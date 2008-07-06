@@ -1,162 +1,110 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [HACK] t/test-lib.sh HACK: Add -s/--show-hack to test suite.
-Date: Sun,  6 Jul 2008 22:22:31 +0200
-Message-ID: <1215375751-30853-1-git-send-email-s-beyer@gmx.net>
-Cc: Stephan Beyer <s-beyer@gmx.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 06 22:23:38 2008
+From: "Mikael Magnusson" <mikachu@gmail.com>
+Subject: [PATCH] Fix grammar in git-rev-parse(1).
+Date: Sun, 6 Jul 2008 22:34:21 +0200
+Message-ID: <237967ef0807061334t681ad234vdb37cfe56af2e483@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 06 22:35:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFalj-0003pE-Li
-	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 22:23:36 +0200
+	id 1KFax6-0006lo-Pk
+	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 22:35:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756274AbYGFUWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2008 16:22:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756202AbYGFUWh
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 16:22:37 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49309 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756185AbYGFUWh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2008 16:22:37 -0400
-Received: (qmail invoked by alias); 06 Jul 2008 20:22:35 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp041) with SMTP; 06 Jul 2008 22:22:35 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX19n5pR1JptnwsIPpuv9YF373MIibGzYDvmTYMK6Jc
-	LEou8NpRyHbtTp
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KFakh-000820-EU; Sun, 06 Jul 2008 22:22:31 +0200
-X-Mailer: git-send-email 1.5.6.363.g7ba71
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.41
+	id S1756397AbYGFUeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2008 16:34:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756916AbYGFUeX
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 16:34:23 -0400
+Received: from rv-out-0506.google.com ([209.85.198.234]:47954 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756385AbYGFUeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2008 16:34:22 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so2362396rvb.1
+        for <git@vger.kernel.org>; Sun, 06 Jul 2008 13:34:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=PAQvWjdgkggc5ge5w5LTLi3xvOO5D08yhPA9fNk5X8c=;
+        b=KmGp4/FY+yt/Gm3Rnwy8IcFiVMnENin6BJLMl3llFvZsJiRdjE9nzGVNV8019lvoD7
+         jQ9kGG/qazXTFdpl2ojsLl+BTc4+W0/ooWAuMRK+Z6B3ngKFngooGtdLMw6zPRlcIs47
+         ZbxN8Ko9f22GxGX4pEBpspxt10sxmIBttqIf8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=Mq1Uf49TSbLB3xhn7RAUE7VDoqD+o2gytUUSikWuEkh9dmYEC4AvlsU3dPMIh6LEUf
+         PK0KZvtRPVbYR5trn87NWp81lL5+RKuOinqE1l5ox91M4NCFMFz27LHdzBMAZkrzS5wh
+         3+Kv7ysY2DQ15tntHE0N2wO/ffQnbrJp3YiqE=
+Received: by 10.141.168.16 with SMTP id v16mr1674344rvo.233.1215376461705;
+        Sun, 06 Jul 2008 13:34:21 -0700 (PDT)
+Received: by 10.141.68.4 with HTTP; Sun, 6 Jul 2008 13:34:21 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87551>
 
-This option realizes a stupid hack that tries to run the test
-cases line by line (separated by &&).
-Furthermore it shows the line it is testing.
-With that information it is easier to find the reason
-why a test fails.
-
-This hack works as long as there are no multi-line
-for/while/subshell/... in the test cases.
-
-Note, that the -s option should only be used if a test case failed.
-It is slow and error-prone.
-
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 ---
-Hi,
+ Documentation/git-rev-parse.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-I wrote that before I started to make the sequencer prototype and
-then I used this hack more than expected ;-)
-Today I cherry-picked this commit into another branch and then
-I thought this could be useful for others, too.
-(Explicitly not for inclusion!)
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 59e95ad..ba65bfa 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -301,9 +301,9 @@ It is the set of commits that are reachable from
+either one of
+ `r1` or `r2` but not from both.
 
-So how to use it?
-When running a test case in t/, add the -s option and then it shows
-something like this:
+ Two other shorthands for naming a set that is formed by a commit
+-and its parent commits exists.  `r1{caret}@` notation means all
++and its parent commits exist.  The `r1{caret}@` notation means all
+ parents of `r1`.  `r1{caret}!` includes commit `r1` but excludes
+-its all parents.
++all of its parents.
 
---snip--[...]
+ Here are a handful of examples:
 
--------
-Testing:
-        ! test -d "$SEQDIR"
-
--------
-Testing:
-        session_ok
-
-* FAIL 3: "pick", "squash", "ref" from stdin
-
-                next_session squashCE &&
-                valgrind git sequencer <todotest1 &&
-                ! test -d "$SEQDIR" &&
-                session_ok &&
-                test -f file2 &&
-                test -f file3 &&
-                test $(git rev-parse CE) = $(git rev-parse HEAD) &&
-                test $(git rev-parse I) = $(git rev-parse HEAD^)
---snap--
-
-Because of the "Testing:" lines you can explicitly see where it failed.
-
-Regards,
-  Stephan
-
- t/test-lib.sh |   45 +++++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 43 insertions(+), 2 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index c0c5e0e..6f42106 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -86,6 +86,8 @@ do
- 		help=t; shift ;;
- 	-v|--v|--ve|--ver|--verb|--verbo|--verbos|--verbose)
- 		verbose=t; shift ;;
-+	-s|--show-hack)
-+		verbose=t; show_hack=t; immediate=t; shift ;;
- 	-q|--q|--qu|--qui|--quie|--quiet)
- 		quiet=t; shift ;;
- 	--no-color)
-@@ -225,9 +227,48 @@ test_debug () {
- 	test "$debug" = "" || eval "$1"
- }
- 
--test_run_ () {
--	eval >&3 2>&4 "$1"
-+test_run__ () {
-+	eval "$1"
- 	eval_ret="$?"
-+}
-+
-+test_run_op_ () {
-+	echo "Testing:"
-+	printf "%s\n" "$op_"
-+	echo
-+	eval "$op_"
-+	eval_ret="$?"
-+}
-+
-+test_run_hack_ () {
-+	i_=1
-+	j_=1
-+	total_=$(printf '%s' "$1" | wc -l)
-+	while test "$j_" -lt $(expr "$total_" + 1)
-+	do
-+		op_=$(printf '%s' "$1" | sed -n -e "$i_,$j_ p")
-+		if test -n "$(printf '%s' "$op_" | sed -n -e '/<<[-\\ A-Za-z]/q;/&& *$/p;')"
-+		then
-+			i_=$(expr "$j_" + 1)
-+			op_=$(printf '%s' "$op_" | sed -e 's/ *&& *$//')
-+			test_run_op_
-+			test "$eval_ret" -ne 0 && return 0
-+			echo -------
-+		fi
-+		j_=$(expr "$j_" + 1)
-+	done
-+	op_="$(printf '%s' "$1" | sed -n -e "$i_,$j_ p")"
-+	test_run_op_
-+	return 0
-+}
-+
-+test_run_ () {
-+	if test -z "$show_hack"
-+	then
-+		test_run__ >&3 2>&4 "$1"
-+	else
-+		test_run_hack_ >&3 2>&4 "$1"
-+	fi
- 	return 0
- }
- 
 -- 
-1.5.6.363.g7ba71
+1.5.6.GIT
+
+
+2008/7/6 Junio C Hamano <gitster@pobox.com>:
+> "Dmitry Potapov" <dpotapov@gmail.com> writes:
+>
+>> On Fri, Jun 20, 2008 at 2:05 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+>>>
+>>> There is shortcut for rev^..rev, namely rev^! (I'm not sure if it is
+>>> documented anywhere, though),
+>>
+>> The latter is not exactly a shortcut for the former.  You can try it at any
+>> merge commit, and you will see different log. For instance, in Git repo:
+>> ...
+>> So, I believe, rev^! means --first-parent rev^..rev
+>
+> Not quite.  From Documentation/git-rev-parse.txt:
+>
+>    SPECIFYING RANGES
+>    -----------------
+>
+>    Two other shorthands for naming a set that is formed by a commit
+>    and its parent commits exists.  `r1{caret}@` notation means all
+>    parents of `r1`.  `r1{caret}!` includes commit `r1` but excludes
+>    its all parents.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+
+
+
+-- 
+Mikael Magnusson
