@@ -1,76 +1,132 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Commit message for 1240f94 has mail headers
-Date: Sun, 6 Jul 2008 23:19:07 +0200
-Message-ID: <20080706211907.GL4729@genesis.frugalware.org>
-References: <2C6B8E28-3E8A-414E-9DB7-626E9709C831@silverinsanity.com>
+From: Abhijit Menon-Sen <ams@toroid.org>
+Subject: [PATCH v2] Add a test for "git stash branch"
+Date: Mon, 7 Jul 2008 02:50:10 +0530
+Message-ID: <20080706212010.GA16343@toroid.org>
+References: <7vvdzo9kkw.fsf@gitster.siamese.dyndns.org> <20080702195401.GA17214@toroid.org> <7vprpw80bw.fsf@gitster.siamese.dyndns.org> <20080703022316.GA25433@toroid.org> <7v63rn61yj.fsf@gitster.siamese.dyndns.org> <20080703061605.GB3815@toroid.org> <20080706112333.GA6477@toroid.org> <alpine.LSU.1.00.0807061453540.3486@wbgn129.biozentrum.uni-wuerzburg.de> <20080706144542.GA8677@toroid.org> <7v1w26eqn5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Sz/4MAOlM1c8JZ8/"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Brian Gernhardt <benabik@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Sun Jul 06 23:20:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 06 23:21:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFbeV-0001WC-5Q
-	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 23:20:11 +0200
+	id 1KFbfS-0001l2-NF
+	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 23:21:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757378AbYGFVTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2008 17:19:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757225AbYGFVTK
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 17:19:10 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:34798 "EHLO virgo.iok.hu"
+	id S1757623AbYGFVUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2008 17:20:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757341AbYGFVUM
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 17:20:12 -0400
+Received: from fugue.toroid.org ([85.10.196.113]:52800 "EHLO fugue.toroid.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756685AbYGFVTJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2008 17:19:09 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 78AEB1B252C;
-	Sun,  6 Jul 2008 23:19:07 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 7061244697;
-	Sun,  6 Jul 2008 22:47:16 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 22304177001C; Sun,  6 Jul 2008 23:19:07 +0200 (CEST)
+	id S1757225AbYGFVUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2008 17:20:11 -0400
+Received: from penne.toroid.org (penne-vpn [10.8.0.6])
+	by fugue.toroid.org (Postfix) with ESMTP id 0177A558350;
+	Sun,  6 Jul 2008 23:20:09 +0200 (CEST)
+Received: by penne.toroid.org (Postfix, from userid 1000)
+	id 00AC6840001; Mon,  7 Jul 2008 02:50:10 +0530 (IST)
 Content-Disposition: inline
-In-Reply-To: <2C6B8E28-3E8A-414E-9DB7-626E9709C831@silverinsanity.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <7v1w26eqn5.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87556>
 
+Make sure that applying the stash to a new branch after a conflicting
+change doesn't result in an error when you try to commit.
 
---Sz/4MAOlM1c8JZ8/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
+---
 
-On Sun, Jul 06, 2008 at 04:00:23AM -0400, Brian Gernhardt <benabik@silverin=
-sanity.com> wrote:
-> I don't think all those mail headers are supposed to be in there.  I don'=
-t=20
-> know if it's too late to fix that, but I thought you should know.
+At 2008-07-06 12:53:02 -0700, gitster@pobox.com wrote:
+>
+> The title is probably not 'stash apply' but 'stash branch'.
 
-My fault, I noticed it but I forgot to send a reminder about it before
-it hit next.
+Fixed, thanks.
 
-Sorry.
+> Don't you want to also validate that: [...]
 
-(I suppose it won't be fixed, unless merge-in-c won't hit master before
-1.6.0, which is hopefully unlikely. ;-) )
+Done.
 
---Sz/4MAOlM1c8JZ8/
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+-- ams
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+ t/t3903-stash.sh |   61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 61 insertions(+), 0 deletions(-)
 
-iEYEARECAAYFAkhxNssACgkQe81tAgORUJbixACeMolVOVXJDBvgBuZQmpgg05rj
-R+oAn3hfZiNTdbha7m3F2bQYQiv2BS+t
-=mV7L
------END PGP SIGNATURE-----
-
---Sz/4MAOlM1c8JZ8/--
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 54d99ed..bd1cdab 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -117,4 +117,65 @@ test_expect_success 'stash pop' '
+ 	test 0 = $(git stash list | wc -l)
+ '
+ 
++cat > expect << EOF
++diff --git a/file2 b/file2
++new file mode 100644
++index 0000000..1fe912c
++--- /dev/null
+++++ b/file2
++@@ -0,0 +1 @@
+++bar2
++EOF
++
++cat > expect1 << EOF
++diff --git a/file b/file
++index 257cc56..5716ca5 100644
++--- a/file
+++++ b/file
++@@ -1 +1 @@
++-foo
+++bar
++EOF
++
++cat > expect2 << EOF
++diff --git a/file b/file
++index 7601807..5716ca5 100644
++--- a/file
+++++ b/file
++@@ -1 +1 @@
++-baz
+++bar
++diff --git a/file2 b/file2
++new file mode 100644
++index 0000000..1fe912c
++--- /dev/null
+++++ b/file2
++@@ -0,0 +1 @@
+++bar2
++EOF
++
++test_expect_success 'stash branch' '
++	echo foo > file &&
++	git commit file -m first
++	echo bar > file &&
++	echo bar2 > file2 &&
++	git add file2 &&
++	git stash &&
++	echo baz > file &&
++	git commit file -m second &&
++	git stash branch stashbranch &&
++	test refs/heads/stashbranch = $(git symbolic-ref HEAD) &&
++	test $(git rev-parse HEAD) = $(git rev-parse master^) &&
++	git diff --cached > output &&
++	test_cmp output expect &&
++	git diff > output &&
++	test_cmp output expect1 &&
++	git add file &&
++	git commit -m alternate\ second &&
++	git diff master..stashbranch &&
++	git diff master..stashbranch > output &&
++	test_cmp output expect2 &&
++	test 0 = $(git stash list | wc -l)
++'
++
+ test_done
+-- 
+1.5.6
