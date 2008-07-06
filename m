@@ -1,85 +1,71 @@
 From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: git-clone --quiet broken?
-Date: Mon, 7 Jul 2008 00:56:49 +0200
-Message-ID: <20080706225649.GD17659@steel.home>
-References: <20080705211616.GA3874@codemonkey.org.uk> <7vmykvrfta.fsf@gitster.siamese.dyndns.org>
+Subject: Re: "make test" works again (sort-of) on cygwin.
+Date: Mon, 7 Jul 2008 01:11:46 +0200
+Message-ID: <20080706231146.GE17659@steel.home>
+References: <486D0FFC.5090308@ramsay1.demon.co.uk> <20080703202637.GC3546@steel.home> <486FD4FB.6070803@ramsay1.demon.co.uk>
 Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dave Jones <davej@codemonkey.org.uk>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 00:58:04 2008
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Mon Jul 07 01:12:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFdB6-0001Nl-O6
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 00:57:57 +0200
+	id 1KFdPU-00057w-46
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 01:12:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755895AbYGFW44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2008 18:56:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755854AbYGFW4z
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 18:56:55 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.181]:21212 "EHLO
+	id S1756863AbYGFXLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2008 19:11:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754955AbYGFXLt
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 19:11:49 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.182]:35828 "EHLO
 	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754719AbYGFW4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2008 18:56:55 -0400
+	with ESMTP id S1756851AbYGFXLt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2008 19:11:49 -0400
 X-RZG-CLASS-ID: mo05
 X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg2r44h+5V
 Received: from tigra.home (Fa915.f.strato-dslnet.de [195.4.169.21])
-	by post.webmailer.de (fruni mo5) (RZmta 16.47)
-	with ESMTP id Y032bck66KtW2k ; Mon, 7 Jul 2008 00:56:50 +0200 (MEST)
+	by post.webmailer.de (klopstock mo62) (RZmta 16.47)
+	with ESMTP id v03a01k66Kglwy ; Mon, 7 Jul 2008 01:11:47 +0200 (MEST)
 	(envelope-from: <raa.lkml@gmail.com>)
 Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 0BF8D277BD;
-	Mon,  7 Jul 2008 00:56:50 +0200 (CEST)
+	by tigra.home (Postfix) with ESMTP id D257D277BD;
+	Mon,  7 Jul 2008 01:11:46 +0200 (CEST)
 Received: by steel.home (Postfix, from userid 1000)
-	id C1B2256D27; Mon,  7 Jul 2008 00:56:49 +0200 (CEST)
+	id A24DE56D27; Mon,  7 Jul 2008 01:11:46 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vmykvrfta.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <486FD4FB.6070803@ramsay1.demon.co.uk>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87564>
 
-Junio C Hamano, Sun, Jul 06, 2008 02:56:17 +0200:
-> Dave Jones <davej@codemonkey.org.uk> writes:
+Ramsay Jones, Sat, Jul 05, 2008 22:09:31 +0200:
+> Alex Riesen wrote:
+> > Ramsay Jones, Thu, Jul 03, 2008 19:44:28 +0200:
+> > 
+> >> Anyhow, the "sort-of" in the subject line, relates to the fact that
+> >> I am seeing some test failures.  In particular, all tests in
+> >> t0004-unwritable.sh and tests 21->24 in t3700-add.sh. All of these
+> >> tests involve chmod/permissions ...
+> > 
+> > Don't run "make test" as root (or "backup operator" on windows).
+> > OTOH, a windows machine is almost useless, unless you're a member of
+> > local administrators group (which includes "backup" permission).
+> > 
 > 
-> > The server I run various git snapshots on recently got upgraded to git 1.5.6,
-> > ...
-> > I could run the clone with 2>/dev/null, but I'd really like to get
-> > mail when something breaks instead of it being totally silent.
-> >
-> > I'm assuming this was an unintentional side-effect of some other recent change?
+> Ah, yes... I am a "Computer administator" aren't I ;-) I totally forgot!
 > 
-> Yeah, I would assume so, too ;-)
-> 
-> Daniel, is this enough?  From re-reading the scripted version of
-> git-clone, it appears that we *might* need to squelch no-progress if the
-> stdout is not tty;  I do not offhand if you got that right when you
-> rewrote this in C.
+> Hmm, but is that really the reason for these failures? After all, (referring
+> to the example you snipped) the permissions are respected for creating
+> files in the directory, just not directories.  Is the "root" user on
+> windows only selectively omnipotent?
 
-While at it, could we please have the first "Initialize" message
-removed?
-
-    Initialize git/.git
-    Initialized empty Git repository in /home/davej/git-trees/git/.git/
-
-The default output looks redundant (that of init_db too, but the full
-path can be useful sometimes). Something like this, perhaps:
-
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 643c7d4..4a0f1ab 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -421,7 +421,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		die("could not create leading directories of '%s'", git_dir);
- 	set_git_dir(make_absolute_path(git_dir));
- 
--	fprintf(stderr, "Initialize %s\n", git_dir);
- 	init_db(option_template, option_quiet ? INIT_DB_QUIET : 0);
- 
- 	/*
+It is (it is the backup operators who can read open, even locked,
+files), but it is boringly hard to find when and where. You can try
+reading MSDN (or better don't, you'll live longer if you don't).
