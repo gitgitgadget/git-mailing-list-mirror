@@ -1,97 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: About -X<option>
-Date: Sun, 06 Jul 2008 12:25:23 -0700
-Message-ID: <7vd4lqerx8.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0807051454060.3334@eeepc-johanness>
- <20080705133245.GH4729@genesis.frugalware.org>
- <AB745D70-D23A-4742-A5B3-DC1B6CAD9C30@ai.rug.nl>
- <7v63rktekf.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0807060342550.3557@eeepc-johanness>
- <7vmykvpq2n.fsf@gitster.siamese.dyndns.org>
- <alpine.LSU.1.00.0807061315310.32725@wbgn129.biozentrum.uni-wuerzburg.de>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH/rfc] git-svn.perl: workaround assertions in svn library
+	1.5.0
+Date: Sun, 6 Jul 2008 19:28:50 +0000
+Message-ID: <20080706192850.32547.qmail@4480698c45f1ed.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pieter de Bie <frimmirf@gmail.com>,
-	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 06 21:26:31 2008
+To: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Jul 06 21:29:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFZsU-0006OA-HG
-	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 21:26:31 +0200
+	id 1KFZvB-0007Ch-FL
+	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 21:29:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756784AbYGFTZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2008 15:25:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756837AbYGFTZc
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 15:25:32 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57000 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755775AbYGFTZb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2008 15:25:31 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 756121B198;
-	Sun,  6 Jul 2008 15:25:30 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 959C41B195; Sun,  6 Jul 2008 15:25:25 -0400 (EDT)
-In-Reply-To: <alpine.LSU.1.00.0807061315310.32725@wbgn129.biozentrum.uni-wuerzburg.de>
- (Johannes Schindelin's message of "Sun, 6 Jul 2008 13:28:00 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4BC76940-4B91-11DD-9196-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1757159AbYGFT2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2008 15:28:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755646AbYGFT2S
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 15:28:18 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:34831 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755485AbYGFT2R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2008 15:28:17 -0400
+Received: (qmail 32548 invoked by uid 1000); 6 Jul 2008 19:28:50 -0000
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87546>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+With subversion 1.5.0 (C and perl libraries) the git-svn selftest
+t9101-git-svn-props.sh fails at test 25 and 26.  The following commands
+cause assertions in the svn library
 
-> By allowing users to put a script in their PATH (possibly resorting to "." 
-> just for that script), named "git-merge-<mybackend>", the following 
-> becomes possible:
->
-> 	$ echo 'git merge-recursive --theirs "$@"' > ~/bin/git-merge-X
-> 	$ chmod a+x ~/bin/git-merge-X
-> 	$ git merge -s X
->
-> This would be even more flexible than the "-X" option, and it would 
-> properly keep "--theirs" out of our officially supported features.
+ $ cd deeply
+ $ git-svn propget svn:ignore .
+ perl: /build/buildd/subversion-1.5.0dfsg1/subversion/libsvn_ra/ra_loader.c:674: svn_ra_get_dir: Assertion `*path != '/'' failed.
+ Aborted
 
-The above "custom backend" is fine, and would be useful for _other_ things
-(That's why I invented "-s" option to "git-merge" to begin with).  The sad
-part is that it does not have much to do with a solution about -X<option>
-issue.
+ $ git-svn propget svn:ignore ..
+ perl: /build/buildd/subversion-1.5.0dfsg1/subversion/libsvn_subr/path.c:120: svn_path_join: Assertion `is_canonical(component, clen)' failed.
 
-Imagine you want to enhance the recursive strategy so that the user can
-tweak the similarity threashold used in the rename detection.  You would
-want to pass the equilvalent of -M<similarity> to the strategy backend
-through "git merge".  You could use millions of such custom merge backend
-to do so:
+With this commit, git-svn makes sure the path doesn't start with a
+slash, and is not a dot, working around these assertions.
 
-	$ echo 'git merge-recursive -M2 "$@"' >~/bin/git-merge-M2
-	$ echo 'git merge-recursive -M4 "$@"' >~/bin/git-merge-M4
-	$ echo 'git merge-recursive -M6 "$@"' >~/bin/git-merge-M6
-	$ ... millions of these ...
-        $ git merge -s M09
+The breakage was reported by Lucas Nussbaum through
+ http://bugs.debian.org/489108
 
-but that's not a solution.  You are kuldging around the issue by punting
-and by not solving it (iow "I did not have forsight to allow passing
-options through git-merge, and as consequence, the users are forced to
-have canned set of options in their backend").  You have the same issue
-with "-Xsubtree=git-gui/", for example.
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
+ git-svn.perl |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-Being able to pick strategy backend is wonderful, and being able to define
-new ones is also wonderful.  But that is unrelated to what we are
-discussing here.  Don't confuse the issue.
+I ran into this on Debian/unstable.  With svn 1.5.0 the selftest fails
+without the patch, with svn 1.4.6 it succeeds with and without the
+patch.  I'm not familar with the svn interfaces, not sure whether this
+is a regression in subversion, or a bug in git-svn.
 
-I am not married to -X<option> notation. Perhaps we can borrow the way
-"gcc" does this, when allowing linker and assmebler options to be passed
-from the command line to the backend with -Wa,<option> and -Wl,<option>.
 
-The issue being addressed with these notation is exactly the same as what
-we are discussing, and we can follow the same model.  The intermediary
-(gcc and git-merge) does not have to fully understand what the option they
-are passing to the backend (assembler and merge-* strategy).
+diff --git a/git-svn.perl b/git-svn.perl
+index f789a6e..a366c89 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -643,6 +643,8 @@ sub canonicalize_path {
+ 	$path =~ s#/[^/]+/\.\.##g;
+ 	$path =~ s#/$##g;
+ 	$path =~ s#^\./## if $dot_slash_added;
++	$path =~ s#^/##;
++	$path =~ s#^\.$##;
+ 	return $path;
+ }
+ 
+-- 
+1.5.6
