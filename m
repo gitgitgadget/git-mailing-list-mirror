@@ -1,137 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Adam Brewster" <adambrewster@gmail.com>
 Subject: Re: [PATCH v5]
-Date: Sat, 05 Jul 2008 18:50:12 -0700
-Message-ID: <7vskunpyqz.fsf@gitster.siamese.dyndns.org>
+Date: Sat, 5 Jul 2008 22:49:31 -0400
+Message-ID: <c376da900807051949y78161d5dv17f251567ba888da@mail.gmail.com>
 References: <20080705204849.GJ4729@genesis.frugalware.org>
- <1215293200-28199-1-git-send-email-adambrewster@gmail.com>
+	 <1215293200-28199-1-git-send-email-adambrewster@gmail.com>
+	 <7vskunpyqz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, mdl123@verizon.net,
-	Johannes.Schindelin@gmx.de, jnareb@gmail.com,
-	vmiklos@frugalware.org
-To: Adam Brewster <adambrewster@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 06 03:51:35 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 06 04:50:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFJPZ-0005d4-6t
-	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 03:51:33 +0200
+	id 1KFKKe-0005m3-L4
+	for gcvg-git-2@gmane.org; Sun, 06 Jul 2008 04:50:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753144AbYGFBua (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jul 2008 21:50:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753195AbYGFBua
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 21:50:30 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59614 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753031AbYGFBu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jul 2008 21:50:29 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 425511A03B;
-	Sat,  5 Jul 2008 21:50:28 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 4D3641A03A; Sat,  5 Jul 2008 21:50:18 -0400 (EDT)
-In-Reply-To: <1215293200-28199-1-git-send-email-adambrewster@gmail.com> (Adam
- Brewster's message of "Sat, 5 Jul 2008 17:26:38 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E8B8DAC0-4AFD-11DD-8957-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753431AbYGFCtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jul 2008 22:49:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753389AbYGFCtd
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jul 2008 22:49:33 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:31500 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753368AbYGFCtc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jul 2008 22:49:32 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so775562ywe.1
+        for <git@vger.kernel.org>; Sat, 05 Jul 2008 19:49:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=OIq2d9zCj/QWlkrIdCEo9ZPkABdQK7xlFZeKPv9CZGQ=;
+        b=GJ+konR9fCxLn61dqkXsK6qNHkfO/Ls57Hsgyd30GJurNsNgkap0YGaQjziY27UQo2
+         jgARaexi0q3zI1wLISLlVajcP+e04pHPazL/14A9bfSm7svuKzXcrjywtbF60f4fcpCE
+         gk5wmNxmIUf4WLVxzgBjQTbxqI6Rf8RkXOuNc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=t0tstYYP/8hfNiQnjKuvPF9dRb6bdjeESPyKgDuU3iNrBY8OUreji4GAGMgBlmX0IC
+         1fAbEyEOq6vnIlbvZizgYz2c5KcHceDZ/rlFLDydCabj1YZ7Yyu3aaWvp6FHfDBYF1W2
+         +FcT0FTfcpoSuWwI1W+k/2qlCF4Wc0IsYryQE=
+Received: by 10.151.142.2 with SMTP id u2mr5166783ybn.148.1215312571737;
+        Sat, 05 Jul 2008 19:49:31 -0700 (PDT)
+Received: by 10.150.205.18 with HTTP; Sat, 5 Jul 2008 19:49:31 -0700 (PDT)
+In-Reply-To: <7vskunpyqz.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87486>
 
-Adam Brewster <adambrewster@gmail.com> writes:
+>
+> Yeah, it is simply a bad taste to use helper in builtin-A from builtin-B.
+> More library-ish files such as revision.c are better home for utility
+> functions to be shared between builtins and commands.
+>
+> Here is what I queued.
+>
 
-> The real reason read_revisions_from_stdin moved to revision.c is because I was 
-> asked to do it that way.
+Thank you.
 
-Yeah, it is simply a bad taste to use helper in builtin-A from builtin-B.
-More library-ish files such as revision.c are better home for utility
-functions to be shared between builtins and commands.
+> By the way did you compile test your fix before sending?
+>
 
-Here is what I queued.
+I ran make and test, but I didn't notice the warnings that prompted
+the question.  I also forgot to re-check it after re-working the
+commits to put everything in order.
 
-By the way did you compile test your fix before sending?
+> -- >8 --
 
--- >8 --
-Move read_revisions_from_stdin from builtin-rev-list.c to revision.c
+Thank you again for your help and patience in dealing with my multiple
+failed attempts to get this right.
 
-Reading rev-list parameters from the command line can be reused by
-commands other than rev-list.  Move this function to more "library-ish"
-place to promote code reuse.
-
-Signed-off-by: Adam Brewster <asb@bu.edu>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-diff --git a/builtin-rev-list.c b/builtin-rev-list.c
-index 83a7b13..54b6672 100644
---- a/builtin-rev-list.c
-+++ b/builtin-rev-list.c
-@@ -565,23 +565,6 @@ static struct commit_list *find_bisection(struct commit_list *list,
- 	return best;
- }
- 
--static void read_revisions_from_stdin(struct rev_info *revs)
--{
--	char line[1000];
--
--	while (fgets(line, sizeof(line), stdin) != NULL) {
--		int len = strlen(line);
--		if (len && line[len - 1] == '\n')
--			line[--len] = 0;
--		if (!len)
--			break;
--		if (line[0] == '-')
--			die("options not supported in --stdin mode");
--		if (handle_revision_arg(line, revs, 0, 1))
--			die("bad revision '%s'", line);
--	}
--}
--
- int cmd_rev_list(int argc, const char **argv, const char *prefix)
- {
- 	struct commit_list *list;
-diff --git a/revision.c b/revision.c
-index fc66755..6ce6042 100644
---- a/revision.c
-+++ b/revision.c
-@@ -910,6 +910,23 @@ int handle_revision_arg(const char *arg, struct rev_info *revs,
- 	return 0;
- }
- 
-+void read_revisions_from_stdin(struct rev_info *revs)
-+{
-+	char line[1000];
-+
-+	while (fgets(line, sizeof(line), stdin) != NULL) {
-+		int len = strlen(line);
-+		if (len && line[len - 1] == '\n')
-+			line[--len] = '\0';
-+		if (!len)
-+			break;
-+		if (line[0] == '-')
-+			die("options not supported in --stdin mode");
-+		if (handle_revision_arg(line, revs, 0, 1))
-+			die("bad revision '%s'", line);
-+	}
-+}
-+
- static void add_grep(struct rev_info *revs, const char *ptn, enum grep_pat_token what)
- {
- 	if (!revs->grep_filter) {
-diff --git a/revision.h b/revision.h
-index abce500..83f364a 100644
---- a/revision.h
-+++ b/revision.h
-@@ -111,6 +111,8 @@ struct rev_info {
- #define REV_TREE_DIFFERENT	2
- 
- /* revision.c */
-+void read_revisions_from_stdin(struct rev_info *revs);
-+
- typedef void (*show_early_output_fn_t)(struct rev_info *, struct commit_list *);
- volatile show_early_output_fn_t show_early_output;
- 
+Adam
