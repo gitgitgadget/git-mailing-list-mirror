@@ -1,96 +1,161 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [q] git-diff --reverse 7def2be1..7def2be1^
-Date: Sun, 06 Jul 2008 15:33:16 -0700
-Message-ID: <7vbq1ad4nn.fsf@gitster.siamese.dyndns.org>
-References: <20080620082034.GA24913@elte.hu>
- <m3d4mcmq20.fsf@localhost.localdomain>
- <37fcd2780807060916h7d8c4e6mba7f30570d527dc3@mail.gmail.com>
- <7vprpqdbjx.fsf@gitster.siamese.dyndns.org>
- <20080706203951.GB1721@dpotapov.dyndns.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: [JGIT PATCH 1/1] jgit: create a tag command
+Date: Mon, 7 Jul 2008 00:41:35 +0200
+Message-ID: <200807070041.35873.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, Ingo Molnar <mingo@elte.hu>,
-	git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 00:34:30 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'Marek Zawirski'" <marek.zawirski@gmail.com>, git@vger.kernel.org
+To: "'Shawn O. Pearce'" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jul 07 00:50:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFcoO-0004oH-95
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 00:34:28 +0200
+	id 1KFd3d-000864-Qz
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 00:50:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752556AbYGFWda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2008 18:33:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752532AbYGFWd3
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 18:33:29 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35898 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751825AbYGFWd3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2008 18:33:29 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 24DDF221CF;
-	Sun,  6 Jul 2008 18:33:27 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 147B2221CE; Sun,  6 Jul 2008 18:33:17 -0400 (EDT)
-In-Reply-To: <20080706203951.GB1721@dpotapov.dyndns.org> (Dmitry Potapov's
- message of "Mon, 7 Jul 2008 00:39:52 +0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8D32C284-4BAB-11DD-8A9D-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752745AbYGFWqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2008 18:46:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752630AbYGFWqZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 18:46:25 -0400
+Received: from av12-2-sn2.hy.skanova.net ([81.228.8.186]:57655 "EHLO
+	av12-2-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751825AbYGFWqY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2008 18:46:24 -0400
+Received: by av12-2-sn2.hy.skanova.net (Postfix, from userid 502)
+	id 0D9A237EF2; Mon,  7 Jul 2008 00:46:22 +0200 (CEST)
+Received: from smtp4-1-sn2.hy.skanova.net (smtp4-1-sn2.hy.skanova.net [81.228.8.92])
+	by av12-2-sn2.hy.skanova.net (Postfix) with ESMTP
+	id D040B37EB6; Mon,  7 Jul 2008 00:46:21 +0200 (CEST)
+Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp4-1-sn2.hy.skanova.net (Postfix) with ESMTP id B084137E43;
+	Mon,  7 Jul 2008 00:46:21 +0200 (CEST)
+User-Agent: KMail/1.9.9
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87562>
 
-Dmitry Potapov <dpotapov@gmail.com> writes:
+This command allows us to create simple or annotated tags using the jgit command line.
+PGP signed tags are not yet supported.
 
-> On Sun, Jul 06, 2008 at 01:04:18PM -0700, Junio C Hamano wrote:
->>     Two other shorthands for naming a set that is formed by a commit
->>     and its parent commits exists.  `r1{caret}@` notation means all
->>     parents of `r1`.  `r1{caret}!` includes commit `r1` but excludes
->>     its all parents.
->
-> So, I would say that rev^! is shorthand for rev^@..rev, but it does not
-> actually work:
->
-> git rev-list 7ac749c^@..7ac749c
-> fatal: ambiguous argument '7ac749c^@..7ac749c': unknown revision or path
-> not in the working tree.
->
-> yet "^rev^@ rev" syntax does:
->
-> git rev-list ^7ac749c^@ 7ac749c
-> 7ac749c96d143ba4f76723959892cbaddbe8ed07
->
-> Is it a bug or feature?
->
-> Puzzled...
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
 
-After reading these paragraphs from "SPECIFYING RANGES":
+I ned this for tagging self-jgit-managed automated builds of the Eclipse plugin.
+I could do with an Ant task, but this will work too.
 
-        History traversing commands such as 'git-log' operate on a set
-        of commits, not just a single commit.  To these commands,
-        specifying a single revision with the notation described in the
-        previous section means the set of commits reachable from that
-        commit, following the commit ancestry chain.
+-- robin
+ org.spearce.jgit/src/org/spearce/jgit/pgm/Tag.java |   96 ++++++++++++++++++++
+ 1 files changed, 96 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/pgm/Tag.java
 
-        To exclude commits reachable from a commit, a prefix `{caret}`
-        notation is used.  E.g. "`{caret}r1 r2`" means commits reachable
-        from `r2` but exclude the ones reachable from `r1`.
 
-        This set operation appears so often that there is a shorthand
-        for it.  "`r1..r2`" is equivalent to "`{caret}r1 r2`".  It is
-        the difference of two sets (subtract the set of commits
-        reachable from `r1` from the set of commits reachable from
-        `r2`).
-
-it is obvious to me that the third paragraph talks about r1 that is a
-single rev (refer to SPECIFYING REVISIONS section, which does _NOT_ talk
-about rev^@ nor rev^!)  and r2 that similarly is another single rev.  So I
-think it is fairly clear that your "r^@..r" example is nonsense.
-
-But perhaps these paragraphs need to be further reworded to avoid the
-confusion.  I dunno.
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/pgm/Tag.java b/org.spearce.jgit/src/org/spearce/jgit/pgm/Tag.java
+new file mode 100644
+index 0000000..a9377f5
+--- /dev/null
++++ b/org.spearce.jgit/src/org/spearce/jgit/pgm/Tag.java
+@@ -0,0 +1,96 @@
++/*
++ * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.pgm;
++
++import org.spearce.jgit.lib.Constants;
++import org.spearce.jgit.lib.PersonIdent;
++
++class Tag extends TextBuiltin {
++	@Override
++	void execute(String[] args) throws Exception {
++		String tagName = null;
++		String message = null;
++		boolean force = false;
++		for (int i = 0; i < args.length; ++i) {
++			if (args[i].equals("-f")) {
++				force = true;
++				continue;
++			}
++			if (args[i].equals("-m")) {
++				if (i < args.length - 2)
++					message = args[i++] + "\n";
++				else
++					usage();
++				continue;
++			}
++			if (args[i].startsWith("-m")) {
++				message = args[i].substring(2) + "\n";
++				continue;
++			}
++			if (args[i].startsWith("-") && i == args.length - 1)
++				usage();
++			if (i == args.length - 1) {
++				tagName = args[i];
++				continue;
++			}
++			usage();
++		}
++		if (!tagName.startsWith(Constants.TAGS_PREFIX + "/"))
++			tagName = Constants.TAGS_PREFIX + "/" + tagName;
++		if (!force && db.resolve(tagName) != null) {
++			throw die("fatal: tag '"
++					+ tagName.substring(Constants.TAGS_PREFIX.length() + 1)
++					+ "' exists");
++		}
++		org.spearce.jgit.lib.Tag tag = new org.spearce.jgit.lib.Tag(db);
++		tag.setObjId(db.resolve(Constants.HEAD));
++		if (message != null) {
++			message = message.replaceAll("\r", "");
++			tag.setMessage(message);
++			tag.setTagger(new PersonIdent(db));
++			tag.setType("commit");
++		}
++		tag.setTag(tagName.substring(Constants.TAGS_PREFIX.length() + 1));
++		tag.tag();
++	}
++
++	private void usage() {
++		new Throwable().printStackTrace();
++		throw die("Usage: -m message tag");
++	}
++}
+-- 
+1.5.6.2.220.g44701
