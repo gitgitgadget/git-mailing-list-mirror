@@ -1,89 +1,98 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [FIXED PATCH] Make rebase save ORIG_HEAD if changing current branch
-Date: Mon, 7 Jul 2008 11:03:46 -0400
-Message-ID: <F0AD23BC-FA9A-4593-8942-228C428B661E@silverinsanity.com>
-References: <1215379370-34265-1-git-send-email-benji@silverinsanity.com> <7v7iby9ucx.fsf@gitster.siamese.dyndns.org> <803A3528-2451-4C5D-A48D-5E0C37B8E90E@silverinsanity.com> <7vbq1a8ay3.fsf@gitster.siamese.dyndns.org> <20080707111803.GF31490@mit.edu> <m34p71gbuk.fsf@localhost.localdomain>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: stgit error on status command
+Date: Mon, 7 Jul 2008 11:10:32 -0400
+Message-ID: <9e4733910807070810i14c8856vfbec24127e711285@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Theodore Tso <tytso@MIT.EDU>, Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 17:04:50 2008
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 07 17:11:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFsGk-0005tr-3i
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 17:04:46 +0200
+	id 1KFsNI-0008VB-Kz
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 17:11:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753350AbYGGPDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 11:03:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753298AbYGGPDt
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 11:03:49 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:53665 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753220AbYGGPDs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 11:03:48 -0400
-Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id DF7C01FFC02C;
-	Mon,  7 Jul 2008 15:03:43 +0000 (UTC)
-In-Reply-To: <m34p71gbuk.fsf@localhost.localdomain>
-X-Mailer: Apple Mail (2.926)
+	id S1753426AbYGGPKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 11:10:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753451AbYGGPKe
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 11:10:34 -0400
+Received: from rn-out-0910.google.com ([64.233.170.191]:62754 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752892AbYGGPKd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 11:10:33 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so357703rnd.17
+        for <git@vger.kernel.org>; Mon, 07 Jul 2008 08:10:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=dkjspDhhqpJzoQ6JwxamFt7QgPInU9jrjKIoidJ8K9E=;
+        b=jgWR8CZXNt2bG4oapLM7DRKElXs483R1pdC31fC+dK8L7IuAIfC8Nwb1to1IeAhxSC
+         VTrQRKnwdRgoD9MKF3DoEh9HzX/MOYFuEOTuO9Z8PFyYIJeDV7M2DRmsfpn5k8oWpZxj
+         thBv9Kc0QM7tdLo6bDKcb+AzEYb/Ji33s64KQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=GgpAsTwDd6h8NDeQz+AafCeeOZcRRKBbtbXSO6+xFi2JclqCirma/JvpuXVCTNZYMw
+         /fxeV28u8D8XhFvvZTOscYKYarnV7qghBpJ8WqTi6s66iCPsojibrQKYdkHkNbWpUCvS
+         C27hKJ+Z2kDf/oF382nOBStVcEbkK1NeSC0T4=
+Received: by 10.151.145.17 with SMTP id x17mr8382349ybn.102.1215443432909;
+        Mon, 07 Jul 2008 08:10:32 -0700 (PDT)
+Received: by 10.151.78.17 with HTTP; Mon, 7 Jul 2008 08:10:32 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87623>
+
+jonsmirl@terra:~$ stg --version
+Stacked GIT 0.14.3.163.g06f9
+git version 1.5.6.1
+Python version 2.5.2 (r252:60911, Apr 21 2008, 11:17:30)
+[GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)]
+jonsmirl@terra:~$
+
+jonsmirl@terra:~/fs$ stg status
+Error: Unhandled exception:
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.5/site-packages/stgit/main.py", line 278, in main
+    ret = command.func(parser, options, args)
+  File "/usr/local/lib/python2.5/site-packages/stgit/commands/status.py",
+line 119, in func
+    options.diff_flags)
+  File "/usr/local/lib/python2.5/site-packages/stgit/commands/status.py",
+line 75, in status
+    diff_flags = diff_flags)
+  File "/usr/local/lib/python2.5/site-packages/stgit/git.py", line
+255, in tree_status
+    for t, fn in parse_git_ls(GRun('diff-index', '-z', *args).raw_output()):
+  File "/usr/local/lib/python2.5/site-packages/stgit/git.py", line
+201, in parse_git_ls
+    mode_a, mode_b, sha1_a, sha1_b, t = line.split(' ')
+ValueError: need more than 1 value to unpack
+jonsmirl@terra:~/fs$
+
+jonsmirl@terra:~/fs$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       renamed:    arch/powerpc/boot/dts/digispeaker-alpha.dts ->
+arch/powerpc/boot/dts/dspeak01.dts
+#       renamed:    arch/powerpc/platforms/52xx/digispeaker_alpha.c ->
+arch/powerpc/platforms/52xx/dspeak0
+#
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#
+#       modified:   arch/powerpc/platforms/52xx/dspeak01.c
 
 
-On Jul 7, 2008, at 7:42 AM, Jakub Narebski wrote:
-
-> Theodore Tso <tytso@MIT.EDU> writes:
->
->> True, but (and please correct me if I'm wrong) ORIG_HEAD will always
->> be pointing out HEAD before the user typed pretty much any git
->> porcelein command (which saves HEAD into ORIG_HEAD), but with  
->> reflogs,
->> it you have to paw through multiple HEAD@{n} to find the 'n' which
->> corresponds to state before executing the git plumbing command, since
->> multiple git plumbing commands could have updated the HEAD's reflog,
->> right?
->
-> You can always use _branch_ reflog, either in the <branch>@{1} form,
-> or in @{1} shortcut form.  @{1} should be equovalent to ORIG_HEAD
-> even for rebase.
-
-I personally expected @{1} to be identical to HEAD@{1}.  Since  
-omitting a ref usually refers to HEAD, why shouldn't omitting it when  
-referring to the reflogs mean the HEAD log?  The definition of @{1} is  
-useful since there's no other easy way to get "current branch's  
-reflog", but I think it's non-obvious.  (Since HEAD@{1} is something  
-completely different, I think the only other way to refer to @{1} is $ 
-(git symbolic-ref)@{1}.)
-
-Also, your statement is only true if ORIG_HEAD was on the branch you  
-are currently working.  If we want ORIG_HEAD to mean "state of HEAD  
-before last command", then "git rebase upstream topic" from master  
-should leave ORIG_HEAD pointing to master, not topic@{1}.  It also is  
-no longer true if you switch branches.  Having ORIG_HEAD set to the  
-point before a pull is useful to compare multiple branches to both the  
-old and new position of your updated branch.
-
-If we're going to have ORIG_HEAD set by _any_ command, we should  
-probably come up with some consistent definition of it and set it  
-appropriately.  The first place most people encounter ORIG_HEAD is  
-after a pull, where it acts something like a reverse of FETCH_HEAD  
-(old state of local vs. new state of remote).  However, pull only sets  
-ORIG_HEAD by way of merge and reset sets ORIG_HEAD as well.  So the  
-current definition appears to be "the prior state of the last branch  
-to be drastically changed."  By this definition, ORIG_HEAD should be  
-set by am and rebase as per Junio's patch.
-
-You could make an argument for removing ORIG_HEAD, it's functionality  
-being replaced by the reflogs.  At this point, it's a rather  
-established bit of git, and I think has usefulness of it's own.
-
-~~ Brian
+-- 
+Jon Smirl
+jonsmirl@gmail.com
