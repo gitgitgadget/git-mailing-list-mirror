@@ -1,60 +1,62 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [FIXED PATCH] Make rebase save ORIG_HEAD if changing current branch
-Date: Mon, 7 Jul 2008 10:36:29 -0400
-Message-ID: <B8E7062C-8CE6-492B-BDB4-91993140739B@silverinsanity.com>
-References: <1215379370-34265-1-git-send-email-benji@silverinsanity.com> <7v7iby9ucx.fsf@gitster.siamese.dyndns.org> <803A3528-2451-4C5D-A48D-5E0C37B8E90E@silverinsanity.com> <7vbq1a8ay3.fsf@gitster.siamese.dyndns.org> <20080707111803.GF31490@mit.edu>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Mon Jul 07 16:38:33 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] better git-submodule status output
+Date: Mon, 7 Jul 2008 15:34:32 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807071533240.18205@racer>
+References: <20080701150119.GE5852@joyeux>  <7vhcb3o7q3.fsf@gitster.siamese.dyndns.org>  <alpine.LSU.1.00.0807061456100.3486@wbgn129.biozentrum.uni-wuerzburg.de>  <20080706160758.GA23385@jhaampe.org>  <alpine.DEB.1.00.0807061821340.7342@eeepc-johanness> 
+ <20080707062142.GA5506@jhaampe.org> <32541b130807070725p6fa4d0dfne9f04bc857920dc7@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sylvain Joyeux <sylvain.joyeux@dfki.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Lars Hjemli <hjemli@gmail.com>, Ping Yin <pkufranky@gmail.com>,
+	Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 07 16:38:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFrqN-0002iI-Dm
+	id 1KFrqM-0002iI-PH
 	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 16:37:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753606AbYGGOgd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 10:36:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753556AbYGGOgd
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 10:36:33 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:50845 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753408AbYGGOga (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 10:36:30 -0400
-Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 2A9BD1FFC02C;
-	Mon,  7 Jul 2008 14:36:26 +0000 (UTC)
-In-Reply-To: <20080707111803.GF31490@mit.edu>
-X-Mailer: Apple Mail (2.926)
+	id S1753326AbYGGOg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 10:36:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753408AbYGGOg2
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 10:36:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54806 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753326AbYGGOg2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 10:36:28 -0400
+Received: (qmail invoked by alias); 07 Jul 2008 14:36:26 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp030) with SMTP; 07 Jul 2008 16:36:26 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/F6ddlUaLFLZrGRtORBxoA9aWj46083YyjmXmsqZ
+	IbBOfSIqYZgDx5
+X-X-Sender: gene099@racer
+In-Reply-To: <32541b130807070725p6fa4d0dfne9f04bc857920dc7@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.78
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87615>
 
+Hi,
 
-On Jul 7, 2008, at 7:18 AM, Theodore Tso wrote:
+On Mon, 7 Jul 2008, Avery Pennarun wrote:
 
-> On Sun, Jul 06, 2008 at 11:28:36PM -0700, Junio C Hamano wrote:
->> (1) ORIG_HEAD is not strictly necessary these days, because we have
->>     reflogs;
->
-> True, but (and please correct me if I'm wrong) ORIG_HEAD will always
-> be pointing out HEAD before the user typed pretty much any git
-> porcelein command (which saves HEAD into ORIG_HEAD), but with reflogs,
-> it you have to paw through multiple HEAD@{n} to find the 'n' which
-> corresponds to state before executing the git plumbing command, since
-> multiple git plumbing commands could have updated the HEAD's reflog,
-> right?
+> The trick here, I think, is that there's only one time the submodule 
+> should be linked to a commit you don't actually have.  It should only 
+> happen if your parent module (supermodule) has been updated, but you 
+> haven't recently done a fetch in the submodule.
 
-This is _exactly_ why I wanted `pull --rebase` to set ORIG_HEAD.   
-Reflogs are great in their own way, but having ORIG_HEAD regularly  
-being available for a quick way to set it back or refer to the  
-original state is just too useful.
+Noooooo!
 
-~~ Brian
+If I am actively working on the submodule, the supermodule has _no 
+business_ trying to wreck my state.
+
+Hth,
+Dscho
