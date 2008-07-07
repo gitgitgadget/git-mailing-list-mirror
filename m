@@ -1,99 +1,160 @@
-From: "Geoff Russell" <geoffrey.russell@gmail.com>
-Subject: Re: finding deleted file names
-Date: Mon, 7 Jul 2008 10:11:05 +0930
-Message-ID: <93c3eada0807061741s33e6da08lc1a8b04700d3a0dc@mail.gmail.com>
-References: <93c3eada0807021701m13b7adddv51537f4cf9d52533@mail.gmail.com>
-	 <237967ef0807021812r3ccbfbacg2cb6b12358d2ee2e@mail.gmail.com>
-	 <93c3eada0807021945la3e565csc50eed4b14feb9c3@mail.gmail.com>
-	 <20080703104233.GA26162@sigill.intra.peff.net>
-	 <93c3eada0807032345r2ff59d69kca42bc9ea7782f31@mail.gmail.com>
-	 <7v1w2aw2lt.fsf@gitster.siamese.dyndns.org>
-	 <93c3eada0807052154j9de9074s8c5625fb7507b96e@mail.gmail.com>
-	 <7v63rjpp4s.fsf@gitster.siamese.dyndns.org>
-Reply-To: geoffrey.russell@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 06 Jul 2008 18:36:01 -0700
+Message-ID: <7vtzf2a326.fsf@gitster.siamese.dyndns.org>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
+ <7vr6d8apjx.fsf@gitster.siamese.dyndns.org>
+ <7vhcdyfe9u.fsf@gitster.siamese.dyndns.org>
+ <7vabjm1a0q.fsf@gitster.siamese.dyndns.org>
+ <7vr6crj0jk.fsf@gitster.siamese.dyndns.org>
+ <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org>
+ <7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
+ <7vabijxhk4.fsf@gitster.siamese.dyndns.org>
+ <7vwslhg8qe.fsf@gitster.siamese.dyndns.org>
+ <7vhccfiksy.fsf@gitster.siamese.dyndns.org>
+ <7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
+ <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org>
+ <7v3anb19n7.fsf@gitster.siamese.dyndns.org>
+ <7vwskjazql.fsf@gitster.siamese.dyndns.org>
+ <7vk5ggipuw.fsf@gitster.siamese.dyndns.org>
+ <7vej6l3lp7.fsf@gitster.siamese.dyndns.org>
+ <7vod5kd3im.fsf@gitster.siamese.dyndns.org>
+ <7v3amv1e8n.fsf@gitster.siamese.dyndns.org>
+ <7vprpwhp7t.fsf@gitster.siamese.dyndns.org>
+ <7vlk0ffhw3.fsf@gitster.siamese.dyndns.org>
+ <alpine.LSU.1.00.0807061309140.32725@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>,
-	"Mikael Magnusson" <mikachu@gmail.com>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 02:42:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 07 03:37:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFenv-0004Qc-N1
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 02:42:08 +0200
+	id 1KFffK-000532-9K
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 03:37:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757384AbYGGAlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2008 20:41:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757373AbYGGAlH
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 20:41:07 -0400
-Received: from an-out-0708.google.com ([209.85.132.245]:59726 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757222AbYGGAlG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2008 20:41:06 -0400
-Received: by an-out-0708.google.com with SMTP id d40so373668and.103
-        for <git@vger.kernel.org>; Sun, 06 Jul 2008 17:41:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=kYEoEiO93a5DRyWsElr6RxOuQA52MaXDQinwz2xDleQ=;
-        b=it6FH1D/5Q+mzt5LSsJ1PPh31SiFDtqIOVulh7fOx6QrZMcdt5+CofuxTKMpciXGzT
-         fR2JF355lqIQfFipf7oXVrM17Y3f67qQsHFaDwNArUM+bUHMhrbdt+GkXGtEsspQWWgd
-         ebP1zpBgSrXG10UMoZfmuAo41FBAnQxa99oGI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=iUu48MnzWJ5E/ED491kEeAp6jQNdJRvSXP1knJhDXXPWepzU9ZwejqhGoQNwfws+y5
-         j/thz+leMh4YZnZT6OMXlMatyykWCmejpA6/5VRWPdk3ARtyToGnMcZC3kF45T6wGh23
-         CAv80hbUJSWCPp+jxgBhDz+LyayauFo+1ajCM=
-Received: by 10.100.250.12 with SMTP id x12mr2395908anh.93.1215391265072;
-        Sun, 06 Jul 2008 17:41:05 -0700 (PDT)
-Received: by 10.100.232.5 with HTTP; Sun, 6 Jul 2008 17:41:05 -0700 (PDT)
-In-Reply-To: <7v63rjpp4s.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752428AbYGGBgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2008 21:36:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752432AbYGGBgT
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jul 2008 21:36:19 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35936 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752205AbYGGBgS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2008 21:36:18 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E41F323D0E;
+	Sun,  6 Jul 2008 21:36:14 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id BE27223D0D; Sun,  6 Jul 2008 21:36:08 -0400 (EDT)
+In-Reply-To: <alpine.LSU.1.00.0807061309140.32725@wbgn129.biozentrum.uni-wuerzburg.de>
+ (Johannes Schindelin's message of "Sun, 6 Jul 2008 13:10:06 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1681A97E-4BC5-11DD-88BE-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87570>
 
-On Sun, Jul 6, 2008 at 2:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Geoff Russell" <geoffrey.russell@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> On Sun, 6 Jul 2008, Junio C Hamano wrote:
 >
->> On 7/4/08, Junio C Hamano <gitster@pobox.com> wrote:
->>> "Geoff Russell" <geoffrey.russell@gmail.com> writes:
->>>
->>>  > ... I've made a bunch of changes to a repository, a few weeks later I
->>>
->>> > figure I've deleted a file I need but am not really sure of its name. So
->>>  > I want to list the files that I've deleted during the past few weeks.
->>>
->>>
->>> $ git log --pretty=oneline --diff-filter=D --name-only -M --since=90.days
->>
->> This is good, but on my version 1.5.5.1, is giving the commit-ids +
->> comments as well
->> as the names.
+>> * js/apply-root (Wed Jul 2 15:28:22 2008 -0700) 2 commits
+>>  + apply --root: thinkofix.
+>>  + Teach "git apply" to prepend a prefix with "--root=<root>"
 >
-> Oh, I very much intended to give them, as --since=90.days is very broad
-> that you would want to know which exact commit to learn when the found
-> change was made anyway.
->
+> If we want to call this "--directory=<root>" instead, we should do it 
+> before that commit hits master.
 
-That's fine, the --name-only confused me, but I understand what is
-happening now.
+Yeah, perhaps like this?
 
-Geoff.
+-- >8 --
+git-apply --directory: make --root more similar to GNU diff
 
+Applying a patch in the directory that is different from what the patch
+records is done with --directory option in GNU diff.  The --root option we
+introduced previously does the same, and we can call it the same way to
+give users more familiar feel.
 
--- 
-6 Fifth Ave,
-St Morris, S.A. 5068
-Australia
-Ph: 041 8805 184 / 08 8332 5069
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-apply.txt |    8 ++++++--
+ builtin-apply.c             |    4 ++--
+ t/t4128-apply-root.sh       |    8 ++++----
+ 3 files changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index 63fce53..3cd3179 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -14,7 +14,7 @@ SYNOPSIS
+ 	  [--allow-binary-replacement | --binary] [--reject] [-z]
+ 	  [-pNUM] [-CNUM] [--inaccurate-eof] [--cached]
+ 	  [--whitespace=<nowarn|warn|fix|error|error-all>]
+-	  [--exclude=PATH] [--root=<root>] [--verbose] [<patch>...]
++	  [--exclude=PATH] [--directory=<root>] [--verbose] [<patch>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -177,9 +177,13 @@ behavior:
+ 	current patch being applied will be printed. This option will cause
+ 	additional information to be reported.
+ 
+---root=<root>::
++--directory=<root>::
+ 	Prepend <root> to all filenames.  If a "-p" argument was passed, too,
+ 	it is applied before prepending the new root.
+++
++For example, a patch that talks about updating `a/git-gui.sh` to `b/git-gui.sh`
++can be applied to the file in the working tree `modules/git-gui/git-gui.sh` by
++running `git apply --directory=modules/git-gui`.
+ 
+ Configuration
+ -------------
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 6c3db60..c242bbd 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -3130,8 +3130,8 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
+ 			inaccurate_eof = 1;
+ 			continue;
+ 		}
+-		if (!prefixcmp(arg, "--root=")) {
+-			arg += strlen("--root=");
++		if (!prefixcmp(arg, "--directory=")) {
++			arg += strlen("--directory=");
+ 			root_len = strlen(arg);
+ 			if (root_len && arg[root_len - 1] != '/') {
+ 				char *new_root;
+diff --git a/t/t4128-apply-root.sh b/t/t4128-apply-root.sh
+index b650245..2dd0c75 100755
+--- a/t/t4128-apply-root.sh
++++ b/t/t4128-apply-root.sh
+@@ -23,18 +23,18 @@ diff a/bla/blub/dir/file b/bla/blub/dir/file
+ +Bello
+ EOF
+ 
+-test_expect_success 'apply --root -p (1)' '
++test_expect_success 'apply --directory -p (1)' '
+ 
+-	git apply --root=some/sub -p3 --index patch &&
++	git apply --directory=some/sub -p3 --index patch &&
+ 	test Bello = $(git show :some/sub/dir/file) &&
+ 	test Bello = $(cat some/sub/dir/file)
+ 
+ '
+ 
+-test_expect_success 'apply --root -p (2) ' '
++test_expect_success 'apply --directory -p (2) ' '
+ 
+ 	git reset --hard initial &&
+-	git apply --root=some/sub/ -p3 --index patch &&
++	git apply --directory=some/sub/ -p3 --index patch &&
+ 	test Bello = $(git show :some/sub/dir/file) &&
+ 	test Bello = $(cat some/sub/dir/file)
+ 
