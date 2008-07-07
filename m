@@ -1,94 +1,53 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH 0/2] push optimizations
-Date: Mon, 7 Jul 2008 22:12:26 +0100
-Message-ID: <b0943d9e0807071412j71780300p87d00cccea6cd8f4@mail.gmail.com>
-References: <20080702060113.11361.39006.stgit@yoghurt>
+From: Jean-Luc Herren <jlh@gmx.ch>
+Subject: Cloning marks pack for .keep
+Date: Mon, 07 Jul 2008 23:27:46 +0200
+Message-ID: <48728A52.8080107@gmx.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 23:13:40 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 07 23:28:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFy1W-0008Ez-MB
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 23:13:27 +0200
+	id 1KFyGT-0005WY-Jg
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 23:28:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756621AbYGGVM2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jul 2008 17:12:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756586AbYGGVM2
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 17:12:28 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:29022 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756597AbYGGVM1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Jul 2008 17:12:27 -0400
-Received: by py-out-1112.google.com with SMTP id p76so1023099pyb.10
-        for <git@vger.kernel.org>; Mon, 07 Jul 2008 14:12:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=qYTWAV93UCE7C0FAUXZpnBfW67vFfiCfC2XdcMUXXW0=;
-        b=E8NMkWPN2ivWKSsGm77AUCzOivbtWYT6rG4wFYGkExOmvvssAStHhKrsqqGd5hwmTL
-         QFPXoHD6PVh3807m7fzGSZ6u77d77T8+Lkncs36ivFp9+Welr3hywcZYXCOVz9cnOs90
-         KXbDnRJcs1jDLjVBGLN8idEYjgXZKsYsNxA1Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=av15QxIdLvU86+kjv18j1wmHJtI8AM7SCSxS8sja7qyBagW12vlm0w7t0iTmezdsor
-         kKlsh8YJkHNCygKvEe+W9ffDfRcU0Cm35m+SS2SzwDA6DvAUWtO1u00/MPjCxr9RzdM1
-         SdgdPPEocRphKb8mknGMm207RAInkxdVY21M8=
-Received: by 10.114.161.11 with SMTP id j11mr7093902wae.105.1215465146606;
-        Mon, 07 Jul 2008 14:12:26 -0700 (PDT)
-Received: by 10.114.124.9 with HTTP; Mon, 7 Jul 2008 14:12:26 -0700 (PDT)
-In-Reply-To: <20080702060113.11361.39006.stgit@yoghurt>
-Content-Disposition: inline
+	id S1756305AbYGGV1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 17:27:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756799AbYGGV1u
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 17:27:50 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44660 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756277AbYGGV1t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 17:27:49 -0400
+Received: (qmail invoked by alias); 07 Jul 2008 21:27:47 -0000
+Received: from 89-186.1-85.cust.bluewin.ch (EHLO [192.168.123.202]) [85.1.186.89]
+  by mail.gmx.net (mp007) with SMTP; 07 Jul 2008 23:27:47 +0200
+X-Authenticated: #14737133
+X-Provags-ID: V01U2FsdGVkX18bSMJhjugbCN2JVbZYe5CEuscsk81Jei6kt/42tU
+	PO2DKFBFIMMIBX
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+X-Enigmail-Version: 0.95.6
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87658>
 
-2008/7/2 Karl Hasselstr=F6m <kha@treskal.com>:
-> Here's the git-apply call you asked for. You were right: it was a hug=
-e
-> speed-up.
+After cloning a local repository with "git clone file://...", the
+resulting repo had one big pack file, as expected, but also a
+matching ".keep" file.  Certainly this is a bug, isn't it?  The
+same happens if I clone git.git.  I used git 1.5.6.1 but observed
+the same with the current master.  I bisected this behavior to
+commit fa740529 by Shawn O. Pearce (CC'ing him).  Since this dates
+back to 2007, I wonder if maybe only I am seeing this, but I
+cannot think of any reason for it.
 
-I know, I've been through this couple of years ago :-)
+(I already mentioned this on IRC today.)
 
-> I set up a benchmark to test it:
->
->  * 32 directories, each containing 32 subdirectories, each containing
->    32 small (and different) files.
-
-Can you try with a Linux kernel like the -mm tree? You get normally
-sized patches which might show a difference with the patch log. You
-can clone the for-akpm branch on git://linux-arm.org/linux-2.6 and
-just uncommit ~300 patches.
-
->  * I set all this up with a python script feeding fast-import. A huge
->    time-saver!
-
-What is fast-import?
-
->
->  * Pop patches, git-reset to upstream, then goto top patch. This
->    makes sure that we use the new infrastructure to push, and that we
->    get one file-level conflict in each patch.
->
-> Before the first patch, the "goto" command took 4:27 minutes,
-> wall-clock time. After the first patch, it took 1:31. After the
-> second, 0:48; one second or so slower than the stable branch (which
-> does not have a patch stack log).
-
-One second is just noise and depends on how warm the caches are. You
-could run a few times consecutively and discard the first result but
-we don't need to be that accurate.
-
---=20
-Catalin
+jlh
