@@ -1,59 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] better git-submodule status output
-Date: Mon, 7 Jul 2008 17:10:45 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807071710140.18205@racer>
-References: <20080701150119.GE5852@joyeux>  <7vhcb3o7q3.fsf@gitster.siamese.dyndns.org>  <alpine.LSU.1.00.0807061456100.3486@wbgn129.biozentrum.uni-wuerzburg.de>  <20080706160758.GA23385@jhaampe.org>  <alpine.DEB.1.00.0807061821340.7342@eeepc-johanness> 
- <20080707062142.GA5506@jhaampe.org>  <32541b130807070725p6fa4d0dfne9f04bc857920dc7@mail.gmail.com>  <alpine.DEB.1.00.0807071533240.18205@racer>  <32541b130807070757s4ba03e28tf4701f479e27b687@mail.gmail.com>  <alpine.DEB.1.00.0807071621300.18205@racer>
- <32541b130807070836n5c6efadu184114f7ed1476e0@mail.gmail.com>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: git-svn sucks when it should not
+Date: Mon, 7 Jul 2008 12:29:43 -0400
+Message-ID: <32541b130807070929q65e9a0d8g788cdb8c28ef28b9@mail.gmail.com>
+References: <alpine.DEB.1.00.0807070135450.7342@eeepc-johanness>
+	 <20080707094438.GA5964@untitled>
+	 <alpine.DEB.1.00.0807071242180.18205@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sylvain Joyeux <sylvain.joyeux@dfki.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Lars Hjemli <hjemli@gmail.com>, Ping Yin <pkufranky@gmail.com>,
-	Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 18:13:53 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 07 18:30:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFtLQ-0007Ht-O1
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 18:13:41 +0200
+	id 1KFtbv-0006IE-9l
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 18:30:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753365AbYGGQMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 12:12:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753190AbYGGQMl
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 12:12:41 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39214 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753133AbYGGQMl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 12:12:41 -0400
-Received: (qmail invoked by alias); 07 Jul 2008 16:12:39 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp029) with SMTP; 07 Jul 2008 18:12:39 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18+OTs1AiA+wb6+j+C4KuKKNTihw6vNIiv6HQHvcP
-	BXvh3CGLlUfmTe
-X-X-Sender: gene099@racer
-In-Reply-To: <32541b130807070836n5c6efadu184114f7ed1476e0@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.77
+	id S1753483AbYGGQ3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 12:29:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753439AbYGGQ3p
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 12:29:45 -0400
+Received: from el-out-1112.google.com ([209.85.162.181]:36348 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753133AbYGGQ3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 12:29:44 -0400
+Received: by el-out-1112.google.com with SMTP id z25so184106ele.1
+        for <git@vger.kernel.org>; Mon, 07 Jul 2008 09:29:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=BV8GgFOQzRMblr+RRfith8KNaX2p/PUq8wI5pr6ISao=;
+        b=Wn1HiWWLTKB534/47la8k4tzmx7D7GW0iweDeKYsxaoNFZdxZH7V2I2rPvW/+Za5An
+         m06gffLnrxGL2EQXSOZr/+PwrZcuZXKA0b6bmgcal7TZLlGTNLA7FO9RYyjIOCCOHQnR
+         AwLauhfDq7ij7REkC7ggVt5fS8GMWIC4UMAZM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=hdKqtRjN3CMTx40TZQbAfUlOy82zliHpK4SzEAasZNWPeYnmhtO4dTOMYY4VyV5Gag
+         ToQCE5ke4GsbB9YF9pNrF0RFs//+gLcPg/0Gw4+f5qY2M3qD12L2iMAj8rCnCOlX9hkQ
+         SbY3aFeqRCyLA5ga4UDiea4CpN0OC3Jvnb66o=
+Received: by 10.151.100.17 with SMTP id c17mr8452061ybm.200.1215448183988;
+        Mon, 07 Jul 2008 09:29:43 -0700 (PDT)
+Received: by 10.150.98.19 with HTTP; Mon, 7 Jul 2008 09:29:43 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0807071242180.18205@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87631>
 
-Hi,
+On 7/7/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>  # It heavily relies on curl being able to screen-scrape the directories,
+>  # in other words, it wants an HTTP on the other side that has directory
+>  # listings enabled.
 
-On Mon, 7 Jul 2008, Avery Pennarun wrote:
+I wrote a similar script myself, although it makes assumptions about
+the meaning of /branches and /tags rather than using the dirs vs.
+files trick.
 
-> What I suggested was to recursively do "git fetch" in submodules at
-> the time of doing fetch or pull operations on the supermodule, in
-> order to help ensure that all necessary objects have been fetched.
+Rather than relying on screen scraping with curl, you might prefer to
+use "svn ls" instead, since it'll work with any svn-compatible
+repository type and (I presume) doesn't require special web server
+settings.
 
-IMO "git submodule update" is just good enough.
+Have fun,
 
-Ciao,
-Dscho
+Avery
