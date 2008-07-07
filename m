@@ -1,75 +1,67 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Build in merge
-Date: Mon, 7 Jul 2008 19:35:59 +0200
-Message-ID: <20080707173559.GU4729@genesis.frugalware.org>
-References: <7vej67jt1e.fsf@gitster.siamese.dyndns.org> <1215451460-1681-1-git-send-email-vmiklos@frugalware.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-rerere: fix conflict markers parsing
+Date: Mon, 07 Jul 2008 10:39:23 -0700
+Message-ID: <7vy74d4mr8.fsf@gitster.siamese.dyndns.org>
+References: <1215434568-30456-1-git-send-email-dkr+ml.git@free.fr>
+ <alpine.DEB.1.00.0807071400180.18205@racer>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="IWOW6f13lWWiH/hK"
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Olivier Marin <dkr@freesurf.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 19:37:06 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Olivier Marin <dkr+ml.git@free.fr>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 07 19:40:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFue8-00061E-3v
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 19:37:04 +0200
+	id 1KFuhU-0007Ge-MQ
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 19:40:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753930AbYGGRgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 13:36:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753725AbYGGRgF
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 13:36:05 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:37249 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753684AbYGGRgE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 13:36:04 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id ECC231B2535;
-	Mon,  7 Jul 2008 19:36:01 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id EB7CB44698;
-	Mon,  7 Jul 2008 19:03:39 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 8AD99177001C; Mon,  7 Jul 2008 19:35:59 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1215451460-1681-1-git-send-email-vmiklos@frugalware.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1754196AbYGGRjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 13:39:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754178AbYGGRjf
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 13:39:35 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60537 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754074AbYGGRje (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 13:39:34 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0144D2E40C;
+	Mon,  7 Jul 2008 13:39:33 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 4479A2E40A; Mon,  7 Jul 2008 13:39:26 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0807071400180.18205@racer> (Johannes
+ Schindelin's message of "Mon, 7 Jul 2008 14:02:20 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A8D7525C-4C4B-11DD-8936-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87636>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---IWOW6f13lWWiH/hK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> So what about
+>
+> 	<<<<<<< This hunk contains =====
+> 	anythin
+> 	=======
+>
+> 	Hello
+> 	=======
+> 	somethin else
+> 	>>>>>>> problem!
+>
+>
+> If you fix it, I think you should do it properly, and analyze the index.
 
-On Mon, Jul 07, 2008 at 07:24:20PM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> Here is an updated version without using path_list at all.
+I do not know offhand if analyzing the index is the right solution, but
+your point is very valid.  You need to know which ====== is the real one
+to be able to properly flip sides of the conflict.
 
-Sorry forgot the interdiff and the log:
-
-- interdiff: git diff 2ed1884..10d5724
-
-- log: git log c255d12 (1 commit)
-
-$ git grep -c path.list builtin-merge.c
-0
-
---IWOW6f13lWWiH/hK
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkhyU/8ACgkQe81tAgORUJaCGgCdF+gwN57vspuW8NHxgHKWYA1y
-49sAn39v2iqIz1OPtUEx/TWH8Ngl8drk
-=utSJ
------END PGP SIGNATURE-----
-
---IWOW6f13lWWiH/hK--
+I however think detecting that we have this ambiguous hunk is easy, and
+punting gracefully and not re-resolving in such a case is million times
+better than producing random results that the users need to be worried
+about.
