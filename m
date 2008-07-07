@@ -1,108 +1,79 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [q] git-diff --reverse 7def2be1..7def2be1^
-Date: Mon, 7 Jul 2008 08:01:31 +0400
-Message-ID: <20080707040131.GC1721@dpotapov.dyndns.org>
-References: <20080620082034.GA24913@elte.hu> <m3d4mcmq20.fsf@localhost.localdomain> <37fcd2780807060916h7d8c4e6mba7f30570d527dc3@mail.gmail.com> <7vprpqdbjx.fsf@gitster.siamese.dyndns.org> <20080706203951.GB1721@dpotapov.dyndns.org> <7vbq1ad4nn.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [FIXED PATCH] Make rebase save ORIG_HEAD if changing current
+ branch
+Date: Sun, 06 Jul 2008 21:43:58 -0700
+Message-ID: <7v7iby9ucx.fsf@gitster.siamese.dyndns.org>
+References: <1215379370-34265-1-git-send-email-benji@silverinsanity.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, Ingo Molnar <mingo@elte.hu>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 06:02:44 2008
+Cc: Git List <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Mon Jul 07 06:45:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFhvw-00070n-2X
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 06:02:36 +0200
+	id 1KFib3-0005i6-8u
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 06:45:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750726AbYGGEBi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 00:01:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750720AbYGGEBi
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 00:01:38 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:11898 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750705AbYGGEBh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 00:01:37 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so598817nfc.21
-        for <git@vger.kernel.org>; Sun, 06 Jul 2008 21:01:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=32ULG1GR3Rit0pnvMV0otABeP+BqZ94Qg5+503tlRNA=;
-        b=vcMpC6tw7Tb4ZtTJ2LCX5iGxeRlurdwuYEIIE/KS+d6Dzsg7bdCsJcMTK9P9KplqVD
-         nSIMNDYVbTV//JwDR+5GeRFYXzj7TdsrJ/a4pbC0wXYdPIofnTDkFwEELRoFz7v4Q4dQ
-         0aZ9rayoPeXfDVifDuizpYsNqKcrR5ngI6M4A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=bWOMb8JYkH5pRr38Wyi1U069P6k1Xcew9SU+oulTxIaAUk4f5aVEtgbyc6SgC1Mg+N
-         W/8AylTrExwoN+H7KJxeBMjxkBPwXvez1JzoLIaVhRBdBJv5+jxEKdpfpCX04QJXwmfN
-         ZLEZ1nLWQugVDRfS17i3m9qxP/ZclWQBxWLe4=
-Received: by 10.210.102.12 with SMTP id z12mr2723137ebb.52.1215403296195;
-        Sun, 06 Jul 2008 21:01:36 -0700 (PDT)
-Received: from localhost ( [85.141.151.81])
-        by mx.google.com with ESMTPS id z37sm5869603ikz.6.2008.07.06.21.01.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Jul 2008 21:01:35 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vbq1ad4nn.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1750822AbYGGEoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 00:44:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750807AbYGGEoG
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 00:44:06 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33063 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750768AbYGGEoF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 00:44:05 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 34CDD25B66;
+	Mon,  7 Jul 2008 00:44:03 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 95CBE25B65; Mon,  7 Jul 2008 00:44:00 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 52ECFF48-4BDF-11DD-A0C3-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87575>
 
-On Sun, Jul 06, 2008 at 03:33:16PM -0700, Junio C Hamano wrote:
-> Dmitry Potapov <dpotapov@gmail.com> writes:
-> 
-> > git rev-list 7ac749c^@..7ac749c
-> > fatal: ambiguous argument '7ac749c^@..7ac749c': unknown revision or path
-> > not in the working tree.
-> >
-> > yet "^rev^@ rev" syntax does:
-> >
-> > git rev-list ^7ac749c^@ 7ac749c
-> > 7ac749c96d143ba4f76723959892cbaddbe8ed07
-> >
-> > Is it a bug or feature?
-> >
-> > Puzzled...
-> 
-> After reading these paragraphs from "SPECIFYING RANGES":
-> 
->         History traversing commands such as 'git-log' operate on a set
->         of commits, not just a single commit.  To these commands,
->         specifying a single revision with the notation described in the
->         previous section means the set of commits reachable from that
->         commit, following the commit ancestry chain.
-> 
->         To exclude commits reachable from a commit, a prefix `{caret}`
->         notation is used.  E.g. "`{caret}r1 r2`" means commits reachable
->         from `r2` but exclude the ones reachable from `r1`.
-> 
->         This set operation appears so often that there is a shorthand
->         for it.  "`r1..r2`" is equivalent to "`{caret}r1 r2`".  It is
->         the difference of two sets (subtract the set of commits
->         reachable from `r1` from the set of commits reachable from
->         `r2`).
-> 
-> it is obvious to me that the third paragraph talks about r1 that is a
-> single rev (refer to SPECIFYING REVISIONS section, which does _NOT_ talk
-> about rev^@ nor rev^!)  and r2 that similarly is another single rev.  So I
-> think it is fairly clear that your "r^@..r" example is nonsense.
+Brian Gernhardt <benji@silverinsanity.com> writes:
 
-I think both second and third paragraphs talk about r1 as a single
-revision. Yet, it is allowed to use "^r^@ r", and it works fine while
-you cannot use "r^@..r". Of course, this behavior does not contradict
-documentation, as it says _nothing_ about what will happen if you use
-"r^@" instead of r1. That is why asked whether it is a bug or feature.
-It still escapes me though, why you consider "r^@..r" as nonsense while
-"^r^@ r" as correct syntax. Not that I am trying to argue with how it
-should work, but I am just trying to understand your logic here.
+> This makes rebase act a little more like merge when working on the
+> current branch.  This is particularly useful for `git pull --rebase`
+>
+> Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+> ---
+>
+>  ARG!  This is what v3 was supposed to be.  I should make sure I am sending in
+>  the correct patch.
 
-Dmitry
+Yeah, I was scratching my head about the discrepancy between the revision
+comment and the patch in the previous one.
+
+Having said that, thanks to updates to git-rebase, rebased_branch@{1} has
+useful information these days, so I do not see much practical upside, even
+though I _will_ apply this patch, just for the sake of consistency.
+
+We would make it _appear_ rebase and merge are interchangeable even more.
+But the thing is, I am not convinced if promoting that appearance is
+necessarily a good thing.
+
+You now do not have to say something like:
+
+	After a 'git pull' you can view 'git diff ORIG_HEAD..' to check
+	what are new, but 'git pull --rebase' is different and you would
+	say 'git diff branch@{1}.." instead.
+
+and you can tell the users that ORIG_HEAD can be used in both cases.
+
+But you cannot say the same thing with "gitk ORIG_HEAD..", for example.
+The meaning of the topology and commits you would see would be quite
+different.  For rebase you will see your own commits that are carried
+forward, and for merge you won't.  Besides this example, there probably
+are many fundamental differences between rebase and merge, and trying to
+give a false impression that they are interchangeable may not add much
+value to the end user experience, and it could even be harmful from
+educational point of view.
