@@ -1,74 +1,84 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH 2/2] Implement "stg refresh --edit" again
-Date: Mon, 7 Jul 2008 21:56:29 +0100
-Message-ID: <b0943d9e0807071356v2a249e4cx4a9f94e73bffb741@mail.gmail.com>
-References: <20080704063755.9637.23750.stgit@yoghurt>
-	 <20080704064036.9637.52951.stgit@yoghurt>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Jakub Narebski" <jnareb@gmail.com>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 22:57:45 2008
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH] Catch failures from t5540-http-push
+Date: Mon,  7 Jul 2008 23:06:46 +0200
+Message-ID: <1215464806-5412-1-git-send-email-mh@glandium.org>
+References: <7vej6531xa.fsf@gitster.siamese.dyndns.org>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jul 07 23:07:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFxm6-000357-Pq
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 22:57:31 +0200
+	id 1KFxw7-0006Ux-Bu
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 23:07:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756315AbYGGU4c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jul 2008 16:56:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756298AbYGGU4c
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 16:56:32 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:46942 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756256AbYGGU4b convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Jul 2008 16:56:31 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so514480yxm.1
-        for <git@vger.kernel.org>; Mon, 07 Jul 2008 13:56:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=rUkw9+IcX9WTh84m2uCXdDUWAvzdUyc1FmuNJi3A0Pc=;
-        b=KwbUI+6CVuDt5mujivzL0p9oz7WKPzXbTT6ZRZz+Sk8CIsTerE3FMvcXMp46OEewep
-         NV7jCAZm2ZPOwikE7XULx64daEPEde9+eNb4KdhGslHYn/xBnHsyiAsj2ch45T9HGZPo
-         MAzgVl5uD7zVPXPeLNu+nIpp20sVfpjGS81ns=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Vyu5ZH/nMYqumQYCcmXDkg+9asm3mPBOgy9ziK4kK4fL3ertNHgiYvflKMX/WndmY9
-         e9eu5B2DM2lga3p4ffrRNjHou7uqVOxsa3cY2bYveAxIMzm9BoOj9SJPyxIWUhCrIKRG
-         26ADhep+JywuazbcrB5FWSIYgo8oPwKfccYJw=
-Received: by 10.114.198.1 with SMTP id v1mr7096658waf.64.1215464189671;
-        Mon, 07 Jul 2008 13:56:29 -0700 (PDT)
-Received: by 10.114.124.9 with HTTP; Mon, 7 Jul 2008 13:56:29 -0700 (PDT)
-In-Reply-To: <20080704064036.9637.52951.stgit@yoghurt>
-Content-Disposition: inline
+	id S1756507AbYGGVGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 17:06:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756309AbYGGVGx
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 17:06:53 -0400
+Received: from vuizook.err.no ([194.24.252.247]:57118 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756198AbYGGVGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 17:06:53 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1KFxv2-0000Y2-3b; Mon, 07 Jul 2008 23:06:50 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1KFxv4-0001Po-CC; Mon, 07 Jul 2008 23:06:46 +0200
+X-Mailer: git-send-email 1.5.6.GIT
+In-Reply-To: <7vej6531xa.fsf@gitster.siamese.dyndns.org>
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87656>
 
-2008/7/4 Karl Hasselstr=F6m <kha@treskal.com>:
-> The -e/--edit flag to "stg refresh" was dropped between v0.13 and
-> v0.14, causing severe user dissatisfaction. This patch restores it,
-> along with -m/--message, -f/--file, --sign, --ack, --author,
-> --authname, --authemail, and --authdate.
+git http-push doesn't handle packed-refs, and now the new builtin-clone
+created packed refs, the http-push test fails.
 
-Thanks.
+Mark the current failure as such, and also catch third test's failure
+that went unreported because git push doesn't return an error code when
+it says:
+ No refs in common and none specified; doing nothing.
+Which it does when http-push can't get a list of refs recursively from
+$URL/refs/.
 
-> I omitted the --committer options on purpose; I think they are a
-> mistake. Falsifying the committer info is not a common operation, and
-> if one wishes to do it for some reason, one can always set the
-> GIT_COMMITTER_* environment variables.
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
 
-I agree.
+ Feel free to squash this in the previous one, if you feel it's better.
 
---=20
-Catalin
+ t/t5540-http-push.sh |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
+index 147ff98..21dbb55 100755
+--- a/t/t5540-http-push.sh
++++ b/t/t5540-http-push.sh
+@@ -51,16 +51,17 @@ test_expect_success 'clone remote repository' '
+ 	git clone $HTTPD_URL/test_repo.git test_repo_clone
+ '
+ 
+-test_expect_success 'push to remote repository' '
++test_expect_failure 'push to remote repository' '
+ 	cd "$ROOT_PATH"/test_repo_clone &&
+ 	: >path2 &&
+ 	git add path2 &&
+ 	test_tick &&
+ 	git commit -m path2 &&
+-	git push
++	git push &&
++	[ -f "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/refs/heads/master" ]
+ '
+ 
+-test_expect_success 'create and delete remote branch' '
++test_expect_failure 'create and delete remote branch' '
+ 	cd "$ROOT_PATH"/test_repo_clone &&
+ 	git checkout -b dev &&
+ 	: >path3 &&
+-- 
+1.5.6.GIT
