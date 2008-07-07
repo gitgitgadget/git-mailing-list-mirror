@@ -1,98 +1,68 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: stgit error on status command
-Date: Mon, 7 Jul 2008 11:10:32 -0400
-Message-ID: <9e4733910807070810i14c8856vfbec24127e711285@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] better git-submodule status output
+Date: Mon, 7 Jul 2008 16:21:00 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807071620030.18205@racer>
+References: <20080701150119.GE5852@joyeux> <7vhcb3o7q3.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0807061456100.3486@wbgn129.biozentrum.uni-wuerzburg.de> <20080706160758.GA23385@jhaampe.org> <alpine.DEB.1.00.0807061821340.7342@eeepc-johanness>
+ <20080707062142.GA5506@jhaampe.org> <32541b130807070725p6fa4d0dfne9f04bc857920dc7@mail.gmail.com> <alpine.DEB.1.00.0807071533240.18205@racer> <alpine.DEB.1.00.0807071537070.18205@racer> <20080707145726.GI3696@joyeux>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 07 17:11:33 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Lars Hjemli <hjemli@gmail.com>, Ping Yin <pkufranky@gmail.com>,
+	Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
+To: Sylvain Joyeux <sylvain.joyeux@dfki.de>
+X-From: git-owner@vger.kernel.org Mon Jul 07 17:24:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFsNI-0008VB-Kz
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 17:11:33 +0200
+	id 1KFsZI-0004q0-3K
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 17:23:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753426AbYGGPKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 11:10:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753451AbYGGPKe
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 11:10:34 -0400
-Received: from rn-out-0910.google.com ([64.233.170.191]:62754 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752892AbYGGPKd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 11:10:33 -0400
-Received: by rn-out-0910.google.com with SMTP id k40so357703rnd.17
-        for <git@vger.kernel.org>; Mon, 07 Jul 2008 08:10:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=dkjspDhhqpJzoQ6JwxamFt7QgPInU9jrjKIoidJ8K9E=;
-        b=jgWR8CZXNt2bG4oapLM7DRKElXs483R1pdC31fC+dK8L7IuAIfC8Nwb1to1IeAhxSC
-         VTrQRKnwdRgoD9MKF3DoEh9HzX/MOYFuEOTuO9Z8PFyYIJeDV7M2DRmsfpn5k8oWpZxj
-         thBv9Kc0QM7tdLo6bDKcb+AzEYb/Ji33s64KQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=GgpAsTwDd6h8NDeQz+AafCeeOZcRRKBbtbXSO6+xFi2JclqCirma/JvpuXVCTNZYMw
-         /fxeV28u8D8XhFvvZTOscYKYarnV7qghBpJ8WqTi6s66iCPsojibrQKYdkHkNbWpUCvS
-         C27hKJ+Z2kDf/oF382nOBStVcEbkK1NeSC0T4=
-Received: by 10.151.145.17 with SMTP id x17mr8382349ybn.102.1215443432909;
-        Mon, 07 Jul 2008 08:10:32 -0700 (PDT)
-Received: by 10.151.78.17 with HTTP; Mon, 7 Jul 2008 08:10:32 -0700 (PDT)
-Content-Disposition: inline
+	id S1753765AbYGGPW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 11:22:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753784AbYGGPW5
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 11:22:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45953 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753685AbYGGPW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 11:22:57 -0400
+Received: (qmail invoked by alias); 07 Jul 2008 15:22:54 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp062) with SMTP; 07 Jul 2008 17:22:54 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18gT7MghcUgh4Hr7xfQjk0VcC1KTMHAlw1SJHQse8
+	Irpo8/rOxENmFt
+X-X-Sender: gene099@racer
+In-Reply-To: <20080707145726.GI3696@joyeux>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87624>
 
-jonsmirl@terra:~$ stg --version
-Stacked GIT 0.14.3.163.g06f9
-git version 1.5.6.1
-Python version 2.5.2 (r252:60911, Apr 21 2008, 11:17:30)
-[GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)]
-jonsmirl@terra:~$
+Hi,
 
-jonsmirl@terra:~/fs$ stg status
-Error: Unhandled exception:
-Traceback (most recent call last):
-  File "/usr/local/lib/python2.5/site-packages/stgit/main.py", line 278, in main
-    ret = command.func(parser, options, args)
-  File "/usr/local/lib/python2.5/site-packages/stgit/commands/status.py",
-line 119, in func
-    options.diff_flags)
-  File "/usr/local/lib/python2.5/site-packages/stgit/commands/status.py",
-line 75, in status
-    diff_flags = diff_flags)
-  File "/usr/local/lib/python2.5/site-packages/stgit/git.py", line
-255, in tree_status
-    for t, fn in parse_git_ls(GRun('diff-index', '-z', *args).raw_output()):
-  File "/usr/local/lib/python2.5/site-packages/stgit/git.py", line
-201, in parse_git_ls
-    mode_a, mode_b, sha1_a, sha1_b, t = line.split(' ')
-ValueError: need more than 1 value to unpack
-jonsmirl@terra:~/fs$
+On Mon, 7 Jul 2008, Sylvain Joyeux wrote:
 
-jonsmirl@terra:~/fs$ git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       renamed:    arch/powerpc/boot/dts/digispeaker-alpha.dts ->
-arch/powerpc/boot/dts/dspeak01.dts
-#       renamed:    arch/powerpc/platforms/52xx/digispeaker_alpha.c ->
-arch/powerpc/platforms/52xx/dspeak0
-#
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#       modified:   arch/powerpc/platforms/52xx/dspeak01.c
+> > > Thus, I'd say the best fix would be to find a way to have "git pull" or 
+> > > "git fetch" in the supermodule also do a fetch in the submodule.
+> > If I am actively working on the submodule, the supermodule has _no 
+> > business_ trying to wreck my state.
+> 
+> Is it possible to make 'fetch' only .. well .. fetch objects, without 
+> updating any refs ? In that case it would wreck no state as no state 
+> would be updated.
 
+You have no business sneaking a fetch into an operation that does not need 
+one.  Period.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+If that is _still_ not enough to convince you: think about sitting in a 
+plane, high above the clouds.  Yes, we try to support that mode of 
+operation.
+
+Hthf,
+Dscho
