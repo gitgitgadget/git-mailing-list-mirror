@@ -1,128 +1,403 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re* [FIXED PATCH] Make rebase save ORIG_HEAD if changing current
- branch
-Date: Mon, 07 Jul 2008 00:16:38 -0700
-Message-ID: <7vvdzi5fl5.fsf@gitster.siamese.dyndns.org>
-References: <7v7iby9ucx.fsf@gitster.siamese.dyndns.org>
- <1215379370-34265-1-git-send-email-benji@silverinsanity.com>
- <20080707151401.6117@nanako3.lavabit.com>
+From: "Rob Shearman" <robertshearman@gmail.com>
+Subject: [PATCH 2/3] git-imap-send: Add support for SSL.
+Date: Mon, 7 Jul 2008 09:05:29 +0100
+Message-ID: <1096648c0807070105m7ac27987i9ba9730a9d0dd19a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gernhardt <benji@silverinsanity.com>,
-	Git List <git@vger.kernel.org>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 09:17:57 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 07 10:07:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFkym-0006OP-PQ
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 09:17:45 +0200
+	id 1KFlk5-0000s6-3O
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 10:06:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752370AbYGGHQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 03:16:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751897AbYGGHQq
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 03:16:46 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53502 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751486AbYGGHQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 03:16:46 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 006C611119;
-	Mon,  7 Jul 2008 03:16:45 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 01AE911115; Mon,  7 Jul 2008 03:16:40 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A7C68FC4-4BF4-11DD-8862-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752345AbYGGIFh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 04:05:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752075AbYGGIFg
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 04:05:36 -0400
+Received: from wr-out-0506.google.com ([64.233.184.233]:54403 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751272AbYGGIFe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 04:05:34 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so1391030wri.5
+        for <git@vger.kernel.org>; Mon, 07 Jul 2008 01:05:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=QPAOd55iqGKtBL495izA/4ppGQerX/3d43InoqVAwU0=;
+        b=hRVJUBk3pztKqAEYCyf7qOozRSIOIRFBwJ4ajyKCHtYiwKVyOwQRpvhIvNrr4CiYoZ
+         M9bra2qyiHX+xyQ08XqTXnMBkLt9m0/eDYhrJCOiyHqmQps0/FdbB/EW5gIRKN4RsPfj
+         56NOxtNSB9vZHMSPLiJkmcgPrJQTRtVVIOFSE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=W6ULRNpdY/9+Sk+hrice66XG0/Ne0v08WznT1jkoXlCAVCL/sANzOESCph7DB3nFA5
+         fyb4dXe36boD+RqIb0a6dd7clHMhz7ojXgbyUWDZxbYlM+EQ/fROOiJ98z1nEyczhypr
+         eLE2FrqSXtXnPtJa0jE50EU5K2Du+EI8KznuI=
+Received: by 10.90.66.5 with SMTP id o5mr4764213aga.89.1215417929290;
+        Mon, 07 Jul 2008 01:05:29 -0700 (PDT)
+Received: by 10.90.93.17 with HTTP; Mon, 7 Jul 2008 01:05:29 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87591>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+Allow SSL to be used when a imaps:// URL is used for the host name.
 
-> Quoting Junio C Hamano <gitster@pobox.com>:
-> ...
->> Having said that, thanks to updates to git-rebase, rebased_branch@{1} has
->> useful information these days, so I do not see much practical upside, even
->> though I _will_ apply this patch, just for the sake of consistency.
->
-> Are you really aiming for consistency, Junio?
->
-> Doesn't this make the behavior of the command inconsistent between
-> "git-rebase" and "git-rebase -m"?
+Also, automatically use TLS when not using imaps:// by using the IMAP
+STARTTLS command, if the server supports it.
 
-Hmm, it makes "rebase -i" different, too.  Luckily, I haven't pushed
-anything out, so I can rewind and all I lose is just a few dozens of
-minutes.
-
-The one from Brian has another serious issue.  That patch does not allow
-you to refer to ORIG_HEAD during conflict resolution, which is quite
-different from how "merge" lets you use ORIG_HEAD.  We need to set
-ORIG_HEAD upfront if we want to tell user that ORIG_HEAD can be reliably
-used across workflows the same way to name where we were before.
-
-When we correctly update "rebase" to do this, because one codepath of it
-uses "am" as its backend, we cannot use the patch I sent out earlier.  We
-probably need to do something like this (minimally tested).
-
--- >8 --
-Teach "am" and "rebase" to mark the original position with ORIG_HEAD
-
-"merge" and "reset" leave the original point in history in ORIG_HEAD,
-which makes it easy to go back to where you were before you inflict a
-major damage to your history and realize that you do not like the result
-at all.  These days with reflog, we technically do not need to use
-ORIG_HEAD, but it is a handy way nevertheless.
-
-This teaches "am" and "rebase" (all forms --- the vanilla one that uses
-"am" as its backend, "-m" variant that cherry-picks, and "--interactive")
-to do the same.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Tested with Courier and Gimap IMAP servers.
 ---
- git-am.sh                  |    1 +
- git-rebase--interactive.sh |    1 +
- git-rebase.sh              |    2 +-
- 3 files changed, 3 insertions(+), 1 deletions(-)
+ Documentation/git-imap-send.txt |    5 +-
+ Makefile                        |    4 +-
+ imap-send.c                     |  166 +++++++++++++++++++++++++++++++++++----
+ 3 files changed, 157 insertions(+), 18 deletions(-)
 
-diff --git a/git-am.sh b/git-am.sh
-index 2c517ed..fe53608 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -241,6 +241,7 @@ else
- 		: >"$dotest/rebasing"
+diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
+index b3d8da3..e4a5873 100644
+--- a/Documentation/git-imap-send.txt
++++ b/Documentation/git-imap-send.txt
+@@ -37,10 +37,11 @@ configuration file (shown with examples):
+     Tunnel = "ssh -q user@server.com /usr/bin/imapd ./Maildir 2> /dev/null"
+
+ [imap]
+-    Host = imap.server.com
++    Host = imaps://imap.example.com
+     User = bob
+     Pass = pwd
+-    Port = 143
++    Port = 993
++    sslverify = false
+ ..........................
+
+
+diff --git a/Makefile b/Makefile
+index bddd1a7..d9265f7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1193,7 +1193,9 @@ endif
+ git-%$X: %.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
+
+-git-imap-send$X: imap-send.o $(LIB_FILE)
++git-imap-send$X: imap-send.o $(GITLIBS)
++	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
++		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
+
+ http.o http-walker.o http-push.o transport.o: http.h
+
+diff --git a/imap-send.c b/imap-send.c
+index 89a1532..d138726 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -23,6 +23,12 @@
+  */
+
+ #include "cache.h"
++#ifdef NO_OPENSSL
++typedef void *SSL;
++#else
++# include <openssl/ssl.h>
++# include <openssl/err.h>
++#endif
+
+ typedef struct store_conf {
+ 	char *name;
+@@ -129,6 +135,8 @@ typedef struct imap_server_conf {
+ 	int port;
+ 	char *user;
+ 	char *pass;
++	int use_ssl;
++	int ssl_verify;
+ } imap_server_conf_t;
+
+ typedef struct imap_store_conf {
+@@ -148,6 +156,7 @@ typedef struct _list {
+
+ typedef struct {
+ 	int fd;
++	SSL *ssl;
+ } Socket_t;
+
+ typedef struct {
+@@ -201,6 +210,7 @@ enum CAPABILITY {
+ 	UIDPLUS,
+ 	LITERALPLUS,
+ 	NAMESPACE,
++	STARTTLS,
+ };
+
+ static const char *cap_list[] = {
+@@ -208,6 +218,7 @@ static const char *cap_list[] = {
+ 	"UIDPLUS",
+ 	"LITERAL+",
+ 	"NAMESPACE",
++	"STARTTLS",
+ };
+
+ #define RESP_OK    0
+@@ -225,19 +236,101 @@ static const char *Flags[] = {
+ 	"Deleted",
+ };
+
++#ifndef NO_OPENSSL
++static void ssl_socket_perror(const char *func)
++{
++	fprintf(stderr, "%s: %s\n", func, ERR_error_string(ERR_get_error(), 0));
++}
++#endif
++
+ static void
+ socket_perror( const char *func, Socket_t *sock, int ret )
+ {
+-	if (ret < 0)
+-		perror( func );
++#ifndef NO_OPENSSL
++	if (sock->ssl) {
++		int sslerr = SSL_get_error(sock->ssl, ret);
++		switch (sslerr) {
++		case SSL_ERROR_NONE:
++			break;
++		case SSL_ERROR_SYSCALL:
++			perror("SSL_connect");
++			break;
++		default:
++			ssl_socket_perror("SSL_connect");
++			break;
++		}
++	} else
++#endif
++	{
++		if (ret < 0)
++			perror(func);
++		else
++			fprintf(stderr, "%s: unexpected EOF\n", func);
++	}
++}
++
++static int ssl_socket_connect(Socket_t *sock, int use_tls_only, int verify)
++{
++#ifdef NO_OPENSSL
++	fprintf(stderr, "SSL requested but SSL support not compiled in\n");
++	return -1;
++#else
++	SSL_METHOD *meth;
++	SSL_CTX *ctx;
++	int ret;
++
++	SSL_library_init();
++	SSL_load_error_strings();
++
++	if (use_tls_only)
++		meth = TLSv1_method();
  	else
- 		: >"$dotest/applying"
-+		git update-ref ORIG_HEAD HEAD
- 	fi
- fi
- 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index a64d9d5..02d7e3c 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -549,6 +549,7 @@ EOF
- 		has_action "$TODO" ||
- 			die_abort "Nothing to do"
- 
-+		git update-ref ORIG_HEAD $HEAD
- 		output git checkout $ONTO && do_rest
- 		;;
- 	esac
-diff --git a/git-rebase.sh b/git-rebase.sh
-index e2d85ee..2597d77 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -378,7 +378,7 @@ fi
- echo "First, rewinding head to replay your work on top of it..."
- git checkout "$onto^0" >/dev/null 2>&1 ||
- 	die "could not detach HEAD"
--# git reset --hard "$onto^0"
-+git update-ref ORIG_HEAD $branch
- 
- # If the $onto is a proper descendant of the tip of the branch, then
- # we just fast forwarded.
+-		fprintf( stderr, "%s: unexpected EOF\n", func );
++		meth = SSLv23_method();
++
++	if (!meth) {
++		ssl_socket_perror("SSLv23_method");
++		return -1;
++	}
++
++	ctx = SSL_CTX_new(meth);
++
++	if (verify)
++		SSL_CTX_set_verify(ctx, SSL_VERIFY_PEER, NULL);
++
++	if (!SSL_CTX_set_default_verify_paths(ctx)) {
++		ssl_socket_perror("SSL_CTX_set_default_verify_paths");
++		return -1;
++	}
++	sock->ssl = SSL_new(ctx);
++	if (!sock->ssl) {
++		ssl_socket_perror("SSL_new");
++		return -1;
++	}
++	if (!SSL_set_fd(sock->ssl, sock->fd)) {
++		ssl_socket_perror("SSL_set_fd");
++		return -1;
++	}
++
++	ret = SSL_connect(sock->ssl);
++	if (ret <= 0) {
++		socket_perror("SSL_connect", sock, ret);
++		return -1;
++	}
++
++	return 0;
++#endif
+ }
+
+ static int
+ socket_read( Socket_t *sock, char *buf, int len )
+ {
+-	ssize_t n = xread( sock->fd, buf, len );
++	ssize_t n;
++#ifndef NO_OPENSSL
++	if (sock->ssl)
++		n = SSL_read(sock->ssl, buf, len);
++	else
++#endif
++		n = xread( sock->fd, buf, len );
+ 	if (n <= 0) {
+ 		socket_perror( "read", sock, n );
+ 		close( sock->fd );
+@@ -249,7 +342,13 @@ socket_read( Socket_t *sock, char *buf, int len )
+ static int
+ socket_write( Socket_t *sock, const char *buf, int len )
+ {
+-	int n = write_in_full( sock->fd, buf, len );
++	int n;
++#ifndef NO_OPENSSL
++	if (sock->ssl)
++		n = SSL_write(sock->ssl, buf, len);
++	else
++#endif
++		n = write_in_full( sock->fd, buf, len );
+ 	if (n != len) {
+ 		socket_perror( "write", sock, n );
+ 		close( sock->fd );
+@@ -258,6 +357,17 @@ socket_write( Socket_t *sock, const char *buf, int len )
+ 	return n;
+ }
+
++static void socket_shutdown(Socket_t *sock)
++{
++#ifndef NO_OPENSSL
++	if (sock->ssl) {
++		SSL_shutdown(sock->ssl);
++		SSL_free(sock->ssl);
++	}
++#endif
++	close(sock->fd);
++}
++
+ /* simple line buffering */
+ static int
+ buffer_gets( buffer_t * b, char **s )
+@@ -875,7 +985,7 @@ imap_close_server( imap_store_t *ictx )
+
+ 	if (imap->buf.sock.fd != -1) {
+ 		imap_exec( ictx, NULL, "LOGOUT" );
+-		close( imap->buf.sock.fd );
++		socket_shutdown( &imap->buf.sock );
+ 	}
+ 	free_list( imap->ns_personal );
+ 	free_list( imap->ns_other );
+@@ -906,6 +1016,7 @@ imap_open_store( imap_server_conf_t *srvc )
+
+ 	ctx->imap = imap = xcalloc( sizeof(*imap), 1 );
+ 	imap->buf.sock.fd = -1;
++	imap->buf.sock.ssl = NULL;
+ 	imap->in_progress_append = &imap->in_progress;
+
+ 	/* open connection to IMAP server */
+@@ -958,10 +1069,15 @@ imap_open_store( imap_server_conf_t *srvc )
+ 			perror( "connect" );
+ 			goto bail;
+ 		}
+-		imap_info( "ok\n" );
+-
++		
+ 		imap->buf.sock.fd = s;
+
++		if (srvc->use_ssl &&
++		    ssl_socket_connect(&imap->buf.sock, 0, srvc->ssl_verify)) {
++			close(s);
++			goto bail;
++		}
++		imap_info( "ok\n" );
+ 	}
+
+ 	/* read the greeting string */
+@@ -986,7 +1102,18 @@ imap_open_store( imap_server_conf_t *srvc )
+ 		goto bail;
+
+ 	if (!preauth) {
+-
++#ifndef NO_OPENSSL
++		if (!srvc->use_ssl && CAP(STARTTLS)) {
++			if (imap_exec(ctx, 0, "STARTTLS") != RESP_OK)
++				goto bail;
++			if (ssl_socket_connect(&imap->buf.sock, 1,
++					       srvc->ssl_verify))
++				goto bail;
++			/* capabilities may have changed, so get the new capabilities */
++			if (imap_exec(ctx, 0, "CAPABILITY") != RESP_OK)
++				goto bail;
++		}
++#endif
+ 		imap_info ("Logging in...\n");
+ 		if (!srvc->user) {
+ 			fprintf( stderr, "Skipping server %s, no user\n", srvc->host );
+@@ -1014,7 +1141,9 @@ imap_open_store( imap_server_conf_t *srvc )
+ 			fprintf( stderr, "Skipping account %s@%s, server forbids LOGIN\n",
+srvc->user, srvc->host );
+ 			goto bail;
+ 		}
+-		imap_warn( "*** IMAP Warning *** Password is being sent in the clear\n" );
++		if (!imap->buf.sock.ssl)
++			imap_warn( "*** IMAP Warning *** Password is being "
++				   "sent in the clear\n" );
+ 		if (imap_exec( ctx, NULL, "LOGIN \"%s\" \"%s\"", srvc->user,
+srvc->pass ) != RESP_OK) {
+ 			fprintf( stderr, "IMAP error: LOGIN failed\n" );
+ 			goto bail;
+@@ -1242,6 +1371,8 @@ static imap_server_conf_t server =
+ 	0,	/* port */
+ 	NULL,	/* user */
+ 	NULL,	/* pass */
++	0,   	/* use_ssl */
++	1,   	/* ssl_verify */
+ };
+
+ static char *imap_folder;
+@@ -1262,11 +1393,11 @@ git_imap_config(const char *key, const char
+*val, void *cb)
+ 	if (!strcmp( "folder", key )) {
+ 		imap_folder = xstrdup( val );
+ 	} else if (!strcmp( "host", key )) {
+-		{
+-			if (!prefixcmp(val, "imap:"))
+-				val += 5;
+-			if (!server.port)
+-				server.port = 143;
++		if (!prefixcmp(val, "imap:"))
++			val += 5;
++		else if (!prefixcmp(val, "imaps:")) {
++			val += 6;
++			server.use_ssl = 1;
+ 		}
+ 		if (!prefixcmp(val, "//"))
+ 			val += 2;
+@@ -1280,6 +1411,8 @@ git_imap_config(const char *key, const char
+*val, void *cb)
+ 		server.port = git_config_int( key, val );
+ 	else if (!strcmp( "tunnel", key ))
+ 		server.tunnel = xstrdup( val );
++	else if (!strcmp( "ssl_verify", key ))
++		server.ssl_verify = git_config_bool( key, val );
+ 	return 0;
+ }
+
+@@ -1299,6 +1432,9 @@ main(int argc, char **argv)
+ 	setup_git_directory_gently( NULL );
+ 	git_config(git_imap_config, NULL);
+
++	if (!server.port)
++		server.port = server.use_ssl ? 993 : 143;
++
+ 	if (!imap_folder) {
+ 		fprintf( stderr, "no imap store specified\n" );
+ 		return 1;
+-- 
+1.5.6.GIT
