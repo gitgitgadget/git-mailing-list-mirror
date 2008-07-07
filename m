@@ -1,68 +1,59 @@
 From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH] Skip t5540-http-push test when USE_CURL_MULTI is undefined
-Date: Mon,  7 Jul 2008 21:02:50 +0200
-Message-ID: <1215457370-24325-1-git-send-email-mh@glandium.org>
+Subject: Re: [PATCH] Fix http-push test
+Date: Mon, 7 Jul 2008 21:08:47 +0200
+Organization: glandium.org
+Message-ID: <20080707190847.GA24489@glandium.org>
+References: <1215457357-24279-1-git-send-email-mh@glandium.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jul 07 21:04:09 2008
+X-From: git-owner@vger.kernel.org Mon Jul 07 21:09:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFw0D-0007Ux-PN
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 21:03:58 +0200
+	id 1KFw5v-0001Jc-5T
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 21:09:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755525AbYGGTC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 15:02:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755520AbYGGTC4
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 15:02:56 -0400
-Received: from vuizook.err.no ([194.24.252.247]:48309 "EHLO vuizook.err.no"
+	id S1754884AbYGGTIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 15:08:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754883AbYGGTIx
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 15:08:53 -0400
+Received: from vuizook.err.no ([194.24.252.247]:59479 "EHLO vuizook.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755519AbYGGTC4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 15:02:56 -0400
+	id S1754798AbYGGTIw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 15:08:52 -0400
 Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
 	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.67)
 	(envelope-from <mh@glandium.org>)
-	id 1KFvz6-0004w2-Ey; Mon, 07 Jul 2008 21:02:55 +0200
+	id 1KFw4r-00054q-Fu; Mon, 07 Jul 2008 21:08:51 +0200
 Received: from mh by jigen with local (Exim 4.69)
 	(envelope-from <mh@jigen>)
-	id 1KFvz8-0006Kl-Sc; Mon, 07 Jul 2008 21:02:50 +0200
-X-Mailer: git-send-email 1.5.6.GIT
+	id 1KFw4t-0006XM-Td; Mon, 07 Jul 2008 21:08:47 +0200
+Content-Disposition: inline
+In-Reply-To: <1215457357-24279-1-git-send-email-mh@glandium.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
 X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87644>
 
-When USE_CURL_MULTI is undefined, git http-push doesn't work, so it's
-useless to test it.
----
+On Mon, Jul 07, 2008 at 09:02:37PM +0200, Mike Hommey wrote:
+> http-push test has been broken by 4a7aaccd adding a space character
+> in the place where the test is being run.
+> ---
+> 
+>  Note that the 4th test doesn't pass because of the new git clone, that
+>  creates the clone with packed-refs instead of refs/heads/master that
+>  push is requiring. But this also means push was already broken with
+>  repositories with packed-refs.
 
- I wasted too much time wondering why the 3rd and 4th tests were failing
- before realizing I was building against an ancient libcurl, thus having
- a non working git http-push. This would avoid other people to do the same.
+Actually, the 3rd is failing too, but fails to report an error because
+git push returns no error code in cases where it says:
+  No refs in common and none specified; doing nothing.
 
- t/t5540-http-push.sh |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
-
-diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
-index 6cd8b45..147ff98 100755
---- a/t/t5540-http-push.sh
-+++ b/t/t5540-http-push.sh
-@@ -12,6 +12,13 @@ This test runs various sanity checks on http-push.'
- ROOT_PATH="$PWD"
- LIB_HTTPD_DAV=t
- 
-+if git http-push > /dev/null 2>&1 || [ $? -eq 128 ]
-+then
-+	say "skipping test, USE_CURL_MULTI is not defined"
-+	test_done
-+	exit
-+fi
-+
- . ../lib-httpd.sh
- 
- if ! start_httpd >&3 2>&4
--- 
-1.5.6.2.220.g44701
+Mike
