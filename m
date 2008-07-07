@@ -1,75 +1,83 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] better git-submodule status output
-Date: Mon, 7 Jul 2008 16:23:02 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807071621300.18205@racer>
-References: <20080701150119.GE5852@joyeux>  <7vhcb3o7q3.fsf@gitster.siamese.dyndns.org>  <alpine.LSU.1.00.0807061456100.3486@wbgn129.biozentrum.uni-wuerzburg.de>  <20080706160758.GA23385@jhaampe.org>  <alpine.DEB.1.00.0807061821340.7342@eeepc-johanness> 
- <20080707062142.GA5506@jhaampe.org>  <32541b130807070725p6fa4d0dfne9f04bc857920dc7@mail.gmail.com>  <alpine.DEB.1.00.0807071533240.18205@racer> <32541b130807070757s4ba03e28tf4701f479e27b687@mail.gmail.com>
+Subject: Re: [PATCH] builtin-rerere: fix conflict markers parsing
+Date: Mon, 7 Jul 2008 16:29:35 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807071627020.18205@racer>
+References: <1215434568-30456-1-git-send-email-dkr+ml.git@free.fr> <alpine.DEB.1.00.0807071400180.18205@racer> <48722038.1010203@free.fr> <alpine.DEB.1.00.0807071505470.18205@racer> <48722BD9.4090406@free.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sylvain Joyeux <sylvain.joyeux@dfki.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Lars Hjemli <hjemli@gmail.com>, Ping Yin <pkufranky@gmail.com>,
-	Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 17:26:15 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-612054422-1215444576=:18205"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Olivier Marin <dkr+ml.git@free.fr>
+X-From: git-owner@vger.kernel.org Mon Jul 07 17:32:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFsbE-0005im-7y
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 17:25:56 +0200
+	id 1KFshZ-0008MF-8V
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 17:32:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753620AbYGGPY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 11:24:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753595AbYGGPY6
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 11:24:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56390 "HELO mail.gmx.net"
+	id S1753304AbYGGPbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 11:31:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752184AbYGGPbb
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 11:31:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50678 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753290AbYGGPY5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 11:24:57 -0400
-Received: (qmail invoked by alias); 07 Jul 2008 15:24:56 -0000
+	id S1751789AbYGGPba (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 11:31:30 -0400
+Received: (qmail invoked by alias); 07 Jul 2008 15:31:29 -0000
 Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp035) with SMTP; 07 Jul 2008 17:24:56 +0200
+  by mail.gmx.net (mp058) with SMTP; 07 Jul 2008 17:31:29 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18MR8kox7MMw5VD1PiXpj093KtkpnXCzIIPjIB+UK
-	YZFdovFzCPEjPA
+X-Provags-ID: V01U2FsdGVkX18TwLc/pGUTBN5Lymna+3jOUN8+AZ9DpaG8efBuqC
+	+1itLw6KwPIkzV
 X-X-Sender: gene099@racer
-In-Reply-To: <32541b130807070757s4ba03e28tf4701f479e27b687@mail.gmail.com>
+In-Reply-To: <48722BD9.4090406@free.fr>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87626>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-612054422-1215444576=:18205
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Mon, 7 Jul 2008, Avery Pennarun wrote:
+On Mon, 7 Jul 2008, Olivier Marin wrote:
 
-> On 7/7/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> >  On Mon, 7 Jul 2008, Avery Pennarun wrote:
-> > > Thus, I'd say the best fix would be to find a way to have "git pull" or
-> > > "git fetch" in the supermodule also do a fetch in the submodule.
-> >
-> > Noooooo!
-> >
-> >  If I am actively working on the submodule, the supermodule has _no
-> >  business_ trying to wreck my state.
+> Johannes Schindelin a écrit :
+> > 
+> > Okay, but then the obvious question is: what do you do about "<<<<<<" 
+> > lines that are not a marker?
 > 
-> Hmm... how does doing a fetch wreck your state?
+> The answer is the same.
 
-It updates the tracking branches.  And guess what I use the tracking 
-branches for?  Yes, to track other people's changes.
+I think not.  You say you want to do something about the ambiguity, but 
+fact is: the conflict markers are ambiguous.  They always have been, will 
+ever be, and I do not even have to argue for it.  Or do I?
 
-It would wreck my state.
+> > Same remark as before: if you fix rerere, why not do it properly?
+> 
+> If you have a better fix send a patch or at least give me some clues.
 
-Anyway, fetch is wrong, wrong, wrong, if all you want to do is see the 
-_state_ of your submodule.
+Did I not say that the index has enough information?  Or at least hint at 
+it?
 
-If that state is that the superproject has a commit that the submodule 
-knows nothing about, then that is _exactly_ what needs to be reported.
+Of course, we could run with your solution.  But that only fixes a corner 
+case, right?
 
-Don't play cute games,
+So a proper fix will be needed eventually anyway.
+
+And no, I will not work on it: this is not my itch, and my time is being 
+stolen too much already, these days.
+
+Ciao,
 Dscho
+
+--8323329-612054422-1215444576=:18205--
