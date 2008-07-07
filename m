@@ -1,84 +1,94 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH] Catch failures from t5540-http-push
-Date: Mon,  7 Jul 2008 23:06:46 +0200
-Message-ID: <1215464806-5412-1-git-send-email-mh@glandium.org>
-References: <7vej6531xa.fsf@gitster.siamese.dyndns.org>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jul 07 23:07:53 2008
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH 0/2] push optimizations
+Date: Mon, 7 Jul 2008 22:12:26 +0100
+Message-ID: <b0943d9e0807071412j71780300p87d00cccea6cd8f4@mail.gmail.com>
+References: <20080702060113.11361.39006.stgit@yoghurt>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Jul 07 23:13:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KFxw7-0006Ux-Bu
-	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 23:07:51 +0200
+	id 1KFy1W-0008Ez-MB
+	for gcvg-git-2@gmane.org; Mon, 07 Jul 2008 23:13:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756507AbYGGVGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 17:06:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756309AbYGGVGx
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 17:06:53 -0400
-Received: from vuizook.err.no ([194.24.252.247]:57118 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756198AbYGGVGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 17:06:53 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1KFxv2-0000Y2-3b; Mon, 07 Jul 2008 23:06:50 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1KFxv4-0001Po-CC; Mon, 07 Jul 2008 23:06:46 +0200
-X-Mailer: git-send-email 1.5.6.GIT
-In-Reply-To: <7vej6531xa.fsf@gitster.siamese.dyndns.org>
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1756621AbYGGVM2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jul 2008 17:12:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756586AbYGGVM2
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 17:12:28 -0400
+Received: from py-out-1112.google.com ([64.233.166.179]:29022 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756597AbYGGVM1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Jul 2008 17:12:27 -0400
+Received: by py-out-1112.google.com with SMTP id p76so1023099pyb.10
+        for <git@vger.kernel.org>; Mon, 07 Jul 2008 14:12:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=qYTWAV93UCE7C0FAUXZpnBfW67vFfiCfC2XdcMUXXW0=;
+        b=E8NMkWPN2ivWKSsGm77AUCzOivbtWYT6rG4wFYGkExOmvvssAStHhKrsqqGd5hwmTL
+         QFPXoHD6PVh3807m7fzGSZ6u77d77T8+Lkncs36ivFp9+Welr3hywcZYXCOVz9cnOs90
+         KXbDnRJcs1jDLjVBGLN8idEYjgXZKsYsNxA1Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=av15QxIdLvU86+kjv18j1wmHJtI8AM7SCSxS8sja7qyBagW12vlm0w7t0iTmezdsor
+         kKlsh8YJkHNCygKvEe+W9ffDfRcU0Cm35m+SS2SzwDA6DvAUWtO1u00/MPjCxr9RzdM1
+         SdgdPPEocRphKb8mknGMm207RAInkxdVY21M8=
+Received: by 10.114.161.11 with SMTP id j11mr7093902wae.105.1215465146606;
+        Mon, 07 Jul 2008 14:12:26 -0700 (PDT)
+Received: by 10.114.124.9 with HTTP; Mon, 7 Jul 2008 14:12:26 -0700 (PDT)
+In-Reply-To: <20080702060113.11361.39006.stgit@yoghurt>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87657>
 
-git http-push doesn't handle packed-refs, and now the new builtin-clone
-created packed refs, the http-push test fails.
+2008/7/2 Karl Hasselstr=F6m <kha@treskal.com>:
+> Here's the git-apply call you asked for. You were right: it was a hug=
+e
+> speed-up.
 
-Mark the current failure as such, and also catch third test's failure
-that went unreported because git push doesn't return an error code when
-it says:
- No refs in common and none specified; doing nothing.
-Which it does when http-push can't get a list of refs recursively from
-$URL/refs/.
+I know, I've been through this couple of years ago :-)
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
+> I set up a benchmark to test it:
+>
+>  * 32 directories, each containing 32 subdirectories, each containing
+>    32 small (and different) files.
 
- Feel free to squash this in the previous one, if you feel it's better.
+Can you try with a Linux kernel like the -mm tree? You get normally
+sized patches which might show a difference with the patch log. You
+can clone the for-akpm branch on git://linux-arm.org/linux-2.6 and
+just uncommit ~300 patches.
 
- t/t5540-http-push.sh |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+>  * I set all this up with a python script feeding fast-import. A huge
+>    time-saver!
 
-diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
-index 147ff98..21dbb55 100755
---- a/t/t5540-http-push.sh
-+++ b/t/t5540-http-push.sh
-@@ -51,16 +51,17 @@ test_expect_success 'clone remote repository' '
- 	git clone $HTTPD_URL/test_repo.git test_repo_clone
- '
- 
--test_expect_success 'push to remote repository' '
-+test_expect_failure 'push to remote repository' '
- 	cd "$ROOT_PATH"/test_repo_clone &&
- 	: >path2 &&
- 	git add path2 &&
- 	test_tick &&
- 	git commit -m path2 &&
--	git push
-+	git push &&
-+	[ -f "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/refs/heads/master" ]
- '
- 
--test_expect_success 'create and delete remote branch' '
-+test_expect_failure 'create and delete remote branch' '
- 	cd "$ROOT_PATH"/test_repo_clone &&
- 	git checkout -b dev &&
- 	: >path3 &&
--- 
-1.5.6.GIT
+What is fast-import?
+
+>
+>  * Pop patches, git-reset to upstream, then goto top patch. This
+>    makes sure that we use the new infrastructure to push, and that we
+>    get one file-level conflict in each patch.
+>
+> Before the first patch, the "goto" command took 4:27 minutes,
+> wall-clock time. After the first patch, it took 1:31. After the
+> second, 0:48; one second or so slower than the stable branch (which
+> does not have a patch stack log).
+
+One second is just noise and depends on how warm the caches are. You
+could run a few times consecutively and discard the first result but
+we don't need to be that accurate.
+
+--=20
+Catalin
