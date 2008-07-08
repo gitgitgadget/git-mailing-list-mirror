@@ -1,82 +1,99 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: git push to amazon s3 [was: [GSoC] What is status of Git's
-	Google Summer of Code 2008 projects?]
-Date: Tue, 8 Jul 2008 07:56:10 +0200
-Organization: glandium.org
-Message-ID: <20080708055610.GA12591@glandium.org>
-References: <905315640807072248w44ccdc4y2f1cf54a10c50c43@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fix "git-submodule add a/b/c/repository"
+Date: Mon, 07 Jul 2008 23:02:11 -0700
+Message-ID: <7vhcb0x6ak.fsf@gitster.siamese.dyndns.org>
+References: <20080701150025.GD5852@joyeux>
+ <7vd4lro7ct.fsf@gitster.siamese.dyndns.org>
+ <20080706161101.GB23385@jhaampe.org> <48711782.6090609@gmail.com>
+ <20080707063424.GB5506@jhaampe.org> <4872CF86.5050702@gmail.com>
+ <7v7ibxxfje.fsf@gitster.siamese.dyndns.org> <4872DE54.5010804@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Nick Hengeveld <nickh@reactrix.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Tarmigan <tarmigan+git@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 07:57:18 2008
+Cc: Sylvain Joyeux <sylvain.joyeux@dfki.de>,
+	Lars Hjemli <hjemli@gmail.com>, Ping Yin <pkufranky@gmail.com>,
+	git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 08:03:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG6CU-0008Ag-4s
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 07:57:18 +0200
+	id 1KG6Ii-0001CO-6u
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 08:03:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751312AbYGHF4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 01:56:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751276AbYGHF4U
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 01:56:20 -0400
-Received: from vuizook.err.no ([194.24.252.247]:54626 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751236AbYGHF4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 01:56:20 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1KG6BM-0001jx-KK; Tue, 08 Jul 2008 07:56:14 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1KG6BO-0003KS-M6; Tue, 08 Jul 2008 07:56:10 +0200
-Content-Disposition: inline
-In-Reply-To: <905315640807072248w44ccdc4y2f1cf54a10c50c43@mail.gmail.com>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1751227AbYGHGC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 02:02:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbYGHGC3
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 02:02:29 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35904 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750914AbYGHGC2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 02:02:28 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9EEAB28B6C;
+	Tue,  8 Jul 2008 02:02:26 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 8C7EB28B6B; Tue,  8 Jul 2008 02:02:18 -0400 (EDT)
+In-Reply-To: <4872DE54.5010804@gmail.com> (Mark Levedahl's message of "Mon,
+ 07 Jul 2008 23:26:12 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 70CDFC7C-4CB3-11DD-B222-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87721>
 
-On Mon, Jul 07, 2008 at 10:48:59PM -0700, Tarmigan wrote:
-> (trimmed cc list to folks who've touched http-push.c)
-> 
-> On Mon, Jul 7, 2008 at 9:19 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > Using Marek's pack generation code I added support for push over
-> > the dumb sftp:// and amazon-s3:// protocols, with the latter also
-> > supporting transparent client side encryption.
-> >
-> > I chose to add these features to jgit partly as an exercise to prove
-> > that Marek's code was built well enough to be reused for this task,
-> > partly because I wanted to backup some private personal repositories
-> > to Amazon S3, and partly to prove that multiple dumb transports
-> > could implement push support.
-> 
-> That sounds cool.  I've been looking into adding s3 push into cgit,
-> and was looking into modifying http-push.c, but got in over my head.
-> I had trouble trying to make it fit into the DAV model that http-push
-> is built around, in part because s3 doesn't seem to support any
-> locking and a lot of the http-push code seems to be around the
-> locking.
-> 
-> Can you describe the s3 support that you added?  Did you do any
-> locking when you pushed?  The objects and packs seem likely to be
-> naturally OK, but I was worried about refs/ and especially
-> objects/info/packs and info/refs (fetch over http works currently out
-> of the box with publicly accessable s3 repos).
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-FWIW, I'm starting to work again on the http backend overhaul. My idea
-is to provide a generic dumb protocol vfs-like interface, so that other
-dumb protocols could be built out of it.
+> Junio C Hamano wrote:
+>> I'd like to hear clarifications on two counts, please?
+>>  (1) If Sylvain wanted to have that appear at dir0/dir1/init not init,
+>>      would it have been sufficient to give that path twice (once for
+>>      <repository> and another for <path> parameter) to make things work as
+>>      expected?
+>>
+> git-submodule really requires two arguments:
+>
+>    $ git submodule add <URL> <relative-path-to-module-in-tree>
+>
+> and supports two modes:
+>
+> 1) relative-path exists and is a valid repo: just add the module, it
+> was created in tree, the user is expected to eventually push this to
+> the given URL so other users will get this as normal. This exists to
+> simplify the process of creating a repo to begin with.
+>
+> 2) relative-path doesn't exist: clone from the URL. This is the normal use.
+> submodule supports adding a module in one of two ways:
+>
+> So,
+>
+>    $ git submodule add   dir0/dir1/init   dir0/dir1/init
+>
+> will add the repo, but also makes the repo its own origin. I don't
+> think this makes sense.
+>>  (2) Is it generally considered a sane use case to specify an existing
+>>      repository inside the working tree of a superproject as a submodule
+>>      using "git submodule add" like Sylvain's example did?
+>>
+>>      I would have understood if the command were "git add dir0/dir1/init",
+>>      but I have this vague recolleciton that "git submodule add" is about
+>>      telling our repository about a submodule that comes from _outside_.
+>>
+>>
+>>
+> Adding an existing in-tree repo, ala
+>
+> $ git submodule add <intended-URL> <path>
+>
+> is there to ease the initial creation of a submodule. It can be
+> created and registered in-tree, and later pushed to the server. This
+> is sane, but is not the normal usage (makes sense only on creation).
 
-Mike
+Thanks.
+
+The above is quite a bit more information than I can read from
+Documentation/git-submodule.txt; care to send it in in a patch form?
