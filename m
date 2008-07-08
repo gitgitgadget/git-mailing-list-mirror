@@ -1,57 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [FIXED PATCH] Make rebase save ORIG_HEAD if changing current
-	branch
-Date: Tue, 8 Jul 2008 00:26:07 -0400
-Message-ID: <20080708042607.GC7186@sigill.intra.peff.net>
-References: <1215379370-34265-1-git-send-email-benji@silverinsanity.com> <7v7iby9ucx.fsf@gitster.siamese.dyndns.org> <803A3528-2451-4C5D-A48D-5E0C37B8E90E@silverinsanity.com> <7vbq1a8ay3.fsf@gitster.siamese.dyndns.org> <20080707111803.GF31490@mit.edu> <m34p71gbuk.fsf@localhost.localdomain> <F0AD23BC-FA9A-4593-8942-228C428B661E@silverinsanity.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH 0/2] push optimizations
+Date: Tue, 8 Jul 2008 06:36:22 +0200
+Message-ID: <20080708043622.GC2247@diana.vm.bytemark.co.uk>
+References: <20080702060113.11361.39006.stgit@yoghurt> <b0943d9e0807071412j71780300p87d00cccea6cd8f4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 06:27:25 2008
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 06:38:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG4nO-0002cU-TE
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 06:27:19 +0200
+	id 1KG4yb-0005Np-8j
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 06:38:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751135AbYGHE0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 00:26:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbYGHE0S
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 00:26:18 -0400
-Received: from peff.net ([208.65.91.99]:4239 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751103AbYGHE0S (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 00:26:18 -0400
-Received: (qmail 28094 invoked by uid 111); 8 Jul 2008 04:26:16 -0000
-Received: from c-75-75-1-159.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (75.75.1.159)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 08 Jul 2008 00:26:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Jul 2008 00:26:07 -0400
+	id S1751157AbYGHEg3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jul 2008 00:36:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751076AbYGHEg3
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 00:36:29 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3053 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750796AbYGHEg3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 00:36:29 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KG4wA-0000gk-00; Tue, 08 Jul 2008 05:36:22 +0100
 Content-Disposition: inline
-In-Reply-To: <F0AD23BC-FA9A-4593-8942-228C428B661E@silverinsanity.com>
+In-Reply-To: <b0943d9e0807071412j71780300p87d00cccea6cd8f4@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87707>
 
-On Mon, Jul 07, 2008 at 11:03:46AM -0400, Brian Gernhardt wrote:
+On 2008-07-07 22:12:26 +0100, Catalin Marinas wrote:
 
-> I personally expected @{1} to be identical to HEAD@{1}.  Since omitting a 
-> ref usually refers to HEAD, why shouldn't omitting it when referring to 
-> the reflogs mean the HEAD log?  The definition of @{1} is useful since 
-> there's no other easy way to get "current branch's reflog", but I think 
-> it's non-obvious.  (Since HEAD@{1} is something completely different, I 
-> think the only other way to refer to @{1} is $(git symbolic-ref)@{1}.)
+> 2008/7/2 Karl Hasselstr=F6m <kha@treskal.com>:
+>
+> > Here's the git-apply call you asked for. You were right: it was a
+> > huge speed-up.
+>
+> I know, I've been through this couple of years ago :-)
 
-FYI, there was much discussion about this exact point:
+:-P
 
-  http://thread.gmane.org/gmane.comp.version-control.git/38379
+> > I set up a benchmark to test it:
+> >
+> >  * 32 directories, each containing 32 subdirectories, each
+> >    containing 32 small (and different) files.
+>
+> Can you try with a Linux kernel like the -mm tree? You get normally
+> sized patches which might show a difference with the patch log. You
+> can clone the for-akpm branch on git://linux-arm.org/linux-2.6 and
+> just uncommit ~300 patches.
 
-(I don't know that it has that much bearing on the current discussion,
-but since I went to the trouble of digging it up, I thought you might
-find it useful).
+Sure, I'll do that. (But one of the reasons I chose a fully synthetic
+benchmark is that I wanted to start a performance suite similar to our
+test suite, and we want such a thing to be repeatable but not too
+large. (That said, operating on points of the kernel history that are
+fixed should do the trick as well. I'll try to find such points -- a
+long string of -mm patches somewhere in the history maybe?))
 
--Peff
+> >  * I set all this up with a python script feeding fast-import. A
+> >    huge time-saver!
+>
+> What is fast-import?
+
+man git-fast-import
+
+I'll try to clean up and publish the script I used.
+
+> >  * Pop patches, git-reset to upstream, then goto top patch. This
+> >    makes sure that we use the new infrastructure to push, and that
+> >    we get one file-level conflict in each patch.
+> >
+> > Before the first patch, the "goto" command took 4:27 minutes,
+> > wall-clock time. After the first patch, it took 1:31. After the
+> > second, 0:48; one second or so slower than the stable branch
+> > (which does not have a patch stack log).
+>
+> One second is just noise and depends on how warm the caches are. You
+> could run a few times consecutively and discard the first result but
+> we don't need to be that accurate.
+
+I did run a few times, and it did indeed fluctuate some -- but I'm
+pretty sure there was a measurable slowdown. Though I agree that it's
+close enough that it doesn't really make a difference.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
