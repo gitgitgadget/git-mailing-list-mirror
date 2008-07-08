@@ -1,73 +1,82 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH] install-doc-quick - use git --exec-path to find git-sh-setup
-Date: Mon,  7 Jul 2008 22:37:38 -0400
-Message-ID: <1215484658-3312-1-git-send-email-mlevedahl@gmail.com>
-Cc: Mark Levedahl <mlevedahl@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 08 04:38:42 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fix "git-submodule add a/b/c/repository"
+Date: Mon, 07 Jul 2008 19:42:29 -0700
+Message-ID: <7v7ibxxfje.fsf@gitster.siamese.dyndns.org>
+References: <20080701150025.GD5852@joyeux>
+ <7vd4lro7ct.fsf@gitster.siamese.dyndns.org>
+ <20080706161101.GB23385@jhaampe.org> <48711782.6090609@gmail.com>
+ <20080707063424.GB5506@jhaampe.org> <4872CF86.5050702@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Sylvain Joyeux <sylvain.joyeux@dfki.de>,
+	Lars Hjemli <hjemli@gmail.com>, Ping Yin <pkufranky@gmail.com>,
+	git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 04:44:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG36G-0003JO-PI
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 04:38:41 +0200
+	id 1KG3Bs-0004H6-Bp
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 04:44:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755687AbYGHChm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 22:37:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755481AbYGHChm
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 22:37:42 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:22542 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755390AbYGHChl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 22:37:41 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1095276ywe.1
-        for <git@vger.kernel.org>; Mon, 07 Jul 2008 19:37:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=vqrn/RmLeNLoeBkIXKx3JXoEzSw9zlHEC5grpgRO5Fk=;
-        b=RH4/cTXrJQ0H3ZR6LojPb/+bSVVb4opXz3nPgKuDzGSBn1+q96Z4p8q5AKSlfxgXUt
-         q/LLfmDfRfgEOxtUCcuG6q+q1Oy4AJY4/uZKo5MOrbzTM28XEgyePEdbJr64FDWUz2wz
-         +7dwDOFTYw6ZwPu7gFlped+s2Kht7hI+A+eP0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=qH5QCLNvqxOCNf7iYZ+ZXbTfxYr9S+7ArvXNM6GXz0MfDQtVy1OeTFox9igkqmRYCj
-         yBOuEPPaPG0+e0GS/V1ZzImQbIVxc90PYnhja57vpGs8Hs7Xci7XT+ecCq/Jv9C0u4Aq
-         8H7tFGg/DGCjXURxhYhy6YOagW+NnjOtFrOqk=
-Received: by 10.151.50.11 with SMTP id c11mr9394301ybk.127.1215484660902;
-        Mon, 07 Jul 2008 19:37:40 -0700 (PDT)
-Received: from localhost.localdomain ( [71.246.235.165])
-        by mx.google.com with ESMTPS id 5sm189796ywd.8.2008.07.07.19.37.38
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 07 Jul 2008 19:37:39 -0700 (PDT)
-X-Mailer: git-send-email 1.5.6.2.271.g73ad8
+	id S1755708AbYGHCml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 22:42:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755582AbYGHCml
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 22:42:41 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34794 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755521AbYGHCmk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 22:42:40 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 01B6D27842;
+	Mon,  7 Jul 2008 22:42:39 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 1A19C27840; Mon,  7 Jul 2008 22:42:31 -0400 (EDT)
+In-Reply-To: <4872CF86.5050702@gmail.com> (Mark Levedahl's message of "Mon,
+ 07 Jul 2008 22:23:02 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 879CA15E-4C97-11DD-96C0-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87690>
 
-This is needed as git-sh-setup is no longer in the path.
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
----
- Documentation/install-doc-quick.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Sylvain Joyeux wrote:
+>>
+>> Redo the prep work, the clone and now
+>>
+>> git submodule add dir0/dir1/init
+>>
+>> (i.e. don't expect dir0/dir1/init to be the clone of ./init, that was just a
+>> shortcut for the test. Expect it to be a clone of "something, somewhere")
+>>
+>>
+> Per the man-page,
+>    git submodule [--quiet] add [-b branch] [--] <repository> [<path>]
+>
+> which means, that the *repository* url is mandatory, the path is
+> optional. What you specifically asked git-submodule to do was to
+> *clone* from dir0/dir1/init, and because you gave no path to put the
+> submodule in, git-submodule deduced the name as "init", and cloned to
+> there.
 
-diff --git a/Documentation/install-doc-quick.sh b/Documentation/install-doc-quick.sh
-index 5433cf8..35f4408 100755
---- a/Documentation/install-doc-quick.sh
-+++ b/Documentation/install-doc-quick.sh
-@@ -6,7 +6,7 @@ head="$1"
- mandir="$2"
- SUBDIRECTORY_OK=t
- USAGE='<refname> <target directory>'
--. git-sh-setup
-+. "$(git --exec-path)"/git-sh-setup
- cd_to_toplevel
- 
- test -z "$mandir" && usage
--- 
-1.5.6.2.271.g73ad8
+I'd like to hear clarifications on two counts, please?
+
+ (1) If Sylvain wanted to have that appear at dir0/dir1/init not init,
+     would it have been sufficient to give that path twice (once for
+     <repository> and another for <path> parameter) to make things work as
+     expected?
+
+ (2) Is it generally considered a sane use case to specify an existing
+     repository inside the working tree of a superproject as a submodule
+     using "git submodule add" like Sylvain's example did?
+
+     I would have understood if the command were "git add dir0/dir1/init",
+     but I have this vague recolleciton that "git submodule add" is about
+     telling our repository about a submodule that comes from _outside_.
