@@ -1,92 +1,108 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008 projects?
-Date: Tue, 8 Jul 2008 19:22:46 +0200
-Message-ID: <200807081922.48010.jnareb@gmail.com>
-References: <200807080227.43515.jnareb@gmail.com> <19b271a20807080931w75430148u8c9778117c9fb6cc@mail.gmail.com> <alpine.DEB.1.00.0807081745040.18205@racer>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [HACK] gitweb: Support hiding of chosen repositories from project list
+Date: Tue, 08 Jul 2008 18:56:55 +0200
+Message-ID: <20080708165445.10663.26304.stgit@rover.dkm.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Joshua Roys <roysjosh@gmail.com>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 08 19:24:09 2008
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 08 19:31:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGGuy-0005cR-AI
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 19:23:56 +0200
+	id 1KGH2H-0008V9-EO
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 19:31:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751622AbYGHRW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 13:22:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752276AbYGHRW5
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 13:22:57 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:43418 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750889AbYGHRW5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 13:22:57 -0400
-Received: by py-out-1112.google.com with SMTP id p76so1257457pyb.10
-        for <git@vger.kernel.org>; Tue, 08 Jul 2008 10:22:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=Y3l/wl9EW9u/r+DO8g4dEf4dZ1PFlM0EyrW0au6LrsQ=;
-        b=OIICtgiMHCfuBkF8b/4nORjtckQ/pbPCDxegGwaOPloCTlwgLOOZI7uEwqBB9g/+ZN
-         dOkCq2FINgVnp9PWLs03m+piYlcwI5rZwFyOgNhKc7ESs+90E9wX2Ki1eRqr4DhDSpU6
-         IDdifCYkR8Ah2UKiYMZRWCGrsGqAwGaW/T3oM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=itVOzlm+6S3ihb1dWFG/R2yjLyboV5dYDMqp3T2OHH5Qyp8YwWtvPV8xor3lseGkDh
-         uIe5U7RP+Lkey/fCSwfUSd614Y1KuPPLyhJES+C9WOHCQrSynt5pKKwUqvoEm4t/VdWy
-         Oni3ykoLPBq3r6LvpqUCo3PsZczx7gmNDw4BM=
-Received: by 10.64.196.9 with SMTP id t9mr1889346qbf.33.1215537773923;
-        Tue, 08 Jul 2008 10:22:53 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.205.145])
-        by mx.google.com with ESMTPS id k7sm7989142qba.3.2008.07.08.10.22.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 08 Jul 2008 10:22:52 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.DEB.1.00.0807081745040.18205@racer>
-Content-Disposition: inline
+	id S1753544AbYGHRa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 13:30:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752613AbYGHRa2
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 13:30:28 -0400
+Received: from rover.dkm.cz ([62.24.64.27]:52862 "EHLO rover.dkm.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751125AbYGHRa2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 13:30:28 -0400
+X-Greylist: delayed 1946 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jul 2008 13:30:27 EDT
+Received: from rover.dkm.cz (localhost [127.0.0.1])
+	by rover.dkm.cz (Postfix) with ESMTP id 90A1D166743
+	for <git@vger.kernel.org>; Tue,  8 Jul 2008 18:56:55 +0200 (CEST)
+User-Agent: StGIT/0.14.3.171.ge0e6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87775>
 
-Johannes Schindelin wrote:
-> On Tue, 8 Jul 2008, Joshua Roys wrote:
->> On Mon, Jul 7, 2008 at 8:27 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->>> 1. GitTorrent (???)
+This makes it possible to hide certain repository from project list
+(while still keeping it accessible, so it's not just an inverse of
+ export-ok). By default the file that needs to be created in the
+repository is '.hide'.
 
->>> There was short thread of me asking about project
->>>  http://thread.gmane.org/gmane.comp.version-control.git/83611
->>> where I got gittorrent mailing list [...] and URL
->>> for project repo / gitweb... which is currently down, so I cannot check
->>> if there is anything here.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-[cut]
->> 
->> The gitweb randomly gives 500/internal server errors, not sure why.
+  I used this for something at repo.or.cz, but it is actually lying around
+unused in my patch queue now; before removing it, I'm going to archive it on
+the mailing list, maybe someone will find it useful.
 
-(I think it was web server error, as error message didn't look like
-it was coming from gitweb; besides gitweb up to some time ago didn't
-use "500 Internal Server Error" HTTP error status code.)
+ Makefile           |    2 ++
+ gitweb/gitweb.perl |   11 +++++++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-> I thought you were working on the torrent stuff?  What is the status on 
-> that?
 
-I think Jushua was referring here to the fact that gitweb for
-GitTorrent project repository[1] is sometimes down (it was down
-when I was writing initial email in this thread).
-
-[1] http://utsl.gen.nz/gitweb/?p=VCS-Git-Torrent
--- 
-Jakub Narebski
-Poland
+diff --git a/Makefile b/Makefile
+index 3314dd6..b7c7f42 100644
+--- a/Makefile
++++ b/Makefile
+@@ -195,6 +195,7 @@ GITWEB_SITENAME =
+ GITWEB_PROJECTROOT = /pub/git
+ GITWEB_PROJECT_MAXDEPTH = 2007
+ GITWEB_EXPORT_OK =
++GITWEB_HIDE_REPO = .hide
+ GITWEB_STRICT_EXPORT =
+ GITWEB_BASE_URL =
+ GITWEB_LIST =
+@@ -1130,6 +1131,7 @@ gitweb/gitweb.cgi: gitweb/gitweb.perl
+ 	    -e 's|++GITWEB_PROJECTROOT++|$(GITWEB_PROJECTROOT)|g' \
+ 	    -e 's|"++GITWEB_PROJECT_MAXDEPTH++"|$(GITWEB_PROJECT_MAXDEPTH)|g' \
+ 	    -e 's|++GITWEB_EXPORT_OK++|$(GITWEB_EXPORT_OK)|g' \
++	    -e 's|++GITWEB_HIDE_REPO++|$(GITWEB_HIDE_REPO)|g' \
+ 	    -e 's|++GITWEB_STRICT_EXPORT++|$(GITWEB_STRICT_EXPORT)|g' \
+ 	    -e 's|++GITWEB_BASE_URL++|$(GITWEB_BASE_URL)|g' \
+ 	    -e 's|++GITWEB_LIST++|$(GITWEB_LIST)|g' \
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 3b02d87..7ad0faa 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -90,6 +90,11 @@ our $default_projects_order = "project";
+ # (only effective if this variable evaluates to true)
+ our $export_ok = "++GITWEB_EXPORT_OK++";
+ 
++# hide repository from the list if this file exists
++# (the repository is still accessible, just not shown in the project list)
++# (only effective if this variable evaulates to true)
++our $hide_repo = "++GITWEB_HIDE_REPO++";
++
+ # only allow viewing of repositories also shown on the overview page
+ our $strict_export = "++GITWEB_STRICT_EXPORT++";
+ 
+@@ -1796,7 +1801,8 @@ sub git_get_projects_list {
+ 				# we check related file in $projectroot
+ 				if ($check_forks and $subdir =~ m#/.#) {
+ 					$File::Find::prune = 1;
+-				} elsif (check_export_ok("$projectroot/$filter/$subdir")) {
++				} elsif ((!$hide_repo or ! -e "$projectroot/$filter/$subdir/$hide_repo")
++				    and check_export_ok("$projectroot/$filter/$subdir")) {
+ 					push @list, { path => ($filter ? "$filter/" : '') . $subdir };
+ 					$File::Find::prune = 1;
+ 				}
+@@ -1846,7 +1852,8 @@ sub git_get_projects_list {
+ 					next PROJECT;
+ 				}
+ 			}
+-			if (check_export_ok("$projectroot/$path")) {
++			if ((!$hide_repo or ! -e "$projectroot/$path/$hide_repo")
++			    and check_export_ok("$projectroot/$path")) {
+ 				my $pr = {
+ 					path => $path,
+ 					owner => to_utf8($owner),
