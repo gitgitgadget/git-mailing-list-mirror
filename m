@@ -1,82 +1,123 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Can I remove stg sync --undo ?
-Date: Tue, 8 Jul 2008 06:14:25 +0200
-Message-ID: <20080708041425.GA2247@diana.vm.bytemark.co.uk>
-References: <20080702072524.GA26805@diana.vm.bytemark.co.uk> <b0943d9e0807031502x5f7c4babtd65511d7966c69f6@mail.gmail.com> <20080704020918.GA30669@diana.vm.bytemark.co.uk> <b0943d9e0807041505oc15660bpcd62a62100e517b9@mail.gmail.com> <20080705083348.GA21097@diana.vm.bytemark.co.uk> <b0943d9e0807071347n17e2e09ai761b849d2d03bc9c@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008
+	projects?
+Date: Tue, 8 Jul 2008 04:19:47 +0000
+Message-ID: <20080708041947.GA2542@spearce.org>
+References: <200807080227.43515.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 06:15:36 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Joshua Roys <roysjosh@gmail.com>,
+	Sverre Rabbelier <alturin@gmail.com>,
+	Sverre Rabbelier <sverre@rabbelier.nl>,
+	David Symonds <dsymonds@gmail.com>,
+	Lea Wiemann <LeWiemann@gmail.com>,
+	John Hawley <warthog19@eaglescrag.net>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jakub Narebski <jnareb@gmail.com>,
+	Marek Zawirski <marek.zawirski@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 06:21:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG4by-0007GL-0S
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 06:15:30 +0200
+	id 1KG4h4-0000Rq-De
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 06:20:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751003AbYGHEOc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jul 2008 00:14:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751035AbYGHEOc
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 00:14:32 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3381 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750994AbYGHEOb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 00:14:31 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KG4av-0000cr-00; Tue, 08 Jul 2008 05:14:25 +0100
+	id S1751060AbYGHETs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 00:19:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751057AbYGHETs
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 00:19:48 -0400
+Received: from george.spearce.org ([209.20.77.23]:52019 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750748AbYGHETs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 00:19:48 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 2EADB38195; Tue,  8 Jul 2008 04:19:47 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0807071347n17e2e09ai761b849d2d03bc9c@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <200807080227.43515.jnareb@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87704>
 
-On 2008-07-07 21:47:13 +0100, Catalin Marinas wrote:
+Jakub Narebski <jnareb@gmail.com> wrote:
+> I'd very much like to have (or perhaps to wrote) some sort of interim 
+> progress report for Google Summer of Code 2008 projects on 
+> http://git.or.cz/gitwiki/SoC2008Projects.  Therefore I'd like you to 
+> expand and/or correct those mini-summaries below.
+> 
+> (It would be, I guess, good preparation for GSoC 2008 mid-term 
+> evaluations, which according to GSoC 2008 timeline
+>   http://code.google.com/opensource/gsoc/2008/faqs.html#0.1_timeline
+> are to take place July 7 -- July 14.)
 
-> 2008/7/5 Karl Hasselstr=F6m <kha@treskal.com>:
->
-> > On 2008-07-04 23:05:11 +0100, Catalin Marinas wrote:
-> >
-> > > There are two operations that can conflict for sync - pushing a
-> > > patch and the actual sync'ing, i.e. a three-way merge with the
-> > > patch to be synchronised with (kind of fold).
-> >
-> > My guess is that conflicts of the first type would work out of the
-> > box (i.e. they'd get an extra log entry) while conflicts of the
-> > second type would not.
->
-> I don't really care as long as I can get back to the patch state
-> before running the sync command if anything goes wrong. So, one undo
-> level would be enough.
->
-> > We need a sync undo test.
->
-> Yes but not sure what how undo would behave in this situation yet.
+Yes, it is that time for evaluations.  The evaluations are now open
+to students and mentors alike; please make sure you complete them
+by the deadline of July 14th.
+ 
+> 4. Eclipse plugin push support (!)
+> 
+> Student: Marek Zawirski
+> Mentor: Shawn O. Pearce
+> 
+> I am not following egit/jgit development close enough, but if I remember 
+> correctly there is some code which provides very rudimentary support 
+> for native generation of simplified packs, and IIRC also for push over 
+> some protocols.
+> 
+> And there is push support over SFTP and (encrypted) Amazon S3...
 
-OK, then I'll write a simple test that makes sure undo and sync
-interact the way I imagine they should. ;-)
+Marek is on holiday right now, so I have to answer for him here.
+Otherwise I would have preferred to let him do it.
 
-> > With just "stg undo" (or reset or redo), you get the usual
-> > new-infrastructure check about dirty index and working tree (the
-> > whole index must be clean, and the parts of the worktree we need
-> > to touch must be clean). Which prevents you from undoing a
-> > conflicting push, for example.
-> >
-> > With the --hard flag, any uncleanliness in index or worktree
-> > simply gets zapped (just like with git reset --hard). I'm not 100%
-> > happy with this -- what I'd really like is to zap only the files
-> > that we need to touch. But I haven't figured out a good way to do
-> > that.
->
-> OK, not much to comment here, it's your implementation :-).
+Thus far Marek has completed generation of packs, including delta
+re-use from packs using either v1 or v2 index, including taking
+advantage of the CRC inside the v2 index to accelerate a safe reuse.
+This code permits jgit to write a valid pack.
 
-But you too get to live with the design decisions ...
+The packing code does not (yet) search for a delta base, or create
+a new delta for an undeltified object.  Packing loose objects packs
+them as whole objects in the pack file, resulting in little to no
+reduction over their loose object size.  This is not a limitation
+of Java.  Marek and I simply decided that protocol support was more
+important than really tight network transport at this point in time.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+As a result of being able to create pack files Marek was able to
+implement the client side of git-push for the native pack transfer
+service, aka push over SSH, push to another local repository (by
+forking 'git receive-pack') and push over anonymous git://.
+
+Using Marek's pack generation code I added support for push over
+the dumb sftp:// and amazon-s3:// protocols, with the latter also
+supporting transparent client side encryption.
+
+I chose to add these features to jgit partly as an exercise to prove
+that Marek's code was built well enough to be reused for this task,
+partly because I wanted to backup some private personal repositories
+to Amazon S3, and partly to prove that multiple dumb transports
+could implement push support.
+
+All of the above is done in the non-Eclipse, BSD licensed jgit
+library, making it available to any tool built on top of the Java
+platform, even if said tool does not use the Eclipse platform or
+any other code from Eclipse.
+
+
+At this point Marek's code is in the main egit.git tree's master
+branch, and is in "production" use by myself and Robin, and maybe
+a few others.  I am quite happy with the work Marek has completed
+to date for the project.
+
+When Marek returns from his holiday he will be working on Eclipse
+UI features to expose this jgit push functionality to the end-user
+within the Eclipse workbench.
+
+-- 
+Shawn.
