@@ -1,82 +1,92 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008
-	projects?
-Date: Tue, 08 Jul 2008 00:20:38 -0700
-Message-ID: <1215501638.1998.21.camel@localhost.localdomain>
-References: <200807080227.43515.jnareb@gmail.com>
-	 <4872E858.4080607@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008 projects?
+Date: Tue, 8 Jul 2008 09:39:30 +0200
+Message-ID: <200807080939.31216.jnareb@gmail.com>
+References: <200807080227.43515.jnareb@gmail.com> <7vmyktxjlq.fsf@gitster.siamese.dyndns.org> <20080708014734.GE6726@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>, Joshua Roys <roysjosh@gmail.com>,
-	Sverre Rabbelier <alturin@gmail.com>,
-	Sverre Rabbelier <sverre@rabbelier.nl>,
-	David Symonds <dsymonds@gmail.com>,
-	Marek Zawirski <marek.zawirski@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 09:22:37 2008
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Tue Jul 08 09:40:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG7X3-0006cS-3c
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 09:22:37 +0200
+	id 1KG7oZ-0003MQ-3R
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 09:40:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751957AbYGHHVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 03:21:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751971AbYGHHVb
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 03:21:31 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:49813 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751957AbYGHHVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 03:21:30 -0400
-Received: from [172.19.0.93] (c-67-188-226-86.hsd1.ca.comcast.net [67.188.226.86])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id m687KjmC013783
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 8 Jul 2008 00:20:46 -0700
-In-Reply-To: <4872E858.4080607@gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-4.fc8) 
-X-Virus-Scanned: ClamAV 0.88.7/7661/Mon Jul  7 21:08:55 2008 on shards.monkeyblade.net
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Tue, 08 Jul 2008 00:20:50 -0700 (PDT)
+	id S1752483AbYGHHjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 03:39:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751913AbYGHHjp
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 03:39:45 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:34869 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751453AbYGHHjp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 03:39:45 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so1166339ugf.16
+        for <git@vger.kernel.org>; Tue, 08 Jul 2008 00:39:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=ia8Jza1DKGm3xNdShhYr7hCokeerPAFsp6lAE6hwSzg=;
+        b=IgDVRmWbgW5BO9zib6ymsr8lIuzQJzMualYTwzxf1CSbsfJ4RyLQ7CQAcl2ieSOTQn
+         TpL2Pax14f7wFLaiOIvp2NPAmYkKe+AajKvBO4WN0FlLfo9GcbUtJtr2cZRvus6ecyg7
+         KVzexb9kBDVjT8F4BLsvq4haw1GgicHlnXLUY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=LcNRoPmlfDlbEykjr8YPnx9jnJGjhxsnrztTkMaQOFZCOlpp/ifmZrj6/e2rrWlO3q
+         kY3ZS37Md4pZni3x7kPgBJU9oDN46IRG+a8WAFp0UgMEa7aMIZtF7lVp3Pk6NHkiKTNN
+         y58aOwwEceo4mW4WsrEm/HarUsxX2lAqCzSlE=
+Received: by 10.66.238.16 with SMTP id l16mr5138267ugh.19.1215502783521;
+        Tue, 08 Jul 2008 00:39:43 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.206.62])
+        by mx.google.com with ESMTPS id j3sm2479343ugd.30.2008.07.08.00.39.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 08 Jul 2008 00:39:42 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080708014734.GE6726@leksak.fem-net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87727>
 
->From a quick an cursory glance I think we are well on track with the
-Gitweb stuff (though I'll let Lea do a full status update).  It looks
-like most of the code is in place, and there is a test site up and
-running on one of the kernel.org machines (though not anywhere near
-production yet - I still need to port some of my other changes to Lea's
-change set so we can try this out for real on Kernel.org)
+On Tue, 8 July 2008, Stephan Beyer wrote:
+> Junio C Hamano <gitster@pobox.com> wrote:
+>> 
+>> I _really_ wanted to merge the basic bits and rewrite of "am" at least to
+>> pu tonight, but I had to drop them after noticing that it does not seem to
+>> handle --rebasing at all (it parses to set $rebasing but after that where
+>> does that bit go?
+> 
+> Yes, you are right that am --rebasing is a no-op.
+> That option was a little mystery to me, because it seemed to do nothing
+> special, but I'll check again (bash-completion etc) and do appropriate
+> changes.
 
-- John 'Warthog9' Hawley
+Undocumented option '--rebasing' to git-am is internal option changing
+git-am behavior to be better used by git-rebase, namely it does not
+change commit message even if it doesn't follow git commit message
+convention, for example if it begins not with single line summary
+of commit, separated by empty line, but by multi-line paragraph.
+See also t/t3405-rebase-malformed.sh
 
-On Tue, 2008-07-08 at 06:08 +0200, Lea Wiemann wrote:
-> Jakub Narebski wrote:
-> > 3. Gitweb caching
-> 
-> I'll post a complete status update in the next few days.  And three
-> large patches (including the mechanize test). ;-)
-> 
-> > Lea has chosen caching data and memcached as primary caching engine,
-> > and is working on object layer on top of Git.pm, namely Git::Repo and 
-> > friends, which will be used by gitweb.  If I understand correctly 
-> > caching is to be done, or at least helped by this layer.
-> 
-> That's correct, except that I'm not using Git.pm anywhere; Git::Repo is
-> independent of Git.pm.  More about that later...
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Although I am not sure if when rebase is rewritten using git-sequencer
+implementing "git am --rebasing" would be truly needed.  On the other
+hand side it would be nice to have some _documented_ option which would
+allow to git-am mail messages with commits not following git commit
+messages convention...
+
+-- 
+Jakub Narebski
+Poland
