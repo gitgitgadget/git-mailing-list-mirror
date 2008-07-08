@@ -1,89 +1,69 @@
-From: "Eric Raible" <raible@gmail.com>
-Subject: PATCH] Documentation: Tweak use case in "git stash save --keep-index"
-Date: Mon, 7 Jul 2008 22:18:03 -0700
-Message-ID: <279b37b20807072218o19dabd97y2c4edc62fb980ca4@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] completion: add branch options --contains --merged
+ --no-merged
+Date: Mon, 07 Jul 2008 22:30:17 -0700
+Message-ID: <7vprppvt7a.fsf@gitster.siamese.dyndns.org>
+References: <279b37b20807071341k3551e61cl10c5969600ba8218@mail.gmail.com>
+ <20080708044922.GD2542@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>, szeder@ira.uka.de
-X-From: git-owner@vger.kernel.org Tue Jul 08 07:19:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Raible <raible@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>, szeder@ira.uka.de
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jul 08 07:31:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG5bX-00074F-7q
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 07:19:07 +0200
+	id 1KG5nR-0001mt-HL
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 07:31:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750994AbYGHFSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 01:18:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750888AbYGHFSI
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 01:18:08 -0400
-Received: from wf-out-1314.google.com ([209.85.200.171]:45928 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750796AbYGHFSF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 01:18:05 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so2398111wfd.4
-        for <git@vger.kernel.org>; Mon, 07 Jul 2008 22:18:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=NpsDvcLNdt/2MP5gpc5kiM2M0hOarIj5Fyjt/dAsY5c=;
-        b=Ec4ehydvwfkAZqHdZ6igCN42/7Z2O8XEWy1l1yiPYvNxIIpGCO1HvAvAao5mh3iB1n
-         GH0AvYnPi/pBGG7IguTV/dxwI39K27FobBPK6kY4JJX7ZsmjdFrQH7VpslovCE+0G/Jy
-         ti33qdwuNmhnALifLCOI9ThcQAH+cWuIfQGlA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=TGsN7pEz8Pc83IAtSUdNF9BGsghSsQaLog/yuFuqOqA0sRN8z/NdYtZWG6Vn1T35z2
-         mddGxURp6m4RUJFp0BJGVsUNPxR0ge4BVZqwpC/TJrtoogLxKSUXzo12AnjwuYU76j3W
-         CCbpiJVdLLnmZ4Lsq+bB0MJ+Gt/ZlwPODSaOs=
-Received: by 10.142.142.14 with SMTP id p14mr1643307wfd.114.1215494283454;
-        Mon, 07 Jul 2008 22:18:03 -0700 (PDT)
-Received: by 10.142.14.12 with HTTP; Mon, 7 Jul 2008 22:18:03 -0700 (PDT)
-Content-Disposition: inline
+	id S1751297AbYGHFa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 01:30:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbYGHFa1
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 01:30:27 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62707 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751233AbYGHFa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 01:30:27 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CE6FC28870;
+	Tue,  8 Jul 2008 01:30:24 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 1ACD72886D; Tue,  8 Jul 2008 01:30:19 -0400 (EDT)
+In-Reply-To: <20080708044922.GD2542@spearce.org> (Shawn O. Pearce's message
+ of "Tue, 8 Jul 2008 04:49:22 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F751A6F4-4CAE-11DD-B073-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87716>
 
-The documentation suggests using "git stash apply" in the
---keep-index workflow even though doing so will lead to clutter
-in the stash.  And given that the changes are about to be
-committed anyway "git stash pop" is more sensible.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Additionally the text preceeding the example claims that it
-works for "two or more commits", but the example itself is
-really tailored for just two.  Expanding it just a little
-makes it clear how the procedure generalizes to N commits.
+> Eric Raible <raible@gmail.com> wrote:
+>> Signed-off-by: Eric Raible <raible@gmail.com>
+>
+> Trivially-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+>
+> ;-)
+>
+> More completion support that probably should go to maint, as the
+> functionality in git-branch is in 1.5.6 but we (again) forgot to
+> make sure the completion was up-to-date prior to release.
 
-Signed-off-by: Eric Raible <raible@gmail.com>
----
-Note that this is relative to Junio's pu branch (v1.5.6.2-397-g20210bb)
+I am actually getting more worried about completion code getting larger
+and larger without its performance impact not being looked at nor
+addressed adequately.  In my regular working tree:
 
- Documentation/git-stash.txt |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+	$ echo Docu<TAB>
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index df26901..bf241da 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -201,9 +201,10 @@ $ git add --patch foo
- $ git stash save --keep-index
- $ build && run tests
- $ git commit -m 'First part'
--$ git stash apply
-+$ git stash pop
-+... repeat above five steps until one commit remains ...
- $ build && run tests
--$ git commit -a -m 'Second part'
-+$ git commit foo -m 'Remaining parts'
- ----------------------------------------------------------------
+completes "mentation/" instantly, but:
 
- SEE ALSO
--- 
-1.5.6.1.1073.g489ff.dirty
+	$ git log -- Docu<TAB>
+
+takes about 1.5 to 2 seconds to complete the same.
