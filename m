@@ -1,70 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bash: offer only paths after '--'
-Date: Tue, 08 Jul 2008 13:21:35 -0700
-Message-ID: <7vtzf0rusw.fsf@gitster.siamese.dyndns.org>
-References: <279b37b20807071341k3551e61cl10c5969600ba8218@mail.gmail.com>
- <20080708044922.GD2542@spearce.org>
- <7vprppvt7a.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0807081335470.4319@eeepc-johanness>
- <20080708165614.GB8224@neumann>
+From: Jan Wielemaker <J.Wielemaker@uva.nl>
+Subject: git submodules or, how do we share code between unrelated projects?
+Date: Tue, 8 Jul 2008 23:11:32 +0200
+Message-ID: <200807082311.32684.J.Wielemaker@uva.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Eric Raible <raible@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Jul 08 22:22:53 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 08 23:12:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGJi3-0008E0-H3
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 22:22:47 +0200
+	id 1KGKUD-0000vF-Jw
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 23:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754035AbYGHUVu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jul 2008 16:21:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753936AbYGHUVu
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 16:21:50 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63196 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753475AbYGHUVt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jul 2008 16:21:49 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4A27414C48;
-	Tue,  8 Jul 2008 16:21:47 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 775E314C46; Tue,  8 Jul 2008 16:21:38 -0400 (EDT)
-In-Reply-To: <20080708165614.GB8224@neumann> (SZEDER =?utf-8?Q?G=C3=A1bor'?=
- =?utf-8?Q?s?= message of "Tue, 8 Jul 2008 18:56:14 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7D592FC0-4D2B-11DD-A943-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1751080AbYGHVLg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 17:11:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751120AbYGHVLg
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 17:11:36 -0400
+Received: from smtp-vbr6.xs4all.nl ([194.109.24.26]:3235 "EHLO
+	smtp-vbr6.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751066AbYGHVLf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 17:11:35 -0400
+Received: from ct.xs4all.nl (ct.xs4all.nl [82.92.39.12])
+	by smtp-vbr6.xs4all.nl (8.13.8/8.13.8) with ESMTP id m68LBXCc056368
+	for <git@vger.kernel.org>; Tue, 8 Jul 2008 23:11:33 +0200 (CEST)
+	(envelope-from J.Wielemaker@uva.nl)
+User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
+Content-Disposition: inline
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87798>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+Hi,
 
-> Hope that I got the commit message right (;
+I'm looking at git-submodule, but I start to get the impression it is old
+CVS jargon that brought me there.
 
-It was very readable.  Thanks.
+We are two open source projects creating implementations of the Prolog
+language.  One (SWI-Prolog) is under GIT, the other (YAP) is under CVS
+but will move to git if this helps.
 
-> +__git_has_doubledash ()
-> +{
-> +	local c=3D1
-> +	while [ $c -lt $COMP_CWORD ]; do
-> +		if [ "--" =3D "${COMP_WORDS[c]}" ]; then
-> +			return 0
-> +		fi
-> +		c=3D$((++c))
+We want to start sharing some developments. I guess for each (unrelated)
+library we wish to share we must create a git repo, right? Now we
+generally need compatibility patches to make this shared code run
+on both systems and we need some way to get this code into the main
+repo of both systems, such that a clone of the repo of a system gets
+you the shared library.
 
-This assignment is somewhat curious, although it should work as expecte=
-d
-either way ;-)
+I guess GIT must be perfect for this, but I'm a bit unsure on the
+proper setup of the workflow.  Is there a project that has something
+similar established and has guidelines how to manage this?
 
-Shawn?
+	Cheers --- Jan
