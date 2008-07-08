@@ -1,106 +1,95 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH] fix "git-submodule add a/b/c/repository"
-Date: Mon, 07 Jul 2008 23:26:12 -0400
-Message-ID: <4872DE54.5010804@gmail.com>
-References: <20080701150025.GD5852@joyeux> <7vd4lro7ct.fsf@gitster.siamese.dyndns.org> <20080706161101.GB23385@jhaampe.org> <48711782.6090609@gmail.com> <20080707063424.GB5506@jhaampe.org> <4872CF86.5050702@gmail.com> <7v7ibxxfje.fsf@gitster.siamese.dyndns.org>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: [FIXED PATCH] Make rebase save ORIG_HEAD if changing current branch
+Date: Mon, 7 Jul 2008 23:28:15 -0400
+Message-ID: <76718490807072028o7e0661a8r6d118cc91dc5e625@mail.gmail.com>
+References: <1215379370-34265-1-git-send-email-benji@silverinsanity.com>
+	 <7v7iby9ucx.fsf@gitster.siamese.dyndns.org>
+	 <803A3528-2451-4C5D-A48D-5E0C37B8E90E@silverinsanity.com>
+	 <7vbq1a8ay3.fsf@gitster.siamese.dyndns.org>
+	 <7vod591hlp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Sylvain Joyeux <sylvain.joyeux@dfki.de>,
-	Lars Hjemli <hjemli@gmail.com>, Ping Yin <pkufranky@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 05:27:13 2008
+Cc: "Git List" <git@vger.kernel.org>,
+	"Brian Gernhardt" <benji@silverinsanity.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 05:29:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG3rF-0003Ez-AL
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 05:27:13 +0200
+	id 1KG3tC-0003bK-8n
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 05:29:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756044AbYGHD0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 23:26:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756043AbYGHD0P
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 23:26:15 -0400
-Received: from wr-out-0506.google.com ([64.233.184.225]:59079 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755999AbYGHD0O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 23:26:14 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so1684478wri.5
-        for <git@vger.kernel.org>; Mon, 07 Jul 2008 20:26:13 -0700 (PDT)
+	id S1756059AbYGHD2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 23:28:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756055AbYGHD2Q
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 23:28:16 -0400
+Received: from rv-out-0506.google.com ([209.85.198.224]:37526 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756043AbYGHD2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 23:28:16 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so2966047rvb.1
+        for <git@vger.kernel.org>; Mon, 07 Jul 2008 20:28:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=mUtA0xNlAD8JXzB4std9tXGtVhgrx2copsh8V0yYzm0=;
-        b=N/7IzQqnU5igbRyNCTTlzpDq2Gth/Ov/FzklpUV3o3WwgS5rVh4/4jB2cPULeeTSGO
-         il0IugN8RRzXUjeApIwPWqTU534+Ueb0VA3R2XQmgNiQIZjV2pNfbxg6flddcmMRdDls
-         EIkvh3ipufyNazQsyzCs93olyH+pTTRepkIxI=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=p3c4PtbL7QZTemaAkZ/O7s9ShJEAFuMvDK4OxPqimsQ=;
+        b=ql4T8IUekiCio+8oCu3BHxMndWMmP64I1KDU6nnMkLKLe4uPv8AA9vUHHcTL2G1eSU
+         7wnSZrPjRbh52uIScfsgC7C3aHyx/jYbT+Tu7CO1HbK+n+ugcctFteZzqGh1poZqIS7P
+         qJ8a1jKNG+6SVxAFl6STF0JMDj2CtVl7hiGlA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=UiOwiat5IIqEYP3rHAF8IBGl81Qdb3AbPD5W6NFU2dxWODBWL/fV7aZ/MIqPhAg2PB
-         vIZPd/kOeA8ADosOJOM+Cb3KTpOKQS3czN4nDmhv06M9lG8lDzWVE/gvuDN6HovjdRJZ
-         LM2j1hpZnPxmsFw+rFtlU03D/3fHpZgsphm5k=
-Received: by 10.90.115.17 with SMTP id n17mr6209196agc.90.1215487573569;
-        Mon, 07 Jul 2008 20:26:13 -0700 (PDT)
-Received: from ?192.168.1.117? ( [71.246.235.165])
-        by mx.google.com with ESMTPS id 6sm8812587ywp.3.2008.07.07.20.26.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 07 Jul 2008 20:26:12 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <7v7ibxxfje.fsf@gitster.siamese.dyndns.org>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=QQJw1LlaU9f09WMXySexrwh3i1+cFwmMd5QJXXRTVl6Jk8OYjlaqIdyO/ba2Ks7MBM
+         a8maKnd9EuIiABfRh0Lm0ncuDnySx4e5CVjGA38tAW4+HS8K333cPO429Ik7cAe5hP5B
+         Z4Hmi+vQYRf20zzlAtJ74dBEaulf1xIcEcHoY=
+Received: by 10.115.59.2 with SMTP id m2mr7225852wak.197.1215487695337;
+        Mon, 07 Jul 2008 20:28:15 -0700 (PDT)
+Received: by 10.114.14.19 with HTTP; Mon, 7 Jul 2008 20:28:15 -0700 (PDT)
+In-Reply-To: <7vod591hlp.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87695>
 
-Junio C Hamano wrote:
-> I'd like to hear clarifications on two counts, please?
->  (1) If Sylvain wanted to have that appear at dir0/dir1/init not init,
->      would it have been sufficient to give that path twice (once for
->      <repository> and another for <path> parameter) to make things work as
->      expected?
->   
-git-submodule really requires two arguments:
+On Mon, Jul 7, 2008 at 5:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> +HEAD names the commit your changes in the working tree is based on.
 
-    $ git submodule add <URL> <relative-path-to-module-in-tree>
+How about:
 
-and supports two modes:
+"HEAD names the commit your working tree is based on. This is the tip
+of the checked out branch, unless HEAD is detached. (HEAD is said to
+be detached if a commit is checked out which is not the tip of any
+branch.)"
 
-1) relative-path exists and is a valid repo: just add the module, it was 
-created in tree, the user is expected to eventually push this to the 
-given URL so other users will get this as normal. This exists to 
-simplify the process of creating a repo to begin with.
+> +FETCH_HEAD records the branch you fetched from a remote repository
+> +with your last 'git-fetch' invocation.
 
-2) relative-path doesn't exist: clone from the URL. This is the normal use.
-submodule supports adding a module in one of two ways:
+consistency w/above: s/records/names/
 
-So,
+> +ORIG_HEAD is created by commands that moves your HEAD in a drastic
+> +way, to record the position of the HEAD before their operation, so that
+> +you can change the tip of the branch back to the state before you ran
+> +them easily.
 
-    $ git submodule add   dir0/dir1/init   dir0/dir1/init
+s/moves/move/; s/can change/can easily change/; s/them easily./them./;
 
-will add the repo, but also makes the repo its own origin. I don't think 
-this makes sense.
->  (2) Is it generally considered a sane use case to specify an existing
->      repository inside the working tree of a superproject as a submodule
->      using "git submodule add" like Sylvain's example did?
->
->      I would have understood if the command were "git add dir0/dir1/init",
->      but I have this vague recolleciton that "git submodule add" is about
->      telling our repository about a submodule that comes from _outside_.
->
->
->   
-Adding an existing in-tree repo, ala
+But maybe this reads better:
 
- $ git submodule add <intended-URL> <path>
+ORIG_HEAD is created by commands that move HEAD in a drastic way to
+record the position of HEAD before their operation, so that the branch
+can easily be reset back to its prior state.
 
-is there to ease the initial creation of a submodule. It can be created 
-and registered in-tree, and later pushed to the server. This is sane, 
-but is not the normal usage (makes sense only on creation).
+> +MERGE_HEAD records the commit(s) you are merging into your branch
+> +when you run 'git-merge'.
 
-Mark
+So it's the "<remote>" arg or args mentioned in the git-merge man page?
+
+j.
