@@ -1,108 +1,125 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [HACK] gitweb: Support hiding of chosen repositories from project list
-Date: Tue, 08 Jul 2008 18:56:55 +0200
-Message-ID: <20080708165445.10663.26304.stgit@rover.dkm.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008 projects?
+Date: Tue, 8 Jul 2008 19:31:31 +0200
+Message-ID: <200807081931.31764.jnareb@gmail.com>
+References: <200807080227.43515.jnareb@gmail.com> <200807081812.15651.jnareb@gmail.com> <20080708163430.GK6726@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 08 19:31:30 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Tue Jul 08 19:33:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGH2H-0008V9-EO
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 19:31:29 +0200
+	id 1KGH3X-0000fJ-N4
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 19:32:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753544AbYGHRa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 13:30:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752613AbYGHRa2
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 13:30:28 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:52862 "EHLO rover.dkm.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751125AbYGHRa2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 13:30:28 -0400
-X-Greylist: delayed 1946 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jul 2008 13:30:27 EDT
-Received: from rover.dkm.cz (localhost [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id 90A1D166743
-	for <git@vger.kernel.org>; Tue,  8 Jul 2008 18:56:55 +0200 (CEST)
-User-Agent: StGIT/0.14.3.171.ge0e6
+	id S1753771AbYGHRbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 13:31:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753753AbYGHRbs
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 13:31:48 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:11358 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753716AbYGHRbr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 13:31:47 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1206284ywe.1
+        for <git@vger.kernel.org>; Tue, 08 Jul 2008 10:31:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=ekVgUrPVnfe2JnQg156OOFUaYETwHMVxh3pAxqdpiBk=;
+        b=x3LZK6goqDlhxwGlkw7TFX7Xw7kvWqsEIvFPdLEUo/oITpTgcnHEmX1xcX392aXD2a
+         OptPupMA8lp0yd3Rr5plErNuXisPJaeaej8VKkUgt4r14luHE/gOG0uNilDUssymQsRl
+         wuvfC6/oLwBh5Rj6q2uaDeMtuM+Sv4GpPghLM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=n2YSy4d6rrHdGx7TU2WljXTCgIFAqumuhRa2x2SQxAU4PnvyL8/CTIOg5a0/ZfkhfL
+         3DrmxrRrZObL2yMt87ezjJl8w6GwxPtMRGHgzB/V/b+AsJeQ1UP5oH/WUuAPiTZK4nww
+         03CQTEl6aNvxChTWDhnbJrz9jyZ0b00GRsHjY=
+Received: by 10.125.114.19 with SMTP id r19mr1464591mkm.46.1215538296925;
+        Tue, 08 Jul 2008 10:31:36 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.205.145])
+        by mx.google.com with ESMTPS id p25sm2171428hub.32.2008.07.08.10.31.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 08 Jul 2008 10:31:35 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080708163430.GK6726@leksak.fem-net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87776>
 
-This makes it possible to hide certain repository from project list
-(while still keeping it accessible, so it's not just an inverse of
- export-ok). By default the file that needs to be created in the
-repository is '.hide'.
+Hi!
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+On Wed, 8 July 2008, Stephan Beyer wrote:
+> Jakub Narebski wrote:
+>> Stephan Beyer wrote:
+>>>
+>>> It is taking the commit message from the commit in the "From <commit> .*"
+>>> line, does *not* change it in any way and then applies the changes using
+>>> threeway merge.
+>> 
+>> Not exactly.  "git am --rebasing" still tries to first just *apply*
+>> the patch, then (I think) it falls back on blob-id based 3way merge.
+> 
+> That's of course totaly right and what I've meant, but unfortunately not
+> what I've written ;-)
+> 
+>>> Keeping that in mind what about dealing with --rebasing like that:
+>>> if --rebasing is given, git am simply generates
+>>> 	pick <commit>
+>>> lines, instead of
+>>> 	patch -3 -k <msg>
+>>> as it is now (and this is not enough, as it seems).
+>> 
+>> It is not.
+>> 
+>> Nevertheless it would be I think better for ordinary patch based rebase
+>> to fall back not on git-am 3way merge, but on cherry-pick based merge
+>> (i.e. on pick).
+> 
+> Hmm, if I get you right you _partly_ agree with me in choosing "pick" for
+> am --rebasing... But cherry-pick should only be chosen if a simple git-apply
+> failed first. Right?
 
-  I used this for something at repo.or.cz, but it is actually lying around
-unused in my patch queue now; before removing it, I'm going to archive it on
-the mailing list, maybe someone will find it useful.
+Right.
 
- Makefile           |    2 ++
- gitweb/gitweb.perl |   11 +++++++++--
- 2 files changed, 11 insertions(+), 2 deletions(-)
+> I just got another idea which could easily be done and perhaps is the
+> right thing :)
+> Generating
+> 	patch -C <commit> -3 <file>
+> 
+> This takes authorship and message from <commit> and does the usual
+> threeway-fallback behavior.
+> 
+> What do you think?
 
+Very good idea (I have proposed something similar either here on in
+another thread).  It would avoid some unnecessary "marshalling" and
+"unmarshalling" which is needed to transfer commit message [unchanged]
+through git-format-patch -> git-am pipeline, namely putting first
+paragraph into subject line, generating then parsing RFC-2822 date,
+using quoted printable encoding for first paragraph / subject header
+(I think).
 
-diff --git a/Makefile b/Makefile
-index 3314dd6..b7c7f42 100644
---- a/Makefile
-+++ b/Makefile
-@@ -195,6 +195,7 @@ GITWEB_SITENAME =
- GITWEB_PROJECTROOT = /pub/git
- GITWEB_PROJECT_MAXDEPTH = 2007
- GITWEB_EXPORT_OK =
-+GITWEB_HIDE_REPO = .hide
- GITWEB_STRICT_EXPORT =
- GITWEB_BASE_URL =
- GITWEB_LIST =
-@@ -1130,6 +1131,7 @@ gitweb/gitweb.cgi: gitweb/gitweb.perl
- 	    -e 's|++GITWEB_PROJECTROOT++|$(GITWEB_PROJECTROOT)|g' \
- 	    -e 's|"++GITWEB_PROJECT_MAXDEPTH++"|$(GITWEB_PROJECT_MAXDEPTH)|g' \
- 	    -e 's|++GITWEB_EXPORT_OK++|$(GITWEB_EXPORT_OK)|g' \
-+	    -e 's|++GITWEB_HIDE_REPO++|$(GITWEB_HIDE_REPO)|g' \
- 	    -e 's|++GITWEB_STRICT_EXPORT++|$(GITWEB_STRICT_EXPORT)|g' \
- 	    -e 's|++GITWEB_BASE_URL++|$(GITWEB_BASE_URL)|g' \
- 	    -e 's|++GITWEB_LIST++|$(GITWEB_LIST)|g' \
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 3b02d87..7ad0faa 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -90,6 +90,11 @@ our $default_projects_order = "project";
- # (only effective if this variable evaluates to true)
- our $export_ok = "++GITWEB_EXPORT_OK++";
- 
-+# hide repository from the list if this file exists
-+# (the repository is still accessible, just not shown in the project list)
-+# (only effective if this variable evaulates to true)
-+our $hide_repo = "++GITWEB_HIDE_REPO++";
-+
- # only allow viewing of repositories also shown on the overview page
- our $strict_export = "++GITWEB_STRICT_EXPORT++";
- 
-@@ -1796,7 +1801,8 @@ sub git_get_projects_list {
- 				# we check related file in $projectroot
- 				if ($check_forks and $subdir =~ m#/.#) {
- 					$File::Find::prune = 1;
--				} elsif (check_export_ok("$projectroot/$filter/$subdir")) {
-+				} elsif ((!$hide_repo or ! -e "$projectroot/$filter/$subdir/$hide_repo")
-+				    and check_export_ok("$projectroot/$filter/$subdir")) {
- 					push @list, { path => ($filter ? "$filter/" : '') . $subdir };
- 					$File::Find::prune = 1;
- 				}
-@@ -1846,7 +1852,8 @@ sub git_get_projects_list {
- 					next PROJECT;
- 				}
- 			}
--			if (check_export_ok("$projectroot/$path")) {
-+			if ((!$hide_repo or ! -e "$projectroot/$path/$hide_repo")
-+			    and check_export_ok("$projectroot/$path")) {
- 				my $pr = {
- 					path => $path,
- 					owner => to_utf8($owner),
+It would be still better to fallback to _pick_, not "git am --3way",
+as the latter IIRC use _shortened_ _blob_ identifiers for pre- and
+post-image to find common ancestor (merge base) for 3way merge.
+Which is not necessary as we can find merge base and base commits
+easier.
+
+-- 
+Jakub Narebski
+Poland
