@@ -1,145 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: error: unlink(.git/refs/remotes/origin/testbranch) failed: was
-	remote does not support deleting refs
-Date: Tue, 8 Jul 2008 00:08:02 -0400
-Message-ID: <20080708040801.GA7186@sigill.intra.peff.net>
-References: <486FE602.3060301@gmx.de> <48700FC2.8080307@gmx.de> <37fcd2780807061134l341ac676ueb674a976ce15e6f@mail.gmail.com>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008 projects?
+Date: Tue, 08 Jul 2008 06:08:56 +0200
+Message-ID: <4872E858.4080607@gmail.com>
+References: <200807080227.43515.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Martin <html-kurs@gmx.de>,
-	git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 06:09:14 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Joshua Roys <roysjosh@gmail.com>,
+	Sverre Rabbelier <alturin@gmail.com>,
+	Sverre Rabbelier <sverre@rabbelier.nl>,
+	David Symonds <dsymonds@gmail.com>,
+	John Hawley <warthog19@eaglescrag.net>,
+	Marek Zawirski <marek.zawirski@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 06:09:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG4Vr-0004ci-IZ
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 06:09:11 +0200
+	id 1KG4WB-0004mF-7U
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 06:09:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750863AbYGHEIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 00:08:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750843AbYGHEIN
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 00:08:13 -0400
-Received: from peff.net ([208.65.91.99]:3877 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750823AbYGHEIN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 00:08:13 -0400
-Received: (qmail 27916 invoked by uid 111); 8 Jul 2008 04:08:12 -0000
-Received: from c-75-75-1-159.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (75.75.1.159)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 08 Jul 2008 00:08:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Jul 2008 00:08:02 -0400
-Content-Disposition: inline
-In-Reply-To: <37fcd2780807061134l341ac676ueb674a976ce15e6f@mail.gmail.com>
+	id S1750909AbYGHEIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 00:08:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750888AbYGHEIe
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 00:08:34 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:47494 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750885AbYGHEId (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 00:08:33 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so727197nfc.21
+        for <git@vger.kernel.org>; Mon, 07 Jul 2008 21:08:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=wZL5q47msP/6NXfkqH80066FA9eeEGGElLG1fUDMI9I=;
+        b=bIcaE7ubsC4bp+sLiceHb8QLva4jN2GGdrcj87VI4RoSxanU5EsB2eHXEWmnxTRIoD
+         RJXWGVGj1VHHwXX8d8JAEcFYpJbde3wxGOkeX0judzT6ys/mQS8exyELpHoGkZEbHS1T
+         raMM1k2C4YI27Tw8KDrJ3ze6NTOJMiClFyxq8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=QNiP68n29iZY4lfKeYz4tDa2Ohhvzj0lDiWL8j77pW2ZtLqPg/JxSG805IC/Txcpua
+         jUBebP1P2eX9ogzAfP2uG9mgjTFCs9hEvosiCLiq4TIJBPA//ZjY5NGPhkZHer8GrX0T
+         QxvhfkIsBW+7u7Gt39GrLeTQ7jzGirKDF5R1s=
+Received: by 10.210.114.15 with SMTP id m15mr3670730ebc.82.1215490109476;
+        Mon, 07 Jul 2008 21:08:29 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.220.244])
+        by mx.google.com with ESMTPS id c24sm7954471ika.4.2008.07.07.21.08.24
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 07 Jul 2008 21:08:26 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <200807080227.43515.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87700>
 
-On Sun, Jul 06, 2008 at 10:34:31PM +0400, Dmitry Potapov wrote:
+Jakub Narebski wrote:
+> 3. Gitweb caching
 
-> On Sun, Jul 06, 2008 at 02:20:18AM +0200, Martin wrote:
-> > But I get another error:
-> > $ git push origin :testbranch
-> > To ssh://myserver.com/my/path/to/repository
-> >  - [deleted]         testbranch
-> > error: unlink(.git/refs/remotes/origin/testbranch) failed: No such file_
-> > or directory
-> > error: Failed to delete
-> >_
-> > Any idea?
-> 
-> It is harmless. It is just that "git push origin :refs/heads/testbranch"
-> cannot remove your local reference to that branch because you already have
-> removed it by running "git branch -d -r origin/testbranch"
+I'll post a complete status update in the next few days.  And three
+large patches (including the mechanize test). ;-)
 
-It is harmless, but it still feels a little wrong to scare the user with
-that message, especially since "Failed to delete" is ambiguous; it looks
-like the main operation, deleting the remote ref, failed. But it didn't;
-the operation that failed was something not even explicitly asked for.
+> Lea has chosen caching data and memcached as primary caching engine,
+> and is working on object layer on top of Git.pm, namely Git::Repo and 
+> friends, which will be used by gitweb.  If I understand correctly 
+> caching is to be done, or at least helped by this layer.
 
-How about this cleanup:
-
--- >8 --
-make deleting a missing ref more quiet
-
-If git attempts to delete a ref, but the unlink of the ref
-file fails, we print a message to stderr. This is usually a
-good thing, but if the error is ENOENT, then it indicates
-that the ref has _already_ been deleted. And since that's
-our goal, it doesn't make sense to complain to the user.
-
-This harmonizes the error reporting behavior for the
-unpacked and packed cases; the packed case already printed
-nothing on ENOENT, but the unpacked printed unconditionally.
-
-Additionally, send-pack would, when deleting the tracking
-ref corresponding to a remote delete, print "Failed to
-delete" on any failure. This can be a misleading
-message, since we actually _did_ delete at the remote side,
-but we failed to delete locally. Rather than make the
-message more precise, let's just eliminate it entirely; the
-delete_ref routine already takes care of printing out a much
-more specific message about what went wrong.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin-send-pack.c          |    3 +--
- refs.c                       |    2 +-
- t/t5404-tracking-branches.sh |    7 +++++++
- 3 files changed, 9 insertions(+), 3 deletions(-)
-
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index d76260c..a708d0a 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -226,8 +226,7 @@ static void update_tracking_ref(struct remote *remote, struct ref *ref)
- 		if (args.verbose)
- 			fprintf(stderr, "updating local tracking ref '%s'\n", rs.dst);
- 		if (ref->deletion) {
--			if (delete_ref(rs.dst, NULL))
--				error("Failed to delete");
-+			delete_ref(rs.dst, NULL);
- 		} else
- 			update_ref("update by push", rs.dst,
- 					ref->new_sha1, NULL, 0, 0);
-diff --git a/refs.c b/refs.c
-index 6c6e9e5..39a3b23 100644
---- a/refs.c
-+++ b/refs.c
-@@ -925,7 +925,7 @@ int delete_ref(const char *refname, const unsigned char *sha1)
- 		i = strlen(lock->lk->filename) - 5; /* .lock */
- 		lock->lk->filename[i] = 0;
- 		err = unlink(lock->lk->filename);
--		if (err) {
-+		if (err && errno != ENOENT) {
- 			ret = 1;
- 			error("unlink(%s) failed: %s",
- 			      lock->lk->filename, strerror(errno));
-diff --git a/t/t5404-tracking-branches.sh b/t/t5404-tracking-branches.sh
-index 1493a92..64fe261 100755
---- a/t/t5404-tracking-branches.sh
-+++ b/t/t5404-tracking-branches.sh
-@@ -10,6 +10,7 @@ test_expect_success 'setup' '
- 	git commit -m 1 &&
- 	git branch b1 &&
- 	git branch b2 &&
-+	git branch b3 &&
- 	git clone . aa &&
- 	git checkout b1 &&
- 	echo b1 >>file &&
-@@ -50,4 +51,10 @@ test_expect_success 'deleted branches have their tracking branches removed' '
- 	test "$(git rev-parse origin/b1)" = "origin/b1"
- '
- 
-+test_expect_success 'already deleted tracking branches ignored' '
-+	git branch -d -r origin/b3 &&
-+	git push origin :b3 >output 2>&1 &&
-+	! grep error output
-+'
-+
- test_done
--- 
-1.5.6.2.381.ga86b
+That's correct, except that I'm not using Git.pm anywhere; Git::Repo is
+independent of Git.pm.  More about that later...
