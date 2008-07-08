@@ -1,61 +1,57 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Remove --undo flags from stg commands and docs
-Date: Tue, 8 Jul 2008 06:21:31 +0200
-Message-ID: <20080708042131.GB2247@diana.vm.bytemark.co.uk>
-References: <20080704063536.9570.43526.stgit@yoghurt> <b0943d9e0807071354j50dca83aya90317f97f559b19@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [FIXED PATCH] Make rebase save ORIG_HEAD if changing current
+	branch
+Date: Tue, 8 Jul 2008 00:26:07 -0400
+Message-ID: <20080708042607.GC7186@sigill.intra.peff.net>
+References: <1215379370-34265-1-git-send-email-benji@silverinsanity.com> <7v7iby9ucx.fsf@gitster.siamese.dyndns.org> <803A3528-2451-4C5D-A48D-5E0C37B8E90E@silverinsanity.com> <7vbq1a8ay3.fsf@gitster.siamese.dyndns.org> <20080707111803.GF31490@mit.edu> <m34p71gbuk.fsf@localhost.localdomain> <F0AD23BC-FA9A-4593-8942-228C428B661E@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 06:22:38 2008
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 06:27:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG4io-00016J-Rx
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 06:22:35 +0200
+	id 1KG4nO-0002cU-TE
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 06:27:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751133AbYGHEVi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jul 2008 00:21:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbYGHEVi
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 00:21:38 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2308 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751110AbYGHEVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 00:21:37 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KG4hn-0000dr-00; Tue, 08 Jul 2008 05:21:31 +0100
+	id S1751135AbYGHE0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 00:26:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbYGHE0S
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 00:26:18 -0400
+Received: from peff.net ([208.65.91.99]:4239 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751103AbYGHE0S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 00:26:18 -0400
+Received: (qmail 28094 invoked by uid 111); 8 Jul 2008 04:26:16 -0000
+Received: from c-75-75-1-159.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (75.75.1.159)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 08 Jul 2008 00:26:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Jul 2008 00:26:07 -0400
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0807071354j50dca83aya90317f97f559b19@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <F0AD23BC-FA9A-4593-8942-228C428B661E@silverinsanity.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87706>
 
-On 2008-07-07 21:54:01 +0100, Catalin Marinas wrote:
+On Mon, Jul 07, 2008 at 11:03:46AM -0400, Brian Gernhardt wrote:
 
-> 2008/7/4 Karl Hasselstr=F6m <kha@treskal.com>:
->
-> > In this one, I've just removed the --undo flag from sync without
-> > adding anything back. Still undetermined if that's OK.
->
-> I think it should be ok (see the other thread). Anyway, have you
-> heard of anyone else using sync apart from me?
+> I personally expected @{1} to be identical to HEAD@{1}.  Since omitting a 
+> ref usually refers to HEAD, why shouldn't omitting it when referring to 
+> the reflogs mean the HEAD log?  The definition of @{1} is useful since 
+> there's no other easy way to get "current branch's reflog", but I think 
+> it's non-obvious.  (Since HEAD@{1} is something completely different, I 
+> think the only other way to refer to @{1} is $(git symbolic-ref)@{1}.)
 
-No, I haven't.
+FYI, there was much discussion about this exact point:
 
-I've tried to understand what it does, and as far as I can tell it
-doesn't do quite what I want. (What I want is the ability to 3-way
-merge StGit patch stacks, so that I can modify the same patch stack in
-several places and merge back and forth. From what I recall, the sync
-command is more like a 2-way merge -- that is, it doesn't take the
-last common ancestor into account. But it's been a while since I
-studied it.)
+  http://thread.gmane.org/gmane.comp.version-control.git/38379
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+(I don't know that it has that much bearing on the current discussion,
+but since I went to the trouble of digging it up, I thought you might
+find it useful).
+
+-Peff
