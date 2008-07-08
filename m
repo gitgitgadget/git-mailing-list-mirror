@@ -1,119 +1,115 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] avoid null SHA1 in oldest reflog
-Date: Tue, 8 Jul 2008 00:38:54 -0400
-Message-ID: <20080708043853.GA18130@sigill.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Cloning marks pack for .keep
+Date: Tue, 8 Jul 2008 04:46:06 +0000
+Message-ID: <20080708044606.GC2542@spearce.org>
+References: <48728A52.8080107@gmx.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 06:40:19 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jean-Luc Herren <jlh@gmx.ch>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 06:47:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG4zn-0005gP-Gu
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 06:40:07 +0200
+	id 1KG56Z-0007hb-AG
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 06:47:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751192AbYGHEjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 00:39:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbYGHEjG
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 00:39:06 -0400
-Received: from peff.net ([208.65.91.99]:2777 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751163AbYGHEjG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 00:39:06 -0400
-Received: (qmail 28168 invoked by uid 111); 8 Jul 2008 04:39:03 -0000
-Received: from c-75-75-1-159.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (75.75.1.159)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 08 Jul 2008 00:39:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Jul 2008 00:38:54 -0400
+	id S1751080AbYGHEqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 00:46:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbYGHEqJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 00:46:09 -0400
+Received: from george.spearce.org ([209.20.77.23]:44628 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751076AbYGHEqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 00:46:08 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id A25933821F; Tue,  8 Jul 2008 04:46:06 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <48728A52.8080107@gmx.ch>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87710>
 
-When the user specifies a ref by a reflog entry older than
-one we have (e.g., "HEAD@{20 years ago"}), we issue a
-warning and give them the "from" value of the oldest reflog
-entry. That is, we say "we don't know what happened before
-this entry, but before this we know we had some particular
-SHA1".
+Jean-Luc Herren <jlh@gmx.ch> wrote:
+> After cloning a local repository with "git clone file://...", the
+> resulting repo had one big pack file, as expected, but also a
+> matching ".keep" file.  Certainly this is a bug, isn't it?  The
+> same happens if I clone git.git.  I used git 1.5.6.1 but observed
+> the same with the current master.  I bisected this behavior to
+> commit fa740529 by Shawn O. Pearce (CC'ing him).  Since this dates
+> back to 2007, I wonder if maybe only I am seeing this, but I
+> cannot think of any reason for it.
 
-However, the oldest reflog entry is often a creation event
-such as clone or branch creation. In this case, the entry
-claims that the ref went from "00000..." (the null sha1) to
-the new value, and the reflog lookup returns the null sha1.
+This is a known issue to me; I have been seeing this behavior
+myself since probably fa74 hit next.  I just don't clone often
+so I've never thought about it much.  ;-)
 
-While this is technically correct (the entry tells us that
-the ref didn't exist at the specified time) it is not
-terribly useful to the end user. What they probably want
-instead is "the oldest useful sha1 that this ref ever had".
-This patch changes the behavior such that if the oldest ref
-would return the null sha1, it instead returns the first
-value the ref ever had.
+I'm willing to bet its the hard-coded:
 
-We never discovered this problem in the test scripts because
-we created "fake" reflogs that had only a specified segment
-of history. This patch updates the tests with a creation
-event at the beginning of history.
++       args.lock_pack = 1;
 
-Signed-off-by: Jeff King <peff@peff.net>
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+inside of fetch_refs_via_pack() that is causing the .keep file to
+stay around after the clone.  When this gets set the caller must
+delete the transport->pack_lockfile (if non-null) once the refs
+have all been updated to reference the objects downloaded into the
+pack file.  Under git-clone all refs are new and there is little to
+no chance that someone issues "git gc" at the same time as the fetch
+is running, so git-clone never cleaned up the pack_lockfile.
+
+I think this would fix it.
+
+--8<--
+Remove unnecessary pack-*.keep file after successful git-clone
+
+Once a clone is successful we no longer need to hold onto the
+.keep file created by the transport.  Delete the file so we
+can later repack the complete repository.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
-This patch was generally well-received in the first posting, but didn't
-get applied. I think it was because the previous thread ended with me
-voicing one concern: should we do this magic other places? I think the
-answer is no, we don't need to. And even if I am wrong, then this is
-probably still the right fix for _this_ bit, and we can fix the other if
-and when a bug report comes in.
+ builtin-clone.c |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
 
- refs.c                |    4 ++++
- t/t1400-update-ref.sh |    9 ++++++++-
- 2 files changed, 12 insertions(+), 1 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 9e8e858..6c6e9e5 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1412,6 +1412,10 @@ int read_ref_at(const char *ref, unsigned long at_time, int cnt, unsigned char *
- 	tz = strtoul(tz_c, NULL, 10);
- 	if (get_sha1_hex(logdata, sha1))
- 		die("Log %s is corrupt.", logfile);
-+	if (is_null_sha1(sha1)) {
-+		if (get_sha1_hex(logdata + 41, sha1))
-+			die("Log %s is corrupt.", logfile);
-+	}
- 	if (msg)
- 		*msg = ref_msg(logdata, logend);
- 	munmap(log_mapped, mapsz);
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index f387d46..ca99d37 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -155,7 +155,8 @@ rm -f .git/$m .git/logs/$m expect
+diff --git a/builtin-clone.c b/builtin-clone.c
+index 7bcc664..7ee8275 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -337,6 +337,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	const struct ref *refs, *head_points_at, *remote_head, *mapped_refs;
+ 	char branch_top[256], key[256], value[256];
+ 	struct strbuf reflog_msg;
++	struct transport *transport = NULL;
  
- git update-ref $m $D
- cat >.git/logs/$m <<EOF
--$C $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 -0500
-+0000000000000000000000000000000000000000 $C $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 -0500
-+$C $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150350 -0500
- $A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150380 -0500
- $F $Z $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150680 -0500
- $Z $E $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150980 -0500
-@@ -186,6 +187,12 @@ test_expect_success \
- 	'Query "master@{May 26 2005 23:32:00}" (exactly history start)' \
- 	'rm -f o e
- 	 git rev-parse --verify "master@{May 26 2005 23:32:00}" >o 2>e &&
-+	 test '"$C"' = $(cat o) &&
-+	 test "" = "$(cat e)"'
-+test_expect_success \
-+	'Query "master@{May 26 2005 23:32:30}" (first non-creation change)' \
-+	'rm -f o e
-+	 git rev-parse --verify "master@{May 26 2005 23:32:30}" >o 2>e &&
- 	 test '"$A"' = $(cat o) &&
- 	 test "" = "$(cat e)"'
- test_expect_success \
+ 	struct refspec refspec;
+ 
+@@ -458,8 +459,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		refs = clone_local(path, git_dir);
+ 	else {
+ 		struct remote *remote = remote_get(argv[0]);
+-		struct transport *transport =
+-			transport_get(remote, remote->url[0]);
++		transport = transport_get(remote, remote->url[0]);
+ 
+ 		if (!transport->get_refs_list || !transport->fetch)
+ 			die("Don't know how to clone %s", transport->url);
+@@ -529,6 +529,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		option_no_checkout = 1;
+ 	}
+ 
++	if (transport)
++		transport_unlock_pack(transport);
++
+ 	if (!option_no_checkout) {
+ 		struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
+ 		struct unpack_trees_options opts;
 -- 
-1.5.6
+1.5.6.74.g8a5e
+
+
+-- 
+Shawn.
