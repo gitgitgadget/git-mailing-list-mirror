@@ -1,88 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: PATCH] Documentation: Tweak use case in "git stash save
- --keep-index"
-Date: Mon, 07 Jul 2008 22:39:58 -0700
-Message-ID: <7vlk0dvsr5.fsf@gitster.siamese.dyndns.org>
-References: <279b37b20807072218o19dabd97y2c4edc62fb980ca4@mail.gmail.com>
+From: Tarmigan <tarmigan+git@gmail.com>
+Subject: git push to amazon s3 [was: [GSoC] What is status of Git's Google Summer of Code 2008 projects?]
+Date: Mon, 7 Jul 2008 22:48:59 -0700
+Message-ID: <905315640807072248w44ccdc4y2f1cf54a10c50c43@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>, szeder@ira.uka.de
-To: "Eric Raible" <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 07:41:20 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Marek Zawirski" <marek.zawirski@gmail.com>, git@vger.kernel.org,
+	"Daniel Barkalow" <barkalow@iabervon.org>,
+	"Nick Hengeveld" <nickh@reactrix.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jul 08 07:50:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG5wv-00040j-G1
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 07:41:13 +0200
+	id 1KG65S-0006bp-TD
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 07:50:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751231AbYGHFkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 01:40:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbYGHFkO
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 01:40:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64166 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751236AbYGHFkN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 01:40:13 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C36D528968;
-	Tue,  8 Jul 2008 01:40:10 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id DE20928919; Tue,  8 Jul 2008 01:40:05 -0400 (EDT)
-In-Reply-To: <279b37b20807072218o19dabd97y2c4edc62fb980ca4@mail.gmail.com>
- (Eric Raible's message of "Mon, 7 Jul 2008 22:18:03 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5493636A-4CB0-11DD-B073-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1751376AbYGHFtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 01:49:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751372AbYGHFtD
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 01:49:03 -0400
+Received: from fk-out-0910.google.com ([209.85.128.186]:40583 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751351AbYGHFtB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 01:49:01 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so1325094fkq.5
+        for <git@vger.kernel.org>; Mon, 07 Jul 2008 22:48:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:mime-version:content-type:content-transfer-encoding
+         :content-disposition:x-google-sender-auth;
+        bh=jc/mLGcLvhkITROOaI4Bq3UpiZNaICYtke1d+rDo8VU=;
+        b=ZDVN03xd/FJdDDz6Dq7G32CoX84jMj9pZbHyyDJsSEJfiDMhCDme915JhmcoDPf8N6
+         Eym1EPDQ/ObMzAv7XXzlIP9FCiQmliJKCA7BY0m1wk5fVIYlu7pX9v7iTEa8QpUUnZCW
+         OrOU8VM/D8XI44zjzxpYem2LyBfhD8ceogJ2Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=YDzyafxlusacSvf4XQ68THZYgPWD/mYXCHx6OHp8PPy785IksLK0aX2TvDm221tk0D
+         p1ge5APiAmJqfTLAdIvUb720p0IqjQ815q0RtcU9LoiQ0LLejnWq9AsWX8DnZCG2gWYm
+         xrIOU2RT93yxmLEK1BMF8cJYKKIAWLeOSZ27k=
+Received: by 10.125.83.17 with SMTP id k17mr1152642mkl.78.1215496139471;
+        Mon, 07 Jul 2008 22:48:59 -0700 (PDT)
+Received: by 10.125.99.6 with HTTP; Mon, 7 Jul 2008 22:48:59 -0700 (PDT)
+Content-Disposition: inline
+X-Google-Sender-Auth: a58fd8cfec2f1a88
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87719>
 
-"Eric Raible" <raible@gmail.com> writes:
+(trimmed cc list to folks who've touched http-push.c)
 
-> The documentation suggests using "git stash apply" in the
-> --keep-index workflow even though doing so will lead to clutter
-> in the stash.  And given that the changes are about to be
-> committed anyway "git stash pop" is more sensible.
-
-Yeah, I was pondering about this myself.  After popping the remaining
-part, you would "git add -p" the next batch, the same "stash save -k-i" to
-save the remaining bits away, and continue.  Will queue.
-
-BUT
-
-It is very likely that in this workflow you would sometimes find that what
-you staged (and left in the working tree after "save -k-i") is faulty and
-you need to tweak it in place to make it into a good enough shape for
-committing.  The example probably should talk about what happens.
-Editing, testing and committing is fine, but then what?  Will the "pop"
-wipe that unplanned change you made after "save -k-i" out? (the answer is
-no and this is safe, but the reader of the documentaiton needs it
-explained)
-
-Also this may be a good way to split an existing commit into five during a
-"rebase -i" session, and the example in the documentation might want to
-talk about it in that larger picture.
-
->  Documentation/git-stash.txt |    5 +++--
->  1 files changed, 3 insertions(+), 2 deletions(-)
+On Mon, Jul 7, 2008 at 9:19 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Using Marek's pack generation code I added support for push over
+> the dumb sftp:// and amazon-s3:// protocols, with the latter also
+> supporting transparent client side encryption.
 >
-> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-> index df26901..bf241da 100644
-> --- a/Documentation/git-stash.txt
-> +++ b/Documentation/git-stash.txt
-> @@ -201,9 +201,10 @@ $ git add --patch foo
->  $ git stash save --keep-index
->  $ build && run tests
->  $ git commit -m 'First part'
-> -$ git stash apply
-> +$ git stash pop
-> +... repeat above five steps until one commit remains ...
->  $ build && run tests
-> -$ git commit -a -m 'Second part'
-> +$ git commit foo -m 'Remaining parts'
->  ----------------------------------------------------------------
+> I chose to add these features to jgit partly as an exercise to prove
+> that Marek's code was built well enough to be reused for this task,
+> partly because I wanted to backup some private personal repositories
+> to Amazon S3, and partly to prove that multiple dumb transports
+> could implement push support.
+
+That sounds cool.  I've been looking into adding s3 push into cgit,
+and was looking into modifying http-push.c, but got in over my head.
+I had trouble trying to make it fit into the DAV model that http-push
+is built around, in part because s3 doesn't seem to support any
+locking and a lot of the http-push code seems to be around the
+locking.
+
+Can you describe the s3 support that you added?  Did you do any
+locking when you pushed?  The objects and packs seem likely to be
+naturally OK, but I was worried about refs/ and especially
+objects/info/packs and info/refs (fetch over http works currently out
+of the box with publicly accessable s3 repos).
+
+Thanks,
+Tarmigan
+
+PS For anyone else who's interested, here's some instructions on how I
+got started with s3 and git:
+
+Start by creating an amazon s3 account
+
+Next download and install "aws" from http://timkay.com/aws/
+Set it up and install your amazon keys as specified.
+
+# I setup a bucket named git_test.
+s3mkdir git_test
+
+#  Run this script to upload a git repo to amazon (run
+update-server-info first):
+#!/bin/bash
+for i in $(tree -fi --noreport git_test_orig.git) ; do
+    #exclude directories
+    if [ ! -d $i ] ; then
+        echo $i
+        s3put "x-amz-acl: public-read" git_test/ $i
+    fi
+done
+
+# Then you can clone (really, feel free to clone from this url.  It
+should just work):
+git clone http://s3.amazonaws.com/git_test/git_test_orig.git
+
+# This experimenting on the git.git repo will set you back about US$0.05
