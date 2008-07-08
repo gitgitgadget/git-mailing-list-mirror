@@ -1,115 +1,120 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008
-	projects?
-Date: Tue, 8 Jul 2008 16:42:39 +0200
-Message-ID: <20080708144239.GJ6726@leksak.fem-net>
-References: <200807080227.43515.jnareb@gmail.com> <7vmyktxjlq.fsf@gitster.siamese.dyndns.org> <20080708014734.GE6726@leksak.fem-net> <200807080939.31216.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008 projects?
+Date: Tue, 8 Jul 2008 18:12:14 +0200
+Message-ID: <200807081812.15651.jnareb@gmail.com>
+References: <200807080227.43515.jnareb@gmail.com> <200807080939.31216.jnareb@gmail.com> <20080708144239.GJ6726@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 16:44:08 2008
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Tue Jul 08 18:13:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGEQC-0002Cn-51
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 16:44:00 +0200
+	id 1KGFp3-0003Zo-RW
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 18:13:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757150AbYGHOmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 10:42:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757127AbYGHOmt
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 10:42:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38851 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757070AbYGHOms (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 10:42:48 -0400
-Received: (qmail invoked by alias); 08 Jul 2008 14:42:46 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp050) with SMTP; 08 Jul 2008 16:42:46 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+yoOcRfV6yrPxFGhLPcTXzfPXifaCovjOZgU9QSo
-	hVcOPRykN+P+02
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KGEOt-0000ku-A8; Tue, 08 Jul 2008 16:42:39 +0200
+	id S1753950AbYGHQMc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 12:12:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753731AbYGHQMc
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 12:12:32 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:29084 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750929AbYGHQMb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 12:12:31 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1199134ywe.1
+        for <git@vger.kernel.org>; Tue, 08 Jul 2008 09:12:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=vlS5LkqHyEgjwjzSifsUimy4D6jInmvSevYY9xX+jRE=;
+        b=Ztsd/zP+1a2qbled9ngzctx4m9R1p0sJ9v2J6OVhULA1RXKLXTPGdED0deM5TBhuwe
+         VLNGP3zQ1hwm3Sy+i+FvcRBlh4HOwNEGFGcsL6seCovZ4/hKBabOK9Dux9Zm8heUl18C
+         tsKO4OpDRZ3fwEymJdShwSdWqpTqgpj7dhx/A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=gUh5vM2NNIi8JR9eXB87dUHfjFJ50zfLXSan8T2xgbzYMB8JXooXqIvzRvHgWyVc6P
+         J/ZBGmsTrWVuPftn4e0SIPpNmExdS1K6qBXrpnz9/Fdo5Cn15HcjsBhYmjwzuSB70tFI
+         g7H/irkQWMl47IlHmp0zjXLWBQDtgXMDf+pK8=
+Received: by 10.125.125.6 with SMTP id c6mr1413898mkn.108.1215533541297;
+        Tue, 08 Jul 2008 09:12:21 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.205.145])
+        by mx.google.com with ESMTPS id 23sm3776812hud.52.2008.07.08.09.12.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 08 Jul 2008 09:12:19 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080708144239.GJ6726@leksak.fem-net>
 Content-Disposition: inline
-In-Reply-To: <200807080939.31216.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87768>
 
-Hi,
+Stephan Beyer wrote:
+> Jakub Narebski wrote:
 
-Jakub Narebski wrote:
-> > Yes, you are right that am --rebasing is a no-op.
-> > That option was a little mystery to me, because it seemed to do nothing
-> > special, but I'll check again (bash-completion etc) and do appropriate
-> > changes.
+>>> Yes, you are right that am --rebasing is a no-op.
+>>> That option was a little mystery to me, because it seemed to do nothing
+>>> special, but I'll check again (bash-completion etc) and do appropriate
+>>> changes.
+>> 
+>> Undocumented option '--rebasing' to git-am is internal option changing
+>> git-am behavior to be better used by git-rebase, namely it does not
+>> change commit message even if it doesn't follow git commit message
+>> convention,
 > 
-> Undocumented option '--rebasing' to git-am is internal option changing
-> git-am behavior to be better used by git-rebase, namely it does not
-> change commit message even if it doesn't follow git commit message
-> convention,
+> Ah yes, I've seen it now.
+>
+> It is taking the commit message from the commit in the "From <commit> .*"
+> line, does *not* change it in any way and then applies the changes using
+> threeway merge.
 
-Ah yes, I've seen it now.
-It is taking the commit message from the commit in the "From <commit> .*"
-line, does *not* change it in any way and then applies the changes using
-threeway merge.
+Not exactly.  "git am --rebasing" still tries to first just *apply*
+the patch, then (I think) it falls back on blob-id based 3way merge.
+ 
+> Keeping that in mind what about dealing with --rebasing like that:
+> if --rebasing is given, git am simply generates
+> 	pick <commit>
+> lines, instead of
+> 	patch -3 -k <msg>
+> as it is now (and this is not enough, as it seems).
 
-Keeping that in mind what about dealing with --rebasing like that:
-if --rebasing is given, git am simply generates
-	pick <commit>
-lines, instead of
-	patch -3 -k <msg>
-as it is now (and this is not enough, as it seems).
+It is not.
 
-Does someone have strong objections against that?
+Nevertheless it would be I think better for ordinary patch based rebase
+to fall back not on git-am 3way merge, but on cherry-pick based merge
+(i.e. on pick).
 
-Speed could be one point in the case that git-apply just works without
-needing threeway-fallback, but in the case of the fallback this will be
-slower than pick, I think. So I'd not value that too high, but perhaps
-there are opinions against my view.
-Perhaps I am missing another point, too?
+> The alternative for doing "pick" is teaching git-sequencer's "patch"
+> insn an option that emulates the --rebasing behavior.
+> 
+> For me this feels somehow unclean. But perhaps there are good reasons.
 
+Why unclean?
 
-The alternative for doing "pick" is teaching git-sequencer's "patch"
-insn an option that emulates the --rebasing behavior.
+But I agree that it would be nice to simplify '--rebasing' logic, for
+example using patch or 2way merge to generate tree, and commit message
+taken directly from commit, not via 'format-patch | am' pipeline.
+ 
+> Of course, somehow I think that rebase and rebase-i should be merged,
+> calling sequencer directly, with the main difference that -i will
+> invoke an editor to allow editing of the TODO file.
+> But nobody is hurt, if I put such a change far far away.
 
-For me this feels somehow unclean. But perhaps there are good reasons.
-
-> for example if it begins not with single line summary
-> of commit, separated by empty line, but by multi-line paragraph.
-> See also t/t3405-rebase-malformed.sh
-
-Well, I have a test script that runs
- for i in t0023* t3350* t340* t3901* t4014* t4150* t5520* t7402*
-and I run that script before I do a commit and after I rebased.
-And I ran the whole test suite before I posted the patchset to the list.
-What I want to say is: t3405 did not fail with my --rebasing no-op.
-
-That's perhaps one reason why I forgot about implementing --rebasing
-correctly.
-
-> Although I am not sure if when rebase is rewritten using git-sequencer
-> implementing "git am --rebasing" would be truly needed.
-
-I didn't want to touch that behavior for several reasons.
-
-Of course, somehow I think that rebase and rebase-i should be merged,
-calling sequencer directly, with the main difference that -i will
-invoke an editor to allow editing of the TODO file.
-But nobody is hurt, if I put such a change far far away.
-
-
-Regards,
-  Stephan
+rebase-m and rebase-i can be merged; ordinary rebase uses other
+mechanism: git-am pipeline, and not cherry-picking.
 
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+Jakub Narebski
+Poland
