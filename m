@@ -1,143 +1,69 @@
-From: Christian Jaeger <christian@jaeger.mine.nu>
-Subject: uninstalling Git
-Date: Tue, 08 Jul 2008 06:57:20 +0200
-Message-ID: <4872F3B0.6050406@jaeger.mine.nu>
+From: Jeff King <peff@peff.net>
+Subject: Re: An alternate model for preparing partial commits
+Date: Tue, 8 Jul 2008 00:58:56 -0400
+Message-ID: <20080708045855.GA2037@sigill.intra.peff.net>
+References: <9af502e50806262350t6e794a92g7751147f1882965@mail.gmail.com> <alpine.DEB.1.00.0806271408290.9925@racer> <7vprq2rbfz.fsf@gitster.siamese.dyndns.org> <20080628050317.GE9451@sigill.intra.peff.net> <alpine.DEB.1.00.0806281549060.9925@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 08 06:58:32 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 08 07:00:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG5Ha-0001Wu-AI
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 06:58:30 +0200
+	id 1KG5J5-0001xB-BA
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 07:00:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751251AbYGHE5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 00:57:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbYGHE5d
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 00:57:33 -0400
-Received: from ethlife-a.ethz.ch ([129.132.49.178]:59460 "HELO ethlife.ethz.ch"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751236AbYGHE5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 00:57:32 -0400
-Received: (qmail 21058 invoked from network); 8 Jul 2008 04:57:29 -0000
-Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
-  by localhost with SMTP; 8 Jul 2008 04:57:29 -0000
-Received: (qmail 23309 invoked from network); 8 Jul 2008 04:57:21 -0000
-Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
-  by elvis-jaeger.mine.nu with SMTP; 8 Jul 2008 04:57:21 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.14 (X11/20080509)
+	id S1751298AbYGHE7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 00:59:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751304AbYGHE7H
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 00:59:07 -0400
+Received: from peff.net ([208.65.91.99]:3043 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751259AbYGHE7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 00:59:06 -0400
+Received: (qmail 28357 invoked by uid 111); 8 Jul 2008 04:59:05 -0000
+Received: from c-75-75-1-159.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (75.75.1.159)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 08 Jul 2008 00:59:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Jul 2008 00:58:56 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0806281549060.9925@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87713>
 
-Hello,
+On Sat, Jun 28, 2008 at 03:51:12PM +0100, Johannes Schindelin wrote:
 
-There are two situations where I'm missing a way to uninstall Git:
+> > Here's a somewhat hackish implementation of "git stash -i" that just 
+> > relies on "add -i":
+> 
+> I like it.
 
-- accidental install with prefix=/usr instead of prefix=/usr/local which 
-I usually choose
-- removing cruft from older gits, like tools and their man/info pages 
-which don't exist anymore in newer Git releases
+Thinking about this some more, it seems to me to lack one really
+important feature that "git add -i" has: you must stash all in one go.
 
-I wonder why there's no "uninstall" make target. Ok, maybe some people 
-would argue that installing and uninstalling software through make has 
-never been the best way, but usually I don't have problems with software 
-providing "make uninstall", and I'm left with no solution for the above 
-once I choose to use "make install" for Git.
+That is, I may do some of the adds as "git add <file1> <file2>" and then
+pick out the rest of the changes with "git add -p". And traditionally,
+stashing has been about dumping all changes, so everything happened at
+once.
 
-[
-Well, there's the "checkinstall" tool, but for some reason using 
-checkinstall (version 1.6.1(-7) from Debian lenny) leads to some strange 
-problems:
+But I think what I would really like here is to say "now I don't want to
+stage for a commit; I want to stage into some bucket, so that I can
+clear my workspace for making the commit". And then proceed to use "add"
+or "add -i" in the usual way, except that they go into my bucket. And at
+the end, I switch back to staging for a commit, make the commit, and
+then start picking things out of my bucket.
 
-at first I always got (with a fresh tree):
+And that workflow is not too hard to imagine by just pointing
+GIT_INDEX_FILE to the bucket.
 
-...
-if test -r /usr/share/info/dir; then \
-      install-info --info-dir=/usr/share/info git.info ;\
-      install-info --info-dir=/usr/share/info gitman.info ;\
-    else \
-      echo "No directory found in /usr/share/info" >&2 ; \
-    fi
+But I am still thinking on this, so I'll let it percolate and then maybe
+try to implement something once I have a better sense of exactly what
+workflow I want. I just thought I would throw it out there for others to
+ponder.
 
-No `START-INFO-DIR-ENTRY' and no `This file documents'.
-install-info(git.info): unable to determine description for `dir' entry 
-- giving up
-
-No `START-INFO-DIR-ENTRY' and no `This file documents'.
-install-info(gitman.info): unable to determine description for `dir' 
-entry - giving up
-make[1]: *** [install-info] Error 1
-make[1]: Leaving directory `/usr/src/GIT/T/git.1/Documentation'
-make: *** [install-info] Error 2
-
-
-and now I'm consistently getting (each time with a fresh tree):
-
-asciidoc -b docbook -d book user-manual.txt
-FAILED: unexpected error:
-------------------------------------------------------------
-Traceback (most recent call last):
-  File "/usr/bin/asciidoc", line 4014, in asciidoc
-    config.load_all(CONF_DIR)
-  File "/usr/bin/asciidoc", line 3637, in load_all
-    for f in os.listdir(filters):
-OSError: [Errno 2] No such file or directory: '/etc/asciidoc/filters'
-...
-
-
-and now, again with a fresh tree but without -j2:
-
-# checkinstall make prefix=/usr install install-doc install-info
-...
-asciidoc -b docbook -d manpage -f asciidoc.conf \
-         -agit_version=1.5.6.GIT -o git-add.xml+ git-add.txt
-FAILED: unexpected error:
-------------------------------------------------------------
-Traceback (most recent call last):
-  File "/usr/bin/asciidoc", line 4014, in asciidoc
-    config.load_all(CONF_DIR)
-  File "/usr/bin/asciidoc", line 3637, in load_all
-    for f in os.listdir(filters):
-OSError: [Errno 2] No such file or directory: '/etc/asciidoc/filters'
-------------------------------------------------------------
-make[1]: *** [git-add.xml] Error 1
-make[1]: Leaving directory `/usr/src/GIT/T/git.1/Documentation'
-make: *** [install-doc] Error 2
-
-****  Installation failed. Aborting package creation.
-
-Cleaning up...OK
-
-Bye.
-
-
-where /etc/asciidoc/filters clearly is a non-empty directory. It seems 
-to behave non-deterministically. So my guess is that checkinstall is 
-using LD_PRELOAD tricks or some such and just doesn't work for the task 
-here, at least not without fixing something.
-]
-
-So,
-- is there any (good?) reason there is no uninstall target? Should I 
-look into creating one?
-- do you have better or working alternative suggestions?
-
-Actually I'd be happy if there are more elegant solutions than make 
-uninstall, since there is the race/hen-and-egg problem of having to run 
-"make uninstall" from the tree before checking out the new version, and 
-checking out the new version of course needs git, meaning the "right" 
-approach would be to keep the working dir of the last install for the 
-purpose of uninstallation until after having built the new version. 
-Maybe it's enough to just keep the toplevel Makefile, but that would be 
-making assumptions. Maybe I should talk with the Debian people about how 
-to build debs easily for such purposes (and not using the standard 
-Debian packages -- I'd really like to just have an own single package 
-without any applied patches etc.)?
-
-Thanks,
-Christian.
+-Peff
