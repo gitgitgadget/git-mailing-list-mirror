@@ -1,89 +1,126 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008 projects?
-Date: Wed, 09 Jul 2008 09:24:10 +1200
-Message-ID: <4873DAFA.6060502@vilain.net>
-References: <200807080227.43515.jnareb@gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: [JGIT PATCH] Egit move/delete bugfix, do not lose files when moving folders
+Date: Tue, 8 Jul 2008 23:51:47 +0200
+Message-ID: <200807082351.47636.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2; format=flowed
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Joshua Roys <roysjosh@gmail.com>,
-	Sverre Rabbelier <alturin@gmail.com>,
-	Sverre Rabbelier <sverre@rabbelier.nl>,
-	David Symonds <dsymonds@gmail.com>,
-	Lea Wiemann <LeWiemann@gmail.com>,
-	John Hawley <warthog19@eaglescrag.net>,
-	Marek Zawirski <marek.zawirski@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 23:25:30 2008
+Cc: git@vger.kernel.org, "'Marek Zawirski'" <marek.zawirski@gmail.com>
+To: "'Shawn O. Pearce'" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jul 08 23:57:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGKgd-00067v-GO
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 23:25:23 +0200
+	id 1KGLC5-0001mk-AW
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 23:57:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751060AbYGHVY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 17:24:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750994AbYGHVY0
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 17:24:26 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:45141 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750925AbYGHVYZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 17:24:25 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 6965B21C978; Wed,  9 Jul 2008 09:24:22 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00,RDNS_DYNAMIC
-	autolearn=no version=3.2.3
-Received: from [192.168.69.179] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id BC99C21C971;
-	Wed,  9 Jul 2008 09:24:11 +1200 (NZST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-In-Reply-To: <200807080227.43515.jnareb@gmail.com>
+	id S1751813AbYGHV4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 17:56:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751639AbYGHV4q
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 17:56:46 -0400
+Received: from av9-1-sn3.vrr.skanova.net ([81.228.9.185]:37152 "EHLO
+	av9-1-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751597AbYGHV4p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 17:56:45 -0400
+Received: by av9-1-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id 8371137F76; Tue,  8 Jul 2008 23:56:43 +0200 (CEST)
+Received: from smtp3-1-sn3.vrr.skanova.net (smtp3-1-sn3.vrr.skanova.net [81.228.9.101])
+	by av9-1-sn3.vrr.skanova.net (Postfix) with ESMTP
+	id 5153737E5C; Tue,  8 Jul 2008 23:56:43 +0200 (CEST)
+Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp3-1-sn3.vrr.skanova.net (Postfix) with ESMTP id 3628837E46;
+	Tue,  8 Jul 2008 23:56:42 +0200 (CEST)
+User-Agent: KMail/1.9.9
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87800>
 
-Jakub Narebski wrote:
-> 1. GitTorrent (???)
->
-> Student: Joshua Roys
-> Mentor: Sam Vilain
->
-> There was short thread of me asking about project
->   http://thread.gmane.org/gmane.comp.version-control.git/83611
-> where I got gittorrent mailing list (no activity at least according to 
-> list archive http://lists.utsl.gen.nz/pipermail/gittorrent/) and URL 
-> for project repo / gitweb... which is currently down, so I cannot check 
-> if there is anything here.
->
-> What is the status of this project, please?
->
-> http://www.codinghorror.com/blog/archives/001134.html ("Don't Got Dark")
->   
+We lied to Eclipse in the move/delete hook and told it we had already
+moved a folder. That wasn't true so the original was lost. With this
+patch Eclipse will move the code for us, but it is not added to the index.
 
-Hi, thanks for your interest.  I don't know when it was you checked - it 
-may have been during a brief network outage our admins needed to do 
-(unfortunately utsl.gen.nz is on a grace-and-favour service arrangement 
-with its hosts, Catalyst), but the gitweb 
-(http://utsl.gen.nz/gitweb/?p=VCS-Git-Torrent) is currently running, and 
-I hope you can see the current activity.
+This is an intermediate fix until we actually manipulate the index properly.
 
-I announced before that I would be sending an update shortly after the 
-mid-term deadline, and I still plan on doing this.  Please be patient 
-and wait until that happens in a week or so.
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
 
-Cheers,
-Sam.
+ .../org/spearce/egit/core/GitMoveDeleteHook.java   |   20 +++++++-------------
+ 1 files changed, 7 insertions(+), 13 deletions(-)
+
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/GitMoveDeleteHook.java b/org.spearce.egit.core/src/org/spearce/egit/core/GitMoveDeleteHook.java
+index 22a14c4..cc4059c 100644
+--- a/org.spearce.egit.core/src/org/spearce/egit/core/GitMoveDeleteHook.java
++++ b/org.spearce.egit.core/src/org/spearce/egit/core/GitMoveDeleteHook.java
+@@ -27,7 +27,6 @@ import org.spearce.jgit.lib.GitIndex;
+ import org.spearce.jgit.lib.Repository;
+ 
+ class GitMoveDeleteHook implements IMoveDeleteHook {
+-	private static final boolean NOT_ALLOWED = true;
+ 	private static final boolean I_AM_DONE = true;
+ 
+ 	private static final boolean FINISH_FOR_ME = false;
+@@ -54,7 +53,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
+ 			e.printStackTrace();
+ 			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(), 0,
+ 					CoreText.MoveDeleteHook_operationError, e));
+-			return NOT_ALLOWED;
++			return I_AM_DONE;
+ 		}
+ 	}
+ 
+@@ -97,7 +96,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
+ 				}
+ 				tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
+ 						0, "Destination not in a git versioned project", null));
+-				return NOT_ALLOWED;
++				return FINISH_FOR_ME;
+ 			}
+ 			GitIndex index2 = map2.getRepository().getIndex();
+ 			tree.standardMoveFile(source, destination, updateFlags, monitor);
+@@ -114,7 +113,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
+ 			e.printStackTrace();
+ 			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(), 0,
+ 					CoreText.MoveDeleteHook_operationError, e));
+-			return NOT_ALLOWED;
++			return I_AM_DONE;
+ 
+ 		}
+ 	}
+@@ -124,25 +123,20 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
+ 			final IProgressMonitor monitor) {
+ 		// TODO: Implement this. Should be relatively easy, but consider that
+ 		// Eclipse thinks folders are real thinsgs, while Git does not care.
+-		return NOT_ALLOWED;
++		return FINISH_FOR_ME;
+ 	}
+ 
+ 	public boolean moveProject(final IResourceTree tree, final IProject source,
+ 			final IProjectDescription description, final int updateFlags,
+ 			final IProgressMonitor monitor) {
+-		// Never allow moving a project as it can complicate updating our
+-		// project data with the new repository mappings. To move a project
+-		// disconnect the GIT team provider, move the project, then reconnect
+-		// the GIT team provider.
+-		// We should be able to do this without too much effort when the
++		// TODO: We should be able to do this without too much effort when the
+ 		// projects belong to the same Git repository.
+-		//
+-		return NOT_ALLOWED;
++		return FINISH_FOR_ME;
+ 	}
+ 
+ 	private boolean cannotModifyRepository(final IResourceTree tree) {
+ 		tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(), 0,
+ 				CoreText.MoveDeleteHook_cannotModifyFolder, null));
+-		return NOT_ALLOWED;
++		return I_AM_DONE;
+ 	}
+ }
+\ No newline at end of file
+-- 
+1.5.6.2.220.g44701
