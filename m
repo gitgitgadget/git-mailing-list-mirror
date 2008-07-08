@@ -1,116 +1,81 @@
-From: "Rob Shearman" <robertshearman@gmail.com>
-Subject: Re: [PATCH 3/3] imap-send.c: Clean up coding style to better match the rest of the git codebase.
-Date: Wed, 9 Jul 2008 00:21:30 +0100
-Message-ID: <1096648c0807081621x669a9bc4ie484fd004674918d@mail.gmail.com>
-References: <1096648c0807070105s2b4ea1d9t2ab1eb17e891e3e8@mail.gmail.com>
-	 <7vfxqm5ba2.fsf@gitster.siamese.dyndns.org>
-	 <1096648c0807070517o8f22f0cs4d25103675bd635d@mail.gmail.com>
-	 <m3zloteukz.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] bash: offer only paths after '--'
+Date: Tue, 08 Jul 2008 16:23:01 -0700
+Message-ID: <7v7ibwq7u2.fsf@gitster.siamese.dyndns.org>
+References: <279b37b20807071341k3551e61cl10c5969600ba8218@mail.gmail.com>
+ <20080708044922.GD2542@spearce.org>
+ <7vprppvt7a.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0807081335470.4319@eeepc-johanness>
+ <20080708165614.GB8224@neumann> <7vtzf0rusw.fsf@gitster.siamese.dyndns.org>
+ <20080708231837.GA16895@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 01:22:30 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: SZEDER GGGbor <szeder@ira.uka.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Raible <raible@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Jul 09 01:24:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGMVx-0000w7-CQ
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 01:22:29 +0200
+	id 1KGMXh-0001KX-Hr
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 01:24:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757213AbYGHXVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 19:21:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759623AbYGHXVd
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 19:21:33 -0400
-Received: from wr-out-0506.google.com ([64.233.184.239]:8183 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759616AbYGHXVb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 19:21:31 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so1980805wri.5
-        for <git@vger.kernel.org>; Tue, 08 Jul 2008 16:21:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=7Btldb4EWrm+C9073h7vHuyYg+FAsrnIFSFwnHig2+g=;
-        b=h3bFw9/Eab2wQI3Y46lm0bKqhuGN+ouVXgf6mY7LovoL7VTEvia7EFD3DYll5KxDU4
-         nDmZXS6xNscbYYg5vP5ImgwVRGYoqtie+zdAtZ2tDw3EAG8ooCNVXTyC+LgyMdmEtgf1
-         GxjLZ1NyjdUH4YxON1lIzyW1q8bZpbLMee1PM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=tySkY1U0aiiMjl/kVPml5ZtFhNWy1nZBXqKw/shskvu08yOwTXHDfyCVzVApqdN9/R
-         VDthX7lxxf+DaAERu0hplb0ks7ocZo8LOkKs2al83a7W+VUkG3Yx8Ta8qdiWyGMR4KkQ
-         I8n3BWG3d1muOhTWkCy6EuzfXr5WrnetIi9Y0=
-Received: by 10.90.54.11 with SMTP id c11mr7695539aga.20.1215559290257;
-        Tue, 08 Jul 2008 16:21:30 -0700 (PDT)
-Received: by 10.90.93.17 with HTTP; Tue, 8 Jul 2008 16:21:30 -0700 (PDT)
-In-Reply-To: <m3zloteukz.fsf@localhost.localdomain>
-Content-Disposition: inline
+	id S1759873AbYGHXXP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jul 2008 19:23:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759271AbYGHXXO
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 19:23:14 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53848 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759873AbYGHXXN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jul 2008 19:23:13 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3F25C16212;
+	Tue,  8 Jul 2008 19:23:12 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6377E16210; Tue,  8 Jul 2008 19:23:04 -0400 (EDT)
+In-Reply-To: <20080708231837.GA16895@spearce.org> (Shawn O. Pearce's message
+ of "Tue, 8 Jul 2008 23:18:37 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D5497DB6-4D44-11DD-BD57-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87809>
 
-2008/7/7 Jakub Narebski <jnareb@gmail.com>:
-> "Rob Shearman" <robertshearman@gmail.com> writes:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
+
+> Junio C Hamano <gitster@pobox.com> wrote:
+>> SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+>>=20
+>> > Hope that I got the commit message right (;
+>>=20
+>> It was very readable.  Thanks.
 >
->> 2008/7/7 Junio C Hamano <gitster@pobox.com>:
->> > These patches seem to have been linewrapped severely.  I _could_ fix them
->> > up and apply, but the last one being about whitespace and style fixes, I'd
->> > rather not.
->>
->> 2008/6/22 Junio C Hamano <gitster@pobox.com>:
->> > Next time please do _not_ attach *.diff but follow the style of patch
->> > submission other people do (see recent patch from Linus for example).
->>
->> How do you propose I fix this? I attached the patch last time to avoid
->> the problem of line wrapping.
+> Acked-by: Shawn O. Pearce <spearce@spearce.org>
 >
-> If possible to turn of linewrapping,
-
-It isn't possible AFAIK to turn off linewrapping in Gmail.
-
-> or use either git-send-email
-> (I think you can send patches also via Gmail) or git-imap-send,
-
-Ok, but git-imap-send only puts the emails into your Drafts folder so
-that you can send them with your normal email client (which is what
-does the linewrapping).
-
-For people not familiar with git-imap-send, it has the advantages of
-making it possible to automatically add signatures, reply-to headers,
-organisation header, etc. already configured in your email client as
-well as saving a copy of the email into your "Sent Mail" folder, if
-configured.
-
-> then preferred solution is to have patch inline.
+>> > +__git_has_doubledash ()
+>> > +{
+>> > +	local c=3D1
+>> > +	while [ $c -lt $COMP_CWORD ]; do
+>> > +		if [ "--" =3D "${COMP_WORDS[c]}" ]; then
+>> > +			return 0
+>> > +		fi
+>> > +		c=3D$((++c))
+>>=20
+>> This assignment is somewhat curious, although it should work as expe=
+cted
+>> either way ;-)
 >
-> If it is not possible, then attach the patch, but preferrably
->  1) with text/plain mimetype (.txt extension instead of .patch or
->    .diff could be required for that)
->
->  2) 8bit (preferred) or quoted-printable (if 8bit is not possible)
->    transfer encoding (base64 is terrible waste of space); text/plain
->    should chose quoted-printable at worst
->
->  3) use "inline" attachement (select 'suggest to display attachement'
->    or something like that), so it is possible to select attachement
->    and hit reply.
+> I agree, its damned odd.  But we already do this in the same
+> sort of loop inside of _git_branch() (see around line 541 in
+> next).  This new patch is only sticking with our current set
+> of conventions in the script, so I say its fine.
 
-I think this was the case with the patches originally sent, but I used
-"git format-patch --attach --stdout ... | git imap-send" so if the
-mails didn't meet one of those points then it should be fixed in
-git-format-patch.
-
-However, I did follow the first suggestion of using "git email-send"
-and then I found it didn't work due to a bug, for which I will send a
-patch in due course.
-
--- 
-Rob Shearman
+Chuckling...  Thanks for sanity checking and an Ack.
