@@ -1,116 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What should "git branch --merged master" do?
-Date: Mon, 07 Jul 2008 23:49:13 -0700
-Message-ID: <7v8wwcx446.fsf@gitster.siamese.dyndns.org>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: Cloning marks pack for .keep
+Date: Tue, 8 Jul 2008 09:57:46 +0300
+Message-ID: <20080708065746.GA3536@mithlond.arda.local>
+References: <48728A52.8080107@gmx.ch> <20080708044606.GC2542@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Lars Hjemli <hjemli@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 08 08:50:32 2008
+Cc: Jean-Luc Herren <jlh@gmx.ch>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jul 08 08:59:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG71t-000405-Lr
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 08:50:26 +0200
+	id 1KG7AI-0007Zk-Mb
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 08:59:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755203AbYGHGt1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 02:49:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755264AbYGHGt1
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 02:49:27 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43462 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755203AbYGHGtY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 02:49:24 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9537D28FB5;
-	Tue,  8 Jul 2008 02:49:21 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7A74A28FB4; Tue,  8 Jul 2008 02:49:16 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FEA6BFE2-4CB9-11DD-AC2F-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1751582AbYGHG6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 02:58:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbYGHG6I
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 02:58:08 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:60628 "EHLO
+	jenni1.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751412AbYGHG6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 02:58:07 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni1.rokki.sonera.fi (8.5.014)
+        id 483E82F101B11ABE; Tue, 8 Jul 2008 09:57:48 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1KG790-0000z3-LB; Tue, 08 Jul 2008 09:57:46 +0300
+Content-Disposition: inline
+In-Reply-To: <20080708044606.GC2542@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87724>
 
-e8b404c (git-branch: add support for --merged and --no-merged, 2008-04-17)
-introduced "git branch --merged" to show the branches that are contained
-within the current HEAD.  I.e. the ones that you can say "git branch -d"
-and do not have to say "-D" to delete.
+Shawn O. Pearce wrote (2008-07-08 04:46 +0000):
 
-Currently "git branch --merged master" fails with a message:
+> Jean-Luc Herren <jlh@gmx.ch> wrote:
+> > After cloning a local repository with "git clone file://...", the
+> > resulting repo had one big pack file, as expected, but also
+> > a matching ".keep" file.  Certainly this is a bug, isn't it?  The
+> > same happens if I clone git.git.  I used git 1.5.6.1 but observed
+> > the same with the current master.  I bisected this behavior to
+> > commit fa740529 by Shawn O. Pearce (CC'ing him).  Since this dates
+> > back to 2007, I wonder if maybe only I am seeing this, but I cannot
+> > think of any reason for it.
+> 
+> This is a known issue to me; I have been seeing this behavior myself
+> since probably fa74 hit next.  I just don't clone often so I've never
+> thought about it much.  ;-)
 
-	fatal: A branch named 'master' already exists.
+Earlier I noticed that this issue sometimes causes the repository to
+grow pretty much after "git gc" because .keep packs are not touched.
+This was discussed two months ago:
 
-but --merged and its opposite --no-merged are in spirit very similar to
-another option --contains in that it is meant to be used as a way to
-influence which branches are _reported_, and not about creating a new
-branch.
+http://thread.gmane.org/gmane.comp.version-control.git/81856
 
-Perhaps we should change them to default to HEAD (to retain the current
-behaviour) but take a commit, and show branches that are merged to the
-commit or not yet fully merged to the commit, respectively?
-
-Incidentally, "git branch --with" fails without the mandatory commit
-argument, and if we are going to do the above, we probably should default
-the argument to HEAD as well.
-
-Here is an attempt to update --with but I am not happy with it.
-
-The patch makes
-
-	$ git branch --contains
-
-work as expected, but breaks
-
-	$ git branch --contains master
-
-You need to spell "git branch --contains=master" instead.  Which means it
-is a regression and cannot be applied.  I suspect I am not using
-parse_options() in an optimal way, but I did not find a way for my
-callback to tell "I consumed the next parameter and it was mine" or "The
-next one is not my optional parameter" back to the parse_options(), so
-probably parse_options() need to be fixed to update this without
-regression, I suspect.
-
- builtin-branch.c |   12 +++++++-----
- 1 files changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/builtin-branch.c b/builtin-branch.c
-index d279702..ee722a2 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -411,7 +411,7 @@ static int opt_parse_with_commit(const struct option *opt, const char *arg, int
- 	struct commit *commit;
- 
- 	if (!arg)
--		return -1;
-+		arg = "HEAD";
- 	if (get_sha1(arg, sha1))
- 		die("malformed object name %s", arg);
- 	commit = lookup_commit_reference(sha1);
-@@ -438,13 +438,15 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_BOOLEAN( 0 , "color",  &branch_use_color, "use colored output"),
- 		OPT_SET_INT('r', NULL,     &kinds, "act on remote-tracking branches",
- 			REF_REMOTE_BRANCH),
--		OPT_CALLBACK(0, "contains", &with_commit, "commit",
--			     "print only branches that contain the commit",
--			     opt_parse_with_commit),
-+		{
-+			OPTION_CALLBACK, 0, "contains", &with_commit, "commit",
-+			"print only branches that contain the commit",
-+			PARSE_OPT_OPTARG, opt_parse_with_commit,
-+		},
- 		{
- 			OPTION_CALLBACK, 0, "with", &with_commit, "commit",
- 			"print only branches that contain the commit",
--			PARSE_OPT_HIDDEN, opt_parse_with_commit,
-+			PARSE_OPT_HIDDEN | PARSE_OPT_OPTARG, opt_parse_with_commit,
- 		},
- 		OPT__ABBREV(&abbrev),
- 
+I tend to think that .keep packs are not good idea at least for small
+and medium sized repos. For _really_ big ones I'm not sure.
