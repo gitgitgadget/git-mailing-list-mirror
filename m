@@ -1,81 +1,115 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [FIXED PATCH] Make rebase save ORIG_HEAD if changing current branch
-Date: Tue, 8 Jul 2008 10:32:28 -0400
-Message-ID: <D66F511D-CDBE-4261-AA28-07ED73F6C593@silverinsanity.com>
-References: <1215379370-34265-1-git-send-email-benji@silverinsanity.com> <7v7iby9ucx.fsf@gitster.siamese.dyndns.org> <803A3528-2451-4C5D-A48D-5E0C37B8E90E@silverinsanity.com> <7vbq1a8ay3.fsf@gitster.siamese.dyndns.org> <20080707111803.GF31490@mit.edu> <m34p71gbuk.fsf@localhost.localdomain> <F0AD23BC-FA9A-4593-8942-228C428B661E@silverinsanity.com> <20080708042607.GC7186@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 08 16:33:34 2008
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008
+	projects?
+Date: Tue, 8 Jul 2008 16:42:39 +0200
+Message-ID: <20080708144239.GJ6726@leksak.fem-net>
+References: <200807080227.43515.jnareb@gmail.com> <7vmyktxjlq.fsf@gitster.siamese.dyndns.org> <20080708014734.GE6726@leksak.fem-net> <200807080939.31216.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 16:44:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGEG2-0006Fp-IW
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 16:33:30 +0200
+	id 1KGEQC-0002Cn-51
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 16:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753113AbYGHOcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 10:32:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753240AbYGHOcb
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 10:32:31 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:46793 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752968AbYGHOcb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 10:32:31 -0400
-Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id D6E861FFC023;
-	Tue,  8 Jul 2008 14:32:26 +0000 (UTC)
-In-Reply-To: <20080708042607.GC7186@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.926)
+	id S1757150AbYGHOmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 10:42:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757127AbYGHOmt
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 10:42:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38851 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757070AbYGHOms (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 10:42:48 -0400
+Received: (qmail invoked by alias); 08 Jul 2008 14:42:46 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp050) with SMTP; 08 Jul 2008 16:42:46 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+yoOcRfV6yrPxFGhLPcTXzfPXifaCovjOZgU9QSo
+	hVcOPRykN+P+02
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KGEOt-0000ku-A8; Tue, 08 Jul 2008 16:42:39 +0200
+Content-Disposition: inline
+In-Reply-To: <200807080939.31216.jnareb@gmail.com>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87767>
+
+Hi,
+
+Jakub Narebski wrote:
+> > Yes, you are right that am --rebasing is a no-op.
+> > That option was a little mystery to me, because it seemed to do nothing
+> > special, but I'll check again (bash-completion etc) and do appropriate
+> > changes.
+> 
+> Undocumented option '--rebasing' to git-am is internal option changing
+> git-am behavior to be better used by git-rebase, namely it does not
+> change commit message even if it doesn't follow git commit message
+> convention,
+
+Ah yes, I've seen it now.
+It is taking the commit message from the commit in the "From <commit> .*"
+line, does *not* change it in any way and then applies the changes using
+threeway merge.
+
+Keeping that in mind what about dealing with --rebasing like that:
+if --rebasing is given, git am simply generates
+	pick <commit>
+lines, instead of
+	patch -3 -k <msg>
+as it is now (and this is not enough, as it seems).
+
+Does someone have strong objections against that?
+
+Speed could be one point in the case that git-apply just works without
+needing threeway-fallback, but in the case of the fallback this will be
+slower than pick, I think. So I'd not value that too high, but perhaps
+there are opinions against my view.
+Perhaps I am missing another point, too?
 
 
-On Jul 8, 2008, at 12:26 AM, Jeff King wrote:
+The alternative for doing "pick" is teaching git-sequencer's "patch"
+insn an option that emulates the --rebasing behavior.
 
-> On Mon, Jul 07, 2008 at 11:03:46AM -0400, Brian Gernhardt wrote:
->
->> I personally expected @{1} to be identical to HEAD@{1}.  Since  
->> omitting a
->> ref usually refers to HEAD, why shouldn't omitting it when  
->> referring to
->> the reflogs mean the HEAD log?  The definition of @{1} is useful  
->> since
->> there's no other easy way to get "current branch's reflog", but I  
->> think
->> it's non-obvious.  (Since HEAD@{1} is something completely  
->> different, I
->> think the only other way to refer to @{1} is $(git symbolic- 
->> ref)@{1}.)
->
-> FYI, there was much discussion about this exact point:
->
->  http://thread.gmane.org/gmane.comp.version-control.git/38379
->
-> (I don't know that it has that much bearing on the current discussion,
-> but since I went to the trouble of digging it up, I thought you might
-> find it useful).
+For me this feels somehow unclean. But perhaps there are good reasons.
 
-Oh, it is useful.  And, thinking about it, I agree completely.  The  
-syntax isn't immediately obvious, but clear and useful.  The need to  
-distinguish between HEAD@{} and $branch@{} is apparent after a  
-moment's reflection, and the chosen solution is fairly obvious at that  
-point.  I just never took that moment in my day-to-day working with git.
+> for example if it begins not with single line summary
+> of commit, separated by empty line, but by multi-line paragraph.
+> See also t/t3405-rebase-malformed.sh
 
-There's even documentation for it that is clear and understandable.   
-If I was a new user to git, I would have read the documentation and  
-found it.  Having used git for a while, I don't bother to look things  
-up and instead try to alter git to match my three years of  
-experience.  ;-)
+Well, I have a test script that runs
+ for i in t0023* t3350* t340* t3901* t4014* t4150* t5520* t7402*
+and I run that script before I do a commit and after I rebased.
+And I ran the whole test suite before I posted the patchset to the list.
+What I want to say is: t3405 did not fail with my --rebasing no-op.
 
-That said, I still want clear and consistent semantics for ORIG_HEAD.   
-And since that now (IMNSHO) exists in next, I'm happy.
+That's perhaps one reason why I forgot about implementing --rebasing
+correctly.
 
-~~ Brian
+> Although I am not sure if when rebase is rewritten using git-sequencer
+> implementing "git am --rebasing" would be truly needed.
+
+I didn't want to touch that behavior for several reasons.
+
+Of course, somehow I think that rebase and rebase-i should be merged,
+calling sequencer directly, with the main difference that -i will
+invoke an editor to allow editing of the TODO file.
+But nobody is hurt, if I put such a change far far away.
+
+
+Regards,
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
