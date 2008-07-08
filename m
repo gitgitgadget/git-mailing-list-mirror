@@ -1,69 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] completion: add branch options --contains --merged
- --no-merged
-Date: Mon, 07 Jul 2008 22:30:17 -0700
-Message-ID: <7vprppvt7a.fsf@gitster.siamese.dyndns.org>
-References: <279b37b20807071341k3551e61cl10c5969600ba8218@mail.gmail.com>
- <20080708044922.GD2542@spearce.org>
+From: Eric Hanchrow <offby1@blarg.net>
+Subject: Re: uninstalling Git
+Date: Mon, 07 Jul 2008 22:30:27 -0700
+Message-ID: <87od59c58s.fsf@offby1.atm01.sea.blarg.net>
+References: <4872F3B0.6050406@jaeger.mine.nu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eric Raible <raible@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>, szeder@ira.uka.de
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jul 08 07:31:28 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 08 07:39:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG5nR-0001mt-HL
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 07:31:25 +0200
+	id 1KG5v7-0003f6-5K
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 07:39:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751297AbYGHFa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 01:30:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbYGHFa1
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 01:30:27 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62707 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751233AbYGHFa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 01:30:27 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CE6FC28870;
-	Tue,  8 Jul 2008 01:30:24 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 1ACD72886D; Tue,  8 Jul 2008 01:30:19 -0400 (EDT)
-In-Reply-To: <20080708044922.GD2542@spearce.org> (Shawn O. Pearce's message
- of "Tue, 8 Jul 2008 04:49:22 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F751A6F4-4CAE-11DD-B073-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1751233AbYGHFiX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 01:38:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751231AbYGHFiX
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 01:38:23 -0400
+Received: from main.gmane.org ([80.91.229.2]:42045 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751227AbYGHFiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 01:38:22 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KG5u2-0005pp-W0
+	for git@vger.kernel.org; Tue, 08 Jul 2008 05:38:14 +0000
+Received: from q-static-138-125.avvanta.com ([206.124.138.125])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Jul 2008 05:38:14 +0000
+Received: from offby1 by q-static-138-125.avvanta.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Jul 2008 05:38:14 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: q-static-138-125.avvanta.com
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+Cancel-Lock: sha1:Cg3c51WpeM0TIbYBzfj5nzDJ2zU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87717>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+>>>>> "Christian" == Christian Jaeger <christian@jaeger.mine.nu> writes:
 
-> Eric Raible <raible@gmail.com> wrote:
->> Signed-off-by: Eric Raible <raible@gmail.com>
->
-> Trivially-Acked-by: Shawn O. Pearce <spearce@spearce.org>
->
-> ;-)
->
-> More completion support that probably should go to maint, as the
-> functionality in git-branch is in 1.5.6 but we (again) forgot to
-> make sure the completion was up-to-date prior to release.
+    Christian> I wonder why there's no "uninstall" make target.  
 
-I am actually getting more worried about completion code getting larger
-and larger without its performance impact not being looked at nor
-addressed adequately.  In my regular working tree:
+This is a problem with lots of packages, not just git.  Here are two
+things I do:
+            
+* When I remember, I use "gnu stow" to manage installations; doing so
+  makes uninstallation easy.
 
-	$ echo Docu<TAB>
+* Failing that, I run
 
-completes "mentation/" instantly, but:
+        find /usr -printf '%T@ ' -ls | sort -n | cut -d\  -f 2-
 
-	$ git log -- Docu<TAB>
+  and assume that all the installed files have the same last-modified
+  timestamps -- once you've found one of them in that pipeline's output,
+  you've found them all, since they'll all be adjacent.
 
-takes about 1.5 to 2 seconds to complete the same.
+-- 
+Asking the Iraqi people to assume Saddam's debts
+is rather like telling a man who has been shot in the head
+that he has to pay for the bullet.
+        -- James Surowiecki
