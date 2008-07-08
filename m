@@ -1,89 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Build in merge
-Date: Mon, 07 Jul 2008 18:05:43 -0700
-Message-ID: <7vskulxk0o.fsf@gitster.siamese.dyndns.org>
-References: <7vhcb14l3m.fsf@gitster.siamese.dyndns.org>
- <1215474140-11220-1-git-send-email-vmiklos@frugalware.org>
- <7v63rhz03x.fsf@gitster.siamese.dyndns.org>
- <20080708010007.GA10347@genesis.frugalware.org>
+From: "Josef 'Jeff' Sipek" <jeffpc@josefsipek.net>
+Subject: Re: [PATCH 2/2] Make guilt work even after git-sh-setup is moved
+	out of the user's path
+Date: Mon, 7 Jul 2008 21:14:13 -0400
+Message-ID: <20080708011413.GC1880@josefsipek.net>
+References: <1215475392-26221-1-git-send-email-tytso@mit.edu> <1215475392-26221-2-git-send-email-tytso@mit.edu> <1215475392-26221-3-git-send-email-tytso@mit.edu> <20080708003256.GB1880@josefsipek.net> <7vwsjxxkfd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Olivier Marin <dkr@freesurf.fr>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Jul 08 03:06:58 2008
+Cc: "Theodore Ts'o" <tytso@MIT.EDU>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 03:16:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG1fU-000365-DM
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 03:06:56 +0200
+	id 1KG1oE-0004nN-VY
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 03:15:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755239AbYGHBF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 21:05:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755218AbYGHBF6
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 21:05:58 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48139 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755210AbYGHBF5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 21:05:57 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 28FE026FE7;
-	Mon,  7 Jul 2008 21:05:56 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 4C8D126FE6; Mon,  7 Jul 2008 21:05:51 -0400 (EDT)
-In-Reply-To: <20080708010007.GA10347@genesis.frugalware.org> (Miklos Vajna's
- message of "Tue, 8 Jul 2008 03:00:07 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 04D9A922-4C8A-11DD-8536-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1755043AbYGHBO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 21:14:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755044AbYGHBO7
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 21:14:59 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:37856 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755032AbYGHBO6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 21:14:58 -0400
+Received: from josefsipek.net (baal.fsl.cs.sunysb.edu [130.245.126.78])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.8) with ESMTP id m681EBbT020227;
+	Mon, 7 Jul 2008 21:14:11 -0400
+Received: by josefsipek.net (Postfix, from userid 1000)
+	id 160AF1C00D88; Mon,  7 Jul 2008 21:14:13 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7vwsjxxkfd.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87679>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+On Mon, Jul 07, 2008 at 05:56:54PM -0700, Junio C Hamano wrote:
+> "Josef 'Jeff' Sipek" <jeffpc@josefsipek.net> writes:
+...
+> > jeffpc@freyr:~$ git --version
+> > git version 1.5.6.2.247.g923712
+> > jeffpc@freyr:~$ git --exec-path
+> > /home/jeffpc/git-bin/bin
+> 
+> Hmm, it is yours that look wrong.
+ 
+Ok.
 
-> I could imagine the following situations:
->
-> 1) A project has code in a repo, some documentation and po files.
->
-> The first two can be merged with builtin strategies, the later probably
-> needs a custom merge driver.
+> With 1.6.0 preview (aka 'master'):
+> 
+> $ git --version
+> git version 1.5.6.2.255.gbed62
 
-Per-path merge is probably better handled with custom ll-merge driver
-anyway.  See gitattributes(5).
+A fresh clone (from master.kernel.org over ssh) gets me:
 
-> 2) Someone is not happy with the current recursive strategy and writes
-> from scratch a new one. He/she puts it to pull.twohead, so it will be
-> tried before recursive.
+$ git describe
+v1.5.6.2-247-g9237122
+$ git --version
+git version 1.5.6.GIT
+$ git --exec-path
+/home/jeffpc/git-bin/bin
 
-That is fine.
+You seem to have a different HEAD for the master branch than I do.
 
-> To sum up: I am not sure what would be the benefit of being able to
-> specify flags for strategies. However, if we want so, it would be good
-> to discuss how it should be done.
+Josef 'Jeff' Sipek.
 
-It wasn't *me* ;-) who wanted to add these "flags".
-
-I think it does not matter what "my-strategy" does unless "-s my-strategy"
-(or pull.twohead) is explicitly given by the user, and at that time,
-DEFAULT_* options should not matter.  It probably is Ok to allow fast
-forward and trivial merges to them.  We'll see.
-
->> The part that records which strategies were specified from the command
->> line *in what order* via "-s foo" switches should remain list of pointers
->> into "struct strategy", which is called "struct strategy **use_strategies"
->> in the code and corresponds to the $use_strategies variable in the
->> scripted version.  The order of these is important, as that defines in
->> which order the strategies are tried [*1*].  If you go route (1), these
->> pointers will all be pointing at elements in all_strategies[]; with route
->> (2) they may be pointing at either all_strageties[] element or
->> user_strategies[] element.
->
-> I see the problem, I lost the order at the moment.
-
-That's Ok.  See the other patch on top of your previous one.
+-- 
+Don't drink and derive. Alcohol and algebra don't mix.
