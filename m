@@ -1,178 +1,126 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [GSoC] What is status of Git's Google Summer of Code 2008 projects?
-Date: Tue, 8 Jul 2008 02:27:41 +0200
-Message-ID: <200807080227.43515.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Build in merge
+Date: Mon, 07 Jul 2008 17:32:50 -0700
+Message-ID: <7v63rhz03x.fsf@gitster.siamese.dyndns.org>
+References: <7vhcb14l3m.fsf@gitster.siamese.dyndns.org>
+ <1215474140-11220-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Sam Vilain <sam@vilain.net>, Joshua Roys <roysjosh@gmail.com>,
-	Sverre Rabbelier <alturin@gmail.com>,
-	Sverre Rabbelier <sverre@rabbelier.nl>,
-	David Symonds <dsymonds@gmail.com>,
-	Lea Wiemann <LeWiemann@gmail.com>,
-	John Hawley <warthog19@eaglescrag.net>,
-	Marek Zawirski <marek.zawirski@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Miklos Vajna <vmiklos@frugalware.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: "To: Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 08 02:28:53 2008
+	Olivier Marin <dkr@freesurf.fr>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Tue Jul 08 02:34:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG14f-0003rK-4T
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 02:28:53 +0200
+	id 1KG19g-0004rv-VP
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 02:34:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754792AbYGHA1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 20:27:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754759AbYGHA1z
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 20:27:55 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:32625 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754721AbYGHA1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 20:27:54 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so711711nfc.21
-        for <git@vger.kernel.org>; Mon, 07 Jul 2008 17:27:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:mime-version:content-disposition:content-type
-         :content-transfer-encoding:message-id;
-        bh=omznbV8j9k4tXuP2cansZGkIsopvH7yArMP8qJJBLfY=;
-        b=x2zWcAcOcfm+OesULjQ4zX624+xMhhG8dfbR/c1JXZOBqpfDkLZay+/8JRdENoYZZN
-         k/li/+d6meJAbrO03hak1z8D5Iy4PfG6EWZs3AOiay1MZcDge883F0v824gkdhQV6vBu
-         NyqwMzBvOOlarEPlKJxBwQYOU5EsTcH6WDyCQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:mime-version:content-disposition
-         :content-type:content-transfer-encoding:message-id;
-        b=ao/NEzIqLLeNF1HZ2U4Gf/p6svhdq7JhXLAuRhFiaFBZE1NjCfYVckwMnerR9rGita
-         JzomRByeJALmXqCfPMKTwTeZwnlpMPHThaRNtSh2L/jaXSRdxsyh2mf2Jrjb3watxXD0
-         1w8H/HdKpEA2qj+T4EwLWL+ZLzA9FLFoaHY/U=
-Received: by 10.210.28.6 with SMTP id b6mr3561214ebb.121.1215476872190;
-        Mon, 07 Jul 2008 17:27:52 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.206.62])
-        by mx.google.com with ESMTPS id b36sm7525377ika.5.2008.07.07.17.27.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 07 Jul 2008 17:27:49 -0700 (PDT)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1754869AbYGHAdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 20:33:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754883AbYGHAdG
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 20:33:06 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40311 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754811AbYGHAdF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 20:33:05 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A1F9326D24;
+	Mon,  7 Jul 2008 20:33:00 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 801BD26D1D; Mon,  7 Jul 2008 20:32:52 -0400 (EDT)
+In-Reply-To: <1215474140-11220-1-git-send-email-vmiklos@frugalware.org>
+ (Miklos Vajna's message of "Tue, 8 Jul 2008 01:42:20 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6B5B7716-4C85-11DD-A6E9-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87671>
 
-I'd very much like to have (or perhaps to wrote) some sort of interim 
-progress report for Google Summer of Code 2008 projects on 
-http://git.or.cz/gitwiki/SoC2008Projects.  Therefore I'd like you to 
-expand and/or correct those mini-summaries below.
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-(It would be, I guess, good preparation for GSoC 2008 mid-term 
-evaluations, which according to GSoC 2008 timeline
-  http://code.google.com/opensource/gsoc/2008/faqs.html#0.1_timeline
-are to take place July 7 -- July 14.)
+> Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> ---
+>
+> On Mon, Jul 07, 2008 at 11:15:09AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+>> I do not get you on this point.  Which one is nicer?
+>>
+>>  (1) Have two lists, perhaps all_* and user_*.  The logic that finds a
+>>      strategy searches in two lists.  The logic that checks if a given
+>>      strategy is built-in checks if it is on all_* list.
+>>
+>>  (2) Have a single list, but add a boolean "unsigned is_builtin:1" to
+>>  each
+>>      element of it.  The logic that finds a strategy looks in this
+>>      single
+>>      list.  The logic that checks if a given strategy is built-in
+>>      looks at
+>>      the strategy instance and it has the bit already.
+>>
+>> You seem to be advocating (1) but I do not understand why...
+>
+> Ah, OK. For now, I just added an "unsigned enabled:1;". Later we can add
+> an "unsigned is_buildin:1;" as well, but currently we die with earlier
+> with a "Could not find merge strategy" error message, so is_builtin
+> would be always true.
+>
+> So here is a version, this time without the use_strategies list.
 
+That is not what I meant.  I am afraid perhaps I misunderstood what you
+were talking about.
 
-1. GitTorrent (???)
+When/if you allow user defined new strategies, then you have a choice:
 
-Student: Joshua Roys
-Mentor: Sam Vilain
+ (1) find "git-merge-*" in path, add them to the single all_strategies[]
+     list (but you will do the ALLOC_GROW() business so you would need to
+     use the one you currently have as static form to prime the real list),
+     and look for "foo" strategy when "-s foo" is given from that single
+     list, or
 
-There was short thread of me asking about project
-  http://thread.gmane.org/gmane.comp.version-control.git/83611
-where I got gittorrent mailing list (no activity at least according to 
-list archive http://lists.utsl.gen.nz/pipermail/gittorrent/) and URL 
-for project repo / gitweb... which is currently down, so I cannot check 
-if there is anything here.
+ (2) find "git-merge-*" in path, add them to a separate user_strategies[]
+     list, and look for "foo" strategy when "-s foo" is given from the
+     user_strategies[] list and all_strategies[] list (all_strategies[]
+     should perhaps be renamed to builtin_strategies[] if you go that
+     route).
 
-What is the status of this project, please?
+The comparison I gave was between the above two.  But the change you are
+talking about is completely different, isn't it?
 
-http://www.codinghorror.com/blog/archives/001134.html ("Don't Got Dark")
+The part that records which strategies were specified from the command
+line *in what order* via "-s foo" switches should remain list of pointers
+into "struct strategy", which is called "struct strategy **use_strategies"
+in the code and corresponds to the $use_strategies variable in the
+scripted version.  The order of these is important, as that defines in
+which order the strategies are tried [*1*].  If you go route (1), these
+pointers will all be pointing at elements in all_strategies[]; with route
+(2) they may be pointing at either all_strageties[] element or
+user_strategies[] element.
 
-
-2. git-statistics (?)
-
-Student: Sverre Rabbelier
-Mentor: David Symonds
-
-There were some posts about how git-statistics can be used:
-  http://thread.gmane.org/gmane.comp.version-control.git/81534
-  http://thread.gmane.org/gmane.comp.version-control.git/82027
-but it was mainly theoretical thread
-
-The git-stats repository at http://repo.or.cz/w/git-stats.git (gitweb) 
-has some commits, but I don't remember any of them on git mailing list.
-Not ready?
-
-
-3. Gitweb caching
-
-Student: Lea Wiemann
-Mentor: John 'warthog' Hawley
-
-Lea has chosen caching data and memcached as primary caching engine,
-and is working on object layer on top of Git.pm, namely Git::Repo and 
-friends, which will be used by gitweb.  If I understand correctly 
-caching is to be done, or at least helped by this layer.
-
-There were added tests for Git.pm (now in git.git I think) and Mechanize 
-test for gitweb (which detected a few errors).
-
-Is it correct?
-
-
-4. Eclipse plugin push support (!)
-
-Student: Marek Zawirski
-Mentor: Shawn O. Pearce
-
-I am not following egit/jgit development close enough, but if I remember 
-correctly there is some code which provides very rudimentary support 
-for native generation of simplified packs, and IIRC also for push over 
-some protocols.
-
-And there is push support over SFTP and (encrypted) Amazon S3...
-
-
-5. git-merge builtin (!!!)
-
-Student: Miklos Vajna
-Mentor: Johannes Schindelin
-
-Builtin merge, together with preparation patches, is now at n-th 
-iteration, as shown in the "Build in merge" thread:
-  http://thread.gmane.org/gmane.comp.version-control.git/86584
-
-In "What's cooking in git.git (topics)" Junio C Hamano wrote:
-
-  It already is beginning to become clear what 1.6.0 will look like.
-  [...]
-  * git-merge will be rewritten in C.
+If you are never going to say "available strategies are these" after you
+start supporting user-defined strategy, then you do not necessarily need
+to do the "find 'git-merge-*' in path, add them to ..." step above, in
+which case it would be Ok not to scan the path and add them to
+all_strategies[] (in route (1)) nor user_strategies[] (in route (2)).
+Instead, you would just create a new "struct strategy" instance lazily
+when the user gave "-s foo" and "foo" is not one of the built-in strategy.
+You would put that at the tail of "struct strategy **use_strategy" array,
+and iterate over use_strategy in the order they are given on the command
+line.
 
 
-6. git-sequencer (!)
+[Footnote]
 
-Student: Stephan Beyer
-Mentor: Christian Couder, Daniel Barkalow
-
-It started with discussion over TODO file format:
-  http://thread.gmane.org/gmane.comp.version-control.git/84230
-
-Now there is prototype shell script implementation (which has some 
-limitations because it is prototype) in "git sequencer prototype"
-  http://thread.gmane.org/gmane.comp.version-control.git/86985
-
-Stephan Beyer wrote:
-  I'm using sequencer-based git-am and git-rebase-i and also 
-  git-sequencer itself for around 2-3 weeks now. So, for me, it is
-  reality-proven [...]
-
--- 
-Jakub Narebski
-Poland
+*1* Personally, I find the importance of this dubious in practice, as I
+said earlier, I do not think it would work well to try different
+strategies and pick the best one --- evaluating which result is the *best*
+is difficult.  If you want to stay compatible with the scripted version,
+however, you cannot just mark entries in all_strategies[] with boolean and
+iterate over them in the order that all_strageties[] define them.  You
+need to try them in the order the user specified.
