@@ -1,108 +1,235 @@
 From: Pierre Habouzit <madcoder@debian.org>
-Subject: Migration of builtin-blame to parse-option
-Date: Tue,  8 Jul 2008 11:55:58 +0200
-Message-ID: <1215510964-16664-1-git-send-email-madcoder@debian.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: torvalds@linux-foundation.org, gitster@pobox.com, peff@peff.net
+Subject: [PATCH 6/6] git-blame: migrate to incremental parse-option [2/2]
+Date: Tue,  8 Jul 2008 11:56:04 +0200
+Message-ID: <1215510964-16664-7-git-send-email-madcoder@debian.org>
+References: <1215510964-16664-1-git-send-email-madcoder@debian.org>
+ <1215510964-16664-2-git-send-email-madcoder@debian.org>
+ <1215510964-16664-3-git-send-email-madcoder@debian.org>
+ <1215510964-16664-4-git-send-email-madcoder@debian.org>
+ <1215510964-16664-5-git-send-email-madcoder@debian.org>
+ <1215510964-16664-6-git-send-email-madcoder@debian.org>
+Cc: torvalds@linux-foundation.org, gitster@pobox.com, peff@peff.net,
+	Pierre Habouzit <madcoder@debian.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 08 12:00:12 2008
+X-From: git-owner@vger.kernel.org Tue Jul 08 12:00:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG9wg-0003P0-8k
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 11:57:14 +0200
+	id 1KG9wj-0003P0-Lt
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 11:57:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753570AbYGHJ4K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jul 2008 05:56:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753218AbYGHJ4K
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 05:56:10 -0400
-Received: from pan.madism.org ([88.191.52.104]:33898 "EHLO hermes.madism.org"
+	id S1753813AbYGHJ4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 05:56:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753783AbYGHJ4U
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 05:56:20 -0400
+Received: from pan.madism.org ([88.191.52.104]:33922 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751394AbYGHJ4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 05:56:09 -0400
+	id S1753355AbYGHJ4K (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 05:56:10 -0400
 Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id E6A7F3438A;
-	Tue,  8 Jul 2008 11:56:06 +0200 (CEST)
+	by hermes.madism.org (Postfix) with ESMTPS id B1B8C3438D;
+	Tue,  8 Jul 2008 11:56:08 +0200 (CEST)
 Received: by madism.org (Postfix, from userid 1000)
-	id B0C5D29EDA1; Tue,  8 Jul 2008 11:56:04 +0200 (CEST)
+	id DF25F2CB85E; Tue,  8 Jul 2008 11:56:04 +0200 (CEST)
 X-Mailer: git-send-email 1.5.6.2.352.g416a6
+In-Reply-To: <1215510964-16664-6-git-send-email-madcoder@debian.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87734>
 
-This series is twofold. The first 4 patches refactor the revision
-parsing machine so that it's easier to deal with from a parse-opt based
-parser:
+Now use handle_revision_args instead of parse_revisions, and simplify the
+handling of old-style arguments a lot thanks to the filtering.
 
-[PATCH 1/6] revisions: refactor init_revisions and setup_revisions.
-21 files changed, 70 insertions(+), 54 deletions(-)
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
+ builtin-blame.c |  132 +++++++++++++++++--------------------------------------
+ 1 files changed, 40 insertions(+), 92 deletions(-)
 
-  This is the patch I sent before, revisited.
-
-[PATCH 2/6] revisions: split the pure option parsing out from parse_rev=
-isions.
-2 files changed, 273 insertions(+), 308 deletions(-)
-
-  This patch splits out the revisions _option_ parsing (as opposed to
-  revisions arguments or pseudo arguments like --all, --not, ...) from
-  the revision parser. The patch is huge, but quite straightforward.
-
-[PATCH 3/6] revisions: parse_revisions refactor.
-1 files changed, 38 insertions(+), 25 deletions(-)
-
-  This patch reworks parse_revisions so that it works internally as if
-  it was a parse-opt parser. It's equivalent to the previous code, but
-  changes are tricky, and a separate commit is really worth it.
-
-[PATCH 4/6] revisions: split handle_revision_args from parse_revisions.
-2 files changed, 52 insertions(+), 46 deletions(-)
-
-  This patch splits out the last bit of parse-revisions (from the
-  previous commit) so that what parses revisions arguments (refs and
-  pseudo arguments like --all/--not/...) can be called independently.
-
-  The commit is straightforward but moves code around, hence the
-  separate commit from patch 3 so that one isn't lost in the code moves
-  while reviewing the tricky bits from patch 3.
-
-
-The second part is the git-blame migration for real:
-
-[PATCH 5/6] git-blame: migrate to incremental parse-option [1/2]
-1 files changed, 118 insertions(+), 102 deletions(-)
-
-  This bit is really alike the proof of concept I saw. Most of the code
-  is stolen from Linus initial patch. It merely removes the git-blame
-  own options and deal with them with a parse-opt parser, in an
-  incremental way.
-
-  All in all, it's a pretty straighforward patch.
-
-[PATCH 6/6] git-blame: migrate to incremental parse-option [2/2]
-1 files changed, 40 insertions(+), 92 deletions(-)
-
-  This is by far the trickiest patch of the series, though it passes th=
-e
-  testsuite fine. This patch uses the function from patch 4 to process
-  the revision arguments. We know the dashdash position from the
-  incremental parse-opt, but we have to deal with the "old way" of
-  passing arguments to git-blame.
-
-  The new code is really less involved than before, because we deal wit=
-h
-  a filtered argv array where we only have the revisions arguments (no
-  options anymore) and the <path>.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@d=
-ebian.org
-OOO                                                http://www.madism.or=
-g
+diff --git a/builtin-blame.c b/builtin-blame.c
+index 6256341..bbbaea5 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -2262,8 +2262,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	struct scoreboard sb;
+ 	struct origin *o;
+ 	struct blame_entry *ent;
+-	int i, seen_dashdash, unk;
+-	long bottom, top, lno;
++	long dashdash_pos, bottom, top, lno;
+ 	const char *final_commit_name = NULL;
+ 	enum object_type type;
+ 
+@@ -2301,6 +2300,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	git_config(git_blame_config, NULL);
+ 	init_revisions(&revs, NULL);
+ 	save_commit_buffer = 0;
++	dashdash_pos = 0;
+ 
+ 	parse_options_start(&ctx, argc, argv, PARSE_OPT_KEEP_DASHDASH |
+ 			    PARSE_OPT_KEEP_ARGV0);
+@@ -2311,6 +2311,8 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 		case PARSE_OPT_HELP:
+ 			exit(129);
+ 		case PARSE_OPT_DONE:
++			if (ctx.argv[0])
++				dashdash_pos = ctx.cpidx;
+ 			goto parse_done;
+ 		}
+ 
+@@ -2330,20 +2332,6 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ parse_done:
+ 	argc = parse_options_end(&ctx);
+ 
+-	seen_dashdash = 0;
+-	for (unk = i = 1; i < argc; i++) {
+-		const char *arg = argv[i];
+-		if (*arg != '-')
+-			break;
+-		else if (!strcmp("--", arg)) {
+-			seen_dashdash = 1;
+-			i++;
+-			break;
+-		}
+-		else
+-			argv[unk++] = arg;
+-	}
+-
+ 	if (!blame_move_score)
+ 		blame_move_score = BLAME_DEFAULT_MOVE_SCORE;
+ 	if (!blame_copy_score)
+@@ -2356,92 +2344,52 @@ parse_done:
+ 	 *
+ 	 * The remaining are:
+ 	 *
+-	 * (1) if seen_dashdash, its either
+-	 *     "-options -- <path>" or
+-	 *     "-options -- <path> <rev>".
+-	 *     but the latter is allowed only if there is no
+-	 *     options that we passed to revision machinery.
++	 * (1) if dashdash_pos != 0, its either
++	 *     "blame [revisions] -- <path>" or
++	 *     "blame -- <path> <rev>"
+ 	 *
+-	 * (2) otherwise, we may have "--" somewhere later and
+-	 *     might be looking at the first one of multiple 'rev'
+-	 *     parameters (e.g. " master ^next ^maint -- path").
+-	 *     See if there is a dashdash first, and give the
+-	 *     arguments before that to revision machinery.
+-	 *     After that there must be one 'path'.
++	 * (2) otherwise, its one of the two:
++	 *     "blame [revisions] <path>"
++	 *     "blame <path> <rev>"
+ 	 *
+-	 * (3) otherwise, its one of the three:
+-	 *     "-options <path> <rev>"
+-	 *     "-options <rev> <path>"
+-	 *     "-options <path>"
+-	 *     but again the first one is allowed only if
+-	 *     there is no options that we passed to revision
+-	 *     machinery.
++	 * Note that we must strip out <path> from the arguments: we do not
++	 * want the path pruning but we may want "bottom" processing.
+ 	 */
+-
+-	if (seen_dashdash) {
+-		/* (1) */
+-		if (argc <= i)
+-			usage_with_options(blame_opt_usage, options);
+-		path = add_prefix(prefix, argv[i]);
+-		if (i + 1 == argc - 1) {
+-			if (unk != 1)
++        if (dashdash_pos) {
++		switch (argc - dashdash_pos - 1) {
++		case 2: /* (1b) */
++			if (argc != 4)
+ 				usage_with_options(blame_opt_usage, options);
+-			argv[unk++] = argv[i + 1];
++			/* reorder for the new way: <rev> -- <path> */
++			argv[1] = argv[3];
++			argv[3] = argv[2];
++			argv[2] = "--";
++			dashdash_pos = 2;
++			/* FALLTHROUGH */
++		case 1: /* (1a) */
++			path = add_prefix(prefix, argv[--argc]);
++			argv[argc] = NULL;
++			break;
++		default:
++			usage_with_options(blame_opt_usage, options);
+ 		}
+-		else if (i + 1 != argc)
+-			/* garbage at end */
++	} else {
++		if (argc < 2)
+ 			usage_with_options(blame_opt_usage, options);
+-	}
+-	else {
+-		int j;
+-		for (j = i; !seen_dashdash && j < argc; j++)
+-			if (!strcmp(argv[j], "--"))
+-				seen_dashdash = j;
+-		if (seen_dashdash) {
+-			/* (2) */
+-			if (seen_dashdash + 1 != argc - 1)
+-				usage_with_options(blame_opt_usage, options);
+-			path = add_prefix(prefix, argv[seen_dashdash + 1]);
+-			for (j = i; j < seen_dashdash; j++)
+-				argv[unk++] = argv[j];
++		path = add_prefix(prefix, argv[argc - 1]);
++		if (argc == 3 && !has_path_in_work_tree(path)) { /* (2b) */
++			path = add_prefix(prefix, argv[1]);
++			argv[1] = argv[2];
+ 		}
+-		else {
+-			/* (3) */
+-			if (argc <= i)
+-				usage_with_options(blame_opt_usage, options);
+-			path = add_prefix(prefix, argv[i]);
+-			if (i + 1 == argc - 1) {
+-				final_commit_name = argv[i + 1];
+-
+-				/* if (unk == 1) we could be getting
+-				 * old-style
+-				 */
+-				if (unk == 1 && !has_path_in_work_tree(path)) {
+-					path = add_prefix(prefix, argv[i + 1]);
+-					final_commit_name = argv[i];
+-				}
+-			}
+-			else if (i != argc - 1)
+-				usage_with_options(blame_opt_usage, options);
++		argv[argc - 1] = "--";
++		dashdash_pos = argc - 1;
+ 
+-			setup_work_tree();
+-			if (!has_path_in_work_tree(path))
+-				die("cannot stat path %s: %s",
+-				    path, strerror(errno));
+-		}
++		setup_work_tree();
++		if (!has_path_in_work_tree(path))
++			die("cannot stat path %s: %s", path, strerror(errno));
+ 	}
+ 
+-	if (final_commit_name)
+-		argv[unk++] = final_commit_name;
+-
+-	/*
+-	 * Now we got rev and path.  We do not want the path pruning
+-	 * but we may want "bottom" processing.
+-	 */
+-	argv[unk++] = "--"; /* terminate the rev name */
+-	argv[unk] = NULL;
+-
+-	parse_revisions(unk, argv, &revs);
++	handle_revision_args(&revs, argc, argv, dashdash_pos);
+ 	setup_revisions(&revs, NULL);
+ 	memset(&sb, 0, sizeof(sb));
+ 
+-- 
+1.5.6.2.352.g416a6
