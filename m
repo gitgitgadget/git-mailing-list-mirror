@@ -1,84 +1,106 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [FIXED PATCH] Make rebase save ORIG_HEAD if changing current branch
-Date: Mon, 7 Jul 2008 23:24:23 -0400
-Message-ID: <35BBB0D4-B3E1-4097-AF11-E0F6223125EA@silverinsanity.com>
-References: <1215379370-34265-1-git-send-email-benji@silverinsanity.com> <7v7iby9ucx.fsf@gitster.siamese.dyndns.org> <803A3528-2451-4C5D-A48D-5E0C37B8E90E@silverinsanity.com> <7vbq1a8ay3.fsf@gitster.siamese.dyndns.org> <7vod591hlp.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH] fix "git-submodule add a/b/c/repository"
+Date: Mon, 07 Jul 2008 23:26:12 -0400
+Message-ID: <4872DE54.5010804@gmail.com>
+References: <20080701150025.GD5852@joyeux> <7vd4lro7ct.fsf@gitster.siamese.dyndns.org> <20080706161101.GB23385@jhaampe.org> <48711782.6090609@gmail.com> <20080707063424.GB5506@jhaampe.org> <4872CF86.5050702@gmail.com> <7v7ibxxfje.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
+Cc: Sylvain Joyeux <sylvain.joyeux@dfki.de>,
+	Lars Hjemli <hjemli@gmail.com>, Ping Yin <pkufranky@gmail.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 05:25:43 2008
+X-From: git-owner@vger.kernel.org Tue Jul 08 05:27:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KG3pj-0002yU-VO
-	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 05:25:40 +0200
+	id 1KG3rF-0003Ez-AL
+	for gcvg-git-2@gmane.org; Tue, 08 Jul 2008 05:27:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756022AbYGHDYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2008 23:24:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756038AbYGHDYa
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 23:24:30 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:59528 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755673AbYGHDY3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2008 23:24:29 -0400
-Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 2CE8B1FFC023;
-	Tue,  8 Jul 2008 03:24:16 +0000 (UTC)
-In-Reply-To: <7vod591hlp.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.926)
+	id S1756044AbYGHD0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2008 23:26:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756043AbYGHD0P
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jul 2008 23:26:15 -0400
+Received: from wr-out-0506.google.com ([64.233.184.225]:59079 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755999AbYGHD0O (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2008 23:26:14 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so1684478wri.5
+        for <git@vger.kernel.org>; Mon, 07 Jul 2008 20:26:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=mUtA0xNlAD8JXzB4std9tXGtVhgrx2copsh8V0yYzm0=;
+        b=N/7IzQqnU5igbRyNCTTlzpDq2Gth/Ov/FzklpUV3o3WwgS5rVh4/4jB2cPULeeTSGO
+         il0IugN8RRzXUjeApIwPWqTU534+Ueb0VA3R2XQmgNiQIZjV2pNfbxg6flddcmMRdDls
+         EIkvh3ipufyNazQsyzCs93olyH+pTTRepkIxI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=UiOwiat5IIqEYP3rHAF8IBGl81Qdb3AbPD5W6NFU2dxWODBWL/fV7aZ/MIqPhAg2PB
+         vIZPd/kOeA8ADosOJOM+Cb3KTpOKQS3czN4nDmhv06M9lG8lDzWVE/gvuDN6HovjdRJZ
+         LM2j1hpZnPxmsFw+rFtlU03D/3fHpZgsphm5k=
+Received: by 10.90.115.17 with SMTP id n17mr6209196agc.90.1215487573569;
+        Mon, 07 Jul 2008 20:26:13 -0700 (PDT)
+Received: from ?192.168.1.117? ( [71.246.235.165])
+        by mx.google.com with ESMTPS id 6sm8812587ywp.3.2008.07.07.20.26.11
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 07 Jul 2008 20:26:12 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+In-Reply-To: <7v7ibxxfje.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87694>
 
+Junio C Hamano wrote:
+> I'd like to hear clarifications on two counts, please?
+>  (1) If Sylvain wanted to have that appear at dir0/dir1/init not init,
+>      would it have been sufficient to give that path twice (once for
+>      <repository> and another for <path> parameter) to make things work as
+>      expected?
+>   
+git-submodule really requires two arguments:
 
-On Jul 7, 2008, at 5:58 PM, Junio C Hamano wrote:
+    $ git submodule add <URL> <relative-path-to-module-in-tree>
 
-> Junio C Hamano <gitster@pobox.com> writes:
+and supports two modes:
+
+1) relative-path exists and is a valid repo: just add the module, it was 
+created in tree, the user is expected to eventually push this to the 
+given URL so other users will get this as normal. This exists to 
+simplify the process of creating a repo to begin with.
+
+2) relative-path doesn't exist: clone from the URL. This is the normal use.
+submodule supports adding a module in one of two ways:
+
+So,
+
+    $ git submodule add   dir0/dir1/init   dir0/dir1/init
+
+will add the repo, but also makes the repo its own origin. I don't think 
+this makes sense.
+>  (2) Is it generally considered a sane use case to specify an existing
+>      repository inside the working tree of a superproject as a submodule
+>      using "git submodule add" like Sylvain's example did?
 >
-> And to answer your "git rebase --onto this from that-branch"  
-> question, I
-> think ORIG_HEAD should record the tip of that-branch before rebase  
-> takes
-> place, not the commit you happened to be at before running it.   
-> Switching
-> branch to that-branch is not the drastic and unforseeable part.  The
-> drastic and unforseeable change is rebasing and seeing that the  
-> rebased
-> result does not work with the new upstream `from`, and the user  
-> would want
-> to have a way to quickly rewind the tip of the branch back to the  
-> state
-> before the rebase.  The new paragraph added by this patch should  
-> hopefully
-> make this reasoning more clear.
-
-I just wanted to make sure there was a clear reasoning and to see if  
-someone could word it clearly, as I was getting a little cross-eyed.
-
-> -- >8 --
-> Documentation: update sections on naming revisions and revision ranges
+>      I would have understood if the command were "git add dir0/dir1/init",
+>      but I have this vague recolleciton that "git submodule add" is about
+>      telling our repository about a submodule that comes from _outside_.
 >
-> Various *_HEAD pseudo refs were not documented in any central place.
-> Especially since we may be teaching rebase and am to record ORIG_HEAD,
-> it would be a good time to do so.
+>
+>   
+Adding an existing in-tree repo, ala
 
-My only objection is to the "may".  ;-)
+ $ git submodule add <intended-URL> <path>
 
-Also, perhaps we should either list the commands that set ORIG_HEAD,  
-or add a note to that effect in their manpages.  I'll see what wording  
-I can come up with, unless you (or someone else) gets to it first of  
-course.
+is there to ease the initial creation of a submodule. It can be created 
+and registered in-tree, and later pushed to the server. This is sane, 
+but is not the normal usage (makes sense only on creation).
 
-> While at it, reword the explanation on r1..r2 notation to reduce
-> confusion.
-
-Looks good.
-
-~~ Brian
+Mark
