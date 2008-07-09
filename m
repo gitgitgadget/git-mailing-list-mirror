@@ -1,54 +1,51 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git protocol specification
-Date: Wed, 9 Jul 2008 20:45:04 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807092044120.4010@eeepc-johanness>
-References: <48750231.4020805@rubyisawesome.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] better git-submodule status output
+Date: Wed, 09 Jul 2008 11:48:38 -0700
+Message-ID: <7vvdzeki61.fsf@gitster.siamese.dyndns.org>
+References: <20080701150119.GE5852@joyeux> <20080709101330.GA3525@joyeux>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Tom Werner <pubsub@rubyisawesome.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 20:46:08 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sylvain Joyeux <sylvain.joyeux@dfki.de>
+X-From: git-owner@vger.kernel.org Wed Jul 09 20:50:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGefn-0006q8-M5
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 20:45:52 +0200
+	id 1KGejc-0000Nr-Cn
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 20:49:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753455AbYGISov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2008 14:44:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752986AbYGISov
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 14:44:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39219 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752648AbYGISou (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2008 14:44:50 -0400
-Received: (qmail invoked by alias); 09 Jul 2008 18:44:48 -0000
-Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
-  by mail.gmx.net (mp062) with SMTP; 09 Jul 2008 20:44:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+dlfFLf7GdTXi6Y5YDlZlL69nbjJ/6lkIbqTOjz2
-	DDfT6DmAoqGUHH
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <48750231.4020805@rubyisawesome.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.75
+	id S1755383AbYGISsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2008 14:48:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755248AbYGISsq
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 14:48:46 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36613 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754096AbYGISsp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2008 14:48:45 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E4F722A8D1;
+	Wed,  9 Jul 2008 14:48:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3D23E2A8D0; Wed,  9 Jul 2008 14:48:40 -0400 (EDT)
+In-Reply-To: <20080709101330.GA3525@joyeux> (Sylvain Joyeux's message of
+ "Wed, 9 Jul 2008 12:13:30 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A737D956-4DE7-11DD-A000-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87907>
 
-Hi,
+Sylvain Joyeux <sylvain.joyeux@dfki.de> writes:
 
-On Wed, 9 Jul 2008, Tom Werner wrote:
+> * changing the output format of git-submodules is not right either,
+>   because it would break existing tools which parses it at the moment.
 
-> I'm working on a flexible Erlang replacement for git-daemon and would 
-> like to know if there is a specification available for the protocol that 
-> git-upload-pack and git-receive-pack use.
-
-How about Documentation/technical/pack-protocol.txt?
-
-Ciao,
-Dscho
+On other two points I do agree with people who objected, but I do not
+think this one is particularly bad.  If 'git submodule status' is similar
+in spirit to 'git status', then it is more important to make it useful for
+human consumption than to keep the wording of the output set in stone.
