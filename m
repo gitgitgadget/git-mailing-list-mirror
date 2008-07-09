@@ -1,117 +1,103 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 1/4] Avoid deadlock while fetching from local repository
-Date: Wed,  9 Jul 2008 00:15:28 -0400
-Message-ID: <1215576931-4174-2-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 2/4] Fix pushing of annotated tags to actually include the tag object
+Date: Wed,  9 Jul 2008 00:15:29 -0400
+Message-ID: <1215576931-4174-3-git-send-email-spearce@spearce.org>
 References: <1215576931-4174-1-git-send-email-spearce@spearce.org>
+ <1215576931-4174-2-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>,
 	Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 06:16:32 2008
+X-From: git-owner@vger.kernel.org Wed Jul 09 06:16:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGR6V-0004EZ-VH
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 06:16:32 +0200
+	id 1KGR6W-0004EZ-Jp
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 06:16:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750949AbYGIEPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2008 00:15:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbYGIEPf
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 00:15:35 -0400
-Received: from george.spearce.org ([209.20.77.23]:46870 "EHLO
+	id S1750972AbYGIEPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2008 00:15:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbYGIEPh
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 00:15:37 -0400
+Received: from george.spearce.org ([209.20.77.23]:46874 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750824AbYGIEPd (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1750834AbYGIEPd (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 9 Jul 2008 00:15:33 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 144A03821F; Wed,  9 Jul 2008 04:15:33 +0000 (UTC)
+	id 6E9C138268; Wed,  9 Jul 2008 04:15:33 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 80F5F38195;
+	by george.spearce.org (Postfix) with ESMTP id DC4F5381FC;
 	Wed,  9 Jul 2008 04:15:32 +0000 (UTC)
 X-Mailer: git-send-email 1.5.6.74.g8a5e
-In-Reply-To: <1215576931-4174-1-git-send-email-spearce@spearce.org>
+In-Reply-To: <1215576931-4174-2-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87841>
 
-We cannot send a packet line end command to git-upload-pack after we
-have sent our want list and obtained a pack back from it.  Once the
-want list has ended git-upload-pack wants no further data sent to
-it, and attempting to write more may cause us to deadlock as the
-pipe won't accept the data.
+When we pushed an annotated tag to a remote repository jgit was
+failing to include the annotated tag object itself as ObjectWalk
+nextObject() failed to pop the object out of the internal pending
+queue and return it for inclusion in the generated pack file.
 
-Not sending the packet line end if we don't send a want list is a
-(minor) protocol error.  To avoid these protocol errors (which
-may display on stderr from git-upload-pack) we still send the end
-during close if we have not yet sent a want list.
+We need to use two different flags for SEEN and IN_PENDING as a blob
+or tree object can be SEEN during a TreeWalk, yet may also have been
+inserted into the pending object list.  SEEN means we have output
+the object to the caller, IN_PENDING means we have placed it into
+the pending object list.  Together these prevent duplicates in the
+queue and duplicate return values.
+
+Noticed by Robin while trying to push an annotated tag:
+
+  $ git tag -m foo X
+  $ git rev-parse X
+  49aa0e93621...
+
+  $ jgit push somerepo refs/tags/X
+  error: unpack should have generated 49aa0e93621...
+  To somerepo.git
+   ! [remote rejected] X -> X (bad pack)
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../spearce/jgit/transport/BasePackConnection.java |    7 ++++++-
- .../jgit/transport/BasePackFetchConnection.java    |    1 +
- .../jgit/transport/BasePackPushConnection.java     |    1 +
- 3 files changed, 8 insertions(+), 1 deletions(-)
+ .../src/org/spearce/jgit/revwalk/ObjectWalk.java   |   13 +++++++++++--
+ 1 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
-index a878f01..7dc4620 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
-@@ -83,6 +83,9 @@ abstract class BasePackConnection extends BaseConnection {
- 	/** Packet line encoder around {@link #out}. */
- 	protected PacketLineOut pckOut;
- 
-+	/** Send {@link PacketLineOut#end()} before closing {@link #out}? */
-+	protected boolean outNeedsEnd;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/ObjectWalk.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/ObjectWalk.java
+index 6a5b857..1ba21eb 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/revwalk/ObjectWalk.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/ObjectWalk.java
+@@ -66,6 +66,15 @@ import org.spearce.jgit.treewalk.TreeWalk;
+  * commits that are returned first.
+  */
+ public class ObjectWalk extends RevWalk {
++	/**
++	 * Indicates a non-RevCommit is in {@link #pendingObjects}.
++	 * <p>
++	 * We can safely reuse {@link RevWalk#REWRITE} here for the same value as it
++	 * is only set on RevCommit and {@link #pendingObjects} never has RevCommit
++	 * instances inserted into it.
++	 */
++	private static final int IN_PENDING = RevWalk.REWRITE;
 +
- 	/** Capability tokens advertised by the remote side. */
- 	private final Set<String> remoteCapablities = new HashSet<String>();
+ 	private final TreeWalk treeWalk;
  
-@@ -99,6 +102,7 @@ abstract class BasePackConnection extends BaseConnection {
- 
- 		pckIn = new PacketLineIn(in);
- 		pckOut = new PacketLineOut(out);
-+		outNeedsEnd = true;
+ 	private BlockObjQueue pendingObjects;
+@@ -361,8 +370,8 @@ public class ObjectWalk extends RevWalk {
  	}
  
- 	protected void readAdvertisedRefs() throws TransportException {
-@@ -195,7 +199,8 @@ abstract class BasePackConnection extends BaseConnection {
- 	public void close() {
- 		if (out != null) {
- 			try {
--				pckOut.end();
-+				if (outNeedsEnd)
-+					pckOut.end();
- 				out.close();
- 			} catch (IOException err) {
- 				// Ignore any close errors.
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackFetchConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackFetchConnection.java
-index 04a91bf..12b36f2 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackFetchConnection.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackFetchConnection.java
-@@ -253,6 +253,7 @@ abstract class BasePackFetchConnection extends BasePackConnection implements
- 			pckOut.writeString(line.toString());
+ 	private void addObject(final RevObject o) {
+-		if ((o.flags & SEEN) == 0) {
+-			o.flags |= SEEN;
++		if ((o.flags & IN_PENDING) == 0) {
++			o.flags |= IN_PENDING;
+ 			pendingObjects.add(o);
  		}
- 		pckOut.end();
-+		outNeedsEnd = false;
- 		return !first;
  	}
- 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
-index 784a578..6d95eaf 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
-@@ -148,6 +148,7 @@ class BasePackPushConnection extends BasePackConnection implements
- 		if (monitor.isCancelled())
- 			throw new TransportException(uri, "push cancelled");
- 		pckOut.end();
-+		outNeedsEnd = false;
- 	}
- 
- 	private String enableCapabilties() {
 -- 
 1.5.6.74.g8a5e
