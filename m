@@ -1,60 +1,52 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Merging a foreign tree into a bare repository.
-Date: Wed, 9 Jul 2008 02:40:52 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807090238561.5277@eeepc-johanness>
-References: <1215562468.4199.26.camel@moss-terrapins.epoch.ncsc.mil>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Dave Quigley <dpquigl@tycho.nsa.gov>
-X-From: git-owner@vger.kernel.org Wed Jul 09 02:41:41 2008
+From: Kevin Ballard <kevin@sb.org>
+Subject: Breakage caused by 2fe403e7 git-svn.perl: workaround assertions in svn library 1.5.0
+Date: Tue, 8 Jul 2008 17:41:48 -0700
+Message-ID: <6583867F-ED86-4E3D-AE8B-39FB974C43D7@sb.org>
+Mime-Version: 1.0 (Apple Message framework v926)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>, pape@smarden.org
+X-From: git-owner@vger.kernel.org Wed Jul 09 02:43:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGNkZ-00028V-Mx
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 02:41:40 +0200
+	id 1KGNm9-0002Yi-Ct
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 02:43:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752606AbYGIAkm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 20:40:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752293AbYGIAkl
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 20:40:41 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43744 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752131AbYGIAkl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 20:40:41 -0400
-Received: (qmail invoked by alias); 09 Jul 2008 00:40:39 -0000
-Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
-  by mail.gmx.net (mp022) with SMTP; 09 Jul 2008 02:40:39 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18aQCVp0q0aAGSf8G9kOwRBjmubpxQm0wWZI8Y/km
-	xJCXcRE9FI0vIE
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <1215562468.4199.26.camel@moss-terrapins.epoch.ncsc.mil>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1752721AbYGIAmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 20:42:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752666AbYGIAmU
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 20:42:20 -0400
+Received: from balanced.mail.policyd.dreamhost.com ([208.97.132.119]:35175
+	"EHLO randymail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752519AbYGIAmT (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jul 2008 20:42:19 -0400
+Received: from [192.168.1.80] (adsl-76-199-69-6.dsl.pltn13.sbcglobal.net [76.199.69.6])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by randymail-a11.g.dreamhost.com (Postfix) with ESMTP id B8B22109E8B;
+	Tue,  8 Jul 2008 17:42:18 -0700 (PDT)
+X-Mailer: Apple Mail (2.926)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87822>
 
-Hi,
+Commit 2fe403e7 causes `git svn info` and `git svn info .` to break.
 
-On Tue, 8 Jul 2008, Dave Quigley wrote:
+   Use of uninitialized value in localtime at /usr/local/libexec/git- 
+core/git-svn line 4277.
+   No such file or directory at /usr/local/libexec/git-core/git-svn  
+line 897.
 
-> I tried to then merge them but you need a working directory to merge the 
-> changes which makes sense.
+If it makes a difference, I have svn 1.4.4 installed, not svn 1.5.
 
-Of course it does.  Merging runs the risk of conflicts, and you need a 
-working directory for that.
+-Kevin Ballard
 
-> How would one go about doing this with a bare repository?
-
-Very easy: clone it ("non-barely"), merge, and push back the results.
-
-You _need_ a working directory for the merge.
-
-Hth,
-Dscho "who wonders what No Such Agency does with Git..."
+-- 
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
