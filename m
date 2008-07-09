@@ -1,69 +1,57 @@
-From: "Rob Shearman" <robertshearman@gmail.com>
-Subject: Re: [PATCH 1/4] git-imap-send: Allow the program to be run from subdirectories of a git tree.
-Date: Wed, 9 Jul 2008 13:08:02 +0100
-Message-ID: <1096648c0807090508w5b161dd0xf4fc61a6653b3289@mail.gmail.com>
-References: <1215555496-21335-1-git-send-email-robertshearman@gmail.com>
-	 <7v3amjq2mj.fsf@gitster.siamese.dyndns.org>
-	 <76718490807081828k7640d07bp547a69d05a6e07c4@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] cherry: cache patch-ids to avoid repeating work
+Date: Wed, 9 Jul 2008 14:18:20 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807091416480.5277@eeepc-johanness>
+References: <7f9d599f0807082053w4603d0bbgfead9127c33b78b5@mail.gmail.com> <7vfxqjmyg2.fsf@gitster.siamese.dyndns.org> <7f9d599f0807082226oee83bedrf13d254ae12be274@mail.gmail.com> <7vprpnlglh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Jay Soffian" <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 14:09:20 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Geoffrey Irving <irving@naml.us>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 09 14:19:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGYTv-0000GN-2F
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 14:09:11 +0200
+	id 1KGYdY-0004XG-GR
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 14:19:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753649AbYGIMIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2008 08:08:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753493AbYGIMIG
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 08:08:06 -0400
-Received: from wr-out-0506.google.com ([64.233.184.226]:48206 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751354AbYGIMID (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2008 08:08:03 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so2112656wri.5
-        for <git@vger.kernel.org>; Wed, 09 Jul 2008 05:08:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=m3+NETLGAnl5lSsbygVjIdSKUoKlJ6TdlO6wWkilD8I=;
-        b=wbUQHQ9yn1ItVvX5LhmxmxpkWKuEv6RUJnpuPxCAV2V6ig/tzdZ9jelAXROcSzqJMx
-         4tOBwsgzhqOO8VyMSyxR+UmCNEgTULs6wk2QakEqmCouCm44/VUnz90phFovCjS0q/+T
-         saNKNQcklaWjOdUXwqFTU1PIgCkBMrmNNtAGc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=dU2ODg/i3RPPhoIx93de+JiwKclCmeI9E+FvUaFUgTJBI6kJ8MSTQ2+JCjPzqt/Lp6
-         5MtVf4v/8Opk9aloR4FmHf4Oa1f5cD3fj65okk4bLQoYMsLwt4rzF8JLhWInI8SHKEpH
-         1LyYV4GwIBySZXAMxkgi4sNU84wDFxPqu1/kE=
-Received: by 10.90.87.7 with SMTP id k7mr8437351agb.47.1215605282883;
-        Wed, 09 Jul 2008 05:08:02 -0700 (PDT)
-Received: by 10.90.93.17 with HTTP; Wed, 9 Jul 2008 05:08:02 -0700 (PDT)
-In-Reply-To: <76718490807081828k7640d07bp547a69d05a6e07c4@mail.gmail.com>
-Content-Disposition: inline
+	id S1752173AbYGIMSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2008 08:18:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751961AbYGIMSK
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 08:18:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59838 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750748AbYGIMSI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2008 08:18:08 -0400
+Received: (qmail invoked by alias); 09 Jul 2008 12:18:07 -0000
+Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
+  by mail.gmx.net (mp022) with SMTP; 09 Jul 2008 14:18:07 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18yZmd3qmEySvy/E6o24jTF7vzqErdSkSU0c+bXPZ
+	3NuEgzs3p66P0F
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7vprpnlglh.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.76
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87877>
 
-2008/7/9 Jay Soffian <jaysoffian@gmail.com>:
-> On Tue, Jul 8, 2008 at 9:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> I thought Jeff already explained why this NULL was a bad idea, but perhaps
->> I was dreaming...
->
-> http://article.gmane.org/gmane.comp.version-control.git/87701
+Hi,
 
-Sorry, I missed that message. I'll resend the patch with his suggestion.
+On Tue, 8 Jul 2008, Junio C Hamano wrote:
 
--- 
-Rob Shearman
+> Think of this procedure as giving a chance for you to hide early 
+> embarrassment under the rug ;-)
+
+Further, as Shawn pointed out to me (and you will all be able to hear it 
+for yourselves soon), these patch iterations give you the chance to apply 
+all the wisdom of the combined developers on this list to your patch, and 
+in the end put your name on it :-)
+
+Ciao,
+Dscho
