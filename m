@@ -1,56 +1,99 @@
-From: Dave Quigley <dpquigl@tycho.nsa.gov>
-Subject: Merging a foreign tree into a bare repository.
-Date: Tue, 08 Jul 2008 20:14:28 -0400
-Message-ID: <1215562468.4199.26.camel@moss-terrapins.epoch.ncsc.mil>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-rerere.txt: Mention rr-cache directory
+Date: Wed, 9 Jul 2008 02:38:15 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807090230560.5277@eeepc-johanness>
+References: <1215562653-5043-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0807090225050.5277@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 09 02:30:54 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Jul 09 02:39:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGNa1-000820-T8
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 02:30:46 +0200
+	id 1KGNiI-0001Zc-Dd
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 02:39:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752095AbYGIA3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 20:29:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751973AbYGIA3s
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 20:29:48 -0400
-Received: from mummy.ncsc.mil ([144.51.88.129]:58382 "EHLO mummy.ncsc.mil"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751957AbYGIA3r (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 20:29:47 -0400
-Received: from facesaver.epoch.ncsc.mil (jazzhorn.ncsc.mil [144.51.5.9])
-	by mummy.ncsc.mil (8.12.10/8.12.10) with ESMTP id m690Tjfn001563
-	for <git@vger.kernel.org>; Wed, 9 Jul 2008 00:29:46 GMT
-Received: from [144.51.25.2] (moss-terrapins [144.51.25.2])
-	by facesaver.epoch.ncsc.mil (8.13.1/8.13.1) with ESMTP id m690TjFJ019553
-	for <git@vger.kernel.org>; Tue, 8 Jul 2008 20:29:45 -0400
-X-Mailer: Evolution 2.12.3 (2.12.3-5.fc8) 
-X-Spam-Status: No, score=-103.8 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00,
-	USER_IN_WHITELIST autolearn=ham version=3.1.8
-X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on
-	facesaver.epoch.ncsc.mil
+	id S1755711AbYGIAiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 20:38:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752293AbYGIAiG
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 20:38:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42302 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755710AbYGIAiD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 20:38:03 -0400
+Received: (qmail invoked by alias); 09 Jul 2008 00:38:02 -0000
+Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
+  by mail.gmx.net (mp052) with SMTP; 09 Jul 2008 02:38:02 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/9Xk5/0fL9MtvTi+NGxGqphRUTGz8tejISUgt2T4
+	JjwbkOI3+y5NnV
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <alpine.DEB.1.00.0807090225050.5277@eeepc-johanness>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87820>
 
-Hello,
-   I created a bare copy of Linus' 2.6 kernel tree which I am using for
-some public development. I have a branch in this tree called patchset
-which has a series of commits based on a patch set that I have. Now I
-want to update this copy from the kernel.org git repository and rebase
-the patches in the patchset branch. I typed git-fetch <URL to Linus'
-tree> and it successfully fetched the remote objects. I tried to then
-merge them but you need a working directory to merge the changes which
-makes sense. Normally if I had a working directory I would use
-git-rebase to rebase my patches on a working tree but since this is a
-bare repository I can't do that. How would one go about doing this with
-a bare repository? Is there a better way of doing this that I am not
-aware of? Is my work flow completely off?
+Hi,
 
-Dave
+On Wed, 9 Jul 2008, Johannes Schindelin wrote:
+
+> On Wed, 9 Jul 2008, Stephan Beyer wrote:
+> 
+> > If a user reads the rerere documentation, he or she is not told to 
+> > create the $GIT_DIR/rr-cache directory to be able to use git-rerere. 
+> 
+> Is it?  The config setting is not enough?  Then that is a bug, and should 
+> not be blessed by a bug in the documentation.
+
+Okay, I took a look:
+
+-- snip --
+static int is_rerere_enabled(void)
+{
+        struct stat st;
+        const char *rr_cache;
+        int rr_cache_exists;
+
+        if (!rerere_enabled)
+                return 0;
+
+        rr_cache = git_path("rr-cache");
+        rr_cache_exists = !stat(rr_cache, &st) && S_ISDIR(st.st_mode);
+        if (rerere_enabled < 0)
+                return rr_cache_exists;
+
+        if (!rr_cache_exists &&
+            (mkdir(rr_cache, 0777) || adjust_shared_perm(rr_cache)))
+                die("Could not create directory %s", rr_cache);
+        return 1;
+}
+-- snap --
+
+As you can see, in the case rerere_enabled < 0 (i.e. the config did not 
+say anything about rerere), it is assumed enabled _exactly_ when 
+.git/rr_cache/ exists.
+
+But if it is > 0, the directory is created.
+
+Of course, this only holds true when the config is read, i.e. when 
+setup_rerere() was called in time.  Which is the case when you call 
+rerere() (as is done both from cmd_rerere() as well as cmd_commit()).
+
+Of course, I haven't tested it.  Other than running the test script, that 
+is.
+
+So care to elaborate what is going wrong?
+
+BTW I think it is a horrible thing that rerere() is declared in commit.h 
+(a libgit header), but implemented in builtin-rerere.c, which is not part 
+of libgit.a.
+
+Ciao,
+Dscho
