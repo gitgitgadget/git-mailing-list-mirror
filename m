@@ -1,101 +1,97 @@
-From: "Rob Shearman" <robertshearman@gmail.com>
-Subject: Re: [PATCH 2/4] git-imap-send: Add support for SSL.
-Date: Wed, 9 Jul 2008 13:02:18 +0100
-Message-ID: <1096648c0807090502x772fdaa4o59bf9932dc364de5@mail.gmail.com>
-References: <1215555496-21335-2-git-send-email-robertshearman@gmail.com>
-	 <7vbq18q7yk.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rerere: Separate libgit and builtin functions
+Date: Wed, 9 Jul 2008 14:03:53 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807091356050.5277@eeepc-johanness>
+References: <alpine.DEB.1.00.0807090230560.5277@eeepc-johanness> <1215598683-9685-1-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 14:03:19 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Jul 09 14:05:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGYOE-00068R-NE
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 14:03:19 +0200
+	id 1KGYPY-0006nI-6d
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 14:04:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752500AbYGIMCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2008 08:02:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752141AbYGIMCU
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 08:02:20 -0400
-Received: from wr-out-0506.google.com ([64.233.184.230]:45414 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751961AbYGIMCT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2008 08:02:19 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so2111417wri.5
-        for <git@vger.kernel.org>; Wed, 09 Jul 2008 05:02:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=39LmGwi7tZPu53Gqb/gQ5hiysrffvSIM/B9T6hIkOSw=;
-        b=HOC3ui2H/upBC8ohtcIhW8i8ZnHajlz+tZRZB3P76YbWsEpmNwD5Lrd82WPKJLhl/O
-         +o8Bt8hfP9xhQOfkBTffXeBs2ZrhAfJquw15R8B1f+DR/2ZOl82dNR3wPKQb8JjxU4sA
-         Y2EqA9E0oNWo+qosVNYDyXG2WeoNfx9iA02Uk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=ipr/rreWIF6rjrHBCfDyIQryASsvDcRXbVzyJ4FT8oYglrPMlzyhVTLnEXeF87sL+z
-         udpOZurm6wv8LprDWkl6HK3hcS0MrSGsxdXWSHhGJONbIfFZTU2Pvru7e/OBBuGIm1Lr
-         VpQivOoKsEFp5mMb1xOIUT6x+La4U04ys4FPw=
-Received: by 10.90.89.14 with SMTP id m14mr8427414agb.100.1215604938168;
-        Wed, 09 Jul 2008 05:02:18 -0700 (PDT)
-Received: by 10.90.93.17 with HTTP; Wed, 9 Jul 2008 05:02:18 -0700 (PDT)
-In-Reply-To: <7vbq18q7yk.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752914AbYGIMDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2008 08:03:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752141AbYGIMDm
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 08:03:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41415 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752085AbYGIMDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2008 08:03:41 -0400
+Received: (qmail invoked by alias); 09 Jul 2008 12:03:39 -0000
+Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
+  by mail.gmx.net (mp052) with SMTP; 09 Jul 2008 14:03:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/eF0ox9ovenwihFgCgghydpCDh2OcFJjIfoiZFWi
+	umKA7NbinXtuX0
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <1215598683-9685-1-git-send-email-s-beyer@gmx.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87874>
 
-2008/7/9 Junio C Hamano <gitster@pobox.com>:
-> Robert Shearman <robertshearman@gmail.com> writes:
->> diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
->> index b3d8da3..e4a5873 100644
->> --- a/Documentation/git-imap-send.txt
->> +++ b/Documentation/git-imap-send.txt
->> @@ -37,10 +37,11 @@ configuration file (shown with examples):
->>      Tunnel = "ssh -q user@server.com /usr/bin/imapd ./Maildir 2> /dev/null"
->>
->>  [imap]
->> -    Host = imap.server.com
->> +    Host = imaps://imap.example.com
->>      User = bob
->>      Pass = pwd
->> -    Port = 143
->> +    Port = 993
->> +    sslverify = false
->>  ..........................
->
-> Don't we also want to keep a vanilla configuration in the example, or is
-> imaps the norm and unencrypted imap is exception these days?
+Hi,
 
-Good point. I'll fix the documentation to use imap:// instead of
-imaps:// and not change the port number. However, I'm not sure the
-examples should be telling the user what they should do, but rather
-what they can do.
+On Wed, 9 Jul 2008, Stephan Beyer wrote:
 
-> Don't we need to support custom certificates, keys and CAs, just like our
-> code that supports https does, by honoring GIT_SSL_* environment variables
-> and configuration file entries?
+>  Makefile                     |    2 +
+>  builtin-rerere.c             |  324 +++---------------------------------------
+>  builtin-rerere.c => rerere.c |  133 +-----------------
+>  rerere.h                     |    9 ++
+>  4 files changed, 32 insertions(+), 436 deletions(-)
 
-Yes, eventually we will want that support in imap-send too. It should
-be fairly trivial to do, although testing will be more difficult.
+Heh, that sounds nice!  Deleting way more lines than adding!  :-)
 
->  The patch itself looks fairly clean, and
-> I'd like to queue this for wider testing, initially even without GIT_SSL_*
-> support.  But I'd like to see any patch with substantial amount of changes
-> properly signed off.
+>  copy builtin-rerere.c => rerere.c (66%)
 
-Great. I'll resend the series later with changes from the comments
-I've received and properly signed-off.
+Oh, well :-)
 
--- 
-Rob Shearman
+> diff --git a/builtin-rerere.c b/rerere.c
+> similarity index 66%
+> copy from builtin-rerere.c
+> copy to rerere.c
+> index 85222d9..5c22bed 100644
+> --- a/builtin-rerere.c
+> +++ b/rerere.c
+> @@ -1,18 +1,11 @@
+> -#include "builtin.h"
+>  #include "cache.h"
+>  #include "path-list.h"
+> +#include "rerere.h"
+>  #include "xdiff/xdiff.h"
+>  #include "xdiff-interface.h"
+>  
+>  #include <time.h>
+
+No longer necessary, is it?
+
+> diff --git a/rerere.h b/rerere.h
+> new file mode 100644
+> index 0000000..35b0fa8
+> --- /dev/null
+> +++ b/rerere.h
+> @@ -0,0 +1,9 @@
+> +#ifndef RERERE_H
+> +#define RERERE_H
+> +
+> +#include "path-list.h"
+> +
+> +extern int setup_rerere(struct path_list *);
+
+Why?
+
+Ah, it is needed for "gc".  Maybe this needs documentation, since it cause 
+some minutes of head scratching with yours truly.
+
+Ciao,
+Dscho
