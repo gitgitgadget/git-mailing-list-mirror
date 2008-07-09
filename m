@@ -1,171 +1,226 @@
 From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH] revisions: refactor handle_revision_opt into parse_revision_opt.
-Date: Wed,  9 Jul 2008 23:38:34 +0200
-Message-ID: <1215639514-1612-2-git-send-email-madcoder@debian.org>
-References: <1215639514-1612-1-git-send-email-madcoder@debian.org>
+Subject: [PATCH] git-shortlog: migrate to parse-options partially.
+Date: Wed,  9 Jul 2008 23:38:33 +0200
+Message-ID: <1215639514-1612-1-git-send-email-madcoder@debian.org>
 Cc: gitster@pobox.com, Pierre Habouzit <madcoder@debian.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 09 23:39:43 2008
+X-From: git-owner@vger.kernel.org Wed Jul 09 23:39:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGhNv-0006ES-UP
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 23:39:36 +0200
+	id 1KGhNw-0006ES-J4
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 23:39:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751934AbYGIVii (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2008 17:38:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751915AbYGIVii
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 17:38:38 -0400
-Received: from pan.madism.org ([88.191.52.104]:57141 "EHLO hermes.madism.org"
+	id S1752089AbYGIVil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2008 17:38:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751977AbYGIVil
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 17:38:41 -0400
+Received: from pan.madism.org ([88.191.52.104]:57146 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751801AbYGIVih (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2008 17:38:37 -0400
+	id S1751915AbYGIVik (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2008 17:38:40 -0400
 Received: from madism.org (olympe.madism.org [82.243.245.108])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 31E583480F;
-	Wed,  9 Jul 2008 23:38:36 +0200 (CEST)
+	by hermes.madism.org (Postfix) with ESMTPS id D33183A46F;
+	Wed,  9 Jul 2008 23:38:38 +0200 (CEST)
 Received: by madism.org (Postfix, from userid 1000)
-	id EDA8485E6; Wed,  9 Jul 2008 23:38:34 +0200 (CEST)
+	id E810A85E5; Wed,  9 Jul 2008 23:38:34 +0200 (CEST)
 X-Mailer: git-send-email 1.5.6.2.428.gdce6.dirty
-In-Reply-To: <1215639514-1612-1-git-send-email-madcoder@debian.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87920>
-
-It seems we're using handle_revision_opt the same way each time, have a
-wrapper around it that does the 9-liner we copy each time instead.
-
-handle_revision_opt can be static in the module for now, it's always
-possible to make it public again if needed.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87921>
 
 Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 ---
- builtin-blame.c    |   11 +----------
- builtin-shortlog.c |   10 +---------
- revision.c         |   18 ++++++++++++++++--
- revision.h         |    7 +++++--
- 4 files changed, 23 insertions(+), 23 deletions(-)
+ builtin-shortlog.c |  135 +++++++++++++++++++++++++++++----------------------
+ 1 files changed, 77 insertions(+), 58 deletions(-)
 
-diff --git a/builtin-blame.c b/builtin-blame.c
-index 73d26c6..06c7de4 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -2305,8 +2305,6 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	parse_options_start(&ctx, argc, argv, PARSE_OPT_KEEP_DASHDASH |
- 			    PARSE_OPT_KEEP_ARGV0);
- 	for (;;) {
--		int n;
--
- 		switch (parse_options_step(&ctx, options, blame_opt_usage)) {
- 		case PARSE_OPT_HELP:
- 			exit(129);
-@@ -2320,14 +2318,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 			ctx.argv[0] = "--children";
- 			reverse = 1;
- 		}
--		n = handle_revision_opt(&revs, ctx.argc, ctx.argv,
--					&ctx.cpidx, ctx.out);
--		if (n <= 0) {
--			error("unknown option `%s'", ctx.argv[0]);
--			usage_with_options(blame_opt_usage, options);
--		}
--		ctx.argv += n;
--		ctx.argc -= n;
-+		parse_revision_opt(&revs, &ctx, options, blame_opt_usage);
- 	}
- parse_done:
- 	argc = parse_options_end(&ctx);
 diff --git a/builtin-shortlog.c b/builtin-shortlog.c
-index 9107bff..0136202 100644
+index e6a2865..9107bff 100644
 --- a/builtin-shortlog.c
 +++ b/builtin-shortlog.c
-@@ -255,21 +255,13 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
- 			    PARSE_OPT_KEEP_ARGV0);
- 
- 	for (;;) {
--		int n;
- 		switch (parse_options_step(&ctx, options, shortlog_usage)) {
- 		case PARSE_OPT_HELP:
- 			exit(129);
- 		case PARSE_OPT_DONE:
- 			goto parse_done;
- 		}
--		n = handle_revision_opt(&rev, ctx.argc, ctx.argv,
--					&ctx.cpidx, ctx.out);
--		if (n <= 0) {
--			error("unknown option `%s'", ctx.argv[0]);
--			usage_with_options(shortlog_usage, options);
--		}
--		ctx.argv += n;
--		ctx.argc -= n;
-+		parse_revision_opt(&rev, &ctx, options, shortlog_usage);
- 	}
- parse_done:
- 	argc = parse_options_end(&ctx);
-diff --git a/revision.c b/revision.c
-index 9d5d933..bbd563e 100644
---- a/revision.c
-+++ b/revision.c
-@@ -974,8 +974,8 @@ static void add_ignore_packed(struct rev_info *revs, const char *name)
- 	revs->ignore_packed[num] = NULL;
- }
- 
--int handle_revision_opt(struct rev_info *revs, int argc, const char **argv,
--			int *unkc, const char **unkv)
-+static int handle_revision_opt(struct rev_info *revs, int argc, const char **argv,
-+			       int *unkc, const char **unkv)
- {
- 	const char *arg = argv[0];
- 
-@@ -1180,6 +1180,20 @@ int handle_revision_opt(struct rev_info *revs, int argc, const char **argv,
- 	return 1;
- }
- 
-+void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
-+			const struct option *options,
-+			const char * const usagestr[])
-+{
-+	int n = handle_revision_opt(revs, ctx->argc, ctx->argv,
-+				    &ctx->cpidx, ctx->out);
-+	if (n <= 0) {
-+		error("unknown option `%s'", ctx->argv[0]);
-+		usage_with_options(usagestr, options);
-+	}
-+	ctx->argv += n;
-+	ctx->argc -= n;
-+}
-+
- /*
-  * Parse revision information, filling in the "rev_info" structure,
-  * and removing the used arguments from the argument list.
-diff --git a/revision.h b/revision.h
-index cc80fcd..fa68c65 100644
---- a/revision.h
-+++ b/revision.h
-@@ -1,6 +1,8 @@
- #ifndef REVISION_H
- #define REVISION_H
- 
+@@ -7,9 +7,14 @@
+ #include "utf8.h"
+ #include "mailmap.h"
+ #include "shortlog.h"
 +#include "parse-options.h"
+ 
+-static const char shortlog_usage[] =
+-"git-shortlog [-n] [-s] [-e] [-w] [<commit-id>... ]";
++static char const * const shortlog_usage[] = {
++	"git-shortlog [-n] [-s] [-e] [-w] [rev-opts] [--] [<commit-id>... ]",
++	"",
++	"[rev-opts] are documented in git-rev-list(1)",
++	NULL
++};
+ 
+ static int compare_by_number(const void *a1, const void *a2)
+ {
+@@ -164,21 +169,19 @@ static void get_from_rev(struct rev_info *rev, struct shortlog *log)
+ 		shortlog_add_commit(log, commit);
+ }
+ 
+-static int parse_uint(char const **arg, int comma)
++static int parse_uint(char const **arg, int comma, int defval)
+ {
+ 	unsigned long ul;
+ 	int ret;
+ 	char *endp;
+ 
+ 	ul = strtoul(*arg, &endp, 10);
+-	if (endp != *arg && *endp && *endp != comma)
++	if (*endp && *endp != comma)
+ 		return -1;
+-	ret = (int) ul;
+-	if (ret != ul)
++	if (ul > INT_MAX)
+ 		return -1;
+-	*arg = endp;
+-	if (**arg)
+-		(*arg)++;
++	ret = *arg == endp ? defval : (int)ul;
++	*arg = *endp ? endp + 1 : endp;
+ 	return ret;
+ }
+ 
+@@ -187,30 +190,30 @@ static const char wrap_arg_usage[] = "-w[<width>[,<indent1>[,<indent2>]]]";
+ #define DEFAULT_INDENT1 6
+ #define DEFAULT_INDENT2 9
+ 
+-static void parse_wrap_args(const char *arg, int *in1, int *in2, int *wrap)
++static int parse_wrap_args(const struct option *opt, const char *arg, int unset)
+ {
+-	arg += 2; /* skip -w */
+-
+-	*wrap = parse_uint(&arg, ',');
+-	if (*wrap < 0)
+-		die(wrap_arg_usage);
+-	*in1 = parse_uint(&arg, ',');
+-	if (*in1 < 0)
+-		die(wrap_arg_usage);
+-	*in2 = parse_uint(&arg, '\0');
+-	if (*in2 < 0)
+-		die(wrap_arg_usage);
+-
+-	if (!*wrap)
+-		*wrap = DEFAULT_WRAPLEN;
+-	if (!*in1)
+-		*in1 = DEFAULT_INDENT1;
+-	if (!*in2)
+-		*in2 = DEFAULT_INDENT2;
+-	if (*wrap &&
+-	    ((*in1 && *wrap <= *in1) ||
+-	     (*in2 && *wrap <= *in2)))
+-		die(wrap_arg_usage);
++	struct shortlog *log = opt->value;
 +
- #define SEEN		(1u<<0)
- #define UNINTERESTING   (1u<<1)
- #define TREESAME	(1u<<2)
-@@ -122,8 +124,9 @@ volatile show_early_output_fn_t show_early_output;
++	log->wrap_lines = !unset;
++	if (unset)
++		return 0;
++	if (!arg) {
++		log->wrap = DEFAULT_WRAPLEN;
++		log->in1 = DEFAULT_INDENT1;
++		log->in2 = DEFAULT_INDENT2;
++		return 0;
++	}
++
++	log->wrap = parse_uint(&arg, ',', DEFAULT_WRAPLEN);
++	log->in1 = parse_uint(&arg, ',', DEFAULT_INDENT1);
++	log->in2 = parse_uint(&arg, '\0', DEFAULT_INDENT2);
++	if (log->wrap < 0 || log->in1 < 0 || log->in2 < 0)
++		return error(wrap_arg_usage);
++	if (log->wrap &&
++	    ((log->in1 && log->wrap <= log->in1) ||
++	     (log->in2 && log->wrap <= log->in2)))
++		return error(wrap_arg_usage);
++	return 0;
+ }
  
- extern void init_revisions(struct rev_info *revs, const char *prefix);
- extern int setup_revisions(int argc, const char **argv, struct rev_info *revs, const char *def);
--extern int handle_revision_opt(struct rev_info *revs, int argc, const char **argv,
--			       int *unkc, const char **unkv);
-+extern void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
-+				 const struct option *options,
-+				 const char * const usagestr[]);
- extern int handle_revision_arg(const char *arg, struct rev_info *revs,int flags,int cant_be_filename);
+ void shortlog_init(struct shortlog *log)
+@@ -227,38 +230,54 @@ void shortlog_init(struct shortlog *log)
  
- extern int prepare_revision_walk(struct rev_info *revs);
+ int cmd_shortlog(int argc, const char **argv, const char *prefix)
+ {
+-	struct shortlog log;
+-	struct rev_info rev;
++	static struct shortlog log;
++	static struct rev_info rev;
+ 	int nongit;
+ 
++	static const struct option options[] = {
++		OPT_BOOLEAN('n', "numbered", &log.sort_by_number,
++			    "sort output according to the number of commits per author"),
++		OPT_BOOLEAN('s', "summary", &log.summary,
++			    "Suppress commit descriptions, only provides commit count"),
++		OPT_BOOLEAN('e', "email", &log.email,
++			    "Show the email address of each author"),
++		{ OPTION_CALLBACK, 'w', NULL, &log, "w[,i1[,i2]]",
++			"Linewrap output", PARSE_OPT_OPTARG, &parse_wrap_args },
++		OPT_END(),
++	};
++
++	struct parse_opt_ctx_t ctx;
++
+ 	prefix = setup_git_directory_gently(&nongit);
+ 	shortlog_init(&log);
+-
+-	/* since -n is a shadowed rev argument, parse our args first */
+-	while (argc > 1) {
+-		if (!strcmp(argv[1], "-n") || !strcmp(argv[1], "--numbered"))
+-			log.sort_by_number = 1;
+-		else if (!strcmp(argv[1], "-s") ||
+-				!strcmp(argv[1], "--summary"))
+-			log.summary = 1;
+-		else if (!strcmp(argv[1], "-e") ||
+-			 !strcmp(argv[1], "--email"))
+-			log.email = 1;
+-		else if (!prefixcmp(argv[1], "-w")) {
+-			log.wrap_lines = 1;
+-			parse_wrap_args(argv[1], &log.in1, &log.in2, &log.wrap);
++	init_revisions(&rev, prefix);
++	parse_options_start(&ctx, argc, argv, PARSE_OPT_KEEP_DASHDASH |
++			    PARSE_OPT_KEEP_ARGV0);
++
++	for (;;) {
++		int n;
++		switch (parse_options_step(&ctx, options, shortlog_usage)) {
++		case PARSE_OPT_HELP:
++			exit(129);
++		case PARSE_OPT_DONE:
++			goto parse_done;
+ 		}
+-		else if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help"))
+-			usage(shortlog_usage);
+-		else
+-			break;
+-		argv++;
+-		argc--;
++		n = handle_revision_opt(&rev, ctx.argc, ctx.argv,
++					&ctx.cpidx, ctx.out);
++		if (n <= 0) {
++			error("unknown option `%s'", ctx.argv[0]);
++			usage_with_options(shortlog_usage, options);
++		}
++		ctx.argv += n;
++		ctx.argc -= n;
++	}
++parse_done:
++	argc = parse_options_end(&ctx);
++
++	if (setup_revisions(argc, argv, &rev, NULL) != 1) {
++		error("unrecognized argument: %s", argv[1]);
++		usage_with_options(shortlog_usage, options);
+ 	}
+-	init_revisions(&rev, prefix);
+-	argc = setup_revisions(argc, argv, &rev, NULL);
+-	if (argc > 1)
+-		die ("unrecognized argument: %s", argv[1]);
+ 
+ 	/* assume HEAD if from a tty */
+ 	if (!nongit && !rev.pending.nr && isatty(0))
 -- 
 1.5.6.2.428.gdce6.dirty
