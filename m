@@ -1,77 +1,54 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH] git-rerere.txt: Mention rr-cache directory
-Date: Wed,  9 Jul 2008 02:17:33 +0200
-Message-ID: <1215562653-5043-1-git-send-email-s-beyer@gmx.net>
-Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 02:18:43 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-rerere.txt: Mention rr-cache directory
+Date: Wed, 9 Jul 2008 02:25:45 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807090225050.5277@eeepc-johanness>
+References: <1215562653-5043-1-git-send-email-s-beyer@gmx.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Jul 09 02:26:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGNOM-0005Uz-MR
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 02:18:43 +0200
+	id 1KGNVw-00075z-Lx
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 02:26:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751298AbYGIARp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 20:17:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751297AbYGIARo
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 20:17:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51862 "HELO mail.gmx.net"
+	id S1751639AbYGIAZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 20:25:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbYGIAZe
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 20:25:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52130 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751251AbYGIARo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 20:17:44 -0400
-Received: (qmail invoked by alias); 09 Jul 2008 00:17:42 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp026) with SMTP; 09 Jul 2008 02:17:42 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/Gv2IuPaTG21B3C3KqvuZl6f7HhV88rSHHgeENg5
-	8rRqjMh04qpdDg
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KGNNF-0001Ji-Cs; Wed, 09 Jul 2008 02:17:33 +0200
-X-Mailer: git-send-email 1.5.6.2.574.gd4568
+	id S1751482AbYGIAZe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 20:25:34 -0400
+Received: (qmail invoked by alias); 09 Jul 2008 00:25:32 -0000
+Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
+  by mail.gmx.net (mp059) with SMTP; 09 Jul 2008 02:25:32 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+f2qxPixifwpRyocpnosNGQW1HUn2or3b7lrXPP5
+	zQDjwP2lVFlwec
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <1215562653-5043-1-git-send-email-s-beyer@gmx.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+X-FuHaFi: 0.77
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87818>
 
-If a user reads the rerere documentation, he or she is not told to
-create the $GIT_DIR/rr-cache directory to be able to use git-rerere.
-This patch adds such a remark.
+Hi,
 
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
----
- Documentation/git-rerere.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+On Wed, 9 Jul 2008, Stephan Beyer wrote:
 
-diff --git a/Documentation/git-rerere.txt b/Documentation/git-rerere.txt
-index 678bfd3..667505c 100644
---- a/Documentation/git-rerere.txt
-+++ b/Documentation/git-rerere.txt
-@@ -23,8 +23,8 @@ initial manual merge, and later by noticing the same automerge
- results and applying the previously recorded hand resolution.
- 
- [NOTE]
--You need to set the configuration variable rerere.enabled to
--enable this command.
-+You need to set the configuration variable `rerere.enabled` and create
-+the `rr-cache` directory under `$GIT_DIR` to enable this command.
- 
- 
- COMMANDS
-@@ -170,8 +170,8 @@ As a convenience measure, 'git-merge' automatically invokes
- records it if it is a new conflict, or reuses the earlier hand
- resolve when it is not.  'git-commit' also invokes 'git-rerere'
- when recording a merge result.  What this means is that you do
--not have to do anything special yourself (Note: you still have
--to set the config variable rerere.enabled to enable this command).
-+not have to do anything special yourself, except making sure
-+that `rerere.enabled` is set and `$GIT_DIR/rr-cache` exists.
- 
- In our example, when you did the test merge, the manual
- resolution is recorded, and it will be reused when you do the
--- 
-1.5.6.2.574.gd4568
+> If a user reads the rerere documentation, he or she is not told to 
+> create the $GIT_DIR/rr-cache directory to be able to use git-rerere. 
+
+Is it?  The config setting is not enough?  Then that is a bug, and should 
+not be blessed by a bug in the documentation.
+
+Ciao,
+Dscho
