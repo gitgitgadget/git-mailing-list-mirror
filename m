@@ -1,196 +1,73 @@
-From: Pierre Habouzit <pierre.habouzit@intersec.com>
-Subject: submodules and interaction with GIT
-Date: Wed, 09 Jul 2008 15:07:23 +0200
-Message-ID: <20080709130723.GG23482@artemis.madism.org>
+From: "Nigel Magnay" <nigel.magnay@gmail.com>
+Subject: clever(er) file merging tools?
+Date: Wed, 9 Jul 2008 14:16:17 +0100
+Message-ID: <320075ff0807090616s147c805cu82ba8b3d9ba37140@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="5CUMAwwhRxlRszMD";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>
-To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 09 15:15:26 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 09 15:17:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGZVl-0001Ki-TZ
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 15:15:10 +0200
+	id 1KGZXq-0002Kn-3p
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 15:17:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753646AbYGINOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2008 09:14:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753528AbYGINOK
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 09:14:10 -0400
-Received: from pan.madism.org ([88.191.52.104]:47213 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752329AbYGINOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2008 09:14:08 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Jul 2008 09:14:07 EDT
-Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 73C25346EB;
-	Wed,  9 Jul 2008 15:07:25 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id E455885E5; Wed,  9 Jul 2008 15:07:23 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <pierre.habouzit@intersec.com>,
-	Git ML <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Lars Hjemli <hjemli@gmail.com>
+	id S1754216AbYGINQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2008 09:16:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754141AbYGINQU
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 09:16:20 -0400
+Received: from mu-out-0910.google.com ([209.85.134.187]:12799 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753755AbYGINQT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2008 09:16:19 -0400
+Received: by mu-out-0910.google.com with SMTP id w8so922128mue.1
+        for <git@vger.kernel.org>; Wed, 09 Jul 2008 06:16:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=bfWPj1OY/6f5EI6rohBPo0xhqzbxqy6FwA5OpoA9St4=;
+        b=R5cUtCCMR3soctfEcMKq/ae2GhS+jQz/vpZKZjgourNb7lP1EN/yXpuCZzpQ7UZs9h
+         YFdmJ8/xDwkN3/fl6yHnC6ct16QXV0XTzE6WDfb+9Fn+BtUQ32A19NUjncP6qGce37HE
+         WEBQYf41ix1fpY1lrA2CeUyIAK1/mI7DKFFGs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=XYMLNmU0erAuuhSjuYX2lVNrMVjrfv4C8hPIwvBYWsFc/568jFw/OuDP/AUfSTsAOT
+         LFDSNmrwBJfQwr4PTEjRZUn0q3u3cZPCg2yInxcdXEl1mw1hSjAoIPwbjzalyW6YNKG1
+         jO7j7GEmlOKFcN3rOciyjByYPxCxthWmkPhbY=
+Received: by 10.103.11.7 with SMTP id o7mr3916291mui.103.1215609377028;
+        Wed, 09 Jul 2008 06:16:17 -0700 (PDT)
+Received: by 10.103.185.13 with HTTP; Wed, 9 Jul 2008 06:16:17 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87881>
 
+This isn't git-specific, but since git users tend to merge more often
+there might be some good knowledge here.
 
---5CUMAwwhRxlRszMD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+My usual practice in merging is to issue the merge, then use 'git
+mergetool' to cope with conflicts. On my mac, that fires up opendiff,
+which does a reasonable (I guess) attempt at unpicking the changes and
+allowing me to choose.
 
-Let's start with a bit of context. We have this __huge__ "put everything
-in it"-repository at work, and we want to strip out core modules and
-integrate them in our different projects through submodules.  We moved
-away one of our core libraries into its separate git repository, and it
-became a submodule in our big fat repository. I believe it's the kind of
-things we said people should do when they need partial checkouts
-(tree-wise) so I assume the workflow I describe here is decent.
+Sometimes, however, probably due to complexity, it spits out a huge
+section of the file as being in conflict. Examining it, I always end
+up getting annoyed, since for a lot of the file, the changes aren't in
+conflict at all - whole (java) functions are in the conflict area
+where they're actually the same.
 
-Just to make things clearer, we have two branches in this repository,
-'maint' and 'master'. Maint is the branch for the production product,
-master is the one where devel happens. 'maint' is obviously merged into
-'master' on a regular basis.
-
-
-Problem 1: directory/submodule conflicts (aka D/S)
----------
-
-Our first problem was that git doesn't deal with D/S conflicts well.  To
-migrate our repository, I went into 'maint' and did:
-
-  $ git rm -rf corelib
-  $ git submodule add -b corelib/master -- <our-repo> corelib
-  $ git commit -asm'replace corelib with a submodule'
-
-  Then I went into 'master' and did:
-
-  $ git merge maint
-
-Here it failed horribly because it claimed that the merge would clobber
-untracked files like corelib/.gitignore which was a previously tracked
-file in the huge repository and is now tracked in the submodule.
-
-I worked that around by having an intermediate commit that removes
-'corelib' in 'master'. Unpretty, but works.  Later, when other
-developers updated their trees, they had all kinds of really distateful
-issues related to D/S conflicts.
-
-
-
-Problem 2: integration with git-checkout
----------
-
-When using submodules, when I do updates to the corelib, like fixing a
-bug, hence I want it to appear in 'maint', I go to maint and basically
-do:
-
-  $ cd corelib
-  $ git fetch
-  $ git reset --hard origin/corelib/master # so that I have the fix
-  $ cd ..
-  $ git commit -asm'update corelib for bug#nnn'
-
-When then I `git checkout master`, the corelib submodule had no
-modifications in 'maint' but remains in its 'maint' state when I go to
-master instead of what I would like: see it be checkout to its 'master'
-state, and refuse to checkout if the submodule cannot perform the
-checkout.
-
-I'd really like git checkout -m to also perform a git checkout -m in
-submodules.
-
-And along the road, one has a lot of frightening errors:
-    fatal: cannot read object b8f1177da31281682feb79c9d4290a88edf067ae 'cor=
-elib~Updated upstream': It is a submodule!
-
-
-I quite understand that in presence of submodules git checkout works
-becomes quite harder as you have to check for every submodule plus
-yourself to know if you can perform the checkout, but I don't really see
-why it can't be done.
-
-
-Problem 3: similar problem with git-reset
----------
-
-Really, I type git reset --hard all the time to undo my local changes.
-And I know while typing that it destroys local changes. Really, it
-should reset the submodules to their supposed state as well.
-
-
-
-Problem 4: merging
----------
-
-When merging two branches, there is a strategy that I believe is
-applicable for submodules. If one of the two submodules states is a
-direct ancestor from the other, then the merge result shall be the
-descendant.
-
-When revisions are not in direct line, then it shall be a conflict.
-
-
-Problem 5: fetching
----------
-
-`git fetch` should fetch submodules too. Arguably, if you type `git
-fetch REMOTE` then any submodule that has a corresponding "REMOTE"
-configured should fetch it.
-
-
-Notes:
------
-
-When you cannot know something required for conflicts handling e.g.,
-(because you haven't enough history for the submodules) the command
-shall fail asking the user to fetch the incriminated submodules. IOW
-when you perform any action that involves submodules, each submodules
-must be queried to know if it can performs the action, and git shall
-fail if it's not the case and do nothing.
-
-Wrt most of the behaviours I described, I would be fine if those were
-enabled only by a configuration flag in the .gitmodules, and that user
-can override in their .git/config. We could have a
-submodule.<module>.commandsMustRecurse setting to tell
-fetch/reset/checkout/... to behave like I said with this module. I
-believe that true should be the default.
-
-Non initialized submodules should be considered as always up to date for
-all of this, so that people that don't want to waste bandwidth for this
-or this submodule can work peacefully.
-
-
-
-Okay, I'm sure there are tons of other uses of submodules out there for
-which this is an overkill, but if we really intend seriously to tell
-people "do use submodules to avoid having incredibly huge repositories"
-like we did in the past, we should really improve the overall usability.
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---5CUMAwwhRxlRszMD
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkh0uAcACgkQvGr7W6HudhzH7gCfTwZULngpJAU17/WrH3ypu0au
-q38An18FBQZVEsiw/9xhWxqrbUYy6jH6
-=1U0V
------END PGP SIGNATURE-----
-
---5CUMAwwhRxlRszMD--
+I have wondered if I could pre-filter the sourcecode through something
+like Jalopy to re-order all the blocks into a common ordering. But I
+also wondered if there were any merge tools that (say) understand the
+structure of Java and use it to compare at a method declaration level
+rather than as a big text document? Maybe just opendiff isn't the best
+(though I quite like the interface as it's easy to understand and the
+price is right...)
