@@ -1,60 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] git-imap-send: Add support for SSL.
-Date: Wed, 09 Jul 2008 11:28:43 -0700
-Message-ID: <7vzloqkj38.fsf@gitster.siamese.dyndns.org>
-References: <1215555496-21335-2-git-send-email-robertshearman@gmail.com>
- <7vbq18q7yk.fsf@gitster.siamese.dyndns.org>
- <1096648c0807090502x772fdaa4o59bf9932dc364de5@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Merging a foreign tree into a bare repository.
+Date: Wed, 9 Jul 2008 20:42:22 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807092040360.4010@eeepc-johanness>
+References: <1215562468.4199.26.camel@moss-terrapins.epoch.ncsc.mil> <alpine.DEB.1.00.0807090238561.5277@eeepc-johanness> <m3lk0bdkyl.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Rob Shearman" <robertshearman@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 20:30:04 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dave Quigley <dpquigl@tycho.nsa.gov>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 09 20:43:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGeQM-0008G9-UQ
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 20:29:55 +0200
+	id 1KGedG-0005Sb-2z
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 20:43:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753101AbYGIS2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2008 14:28:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753567AbYGIS2z
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 14:28:55 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64531 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753094AbYGIS2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2008 14:28:54 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3A70F2A354;
-	Wed,  9 Jul 2008 14:28:53 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A7C3D2A351; Wed,  9 Jul 2008 14:28:50 -0400 (EDT)
-In-Reply-To: <1096648c0807090502x772fdaa4o59bf9932dc364de5@mail.gmail.com>
- (Rob Shearman's message of "Wed, 9 Jul 2008 13:02:18 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E21AC342-4DE4-11DD-94AD-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753210AbYGISmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2008 14:42:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753301AbYGISmK
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 14:42:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37113 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753019AbYGISmJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2008 14:42:09 -0400
+Received: (qmail invoked by alias); 09 Jul 2008 18:42:06 -0000
+Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
+  by mail.gmx.net (mp061) with SMTP; 09 Jul 2008 20:42:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18M/iVU9UYM/ni+3lg4ag8XZTuIFeoXU/gcliQshP
+	frx95rl3nB71g6
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <m3lk0bdkyl.fsf@localhost.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87905>
 
-"Rob Shearman" <robertshearman@gmail.com> writes:
+Hi,
 
-> 2008/7/9 Junio C Hamano <gitster@pobox.com>:
-> ...
->> Don't we also want to keep a vanilla configuration in the example, or is
->> imaps the norm and unencrypted imap is exception these days?
->
-> Good point. I'll fix the documentation to use imap:// instead of
-> imaps:// and not change the port number. However, I'm not sure the
-> examples should be telling the user what they should do, but rather
-> what they can do.
+On Wed, 9 Jul 2008, Jakub Narebski wrote:
 
-My comment was purely about losing the basic example by replacing it with
-something more advanced.  Nobody prevents you from having _more_ examples.
-"You can do this, you can do that, also here is an example of how to use
-SSL".
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Tue, 8 Jul 2008, Dave Quigley wrote:
+> > 
+> > > I tried to then merge them but you need a working directory to merge the 
+> > > changes which makes sense.
+> > 
+> > Of course it does.  Merging runs the risk of conflicts, and you need a 
+> > working directory for that.
+> > 
+> > > How would one go about doing this with a bare repository?
+> > 
+> > Very easy: clone it ("non-barely"), merge, and push back the results.
+> > 
+> > You _need_ a working directory for the merge.
+> 
+> Or, alternatively, you can tell git where you want to have working
+> directory with '--work-tree' parameter to git wrapper,
+
+... which runs the risk of you forgetting to specify the same working 
+directory all the time.
+
+Which is the reason I did not suggest it.
+
+> You can also set core.worktree configuration variable...
+
+... effectively turning it into a non-bare repository.  Was that the 
+question, how to turn a bare repository into a non-bare one?
+
+Ciao,
+Dscho
