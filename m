@@ -1,69 +1,56 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] Provide fallback definitions of PRIu32 and PRIx32
-Date: Wed, 9 Jul 2008 22:38:14 +0200
-Message-ID: <200807092238.14656.johannes.sixt@telecom.at>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 22:39:43 2008
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [PATCH] git-blame: fix lapsus
+Date: Wed,  9 Jul 2008 22:47:38 +0200
+Message-ID: <1215636458-17687-1-git-send-email-madcoder@debian.org>
+Cc: gitster@pobox.com, Pierre Habouzit <madcoder@debian.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 09 22:49:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGgRw-00082B-Kq
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 22:39:41 +0200
+	id 1KGgak-0003fU-Iw
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 22:48:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751795AbYGIUie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2008 16:38:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752011AbYGIUie
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 16:38:34 -0400
-Received: from smtp3.srv.eunet.at ([193.154.160.89]:43540 "EHLO
-	smtp3.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751526AbYGIUid (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2008 16:38:33 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp3.srv.eunet.at (Postfix) with ESMTP id 1465910AA70;
-	Wed,  9 Jul 2008 22:38:25 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 1B8B819E67;
-	Wed,  9 Jul 2008 22:38:15 +0200 (CEST)
-User-Agent: KMail/1.9.9
-Content-Disposition: inline
+	id S1754115AbYGIUrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2008 16:47:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753963AbYGIUrq
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 16:47:46 -0400
+Received: from pan.madism.org ([88.191.52.104]:59120 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753936AbYGIUrq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2008 16:47:46 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id AFCCC34710;
+	Wed,  9 Jul 2008 22:47:39 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 55EA485E5; Wed,  9 Jul 2008 22:47:38 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.2.397.gf2a8c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87911>
 
-Since 6e1c23442 we make use of these C99 constructs, but this commit did
-not provide fallbacks for non-C99 systems.
-
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 ---
- git-compat-util.h |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+ builtin-blame.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 545df59..8c7e114 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -110,6 +110,14 @@
- #define PRIuMAX "llu"
- #endif
+diff --git a/builtin-blame.c b/builtin-blame.c
+index 99f5140..73d26c6 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -25,7 +25,7 @@ static char blame_usage[] = "git-blame [options] [rev-opts] [rev] [--] file";
+ static const char *blame_opt_usage[] = {
+ 	blame_usage,
+ 	"",
+-	"[rev-opts] are documented in git-rev-parse(1)",
++	"[rev-opts] are documented in git-rev-list(1)",
+ 	NULL
+ };
  
-+#ifndef PRIu32
-+#define PRIu32 "u"
-+#endif
-+
-+#ifndef PRIx32
-+#define PRIx32 "x"
-+#endif
-+
- #ifndef PATH_SEP
- #define PATH_SEP ':'
- #endif
 -- 
-1.5.6.1.216.g8c89b
+1.5.6.2.397.gf2a8c
