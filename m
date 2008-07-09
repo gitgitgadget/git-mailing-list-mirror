@@ -1,132 +1,53 @@
-From: "=?UTF-8?Q?Jo=C3=A3o_Abecasis?=" <joao@abecasis.name>
-Subject: [PATCH] git-svn: find-rev and rebase for SVN::Mirror repositories
-Date: Wed, 9 Jul 2008 03:08:27 +0100
-Message-ID: <7bf6f1d20807081908kdf9f615taa532ae579b457d7@mail.gmail.com>
+From: Abhijit Menon-Sen <ams@toroid.org>
+Subject: Re: [PATCH 2/4] git-imap-send: Add support for SSL.
+Date: Wed, 9 Jul 2008 07:58:39 +0530
+Message-ID: <20080709022839.GA4989@toroid.org>
+References: <1215555496-21335-2-git-send-email-robertshearman@gmail.com> <7vbq18q7yk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-To: git@vger.kernel.org, "Eric Wong" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Jul 09 04:09:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Robert Shearman <robertshearman@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 09 04:29:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGP7Y-0002iX-CG
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 04:09:29 +0200
+	id 1KGPRM-0007kZ-4i
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 04:29:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751550AbYGICIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2008 22:08:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751344AbYGICIa
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 22:08:30 -0400
-Received: from fk-out-0910.google.com ([209.85.128.189]:49494 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751157AbYGICI3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2008 22:08:29 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so1479909fkq.5
-        for <git@vger.kernel.org>; Tue, 08 Jul 2008 19:08:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition:x-google-sender-auth;
-        bh=AtC+gSMa72qnlomatgVcX2MIZUaraCejLT56M/VeLcM=;
-        b=voCeuymoPh3hPanyvctWVnwGZVXB9Q8o+v4vLcUAw4XtB31Qg6VAfipUMk+3MsGS6w
-         aZ/W8v5FK9X5WS1CvTi0y34WlwdtF2+AoUaA92hKTaZxouVdJytlOTf5NVc7yOxZOgCt
-         tRzvys1ige7jYbPR0eFGZrBRSqicaFfzPCyqk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=lRGmUd5AQgVvqLcZSCeqDsZL4bW9dxrZUP9IGBC//qrFjuLs+/O222xD5A+XpEYChS
-         RsnFXGr/ZXoc2xRCHvxNWZQXmwaI/ROnRVhiUmv3CsKs55zBEOQVrtAvxpbg+BOaKpqi
-         2HtP/IK8jWfJmwtCfUyzdrpySVubH1dQR62xE=
-Received: by 10.125.153.8 with SMTP id f8mr1693970mko.60.1215569307914;
-        Tue, 08 Jul 2008 19:08:27 -0700 (PDT)
-Received: by 10.125.131.3 with HTTP; Tue, 8 Jul 2008 19:08:27 -0700 (PDT)
+	id S1751940AbYGIC2j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2008 22:28:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751846AbYGIC2j
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jul 2008 22:28:39 -0400
+Received: from fugue.toroid.org ([85.10.196.113]:46003 "EHLO fugue.toroid.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751269AbYGIC2j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2008 22:28:39 -0400
+Received: from penne.toroid.org (penne-vpn [10.8.0.6])
+	by fugue.toroid.org (Postfix) with ESMTP id CA3D9558400;
+	Wed,  9 Jul 2008 04:28:36 +0200 (CEST)
+Received: by penne.toroid.org (Postfix, from userid 1000)
+	id 1A409ADC364; Wed,  9 Jul 2008 07:58:39 +0530 (IST)
 Content-Disposition: inline
-X-Google-Sender-Auth: 07e51b8f96b12ec3
+In-Reply-To: <7vbq18q7yk.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87832>
 
-ZmluZC1yZXYgYW5kIHJlYmFzZSBlcnJvciBvdXQgb24gc3ZtIGJlY2F1c2UgZ2l0LXN2biBkb2Vz
-bid0IHRyYWNlIHRoZSBvcmlnaW5hbApzdm4gcmV2aXNpb24gbnVtYmVycyBiYWNrIHRvIGdpdCBj
-b21taXRzLiBUaGUgdXBkYXRlZCB0ZXN0IGNhc2UsIGluY2x1ZGVkIGluIHRoZQpwYXRjaCwgc2hv
-d3MgdGhlIGlzc3VlIGFuZCBwYXNzZXMgd2l0aCB0aGUgcmVzdCBvZiB0aGUgcGF0Y2ggYXBwbGll
-ZC4KClRoaXMgZml4ZXMgR2l0OjpTVk46OmZpbmRfYnlfdXJsIHRvIGZpbmQgYnJhbmNoZXMgYmFz
-ZWQgb24gdGhlIHN2bTpzb3VyY2UgVVJMLAp3aGVyZSB1c2VTdm1Qcm9wcyBpcyBzZXQuIEFsc28g
-bWFrZXMgc3VyZSBjbWRfZmluZF9yZXYgYW5kIHdvcmtpbmdfaGVhZF9pbmZvIHVzZQp0aGUgaW5m
-b3JtYXRpb24gdGhleSBoYXZlIHRvIGNvcnJlY3RseSB0cmFjayB0aGUgc291cmNlIHJlcG9zaXRv
-cnkuIFRoaXMgaXMKZW5vdWdoIHRvIGdldCBmaW5kLXJldiBhbmQgcmViYXNlIHdvcmtpbmcuCgpT
-aWduZWQtb2ZmLWJ5OiBKb8OjbyBBYmVjYXNpcyA8am9hb0BhYmVjYXNpcy5uYW1lPgotLS0KSW5j
-aWRlbnRhbGx5LCBJJ3ZlIHRyaWVkIHN1Ym1pdHRpbmcgdGhlc2UgZml4ZXMgYmVmb3JlLCBidXQg
-ZmFpbGVkIHRvCmdldCBtdWNoIGF0dGVudGlvbiwgc28gSSBjb3VsZCBiZSBkb2luZyBzb21ldGhp
-bmcgd3JvbmcuLi4gQW55IGlucHV0Cm9uIHRoZSBwYXRjaCBvciBteSBhcHByb2FjaCB0byB0aGlz
-IGxpc3QgaXMgYXBwcmVjaWF0ZWQuIFRoaXMgdGltZSBJCnJld29yZGVkIHRoZSBjb21taXQgbWVz
-c2FnZSBhbmQgYWRkZWQgRXJpYyBXb25nIHRvIHRoZSBDQyBsaXN0LCBzaW5jZQpoZSBzZWVtcyB0
-byBiZSBBY2snaW5nIGdpdC1zdm4gcGF0Y2hlcy4KCkFueXdheSwgdGhlIHBhdGNoIGRvZXMgZ2V0
-IHRoaW5ncyB3b3JraW5nIGZvciBtZS4KCkNoZWVycywKCgpKb8OjbwoKIGdpdC1zdm4ucGVybCAg
-ICAgICAgICAgICAgICAgICAgIHwgICAzNyArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KystLS0tCiB0L3Q5MTEwLWdpdC1zdm4tdXNlLXN2bS1wcm9wcy5zaCB8ICAgIDkgKysrKysrKysr
-CiAyIGZpbGVzIGNoYW5nZWQsIDQyIGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0pCgpkaWZm
-IC0tZ2l0IGEvZ2l0LXN2bi5wZXJsIGIvZ2l0LXN2bi5wZXJsCmluZGV4IGEzNjZjODkuLmY1YmFl
-YzEgMTAwNzU1Ci0tLSBhL2dpdC1zdm4ucGVybAorKysgYi9naXQtc3ZuLnBlcmwKQEAgLTUzNywx
-MyArNTM3LDEzIEBAIHN1YiBjbWRfZmluZF9yZXYgewogCQlteSAkaGVhZCA9IHNoaWZ0OwogCQkk
-aGVhZCB8fD0gJ0hFQUQnOwogCQlteSBAcmVmczsKLQkJbXkgKHVuZGVmLCB1bmRlZiwgdW5kZWYs
-ICRncykgPSB3b3JraW5nX2hlYWRfaW5mbygkaGVhZCwgXEByZWZzKTsKKwkJbXkgKHVuZGVmLCB1
-bmRlZiwgJHV1aWQsICRncykgPSB3b3JraW5nX2hlYWRfaW5mbygkaGVhZCwgXEByZWZzKTsKIAkJ
-dW5sZXNzICgkZ3MpIHsKIAkJCWRpZSAiVW5hYmxlIHRvIGRldGVybWluZSB1cHN0cmVhbSBTVk4g
-aW5mb3JtYXRpb24gZnJvbSAiLAogCQkJICAgICIkaGVhZCBoaXN0b3J5XG4iOwogCQl9CiAJCW15
-ICRkZXNpcmVkX3JldmlzaW9uID0gc3Vic3RyKCRyZXZpc2lvbl9vcl9oYXNoLCAxKTsKLQkJJHJl
-c3VsdCA9ICRncy0+cmV2X21hcF9nZXQoJGRlc2lyZWRfcmV2aXNpb24pOworCQkkcmVzdWx0ID0g
-JGdzLT5yZXZfbWFwX2dldCgkZGVzaXJlZF9yZXZpc2lvbiwgJHV1aWQpOwogCX0gZWxzZSB7CiAJ
-CW15ICh1bmRlZiwgJHJldiwgdW5kZWYpID0gY210X21ldGFkYXRhKCRyZXZpc2lvbl9vcl9oYXNo
-KTsKIAkJJHJlc3VsdCA9ICRyZXY7CkBAIC0xMTYyLDcgKzExNjIsNyBAQCBzdWIgd29ya2luZ19o
-ZWFkX2luZm8gewogCQlpZiAoZGVmaW5lZCAkdXJsICYmIGRlZmluZWQgJHJldikgewogCQkJbmV4
-dCBpZiAkbWF4eyR1cmx9IGFuZCAkbWF4eyR1cmx9IDwgJHJldjsKIAkJCWlmIChteSAkZ3MgPSBH
-aXQ6OlNWTi0+ZmluZF9ieV91cmwoJHVybCkpIHsKLQkJCQlteSAkYyA9ICRncy0+cmV2X21hcF9n
-ZXQoJHJldik7CisJCQkJbXkgJGMgPSAkZ3MtPnJldl9tYXBfZ2V0KCRyZXYsICR1dWlkKTsKIAkJ
-CQlpZiAoJGMgJiYgJGMgZXEgJGhhc2gpIHsKIAkJCQkJY2xvc2UgJGZoOyAjIGJyZWFrIHRoZSBw
-aXBlCiAJCQkJCXJldHVybiAoJHVybCwgJHJldiwgJHV1aWQsICRncyk7CkBAIC0xNDE2LDExICsx
-NDE2LDE3IEBAIHN1YiBmZXRjaF9hbGwgewoKIHN1YiByZWFkX2FsbF9yZW1vdGVzIHsKIAlteSAk
-ciA9IHt9OworICAgICAgICBteSAkdXNlc3ZtcHJvcHMgPSBldmFsIHsgY29tbWFuZF9vbmVsaW5l
-KHF3L2NvbmZpZyAtLWJvb2wKKyAgICAgICAgICAgIHN2bi51c2VTdm1Qcm9wcy8pIH07CisgICAg
-ICAgICR1c2Vzdm1wcm9wcyA9ICR1c2Vzdm1wcm9wcyBlcSAndHJ1ZScgaWYgJHVzZXN2bXByb3Bz
-OwogCWZvcmVhY2ggKGdyZXAgeyBzL15zdm4tcmVtb3RlXC4vLyB9IGNvbW1hbmQocXcvY29uZmln
-IC1sLykpIHsKIAkJaWYgKG0hXiguKylcLmZldGNoPVxzKiguKilccyo6XHMqcmVmcy9yZW1vdGVz
-LyguKylccyokISkgewogCQkJbXkgKCRyZW1vdGUsICRsb2NhbF9yZWYsICRyZW1vdGVfcmVmKSA9
-ICgkMSwgJDIsICQzKTsKIAkJCSRsb2NhbF9yZWYgPX4gc3teL317fTsKIAkJCSRyLT57JHJlbW90
-ZX0tPntmZXRjaH0tPnskbG9jYWxfcmVmfSA9ICRyZW1vdGVfcmVmOworCQkJJHItPnskcmVtb3Rl
-fS0+e3N2bX0gPSB7fSBpZiAkdXNlc3ZtcHJvcHM7CisJCX0gZWxzaWYgKG0hXiguKylcLnVzZXN2
-bXByb3BzPVxzKiguKilccyokISkgeworCQkJJHItPnskMX0tPntzdm19ID0ge307CiAJCX0gZWxz
-aWYgKG0hXiguKylcLnVybD1ccyooLiopXHMqJCEpIHsKIAkJCSRyLT57JDF9LT57dXJsfSA9ICQy
-OwogCQl9IGVsc2lmIChtIV4oLispXC4oYnJhbmNoZXN8dGFncyk9CkBAIC0xNDM3LDYgKzE0NDMs
-MjEgQEAgc3ViIHJlYWRfYWxsX3JlbW90ZXMgewogCQkJfQogCQl9CiAJfQorCisJbWFwIHsKKwkJ
-aWYgKGRlZmluZWQgJHItPnskX30tPntzdm19KSB7CisJCQlteSAkc3ZtOworCQkJZXZhbCB7CisJ
-CQkJbXkgJHNlY3Rpb24gPSAic3ZuLXJlbW90ZS4kXyI7CisJCQkJJHN2bSA9IHsKKwkJCQkJc291
-cmNlID0+IHRtcF9jb25maWcoJy0tZ2V0JywgIiRzZWN0aW9uLnN2bS1zb3VyY2UiKSwKKwkJCQkJ
-cmVwbGFjZSA9PiB0bXBfY29uZmlnKCctLWdldCcsICIkc2VjdGlvbi5zdm0tcmVwbGFjZSIpLAor
-CQkJCX0KKwkJCX07CisJCQkkci0+eyRffS0+e3N2bX0gPSAkc3ZtOworCQl9CisJfSBrZXlzICUk
-cjsKKwogCSRyOwogfQoKQEAgLTE1NjMsMTMgKzE1ODQsMjEgQEAgc3ViIGZpbmRfYnlfdXJsIHsg
-IyByZXBvc19yb290IGFuZCwgcGF0aCBhcmUgb3B0aW9uYWwKIAkJfQogCQlteSAkcCA9ICRwYXRo
-OwogCQlteSAkcndyID0gcmV3cml0ZV9yb290KHtyZXBvX2lkID0+ICRyZXBvX2lkfSk7CisJCW15
-ICRzdm0gPSAkcmVtb3Rlcy0+eyRyZXBvX2lkfS0+e3N2bX0KKwkJCWlmIGRlZmluZWQgJHJlbW90
-ZXMtPnskcmVwb19pZH0tPntzdm19OwogCQl1bmxlc3MgKGRlZmluZWQgJHApIHsKIAkJCSRwID0g
-JGZ1bGxfdXJsOwogCQkJbXkgJHogPSAkdTsKKwkJCW15ICRwcmVmaXggPSAnJzsKIAkJCWlmICgk
-cndyKSB7CiAJCQkJJHogPSAkcndyOworCQkJfSBlbHNpZiAoZGVmaW5lZCAkc3ZtKSB7CisJCQkJ
-JHogPSAkc3ZtLT57c291cmNlfTsKKwkJCQkkcHJlZml4ID0gJHN2bS0+e3JlcGxhY2V9OworCQkJ
-CSRwcmVmaXggPX4gcyNeXFEkdVxFKD86L3wkKSMjOworCQkJCSRwcmVmaXggPX4gcyMvJCMjOwog
-CQkJfQotCQkJJHAgPX4gcyNeXFEkelxFKD86L3wkKSMjIG9yIG5leHQ7CisJCQkkcCA9fiBzI15c
-USR6XEUoPz0vfCQpIyRwcmVmaXgjIG9yIG5leHQ7CiAJCX0KIAkJZm9yZWFjaCBteSAkZiAoa2V5
-cyAlJGZldGNoKSB7CiAJCQluZXh0IGlmICRmIG5lICRwOwpkaWZmIC0tZ2l0IGEvdC90OTExMC1n
-aXQtc3ZuLXVzZS1zdm0tcHJvcHMuc2ggYi90L3Q5MTEwLWdpdC1zdm4tdXNlLXN2bS1wcm9wcy5z
-aAppbmRleCAwNDc2NTlmLi4wNGQyYTY1IDEwMDc1NQotLS0gYS90L3Q5MTEwLWdpdC1zdm4tdXNl
-LXN2bS1wcm9wcy5zaAorKysgYi90L3Q5MTEwLWdpdC1zdm4tdXNlLXN2bS1wcm9wcy5zaApAQCAt
-NDksNCArNDksMTMgQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyAndmVyaWZ5IG1ldGFkYXRhIGZvciAv
-ZGlyJyAiCiAJICAgZ3JlcCAnXmdpdC1zdm4taWQ6ICRkaXJfdXJsQDEgJHV1aWQkJwogCSIKCit0
-ZXN0X2V4cGVjdF9zdWNjZXNzICdmaW5kIGNvbW1pdCBiYXNlZCBvbiBTVk4gcmV2aXNpb24gbnVt
-YmVyJyAiCisgICAgICAgIGdpdC1zdm4gZmluZC1yZXYgcjEyIHwKKwkgICAgZ3JlcCBgZ2l0IHJl
-di1wYXJzZSBIRUFEYAorICAgICAgICAiCisKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2VtcHR5IHJl
-YmFzZScgIgorCWdpdC1zdm4gcmViYXNlCisJIgorCiB0ZXN0X2RvbmUKLS0gCjEuNS42Cg==
+At 2008-07-08 16:20:19 -0700, gitster@pobox.com wrote:
+>
+> > -    Port = 143
+> > +    Port = 993
+> > +    sslverify = false
+> >  ..........................
+> 
+> Don't we also want to keep a vanilla configuration in the example, or
+> is imaps the norm and unencrypted imap is exception these days?
+
+The norm is IMAP+STARTTLS on port 143, not IMAPS on port 993. The latter
+is also widely deployed for compatibility with older clients, but it is
+non-standard and its use isn't exactly encouraged.
+
+-- ams
