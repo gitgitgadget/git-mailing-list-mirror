@@ -1,109 +1,81 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] parse-options: add PARSE_OPT_FAKELASTARG flag.
-Date: Wed, 09 Jul 2008 09:47:24 +0200
-Message-ID: <20080709074724.GB23482@artemis.madism.org>
-References: <7v8wwcx446.fsf@gitster.siamese.dyndns.org> <20080708101452.GB19202@artemis.madism.org> <20080708103408.GC19202@artemis.madism.org> <7vvdzfoo1s.fsf@gitster.siamese.dyndns.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Fix problem with authentification on http repository.
+Date: Wed, 9 Jul 2008 09:53:46 +0200
+Organization: glandium.org
+Message-ID: <20080709075345.GA22022@glandium.org>
+References: <11911047823308-git-send-email-jean.guyader@linkea.org> <7v8x6pjb4c.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0709300039430.28395@racer.site> <7v4phdja01.fsf@gitster.siamese.dyndns.org> <7v4p6zmx0l.fsf@gitster.siamese.dyndns.org> <20080709055150.GA28482@glandium.org> <7vlk0blgg0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="v9Ux+11Zm5mwPlX6";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	jean.guyader@linkea.org, git@vger.kernel.org,
+	Jean Guyader <jean.guyader@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 09:48:35 2008
+X-From: git-owner@vger.kernel.org Wed Jul 09 09:55:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGUPY-0007dH-0B
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 09:48:24 +0200
+	id 1KGUWJ-0001LK-9s
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 09:55:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753380AbYGIHr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2008 03:47:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753243AbYGIHr0
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 03:47:26 -0400
-Received: from pan.madism.org ([88.191.52.104]:43420 "EHLO hermes.madism.org"
+	id S1753160AbYGIHyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2008 03:54:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752797AbYGIHyF
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 03:54:05 -0400
+Received: from vuizook.err.no ([194.24.252.247]:46447 "EHLO vuizook.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752797AbYGIHr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2008 03:47:26 -0400
-Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 388193461F;
-	Wed,  9 Jul 2008 09:47:25 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 5A94E85E7; Wed,  9 Jul 2008 09:47:24 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Lars Hjemli <hjemli@gmail.com>
+	id S1751013AbYGIHyE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2008 03:54:04 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=vaio.glandium.org)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1KGUUn-000401-TG; Wed, 09 Jul 2008 09:53:56 +0200
+Received: from mh by vaio.glandium.org with local (Exim 4.63)
+	(envelope-from <mh@glandium.org>)
+	id 1KGUUk-0005ka-M9; Wed, 09 Jul 2008 09:53:46 +0200
 Content-Disposition: inline
-In-Reply-To: <7vvdzfoo1s.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <7vlk0blgg0.fsf@gitster.siamese.dyndns.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: mh@glandium.org
+X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87857>
 
-
---v9Ux+11Zm5mwPlX6
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Jul 09, 2008 at 01:15:43AM +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> > If you set this for a given flag, and the flag appears without a value =
-on
-> > the command line, then the `defval' is used to fake a new argument.
+On Tue, Jul 08, 2008 at 11:28:15PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Mike Hommey <mh@glandium.org> writes:
+> 
+> > On Tue, Jul 08, 2008 at 10:44:58PM -0700, Junio C Hamano wrote:
+> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >> 
+> >> > On Sat, 29 Sep 2007, Junio C Hamano wrote:
+> >> >
+> >> >> We never supported URLs with embedded credentials (see
+> >> >> Documentation/urls.txt), partly because nobody asked for it, but
+> >> >> more importantly because giving -n to curl to have it read from
+> >> >> user's .netrc is generally much more preferred approach.
+> >> >
+> >> > To elaborate on that: if you fetch from somewhere, your url, username and 
+> >> > password can be read from the output of "ps ax | grep http" very easily.
+> >> 
+> >> Actually Documentation/howto/setup-git-server-over-http.txt
+> >> talks about http://user@server/path/ format.  How well does this
+> >> work in practice?  If it does, we should update Documentation/urls.txt
+> >> to allow optional user@ there like...
 > >
-> > Note that this flag is meaningless in presence of OPTARG or NOARG flags.
-> > (in the current implementation it will be ignored, but don't rely on it=
-).
-> >
-> > Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> > ---
-> >
-> >     >   (3) inspired from (1) and (2), have a flag for options that says
-> >     >       "I do take an argument, but if I'm the last option on the
-> >     >       command line, please fake this argument for me.
-> >     >
-> >     > I really like (3) more FWIW as it doesn't generate ambiguous
-> >     > parsers like (2) would, and it's not horrible like (1). And cherry
-> >     > on top it's pretty trivial to implement I think.
->=20
-> Yeah, I do not particularly want a major rewrite that only introduces
-> possible ambiguity to the option parser (even though arguably it would add
-> to the usability very much, just like we accept revs and paths when
-> unambiguous), so I think this is a reasonable compromise.
->=20
-> It feels more like LASTARG_DEFAULT but that is bikeshedding ;-)
+> > AFAIK, there is nothing to deal with asking a password to the user in git
+> > in this case, so that doesn't work.
+> 
+> Then perhaps the howto needs updating?
 
-  I absolutely don't like this FAKELASTARG name, so really, use what you
-like.
+Actually, the howto tells to setup a ~/.netrc file, which should make
+the http://user@server/path/ format work. I don't know if dropping user@
+would still work, that depends how libcurl works with it.
 
-> But I see one thinko (fix below) and another issue I am not sure what the
-> best fix would be.
-
-  Like I said it was just a draft, I did not test the new feature, so
-I'm not really surprised it's partly broken ;)
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---v9Ux+11Zm5mwPlX6
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkh0bQwACgkQvGr7W6HudhzONgCgnJbokd/aKTaOKDEti7putAXB
-kKYAoKAeAknzY07eMP1ufaESgAb/g/UF
-=wBXV
------END PGP SIGNATURE-----
-
---v9Ux+11Zm5mwPlX6--
+Mike
