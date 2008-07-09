@@ -1,69 +1,127 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] Fix problem with authentification on http repository.
-Date: Wed, 9 Jul 2008 07:51:50 +0200
-Organization: glandium.org
-Message-ID: <20080709055150.GA28482@glandium.org>
-References: <11911047823308-git-send-email-jean.guyader@linkea.org> <7v8x6pjb4c.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0709300039430.28395@racer.site> <7v4phdja01.fsf@gitster.siamese.dyndns.org> <7v4p6zmx0l.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-submodule - make "submodule add" more strict, and
+ document it
+Date: Tue, 08 Jul 2008 23:04:19 -0700
+Message-ID: <7vwsjvlhjw.fsf@gitster.siamese.dyndns.org>
+References: <7vhcb0x6ak.fsf@gitster.siamese.dyndns.org>
+ <1215575965-3588-1-git-send-email-mlevedahl@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	jean.guyader@linkea.org, git@vger.kernel.org,
-	Jean Guyader <jean.guyader@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 07:53:12 2008
+Cc: git@vger.kernel.org, <sylvain.joyeux@dfki.de>, <hjemli@gmail.com>,
+	<pkufranky@gmail.com>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 09 08:06:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGSbz-0006ws-S1
-	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 07:53:08 +0200
+	id 1KGSnx-0001Fr-TW
+	for gcvg-git-2@gmane.org; Wed, 09 Jul 2008 08:05:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751821AbYGIFwG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2008 01:52:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751156AbYGIFwG
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 01:52:06 -0400
-Received: from vuizook.err.no ([194.24.252.247]:60214 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751381AbYGIFwF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2008 01:52:05 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1KGSai-0002yP-KK; Wed, 09 Jul 2008 07:51:54 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1KGSal-0007Rb-07; Wed, 09 Jul 2008 07:51:51 +0200
-Content-Disposition: inline
-In-Reply-To: <7v4p6zmx0l.fsf@gitster.siamese.dyndns.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1751511AbYGIGEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2008 02:04:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751502AbYGIGEc
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 02:04:32 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50099 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751432AbYGIGEb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2008 02:04:31 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A5EBD18BF0;
+	Wed,  9 Jul 2008 02:04:30 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6EB2818BEF; Wed,  9 Jul 2008 02:04:24 -0400 (EDT)
+In-Reply-To: <1215575965-3588-1-git-send-email-mlevedahl@gmail.com> (Mark
+ Levedahl's message of "Tue, 8 Jul 2008 23:59:25 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E52502EA-4D7C-11DD-A60D-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87851>
 
-On Tue, Jul 08, 2008 at 10:44:58PM -0700, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Sat, 29 Sep 2007, Junio C Hamano wrote:
-> >
-> >> We never supported URLs with embedded credentials (see
-> >> Documentation/urls.txt), partly because nobody asked for it, but
-> >> more importantly because giving -n to curl to have it read from
-> >> user's .netrc is generally much more preferred approach.
-> >
-> > To elaborate on that: if you fetch from somewhere, your url, username and 
-> > password can be read from the output of "ps ax | grep http" very easily.
-> 
-> Actually Documentation/howto/setup-git-server-over-http.txt
-> talks about http://user@server/path/ format.  How well does this
-> work in practice?  If it does, we should update Documentation/urls.txt
-> to allow optional user@ there like...
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-AFAIK, there is nothing to deal with asking a password to the user in git
-in this case, so that doesn't work.
+> This change makes "submodule add" much more strict in the arguments it
+> takes, and is intended to address confusion as recently noted on the
+> git-list. With this change, the required syntax is:
+> 	$ git submodule add URL path
+>
 
-Mike
+Please have an extra blank line on both sides of examples.
+
+> Specifically, this eliminates the form
+> 	$git submodule add URL
+> which was confused by more than one person as
+> 	$git submodule add path
+
+s/\$/& /;
+
+> The change eliminates one form of URL: a path relative to the current
+> working directory....
+> ...
+> Following this change, there are exactly four variants of
+> submodule-add, as both arguments have two flavors:
+>
+> URL can be absolute, or can begin with ./|../ and thus name the origin
+> relative to the top-level origin.
+
+Now this _is_ confusing.  Examples of a path relative to the current
+working directory would be ./foo or ../../foo but the previous paragraph
+says the form is eliminated.  I think I know what you want to say, but it
+still is confusing.
+
+>  add::
+>  	Add the given repository as a submodule at the given path
+> +	to the changeset to be committed next. This requires two arguments,
+> +	<repository> and <path>. <repository> is the URL of the new
+> +	submodule's origin repository. This may be either an absolute URL,
+> +	or (if it begins with ./ or ../), the location relative
+> +	to the parent repository's origin.
+
+This is much better than the part I found confusing above.  Here, "parent
+repository" actually means "this repository", right?  It is the one that
+owns the index you are adding the gitlink to and tracks the .gitmodules
+file you are adding an entry for this submodule to.
+
+> +	<path> is the relative location for the cloned submodule to
+> +	exist in the current tree. If <path> does not exist, then the
+> +	module is created by cloning from the named URL. If <path> does
+> +	exist and is already a valid git repository, then this is added
+> +	to the changeset without cloning. This second form is provided
+> +	to ease adding a submodule to a project the first time, and presumes
+> +	the user will later push the new submodule to the given URL.
+> +
+> +	In either case, the given URL is recorded into .gitmodules for
+> +	use by subsequent users cloning the project. If the URL is given
+> +	relative to the parent, the presumption is the main and sub-modules
+
+We seem to say "superproject" and "submodule" elsewhere, including Linus's
+talk.
+
+> +	will be kept together in the same relative location, and only the
+> +	top-level URL need be provided: git-submodule will correctly
+> +	locat the submodules using the hint in .gitmodules.
+
+s/locat/&e/;
+
+> @@ -150,16 +138,27 @@ cmd_add()
+> ...
+> +	# assure repo is absolute or relative to parent
+> +	case "$repo" in
+> +		./*|../*)
+> +			# dereference source url relative to parent's url
+> +			realrepo=$(resolve_relative_url "$repo") || exit
+> +			;;
+> +	    *:*|/*)
+
+Funny indentation; "case/esac" and its arms align, like so:
+
+	case "$repo" in
+        ./* | ../*)
+        	...
+		;;
+	esac
