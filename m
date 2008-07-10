@@ -1,74 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] bisect: test merge base if good rev is not an ancestor
- of bad rev
-Date: Thu, 10 Jul 2008 12:04:35 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807101201210.3135@eeepc-johanness>
-References: <20080710054152.b051989c.chriscool@tuxfamily.org>
+From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+Subject: Re: git over rsync+ssh
+Date: Thu, 10 Jul 2008 12:06:55 +0200
+Message-ID: <g54mvv$kek$1@ger.gmane.org>
+References: <g52gbg$si9$1@ger.gmane.org> <e2b179460807090802j2dbb72efo4f03c0a9e79241c0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Jul 10 12:05:59 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 10 12:08:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGt1k-0002nb-DM
-	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 12:05:49 +0200
+	id 1KGt4L-0003e1-Bf
+	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 12:08:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752638AbYGJKEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 06:04:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752682AbYGJKEa
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 06:04:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43409 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752419AbYGJKE3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 06:04:29 -0400
-Received: (qmail invoked by alias); 10 Jul 2008 10:04:28 -0000
-Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness) [88.107.253.132]
-  by mail.gmx.net (mp030) with SMTP; 10 Jul 2008 12:04:28 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/c/wMRe+fcK8veZd9vwMuqgdiSFsb9dHLry1LbTv
-	gxXq5fHzHv6CA0
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080710054152.b051989c.chriscool@tuxfamily.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.74
+	id S1752922AbYGJKHM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 06:07:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752786AbYGJKHL
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 06:07:11 -0400
+Received: from main.gmane.org ([80.91.229.2]:51549 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752494AbYGJKHL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 06:07:11 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KGt3J-0005gL-47
+	for git@vger.kernel.org; Thu, 10 Jul 2008 10:07:05 +0000
+Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 10 Jul 2008 10:07:05 +0000
+Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 10 Jul 2008 10:07:05 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <e2b179460807090802j2dbb72efo4f03c0a9e79241c0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87965>
 
-Hi,
+Mike Ralphson venit, vidit, dixit 09.07.2008 17:02:
+> 2008/7/9 Michael J Gruber <michaeljgruber+gmane@fastmail.fm>:
+>> I want to put a git repo on a server where I have ssh access but failed to
+>> compile git (AIX 5.1, has libz.a but no .so nor headers; compiling
+>> prerequisite zlib failed, probably due to a botched build environment).
+> 
+> I can send you a binary to try if you'd like. It would be compiled on
+> AIX 5.3 but I have to jump through hoops on several non-identically
+> set-up servers here, so one might work for you.
 
-On Thu, 10 Jul 2008, Christian Couder wrote:
+Thanks for the offer. I found an AIX 4.3 box with a working build 
+environment there, including zlib-devel, and I got git 1.5.6.2 compiled 
+now (no tcltk, don't care). Runs fine on the AIX 5.1 box, I can clone 
+and push happily. Yeah.
 
-> Before this patch, "git bisect", when it was given some good revs that 
-> are not ancestor of the bad rev, didn't check if the merge bases were 
-> good. "git bisect" just supposed that the user knew what he was doing, 
-> and that, when he said the revs were good, he knew that it meant that 
-> all the revs in the history leading to the good revs were also 
-> considered good.
-
-Well, it is not completely relying on the user.
-
-The common scenario before a bisect is this: something used to work _all 
-the time_, and all of a sudden, it does not anymore.
-
-So it is expected that there is no fix in the history.  Not in the current 
-branch, not in the "good" branch, not wherever.
-
-In that case, you are literally guaranteed that all ancestors of a good 
-commit are good, too, because if there was a bad one, there would be a 
-fix, too.
-
-The whole idea of "bisect" relies on that idea, that any ancestor of a 
-good commit is good.  Otherwise you'd have to check the commits one by 
-one, not in a bisecting manner.
-
-Ciao,
-Dscho
+Michael
