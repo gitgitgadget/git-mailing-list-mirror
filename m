@@ -1,67 +1,68 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: THREADED_DELTA_SEARCH
-Date: Thu, 10 Jul 2008 16:36:35 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0807101633480.12484@xanadu.home>
-References: <20080710075327.GD24819@artemis.madism.org>
- <7vy749pxbe.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.10.0807101212000.12484@xanadu.home>
- <20080710201352.GA3717@blimp.local>
- <alpine.LFD.1.10.0807101625330.12484@xanadu.home>
- <20080710202919.GB3717@blimp.local>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: feature request: git-log should accept sth like
+ v2.6.26-rc8-227
+Date: Thu, 10 Jul 2008 13:36:26 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0807101334310.11076@woody.linux-foundation.org>
+References: <200807102057.15063.toralf.foerster@gmx.de> <7vk5ftpnek.fsf@gitster.siamese.dyndns.org> <m3d4lledbn.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git ML <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 10 22:37:42 2008
+	=?ISO-8859-15?Q?Toralf_F=F6rster?= <toralf.foerster@gmx.de>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 10 22:38:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KH2tX-0000vy-Je
-	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 22:37:40 +0200
+	id 1KH2uM-0001H6-8z
+	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 22:38:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753900AbYGJUgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 16:36:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753349AbYGJUgh
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 16:36:37 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:19524 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753314AbYGJUgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 16:36:36 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K3T001ZP58ZUPK0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 10 Jul 2008 16:36:35 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080710202919.GB3717@blimp.local>
+	id S1753709AbYGJUhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 16:37:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753983AbYGJUhc
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 16:37:32 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:39257 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753647AbYGJUhb (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jul 2008 16:37:31 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6AKaQGK010979
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 10 Jul 2008 13:36:27 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6AKaQlR013732;
+	Thu, 10 Jul 2008 13:36:26 -0700
+In-Reply-To: <m3d4lledbn.fsf@localhost.localdomain>
 User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.358 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88011>
 
-On Thu, 10 Jul 2008, Alex Riesen wrote:
 
-> Nicolas Pitre, Thu, Jul 10, 2008 22:26:03 +0200:
-> > On Thu, 10 Jul 2008, Alex Riesen wrote:
-> > > 
-> > > Have you ever seen what happens to Windows XP on memory shortage?
-> > 
-> > Who said this would be enabled on Windows?
-> > 
+
+On Thu, 10 Jul 2008, Jakub Narebski wrote:
 > 
-> Windows is just an example (exaggerated one).
+> Nevertheless it _could_ be unique.
 
-Don't use that example then.
+NO IT COULD NOT!
 
-> There are just systems were resources are a problem.
+It doesn't matter if it's unique in _one_ repository. What matters is if 
+it is globally unique!
 
-Then on those systems you simply have to adjust the appropriate knob.  
-That's why those knobs are available after all.
+Otherwise, people will start sending these version numbers out in emails, 
+and now somethign that was unique in the senders repo is actually not 
+unique at the receivers side (or _is_ unique, but points to something 
+totally different).
 
+So no. A revision number like "v2.6.26-rc8-227" is fundamentally and 
+utterly broken. No way it should ever be accepted, even as a "helpful" 
+thing, because it's not helpful at all. It would be a sure way to crap.
 
-Nicolas
+		Linus
