@@ -1,57 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: feature request: git-log should accept sth like v2.6.26-rc8-227
-Date: Thu, 10 Jul 2008 12:08:51 -0700
-Message-ID: <7vk5ftpnek.fsf@gitster.siamese.dyndns.org>
-References: <200807102057.15063.toralf.foerster@gmx.de>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] bisect: test merge base if good rev is not an ancestor of bad rev
+Date: Thu, 10 Jul 2008 21:26:37 +0200
+Message-ID: <200807102126.37567.chriscool@tuxfamily.org>
+References: <20080710054152.b051989c.chriscool@tuxfamily.org> <alpine.DEB.1.00.0807101201210.3135@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Toralf =?utf-8?Q?F=C3=B6rster?= <toralf.foerster@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 10 21:11:34 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 10 21:24:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KH1Xz-0008CH-Rn
-	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 21:11:20 +0200
+	id 1KH1kq-0005BB-0T
+	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 21:24:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754080AbYGJTJO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jul 2008 15:09:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754380AbYGJTJO
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 15:09:14 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57580 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753028AbYGJTJN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Jul 2008 15:09:13 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C6F1325A0A;
-	Thu, 10 Jul 2008 15:09:10 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 917E925A09; Thu, 10 Jul 2008 15:09:04 -0400 (EDT)
-In-Reply-To: <200807102057.15063.toralf.foerster@gmx.de> (Toralf
- =?utf-8?Q?F=C3=B6rster's?= message of "Thu, 10 Jul 2008 20:57:12 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: AD819B0E-4EB3-11DD-942C-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1758998AbYGJTWr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jul 2008 15:22:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758923AbYGJTWr
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 15:22:47 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:42478 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757987AbYGJTWq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jul 2008 15:22:46 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id D836D1AB2D6;
+	Thu, 10 Jul 2008 21:22:44 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 870B31AB316;
+	Thu, 10 Jul 2008 21:22:44 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0807101201210.3135@eeepc-johanness>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87999>
 
-Toralf F=C3=B6rster <toralf.foerster@gmx.de> writes:
+Hi,
 
-> git-describe gives an informative string about the current status:
-> tfoerste@n22 ~/devel/linux-2.6 $ git describe
-> v2.6.26-rc9-56-g6329d30
+Le jeudi 10 juillet 2008, Johannes Schindelin a =E9crit :
+> Hi,
 >
-> I appended those strings to the names of my UML kernel executables.
-> Unfortunately I didn't used the commit id and now I'm wondering wheth=
-er git
-> could accept v2.6.26-rc9-56 as well in future.
+> On Thu, 10 Jul 2008, Christian Couder wrote:
+> > Before this patch, "git bisect", when it was given some good revs t=
+hat
+> > are not ancestor of the bad rev, didn't check if the merge bases we=
+re
+> > good. "git bisect" just supposed that the user knew what he was doi=
+ng,
+> > and that, when he said the revs were good, he knew that it meant th=
+at
+> > all the revs in the history leading to the good revs were also
+> > considered good.
+>
+> Well, it is not completely relying on the user.
 
-It does take v2.6.26-rc9-56-g6329d30.
+Yeah it's relying on statistics too.
 
-It will never take v2.6.26-rc9-56.  The world is not linear.
+> The common scenario before a bisect is this: something used to work _=
+all
+> the time_, and all of a sudden, it does not anymore.
+
+I agree that it is the most common scenario, perhaps 95% or perhaps eve=
+n 99%=20
+or more. But mistakes and special cases happens too.
+
+=46or example people can forget to apply in the trunk a fix that is in =
+a side=20
+branch. Or they can revert in a side branch a big buggy feature just be=
+fore=20
+making a minor release; but in the trunk the big buggy feature is still=
+=20
+there and may very well have introduced regressions.
+
+> So it is expected that there is no fix in the history.  Not in the
+> current branch, not in the "good" branch, not wherever.
+>
+> In that case, you are literally guaranteed that all ancestors of a go=
+od
+> commit are good, too, because if there was a bad one, there would be =
+a
+> fix, too.
+
+Yeah, in that case...
+
+> The whole idea of "bisect" relies on that idea, that any ancestor of =
+a
+> good commit is good.  Otherwise you'd have to check the commits one b=
+y
+> one, not in a bisecting manner.
+
+No, you just need to check that the merge bases between the bad rev on =
+one=20
+side and each good rev on the other side are good too. And if that is t=
+he=20
+case, then you can be sure that bisection will point to a first bad com=
+mit.
+
+So the choice is between a simple and fast but not fully reliable bisec=
+t, or=20
+a more complex and slower but fully reliable bisect.
+
+Regards,
+Christian.
