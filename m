@@ -1,94 +1,95 @@
-From: "Geoffrey Irving" <irving@naml.us>
-Subject: Re: [PATCH] cherry: cache patch-ids to avoid repeating work
-Date: Thu, 10 Jul 2008 07:09:14 -0700
-Message-ID: <7f9d599f0807100709u778f0ab1y28776d7efb831b61@mail.gmail.com>
-References: <7f9d599f0807082053w4603d0bbgfead9127c33b78b5@mail.gmail.com>
-	 <7vfxqjmyg2.fsf@gitster.siamese.dyndns.org>
-	 <7f9d599f0807082226oee83bedrf13d254ae12be274@mail.gmail.com>
-	 <7vprpnlglh.fsf@gitster.siamese.dyndns.org>
-	 <7f9d599f0807092034n438f0976pf44d4c9305871087@mail.gmail.com>
+From: Don Zickus <dzickus@redhat.com>
+Subject: Re: [PATCH] apply: fix copy/rename breakage
+Date: Thu, 10 Jul 2008 10:01:54 -0400
+Message-ID: <20080710140154.GN26957@redhat.com>
+References: <7vy74aqvr1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 10 16:10:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 10 16:14:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGwqd-0002Y6-96
-	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 16:10:15 +0200
+	id 1KGwuk-0004Gb-17
+	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 16:14:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754616AbYGJOJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 10:09:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754455AbYGJOJQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 10:09:16 -0400
-Received: from rv-out-0506.google.com ([209.85.198.226]:33639 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754157AbYGJOJP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 10:09:15 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so3999444rvb.1
-        for <git@vger.kernel.org>; Thu, 10 Jul 2008 07:09:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=wKrFW2/aAQxEEOoK6XfxHmj77zTgVZS5JVgtqEDNF0M=;
-        b=AMLLYAF7R0uCchEOTxgDtfslQ8JrZ3HMeTq80G/KV4sHq6aimoElPnp7EnZGb9o6qf
-         CXybndlPWASsR1o28uYrG8q10xTQNOSDEdL59plaqMIOYtF1Zgzsc5DGeMlayBasK5Bk
-         xov/7BL+sREcNJi0g4+tXKL/cHEEZLmM20+FI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=tz/08G2m379cJhmZs9WEvWNDwUJcSpfDUJfAiuX3JlV1fULKPPLpZAvnK67guTPU30
-         fX4tLdMXWQABl2EwsWzFd39d/8luj8RLbAhgIu5QBlcaiRrAhElwrucK0VZIHgBOQcKj
-         q2xkGFE+Kx1Uqt3n5mlZF/eFRTmdSekPct9Ik=
-Received: by 10.140.174.11 with SMTP id w11mr2422101rve.18.1215698954553;
-        Thu, 10 Jul 2008 07:09:14 -0700 (PDT)
-Received: by 10.141.202.6 with HTTP; Thu, 10 Jul 2008 07:09:14 -0700 (PDT)
-In-Reply-To: <7f9d599f0807092034n438f0976pf44d4c9305871087@mail.gmail.com>
+	id S1754431AbYGJONc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 10:13:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754295AbYGJONc
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 10:13:32 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:48949 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753989AbYGJONb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 10:13:31 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m6AE1utX028549;
+	Thu, 10 Jul 2008 10:01:56 -0400
+Received: from mail.boston.redhat.com (mail.boston.redhat.com [10.16.255.12])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m6AE1tUf016898;
+	Thu, 10 Jul 2008 10:01:55 -0400
+Received: from drseuss.usersys.redhat.com (dhcp-100-19-202.bos.redhat.com [10.16.19.202])
+	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id m6AE1tRg005231;
+	Thu, 10 Jul 2008 10:01:55 -0400
+Received: from drseuss.usersys.redhat.com (localhost.localdomain [127.0.0.1])
+	by drseuss.usersys.redhat.com (8.14.2/8.14.1) with ESMTP id m6AE1taF019303;
+	Thu, 10 Jul 2008 10:01:55 -0400
+Received: (from dzickus@localhost)
+	by drseuss.usersys.redhat.com (8.14.2/8.14.2/Submit) id m6AE1s8A019302;
+	Thu, 10 Jul 2008 10:01:54 -0400
+X-Authentication-Warning: drseuss.usersys.redhat.com: dzickus set sender to dzickus@redhat.com using -f
 Content-Disposition: inline
-X-Google-Sender-Auth: cc85007936134576
+In-Reply-To: <7vy74aqvr1.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87973>
 
-On Wed, Jul 9, 2008 at 8:34 PM, Geoffrey Irving <irving@naml.us> wrote:
-> Add cached-sha-map.[ch] implementing a persistent hash map from sha1 to
-> sha1.  The map is read with mmap, and completely rewritten if any entries
-> change.  It would be good to add incremental update to handle the usual case
-> where only a few entries change.
->
-> This structure is used by patch-ids.c to cache the mapping from commit to
-> patch-id into $GIT_DIR/patch-id-cache.  In the one case I've tested so far,
-> this speeds up the second invocation of git-cherry by two orders of
-> magnitude.  The caching can be disabled by setting cherry.cachepatchids to
-> false.
->
-> Original code cannibalized from Johannes Schindelin's notes-index structure.
->
-> Signed-off-by: Geoffrey Irving <irving@naml.us>
-> ---
->
-> Note: there are at least two "holes" in this code.  First, it is impossible
-> to verify the validity of the entries (this is impossible to fix).  Second,
-> it is possible to write a malicious patch-id-cache file that causes git-cherry
-> to go into an infinite loop.  Fixing the loop requires either traversing every
-> entry on load (bad) or adding a second loop termination condition to
-> find_helper.  Since looping forever is better than returning incorrect
-> results, I figured fixing the weaker hole would just result in a false sense
-> of security.
+On Wed, Jul 09, 2008 at 08:10:58PM -0700, Junio C Hamano wrote:
+> Recently, 7ebd52a (Merge branch 'dz/apply-again', 2008-07-01) taught
+> "git-apply" to grok a (non-git) patch that is a concatenation of separate
+> patches that touch the same file number of files, by recording the
+> postimage of patch application of previous round and using it as the
+> preimage for later rounds.
+> 
+> However, this "incremental" mode of patch application contradicts with the
+> way git rename/copy patches are fundamentally designed.  When a git patch
+> talks about a file A getting modified, and a new file B created out of B,
+> like this:
+> 
+> 	diff --git a/A b/A
+> 	--- a/A
+> 	+++ b/A
+> 	... change text here ...
+> 	diff --git a/A b/B
+> 	copy from A
+> 	copy to B
+> 	--- a/A
+> 	+++ b/B
+> 	... change text here ...
+> 
+> the second change to produce B does not depend on what is done to A with
+> the first change (this is explicitly done so for reviewability of
+> individual patches).
+> 
+> With this patch, we disable the postimage record 'fn_table' when applying
+> a patch to produce new files out of existing file by copying to fix this
+> issue.
 
-Oops: avoiding the infinite loop only requires reading expected O(1)
-entries on load, so I can fix that if you like.  It would only be all
-of them if it actually did detect the infinite loop.
+Odd.  I guess the way I read this workflow is
 
-Geoffrey
+apply change X to A, copy A' to B, apply change Y to B => B' now has changes X+Y
+
+But instead you are saying B' only has change Y because A is copied to B
+not A'.
+
+Regardless, it doesn't affect my workflow.
+
+ACK.
+
+Cheers,
+Don
