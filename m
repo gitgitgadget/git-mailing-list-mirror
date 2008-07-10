@@ -1,62 +1,75 @@
-From: Stephan Hennig <mailing_list@arcor.de>
-Subject: git pull is slow
-Date: Thu, 10 Jul 2008 16:40:17 +0200
-Message-ID: <g5570s$d5m$1@ger.gmane.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: git pull is slow
+Date: Thu, 10 Jul 2008 12:13:28 -0300
+Message-ID: <46a038f90807100813s82e1e54l1d8ac6851015a500@mail.gmail.com>
+References: <g5570s$d5m$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 10 16:41:41 2008
+Cc: git@vger.kernel.org
+To: "Stephan Hennig" <mailing_list@arcor.de>
+X-From: git-owner@vger.kernel.org Thu Jul 10 17:14:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGxL2-0007Zn-3w
-	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 16:41:40 +0200
+	id 1KGxqq-0005DA-N7
+	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 17:14:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753762AbYGJOkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 10:40:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754746AbYGJOkl
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 10:40:41 -0400
-Received: from main.gmane.org ([80.91.229.2]:38742 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753598AbYGJOkl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 10:40:41 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KGxK1-0000wo-Ht
-	for git@vger.kernel.org; Thu, 10 Jul 2008 14:40:37 +0000
-Received: from dialin-145-254-067-152.pools.arcor-ip.net ([145.254.67.152])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 10 Jul 2008 14:40:37 +0000
-Received: from mailing_list by dialin-145-254-067-152.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 10 Jul 2008 14:40:37 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dialin-145-254-067-152.pools.arcor-ip.net
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12
+	id S1755629AbYGJPNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 11:13:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754355AbYGJPNc
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 11:13:32 -0400
+Received: from wx-out-0506.google.com ([66.249.82.228]:48594 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755051AbYGJPNb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 11:13:31 -0400
+Received: by wx-out-0506.google.com with SMTP id h29so1440446wxd.4
+        for <git@vger.kernel.org>; Thu, 10 Jul 2008 08:13:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=UbLRnAubXsETFK/mIgNYKQALXfKztbe2rnafItPu56A=;
+        b=hBv4toVcczxMCV8isKIj4OzTnJjtT9KRinCs7BZTCuLXTtDxWo5QyJ8etEYMKQWqBK
+         zQaGeVeGKt/7G56Rys7Qow5kHoNtfvhAJZd/OkL+F8Xxk1iWUarTLMzIkGk2oBdQwncx
+         cI3Nz4msiMtSgubWLYyTaSzyUhIEt/CJq5hfk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=kjYBus9YtFJDIIIRKkEEM6USdTkIg+dQsmR8Qfm7ToB+dU8FDWV4wajbsDX2j4ewiN
+         3MXnqcgIq3pTAFho1eO4XlsR63ymm6aYYICrWPNxx6uANHpdkBVOOk74iG5gFb073ro4
+         PxxhmmJAOH1FeHoHOcbgx6jBuN7ublL8OlPDc=
+Received: by 10.142.12.14 with SMTP id 14mr2771901wfl.147.1215702808184;
+        Thu, 10 Jul 2008 08:13:28 -0700 (PDT)
+Received: by 10.142.43.6 with HTTP; Thu, 10 Jul 2008 08:13:28 -0700 (PDT)
+In-Reply-To: <g5570s$d5m$1@ger.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87979>
 
-Hi,
+On Thu, Jul 10, 2008 at 11:40 AM, Stephan Hennig <mailing_list@arcor.de> wrote:
+> commits to the repository is fast (with git+ssh access method).  Any
+> ideas what's going on and how to make pulling faster?
 
-I am observing very large data transfers when pulling from the
-repository at <URL:http://repo.or.cz/w/wortliste.git>.  This repository
-contains one 13 MB text file that compressed is roughly 3 MB large.
+When pushing you can use --thin to get a "thin pack" transfer, where
+the delta-base is not transferred. Not sure how you request this from
+git fetch these days though :-/ Search the list for "thin packs"
+perhaps?
 
-While I'd expect pulling commits that change only a few lines of the
-large text file to result in a download of less than, say 10kB, git pull
-seems to transfer the complete, compressed file.  I have observed this
-several times for different commits.  On the other hand, pushing my own
-commits to the repository is fast (with git+ssh access method).  Any
-ideas what's going on and how to make pulling faster?
+cheers,
 
-Best regards,
-Stephan Hennig
 
-> $ git version
-> git version 1.5.6.1.1071.g76fb
+m
+--
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
