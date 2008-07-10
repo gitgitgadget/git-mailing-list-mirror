@@ -1,68 +1,74 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: THREADED_DELTA_SEARCH
-Date: Thu, 10 Jul 2008 22:13:52 +0200
-Message-ID: <20080710201352.GA3717@blimp.local>
-References: <20080710075327.GD24819@artemis.madism.org> <7vy749pxbe.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0807101212000.12484@xanadu.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH 2/5] Don't display passwords on the console in fetch/push output
+Date: Thu, 10 Jul 2008 22:17:38 +0200
+Message-ID: <200807102217.38459.robin.rosenberg.lists@dewire.com>
+References: <1215670403-19191-1-git-send-email-spearce@spearce.org> <1215670403-19191-3-git-send-email-spearce@spearce.org> <200807102056.43912.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git ML <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Jul 10 22:15:27 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jul 10 22:24:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KH2Y1-0007eQ-NE
-	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 22:15:26 +0200
+	id 1KH2gd-0002h1-V0
+	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 22:24:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752999AbYGJUOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 16:14:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753210AbYGJUOP
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 16:14:15 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.181]:34719 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752999AbYGJUOP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 16:14:15 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg2r44jO9V
-Received: from tigra.home (Fa95a.f.strato-dslnet.de [195.4.169.90])
-	by post.webmailer.de (fruni mo57) (RZmta 16.47)
-	with ESMTP id w03723k6AJDWyL ; Thu, 10 Jul 2008 22:14:08 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id C78B3277BD;
-	Thu, 10 Jul 2008 22:14:07 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id D93A436D18; Thu, 10 Jul 2008 22:13:52 +0200 (CEST)
+	id S1753753AbYGJUWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 16:22:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753168AbYGJUWq
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 16:22:46 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:12690 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752834AbYGJUWp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jul 2008 16:22:45 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 47865802846;
+	Thu, 10 Jul 2008 22:22:44 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id GectWJsjUbU2; Thu, 10 Jul 2008 22:22:43 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 9ACB3800691;
+	Thu, 10 Jul 2008 22:22:43 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <200807102056.43912.robin.rosenberg@dewire.com>
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0807101212000.12484@xanadu.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88007>
 
-Nicolas Pitre, Thu, Jul 10, 2008 18:21:09 +0200:
-> On Thu, 10 Jul 2008, Junio C Hamano wrote:
-> >  (2) exploding memory use, suspected to be due to malloc pool
-> >      fragmentation under multithreading.
-...
-> > but I do not
-> > recall the latter issue has been addressed.
-> 
-> Well, for "standard" repositories such as the Linux kernel, things 
-> always worked just fine.  And commit eac12e2d is apparently helping a 
-> lot with the remaining odd cases.  And if someone has problems due to 
-> this then a simple 'git config --global pack.threads 1' would restore 
-> the non threaded behavior.
+>From 99c09cf2321f36eb81043aed2fa6834811ee762b Mon Sep 17 00:00:00 2001
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Date: Thu, 10 Jul 2008 22:16:19 +0200
+Subject: [PATCH] Avoid password leak from URIIsh
 
-Have you ever seen what happens to Windows XP on memory shortage?
-It freezes *hard*. Not a good behaviour for _default_ settings.
+The toString() method is commonly used for dumping information. We
+never ever want to use toString when the password is needed. By masking
+out the password we avoid unintentional password leaks.
 
-And if someone has no problems with memory, then a simple "git config
-pack.threads 100" would restore the threaded behaviour for a
-repository which supposedly will never grow up.
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../src/org/spearce/jgit/transport/URIish.java     |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java b/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
+index e022e57..632c8ad 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
+@@ -318,7 +318,7 @@ public class URIish {
+ 			r.append(getUser());
+ 			if (getPass() != null) {
+ 				r.append(':');
+-				r.append(getPass());
++				r.append("PASSWORD");
+ 			}
+ 		}
+ 
+-- 
+1.5.6.2.220.g44701
