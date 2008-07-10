@@ -1,99 +1,63 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] apply: fix copy/rename breakage
-Date: Thu, 10 Jul 2008 17:22:01 +0200
-Message-ID: <48762919.6070902@viscovery.net>
-References: <7vy74aqvr1.fsf@gitster.siamese.dyndns.org> <20080710140154.GN26957@redhat.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: git pull is slow
+Date: Thu, 10 Jul 2008 17:28:46 +0200
+Message-ID: <20080710152846.GB32184@machine.or.cz>
+References: <g5570s$d5m$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Don Zickus <dzickus@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Jul 10 17:23:15 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stephan Hennig <mailing_list@arcor.de>
+X-From: git-owner@vger.kernel.org Thu Jul 10 17:36:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGxzB-0000QI-N0
-	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 17:23:10 +0200
+	id 1KGyCL-0006Tc-80
+	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 17:36:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754770AbYGJPWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 11:22:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753320AbYGJPWK
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 11:22:10 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:36141 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754463AbYGJPWK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 11:22:10 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KGxy6-0005C7-Q8; Thu, 10 Jul 2008 17:22:03 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 78E296D9; Thu, 10 Jul 2008 17:22:02 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20080710140154.GN26957@redhat.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1759880AbYGJP2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 11:28:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759879AbYGJP2z
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 11:28:55 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:39999 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759866AbYGJP2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 11:28:54 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 757522C4C02F; Thu, 10 Jul 2008 17:28:46 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <g5570s$d5m$1@ger.gmane.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87981>
 
-Don Zickus schrieb:
-> On Wed, Jul 09, 2008 at 08:10:58PM -0700, Junio C Hamano wrote:
->> However, this "incremental" mode of patch application contradicts with the
->> way git rename/copy patches are fundamentally designed.  When a git patch
->> talks about a file A getting modified, and a new file B created out of B,
->> like this:
->>
->> 	diff --git a/A b/A
->> 	--- a/A
->> 	+++ b/A
->> 	... change text X here ...
->> 	diff --git a/A b/B
->> 	copy from A
->> 	copy to B
->> 	--- a/A
->> 	+++ b/B
->> 	... change text Y here ...
->>
->> the second change to produce B does not depend on what is done to A with
->> the first change (this is explicitly done so for reviewability of
->> individual patches).
->>
->> With this patch, we disable the postimage record 'fn_table' when applying
->> a patch to produce new files out of existing file by copying to fix this
->> issue.
+  Hi,
+
+On Thu, Jul 10, 2008 at 04:40:17PM +0200, Stephan Hennig wrote:
+> I am observing very large data transfers when pulling from the
+> repository at <URL:http://repo.or.cz/w/wortliste.git>.  This repository
+> contains one 13 MB text file that compressed is roughly 3 MB large.
 > 
-> Odd.  I guess the way I read this workflow is
-> 
-> apply change X to A, copy A' to B, apply change Y to B => B' now has changes X+Y
-> 
-> But instead you are saying B' only has change Y because A is copied to B
-> not A'.
-> 
-> Regardless, it doesn't affect my workflow.
+> While I'd expect pulling commits that change only a few lines of the
+> large text file to result in a download of less than, say 10kB, git pull
+> seems to transfer the complete, compressed file.  I have observed this
+> several times for different commits.  On the other hand, pushing my own
+> commits to the repository is fast (with git+ssh access method).  Any
+> ideas what's going on and how to make pulling faster?
 
-Oh, it does. It's a normal git diff where a copy was detected!
+  do you use HTTP or native Git protocol for pulling? If HTTP, you have
+to live with this, sorry - the automatic repacks will create a new pack
+every time and you will have to redownload the whole history; I tried to
+avoid this problem but in the end I had to bow down to the agressive
+repacking strategy because the number of packs was getting out of hand.
+It is technically possible to implement some alternative more
+HTTP-friendly packing strategy, but this has always stayed only in idea
+stage. If you want to implement something, repo.or.cz will become a glad
+user. :-)
 
-Don't let you distract by the word "incremental" and by the names A and B.
-In the example above, the change X comes first because 'A' is sorted
-before 'B'. If the roles of A and B were swapped, then you have this patch:
-
- 	diff --git a/A b/A
- 	copy from B
- 	copy to A
- 	--- a/A
- 	+++ b/A
- 	... change text Y here ...
- 	diff --git a/A b/B
- 	--- a/A
- 	+++ b/B
- 	... change text X here ...
-
-See?
-
--- Hannes
+-- 
+				Petr "Pasky" Baudis
+The last good thing written in C++ was the Pachelbel Canon. -- J. Olson
