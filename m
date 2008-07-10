@@ -1,276 +1,257 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 5/5] Explicitly capture the stderr from a failed SSH fetch or push
-Date: Thu, 10 Jul 2008 02:13:23 -0400
-Message-ID: <1215670403-19191-6-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 1/5] Include a progress meter for large uploads to Amazon S3
+Date: Thu, 10 Jul 2008 02:13:19 -0400
+Message-ID: <1215670403-19191-2-git-send-email-spearce@spearce.org>
 References: <1215670403-19191-1-git-send-email-spearce@spearce.org>
- <1215670403-19191-2-git-send-email-spearce@spearce.org>
- <1215670403-19191-3-git-send-email-spearce@spearce.org>
- <1215670403-19191-4-git-send-email-spearce@spearce.org>
- <1215670403-19191-5-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>,
 	Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 10 08:14:39 2008
+X-From: git-owner@vger.kernel.org Thu Jul 10 08:14:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGpQK-0004ug-7s
-	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 08:14:36 +0200
+	id 1KGpQH-0004ug-D3
+	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 08:14:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753009AbYGJGNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 02:13:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752984AbYGJGNe
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 02:13:34 -0400
-Received: from george.spearce.org ([209.20.77.23]:55201 "EHLO
+	id S1752852AbYGJGN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 02:13:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752641AbYGJGN2
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 02:13:28 -0400
+Received: from george.spearce.org ([209.20.77.23]:55187 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752638AbYGJGN2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 02:13:28 -0400
+	with ESMTP id S1751508AbYGJGN0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 02:13:26 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id A7F94381FC; Thu, 10 Jul 2008 06:13:27 +0000 (UTC)
+	id 5FF4B38268; Thu, 10 Jul 2008 06:13:25 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 0CF3C381FF;
-	Thu, 10 Jul 2008 06:13:26 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 7F481381FC;
+	Thu, 10 Jul 2008 06:13:24 +0000 (UTC)
 X-Mailer: git-send-email 1.5.6.2.393.g45096
-In-Reply-To: <1215670403-19191-5-git-send-email-spearce@spearce.org>
+In-Reply-To: <1215670403-19191-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87944>
 
-If the remote command name is not found on the remote system we are
-likely to get a shell error sent to the channel's stderr stream,
-and yet the channel is connected.  So we don't see the problem
-until we try to read the advertised refs, which is somewhat late.
-
-If we get EOF before the first advertised ref it is a very good
-indication that the remote side did not start the process we wanted
-it to.  Tossing a specialized exception allows the SSH transport
-to offer up the contents of the stderr channel (if any) as possible
-indication of why the repository does not exist.
+If we are uploading a sizable pack file or idx file to the S3
+service the upload happens after we have finished writing the pack
+to a local temporary file.  This causes a long pause for the user
+while they wait for the data transfer to complete, with no real
+indication of progress happening.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../spearce/egit/ui/EclipseSshSessionFactory.java  |    5 +-
- .../jgit/errors/NoRemoteRepositoryException.java   |   59 ++++++++++++++++++++
- .../spearce/jgit/transport/BasePackConnection.java |    3 +-
- .../jgit/transport/DefaultSshSessionFactory.java   |   30 ++++++++++-
- .../spearce/jgit/transport/TransportGitSsh.java    |   34 +++++++++++-
- 5 files changed, 126 insertions(+), 5 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/errors/NoRemoteRepositoryException.java
+ .../src/org/spearce/jgit/transport/AmazonS3.java   |   29 +++++++++++++++----
+ .../spearce/jgit/transport/TransportAmazonS3.java  |    7 +++-
+ .../org/spearce/jgit/transport/TransportSftp.java  |    5 +++-
+ .../spearce/jgit/transport/WalkPushConnection.java |    5 ++-
+ .../jgit/transport/WalkRemoteObjectDatabase.java   |   11 ++++++-
+ 5 files changed, 44 insertions(+), 13 deletions(-)
 
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
-index 144d47d..8f80373 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
-@@ -55,7 +55,10 @@ class EclipseSshSessionFactory extends SshSessionFactory {
- 			StringBuilder sb = new StringBuilder();
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/AmazonS3.java b/org.spearce.jgit/src/org/spearce/jgit/transport/AmazonS3.java
+index e8575aa..59337f8 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/AmazonS3.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/AmazonS3.java
+@@ -75,6 +75,8 @@ import javax.crypto.spec.SecretKeySpec;
  
- 			public String toString() {
--				return all.toString();
-+				String r = all.toString();
-+				while (r.endsWith("\n"))
-+					r = r.substring(0, r.length() - 1);
-+				return r;
+ import org.spearce.jgit.awtui.AwtAuthenticator;
+ import org.spearce.jgit.lib.Constants;
++import org.spearce.jgit.lib.NullProgressMonitor;
++import org.spearce.jgit.lib.ProgressMonitor;
+ import org.spearce.jgit.util.Base64;
+ import org.spearce.jgit.util.HttpSupport;
+ import org.spearce.jgit.util.TemporaryBuffer;
+@@ -376,7 +378,7 @@ public class AmazonS3 {
+ 			// We have to copy to produce the cipher text anyway so use
+ 			// the large object code path as it supports that behavior.
+ 			//
+-			final OutputStream os = beginPut(bucket, key);
++			final OutputStream os = beginPut(bucket, key, null, null);
+ 			os.write(data);
+ 			os.close();
+ 			return;
+@@ -430,11 +432,17 @@ public class AmazonS3 {
+ 	 *            name of the bucket storing the object.
+ 	 * @param key
+ 	 *            key of the object within its bucket.
++	 * @param monitor
++	 *            (optional) progress monitor to post upload completion to
++	 *            during the stream's close method.
++	 * @param monitorTask
++	 *            (optional) task name to display during the close method.
+ 	 * @return a stream which accepts the new data, and transmits once closed.
+ 	 * @throws IOException
+ 	 *             if encryption was enabled it could not be configured.
+ 	 */
+-	public OutputStream beginPut(final String bucket, final String key)
++	public OutputStream beginPut(final String bucket, final String key,
++			final ProgressMonitor monitor, final String monitorTask)
+ 			throws IOException {
+ 		final MessageDigest md5 = newMD5();
+ 		final TemporaryBuffer buffer = new TemporaryBuffer() {
+@@ -442,7 +450,8 @@ public class AmazonS3 {
+ 			public void close() throws IOException {
+ 				super.close();
+ 				try {
+-					putImpl(bucket, key, md5.digest(), this);
++					putImpl(bucket, key, md5.digest(), this, monitor,
++							monitorTask);
+ 				} finally {
+ 					destroy();
+ 				}
+@@ -452,7 +461,13 @@ public class AmazonS3 {
+ 	}
+ 
+ 	private void putImpl(final String bucket, final String key,
+-			final byte[] csum, final TemporaryBuffer buf) throws IOException {
++			final byte[] csum, final TemporaryBuffer buf,
++			ProgressMonitor monitor, String monitorTask) throws IOException {
++		if (monitor == null)
++			monitor = NullProgressMonitor.INSTANCE;
++		if (monitorTask == null)
++			monitorTask = "Uploading " + key;
++
+ 		final String md5str = Base64.encodeBytes(csum);
+ 		final long len = buf.length();
+ 		final String lenstr = String.valueOf(len);
+@@ -465,10 +480,12 @@ public class AmazonS3 {
+ 			authorize(c);
+ 			c.setDoOutput(true);
+ 			c.setFixedLengthStreamingMode((int) len);
++			monitor.beginTask(monitorTask, (int) (len / 1024));
+ 			final OutputStream os = c.getOutputStream();
+ 			try {
+-				buf.writeTo(os, null);
++				buf.writeTo(os, monitor);
+ 			} finally {
++				monitor.endTask();
+ 				os.close();
  			}
  
- 			@Override
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/errors/NoRemoteRepositoryException.java b/org.spearce.jgit/src/org/spearce/jgit/errors/NoRemoteRepositoryException.java
-new file mode 100644
-index 0000000..604ec4d
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/errors/NoRemoteRepositoryException.java
-@@ -0,0 +1,59 @@
-+/*
-+ * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
-+
-+package org.spearce.jgit.errors;
-+
-+import org.spearce.jgit.transport.URIish;
-+
-+/**
-+ * Indicates a remote repository does not exist.
-+ */
-+public class NoRemoteRepositoryException extends TransportException {
-+	private static final long serialVersionUID = 1L;
-+
-+	/**
-+	 * Constructs an exception indicating a repository does not exist.
-+	 *
-+	 * @param uri
-+	 *            URI used for transport
-+	 * @param s
-+	 *            message
-+	 */
-+	public NoRemoteRepositoryException(final URIish uri, final String s) {
-+		super(uri, s);
-+	}
-+}
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
-index 7dc4620..52f3f48 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
-@@ -49,6 +49,7 @@ import java.util.HashSet;
- import java.util.LinkedHashMap;
- import java.util.Set;
- 
-+import org.spearce.jgit.errors.NoRemoteRepositoryException;
- import org.spearce.jgit.errors.PackProtocolException;
+@@ -641,7 +658,7 @@ public class AmazonS3 {
+ 		} else if ("rm".equals(op) || "delete".equals(op)) {
+ 			s3.delete(bucket, key);
+ 		} else if ("put".equals(op)) {
+-			final OutputStream os = s3.beginPut(bucket, key);
++			final OutputStream os = s3.beginPut(bucket, key, null, null);
+ 			final byte[] tmp = new byte[2048];
+ 			int n;
+ 			while ((n = System.in.read(tmp)) > 0)
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportAmazonS3.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportAmazonS3.java
+index d2f4c83..cd62c5b 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportAmazonS3.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportAmazonS3.java
+@@ -54,6 +54,7 @@ import java.util.TreeMap;
+ import org.spearce.jgit.errors.NotSupportedException;
  import org.spearce.jgit.errors.TransportException;
  import org.spearce.jgit.lib.ObjectId;
-@@ -129,7 +130,7 @@ abstract class BasePackConnection extends BaseConnection {
- 				line = pckIn.readString();
- 			} catch (EOFException eof) {
- 				if (avail.isEmpty())
--					throw new TransportException(uri, "not found.");
-+					throw new NoRemoteRepositoryException(uri, "not found.");
- 				throw eof;
- 			}
- 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-index 5924a04..b4578d4 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-@@ -253,6 +253,34 @@ class DefaultSshSessionFactory extends SshSessionFactory {
- 
- 	@Override
- 	public OutputStream getErrorStream() {
--		return System.err;
-+		return new OutputStream() {
-+			private StringBuilder all = new StringBuilder();
-+
-+			private StringBuilder sb = new StringBuilder();
-+
-+			public String toString() {
-+				String r = all.toString();
-+				while (r.endsWith("\n"))
-+					r = r.substring(0, r.length() - 1);
-+				return r;
-+			}
-+
-+			@Override
-+			public void write(final int b) throws IOException {
-+				if (b == '\r') {
-+					System.err.print('\r');
-+					return;
-+				}
-+
-+				sb.append((char) b);
-+
-+				if (b == '\n') {
-+					final String line = sb.toString();
-+					System.err.print(line);
-+					all.append(line);
-+					sb = new StringBuilder();
-+				}
-+			}
-+		};
- 	}
- }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
-index 9a6c719..3f2cd37 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
-@@ -44,6 +44,7 @@ import java.io.OutputStream;
- import java.net.ConnectException;
- import java.net.UnknownHostException;
- 
-+import org.spearce.jgit.errors.NoRemoteRepositoryException;
- import org.spearce.jgit.errors.TransportException;
++import org.spearce.jgit.lib.ProgressMonitor;
+ import org.spearce.jgit.lib.Ref;
  import org.spearce.jgit.lib.Repository;
- 
-@@ -217,6 +218,25 @@ class TransportGitSsh extends PackTransport {
+ import org.spearce.jgit.lib.Ref.Storage;
+@@ -236,8 +237,10 @@ class TransportAmazonS3 extends WalkTransport {
  		}
+ 
+ 		@Override
+-		OutputStream writeFile(final String path) throws IOException {
+-			return s3.beginPut(bucket, resolveKey(path));
++		OutputStream writeFile(final String path,
++				final ProgressMonitor monitor, final String monitorTask)
++				throws IOException {
++			return s3.beginPut(bucket, resolveKey(path), monitor, monitorTask);
+ 		}
+ 
+ 		@Override
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportSftp.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportSftp.java
+index a33406b..c2cbe6a 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportSftp.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportSftp.java
+@@ -54,6 +54,7 @@ import java.util.TreeMap;
+ 
+ import org.spearce.jgit.errors.TransportException;
+ import org.spearce.jgit.lib.ObjectId;
++import org.spearce.jgit.lib.ProgressMonitor;
+ import org.spearce.jgit.lib.Ref;
+ import org.spearce.jgit.lib.Repository;
+ import org.spearce.jgit.lib.Ref.Storage;
+@@ -294,7 +295,9 @@ class TransportSftp extends WalkTransport {
+ 		}
+ 
+ 		@Override
+-		OutputStream writeFile(final String path) throws IOException {
++		OutputStream writeFile(final String path,
++				final ProgressMonitor monitor, final String monitorTask)
++				throws IOException {
+ 			try {
+ 				return ftp.put(path);
+ 			} catch (SftpException je) {
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/WalkPushConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/WalkPushConnection.java
+index bb5a653..904a699 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/WalkPushConnection.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/WalkPushConnection.java
+@@ -230,14 +230,15 @@ class WalkPushConnection extends BaseConnection implements PushConnection {
+ 			// Write the pack file, then the index, as readers look the
+ 			// other direction (index, then pack file).
+ 			//
+-			OutputStream os = dest.writeFile(pathPack);
++			final String wt = "Put " + base.substring(0, 12);
++			OutputStream os = dest.writeFile(pathPack, monitor, wt + "..pack");
+ 			try {
+ 				pw.writePack(os);
+ 			} finally {
+ 				os.close();
+ 			}
+ 
+-			os = dest.writeFile(pathIdx);
++			os = dest.writeFile(pathIdx, monitor, wt + "..idx");
+ 			try {
+ 				pw.writeIndex(os);
+ 			} finally {
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/WalkRemoteObjectDatabase.java b/org.spearce.jgit/src/org/spearce/jgit/transport/WalkRemoteObjectDatabase.java
+index 915faac..c5a5199 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/WalkRemoteObjectDatabase.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/WalkRemoteObjectDatabase.java
+@@ -52,6 +52,7 @@ import java.util.Map;
+ import org.spearce.jgit.errors.TransportException;
+ import org.spearce.jgit.lib.Constants;
+ import org.spearce.jgit.lib.ObjectId;
++import org.spearce.jgit.lib.ProgressMonitor;
+ import org.spearce.jgit.lib.Ref;
+ import org.spearce.jgit.util.NB;
+ 
+@@ -213,11 +214,17 @@ abstract class WalkRemoteObjectDatabase {
+ 	 *         complete the write request. The stream is not buffered and each
+ 	 *         write may cause a network request/response so callers should
+ 	 *         buffer to smooth out small writes.
++	 * @param monitor
++	 *            (optional) progress monitor to post write completion to during
++	 *            the stream's close method.
++	 * @param monitorTask
++	 *            (optional) task name to display during the close method.
+ 	 * @throws IOException
+ 	 *             writing is not supported, or attempting to write the file
+ 	 *             failed, possibly due to permissions or remote disk full, etc.
+ 	 */
+-	OutputStream writeFile(final String path) throws IOException {
++	OutputStream writeFile(final String path, final ProgressMonitor monitor,
++			final String monitorTask) throws IOException {
+ 		throw new IOException("Writing of '" + path + "' not supported.");
  	}
  
-+	NoRemoteRepositoryException cleanNotFound(NoRemoteRepositoryException nf) {
-+		String why = errStream.toString();
-+		if (why == null || why.length() == 0)
-+			return nf;
-+
-+		String path = uri.getPath();
-+		if (uri.getScheme() != null && uri.getPath().startsWith("/~"))
-+			path = uri.getPath().substring(1);
-+
-+		final StringBuilder pfx = new StringBuilder();
-+		pfx.append("fatal: ");
-+		sqAlways(pfx, path);
-+		pfx.append(": ");
-+		if (why.startsWith(pfx.toString()))
-+			why = why.substring(pfx.length());
-+
-+		return new NoRemoteRepositoryException(uri, why);
-+	}
-+
- 	class SshFetchConnection extends BasePackFetchConnection {
- 		private ChannelExec channel;
- 
-@@ -238,7 +258,12 @@ class TransportGitSsh extends PackTransport {
- 				throw new TransportException(uri,
- 						"remote hung up unexpectedly", err);
- 			}
--			readAdvertisedRefs();
-+
-+			try {
-+				readAdvertisedRefs();
-+			} catch (NoRemoteRepositoryException notFound) {
-+				throw cleanNotFound(notFound);
-+			}
- 		}
- 
- 		@Override
-@@ -277,7 +302,12 @@ class TransportGitSsh extends PackTransport {
- 				throw new TransportException(uri,
- 						"remote hung up unexpectedly", err);
- 			}
--			readAdvertisedRefs();
-+
-+			try {
-+				readAdvertisedRefs();
-+			} catch (NoRemoteRepositoryException notFound) {
-+				throw cleanNotFound(notFound);
-+			}
- 		}
- 
- 		@Override
+@@ -247,7 +254,7 @@ abstract class WalkRemoteObjectDatabase {
+ 	 *             failed, possibly due to permissions or remote disk full, etc.
+ 	 */
+ 	void writeFile(final String path, final byte[] data) throws IOException {
+-		final OutputStream os = writeFile(path);
++		final OutputStream os = writeFile(path, null, null);
+ 		try {
+ 			os.write(data);
+ 		} finally {
 -- 
 1.5.6.2.393.g45096
