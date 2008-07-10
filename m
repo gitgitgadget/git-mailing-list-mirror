@@ -1,77 +1,74 @@
-From: Toralf =?iso-8859-15?q?F=F6rster?= <toralf.foerster@gmx.de>
-Subject: feature request: git-log should accept sth like v2.6.26-rc8-227
-Date: Thu, 10 Jul 2008 20:57:12 +0200
-Message-ID: <200807102057.15063.toralf.foerster@gmx.de>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [JGIT PATCH 2/5] Don't display passwords on the console in fetch/push output
+Date: Thu, 10 Jul 2008 20:56:43 +0200
+Message-ID: <200807102056.43912.robin.rosenberg@dewire.com>
+References: <1215670403-19191-1-git-send-email-spearce@spearce.org> <1215670403-19191-2-git-send-email-spearce@spearce.org> <1215670403-19191-3-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart5665137.8bja5Eh5tz";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 10 21:06:51 2008
+Cc: Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jul 10 21:07:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KH1TS-0005yX-VB
-	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 21:06:39 +0200
+	id 1KH1TZ-0005yX-I9
+	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 21:06:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754821AbYGJS5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 14:57:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753028AbYGJS5T
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 14:57:19 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59698 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752545AbYGJS5S (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 14:57:18 -0400
-Received: (qmail invoked by alias); 10 Jul 2008 18:57:16 -0000
-Received: from d072181.adsl.hansenet.de (EHLO d072181.adsl.hansenet.de) [80.171.72.181]
-  by mail.gmx.net (mp057) with SMTP; 10 Jul 2008 20:57:16 +0200
-X-Authenticated: #5108953
-X-Provags-ID: V01U2FsdGVkX19JRRhJ27FJgdAGi3DriL/QUspDxISpmtLl3/BUL3
-	Pk4Z60FaBvF4mL
+	id S1753653AbYGJTBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 15:01:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752764AbYGJTBv
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 15:01:51 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:12479 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752106AbYGJTBv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 15:01:51 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 35C1A802846;
+	Thu, 10 Jul 2008 21:01:49 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id v-0PN0p30974; Thu, 10 Jul 2008 21:01:48 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 976448027F7;
+	Thu, 10 Jul 2008 21:01:48 +0200 (CEST)
 User-Agent: KMail/1.9.9
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+In-Reply-To: <1215670403-19191-3-git-send-email-spearce@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87997>
 
---nextPart5665137.8bja5Eh5tz
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+torsdagen den 10 juli 2008 08.13.20 skrev Shawn O. Pearce:
+> When we show the URI we just fetched or pushed against there may
+> be a user password embedded in that URI, as saved in the user's
+> .git/config file.  We shouldn't display that in public to prying
+> eyes so nulling it out will give us a copy of the URI without that
+> field in it.
+> 
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> ---
+>  .../src/org/spearce/jgit/pgm/Fetch.java            |    2 +-
+>  .../src/org/spearce/jgit/pgm/Push.java             |    2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/org.spearce.jgit/src/org/spearce/jgit/pgm/Fetch.java b/org.spearce.jgit/src/org/spearce/jgit/pgm/Fetch.java
+> index c9c997e..36a0592 100644
+> --- a/org.spearce.jgit/src/org/spearce/jgit/pgm/Fetch.java
+> +++ b/org.spearce.jgit/src/org/spearce/jgit/pgm/Fetch.java
+> @@ -71,7 +71,7 @@ class Fetch extends TextBuiltin {
+>  			return;
+>  
+>  		out.print("From ");
+> -		out.print(tn.getURI());
+> +		out.print(tn.getURI().setPass(null));
 
-Hello,
+We did this a while ago. Sort of patching broken stuff instead of fixing what's broken, thus we should make URIIsh.toiString
+not display the password.
 
-git-describe gives an informative string about the current status:
-tfoerste@n22 ~/devel/linux-2.6 $ git describe
-v2.6.26-rc9-56-g6329d30
-
-I appended those strings to the names of my UML kernel executables.
-Unfortunately I didn't used the commit id and now I'm wondering whether git
-could accept v2.6.26-rc9-56 as well in future.
-
-=2D-=20
-MfG/Sincerely
-
-Toralf F=F6rster
-pgp finger print: 7B1A 07F4 EC82 0F90 D4C2 8936 872A E508 7DB6 9DA3
-
---nextPart5665137.8bja5Eh5tz
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkh2W4sACgkQhyrlCH22naNEJQCdFFesaYKP+6Z9RjS1eCS/YYXO
-UOgAnip6RuJr6Aqz5BCBYx0Bdx6rINLS
-=FHfM
------END PGP SIGNATURE-----
-
---nextPart5665137.8bja5Eh5tz--
+-- robin
