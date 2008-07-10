@@ -1,86 +1,158 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] bisect: test merge base if good rev is not an ancestor
- of bad rev
-Date: Fri, 11 Jul 2008 00:38:10 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807110035180.3279@eeepc-johanness>
-References: <20080710054152.b051989c.chriscool@tuxfamily.org> <200807102126.37567.chriscool@tuxfamily.org> <7vd4llpkxq.fsf@gitster.siamese.dyndns.org> <200807110036.17504.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="658432-1708213059-1215729492=:3279"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Jul 11 00:39:04 2008
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH 1/6] Create a selection handler for the revision graph.
+Date: Fri, 11 Jul 2008 00:39:28 +0200
+Message-ID: <1215729573-26536-2-git-send-email-robin.rosenberg@dewire.com>
+References: <1215729573-26536-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jul 11 00:46:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KH4ms-0001fx-UY
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 00:38:55 +0200
+	id 1KH4tk-0003md-35
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 00:46:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753198AbYGJWhx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 18:37:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753165AbYGJWhx
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 18:37:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50005 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751801AbYGJWhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 18:37:53 -0400
-Received: (qmail invoked by alias); 10 Jul 2008 22:37:51 -0000
-Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
-  by mail.gmx.net (mp038) with SMTP; 11 Jul 2008 00:37:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/MGao9arPMZSNWnW04+BcQ8JecGWmZHBBZuTrOSc
-	66HMCQFB89WVSk
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <200807110036.17504.chriscool@tuxfamily.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1754119AbYGJWoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 18:44:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754089AbYGJWoq
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 18:44:46 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:13076 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754016AbYGJWom (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 18:44:42 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 8EE9B802E18;
+	Fri, 11 Jul 2008 00:44:41 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id RO3SyjHVcN-i; Fri, 11 Jul 2008 00:44:39 +0200 (CEST)
+Received: from localhost.localdomain (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id E6373802C0D;
+	Fri, 11 Jul 2008 00:44:38 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.2.220.g44701
+In-Reply-To: <1215729573-26536-1-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88022>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This make it possible to associate content menu contributions
+with selections in the history graph.
 
---658432-1708213059-1215729492=:3279
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../egit/ui/internal/history/GitHistoryPage.java   |   11 ++++-
+ .../history/RevObjectSelectionProvider.java        |   48 ++++++++++++++++++++
+ 2 files changed, 57 insertions(+), 2 deletions(-)
+ create mode 100644 org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/RevObjectSelectionProvider.java
 
-Hi,
-
-On Fri, 11 Jul 2008, Christian Couder wrote:
-
-> Le jeudi 10 juillet 2008, Junio C Hamano a écrit :
->
-> >  - "Test this merge-base before going forward, please" will add 
-> >    typically only one round of check (if you have more merge bases 
-> >    between good and bad, you need to test all of them are good to be 
-> >    sure), so it is not "slower nor more complex".
-> 
-> By "slower" I meant that it would need more rounds of check on average. 
-> By "more complex" I meant that more code is needed.
-> 
-> And I think you are right, all the merge bases need to be tested so I 
-> will send a patch on top of the patch discussed here.
-
-Good luck.  This will open the scenario where people use a proper ancestor 
-as "good" revision.  In this case, you test that.  If it is "bad" you 
-report that it is the _first_ one.
-
-You are opening a can of worms here, and I doubt that this is a good idea.
-
-git-bisect as-is has very precise, and _simple_ semantics, and users 
-should really know what they are doing (i.e. not marking something as 
-"good" which is on a branch containing a fix).
-
-Trying to be too clever here might just make the whole tool rather 
-useless.
-
-Ciao,
-Dscho
-
---658432-1708213059-1215729492=:3279--
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GitHistoryPage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GitHistoryPage.java
+index 9bcae19..6eaa6e4 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GitHistoryPage.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GitHistoryPage.java
+@@ -181,6 +181,11 @@ public class GitHistoryPage extends HistoryPage {
+ 	 */
+ 	private List<String> pathFilters;
+ 
++	/**
++	 * The selection provider tracks the selected revisions for the context menu
++	 */
++	private RevObjectSelectionProvider revObjectSelectionProvider;
++
+ 	@Override
+ 	public void createControl(final Composite parent) {
+ 		GridData gd;
+@@ -211,6 +216,7 @@ public class GitHistoryPage extends HistoryPage {
+ 		layoutSashForm(graphDetailSplit, SPLIT_GRAPH);
+ 		layoutSashForm(revInfoSplit, SPLIT_INFO);
+ 
++		revObjectSelectionProvider = new RevObjectSelectionProvider();
+ 		popupMgr = new MenuManager(null, POPUP_ID);
+ 		attachCommitSelectionChanged();
+ 		createLocalToolbarActions();
+@@ -221,7 +227,6 @@ public class GitHistoryPage extends HistoryPage {
+ 		attachContextMenu(graph.getControl());
+ 		attachContextMenu(commentViewer.getControl());
+ 		attachContextMenu(fileViewer.getControl());
+-
+ 		layout();
+ 	}
+ 
+@@ -229,7 +234,8 @@ public class GitHistoryPage extends HistoryPage {
+ 		popupMgr.add(new Separator());
+ 		popupMgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+ 		getSite().registerContextMenu(POPUP_ID, popupMgr,
+-				getSite().getSelectionProvider());
++				revObjectSelectionProvider);
++		getSite().setSelectionProvider(revObjectSelectionProvider);
+ 	}
+ 
+ 	private void attachContextMenu(final Control c) {
+@@ -299,6 +305,7 @@ public class GitHistoryPage extends HistoryPage {
+ 				c = (PlotCommit<?>) sel.getFirstElement();
+ 				commentViewer.setInput(c);
+ 				fileViewer.setInput(c);
++				revObjectSelectionProvider.setSelection(s);
+ 			}
+ 		});
+ 		commentViewer
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/RevObjectSelectionProvider.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/RevObjectSelectionProvider.java
+new file mode 100644
+index 0000000..c44b229
+--- /dev/null
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/RevObjectSelectionProvider.java
+@@ -0,0 +1,48 @@
++/*******************************************************************************
++ * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
++ *
++ * All rights reserved. This program and the accompanying materials
++ * are made available under the terms of the Eclipse Public License v1.0
++ * See LICENSE for the full license text, also available.
++ *******************************************************************************/
++package org.spearce.egit.ui.internal.history;
++
++import java.util.ArrayList;
++import java.util.List;
++
++import org.eclipse.jface.viewers.ISelection;
++import org.eclipse.jface.viewers.ISelectionChangedListener;
++import org.eclipse.jface.viewers.ISelectionProvider;
++import org.eclipse.jface.viewers.SelectionChangedEvent;
++
++/**
++ * A selection provider for Git revision objects
++ */
++public class RevObjectSelectionProvider implements ISelectionProvider {
++
++	private List<ISelectionChangedListener> listeners = new ArrayList<ISelectionChangedListener>();
++
++	private ISelection selection;
++
++	public void addSelectionChangedListener(ISelectionChangedListener listener) {
++		listeners.add(listener);
++	}
++
++	public ISelection getSelection() {
++		return selection;
++	}
++
++	public void removeSelectionChangedListener(
++			ISelectionChangedListener listener) {
++		listeners.remove(listener);
++	}
++
++	public void setSelection(ISelection selection) {
++		this.selection = selection;
++		SelectionChangedEvent event = new SelectionChangedEvent(this, selection);
++		for (ISelectionChangedListener l : listeners) {
++			l.selectionChanged(event);
++		}
++	}
++
++}
+-- 
+1.5.6.2.220.g44701
