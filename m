@@ -1,68 +1,86 @@
-From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
-Subject: Re: [PATCH] git-mailinfo: Fix getting the subject from the body
-Date: Fri, 11 Jul 2008 00:37:36 +0200
-Organization: Chalmers
-Message-ID: <48768F30.8070409@etek.chalmers.se>
-References: <4876820D.4070806@etek.chalmers.se> <7vod55o0tx.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] bisect: test merge base if good rev is not an ancestor
+ of bad rev
+Date: Fri, 11 Jul 2008 00:38:10 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807110035180.3279@eeepc-johanness>
+References: <20080710054152.b051989c.chriscool@tuxfamily.org> <200807102126.37567.chriscool@tuxfamily.org> <7vd4llpkxq.fsf@gitster.siamese.dyndns.org> <200807110036.17504.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	=?UTF-8?B?THVrYXMgU2FuZHN0csO2?= =?UTF-8?B?bQ==?= 
-	<lukass@etek.chalmers.se>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 00:38:37 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="658432-1708213059-1215729492=:3279"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Jul 11 00:39:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KH4ma-0001ZD-Cr
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 00:38:36 +0200
+	id 1KH4ms-0001fx-UY
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 00:38:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752322AbYGJWhi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jul 2008 18:37:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751982AbYGJWhi
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 18:37:38 -0400
-Received: from atum.ita.chalmers.se ([129.16.4.148]:36450 "EHLO
-	atum.ita.chalmers.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751967AbYGJWhh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 18:37:37 -0400
-Received: from [192.168.0.82] (153.29.227.87.static.kba.siw.siwnet.net [87.227.29.153])
-	(Authenticated sender: lukass)
-	by atum.ita.chalmers.se (Postfix) with ESMTP id A65B1831F;
-	Fri, 11 Jul 2008 00:37:36 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.14) Gecko/20080504 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <7vod55o0tx.fsf@gitster.siamese.dyndns.org>
+	id S1753198AbYGJWhx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 18:37:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753165AbYGJWhx
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 18:37:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50005 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751801AbYGJWhx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 18:37:53 -0400
+Received: (qmail invoked by alias); 10 Jul 2008 22:37:51 -0000
+Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
+  by mail.gmx.net (mp038) with SMTP; 11 Jul 2008 00:37:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/MGao9arPMZSNWnW04+BcQ8JecGWmZHBBZuTrOSc
+	66HMCQFB89WVSk
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <200807110036.17504.chriscool@tuxfamily.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88021>
 
-Junio C Hamano wrote:
-> Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se> writes:
->=20
->> "Subject: " isn't in the static array "header", and thus
->> memcmp("Subject: ", header[i], 7) will never match.
->>
->> Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
->> ---
->>
->> This has been broken since 2007-03-12, with commit
->> 87ab799234639c26ea10de74782fa511cb3ca606
->> so it might not be very important.
->=20
-> Wow, thanks.  Perhaps we would want some additional test scripts?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Yes, apparently.
+--658432-1708213059-1215729492=:3279
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
-After looking at this part some more, I see that there is no guarantee
-that hdr_data[i] !=3D NULL in this codepath, and then we won't use the
-subject anyway.
+Hi,
 
-I'm currently working on rewriting git-mailinfo to use strbuf's insted
-of the preallocated buffers currently used. Do you want me to send a
-patch allocating hdr_data[i], or can you wait for my strbuf-conversion
-patch? It'll propably be ready for review tonight.
+On Fri, 11 Jul 2008, Christian Couder wrote:
 
-/Lukas
+> Le jeudi 10 juillet 2008, Junio C Hamano a écrit :
+>
+> >  - "Test this merge-base before going forward, please" will add 
+> >    typically only one round of check (if you have more merge bases 
+> >    between good and bad, you need to test all of them are good to be 
+> >    sure), so it is not "slower nor more complex".
+> 
+> By "slower" I meant that it would need more rounds of check on average. 
+> By "more complex" I meant that more code is needed.
+> 
+> And I think you are right, all the merge bases need to be tested so I 
+> will send a patch on top of the patch discussed here.
+
+Good luck.  This will open the scenario where people use a proper ancestor 
+as "good" revision.  In this case, you test that.  If it is "bad" you 
+report that it is the _first_ one.
+
+You are opening a can of worms here, and I doubt that this is a good idea.
+
+git-bisect as-is has very precise, and _simple_ semantics, and users 
+should really know what they are doing (i.e. not marking something as 
+"good" which is on a branch containing a fix).
+
+Trying to be too clever here might just make the whole tool rather 
+useless.
+
+Ciao,
+Dscho
+
+--658432-1708213059-1215729492=:3279--
