@@ -1,537 +1,276 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 3/5] Reuse the same SSH connection when automatically fetching tags
-Date: Thu, 10 Jul 2008 02:13:21 -0400
-Message-ID: <1215670403-19191-4-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 5/5] Explicitly capture the stderr from a failed SSH fetch or push
+Date: Thu, 10 Jul 2008 02:13:23 -0400
+Message-ID: <1215670403-19191-6-git-send-email-spearce@spearce.org>
 References: <1215670403-19191-1-git-send-email-spearce@spearce.org>
  <1215670403-19191-2-git-send-email-spearce@spearce.org>
  <1215670403-19191-3-git-send-email-spearce@spearce.org>
+ <1215670403-19191-4-git-send-email-spearce@spearce.org>
+ <1215670403-19191-5-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>,
 	Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 10 08:14:36 2008
+X-From: git-owner@vger.kernel.org Thu Jul 10 08:14:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGpQJ-0004ug-CQ
+	id 1KGpQK-0004ug-7s
 	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 08:14:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751812AbYGJGNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 02:13:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752375AbYGJGNd
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 02:13:33 -0400
-Received: from george.spearce.org ([209.20.77.23]:55194 "EHLO
+	id S1753009AbYGJGNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 02:13:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752984AbYGJGNe
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 02:13:34 -0400
+Received: from george.spearce.org ([209.20.77.23]:55201 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751812AbYGJGN1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 02:13:27 -0400
+	with ESMTP id S1752638AbYGJGN2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 02:13:28 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 9105E382A6; Thu, 10 Jul 2008 06:13:26 +0000 (UTC)
+	id A7F94381FC; Thu, 10 Jul 2008 06:13:27 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 3C80D3821F;
-	Thu, 10 Jul 2008 06:13:25 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 0CF3C381FF;
+	Thu, 10 Jul 2008 06:13:26 +0000 (UTC)
 X-Mailer: git-send-email 1.5.6.2.393.g45096
-In-Reply-To: <1215670403-19191-3-git-send-email-spearce@spearce.org>
+In-Reply-To: <1215670403-19191-5-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87943>
 
-If we have to open a second connection to git-upload-pack in order
-to automatically follow and fetch annotated tags we may be able to
-reuse the same JSch Session object and simply run the second stream
-over the already established, encrypted TCP stream.
+If the remote command name is not found on the remote system we are
+likely to get a shell error sent to the channel's stderr stream,
+and yet the channel is connected.  So we don't see the problem
+until we try to read the advertised refs, which is somewhat late.
 
-Reusing the Session avoids the overheads associated with performing
-public/private key authentication and reduces the overall latency
-of the fetch process.
-
-To make reuse work we cache the Session at the Transport instance
-level and ask Transport API users to close the Transport once they
-are completely done talking to this remote repository.  While the
-Transport instance is unclosed however multiple FetchConnection
-and/or PushConnections can be established, with each subsequent
-connection being cheaper to setup.
-
-In the future we may also support reusing the same Session onto
-different Transport instances, permitting access to multiple
-repositories hosted on the same remote SSH server.
+If we get EOF before the first advertised ref it is a very good
+indication that the remote side did not start the process we wanted
+it to.  Tossing a specialized exception allows the SSH transport
+to offer up the contents of the stderr channel (if any) as possible
+indication of why the repository does not exist.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../org/spearce/egit/core/op/CloneOperation.java   |   10 +++-
- .../egit/ui/internal/clone/SourceBranchPage.java   |    1 +
- .../spearce/jgit/transport/PushProcessTest.java    |    5 ++
- .../org/spearce/jgit/transport/TransportTest.java  |   10 +++
- .../src/org/spearce/jgit/pgm/Fetch.java            |   17 ++++--
- .../src/org/spearce/jgit/pgm/LsRemote.java         |    1 +
- .../src/org/spearce/jgit/transport/Transport.java  |   10 +++
- .../spearce/jgit/transport/TransportAmazonS3.java  |    5 ++
- .../spearce/jgit/transport/TransportBundle.java    |    5 ++
- .../spearce/jgit/transport/TransportGitAnon.java   |    5 ++
- .../spearce/jgit/transport/TransportGitSsh.java    |   60 +++++++++-----------
- .../org/spearce/jgit/transport/TransportHttp.java  |    5 ++
- .../org/spearce/jgit/transport/TransportLocal.java |    5 ++
- .../org/spearce/jgit/transport/TransportSftp.java  |   52 +++++++++---------
- 14 files changed, 124 insertions(+), 67 deletions(-)
+ .../spearce/egit/ui/EclipseSshSessionFactory.java  |    5 +-
+ .../jgit/errors/NoRemoteRepositoryException.java   |   59 ++++++++++++++++++++
+ .../spearce/jgit/transport/BasePackConnection.java |    3 +-
+ .../jgit/transport/DefaultSshSessionFactory.java   |   30 ++++++++++-
+ .../spearce/jgit/transport/TransportGitSsh.java    |   34 +++++++++++-
+ 5 files changed, 126 insertions(+), 5 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/errors/NoRemoteRepositoryException.java
 
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/op/CloneOperation.java b/org.spearce.egit.core/src/org/spearce/egit/core/op/CloneOperation.java
-index 7600e3b..656f3cb 100644
---- a/org.spearce.egit.core/src/org/spearce/egit/core/op/CloneOperation.java
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/op/CloneOperation.java
-@@ -85,8 +85,14 @@ public class CloneOperation implements IRunnableWithProgress {
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
+index 144d47d..8f80373 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
+@@ -55,7 +55,10 @@ class EclipseSshSessionFactory extends SshSessionFactory {
+ 			StringBuilder sb = new StringBuilder();
  
- 	private void doFetch(final IProgressMonitor monitor)
- 			throws NotSupportedException, TransportException {
--		fetchResult = Transport.open(local, remote).fetch(
--				new EclipseGitProgressTransformer(monitor), null);
-+		final Transport tn = Transport.open(local, remote);
-+		try {
-+			final EclipseGitProgressTransformer pm;
-+			pm = new EclipseGitProgressTransformer(monitor);
-+			fetchResult = tn.fetch(pm, null);
-+		} finally {
-+			tn.close();
-+		}
- 	}
- 
- 	private void doCheckout(final IProgressMonitor monitor) throws IOException {
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/clone/SourceBranchPage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/clone/SourceBranchPage.java
-index b704aaa..b0aba1e 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/clone/SourceBranchPage.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/clone/SourceBranchPage.java
-@@ -241,6 +241,7 @@ class SourceBranchPage extends WizardPage {
- 							adv = fn.getRefs();
- 						} finally {
- 							fn.close();
-+							tn.close();
- 						}
- 
- 						final Ref idHEAD = fn.getRef(Constants.HEAD);
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/PushProcessTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/PushProcessTest.java
-index fae1cbb..357e6b7 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/PushProcessTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/PushProcessTest.java
-@@ -379,6 +379,11 @@ public class PushProcessTest extends RepositoryTestCase {
- 				TransportException {
- 			return new MockPushConnection();
- 		}
-+
-+		@Override
-+		public void close() {
-+			// nothing here
-+		}
- 	}
- 
- 	private class MockPushConnection extends BaseConnection implements
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/TransportTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/TransportTest.java
-index 10f6651..dc1cb21 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/TransportTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/TransportTest.java
-@@ -56,6 +56,16 @@ public class TransportTest extends RepositoryTestCase {
- 		final RepositoryConfig config = db.getConfig();
- 		remoteConfig = new RemoteConfig(config, "test");
- 		remoteConfig.addURI(new URIish("http://everyones.loves.git/u/2"));
-+		transport = null;
-+	}
-+
-+	@Override
-+	protected void tearDown() throws Exception {
-+		if (transport != null) {
-+			transport.close();
-+			transport = null;
-+		}
-+		super.tearDown();
- 	}
- 
- 	/**
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/pgm/Fetch.java b/org.spearce.jgit/src/org/spearce/jgit/pgm/Fetch.java
-index 36a0592..c361c26 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/pgm/Fetch.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/pgm/Fetch.java
-@@ -63,12 +63,17 @@ class Fetch extends TextBuiltin {
- 			args = new String[] { "origin" };
- 
- 		final Transport tn = Transport.open(db, args[argi++]);
--		final List<RefSpec> toget = new ArrayList<RefSpec>();
--		for (; argi < args.length; argi++)
--			toget.add(new RefSpec(args[argi]));
--		final FetchResult r = tn.fetch(new TextProgressMonitor(), toget);
--		if (r.getTrackingRefUpdates().isEmpty())
--			return;
-+		final FetchResult r;
-+		try {
-+			final List<RefSpec> toget = new ArrayList<RefSpec>();
-+			for (; argi < args.length; argi++)
-+				toget.add(new RefSpec(args[argi]));
-+			r = tn.fetch(new TextProgressMonitor(), toget);
-+			if (r.getTrackingRefUpdates().isEmpty())
-+				return;
-+		} finally {
-+			tn.close();
-+		}
- 
- 		out.print("From ");
- 		out.print(tn.getURI().setPass(null));
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/pgm/LsRemote.java b/org.spearce.jgit/src/org/spearce/jgit/pgm/LsRemote.java
-index dbdfeb3..21e02ec 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/pgm/LsRemote.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/pgm/LsRemote.java
-@@ -70,6 +70,7 @@ class LsRemote extends TextBuiltin {
+ 			public String toString() {
+-				return all.toString();
++				String r = all.toString();
++				while (r.endsWith("\n"))
++					r = r.substring(0, r.length() - 1);
++				return r;
  			}
- 		} finally {
- 			c.close();
-+			tn.close();
- 		}
- 	}
  
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-index b962162..5bec4d2 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-@@ -527,6 +527,16 @@ public abstract class Transport {
- 	public abstract PushConnection openPush() throws NotSupportedException,
- 			TransportException;
- 
+ 			@Override
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/errors/NoRemoteRepositoryException.java b/org.spearce.jgit/src/org/spearce/jgit/errors/NoRemoteRepositoryException.java
+new file mode 100644
+index 0000000..604ec4d
+--- /dev/null
++++ b/org.spearce.jgit/src/org/spearce/jgit/errors/NoRemoteRepositoryException.java
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.errors;
++
++import org.spearce.jgit.transport.URIish;
++
++/**
++ * Indicates a remote repository does not exist.
++ */
++public class NoRemoteRepositoryException extends TransportException {
++	private static final long serialVersionUID = 1L;
++
 +	/**
-+	 * Close any resources used by this transport.
-+	 * <p>
-+	 * If the remote repository is contacted by a network socket this method
-+	 * must close that network socket, disconnecting the two peers. If the
-+	 * remote repository is actually local (same system) this method must close
-+	 * any open file handles used to read the "remote" repository.
++	 * Constructs an exception indicating a repository does not exist.
++	 *
++	 * @param uri
++	 *            URI used for transport
++	 * @param s
++	 *            message
 +	 */
-+	public abstract void close();
-+
- 	private Collection<RefSpec> expandPushWildcardsFor(
- 			final Collection<RefSpec> specs) {
- 		final Map<String, Ref> localRefs = local.getAllRefs();
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportAmazonS3.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportAmazonS3.java
-index cd62c5b..9aa2567 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportAmazonS3.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportAmazonS3.java
-@@ -159,6 +159,11 @@ class TransportAmazonS3 extends WalkTransport {
- 		return r;
- 	}
- 
-+	@Override
-+	public void close() {
-+		// No explicit connections are maintained.
++	public NoRemoteRepositoryException(final URIish uri, final String s) {
++		super(uri, s);
 +	}
-+
- 	class DatabaseS3 extends WalkRemoteObjectDatabase {
- 		private final String bucketName;
++}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
+index 7dc4620..52f3f48 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
+@@ -49,6 +49,7 @@ import java.util.HashSet;
+ import java.util.LinkedHashMap;
+ import java.util.Set;
  
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java
-index 6169179..24d49eb 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java
-@@ -101,6 +101,11 @@ class TransportBundle extends PackTransport {
- 				"Push is not supported for bundle transport");
++import org.spearce.jgit.errors.NoRemoteRepositoryException;
+ import org.spearce.jgit.errors.PackProtocolException;
+ import org.spearce.jgit.errors.TransportException;
+ import org.spearce.jgit.lib.ObjectId;
+@@ -129,7 +130,7 @@ abstract class BasePackConnection extends BaseConnection {
+ 				line = pckIn.readString();
+ 			} catch (EOFException eof) {
+ 				if (avail.isEmpty())
+-					throw new TransportException(uri, "not found.");
++					throw new NoRemoteRepositoryException(uri, "not found.");
+ 				throw eof;
+ 			}
+ 
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
+index 5924a04..b4578d4 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
+@@ -253,6 +253,34 @@ class DefaultSshSessionFactory extends SshSessionFactory {
+ 
+ 	@Override
+ 	public OutputStream getErrorStream() {
+-		return System.err;
++		return new OutputStream() {
++			private StringBuilder all = new StringBuilder();
++
++			private StringBuilder sb = new StringBuilder();
++
++			public String toString() {
++				String r = all.toString();
++				while (r.endsWith("\n"))
++					r = r.substring(0, r.length() - 1);
++				return r;
++			}
++
++			@Override
++			public void write(final int b) throws IOException {
++				if (b == '\r') {
++					System.err.print('\r');
++					return;
++				}
++
++				sb.append((char) b);
++
++				if (b == '\n') {
++					final String line = sb.toString();
++					System.err.print(line);
++					all.append(line);
++					sb = new StringBuilder();
++				}
++			}
++		};
  	}
- 
-+	@Override
-+	public void close() {
-+		// Resources must be established per-connection.
-+	}
-+
- 	class BundleFetchConnection extends BaseFetchConnection {
- 		FileInputStream in;
- 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitAnon.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitAnon.java
-index 8a78099..a80c335 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitAnon.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitAnon.java
-@@ -77,6 +77,11 @@ class TransportGitAnon extends PackTransport {
- 		return new TcpPushConnection();
- 	}
- 
-+	@Override
-+	public void close() {
-+		// Resources must be established per-connection.
-+	}
-+
- 	Socket openConnection() throws TransportException {
- 		final int port = uri.getPort() > 0 ? uri.getPort() : GIT_PORT;
- 		try {
+ }
 diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
-index 1bbdf04..b169f4c 100644
+index 9a6c719..3f2cd37 100644
 --- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
 +++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
-@@ -78,7 +78,10 @@ class TransportGitSsh extends PackTransport {
- 		return false;
- 	}
+@@ -44,6 +44,7 @@ import java.io.OutputStream;
+ import java.net.ConnectException;
+ import java.net.UnknownHostException;
  
--	final SshSessionFactory sch;
-+	private final SshSessionFactory sch;
-+
-+	private Session sock;
-+
- 	OutputStream errStream;
++import org.spearce.jgit.errors.NoRemoteRepositoryException;
+ import org.spearce.jgit.errors.TransportException;
+ import org.spearce.jgit.lib.Repository;
  
- 	TransportGitSsh(final Repository local, final URIish uri) {
-@@ -96,6 +99,17 @@ class TransportGitSsh extends PackTransport {
- 		return new SshPushConnection();
- 	}
- 
-+	@Override
-+	public void close() {
-+		if (sock != null) {
-+			try {
-+				sch.releaseSession(sock);
-+			} finally {
-+				sock = null;
-+			}
-+		}
-+	}
-+
- 	private static void sqMinimal(final StringBuilder cmd, final String val) {
- 		if (val.matches("^[a-zA-Z0-9._/-]*$")) {
- 			// If the string matches only generally safe characters
-@@ -152,17 +166,18 @@ class TransportGitSsh extends PackTransport {
- 		cmd.append('\'');
- 	}
- 
--	Session openSession() throws TransportException {
-+	private void initSession() throws TransportException {
-+		if (sock != null)
-+			return;
-+
- 		final String user = uri.getUser();
- 		final String pass = uri.getPass();
- 		final String host = uri.getHost();
- 		final int port = uri.getPort();
- 		try {
--			final Session session;
--			session = sch.getSession(user, pass, host, port);
--			if (!session.isConnected())
--				session.connect();
--			return session;
-+			sock = sch.getSession(user, pass, host, port);
-+			if (!sock.isConnected())
-+				sock.connect();
- 		} catch (JSchException je) {
- 			final Throwable c = je.getCause();
- 			if (c instanceof UnknownHostException)
-@@ -173,8 +188,9 @@ class TransportGitSsh extends PackTransport {
+@@ -217,6 +218,25 @@ class TransportGitSsh extends PackTransport {
  		}
  	}
  
--	ChannelExec exec(final Session sock, final String exe)
--			throws TransportException {
-+	ChannelExec exec(final String exe) throws TransportException {
-+		initSession();
++	NoRemoteRepositoryException cleanNotFound(NoRemoteRepositoryException nf) {
++		String why = errStream.toString();
++		if (why == null || why.length() == 0)
++			return nf;
 +
- 		try {
- 			final ChannelExec channel = (ChannelExec) sock.openChannel("exec");
- 			String path = uri.getPath();
-@@ -202,15 +218,12 @@ class TransportGitSsh extends PackTransport {
- 	}
- 
++		String path = uri.getPath();
++		if (uri.getScheme() != null && uri.getPath().startsWith("/~"))
++			path = uri.getPath().substring(1);
++
++		final StringBuilder pfx = new StringBuilder();
++		pfx.append("fatal: ");
++		sqAlways(pfx, path);
++		pfx.append(": ");
++		if (why.startsWith(pfx.toString()))
++			why = why.substring(pfx.length());
++
++		return new NoRemoteRepositoryException(uri, why);
++	}
++
  	class SshFetchConnection extends BasePackFetchConnection {
--		private Session session;
--
  		private ChannelExec channel;
  
- 		SshFetchConnection() throws TransportException {
- 			super(TransportGitSsh.this);
- 			try {
--				session = openSession();
--				channel = exec(session, getOptionUploadPack());
-+				channel = exec(getOptionUploadPack());
- 
- 				if (channel.isConnected())
- 					init(channel.getInputStream(), channel.getOutputStream());
-@@ -240,27 +253,16 @@ class TransportGitSsh extends PackTransport {
- 					channel = null;
- 				}
+@@ -238,7 +258,12 @@ class TransportGitSsh extends PackTransport {
+ 				throw new TransportException(uri,
+ 						"remote hung up unexpectedly", err);
  			}
--
--			if (session != null) {
--				try {
--					sch.releaseSession(session);
--				} finally {
--					session = null;
--				}
--			}
- 		}
- 	}
- 
- 	class SshPushConnection extends BasePackPushConnection {
--		private Session session;
--
- 		private ChannelExec channel;
- 
- 		SshPushConnection() throws TransportException {
- 			super(TransportGitSsh.this);
- 			try {
--				session = openSession();
--				channel = exec(session, getOptionReceivePack());
-+				channel = exec(getOptionReceivePack());
- 				init(channel.getInputStream(), channel.getOutputStream());
- 			} catch (TransportException err) {
- 				close();
-@@ -285,14 +287,6 @@ class TransportGitSsh extends PackTransport {
- 					channel = null;
- 				}
- 			}
--
--			if (session != null) {
--				try {
--					sch.releaseSession(session);
--				} finally {
--					session = null;
--				}
--			}
- 		}
- 	}
- }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportHttp.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportHttp.java
-index 9351a12..1357e58 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportHttp.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportHttp.java
-@@ -106,6 +106,11 @@ class TransportHttp extends WalkTransport {
- 		return r;
- 	}
- 
-+	@Override
-+	public void close() {
-+		// No explicit connections are maintained.
-+	}
+-			readAdvertisedRefs();
 +
- 	class HttpObjectDB extends WalkRemoteObjectDatabase {
- 		private final URL objectsUrl;
- 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportLocal.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportLocal.java
-index 155d59f..d74f1b3 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportLocal.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportLocal.java
-@@ -93,6 +93,11 @@ class TransportLocal extends PackTransport {
- 		return new LocalPushConnection();
- 	}
- 
-+	@Override
-+	public void close() {
-+		// Resources must be established per-connection.
-+	}
-+
- 	protected Process startProcessWithErrStream(final String cmd)
- 			throws TransportException {
- 		try {
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportSftp.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportSftp.java
-index c2cbe6a..6a5df07 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportSftp.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportSftp.java
-@@ -91,7 +91,9 @@ class TransportSftp extends WalkTransport {
- 		return uri.isRemote() && "sftp".equals(uri.getScheme());
- 	}
- 
--	final SshSessionFactory sch;
-+	private final SshSessionFactory sch;
-+
-+	private Session sock;
- 
- 	TransportSftp(final Repository local, final URIish uri) {
- 		super(local, uri);
-@@ -114,17 +116,29 @@ class TransportSftp extends WalkTransport {
- 		return r;
- 	}
- 
--	Session openSession() throws TransportException {
-+	@Override
-+	public void close() {
-+		if (sock != null) {
 +			try {
-+				sch.releaseSession(sock);
-+			} finally {
-+				sock = null;
++				readAdvertisedRefs();
++			} catch (NoRemoteRepositoryException notFound) {
++				throw cleanNotFound(notFound);
 +			}
-+		}
-+	}
-+
-+	private void initSession() throws TransportException {
-+		if (sock != null)
-+			return;
-+
- 		final String user = uri.getUser();
- 		final String pass = uri.getPass();
- 		final String host = uri.getHost();
- 		final int port = uri.getPort();
- 		try {
--			final Session session;
--			session = sch.getSession(user, pass, host, port);
--			if (!session.isConnected())
--				session.connect();
--			return session;
-+			sock = sch.getSession(user, pass, host, port);
-+			if (!sock.isConnected())
-+				sock.connect();
- 		} catch (JSchException je) {
- 			final Throwable c = je.getCause();
- 			if (c instanceof UnknownHostException)
-@@ -135,7 +149,9 @@ class TransportSftp extends WalkTransport {
  		}
- 	}
  
--	ChannelSftp open(final Session sock) throws TransportException {
-+	ChannelSftp newSftp() throws TransportException {
-+		initSession();
-+
- 		try {
- 			final Channel channel = sock.openChannel("sftp");
- 			channel.connect();
-@@ -148,10 +164,6 @@ class TransportSftp extends WalkTransport {
- 	class SftpObjectDB extends WalkRemoteObjectDatabase {
- 		private final String objectsPath;
- 
--		private final boolean sessionOwner;
--
--		private Session session;
--
- 		private ChannelSftp ftp;
- 
- 		SftpObjectDB(String path) throws TransportException {
-@@ -160,9 +172,7 @@ class TransportSftp extends WalkTransport {
- 			if (path.startsWith("~/"))
- 				path = path.substring(2);
- 			try {
--				session = openSession();
--				sessionOwner = true;
--				ftp = TransportSftp.this.open(session);
-+				ftp = newSftp();
- 				ftp.cd(path);
- 				ftp.cd("objects");
- 				objectsPath = ftp.pwd();
-@@ -177,10 +187,8 @@ class TransportSftp extends WalkTransport {
- 
- 		SftpObjectDB(final SftpObjectDB parent, final String p)
- 				throws TransportException {
--			sessionOwner = false;
--			session = parent.session;
- 			try {
--				ftp = TransportSftp.this.open(session);
-+				ftp = newSftp();
- 				ftp.cd(parent.objectsPath);
- 				ftp.cd(p);
- 				objectsPath = ftp.pwd();
-@@ -452,14 +460,6 @@ class TransportSftp extends WalkTransport {
- 					ftp = null;
- 				}
+ 		@Override
+@@ -277,7 +302,12 @@ class TransportGitSsh extends PackTransport {
+ 				throw new TransportException(uri,
+ 						"remote hung up unexpectedly", err);
  			}
--
--			if (sessionOwner && session != null) {
--				try {
--					sch.releaseSession(session);
--				} finally {
--					session = null;
--				}
--			}
+-			readAdvertisedRefs();
++
++			try {
++				readAdvertisedRefs();
++			} catch (NoRemoteRepositoryException notFound) {
++				throw cleanNotFound(notFound);
++			}
  		}
- 	}
- }
+ 
+ 		@Override
 -- 
 1.5.6.2.393.g45096
