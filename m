@@ -1,63 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bisect: test merge base if good rev is not an ancestor
- of bad rev
-Date: Thu, 10 Jul 2008 13:13:03 -0700
-Message-ID: <7v4p6xpkfk.fsf@gitster.siamese.dyndns.org>
-References: <20080710054152.b051989c.chriscool@tuxfamily.org>
- <alpine.DEB.1.00.0807101201210.3135@eeepc-johanness>
- <200807102126.37567.chriscool@tuxfamily.org>
- <7vd4llpkxq.fsf@gitster.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: THREADED_DELTA_SEARCH
+Date: Thu, 10 Jul 2008 22:13:52 +0200
+Message-ID: <20080710201352.GA3717@blimp.local>
+References: <20080710075327.GD24819@artemis.madism.org> <7vy749pxbe.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0807101212000.12484@xanadu.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Jul 10 22:14:59 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git ML <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Jul 10 22:15:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KH2XV-0007R8-8g
-	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 22:14:53 +0200
+	id 1KH2Y1-0007eQ-NE
+	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 22:15:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753649AbYGJUNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 16:13:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753751AbYGJUNO
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 16:13:14 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41428 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753495AbYGJUNO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 16:13:14 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id BB7E62610B;
-	Thu, 10 Jul 2008 16:13:12 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8698E26107; Thu, 10 Jul 2008 16:13:05 -0400 (EDT)
-In-Reply-To: <7vd4llpkxq.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 10 Jul 2008 13:02:09 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9F7CEB9A-4EBC-11DD-8C70-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752999AbYGJUOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 16:14:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753210AbYGJUOP
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 16:14:15 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.181]:34719 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752999AbYGJUOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 16:14:15 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg2r44jO9V
+Received: from tigra.home (Fa95a.f.strato-dslnet.de [195.4.169.90])
+	by post.webmailer.de (fruni mo57) (RZmta 16.47)
+	with ESMTP id w03723k6AJDWyL ; Thu, 10 Jul 2008 22:14:08 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from blimp (unknown [192.168.0.8])
+	by tigra.home (Postfix) with ESMTP id C78B3277BD;
+	Thu, 10 Jul 2008 22:14:07 +0200 (CEST)
+Received: by blimp (Postfix, from userid 1000)
+	id D93A436D18; Thu, 10 Jul 2008 22:13:52 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0807101212000.12484@xanadu.home>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88006>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Nicolas Pitre, Thu, Jul 10, 2008 18:21:09 +0200:
+> On Thu, 10 Jul 2008, Junio C Hamano wrote:
+> >  (2) exploding memory use, suspected to be due to malloc pool
+> >      fragmentation under multithreading.
+...
+> > but I do not
+> > recall the latter issue has been addressed.
+> 
+> Well, for "standard" repositories such as the Linux kernel, things 
+> always worked just fine.  And commit eac12e2d is apparently helping a 
+> lot with the remaining odd cases.  And if someone has problems due to 
+> this then a simple 'git config --global pack.threads 1' would restore 
+> the non threaded behavior.
 
-> I have not looked at your implementation, but I do not think:
+Have you ever seen what happens to Windows XP on memory shortage?
+It freezes *hard*. Not a good behaviour for _default_ settings.
 
-Sheesh.  "I *do* think"...
-
->  - The current one is not "fully reliable"; the user needs to know what
->    he is doing.  You might call it "prone to user errors".
->
->  - "Test this merge-base before going forward, please" will add typically
->    only one round of check (if you have more merge bases between good and
->    bad, you need to test all of them are good to be sure), so it is not
->    "slower nor more complex".
-
-and I think it is a reasonable thing to do.
+And if someone has no problems with memory, then a simple "git config
+pack.threads 100" would restore the threaded behaviour for a
+repository which supposedly will never grow up.
