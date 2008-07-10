@@ -1,80 +1,99 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] revisions: refactor handle_revision_opt into  parse_revision_opt.
-Date: Thu, 10 Jul 2008 09:40:12 +0200
-Message-ID: <20080710074012.GC24819@artemis.madism.org>
-References: <1215639514-1612-1-git-send-email-madcoder@debian.org> <1215639514-1612-2-git-send-email-madcoder@debian.org> <20080710071418.GD3195@sigill.intra.peff.net> <20080710073450.GA24819@artemis.madism.org>
+From: Jan Wielemaker <J.Wielemaker@uva.nl>
+Subject: Re: Bug: /usr/local/bin/git-daemon starts /usr/sbin/git-upload-pack?
+Date: Thu, 10 Jul 2008 09:38:52 +0200
+Message-ID: <200807100938.53189.J.Wielemaker@uva.nl>
+References: <200807092220.10655.J.Wielemaker@uva.nl> <7vlk0a7obl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="qtZFehHsKgwS5rPz";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 10 09:41:32 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 10 09:42:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGqmB-0004Mw-QJ
-	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 09:41:16 +0200
+	id 1KGqnE-0004vl-T7
+	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 09:42:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754006AbYGJHkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 03:40:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753947AbYGJHkP
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 03:40:15 -0400
-Received: from pan.madism.org ([88.191.52.104]:60130 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753845AbYGJHkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 03:40:14 -0400
-Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id B90C51BA;
-	Thu, 10 Jul 2008 09:40:13 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id D15443211; Thu, 10 Jul 2008 09:40:12 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
+	id S1751861AbYGJHlX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 03:41:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752232AbYGJHlX
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 03:41:23 -0400
+Received: from smtp-vbr13.xs4all.nl ([194.109.24.33]:4405 "EHLO
+	smtp-vbr13.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751049AbYGJHlW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 03:41:22 -0400
+Received: from ct.xs4all.nl (ct.xs4all.nl [82.92.39.12])
+	by smtp-vbr13.xs4all.nl (8.13.8/8.13.8) with ESMTP id m6A7crgj039301;
+	Thu, 10 Jul 2008 09:38:54 +0200 (CEST)
+	(envelope-from J.Wielemaker@uva.nl)
+User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
+In-Reply-To: <7vlk0a7obl.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <20080710073450.GA24819@artemis.madism.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87955>
 
+Hi Junio,
 
---qtZFehHsKgwS5rPz
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wednesday 09 July 2008 23:14:06 Junio C Hamano wrote:
+> Jan Wielemaker <J.Wielemaker@uva.nl> writes:
+> > After upgrade to SuSE 11.0 I was forced to update GIT (changed libcurl).
+> > I did (with some trickery) a pull of the latest git and built it using
+> > make prefix=/usr/local ..., to find out that /usr/local/bin/git-daemon
+> > starts /usr/sbin/git-upload-pack.
+> >
+> > After creating a symlink to /usr/local/bin/git-upload-pack all works fine
+> > again, but I guess this is a mistake?
+>
+> I think this is a distro issue.
+>
+> Pre-1.6.0 git installs git-everything in $(bindir) and knows things are
+> there.  Current 'master' we are preparing for 1.6.0 instead installs
+> git-mostofthem in $(prefix)/libexec/git-core and git-someofthem in
+> $(bindir); our executables know which binaries are installed in $(bindir)
+> and which ones are installed in $(prefix)/libexec/git-core.
+>
+> The point is we never install $anywhere/sbin unless the person who is
+> building explicitly does so (either by futzing the Makefile or giving
+> bindir=$somewhere from the command line of "make").  The reason your
+> /usr/local/bin/git-daemon (we do not know who compiled it and how) spawns
+> something in /usr/sbin is not our doing.  Find out who configured it and
+> why, and more importantly, what _other_ changes are made in the build and
+> installation procedure to support that change in location.
 
-On Thu, Jul 10, 2008 at 07:34:50AM +0000, Pierre Habouzit wrote:
-> and have a full parse-opt thing from top to bottom. the "--reverse" hack
-> could be done really differently, because we really know what
-> "--children" does and we could directly do what the revision option
-> parser does.
+If you read carefully you see some "I ..." :-)  Summarising to avoid all
+confusion:
 
-  I mean in a clean way, given what --children does, it would probably
-implemented by a callback in revision.c, so it's easy for git-blame to
-call it too.
+	* I had git installed in /usr/local/bin, this was git from git,
+	close to 1.5.6.  The machine was running SuSE 10.2.
+	* I installed SuSE 11.0, whiping /, but git remained as 
+	/usr/local is on a seperate partition.
+	* Git refused to run (dependency on libcurl.so.3; 11.0 ships with
+	libcurl.so.4).
+	* I copied libcurl.so.3 from backup into /usr/lib64, which at least
+	made git run again.
+	* Then I did 
 
+		% git pull
+		% git clean -x -f
+		% make prefix=/usr/local all doc info 
+		# make prefix=/usr/local install install-doc install-info
+		
+	* All went smooth, but clients to git:// complained that the other site
+	hung up unexpectedly.
+	* Ran git-daemon --verbose --export-all --user=git --port=4000 /some/path
+	* Ran strace -f -p <pid>
+	* Ran git clone git://localhost:4000/some/path to find it was trying to
+	start /usr/sbin/git-upload-pack.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+I understand bit changes are underway, so it might not be worthwhile to try 
+and
+get to the bottom of this.
 
---qtZFehHsKgwS5rPz
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkh1vNwACgkQvGr7W6HudhzydQCfXoiuShX+hPTon628Uy+psyK1
-sI0AoI7fBiWPnAL6FHbS7hIGT66YkPUr
-=+D7Y
------END PGP SIGNATURE-----
-
---qtZFehHsKgwS5rPz--
+	Cheers --- Jan
