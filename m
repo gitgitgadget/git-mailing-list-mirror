@@ -1,71 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix backwards-incompatible handling of
- core.sharedRepository
-Date: Thu, 10 Jul 2008 16:39:33 -0700
-Message-ID: <7vr6a1mhqi.fsf@gitster.siamese.dyndns.org>
-References: <20080710231853.21448.18643.stgit@rover.dkm.cz>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] bisect: test merge base if good rev is not an ancestor of bad rev
+Date: Fri, 11 Jul 2008 01:45:33 +0200
+Message-ID: <200807110145.33820.chriscool@tuxfamily.org>
+References: <20080710054152.b051989c.chriscool@tuxfamily.org> <alpine.DEB.1.00.0807110035180.3279@eeepc-johanness> <7v7ibtnx09.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Heikki Orsila <heikki.orsila@iki.fi>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Jul 11 01:40:42 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 01:42:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KH5kf-0001A7-NY
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 01:40:42 +0200
+	id 1KH5md-0001dg-Oi
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 01:42:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754440AbYGJXjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 19:39:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754566AbYGJXjm
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 19:39:42 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46219 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754433AbYGJXjl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 19:39:41 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2F29825156;
-	Thu, 10 Jul 2008 19:39:40 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id CE89E25154; Thu, 10 Jul 2008 19:39:35 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 76F66C1A-4ED9-11DD-9078-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1756597AbYGJXln convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jul 2008 19:41:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755900AbYGJXln
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 19:41:43 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:50213 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753501AbYGJXlm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jul 2008 19:41:42 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 424711AB2B8;
+	Fri, 11 Jul 2008 01:41:41 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 092F31AB2B3;
+	Fri, 11 Jul 2008 01:41:40 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7v7ibtnx09.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88057>
 
-Petr Baudis <pasky@suse.cz> writes:
-
-> The 06cbe8550324e0fd2290839bf3b9a92aa53b70ab core.sharedRepository
-> handling extension broke backwards compatibility; before, shared=1 meant
-> that Git merely ensured the repository is group-writable, not that it's
-> _only_ group-writable, which is the current behaviour.
-
-Donn't our existing tests catch this, and if the answer is no because we
-don't have any, could you add some?
-
->  path.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
+Le vendredi 11 juillet 2008, Junio C Hamano a =E9crit :
+>
+> But in real life, things are more like "Today's master does not work,=
+ but
+> I am sure it used to work at 1.5.6.2".  I happen to always merge all =
+of
+> 'maint' to 'master' before pushing them out, so a good topology is
+> guaranteed, but not everybody does this (it takes careful planning wh=
+at
+> to apply to 'maint' and where to fork topics from, and maintainers ar=
+e
+> not perfect):
+>
+>               Good
+>           ?---o (maint)
+>          /
+>      ---?---?---?---?---x (master)
+>         MB              Bad
+>
+> People _will_ face such a topology.  If the users Know Better, they w=
+ill
+> test MB=3D$(merge-base master maint) first to see if it is broken, an=
+d then
+> the world will have two possibilities:
+>
+>     (1)       Good
+>           ?---o (maint)
+>          /
+>      ---o---?---?---?---x (master)
+>         Good            Bad
+>
+>     (2)       Good
+>           ?---o (maint)
+>          /
+>      ---x---?---?---?---x (master)
+>         Bad             Bad
 >
 >
-> diff --git a/path.c b/path.c
-> index 5983255..75c5915 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -269,7 +269,7 @@ int adjust_shared_perm(const char *path)
->  	mode = st.st_mode;
->  
->  	if (shared_repository) {
-> -		int tweak = shared_repository;
-> +		int tweak = (mode & 0777) | shared_repository;
->  		if (!(mode & S_IWUSR))
->  			tweak &= ~0222;
->  		mode = (mode & ~0777) | tweak;
+> If (1), you go ahead with the usual bisection.  If (2), you cannot ev=
+en
+> bisect.  Instead, you flip good and bad to find the "fix" in the side
+> branch (the answer has to be either the tip of maint or one previous =
+in
+> the picture) to forward port to, either by merging 'maint' to 'master=
+' or
+> cherry-picking.
+>
+> The idea to check merge-base first is about automating this process (=
+I
+> admit I still haven't looked at Christian's patch text yet).
 
-I think this change is good.  shared_repository has always been about
-widening the access and not about limiting.
+Well in case (2) my patch does:
+
+-------
+		cat >&2 <<EOF
+The merge base $_badmb is bad.
+This means the bug has been fixed between $_badmb and $_g.
+EOF
+		exit 3
+-------
+
+but this can be improved upon in some latter patches.
+
+Thanks,
+Christian.
