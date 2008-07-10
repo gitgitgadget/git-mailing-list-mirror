@@ -1,105 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] bisect: test merge base if good rev is not an ancestor
  of bad rev
-Date: Thu, 10 Jul 2008 16:50:15 -0700
-Message-ID: <7vmykpmh8o.fsf@gitster.siamese.dyndns.org>
-References: <20080710054152.b051989c.chriscool@tuxfamily.org>
- <alpine.DEB.1.00.0807110035180.3279@eeepc-johanness>
+Date: Fri, 11 Jul 2008 01:59:58 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807110155040.3279@eeepc-johanness>
+References: <20080710054152.b051989c.chriscool@tuxfamily.org> <200807102126.37567.chriscool@tuxfamily.org> <7vd4llpkxq.fsf@gitster.siamese.dyndns.org> <200807110036.17504.chriscool@tuxfamily.org> <alpine.DEB.1.00.0807110035180.3279@eeepc-johanness>
  <7v7ibtnx09.fsf@gitster.siamese.dyndns.org>
- <200807110145.33820.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Christian Couder <chriscool@tuxfamily.org>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Jul 11 01:51:30 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 02:01:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KH5v7-0003S2-Kd
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 01:51:30 +0200
+	id 1KH64Y-0005fz-Ap
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 02:01:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754771AbYGJXua convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jul 2008 19:50:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbYGJXua
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 19:50:30 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46943 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751442AbYGJXu3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Jul 2008 19:50:29 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0A45225210;
-	Thu, 10 Jul 2008 19:50:26 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id DDABA2520F; Thu, 10 Jul 2008 19:50:18 -0400 (EDT)
-In-Reply-To: <200807110145.33820.chriscool@tuxfamily.org> (Christian Couder's
- message of "Fri, 11 Jul 2008 01:45:33 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F7ED01FC-4EDA-11DD-834F-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1754966AbYGJX7m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 19:59:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754906AbYGJX7l
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 19:59:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53776 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754900AbYGJX7l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 19:59:41 -0400
+Received: (qmail invoked by alias); 10 Jul 2008 23:59:39 -0000
+Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
+  by mail.gmx.net (mp038) with SMTP; 11 Jul 2008 01:59:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19qvB8chpFq0JnFTW7uyvYXu7D97BryJ2W/jQdUQF
+	jcCiaCflfjXQB8
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7v7ibtnx09.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88062>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Hi,
 
-> Le vendredi 11 juillet 2008, Junio C Hamano a =C3=A9crit :
->>
->>     (2)       Good
->>           ?---o (maint)
->>          /
->>      ---x---?---?---?---x (master)
->>         Bad             Bad
->>
->>
->> If (1), you go ahead with the usual bisection.  If (2), you cannot e=
-ven
->> bisect.  Instead, you flip good and bad to find the "fix" in the sid=
-e
->> branch (the answer has to be either the tip of maint or one previous=
- in
->> the picture) to forward port to, either by merging 'maint' to 'maste=
-r' or
->> cherry-picking.
->>
->> The idea to check merge-base first is about automating this process =
-(I
->> admit I still haven't looked at Christian's patch text yet).
->
-> Well in case (2) my patch does:
->
-> -------
-> 		cat >&2 <<EOF
-> The merge base $_badmb is bad.
-> This means the bug has been fixed between $_badmb and $_g.
-> EOF
-> 		exit 3
-> -------
->
-> but this can be improved upon in some latter patches.
+On Thu, 10 Jul 2008, Junio C Hamano wrote:
 
-I think such an "improvement" is getting close to being too clever.  I
-should have worded my description on what you would do in (2) a bit mor=
-e
-carefully.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > You are opening a can of worms here, and I doubt that this is a good idea.
+> >
+> > git-bisect as-is has very precise, and _simple_ semantics, and users 
+> > should really know what they are doing (i.e. not marking something as 
+> > "good" which is on a branch containing a fix).
+> >
+> > Trying to be too clever here might just make the whole tool rather 
+> > useless.
+> 
+> Have you read the original thread yet?  I do not think this is trying to
+> be clever at all, but trying to be helpful.
+> 
+> As you explained, bisection *requires* that Good is ancestor of Bad.
 
-    If (2), you cannot even bisect.
+Thanks, I got that already.
 
-    Instead, you may decide to merge 'maint' to 'master' to get that fi=
-x.
-    In which case you do not have to worry about it; you do not do
-    anything further.
+Of course it can be that the user commits a pilot error and says "but that 
+unrelated version was good", while the fork point(s) between good and bad 
+was bad (and this might be even the intention of the user, to find _one_ 
+commit that introduced the bug).
 
-    If you cannot afford to merge 'maint' to 'master' but somehow need =
-to
-    forward port the fix by cherry-picking, you need to flip good and b=
-ad
-    to find the "fix" in the side branch (the answer has to be either t=
-he
-    tip of maint or one previous in the picture).
+Speaking of plural, what if some of the merge bases are good, some are 
+bad?
+
+Without carefully thinking it through, you might even _break_ the tool.
+
+All I was proposing is keeping the current semantics, keeping the 
+mechanism simple, and therefore reliable.
+
+Ciao,
+Dscho
