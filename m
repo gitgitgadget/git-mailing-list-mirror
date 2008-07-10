@@ -1,50 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug: /usr/local/bin/git-daemon starts
-	/usr/sbin/git-upload-pack?
-Date: Thu, 10 Jul 2008 04:59:53 -0400
-Message-ID: <20080710085952.GA5982@sigill.intra.peff.net>
-References: <200807092220.10655.J.Wielemaker@uva.nl> <200807100932.06569.brian.foster@innova-card.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: THREADED_DELTA_SEARCH
+Date: Thu, 10 Jul 2008 11:33:09 +0200
+Message-ID: <20080710093308.GF24819@artemis.madism.org>
+References: <20080710075327.GD24819@artemis.madism.org> <m3hcaydswg.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jan Wielemaker <J.Wielemaker@uva.nl>
-To: Brian Foster <brian.foster@innova-card.com>
-X-From: git-owner@vger.kernel.org Thu Jul 10 11:01:08 2008
+Content-Type: multipart/signed; boundary="cz6wLo+OExbGG7q/";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Git ML <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 10 11:34:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGs1Q-0007q7-Tm
-	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 11:01:05 +0200
+	id 1KGsXQ-0008Jz-Hz
+	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 11:34:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752020AbYGJJAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 05:00:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbYGJJAG
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 05:00:06 -0400
-Received: from peff.net ([208.65.91.99]:4770 "EHLO peff.net"
+	id S1753182AbYGJJdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 05:33:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753172AbYGJJdM
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 05:33:12 -0400
+Received: from pan.madism.org ([88.191.52.104]:51882 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751209AbYGJJAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 05:00:05 -0400
-Received: (qmail 18768 invoked by uid 111); 10 Jul 2008 09:00:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 10 Jul 2008 05:00:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Jul 2008 04:59:53 -0400
+	id S1752991AbYGJJdL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 05:33:11 -0400
+Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 2B7F58;
+	Thu, 10 Jul 2008 11:33:09 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 0E6A53ABA; Thu, 10 Jul 2008 11:33:09 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Jakub Narebski <jnareb@gmail.com>, Git ML <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <200807100932.06569.brian.foster@innova-card.com>
+In-Reply-To: <m3hcaydswg.fsf@localhost.localdomain>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87963>
 
-On Thu, Jul 10, 2008 at 09:32:06AM +0200, Brian Foster wrote:
 
->     GIT_TRACE=/tmp/LOG-git-daemon
-> 
->  gave some valuable clews.  I'm unaware of GIT_TRACE
->  being documented.  I also concur it's annoying neither
+--cz6wLo+OExbGG7q/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It's in git(1).
+On Thu, Jul 10, 2008 at 08:51:06AM +0000, Jakub Narebski wrote:
+> Pierre Habouzit <madcoder@debian.org> writes:
+>=20
+> >   I'm using it in production for quite a long time now, and I wonder if
+> > there is any specific reason why it's not default. Debian activated it
+> > by default too a couple of weeks ago, which means that it's in
+> > production on quite a large scale, and there are no issues reported
+> > either. Would a patch making it default be accepted ? It's quite handy
+> > given that SMP machines are really pervasive nowadays=E2=80=A6
+>=20
+> Doues our ./configure detects if it makes sense (i.e. if it is SMP
+> machine)?
 
--Peff
+  I don't know if it does, but it wouldn't make sense for distros.
+
+>  What is the cost of THREADED_DELTA_SEARCH for single processor
+> single core machine?
+
+  Threading has to be enabled in the configuration, and there is a
+--thread=3D0 mode that enables autodetection of the number of CPUs online.
+so there is no overhead for single CPU systems.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--cz6wLo+OExbGG7q/
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkh111QACgkQvGr7W6HudhxVpACgo3YOMPJhs1U3RiZ6v6xlniLd
+tVYAni5a4UidRtkqd8pEmpcexTDa+gzT
+=Ozyr
+-----END PGP SIGNATURE-----
+
+--cz6wLo+OExbGG7q/--
