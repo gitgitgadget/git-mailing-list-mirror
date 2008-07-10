@@ -1,186 +1,292 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH (WIP)] Git.pm: Add get_config() method and related subroutines
-Date: Thu, 10 Jul 2008 01:33:36 +0200
-Message-ID: <200807100133.38163.jnareb@gmail.com>
-References: <200807031824.55958.jnareb@gmail.com> <20080709160303.GL10151@machine.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Lea Wiemann <lewiemann@gmail.com>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Jul 10 01:30:48 2008
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: [PATCH] git-submodule - make "submodule add" more strict, and document it
+Date: Wed,  9 Jul 2008 21:05:40 -0400
+Message-ID: <1215651941-3460-1-git-send-email-mlevedahl@gmail.com>
+References: <7vwsjvlhjw.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, <sylvain.joyeux@dfki.de>, <hjemli@gmail.com>,
+	<pkufranky@gmail.com>, Mark Levedahl <mlevedahl@gmail.com>
+To: gitster@pobox.com, <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 10 03:06:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KGj7T-0005Id-7o
-	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 01:30:43 +0200
+	id 1KGkcR-0000VE-F2
+	for gcvg-git-2@gmane.org; Thu, 10 Jul 2008 03:06:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751915AbYGIX3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2008 19:29:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751889AbYGIX3o
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 19:29:44 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:31924 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751381AbYGIX3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2008 19:29:43 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1265075fgg.17
-        for <git@vger.kernel.org>; Wed, 09 Jul 2008 16:29:41 -0700 (PDT)
+	id S1752969AbYGJBFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2008 21:05:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753051AbYGJBFt
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jul 2008 21:05:49 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:60789 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752942AbYGJBFs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2008 21:05:48 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so952731yxm.1
+        for <git@vger.kernel.org>; Wed, 09 Jul 2008 18:05:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=JAxCIKH1VFN7iHcVCqjmZge4rhn0Al/ELSZ0dsbKa8Q=;
-        b=cf/cpOwHA5vmyg+6hkWieIv65J38dU287zJmfqMN2Vcwc17rJYB+TB3nAidloMsVdQ
-         FM0sIA1FCT2wiz6Cvrhu/NvRM/y5tA2UV1UkVpD3ficlAvOC/W5Fyl6b9Ed2bek2HWgM
-         gBdf6DiTfqtIf2l0sQP1BrHwCMiWoicMX0oOI=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=LqKPjkf0OSnaeMrcMKAIM927MbW1veF2B/hFl8BWgvE=;
+        b=su7fbV96Y+UMu4L92CE1JZyMvbtAtBWDFJIcoguFE6tEsdSvU91a1WV1tWKyplrsMP
+         hIajuZo3pbLJGsUXgk+/0bSl3zJH0w4rZU5e1sLbSqCPcXI/cvAqmy3KuMdaTfklLkjA
+         OST/0enEIenpjX6yo2orX2jhIkxzUB8U/F72s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=chUSE6sfxpSdVm0LI2mNIKQA5DZuINKyG05PlqgUoXdfs4zQ6ncOvw9b/ahZBladXf
-         f75+qa1IYCjG91cuYBnBk035+/8hOIsS+dXplhQVgn9ogtcuYsfz/gYichsjP2kK70yG
-         Pj8WpNZENBf4omMP5jXBZTasJsQXsQ73mV5Fo=
-Received: by 10.86.66.19 with SMTP id o19mr7781887fga.78.1215646181497;
-        Wed, 09 Jul 2008 16:29:41 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.249.234])
-        by mx.google.com with ESMTPS id l19sm9929256fgb.7.2008.07.09.16.29.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 09 Jul 2008 16:29:39 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080709160303.GL10151@machine.or.cz>
-Content-Disposition: inline
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=eWF3zxxfwVgBeK9s94hEMX8zt8zZxRhpfFg9pEBNhWtVrVWktrF5LnT/MFBuAyP5SP
+         cgMxX6qY/p7ibKM/1Kl6OcNHJvxcym5tuQCK3vXGGnWpX4YITJpY3QBLTXuewW3AjUOL
+         aKpxeqEbpNsdfghmRi4VZBx3M5CK79wIZUTzk=
+Received: by 10.151.112.4 with SMTP id p4mr13429783ybm.167.1215651946805;
+        Wed, 09 Jul 2008 18:05:46 -0700 (PDT)
+Received: from localhost.localdomain ( [71.246.235.165])
+        by mx.google.com with ESMTPS id 9sm9395670yxs.5.2008.07.09.18.05.44
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 09 Jul 2008 18:05:45 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6.2.271.g73ad8
+In-Reply-To: <7vwsjvlhjw.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/87925>
 
-On Wed, Jul 09, 2008, Petr "Pasky" Baudis wrote:
-> On Thu, Jul 03, 2008 at 06:24:53PM +0200, Jakub Narebski wrote:
-> >
-> > There are also a few things which I'd like some comments about:
-> > 
-> >  * Do config_val_to_bool and config_val_to_int should be exported
-> >    by default?
-> 
->   Yes with the current API, not with object API (see below). But if
-> exported by default, there should be definitely a git_ prefix.
+This change makes "submodule add" much more strict in the arguments it
+takes, and is intended to address confusion as recently noted on the
+git-list. With this change, the required syntax is:
 
-Object API for config is definitely good idea; some more reasons are
-given below.
+	$ git submodule add URL path
 
-> >  * Should config_val_to_bool and config_val_to_int throw error or
-> >    just return 'undef' on invalid values?  One can check if variable
-> >    is defined using "exists($config_hash{'varname'})".
-> 
->   I think that it's more reasonable to throw an error here (as long as
-> you don't throw an error on undef argument). This particular case is
-> clearly a misconfiguration by the user and you rarely need to handle
-> this more gracefully, I believe.
+Specifically, this eliminates the form
 
-If we follow git-config convention (and I guess we should), it would be
-value of appropriate type if variable value is of appropriate type,
-'undef' (no output in the case of git-config) when variable does not 
-exists, and throwing error (status and "fatal: ..." message on STDERR
-in the case of git-config) if variable is not of given type.
+	$ git submodule add URL
 
-> >  * How config_val_to_bool etc. should be named? Perhaps just
-> >    config_to_bool, like in gitweb?
-> 
->   What about Git::Config::bool()? ;-) (See below.)
-> 
-> >  * Is "return wantarray ? %config : \%config;" DWIM-mery good style?
-> >    I am _not_ a Perl hacker...
-> 
-> I maybe wouldn't be as liberal myself, but I can't tell if it's a bad
-> style either.
+which was confused by more than one person as
 
-This won't matter, I think, in the case of object API (returning 
-Git::Config instead of hash or hashref).
+	$ git submodule add path
 
-> >  * Should ->get_config() use ->command_output_pipe, or simpler
-> >    ->command() method, reading whole config into array?
-> 
-> You have the code written already, I'd stick with it.
+With this patch, the URL locating the submodule's origin repository can be
+either an absolute URL, or (if it begins with ./ or ../) can express the
+submodule's repository location relative to the superproject's origin.
 
-This is simple rewrite of code which is in gitweb, changing open '-|'
-into ->command_output_pipe, but we could just read the whole config
-into array using ->command(), which would be a bit simpler.
+This patch also eliminates a third form of URL, which was relative to the
+superproject's top-level directory (not its repository).  Any URL that was
+neither absolute nor matched ./*|../* was assumed to point to a
+subdirectory of the superproject as the location of the submodule's origin
+repository.  This URL form was confusing and does not seem to correspond
+to an important use-case.  Specifically, no-one has identified the need to
+clone from a repository already in the superproject's tree, but if this is
+needed it is easily done using an absolute URL: $(pwd)/relative-path.  So,
+no functionality is lost with this patch. (t6008-rev-list-submodule.sh did
+rely upon this relative URL, fixed by using $(pwd).)
 
-> >  * What should ->get_config() have as an optional parameter:
-> >    PREFIX (/^$prefix/o), or simply SECTION (/^(?:$section)\./o)?
-> 
->   Do we even _need_ a parameter like that? I don't understand what is
-> this interface trying to address.
+Following this change, there are exactly four variants of
+submodule-add, as both arguments have two flavors:
 
-For example if one wants to access _all_ variables in gitweb.* section
-(or in gitcvs.* section), and _only_ config variables in given section.
+URL can be absolute, or can begin with ./|../ and thus names the
+submodule's origin relative to the superproject's origin.
 
-> >  * Should we perltie hash?
-> 
->   I agree with Lea that we should actually bless it. :-) Returning a
-> Git::Config object provides a more flexible interface, and you can
-> also do $repo->get_config()->bool('key') which is quite more elegant
-> way than the val_ functions, I think.
+Note: With this patch, "submodule add" discerns an absolute URL as
+matching /*|*:*: e.g., URL begins with /, or it contains a :.  This works
+for all valid URLs, an absolute path in POSIX, as well as an absolute path
+on Windows).
 
-Yes it is.
+path can either already exist as a valid git repo, or will be cloned from
+the given URL.  The first form here eases creation of a new submodule in
+an existing superproject as the submodule can be added and tested in-tree
+before pushing to the public repository.  However, the more usual form is
+the second, where the repo is cloned from the given URL.
 
-Also it does allow to use any capitalization of the section name and 
-variable name (which are case insensitive), so you can write either
+This specifically addresses the issue of
 
-  $repo->get_config()->get('gitcvs.dbtablenameprefix');
+	$ git submodule add a/b/c
 
-but also
+attempting to clone from a repository at "a/b/c" to create a new module
+in "c". This also simplifies description of "relative URL" as there is now
+exactly *one* form: a URL relative to the parent's origin repo.
 
-  $repo->get_config()->get('gitcvs.dbTableNamePrefix');
+Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+---
+This should address Junio's issues. In addition, I found one test
+affected by this change and fixed that (the test actually used
+the relative path URL to clone, replaced with $(pwd)).
 
-or even better, as below:
+ Documentation/git-submodule.txt |   36 +++++++++++++++++++------
+ git-submodule.sh                |   55 ++++++++++++++------------------------
+ t/t6008-rev-list-submodule.sh   |    2 +-
+ 3 files changed, 48 insertions(+), 45 deletions(-)
 
-  $config = $repo->get_config();
-  $config->get('gitcvs.dbTableNamePrefix');
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 105fc2d..1fe13a6 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -9,7 +9,7 @@ git-submodule - Initialize, update or inspect submodules
+ SYNOPSIS
+ --------
+ [verse]
+-'git submodule' [--quiet] add [-b branch] [--] <repository> [<path>]
++'git submodule' [--quiet] add [-b branch] [--] <repository> <path>
+ 'git submodule' [--quiet] status [--cached] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+ 'git submodule' [--quiet] update [--init] [--] [<path>...]
+@@ -20,14 +20,31 @@ COMMANDS
+ --------
+ add::
+ 	Add the given repository as a submodule at the given path
+-	to the changeset to be committed next.  If path is a valid
+-	repository within the project, it is added as is. Otherwise,
+-	repository is cloned at the specified path. path is added to the
+-	changeset and registered in .gitmodules.   If no path is
+-	specified, the path is deduced from the repository specification.
+-	If the repository url begins with ./ or ../, it is stored as
+-	given but resolved as a relative path from the main project's
+-	url when cloning.
++	to the changeset to be committed next to the current
++	project: the current project is termed termed the "superproject".
++
++	This requires two arguments: <repository> and <path>.
++
++	<repository> is the URL of the new submodule's origin repository.
++	This may be either an absolute URL, or (if it begins with ./
++	or ../), the location relative to the superproject's origin
++	repository.
++
++	<path> is the relative location for the cloned submodule to
++	exist in the superproject. If <path> does not exist, then the
++	submodule is created by cloning from the named URL. If <path> does
++	exist and is already a valid git repository, then this is added
++	to the changeset without cloning. This second form is provided
++	to ease creating a new submodule from scratch, and presumes
++	the user will later push the submodule to the given URL.
++
++	In either case, the given URL is recorded into .gitmodules for
++	use by subsequent users cloning the superproject. If the URL is
++	given relative to the superproject's repository, the presumption
++	is the superproject and submodule repositories will be kept
++	together in the same relative location, and only the
++	superproject's URL need be provided: git-submodule will correctly
++	locate the submodule using the relative URL in .gitmodules.
 
-BTW. what should non-typecasting should be named? $c->get(<VAR>), 
-$c->value(<VAR>), $c->param(<VAR>), or something yet different?
+ status::
+ 	Show the status of the submodules. This will print the SHA-1 of the
+@@ -85,6 +102,7 @@ OPTIONS
+ <path>::
+ 	Path to submodule(s). When specified this will restrict the command
+ 	to only operate on the submodules found at the specified paths.
++	(This argument is required with add).
 
-> Also, having accessors for special types lets you return undef when
-> the type really isn't defined, instead of e.g. true with current
-> config_val_bool, which is clearly bogus and requires complicated code
-> on the user side. 
- 
-I don't follow you.  Didn't we agree on casting an error when variable
-is not of given type?
+ FILES
+ -----
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 099a7d7..c2ce2fb 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -5,7 +5,7 @@
+ # Copyright (c) 2007 Lars Hjemli
 
-By the way, bool values are processed a bit strangely.  Value is true
-if it there is no value[*1*], if it is 'true' or 'yes' case insensitive, 
-or of it is integer != 0.  Value is false if it has empty value[*2*], 
-if it is 'false' or 'no' case insensitive, and if it is integer of 
-value '0'.  All other values are invalid (and should cause throwing an 
-error).
+ USAGE="[--quiet] [--cached] \
+-[add <repo> [-b branch]|status|init|update [-i|--init]|summary [-n|--summary-limit <n>] [<commit>]] \
++[add <repo> [-b branch] <path>]|[status|init|update [-i|--init]|summary [-n|--summary-limit <n>] [<commit>]] \
+ [--] [<path>...]"
+ OPTIONS_SPEC=
+ . git-sh-setup
+@@ -27,18 +27,6 @@ say()
+ 	fi
+ }
 
-Both current config_val_to_bool() and config_val_to_int() implementation 
-are too forbidding.
+-# NEEDSWORK: identical function exists in get_repo_base in clone.sh
+-get_repo_base() {
+-	(
+-		cd "`/bin/pwd`" &&
+-		cd "$1" || cd "$1.git" &&
+-		{
+-			cd .git
+-			pwd
+-		}
+-	) 2>/dev/null
+-}
+-
+ # Resolve relative url by appending to parent's url
+ resolve_relative_url ()
+ {
+@@ -115,7 +103,7 @@ module_clone()
+ #
+ # Add a new submodule to the working tree, .gitmodules and the index
+ #
+-# $@ = repo [path]
++# $@ = repo path
+ #
+ # optional branch is stored in global branch variable
+ #
+@@ -150,16 +138,27 @@ cmd_add()
+ 	repo=$1
+ 	path=$2
 
-> > As this is an RFC I have not checked if manpage (generated from
-> > embedded POD documentation) renders correctly.
-> 
->   By the way, unless you know already, you can do that trivially by
-> issuing:
-> 
-> 	perldoc perl/Git.pm
+-	if test -z "$repo"; then
++	if test -z "$repo" -o -z "$path"; then
+ 		usage
+ 	fi
 
-Thanks, I didn't knew this.
+-	# Guess path from repo if not specified or strip trailing slashes
+-	if test -z "$path"; then
+-		path=$(echo "$repo" | sed -e 's|/*$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
+-	else
+-		path=$(echo "$path" | sed -e 's|/*$||')
+-	fi
++	# assure repo is absolute or relative to parent
++	case "$repo" in
++	./*|../*)
++		# dereference source url relative to parent's url
++		realrepo=$(resolve_relative_url "$repo") || exit
++		;;
++	*:*|/*)
++		# absolute url
++		realrepo=$repo
++		;;
++	*)
++		die "repo URL: '$repo' must be absolute or begin with ./|../"
++	;;
++	esac
++
++	# strip trailing slashes from path
++	path=$(echo "$path" | sed -e 's|/*$||')
 
-> -- 
-> 				Petr "Pasky" Baudis
-> The last good thing written in C++ was the Pachelbel Canon. 
->                                                  -- J. Olson 
+ 	git ls-files --error-unmatch "$path" > /dev/null 2>&1 &&
+ 	die "'$path' already exists in the index"
+@@ -174,20 +173,6 @@ cmd_add()
+ 			die "'$path' already exists and is not a valid git repo"
+ 		fi
+ 	else
+-		case "$repo" in
+-		./*|../*)
+-			# dereference source url relative to parent's url
+-			realrepo=$(resolve_relative_url "$repo") || exit
+-			;;
+-		*)
+-			# Turn the source into an absolute path if
+-			# it is local
+-			if base=$(get_repo_base "$repo"); then
+-				repo="$base"
+-			fi
+-			realrepo=$repo
+-			;;
+-		esac
 
-Eh? Isn't it written C# rather?
+ 		module_clone "$path" "$realrepo" || exit
+ 		(unset GIT_DIR; cd "$path" && git checkout -q ${branch:+-b "$branch" "origin/$branch"}) ||
+diff --git a/t/t6008-rev-list-submodule.sh b/t/t6008-rev-list-submodule.sh
+index 88e96fb..c4af9ca 100755
+--- a/t/t6008-rev-list-submodule.sh
++++ b/t/t6008-rev-list-submodule.sh
+@@ -23,7 +23,7 @@ test_expect_success 'setup' '
 
--- 
-Jakub Narebski
-Poland
+ 	: > super-file &&
+ 	git add super-file &&
+-	git submodule add . sub &&
++	git submodule add "$(pwd)" sub &&
+ 	git symbolic-ref HEAD refs/heads/super &&
+ 	test_tick &&
+ 	git commit -m super-initial &&
+--
+1.5.6.2.271.g73ad8
