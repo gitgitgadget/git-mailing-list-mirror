@@ -1,108 +1,169 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] bisect: test merge base if good rev is not an ancestor of bad rev
-Date: Fri, 11 Jul 2008 01:45:33 +0200
-Message-ID: <200807110145.33820.chriscool@tuxfamily.org>
-References: <20080710054152.b051989c.chriscool@tuxfamily.org> <alpine.DEB.1.00.0807110035180.3279@eeepc-johanness> <7v7ibtnx09.fsf@gitster.siamese.dyndns.org>
+From: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>
+Subject: [PATCH] Add some useful functions for strbuf manipulation.
+Date: Fri, 11 Jul 2008 01:41:52 +0200
+Organization: Chalmers
+Message-ID: <48769E40.8030303@etek.chalmers.se>
+References: <4876820D.4070806@etek.chalmers.se> <7vod55o0tx.fsf@gitster.siamese.dyndns.org> <48768F30.8070409@etek.chalmers.se> <7v3amhnwy9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc: =?UTF-8?B?THVrYXMgU2FuZHN0csO2bQ==?= <lukass@etek.chalmers.se>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 01:42:46 2008
+X-From: git-owner@vger.kernel.org Fri Jul 11 01:44:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KH5md-0001dg-Oi
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 01:42:44 +0200
+	id 1KH5oN-00020M-I8
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 01:44:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756597AbYGJXln convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jul 2008 19:41:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755900AbYGJXln
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 19:41:43 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:50213 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753501AbYGJXlm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Jul 2008 19:41:42 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 424711AB2B8;
-	Fri, 11 Jul 2008 01:41:41 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 092F31AB2B3;
-	Fri, 11 Jul 2008 01:41:40 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7v7ibtnx09.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1756283AbYGJXl4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jul 2008 19:41:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755900AbYGJXl4
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 19:41:56 -0400
+Received: from atum.ita.chalmers.se ([129.16.4.148]:54878 "EHLO
+	atum.ita.chalmers.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756254AbYGJXlz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 19:41:55 -0400
+Received: from [192.168.0.82] (153.29.227.87.static.kba.siw.siwnet.net [87.227.29.153])
+	(Authenticated sender: lukass)
+	by atum.ita.chalmers.se (Postfix) with ESMTP id 73FFC8749;
+	Fri, 11 Jul 2008 01:41:53 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.14) Gecko/20080504 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <7v3amhnwy9.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88058>
 
-Le vendredi 11 juillet 2008, Junio C Hamano a =E9crit :
->
-> But in real life, things are more like "Today's master does not work,=
- but
-> I am sure it used to work at 1.5.6.2".  I happen to always merge all =
-of
-> 'maint' to 'master' before pushing them out, so a good topology is
-> guaranteed, but not everybody does this (it takes careful planning wh=
-at
-> to apply to 'maint' and where to fork topics from, and maintainers ar=
-e
-> not perfect):
->
->               Good
->           ?---o (maint)
->          /
->      ---?---?---?---?---x (master)
->         MB              Bad
->
-> People _will_ face such a topology.  If the users Know Better, they w=
-ill
-> test MB=3D$(merge-base master maint) first to see if it is broken, an=
-d then
-> the world will have two possibilities:
->
->     (1)       Good
->           ?---o (maint)
->          /
->      ---o---?---?---?---x (master)
->         Good            Bad
->
->     (2)       Good
->           ?---o (maint)
->          /
->      ---x---?---?---?---x (master)
->         Bad             Bad
->
->
-> If (1), you go ahead with the usual bisection.  If (2), you cannot ev=
-en
-> bisect.  Instead, you flip good and bad to find the "fix" in the side
-> branch (the answer has to be either the tip of maint or one previous =
-in
-> the picture) to forward port to, either by merging 'maint' to 'master=
-' or
-> cherry-picking.
->
-> The idea to check merge-base first is about automating this process (=
-I
-> admit I still haven't looked at Christian's patch text yet).
+Signed-off-by: Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
+---
 
-Well in case (2) my patch does:
+Junio C Hamano wrote:
+> Heh, after getting burned by that NUL thingy, I was waiting for someb=
+ody
+> to step up.  Thanks.
 
--------
-		cat >&2 <<EOF
-The merge base $_badmb is bad.
-This means the bug has been fixed between $_badmb and $_g.
-EOF
-		exit 3
--------
+Here we go then. Two freshly baked patches.
 
-but this can be improved upon in some latter patches.
+Note that this is a pretty straight buffers -> strbuf's conversion,
+but I think it will be a good start for further hardening of mailinfo.
 
-Thanks,
-Christian.
+
+ strbuf.c |   70 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ strbuf.h |    6 +++++
+ 2 files changed, 76 insertions(+), 0 deletions(-)
+
+diff --git a/strbuf.c b/strbuf.c
+index 4aed752..28d6776 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -60,6 +60,18 @@ void strbuf_grow(struct strbuf *sb, size_t extra)
+ 	ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
+ }
+=20
++void strbuf_trim(struct strbuf *sb)
++{
++	char *b =3D sb->buf;
++	while (sb->len > 0 && isspace((unsigned char)sb->buf[sb->len - 1]))
++		sb->len--;
++	while(sb->len > 0 && isspace(*b)) {
++		b++;
++		sb->len--;
++	}
++	memmove(sb->buf, b, sb->len);
++	sb->buf[sb->len] =3D '\0';
++}
+ void strbuf_rtrim(struct strbuf *sb)
+ {
+ 	while (sb->len > 0 && isspace((unsigned char)sb->buf[sb->len - 1]))
+@@ -67,6 +79,64 @@ void strbuf_rtrim(struct strbuf *sb)
+ 	sb->buf[sb->len] =3D '\0';
+ }
+=20
++void strbuf_ltrim(struct strbuf *sb)
++{
++	char *b =3D sb->buf;
++	while(sb->len > 0 && isspace(*b)) {
++		b++;
++		sb->len--;
++	}
++	memmove(sb->buf, b, sb->len);
++	sb->buf[sb->len] =3D '\0';
++}
++
++void strbuf_tolower(struct strbuf *sb)
++{
++	int i;
++	for (i =3D 0; i < sb->len; i++)
++		sb->buf[i] =3D tolower(sb->buf[i]);
++}
++
++struct strbuf ** strbuf_split(struct strbuf *sb, int delim)
++{
++	int alloc =3D 2, pos =3D 0;
++	char *n, *p;
++	struct strbuf **ret;
++	struct strbuf *t;
++
++	ret =3D xcalloc(alloc, sizeof(struct strbuf *));
++	p =3D n =3D sb->buf;
++	while (n < sb->buf + sb->len) {
++		int len;
++		n =3D memchr(n, delim, sb->len - (n - sb->buf));
++		if (pos + 1 >=3D alloc) {
++			alloc =3D alloc * 2;
++			ret =3D xrealloc(ret, sizeof(struct strbuf *) * alloc);
++		}
++		if (!n)
++			n =3D sb->buf + sb->len - 1;
++		len =3D n - p + 1;
++		t =3D xmalloc(sizeof(struct strbuf));
++		strbuf_init(t, len);
++		strbuf_add(t, p, len);
++		ret[pos] =3D t;
++		ret[++pos] =3D NULL;
++		p =3D ++n;
++	}
++	return ret;
++}
++
++void strbuf_list_free(struct strbuf ** sbs)
++{
++	struct strbuf **s =3D sbs;
++
++	while(*s) {
++		strbuf_release(*s);
++		free(*s++);
++	}
++	free(sbs);
++}
++
+ int strbuf_cmp(struct strbuf *a, struct strbuf *b)
+ {
+ 	int cmp;
+diff --git a/strbuf.h b/strbuf.h
+index faec229..577d14e 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -77,8 +77,14 @@ static inline void strbuf_setlen(struct strbuf *sb, =
+size_t len) {
+ #define strbuf_reset(sb)  strbuf_setlen(sb, 0)
+=20
+ /*----- content related -----*/
++extern void strbuf_trim(struct strbuf *);
+ extern void strbuf_rtrim(struct strbuf *);
++extern void strbuf_ltrim(struct strbuf *);
+ extern int strbuf_cmp(struct strbuf *, struct strbuf *);
++extern void strbuf_tolower(struct strbuf *);
++
++extern struct strbuf ** strbuf_split(struct strbuf*, int delim);
++extern void strbuf_list_free(struct strbuf **);
+=20
+ /*----- add data in your buffer -----*/
+ static inline void strbuf_addch(struct strbuf *sb, int c) {
+--=20
+1.5.4.5
