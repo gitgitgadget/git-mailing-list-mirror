@@ -1,102 +1,74 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] git-bisect: use dash-less form on git bisect log
-Date: Fri, 11 Jul 2008 18:01:29 +0200
-Message-ID: <1215792089-27201-1-git-send-email-vmiklos@frugalware.org>
-References: <200807110839.14764.chriscool@tuxfamily.org>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Jul 11 18:02:20 2008
+From: "Denis Bueno" <dbueno@gmail.com>
+Subject: Re: git cherry-pick before archive
+Date: Fri, 11 Jul 2008 12:09:02 -0400
+Message-ID: <6dbd4d000807110909n1ced22eeraef45af441c20cca@mail.gmail.com>
+References: <6dbd4d000807110846m2921ddb9r88eb3986762b8f81@mail.gmail.com>
+	 <alpine.DEB.1.00.0807111649290.8950@racer>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 11 18:10:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHL4W-0008Tl-Tt
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 18:02:13 +0200
+	id 1KHLCA-00030r-OX
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 18:10:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752985AbYGKQBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 12:01:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752750AbYGKQBP
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 12:01:15 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:50803 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752676AbYGKQBO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 12:01:14 -0400
-Received: from vmobile.example.net (dsl5401CCAB.pool.t-online.hu [84.1.204.171])
-	by yugo.frugalware.org (Postfix) with ESMTP id 807761DDC5B;
-	Fri, 11 Jul 2008 18:01:11 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id F3E941A9833; Fri, 11 Jul 2008 18:01:29 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6.2.450.g8d367.dirty
-In-Reply-To: <200807110839.14764.chriscool@tuxfamily.org>
+	id S1753468AbYGKQJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 12:09:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753333AbYGKQJH
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 12:09:07 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:9386 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751074AbYGKQJE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 12:09:04 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1561030fgg.17
+        for <git@vger.kernel.org>; Fri, 11 Jul 2008 09:09:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ZRu/ErZhPz+KcX0NWvkHUZF9oNBO7Eh/YhsqE94nZy4=;
+        b=B1acL9rgNTt0j0H+W++laMa7aqdShY6miGdoyTNOfvmHd2M/LEvXSAe0KTkadFiJgC
+         a/u5JXNOMaU7hxUONd1bj3rPnNV4u7uIV7sp2JiV+aULh7+S8bzz8fKTXwAf/jMCRZVS
+         rzIDzvM4eLp3J8NHPcL2uigALYK795DfT0kaY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=hBCl+9yOfZ/5LSwQD3BU/5PPtUdlMgODAa1WUrWZciUhjSiAK2ISqFkKpC6ww0ulQS
+         hy40Ux3YNn/rlNumAMUoArh3UQ9ufCfAicB4dG8iXeWwxVcl9ocs00sQ8Yb0voq821gO
+         DObCxEpITXOxmfJ1VIIn7ljAizGktud0Bwqkc=
+Received: by 10.86.80.17 with SMTP id d17mr10114927fgb.24.1215792542886;
+        Fri, 11 Jul 2008 09:09:02 -0700 (PDT)
+Received: by 10.86.59.7 with HTTP; Fri, 11 Jul 2008 09:09:02 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0807111649290.8950@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88136>
 
-Given that users are supposed to type 'git bisect' now, make the output
-of 'git bisect log' consistent with this.
+On Fri, Jul 11, 2008 at 11:51, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> $ git cherry-pick -n <bla>
+> $ git archive --format=tar --prefix=pfx/ $(git write-tree) | gzip > prj.tgz
+> $ git reset
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+Thank you!  This is much better.  The only thing that could improve it
+is by some way to "un-cherry-pick" the applied change (so that after
+"git reset" there are no local modifications to the file(s) changed by
+cherry-picking <bla>).
 
-On Fri, Jul 11, 2008 at 08:39:14AM +0200, Christian Couder <chriscool@tuxfamily.org> wrote:
-> Wouldn't it be better if bisect_replay could read old logs?
->
-> Maybe with something like:
->
-> +     while read git bisect command rev
->       do
-> -             test "$bisect" = "git-bisect" || continue
-> +             test "$git $bisect" = "git bisect" -o "$git" =
-> "git-bisect" || continue
-> +             if test "$git" = "git-bisect"; then
-> +                     rev="$command"
-> +                     command="$bisect"
-> +             fi
+Is there an easy way to invert a patch to undo the change the original
+patch introduced?
 
-You are right, here is an updated patch.
 
- git-bisect.sh |   12 ++++++++----
- 1 files changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 991b2ef..3cac20d 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -149,7 +149,7 @@ bisect_start() {
- 	echo "$start_head" >"$GIT_DIR/BISECT_START" &&
- 	sq "$@" >"$GIT_DIR/BISECT_NAMES" &&
- 	eval "$eval" &&
--	echo "git-bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
-+	echo "git bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
- 	#
- 	# Check if we can proceed to the next bisect state.
- 	#
-@@ -169,7 +169,7 @@ bisect_write() {
- 	esac
- 	git update-ref "refs/bisect/$tag" "$rev" || exit
- 	echo "# $state: $(git show-branch $rev)" >>"$GIT_DIR/BISECT_LOG"
--	test -n "$nolog" || echo "git-bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
-+	test -n "$nolog" || echo "git bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
- }
- 
- bisect_state() {
-@@ -426,9 +426,13 @@ bisect_clean_state() {
- bisect_replay () {
- 	test -r "$1" || die "cannot read $1 for replaying"
- 	bisect_reset
--	while read bisect command rev
-+	while read git bisect command rev
- 	do
--		test "$bisect" = "git-bisect" || continue
-+		test "$git $bisect" = "git bisect" -o "$git" = "git-bisect" || continue
-+		if test "$git" = "git-bisect"; then
-+			rev="$command"
-+			command="$bisect"
-+		fi
- 		case "$command" in
- 		start)
- 			cmd="bisect_start $rev"
 -- 
-1.5.6.2.450.g8d367.dirty
+ Denis
