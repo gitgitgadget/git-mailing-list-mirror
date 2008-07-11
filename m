@@ -1,83 +1,126 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] Fixed text file auto-detection: treat EOF character 032 at the end of file as printable
-Date: Fri, 11 Jul 2008 22:32:25 +0200
-Message-ID: <920CBA3F-779D-4861-B447-135690B4E8BD@zib.de>
-References: <7vabh0d4t9.fsf@gitster.siamese.dyndns.org> <1215794896-31354-1-git-send-email-prohaska@zib.de> <alpine.DEB.1.00.0807111940420.8950@racer>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 11 22:34:22 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: feature request: git-log should accept sth like
+ v2.6.26-rc8-227
+Date: Fri, 11 Jul 2008 21:35:29 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807112129290.8950@racer>
+References: <200807102057.15063.toralf.foerster@gmx.de> <200807111539.06606.toralf.foerster@gmx.de> <37fcd2780807110744k3b2a332csdf788dabd172622c@mail.gmail.com> <200807111658.40626.toralf.foerster@gmx.de> <20080711192902.GD1721@dpotapov.dyndns.org>
+ <alpine.DEB.1.00.0807112041470.8950@racer>
+Mime-Version: 1.0
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1417154506-1215808530=:8950"
+Cc: =?ISO-8859-15?Q?Toralf_F=F6rster?= <toralf.foerster@gmx.de>,
+	git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 22:36:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHPJt-0000vH-Kf
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 22:34:22 +0200
+	id 1KHPLz-0001YF-5Z
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 22:36:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757251AbYGKUcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 16:32:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759874AbYGKUcu
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 16:32:50 -0400
-Received: from mailer.zib.de ([130.73.108.11]:50218 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760832AbYGKUct (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 16:32:49 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m6BKW4vY019384;
-	Fri, 11 Jul 2008 22:32:09 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db9309a.pool.einsundeins.de [77.185.48.154])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m6BKVx0v025579
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 11 Jul 2008 22:31:59 +0200 (MEST)
-In-Reply-To: <alpine.DEB.1.00.0807111940420.8950@racer>
-X-Mailer: Apple Mail (2.926)
+	id S1755336AbYGKUfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 16:35:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754804AbYGKUfc
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 16:35:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42470 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755235AbYGKUfb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 16:35:31 -0400
+Received: (qmail invoked by alias); 11 Jul 2008 20:35:29 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp018) with SMTP; 11 Jul 2008 22:35:29 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/7vxZu5EP7EzQGCfE2G42XAQ5T9pphXrpPYzs83E
+	lnkl5HKSG3Mn3m
+X-X-Sender: gene099@racer
+In-Reply-To: <alpine.DEB.1.00.0807112041470.8950@racer>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.49
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88170>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Jul 11, 2008, at 8:42 PM, Johannes Schindelin wrote:
+--8323329-1417154506-1215808530=:8950
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
-> On Fri, 11 Jul 2008, Steffen Prohaska wrote:
->
->> From: Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
->>
->> Signed-off-by: Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
->> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
->> ---
->> convert.c |    4 ++++
->> 1 files changed, 4 insertions(+), 0 deletions(-)
->>
->> diff --git a/convert.c b/convert.c
->> index 352b69d..78efed8 100644
->> --- a/convert.c
->> +++ b/convert.c
->> @@ -61,6 +61,10 @@ static void gather_stats(const char *buf,  
->> unsigned long size, struct text_stat *
->> 		else
->> 			stats->printable++;
->> 	}
->> +
->> +	/* If file ends with EOF then don't count this EOF as non- 
->> printable. */
->> +	if (size >= 1 && buf[size-1] == '\032')
->> +		stats->nonprintable--;
->
-> This is one of the things that are very specific to Windows and  
-> should not
-> affect other people.
+Hi,
 
-Does this mean you are opposed to this change?
+On Fri, 11 Jul 2008, Johannes Schindelin wrote:
 
-Junio thinks that "the intention of this change is good" [1].  Hence,
-I cleaned up the style and re-send the patch.
+> On Fri, 11 Jul 2008, Dmitry Potapov wrote:
+> 
+> > On Fri, Jul 11, 2008 at 04:58:40PM +0200, Toralf Förster wrote:
+> > > 
+> > > $> git-log v2.6.26-rc9.. --pretty=short | grep "^commit" | cut -f2 -d' ' | xargs -n 1 git describe | grep '\-56\-'
+> > 
+> > The fastest way to do the same would be:
+> > 
+> > git rev-list v2.6.26-rc9.. | xargs git describe | grep '\-56\-'
+> 
+> You forgot the "--all" option to rev-list.
+> 
+> And I doubt it would be the "fastest" way, in terms of execution speed.
+> 
+> Also, it leaves out this case:
+> 
+> rc9 - A - B - C - D - F
+>     \               /
+>       ----- E -----
+> 
+> F would be "rc9-5", but also "rc9-2".
+> 
+> Oh, and this would leave out reflogs, too.
+> 
+> Can we please let this concept die now?
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/87122
+Heh, just as an intellectual exercise, I could not resist trying to brush 
+up my l33t py7h0n sk1llz (and I am sure somebody will teach me something 
+useful again):
 
-	Steffen
+-- snipsnap --
+#!/usr/bin/python
+
+import os
+import sys
+
+if len(sys.argv) != 2:
+	print 'Usage:', sys.argv[0], '<pseudo-describe>'
+
+# split argument
+dash = sys.argv[1].rindex('-')
+tag = sys.argv[1][0:dash]
+generation = int(sys.argv[1][dash + 1:])
+
+# get sha1 of given tag's commit
+pipe = os.popen('git rev-parse ' + tag + '^{commit}')
+sha1 = pipe.readlines()[0].strip()
+pipe.close()
+
+# 'number' will contain (positive) distance to given commit
+number = dict()
+number[sha1] = set()
+number[sha1].add(0)
+
+pipe = os.popen('git rev-list ^' + sha1 + ' --all --parents')
+rev_list = pipe.readlines()
+pipe.close()
+
+rev_list.reverse()
+for line in rev_list:
+	list = line.strip().split(' ')
+	number[list[0]] = set()
+	for parent in list[1:]:
+		if parent in number:
+			for n in number[parent]:
+				number[list[0]].add(n + 1)
+	for n in number[list[0]]:
+		if n == generation:
+			print list[0]
+--8323329-1417154506-1215808530=:8950--
