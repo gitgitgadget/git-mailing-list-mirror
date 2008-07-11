@@ -1,153 +1,184 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/3] Git::Repo API and gitweb caching
-Date: Fri, 11 Jul 2008 11:33:09 +0200
-Message-ID: <200807111133.11662.jnareb@gmail.com>
-References: <4876B223.4070707@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Cc: Git Mailing List <git@vger.kernel.org>,
-	John Hawley <warthog19@eaglescrag.net>,
-	Petr Baudis <pasky@suse.cz>
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 11:37:40 2008
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH 7/7] Add a job to refresh projects when the index changes.
+Date: Fri, 11 Jul 2008 11:32:25 +0200
+Message-ID: <1215768745-1420-1-git-send-email-robin.rosenberg@dewire.com>
+References: <20080711043317.GD32633@spearce.org>
+Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jul 11 11:40:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHF1D-0001Kn-Py
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 11:34:24 +0200
+	id 1KHF5H-000330-E8
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 11:38:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752478AbYGKJd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 05:33:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752430AbYGKJd0
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 05:33:26 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:5782 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751413AbYGKJdZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Jul 2008 05:33:25 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1510628fgg.17
-        for <git@vger.kernel.org>; Fri, 11 Jul 2008 02:33:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=6uAUBukmrJyNN7Fh9a49qsikjvvL6vdMaeh6h9aF08g=;
-        b=uEH3S2Vdpgf+MwPlfyEN+zzQvcsLmFilSEnO4X7We0AizG9cXADJ7dqI0C0Ewyv3Tr
-         sYrcAsWIEiJVXeCZrYNbJBPKRETxxZR00DyYer8Ve8ihT14mIS3ank8qzBZ0S3krHlsy
-         S8C/3x1TAkYNawHkFVTEicKobd0vCNVrL+lLU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=kfwucJoVPwZyCLdm9mXyEt9V8d7cUdDMQdxi4p/TJ7wfxmxQbocB5zjWppGbPHkqZw
-         yNcLV0oPMFOw16Oj0Hz5iFgGmvBvWAn08Eoa3peJhlJz63VMw3cMPa577e9TI9ATNwmk
-         sroSRljqgkvSmYWD+Qs1dYmvrO9+d7DNXEr8I=
-Received: by 10.86.91.12 with SMTP id o12mr9553205fgb.1.1215768803371;
-        Fri, 11 Jul 2008 02:33:23 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.227.34])
-        by mx.google.com with ESMTPS id 4sm652376fge.5.2008.07.11.02.33.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 11 Jul 2008 02:33:21 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4876B223.4070707@gmail.com>
-Content-Disposition: inline
+	id S1751879AbYGKJhh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 05:37:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751851AbYGKJhh
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 05:37:37 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:15242 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751381AbYGKJhg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 05:37:36 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id E62BF8027F7;
+	Fri, 11 Jul 2008 11:37:34 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id C1TwYJLd1nRH; Fri, 11 Jul 2008 11:37:34 +0200 (CEST)
+Received: from localhost.localdomain (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 08DD08006B7;
+	Fri, 11 Jul 2008 11:37:34 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.2.220.g44701
+In-Reply-To: <20080711043317.GD32633@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88103>
 
-On Fri, 11 July 2008, Lea Wiemann wrote:
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../src/org/spearce/egit/ui/Activator.java         |   85 +++++++++++++++++++-
+ 1 files changed, 81 insertions(+), 4 deletions(-)
 
-> As follow-ups to this message, I'll be sending three patches for
-> 
-> 1) adding the Mechanize tests,
-
-Somehow I didn't get Cc-ed this patch...
-
-> The Mechanize tests succeed before and after patch (3) is applied, so
-> I'm reasonably confident that my refactoring didn't introduce any
-> (major) bugs.
-
-If I remember correctly Mechanize tests detected some bugs in gitweb
-(nice!), but there were swept under the rug, i.e. put as TODO.
-
-Does that mean that those errors were corrected, or that refactoring
-"just" didn't break anything more?
-
-> On my to-do list:
-> 
-> - Benchmarks.  I'm planning to time a replay of kernel.org's gitweb logs
-> on the test server, with and without caching.  Nothing fancy.  (The
-> performance of the test setup on odin3.kernel.org is not representative
-> of gitweb's actual performance under load.)
-
-Do you plan to compare other gitweb caching implementations? I mean
-here old kernel.org caching by J.H., and repo.or.cz caching (only for
-projects list page) by Pasky.
-
-> - Implement support for Last-Modified or ETags, since those basically
-> fall out for free with the current implementation.  (This will require
-> mod_perl, since CGI doesn't allow for accessing arbitrary request
-> headers AFAIK.)
-
->From CGI(3pm):
-
-       http()
-           Called with no arguments returns the list of HTTP environment vari-
-           ables, including such things as HTTP_USER_AGENT, HTTP_ACCEPT_LANGUAGE,
-           and HTTP_ACCEPT_CHARSET, corresponding to the like-named HTTP header
-           fields in the request.  Called with the name of an HTTP header field,
-           returns its value.  Capitalization and the use of hyphens versus under-
-           scores are not significant.
-
-           For example, all three of these examples are equivalent:
-
-              $requested_language = http('Accept-language');
-              $requested_language = http('Accept_language');
-              $requested_language = http('HTTP_ACCEPT_LANGUAGE');
-
-
->From http://hoohoo.ncsa.uiuc.edu/cgi/env.html
-
-  In addition to these, the header lines received from the client, if
-  any, are placed into the environment with the prefix HTTP_ followed
-  by the header name. Any '-' characters in the header name are changed
-  to '_' characters. The server may exclude any headers which it has
-  already processed, such as Authorization, Content-type, and
-  Content-length. If necessary, the server may choose to exclude any
-  or all of these headers if including them would exceed any system
-  environment limits.
-
-So you _can_ access 'If-Modified-Since', 'If-None-Match' (by web browsers)
-and 'If-Not-Modified-Since', 'If-Match' (by caches) from CGI.
-
-> That will make the site a tad more responsive, I hope,
-> and it will also hugely reduce the load for RSS/Atom requests, which
-> currently make up almost half of all requests to kernel.org's gitweb and
-> get served in full each time (i.e. "200 OK" instead of "304 Not Modified").
-
-Currently only one "shortcut" is that gitweb respects HEAD request
-(returning only HTTP headers) for feeds, and if I remember correctly
-only for feeds.  I don't know however how much work gitweb does before
-HEAD request shortcut.
-
-> - Make gitweb use more parts of the Git::Repo API; in particular, the
-> commit and tag parsing code should be ripped out, and gitweb should use
-> the (much prettier) Git::Commit/Git::Tag API instead.  Perhaps some more
-> functions (like ls_tree) can be generalized into the API as well; I went
-> the easy route for now and simply replaced most "open '-|'" calls with
-> $repo->cmd_output calls.
-
-I think that ls_tree and git-ls-tree output parsing should be
-generalized into Git::Tree API as well.
-
-
-I'll try to review the rest of patches by tomorrow...
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/Activator.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/Activator.java
+index 3e02c44..89e6579 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/Activator.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/Activator.java
+@@ -11,16 +11,20 @@ package org.spearce.egit.ui;
+ import java.net.Authenticator;
+ import java.net.ProxySelector;
+ import java.util.HashSet;
++import java.util.Iterator;
++import java.util.LinkedHashSet;
+ import java.util.Set;
+ 
+ import org.eclipse.core.net.proxy.IProxyService;
+ import org.eclipse.core.resources.IProject;
++import org.eclipse.core.resources.IResource;
+ import org.eclipse.core.resources.ResourcesPlugin;
+ import org.eclipse.core.runtime.CoreException;
+ import org.eclipse.core.runtime.IProgressMonitor;
+ import org.eclipse.core.runtime.IStatus;
+ import org.eclipse.core.runtime.Platform;
+ import org.eclipse.core.runtime.Status;
++import org.eclipse.core.runtime.SubProgressMonitor;
+ import org.eclipse.core.runtime.jobs.ISchedulingRule;
+ import org.eclipse.core.runtime.jobs.Job;
+ import org.eclipse.jsch.core.IJSchService;
+@@ -30,7 +34,10 @@ import org.eclipse.ui.themes.ITheme;
+ import org.osgi.framework.BundleContext;
+ import org.osgi.framework.ServiceReference;
+ import org.spearce.egit.core.project.RepositoryMapping;
++import org.spearce.jgit.lib.IndexChangedEvent;
++import org.spearce.jgit.lib.RefsChangedEvent;
+ import org.spearce.jgit.lib.Repository;
++import org.spearce.jgit.lib.RepositoryListener;
+ import org.spearce.jgit.transport.SshSessionFactory;
+ 
+ /**
+@@ -137,6 +144,7 @@ public class Activator extends AbstractUIPlugin {
+ 
+ 	private boolean traceVerbose;
+ 	private RCS rcs;
++	private RIRefresh refreshJob;
+ 
+ 	/**
+ 	 * Constructor for the egit ui plugin singleton
+@@ -151,6 +159,71 @@ public class Activator extends AbstractUIPlugin {
+ 		setupSSH(context);
+ 		setupProxy(context);
+ 		setupRepoChangeScanner();
++		setupRepoIndexRefresh();
++	}
++
++	private void setupRepoIndexRefresh() {
++		refreshJob = new RIRefresh();
++		Repository.addAnyRepositoryChangedListener(refreshJob);
++	}
++
++	static class RIRefresh extends Job implements RepositoryListener {
++
++		RIRefresh() {
++			super("Git index refresh Job");
++		}
++
++		private Set<IProject> projectsToScan = new LinkedHashSet<IProject>();
++
++		@Override
++		protected IStatus run(IProgressMonitor monitor) {
++			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
++			monitor.beginTask("Refreshing git managed projects", projects.length);
++
++			while (projectsToScan.size() > 0) {
++				IProject p;
++				synchronized (projectsToScan) {
++					if (projectsToScan.size() == 0)
++						break;
++					Iterator<IProject> i = projectsToScan.iterator();
++					p = i.next();
++					i.remove();
++				}
++				ISchedulingRule rule = p.getWorkspace().getRuleFactory().refreshRule(p);
++				try {
++					getJobManager().beginRule(rule, monitor);
++					p.refreshLocal(IResource.DEPTH_INFINITE, new SubProgressMonitor(monitor, 1));
++				} catch (CoreException e) {
++					logError("Failed to refresh projects from index changes", e);
++					return new Status(IStatus.ERROR, getPluginId(), e.getMessage());
++				} finally {
++					getJobManager().endRule(rule);
++				}
++			}
++			monitor.done();
++			return Status.OK_STATUS;
++		}
++
++		public void indexChanged(IndexChangedEvent e) {
++			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
++			Set<IProject> toRefresh= new HashSet<IProject>();
++			for (IProject p : projects) {
++				RepositoryMapping mapping = RepositoryMapping.getMapping(p);
++				if (mapping != null && mapping.getRepository() == e.getRepository()) {
++					toRefresh.add(p);
++				}
++			}
++			synchronized (projectsToScan) {
++				projectsToScan.addAll(toRefresh);
++			}
++			if (projectsToScan.size() > 0)
++				schedule();
++		}
++
++		public void refsChanged(RefsChangedEvent e) {
++			// Do not react here
++		}
++
+ 	}
+ 
+ 	static class RCS extends Job {
+@@ -236,10 +309,14 @@ public class Activator extends AbstractUIPlugin {
+ 
+ 	public void stop(final BundleContext context) throws Exception {
+ 		trace("Trying to cancel " + rcs.getName() + " job");
+-		if (!rcs.cancel()) {
+-			rcs.join();
+-		}
+-		trace("rcs.getName() " + rcs.getName() + " cancelled ok");
++		rcs.cancel();
++		trace("Trying to cancel " + refreshJob.getName() + " job");
++		refreshJob.cancel();
++
++		rcs.join();
++		refreshJob.join();
++
++		trace("Jobs terminated");
+ 		super.stop(context);
+ 		plugin = null;
+ 	}
 -- 
-Jakub Narebski
-Poland
+1.5.6.2.220.g44701
