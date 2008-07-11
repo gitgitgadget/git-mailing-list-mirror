@@ -1,102 +1,146 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git pull is slow
-Date: Fri, 11 Jul 2008 15:04:21 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807111443280.8950@racer>
-References: <g5570s$d5m$1@ger.gmane.org> <g57jkp$ekm$1@ger.gmane.org> <48776169.20705@op5.se>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [PATCH 0/3] Git::Repo API and gitweb caching
+Date: Fri, 11 Jul 2008 16:07:26 +0200
+Message-ID: <4877691E.1010000@gmail.com>
+References: <4876B223.4070707@gmail.com> <200807111133.11662.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-432674514-1215785063=:8950"
-Cc: Stephan Hennig <mailing_list@arcor.de>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Jul 11 16:06:06 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	John Hawley <warthog19@eaglescrag.net>,
+	Petr Baudis <pasky@suse.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 16:09:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHJFu-0000lw-8d
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 16:05:50 +0200
+	id 1KHJIl-0002FK-9I
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 16:08:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760286AbYGKOE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 10:04:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760271AbYGKOE0
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 10:04:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51490 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760131AbYGKOE0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 10:04:26 -0400
-Received: (qmail invoked by alias); 11 Jul 2008 14:04:24 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp008) with SMTP; 11 Jul 2008 16:04:24 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/l0n1RZ1nljn4fxNeyi7BoJzmB4FAmCNzfUjuu9u
-	laQ/yQej15MWmX
-X-X-Sender: gene099@racer
-In-Reply-To: <48776169.20705@op5.se>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
+	id S1754903AbYGKOHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 10:07:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752738AbYGKOHs
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 10:07:48 -0400
+Received: from gv-out-0910.google.com ([216.239.58.191]:19333 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753602AbYGKOHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 10:07:47 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so717956gvc.37
+        for <git@vger.kernel.org>; Fri, 11 Jul 2008 07:07:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=KutoyrxYG3/QcaP7T0lF7i84ZMnaDpDlwWp7lNk6O1o=;
+        b=HpNHCrloHGI+s/ng0Bew3tD0G2ZHB3Qb57gy2mW0y8EdmWGhm82btyRWEbXMxcW3k2
+         DwdfqsIHJVvJWdJHr+oETPjPJFCc4gpm6BlnLzKjBBM5QSTEsnP8y+/X3pKaVrGvMeoV
+         3x66V4nV/wMALVzg41Y+Abgv3ZkU6ZN/6mW9I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=gf2+vkkLl8q2hyNT5Vq10sp92gax7ByUbOSwUlai9U7GIEVD9AaT/ZyJMrV2Gcmewc
+         JNvCVXBREDPUto6xJqj3KyB1pFa9Ns+KBRRX4DIsK6m0N7nHj1mxdl+hHr9dx3k62Nym
+         iE8nVPVL66JR+GSSaibdua9yLjnYe//nINVr4=
+Received: by 10.125.101.11 with SMTP id d11mr2995994mkm.110.1215785250979;
+        Fri, 11 Jul 2008 07:07:30 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.219.252])
+        by mx.google.com with ESMTPS id 11sm144780hug.62.2008.07.11.07.07.27
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 11 Jul 2008 07:07:30 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <200807111133.11662.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88121>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-432674514-1215785063=:8950
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-
-Hi,
-
-On Fri, 11 Jul 2008, Andreas Ericsson wrote:
-
-> Stephan Hennig wrote:
-> > Stephan Hennig schrieb:
-> > 
-> > > I am observing very large data transfers when pulling from the
-> > > repository at <URL:http://repo.or.cz/w/wortliste.git>.
-> > 
-> > Here's the output of a recent pull:
-> > 
-> > > unknown@COMMODORE ~/Themen/trennmuster/repository/wortliste (master)
-> > > $ git pull
-> > > Enter passphrase for key '/x/home/.ssh/id_rsa':
-> > > remote: Counting objects: 15, done.←[K
-> > > remote: Compressing objects: 100% (7/7), done.←[K)   ←[Kts:   8% (1/12)
-> > > remote: Total 12 (delta 5), reused 12 (delta 5)←[K
-> > > Unpacking objects: 100% (12/12), done.
-> > > From git+ssh://xxx@repo.or.cz/srv/git/wortliste
-> > >    d905095..d0c6a33  master     -> origin/master
-> > > * [new tag]         dehyph-exptl-v0.13 -> dehyph-exptl-v0.13
-> > > Updating d905095..d0c6a33
-> > > Fast forward
-> > >  wortliste←[m |   19 ←[32m+++++++++++←[m←[31m--------←[m
-> > >  1 files changed, 11 insertions(+), 8 deletions(-)←[m
-> > 
-> > After the line containing "remote: Compressing objects:" had been
-> > printed several MB have been transferred.
-> > 
+Jakub Narebski wrote:
+> On Fri, 11 July 2008, Lea Wiemann wrote:
+>> 1) adding the Mechanize tests,
 > 
-> Seems like you're being bitten by a bug we had some months back,
-> where the client requested full history for new tag objects.
+> Somehow I didn't get Cc-ed this patch...
 
-I do not think so.  I think it is a problem with the pack.  The slowness 
-is already there in the clone, in the resolving phase.
+Yup, nobody got Cc'ed; apologies.
 
-Judging from the output of "verify-pack -v", it seems that the delta 
-chains are quite long.
+> If I remember correctly Mechanize tests detected some bugs in gitweb
+> (nice!), but there were swept under the rug, i.e. put as TODO.
+> 
+> Does that mean that those errors were corrected, or that refactoring
+> "just" didn't break anything more?
 
-I saw memory usage go up pretty quickly.  I thought that maybe 
-eac12e2(Correct pack memory leak causing git gc to try to exceed ulimit)
-would help things, since it fixes a place where memory usage grows out of 
-bounds, but it did not.
+Refactoring really just didn't break anything more; it could be that
+something got corrected accidentally, but I'd be surprised.
 
-Unfortunately, I do not have time to look into this further.
+>> - Benchmarks.
+> 
+> Do you plan to compare other gitweb caching implementations? [k.org, repo.or.cz]
 
-BTW there is a nasty usability bug when "Compressing objects:" and 
-"Receiving objects:" messages 
+Yup, sure.
 
-Ciao,
-Dscho
---8323329-432674514-1215785063=:8950--
+>> - Implementing support for Last-Modified or ETags [...] will require
+>> mod_perl, since CGI doesn't allow for accessing arbitrary request headers
+> 
+>               $requested_language = http('Accept-language');
+> 
+>   the header lines received from the client, if any, are placed into the
+>   environment with the prefix HTTP_ followed by the header name.
+
+Right, you'd think the request headers should be accessible this way,
+but apparently not all of them are.
+
+If you take this script, ...
+
+#!/usr/bin/perl
+use CGI qw(http);
+print "Content-type: text/plain\n";
+print "Last-Modified: Thu, 03 Jul 2008 22:39:42 GMT\n\n";
+print "Header: ", http('If-Last-Modified');
+
+... then my browser (according to LiveHTTPHeaders) sends an
+If-Last-Modified header, but it doesn't get through to the CGI script.
+It does work if you test Accept-Language.  (Try print `env` to get an
+idea of what gets through.)  It happens on Apache and thttpd.
+Apparently this part somehow applies:
+
+>   'The server may exclude any headers which it has already processed,'
+
+I honestly have no idea why the If-Last-Modified headers gets eaten (and
+googling didn't help), but I assume that at least it'll be possible to
+access all headers with mod_perl.
+
+> 'If-Not-Modified-Since', 'If-Match' (by caches)
+
+Wait, are you sure caches would use those headers (I believe only the
+latter actually exists BTW), or did you fall prey to a thinko? ;)
+
+> one "shortcut" is that gitweb respects HEAD request
+> (returning only HTTP headers) for feeds
+
+Yes, and I think it does help performance-wise, but only a really small
+fraction of the RSS/Atom requests actually use HEAD.  Most use GET.
+
+> I think that ls_tree and git-ls-tree output parsing should be
+> generalized into Git::Tree API as well.
+
+True, though I'm still not sure how to make element access work pretty
+and fast.  I'll keep pondering it for a while.
+
+> I'll try to review the rest of patches by tomorrow...
+
+Thanks!
+
+Johannes Schindelin wrote:
+> FWIW there are a few reasons why splitting up (3) might be the thing
+> you really want to do
+
+I've put splitting it on my list; I'm not sure though if I'll get around
+to doing it today.  Everyone, comments on patch (3) are still
+appreciated in the meantime. ;-)  I'll integrate any suggestions/patches
+when I split it up.
+
+-- Lea
