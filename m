@@ -1,81 +1,101 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fixed text file auto-detection: treat EOF character 032
- at the end of file as printable
-Date: Fri, 11 Jul 2008 19:42:33 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807111940420.8950@racer>
-References: <7vabh0d4t9.fsf@gitster.siamese.dyndns.org> <1215794896-31354-1-git-send-email-prohaska@zib.de>
+From: ff <ff@member.org>
+Subject: Re: how to undo a git merge?
+Date: Fri, 11 Jul 2008 14:46:15 -0400
+Message-ID: <fa7d16350807111146m18b0ca9q6902c2167bfd3512@mail.gmail.com>
+References: <fa7d16350807110916x689e316fr6bae01f28e2e1acb@mail.gmail.com>
+	 <20080711161923.GE10347@genesis.frugalware.org>
+	 <fa7d16350807111107o40c5cbb5xc06c3c56b16b7499@mail.gmail.com>
+	 <20080711181413.GI10347@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Fri Jul 11 20:44:17 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Miklos Vajna" <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Fri Jul 11 20:47:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHNag-0003me-1m
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 20:43:34 +0200
+	id 1KHNeF-0005ds-Vu
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 20:47:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754224AbYGKSmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 14:42:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754084AbYGKSmg
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 14:42:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46685 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753883AbYGKSmf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 14:42:35 -0400
-Received: (qmail invoked by alias); 11 Jul 2008 18:42:33 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp007) with SMTP; 11 Jul 2008 20:42:33 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/gI2dfDG3gEySicZ4oRNKZuS6cJF9lIfbiuVTi0V
-	gTDvHUooB3yQ7O
-X-X-Sender: gene099@racer
-In-Reply-To: <1215794896-31354-1-git-send-email-prohaska@zib.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1754462AbYGKSqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 14:46:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754372AbYGKSqR
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 14:46:17 -0400
+Received: from py-out-1112.google.com ([64.233.166.182]:62843 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753326AbYGKSqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 14:46:17 -0400
+Received: by py-out-1112.google.com with SMTP id p76so2256031pyb.10
+        for <git@vger.kernel.org>; Fri, 11 Jul 2008 11:46:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=EfFgPi5zazeheF9eqP3ZX2AKMDfQTstCDyQEJ3ATjng=;
+        b=Mfl9fd3cMy81TTJZsAXWQEkX0dIptaHVgTgi0Wdw1xjUH6V4eTItjWpyTehJmhFObY
+         5Y8JhZiilE8bADKd9Q1pGNbLhXRhyiK3UuXGJm/KCmDVHcOfy/mn4qmwRUSeUBJXH+Xq
+         QXuOL9hxK8RPnDv6Iqq7YUKWtiYwk9wE2ce8Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=e09szYryHcWZxcjAqLL9IE9Wnl7xw/nMeclHlTQNTxgkvOa0NyOcrShOYRnQPy/T2h
+         dwUC9RuBvxgBjbAYWvgF1K9QsBOtP+RX7p2G0EvB6OXXdsVpSWuamBWfL9GlwsPumlYb
+         EcC9WLJU13dw1ItGgq1JoNs6Kpy6S+nMxMbyw=
+Received: by 10.114.124.12 with SMTP id w12mr14361836wac.210.1215801975873;
+        Fri, 11 Jul 2008 11:46:15 -0700 (PDT)
+Received: by 10.141.91.21 with HTTP; Fri, 11 Jul 2008 11:46:15 -0700 (PDT)
+In-Reply-To: <20080711181413.GI10347@genesis.frugalware.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: d1f9e33799931f91
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88154>
 
-Hi,
+> [ Did you reply off-list intentionally? ]
 
-On Fri, 11 Jul 2008, Steffen Prohaska wrote:
+ooops... yes... I'm scared of the reply-all button. :)
 
-> From: Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
-> 
-> Signed-off-by: Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
-> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-> ---
->  convert.c |    4 ++++
->  1 files changed, 4 insertions(+), 0 deletions(-)
-> 
-> diff --git a/convert.c b/convert.c
-> index 352b69d..78efed8 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -61,6 +61,10 @@ static void gather_stats(const char *buf, unsigned long size, struct text_stat *
->  		else
->  			stats->printable++;
->  	}
-> +
-> +	/* If file ends with EOF then don't count this EOF as non-printable. */
-> +	if (size >= 1 && buf[size-1] == '\032')
-> +		stats->nonprintable--;
+> For example, if you were on branch 'master' and you merged 'foo' to
+> master using 'git merge foo', and you want to revert that merge then you
+> need '-m 1'.
 
-This is one of the things that are very specific to Windows and should not 
-affect other people.
+Ok, so... sorry for not getting it completely, even after reading the info.
 
-Ciao,
-Dscho
+In your example, how and why you can determine that the number 1
+represents the "foo" branch? Would "-m 2" represent the master branch?
+In your example is there any other choice for the "-m" number to use?
 
-P.S.: this is one of the examples why I would like to discuss things that 
-are Windows-only on the msysGit list, until we have a consensus there.  We 
-have a few Git experts there, you and Hannes in particular, which cover 
-that side, but also some Windows experts such as Peter and Marius, and we 
-should not need to have that discussion on a list where people are not 
-expected to care about Windows _at all_.
+-- ff
+
+
+
+On Fri, Jul 11, 2008 at 2:14 PM, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> [ Did you reply off-list intentionally? ]
+>
+> On Fri, Jul 11, 2008 at 02:07:44PM -0400, ff <ff@member.org> wrote:
+>> thank you.
+>>
+>> I did see the -m option in the revert man page. It talks about
+>> "parent" and I did
+>> not understand what that is. Is parent the commit id of the merge commit?
+>>
+>> Thanks again!
+>
+> http://www.kernel.org/pub/software/scm/git/docs/gitglossary.html#def_parent
+>
+> A merge commit has two parents, but obviously only one of the was the
+> HEAD commit before the merge. So when you revert a merge, you need to
+> specify which which parent's tree should be the tree of the new HEAD.
+>
+> For example, if you were on branch 'master' and you merged 'foo' to
+> master using 'git merge foo', and you want to revert that merge then you
+> need '-m 1'.
+>
