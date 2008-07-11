@@ -1,95 +1,102 @@
-From: Toralf =?iso-8859-1?q?F=F6rster?= <toralf.foerster@gmx.de>
-Subject: Re: feature request: git-log should accept sth like v2.6.26-rc8-227
-Date: Fri, 11 Jul 2008 15:39:04 +0200
-Message-ID: <200807111539.06606.toralf.foerster@gmx.de>
-References: <200807102057.15063.toralf.foerster@gmx.de> <alpine.DEB.1.00.0807102028420.18205@racer>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git pull is slow
+Date: Fri, 11 Jul 2008 15:04:21 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807111443280.8950@racer>
+References: <g5570s$d5m$1@ger.gmane.org> <g57jkp$ekm$1@ger.gmane.org> <48776169.20705@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart7199409.nOybBXZ8d8";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 11 15:40:23 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-432674514-1215785063=:8950"
+Cc: Stephan Hennig <mailing_list@arcor.de>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri Jul 11 16:06:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHIr4-0006fb-Jv
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 15:40:11 +0200
+	id 1KHJFu-0000lw-8d
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 16:05:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755512AbYGKNjM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 09:39:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755467AbYGKNjM
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 09:39:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59216 "HELO mail.gmx.net"
+	id S1760286AbYGKOE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 10:04:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760271AbYGKOE0
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 10:04:26 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51490 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755221AbYGKNjL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 09:39:11 -0400
-Received: (qmail invoked by alias); 11 Jul 2008 13:39:08 -0000
-Received: from d036167.adsl.hansenet.de (EHLO d036167.adsl.hansenet.de) [80.171.36.167]
-  by mail.gmx.net (mp058) with SMTP; 11 Jul 2008 15:39:08 +0200
-X-Authenticated: #5108953
-X-Provags-ID: V01U2FsdGVkX19LKuIri9lLpo1fnLztSm41MoeauaPGcOnnC+z2Wp
-	open2r9EbAMWZl
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0807102028420.18205@racer>
+	id S1760131AbYGKOE0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 10:04:26 -0400
+Received: (qmail invoked by alias); 11 Jul 2008 14:04:24 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp008) with SMTP; 11 Jul 2008 16:04:24 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/l0n1RZ1nljn4fxNeyi7BoJzmB4FAmCNzfUjuu9u
+	laQ/yQej15MWmX
+X-X-Sender: gene099@racer
+In-Reply-To: <48776169.20705@op5.se>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+X-FuHaFi: 0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88120>
 
---nextPart7199409.nOybBXZ8d8
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-At Thursday 10 July 2008 21:29:07 Johannes Schindelin wrote :
-> Hi,
->=20
-> On Thu, 10 Jul 2008, Toralf F=F6rster wrote:
->=20
-> > I appended those strings to the names of my UML kernel executables.=20
-> > Unfortunately I didn't used the commit id and now I'm wondering whether=
-=20
-> > git could accept v2.6.26-rc9-56 as well in future.
->=20
-> If that were unambiguous, yes.  But it is not.
->=20
-> Ciao,
-> Dscho
->=20
+--8323329-432674514-1215785063=:8950
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-Ok, following the thread I understand why this feature isn't wanted by all.=
- But
-for the given example (where I only pulled from another git tree) this could
-work, isn't it : ?
+Hi,
 
-tfoerste@n22 ~/devel/linux-2.6 $ git-log v2.6.26-rc9.. | perl -e '@c =3D gr=
-ep { /^commit/ } <>; print map { $#c - $i++ . "\t" . $_ } @c'
+On Fri, 11 Jul 2008, Andreas Ericsson wrote:
 
+> Stephan Hennig wrote:
+> > Stephan Hennig schrieb:
+> > 
+> > > I am observing very large data transfers when pulling from the
+> > > repository at <URL:http://repo.or.cz/w/wortliste.git>.
+> > 
+> > Here's the output of a recent pull:
+> > 
+> > > unknown@COMMODORE ~/Themen/trennmuster/repository/wortliste (master)
+> > > $ git pull
+> > > Enter passphrase for key '/x/home/.ssh/id_rsa':
+> > > remote: Counting objects: 15, done.←[K
+> > > remote: Compressing objects: 100% (7/7), done.←[K)   ←[Kts:   8% (1/12)
+> > > remote: Total 12 (delta 5), reused 12 (delta 5)←[K
+> > > Unpacking objects: 100% (12/12), done.
+> > > From git+ssh://xxx@repo.or.cz/srv/git/wortliste
+> > >    d905095..d0c6a33  master     -> origin/master
+> > > * [new tag]         dehyph-exptl-v0.13 -> dehyph-exptl-v0.13
+> > > Updating d905095..d0c6a33
+> > > Fast forward
+> > >  wortliste←[m |   19 ←[32m+++++++++++←[m←[31m--------←[m
+> > >  1 files changed, 11 insertions(+), 8 deletions(-)←[m
+> > 
+> > After the line containing "remote: Compressing objects:" had been
+> > printed several MB have been transferred.
+> > 
+> 
+> Seems like you're being bitten by a bug we had some months back,
+> where the client requested full history for new tag objects.
 
-=2D-=20
-MfG/Sincerely
+I do not think so.  I think it is a problem with the pack.  The slowness 
+is already there in the clone, in the resolving phase.
 
-Toralf F=F6rster
-pgp finger print: 7B1A 07F4 EC82 0F90 D4C2 8936 872A E508 7DB6 9DA3
+Judging from the output of "verify-pack -v", it seems that the delta 
+chains are quite long.
 
---nextPart7199409.nOybBXZ8d8
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+I saw memory usage go up pretty quickly.  I thought that maybe 
+eac12e2(Correct pack memory leak causing git gc to try to exceed ulimit)
+would help things, since it fixes a place where memory usage grows out of 
+bounds, but it did not.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+Unfortunately, I do not have time to look into this further.
 
-iEYEABECAAYFAkh3YnoACgkQhyrlCH22naOQqwCeI6Rf6DFugqGaz1P1OO+0hhiR
-+xAAn0SsXB19IIfqdRaHyWt/LMkjrJ4Z
-=TEqu
------END PGP SIGNATURE-----
+BTW there is a nasty usability bug when "Compressing objects:" and 
+"Receiving objects:" messages 
 
---nextPart7199409.nOybBXZ8d8--
+Ciao,
+Dscho
+--8323329-432674514-1215785063=:8950--
