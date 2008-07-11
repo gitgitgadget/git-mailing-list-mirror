@@ -1,92 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fixed text file auto-detection: treat EOF character 032
- at the end of file as printable
-Date: Fri, 11 Jul 2008 21:40:47 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807112136270.8950@racer>
-References: <7vabh0d4t9.fsf@gitster.siamese.dyndns.org> <1215794896-31354-1-git-send-email-prohaska@zib.de> <alpine.DEB.1.00.0807111940420.8950@racer> <920CBA3F-779D-4861-B447-135690B4E8BD@zib.de>
+From: "mike zheng" <mail4mz@gmail.com>
+Subject: Install GIT?
+Date: Fri, 11 Jul 2008 16:55:12 -0400
+Message-ID: <5c9cd53b0807111355u7a346dafne6a3b7bd75d5100e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Fri Jul 11 22:41:55 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 11 22:56:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHPR6-0003Ih-V9
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 22:41:49 +0200
+	id 1KHPf5-0007vF-FP
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 22:56:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752557AbYGKUkv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 16:40:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752498AbYGKUku
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 16:40:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56659 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751365AbYGKUkt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 16:40:49 -0400
-Received: (qmail invoked by alias); 11 Jul 2008 20:40:47 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp041) with SMTP; 11 Jul 2008 22:40:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18rrH4zuqwrsOlJuh/L2k9hF+Qx3QoYM3gWtRpfWk
-	AlY9OhTUav01NK
-X-X-Sender: gene099@racer
-In-Reply-To: <920CBA3F-779D-4861-B447-135690B4E8BD@zib.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1760541AbYGKUzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 16:55:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760481AbYGKUzO
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 16:55:14 -0400
+Received: from rv-out-0506.google.com ([209.85.198.239]:62243 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760401AbYGKUzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 16:55:13 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so4550955rvb.1
+        for <git@vger.kernel.org>; Fri, 11 Jul 2008 13:55:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=d8lUbWdKUsUamH7/H+cfrZLzIcBatZxKpimfD0QZCK0=;
+        b=PWA4LwG66EayjRQIi4k9a7ngAaK7EITfulbnYdsOCyhyhDuQWeOgF5MxWaWTX2WQR1
+         A6dBx7FVFaemmcd3UKVMZ21cRCi9oe/nb2+BXLtwLAOo9vdMbD9NL5soixLjKhsbRepm
+         0ML1dV3kCiaEpKksamvXDuidpOr2koKI+sBn4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=YVGZCzyiQjWGslu9CKTxBgEoC6ml2AwusKsGAjHXl0Ex3mRGZ/ydDN5QdayZuUE3b+
+         uww7VkjeiUutTo7jmc1Dg9sf+6RL0V7DXjqekG8M1awi35hfFDaX6nKN6BGs3cCbhQtA
+         nQt6e3icGAaIUs1I+aglvrm7iKpBmGzrEbi3M=
+Received: by 10.114.25.3 with SMTP id 3mr14698976way.22.1215809712446;
+        Fri, 11 Jul 2008 13:55:12 -0700 (PDT)
+Received: by 10.140.125.17 with HTTP; Fri, 11 Jul 2008 13:55:12 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88172>
 
-Hi,
+hello,
 
-On Fri, 11 Jul 2008, Steffen Prohaska wrote:
+is there any document on how to compile and install git? Which package
+shall I download from http://www.kernel.org/pub/software/scm/git/?
+What is the steps to compile each of them?
 
-> On Jul 11, 2008, at 8:42 PM, Johannes Schindelin wrote:
-> 
-> >On Fri, 11 Jul 2008, Steffen Prohaska wrote:
-> >
-> > >From: Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
-> > >
-> > >Signed-off-by: Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
-> > >Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-> > >---
-> > >convert.c |    4 ++++
-> > >1 files changed, 4 insertions(+), 0 deletions(-)
-> > >
-> > >diff --git a/convert.c b/convert.c
-> > >index 352b69d..78efed8 100644
-> > >--- a/convert.c
-> > >+++ b/convert.c
-> > >@@ -61,6 +61,10 @@ static void gather_stats(const char *buf, unsigned long
-> > >size, struct text_stat *
-> > >  else
-> > > 		stats->printable++;
-> > >	}
-> > >+
-> > >+	/* If file ends with EOF then don't count this EOF as non-printable.
-> > >*/
-> > >+	if (size >= 1 && buf[size-1] == '\032')
-> > >+		stats->nonprintable--;
-> >
-> >This is one of the things that are very specific to Windows and should not
-> >affect other people.
-> 
-> Does this mean you are opposed to this change?
+thanks in advance,
 
-Hrm.  Thinking about it again, this _could_ help Unix people who 
-collaborate with DOS people.
-
-OTOH it will just hide the fact that text files were committed that 
-contain silly characters.
-
-On the third hand, this code path affects only people who set autocrlf.
-
-Well, I guess they asked for it, kind of.
-
-Ciao,
-Dscho
+mike
