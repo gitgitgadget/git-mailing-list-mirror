@@ -1,103 +1,102 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Should we discuss Windows-related changes on
- git@vger.kernel.org?
-Date: Fri, 11 Jul 2008 16:57:04 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807111652170.8950@racer>
-References: <DDFD7E3B-8401-4EA0-9BBA-C9D8E25998A3@zib.de> <alpine.DEB.1.00.0807111349470.3640@eeepc-johanness> <65365AC4-D7C9-462B-8239-F3B35F7ECBEF@zib.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <johannes.sixt@telecom.at>,
-	Junio C Hamano <gitster@pobox.com>,
-	msysGit <msysgit@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Fri Jul 11 17:58:08 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] git-bisect: use dash-less form on git bisect log
+Date: Fri, 11 Jul 2008 18:01:29 +0200
+Message-ID: <1215792089-27201-1-git-send-email-vmiklos@frugalware.org>
+References: <200807110839.14764.chriscool@tuxfamily.org>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Jul 11 18:02:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHL0a-0006sJ-54
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 17:58:08 +0200
+	id 1KHL4W-0008Tl-Tt
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 18:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752524AbYGKP5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 11:57:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751074AbYGKP5I
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 11:57:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43215 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750992AbYGKP5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 11:57:07 -0400
-Received: (qmail invoked by alias); 11 Jul 2008 15:57:05 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp034) with SMTP; 11 Jul 2008 17:57:05 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+iU082pCGiB2oe746ISTTYnz1zxlbE0V5C/fbJ0T
-	/pEuw0XX978r9u
-X-X-Sender: gene099@racer
-In-Reply-To: <65365AC4-D7C9-462B-8239-F3B35F7ECBEF@zib.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1752985AbYGKQBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 12:01:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752750AbYGKQBP
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 12:01:15 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:50803 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752676AbYGKQBO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 12:01:14 -0400
+Received: from vmobile.example.net (dsl5401CCAB.pool.t-online.hu [84.1.204.171])
+	by yugo.frugalware.org (Postfix) with ESMTP id 807761DDC5B;
+	Fri, 11 Jul 2008 18:01:11 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id F3E941A9833; Fri, 11 Jul 2008 18:01:29 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.2.450.g8d367.dirty
+In-Reply-To: <200807110839.14764.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88135>
 
-Hi,
+Given that users are supposed to type 'git bisect' now, make the output
+of 'git bisect log' consistent with this.
 
-On Fri, 11 Jul 2008, Steffen Prohaska wrote:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-> On Jul 11, 2008, at 1:56 PM, Johannes Schindelin wrote:
-> 
-> >On Fri, 11 Jul 2008, Steffen Prohaska wrote:
-> >
-> > >I decided to stop queuing changes in 4msysgit.  Instead I'd like to
-> > >bring the diff between Junio's and 4msysgit's master to zero.  This
-> > >seems to be achievable after Junio merged Hannes' MinGW changes.
-> > >
-> > >I think all Windows-related changes to the git code base could be
-> > >discussed directly on the main git list and the msysgit list would be
-> > >reserved for the MinGW/MSYS runtime environment and the installer.
-> >
-> >I disagree.  Judging from the mails I read on the git list, Junio gets
-> >really swamped by patches these days (what with our very productive GSoC
-> >students).
-> 
-> Sending the patches to the git list does not necessarily mean that
-> they are directly addressed to Junio.  We discuss JGIT, EGIT, gitk,
-> and git gui patches on the list too.  AFAIK, none of them are applied
-> by Junio directly but by the respective maintainers.  We could handle
-> Windows-related patches similarly.
+On Fri, Jul 11, 2008 at 08:39:14AM +0200, Christian Couder <chriscool@tuxfamily.org> wrote:
+> Wouldn't it be better if bisect_replay could read old logs?
+>
+> Maybe with something like:
+>
+> +     while read git bisect command rev
+>       do
+> -             test "$bisect" = "git-bisect" || continue
+> +             test "$git $bisect" = "git bisect" -o "$git" =
+> "git-bisect" || continue
+> +             if test "$git" = "git-bisect"; then
+> +                     rev="$command"
+> +                     command="$bisect"
+> +             fi
 
-Then what is the msysGit list about?
+You are right, here is an updated patch.
 
-No, I really disagree.  Windows support is too large a thing, and partly a 
-too disgusting one to bother the git list.
+ git-bisect.sh |   12 ++++++++----
+ 1 files changed, 8 insertions(+), 4 deletions(-)
 
-> >I really think that we should discuss the patches on the msysGit list 
-> >first, whip them into shape, and then send them off.
-> >
-> >Just think of those patches that were sent off, only to realize that 
-> >they were no longer needed.  That should not have happened.
-> 
-> I intentionally sent the patches to show and discuss the differences 
-> between the state of the MinGW port in Junio's master and in 4msysgit. 
-> Some of the patches could be reverted in 4msysgit.  But, at least one 
-> patch was unrelated to MinGW and is now in master.  Some other patches 
-> need more work and are currently improved.  I think this was not a waste 
-> of time.
-
-IMO we could have discussed first what is the current state on the msysGit 
-list, and I would have commented there already on the patches that I think 
-would no longer be needed.
-
-Then the patch would have been sent off, and be in master, too.
-
-The difference: it would have been more efficient.  Those people who can 
-test if something is still needed on Windows are on the msysGit list.
-
-We do not really need to clutter git@vger more than necessary.
-
-Ciao,
-Dscho
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 991b2ef..3cac20d 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -149,7 +149,7 @@ bisect_start() {
+ 	echo "$start_head" >"$GIT_DIR/BISECT_START" &&
+ 	sq "$@" >"$GIT_DIR/BISECT_NAMES" &&
+ 	eval "$eval" &&
+-	echo "git-bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
++	echo "git bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
+ 	#
+ 	# Check if we can proceed to the next bisect state.
+ 	#
+@@ -169,7 +169,7 @@ bisect_write() {
+ 	esac
+ 	git update-ref "refs/bisect/$tag" "$rev" || exit
+ 	echo "# $state: $(git show-branch $rev)" >>"$GIT_DIR/BISECT_LOG"
+-	test -n "$nolog" || echo "git-bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
++	test -n "$nolog" || echo "git bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
+ }
+ 
+ bisect_state() {
+@@ -426,9 +426,13 @@ bisect_clean_state() {
+ bisect_replay () {
+ 	test -r "$1" || die "cannot read $1 for replaying"
+ 	bisect_reset
+-	while read bisect command rev
++	while read git bisect command rev
+ 	do
+-		test "$bisect" = "git-bisect" || continue
++		test "$git $bisect" = "git bisect" -o "$git" = "git-bisect" || continue
++		if test "$git" = "git-bisect"; then
++			rev="$command"
++			command="$bisect"
++		fi
+ 		case "$command" in
+ 		start)
+ 			cmd="bisect_start $rev"
+-- 
+1.5.6.2.450.g8d367.dirty
