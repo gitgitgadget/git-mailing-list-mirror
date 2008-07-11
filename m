@@ -1,71 +1,80 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Ext4 patchqueue corrupted ?
-Date: Fri, 11 Jul 2008 08:26:17 -0400
-Message-ID: <20080711122617.GA8154@mit.edu>
-References: <20080711034606.GA779@skywalker> <20080711084715.GT10151@machine.or.cz>
+From: Stephan Hennig <mailing_list@arcor.de>
+Subject: Re: git pull is slow
+Date: Fri, 11 Jul 2008 14:25:58 +0200
+Message-ID: <g57jkp$ekm$1@ger.gmane.org>
+References: <g5570s$d5m$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>,
-	Ming Ming Cao <cmm@us.ibm.com>,
-	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>,
-	git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Jul 11 14:27:40 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 11 14:29:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHHis-0003du-I8
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 14:27:38 +0200
+	id 1KHHkX-0004Di-BG
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 14:29:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758010AbYGKM0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 08:26:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754971AbYGKM0l
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 08:26:41 -0400
-Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:44515 "EHLO
-	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757905AbYGKM0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 08:26:38 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1KHHhk-0007Oz-8R; Fri, 11 Jul 2008 08:26:28 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1KHHhZ-00057I-E4; Fri, 11 Jul 2008 08:26:17 -0400
-Content-Disposition: inline
-In-Reply-To: <20080711084715.GT10151@machine.or.cz>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1754904AbYGKM2X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jul 2008 08:28:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754816AbYGKM2X
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 08:28:23 -0400
+Received: from main.gmane.org ([80.91.229.2]:37149 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752315AbYGKM2X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 08:28:23 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KHHjZ-00025z-EB
+	for git@vger.kernel.org; Fri, 11 Jul 2008 12:28:21 +0000
+Received: from dialin-145-254-068-004.pools.arcor-ip.net ([145.254.68.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 Jul 2008 12:28:21 +0000
+Received: from mailing_list by dialin-145-254-068-004.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 Jul 2008 12:28:21 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dialin-145-254-068-004.pools.arcor-ip.net
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12
+In-Reply-To: <g5570s$d5m$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88112>
 
-On Fri, Jul 11, 2008 at 10:47:15AM +0200, Petr Baudis wrote:
->   very puzzling; I have backed up the broken objects store, can you
-> repush, please? I'm curious about how this could have happenned;
-> repo.or.cz now uses Git from latest next, which is a rather strange
-> coincidence. ;-) Or did any of the pushers do anything special about
-> pushin to the repository recently?
+Stephan Hennig schrieb:
 
-Aneesh, did you try repushing?  It looks like the objects store is
-broken again.
+> I am observing very large data transfers when pulling from the
+> repository at <URL:http://repo.or.cz/w/wortliste.git>.
 
-Pasky, in case it helps, and for the benefit of Linux-ext4 folks, I
-have a copy of my repository (which I last pushed to repo.or.cz around
-noon US/Eastern yesterday) here:
+Here's the output of a recent pull:
 
-     git://git.kernel.org/pub/scm/fs/ext2/ext4-patch-queue.git
+> unknown@COMMODORE ~/Themen/trennmuster/repository/wortliste (master)
+> $ git pull
+> Enter passphrase for key '/x/home/.ssh/id_rsa':
+> remote: Counting objects: 15, done.=E2=86=90[K
+> remote: Compressing objects: 100% (7/7), done.=E2=86=90[K)   =E2=86=90=
+[Kts:   8% (1/12)
+> remote: Total 12 (delta 5), reused 12 (delta 5)=E2=86=90[K
+> Unpacking objects: 100% (12/12), done.
+> From git+ssh://xxx@repo.or.cz/srv/git/wortliste
+>    d905095..d0c6a33  master     -> origin/master
+>  * [new tag]         dehyph-exptl-v0.13 -> dehyph-exptl-v0.13
+> Updating d905095..d0c6a33
+> Fast forward
+>  wortliste=E2=86=90[m |   19 =E2=86=90[32m+++++++++++=E2=86=90[m=E2=86=
+=90[31m--------=E2=86=90[m
+>  1 files changed, 11 insertions(+), 8 deletions(-)=E2=86=90[m
 
-My most recent HEAD is ec90e411; if anyone has something more recent,
-they can send it to me via:
+After the line containing "remote: Compressing objects:" had been
+printed several MB have been transferred.
 
-     git bundle create /tmp/to-send ec90e411
+Does it matter that the original clone has been performed with plain gi=
+t
+protocol?  I have only later changed the url in .git/config to use git+=
+ssh.
 
-... and then e-mailing me as an attachment the resulting binary file
-in /tmp/to-send.
-
-						- Ted
+Best regards,
+Stephan Hennig
