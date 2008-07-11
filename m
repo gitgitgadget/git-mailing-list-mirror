@@ -1,132 +1,95 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [GitStats] Bling bling or some statistics on the git.git
- repository
-Date: Sat, 12 Jul 2008 00:33:37 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807120028280.8950@racer>
-References: <bd6139dc0807090621n308b0159n92d946c165d3a5dd@mail.gmail.com>  <bd6139dc0807111404y1d3dd48ao6d2903da4cd1aa56@mail.gmail.com>  <alpine.DEB.1.00.0807112215050.8950@racer>  <bd6139dc0807111452x778759d4jd6ac71338974018e@mail.gmail.com> 
- <alpine.DEB.1.00.0807112257450.8950@racer> <bd6139dc0807111550w1f4a9e5fl636df73572bd27de@mail.gmail.com>
+Subject: Re: Should we discuss Windows-related changes on
+ git@vger.kernel.org?
+Date: Sat, 12 Jul 2008 00:35:20 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807120033490.8950@racer>
+References: <DDFD7E3B-8401-4EA0-9BBA-C9D8E25998A3@zib.de> <alpine.DEB.1.00.0807111349470.3640@eeepc-johanness> <65365AC4-D7C9-462B-8239-F3B35F7ECBEF@zib.de> <alpine.DEB.1.00.0807111652170.8950@racer> <A065AF71-5685-423A-9F87-5349ADC6C9C9@zib.de> <alpine.DEB.1.00.0807111930160.8950@racer> <alpine.LFD.1.10.0807111159560.2936@woody.linux-foundation.org> <alpine.DEB.1.00.0807112037220.8950@racer> <7v4p6wjcgm.fsf@gitster.siamese.dyndns.org>
+Reply-To: Johannes.Schindelin@gmx.de
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailinglist <git@vger.kernel.org>,
-	David Symonds <dsymonds@gmail.com>
-To: Sverre Rabbelier <alturin@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 12 01:34:39 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,  Steffen Prohaska <prohaska@zib.de>,  Johannes Sixt <johannes.sixt@telecom.at>,  msysGit <msysgit@googlegroups.com>, Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sat Jul 12 01:36:34 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from py-out-1314.google.com ([64.233.166.169])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHS8L-0000Rk-Ae
-	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 01:34:37 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753433AbYGKXdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 19:33:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753326AbYGKXdj
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 19:33:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40138 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751482AbYGKXdi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 19:33:38 -0400
-Received: (qmail invoked by alias); 11 Jul 2008 23:33:36 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp019) with SMTP; 12 Jul 2008 01:33:36 +0200
+	id 1KHSA2-0000q0-V7
+	for gcvm-msysgit@m.gmane.org; Sat, 12 Jul 2008 01:36:23 +0200
+Received: by py-out-1314.google.com with SMTP id u10so11059154pyb.2
+        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2008 16:35:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
+         :subject:in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        bh=x2xZ3pH5EOb7oukAOlBNJMILwpDVSh52jitupZnCug4=;
+        b=i0thkAnbnCgJ0nz9esVX8wW11jAd1rAUeaUiPwoVeqhZ7uXMbXrCxvgXOXoyWddT31
+         FM4mdWV1zPNfYKKEg4AO95wmOn13Gobc/lf6W5ghscCRHKRin/04UE1o/R79txUwBCTm
+         VPN1wsZJ3jDPu5PjMtclSrsoDseMaP2C9KtSQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere;
+        b=bvwhJaywo3QV9ATurxOHyJJmoSKGACcuePxAlDaNtfnwmjecIWD5JxnaPuI96tPzfb
+         JjvM/eP8XtbATJIo+FjpdRwtuo+qQJsSiFZ4myx3vGWAvwtsSFWr+LtruYKSWYDp61yW
+         yfc7wAstPFBQZ8uj+P8aTP+v9RMRkwXI3LnBw=
+Received: by 10.142.221.19 with SMTP id t19mr330476wfg.13.1215819322651;
+        Fri, 11 Jul 2008 16:35:22 -0700 (PDT)
+Received: by 10.106.239.31 with SMTP id m31gr2684prh.0;
+	Fri, 11 Jul 2008 16:35:22 -0700 (PDT)
+X-Sender: Johannes.Schindelin@gmx.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.114.67.2 with SMTP id p2mr6748149waa.24.1215819321795; Fri, 11 Jul 2008 16:35:21 -0700 (PDT)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id 39si1428107yxd.0.2008.07.11.16.35.21; Fri, 11 Jul 2008 16:35:21 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Received: (qmail invoked by alias); 11 Jul 2008 23:35:20 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28] by mail.gmx.net (mp010) with SMTP; 12 Jul 2008 01:35:20 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18E7V5G7wsEFWoSLGfT61j1AbWCq8spJH/+ML5pB5
-	xvTAz8TU+abbvv
+X-Provags-ID: V01U2FsdGVkX18YKFdPd7UYSOZM9UW7xqYCPwuv71goIeVvVv54HC W+08TzleVEBx0b
 X-X-Sender: gene099@racer
-In-Reply-To: <bd6139dc0807111550w1f4a9e5fl636df73572bd27de@mail.gmail.com>
+In-Reply-To: <7v4p6wjcgm.fsf@gitster.siamese.dyndns.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
-Sender: git-owner@vger.kernel.org
+X-FuHaFi: 0.67
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88200>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88201>
+
 
 Hi,
 
-On Sat, 12 Jul 2008, Sverre Rabbelier wrote:
+On Fri, 11 Jul 2008, Junio C Hamano wrote:
 
-> On Sat, Jul 12, 2008 at 12:07 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >> On Fri, Jul 11, 2008 at 11:22 PM, Johannes Schindelin Yeah, I wish 
-> >> 'git log -C -C -M --numstat --sacrifice-chicken --pretty=format:%ae 
-> >> --' would take care of that... That is, a git-blame like mechanism 
-> >> that would detect such moves on a per-commit basis and report them 
-> >> would be very useful to me.
-> >
-> > Well, the chicken (or better, a goat) should be sacrificed by you...  
-> > The option I would call "--code-moves".
-> 
-> If you suggest I write up a patch to 'git log' I am afraid that would 
-> require quite a bit more skill && knowledge of 'git log' than I have 
-> (which is about Null :P).
+> Another example that has already happened was our move away from direct 
+> use of fork/exec but abstracting it out to run_command() layer.  This 
+> would not have settled in a shape usable by both Windows and POSIX if 
+> people from both camps did not participate in the design and review.
 
-If you were suspecting that I would write the patch once the semantics are 
-finalized, you would be absolutely correct.
+I think that is a perfect example, since Hannes worked on it in mingw.git.  
+AFAIR a few comments came through msysGit, and were incorporated.  When 
+everything was good for a first go at git@vger, it was sent, and the 
+interface finalized.
 
-> > But the semantics of that need to be sorted out in a shell script 
-> > first; maybe like I outlined (if that was not coherent, please say 
-> > so).
-> 
-> Python is one big shell script :P, so if you meant that it should be 
-> part of GitStats (instead of part of 'git log', which I commented on 
-> above), python would be just fine :). The concept was clear enough 
-> though, I think I understand what you mean.
-
-Fair enough.  As long as you use a language that is easy to prototype 
-quickly and dirtily in.  Such as Python.
-
-> >> Very much so, but the former I figure can be easily done with 'git 
-> >> log -C -C -M' I discovered (I need to parse it's output though, and 
-> >> also determine what to do with moves statistics wise. Should changes 
-> >> made due to moves just be ignored?)
-> >
-> > That is not very interesting, as we often move so small parts (think 
-> > "one function") that -C -C -M does not trigger.
-> 
-> Right, why aim for the stuff when there's much more interesting fun out 
-> there? If there was a --code-moves I agree with you that it would be a 
-> lot more interesting to have than going with the current approach and 
-> throwing in '-C -C -M'.
-
-Let's go for it, then!
-
-> >> That sounds interesting, I won't need to actually do that though, I 
-> >> already have a diff parser that gives me the lines added VS lines 
-> >> deleted on a hunk-by-hunk basis. If it is a true move (e.g., code 
-> >> removed in file X and added in file Y) it should be trivial to detect 
-> >> that.
-> >>
-> >> Something along the lines of:
-> >>  for hunk in added:
-> >>   if hunk in deleted:
-> >>     print("Over here!!")
-> >
-> > I think that is not enough, as a code move can mean that part of a
-> > function was refactored into a function.  The consequence is often a
-> > reindent, and possibly rewrapping.
-> 
-> Mhhh, such would be beyond the scope of implementing manually indeed,
-> and should be left to the likes of a diff tool instead in order to
-> prevent reinventing the wheel :).
-
-That is why I was suggesting using the diff tool with munged input to find 
-out what works best.
-
-When that is done, I'll turn it into C.
-
-> > BTW I realized something else: your 
-> > http://alturin.googlepages.com/full_activity.txt lists only 
-> > "gitk-git/po/es.po" under git-git/po/.  And it has as many added as 
-> > deleted lines.
-> 
-> Correct, that's because that is what 'git log' tells me.
-
-I suspect that one big "git log" will not tell you enough.  You probably 
-need to make your tool aware (at least a little) about merges, just as you 
-probably made it aware about parent/child relationships (to track the 
-changes along renames)...
+And I agree that it is a pretty beautiful interface.
 
 Ciao,
 Dscho
