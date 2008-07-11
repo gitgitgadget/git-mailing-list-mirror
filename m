@@ -1,57 +1,63 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Ext4 patchqueue corrupted ?
-Date: Fri, 11 Jul 2008 15:13:38 +0200
-Message-ID: <20080711131338.GU10151@machine.or.cz>
-References: <20080711034606.GA779@skywalker> <20080711084715.GT10151@machine.or.cz> <20080711122617.GA8154@mit.edu> <20080711123109.GA14606@skywalker> <20080711124742.GA20099@mit.edu>
+From: Stephan Hennig <mailing_list@arcor.de>
+Subject: Re: git pull is slow
+Date: Fri, 11 Jul 2008 14:55:25 +0200
+Message-ID: <g57mu1$q3v$1@ger.gmane.org>
+References: <g5570s$d5m$1@ger.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>,
-	Ming Ming Cao <cmm@us.ibm.com>,
-	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>,
-	git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: linux-ext4-owner@vger.kernel.org Fri Jul 11 15:14:50 2008
-Return-path: <linux-ext4-owner@vger.kernel.org>
-Envelope-to: gcfe-linux-ext4@gmane.org
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 11 15:26:11 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHISP-0004Pd-OF
-	for gcfe-linux-ext4@gmane.org; Fri, 11 Jul 2008 15:14:42 +0200
+	id 1KHId4-0000KQ-7r
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 15:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755596AbYGKNNo (ORCPT <rfc822;gcfe-linux-ext4@m.gmane.org>);
-	Fri, 11 Jul 2008 09:13:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755281AbYGKNNo
-	(ORCPT <rfc822;linux-ext4-outgoing>);
-	Fri, 11 Jul 2008 09:13:44 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:48322 "EHLO machine.or.cz"
+	id S1753298AbYGKNYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 09:24:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751911AbYGKNYo
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 09:24:44 -0400
+Received: from main.gmane.org ([80.91.229.2]:55320 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752174AbYGKNNn (ORCPT <rfc822;linux-ext4@vger.kernel.org>);
-	Fri, 11 Jul 2008 09:13:43 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id F35B9393BB0A; Fri, 11 Jul 2008 15:13:38 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080711124742.GA20099@mit.edu>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-Sender: linux-ext4-owner@vger.kernel.org
+	id S1751246AbYGKNYn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 09:24:43 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KHIc2-0004Yi-0J
+	for git@vger.kernel.org; Fri, 11 Jul 2008 13:24:38 +0000
+Received: from dialin-145-254-069-091.pools.arcor-ip.net ([145.254.69.91])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 Jul 2008 13:24:37 +0000
+Received: from mailing_list by dialin-145-254-069-091.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 Jul 2008 13:24:37 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dialin-145-254-069-091.pools.arcor-ip.net
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12
+In-Reply-To: <g5570s$d5m$1@ger.gmane.org> 
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-ext4.vger.kernel.org>
-X-Mailing-List: linux-ext4@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88116>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88117>
 
-  Hi,
+Stephan Hennig schrieb:
 
-On Fri, Jul 11, 2008 at 08:47:42AM -0400, Theodore Tso wrote:
-> Can you completely zap the repository replace it with a freshly 
-> "git init"-ialized files, and I'll try repushing?
+> Does it matter that the original clone has been performed with plain git
+> protocol?  I have only later changed the url in .git/config to use git+ssh.
 
-  right, I have done that now. For anyone interested in the corrupted
-repository, the backed up refs and objects directories are still in the
-repository under the name *.broken, e.g. at
+To be precise, the original pull has been done via
 
-	http://repo.or.cz/r/ext4-patch-queue.git
+	url = git://repo.or.cz/wortliste.git
 
-I will try to analyze it myself later.
+which is a read-only URL.  I changed .git/config manually to point to
 
--- 
-				Petr "Pasky" Baudis
-The last good thing written in C++ was the Pachelbel Canon. -- J. Olson
+	url = git+ssh://xxx@repo.or.cz/srv/git/wortliste.git
+
+later, which is the push URL.
+
+Best regards,
+Stephan Hennig
