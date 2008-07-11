@@ -1,78 +1,108 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add pretty format %aN which gives the author name,
- respecting .mailmap
-Date: Sat, 12 Jul 2008 00:42:39 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807120041300.8950@racer>
-References: <bd6139dc0807090621n308b0159n92d946c165d3a5dd@mail.gmail.com>  <bd6139dc0807111404y1d3dd48ao6d2903da4cd1aa56@mail.gmail.com>  <alpine.DEB.1.00.0807112215050.8950@racer>  <alpine.DEB.1.00.0807112238350.8950@racer> 
- <bd6139dc0807111455s127c5a35hfd3f01cc75614f65@mail.gmail.com>  <alpine.DEB.1.00.0807112310140.8950@racer>  <bd6139dc0807111514j75d1ae6dl3c3f5dbfb55961c7@mail.gmail.com>  <alpine.DEB.1.00.0807120000580.8950@racer>  <alpine.DEB.1.00.0807120027330.8950@racer>
- <bd6139dc0807111630j306f0225m90b501296a508552@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCHv3] Fix backwards-incompatible handling of core.sharedRepository
+Date: Sat, 12 Jul 2008 01:45:00 +0200
+Message-ID: <20080711234257.16449.85447.stgit@rover.dkm.cz>
+References: <20080711233841.30916.75885.stgit@rover.dkm.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, Git Mailinglist <git@vger.kernel.org>,
-	David Symonds <dsymonds@gmail.com>
-To: Sverre Rabbelier <alturin@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 12 01:43:40 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Heikki Orsila <heikki.orsila@iki.fi>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Jul 12 01:47:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHSH5-0002Ds-Q1
-	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 01:43:40 +0200
+	id 1KHSKT-0002wp-4E
+	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 01:47:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754245AbYGKXml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 19:42:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753201AbYGKXml
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 19:42:41 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46527 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751455AbYGKXmk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 19:42:40 -0400
-Received: (qmail invoked by alias); 11 Jul 2008 23:42:38 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp026) with SMTP; 12 Jul 2008 01:42:38 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX185+/9jJZM5Hyhf4mrA966+wEmaf7bzPPiKEVdoxZ
-	Srh7XOg7+B/kDs
-X-X-Sender: gene099@racer
-In-Reply-To: <bd6139dc0807111630j306f0225m90b501296a508552@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1753086AbYGKXqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 19:46:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752149AbYGKXqL
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 19:46:11 -0400
+Received: from rover.dkm.cz ([62.24.64.27]:40128 "EHLO rover.dkm.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752104AbYGKXqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 19:46:10 -0400
+Received: from rover.dkm.cz (localhost [127.0.0.1])
+	by rover.dkm.cz (Postfix) with ESMTP id 123D0166748;
+	Sat, 12 Jul 2008 01:45:00 +0200 (CEST)
+In-Reply-To: <20080711233841.30916.75885.stgit@rover.dkm.cz>
+User-Agent: StGIT/0.14.3.171.ge0e6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88206>
 
-Hi,
+The 06cbe8550324e0fd2290839bf3b9a92aa53b70ab core.sharedRepository
+handling extension broke backwards compatibility; before, shared=1 meant
+that Git merely ensured the repository is group-writable, not that it's
+_only_ group-writable, which is the current behaviour. Thus, with umask 002,
+Git creates repository with /rw.rw.--./, this patch fixes it back to
+/rw.rw.r-./.
 
-On Sat, 12 Jul 2008, Sverre Rabbelier wrote:
+Maybe it makes sense to provide the current semantics in some way too,
+but that cannot be done at the expense of ditching backwards
+compatibility; this bug has just wasted me two hours and broke
+repo.or.cz pushing for several hours.
 
-> On Sat, Jul 12, 2008 at 1:28 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > The pretty format %an does not respect .mailmap, but gives the exact 
-> > author name recorded in the commit.  Sometimes it is more desirable, 
-> > however, to look if the email has another name mapped to it in 
-> > .mailmap.
-> >
-> > This commit adds %aN (and %cN for the committer name) to do exactly 
-> > that.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> 
-> Whoah, that's fast ;).
+Cc: Heikki Orsila <heikki.orsila@iki.fi>
+Signed-off-by: Petr Baudis <pasky@rover.dkm.cz>
+---
 
-Heh.  The price is that my patches are usually more buggy than other 
-contributors' patches.
+  Oops, this testcase wouldn't really remove its test subrepository
+after itself properly, though the testsuite would still pass; of course
+this bug slipped through all the previous visual inspections of mine.
 
-> I'm not sure what to do though, if I use this new %cN GitStats will
-> only work with the latest git version... :(
+  Sorry for the continuous noise. :-)
 
-Yes, that is correct.  But my impression was that GitStats was never meant 
-as a pure add-on, but rather some integral part of Git, no?  IOW at least 
-contrib/ stuff.
+ path.c                 |    2 +-
+ t/t1301-shared-repo.sh |   20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletions(-)
 
-Ciao,
-Dscho
+
+diff --git a/path.c b/path.c
+index 5983255..75c5915 100644
+--- a/path.c
++++ b/path.c
+@@ -269,7 +269,7 @@ int adjust_shared_perm(const char *path)
+ 	mode = st.st_mode;
+ 
+ 	if (shared_repository) {
+-		int tweak = shared_repository;
++		int tweak = (mode & 0777) | shared_repository;
+ 		if (!(mode & S_IWUSR))
+ 			tweak &= ~0222;
+ 		mode = (mode & ~0777) | tweak;
+diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+index 6c78c8b..3fe485c 100755
+--- a/t/t1301-shared-repo.sh
++++ b/t/t1301-shared-repo.sh
+@@ -17,6 +17,26 @@ test_expect_success 'shared = 0400 (faulty permission u-w)' '
+ 	test $ret != "0"
+ '
+ 
++test_expect_success 'shared=1 does not override sane umask' '
++	mkdir sub &&
++	cd sub &&
++	umask 002 &&
++	git init --shared=1 &&
++	test 1 = $(git config core.sharedrepository) &&
++	actual="$(ls -l .git/HEAD)" &&
++	cd .. &&
++	rm -rf sub &&
++	case "$actual" in
++	-rw-rw-r--*)
++		: happy
++		;;
++	*)
++		echo Oops, .git/HEAD is not 0664 but $actual
++		false
++		;;
++	esac
++'
++
+ test_expect_success 'shared=all' '
+ 	mkdir sub &&
+ 	cd sub &&
