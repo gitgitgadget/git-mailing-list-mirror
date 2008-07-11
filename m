@@ -1,71 +1,64 @@
-From: "Denis Bueno" <dbueno@gmail.com>
-Subject: git cherry-pick before archive
-Date: Fri, 11 Jul 2008 11:46:12 -0400
-Message-ID: <6dbd4d000807110846m2921ddb9r88eb3986762b8f81@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] cherry: cache patch-ids to avoid repeating work
+Date: Fri, 11 Jul 2008 16:48:27 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807111647080.8950@racer>
+References: <7f9d599f0807082053w4603d0bbgfead9127c33b78b5@mail.gmail.com>  <7f9d599f0807082226oee83bedrf13d254ae12be274@mail.gmail.com>  <7vprpnlglh.fsf@gitster.siamese.dyndns.org>  <7f9d599f0807092034n438f0976pf44d4c9305871087@mail.gmail.com> 
+ <7f9d599f0807100709u778f0ab1y28776d7efb831b61@mail.gmail.com>  <alpine.DEB.1.00.0807101526380.18205@racer>  <7f9d599f0807100733s4435a9bga89749f2f6e10cf@mail.gmail.com>  <7v3amglxmb.fsf@gitster.siamese.dyndns.org>  <7f9d599f0807110758y6c4ea7bepd726daf4fe5f074c@mail.gmail.com>
+  <alpine.DEB.1.00.0807111635400.8950@racer> <7f9d599f0807110841r329dfb95g786a576bd981dd1b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 11 17:47:19 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Geoffrey Irving <irving@naml.us>
+X-From: git-owner@vger.kernel.org Fri Jul 11 17:49:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHKq3-0002VG-2k
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 17:47:15 +0200
+	id 1KHKsD-0003NC-Eg
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 17:49:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291AbYGKPqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 11:46:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751074AbYGKPqR
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 11:46:17 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:39717 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750712AbYGKPqQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 11:46:16 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1557642fgg.17
-        for <git@vger.kernel.org>; Fri, 11 Jul 2008 08:46:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=DfNCZ5dFj4V1j9yz6mlmm8ZNCSL55AqnPblW/Q2fRcY=;
-        b=BPMPbW9gOtUEQSgCEd9lmBKWXEtitxxvI50ycInctR2Puose5ME/hBb7vy+PhSdmV0
-         IhDhiT0NeB9uqztRd4OUwDv/PousJqggemM1T+ThbHHzbBYp4hjuqKt5ZSdh7GjFagR9
-         kmlIEzk5k+fuEmRDcXVTzkyTCs5B5zusZQgL4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=SCWy256EDq6plJVSvmpSY+r523kP/MO00e+VxU7DAbhnGdmg/y7jnDuHBRtK9WB0S5
-         z9dnt7lUA/jwmJchnoWQlqxU8SuOPchlPZeLyG6DheWWrUQtYezWwTihZgzHCsBn77Ti
-         wEUBl+MAKyUdadOFIj4vmUvnln2Z3RAu2n5/o=
-Received: by 10.86.89.1 with SMTP id m1mr10039561fgb.68.1215791173114;
-        Fri, 11 Jul 2008 08:46:13 -0700 (PDT)
-Received: by 10.86.59.7 with HTTP; Fri, 11 Jul 2008 08:46:12 -0700 (PDT)
-Content-Disposition: inline
+	id S1752922AbYGKPsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 11:48:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751482AbYGKPsa
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 11:48:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57530 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751944AbYGKPsa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 11:48:30 -0400
+Received: (qmail invoked by alias); 11 Jul 2008 15:48:28 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp004) with SMTP; 11 Jul 2008 17:48:28 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+0yYVeGwi0iU56ZLsa6P+VHSzeKwNGSqeUmZPsSe
+	F+SsokJGu45amP
+X-X-Sender: gene099@racer
+In-Reply-To: <7f9d599f0807110841r329dfb95g786a576bd981dd1b@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88131>
 
-Hi all,
+Hi,
 
-I'm trying to use git archive to create a kind of "release" tarball of
-my source.  I've got a patch (a commit) that I'd like to apply to the
-tree before I call git archive on HEAD.  Currently my command is:
+On Fri, 11 Jul 2008, Geoffrey Irving wrote:
 
-    git archive --format=tar --prefix=pfx/ HEAD | gzip > prj.tgz
+> On Fri, Jul 11, 2008 at 8:36 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>
+> > Why so complicated?  I mean, you can count in that "infinite" loop 
+> > yourself, no?
+> 
+> Yeah, I was just trying to avoid the extra termination condition, 
+> because I don't think it adds any real safety.
 
-If I were to actually modify my tree & history, I'd change the command to:
+Sorry.  You absolutely lost me.  While doing the loop over the entries, 
+trying to find an entry, adding a counter, and exiting when the counter 
+reaches the total number of slots does not add any real safety?
 
-    git cherry-pick 97a1235ce674f7cf4df3129cd0ab1ae0793db392
-    git archive --format=tar --prefix=pfx/ HEAD | gzip > prj.tgz
-    git reset --hard HEAD^
-
-But I'd rather not modify my history, if it's possible.  (This will
-create a bunch of dangling commit objects over time, no?)
-
--- 
- Denis
+Puzzled,
+Dscho
