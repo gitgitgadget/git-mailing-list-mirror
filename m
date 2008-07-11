@@ -1,78 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git cherry-pick before archive
-Date: Fri, 11 Jul 2008 19:53:17 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807111950540.8950@racer>
-References: <6dbd4d000807110846m2921ddb9r88eb3986762b8f81@mail.gmail.com>  <alpine.DEB.1.00.0807111649290.8950@racer>  <6dbd4d000807110909n1ced22eeraef45af441c20cca@mail.gmail.com>  <20080711161158.GD10347@genesis.frugalware.org>  <alpine.DEB.1.00.0807111924180.8950@racer>
-  <6dbd4d000807111128l4721113dh3713bc7abd3d837e@mail.gmail.com>  <alpine.DEB.1.00.0807111944000.8950@racer> <6dbd4d000807111149s4fb661cak9fac152864260901@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: how to undo a git merge?
+Date: Fri, 11 Jul 2008 20:53:32 +0200
+Message-ID: <20080711185332.GJ10347@genesis.frugalware.org>
+References: <fa7d16350807110916x689e316fr6bae01f28e2e1acb@mail.gmail.com> <20080711161923.GE10347@genesis.frugalware.org> <fa7d16350807111107o40c5cbb5xc06c3c56b16b7499@mail.gmail.com> <20080711181413.GI10347@genesis.frugalware.org> <fa7d16350807111146m18b0ca9q6902c2167bfd3512@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Denis Bueno <dbueno@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 20:54:35 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="W18qbkTAGYos9/y6"
+Cc: git@vger.kernel.org
+To: ff <ff@member.org>
+X-From: git-owner@vger.kernel.org Fri Jul 11 20:55:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHNl4-0008Lp-NV
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 20:54:19 +0200
+	id 1KHNlJ-0008Q0-Nc
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 20:54:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751167AbYGKSxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 14:53:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbYGKSxU
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 14:53:20 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36041 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750860AbYGKSxT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 14:53:19 -0400
-Received: (qmail invoked by alias); 11 Jul 2008 18:53:17 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp026) with SMTP; 11 Jul 2008 20:53:17 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18vVDtNYCQvUMWMc41oe50doG+euZcfxzDB10g5SK
-	u7oeplfrW4gL8o
-X-X-Sender: gene099@racer
-In-Reply-To: <6dbd4d000807111149s4fb661cak9fac152864260901@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1751777AbYGKSxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 14:53:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752555AbYGKSxe
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 14:53:34 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:50593 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751678AbYGKSxd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 14:53:33 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 733331B24FA;
+	Fri, 11 Jul 2008 20:53:32 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id A55E64465E;
+	Fri, 11 Jul 2008 20:18:54 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 53A4C177001C; Fri, 11 Jul 2008 20:53:32 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <fa7d16350807111146m18b0ca9q6902c2167bfd3512@mail.gmail.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88158>
 
-Hi,
 
-On Fri, 11 Jul 2008, Denis Bueno wrote:
+--W18qbkTAGYos9/y6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> On Fri, Jul 11, 2008 at 14:46, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > BTW in your case, I would suggest this:
-> >
-> >        INDEX_FILE=.git/bla git read-tree HEAD &&
-> >        INDEX_FILE=.git/bla git apply --cached patchfile &&
-> >        INDEX_FILE=.git/bla git archive [...] &&
-> >        rm .git/bla
-> >
-> > IOW: Just use a temporary index for your work.
-> 
-> What is the rationale?  So I can relieve the assumption that the index 
-> is clean?
+On Fri, Jul 11, 2008 at 02:46:15PM -0400, ff <ff@member.org> wrote:
+> ooops... yes... I'm scared of the reply-all button. :)
 
-Not completely.
+Also please don't top-post, thanks. ;-)
 
-It will just leave the current index alone, ignoring the changes within 
-it.  It will also avoid having to update the index several times.
+> In your example, how and why you can determine that the number 1
+> represents the "foo" branch? Would "-m 2" represent the master branch?
+> In your example is there any other choice for the "-m" number to use?
 
-IMO it is just the thing you should do here: you do not want to stage 
-anything for commit, so keep .git/index as-is, and use a temporary staging 
-area instead.
+If the merge has two parents, then the first one is the actual branch
+and the second is the 'other' branch.
 
-It also avoids the need to "undo" things that might not be easily undone: 
-if your patch contains stuff that was partly in the index, but 
-uncommitted, neither "git reset" nor "git revert -n" will do what you 
-want.
+So if 'master' is checked out, you did a 'git merge foo', and you want
+to do a revert, '1' stands for 'master' and '2' for 'foo'.
 
-Ciao,
-Dscho
+--W18qbkTAGYos9/y6
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkh3rCwACgkQe81tAgORUJbifACeOIvaILN0fOzEcP3qKBj1qB6T
+aDUAoKM6VaiAMZxb+COFRRXamR1TNHdG
+=1UNY
+-----END PGP SIGNATURE-----
+
+--W18qbkTAGYos9/y6--
