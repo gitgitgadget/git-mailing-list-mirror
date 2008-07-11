@@ -1,86 +1,89 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: feature request: git-log should accept sth like
- v2.6.26-rc8-227
-Date: Fri, 11 Jul 2008 15:36:07 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807111533310.8950@racer>
-References: <200807102057.15063.toralf.foerster@gmx.de> <alpine.DEB.1.00.0807102028420.18205@racer> <200807111539.06606.toralf.foerster@gmx.de>
+From: "Dmitry Potapov" <dpotapov@gmail.com>
+Subject: Re: feature request: git-log should accept sth like v2.6.26-rc8-227
+Date: Fri, 11 Jul 2008 18:44:23 +0400
+Message-ID: <37fcd2780807110744k3b2a332csdf788dabd172622c@mail.gmail.com>
+References: <200807102057.15063.toralf.foerster@gmx.de>
+	 <alpine.DEB.1.00.0807102028420.18205@racer>
+	 <200807111539.06606.toralf.foerster@gmx.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1771059144-1215786967=:8950"
-Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?Toralf_F=F6rster?= <toralf.foerster@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 11 16:37:33 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Toralf_F=F6rster?=" <toralf.foerster@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 11 16:45:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHJkE-0006XU-1s
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 16:37:10 +0200
+	id 1KHJsB-0001Tg-Cr
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 16:45:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752786AbYGKOgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 10:36:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752621AbYGKOgL
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 10:36:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38189 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752106AbYGKOgK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 10:36:10 -0400
-Received: (qmail invoked by alias); 11 Jul 2008 14:36:08 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp052) with SMTP; 11 Jul 2008 16:36:08 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18QQuN/l9sQNpl+VIzYd9kl1DvNB1GIrnC9F/SEuR
-	To1y25rDAv8zOu
-X-X-Sender: gene099@racer
+	id S1751582AbYGKOoZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jul 2008 10:44:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752621AbYGKOoZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 10:44:25 -0400
+Received: from rv-out-0506.google.com ([209.85.198.229]:35740 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750932AbYGKOoY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Jul 2008 10:44:24 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so4443205rvb.1
+        for <git@vger.kernel.org>; Fri, 11 Jul 2008 07:44:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=xv9tfCZ73uaFh8CXypEvunYEYOcJ3DAXYTgkXJmKplI=;
+        b=rYDtiCKTuVn/0WptMVgY0iqZ1ASDzarPCUIDBTj2m//tgILVGpB/rQ50FFarpjNy/T
+         9k374jCMqyzPXQUNwpl0Newv9GoYozvALVwJsL+gA2c0oni1vFIVcdn3rWsaiUdrN/14
+         zXK8jWNgnjC0GRQ31Saj6xZ0NF41x/Zfa9g94=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=ZNRrqKUT0EvU8ZnGtF4c1IoJI6dAIPUjex4pXt4YYvllFO9bX9wT975TIzMvt8pTkS
+         xyJzuRNYOS4LCJ2CKlfH8D9yOpA86CPcgRJCPJF7R55y0oGBgvQe0sGoNlukQnUKcg1Y
+         IMKe44+i51cWu78Fj+AetomF4J1Xb1Jx2Mzzw=
+Received: by 10.115.76.1 with SMTP id d1mr13923636wal.196.1215787463211;
+        Fri, 11 Jul 2008 07:44:23 -0700 (PDT)
+Received: by 10.140.126.10 with HTTP; Fri, 11 Jul 2008 07:44:23 -0700 (PDT)
 In-Reply-To: <200807111539.06606.toralf.foerster@gmx.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88123>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Jul 11, 2008 at 5:39 PM, Toralf F=F6rster <toralf.foerster@gmx.=
+de> wrote:
+>
+> Ok, following the thread I understand why this feature isn't wanted b=
+y all. But
+> for the given example (where I only pulled from another git tree) thi=
+s could
+> work, isn't it : ?
+>
+> tfoerste@n22 ~/devel/linux-2.6 $ git-log v2.6.26-rc9.. | perl -e '@c =
+=3D grep { /^commit/ } <>; print map { $#c - $i++ . "\t" . $_ } @c'
 
---8323329-1771059144-1215786967=:8950
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+No, it does not. Running your script, I have
 
-Hi,
+=2E..
+56      commit 803a9067e19714ea7b7da760fe92f0d53bfa6994
+=2E..
 
-On Fri, 11 Jul 2008, Toralf Förster wrote:
+Now, let's see what git-describe thinks about it
+$ git describe 803a9067e19714ea7b7da760fe92f0d53bfa6994
+v2.6.26-rc9-38-g803a906
 
-> At Thursday 10 July 2008 21:29:07 Johannes Schindelin wrote :
-> 
-> > On Thu, 10 Jul 2008, Toralf Förster wrote:
-> > 
-> > > I appended those strings to the names of my UML kernel executables. 
-> > > Unfortunately I didn't used the commit id and now I'm wondering 
-> > > whether git could accept v2.6.26-rc9-56 as well in future.
-> > 
-> > If that were unambiguous, yes.  But it is not.
-> 
-> Ok, following the thread I understand why this feature isn't wanted by 
-> all. But for the given example (where I only pulled from another git 
-> tree) this could work, isn't it : ?
-> 
-> tfoerste@n22 ~/devel/linux-2.6 $ git-log v2.6.26-rc9.. | perl -e '@c = grep { /^commit/ } <>; print map { $#c - $i++ . "\t" . $_ } @c'
+Your script is obviously incorrect. It is written in the assumption tha=
+t
+history is linear, but it is not. Even if you pull only from one repo,
+this repo still contains *many* branches. Along any branch, you may hav=
+e
+the same number.
 
-The question is not so much if it would work, but what people would do 
-with this.  They would probably include something in a mail to you like 
-"v2.6.26-rc9-111 stopped working!", you would test "v2.6.26-rc9-111" and 
-go back "but it still works!".
-
-Because you are talking about two different things.
-
-So, in what workflow would v2.6.26-rc9-111 actually be helpful?  For 
-yourself working in your own lil' branch?  I do not think so.  HEAD~23 is 
-much more helpful in that case, since locally, you do not work so much 
-relative to a given tag, but relative to your current HEAD.
-
-Hth,
-Dscho
-
---8323329-1771059144-1215786967=:8950--
+Dmitry
