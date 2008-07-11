@@ -1,138 +1,92 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 3/3 FIXED] help (Windows): Display HTML in default browser using Windows' shell API
-Date: Fri, 11 Jul 2008 09:37:02 +0200
-Message-ID: <1215761822-21356-1-git-send-email-prohaska@zib.de>
-References: <228FC26D-D318-487A-9BF3-B473096CB0C9@zib.de>
-Cc: git@vger.kernel.org,
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: THREADED_DELTA_SEARCH
+Date: Fri, 11 Jul 2008 09:41:08 +0200
+Message-ID: <20080711074107.GA7783@artemis.madism.org>
+References: <7vy749pxbe.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0807101212000.12484@xanadu.home> <20080710201352.GA3717@blimp.local> <alpine.LFD.1.10.0807101625330.12484@xanadu.home> <20080710202919.GB3717@blimp.local> <alpine.LFD.1.10.0807101633480.12484@xanadu.home> <20080710221922.GA3665@steel.home> <alpine.DEB.1.00.0807110032030.3279@eeepc-johanness> <alpine.LFD.1.10.0807101851520.12484@xanadu.home> <81b0412b0807102259q1046051bwc513eadb50847675@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; boundary="ZPt4rx8FFjLCG7dd";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Nicolas Pitre <nico@cam.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Steffen Prohaska <prohaska@zib.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 09:39:09 2008
+	Junio C Hamano <gitster@pobox.com>,
+	Git ML <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 09:42:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHDDc-0005yG-FW
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 09:39:04 +0200
+	id 1KHDGc-0007Dg-Li
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 09:42:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754283AbYGKHiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 03:38:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754307AbYGKHiF
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 03:38:05 -0400
-Received: from mailer.zib.de ([130.73.108.11]:50434 "EHLO mailer.zib.de"
+	id S1754249AbYGKHlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 03:41:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753028AbYGKHlM
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 03:41:12 -0400
+Received: from pan.madism.org ([88.191.52.104]:52706 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754283AbYGKHiE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 03:38:04 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m6B7b2dj015236;
-	Fri, 11 Jul 2008 09:37:07 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m6B7b2Di001744;
-	Fri, 11 Jul 2008 09:37:02 +0200 (MEST)
-X-Mailer: git-send-email 1.5.4.4
-In-Reply-To: <228FC26D-D318-487A-9BF3-B473096CB0C9@zib.de>
+	id S1753106AbYGKHlM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 03:41:12 -0400
+Received: from madism.org (APuteaux-103-1-3-109.w217-128.abo.wanadoo.fr [217.128.49.109])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 25DB7324B9;
+	Fri, 11 Jul 2008 09:41:09 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 5AF23D04; Fri, 11 Jul 2008 09:41:08 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Alex Riesen <raa.lkml@gmail.com>, Nicolas Pitre <nico@cam.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, Git ML <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <81b0412b0807102259q1046051bwc513eadb50847675@mail.gmail.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88094>
 
-The system's default browser for displaying HTML help pages is now used
-directly on Windows, instead of launching git-web--browser, which
-requires a Unix shell.  Avoiding MSYS' bash when possible is good
-because it avoids potential path translation issues.  In this case it is
-not too hard to avoid launching a shell, so let's avoid it.
 
-The Windows-specific code is implemented in compat/mingw.c to avoid
-platform-specific code in the main code base.  On Windows, open_html is
-provided as a define.  If open_html is not defined, git-web--browse is
-used.  This approach avoids platform-specific ifdefs by using
-per-function ifdefs.  The "ifndef open_html" together with the
-introductory comment should sufficiently warn developers, so that they
-hopefully will not break this mechanism.
+--ZPt4rx8FFjLCG7dd
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- compat/mingw.c |   21 +++++++++++++++++++++
- compat/mingw.h |    3 +++
- help.c         |   14 +++++++++++++-
- 3 files changed, 37 insertions(+), 1 deletions(-)
+On Fri, Jul 11, 2008 at 05:59:56AM +0000, Alex Riesen wrote:
+> 2008/7/11 Nicolas Pitre <nico@cam.org>:
+> > Furthermore, the number of threads is, by default, equivalent to the
+> > number of detected CPUs.  So if you have a 8-CPU machine, I sure hope
+> > you have the RAM configuration that goes along with such a system.
+>=20
+> ....and while the threads limit is implemented, the global memory limit i=
+s not
+> (well, frankly, I just don't know. Maybe it is there, and I can't find it=
+).
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 3a05fe7..0ca73f7 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1017,3 +1017,24 @@ sig_handler_t mingw_signal(int sig, sig_handler_t handler)
- 	timer_fn = handler;
- 	return old;
- }
-+
-+static const char *make_backslash_path(const char *path) {
-+	static char buf[PATH_MAX + 1];
-+	char *c;
-+
-+	if (strlcpy(buf, path, PATH_MAX) >= PATH_MAX)
-+		die ("Too long path: %.*s", 60, path);
-+
-+	for (c = buf; *c; c++) {
-+		if (*c == '/')
-+			*c = '\\';
-+	}
-+	return buf;
-+}
-+
-+void mingw_open_html(const char *unixpath)
-+{
-+	const char *htmlpath = make_backslash_path(unixpath);
-+	printf("Launching default browser to display HTML ...\n");
-+	ShellExecute(NULL, "open", htmlpath, NULL, "\\", 0);
-+}
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 6bc049a..136361e 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -193,6 +193,9 @@ static inline unsigned int git_ntohl(unsigned int x)
- sig_handler_t mingw_signal(int sig, sig_handler_t handler);
- #define signal mingw_signal
- 
-+void mingw_open_html(const char *path);
-+#define open_html mingw_open_html
-+
- /*
-  * git specific compatibility
-  */
-diff --git a/help.c b/help.c
-index 0f055bf..52d39b8 100644
---- a/help.c
-+++ b/help.c
-@@ -644,6 +644,18 @@ static void get_html_page_path(struct strbuf *page_path, const char *page)
- 	strbuf_addf(page_path, "%s/%s.html", html_path, page);
- }
- 
-+/*
-+ * If open_html is not defined in a platform-specific way (see for
-+ * example compat/mingw.h), we use the script web--browse to display
-+ * HTML.
-+ */
-+#ifndef open_html
-+void open_html(const char *path)
-+{
-+	execl_git_cmd("web--browse", "-c", "help.browser", path, NULL);
-+}
-+#endif
-+
- static void show_html_page(const char *git_cmd)
- {
- 	const char *page = cmd_to_page(git_cmd);
-@@ -651,7 +663,7 @@ static void show_html_page(const char *git_cmd)
- 
- 	get_html_page_path(&page_path, page);
- 
--	execl_git_cmd("web--browse", "-c", "help.browser", page_path.buf, NULL);
-+	open_html(page_path.buf);
- }
- 
- void help_unknown_cmd(const char *cmd)
--- 
-1.5.6.1.282.gd8a0d
+  You mean --window-memory=3D ?
+
+  I agree this feature should be opt-in. Linux, FreeBSD and Solaris
+should probably do fine I assume ? I'm quite sure the two first will do,
+I really know the latter less though.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--ZPt4rx8FFjLCG7dd
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkh3DpIACgkQvGr7W6HudhxV2wCgjp9qA7O/wVjH/YvV57uvG5l4
+loAAn2fiSiBqUIPGtZOypcxXLcH5YzfM
+=DdVe
+-----END PGP SIGNATURE-----
+
+--ZPt4rx8FFjLCG7dd--
