@@ -1,108 +1,97 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCHv3] Fix backwards-incompatible handling of core.sharedRepository
-Date: Sat, 12 Jul 2008 01:45:00 +0200
-Message-ID: <20080711234257.16449.85447.stgit@rover.dkm.cz>
-References: <20080711233841.30916.75885.stgit@rover.dkm.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Should we discuss Windows-related changes on
+ git@vger.kernel.org?
+Date: Sat, 12 Jul 2008 00:47:37 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807120043150.8950@racer>
+References: <DDFD7E3B-8401-4EA0-9BBA-C9D8E25998A3@zib.de> <alpine.DEB.1.00.0807111349470.3640@eeepc-johanness> <65365AC4-D7C9-462B-8239-F3B35F7ECBEF@zib.de> <alpine.DEB.1.00.0807111652170.8950@racer> <A065AF71-5685-423A-9F87-5349ADC6C9C9@zib.de>
+ <alpine.DEB.1.00.0807111930160.8950@racer> <alpine.LFD.1.10.0807111159560.2936@woody.linux-foundation.org> <alpine.DEB.1.00.0807112037220.8950@racer> <7v4p6wjcgm.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807120033490.8950@racer>
+ <alpine.LFD.1.10.0807111638130.3459@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, Heikki Orsila <heikki.orsila@iki.fi>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Jul 12 01:47:10 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	msysGit <msysgit@googlegroups.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Jul 12 01:48:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHSKT-0002wp-4E
-	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 01:47:09 +0200
+	id 1KHSLs-0003Gn-FV
+	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 01:48:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753086AbYGKXqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 19:46:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752149AbYGKXqL
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 19:46:11 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:40128 "EHLO rover.dkm.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752104AbYGKXqK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 19:46:10 -0400
-Received: from rover.dkm.cz (localhost [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id 123D0166748;
-	Sat, 12 Jul 2008 01:45:00 +0200 (CEST)
-In-Reply-To: <20080711233841.30916.75885.stgit@rover.dkm.cz>
-User-Agent: StGIT/0.14.3.171.ge0e6
+	id S1754108AbYGKXrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 19:47:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754005AbYGKXrj
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 19:47:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40651 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753890AbYGKXri (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 19:47:38 -0400
+Received: (qmail invoked by alias); 11 Jul 2008 23:47:36 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp064) with SMTP; 12 Jul 2008 01:47:36 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+XGXVx1z2XsVWNIWju0K9juU/0GpiJ8NfoMk61ou
+	qVyqZq9rwdC0WE
+X-X-Sender: gene099@racer
+In-Reply-To: <alpine.LFD.1.10.0807111638130.3459@woody.linux-foundation.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88207>
 
-The 06cbe8550324e0fd2290839bf3b9a92aa53b70ab core.sharedRepository
-handling extension broke backwards compatibility; before, shared=1 meant
-that Git merely ensured the repository is group-writable, not that it's
-_only_ group-writable, which is the current behaviour. Thus, with umask 002,
-Git creates repository with /rw.rw.--./, this patch fixes it back to
-/rw.rw.r-./.
+Hi,
 
-Maybe it makes sense to provide the current semantics in some way too,
-but that cannot be done at the expense of ditching backwards
-compatibility; this bug has just wasted me two hours and broke
-repo.or.cz pushing for several hours.
+On Fri, 11 Jul 2008, Linus Torvalds wrote:
 
-Cc: Heikki Orsila <heikki.orsila@iki.fi>
-Signed-off-by: Petr Baudis <pasky@rover.dkm.cz>
----
+> On Sat, 12 Jul 2008, Johannes Schindelin wrote:
+> > 
+> > I think that is a perfect example, since Hannes worked on it in 
+> > mingw.git.  AFAIR a few comments came through msysGit, and were 
+> > incorporated.  When everything was good for a first go at git@vger, it 
+> > was sent, and the interface finalized.
+> 
+> Umm. Dscho - that was before the thing was merged.
+> 
+> Now that the basic mingw support is part of standard git, the situation 
+> has changed.
+> 
+> That's the main issue here - if mingw support is in standard git (and it 
+> is), then mingw issues that touch any non-mingw code should be discussed 
+> where all the git developers are.
+> 
+> Can't you see the difference between the pre-merge and the post-merge 
+> situation?
 
-  Oops, this testcase wouldn't really remove its test subrepository
-after itself properly, though the testsuite would still pass; of course
-this bug slipped through all the previous visual inspections of mine.
+Sure I can.
 
-  Sorry for the continuous noise. :-)
+But we are talking about 4msysgit.git, no?
 
- path.c                 |    2 +-
- t/t1301-shared-repo.sh |   20 ++++++++++++++++++++
- 2 files changed, 21 insertions(+), 1 deletions(-)
+At least the patches that Steffen sent were all from 4msysgit.git, and for 
+some reason or other not necessary for Hannes' mingw.git.
 
+We are talking about stuff like that putty thing, where people feel it 
+would be a better idea to avoid scripts, at the cost of a higher 
+maintenance burden.
 
-diff --git a/path.c b/path.c
-index 5983255..75c5915 100644
---- a/path.c
-+++ b/path.c
-@@ -269,7 +269,7 @@ int adjust_shared_perm(const char *path)
- 	mode = st.st_mode;
- 
- 	if (shared_repository) {
--		int tweak = shared_repository;
-+		int tweak = (mode & 0777) | shared_repository;
- 		if (!(mode & S_IWUSR))
- 			tweak &= ~0222;
- 		mode = (mode & ~0777) | tweak;
-diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-index 6c78c8b..3fe485c 100755
---- a/t/t1301-shared-repo.sh
-+++ b/t/t1301-shared-repo.sh
-@@ -17,6 +17,26 @@ test_expect_success 'shared = 0400 (faulty permission u-w)' '
- 	test $ret != "0"
- '
- 
-+test_expect_success 'shared=1 does not override sane umask' '
-+	mkdir sub &&
-+	cd sub &&
-+	umask 002 &&
-+	git init --shared=1 &&
-+	test 1 = $(git config core.sharedrepository) &&
-+	actual="$(ls -l .git/HEAD)" &&
-+	cd .. &&
-+	rm -rf sub &&
-+	case "$actual" in
-+	-rw-rw-r--*)
-+		: happy
-+		;;
-+	*)
-+		echo Oops, .git/HEAD is not 0664 but $actual
-+		false
-+		;;
-+	esac
-+'
-+
- test_expect_success 'shared=all' '
- 	mkdir sub &&
- 	cd sub &&
+We are talking about patches that were necessary a long time ago, but are 
+no longer, and we should have that sorted out on the msysGit list before 
+sending them to a list where many people could not care less for Windows, 
+and are probably annoyed to even read as much as _this_ thread about it, 
+let alone be bothered by patches that turn out to be stale in the first 
+place.
+
+_That_ is what I am arguing should be sorted out, at least the early 
+stages, on msysGit.  As we did in the past.
+
+And that worked out rather well so far, do you disagree?
+
+Ciao,
+Dscho
