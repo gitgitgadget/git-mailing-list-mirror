@@ -1,84 +1,61 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [StGIT] Failure to install on RHELWS4
-Date: Fri, 11 Jul 2008 22:07:35 +0200
-Message-ID: <20080711200735.GK10347@genesis.frugalware.org>
-References: <20080711170356.GF32184@machine.or.cz> <200807112126.39729.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="bSr84fpmRhc6ULjY"
+Subject: [PATCH] setup.py: fix error message when running with python-2.3
+Date: Fri, 11 Jul 2008 22:09:31 +0200
+Message-ID: <1215806972-18713-1-git-send-email-vmiklos@frugalware.org>
+References: <20080711200735.GK10347@genesis.frugalware.org>
 Cc: Thomas Rast <trast@student.ethz.ch>, Petr Baudis <pasky@suse.cz>,
 	Git Mailing List <git@vger.kernel.org>
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 22:08:44 2008
+X-From: git-owner@vger.kernel.org Fri Jul 11 22:10:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHOv5-000089-Bd
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 22:08:43 +0200
+	id 1KHOwb-0000ey-6M
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 22:10:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756192AbYGKUHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 16:07:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759699AbYGKUHi
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 16:07:38 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:50732 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759662AbYGKUHh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 16:07:37 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id A2F941B24FA;
-	Fri, 11 Jul 2008 22:07:35 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id ACAA94465E;
-	Fri, 11 Jul 2008 21:32:55 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 15741177001C; Fri, 11 Jul 2008 22:07:35 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200807112126.39729.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1752613AbYGKUJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 16:09:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754934AbYGKUJR
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 16:09:17 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:33546 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751001AbYGKUJQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 16:09:16 -0400
+Received: from vmobile.example.net (dsl5401CCAB.pool.t-online.hu [84.1.204.171])
+	by yugo.frugalware.org (Postfix) with ESMTP id 9452C1DDC5B;
+	Fri, 11 Jul 2008 22:09:14 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id B0BFC1A9833; Fri, 11 Jul 2008 22:09:32 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.2.450.g8d367.dirty
+In-Reply-To: <20080711200735.GK10347@genesis.frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88167>
 
+When setup.py tries to check the python version, the check actually
+won't give a usable error message but it'll raise a SyntaxError. Fix
+this by not using generator expressions.
 
---bSr84fpmRhc6ULjY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+ setup.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-On Fri, Jul 11, 2008 at 09:26:29PM +0200, Thomas Rast <trast@student.ethz.c=
-h> wrote:
-> > 	    pyver =3D '.'.join(str(n) for n in sys.version_info)
-> > 	                              ^
-> [...]
-> > Python version is 2.3.4
->=20
-> That is indeed too old.  Generator expressions like the above were
-> introduced in 2.4:
->=20
->   http://www.python.org/dev/peps/pep-0289/
-
-So obviously it's a bad idea to use generators for such a version check.
-
-Also, setup.py would try to import stgit.run before the version check.
-
-I'm sending two patches, which restore the wished "Python version 2.4 or
-newer required. Found 2.2.1.final.0" error message.
-
-(Tested with Python 2.2.1.)
-
---bSr84fpmRhc6ULjY
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkh3vYcACgkQe81tAgORUJZbpwCePRxuc3mZC1YeZkY+JMj5nt2l
-f9AAoKqyIfmrHt84679OTgFbqc6eE8+h
-=Y7Vc
------END PGP SIGNATURE-----
-
---bSr84fpmRhc6ULjY--
+diff --git a/setup.py b/setup.py
+index 8d8f7a8..44cc6ea 100755
+--- a/setup.py
++++ b/setup.py
+@@ -28,7 +28,7 @@ def __check_min_version(min_ver, ver):
+ def __check_python_version():
+     """Check the minimum Python version
+     """
+-    pyver = '.'.join(str(n) for n in sys.version_info)
++    pyver = '.'.join(map(lambda x: str(x), sys.version_info))
+     if not __check_min_version(version.python_min_ver, pyver):
+         print >> sys.stderr, 'Python version %s or newer required. Found %s' \
+               % (version.python_min_ver, pyver)
+-- 
+1.5.6.2.450.g8d367.dirty
