@@ -1,70 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Should we discuss Windows-related changes on
- git@vger.kernel.org?
-Date: Fri, 11 Jul 2008 13:56:46 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807111349470.3640@eeepc-johanness>
-References: <DDFD7E3B-8401-4EA0-9BBA-C9D8E25998A3@zib.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: jgit (was: [PATCH 4/4] Add a method...)
+Date: Fri, 11 Jul 2008 14:24:03 +0200
+Message-ID: <487750E3.90303@op5.se>
+References: <20080711042822.GC32633@spearce.org> <1215769719-5238-1-git-send-email-robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <johannes.sixt@telecom.at>,
-	Junio C Hamano <gitster@pobox.com>,
-	msysGit <msysgit@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Fri Jul 11 13:57:35 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Marek Zawirski <marek.zawirski@gmail.com>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 14:26:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHHFf-0000R5-4I
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 13:57:27 +0200
+	id 1KHHhO-00035z-LO
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 14:26:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753738AbYGKL43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 07:56:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753921AbYGKL43
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 07:56:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39107 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753685AbYGKL42 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 07:56:28 -0400
-Received: (qmail invoked by alias); 11 Jul 2008 11:56:26 -0000
-Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
-  by mail.gmx.net (mp014) with SMTP; 11 Jul 2008 13:56:26 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Dhzo30ZzD09qulWSJLoMNoqSkrwaCLzrG88h1Qj
-	7JfXf0yDsQKIdT
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <DDFD7E3B-8401-4EA0-9BBA-C9D8E25998A3@zib.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1754531AbYGKMZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 08:25:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752419AbYGKMZF
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 08:25:05 -0400
+Received: from mail.op5.se ([193.201.96.20]:33634 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752082AbYGKMZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 08:25:04 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 769BC1B803F4;
+	Fri, 11 Jul 2008 14:24:41 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.93
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.93 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.469, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id N2zX5aurmkbQ; Fri, 11 Jul 2008 14:24:39 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.180])
+	by mail.op5.se (Postfix) with ESMTP id D93A51B803E3;
+	Fri, 11 Jul 2008 14:24:37 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <1215769719-5238-1-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88110>
 
-Hi,
+Sorry for butting in, but I'd appreciate if you kept adding 'jgit'
+to the subject so I can keep filtering these patches out. The volume
+on git@vger is high enough without having to follow off-shoots that
+are of no particular concern to me (although I certainly applaud the
+effort).
 
-On Fri, 11 Jul 2008, Steffen Prohaska wrote:
+Thanks
 
-> I decided to stop queuing changes in 4msysgit.  Instead I'd like to
-> bring the diff between Junio's and 4msysgit's master to zero.  This
-> seems to be achievable after Junio merged Hannes' MinGW changes.
-> 
-> I think all Windows-related changes to the git code base could be
-> discussed directly on the main git list and the msysgit list would be
-> reserved for the MinGW/MSYS runtime environment and the installer.
+Robin Rosenberg wrote:
+[ a patch for jgit ]
 
-I disagree.  Judging from the mails I read on the git list, Junio gets 
-really swamped by patches these days (what with our very productive GSoC 
-students).
-
-I really think that we should discuss the patches on the msysGit list 
-first, whip them into shape, and then send them off.
-
-Just think of those patches that were sent off, only to realize that they 
-were no longer needed.  That should not have happened.
-
-My 2p,
-Dscho
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
