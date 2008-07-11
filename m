@@ -1,110 +1,89 @@
-From: Toralf =?iso-8859-1?q?F=F6rster?= <toralf.foerster@gmx.de>
-Subject: Re: feature request: git-log should accept sth like v2.6.26-rc8-227
-Date: Fri, 11 Jul 2008 16:58:40 +0200
-Message-ID: <200807111658.40626.toralf.foerster@gmx.de>
-References: <200807102057.15063.toralf.foerster@gmx.de> <200807111539.06606.toralf.foerster@gmx.de> <37fcd2780807110744k3b2a332csdf788dabd172622c@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Fix backwards-incompatible handling of
+	core.sharedRepository
+Date: Fri, 11 Jul 2008 17:07:07 +0200
+Message-ID: <20080711150707.GE32184@machine.or.cz>
+References: <20080710231853.21448.18643.stgit@rover.dkm.cz> <7vr6a1mhqi.fsf@gitster.siamese.dyndns.org> <7vr6a1kmpq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1471996.cj8k3yTmsA";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Dmitry Potapov" <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 16:59:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 17:08:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHK62-0007iP-8j
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 16:59:42 +0200
+	id 1KHKEI-000345-3C
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 17:08:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752407AbYGKO6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 10:58:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752417AbYGKO6o
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 10:58:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60333 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752260AbYGKO6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 10:58:43 -0400
-Received: (qmail invoked by alias); 11 Jul 2008 14:58:42 -0000
-Received: from d036167.adsl.hansenet.de (EHLO d036167.adsl.hansenet.de) [80.171.36.167]
-  by mail.gmx.net (mp055) with SMTP; 11 Jul 2008 16:58:42 +0200
-X-Authenticated: #5108953
-X-Provags-ID: V01U2FsdGVkX18YV5Mt6fAYz2QIGPUt8NxKC2j9mcm/DxFPCeyElg
-	S6dR7jNuWis5CH
-User-Agent: KMail/1.9.9
-In-Reply-To: <37fcd2780807110744k3b2a332csdf788dabd172622c@mail.gmail.com>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+	id S1757269AbYGKPHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 11:07:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756290AbYGKPHO
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 11:07:14 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:53682 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755330AbYGKPHM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 11:07:12 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 07D432C4C037; Fri, 11 Jul 2008 17:07:08 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vr6a1kmpq.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88127>
 
---nextPart1471996.cj8k3yTmsA
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-At Friday 11 July 2008 16:44:23 Dmitry Potapov wrote :
-> On Fri, Jul 11, 2008 at 5:39 PM, Toralf F=F6rster <toralf.foerster@gmx.de=
-> wrote:
+On Thu, Jul 10, 2008 at 10:34:57PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Petr Baudis <pasky@suse.cz> writes:
 > >
-> > Ok, following the thread I understand why this feature isn't wanted by =
-all. But
-> > for the given example (where I only pulled from another git tree) this =
-could
-> > work, isn't it : ?
+> >> The 06cbe8550324e0fd2290839bf3b9a92aa53b70ab core.sharedRepository
+> >> handling extension broke backwards compatibility; before, shared=1 meant
+> >> that Git merely ensured the repository is group-writable, not that it's
+> >> _only_ group-writable, which is the current behaviour.
 > >
-> > tfoerste@n22 ~/devel/linux-2.6 $ git-log v2.6.26-rc9.. | perl -e '@c =
-=3D grep { /^commit/ } <>; print map { $#c - $i++ . "\t" . $_ } @c'
->=20
-> No, it does not. Running your script, I have
->=20
-> ...
-> 56      commit 803a9067e19714ea7b7da760fe92f0d53bfa6994
-> ...
->=20
-> Now, let's see what git-describe thinks about it
-> $ git describe 803a9067e19714ea7b7da760fe92f0d53bfa6994
-> v2.6.26-rc9-38-g803a906
->=20
-> Your script is obviously incorrect. It is written in the assumption that
-> history is linear, but it is not. Even if you pull only from one repo,
-> this repo still contains *many* branches. Along any branch, you may have
-> the same number.
->=20
-> Dmitry
->=20
+> > Donn't our existing tests catch this, and if the answer is no because we
+> > don't have any, could you add some?
 
-Yes,
+(Will do. Wanted to do it but forgot. :-)
 
-$> git-log v2.6.26-rc9.. --pretty=3Dshort | grep "^commit" | cut -f2 -d' ' =
-| xargs -n 1 git describe | grep '\-56\-'
+> >> diff --git a/path.c b/path.c
+> >> index 5983255..75c5915 100644
+> >> --- a/path.c
+> >> +++ b/path.c
+> >> @@ -269,7 +269,7 @@ int adjust_shared_perm(const char *path)
+> >>  	mode = st.st_mode;
+> >>  
+> >>  	if (shared_repository) {
+> >> -		int tweak = shared_repository;
+> >> +		int tweak = (mode & 0777) | shared_repository;
+> >>  		if (!(mode & S_IWUSR))
+> >>  			tweak &= ~0222;
+> >>  		mode = (mode & ~0777) | tweak;
+> >
+> > I think this change is good.  shared_repository has always been about
+> > widening the access and not about limiting.
+> 
+> Having said that, you really should protect this behaviour from regression
+> with a test case.  I do not see practical difference for sane umask
+> values.
+> 
+> What umask are you using, and which file in the repository gets affected?
+> In the old code I see we do have checks for S_IXUSR and tweaks on S_IXGRP
+> and S_IXOTH, but this should make a difference only if your umask blocks
+> executable bit and the file in question is executable.  Was it an
+> executable hook copied from template?
 
-I used eventually to get the commit id for the (broken) UML kernel 2.6.26-r=
-c9-56
+My umask is 002, and the difference is visible at all the files in the
+repository (in existing repositories, update will cause new object files
+have the missing permission, making for the most confusing behaviour).
 
-=2D-=20
-MfG/Sincerely
+With sane Git versions, the permissions when shared=1 are rwxrwxr-x,
+with recent Git however, it is rwxrwx--- (modulo the exec bits).
 
-Toralf F=F6rster
-pgp finger print: 7B1A 07F4 EC82 0F90 D4C2 8936 872A E508 7DB6 9DA3
-
---nextPart1471996.cj8k3yTmsA
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkh3dSAACgkQhyrlCH22naMivwCfW5yyLp1BhLabTdOfWMJWGWmN
-d3wAoKfRUZmuHvcUuCk/vzfSWN+9croC
-=re3i
------END PGP SIGNATURE-----
-
---nextPart1471996.cj8k3yTmsA--
+-- 
+				Petr "Pasky" Baudis
+The last good thing written in C++ was the Pachelbel Canon. -- J. Olson
