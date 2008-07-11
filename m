@@ -1,53 +1,63 @@
-From: Abhijit Menon-Sen <ams@toroid.org>
-Subject: Re: [PATCH 0/3] Git::Repo API and gitweb caching
-Date: Fri, 11 Jul 2008 21:57:52 +0530
-Message-ID: <20080711162752.GA5456@toroid.org>
-References: <4876B223.4070707@gmail.com> <200807111133.11662.jnareb@gmail.com> <4877691E.1010000@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 18:28:58 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH] Fixed text file auto-detection: treat EOF character 032 at the end of file as printable
+Date: Fri, 11 Jul 2008 18:48:16 +0200
+Message-ID: <1215794896-31354-1-git-send-email-prohaska@zib.de>
+References: <7vabh0d4t9.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Dmitry Kakurin <Dmitry.Kakurin@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 18:52:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHLUL-0001uM-L2
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 18:28:54 +0200
+	id 1KHLqk-0002Yh-9L
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 18:52:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752030AbYGKQ1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 12:27:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751929AbYGKQ1z
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 12:27:55 -0400
-Received: from fugue.toroid.org ([85.10.196.113]:41583 "EHLO fugue.toroid.org"
+	id S1752879AbYGKQvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 12:51:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752629AbYGKQvB
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 12:51:01 -0400
+Received: from mailer.zib.de ([130.73.108.11]:58763 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751125AbYGKQ1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 12:27:54 -0400
-Received: from penne.toroid.org (penne-vpn [10.8.0.6])
-	by fugue.toroid.org (Postfix) with ESMTP id 316E75584D8;
-	Fri, 11 Jul 2008 18:27:53 +0200 (CEST)
-Received: by penne.toroid.org (Postfix, from userid 1000)
-	id B3877ADC364; Fri, 11 Jul 2008 21:57:52 +0530 (IST)
-Content-Disposition: inline
-In-Reply-To: <4877691E.1010000@gmail.com>
+	id S1751976AbYGKQvB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 12:51:01 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m6BGmObG027427;
+	Fri, 11 Jul 2008 18:48:29 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m6BGmGFR009464;
+	Fri, 11 Jul 2008 18:48:20 +0200 (MEST)
+X-Mailer: git-send-email 1.5.4.4
+In-Reply-To: <7vabh0d4t9.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88143>
 
-At 2008-07-11 16:07:26 +0200, lewiemann@gmail.com wrote:
->
-> > 'If-Not-Modified-Since', 'If-Match' (by caches)
-> 
-> Wait, are you sure caches would use those headers (I believe only the
-> latter actually exists BTW), or did you fall prey to a thinko? ;)
+From: Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
 
-If-Not-Modified-Since should really be If-Unmodified-Since.
+Signed-off-by: Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ convert.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-But where's the thinko? To send If-Modified-Since or similar with a
-request, you would need to have a cached copy of the resource and use
-its Last-Modified, for example. Sure, you could do it without one, but
-what would be the point?
-
--- ams
+diff --git a/convert.c b/convert.c
+index 352b69d..78efed8 100644
+--- a/convert.c
++++ b/convert.c
+@@ -61,6 +61,10 @@ static void gather_stats(const char *buf, unsigned long size, struct text_stat *
+ 		else
+ 			stats->printable++;
+ 	}
++
++	/* If file ends with EOF then don't count this EOF as non-printable. */
++	if (size >= 1 && buf[size-1] == '\032')
++		stats->nonprintable--;
+ }
+ 
+ /*
+-- 
+1.5.6.1.282.gd8a0d
