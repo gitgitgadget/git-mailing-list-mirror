@@ -1,1366 +1,2571 @@
 From: Lea Wiemann <lewiemann@gmail.com>
-Subject: [PATCH 2/3] add new Git::Repo API
-Date: Fri, 11 Jul 2008 03:11:05 +0200
-Message-ID: <1215738665-5153-1-git-send-email-LeWiemann@gmail.com>
+Subject: [PATCH 3/3] gitweb: use new Git::Repo API, and add optional caching
+Date: Fri, 11 Jul 2008 03:11:48 +0200
+Message-ID: <1215738708-5212-1-git-send-email-LeWiemann@gmail.com>
 References: <4876B223.4070707@gmail.com>
 Cc: John Hawley <warthog19@eaglescrag.net>,
 	Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 11 03:12:55 2008
+X-From: git-owner@vger.kernel.org Fri Jul 11 03:13:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KH7Bp-0002uJ-Cq
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 03:12:50 +0200
+	id 1KH7CY-000351-HR
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 03:13:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755737AbYGKBLu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2008 21:11:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755533AbYGKBLt
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 21:11:49 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:32329 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755229AbYGKBLs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2008 21:11:48 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1800629ywe.1
-        for <git@vger.kernel.org>; Thu, 10 Jul 2008 18:11:38 -0700 (PDT)
+	id S1755513AbYGKBM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2008 21:12:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755287AbYGKBM2
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jul 2008 21:12:28 -0400
+Received: from py-out-1112.google.com ([64.233.166.181]:12590 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753921AbYGKBMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2008 21:12:25 -0400
+Received: by py-out-1112.google.com with SMTP id p76so2026429pyb.10
+        for <git@vger.kernel.org>; Thu, 10 Jul 2008 18:12:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:from;
-        bh=r4vgY+foXN9lz60RenNc6vj2VOPxaCMHNT7tAKdA7AM=;
-        b=u+lRmEY94G8XSrZTSA7Nrvuit/cbIDvWEjW+lwZylBn5TUiXy3at4nwcng2JZHU7J3
-         MxFEsh8v0MRRB/6Q+q9PTwah/12hIA3vYwIYIWQlQw3x5qWpzpBxvBIOk7ufiMn/wx6f
-         BjMfUrgeJoifn0OsaLHgTMinmBfwaJyM36tvs=
+        bh=4Cm1j+jf58bRZTNBWam5TLkBC7pml17nJKfaIrvJljE=;
+        b=UEXoqIpmlqixi0CVNUUUWgY9mw7M+g+6c7VtP6ZWXtlu/c0AroEOW9kicAehU8QR48
+         gblZ7Q+GXu/TOZYCq9ILpllpn7eKDZxBUDDNFjHWGWGd1tVLI4/JvNx9HPdtq8iwc92S
+         fOhfgkWHBiffVWzVdJduP9IXZ+ReRcYD0maD4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        b=h3avj4rNbhm1KEXkKvATUpCpWu6gAyXn3n0RMKP6EwE69UGbyfeDjuNSWw6zHyNw+Z
-         ca9c267EfUaB2MTjpJbgaf3pHPk+MESeFuHIJdJiOzLJnu5HGzdclw8DV8SVBU0GhZgn
-         bCrKu+g3StlBL4Qc2Ksbm+U+0e6ufPCe/JrdM=
-Received: by 10.114.52.1 with SMTP id z1mr12804847waz.42.1215738697959;
-        Thu, 10 Jul 2008 18:11:37 -0700 (PDT)
+        b=E6o2dWPxe4iBOK55orcAEo1Olj4r12CQsLq003Jz60ZzvWChGiuAXPKSwCRL/ASp8z
+         s53ReR488NcdhHGUduXZ5Tq3NjHIgQuE5M8mUBZID0uRbwKDZiFOIu+5nvPXxsAfRYqZ
+         pROXGU0THj41DyE4WTSaEAXbNANANKpKXWcpE=
+Received: by 10.114.176.1 with SMTP id y1mr12753555wae.118.1215738741795;
+        Thu, 10 Jul 2008 18:12:21 -0700 (PDT)
 Received: from fly ( [91.33.220.178])
-        by mx.google.com with ESMTPS id l12sm1085823fgb.6.2008.07.10.18.11.05
+        by mx.google.com with ESMTPS id 13sm1979362fks.6.2008.07.10.18.11.48
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 10 Jul 2008 18:11:37 -0700 (PDT)
+        Thu, 10 Jul 2008 18:12:21 -0700 (PDT)
 Received: from lea by fly with local (Exim 4.69)
 	(envelope-from <lea@fly>)
-	id 1KH7A9-0001LT-C9; Fri, 11 Jul 2008 03:11:05 +0200
+	id 1KH7Aq-0001MQ-AR; Fri, 11 Jul 2008 03:11:48 +0200
 X-Mailer: git-send-email 1.5.6.2.456.g63fc0
 In-Reply-To: <4876B223.4070707@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88071>
 
-This also adds the Git::Commit and Git::Tag classes, which are used by
-Git::Repo, the Git::Object base class, and the Git::RepoRoot helper
-factory class.
+Gitweb now uses the Git::Repo API; this change is behavior-preserving,
+except for slightly more aggressive error handling; see below.
+
+This patch also adds an optional caching layer for caching repository
+data in memory and (for larger cacheable items, like blobs, snapshots,
+or diffs) on disk.
+
+Other minor changes:
+
+- Gitweb would previously accept invalid input and either (a) display
+  nothing, (b) display an obscure error message, or (c) proceed as
+  normal since the parameter happens to be unused in the particular
+  code path used.  This has changed in that gitweb will check for
+  parameter correctness more aggressively, and display meaningful
+  error messages.  This change is only relevant if you manually edit
+  gitweb's CGI parameters, since gitweb only generates valid links.
+
+- Empty projects:
+
+  - Only display summary link for empty projects in project list to
+    avoid broken links (yielding 404).
+
+  - Slim down summary page for empty projects to avoid some broken
+    links and unnecessary vertical space.
+
+  - Sort empty projects at the bottom of the project list when sorting
+    by last change.
+
+  - Add test for empty projects to t9503 (the Mechanize test), now
+    that there no broken links anymore.
+
+- For HTML pages, remove the "Expires" HTTP response header, and add
+  "Cache-Control: no-cache" instead.  This is because pages can
+  contain dynamic content (like the subject of the latest commit), so
+  the Expires headers would be wrong.
+
+  This makes gitweb's responsiveness slightly worse, but it will get
+  much better once If-Last-Modified is implemented.  It's better to be
+  correct than to be convenient here, since having to press the reload
+  button makes for lousy user experience (IOW, users should be able to
+  always trust gitweb's output).
+
+  Raw diffs and blobs still get the Expires header, where appropriate.
+
+- Add a $page_info option to display cache stats at the bottom of each
+  page; the option is named generically to allow for adding non-cache
+  page info there at some point (timings perhaps?).
+
+Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
 ---
-Here's some elaboration on why I didn't use or extend Git.pm.
+It's all documented of course :-), but for the impatient here's a
+snippet for gitweb_config.perl to activate caching:
 
-Please note before starting a reply to this: This is not an argument;
-I'm just explaining why I implemented it the way I did.  So please
-don't try to argue with me about what I should or should have done.
-I'm not going to refactor Git::Repo to use Git.pm or vice versa; it's
-really a much more non-trivial task than you might think at first
-glance.
+use Cache::Memcached;
+$cache = Cache::Memcached->new( { servers => ['localhost:11211'], compress_threshold => 1000 } );
+$large_cache_root = '/home/lewiemann/gitweb-cache';
+$large_cache_case_sensitive = 1;
+# Invalidate cache on changes to gitweb without version number bump;
+# useful for development.
+$cache_key = (stat '/home/lewiemann/gitweb')[9] . (stat '/home/lewiemann/gitweb/gitweb.cgi')[9];
+# Display detailed cache info at the bottom of each page.
+$page_info = 2;
 
-Anyways, the following bullet points are my reasons for not extending
-Git.pm:
+A live demo is here: http://odin3.kernel.org/git-lewiemann/
 
-- Git.pm doesn't do what I want: It's designed to provide access to
-  working copies.  Extending it to have more repository-access
-  functions might have resulted in a mess.
+ Makefile                               |   27 +-
+ gitweb/README                          |   14 +
+ gitweb/gitweb.css                      |   16 +
+ gitweb/gitweb.perl                     | 1415 +++++++++++++++++++-------------
+ t/t9500-gitweb-standalone-no-errors.sh |    4 +-
+ t/t9503-gitweb-Mechanize.sh            |   10 +
+ t/t9503/test.pl                        |    5 +
+ 7 files changed, 911 insertions(+), 580 deletions(-)
 
-  Some long-term thoughts on this issue: I don't think Git.pm's design
-  approach is sensible: It tries to do (a) WC access, (b) repo access,
-  and (c) frontend error handling (with sensible error messages).
-  Those things should really be separated; e.g. one could write a
-  Git::WC class that *has* a Git::Repo instance (since every working
-  copy has a repository associated with it); so you can use $wc =
-  Git::WC->new to access the working copy, and $wc->repo to access its
-  repository.  Git.pm will obviously have to stay since a few git
-  commands use it, but I'd probably let it die a slow death, and
-  (cleanly!) copy functionality to a Git::WC module (and perhaps a
-  Git::Frontend module) in the long run.
-
-- It would have needed refactoring and more features.
-
-  - For example, the Error module should be removed (and normal die
-    and eval should be used instead).  At some point when I was trying
-    to debug it through gitweb, Git.pm would error out somewhere and I
-    would randomly get either a blank page (usually) or an error page
-    (rarely).  I suspect that this is because of the Error module or
-    some strange interaction with another.  (Besides, Error is not in
-    the Perl distribution, so it would be an unnecessary dependency
-    for gitweb; the only one as far as I can see.)
-
-  - Also, I needed something like max_exit_code and a custom path to
-    the git binary; adding max_exit_code would have been non-trivial.
-
-  Now I'm all in favor of re-using existing code, but refactoring
-  Git.pm would have taken *much* longer than simply writing a new
-  module.  I'm working on caching for gitweb, not on implementing the
-  next great Perl API for Git.  (And Git::Repo isn't great, FTR.)
-
-- It's buggy and untested.  Neither of these is a problem by itself,
-  but the combination is deadly.  E.g. I was trying to refactor the
-  'repository' constructor (to be able to do instantaneous
-  instantiation) and stumbled upon a missing semicolon that rendered
-  the surrounding code syntactically correct but obviously buggy (line
-  214 on master).  Adding a semicolon there seemed to cause other
-  errors, and given that (a) I don't understand what the code does and
-  no test or comment tells me what it should, and (b) it doesn't work
-  (or maybe it half-works?), I lost all my confidence that I could do
-  anything resembling a (behavior-preserving) refactoring on that
-  code.
-
-  I might have been able to work with this particular problem, but
-  such a problem (buggy and completely untested code) are indicative
-  that the rest of the code might bear similar surprises.
-
-- It's overly lengthy, and it's a lot of code for not much
-  functionality.  Git.pm has 1200 LOC, with a large stack of tiny
-  subroutines to handle pipes, and a complicated error handling
-  system.  I can make out ~400 lines of actual Git functionality, plus
-  a 100-lines constructor (all including documentation).  The part of
-  Git::Repo that overlaps with Git.pm (in terms of duplicate
-  functionality) seems to be in the range of 150-200 lines, and it's
-  mostly pipe-handling.  That's not a whole lot.
-
-- When I decided I didn't want to use Git.pm, it took me 2-3 hours to
-  replicate the functionality in Git.pm that I needed; it would have
-  taken me *much* longer to extend Git.pm to do what I want.  Again,
-  I'm not working on the next great Git Perl API.
-
-So where do we go with Git.pm and Git::Repo?  I would suggest that
-they both stay.
-
-Thus we'd have two APIs (both of them obviously incomplete).  If
-there's enough objection to having two competing official APIs, I'll
-be happy to move Git::Repo to the gitweb directory, and make it a
-gitweb-specific thing (though it's not gitweb-specific at all in terms
-of functionality); I really don't care, as my goal is to get caching
-for gitweb working.  Again, if you're bothered by the fact that
-there's duplicate functionality at all, please don't complain, but
-send patches to reconcile the APIs; I will not take care of that
-myself, since it's a very much non-trivial task.
-
-Unrelatedly, should I add copyright notices at the bottom of each perl
-module so they are displayed in the perldoc/man pages?  I'm not
-generally a fan of such notices, since they tend to establish code
-ownership, but if it's desired I can add them.
-
-So, here's the Git::Repo (and friends) API, plus tests of course: ;-)
-
- perl/Git/Commit.pm       |  163 +++++++++++++++++++
- perl/Git/Object.pm       |   81 ++++++++++
- perl/Git/Repo.pm         |  397 ++++++++++++++++++++++++++++++++++++++++++++++
- perl/Git/RepoRoot.pm     |  103 ++++++++++++
- perl/Git/Tag.pm          |  155 ++++++++++++++++++
- perl/Makefile            |    1 +
- perl/Makefile.PL         |   10 +-
- t/t9710-perl-git-repo.sh |   49 ++++++
- t/t9710/test.pl          |  165 +++++++++++++++++++
- 9 files changed, 1123 insertions(+), 1 deletions(-)
- create mode 100644 perl/Git/Commit.pm
- create mode 100644 perl/Git/Object.pm
- create mode 100644 perl/Git/Repo.pm
- create mode 100644 perl/Git/RepoRoot.pm
- create mode 100644 perl/Git/Tag.pm
- create mode 100755 t/t9710-perl-git-repo.sh
- create mode 100755 t/t9710/test.pl
-
-diff --git a/perl/Git/Commit.pm b/perl/Git/Commit.pm
-new file mode 100644
-index 0000000..a9bc304
---- /dev/null
-+++ b/perl/Git/Commit.pm
-@@ -0,0 +1,163 @@
-+=head1 NAME
+diff --git a/Makefile b/Makefile
+index 15f210e..a65aa4d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1099,25 +1099,28 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)): perl/perl.mak
+ perl/perl.mak: GIT-CFLAGS perl/Makefile perl/Makefile.PL
+ 	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' $(@F)
+ 
++PERL_USE_LIB_REWRITE = \
++	-e '1{' \
++	-e '	s|\#!.*perl|\#!$(PERL_PATH_SQ)|' \
++	-e '	h' \
++	-e '	s=.*=use lib (split(/:/, \$$ENV{GITPERLLIB} || \"@@INSTLIBDIR@@\"));=' \
++	-e '	H' \
++	-e '	x' \
++	-e '}' \
++	-e 's|@@INSTLIBDIR@@|'"$$INSTLIBDIR"'|g' \
++	-e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g'
 +
-+Git::Commit - Object-oriented interface to Git commit objects.
-+
-+=cut
-+
-+use strict;
-+use warnings;
-+
-+
-+package Git::Commit;
-+
-+use base qw(Git::Object);
-+
-+use constant _MESSAGE => 'M';
-+use constant _ENCODING => 'E';
-+use constant _TREE => 'T';
-+use constant _PARENTS => 'P';
-+use constant _AUTHOR => 'A';
-+use constant _COMMITTER => 'C';
-+
-+
-+# Keep documentation in one place to save space.
-+
-+=head1 METHODS
-+
-+=over
-+
-+=item $commit = Git::Commit->new($repo, $sha1)
-+
-+Return a new Git::Commit instance for a commit object with $sha1 in
-+repository $repo.
-+
-+Calls to this method are free, since it does not check whether $sha1
-+exists and has the right type.  However, accessing any of the commit
-+object's properties will fail if $sha1 is not a valid commit object.
-+
-+Note that $sha1 must be the SHA1 of a commit object; tag objects are
-+not dereferenced.
-+
-+=item $obj->repo
-+
-+Return the Git::Repo instance this object was instantiated with.
-+
-+=item $obj->sha1
-+
-+Return the SHA1 of this commit object.
-+
-+=item $commit->tree
-+
-+Return the tree this commit object refers to.
-+
-+=item $commit->parents
-+
-+Return a list of zero or more parent commit objects.  Note that commit
-+objects stringify to their respective SHA1s, so you can alternatively
-+treat this as a list of SHA1 strings.
-+
-+=item $commit->authors
-+
-+Return the author string of this commit object.
-+
-+=item $commit->committer
-+
-+Return the committer string of this commit object.
-+
-+=item $commit->message
-+
-+Return the undecoded commit message of this commit object.
-+
-+=item $commit->encoding
-+
-+Return the encoding header of the commit object.
-+
-+=back
-+
-+=cut
-+
-+
-+sub tree {
-+	my $self = shift;
-+	$self->_load;
-+	$self->{_TREE()};
+ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+ 	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir` && \
+-	sed -e '1{' \
+-	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+-	    -e '	h' \
+-	    -e '	s=.*=use lib (split(/:/, $$ENV{GITPERLLIB} || "@@INSTLIBDIR@@"));=' \
+-	    -e '	H' \
+-	    -e '	x' \
+-	    -e '}' \
+-	    -e 's|@@INSTLIBDIR@@|'"$$INSTLIBDIR"'|g' \
+-	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+-	    $@.perl >$@+ && \
++	sed $(PERL_USE_LIB_REWRITE) $@.perl >$@+ && \
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+ 
+ gitweb/gitweb.cgi: gitweb/gitweb.perl
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+-	sed -e '1s|#!.*perl|#!$(PERL_PATH_SQ)|' \
++	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir` && \
++	sed $(PERL_USE_LIB_REWRITE) \
+ 	    -e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
+ 	    -e 's|++GIT_BINDIR++|$(bindir)|g' \
+ 	    -e 's|++GITWEB_CONFIG++|$(GITWEB_CONFIG)|g' \
+@@ -1125,7 +1128,7 @@ gitweb/gitweb.cgi: gitweb/gitweb.perl
+ 	    -e 's|++GITWEB_HOME_LINK_STR++|$(GITWEB_HOME_LINK_STR)|g' \
+ 	    -e 's|++GITWEB_SITENAME++|$(GITWEB_SITENAME)|g' \
+ 	    -e 's|++GITWEB_PROJECTROOT++|$(GITWEB_PROJECTROOT)|g' \
+-	    -e 's|"++GITWEB_PROJECT_MAXDEPTH++"|$(GITWEB_PROJECT_MAXDEPTH)|g' \
++	    -e 's|++GITWEB_PROJECT_MAXDEPTH++|$(GITWEB_PROJECT_MAXDEPTH)|g' \
+ 	    -e 's|++GITWEB_EXPORT_OK++|$(GITWEB_EXPORT_OK)|g' \
+ 	    -e 's|++GITWEB_STRICT_EXPORT++|$(GITWEB_STRICT_EXPORT)|g' \
+ 	    -e 's|++GITWEB_BASE_URL++|$(GITWEB_BASE_URL)|g' \
+diff --git a/gitweb/README b/gitweb/README
+index 6908036..fb5a027 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -214,6 +214,20 @@ not include variables usually directly set during build):
+    Rename detection options for git-diff and git-diff-tree. By default
+    ('-M'); set it to ('-C') or ('-C', '-C') to also detect copies, or
+    set it to () if you don't want to have renames detection.
++ * $cache
++   To activate caching, set this to an instance of a Cache::Cache
++   compatible cache (e.g. Cache::Memcached).
++ * $large_cache_root
++   A directory in which gitweb will store potentially large cache
++   items (like snapshots or blobs).  Cache items in this directory are
++   not deleted, so you should clean it up yourself periodically.
++   Default: undef (no caching for large items).
++ * $large_cache_case_sensitive
++   Set this to 1 if the file system on which the large cache resides
++   is case sensitive; it will result in a shorter file names.
++ * $page_info
++   Set to 1 to display cache statistics at the bottom of each page;
++   can be used to check whether your cache works.
+ 
+ 
+ Projects list file format
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index aa0eeca..849bb8e 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -71,6 +71,22 @@ div.page_footer_text {
+ 	font-style: italic;
+ }
+ 
++div.page_info {
++	color: #777777;
++	padding: 4px 8px;
++	margin-top: 0.5em;
++	background-color: #ecebe8;
 +}
 +
-+sub parents {
-+	my $self = shift;
-+	$self->_load;
-+	map { ref($self)->new($self->repo, $_) } @{$self->{_PARENTS()}};
++div.page_info p {
++	margin: 0px;
++	padding: 0px;
 +}
 +
-+sub author {
-+	my $self = shift;
-+	$self->_load;
-+	$self->{_AUTHOR()} or '';
++pre.cache_list {
++	margin: 0.5em 2em;
 +}
 +
-+sub committer {
-+	my $self = shift;
-+	$self->_load;
-+	$self->{_COMMITTER()} or '';
-+}
+ div.page_body {
+ 	padding: 8px;
+ 	font-family: monospace;
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 90cd99b..01deca0 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -16,6 +16,9 @@ use Encode;
+ use Fcntl ':mode';
+ use File::Find qw();
+ use File::Basename qw(basename);
 +
-+sub message {
-+	my $self = shift;
-+	$self->_load;
-+	$self->{_MESSAGE()};
-+}
++use Git::RepoRoot;
 +
-+sub encoding {
-+	my $self = shift;
-+	$self->_load;
-+	$self->{_ENCODING()};
-+}
+ binmode STDOUT, ':utf8';
+ 
+ BEGIN {
+@@ -161,6 +164,49 @@ our %known_snapshot_format_aliases = (
+ 	'x-zip' => undef, '' => undef,
+ );
+ 
++# Cache::Cache object to cache data from the repository, or undef for
++# no cache.  You would typically use a Cache::Memcached instance here.
++our $cache = undef;
 +
-+# Auxiliary method to load (and parse) the commit object from the
-+# repository if it hasn't already been loaded.
++# Expiration time in seconds for transient cache entries, or undef for
++# no expiration.  (Only used if $cache is defined.)
++#
++# Transient cache entries (like get_sha1('HEAD')) are automatically
++# invalidated when an mtime of either the repository's root directory
++# or of the refs directory or any subdirectory changes.  This
++# mechanism *should* detect changes to the repository reliably if you
++# only use git or rsync to access it, and hence this expiration time
++# can be set very high.  (This does not default to non-expiring
++# [undef] just in case a change goes undetected for some reason.)  You
++# might want to set this to a lower time (e.g. a few minutes) if
++# developers change files in the refs directories on your server by
++# non-standard means (i.e. manually).
++#
++# You can usually go with the default here.
++our $cache_transient_expiration_time = 60 * 60 * 24;
 +
-+sub _load {
-+	my($self, $raw_text) = shift;
-+	return if defined $self->{_MESSAGE()};  # already loaded
++# Directory on disk to hold potentially large cache items (in
++# particular, snapshots, diffs and blobs), or undef for no cache.
++# Cache files will be created in this directory, but they will not be
++# expired; you should periodically delete old files yourself.  Setting
++# $large_cache_root but not $cache is possible, but usually not
++# sensible.
++our $large_cache_root = undef;
 +
-+	my $sha1 = $self->sha1;
-+	if (!defined $raw_text) {
-+		# Retrieve from the repository.
-+		(my $type, $raw_text) = $self->repo->cat_file($sha1);
-+		die "$sha1 is a $type object (expected a commit object)"
-+		    unless $type eq 'commit';
-+	}
++# Is the file system on which your large cache resides case-sensitive?
++our $large_cache_case_sensitive = 0;
 +
-+	(my $header, $self->{_MESSAGE()}) = split "\n\n", $raw_text, 2;
-+	# Parse header.
-+	for my $line (split "\n", $header) {
-+		local $/ = "\n"; # for chomp
-+		chomp($line);
-+		my($key, $value) = split ' ', $line, 2;
-+		if ($key eq 'tree') {
-+			$self->{_TREE()} = $value;
-+		} elsif ($key eq 'parent') {
-+			push @{$self->{_PARENTS()}}, $value;
-+		} elsif ($key eq 'author') {
-+			$self->{_AUTHOR()} = $value;
-+		} elsif ($key eq 'committer') {
-+			$self->{_COMMITTER()} = $value;
-+		} elsif ($key eq 'encoding') {
-+			$self->{_ENCODING()} = $value;
-+		} else {
-+			die "unrecognized commit header $key";
-+		}
-+	}
-+	undef;
-+}
++# Extra cache key component to use.  This should stringify to a string
++# without null bytes; it is used as a means to discard old cache
++# entries whenever this key changes.  Since Gitweb already uses its
++# own version number as a cache key component, you don't normally need
++# this unless you're developing gitweb.
++our $cache_key = undef;
 +
++# Display information in the footer of each page (currently only cache
++# statistics): 0 = none, 1 = short, 2 = long.
++our $page_info = 0;
 +
-+=head1 NOTES
+ # You define site-wide feature defaults here; override them with
+ # $GITWEB_CONFIG as necessary.
+ our %feature = (
+@@ -376,8 +422,375 @@ if (-e $GITWEB_CONFIG) {
+ 	do $GITWEB_CONFIG_SYSTEM if -e $GITWEB_CONFIG_SYSTEM;
+ }
+ 
+-# version of the core git binary
+-our $git_version = qx("$GIT" --version) =~ m/git version (.*)$/ ? $1 : "unknown";
 +
-+You will usually want to call $repo->get_commit($sha1) instead of
-+instantiating this class directly; see L<Git::Repo>.
++# ======================================================================
++# caching layer
 +
-+=cut
++package CachedRepo;
 +
++use Digest::MD5 qw(md5_base64 md5_hex);
++use List::Util qw(max);
 +
-+1;
-diff --git a/perl/Git/Object.pm b/perl/Git/Object.pm
-new file mode 100644
-index 0000000..a5126f9
---- /dev/null
-+++ b/perl/Git/Object.pm
-@@ -0,0 +1,81 @@
-+=head1 NAME
++use base qw(Git::Repo);
 +
-+Git::Object - Object-oriented interface to Git objects (base class).
++# Global statistics, collected across repositories.
++# Hits, misses, sets, and failed_sets are counters, and get_list is an
++# arrayref of keys, where a key is an arrayref of key items.
++our %cache_statistics = (
++	hits => 0, misses => 0, sets => 0, failed_sets => 0, get_list => []);
++our %large_cache_statistics = (
++	hits => 0, misses => 0, sets => 0, failed_sets => 0, get_list => []);
 +
-+=head1 DESCRIPTION
-+
-+Git::Object is a base class that provides access to commit, tag and
-+(unimplemented) tree objects.  See L<Git::Commit> and L<Git::Tag>.
-+
-+Objects are loaded lazily, and hence instantiation is free.  Objects
-+stringify to their SHA1s.
-+
-+=cut
-+
-+
-+use strict;
-+use warnings;
-+
-+
-+package Git::Object;
-+
-+use base qw(Exporter);
-+
-+our @EXPORT = qw();
-+our @EXPORT_OK = qw();
-+
-+use overload
-+    '""' => \&stringify;
-+
-+# Hash indices:
-+use constant _REPO => 'R';
-+use constant _SHA1 => 'H';
-+
-+=head1 METHODS
-+
-+=over
-+
-+=item Git::Object->new($repo, $sha1)
-+
-+Return a new Git::Object instance for the object with $sha1 in the
-+repository $repo (a Git::Repo instance).
-+
-+Note that this method does not check whether the object exists in the
-+repository.  Trying to accessing its properties through a subclass
-+will fail if the object doesn't exist, however.
-+
-+=cut
-+
++# Options: like Git::Repo->new, and the following:
++# cache: a Cache::Cache conforming cache instance
++# transient_expiration_time: expiration time in seconds for transient
++#     cache entries (like get_hash('HEAD')), or undef; do not set to
++#     30 days or more, since it makes Cache::Memcached hiccup
 +sub new {
-+	my($class, $repo, $sha1) = @_;
-+	die "$repo is not a Git::Repo instance" unless $repo->isa('Git::Repo');
-+	my $self = {_REPO() => $repo, _SHA1() => $sha1};
-+	return bless $self, $class;
-+}
-+
-+=item $obj->repo
-+
-+Return the Git::Repo instance this object was instantiated with.
-+
-+=cut
-+
-+sub repo {
-+	shift->{_REPO()}
-+}
-+
-+=item $obj->sha1
-+
-+Return the SHA1 of this object.
-+
-+=cut
-+
-+sub sha1 {
-+	shift->{_SHA1()}
-+}
-+
-+sub stringify {
-+	shift->{_SHA1()}
-+}
-+
-+
-+1;
-diff --git a/perl/Git/Repo.pm b/perl/Git/Repo.pm
-new file mode 100644
-index 0000000..5a4c7e0
---- /dev/null
-+++ b/perl/Git/Repo.pm
-@@ -0,0 +1,397 @@
-+=head1 NAME
-+
-+Git::Repo - Read-only access to the Git repositories.
-+
-+WARNING: This module is in active development -- do not use it in any
-+production code as the API may change at any time.
-+
-+=head1 SYNOPSIS
-+
-+  use Git::Repo;
-+
-+  my $repo = Git::Repo->new(
-+      directory => '/path/to/repository.git',
-+      git_binary => '/usr/bin/git');
-+  my ($sha1, $type, $size) = $repo->get_sha1('HEAD');
-+  print "Last log message:\n\n" . $repo->get_commit($sha1)->message;
-+
-+=cut
-+
-+
-+use strict;
-+use warnings;
-+use 5.006002;
-+
-+
-+package Git::Repo;
-+
-+use Git::Tag;
-+use Git::Commit;
-+
-+use IPC::Open2 qw(open2);
-+use IO::Handle;
-+
-+use base qw(Exporter);
-+
-+our @EXPORT = qw();
-+our @EXPORT_OK = qw(assert_sha1 assert_opts);
-+
-+# Auxiliary subroutines
-+
-+sub assert_opts {
-+	die "must have an even number of arguments for named options"
-+	    unless $#_ % 2;
-+}
-+
-+sub assert_sha1 {
-+	my $sha1 = shift;
-+	die "'$sha1' is not a SHA1 (need to use get_sha1?)"
-+	    unless $sha1 && $sha1 =~ /^[a-f0-9]{40}$/;
-+}
-+
-+
-+=head1 METHODS
-+
-+=head2 Instantiation and basic methods
-+
-+=over
-+
-+=item $repo = Git::Repo->new(%opts)
-+
-+Return a new Git::Repo object.  The following options are supported:
-+
-+=over
-+
-+=item 'directory'
-+
-+The directory of the repository (mandatory).
-+
-+Note that this option is working-copy agnostic; you need to
-+instantiate it with the working copy's .git directory as the
-+'directory' option.
-+
-+=item 'git_binary'
-+
-+The name or full path of the git binary (default: 'git').
-+
-+=back
-+
-+Calling this method is free, since it does not check whether the
-+repository exists.  Trying to access the repository through one of the
-+instance methods will fail if it doesn't exist though.
-+
-+Examples:
-+
-+    $repo = Git::Repo->new(directory => '/path/to/repository.git');
-+    $repo = Git::Repo->new(directory => '/path/to/working_copy/.git');
-+
-+=cut
-+
-+sub new {
-+	my $class = shift;
-+	assert_opts(@_);
-+	my $self = {@_};
-+	bless $self, $class;
-+	die 'no directory given' unless $self->{directory};
++	my ($class, %opts) = @_;
++	my $cache = delete $opts{cache};
++	my $large_cache_root = delete $opts{large_cache_root};
++	my $transient_expiration_time = delete $opts{transient_expiration_time};
++	my $self = $class->SUPER::new(%opts);
++	$self->{cache} = $cache;
++	$self->{large_cache_root} = $large_cache_root;
++	$self->{transient_expiration_time} = $transient_expiration_time;
 +	return $self;
 +}
 +
-+=item $repo->repo_dir
++sub cache { shift->{cache} }
++sub large_cache_root { shift->{large_cache_root} }
++sub transient_expiration_time { shift->{transient_expiration_time} }
 +
-+Return the directory of the repository (.../.git in case of a working
-+copy).
-+
-+=cut
-+
-+sub repo_dir {
-+	shift->{directory}
-+}
-+
-+=item $repo->git_binary
-+
-+Return the name of or path to the git binary (used with exec).
-+
-+=cut
-+
-+sub git_binary {
-+	shift->{git_binary}
-+}
-+
-+=item $repo->version
-+
-+Return the output of 'git --version', with /^git version / stripped.
-+
-+This method does not require the repository to exist.
-+
-+=cut
-+
-+sub version{
++# Fast function to generate a unique (short) key for the cache to use.
++# None of the parameters should contain null bytes.  Example:
++# $repo->get_key('sha1', 'HEAD:file1') eq 'dK2M2Y8AsgTpgAmY7PhC3q'
++sub get_key {
 +	my $self = shift;
-+	chomp(my $version = $self->cmd_output(cmd => ['--version']));
-+	$version =~ s/^git version //;  # be permissive if this does not match
-+	return $version;
++	# Some caches (like Cache::FileCache) hash keys themselves,
++        # but Cache::Memcached does not like long keys, so we need to
++        # hash them.  MD5 is fine here, since (as of July 2008) there
++        # are only collision attacks, but no practical preimage
++        # attacks on MD5.  Constructing two colliding keys doesn't
++        # seem to pose much of a threat for the cache.  Digest::SHA1
++        # is only in core as of Perl 5.9.
++	return md5_base64(join "\0", $self->_key_items(@_));
 +}
 +
++# Same as get_key, but returns a case insensitive (but longer) key.
++sub get_case_insensitive_key {
++	my $self = shift;
++	return md5_hex(join "\0", $self->_key_items(@_));
++}
 +
-+=back
++# Return a list of strings that can be used to generate a key.
++sub _key_items {
++	my $self = shift;
++	return map { defined $_ ? " $_" : '' }
++	    ('gitweb', $version, $cache_key, 'project', $self->repo_dir, @_);
++}
 +
-+=head2 Calling the Git binary
++# Convenience function: cache_set(\@key, $value, $expire);
++# $expire is boolean and indicates whether an expiry time should be set.
++sub cache_set {
++	my ($self, $key, $value, $expire) = @_;
++	return unless $self->cache;
++	my $expiration_token = $expire ? $self->get_last_modification() : undef;
++	my $ok = $self->cache->set(
++		$self->get_key($expiration_token, @$key), $value,
++		$expire ? $self->transient_expiration_time : ());
++	$ok ? $cache_statistics{sets}++ : $cache_statistics{failed_sets}++;
++	return $ok;
++}
 +
-+=over
++# Convenience function: cache_get(\@key, $expire)
++# $expire must be the same that has been used for cache_set or the
++# lookup will fail.
++sub cache_get {
++	my ($self, $key, $expire) = @_;
++	return unless $self->cache;
++	my $expiration_token = $expire ? $self->get_last_modification() : undef;
++	my $val = $self->cache->get($self->get_key($expiration_token, @$key));
++	defined $val ? $cache_statistics{hits}++ : $cache_statistics{misses}++;
++	push @{$cache_statistics{get_list}},
++	    [$self->repo_dir, $expire ? 1 : 0, @$key];
++	return $val;
++}
 +
-+=item $repo->cmd_output(%opts)
-+
-+Return the output of the given git command as a string, or as a list
-+of lines in array context.  Valid options are:
-+
-+=over
-+
-+=item 'cmd'
-+
-+An arrayref of arguments to pass to git (mandatory).
-+
-+=item 'max_exit_code'
-+
-+Die if the exit code of the git binary is greater than
-+C<max_exit_code> (default: 0).
-+
-+=back
-+
-+Example:
-+
-+    $output = $repo->cmd_output(cmd => ['show', 'HEAD'])
-+
-+=cut
-+
-+# To do: According to Git.pm, this might not work with ActiveState
-+# Perl on Win 32.  Need to check or wait for reports.
-+
++# Like Git::Repo->cmd_output, but with an added 'cache' option to
++# indicate that the output can be cached: if 1, it is cached but
++# expires when the repo is modified, if 2, it is cached indefinitely.
 +sub cmd_output {
-+	my $self = shift;
-+	assert_opts @_;
-+	my %opts = @_;
-+	# We don't support string-commands here unless someone makes a
-+	# case for them -- they are too dangerous.
-+	die 'cmd parameter must be array' unless ref($opts{cmd}) eq 'ARRAY';
-+	my @cmd = ($self->_get_git_cmd, @{$opts{cmd}});
-+	open my $fh, '-|', @cmd or die 'cannot open pipe: ' . join(" ", @cmd);
-+	local $/;
-+	my $output = <$fh>;
-+	if (not close $fh) {
-+		if ($!) {
-+			# Close failed.  Git.pm says it is OK to not
-+			# die here, but doesn't provide an example.
-+			# Let's die here for now.
-+			die "error closing pipe ($!): " . join(' ', @cmd);
-+		}
-+		my $exit_code = $? >> 8;
-+		die "Command died with exit code $exit_code: " . join(" ", @cmd)
-+		    if $exit_code > ($opts{max_exit_code} || 0);
++	my ($self, %opts) = @_;
++	my $key = ['cmd', $opts{max_exit_code}, @{$opts{cmd}}];
++	my $output;
++	unless ($opts{cache} && defined($output = $self->cache_get(
++						$key, $opts{cache} == 1))) {
++		$output = $self->SUPER::cmd_output(%opts);
++		$self->cache_set($key, $output, $opts{cache} == 1) if $opts{cache};
 +	}
 +	return $output;
 +}
 +
-+=item $repo->get_bidi_pipe(%opts)
-+
-+Open a new bidirectional pipe and return its STDIN and STDOUT file
-+handles.  Valid options are:
-+
-+=over
-+
-+=item 'cmd'
-+
-+An arrayref of arguments to pass to git (mandatory).
-+
-+=item 'reuse'
-+
-+If true, reuse a previously opened pipe with the same command line and
-+whose C<reuse> option was true (default: false).
-+
-+=back
-+
-+=cut
-+
-+sub get_bidi_pipe {
-+	my $self = shift;
-+	assert_opts @_;
-+	my %opts = @_;
-+	die 'missing or empty cmd option' unless $opts{cmd} and @{$opts{cmd}};
-+	my ($stdin, $stdout);
-+	my $cmd_str = join ' ', @{$opts{cmd}};  # key for reusing pipes
-+	if ($opts{reuse}) {
-+		my $pair = $self->{bidi_pipes}->{$cmd_str};
-+		return @$pair if $pair;
-+	}
-+	my @cmd = ($self->_get_git_cmd, @{$opts{cmd}});
-+	open2($stdout, $stdin, @cmd)
-+	    or die 'cannot open pipe';
-+	if ($opts{reuse}) {
-+		$self->{bidi_pipes}->{$cmd_str} = [$stdin, $stdout];
-+	}
-+	return ($stdin, $stdout);
-+}
-+
-+# Return the first items of the git command line, for instance
-+# qw(/usr/bin/git --git-dir=/path/to/repo.git).
-+sub _get_git_cmd {
-+	my $self = shift;
-+	return ($self->git_binary || 'git', '--git-dir=' . $self->repo_dir);
-+}
-+
-+
-+=back
-+
-+=head2 Inspecting the Repository
-+
-+=over
-+
-+=item $repo->get_sha1($extended_object_identifier)
-+
-+Look up the object identified by $extended_object_identifier and
-+return its SHA1 hash in scalar context or its ($sha1, $type, $size) in
-+list context, or undef or () if the lookup failed, where $type is one
-+of 'tag', 'commit', 'tree', or 'blob'.
-+
-+See L<git-rev-parse(1)>, section "Specifying Revisions", for the
-+syntax of the $extended_object_identifier string.
-+
-+Note that even if you pass a SHA1 hash, its existence is still
-+checked, and this method returns undef or () if it doesn't exist in
-+the repository.
-+
-+=cut
++# The following methods override the base class (Git::Repo) methods to
++# add caching.
 +
 +sub get_sha1 {
 +	my ($self, $object_id) = @_;
-+	die 'no object identifier given' unless $object_id;
-+	die 'object identifier must not contain newlines' if $object_id =~ /\n/;
-+	my ($in, $out) = $self->get_bidi_pipe(
-+		cmd => ['cat-file','--batch-check'], reuse => 1);
-+	print $in "$object_id\n" or die 'cannot write to pipe';
-+	local $/ = "\n";
-+	my $output = <$out>;
-+	die 'no output from pipe' unless $output;
-+	chomp $output;
-+	return if $output =~ /missing$/;
-+	my ($sha1, $type, $size) =
-+	    ($output =~ /^([0-9a-f]{40}) ([a-z]+) ([0-9]+)$/)
-+	    or die "invalid response: $output";
-+	return wantarray ? ($sha1, $type, $size) : $sha1;
++	my $expire = ($object_id !~ /^[0-9a-f]{40}(?![0-9a-f])/);
++	my $triple = $self->cache_get(['SHA1', $object_id], $expire);
++	unless (defined $triple) {
++		$triple = [$self->SUPER::get_sha1($object_id)];
++		# Do not cache failed lookups -- missing SHA1s would
++		# be permanently cached, but a subsequent push to the
++		# repository might add those missing SHA1s to the
++		# repository.
++		return unless $triple->[0];
++		$self->cache_set(['SHA1', $object_id], $triple, $expire);
++	}
++	return wantarray ? @$triple : $triple->[0];
 +}
-+
-+=item $repo->cat_file($sha1)
-+
-+Return the ($type, $content) of the object identified by $sha1, or die
-+if no such object exists in the repository.
-+
-+Note that you may want to use the higher-level methods get_commit and
-+get_tag instead.
-+
-+=cut
-+
-+# Possible to-do items: Add optional $file_handle parameter.  Guard
-+# against getting huge blobs back when we don't expect it (for
-+# instance, we could limit the size and send SIGPIPE to git if we get
-+# a blob that is too large).
 +
 +sub cat_file {
 +	my ($self, $sha1) = @_;
-+	assert_sha1($sha1);
-+
-+	my ($in, $out) = $self->get_bidi_pipe(
-+		cmd => ['cat-file','--batch'], reuse => 1);
-+	print $in "$sha1\n" or die 'cannot write to pipe';
-+	my ($ret_sha1, $type, $size) = split ' ', $out->getline;
-+	die "'$sha1' not found" if $type eq 'missing';
-+	$out->read(my $content, $size);
-+	$out->getline;  # eat trailing newline
-+	return wantarray ? ($type, $content) : $content;
++	my $type_content = $self->cache_get(['cat-file', $sha1], 0);
++	unless (defined $type_content) {
++		$type_content = [$self->SUPER::cat_file($sha1)];
++		die 'unexpected empty return value' unless @$type_content;
++		$self->cache_set(['cat-file', $sha1], $type_content, 0);
++	}
++	return wantarray ? @$type_content : $type_content->[1];
 +}
 +
-+=item $repo->get_commit($commit_sha1)
++# get_commit and get_tag only return empty Commit and Tag objects,
++# which when loaded (lazily), happen to call cat_file and thus are
++# cached as well.
 +
-+Return a new L<Git::Commit> instance referring to the commit object
-+with SHA1 $commit_sha1.
-+
-+=cut
-+
-+sub get_commit {
-+	my ($self, $sha1) = @_;
-+	assert_sha1($sha1);
-+	return Git::Commit->new($self, $sha1);
-+}
-+
-+=item $repo->get_tag($tag_sha1)
-+
-+Return a new L<Git::Tag> instance referring to the tag object with SHA1
-+$tag_sha1.
-+
-+=cut
-+
-+sub get_tag {
-+	my ($self, $sha1) = @_;
-+	assert_sha1($sha1);
-+	return Git::Tag->new($self, $sha1);
-+}
-+
-+=item $repo->get_path($tree_sha1, $file_sha1)
-+
-+Return the path of the tree or blob identified by $file_sha1 in the
-+tree identified by $tree_sha1, or undef if the tree or blob does not
-+exist in the given tree.
-+
-+=cut
-+
++# Mostly copied from base class.
 +sub get_path {
 +	my ($self, $tree, $file_sha1) = @_;
 +	assert_sha1($tree, $file_sha1);
-+	my @lines = split "\n", $self->cmd_output(cmd => ['ls-tree', '-r', '-t', $tree]);
-+	for (@lines) {
-+		if (/^[0-9]+ [a-z]+ $file_sha1\t(.+)$/) {
++	# This can be quite large, so use progressive_cmd_output.
++	my $ls_tree_read = $self->progressive_cmd_output(
++		cmd => [qw(ls-tree -r -t), $tree], separator => "\n",
++		cache => 1);
++	while (my $line = $ls_tree_read->()) {
++		if ($line =~ /^[0-9]+ [a-z]+ $file_sha1\t(.+)$/) {
++			while ($ls_tree_read->()) { } # cache it
 +			return $1;
 +		}
 +	}
 +	return undef;
 +}
 +
-+=item $repo->get_refs
-+
-+=item $repo->get_refs($pattern)
-+
-+Return an arrayref of [$sha1, $object_type, $ref_name] triples.  If
-+$pattern is given, only refs matching the pattern are returned; see
-+L<git-for-each-ref(1)> for details.
-+
-+=cut
-+
 +sub get_refs {
 +	my ($self, $pattern) = @_;
-+
-+	return [ map [ split ], split("\n", $self->cmd_output(
-+			 cmd => [ 'for-each-ref',
-+				  defined $pattern ? $pattern : () ])) ];
++	my $refs = $self->cache_get(['refs', $pattern], 1);
++	unless (defined $refs ) {
++		$refs = $self->SUPER::get_refs($pattern);
++		$self->cache_set(['refs', $pattern], $refs, 1);
++	}
++	return $refs;
 +}
-+
-+=item $repo->name_rev($committish_sha1, $tags_only = 0)
-+
-+Return a symbolic name for the commit identified by $committish_sha1,
-+or undef if no name can be found; see L<git-name-rev(1)> for details.
-+If $tags_only is true, no branch names are used to name the commit.
-+
-+=cut
 +
 +sub name_rev {
 +	my ($self, $sha1, $tags_only) = @_;
-+	assert_sha1($sha1);
-+
-+	# Note that we cannot use a bidi pipe here since name git
-+	# name-rev --stdin has an excessively high start-up time.
-+	# http://thread.gmane.org/gmane.comp.version-control.git/85531
-+	chomp(my $name = $self->cmd_output(
-+		      cmd => [ 'name-rev', $tags_only ? '--tags' : (),
-+			 '--name-only', $sha1 ]));
-+	return $name eq 'undefined' ? undef : $name;
-+}
-+
-+
-+1;
-diff --git a/perl/Git/RepoRoot.pm b/perl/Git/RepoRoot.pm
-new file mode 100644
-index 0000000..12e1836
---- /dev/null
-+++ b/perl/Git/RepoRoot.pm
-@@ -0,0 +1,103 @@
-+=head1 NAME
-+
-+Git::RepoRoot - A factory class representing a root directory
-+containing Git repositories.
-+
-+=head1 DESCRIPTION
-+
-+Git::RepoRoot is a factory class to create L<Git::Repo> instances that
-+are located under a common root directory.  It also allows for
-+specifying options that all Git::Repo instances will be created with.
-+
-+Using Git::RepoRoot to create Git::Repo instances is entirely
-+optional, but can be more convenient than instantiating them directly.
-+
-+=cut
-+
-+
-+use strict;
-+use warnings;
-+
-+
-+package Git::RepoRoot;
-+
-+use File::Spec;
-+
-+use Git::Repo;
-+
-+use base qw(Exporter);
-+
-+our @EXPORT = qw();
-+our @EXPORT_OK = qw();
-+
-+=head1 METHODS
-+
-+=over
-+
-+=item $repo_root = Git::RepoRoot->new(%opts)
-+
-+Return a new Git::RepoRoot object.  The following options are
-+supported:
-+
-+=over
-+
-+=item 'directory'
-+
-+The directory holding all repositories.
-+
-+=back
-+
-+All other options will be passed through to Git::Repo->new.
-+
-+Example:
-+
-+    $repo_root = Git::RepoRoot->new(directory => '/pub/git',
-+                                    git_binary => '/usr/bin/git'q);
-+
-+=cut
-+
-+sub new {
-+	my $class = shift;
-+	Git::Repo::assert_opts(@_);
-+	my $self = {@_};
-+	bless $self, $class;
-+	die 'no root directory given' unless $self->{directory};
-+	return $self;
-+}
-+
-+=item $repo_root->repo(%opts)
-+
-+Return a new L<Git::Repo> object.  The following options are
-+supported:
-+
-+=over
-+
-+=item 'directory'
-+
-+The path of the repository relative to the repository root.
-+
-+=item 'repo_class'
-+
-+The Repo class to instantiate (default: 'Git::Repo').
-+
-+=back
-+
-+All other options are passed through to Git::Repo.
-+
-+=cut
-+
-+sub repo {
-+	my $self = shift;
-+	Git::Repo::assert_opts(@_);
-+	my %opts = (%$self, @_);
-+	die 'no directory given' unless $opts{directory};
-+	# not technically necessary, but to guard against errors in the caller:
-+	die "you passed an absolute path ($opts{directory})"
-+	    if $opts{directory} =~ m!^/!;
-+	my $repo_class = delete $opts{repo_class} || 'Git::Repo';
-+	$opts{directory} = File::Spec->catfile($self->{directory}, $opts{directory});
-+	return $repo_class->new(%opts);
-+}
-+
-+
-+1;
-diff --git a/perl/Git/Tag.pm b/perl/Git/Tag.pm
-new file mode 100644
-index 0000000..4e0549b
---- /dev/null
-+++ b/perl/Git/Tag.pm
-@@ -0,0 +1,155 @@
-+=head1 NAME
-+
-+Git::Tag - Object-oriented interface to Git tag objects.
-+
-+=cut
-+
-+use strict;
-+use warnings;
-+
-+
-+package Git::Tag;
-+
-+use base qw(Git::Object);
-+
-+use constant _MESSAGE => 'M';
-+use constant _ENCODING => 'E';
-+use constant _TAGGER => 'A';
-+use constant _TAG => 'T';
-+use constant _TYPE => 'Y';
-+use constant _OBJECT => 'O';
-+
-+
-+# Keep documentation in one place to save space.
-+
-+=head1 METHODS
-+
-+=over
-+
-+=item $tag = Git::Tag->new($repo, $sha1)
-+
-+Return a new Git::Tag instance for a tag object with $sha1 in
-+repository $repo.
-+
-+Calls to this method are free, since it does not check whether $sha1
-+exists and has the right type.  However, accessing any of the tag
-+object's properties will fail if $sha1 is not a valid tag object.
-+
-+=item $obj->repo
-+
-+Return the Git::Repo instance this object was instantiated with.
-+
-+=item $obj->sha1
-+
-+Return the SHA1 of this tag object.
-+
-+=item $tag->object
-+
-+Return the SHA1 string of the object referenced by this tag .
-+
-+=item $tag->type
-+
-+Return the type of the referenced object, as claimed by the tag
-+object.  This is usually 'commit', but can be any of 'tag', 'commit',
-+'tree', or 'blob'.
-+
-+=item $tag->tagger
-+
-+Return the tagger string of this tag object.
-+
-+=item $tag->message
-+
-+Return the undecoded tag message of this tag object.
-+
-+=item $tag->encoding
-+
-+Return the encoding header of the tag object.
-+
-+=back
-+
-+=cut
-+
-+
-+sub object {
-+	my $self = shift;
-+	$self->_load;
-+	$self->{_OBJECT()};
-+}
-+
-+sub type {
-+	my $self = shift;
-+	$self->_load;
-+	$self->{_TYPE()} or '';
-+}
-+
-+sub tag {
-+	my $self = shift;
-+	$self->_load;
-+	$self->{_TAG()};
-+}
-+
-+sub tagger {
-+	my $self = shift;
-+	$self->_load;
-+	$self->{_TAGGER()} or '';
-+}
-+
-+sub message {
-+	my $self = shift;
-+	$self->_load;
-+	$self->{_MESSAGE()};
-+}
-+
-+sub encoding {
-+	my $self = shift;
-+	$self->_load;
-+	$self->{_ENCODING()};
-+}
-+
-+# Auxiliary method to load (and parse) the tag object from the
-+# repository if it hasn't already been loaded.
-+
-+sub _load {
-+	my($self, $raw_text) = shift;
-+	return if defined $self->{_MESSAGE()};  # already loaded
-+
-+	my $sha1 = $self->sha1;
-+	if (!defined $raw_text) {
-+		(my $type, $raw_text) = $self->repo->cat_file($sha1);
-+		die "$sha1 is a $type object (expected a tag object)"
-+		    unless $type eq 'tag';
++	my $name = $self->cache_get(['name-rev', $sha1, $tags_only], 1);
++	unless (defined $name) {
++		# || '' is to cache failed lookups (name_rev doesn't
++		# ever return empty names).
++		$name = $self->SUPER::name_rev($sha1, $tags_only) || '';
++		$self->cache_set(['name-rev', $sha1, $tags_only], $name, 1);
 +	}
++	return $name || undef;
++}
 +
-+	(my $header, $self->{_MESSAGE()}) = split "\n\n", $raw_text, 2;
-+	# Parse header.
-+	for my $line (split "\n", $header) {
-+		local $/ = "\n"; # for chomp
-+		chomp($line);
-+		my($key, $value) = split ' ', $line, 2;
-+		if ($key eq 'object') {
-+			$self->{_OBJECT()} = $value;
-+		} elsif ($key eq 'type') {
-+			$self->{_TYPE()} = $value;
-+		} elsif ($key eq 'tag') {
-+			$self->{_TAG()} = $value;
-+		} elsif ($key eq 'tagger') {
-+			$self->{_TAGGER()} = $value;
-+		} elsif ($key eq 'encoding') {
-+			$self->{_ENCODING()} = $value;
++# progressive_cmd_output(%opts)
++#
++# Return a coderef that returns a chunk of the output of the given
++# command each time it is called, or undef when the output is
++# exhausted.  For the output to be cached, it must be read until the
++# coderef returns undef, otherwise it will leave a stale temporary
++# file in the cache.
++#
++# Options:
++# cmd: an arrayref or string of arguments to git; if it's a string, it will be
++#     passed to the shell
++# max_exit_code: die if the command exits with a higher exit code (default: 0)
++# separator: like $/; if undef, read the output in chunks of arbitrary size
++# cache: if true, cache the output of the command (without expiration)
++#
++# Example:
++# my $diff_read = $repo->progressive_cmd_output(
++#     cmd => ['diff', $from_sha1, $to_sha1], separator => "\n", cache => 1]);
++# while (my $line = $diff_read->()) {
++# 	chomp $line;
++# 	...
++# }
++my $_file_seq = 0;
++sub progressive_cmd_output {
++	die 'must pass an odd number of arguments' unless @_ % 2;
++	my ($self, %opts) = @_;
++	local $/ = defined $opts{separator} ? delete $opts{separator} : \32768;
++	# Half of cmd_output has been copied here, but there's no
++	# pretty way to generalize it.
++	my (@cmd, $cmd_str);
++	if (ref($opts{cmd}) eq 'ARRAY') {
++		@cmd = ($self->_get_git_cmd, @{$opts{cmd}});
++		$cmd_str = join " ", @cmd;  # only used for diagnostics
++	} else {
++		$cmd_str = main::quote_command($self->_get_git_cmd) .
++		    " $opts{cmd}";  # this will be passed to the shell
++	}
++	# We read from $fh, whether it's a pipe or a cache file.  If
++	# it's a pipe, we also progressively cache it to
++	# $tmp_cache_file, and at the end move $tmp_cache_file_name to
++	# $cache_file_name.  This avoids having partially written
++	# cache entries.
++	my ($fh, $cache_file_name, $tmp_cache_file_name, $tmp_cache_file);
++	if ($opts{cache} && $self->large_cache_root) {
++		my @key_items = ('cmd', $opts{max_exit_code},
++				 ref($opts{cmd}) eq 'ARRAY' ?
++				 (@{$opts{cmd}}) : (undef, $opts{cmd}));
++		push @{$large_cache_statistics{get_list}},
++		    [$self->repo_dir, @key_items];
++		my $key = $large_cache_case_sensitive ?
++		    $self->get_key(@key_items) :
++		    $self->get_case_insensitive_key(@key_items);
++		# Make the key file-system safe; _ and @ are available
++		# on most file systems and sort after the dot as a
++		# bonus.
++		$key =~ tr{+/}{_@};
++		$cache_file_name = File::Spec->catfile(
++			$self->large_cache_root, $key);
++		$tmp_cache_file_name = File::Spec->catfile(
++			$self->large_cache_root,
++			join('.', $$, $_file_seq++, 'tmp'));
++	}
++	unless ($cache_file_name && open $fh, '<', $cache_file_name) {
++		# Not in cache -- open pipe, and open cache file to write to.
++		if (@cmd) {
++			open $fh, '-|', @cmd;
 +		} else {
-+			die "unrecognized tag header $key";
++			open $fh, '-|', $cmd_str;
++		}
++		die "cannot open pipe: $cmd_str" unless $fh;
++		open $tmp_cache_file, '>', $tmp_cache_file_name
++		    if $tmp_cache_file_name;
++		# Increment failed_sets; it will be decremented upon
++		# successful finalization of the cache entry.
++		$large_cache_statistics{failed_sets}++;
++		# Do not die if the open fails, it simply leaves
++		# $tmp_cache_file undefined.
++		# Record uncached calls as misses.
++		$large_cache_statistics{misses}++;
++	} else {
++		$large_cache_statistics{hits}++;
++	}
++	my $read = sub {
++		return undef unless $fh;  # already closed
++		my $output = <$fh>;
++		if ($output) {
++			# Write to cache and return.
++			if ($tmp_cache_file && ! print $tmp_cache_file $output) {
++				# Writing to cache failed; clean up
++				# and stop caching this pipe.
++				close $tmp_cache_file;
++				$tmp_cache_file = undef;
++				unlink $tmp_cache_file_name;
++			}
++			return $output;
++		}
++		# End of output; close and finalize cache.
++		if (close $fh) {
++			# We sometimes get mysterious "Bad file
++			# descriptor" errors here, but reading from
++			# the pipe worked fine, so let's not die.
++			#die "error closing pipe ($!): $cmd_str" if $!;
++			my $exit_code = $? >> 8;
++			die "Command died with exit code $exit_code: $cmd_str"
++			    if $exit_code > ($opts{max_exit_code} || 0);
++		}
++		$fh = undef;
++		if ($tmp_cache_file && close $tmp_cache_file) {
++			# Cache file written OK, move it in place.
++			if (rename $tmp_cache_file_name, $cache_file_name) {
++				$large_cache_statistics{failed_sets}--;
++				$large_cache_statistics{sets}++;
++			}
++		}
++		return undef;
++	};
++	# We can also provide a &close function here in case it
++	# becomes necessary to close pipes prematurely.
++	return $read;
++}
++
++# Return the seconds since epoch when the repository was last touched.
++sub get_last_modification {
++	my $self = shift;
++	return $self->{last_modification} if $self->{last_modification};
++	# Hashref mapping absolute paths of directories to mtimes.  We
++	# rely on the fact here that every time git updates a file, it
++	# creates it under a different name and then moves it in
++	# place, thus causing the mtime of the containing directory to
++	# be updated.  Hence it's enough to just stat the directories.
++	my $mtimes = $self->cache_get(['mtimes'], 0);
++	if ($mtimes) {
++		CHECK_CACHE: {
++			# Check if the cache response is up to date.
++			while (my ($dir, $mtime) = each %$mtimes) {
++				last CHECK_CACHE if (stat $dir)[9] != $mtime;
++			}
++			$self->{last_modification} = max(values %$mtimes);
++			return max(values %$mtimes);
 +		}
 +	}
-+	undef;
++	# Either mtimes are not in cache, or at least one directory
++	# has been updated.  Traverse the whole ref tree and record
++	# all directory mtimes -- this is a bit slower than the
++	# up-to-date-ness check above since we end up stat'ing all
++	# files in the refs directory.
++	my $time = time;
++	$mtimes = { $self->repo_dir => (stat $self->repo_dir)[9] };
++	my $cacheable = 1;
++	File::Find::find(
++		sub {
++			my $time = time;  # get time first
++			# No way to avoid stat'ing unconditionally
++			# with File::Find.
++			my @stat = stat($_);
++			if (Fcntl::S_ISDIR($stat[2])) {
++				# Record the directory's mtime.
++				$mtimes->{$File::Find::name} = $stat[9];
++				# Mtimes have a 1-second granularity,
++				# so if the directory has *just* been
++				# modified, we might miss subsequent
++				# modifictions in the same second if
++				# we cached it.
++				$cacheable = 0 if $stat[9] >= $time;
++			}
++		}, File::Spec->catfile($self->repo_dir, 'refs'));
++	$self->cache_set(['mtimes'], $mtimes, 0) if $cacheable;
++	$self->{last_modification} = max(values %$mtimes);
++	return max(values %$mtimes);
 +}
 +
-+
-+=head1 NOTES
-+
-+You will usually want to call $repo->get_tag($sha1) instead of
-+instantiating this class directly; see L<Git::Repo>.
-+
-+=cut
++package main;
 +
 +
-+1;
-diff --git a/perl/Makefile b/perl/Makefile
-index 5e079ad..a70e78a 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -27,6 +27,7 @@ $(makfile): ../GIT-CFLAGS Makefile
- 	echo install: >> $@
- 	echo '	mkdir -p $(instdir_SQ)' >> $@
- 	echo '	$(RM) $(instdir_SQ)/Git.pm; cp Git.pm $(instdir_SQ)' >> $@
-+	echo '	mkdir -p $(instdir_SQ)/Git; $(RM) $(instdir_SQ)/Git/*.pm; cp Git/*.pm $(instdir_SQ)/Git' >> $@
- 	echo '	$(RM) $(instdir_SQ)/Error.pm; \
- 	cp private-Error.pm $(instdir_SQ)/Error.pm' >> $@
- 	echo instlibdir: >> $@
-diff --git a/perl/Makefile.PL b/perl/Makefile.PL
-index 320253e..6c62160 100644
---- a/perl/Makefile.PL
-+++ b/perl/Makefile.PL
-@@ -8,7 +8,15 @@ instlibdir:
- MAKE_FRAG
++our $repo_root = Git::RepoRoot->new(directory => $projectroot,
++				    git_binary => $GIT,
++				    cache => $cache,
++				    large_cache_root => $large_cache_root,
++				    transient_expiration_time =>
++				      $cache_transient_expiration_time,
++				    repo_class => 'CachedRepo'
++    );
++
++# Version of the core git binary.  This should normally be the same as
++# the gitweb version, but it may diverge slightly during development.
++our $git_version = $repo_root->repo(directory => 'dummy')->version;
+ 
+ $projects_list ||= $projectroot;
+ 
+@@ -392,6 +805,7 @@ if (defined $action) {
+ 
+ # parameters which are pathnames
+ our $project = $cgi->param('p');
++our $repo = $repo_root->repo(directory => $project) if $project;
+ if (defined $project) {
+ 	if (!validate_pathname($project) ||
+ 	    !(-d "$projectroot/$project") ||
+@@ -509,13 +923,14 @@ sub evaluate_path_info {
+ 		undef $project;
+ 		return;
+ 	}
++	$repo = $repo_root->repo(directory => $project);
+ 	# do not change any parameters if an action is given using the query string
+ 	return if $action;
+ 	$path_info =~ s,^\Q$project\E/*,,;
+ 	my ($refname, $pathname) = split(/:/, $path_info, 2);
+ 	if (defined $pathname) {
+ 		# we got "project.git/branch:filename" or "project.git/branch:dir/"
+-		# we could use git_get_type(branch:pathname), but it needs $git_dir
++		# we could use git_get_type(branch:pathname) here
+ 		$pathname =~ s,^/+,,;
+ 		if (!$pathname || substr($pathname, -1) eq "/") {
+ 			$action  ||= "tree";
+@@ -533,10 +948,6 @@ sub evaluate_path_info {
+ }
+ evaluate_path_info();
+ 
+-# path to the current git repository
+-our $git_dir;
+-$git_dir = "$projectroot/$project" if $project;
+-
+ # dispatch
+ my %actions = (
+ 	"blame" => \&git_blame,
+@@ -597,8 +1008,7 @@ sub href (%) {
+ 	# default is to use -absolute url() i.e. $my_uri
+ 	my $href = $params{-full} ? $my_url : $my_uri;
+ 
+-	# XXX: Warning: If you touch this, check the search form for updating,
+-	# too.
++	# If you touch this, check the search form for updating, too.
+ 
+ 	my @mapping = (
+ 		project => "p",
+@@ -1309,10 +1719,12 @@ sub format_diff_cc_simplified {
+ 	$result .= "<div class=\"diff header\">" .
+ 	           "diff --cc ";
+ 	if (!is_deleted($diffinfo)) {
+-		$result .= $cgi->a({-href => href(action=>"blob",
+-		                                  hash_base=>$hash,
+-		                                  hash=>$diffinfo->{'to_id'},
+-		                                  file_name=>$diffinfo->{'to_file'}),
++		$result .= $cgi->a(
++			{-href => href(action=>"blob",
++				       $hash && git_get_type($hash) eq 'commit' ?
++				       (hash_base=>$hash) : (),
++				       hash=>$diffinfo->{'to_id'},
++				       file_name=>$diffinfo->{'to_file'}),
+ 		                    -class => "path"},
+ 		                   esc_path($diffinfo->{'to_file'}));
+ 	} else {
+@@ -1332,8 +1744,6 @@ sub format_diff_line {
+ 	my ($from, $to) = @_;
+ 	my $diff_class = "";
+ 
+-	chomp $line;
+-
+ 	if ($from && $to && ref($from->{'href'}) eq "ARRAY") {
+ 		# combined diff
+ 		my $prefix = substr($line, 0, scalar @{$from->{'href'}});
+@@ -1495,11 +1905,6 @@ sub get_feed_info {
+ ## ----------------------------------------------------------------------
+ ## git utility subroutines, invoking git commands
+ 
+-# returns path to the core git executable and the --git-dir parameter as list
+-sub git_cmd {
+-	return $GIT, '--git-dir='.$git_dir;
+-}
+-
+ # quote the given arguments for passing them to the shell
+ # quote_command("command", "arg 1", "arg with ' and ! characters")
+ # => "'command' 'arg 1' 'arg with '\'' and '\!' characters'"
+@@ -1509,33 +1914,55 @@ sub quote_command {
+ 		    map( { my $a = $_; $a =~ s/(['!])/'\\$1'/g; "'$a'" } @_ ));
  }
  
--my %pm = ('Git.pm' => '$(INST_LIBDIR)/Git.pm');
-+# Note that when changing %pm, you'll have to remove pm_to_blib rather
-+# than the blib directory to .force the .pm files to be re-installed
-+# to blib/lib.
-+my %pm = ('Git.pm' => '$(INST_LIBDIR)/Git.pm',
-+	  'Git/Repo.pm' => '$(INST_LIBDIR)/Git/Repo.pm',
-+	  'Git/RepoRoot.pm' => '$(INST_LIBDIR)/Git/RepoRoot.pm',
-+	  'Git/Commit.pm' => '$(INST_LIBDIR)/Git/Commit.pm',
-+	  'Git/Tag.pm' => '$(INST_LIBDIR)/Git/Tag.pm',
-+	  'Git/Object.pm' => '$(INST_LIBDIR)/Git/Object.pm');
+-# get HEAD ref of given project as hash
+-sub git_get_head_hash {
+-	my $project = shift;
+-	my $o_git_dir = $git_dir;
+-	my $retval = undef;
+-	$git_dir = "$projectroot/$project";
+-	if (open my $fd, "-|", git_cmd(), "rev-parse", "--verify", "HEAD") {
+-		my $head = <$fd>;
+-		close $fd;
+-		if (defined $head && $head =~ /^([0-9a-fA-F]{40})$/) {
+-			$retval = $1;
++# git_get_sha1_or_die ( EXTENDED_OBJECT_IDENTIFER [, TYPE] )
++#
++# Look up the object referred to by C<EXTENDED_OBJECT_IDENTIFER> and
++# return its SHA1 hash in scalar context or its ($hash, $type, $size)
++# in list context.  Return an error page to the browser if the object
++# couldn't be found.
++#
++# If C<TYPE> is given, resolve tag and commit objects if necessary and
++# die unless the object found has the right type.  The $type return
++# value is guaranteed to equal C<TYPE>.
++sub git_get_sha1_or_die {
++	my ($object_id, $want_type) = @_;
++	# This method shouldn't be used for checking missing
++	# parameters, since it cannot generate proper error messages.
++	# Hence we die with 500.
++	die_error(500, 'No object given') unless $object_id;
++	my ($hash, $type, $size) = $repo->get_sha1($object_id);
++	unless ($hash) {
++		my $human_type = ucfirst($want_type || 'object');
++		die_error(404, "$human_type not found: '$object_id'");
++	}
++	if ($want_type && $want_type ne $type) {
++		if ($type eq 'tag') {
++			return git_get_sha1_or_die(
++				$repo->get_tag($hash)->object, $want_type);
++		} elsif ($type eq 'commit' && $want_type eq 'tree') {
++			return git_get_sha1_or_die(
++				$repo->get_commit($hash)->tree, $want_type);
++		} else {
++			# $object_id and $type can be off due to recursion,
++			# but fixing it complicates the code too much.
++			die_error(400, "Expected a $want_type object, but " .
++				  "'$object_id' is a $type object");
+ 		}
+ 	}
+-	if (defined $o_git_dir) {
+-		$git_dir = $o_git_dir;
+-	}
+-	return $retval;
++	return wantarray ? ($hash, $type, $size) : $hash;
++}
++
++# get HEAD ref hash of current project or die if no HEAD ref was found
++sub git_get_head_hash {
++	die_error(400, 'no project given') unless $project;
++	my $sha1 = $repo->get_sha1('HEAD')
++	    or die_error(500, "HEAD ref not found for project '$project'");
++	return $sha1;
+ }
  
- # We come with our own bundled Error.pm. It's not in the set of default
- # Perl modules so install it if it's not available on the system yet.
-diff --git a/t/t9710-perl-git-repo.sh b/t/t9710-perl-git-repo.sh
-new file mode 100755
-index 0000000..ca67b87
---- /dev/null
-+++ b/t/t9710-perl-git-repo.sh
-@@ -0,0 +1,49 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Lea Wiemann
-+#
+ # get type of given object
+ sub git_get_type {
+-	my $hash = shift;
+-
+-	open my $fd, "-|", git_cmd(), "cat-file", '-t', $hash or return;
+-	my $type = <$fd>;
+-	close $fd or return;
+-	chomp $type;
++	my($sha1, $type, $size) = $repo->get_sha1(shift);
+ 	return $type;
+ }
+ 
+@@ -1563,20 +1990,14 @@ sub git_parse_project_config {
+ 	my $section_regexp = shift;
+ 	my %config;
+ 
+-	local $/ = "\0";
+-
+-	open my $fh, "-|", git_cmd(), "config", '-z', '-l',
+-		or return;
+-
+-	while (my $keyval = <$fh>) {
+-		chomp $keyval;
++	return unless $repo;
++	for my $keyval (split "\0", $repo->cmd_output(
++				cmd => [qw(config -z -l)], cache => 1)) {
+ 		my ($key, $value) = split(/\n/, $keyval, 2);
+ 
+ 		hash_set_multi(\%config, $key, $value)
+ 			if (!defined $section_regexp || $key =~ /^(?:$section_regexp)\./o);
+ 	}
+-	close $fh;
+-
+ 	return %config;
+ }
+ 
+@@ -1639,9 +2060,9 @@ sub git_get_project_config {
+ 
+ 	# get config
+ 	if (!defined $config_file ||
+-	    $config_file ne "$git_dir/config") {
++	    $config_file ne "$projectroot/$project/config") {
+ 		%config = git_parse_project_config('gitweb');
+-		$config_file = "$git_dir/config";
++		$config_file = "$projectroot/$project/config";
+ 	}
+ 
+ 	# ensure given type
+@@ -1656,65 +2077,42 @@ sub git_get_project_config {
+ 	return $config{"gitweb.$key"};
+ }
+ 
+-# get hash of given path at given ref
+-sub git_get_hash_by_path {
+-	my $base = shift;
+-	my $path = shift || return undef;
+-	my $type = shift;
+-
++# Return the SHA1 of the blob or tree at the path in the given commit,
++# or return undef if it does not exist.
++sub git_get_sha1_by_path {
++	my ($base, $path, $type) = @_;
+ 	$path =~ s,/+$,,;
+-
+-	open my $fd, "-|", git_cmd(), "ls-tree", $base, "--", $path
+-		or die_error(500, "Open git-ls-tree failed");
+-	my $line = <$fd>;
+-	close $fd or return undef;
+-
+-	if (!defined $line) {
+-		# there is no tree or hash given by $path at $base
+-		return undef;
+-	}
+-
+-	#'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa	panic.c'
+-	$line =~ m/^([0-9]+) (.+) ([0-9a-fA-F]{40})\t/;
+-	if (defined $type && $type ne $2) {
+-		# type doesn't match
+-		return undef;
+-	}
+-	return $3;
++	return $repo->get_sha1("$base:$path", $type);
+ }
+ 
+-# get path of entry with given hash at given tree-ish (ref)
+-# used to get 'from' filename for combined diff (merge commit) for renames
++# Get path of entry with given hash at given tree-ish (ref); used to
++# get 'from' filename for combined diff (merge commit) for renames.
++# Note that this does not resolve tag or commit objects in the $hash
++# parameter, you must pass a tree or blob object.
+ sub git_get_path_by_hash {
+ 	my $base = shift || return;
+ 	my $hash = shift || return;
+ 
+-	local $/ = "\0";
++	my $tree = git_get_sha1_or_die($base, 'tree');
++	my ($file_sha1, $file_type) = $repo->get_sha1($hash);
++	die_error(404, "object not found: '$hash'") unless $file_sha1;
++	die_error(400, "'$hash' is a $file_type object, not a tree or blob object")
++	    unless $file_type eq 'blob' || $file_type eq 'tree';
+ 
+-	open my $fd, "-|", git_cmd(), "ls-tree", '-r', '-t', '-z', $base
+-		or return undef;
+-	while (my $line = <$fd>) {
+-		chomp $line;
+-
+-		#'040000 tree 595596a6a9117ddba9fe379b6b012b558bac8423	gitweb'
+-		#'100644 blob e02e90f0429be0d2a69b76571101f20b8f75530f	gitweb/README'
+-		if ($line =~ m/(?:[0-9]+) (?:.+) $hash\t(.+)$/) {
+-			close $fd;
+-			return $1;
+-		}
+-	}
+-	close $fd;
+-	return undef;
++	return $repo->get_path($tree, $file_sha1);
+ }
+ 
+ ## ......................................................................
+ ## git utility functions, directly accessing git repository
+ 
++# The following subroutines locally change the global $project
++# variable as a side-effect so that their calls to
++# git_get_project_config work.
 +
-+test_description='perl interface (Git/*.pm)'
-+. ./test-lib.sh
-+
-+perl -MTest::More -e 0 2>/dev/null || {
-+	say_color skip "Perl Test::More unavailable, skipping test"
-+	test_done
+ sub git_get_project_description {
+-	my $path = shift;
++	local $project = shift;
+ 
+-	$git_dir = "$projectroot/$path";
+-	open my $fd, "$git_dir/description"
++	open my $fd, "$projectroot/$project/description"
+ 		or return git_get_project_config('description');
+ 	my $descr = <$fd>;
+ 	close $fd;
+@@ -1725,10 +2123,9 @@ sub git_get_project_description {
+ }
+ 
+ sub git_get_project_url_list {
+-	my $path = shift;
++	local $project = shift;
+ 
+-	$git_dir = "$projectroot/$path";
+-	open my $fd, "$git_dir/cloneurl"
++	open my $fd, "$projectroot/$project/cloneurl"
+ 		or return wantarray ?
+ 		@{ config_to_multi(git_get_project_config('url')) } :
+ 		   config_to_multi(git_get_project_config('url'));
+@@ -1863,11 +2260,10 @@ sub git_get_project_list_from_file {
+ }
+ 
+ sub git_get_project_owner {
+-	my $project = shift;
++	local $project = shift;
+ 	my $owner;
+ 
+ 	return undef unless $project;
+-	$git_dir = "$projectroot/$project";
+ 
+ 	if (!defined $gitweb_project_owner) {
+ 		git_get_project_list_from_file();
+@@ -1880,44 +2276,45 @@ sub git_get_project_owner {
+ 		$owner = git_get_project_config('owner');
+ 	}
+ 	if (!defined $owner) {
+-		$owner = get_file_owner("$git_dir");
++		$owner = get_file_owner("$projectroot/$project");
+ 	}
+ 
+ 	return $owner;
+ }
+ 
+ sub git_get_last_activity {
+-	my ($path) = @_;
+-	my $fd;
++	my $path = shift;
+ 
+-	$git_dir = "$projectroot/$path";
+-	open($fd, "-|", git_cmd(), 'for-each-ref',
+-	     '--format=%(committer)',
+-	     '--sort=-committerdate',
+-	     '--count=1',
+-	     'refs/heads') or return;
+-	my $most_recent = <$fd>;
+-	close $fd or return;
+-	if (defined $most_recent &&
+-	    $most_recent =~ / (\d+) [-+][01]\d\d\d$/) {
+-		my $timestamp = $1;
+-		my $age = time - $timestamp;
+-		return ($age, age_string($age));
+-	}
+-	return (undef, undef);
++	chomp(my $most_recent = $repo_root->repo(directory => $path)->cmd_output(
++		      cmd => [ qw(for-each-ref --count=1 --format=%(committer)),
++			       qw(--sort=-committerdate refs/heads) ],
++		      cache => 1, max_exit_code => 255)) or return;
++	$most_recent =~ / (\d+) [-+][01]\d\d\d$/ or return;
++	my $timestamp = $1;
++	my $age = time - $timestamp;
++	return ($age, age_string($age));
+ }
+ 
++# Return a hashref from SHA1s to arrayrefs of ref names.  Example:
++# { '7e51...' => ['tags/tag-object'], # tag SHA1
++#   '51ba...' => ['tags/tag-object'], # referenced commit SHA1
++#   '3c4a...' => ['heads/master', 'tags/another-tag'] }
+ sub git_get_references {
+ 	my $type = shift || "";
+ 	my %refs;
+-	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/tags/v2.6.11
+-	# c39ae07f393806ccf406ef966e9a15afc43cc36a refs/tags/v2.6.11^{}
+-	open my $fd, "-|", git_cmd(), "show-ref", "--dereference",
+-		($type ? ("--", "refs/$type") : ()) # use -- <pattern> if $type
+-		or return;
+-
+-	while (my $line = <$fd>) {
+-		chomp $line;
++	# This is not implementable in terms of $repo->get_refs
++	# because get_refs doesn't dereference, and we cannot
++	# dereference a lot of SHA1s ourselves as long as there is no
++	# implementation that uses Cache::Memcached->get_multi.
++	# Hence, we use cmd_output.
++	my @lines = split "\n", $repo->cmd_output(
++		cmd => ['show-ref', '--dereference',
++			($type ? ("--", "refs/$type") : ())],
++		max_exit_code => 1,  # exits with status 1 on empty repos
++		cache => 1);
++	for my $line (@lines) {
++		# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/tags/v2.6.11
++		# c39ae07f393806ccf406ef966e9a15afc43cc36a refs/tags/v2.6.11^{}
+ 		if ($line =~ m!^([0-9a-fA-F]{40})\srefs/($type/?[^^]+)!) {
+ 			if (defined $refs{$1}) {
+ 				push @{$refs{$1}}, $2;
+@@ -1926,24 +2323,15 @@ sub git_get_references {
+ 			}
+ 		}
+ 	}
+-	close $fd or return;
+ 	return \%refs;
+ }
+ 
+ sub git_get_rev_name_tags {
+-	my $hash = shift || return undef;
++	my $hash = shift or die_error();
+ 
+-	open my $fd, "-|", git_cmd(), "name-rev", "--tags", $hash
+-		or return;
+-	my $name_rev = <$fd>;
+-	close $fd;
+-
+-	if ($name_rev =~ m|^$hash tags/(.*)$|) {
+-		return $1;
+-	} else {
+-		# catches also '$hash undefined' output
+-		return undef;
+-	}
++	my $name = $repo->name_rev($hash);
++	$name =~ s!^tags/!! if $name;
++	return $name;
+ }
+ 
+ ## ----------------------------------------------------------------------
+@@ -1982,14 +2370,12 @@ sub parse_date {
+ }
+ 
+ sub parse_tag {
+-	my $tag_id = shift;
++	my $sha1 = shift;
+ 	my %tag;
+ 	my @comment;
+ 
+-	open my $fd, "-|", git_cmd(), "cat-file", "tag", $tag_id or return;
+-	$tag{'id'} = $tag_id;
+-	while (my $line = <$fd>) {
+-		chomp $line;
++	my ($raw_header, $raw_comment) = split "\n\n", $repo->cat_file($sha1), 2;
++	for my $line (split "\n", $raw_header) {
+ 		if ($line =~ m/^object ([0-9a-fA-F]{40})$/) {
+ 			$tag{'object'} = $1;
+ 		} elsif ($line =~ m/^type (.+)$/) {
+@@ -2000,19 +2386,9 @@ sub parse_tag {
+ 			$tag{'author'} = $1;
+ 			$tag{'epoch'} = $2;
+ 			$tag{'tz'} = $3;
+-		} elsif ($line =~ m/--BEGIN/) {
+-			push @comment, $line;
+-			last;
+-		} elsif ($line eq "") {
+-			last;
+ 		}
+ 	}
+-	push @comment, <$fd>;
+-	$tag{'comment'} = \@comment;
+-	close $fd or return;
+-	if (!defined $tag{'name'}) {
+-		return
+-	};
++	$tag{'comment'} = [split "\n", $raw_comment];
+ 	return %tag
+ }
+ 
+@@ -2021,8 +2397,6 @@ sub parse_commit_text {
+ 	my @commit_lines = split '\n', $commit_text;
+ 	my %co;
+ 
+-	pop @commit_lines; # Remove '\0'
+-
+ 	if (! @commit_lines) {
+ 		return;
+ 	}
+@@ -2117,48 +2491,38 @@ sub parse_commit_text {
+ 
+ sub parse_commit {
+ 	my ($commit_id) = @_;
+-	my %co;
+-
+-	local $/ = "\0";
+-
+-	open my $fd, "-|", git_cmd(), "rev-list",
+-		"--parents",
+-		"--header",
+-		"--max-count=1",
+-		$commit_id,
+-		"--",
+-		or die_error(500, "Open git-rev-list failed");
+-	%co = parse_commit_text(<$fd>, 1);
+-	close $fd;
++	# This currently supports arbitrary object names, so we
++	# resolve it here.
++	my $sha1 = git_get_sha1_or_die($commit_id, 'commit');
+ 
+-	return %co;
++	# This formats commits slightly differently than the raw
++	# cat-file, so we cannot use cat_file here.  This function
++	# should be replaced by $repo->get_commit anyway.
++	my $commit_text = $repo->cmd_output(
++		cmd => [qw(rev-list --parents --header --max-count=1), $sha1, '--'],
++		cache => 2);
++	$commit_text =~ s/\x00$//;
++	return parse_commit_text($commit_text, 1);
+ }
+ 
+ sub parse_commits {
+ 	my ($commit_id, $maxcount, $skip, $filename, @args) = @_;
+-	my @cos;
++	# This currently supports arbitrary object names, so we
++	# resolve it here.
++	my $sha1 = git_get_sha1_or_die($commit_id);
++	git_get_sha1_or_die("$sha1:$filename") if $filename;  # check existence
+ 
+ 	$maxcount ||= 1;
+ 	$skip ||= 0;
+ 
+-	local $/ = "\0";
+-
+-	open my $fd, "-|", git_cmd(), "rev-list",
+-		"--header",
+-		@args,
+-		("--max-count=" . $maxcount),
+-		("--skip=" . $skip),
+-		@extra_options,
+-		$commit_id,
+-		"--",
+-		($filename ? ($filename) : ())
+-		or die_error(500, "Open git-rev-list failed");
+-	while (my $line = <$fd>) {
+-		my %co = parse_commit_text($line);
+-		push @cos, \%co;
+-	}
+-	close $fd;
+-
++	# TODO: Integrate this into Git::Repo, and get rid of @args
++	# and @extra_options.
++	my @raw_commits = split "\0", $repo->cmd_output(
++		cmd => ['rev-list', '--header', @args, "--max-count=$maxcount",
++			"--skip=$skip", @extra_options,	$sha1, "--",
++			$filename || ()],
++		cache => 2);
++	my @cos = map { { parse_commit_text($_) } } @raw_commits;
+ 	return wantarray ? @cos : \@cos;
+ }
+ 
+@@ -2263,7 +2627,9 @@ sub parse_from_to_diffinfo {
+ 		# ordinary (not combined) diff
+ 		$from->{'file'} = $diffinfo->{'from_file'};
+ 		if ($diffinfo->{'status'} ne "A") { # not new (added) file
+-			$from->{'href'} = href(action=>"blob", hash_base=>$hash_parent,
++			$from->{'href'} = href(action=>"blob",
++					       $hash_parent && git_get_type($hash_parent) eq 'commit' ?
++					       (hash_base=>$hash_parent) : (),
+ 			                       hash=>$diffinfo->{'from_id'},
+ 			                       file_name=>$from->{'file'});
+ 		} else {
+@@ -2273,7 +2639,9 @@ sub parse_from_to_diffinfo {
+ 
+ 	$to->{'file'} = $diffinfo->{'to_file'};
+ 	if (!is_deleted($diffinfo)) { # file exists in result
+-		$to->{'href'} = href(action=>"blob", hash_base=>$hash,
++		$to->{'href'} = href(action=>"blob",
++				     $hash && git_get_type($hash) eq 'commit' ?
++				     (hash_base=>$hash) : (),
+ 		                     hash=>$diffinfo->{'to_id'},
+ 		                     file_name=>$to->{'file'});
+ 	} else {
+@@ -2288,15 +2656,15 @@ sub git_get_heads_list {
+ 	my $limit = shift;
+ 	my @headslist;
+ 
+-	open my $fd, '-|', git_cmd(), 'for-each-ref',
+-		($limit ? '--count='.($limit+1) : ()), '--sort=-committerdate',
+-		'--format=%(objectname) %(refname) %(subject)%00%(committer)',
+-		'refs/heads'
+-		or return;
+-	while (my $line = <$fd>) {
++	my @lines = split "\n", $repo->cmd_output(
++		cmd => ['for-each-ref', '--sort=-committerdate',
++			$limit ? '--count='.($limit+1) : (),
++			'--format=%(objectname) %(refname) %(subject)%00%(committer)',
++			'refs/heads'],
++		cache => 1);
++	for my $line (@lines) {
+ 		my %ref_item;
+ 
+-		chomp $line;
+ 		my ($refinfo, $committerinfo) = split(/\0/, $line);
+ 		my ($hash, $name, $title) = split(' ', $refinfo, 3);
+ 		my ($committer, $epoch, $tz) =
+@@ -2316,7 +2684,6 @@ sub git_get_heads_list {
+ 
+ 		push @headslist, \%ref_item;
+ 	}
+-	close $fd;
+ 
+ 	return wantarray ? @headslist : \@headslist;
+ }
+@@ -2325,16 +2692,16 @@ sub git_get_tags_list {
+ 	my $limit = shift;
+ 	my @tagslist;
+ 
+-	open my $fd, '-|', git_cmd(), 'for-each-ref',
+-		($limit ? '--count='.($limit+1) : ()), '--sort=-creatordate',
+-		'--format=%(objectname) %(objecttype) %(refname) '.
+-		'%(*objectname) %(*objecttype) %(subject)%00%(creator)',
+-		'refs/tags'
+-		or return;
+-	while (my $line = <$fd>) {
++	my @lines = split "\n", $repo->cmd_output(
++		cmd => ['for-each-ref', '--sort=-creatordate',
++			($limit ? '--count='.($limit+1) : ()),
++			'--format=%(objectname) %(objecttype) %(refname) '.
++			'%(*objectname) %(*objecttype) %(subject)%00%(creator)',
++			'refs/tags'],
++		cache => 1);
++	for my $line (@lines) {
+ 		my %ref_item;
+ 
+-		chomp $line;
+ 		my ($refinfo, $creatorinfo) = split(/\0/, $line);
+ 		my ($id, $type, $name, $refid, $reftype, $title) = split(' ', $refinfo, 6);
+ 		my ($creator, $epoch, $tz) =
+@@ -2365,7 +2732,6 @@ sub git_get_tags_list {
+ 
+ 		push @tagslist, \%ref_item;
+ 	}
+-	close $fd;
+ 
+ 	return wantarray ? @tagslist : \@tagslist;
+ }
+@@ -2429,8 +2795,16 @@ sub mimetype_guess {
+ 	return $mime;
+ }
+ 
++# Replacement for (heuristic) -T operator.  (perldoc -f -T)
++sub is_ascii_text {
++	my $text = shift;
++	return ((grep { ord($_) > 127 } split('', $text)) / length $text) <= 0.3;
 +}
 +
-+# Set up test repository.  Tagging/branching is a little tricky
-+# because it needs to stay unambiguous for the name_rev tests.
++# Determine the MIME type of a blob based on its file name ($filename)
++# and its first n bytes ($snippet).
+ sub blob_mimetype {
+-	my $fd = shift;
++	my $snippet = shift;
+ 	my $filename = shift;
+ 
+ 	if ($filename) {
+@@ -2438,10 +2812,7 @@ sub blob_mimetype {
+ 		$mime and return $mime;
+ 	}
+ 
+-	# just in case
+-	return $default_blob_plain_mimetype unless $fd;
+-
+-	if (-T $fd) {
++	if (is_ascii_text($snippet)) {
+ 		return 'text/plain';
+ 	} elsif (! $filename) {
+ 		return 'application/octet-stream';
+@@ -2457,9 +2828,9 @@ sub blob_mimetype {
+ }
+ 
+ sub blob_contenttype {
+-	my ($fd, $file_name, $type) = @_;
++	my ($snippet, $file_name, $type) = @_;
+ 
+-	$type ||= blob_mimetype($fd, $file_name);
++	$type ||= blob_mimetype($snippet, $file_name);
+ 	if ($type eq 'text/plain' && defined $default_text_plain_charset) {
+ 		$type .= "; charset=$default_text_plain_charset";
+ 	}
+@@ -2472,7 +2843,6 @@ sub blob_contenttype {
+ 
+ sub git_header_html {
+ 	my $status = shift || "200 OK";
+-	my $expires = shift;
+ 
+ 	my $title = "$site_name";
+ 	if (defined $project) {
+@@ -2500,7 +2870,7 @@ sub git_header_html {
+ 		$content_type = 'text/html';
+ 	}
+ 	print $cgi->header(-type=>$content_type, -charset => 'utf-8',
+-	                   -status=> $status, -expires => $expires);
++	                   -status=> $status, -cache_control => 'no-cache');
+ 	my $mod_perl_version = $ENV{'MOD_PERL'} ? " $ENV{'MOD_PERL'}" : '';
+ 	print <<EOF;
+ <?xml version="1.0" encoding="utf-8"?>
+@@ -2573,7 +2943,7 @@ EOF
+ 	print "</head>\n" .
+ 	      "<body>\n";
+ 
+-	if (-f $site_header) {
++	if ($site_header && -f $site_header) {
+ 		open (my $fd, $site_header);
+ 		print <$fd>;
+ 		close $fd;
+@@ -2593,8 +2963,8 @@ EOF
+ 	}
+ 	print "</div>\n";
+ 
+-	my ($have_search) = gitweb_check_feature('search');
+-	if (defined $project && $have_search) {
++	if (defined $project && gitweb_check_feature('search') &&
++	    $repo->get_sha1('HEAD')) {
+ 		if (!defined $searchtext) {
+ 			$searchtext = "";
+ 		}
+@@ -2662,6 +3032,39 @@ sub git_footer_html {
+ 	}
+ 	print "</div>\n"; # class="page_footer"
+ 
++	if ($page_info) {
++		print "<div class=\"page_info\">\n";
++		my $print_stats = sub {
++			my ($name, $cache_exists) = (shift, shift);
++			my %s = @_;  # statistics hash
++			if ($cache_exists) {
++				my $gets = $s{hits} + $s{misses};
++				print "<p>" . ucfirst($name) . ": " .
++				    "<b>$gets</b> gets " .
++				    "(<b>$s{hits}</b> hits + ".
++				    "<b>$s{misses}</b> misses); " .
++				    "<b>$s{sets}</b> sets, " .
++				    "<b>$s{failed_sets}</b> failed sets.</p>\n";
++				if ($page_info == 2 && @{$s{get_list}}) {
++					print "<pre class=\"cache_list\">";
++					print join("\n",
++						   map(esc_html(join ',',
++								map(defined $_ ? " $_" : '',
++								    @$_)),
++						       @{$s{get_list}}));
++					print "</pre>\n";
++				}
++			} else {
++				print "<p><i>No $name.</i></p>\n";
++			}
++		};
++		$print_stats->('main cache', $cache,
++			       %CachedRepo::cache_statistics);
++		$print_stats->('large cache', $large_cache_root,
++			       %CachedRepo::large_cache_statistics);
++		print "</div>\n"; # class="page_info"
++	}
 +
-+test_expect_success \
-+    'set up test repository' \
-+    'echo "test file 1" > file1 &&
-+     echo "test file 2" > file2 &&
-+     mkdir directory1 &&
-+     echo "in directory1" >> directory1/file &&
-+     mkdir directory2 &&
-+     echo "in directory2" >> directory2/file &&
-+     git add . &&
-+     git commit -m "first commit" &&
+ 	if (-f $site_footer) {
+ 		open (my $fd, $site_footer);
+ 		print <$fd>;
+@@ -2710,6 +3113,8 @@ sub git_print_page_nav {
+ 	my ($current, $suppress, $head, $treehead, $treebase, $extra) = @_;
+ 	$extra = '' if !defined $extra; # pager or formats
+ 
++	return unless $repo->get_sha1('HEAD');  # no navigation for empty repos
 +
-+     git tag -a -m "tag message 1" tag-object-1 &&
+ 	my @navs = qw(summary shortlog log commit commitdiff tree);
+ 	if ($suppress) {
+ 		@navs = grep { $_ ne $suppress } @navs;
+@@ -2893,20 +3298,8 @@ sub git_print_log ($;%) {
+ 
+ # return link target (what link points to)
+ sub git_get_link_target {
+-	my $hash = shift;
+-	my $link_target;
+-
+-	# read link
+-	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
+-		or return;
+-	{
+-		local $/;
+-		$link_target = <$fd>;
+-	}
+-	close $fd
+-		or return;
+-
+-	return $link_target;
++	my $sha1 = shift;
++	return $repo->cat_file($sha1);
+ }
+ 
+ # given link target, and the directory (basedir) the link is in,
+@@ -3383,7 +3776,7 @@ sub git_difftree_body {
+ }
+ 
+ sub git_patchset_body {
+-	my ($fd, $difftree, $hash, @hash_parents) = @_;
++	my ($read, $difftree, $hash, @hash_parents) = @_;
+ 	my ($hash_parent) = $hash_parents[0];
+ 
+ 	my $is_combined = (@hash_parents > 1);
+@@ -3397,7 +3790,7 @@ sub git_patchset_body {
+ 	print "<div class=\"patchset\">\n";
+ 
+ 	# skip to first patch
+-	while ($patch_line = <$fd>) {
++	while ($patch_line = $read->()) {
+ 		chomp $patch_line;
+ 
+ 		last if ($patch_line =~ m/^diff /);
+@@ -3465,7 +3858,7 @@ sub git_patchset_body {
+ 		# print extended diff header
+ 		print "<div class=\"diff extended_header\">\n";
+ 	EXTENDED_HEADER:
+-		while ($patch_line = <$fd>) {
++		while ($patch_line = $read->()) {
+ 			chomp $patch_line;
+ 
+ 			last EXTENDED_HEADER if ($patch_line =~ m/^--- |^diff /);
+@@ -3484,7 +3877,7 @@ sub git_patchset_body {
+ 		#assert($patch_line =~ m/^---/) if DEBUG;
+ 
+ 		my $last_patch_line = $patch_line;
+-		$patch_line = <$fd>;
++		$patch_line = $read->();
+ 		chomp $patch_line;
+ 		#assert($patch_line =~ m/^\+\+\+/) if DEBUG;
+ 
+@@ -3494,7 +3887,7 @@ sub git_patchset_body {
+ 
+ 		# the patch itself
+ 	LINE:
+-		while ($patch_line = <$fd>) {
++		while ($patch_line = $read->()) {
+ 			chomp $patch_line;
+ 
+ 			next PATCH if ($patch_line =~ m/^diff /);
+@@ -3545,9 +3938,6 @@ sub fill_project_list_info {
+  PROJECT:
+ 	foreach my $pr (@$projlist) {
+ 		my (@activity) = git_get_last_activity($pr->{'path'});
+-		unless (@activity) {
+-			next PROJECT;
+-		}
+ 		($pr->{'age'}, $pr->{'age_string'}) = @activity;
+ 		if (!defined $pr->{'descr'}) {
+ 			my $descr = git_get_project_description($pr->{'path'}) || "";
+@@ -3585,7 +3975,9 @@ sub print_sort_th {
+ 		if ($str_sort) {
+ 			@$list = sort {$a->{$key} cmp $b->{$key}} @$list;
+ 		} else {
+-			@$list = sort {$a->{$key} <=> $b->{$key}} @$list;
++			# Sort undefined keys last.
++			@$list = sort { (defined $a->{$key} ? $a->{$key} : 1e30) <=>
++					(defined $b->{$key} ? $b->{$key} : 1e30)} @$list;
+ 		}
+ 		print "<th>$header</th>\n";
+ 	} else {
+@@ -3653,16 +4045,20 @@ sub git_project_list_body {
+ 		      "<td>" . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary"),
+ 		                        -class => "list", -title => $pr->{'descr_long'}},
+ 		                        esc_html($pr->{'descr'})) . "</td>\n" .
+-		      "<td><i>" . chop_and_escape_str($pr->{'owner'}, 15) . "</i></td>\n";
+-		print "<td class=\"". age_class($pr->{'age'}) . "\">" .
++		      "<td><i>" . chop_and_escape_str($pr->{'owner'}, 15) . "</i></td>\n" .
++		      "<td class=\"". age_class($pr->{'age'}) . "\">" .
+ 		      (defined $pr->{'age_string'} ? $pr->{'age_string'} : "No commits") . "</td>\n" .
+ 		      "<td class=\"link\">" .
+-		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary")}, "summary")   . " | " .
+-		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"shortlog")}, "shortlog") . " | " .
+-		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"log")}, "log") . " | " .
+-		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"tree")}, "tree") .
+-		      ($pr->{'forks'} ? " | " . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"forks")}, "forks") : '') .
+-		      "</td>\n" .
++		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary")}, "summary");
++		if ($pr->{'age_string'}) {
++			# Non-empty repository.
++			print " | " .
++			    $cgi->a({-href => href(project=>$pr->{'path'}, action=>"shortlog")}, "shortlog") . " | " .
++			    $cgi->a({-href => href(project=>$pr->{'path'}, action=>"log")}, "log") . " | " .
++			    $cgi->a({-href => href(project=>$pr->{'path'}, action=>"tree")}, "tree");
++		}
++		print " | " . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"forks")}, "forks") if $pr->{'forks'};
++		print "</td>\n" .
+ 		      "</tr>\n";
+ 	}
+ 	if (defined $extra) {
+@@ -3760,8 +4156,8 @@ sub git_history_body {
+ 		      $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, "commitdiff");
+ 
+ 		if ($ftype eq 'blob') {
+-			my $blob_current = git_get_hash_by_path($hash_base, $file_name);
+-			my $blob_parent  = git_get_hash_by_path($commit, $file_name);
++			my $blob_current = git_get_sha1_by_path($hash_base, $file_name);
++			my $blob_parent = git_get_sha1_by_path($commit, $file_name);
+ 			if (defined $blob_current && defined $blob_parent &&
+ 					$blob_current ne $blob_parent) {
+ 				print " | " .
+@@ -4016,9 +4412,9 @@ sub git_project_index {
+ 
+ sub git_summary {
+ 	my $descr = git_get_project_description($project) || "none";
+-	my %co = parse_commit("HEAD");
+-	my %cd = %co ? parse_date($co{'committer_epoch'}, $co{'committer_tz'}) : ();
+-	my $head = $co{'id'};
++	my $head = $repo->get_sha1('HEAD', 'commit');
++	my %co = parse_commit($head) if $head;
++	my %cd = parse_date($co{'committer_epoch'}, $co{'committer_tz'}) if $head;
+ 
+ 	my $owner = git_get_project_owner($project);
+ 
+@@ -4037,7 +4433,7 @@ sub git_summary {
+ 	git_header_html();
+ 	git_print_page_nav('summary','', $head);
+ 
+-	print "<div class=\"title\">&nbsp;</div>\n";
++	print "<div class=\"title\">&nbsp;</div>\n" if $head;
+ 	print "<table class=\"projects_list\">\n" .
+ 	      "<tr><td>description</td><td>" . esc_html($descr) . "</td></tr>\n" .
+ 	      "<tr><td>owner</td><td>" . esc_html($owner) . "</td></tr>\n";
+@@ -4103,14 +4499,12 @@ sub git_summary {
+ }
+ 
+ sub git_tag {
+-	my $head = git_get_head_hash($project);
++	my $head = git_get_head_hash();
++	my $sha1 = git_get_sha1_or_die($hash, 'tag');
+ 	git_header_html();
+ 	git_print_page_nav('','', $head,undef,$head);
+-	my %tag = parse_tag($hash);
+-
+-	if (! %tag) {
+-		die_error(404, "Unknown tag object");
+-	}
++	# TODO: This wants to become $repo->get_tag.
++	my %tag = parse_tag($sha1);
+ 
+ 	git_print_header_div('commit', esc_html($tag{'name'}), $hash);
+ 	print "<div class=\"title_text\">\n" .
+@@ -4134,7 +4528,6 @@ sub git_tag {
+ 	print "<div class=\"page_body\">";
+ 	my $comment = $tag{'comment'};
+ 	foreach my $line (@$comment) {
+-		chomp $line;
+ 		print esc_html($line, -nbsp=>1) . "<br/>\n";
+ 	}
+ 	print "</div>\n";
+@@ -4145,25 +4538,19 @@ sub git_blame {
+ 	my $fd;
+ 	my $ftype;
+ 
+-	gitweb_check_feature('blame')
+-	    or die_error(403, "Blame view not allowed");
++	die_error(403, "Blame view not allowed")
++	    unless gitweb_check_feature('blame');
+ 
+ 	die_error(400, "No file name given") unless $file_name;
+-	$hash_base ||= git_get_head_hash($project);
+-	die_error(404, "Couldn't find base commit") unless ($hash_base);
+-	my %co = parse_commit($hash_base)
+-		or die_error(404, "Commit not found");
+-	if (!defined $hash) {
+-		$hash = git_get_hash_by_path($hash_base, $file_name, "blob")
+-			or die_error(404, "Error looking up file");
+-	}
+-	$ftype = git_get_type($hash);
+-	if ($ftype !~ "blob") {
+-		die_error(400, "Object is not a blob");
+-	}
+-	open ($fd, "-|", git_cmd(), "blame", '-p', '--',
+-	      $file_name, $hash_base)
+-		or die_error(500, "Open git-blame failed");
++	$hash_base ||= git_get_head_hash();
++	my $hash_base_sha1 = git_get_sha1_or_die($hash_base, 'commit');
++	my %co = parse_commit($hash_base);
++	$hash ||= git_get_sha1_by_path($hash_base, $file_name, 'blob')
++	    or die_error(404, "Error looking up file: '$file_name'");
++	git_get_sha1_or_die($hash, 'blob');  # check existence
++	my @blame_lines = split "\n", $repo->cmd_output(
++		cmd => ['blame', '-p', '--', $file_name, $hash_base_sha1],
++	    cache => 2);
+ 	git_header_html();
+ 	my $formats_nav =
+ 		$cgi->a({-href => href(action=>"blob", -replay=>1)},
+@@ -4188,7 +4575,7 @@ sub git_blame {
+ HTML
+ 	my %metainfo = ();
+ 	while (1) {
+-		$_ = <$fd>;
++		$_ = shift @blame_lines;
+ 		last unless defined $_;
+ 		my ($full_rev, $orig_lineno, $lineno, $group_size) =
+ 		    /^([0-9a-f]{40}) (\d+) (\d+)(?: (\d+))?$/;
+@@ -4196,14 +4583,13 @@ HTML
+ 			$metainfo{$full_rev} = {};
+ 		}
+ 		my $meta = $metainfo{$full_rev};
+-		while (<$fd>) {
++		while ($_ = shift @blame_lines) {
+ 			last if (s/^\t//);
+ 			if (/^(\S+) (.*)$/) {
+ 				$meta->{$1} = $2;
+ 			}
+ 		}
+ 		my $data = $_;
+-		chomp $data;
+ 		my $rev = substr($full_rev, 0, 8);
+ 		my $author = $meta->{'author'};
+ 		my %date = parse_date($meta->{'author-time'},
+@@ -4224,11 +4610,9 @@ HTML
+ 			              esc_html($rev));
+ 			print "</td>\n";
+ 		}
+-		open (my $dd, "-|", git_cmd(), "rev-parse", "$full_rev^")
+-			or die_error(500, "Open git-rev-parse failed");
+-		my $parent_commit = <$dd>;
+-		close $dd;
+-		chomp($parent_commit);
++		# TODO: $parent_commit can be undef, in which case the
++		# link becomes invalid.
++		my $parent_commit = $repo->get_sha1("$full_rev^");
+ 		my $blamed = href(action => 'blame',
+ 		                  file_name => $meta->{'filename'},
+ 		                  hash_base => $parent_commit);
+@@ -4243,13 +4627,11 @@ HTML
+ 	}
+ 	print "</table>\n";
+ 	print "</div>";
+-	close $fd
+-		or print "Reading blob failed\n";
+ 	git_footer_html();
+ }
+ 
+ sub git_tags {
+-	my $head = git_get_head_hash($project);
++	my $head = git_get_head_hash();
+ 	git_header_html();
+ 	git_print_page_nav('','', $head,undef,$head);
+ 	git_print_header_div('summary', $project);
+@@ -4262,7 +4644,7 @@ sub git_tags {
+ }
+ 
+ sub git_heads {
+-	my $head = git_get_head_hash($project);
++	my $head = git_get_head_hash();
+ 	git_header_html();
+ 	git_print_page_nav('','', $head,undef,$head);
+ 	git_print_header_div('summary', $project);
+@@ -4280,9 +4662,9 @@ sub git_blob_plain {
+ 
+ 	if (!defined $hash) {
+ 		if (defined $file_name) {
+-			my $base = $hash_base || git_get_head_hash($project);
+-			$hash = git_get_hash_by_path($base, $file_name, "blob")
+-				or die_error(404, "Cannot find file");
++			my $base = $hash_base || git_get_head_hash();
++			$hash = git_get_sha1_by_path($base, $file_name, 'blob')
++			    or die_error(404, "Cannot find file: '$file_name'");
+ 		} else {
+ 			die_error(400, "No file name defined");
+ 		}
+@@ -4291,11 +4673,15 @@ sub git_blob_plain {
+ 		$expires = "+1d";
+ 	}
+ 
+-	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
+-		or die_error(500, "Open git-cat-file blob '$hash' failed");
++	my $sha1 = git_get_sha1_or_die($hash, 'blob');
++	my $blob_read = $repo->progressive_cmd_output(
++		cmd => ['cat-file', 'blob', $sha1], separator => undef,
++		cache => 1);
++	my $first_chunk = $blob_read->() || '';
+ 
+ 	# content-type (can include charset)
+-	$type = blob_contenttype($fd, $file_name, $type);
++	$type = blob_contenttype(substr($first_chunk, 0, 1024),
++				 $file_name, $type);
+ 
+ 	# "save as" filename, even when no $file_name is given
+ 	my $save_as = "$hash";
+@@ -4309,42 +4695,47 @@ sub git_blob_plain {
+ 		-type => $type,
+ 		-expires => $expires,
+ 		-content_disposition => 'inline; filename="' . $save_as . '"');
+-	undef $/;
+-	binmode STDOUT, ':raw';
+-	print <$fd>;
+-	binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+-	$/ = "\n";
+-	close $fd;
++	{
++		local $/;
++		binmode STDOUT, ':raw';
++		print $first_chunk;
++		while (my $chunk = $blob_read->()) {
++			print $chunk;
++		}
++		binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
++	}
+ }
+ 
+ sub git_blob {
+-	my $expires;
+-
+ 	if (!defined $hash) {
+ 		if (defined $file_name) {
+-			my $base = $hash_base || git_get_head_hash($project);
+-			$hash = git_get_hash_by_path($base, $file_name, "blob")
+-				or die_error(404, "Cannot find file");
++			my $base = $hash_base || git_get_head_hash();
++			$hash = git_get_sha1_by_path($base, $file_name, 'blob')
++			    or die_error(404, "Cannot find file: '$file_name'");
+ 		} else {
+ 			die_error(400, "No file name defined");
+ 		}
+-	} elsif ($hash =~ m/^[0-9a-fA-F]{40}$/) {
+-		# blobs defined by non-textual hash id's can be cached
+-		$expires = "+1d";
+ 	}
+ 
+ 	my ($have_blame) = gitweb_check_feature('blame');
+-	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
+-		or die_error(500, "Couldn't cat $file_name, $hash");
+-	my $mimetype = blob_mimetype($fd, $file_name);
+-	if ($mimetype !~ m!^(?:text/|image/(?:gif|png|jpeg)$)! && -B $fd) {
+-		close $fd;
+-		return git_blob_plain($mimetype);
+-	}
++	my $sha1 = git_get_sha1_or_die($hash, 'blob');
++	my $blob_read = $repo->progressive_cmd_output(
++		cmd => ['cat-file', 'blob', $sha1], separator => "\n",
++		cache => 1);
++	my @first_lines;
++	for my $i (0..20) {
++		my $line = $blob_read->() or last;
++		push @first_lines, $line;
++	}
++	my $test_snippet = join("\n", @first_lines);
++	my $mimetype = blob_mimetype($test_snippet, $file_name);
++	return git_blob_plain($mimetype)
++	    if ($mimetype !~ m!^(?:text/|image/(?:gif|png|jpeg)$)! &&
++		! is_ascii_text($test_snippet));
+ 	# we can have blame only for text/* mimetype
+ 	$have_blame &&= ($mimetype =~ m!^text/!);
+ 
+-	git_header_html(undef, $expires);
++	git_header_html();
+ 	my $formats_nav = '';
+ 	if (defined $hash_base && (my %co = parse_commit($hash_base))) {
+ 		if (defined $file_name) {
+@@ -4389,7 +4780,7 @@ sub git_blob {
+ 		      qq!" />\n!;
+ 	} else {
+ 		my $nr;
+-		while (my $line = <$fd>) {
++		while (my $line = shift @first_lines || $blob_read->()) {
+ 			chomp $line;
+ 			$nr++;
+ 			$line = untabify($line);
+@@ -4397,29 +4788,23 @@ sub git_blob {
+ 			       $nr, $nr, $nr, esc_html($line, -nbsp=>1);
+ 		}
+ 	}
+-	close $fd
+-		or print "Reading blob failed.\n";
+ 	print "</div>";
+ 	git_footer_html();
+ }
+ 
+ sub git_tree {
+-	if (!defined $hash_base) {
+-		$hash_base = "HEAD";
+-	}
++	$hash_base ||= "HEAD";
+ 	if (!defined $hash) {
+ 		if (defined $file_name) {
+-			$hash = git_get_hash_by_path($hash_base, $file_name, "tree");
++			$hash = git_get_sha1_by_path($hash_base, $file_name, 'tree')
++			    or die_error(404, "Cannot find file: '$file_name'");
+ 		} else {
+ 			$hash = $hash_base;
+ 		}
+ 	}
+-	$/ = "\0";
+-	open my $fd, "-|", git_cmd(), "ls-tree", '-z', $hash
+-		or die_error(500, "Open git-ls-tree failed");
+-	my @entries = map { chomp; $_ } <$fd>;
+-	close $fd or die_error(404, "Reading tree failed");
+-	$/ = "\n";
++	my $sha1 = git_get_sha1_or_die($hash, 'tree');
++	my @entries = split "\0", $repo->cmd_output(
++		cmd => ['ls-tree', '-z', $sha1], cache => 2);
+ 
+ 	my $refs = git_get_references();
+ 	my $ref = format_ref_marker($refs, $hash_base);
+@@ -4520,9 +4905,8 @@ sub git_snapshot {
+ 		die_error(403, "Unsupported snapshot format");
+ 	}
+ 
+-	if (!defined $hash) {
+-		$hash = git_get_head_hash($project);
+-	}
++	$hash ||= git_get_head_hash();
++	my $sha1 = git_get_sha1_or_die($hash);
+ 
+ 	my $name = $project;
+ 	$name =~ s,([^/])/*\.git$,$1,;
+@@ -4532,9 +4916,9 @@ sub git_snapshot {
+ 	my $cmd;
+ 	$filename .= "-$hash$known_snapshot_formats{$format}{'suffix'}";
+ 	$cmd = quote_command(
+-		git_cmd(), 'archive',
++		'archive',
+ 		"--format=$known_snapshot_formats{$format}{'format'}",
+-		"--prefix=$name/", $hash);
++		"--prefix=$name/", $sha1);
+ 	if (exists $known_snapshot_formats{$format}{'compressor'}) {
+ 		$cmd .= ' | ' . quote_command(@{$known_snapshot_formats{$format}{'compressor'}});
+ 	}
+@@ -4544,16 +4928,17 @@ sub git_snapshot {
+ 		-content_disposition => 'inline; filename="' . "$filename" . '"',
+ 		-status => '200 OK');
+ 
+-	open my $fd, "-|", $cmd
+-		or die_error(500, "Execute git-archive failed");
++	my $snapshot_read = $repo->progressive_cmd_output(
++		cmd => $cmd, separator => undef, cache => 1);
+ 	binmode STDOUT, ':raw';
+-	print <$fd>;
++	while (my $chunk = $snapshot_read->()) {
++		print $chunk;
++	}
+ 	binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+-	close $fd;
+ }
+ 
+ sub git_log {
+-	my $head = git_get_head_hash($project);
++	my $head = git_get_head_hash();
+ 	if (!defined $hash) {
+ 		$hash = $head;
+ 	}
+@@ -4613,8 +4998,8 @@ sub git_log {
+ 
+ sub git_commit {
+ 	$hash ||= $hash_base || "HEAD";
+-	my %co = parse_commit($hash)
+-	    or die_error(404, "Unknown commit object");
++	my $sha1 = git_get_sha1_or_die($hash, 'commit');
++	my %co = parse_commit($hash);
+ 	my %ad = parse_date($co{'author_epoch'}, $co{'author_tz'});
+ 	my %cd = parse_date($co{'committer_epoch'}, $co{'committer_tz'});
+ 
+@@ -4649,24 +5034,15 @@ sub git_commit {
+ 	if (!defined $parent) {
+ 		$parent = "--root";
+ 	}
+-	my @difftree;
+-	open my $fd, "-|", git_cmd(), "diff-tree", '-r', "--no-commit-id",
+-		@diff_opts,
+-		(@$parents <= 1 ? $parent : '-c'),
+-		$hash, "--"
+-		or die_error(500, "Open git-diff-tree failed");
+-	@difftree = map { chomp; $_ } <$fd>;
+-	close $fd or die_error(404, "Reading git-diff-tree failed");
+-
+-	# non-textual hash id's can be cached
+-	my $expires;
+-	if ($hash =~ m/^[0-9a-fA-F]{40}$/) {
+-		$expires = "+1d";
+-	}
++	my @difftree = split "\n", $repo->cmd_output(
++		cmd => ['diff-tree', '-r', '--no-commit-id', @diff_opts,
++			(@$parents <= 1 ? $parent : '-c'), $sha1, '--'],
++		cache => 2);
 +
-+     echo "changed file 1" > file1 &&
-+     git commit -a -m "second commit" &&
+ 	my $refs = git_get_references();
+ 	my $ref = format_ref_marker($refs, $co{'id'});
+ 
+-	git_header_html(undef, $expires);
++	git_header_html();
+ 	git_print_page_nav('commit', '',
+ 	                   $hash, $co{'tree'}, $hash,
+ 	                   $formats_nav);
+@@ -4743,41 +5119,16 @@ sub git_object {
+ 	# - hash_base and file_name
+ 	my $type;
+ 
+-	# - hash or hash_base alone
+ 	if ($hash || ($hash_base && !defined $file_name)) {
+-		my $object_id = $hash || $hash_base;
+-
+-		open my $fd, "-|", quote_command(
+-			git_cmd(), 'cat-file', '-t', $object_id) . ' 2> /dev/null'
+-			or die_error(404, "Object does not exist");
+-		$type = <$fd>;
+-		chomp $type;
+-		close $fd
+-			or die_error(404, "Object does not exist");
+-
+-	# - hash_base and file_name
++		# hash or hash_base alone
++		$type = (git_get_sha1_or_die($hash || $hash_base))[1];
+ 	} elsif ($hash_base && defined $file_name) {
++		# hash_base and file_name
+ 		$file_name =~ s,/+$,,;
+-
+-		system(git_cmd(), "cat-file", '-e', $hash_base) == 0
+-			or die_error(404, "Base object does not exist");
+-
+-		# here errors should not hapen
+-		open my $fd, "-|", git_cmd(), "ls-tree", $hash_base, "--", $file_name
+-			or die_error(500, "Open git-ls-tree failed");
+-		my $line = <$fd>;
+-		close $fd;
+-
+-		#'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa	panic.c'
+-		unless ($line && $line =~ m/^([0-9]+) (.+) ([0-9a-fA-F]{40})\t/) {
+-			die_error(404, "File or directory for given base does not exist");
+-		}
+-		$type = $2;
+-		$hash = $3;
++		($hash, $type) = git_get_sha1_or_die("$hash_base:$file_name");
+ 	} else {
+ 		die_error(400, "Not enough information to find object");
+ 	}
+-
+ 	print $cgi->redirect(-uri => href(action=>$type, -full=>1,
+ 	                                  hash=>$hash, hash_base=>$hash_base,
+ 	                                  file_name=>$file_name),
+@@ -4787,47 +5138,25 @@ sub git_object {
+ sub git_blobdiff {
+ 	my $format = shift || 'html';
+ 
+-	my $fd;
+ 	my @difftree;
+ 	my %diffinfo;
+-	my $expires;
++	my $diff_read;
+ 
+-	# preparing $fd and %diffinfo for git_patchset_body
++	# prepare $diff_read and %diffinfo for git_patchset_body
+ 	# new style URI
+ 	if (defined $hash_base && defined $hash_parent_base) {
+-		if (defined $file_name) {
+-			# read raw output
+-			open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-				$hash_parent_base, $hash_base,
+-				"--", (defined $file_parent ? $file_parent : ()), $file_name
+-				or die_error(500, "Open git-diff-tree failed");
+-			@difftree = map { chomp; $_ } <$fd>;
+-			close $fd
+-				or die_error(404, "Reading git-diff-tree failed");
+-			@difftree
+-				or die_error(404, "Blob diff not found");
+-
+-		} elsif (defined $hash &&
+-		         $hash =~ /[0-9a-fA-F]{40}/) {
+-			# try to find filename from $hash
+-
+-			# read filtered raw output
+-			open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-				$hash_parent_base, $hash_base, "--"
+-				or die_error(500, "Open git-diff-tree failed");
+-			@difftree =
+-				# ':100644 100644 03b21826... 3b93d5e7... M	ls-files.c'
+-				# $hash == to_id
+-				grep { /^:[0-7]{6} [0-7]{6} [0-9a-fA-F]{40} $hash/ }
+-				map { chomp; $_ } <$fd>;
+-			close $fd
+-				or die_error(404, "Reading git-diff-tree failed");
+-			@difftree
+-				or die_error(404, "Blob diff not found");
+-
+-		} else {
+-			die_error(400, "Missing one of the blob diff parameters");
+-		}
++		my $commit_sha1 = git_get_sha1_or_die($hash_base, 'commit');
++		my $parent_base_sha1 = git_get_sha1_or_die($hash_parent_base, 'commit');
++		git_get_sha1_or_die($file_parent, 'blob') if $file_parent;
++		# There used to be code to handle hash (h) parameters,
++		# but it's not used (anymore), so we can require $file_name.
++		die_error(400, "No file name given") unless $file_name;
++		# read raw output
++		@difftree = split "\n", $repo->cmd_output(
++			cmd => ['diff-tree', '-r', @diff_opts, $parent_base_sha1,
++				$commit_sha1, '--', $file_parent || (),
++				$file_name],
++			cache => 2);
+ 
+ 		if (@difftree > 1) {
+ 			die_error(400, "Ambiguous blob diff specification");
+@@ -4840,21 +5169,17 @@ sub git_blobdiff {
+ 		$hash_parent ||= $diffinfo{'from_id'};
+ 		$hash        ||= $diffinfo{'to_id'};
+ 
+-		# non-textual hash id's can be cached
+-		if ($hash_base =~ m/^[0-9a-fA-F]{40}$/ &&
+-		    $hash_parent_base =~ m/^[0-9a-fA-F]{40}$/) {
+-			$expires = '+1d';
+-		}
+-
+ 		# open patch output
+-		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-			'-p', ($format eq 'html' ? "--full-index" : ()),
+-			$hash_parent_base, $hash_base,
+-			"--", (defined $file_parent ? $file_parent : ()), $file_name
+-			or die_error(500, "Open git-diff-tree failed");
++		my $hash_base_sha1 = git_get_sha1_or_die($hash_base, 'commit');
++		$diff_read = $repo->progressive_cmd_output(  # TODO: uncovered
++			cmd => ['diff-tree', '-r', @diff_opts, '-p',
++				($format eq 'html' ? '--full-index' : ()),
++				$parent_base_sha1, $hash_base_sha1, '--',
++				$file_parent || (), $file_name],
++			separator => "\n", cache => 1);
+ 	}
+ 
+-	# old/legacy style URI
++	# old/legacy style URI (still used in feed [Atom/RSS] view)
+ 	if (!%diffinfo && # if new style URI failed
+ 	    defined $hash && defined $hash_parent) {
+ 		# fake git-diff-tree raw output
+@@ -4877,17 +5202,14 @@ sub git_blobdiff {
+ 			$diffinfo{'to_file'}   = $hash;
+ 		}
+ 
+-		# non-textual hash id's can be cached
+-		if ($hash =~ m/^[0-9a-fA-F]{40}$/ &&
+-		    $hash_parent =~ m/^[0-9a-fA-F]{40}$/) {
+-			$expires = '+1d';
+-		}
+-
+ 		# open patch output
+-		open $fd, "-|", git_cmd(), "diff", @diff_opts,
+-			'-p', ($format eq 'html' ? "--full-index" : ()),
+-			$hash_parent, $hash, "--"
+-			or die_error(500, "Open git-diff failed");
++		my $parent_sha1 = git_get_sha1_or_die($hash_parent, 'blob');
++		my $sha1 = git_get_sha1_or_die($hash, 'commit');
++		$diff_read = $repo->progressive_cmd_output(
++			cmd => ['diff', @diff_opts, '-p',
++				($format eq 'html' ? '--full-index' : ()),
++				$parent_sha1, $sha1, '--'],
++			separator => "\n", cache => 1);
+ 	} else  {
+ 		die_error(400, "Missing one of the blob diff parameters")
+ 			unless %diffinfo;
+@@ -4898,7 +5220,7 @@ sub git_blobdiff {
+ 		my $formats_nav =
+ 			$cgi->a({-href => href(action=>"blobdiff_plain", -replay=>1)},
+ 			        "raw");
+-		git_header_html(undef, $expires);
++		git_header_html();
+ 		if (defined $hash_base && (my %co = parse_commit($hash_base))) {
+ 			git_print_page_nav('','', $hash_base,$co{'tree'},$hash_base, $formats_nav);
+ 			git_print_header_div('commit', esc_html($co{'title'}), $hash_base);
+@@ -4913,6 +5235,8 @@ sub git_blobdiff {
+ 		}
+ 
+ 	} elsif ($format eq 'plain') {
++		my $expires = ($hash =~ m/^[0-9a-f]{40}$/ &&
++			       $hash_parent =~ m/^[0-9a-f]{40}$/) ? '+1d' : undef;
+ 		print $cgi->header(
+ 			-type => 'text/plain',
+ 			-charset => 'utf-8',
+@@ -4929,14 +5253,13 @@ sub git_blobdiff {
+ 	if ($format eq 'html') {
+ 		print "<div class=\"page_body\">\n";
+ 
+-		git_patchset_body($fd, [ \%diffinfo ], $hash_base, $hash_parent_base);
+-		close $fd;
++		git_patchset_body($diff_read, [ \%diffinfo ], $hash_base, $hash_parent_base);
+ 
+ 		print "</div>\n"; # class="page_body"
+ 		git_footer_html();
+ 
+ 	} else {
+-		while (my $line = <$fd>) {
++		while (my $line = $diff_read->()) {
+ 			$line =~ s!a/($hash|$hash_parent)!'a/'.esc_path($diffinfo{'from_file'})!eg;
+ 			$line =~ s!b/($hash|$hash_parent)!'b/'.esc_path($diffinfo{'to_file'})!eg;
+ 
+@@ -4944,9 +5267,9 @@ sub git_blobdiff {
+ 
+ 			last if $line =~ m!^\+\+\+!;
+ 		}
+-		local $/ = undef;
+-		print <$fd>;
+-		close $fd;
++		while (my $line = $diff_read->()) {
++			print $line;
++		}
+ 	}
+ }
+ 
+@@ -4957,12 +5280,20 @@ sub git_blobdiff_plain {
+ sub git_commitdiff {
+ 	my $format = shift || 'html';
+ 	$hash ||= $hash_base || "HEAD";
+-	my %co = parse_commit($hash)
+-	    or die_error(404, "Unknown commit object");
++	my $sha1 = git_get_sha1_or_die($hash, 'commit');
++	my %co = parse_commit($hash);
+ 
+ 	# choose format for commitdiff for merge
+-	if (! defined $hash_parent && @{$co{'parents'}} > 1) {
+-		$hash_parent = '--cc';
++	my $hash_parent_param = $hash_parent;
++	# Unfortunately we can pass in command line options as
++	# $hash_parent.
++	if ($hash_parent_param && $hash_parent_param ne '-c' &&
++	    $hash_parent_param ne '--cc') {
++		$hash_parent_param =
++		    git_get_sha1_or_die($hash_parent_param, 'commit');
++	}
++	if (! defined $hash_parent_param && @{$co{'parents'}} > 1) {
++		$hash_parent_param = '--cc';
+ 	}
+ 	# we need to prepare $formats_nav before almost any parameter munging
+ 	my $formats_nav;
+@@ -4971,8 +5302,7 @@ sub git_commitdiff {
+ 			$cgi->a({-href => href(action=>"commitdiff_plain", -replay=>1)},
+ 			        "raw");
+ 
+-		if (defined $hash_parent &&
+-		    $hash_parent ne '-c' && $hash_parent ne '--cc') {
++		if (defined $hash_parent) {
+ 			# commitdiff with two commits given
+ 			my $hash_parent_short = $hash_parent;
+ 			if ($hash_parent =~ m/^[0-9a-fA-F]{40}$/) {
+@@ -5004,7 +5334,7 @@ sub git_commitdiff {
+ 				')';
+ 		} else {
+ 			# merge commit
+-			if ($hash_parent eq '--cc') {
++			if ($hash_parent && $hash_parent eq '--cc') {
+ 				$formats_nav .= ' | ' .
+ 					$cgi->a({-href => href(action=>"commitdiff",
+ 					                       hash=>$hash, hash_parent=>'-c')},
+@@ -5026,7 +5356,6 @@ sub git_commitdiff {
+ 		}
+ 	}
+ 
+-	my $hash_parent_param = $hash_parent;
+ 	if (!defined $hash_parent_param) {
+ 		# --cc for multiple parents, --root for parentless
+ 		$hash_parent_param =
+@@ -5034,34 +5363,26 @@ sub git_commitdiff {
+ 	}
+ 
+ 	# read commitdiff
+-	my $fd;
++	my $diff_read;
+ 	my @difftree;
+ 	if ($format eq 'html') {
+-		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-			"--no-commit-id", "--patch-with-raw", "--full-index",
+-			$hash_parent_param, $hash, "--"
+-			or die_error(500, "Open git-diff-tree failed");
+-
+-		while (my $line = <$fd>) {
++		$diff_read = $repo->progressive_cmd_output(
++			cmd => ['diff-tree', '-r', @diff_opts, '--no-commit-id',
++				'--patch-with-raw', '--full-index',
++				$hash_parent_param, $sha1, '--'],
++			separator => "\n", cache => 1);
++		while (my $line = $diff_read->()) {
+ 			chomp $line;
+ 			# empty line ends raw part of diff-tree output
+ 			last unless $line;
+ 			push @difftree, scalar parse_difftree_raw_line($line);
+ 		}
+-
+-	} elsif ($format eq 'plain') {
+-		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-			'-p', $hash_parent_param, $hash, "--"
+-			or die_error(500, "Open git-diff-tree failed");
+-
+ 	} else {
+-		die_error(400, "Unknown commitdiff format");
+-	}
+-
+-	# non-textual hash id's can be cached
+-	my $expires;
+-	if ($hash =~ m/^[0-9a-fA-F]{40}$/) {
+-		$expires = "+1d";
++		die unless $format eq 'plain';
++		$diff_read = $repo->progressive_cmd_output(
++			cmd => ['diff-tree', '-r', @diff_opts, '-p',
++				$hash_parent_param, $sha1, '--'],
++			separator => "\n", cache => 1);
+ 	}
+ 
+ 	# write commit message
+@@ -5069,7 +5390,7 @@ sub git_commitdiff {
+ 		my $refs = git_get_references();
+ 		my $ref = format_ref_marker($refs, $co{'id'});
+ 
+-		git_header_html(undef, $expires);
++		git_header_html();
+ 		git_print_page_nav('commitdiff','', $hash,$co{'tree'},$hash, $formats_nav);
+ 		git_print_header_div('commit', esc_html($co{'title'}) . $ref, $hash);
+ 		git_print_authorship(\%co);
+@@ -5081,10 +5402,10 @@ sub git_commitdiff {
+ 		}
+ 
+ 	} elsif ($format eq 'plain') {
+-		my $refs = git_get_references("tags");
+-		my $tagname = git_get_rev_name_tags($hash);
++		my $tagname = git_get_rev_name_tags($sha1);
+ 		my $filename = basename($project) . "-$hash.patch";
+ 
++		my $expires = ($hash =~ m/^[0-9a-f]{40}$/) ? '+1d' : undef;
+ 		print $cgi->header(
+ 			-type => 'text/plain',
+ 			-charset => 'utf-8',
+@@ -5112,17 +5433,15 @@ sub git_commitdiff {
+ 		                  $use_parents ? @{$co{'parents'}} : $hash_parent);
+ 		print "<br/>\n";
+ 
+-		git_patchset_body($fd, \@difftree, $hash,
++		git_patchset_body($diff_read, \@difftree, $hash,
+ 		                  $use_parents ? @{$co{'parents'}} : $hash_parent);
+-		close $fd;
+ 		print "</div>\n"; # class="page_body"
+ 		git_footer_html();
+ 
+ 	} elsif ($format eq 'plain') {
+-		local $/ = undef;
+-		print <$fd>;
+-		close $fd
+-			or print "Reading git-diff-tree failed\n";
++		while (my $line = $diff_read->()) {
++			print $line;
++		}
+ 	}
+ }
+ 
+@@ -5131,37 +5450,29 @@ sub git_commitdiff_plain {
+ }
+ 
+ sub git_history {
+-	if (!defined $hash_base) {
+-		$hash_base = git_get_head_hash($project);
+-	}
+-	if (!defined $page) {
+-		$page = 0;
+-	}
++	$hash_base ||= git_get_head_hash();
++	$page ||= 0;
+ 	my $ftype;
+-	my %co = parse_commit($hash_base)
+-	    or die_error(404, "Unknown commit object");
++	my %co = parse_commit($hash_base);
+ 
+ 	my $refs = git_get_references();
+ 	my $limit = sprintf("--max-count=%i", (100 * ($page+1)));
+ 
+ 	my @commitlist = parse_commits($hash_base, 101, (100 * $page),
+-	                               $file_name, "--full-history")
+-	    or die_error(404, "No such file or directory on given branch");
++	                               $file_name, "--full-history");
+ 
+ 	if (!defined $hash && defined $file_name) {
+ 		# some commits could have deleted file in question,
+ 		# and not have it in tree, but one of them has to have it
+ 		for (my $i = 0; $i <= @commitlist; $i++) {
+-			$hash = git_get_hash_by_path($commitlist[$i]{'id'}, $file_name);
++			$hash = git_get_sha1_by_path($commitlist[$i]{'id'}, $file_name);
+ 			last if defined $hash;
+ 		}
+ 	}
+ 	if (defined $hash) {
++		git_get_sha1_or_die($hash);
+ 		$ftype = git_get_type($hash);
+ 	}
+-	if (!defined $ftype) {
+-		die_error(500, "Unknown type of object");
+-	}
+ 
+ 	my $paging_nav = '';
+ 	if ($page > 0) {
+@@ -5202,13 +5513,8 @@ sub git_search {
+ 	if (!defined $searchtext) {
+ 		die_error(400, "Text field is empty");
+ 	}
+-	if (!defined $hash) {
+-		$hash = git_get_head_hash($project);
+-	}
++	$hash ||= git_get_head_hash();
+ 	my %co = parse_commit($hash);
+-	if (!%co) {
+-		die_error(404, "Unknown commit object");
+-	}
+ 	if (!defined $page) {
+ 		$page = 0;
+ 	}
+@@ -5280,12 +5586,15 @@ sub git_search {
+ 		print "<table class=\"pickaxe search\">\n";
+ 		my $alternate = 1;
+ 		$/ = "\n";
+-		open my $fd, '-|', git_cmd(), '--no-pager', 'log', @diff_opts,
+-			'--pretty=format:%H', '--no-abbrev', '--raw', "-S$searchtext",
+-			($search_use_regexp ? '--pickaxe-regex' : ());
++		my $pickaxe_read = $repo->progressive_cmd_output(
++			cmd => ['log', @diff_opts, '--pretty=format:%H',
++				'--no-abbrev', '--raw', "-S$searchtext",
++				($search_use_regexp ? '--pickaxe-regex' : ()),
++				git_get_head_hash()],
++			separator => "\n", cache => 1);
+ 		undef %co;
+ 		my @files;
+-		while (my $line = <$fd>) {
++		while (my $line = $pickaxe_read->()) {
+ 			chomp $line;
+ 			next unless $line;
+ 
+@@ -5326,7 +5635,6 @@ sub git_search {
+ 				      "<br/>\n";
+ 			}
+ 		}
+-		close $fd;
+ 
+ 		# finish last commit (warning: repetition!)
+ 		if (%co) {
+@@ -5349,12 +5657,13 @@ sub git_search {
+ 		print "<table class=\"grep_search\">\n";
+ 		my $alternate = 1;
+ 		my $matches = 0;
+-		$/ = "\n";
+-		open my $fd, "-|", git_cmd(), 'grep', '-n',
+-			$search_use_regexp ? ('-E', '-i') : '-F',
+-			$searchtext, $co{'tree'};
++		my $grep_read = $repo->progressive_cmd_output(
++			cmd => ['grep', '-n',
++				$search_use_regexp ? ('-E', '-i') : '-F',
++				$searchtext, $co{'tree'}],
++			separator => "\n", cache => 1);
+ 		my $lastfile = '';
+-		while (my $line = <$fd>) {
++		while (my $line = $grep_read->()) {
+ 			chomp $line;
+ 			my ($file, $lno, $ltext, $binary);
+ 			last if ($matches++ > 1000);
+@@ -5406,7 +5715,6 @@ sub git_search {
+ 		} else {
+ 			print "<div class=\"diff nodifferences\">No matches found</div>\n";
+ 		}
+-		close $fd;
+ 
+ 		print "</table>\n";
+ 	}
+@@ -5458,7 +5766,7 @@ EOT
+ }
+ 
+ sub git_shortlog {
+-	my $head = git_get_head_hash($project);
++	my $head = git_get_head_hash();
+ 	if (!defined $hash) {
+ 		$hash = $head;
+ 	}
+@@ -5500,33 +5808,22 @@ sub git_feed {
+ 	}
+ 
+ 	# log/feed of current (HEAD) branch, log of given branch, history of file/directory
+-	my $head = $hash || 'HEAD';
+-	my @commitlist = parse_commits($head, 150, 0, $file_name);
++	my $head = $hash || $repo->get_sha1('HEAD');  # can be undef
++	my %last_modified = parse_date($repo->get_last_modification);
+ 
+-	my %latest_commit;
+-	my %latest_date;
+ 	my $content_type = "application/$format+xml";
+ 	if (defined $cgi->http('HTTP_ACCEPT') &&
+ 		 $cgi->Accept('text/xml') > $cgi->Accept($content_type)) {
+ 		# browser (feed reader) prefers text/xml
+ 		$content_type = 'text/xml';
+ 	}
+-	if (defined($commitlist[0])) {
+-		%latest_commit = %{$commitlist[0]};
+-		%latest_date   = parse_date($latest_commit{'author_epoch'});
+-		print $cgi->header(
+-			-type => $content_type,
+-			-charset => 'utf-8',
+-			-last_modified => $latest_date{'rfc2822'});
+-	} else {
+-		print $cgi->header(
+-			-type => $content_type,
+-			-charset => 'utf-8');
+-	}
++	print $cgi->header(
++		-type => $content_type, -charset => 'utf-8',
++		-last_modified => $last_modified{'rfc2822'});
+ 
+ 	# Optimization: skip generating the body if client asks only
+ 	# for Last-Modified date.
+-	return if ($cgi->request_method() eq 'HEAD');
++	return if $cgi->request_method() && $cgi->request_method() eq 'HEAD';
+ 
+ 	# header variables
+ 	my $title = "$site_name - $project/$action";
+@@ -5593,15 +5890,11 @@ XML
+ 			# not twice as wide as tall: 72 x 27 pixels
+ 			print "<logo>" . esc_url($logo) . "</logo>\n";
+ 		}
+-		if (! %latest_date) {
+-			# dummy date to keep the feed valid until commits trickle in:
+-			print "<updated>1970-01-01T00:00:00Z</updated>\n";
+-		} else {
+-			print "<updated>$latest_date{'iso-8601'}</updated>\n";
+-		}
++		print "<updated>$last_modified{'iso-8601'}</updated>\n";
+ 	}
+ 
+ 	# contents
++	my @commitlist = parse_commits($head, 150, 0, $file_name) if $head;
+ 	for (my $i = 0; $i <= $#commitlist; $i++) {
+ 		my %co = %{$commitlist[$i]};
+ 		my $commit = $co{'id'};
+@@ -5612,13 +5905,11 @@ XML
+ 		my %cd = parse_date($co{'author_epoch'});
+ 
+ 		# get list of changed files
+-		open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-			$co{'parent'} || "--root",
+-			$co{'id'}, "--", (defined $file_name ? $file_name : ())
+-			or next;
+-		my @difftree = map { chomp; $_ } <$fd>;
+-		close $fd
+-			or next;
++		my @difftree = split "\n", $repo->cmd_output(
++			cmd => ['diff-tree', '-r', @diff_opts,
++				$co{'parent'} || '--root', $co{'id'}, '--',
++				(defined $file_name ? $file_name : ())],
++			cache => 2);
+ 
+ 		# print element (entry, item)
+ 		my $co_url = href(-full=>1, action=>"commitdiff", hash=>$commit);
+@@ -5733,16 +6024,8 @@ XML
+ 
+ 	foreach my $pr (@list) {
+ 		my %proj = %$pr;
+-		my $head = git_get_head_hash($proj{'path'});
+-		if (!defined $head) {
+-			next;
+-		}
+-		$git_dir = "$projectroot/$proj{'path'}";
+-		my %co = parse_commit($head);
+-		if (!%co) {
+-			next;
+-		}
+-
++		next unless $repo_root->repo(directory => $proj{'path'})
++		    ->get_sha1('HEAD');
+ 		my $path = esc_html(chop_str($proj{'path'}, 25, 5));
+ 		my $rss  = "$my_url?p=$proj{'path'};a=rss";
+ 		my $html = "$my_url?p=$proj{'path'};a=summary";
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
+index ae7082b..e04fb5f 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -54,7 +54,7 @@ gitweb_run () {
+ 	# written to web server logs, so we are not interested in that:
+ 	# we are interested only in properly formatted errors/warnings
+ 	rm -f gitweb.log &&
+-	perl -- "$(pwd)/../../gitweb/gitweb.perl" \
++	"$PERL_PATH" -- "$(pwd)/../../gitweb/gitweb.cgi" \
+ 		>/dev/null 2>gitweb.log &&
+ 	if grep -q -s "^[[]" gitweb.log >/dev/null; then false; else true; fi
+ 
+@@ -71,7 +71,7 @@ safe_chmod () {
+ 
+ . ./test-lib.sh
+ 
+-perl -MEncode -e 'decode_utf8("", Encode::FB_CROAK)' >/dev/null 2>&1 || {
++"$PERL_PATH" -MEncode -e 'decode_utf8("", Encode::FB_CROAK)' >/dev/null 2>&1 || {
+     test_expect_success 'skipping gitweb tests, perl version is too old' :
+     test_done
+     exit
+diff --git a/t/t9503-gitweb-Mechanize.sh b/t/t9503-gitweb-Mechanize.sh
+index 53f2a8a..c0558e5 100755
+--- a/t/t9503-gitweb-Mechanize.sh
++++ b/t/t9503-gitweb-Mechanize.sh
+@@ -89,6 +89,16 @@ test_expect_success 'set up test repository' '
+ 	test_tick && git pull . b
+ '
+ 
++# set up empty repository
++# create this as a subdirectory of trash directory; not pretty, but simple
++test_expect_success 'set up empty repository' '
 +
-+     git branch branch-2 &&
++	mkdir empty.git &&
++	cd empty.git &&
++	git init --bare &&
++	cd ..
++'
 +
-+     echo "changed file 2" > file2 &&
-+     git commit -a -m "third commit" &&
-+
-+     git tag -a -m "tag message 3" tag-object-3 &&
-+     git tag -a -m "indirect tag message 3" indirect-tag-3 tag-object-3 &&
-+
-+     echo "changed file 1 again" > file1 &&
-+     git commit -a -m "fourth commit"
-+     '
-+
-+test_external_without_stderr \
-+    'Git::Repo API' \
-+    perl ../t9710/test.pl
-+
-+test_done
-diff --git a/t/t9710/test.pl b/t/t9710/test.pl
-new file mode 100755
-index 0000000..188abba
---- /dev/null
-+++ b/t/t9710/test.pl
-@@ -0,0 +1,165 @@
-+#!/usr/bin/perl
-+use lib (split(/:/, $ENV{GITPERLLIB}));
-+
-+use warnings;
-+use strict;
-+
-+use Test::More qw(no_plan);
-+use Test::Exception;
-+use Carp::Always;
-+
-+use Cwd;
-+use File::Basename;
-+use File::Temp;
-+use File::Spec;
-+use Data::Dumper; # for debugging
-+
-+BEGIN { use_ok('Git::Repo') }
-+
-+our $old_stderr;
-+sub discard_stderr {
-+	open our $old_stderr, ">&", STDERR or die "cannot save STDERR";
-+	close STDERR;
-+}
-+sub restore_stderr {
-+	open STDERR, ">&", $old_stderr or die "cannot restore STDERR";
-+}
-+
-+# set up
-+our $repo_dir = "trash directory";
-+our $abs_wc_dir = Cwd->cwd;
-+die "this must be run by calling the t/t97* shell script(s)\n"
-+    if basename(Cwd->cwd) ne $repo_dir;
-+ok(our $r = Git::Repo->new(directory => "./.git"), 'open repository');
-+sub rev_parse {
-+	my $name = shift;
-+	chomp(my $sha1 = `git rev-parse $name 2> /dev/null`);
-+	$sha1 or undef;
-+}
-+
-+my @revisions = split /\s/, `git-rev-list --first-parent HEAD`;
-+my $head = $revisions[0];
-+
-+# cmd_output
-+is($r->cmd_output(cmd => ['cat-file', '-t', 'HEAD']), "commit\n", 'cmd_output: basic');
-+discard_stderr;
-+dies_ok { $r->cmd_output(cmd => ['bad-cmd']); } 'cmd_output: die on error';
-+restore_stderr;
-+my $bad_output;
-+lives_ok { $bad_output = $r->cmd_output(
-+		   cmd => ['rev-parse', '--verify', '--quiet', 'badrev'],
-+		   max_exit_code => 1); }
-+    'cmd_output: max_error';
-+is($bad_output, '', 'cmd_output: return string on non-zero exit');
-+# untested: get_bidi_pipe
-+
-+# get_sha1
-+is($r->get_sha1('HEAD'), $head, 'get_sha1: scalar');
-+is($r->get_sha1('HEAD'), $head, 'get_sha1: scalar, repeated');
-+my($sha1, $type, $head_size) = $r->get_sha1('HEAD');
-+is($sha1, $head, 'get_sha1: array (SHA1)');
-+is($type, 'commit', 'get_sha1: array (commit)');
-+ok($head_size > 0, 'get_sha1: array (size)');
-+
-+# cat_file
-+is_deeply([$r->cat_file($r->get_sha1("$revisions[-1]:file1"))], ['blob', "test file 1\n"], 'cat_file: blob');
-+is_deeply([$r->cat_file($r->get_sha1("$revisions[-1]:file1"))], ['blob', "test file 1\n"], 'cat_file: blob, repeated');
-+dies_ok { $r->cat_file('0' x 40) } 'cat_file: non-existent sha1';
-+
-+# get_commit
-+isa_ok($r->get_commit($revisions[-1]), 'Git::Commit',
-+       'get_commit: returns Git::Commit object');
-+
-+# get_tag
-+isa_ok($r->get_tag($r->get_sha1('tag-object-1')), 'Git::Tag',
-+       'get_tag: returns Git::Tag object');
-+
-+# get_path
-+is($r->get_path($head, $r->get_sha1('HEAD:directory1/file')),
-+   'directory1/file', 'get_path: file');
-+is($r->get_path($head, $r->get_sha1('HEAD:directory1')),
-+   'directory1', 'get_path: directory');
-+is($r->get_path($head, '0' x 40), undef, 'get_path: nonexistent');
-+
-+# get_refs
-+my @refs = @{$r->get_refs()};
-+is((grep { $_->[2] eq 'refs/heads/branch-2' } @refs), 1,
-+   'get_refs: branch existence and uniqueness');
-+my @branch2_info = @{(grep { $_->[2] eq 'refs/heads/branch-2' } @refs)[0]};
-+is_deeply([@branch2_info], [$revisions[-2], 'commit', 'refs/heads/branch-2'],
-+	  'get_heads: sub-array contents');
-+@refs = @{$r->get_refs('refs/tags')};
-+ok(@refs, 'get_refs: pattern');
-+is((grep { $_->[2] eq 'refs/heads/branch-2' } @refs), 0, 'get_refs: pattern');
-+
-+# name_rev
-+is($r->name_rev($revisions[-2]), 'branch-2', 'name_rev: branch');
-+is($r->name_rev($head, 1), undef, 'name_rev: branch, tags only');
-+is($r->name_rev($revisions[-1]), 'tags/tag-object-1^0', 'name_rev: tag object');
-+is($r->name_rev($revisions[-1], 1), 'tag-object-1^0', 'name_rev: tag object, tags only');
-+
-+
-+
-+# Git::Commmit
-+print "# Git::Commit:\n";
-+
-+BEGIN { use_ok('Git::Commit') }
-+
-+my $invalid_commit = Git::Commit->new($r, '0' x 40);
-+is($invalid_commit->sha1, '0' x 40, 'new, sha1: accept invalid SHA1');
-+dies_ok { $invalid_commit->tree } 'die on accessing properties of invalid SHA1s';
-+
-+$invalid_commit = Git::Commit->new($r, $r->get_sha1('HEAD:')); # tree, not commit
-+dies_ok { $invalid_commit->tree } 'die on accessing properties of non-commit objects';
-+
-+my $c = Git::Commit->new($r, $revisions[-2]);
-+is($c->repo, $r, 'repo: basic');
-+is($c->sha1, $revisions[-2], 'sha1: basic');
-+is($c->{Git::Commit::_PARENTS}, undef,
-+   'lazy loading: not loaded after reading SHA1');
-+is($c->tree, $r->get_sha1("$revisions[-2]:"), 'tree: basic');
-+ok($c->{Git::Commit::_PARENTS}, 'lazy loading: loaded after reading tree');
-+is_deeply([$c->parents], [$revisions[-1]], 'parents: basic');
-+like($c->author, qr/A U Thor <author\@example.com> [0-9]+ \+0000/, 'author: basic');
-+like($c->committer, qr/C O Mitter <committer\@example.com> [0-9]+ \+0000/, 'committer: basic');
-+is($c->encoding, undef, 'encoding: undef');
-+is($c->message, "second commit\n", 'message: basic');
-+is($c, $c->sha1, 'stringify: basic');
-+
-+# error handling
-+dies_ok { Git::Commit->new($r, $r->get_sha1('tag-object-3'))->_load }
-+    'new: pass tag SHA1 (dies)';
-+dies_ok { Git::Commit->new($r, '0' x 40)->_load }
-+    'new: pass invalid SHA1 (dies)';
-+
-+
-+# Git::Tag
-+print "# Git::Tag:\n";
-+
-+BEGIN { use_ok('Git::Tag') }
-+
-+# We don't test functionality inherited from Git::Object that we
-+# already tested in the Git::Commit tests.
-+
-+my $t = Git::Tag->new($r, $r->get_sha1('tag-object-1'));
-+is($t->tag, 'tag-object-1', 'tag: basic');
-+is($t->object, $revisions[-1], 'object: basic');
-+is($t->type, 'commit', 'tag: type');
-+like($t->tagger, qr/C O Mitter <committer\@example.com> [0-9]+ \+0000/, 'tagger: basic');
-+is($t->encoding, undef, 'encoding: undef');
-+is($t->message, "tag message 1\n", 'message: basic');
-+
-+# error handling
-+dies_ok { Git::Tag->new($r, $head)->_load } 'new: pass commit SHA1 (dies)';
-+dies_ok { Git::Tag->new($r, '0' x 40)->_load } 'new: pass invalid SHA1 (dies)';
-+
-+
-+# Git::RepoRoot
-+print "# Git::RepoRoot:\n";
-+
-+BEGIN { use_ok('Git::RepoRoot'); }
-+
-+my $reporoot = Git::RepoRoot->new(
-+	directory => File::Spec->catfile($abs_wc_dir, '..'));
-+is($reporoot->repo(directory => File::Spec->catfile($repo_dir, '.git'))
-+   ->get_sha1('HEAD'), $head, 'repo: basic');
+ # set up gitweb configuration
+ safe_pwd="$("$PERL_PATH" -MPOSIX=getcwd -e 'print quotemeta(getcwd)')"
+ large_cache_root="../t9503/large_cache.tmp"
+diff --git a/t/t9503/test.pl b/t/t9503/test.pl
+index b0a8269..2d83158 100755
+--- a/t/t9503/test.pl
++++ b/t/t9503/test.pl
+@@ -274,6 +274,11 @@ if (test_page '', 'project list (implicit)') {
+ 		"title contains $site_name");
+ 	$mech->content_contains('t9503-gitweb-Mechanize test repository',
+ 		'lists test repository (by description)');
++	if (follow_link( { text => 'empty.git' }, 'empty git repository')) {
++		# Just check that the empty.git summary page is linked
++		# and doesn't die.
++		$mech->back;
++	}
+ }
+ 
+ 
 -- 
 1.5.6.2.456.g63fc0
