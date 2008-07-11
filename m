@@ -1,132 +1,144 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: [GitStats] Bling bling or some statistics on the git.git repository
-Date: Fri, 11 Jul 2008 23:04:31 +0200
-Message-ID: <bd6139dc0807111404y1d3dd48ao6d2903da4cd1aa56@mail.gmail.com>
-References: <bd6139dc0807090621n308b0159n92d946c165d3a5dd@mail.gmail.com>
-Reply-To: sverre@rabbelier.nl
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: Should we discuss Windows-related changes on
+ git@vger.kernel.org?
+Date: Fri, 11 Jul 2008 23:10:12 +0200
+Message-ID: <0E93411E-745C-4858-999E-F0B7487B48B1@zib.de>
+References: <DDFD7E3B-8401-4EA0-9BBA-C9D8E25998A3@zib.de> <alpine.DEB.1.00.0807111349470.3640@eeepc-johanness> <65365AC4-D7C9-462B-8239-F3B35F7ECBEF@zib.de> <alpine.DEB.1.00.0807111652170.8950@racer> <A065AF71-5685-423A-9F87-5349ADC6C9C9@zib.de> <alpine.DEB.1.00.0807111930160.8950@racer> <alpine.LFD.1.10.0807111159560.2936@woody.linux-foundation.org> <alpine.DEB.1.00.0807112037220.8950@racer>
+Reply-To: prohaska@zib.de
+Mime-Version: 1.0 (Apple Message framework v926)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: "David Symonds" <dsymonds@gmail.com>
-To: "Git Mailinglist" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 11 23:05:52 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, Johannes Sixt <johannes.sixt@telecom.at>, Junio C Hamano <gitster@pobox.com>, msysGit <msysgit@googlegroups.com>, Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Fri Jul 11 23:11:27 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from yw-out-2122.google.com ([74.125.46.26])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHPo4-0002RP-Fy
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 23:05:51 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755092AbYGKVEe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 17:04:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755161AbYGKVEe
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 17:04:34 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:43915 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755027AbYGKVEd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 17:04:33 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so1371944yxm.1
-        for <git@vger.kernel.org>; Fri, 11 Jul 2008 14:04:32 -0700 (PDT)
+	id 1KHPtU-0004Rd-04
+	for gcvm-msysgit@m.gmane.org; Fri, 11 Jul 2008 23:11:08 +0200
+Received: by yw-out-2122.google.com with SMTP id 8so3799351yws.63
+        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2008 14:10:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=XwfTRYWxOHYP6tsD4wRvss6F71DGn5iUihIkgjASdlY=;
-        b=mO8wl0dbIA21tUS2T//WNEoQzsGqufoHBFfGOC+4vDaAmtR61FXkbfVWj4oCdZSNv+
-         HurbNnZ9rmDX5l7rpmv2trDSZ1CeZSP00dSQoua/N96YAQnlb/UKY2WsUSRDujAQygCU
-         GkSFr0MUntevQqmz6MxnuZjXUGW8VOiHNZ/QI=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :received:from:to:in-reply-to:subject:references:message-id
+         :content-type:content-transfer-encoding:mime-version:date:cc
+         :x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list
+         :list-id:list-post:list-help:list-unsubscribe:x-beenthere;
+        bh=BIFCITJgEqrV06k6VA6Qvyr4udO2/W7hNqgiBHpK2ug=;
+        b=SSmqbV3I9wdZv40DdFHwZ/6BB5KKFw7aURXTIv3j9eqe/HtFUmr7HsWdgmcOpmydAy
+         U9k59hnu+Gb+iTNTf6fz1BLjtUcP/ZzjJr9UfDVOZrHqaLZ6hYnlSSg8Xqeyj9CcjSud
+         XIucSEwZZIXHj769ETFRS/kS8ANBqsTTIYpjY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=V6uessMGkcpDnig5OzbZMc4binci87Z6YZZPnctnfFkJwcisfXd6/XZ1yyUFRPukb1
-         6DTjpM2TQMhkBLOI6M123f1Z463oevihnwAwO3hyQaLDceSrptQTamVUqY2Bm3DpxhU4
-         d7tNiPm+yjlrIpCvIEFgswleRiPFypMZZRaJs=
-Received: by 10.151.112.10 with SMTP id p10mr16579713ybm.129.1215810271843;
-        Fri, 11 Jul 2008 14:04:31 -0700 (PDT)
-Received: by 10.150.53.8 with HTTP; Fri, 11 Jul 2008 14:04:31 -0700 (PDT)
-In-Reply-To: <bd6139dc0807090621n308b0159n92d946c165d3a5dd@mail.gmail.com>
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:from
+         :to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc:x-mailer:reply-to
+         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
+         :list-help:list-unsubscribe:x-beenthere;
+        b=w0LpyOjKOV7Chdi11xLf3kXJ2TjDp3kH4U8hycr5KRMSkBs5mc4wIuEzSA/eUzuJhj
+         bdiiuQj8eHLI0pdWsqnl8Vr7XMojvHvabYzVGomk9qJkCtwjUKKOE0kzHYbAtUY1059D
+         SrpJ5dIpgXyduqMJ+CcJF6PTPXRNGV58wlFZg=
+Received: by 10.150.11.6 with SMTP id 6mr334941ybk.1.1215810607891;
+        Fri, 11 Jul 2008 14:10:07 -0700 (PDT)
+Received: by 10.107.13.30 with SMTP id q30gr2680pri.0;
+	Fri, 11 Jul 2008 14:10:07 -0700 (PDT)
+X-Sender: prohaska@zib.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.114.202.15 with SMTP id z15mr6638165waf.22.1215810606288; Fri, 11 Jul 2008 14:10:06 -0700 (PDT)
+Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id 22si1254228yxr.2.2008.07.11.14.10.05; Fri, 11 Jul 2008 14:10:06 -0700 (PDT)
+Received-SPF: pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
+Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska@zib.de designates 130.73.108.11 as permitted sender) smtp.mail=prohaska@zib.de
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m6BL9qW7023817; Fri, 11 Jul 2008 23:09:59 +0200 (CEST)
+Received: from [192.168.178.21] (brln-4db9309a.pool.einsundeins.de [77.185.48.154]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m6BL9jJx005105 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Fri, 11 Jul 2008 23:09:46 +0200 (MEST)
+In-Reply-To: <alpine.DEB.1.00.0807112037220.8950@racer>
+X-Mailer: Apple Mail (2.926)
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88174>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit-owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit-help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe@googlegroups.com>
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88175>
 
-[I sent this mail earlier, but I think vger rejected it due to the
-size of the attachments, I have uploaded them instead now, they can be
-found at:
-http://alturin.googlepages.com/activity_per_author.txt
-http://alturin.googlepages.com/full_activity.txt ]
 
-Heya,
 
-Today I sat down and finished the activity aggregation code. Now it is
-possible to generate the attached files with the following commands:
-$ stats.py author -e --id=an > activity_per_author.txt
-$ stats.py author -a  > full_activity.txt
+On Jul 11, 2008, at 9:40 PM, Johannes Schindelin wrote:
 
-The first one calculates the activity of all developers on a per-file
-basis and dumps it into the file. The "--id=an" switch sets the
-grouping field to "%an" (see man git-log), since the default (%ae) is
-not that helpful for git.git (I don't know people by their e-mail, I
-know them by their name). This was already possible (with "author
--d"), but before one had to pick a specific developer, now it will
-show for _all_ developers.This is interesting stuff, although for a
-huge project like git it's a bit much to take in. What is probably
-more interesting is the second command, it shows how much change a
-file has had in it's existence.
-I temporarily modified the code to output %04d instead of %4d so that
-I could do the following:
-$ stats.py author -a  > full_activity_sortable.txt
+> On Fri, 11 Jul 2008, Linus Torvalds wrote:
+>
+>> - It may well be good to explain to the _real_ git people (eg me)  
+>> what
+>>   the problems in Windows land are, so that we get a first-hand view
+>>   into hell, and can maybe take it into account when we make changes
+>>   for other things.
+>
+> Wow.  I did not think that you were a masochist.
+>
+>> IOW, I think that since 1.6.0 is supposed to have native support for
+>> windows, we should have patches discussed on the regular git list.  
+>> The
+>> ghetto that is windows can be useful for _user_ discussions, where  
+>> a lot
+>> of the core git people simply cannot help. But having development
+>> discussions there is bad, I think.
+>
+> We do have development discussions there that do not belong to  
+> git@vger.
+> For example, when Hannes reimplemented the utterly broken spawn()
+> implementation of Microsoft's "Run" time library.
+>
+> That is not something you need to see, want to see, or can help with.
 
-A few highlights from the sorted file:
+The separation is not always that clear.  For example, the discussion
+of issue 130 might benefit from "a first-hand view into hell", see
 
-$ cat full_activity_sortable.txt | sort | tail -n 20
-0170:  2721+  1060- = refs.c
-0172:  4369+  2004- = builtin-pack-objects.c
-0177:   345+   233- = GIT-VERSION-GEN
-0178:  2855+  2121- = commit.c
-0178:  4779+  2227- = fast-import.c
-0179:  2677+  1400- = read-cache.c
-0185:  5661+  2056- = builtin-apply.c
-0186:  3269+  1255- = revision.c
-0213:  1884+   460- = Documentation/config.txt
-0232:  2257+  1621- = Documentation/git.txt
-0236:  3990+  1991- = contrib/fast-import/git-p4
-0281:  2753+  2220- = git.c
-0333: 10259+  7150- = git-gui.sh
-0338: 11337+  6187- = git-svn.perl
-0338:  5755+  3159- = sha1_file.c
-0397: 10230+  9599- = diff.c
-0412: 23248+ 20257- = gitk
-0432: 10580+  4502- = gitweb/gitweb.perl
-0490:  1412+   619- = cache.h
-0977:  4703+  2705- = Makefile
+http://thread.gmane.org/gmane.comp.version-control.msysgit/2653/focus=2682
 
-$ cat Makefile | wc -l
-1482
 
-For some reason you people can't seem to make up your mind about a
-file that's not even 1500 lines in size ;). With almost a thousand
-edits so far, it's been edited so many times it could've been written
-from scratch three times (except that the amount of lines deleted
-doesn't match). Also interesting to note is that the "external" files
-such as gitweb, gitk, git-gui and git-svn make up the bulk of all
-changes. The two contenders from the native git camp are diff.c and
-sha1_file.c which both have a lot of LOC. This information is
-interesting for GitStats as it might help determine which files have
-had a lot of change, and which files are not touched a lot.
+Another example is the discussion about GIT_EXEC_PATH, see
 
-A note is in order here, this data was mined with "git log --num-stat"
-so things like moving files and copying files are not accounted for. I
-thought about using git-blame to gather this info before, but it is
-not the right tool for the job. If anyone else has any idea's on what
-would be better please let me know and I'll happily dig into it :).
+http://thread.gmane.org/gmane.comp.version-control.msysgit/2633
 
---
-Cheers,
+It might be triggered by msysGit's need to freely move a git  
+installation
+in the filesystem.  The resulting feature might however be interesting  
+on
+other platforms, too.
 
-Sverre Rabbelier
+
+A last example is the crash of gitk that was observed on Windows and is
+now buried in the msysGit issue tracker, although I am pretty sure that
+is it not windows-specific, see
+
+http://code.google.com/p/msysgit/issues/detail?id=125
+
+
+
+> Likewise, I think it has nothing to do with the git@vger list when  
+> we add
+> work-arounds until some better solution is found, and then discuss  
+> whether
+> the workaround is still needed.
+>
+> I cannot help to see the benefit, at least.
+>
+> Once things are sorted out, I agree, it has to be sent to the git  
+> list.
+>
+> Before that, however, allow us to work on another list.
+
+Personally, I'd find it easier to work on a single list.  MinGW support
+is mature enough and workarounds should now be avoid.  If we tested git
+during the official release cycle, we would have sufficient time to find
+and solve problems on Windows and prepare patches that have sufficient
+quality to be discuss on git@vger.
+
+	Steffen
