@@ -1,72 +1,154 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Should we discuss Windows-related changes on git@vger.kernel.org?
-Date: Fri, 11 Jul 2008 16:06:57 -0700
-Message-ID: <7vmykohvfy.fsf@gitster.siamese.dyndns.org>
-References: <DDFD7E3B-8401-4EA0-9BBA-C9D8E25998A3@zib.de>
- <alpine.DEB.1.00.0807111349470.3640@eeepc-johanness>
- <65365AC4-D7C9-462B-8239-F3B35F7ECBEF@zib.de>
- <alpine.DEB.1.00.0807111652170.8950@racer>
- <A065AF71-5685-423A-9F87-5349ADC6C9C9@zib.de>
- <alpine.DEB.1.00.0807111930160.8950@racer>
- <alpine.LFD.1.10.0807111159560.2936@woody.linux-foundation.org>
- <alpine.DEB.1.00.0807112037220.8950@racer>
- <0E93411E-745C-4858-999E-F0B7487B48B1@zib.de>
- <alpine.DEB.1.00.0807112226190.8950@racer>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Add pretty format %aN which gives the author name, respecting
+ .mailmap
+Date: Sat, 12 Jul 2008 00:28:18 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807120027330.8950@racer>
+References: <bd6139dc0807090621n308b0159n92d946c165d3a5dd@mail.gmail.com>  <bd6139dc0807111404y1d3dd48ao6d2903da4cd1aa56@mail.gmail.com>  <alpine.DEB.1.00.0807112215050.8950@racer>  <alpine.DEB.1.00.0807112238350.8950@racer> 
+ <bd6139dc0807111455s127c5a35hfd3f01cc75614f65@mail.gmail.com>  <alpine.DEB.1.00.0807112310140.8950@racer> <bd6139dc0807111514j75d1ae6dl3c3f5dbfb55961c7@mail.gmail.com> <alpine.DEB.1.00.0807120000580.8950@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	msysGit <msysgit@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 12 01:08:18 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailinglist <git@vger.kernel.org>,
+	David Symonds <dsymonds@gmail.com>
+To: Sverre Rabbelier <alturin@gmail.com>, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Jul 12 01:29:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHRih-00031N-5Y
-	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 01:08:07 +0200
+	id 1KHS3C-0007gd-Sd
+	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 01:29:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819AbYGKXHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 19:07:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752149AbYGKXHJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 19:07:09 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57319 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751976AbYGKXHH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 19:07:07 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6112B29ABC;
-	Fri, 11 Jul 2008 19:07:06 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7AA8F29AB8; Fri, 11 Jul 2008 19:06:59 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0807112226190.8950@racer> (Johannes
- Schindelin's message of "Fri, 11 Jul 2008 22:38:23 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 14D40E64-4F9E-11DD-A3B3-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753580AbYGKX2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 19:28:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753726AbYGKX2U
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 19:28:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45639 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753557AbYGKX2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 19:28:20 -0400
+Received: (qmail invoked by alias); 11 Jul 2008 23:28:18 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp010) with SMTP; 12 Jul 2008 01:28:18 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/T/AYBGaPTeM2hZi5VMo2X62zFLKXAGylLOKOI65
+	GlqcEDuv4DYVdp
+X-X-Sender: gene099@racer
+In-Reply-To: <alpine.DEB.1.00.0807120000580.8950@racer>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88198>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> And if the separation is not always that clear, why not discuss those 
-> things on msysGit first, and then come to git@vger with our minds (and 
-> possibly our patches) made up?
+The pretty format %an does not respect .mailmap, but gives the exact
+author name recorded in the commit.  Sometimes it is more desirable,
+however, to look if the email has another name mapped to it in .mailmap.
 
-I know you mean well, but my impression from reading the kernel list is
-that often a message that says "we already debated this issue on our list
-to death and here is our conclusion, take it or leave it" to the audience
-is not accepted warmly, and more central kernel people may even say "do
-not hide the discussion in the subsystem list, do it in the open,
-discussion on the subsystem list does not matter".
+This commit adds %aN (and %cN for the committer name) to do exactly that.
 
-Taking that lesson from the other community, I'd suggest that it is
-probably a good idea to start discussion on your list, but once (some)
-people in the discussion think the topic is releavant here, move it here
-sooner rather than later.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+	On Sat, 12 Jul 2008, Johannes Schindelin wrote:
+
+	> On Sat, 12 Jul 2008, Sverre Rabbelier wrote:
+	> 
+	> > On Sat, Jul 12, 2008 at 12:11 AM, Johannes Schindelin
+	> > <Johannes.Schindelin@gmx.de> wrote:
+	> > > The mechanism is this: you look up the email in .mailmap 
+	> > > (actually you parse that once, but the idea stays the same), and if 
+	> > > there is a name for it, you use that _instead of_ the given author 
+	> > > name.
+	> > 
+	> > Ah, so you suggest changing "format:%ae" to "format:%ae %an" 
+	> > and falling back to the latter id specified on that line if the 
+	> > former is not in .mailmap? That would work I guess, I'll put it on my 
+	> > TODO list :).
+	> 
+	> Hmm.  I missed the fact that you used pretty formats.  Seems 
+	> like %an does not respect .mailmap; I'm on it.
+
+ Documentation/pretty-formats.txt |    2 ++
+ pretty.c                         |   27 +++++++++++++++++++++++++--
+ 2 files changed, 27 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 69e6d2f..c11d495 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -101,6 +101,7 @@ The placeholders are:
+ - '%P': parent hashes
+ - '%p': abbreviated parent hashes
+ - '%an': author name
++- '%aN': author name (respecting .mailmap)
+ - '%ae': author email
+ - '%ad': author date
+ - '%aD': author date, RFC2822 style
+@@ -108,6 +109,7 @@ The placeholders are:
+ - '%at': author date, UNIX timestamp
+ - '%ai': author date, ISO 8601 format
+ - '%cn': committer name
++- '%cN': committer name (respecting .mailmap)
+ - '%ce': committer email
+ - '%cd': committer date
+ - '%cD': committer date, RFC2822 style
+diff --git a/pretty.c b/pretty.c
+index 8eb39e9..862364b 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -3,6 +3,8 @@
+ #include "utf8.h"
+ #include "diff.h"
+ #include "revision.h"
++#include "path-list.h"
++#include "mailmap.h"
+ 
+ static char *user_format;
+ 
+@@ -288,6 +290,25 @@ static char *logmsg_reencode(const struct commit *commit,
+ 	return out;
+ }
+ 
++static int mailmap_name(struct strbuf *sb, const char *email)
++{
++	static struct path_list *mail_map;
++	char buffer[1024];
++
++	if (!mail_map) {
++		mail_map = xcalloc(1, sizeof(*mail_map));
++		read_mailmap(mail_map, ".mailmap", NULL);
++	}
++
++	if (!mail_map->nr)
++		return -1;
++
++	if (!map_email(mail_map, email, buffer, sizeof(buffer)))
++		return -1;
++	strbuf_addstr(sb, buffer);
++	return 0;
++}
++
+ static size_t format_person_part(struct strbuf *sb, char part,
+                                const char *msg, int len)
+ {
+@@ -309,10 +330,12 @@ static size_t format_person_part(struct strbuf *sb, char part,
+ 	if (end >= len - 2)
+ 		goto skip;
+ 
+-	if (part == 'n') {	/* name */
++	if (part == 'n' || part == 'N') {	/* name */
+ 		while (end > 0 && isspace(msg[end - 1]))
+ 			end--;
+-		strbuf_add(sb, msg, end);
++		if (part != 'N' || !msg[end] || !msg[end + 1] ||
++				mailmap_name(sb, msg + end + 2) < 0)
++			strbuf_add(sb, msg, end);
+ 		return placeholder_len;
+ 	}
+ 	start = ++end; /* save email start position */
+-- 
+1.5.6.2.509.g109edf
