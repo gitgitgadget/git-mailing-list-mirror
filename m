@@ -1,101 +1,81 @@
-From: ff <ff@member.org>
-Subject: Re: how to undo a git merge?
-Date: Fri, 11 Jul 2008 14:46:15 -0400
-Message-ID: <fa7d16350807111146m18b0ca9q6902c2167bfd3512@mail.gmail.com>
-References: <fa7d16350807110916x689e316fr6bae01f28e2e1acb@mail.gmail.com>
-	 <20080711161923.GE10347@genesis.frugalware.org>
-	 <fa7d16350807111107o40c5cbb5xc06c3c56b16b7499@mail.gmail.com>
-	 <20080711181413.GI10347@genesis.frugalware.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git cherry-pick before archive
+Date: Fri, 11 Jul 2008 19:46:27 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807111944000.8950@racer>
+References: <6dbd4d000807110846m2921ddb9r88eb3986762b8f81@mail.gmail.com>  <alpine.DEB.1.00.0807111649290.8950@racer>  <6dbd4d000807110909n1ced22eeraef45af441c20cca@mail.gmail.com>  <20080711161158.GD10347@genesis.frugalware.org>  <alpine.DEB.1.00.0807111924180.8950@racer>
+ <6dbd4d000807111128l4721113dh3713bc7abd3d837e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Miklos Vajna" <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Jul 11 20:47:41 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Denis Bueno <dbueno@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 20:47:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHNeF-0005ds-Vu
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 20:47:16 +0200
+	id 1KHNeV-0005ku-Nl
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 20:47:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754462AbYGKSqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 14:46:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754372AbYGKSqR
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 14:46:17 -0400
-Received: from py-out-1112.google.com ([64.233.166.182]:62843 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753326AbYGKSqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 14:46:17 -0400
-Received: by py-out-1112.google.com with SMTP id p76so2256031pyb.10
-        for <git@vger.kernel.org>; Fri, 11 Jul 2008 11:46:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=EfFgPi5zazeheF9eqP3ZX2AKMDfQTstCDyQEJ3ATjng=;
-        b=Mfl9fd3cMy81TTJZsAXWQEkX0dIptaHVgTgi0Wdw1xjUH6V4eTItjWpyTehJmhFObY
-         5Y8JhZiilE8bADKd9Q1pGNbLhXRhyiK3UuXGJm/KCmDVHcOfy/mn4qmwRUSeUBJXH+Xq
-         QXuOL9hxK8RPnDv6Iqq7YUKWtiYwk9wE2ce8Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=e09szYryHcWZxcjAqLL9IE9Wnl7xw/nMeclHlTQNTxgkvOa0NyOcrShOYRnQPy/T2h
-         dwUC9RuBvxgBjbAYWvgF1K9QsBOtP+RX7p2G0EvB6OXXdsVpSWuamBWfL9GlwsPumlYb
-         EcC9WLJU13dw1ItGgq1JoNs6Kpy6S+nMxMbyw=
-Received: by 10.114.124.12 with SMTP id w12mr14361836wac.210.1215801975873;
-        Fri, 11 Jul 2008 11:46:15 -0700 (PDT)
-Received: by 10.141.91.21 with HTTP; Fri, 11 Jul 2008 11:46:15 -0700 (PDT)
-In-Reply-To: <20080711181413.GI10347@genesis.frugalware.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: d1f9e33799931f91
+	id S1755287AbYGKSqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 14:46:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751434AbYGKSqb
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 14:46:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42012 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755148AbYGKSq3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 14:46:29 -0400
+Received: (qmail invoked by alias); 11 Jul 2008 18:46:27 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp033) with SMTP; 11 Jul 2008 20:46:27 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/OpplTfurOhg/mzCxH2xMz9FMSZk7erA0DzxMfNa
+	NSfzpKRKTADP+b
+X-X-Sender: gene099@racer
+In-Reply-To: <6dbd4d000807111128l4721113dh3713bc7abd3d837e@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88155>
 
-> [ Did you reply off-list intentionally? ]
+Hi,
 
-ooops... yes... I'm scared of the reply-all button. :)
+On Fri, 11 Jul 2008, Denis Bueno wrote:
 
-> For example, if you were on branch 'master' and you merged 'foo' to
-> master using 'git merge foo', and you want to revert that merge then you
-> need '-m 1'.
+> On Fri, Jul 11, 2008 at 14:25, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > Anyway, back to Denis' question: I could imagine (haven't tested,
+> > thought), that "git revert -n <the-same-commit>" would undo the "git
+> > cherry-pick -n".
+> 
+> So I need to be able to maintain the patch that is applied to the tree
+> before archiving, so instead of a commit ID, I'm now using a patch
+> file, and the sequence of actions is like so:
+> 
+>     $ <assume index is clean>
+>     $ git apply --cached patchfile || exit 1
+>     $ git archive --format=tar --prefix=pfx/ $(git write-tree) \
+>           | gzip > prj.tgz
+>     $ git reset
+> 
+> This way I don't even need to reverse-apply the patch, because I never
+> touch the working copy.  Of course, this can't be done in this way in
+> any other revision control system, because they don't have an index.
 
-Ok, so... sorry for not getting it completely, even after reading the info.
+Well, they have.  They just do not expose it.
 
-In your example, how and why you can determine that the number 1
-represents the "foo" branch? Would "-m 2" represent the master branch?
-In your example is there any other choice for the "-m" number to use?
+BTW in your case, I would suggest this:
 
--- ff
+	INDEX_FILE=.git/bla git read-tree HEAD &&
+	INDEX_FILE=.git/bla git apply --cached patchfile &&
+	INDEX_FILE=.git/bla git archive [...] &&
+	rm .git/bla
 
+IOW: Just use a temporary index for your work.
 
-
-On Fri, Jul 11, 2008 at 2:14 PM, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> [ Did you reply off-list intentionally? ]
->
-> On Fri, Jul 11, 2008 at 02:07:44PM -0400, ff <ff@member.org> wrote:
->> thank you.
->>
->> I did see the -m option in the revert man page. It talks about
->> "parent" and I did
->> not understand what that is. Is parent the commit id of the merge commit?
->>
->> Thanks again!
->
-> http://www.kernel.org/pub/software/scm/git/docs/gitglossary.html#def_parent
->
-> A merge commit has two parents, but obviously only one of the was the
-> HEAD commit before the merge. So when you revert a merge, you need to
-> specify which which parent's tree should be the tree of the new HEAD.
->
-> For example, if you were on branch 'master' and you merged 'foo' to
-> master using 'git merge foo', and you want to revert that merge then you
-> need '-m 1'.
->
+Ciao,
+Dscho
