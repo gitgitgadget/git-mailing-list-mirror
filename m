@@ -1,57 +1,81 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: jgit (was: [PATCH 4/4] Add a method...)
-Date: Fri, 11 Jul 2008 14:24:14 +0200
-Message-ID: <200807111424.14328.robin.rosenberg@dewire.com>
-References: <20080711042822.GC32633@spearce.org> <1215769719-5238-1-git-send-email-robin.rosenberg@dewire.com> <487750E3.90303@op5.se>
+From: "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>
+Subject: Re: Ext4 patchqueue corrupted ?
+Date: Fri, 11 Jul 2008 18:01:09 +0530
+Message-ID: <20080711123109.GA14606@skywalker>
+References: <20080711034606.GA779@skywalker> <20080711084715.GT10151@machine.or.cz> <20080711122617.GA8154@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Marek Zawirski <marek.zawirski@gmail.com>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Jul 11 14:30:28 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, Ming Ming Cao <cmm@us.ibm.com>,
+	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>,
+	git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: linux-ext4-owner@vger.kernel.org Fri Jul 11 14:32:35 2008
+Return-path: <linux-ext4-owner@vger.kernel.org>
+Envelope-to: gcfe-linux-ext4@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHHlZ-0004c8-0R
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 14:30:25 +0200
+	id 1KHHnd-0005I9-2J
+	for gcfe-linux-ext4@gmane.org; Fri, 11 Jul 2008 14:32:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755358AbYGKM30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 08:29:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755295AbYGKM30
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 08:29:26 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:16156 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1755340AbYGKM30 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 08:29:26 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 900BA802846;
-	Fri, 11 Jul 2008 14:29:24 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HfZOYo4mLZ4B; Fri, 11 Jul 2008 14:29:24 +0200 (CEST)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 2FA638006B7;
-	Fri, 11 Jul 2008 14:29:24 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <487750E3.90303@op5.se>
+	id S1751977AbYGKMbi (ORCPT <rfc822;gcfe-linux-ext4@m.gmane.org>);
+	Fri, 11 Jul 2008 08:31:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755359AbYGKMbh
+	(ORCPT <rfc822;linux-ext4-outgoing>);
+	Fri, 11 Jul 2008 08:31:37 -0400
+Received: from e28smtp04.in.ibm.com ([59.145.155.4]:59372 "EHLO
+	e28esmtp04.in.ibm.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751977AbYGKMbh (ORCPT
+	<rfc822;linux-ext4@vger.kernel.org>); Fri, 11 Jul 2008 08:31:37 -0400
+Received: from d28relay04.in.ibm.com (d28relay04.in.ibm.com [9.184.220.61])
+	by e28esmtp04.in.ibm.com (8.13.1/8.13.1) with ESMTP id m6BCVEAl025702;
+	Fri, 11 Jul 2008 18:01:14 +0530
+Received: from d28av05.in.ibm.com (d28av05.in.ibm.com [9.184.220.67])
+	by d28relay04.in.ibm.com (8.13.8/8.13.8/NCO v9.0) with ESMTP id m6BCUqoF1441800;
+	Fri, 11 Jul 2008 18:00:52 +0530
+Received: from d28av05.in.ibm.com (loopback [127.0.0.1])
+	by d28av05.in.ibm.com (8.13.1/8.13.3) with ESMTP id m6BCVDlk003636;
+	Fri, 11 Jul 2008 18:01:14 +0530
+Received: from skywalker ([9.77.123.86])
+	by d28av05.in.ibm.com (8.13.1/8.12.11) with ESMTP id m6BCVA8X003566
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 11 Jul 2008 18:01:12 +0530
 Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <20080711122617.GA8154@mit.edu>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+Sender: linux-ext4-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88113>
+List-ID: <linux-ext4.vger.kernel.org>
+X-Mailing-List: linux-ext4@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88114>
 
-fredagen den 11 juli 2008 14.24.03 skrev Andreas Ericsson:
-> Sorry for butting in, but I'd appreciate if you kept adding 'jgit'
-> to the subject so I can keep filtering these patches out. The volume
-> on git@vger is high enough without having to follow off-shoots that
-> are of no particular concern to me (although I certainly applaud the
-> effort).
+On Fri, Jul 11, 2008 at 08:26:17AM -0400, Theodore Tso wrote:
+> On Fri, Jul 11, 2008 at 10:47:15AM +0200, Petr Baudis wrote:
+> >   very puzzling; I have backed up the broken objects store, can you
+> > repush, please? I'm curious about how this could have happenned;
+> > repo.or.cz now uses Git from latest next, which is a rather strange
+> > coincidence. ;-) Or did any of the pushers do anything special about
+> > pushin to the repository recently?
+> 
+> Aneesh, did you try repushing?  It looks like the objects store is
+> broken again.
 
-It was an accident. Honestly :)
+I don't have permission to push to the repo. I can only pull.
 
--- robin
+
+> 
+> Pasky, in case it helps, and for the benefit of Linux-ext4 folks, I
+> have a copy of my repository (which I last pushed to repo.or.cz around
+> noon US/Eastern yesterday) here:
+> 
+>      git://git.kernel.org/pub/scm/fs/ext2/ext4-patch-queue.git
+> 
+> My most recent HEAD is ec90e411; if anyone has something more recent,
+> they can send it to me via:
+> 
+>      git bundle create /tmp/to-send ec90e411
+> 
+> ... and then e-mailing me as an attachment the resulting binary file
+> in /tmp/to-send.
+> 
+
+-aneesh
