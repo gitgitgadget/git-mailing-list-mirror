@@ -1,85 +1,74 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git cherry-pick before archive
-Date: Fri, 11 Jul 2008 18:11:58 +0200
-Message-ID: <20080711161158.GD10347@genesis.frugalware.org>
-References: <6dbd4d000807110846m2921ddb9r88eb3986762b8f81@mail.gmail.com> <alpine.DEB.1.00.0807111649290.8950@racer> <6dbd4d000807110909n1ced22eeraef45af441c20cca@mail.gmail.com>
+From: ff <ff@member.org>
+Subject: how to undo a git merge?
+Date: Fri, 11 Jul 2008 12:16:15 -0400
+Message-ID: <fa7d16350807110916x689e316fr6bae01f28e2e1acb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="QOa9dl9wYIBIim/b"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Denis Bueno <dbueno@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 18:13:02 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 11 18:17:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHLEx-00046E-46
-	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 18:12:59 +0200
+	id 1KHLJ5-0005fc-L2
+	for gcvg-git-2@gmane.org; Fri, 11 Jul 2008 18:17:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753472AbYGKQMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 12:12:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753333AbYGKQMB
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 12:12:01 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:50170 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752819AbYGKQMA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 12:12:00 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 322DA1B24FA;
-	Fri, 11 Jul 2008 18:11:59 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 132764465E;
-	Fri, 11 Jul 2008 17:37:25 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id D13EB177001C; Fri, 11 Jul 2008 18:11:58 +0200 (CEST)
+	id S1753624AbYGKQQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 12:16:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753711AbYGKQQS
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 12:16:18 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:15877 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753582AbYGKQQR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 12:16:17 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1932084ywe.1
+        for <git@vger.kernel.org>; Fri, 11 Jul 2008 09:16:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition:x-google-sender-auth;
+        bh=nBqKklPpFLIC1pnER94JgkjBNJioReWNrfHW1ZnyBX4=;
+        b=LjAr7c3K3R52QKnX9uA4cvTk0IL0ymoiJVf7ZMHWPrVgmXSkByyZJrncx8Vx8wuUia
+         rigFQKwUVWGvuU5i/dNzz3BqVcgRVgOLCC48PC9YQHCJcElwZjw2/FUxtXEPY31Ar0WG
+         oaSaLB5lUPERcCcsyLPtVxGSHtbNNM+RupNBw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=EL5slzKGv6kOcVdvCGaDua59jIMdJZEBikOl2K9LU5rqCpoObDkuuruweZHa6Z53VR
+         BkwOqEp7d74ee2LLxEEFy4F8shdKJjo4WHYh12rSR+AK/9Ob9qOmCEVitCqEx1jtoSf7
+         DDP/JQVIv6VXMEqRcezyPHoRkSlGLdQxYM87E=
+Received: by 10.115.91.2 with SMTP id t2mr14174822wal.62.1215792975906;
+        Fri, 11 Jul 2008 09:16:15 -0700 (PDT)
+Received: by 10.141.91.21 with HTTP; Fri, 11 Jul 2008 09:16:15 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <6dbd4d000807110909n1ced22eeraef45af441c20cca@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Google-Sender-Auth: 0da68d3adade4a32
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88138>
 
+Hello,
 
---QOa9dl9wYIBIim/b
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm a git lover with a question.
 
-On Fri, Jul 11, 2008 at 12:09:02PM -0400, Denis Bueno <dbueno@gmail.com> wr=
-ote:
-> On Fri, Jul 11, 2008 at 11:51, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > $ git cherry-pick -n <bla>
-> > $ git archive --format=3Dtar --prefix=3Dpfx/ $(git write-tree) | gzip >=
- prj.tgz
-> > $ git reset
+I have two git branches that stem from the same exact master branch.
+Many commits happened independently on these two branches overtime.
+Then, I inadvertently did a merge from one branch into another. The branch
+where I merged into now has mixed commits, and also a commit for the merge
+itself. I then had more commits added to the branch that I merged into.
 
-I guess he wanted to write 'git reset --hard' here ;-)
+Now I would like to revert the merge... what is the best way of doing that?
+I would like very much to use something like git-revert <merge_commit_id>
+But that does not seem to work.
 
->=20
-> Thank you!  This is much better.  The only thing that could improve it
-> is by some way to "un-cherry-pick" the applied change (so that after
-> "git reset" there are no local modifications to the file(s) changed by
-> cherry-picking <bla>).
->=20
-> Is there an easy way to invert a patch to undo the change the original
-> patch introduced?
+Any help/pointers of an example illustrating solution to this case
+would be greatly
+appreciated!
 
-git show <commit> | git apply -R?
+Regards,
 
---QOa9dl9wYIBIim/b
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkh3hk4ACgkQe81tAgORUJYu/ACgmUFR7XRKxxFrhqjdZDJw5wiQ
-07cAoJ97YE/OV7mxW7ItZVgZKBsg/m7w
-=tu6b
------END PGP SIGNATURE-----
-
---QOa9dl9wYIBIim/b--
+-- ff@member.org
