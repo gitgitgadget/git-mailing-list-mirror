@@ -1,74 +1,73 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: git-svn and svn properties on upstream
-Date: Sat, 12 Jul 2008 17:30:58 -0400
-Message-ID: <32541b130807121430ia85a3c8u3efc0b5a8591eb44@mail.gmail.com>
-References: <608871.39190.qm@web27807.mail.ukl.yahoo.com>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH 2/2] t/: Use "test_must_fail git" instead of "! git"
+Date: Sat, 12 Jul 2008 23:43:59 +0200
+Message-ID: <20080712214359.GA22323@leksak.fem-net>
+References: <1215877672-17049-1-git-send-email-s-beyer@gmx.net> <1215877672-17049-2-git-send-email-s-beyer@gmx.net> <m3vdzbccoq.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gnuruandstuff@yahoo.co.uk
-X-From: git-owner@vger.kernel.org Sat Jul 12 23:32:02 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 12 23:45:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHmhD-0004oa-3Q
-	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 23:31:59 +0200
+	id 1KHmtt-0007wB-Hv
+	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 23:45:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752887AbYGLVbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jul 2008 17:31:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752313AbYGLVbA
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 17:31:00 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:17922 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752063AbYGLVa7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jul 2008 17:30:59 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so2146405ywe.1
-        for <git@vger.kernel.org>; Sat, 12 Jul 2008 14:30:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=+HZwF/cJ7vwb0xwkMkZHVTD+FxW/CgylPc1PJbUjukA=;
-        b=dqF/OMm/CBx77lJe7oFvF8xvvonuuK0zNNH8T5x8rlJyifn2mKv/h6XYusvqLfP6rq
-         8mZbUADC8rkg211WF5MlZ+GXPehXx+uChXLAVjg4p+ISZXvpNVxt77RBCO/pfdg9bRiG
-         FYg2jPX+QM4oSW6InUYWJHKR/thxTKU9rcA5c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=prHILaJfFJWQDPjjV3tjufj4KWZ/EqjoM9kHGPrl+Lexp8XZSptPZvtqNnRiU4eg6j
-         8siTXZlXlC0sKCjimUCmsFRpZdGqbYPV8YKAg8mrjIvqDoXpYll/f8SMAet/3KMd6T7F
-         CGizSMDDRMB/xHIeySLf0SQa9R5TNrLltTtAI=
-Received: by 10.151.142.16 with SMTP id u16mr17983420ybn.177.1215898258843;
-        Sat, 12 Jul 2008 14:30:58 -0700 (PDT)
-Received: by 10.150.98.19 with HTTP; Sat, 12 Jul 2008 14:30:58 -0700 (PDT)
-In-Reply-To: <608871.39190.qm@web27807.mail.ukl.yahoo.com>
+	id S1753103AbYGLVoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jul 2008 17:44:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752919AbYGLVoG
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 17:44:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34731 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751582AbYGLVoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jul 2008 17:44:04 -0400
+Received: (qmail invoked by alias); 12 Jul 2008 21:44:02 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp066) with SMTP; 12 Jul 2008 23:44:02 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX19ozIolabtoPIA805S3NY0UbJPTxBoh96W59Vd62U
+	Mnz+KlxKVCzBfa
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KHmsp-0005oV-A6; Sat, 12 Jul 2008 23:43:59 +0200
 Content-Disposition: inline
+In-Reply-To: <m3vdzbccoq.fsf@localhost.localdomain>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88267>
 
-On 7/12/08, Paul Talacko <gnuruandstuff@yahoo.co.uk> wrote:
->  * amend SVN::Git::Editor::generate_diffs to add another hash key to amend properties.
->  * look for ~/.subversion/config or /etc/subversion/config to see whether auto-props are set
->  * if set, set the properties accordingly in the @mods array of hashes.
->  * SVN::Git::Editor::A then sets the properties according to the contents of the $mods hash
-> ref, using set_file_prop().
+Hi,
 
-This sounds like it would be fine for almost all users.  Specifically
-me :)  I think it's a good starting point, so you could build
-something even more flexible on top later if you wanted.
+Jakub Narebski wrote:
+> Stephan Beyer <s-beyer@gmx.net> writes:
+> 
+> > This patch changes every occurrence of "! git" -- with the meaning
+> > that a git call has to fail -- into "test_must_fail git".
+> > 
+> > This is useful to
+> 
+> >  - advertise the use of "test_must_fail" for new tests.
+> 
+> Hmmm... I think advertising the use of 'test_must_fail' would be
+> the best served by adding information about this function to
+> t/README
 
-I guess in an ideal world there'd be a way to track svn properties in
-the git history, but I have no idea where such things should probably
-go.
+This is true.
+This is not only true for test_must_fail, it is also true for
+stuff like test_tick, test_set_editor, test_cmp and the like.
 
-Have fun,
+But, well, t/README says also, that "existing programs are the best
+source of the information."
+And I think it is right ;-)
 
-Avery
+Regards,
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
