@@ -1,80 +1,141 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH 2/2] Reuse the same temp index in a transaction
-Date: Sat, 12 Jul 2008 11:24:24 +0100
-Message-ID: <b0943d9e0807120324l7674c010w9a8e4a0bbdeeee65@mail.gmail.com>
-References: <20080702060113.11361.39006.stgit@yoghurt>
-	 <20080702061314.11361.28297.stgit@yoghurt>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] t0004: fix timing bug
+Date: Sat, 12 Jul 2008 04:14:52 -0700
+Message-ID: <7vej5zwdzn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sat Jul 12 12:25:25 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 12 13:16:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHcI8-0004Qm-5B
-	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 12:25:24 +0200
+	id 1KHd56-0007nC-Kg
+	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 13:16:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752116AbYGLKY0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jul 2008 06:24:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752154AbYGLKY0
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 06:24:26 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:59729 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750924AbYGLKYZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Jul 2008 06:24:25 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so2493738waf.23
-        for <git@vger.kernel.org>; Sat, 12 Jul 2008 03:24:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=BJmtf6wBxraSiewaRSKpvMVWWeVKkxuDBVP7uQp5E5A=;
-        b=joj4F/3nR24uqHqHajoGUWiHSs+AgOWpZjggqg0+4ROeErZBpkBbNt71010GUWdoTQ
-         ch7u8vyPdefXqAqG7989o94GM3eJWHLiIUTjO9r7djJe7OhVQ3FHCkEZfsDHdhRAZpHq
-         a25R9bjFIHbDku6DMobX1jC/u9YjVUdI7L5Yo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=FpuiFRVJ2XPJVWmj/axv2bfB5cjbE9NMvEUHW3qpTkFguoBwbb7FR20NYh39GEWJj0
-         Tap0pzjgV/iYRbPlwaASzkpNdaEObObVFEn3mQVfCDIl0EqubZVDUuuBTyzzn1VBhzad
-         ZvaOcfCfyEuDan72MVNTJiRYF+rH2KgBC1Dfg=
-Received: by 10.114.66.8 with SMTP id o8mr15438314waa.135.1215858264850;
-        Sat, 12 Jul 2008 03:24:24 -0700 (PDT)
-Received: by 10.114.124.9 with HTTP; Sat, 12 Jul 2008 03:24:24 -0700 (PDT)
-In-Reply-To: <20080702061314.11361.28297.stgit@yoghurt>
-Content-Disposition: inline
+	id S1754851AbYGLLPB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jul 2008 07:15:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754832AbYGLLPA
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 07:15:00 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37529 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754799AbYGLLO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jul 2008 07:14:59 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C0FBC28FFF;
+	Sat, 12 Jul 2008 07:14:57 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 0957A28FFE; Sat, 12 Jul 2008 07:14:54 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C300DCD2-5003-11DD-8BDA-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88233>
 
-2008/7/2 Karl Hasselstr=F6m <kha@treskal.com>:
-> Instead of making a new temp index every time we need one, just keep
-> reusing the same one. And keep track of which tree is currently store=
-d
-> in it -- if we do several consecutive successful pushes, it's always
-> going to be the "right" tree so that we don't have to call read-tree
-> before each patch application.
->
-> The motivation behind this change is of course that it makes things
-> faster.
->
-> (The same simple test as in the previous patch -- pushing 250 patches
-> in a 32k-file repository, with one file-level merge necessary per pus=
-h
-> -- went from 0.36 to 0.19 seconds per patch with this patch applied.)
+The test created an initial commit, made .git/objects unwritable and then
+exercised various codepaths to create loose commit, tree and blob objects
+to make sure the commands notice failures from these attempts.
 
-That's an impressive improvement (together with the previous patch).
-Is this with the new patch log infrastructure?
+However, the initial commit was not preceded with test_tick, which made
+its object name depend on the timestamp.  The names of all the later tree
+and blob objects the test tried to create were static.  If the initial
+commit's object name happened to begin with the same two hexdigits as the
+tree or blob objects the test later attempted to create, the fan-out
+directory in which these tree or blob would be created is already created
+when the initial commit was made, and the object creation succeeds, and
+commands being tested should not notice any failure --- in short, the test
+was bogus.
 
-Thanks.
+This makes the fan-out directories also unwritable, and adds test_tick
+before the commit object creation to make the test repeatable.
 
---=20
-Catalin
+The contents of the file to create a blob from "a" to "60" is to force the
+name of the blob object to begin with "1b", which shares the fan-out
+directory with the initial commit that is created with the test.  This was
+useful when diagnosing the breakage of this test.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * I initially hoped that I spotted a bug in the Linux filesystem code
+   that lets a quick operation sneak past chmod that is done immediately
+   after it or something racy so that I can tease Linus with it, but no
+   such luck ;-)  Doubly embarrasing is that the test-bug is mine. 
+
+ t/t0004-unwritable.sh |   19 ++++++++++---------
+ 1 files changed, 10 insertions(+), 9 deletions(-)
+
+diff --git a/t/t0004-unwritable.sh b/t/t0004-unwritable.sh
+index 9255c63..63e1217 100755
+--- a/t/t0004-unwritable.sh
++++ b/t/t0004-unwritable.sh
+@@ -8,6 +8,7 @@ test_expect_success setup '
+ 
+ 	>file &&
+ 	git add file &&
++	test_tick &&
+ 	git commit -m initial &&
+ 	echo >file &&
+ 	git add file
+@@ -17,11 +18,11 @@ test_expect_success setup '
+ test_expect_success 'write-tree should notice unwritable repository' '
+ 
+ 	(
+-		chmod a-w .git/objects
++		chmod a-w .git/objects .git/objects/?? &&
+ 		test_must_fail git write-tree
+ 	)
+ 	status=$?
+-	chmod 775 .git/objects
++	chmod 775 .git/objects .git/objects/??
+ 	(exit $status)
+ 
+ '
+@@ -29,11 +30,11 @@ test_expect_success 'write-tree should notice unwritable repository' '
+ test_expect_success 'commit should notice unwritable repository' '
+ 
+ 	(
+-		chmod a-w .git/objects
++		chmod a-w .git/objects .git/objects/?? &&
+ 		test_must_fail git commit -m second
+ 	)
+ 	status=$?
+-	chmod 775 .git/objects
++	chmod 775 .git/objects .git/objects/??
+ 	(exit $status)
+ 
+ '
+@@ -41,12 +42,12 @@ test_expect_success 'commit should notice unwritable repository' '
+ test_expect_success 'update-index should notice unwritable repository' '
+ 
+ 	(
+-		echo a >file &&
+-		chmod a-w .git/objects
++		echo 6O >file &&
++		chmod a-w .git/objects .git/objects/?? &&
+ 		test_must_fail git update-index file
+ 	)
+ 	status=$?
+-	chmod 775 .git/objects
++	chmod 775 .git/objects .git/objects/??
+ 	(exit $status)
+ 
+ '
+@@ -55,11 +56,11 @@ test_expect_success 'add should notice unwritable repository' '
+ 
+ 	(
+ 		echo b >file &&
+-		chmod a-w .git/objects
++		chmod a-w .git/objects .git/objects/?? &&
+ 		test_must_fail git add file
+ 	)
+ 	status=$?
+-	chmod 775 .git/objects
++	chmod 775 .git/objects .git/objects/??
+ 	(exit $status)
+ 
+ '
