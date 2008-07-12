@@ -1,77 +1,119 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Git call graph
-Date: Sat, 12 Jul 2008 03:27:27 +0200
-Message-ID: <20080712012727.GP10347@genesis.frugalware.org>
-References: <20080712004714.GL10347@genesis.frugalware.org> <7vd4ljj4u1.fsf@gitster.siamese.dyndns.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [RFC/PATCH (WIP)] Git.pm: Add get_config() method and related
+	subroutines
+Date: Sat, 12 Jul 2008 03:47:08 +0200
+Message-ID: <20080712014708.GB10151@machine.or.cz>
+References: <200807031824.55958.jnareb@gmail.com> <20080709160303.GL10151@machine.or.cz> <200807100133.38163.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="7cXxibKNEnJOqEg4"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 12 03:28:34 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Lea Wiemann <lewiemann@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 12 03:48:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHTua-0005gd-5i
-	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 03:28:32 +0200
+	id 1KHUDb-0001qg-7f
+	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 03:48:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755806AbYGLB1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2008 21:27:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753514AbYGLB1d
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 21:27:33 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:51361 "EHLO virgo.iok.hu"
+	id S1755628AbYGLBrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2008 21:47:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755388AbYGLBrM
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jul 2008 21:47:12 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:50125 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751133AbYGLB1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2008 21:27:33 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 3B6161B24FA;
-	Sat, 12 Jul 2008 03:27:30 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 00B394465E;
-	Sat, 12 Jul 2008 02:52:40 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id C5F55177001C; Sat, 12 Jul 2008 03:27:27 +0200 (CEST)
+	id S1755385AbYGLBrM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2008 21:47:12 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id AE2A0393B60B; Sat, 12 Jul 2008 03:47:08 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vd4ljj4u1.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <200807100133.38163.jnareb@gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88215>
 
+On Thu, Jul 10, 2008 at 01:33:36AM +0200, Jakub Narebski wrote:
+> On Wed, Jul 09, 2008, Petr "Pasky" Baudis wrote:
+> > On Thu, Jul 03, 2008 at 06:24:53PM +0200, Jakub Narebski wrote:
+> > >  * Should config_val_to_bool and config_val_to_int throw error or
+> > >    just return 'undef' on invalid values?  One can check if variable
+> > >    is defined using "exists($config_hash{'varname'})".
+> > 
+> >   I think that it's more reasonable to throw an error here (as long as
+> > you don't throw an error on undef argument). This particular case is
+> > clearly a misconfiguration by the user and you rarely need to handle
+> > this more gracefully, I believe.
+> 
+> If we follow git-config convention (and I guess we should), it would be
+> value of appropriate type if variable value is of appropriate type,
+> 'undef' (no output in the case of git-config) when variable does not 
+> exists, and throwing error (status and "fatal: ..." message on STDERR
+> in the case of git-config) if variable is not of given type.
 
---7cXxibKNEnJOqEg4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, this seems to be in agreement with what I suggested.
 
-On Fri, Jul 11, 2008 at 05:58:46PM -0700, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> > Here is the result:
-> >
-> > http://vmiklos.hu/pic/git-call-graph.png
->=20
-> Your pull does not seem to call either fetch nor merge...  Strange.
+> > >  * What should ->get_config() have as an optional parameter:
+> > >    PREFIX (/^$prefix/o), or simply SECTION (/^(?:$section)\./o)?
+> > 
+> >   Do we even _need_ a parameter like that? I don't understand what is
+> > this interface trying to address.
+> 
+> For example if one wants to access _all_ variables in gitweb.* section
+> (or in gitcvs.* section), and _only_ config variables in given section.
 
-My bad. I tracked shell calls using a wrapper around 'git' so it missed
-calls without the 'remove-dashes' patches I posted yesterday.
+But what is the practical benefit? Does anyone use a config file long
+enough that this makes any difference?
 
-http://vmiklos.hu/pic/git-call-graph-v2.png
+Or if you mean foreach use, it's trivial to
 
-This one now shows that.
+	foreach (grep { /^gitweb\./ } keys %$config)
 
---7cXxibKNEnJOqEg4
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+or provide a method of Git::Config that will return this list, but it
+does not seem appropriate to have specific Git::Config instances for
+this. (Besides, if the script also needs to access a single variable
+from a different section, it will need to re-parse the config again.)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+So I think your approach would be good only if there are multiple
+methods of Git::Config that would operate on the whole config and needed
+a way to be restricted; is that the case?
 
-iEYEARECAAYFAkh4CH8ACgkQe81tAgORUJZhswCfXifYU4nRzZzjXixWBk5/O1Vg
-1gkAn3g+zWmtdzXw0yncvWp9m4+we0Mk
-=lZsK
------END PGP SIGNATURE-----
+> BTW. what should non-typecasting should be named? $c->get(<VAR>), 
+> $c->value(<VAR>), $c->param(<VAR>), or something yet different?
 
---7cXxibKNEnJOqEg4--
+I would prefer 'get' since it's the shortest and most clear, but 'value'
+would be fine too, I suppose (and more in line with bool etc.).
+
+> > Also, having accessors for special types lets you return undef when
+> > the type really isn't defined, instead of e.g. true with current
+> > config_val_bool, which is clearly bogus and requires complicated code
+> > on the user side. 
+>  
+> I don't follow you.  Didn't we agree on casting an error when variable
+> is not of given type?
+
+Sorry, s/type really/variable really/. According to your original code,
+
+	config_val_bool(undef)
+
+would return true, while the undef could be from both non-existent and
+unassigned variable. (This 'unassigned variables' case is really
+annoying to handle.)
+
+> > -- 
+> > 				Petr "Pasky" Baudis
+> > The last good thing written in C++ was the Pachelbel Canon. 
+> >                                                  -- J. Olson 
+> 
+> Eh? Isn't it written C# rather?
+
+Well, the quote is a bit dated and changing it would be too problematic.
+;-)
+
+-- 
+				Petr "Pasky" Baudis
+GNU, n. An animal of South Africa, which in its domesticated state
+resembles a horse, a buffalo and a stag. In its wild condition it is
+something like a thunderbolt, an earthquake and a cyclone. -- A. Pierce
