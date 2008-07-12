@@ -1,63 +1,69 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH 3/3 FIXED] help (Windows): Display HTML in default browser using Windows' shell API
-Date: Sat, 12 Jul 2008 22:41:17 +0200
-Message-ID: <1215895277.487916ed43464@webmail.nextra.at>
-References: <228FC26D-D318-487A-9BF3-B473096CB0C9@zib.de> <1215761822-21356-1-git-send-email-prohaska@zib.de> <7vtzevhjf8.fsf@gitster.siamese.dyndns.org> <8D150442-8B57-4025-9110-BC4C23C2310C@zib.de> <7vskufy40c.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [SQUASH PATCH] t9001: Use "test_must_fail git" instead of "! git"
+Date: Sat, 12 Jul 2008 23:30:29 +0200
+Message-ID: <1215898229-21363-1-git-send-email-s-beyer@gmx.net>
+References: <1215877672-17049-2-git-send-email-s-beyer@gmx.net>
+Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 12 22:42:25 2008
+X-From: git-owner@vger.kernel.org Sat Jul 12 23:32:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHlvA-0001LL-Vj
-	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 22:42:21 +0200
+	id 1KHmhC-0004oa-Eg
+	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 23:31:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752969AbYGLUlW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jul 2008 16:41:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752960AbYGLUlW
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 16:41:22 -0400
-Received: from smtp4.srv.eunet.at ([193.154.160.226]:34515 "EHLO
-	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752768AbYGLUlV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jul 2008 16:41:21 -0400
-Received: from webmail01.si.eunet.at (webmail01.srv.eunet.at [193.154.180.195])
-	by smtp4.srv.eunet.at (Postfix) with ESMTPS id BB82F979C4;
-	Sat, 12 Jul 2008 22:41:19 +0200 (CEST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by webmail01.si.eunet.at (8.13.1/8.13.1) with ESMTP id m6CKfHVs013478;
-	Sat, 12 Jul 2008 22:41:18 +0200
-Received: from 77.117.179.246 ([77.117.179.246]) 
-	by webmail.nextra.at (IMP) with HTTP 
-	for <johsixt@mbox.eunet.at>; Sat, 12 Jul 2008 22:41:17 +0200
-In-Reply-To: <7vskufy40c.fsf@gitster.siamese.dyndns.org>
-User-Agent: Internet Messaging Program (IMP) 3.2.8
-X-Originating-IP: 77.117.179.246
+	id S1752805AbYGLVag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jul 2008 17:30:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752786AbYGLVag
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 17:30:36 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50800 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752768AbYGLVaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jul 2008 17:30:35 -0400
+Received: (qmail invoked by alias); 12 Jul 2008 21:30:33 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp025) with SMTP; 12 Jul 2008 23:30:33 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX18Pa6tqbGMPL/G+zFk+QtefD0K+TPl7MyUJV69trX
+	oGuBFHspSyQEcG
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KHmfl-0005Yx-UT; Sat, 12 Jul 2008 23:30:29 +0200
+X-Mailer: git-send-email 1.5.6.2.303.g79662
+In-Reply-To: <1215877672-17049-2-git-send-email-s-beyer@gmx.net>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88265>
 
-Zitat von Junio C Hamano <gitster@pobox.com>:
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+---
 
-> Steffen Prohaska <prohaska@zib.de> writes:
->
-> >> Do you mean to have that printf() or is it a leftover debugging
-> >> statement?
-> >
-> > I mean to have it.
->
-> Ok, I was just checking.  Unless other Windows users complain, will apply
-> as-is.  As you might guess, I am completely neutral on this one.
+This one was mysteriously *g* excluded from the last patch :(
+Junio, if you apply, can you squash this?
 
-I'm working on followups to this series, and it turns out to be more
-convenient to have system_path() in exec_cmd.c instead of path.c.
-It'll make sense if I resend the series with an updated version of 1/3
-(instead of a patch that merely moves the function around).
+Sorry,
+  Stephan
 
--- Hannes
+ t/t9001-send-email.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 3e4eb63..de5b980 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -91,7 +91,7 @@ test_expect_success 'reject long lines' '
+ 	clean_fake_sendmail &&
+ 	cp $patches longline.patch &&
+ 	echo $z512$z512 >>longline.patch &&
+-	! git send-email \
++	test_must_fail git send-email \
+ 		--from="Example <nobody@example.com>" \
+ 		--to=nobody@example.com \
+ 		--smtp-server="$(pwd)/fake.sendmail" \
+-- 
+1.5.6.2.303.g79662
