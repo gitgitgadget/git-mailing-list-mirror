@@ -1,83 +1,109 @@
 From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: git-rebase eats empty commits
-Date: Sun, 13 Jul 2008 00:12:07 +0200
-Message-ID: <20080712221207.GB22323@leksak.fem-net>
-References: <g4vrrm$g35$1@ger.gmane.org>
+Subject: Re: [HACK] t/test-lib.sh HACK: Add -s/--show-hack to test suite.
+Date: Sun, 13 Jul 2008 00:22:12 +0200
+Message-ID: <20080712222212.GC22323@leksak.fem-net>
+References: <1215375751-30853-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0807062241040.7342@eeepc-johanness> <20080707140841.GB6726@leksak.fem-net> <alpine.DEB.1.00.0807071540310.18205@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-X-From: git-owner@vger.kernel.org Sun Jul 13 00:13:12 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 13 00:23:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHnL5-0005Yo-O5
-	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 00:13:12 +0200
+	id 1KHnUr-0007SB-9O
+	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 00:23:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753396AbYGLWMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jul 2008 18:12:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753227AbYGLWMN
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 18:12:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43824 "HELO mail.gmx.net"
+	id S1752326AbYGLWWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jul 2008 18:22:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752314AbYGLWWS
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 18:22:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40268 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752482AbYGLWMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jul 2008 18:12:12 -0400
-Received: (qmail invoked by alias); 12 Jul 2008 22:12:10 -0000
+	id S1751017AbYGLWWR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jul 2008 18:22:17 -0400
+Received: (qmail invoked by alias); 12 Jul 2008 22:22:15 -0000
 Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp042) with SMTP; 13 Jul 2008 00:12:10 +0200
+  by mail.gmx.net (mp051) with SMTP; 13 Jul 2008 00:22:15 +0200
 X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX199edte4QR9eRN25jrhktJefzRINONCI2rbzNStZu
-	Fv3besS8GFZBBI
+X-Provags-ID: V01U2FsdGVkX1+jllR5ovyjIiEoNgqTQiAhBlR9uBuxCu1pXCK2Lb
+	T7I+5Gaq7HFVy/
 Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
 	(envelope-from <s-beyer@gmx.net>)
-	id 1KHnK3-0006NP-Ox; Sun, 13 Jul 2008 00:12:07 +0200
+	id 1KHnTo-0006OU-OI; Sun, 13 Jul 2008 00:22:12 +0200
 Content-Disposition: inline
-In-Reply-To: <g4vrrm$g35$1@ger.gmane.org>
+In-Reply-To: <alpine.DEB.1.00.0807071540310.18205@racer>
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88270>
 
 Hi,
 
-Michael J Gruber wrote:
-> "git commit" allows empty commits with the "--allow-empty" option, i.e.  
-> commits which introduce no change at all. This is sometimes useful for  
-> keeping a log of untracked work related to tracked content.
->
-> "git rebase" removes empty commits, for the good reason that rebasing  
-> may make certain commits obsolete; but I don't want that in the case  
-> mentioned above. Is there any way to specify "--preserve-empty" or 
-> similar?
+I'm just cleaning up my inbox and I've seen I've not yet replied to your
+mail.
 
-First I can speak for git-sequencer: there is no such thing as a
-"preserve empty" option, but currently, when you are picking a commit
-that has already been applied so that no changes occur, it will pause.
-(It will not pause if it is a fast-forward.)
-Yet, I was unsure if this is a "correct" behavior, but it seemed to be
-useful, because you can inspect the situation.
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 7 Jul 2008, Stephan Beyer wrote:
+> 
+> > > > This option realizes a stupid hack that tries to run the test cases 
+> > > > line by line (separated by &&).
+> > > 
+> > > In what way is that better than "sh -x t????-*.sh"?
+> > 
+> > Your suggestion is more like "./t????-*.sh -v" instead of -s, at least
+> > on bash and dash here.
+> 
+> No, I meant without "-v".
 
-In my mind, the same should happen with an empty commit, so I tested it:
- 1. It pauses.
- 2. In that pause I only need to run "git commit --allow-empty" and I have
-    the picked empty patch with that commit message.
+Me, too.
 
-So if this behavior is kept, there is no such need for such an option.
+I've written something different:
+"sh -x" is a great thing and does exactly what it should on simple scripts
+containing:
 
-Now I'm checking it with the old rebase-i (I'm always referring to
-git-rebase--interactive as rebase-i) and exactly the same behavior
-occurs.
+	foo &&
+	bar &&
+	baz
 
-But rebase is not rebase-i.
-So I've also checked both, pure rebase and rebase-m: then the empty commit
-is lost.
+But for a test case in the git test suite it does not work, unfortunately.
+(Tested on bash, dash and zsh.)
 
-To sum up, use rebase -i and when it's pausing, do "git commit --allow-empty"
-and then "git rebase --continue" and you have what you want.
+The information I get from
+	sh -x ./t????-*.sh
+is like the information I get from invoking
+	./t????-*.sh -v
+but less eye-pleasing.
+And ./t????-*.sh -s (using this patch) shows me something like:
+
+	Testing:
+		foo
+
+	Testing:
+		bar
+
+	* FAIL: blabla
+
+So that I what *command* of the test case fails.
+
+But perhaps I am just doing something wrong.
+
+> > But I didn't know the -x flag and it seems that this could be used in 
+> > test-lib.sh to make the hack faster, more robust and less hacky ;-)
+> 
+> It would obsolete your hack, I suggest.  Obviously, you haven't tried it 
+> yet.
+
+The obvious is wrong.
+
+I would be very happy to obsolete my slow and error-prone hack, but
+currently I have not seen a good alternative.
 
 Regards,
   Stephan
