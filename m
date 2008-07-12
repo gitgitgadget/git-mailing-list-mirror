@@ -1,112 +1,106 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [HACK] t/test-lib.sh HACK: Add -s/--show-hack to test suite.
-Date: Sun, 13 Jul 2008 00:22:12 +0200
-Message-ID: <20080712222212.GC22323@leksak.fem-net>
-References: <1215375751-30853-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0807062241040.7342@eeepc-johanness> <20080707140841.GB6726@leksak.fem-net> <alpine.DEB.1.00.0807071540310.18205@racer>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Add a new test for git-merge-resolve
+Date: Sun, 13 Jul 2008 00:33:35 +0200
+Message-ID: <1215902015-5102-1-git-send-email-vmiklos@frugalware.org>
+References: <1215888130-3260-1-git-send-email-vmiklos@frugalware.org>
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 13 00:23:18 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 13 00:34:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHnUr-0007SB-9O
-	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 00:23:17 +0200
+	id 1KHnfX-0001HE-DK
+	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 00:34:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbYGLWWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jul 2008 18:22:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752314AbYGLWWS
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 18:22:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40268 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751017AbYGLWWR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jul 2008 18:22:17 -0400
-Received: (qmail invoked by alias); 12 Jul 2008 22:22:15 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp051) with SMTP; 13 Jul 2008 00:22:15 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+jllR5ovyjIiEoNgqTQiAhBlR9uBuxCu1pXCK2Lb
-	T7I+5Gaq7HFVy/
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KHnTo-0006OU-OI; Sun, 13 Jul 2008 00:22:12 +0200
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807071540310.18205@racer>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1753427AbYGLWdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jul 2008 18:33:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752314AbYGLWdU
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 18:33:20 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:52289 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751759AbYGLWdU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jul 2008 18:33:20 -0400
+Received: from vmobile.example.net (dsl5401CADA.pool.t-online.hu [84.1.202.218])
+	by yugo.frugalware.org (Postfix) with ESMTP id 827F31DDC5B;
+	Sun, 13 Jul 2008 00:33:17 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 230431A9833; Sun, 13 Jul 2008 00:33:35 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.2.450.g8d367.dirty
+In-Reply-To: <1215888130-3260-1-git-send-email-vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88271>
 
-Hi,
+Actually this is a simple test, just to ensure merge-resolve properly
+calls read-tree. read-tree itself already has more complex tests.
 
-I'm just cleaning up my inbox and I've seen I've not yet replied to your
-mail.
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Mon, 7 Jul 2008, Stephan Beyer wrote:
-> 
-> > > > This option realizes a stupid hack that tries to run the test cases 
-> > > > line by line (separated by &&).
-> > > 
-> > > In what way is that better than "sh -x t????-*.sh"?
-> > 
-> > Your suggestion is more like "./t????-*.sh -v" instead of -s, at least
-> > on bash and dash here.
-> 
-> No, I meant without "-v".
+This one adds tests in a new file; it tests merge-resolve as well, just
+as my previous patch, but I though it's better if I just add the
+multiple-base merge one to the end of the existing criss-cross tests.
 
-Me, too.
+So this is not a replacement, both are sent for inclusion.
 
-I've written something different:
-"sh -x" is a great thing and does exactly what it should on simple scripts
-containing:
+ t/t7605-merge-resolve.sh |   46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 46 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7605-merge-resolve.sh
 
-	foo &&
-	bar &&
-	baz
-
-But for a test case in the git test suite it does not work, unfortunately.
-(Tested on bash, dash and zsh.)
-
-The information I get from
-	sh -x ./t????-*.sh
-is like the information I get from invoking
-	./t????-*.sh -v
-but less eye-pleasing.
-And ./t????-*.sh -s (using this patch) shows me something like:
-
-	Testing:
-		foo
-
-	Testing:
-		bar
-
-	* FAIL: blabla
-
-So that I what *command* of the test case fails.
-
-But perhaps I am just doing something wrong.
-
-> > But I didn't know the -x flag and it seems that this could be used in 
-> > test-lib.sh to make the hack faster, more robust and less hacky ;-)
-> 
-> It would obsolete your hack, I suggest.  Obviously, you haven't tried it 
-> yet.
-
-The obvious is wrong.
-
-I would be very happy to obsolete my slow and error-prone hack, but
-currently I have not seen a good alternative.
-
-Regards,
-  Stephan
-
+diff --git a/t/t7605-merge-resolve.sh b/t/t7605-merge-resolve.sh
+new file mode 100755
+index 0000000..ee21a10
+--- /dev/null
++++ b/t/t7605-merge-resolve.sh
+@@ -0,0 +1,46 @@
++#!/bin/sh
++
++test_description='git-merge
++
++Testing the resolve strategy.'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo c0 > c0.c &&
++	git add c0.c &&
++	git commit -m c0 &&
++	git tag c0 &&
++	echo c1 > c1.c &&
++	git add c1.c &&
++	git commit -m c1 &&
++	git tag c1 &&
++	git reset --hard c0 &&
++	echo c2 > c2.c &&
++	git add c2.c &&
++	git commit -m c2 &&
++	git tag c2 &&
++	git reset --hard c0 &&
++	echo c3 > c2.c &&
++	git add c2.c &&
++	git commit -m c3 &&
++	git tag c3
++'
++
++test_expect_success 'merge c1 to c2' '
++	git reset --hard c1 &&
++	git merge -s resolve c2 &&
++	test "$(git rev-parse c1)" != "$(git rev-parse HEAD)" &&
++	test "$(git rev-parse c1)" = "$(git rev-parse HEAD^1)" &&
++	test "$(git rev-parse c2)" = "$(git rev-parse HEAD^2)" &&
++	git diff --exit-code &&
++	test -f c0.c &&
++	test -f c1.c &&
++	test -f c2.c
++'
++
++test_expect_success 'merge c2 to c3 (fails)' '
++	git reset --hard c2 &&
++	test_must_fail git merge -s resolve c3
++'
++test_done
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+1.5.6.2.450.g8d367.dirty
