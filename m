@@ -1,97 +1,82 @@
-From: Mark Levedahl <mlevedahl@verizon.net>
-Subject: directory / submodule merge conflcts
-Date: Sat, 12 Jul 2008 12:01:37 -0400
-Message-ID: <4878D561.8090009@verizon.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] t/: Use "test_must_fail git" instead of "! git"
+Date: Sat, 12 Jul 2008 09:04:21 -0700 (PDT)
+Message-ID: <m3vdzbccoq.fsf@localhost.localdomain>
+References: <1215877672-17049-1-git-send-email-s-beyer@gmx.net>
+	<1215877672-17049-2-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 12 18:03:57 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Sat Jul 12 18:05:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHhZi-0002ao-QE
-	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 18:03:55 +0200
+	id 1KHhbA-0002wR-4s
+	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 18:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753740AbYGLQBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jul 2008 12:01:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753660AbYGLQBq
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 12:01:46 -0400
-Received: from vms173005pub.verizon.net ([206.46.173.5]:33381 "EHLO
-	vms173005pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753426AbYGLQBp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jul 2008 12:01:45 -0400
-Received: from [192.168.1.117] ([71.246.235.165]) by vms173005.mailsrvcs.net
- (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
- with ESMTPA id <0K3W0003JHUQB1L4@vms173005.mailsrvcs.net> for
- git@vger.kernel.org; Sat, 12 Jul 2008 11:01:39 -0500 (CDT)
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+	id S1753751AbYGLQEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jul 2008 12:04:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753750AbYGLQEZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 12:04:25 -0400
+Received: from gv-out-0910.google.com ([216.239.58.191]:28754 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753743AbYGLQEY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jul 2008 12:04:24 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so782107gvc.37
+        for <git@vger.kernel.org>; Sat, 12 Jul 2008 09:04:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=CXGaYoyzLfBg0Ude7Z9UqC0FC/nHna9Q/PDOHb760ss=;
+        b=vFK3e17rS5sEifhw1ra1L6pUPKn8MJf2OQgY6kxzBQL7Rnx/Qm7iRYH3nlNl7X9YF0
+         Bg3oFEOqqySLqzrbFe+1UVBMZ1yvK5gQFyErOppl5GWB9CFGBfQTju+yVJbqJsNRObNB
+         nOeZNpkU2TpMdjd+ETDvX0BBv/bJv3Zyd1Hho=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=WuGu2VuJmNvOvkS8feAMwHtiwkiimnoECcEEZU740wLe+EhL0PIsvCsajOkBn8BTRF
+         e8kMNudD+jWua9/et4epLynqM0UgUurkUMeaPjG/UZna1ez4hDIu0V1RO4AdsA1Zvj6u
+         acnQySmbqU41bgFGVJjmuyWmc6tEzSEiFl940=
+Received: by 10.103.215.4 with SMTP id s4mr6347935muq.13.1215878662718;
+        Sat, 12 Jul 2008 09:04:22 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.204.111])
+        by mx.google.com with ESMTPS id s10sm4280083mue.16.2008.07.12.09.04.19
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 12 Jul 2008 09:04:21 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m6CG3dm5022196;
+	Sat, 12 Jul 2008 18:03:44 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m6CG3H3Y022190;
+	Sat, 12 Jul 2008 18:03:17 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1215877672-17049-2-git-send-email-s-beyer@gmx.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88254>
 
-Over time, I have converted a number of subdirectories in a main project 
-into submodules, while maintaining the complete pathnames intact. Thus, 
-only git knows that an object at code/dir1 is a submodule or a 
-subdirectory of the superproject.
+Stephan Beyer <s-beyer@gmx.net> writes:
 
-git has trouble merging branches across the above boundaries, the script 
-below demonstrates the issue. I cannot merge the main branch and a 
-branch that occurred before conversion to a submodule.
+> This patch changes every occurrence of "! git" -- with the meaning
+> that a git call has to fail -- into "test_must_fail git".
+> 
+> This is useful to
 
-Paraphrasing the script, the formula is
-    - create a superproject with a subdirectory (sub1)
-    - on master, convert sub1 to a submodule (no other changes)
-    - on branch base (before sub1 conversion to a submodule), change a 
-file not in sub1 (no other changes)
-    - merge master into base - failure
+>  - advertise the use of "test_must_fail" for new tests.
 
-The actual reported error message is:
-fatal: cannot read object b500f4d0c6aaf40a0251da35b82c0fa5c57b6503 
-'sub1~master': It is a submodule!
-Merge with strategy recursive failed.
+Hmmm... I think advertising the use of 'test_must_fail' would be
+the best served by adding information about this function to
+t/README
 
-Any ideas or hints on how to improve this would be greatly appreciated.
-
-Thanks,
-Mark
-
-#!/bin/sh
-#
-# demonstrate issue with directory / submodule (D/S) conflict problem
-
-mkdir dsprob || exit
-cd dsprob
-git init
-mkdir sub1
-echo hi > foo
-echo hi1 > sub1/foo
-git add .
-git commit -m "Create base"
-git checkout -b base
-echo bye >> foo
-git add .
-git commit -m "Modify base"
-git checkout master
-
-# make sub1 a submodule
-git rm -r -f sub1
-git commit -m "removed sub1 directory"
-git checkout base sub1
-git reset
-cd sub1
-git init
-git add .
-git commit -m "Start sub1 as its own project"
-cd ..
-mv sub1 sub1_repo
-git submodule add "$(pwd)/sub1_repo" sub1
-git commit -m "Added sub1 as a submodule"
-
-# now, go back to base and try to merge
-rm -rf sub1
-git checkout -f base
-git merge master
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
