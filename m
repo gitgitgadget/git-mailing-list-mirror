@@ -1,77 +1,61 @@
-From: "Jelle Geerts" <jellegeerts@gmail.com>
-Subject: Automatic cherry-pick failure
-Date: Sat, 12 Jul 2008 13:55:07 +0200
-Message-ID: <bf2cff050807120455p2394481bg181debddb86961dd@mail.gmail.com>
+From: Kalle Olavi Niemitalo <kon@iki.fi>
+Subject: git-new-workdir should not share .git/rr-cache/MERGE_RR
+Date: Sat, 12 Jul 2008 14:27:07 +0300
+Message-ID: <87skufmjg4.fsf@Astalo.kon.iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Keywords: git repository,merge,conflict resolution,bug,symbolic link
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 12 13:56:26 2008
+X-From: git-owner@vger.kernel.org Sat Jul 12 14:08:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHdi9-0002gV-Gg
-	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 13:56:21 +0200
+	id 1KHdtd-00065X-3L
+	for gcvg-git-2@gmane.org; Sat, 12 Jul 2008 14:08:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752269AbYGLLzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jul 2008 07:55:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752279AbYGLLzR
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 07:55:17 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:45337 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752215AbYGLLzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jul 2008 07:55:16 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so2075196ywe.1
-        for <git@vger.kernel.org>; Sat, 12 Jul 2008 04:55:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=I6FzMfKwVYtVigSVWSLqWqu7c6IbM7MJRfUBJiVYnc8=;
-        b=h7Mz1F5/cahKe+2lFGa/234eFpL8MlJWcbDbJJOyx1d8ed6C4qWlzpC3AL9rG1p+NB
-         NYuY1i3kpkCZH8TPf47JUwhaF8KE6YEHYXYlq8hXXfkML5qJVDbneAjtfT6Ix7FDDGQP
-         gVSUcLB6RUsPbGM6S59xTlNlsRryPK5TNS06w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=mugS9WmlU7q+N4KW1RLCuXLXF9GxHG7JqgU0Xq5/WPnjNf0bn+t8wTFEa/lYwHw7/6
-         uB8SRU6WmdejmNq/ckBFDXeO5vgbNEQZ2I4nycby4BJJhIfcFgdT/m8cPt9BUmRCOI1q
-         gDFqN+nl/hND1HnnJpuj8MpG3dlZdPn6Ky6cI=
-Received: by 10.150.191.10 with SMTP id o10mr17432629ybf.56.1215863707085;
-        Sat, 12 Jul 2008 04:55:07 -0700 (PDT)
-Received: by 10.151.84.4 with HTTP; Sat, 12 Jul 2008 04:55:07 -0700 (PDT)
-Content-Disposition: inline
+	id S1752323AbYGLMCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jul 2008 08:02:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752215AbYGLMCP
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 08:02:15 -0400
+Received: from 85-23-32-88-Rajakyla-TR1.suomi.net ([85.23.32.88]:50607 "EHLO
+	Astalo.kon.iki.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752205AbYGLMCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jul 2008 08:02:14 -0400
+X-Greylist: delayed 2105 seconds by postgrey-1.27 at vger.kernel.org; Sat, 12 Jul 2008 08:02:14 EDT
+Received: from Kalle by Astalo.kon.iki.fi with local (Exim 4.52)
+	id 1KHdFr-0001ra-M7; Sat, 12 Jul 2008 14:27:07 +0300
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.0.51 (gnu/linux)
+X-Accept-Language: fi;q=1.0, en;q=0.9, sv;q=0.5, de;q=0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88235>
 
-Hello,
+The contrib/workdir/git-new-workdir script makes .git/rr-cache in
+each workdir a symlink to the shared .git/rr-cache directory.
+This lets git-rerere share conflict resolutions between workdirs.
+However, that directory also contains .git/rr-cache/MERGE_RR,
+which lists the files for which conflict resolutions should be
+saved in the next commit.  It is thus possible that git-merge in
+one workdir records conflicts to the shared MERGE_RR file, and
+git-commit in another workdir saves the staged files to rr-cache
+as conflict resolutions, even though those files are from a
+different branch and never saw the merge.  Such invalid conflict
+resolutions need then be separately deleted.  This happened to
+me, with git version 1.5.6.
 
-When I tried to `git rebase -i', I changed the first line in the editor from
-'pick' to 'edit'. After the editor exited, git complained:
-  error: Untracked working tree file 'DESIGN.TXT' would be overwritten by merge.
-But this file is tracked, so first I did `git rebase --abort'.
-I had to use `git config --bool core.ignorecase true' to get around the error.
-It's because I use Git with Cygwin on an NTFS partition. Only thing I is that
-'core.ignorecase' is undocumented.
+I don't see any way to modify the symlinks made by
+git-new-workdir so that new SHA-1 directories in .git/rr-cache
+would be shared but .git/rr-cache/MERGE_RR would not.  On IRC,
+"gitte" suggested changing Git to use $GIT_DIR/MERGE_RR instead
+of $GIT_DIR/rr-cache/MERGE_RR.  I suppose compatibility with
+people's existing repositories would require the modified Git to
+keep reading $GIT_DIR/rr-cache/MERGE_RR too, so that Git could be
+painlessly upgraded during a merge, but it is not obvious to me
+how lock files should then work.
 
-After getting around the Cygwin specific workaround, I reran rebase. Again, I
-edited the first line from 'pick' to 'edit'. All went well. Then I made the
-amendment to the commit with `git commit --amend --author="me <me@somewhere>"'.
-Now, when I typed `git rebase --continue' I got this:
-  error: Entry 'code/src/sys_main.cc' not uptodate. Cannot merge.
-  fatal: merging of trees e3249e935c9ccd790c372aac82b8e097044b1ffe and
-ac79e613ed0fe912e0da2c5ccf52f6a540533cb8 failed
-  Automatic cherry-pick failed.  After resolving the conflicts,
-  mark the corrected paths with 'git add <paths>', and
-  run 'git rebase --continue'
-  Could not apply 5c03af9... commit test
-
-I'm not sure what I have to do now, can someone help me with this?
-
--- Jelle
+Alternatively, the SHA-1 directories in .git/rr-cache could be
+moved to a subdirectory; then git-new-workdir could be changed to
+symlink only that subdirectory.
