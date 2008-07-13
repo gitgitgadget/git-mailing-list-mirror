@@ -1,55 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-bisect: use dash-less form on git bisect log
-Date: Sun, 13 Jul 2008 14:26:57 -0700
-Message-ID: <7vk5fpqxum.fsf@gitster.siamese.dyndns.org>
-References: <1215792089-27201-1-git-send-email-vmiklos@frugalware.org>
- <200807130819.24206.chriscool@tuxfamily.org>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: [PATCH] Added --export option to git-send-email.
+Date: Sun, 13 Jul 2008 17:32:57 -0400
+Message-ID: <32541b130807131432j78e5100dyea20893268321466@mail.gmail.com>
+References: <20080710170735.4c5b237a@linux360.ro>
+	 <7vskudr11m.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Jul 13 23:28:07 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Eduard - Gabriel Munteanu" <eduard.munteanu@linux360.ro>,
+	ryan@michonline.com, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 13 23:34:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KI971-0001Yt-5K
-	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 23:28:07 +0200
+	id 1KI9Cn-0002t7-FT
+	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 23:34:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756373AbYGMV1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2008 17:27:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756173AbYGMV1G
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 17:27:06 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48134 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755971AbYGMV1F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2008 17:27:05 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 83D152AA5D;
-	Sun, 13 Jul 2008 17:27:04 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 45DA12AA5C; Sun, 13 Jul 2008 17:26:59 -0400 (EDT)
-In-Reply-To: <200807130819.24206.chriscool@tuxfamily.org> (Christian Couder's
- message of "Sun, 13 Jul 2008 08:19:24 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 70452EF6-5122-11DD-95A1-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752909AbYGMVdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2008 17:33:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755496AbYGMVdE
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 17:33:04 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:3133 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755814AbYGMVdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2008 17:33:01 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so2275080ywe.1
+        for <git@vger.kernel.org>; Sun, 13 Jul 2008 14:32:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=CSrCZDZD7xv0pmwQqZGnbEoRTjGlMSSnlrlGICqvLTI=;
+        b=O9YAz9k0NUSbvX9guliuNFdDzsJt5AWXhjufdv9EsokXHRKo0Tl0GCEs2QkbgbIT6g
+         wv1gPvrK/6kHvybeLUNuBtNTdfM5cEWh3QvzNrejLYeqskwZXgl/BeWqrujlFIjUPh9H
+         Sh7l8ePTOQuY+M2raIWhCyArCuPC9EWTwLF2Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=rh7jI80rX/aAhXAGPM8Mqdv98t/Mgz8aNWQsLdYI9hPy+UP/q6C4x5GkH5qR+/BY3V
+         6E9v9QsmD3nPu+sEe9wuBo5JkDqylNOat3oEpBKaDfOffH3Yw0k1sKweDM/oOMKb0eiR
+         npbdOJrtSJltnk8LFuR9oBUaIrcvX+sXSdJc4=
+Received: by 10.150.95.5 with SMTP id s5mr19137767ybb.246.1215984777063;
+        Sun, 13 Jul 2008 14:32:57 -0700 (PDT)
+Received: by 10.150.98.19 with HTTP; Sun, 13 Jul 2008 14:32:57 -0700 (PDT)
+In-Reply-To: <7vskudr11m.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88340>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On 7/13/08, Junio C Hamano <gitster@pobox.com> wrote:
+> Eduard - Gabriel Munteanu <eduard.munteanu@linux360.ro> writes:
+>  > +     } elsif (defined $export_file) {
+>  > +             my $mbox_from = "From $raw_from $date";
+>  > +             $message =~ s/^(>{0,})From/>$1From/m;
+>  > +             print $out "$mbox_from\n$header\n$message";
+>
+> Sorry, but I am scratching my head here.  Shouldn't this "bare From
+>  munging" be like this instead?
+>
+>                 $message =~ s/^From />From /m;
 
-> Your patch looks good. But there is also the problem that new bisect logs 
-> will not be understood by old git. So I wonder if a patch to only read the 
-> new log should be first commited to the "maint" branch.
+That wouldn't be a reversible operation.
 
-I do not think it is worth it.  If we are making something long lived like
-rerere cache backward incompatible, the approach would be sensible, but
-bisect log is about a single session and once you reached the breakage you
-would not reuse it.  Besides, the bisect log is designed to be executable
-shell script so you can always copy it out, edit it if needed and feed
-that to shell.
+Have fun,
+
+Avery
