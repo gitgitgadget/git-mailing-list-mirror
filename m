@@ -1,76 +1,86 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] bash completion: Fix the . -> .. revision range completion
-Date: Sun, 13 Jul 2008 13:19:58 +0200
-Message-ID: <20080713111847.29801.8969.stgit@localhost>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGIT PATCH 4/4] Remove the applied/unapplied commands
+Date: Sun, 13 Jul 2008 12:31:20 +0100
+Message-ID: <b0943d9e0807130431q58a74e95j53458d502c3e7a0a@mail.gmail.com>
+References: <20080619214023.27794.97039.stgit@localhost.localdomain>
+	 <20080619214233.27794.98487.stgit@localhost.localdomain>
+	 <20080622161341.GD4468@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Jul 13 13:30:11 2008
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Sun Jul 13 13:32:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHzmM-0003Fg-SZ
-	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 13:30:11 +0200
+	id 1KHzoT-0003jN-Fv
+	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 13:32:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752188AbYGML3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2008 07:29:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752242AbYGML3L
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 07:29:11 -0400
-Received: from 159-162.104-92.cust.bluewin.ch ([92.104.162.159]:53788 "EHLO
-	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752074AbYGML3K (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2008 07:29:10 -0400
-X-Greylist: delayed 544 seconds by postgrey-1.27 at vger.kernel.org; Sun, 13 Jul 2008 07:29:09 EDT
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by pixie.suse.cz (Postfix) with ESMTP id A8BDC2ACC9B;
-	Sun, 13 Jul 2008 13:19:58 +0200 (CEST)
-User-Agent: StGIT/0.14.2
+	id S1752299AbYGMLbW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jul 2008 07:31:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752182AbYGMLbW
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 07:31:22 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:10102 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752105AbYGMLbW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Jul 2008 07:31:22 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so2646365waf.23
+        for <git@vger.kernel.org>; Sun, 13 Jul 2008 04:31:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=SodWLUwFYemSTK4BOnhfHDVEwN7d+e31a5GJ/gqNlLA=;
+        b=Fb3jJZSZmhx9d2dcp3101Fp6z74zNYpeKg4Puw4C9nou0Ig58EDDM5kCSPdbkgZeNo
+         1aQx2UcwqXUYStDji0b1XuJUbexaPo+2BqblhAEcisdW0y/uc0X0D20INCiYFRamLoFM
+         ZQZOUKiFbkvGQfWL6OHe4W6QZiUfIc+xKQxVE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=MCWU5RzPVawzUC/7sZLP4v+ejA7hMy/HbEbRoK/eP/doVJFoaPVM2oSw04Fy4xTEnm
+         OHRbJAqqCRefK7DNvsAohiYGdTR2MbrPuzZ4D+BzWQdOPBC3WueNfZWhlLXrrtNNIAj3
+         bYtjky9Rap1pmujkZfrvzjz2ozw9AUbRZ8R6U=
+Received: by 10.114.200.2 with SMTP id x2mr16384780waf.79.1215948680906;
+        Sun, 13 Jul 2008 04:31:20 -0700 (PDT)
+Received: by 10.114.124.9 with HTTP; Sun, 13 Jul 2008 04:31:20 -0700 (PDT)
+In-Reply-To: <20080622161341.GD4468@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88299>
 
-When Git sees a string with trailing dot on a place where revision
-range could occur, it will unconditionally append another dot to
-it to help complete a revision range. However, filespec can usually
-occur at such a place as well. I have been hitting this all the time
-lately with
+2008/6/22 Karl Hasselstr=F6m <kha@treskal.com>:
+> On 2008-06-19 22:42:33 +0100, Catalin Marinas wrote:
+>
+>> This patch moves the applied/unapplied functionality to the 'series'
+>> command via the corresponding options.
+[...]
+>>             make_option('-a', '--all',
+>>                         help =3D 'show all patches, including the hi=
+dden ones',
+>>                         action =3D 'store_true'),
+>> +           make_option('--applied',
+>> +                       help =3D 'show the applied patches only',
+>> +                       action =3D 'store_true'),
+>> +           make_option('--unapplied',
+>> +                       help =3D 'show the unapplied patches only',
+>> +                       action =3D 'store_true'),
+>>             make_option('--hidden',
+>>                         help =3D 'show the hidden patches only',
+>>                         action =3D 'store_true'),
+>
+> Maybe some logic to prohibit the use of more than one of these at
+> once? The current logic is kind of arbitrary.
 
-	git log git-submodule.<tab>
+I decided to allow a combination of applied/unapplied/hidden but not
+together with all. I'll post the patches again.
 
-and the like.
-
-This patch will make Git perform the . -> .. completion in
-__git_complete_revlist only if there is no filename starting with
-the entered prefix available.  At few places, filename could not occur
-when calling __git_complete_revlist; however, taking this into account
-did not seem worth complicating the code further.
-
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
-
- contrib/completion/git-completion.bash |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 61581fe..fe24b8c 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -325,7 +325,12 @@ __git_complete_revlist ()
- 		__gitcomp "$(__git_refs)" "$pfx" "$cur"
- 		;;
- 	*.)
--		__gitcomp "$cur."
-+		if ls "$cur"* >/dev/null 2>&1; then
-+			# This is a file, not revision range
-+			__gitcomp "$(__git_refs)"
-+		else
-+			__gitcomp "$cur."
-+		fi
- 		;;
- 	*)
- 		__gitcomp "$(__git_refs)"
+--=20
+Catalin
