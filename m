@@ -1,83 +1,132 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git pull is slow
-Date: Sun, 13 Jul 2008 15:59:00 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807131555560.4816@eeepc-johanness>
-References: <g5570s$d5m$1@ger.gmane.org> <g57jkp$ekm$1@ger.gmane.org> <48776169.20705@op5.se> <alpine.DEB.1.00.0807111443280.8950@racer> <4878A442.6020405@arcor.de> <alpine.DEB.1.00.0807121546590.8950@racer> <20080713011512.GB31050@spearce.org>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: [RFH] Finding all commits that touch the same files as a specific commit
+Date: Sun, 13 Jul 2008 16:43:21 +0200
+Message-ID: <bd6139dc0807130743y178a865amebcf130a68283854@mail.gmail.com>
+References: <bd6139dc0807120858vc058451lb10933b5225c8521@mail.gmail.com>
+	 <7viqvavao4.fsf@gitster.siamese.dyndns.org>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Stephan Hennig <mailing_list@arcor.de>,
-	Nicolas Pitre <nico@cam.org>, Andreas Ericsson <ae@op5.se>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Jul 13 15:59:34 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailinglist" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 13 16:44:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KI26v-0002ZZ-0V
-	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 15:59:33 +0200
+	id 1KI2oM-0006SR-8J
+	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 16:44:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753309AbYGMN6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2008 09:58:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753301AbYGMN6f
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 09:58:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35501 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753296AbYGMN6e (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2008 09:58:34 -0400
-Received: (qmail invoked by alias); 13 Jul 2008 13:58:32 -0000
-Received: from 88-107-253-132.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.253.132]
-  by mail.gmx.net (mp007) with SMTP; 13 Jul 2008 15:58:32 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+TDkRThx+TaveGAAyzQHZbr30A99zG6EbLg9Imj5
-	+WBJceVlWc+A83
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080713011512.GB31050@spearce.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1753493AbYGMOnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2008 10:43:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753468AbYGMOnW
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 10:43:22 -0400
+Received: from wf-out-1314.google.com ([209.85.200.174]:13049 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753466AbYGMOnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2008 10:43:22 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so4479854wfd.4
+        for <git@vger.kernel.org>; Sun, 13 Jul 2008 07:43:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=nRl24iZZZg9MgP/fq1Iv92g9XKwrlfzEbV9vJSoJP8E=;
+        b=j+YFC5Bxl3p42RuJGhUZKB2/ijwTXrwUrjUddx4keS7dwjNx4LBGOxgJNnu739O7+E
+         CsKMYcT9dQz64XjKbg/i/qNHp8YccXSwoWIQQkhyfpTguO7/dcgEURU6Y+tCiWDSIxS1
+         ponw0DanVr87u9QfAeJgfHbeZ4wzj9KOLpi0U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=flHN2UPu4abmF3TQ9TU2bq1aRFFyxIG7zn0+Gqw+7UTaQhlas8e6oAizrwOclzRg8a
+         YusnXpF4Jr3UeCr/P3AySS55ai1nI0NCtWq2HC9BGwVEkOLHBfDyMyPgYUAguN/t0yro
+         PfI1EIBgKmB4LIHVj0Wkfe/38UjkWLdT0ZVEc=
+Received: by 10.142.127.10 with SMTP id z10mr3883069wfc.263.1215960201480;
+        Sun, 13 Jul 2008 07:43:21 -0700 (PDT)
+Received: by 10.143.38.17 with HTTP; Sun, 13 Jul 2008 07:43:21 -0700 (PDT)
+In-Reply-To: <7viqvavao4.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88315>
 
-Hi,
+On Sun, Jul 13, 2008 at 3:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-On Sun, 13 Jul 2008, Shawn O. Pearce wrote:
+<explanation of the git log traversal machinery snipped>
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > On Sat, 12 Jul 2008, Stephan Hennig wrote:
-> > > 
-> > > Thanks for having a look at this!  What does "problem with the pack" 
-> > > mean?  Do you think it is a Git problem (client or server side?) or just 
-> > > a misconfiguration?
-> > 
-> > I thought that the blobs in the pack are just too similar.  That makes for 
-> > a good compression, since you get many relatively small deltas.  But it 
-> > also makes for a lot of work to reconstruct the blobs.
-> > 
-> > I suspected that you run out of space for the cache holding some 
-> > reconstructed blobs (to prevent reconstructing all of them from scratch).
-> ...
-> > Whoa. As you can see, your puny little 3.3 megabyte pack is blown to a 
-> > full 555 megabyte in RAM.
-> ...
-> > I expect this to touch the resolve_delta() function of index-pack.c in a 
-> > major way, though.
-> 
-> Yea, that's going to be ugly.  The "cache" you speak of above is held on 
-> the call stack as resolv_delta() recurses through the delta chain to 
-> reconstruct objects and generate their SHA-1s.  There isn't a way to 
-> release these objects when memory gets low so your worst case scenario 
-> is a 100M+ blob with a delta chain of 50 or more - that will take you 5G 
-> of memory to pass through index-pack.
+> In order to follow renames reliably in a merge heavy history, you need to
+> keep track of the pathname the file you are interested in appears as _in
+> each commit_.  As you traverse down the history, you pass down the
+> pathname to the parent you visit, so while you are traversing from 'x' to
+> earlier 'x', you will keep following "git-gui/git-gui.sh", while you
+> traverse down to 'o', you will inspect "git-gui.sh".
+>
+> The data structure the revision traversal machinery uses does not support
+> this "path-per-commit" natively.
 
-Actually, there is...
+Would it be possible to go for a slightly less complicated approach
+and instead of passing replacing the tracked file, append it? We
+already have a list of files we are tracking, so I assume the data
+structure does support that. Such would run with the risk of tracking
+too much (e.g., you rename a.txt => b.txt, and then later on
+create/rename a new a.txt which is then tracked as well).
 
-You would only need to tap into the "release_pack_memory()" mechanism, 
-adding a sort of a "smart pointer" that knows how to reconstruct its 
-contents.
+> This is the reason "git-blame" uses its own traversal engine.  It keeps
+> track of <commit, path> pairs so that it can mark which line came from
+> what path in what commit.  When copy/move detection are used, we can even
+> notice that the contents we are interested in came from more than one file
+> in the same commits, and the data structure supports it (i.e. it is not
+> just a pointer to a single string from "struct commit").
 
-Ciao,
-Dscho
+So what could be done is use a blame-like mechanism that invokes
+rename detection on each interesting commit and then record that
+information? Purely hypothetical though, since I know neither and have
+no time to do so.
+
+> For the purpose of "git log" traversal and the "file renames" people
+> usually talk about, this is overkill; you should however be able to
+> backport the basic idea to revision machinery, if you really cared.
+
+Right, that'd teach git log how to follow across renames in an
+intelligent manner that works also for non-linear histories at the
+cost of using up more memory and cpu?
+
+> In a real history, "file rename" is a very ill defined concept and is not
+> always useful in practice.  I did a fairly detailed analysis on one
+> real-world history more than two years ago, which is found here:
+>
+>    http://thread.gmane.org/gmane.comp.version-control.git/13746/focus=13769
+
+Aye, I agree that a 'rename' is hard to define and that a lot of
+effort could be put into supporting 'renames' that are not trivial
+(e.g., more complex than 'git mv foo.txt bar.txt').
+
+> In our own "git.git" history, the evolution of what finally landed in
+> revision.c is interesting.  The interesting part of content movement never
+> involved any file renames --- only bits and pieces migrated over across
+> many files.  That is not something "file rename tracking", even with an
+> extension to the revision traversal machinery to keep one path per commit
+> to record the file you are interested in, can ever give meaningful
+> explanation of the history.  You need a lot more fine grained "blame"
+> traversal machinery for that.
+
+This makes sense, but it (using blame traversal machinery) is overkill
+for what I am interested in. What I think would be a good goal in
+supporting is the subtree merge strategy. It would be nice if 'git log
+--follow-subtree-merge refspec -- filefilter' or such would Just Work
+(TM). Perhaps that the hunk-tracking I am working on with Dscho could
+help make 'git log --numstat' more accurate. Those two combined (git
+log being able to follow across subtree merges and being able to
+recognise hunks being moved) would be all that I need.
+
+
+-- 
+Cheers,
+
+Sverre Rabbelier
