@@ -1,80 +1,55 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 0/4] Proposed patches
-Date: Sun, 13 Jul 2008 22:10:36 +0100
-Message-ID: <b0943d9e0807131410w2c08d55fg68aeb7070b2063cd@mail.gmail.com>
-References: <20080713113853.18845.37686.stgit@localhost.localdomain>
-	 <b0943d9e0807130442k36a10747q7bcbd996cdc774dd@mail.gmail.com>
-	 <487A5032.9090307@etek.chalmers.se>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-bisect: use dash-less form on git bisect log
+Date: Sun, 13 Jul 2008 14:26:57 -0700
+Message-ID: <7vk5fpqxum.fsf@gitster.siamese.dyndns.org>
+References: <1215792089-27201-1-git-send-email-vmiklos@frugalware.org>
+ <200807130819.24206.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Lukas_Sandstr=F6m?=" <lukass@etek.chalmers.se>
-X-From: git-owner@vger.kernel.org Sun Jul 13 23:11:39 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sun Jul 13 23:28:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KI8r3-0006Eo-LE
-	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 23:11:38 +0200
+	id 1KI971-0001Yt-5K
+	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 23:28:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752917AbYGMVKi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jul 2008 17:10:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754672AbYGMVKh
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 17:10:37 -0400
-Received: from rv-out-0506.google.com ([209.85.198.233]:17703 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750863AbYGMVKh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Jul 2008 17:10:37 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so5258273rvb.1
-        for <git@vger.kernel.org>; Sun, 13 Jul 2008 14:10:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Rp+LndNkDXvL9gwFxM9clQ3PNfS9WHJBMCqJzcdOHbU=;
-        b=Nju0XG+5hQOHHGjaLE6ZN9l8/R/QwJHdMRIroChM1VTFrcKBGBbXRTrgpgrC7wRpf0
-         BxjFwIki+4QsVLU8JD9UugR9D90xAAM9kTh/F+Q8ALxiO9K/QCLjfXgMLTFtyGOiTupF
-         UR3KN5HDXfD6HKG5Z7uAfClm0pksXNP5riQOM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=W/q+eN3BUUq5V1nHSZXxfeyh02kG2CxcMUDC9KMPrZe98cT0Kj4LXdAjOE6xnvssgB
-         zJgNODXCnx/MsXJPms0tZpSC6yczPjebwkB7Y2JH/e/wxUpF595d2bd5ZXw4BfRWLgIn
-         pk4DO0GpnZTHj37C5cyjEK8cFeqe6X9jpCWUY=
-Received: by 10.114.202.15 with SMTP id z15mr3576550waf.88.1215983436339;
-        Sun, 13 Jul 2008 14:10:36 -0700 (PDT)
-Received: by 10.114.124.9 with HTTP; Sun, 13 Jul 2008 14:10:36 -0700 (PDT)
-In-Reply-To: <487A5032.9090307@etek.chalmers.se>
-Content-Disposition: inline
+	id S1756373AbYGMV1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2008 17:27:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756173AbYGMV1G
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 17:27:06 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48134 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755971AbYGMV1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2008 17:27:05 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 83D152AA5D;
+	Sun, 13 Jul 2008 17:27:04 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 45DA12AA5C; Sun, 13 Jul 2008 17:26:59 -0400 (EDT)
+In-Reply-To: <200807130819.24206.chriscool@tuxfamily.org> (Christian Couder's
+ message of "Sun, 13 Jul 2008 08:19:24 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 70452EF6-5122-11DD-95A1-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88339>
 
-2008/7/13 Lukas Sandstr=F6m <lukass@etek.chalmers.se>:
-> Catalin Marinas wrote:
->> 2008/7/13 Catalin Marinas <catalin.marinas@gmail.com>:
->>> A new post of the proposed patches after implementing Karl's commen=
-ts.
->>
->> BTW, these are StGIT patches, I forgot to add the prefix in the subj=
-ect line.
->>
-> If you run "git config format.subjectprefix 'StGIT PATCH'" in your re=
-po,
-> git format-patch will add the prefix automatically for you.
->
-> StGIT might have a similar option.
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-No, it doesn't, but it would be good to have one. The alternative in
-StGIT is to modify the (local) template file.
+> Your patch looks good. But there is also the problem that new bisect logs 
+> will not be understood by old git. So I wonder if a patch to only read the 
+> new log should be first commited to the "maint" branch.
 
-Thanks,
-
---=20
-Catalin
+I do not think it is worth it.  If we are making something long lived like
+rerere cache backward incompatible, the approach would be sensible, but
+bisect log is about a single session and once you reached the breakage you
+would not reuse it.  Besides, the bisect log is designed to be executable
+shell script so you can always copy it out, edit it if needed and feed
+that to shell.
