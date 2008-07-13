@@ -1,61 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2 (for GIT-GUI)] git-gui: MERGE_RR lives in .git/
- directly with newer Git versions
-Date: Sun, 13 Jul 2008 01:58:33 -0700
-Message-ID: <7vvdzatb2e.fsf@gitster.siamese.dyndns.org>
-References: <87skufmjg4.fsf@Astalo.kon.iki.fi>
- <alpine.DEB.1.00.0807121553120.8950@racer>
- <alpine.DEB.1.00.0807121556480.8950@racer>
- <20080713011623.GC31050@spearce.org>
+From: Stephan Hennig <mailing_list@arcor.de>
+Subject: Re: git pull is slow
+Date: Sun, 13 Jul 2008 11:01:29 +0200
+Message-ID: <4879C469.4080101@arcor.de>
+References: <g5570s$d5m$1@ger.gmane.org> <g57jkp$ekm$1@ger.gmane.org> <48776169.20705@op5.se> <alpine.DEB.1.00.0807111443280.8950@racer> <4878A442.6020405@arcor.de> <alpine.DEB.1.00.0807121546590.8950@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Kalle Olavi Niemitalo <kon@iki.fi>, git@vger.kernel.org,
-	gitster@pobox.com
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Jul 13 10:59:58 2008
+	Nicolas Pitre <nico@cam.org>, Andreas Ericsson <ae@op5.se>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 13 11:37:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHxQw-0001dS-1s
-	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 10:59:54 +0200
+	id 1KHy0r-0001US-3o
+	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 11:37:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752621AbYGMI6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2008 04:58:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752613AbYGMI6q
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 04:58:46 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33317 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752573AbYGMI6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2008 04:58:45 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D7B072933C;
-	Sun, 13 Jul 2008 04:58:44 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C458F2933B; Sun, 13 Jul 2008 04:58:37 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E5FD36B6-50B9-11DD-B767-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751814AbYGMJgB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2008 05:36:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751528AbYGMJgB
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 05:36:01 -0400
+Received: from main.gmane.org ([80.91.229.2]:41911 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750766AbYGMJgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2008 05:36:00 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KHxzr-0004WB-4U
+	for git@vger.kernel.org; Sun, 13 Jul 2008 09:35:59 +0000
+Received: from dialin-212-144-219-217.pools.arcor-ip.net ([212.144.219.217])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 13 Jul 2008 09:35:59 +0000
+Received: from mailing_list by dialin-212-144-219-217.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 13 Jul 2008 09:35:59 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dialin-212-144-219-217.pools.arcor-ip.net
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12
+In-Reply-To: <alpine.DEB.1.00.0807121546590.8950@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88294>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Johannes Schindelin schrieb:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> 
->> Now that MERGE_RR was moved out of .git/rr-cache/, we have to delete
->> it somewhere else.  Just in case somebody wants to use a newer git-gui
->> with an older Git, the file .git/rr-cache/MERGE_RR is removed, too (if
->> it exists).
->> 
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Ack, I can pull this into git-gui.git.  But I want to make sure
-> Junio is going to take 1/2 into git.git.
+> I suspected that you run out of space for the cache holding some 
+> reconstructed blobs (to prevent reconstructing all of them from scratch).
+> 
+> [...]
+> 
+> Okay, "valgrind --tool=massif" to the rescue:
+> 
+> -- snip --
+> MB
+> 555.9^                                                            ,  #
+> |                                                                 @..#
+> ~
+> | . :::: ::: ::::: @:: : : :: : :: :@ :@: :@@::@:: :::: @: : @@: :@::# ::
+> 0----------------------------------------------------------------------->Gi
+>                                                                    32.83
+> -- snap --
+> 
+> [...]
+> 
+> Now, I do not know the internals of index-pack enough to know if there is 
+> a way to cut the memory usage (by throwing out earlier reconstructed 
+> blobs, for example, and reconstructing them _again_ if need be), so I 
+> Cc:ed Nico and hand the problem off to him.
+> 
+> I expect this to touch the resolve_delta() function of index-pack.c in a 
+> major way, though.
 
-Will do.
+Thank you for the analysis!  As a workaround, I think about splitting
+the file.  Can you suggest a proper file size?
+
+Best regards,
+Stephan Hennig
