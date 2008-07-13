@@ -1,63 +1,104 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 0/4] Proposed patches
-Date: Sun, 13 Jul 2008 12:42:22 +0100
-Message-ID: <b0943d9e0807130442k36a10747q7bcbd996cdc774dd@mail.gmail.com>
-References: <20080713113853.18845.37686.stgit@localhost.localdomain>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Vanilla gitweb vs repo.or.cz
+Date: Sun, 13 Jul 2008 13:59:30 +0200
+Message-ID: <20080713115930.GH10151@machine.or.cz>
+References: <20080712203042.GF1924@perso.beuc.net> <20080712222001.GE10151@machine.or.cz> <20080713082812.GA4944@perso.beuc.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 13 13:43:24 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: savannah-hackers-public@gnu.org, git@vger.kernel.org
+To: Sylvain Beucler <beuc@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Jul 13 14:00:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHzz8-0006iQ-NK
-	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 13:43:23 +0200
+	id 1KI0Fj-0002C4-T9
+	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 14:00:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752790AbYGMLmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2008 07:42:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751707AbYGMLmY
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 07:42:24 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:29133 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752648AbYGMLmX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2008 07:42:23 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so2647459waf.23
-        for <git@vger.kernel.org>; Sun, 13 Jul 2008 04:42:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=QqXRFbPQw2T1z6A1M+pG47DWABcc5QIb/jpQCX9z4HM=;
-        b=YQbt4VPPiEEPfKWDeEREXdXypjAtgq3/z8hMsmm7CEvByNvc5W++NAuEM5E88Y+2sG
-         1Jgot0wxwv3VJHAHURefVQ9rF1HkT+8y7+N75+zhajxTqBLUvX7WIiPxBJMWctAzFr1e
-         5V8JM5WJ4bSA5SoHSSYtbZm+idStQcCJkfFEs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=jhAZSzx+imoWvFbu3qkLT2nLDKMP5QyZdNiK3goJiqvHJsqYcCRd+MbbWeevYVN36I
-         1gctTVjlxF0KeKP41c9t+wWfBftO2uRB5+BmYcf9hRjSDz86vMFNke5mTSNn4Han0hFd
-         AbjlY/uqlPXpdgDUwjMqzc/RJyctZUe2CIm9Y=
-Received: by 10.114.155.1 with SMTP id c1mr16417093wae.24.1215949342934;
-        Sun, 13 Jul 2008 04:42:22 -0700 (PDT)
-Received: by 10.114.124.9 with HTTP; Sun, 13 Jul 2008 04:42:22 -0700 (PDT)
-In-Reply-To: <20080713113853.18845.37686.stgit@localhost.localdomain>
+	id S1752830AbYGML7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2008 07:59:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752828AbYGML7d
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 07:59:33 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:38741 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752453AbYGML7d (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2008 07:59:33 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 4371A393B31D; Sun, 13 Jul 2008 13:59:30 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20080713082812.GA4944@perso.beuc.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88306>
 
-2008/7/13 Catalin Marinas <catalin.marinas@gmail.com>:
-> A new post of the proposed patches after implementing Karl's comments.
+  Hi,
 
-BTW, these are StGIT patches, I forgot to add the prefix in the subject line.
+On Sun, Jul 13, 2008 at 10:28:12AM +0200, Sylvain Beucler wrote:
+> >   By the way, where can I see the source code of the gitweb you are
+> > using?
+> 
+> We're using vanilla gitweb from the official Git, actually.
+
+  ah, of course! Somehow, I forgot that you can customize the project
+URLs shown without modifying the source code nowadays.
+
+> Apparently that version begins to be outdated, doesn't it? For
+> example, a user recently suggested we use a cache for the start page
+> project list but that feature doesn't seem to be merged yet. Maybe
+> should we switch to repo.or.cz's version directly?
+
+  This is a bit more complicated; I've cc'd the Git mailing list in case
+someone else finds this informative.
+
+  The upstream gitweb is under active development; most importantly,
+Lea Wiemann is intensively working on a new caching infrastructure and
+is doing some cleanups, while Jakub Narebski tries to fight the general
+apathy by posting various interesting RFC patches I keep promising
+myself to finally check out (most importantly for an index page
+overhaul; the recently introduced content tags were the first step
+to this).
+
+  Then, there is the http://repo.or.cz/w/git/gitweb.git repository,
+which was my old attempt at maintaining gitweb actively. Unfortunately,
+this didn't quite work out because of my general lack of time and
+dedication. However, the next and pu branches still contain some patches
+and these patches are actively used on repo.or.cz; I still hope to get
+to clean them up and resubmit sometime soon. I'm working on a certain
+Git-based project essentially fulltime this summer, so I hope to do get
+around to it. :-)
+
+  Finally, there is the http://repo.or.cz/w/git/repo.git repository.
+This is the Git variant repo.or.cz uses - both for gitweb and the rest
+of Git binaries too (e.g. git-daemon and gc cronjobs; however, I need to
+do the ssh chroot updates manually, so that might lag a lot behind;
+until just a few days ago, Git version in the chroot was from December
+2007).  It dubbles as my personal Git patch queue, but most of the
+non-gitweb patches aren't generally interesting (and mostly remind me
+of "what all should I redo differently sometime").
+
+  The gitweb patches in git/repo.git are superset of git/gitweb.git
+patches and the extra patches are I believe (at least not currently)
+interesting for general gitweb public. However, some of them _might_
+be interesting for large-scale gitweb hosting like yours. Some of them
+might end up in git/gitweb.git after some cleanup (graphiclog link,
+email addresses obfuscation, ...).
+
+  Thus, my recommendation for now would be to check out the patches
+queued in
+
+	http://repo.or.cz/w/git/gitweb.git
+	http://repo.or.cz/w/git/repo.git
+
+and maybe cherrypick some interesting ones; basing your gitweb directly
+on git/repo.git probably does not make much sense unless you revert
+"Custom gitweb changes" and probably others. Basing your gitweb on
+git/gitweb.git might work, but would be a little bit adventurous. ;-)
 
 -- 
-Catalin
+				Petr "Pasky" Baudis
+GNU, n. An animal of South Africa, which in its domesticated state
+resembles a horse, a buffalo and a stag. In its wild condition it is
+something like a thunderbolt, an earthquake and a cyclone. -- A. Pierce
