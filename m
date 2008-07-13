@@ -1,89 +1,61 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] bash completion: Fix the . -> .. revision range
-	completion
-Date: Sun, 13 Jul 2008 22:06:31 +0000
-Message-ID: <20080713220631.GB12708@spearce.org>
-References: <20080713111847.29801.8969.stgit@localhost> <7vskudpiqq.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Added --export option to git-send-email.
+Date: Sun, 13 Jul 2008 15:05:53 -0700
+Message-ID: <7vvdz9o2wu.fsf@gitster.siamese.dyndns.org>
+References: <20080710170735.4c5b237a@linux360.ro>
+ <7vskudr11m.fsf@gitster.siamese.dyndns.org>
+ <32541b130807131432j78e5100dyea20893268321466@mail.gmail.com>
+ <7vbq11qxfb.fsf@gitster.siamese.dyndns.org>
+ <32541b130807131444s5e9ea0d6v9610dd5871467fc9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 00:07:38 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Eduard - Gabriel Munteanu" <eduard.munteanu@linux360.ro>,
+	ryan@michonline.com, git@vger.kernel.org
+To: "Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 14 00:07:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KI9jB-0002Lm-7B
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 00:07:33 +0200
+	id 1KI9jA-0002Lm-Ij
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 00:07:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754004AbYGMWGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2008 18:06:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753833AbYGMWGc
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 18:06:32 -0400
-Received: from george.spearce.org ([209.20.77.23]:46042 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751252AbYGMWGc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2008 18:06:32 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 81D0A3836B; Sun, 13 Jul 2008 22:06:31 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7vskudpiqq.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751173AbYGMWGC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2008 18:06:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751252AbYGMWGB
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 18:06:01 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64751 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750989AbYGMWGB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2008 18:06:01 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9583421704;
+	Sun, 13 Jul 2008 18:05:59 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id EF40921703; Sun, 13 Jul 2008 18:05:54 -0400 (EDT)
+In-Reply-To: <32541b130807131444s5e9ea0d6v9610dd5871467fc9@mail.gmail.com>
+ (Avery Pennarun's message of "Sun, 13 Jul 2008 17:44:16 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E01441CC-5127-11DD-8EC2-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88350>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Petr Baudis <pasky@suse.cz> writes:
-> > When Git sees a string with trailing dot on a place where revision
-> > range could occur, it will unconditionally append another dot to
-...
-> > 	git log git-submodule.<tab>
-...
-> By the way, the above command line is another "dot" related frustration I
-> always have.  If you try:
-> 
-> 	git log v1.5.6.<TAB>
-> 
-> the completion code adds a dot unconditionally when I want to choose from
-> the list of v1.5.6.X tags.
+"Avery Pennarun" <apenwarr@gmail.com> writes:
 
-This annoys me too Junio.  Its a bug I just never got around to fixing.
-Based on Petr's comments and yours I'm wondering if this is just not the
-better patch to apply here:
+> So by encoding it this way, someone with a modern mailer could...
 
---8<--
-bash completion: Don't offer "a.." as a completion for "a."
+Heh, so by that definition Gnus is not modern enough; neither is webmail
+interface at gmail.
 
-If the user is trying to complete "v1.5.3.<tab>" to see all of
-the available maintenance releases for 1.5.3 we should not give
-them an extra dot as the completion.  Instead if the user wants
-a ".." or a "..." operator they should key the two dots out on
-their own.  Its the same number of keystrokes either way.
+>From which has originally zero level of >
+>From which has one
+>>From which has two
+>>>From which has three
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- contrib/completion/git-completion.bash |    3 ---
- 1 files changed, 0 insertions(+), 3 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 61581fe..9a1c66a 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -324,9 +324,6 @@ __git_complete_revlist ()
- 		cur="${cur#*..}"
- 		__gitcomp "$(__git_refs)" "$pfx" "$cur"
- 		;;
--	*.)
--		__gitcomp "$cur."
--		;;
- 	*)
- 		__gitcomp "$(__git_refs)"
- 		;;
--- 
-1.5.6.2.393.g45096
-
--- 
-Shawn.
+I am reasonably sure the above will be sent with one, one, two and three
+gt before "From".  Is your mailer modern enough?
