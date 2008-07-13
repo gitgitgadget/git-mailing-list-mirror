@@ -1,86 +1,77 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: Re: tests for git-p4
-Date: Sun, 13 Jul 2008 14:26:03 +0200
-Message-ID: <200807131426.09688.simon@lst.de>
-References: <e48c5e540807120524rabdcfa6vd91c16ef1b0f80a0@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH/Test] Build in merge is broken
+Date: Sun, 13 Jul 2008 14:41:00 +0200
+Message-ID: <20080713124100.GB10347@genesis.frugalware.org>
+References: <loom.20080713T073129-112@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2391188.oej0GxzuYn";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="qCGCnlPZoKZX9mDP"
 Cc: git@vger.kernel.org
-To: "Matt McClure" <mlm@aya.yale.edu>
-X-From: git-owner@vger.kernel.org Sun Jul 13 14:30:16 2008
+To: Sverre Hvammen Johansen <hvammen+git@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 13 14:42:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KI0iV-0003aO-5A
-	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 14:30:15 +0200
+	id 1KI0tw-0006o9-9Q
+	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 14:42:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752945AbYGMM3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2008 08:29:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752932AbYGMM3Q
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 08:29:16 -0400
-Received: from hoat.troll.no ([62.70.27.150]:47776 "EHLO hoat.troll.no"
+	id S1753115AbYGMMlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2008 08:41:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752448AbYGMMlE
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 08:41:04 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:55820 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752853AbYGMM3P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2008 08:29:15 -0400
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 3E61D20E5C;
-	Sun, 13 Jul 2008 14:29:10 +0200 (CEST)
-Received: from rani.local (unknown [172.20.1.59])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id 2B1BD20B80;
-	Sun, 13 Jul 2008 14:29:10 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <e48c5e540807120524rabdcfa6vd91c16ef1b0f80a0@mail.gmail.com>
+	id S1752430AbYGMMlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2008 08:41:03 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 8381C1B24FB;
+	Sun, 13 Jul 2008 14:41:00 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 530BD4465E;
+	Sun, 13 Jul 2008 14:05:23 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 21D4A11901B3; Sun, 13 Jul 2008 14:41:00 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <loom.20080713T073129-112@post.gmane.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88309>
 
---nextPart2391188.oej0GxzuYn
-Content-Type: text/plain;
-  charset="iso-8859-1"
+
+--qCGCnlPZoKZX9mDP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+
+On Sun, Jul 13, 2008 at 08:13:55AM +0000, Sverre Hvammen Johansen <hvammen+=
+git@gmail.com> wrote:
+> Great that we now are introducing merge in C.  Great job Miklos.
+> However, it is broken as this patch shows.  This have been
+> bisected to 1c7b76be Build in merge.
+>=20
+> The test case when run will record the parents that were asked for which =
+is
+> fine.  However, only c2 is recorded as a parent in the commit object.  Bo=
+th
+> c1 and c2 should have been recorded.  The merge is otherwise working
+> correctly.
+
+Thanks for the testcase, I'm on it. ;-)
+
+--qCGCnlPZoKZX9mDP
+Content-Type: application/pgp-signature
 Content-Disposition: inline
 
-On Saturday 12 July 2008 14:24:10 Matt McClure wrote:
-> I'm planning to write a "p4-fast-export" that will facilitate using
-> Bazaar on projects maintained in Perforce.  I'd like to reuse code
-> from git-p4 since it appears to have much of the functionality I want.
->  In fact, the main reason I can't just use git-p4 today is that it
-> does too much: it pushes the Perforce fast-export representation
-> directly into Git.  I'm going to work on covering the existing
-> functionality in tests before I start modifying the code, and I could
-> try to write those tests such that they'll be useful to the Git
-> project as well.
->
-> Would my tests be of interest to git-p4's authors?  Is there any
-> existing test framework for git-p4 that I missed?
-
-There are currently no automated tests for git-p4. I would certainly be=20
-interested, but I forsee difficulties testing the interaction with p4 in a=
-=20
-general way independent from a specific server setup.
-
-
-Simon
-
---nextPart2391188.oej0GxzuYn
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-iD8DBQBIefRhWXvMThJCpvIRAgqkAKCE94dv3oV6BKfGMTqsheCwobgocACePnWx
-XweLvZpXUk9kF7e0E/WcVFI=
-=3jxj
+iEYEARECAAYFAkh599wACgkQe81tAgORUJY7WQCgg3Px19YTAPJ6oUuV5QgeZS3l
+FXMAnAtktXmJlFPobXIfCUNH2tkYzHpP
+=S7sd
 -----END PGP SIGNATURE-----
 
---nextPart2391188.oej0GxzuYn--
+--qCGCnlPZoKZX9mDP--
