@@ -1,256 +1,375 @@
 From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: [PATCH 2/4] Implement a new patch identification scheme and id command
-Date: Sun, 13 Jul 2008 12:40:35 +0100
-Message-ID: <20080713114035.18845.45056.stgit@localhost.localdomain>
+Subject: [PATCH 3/4] Convert git_id() to the new id format
+Date: Sun, 13 Jul 2008 12:40:48 +0100
+Message-ID: <20080713114047.18845.34899.stgit@localhost.localdomain>
 References: <20080713113853.18845.37686.stgit@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 To: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 13 13:41:48 2008
+X-From: git-owner@vger.kernel.org Sun Jul 13 13:42:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHzxb-0006GP-OC
-	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 13:41:48 +0200
+	id 1KHzxl-0006Jf-2o
+	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 13:41:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752720AbYGMLkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2008 07:40:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752735AbYGMLkt
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 07:40:49 -0400
-Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:28326 "EHLO
+	id S1752751AbYGMLky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2008 07:40:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752741AbYGMLky
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 07:40:54 -0400
+Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:57304 "EHLO
 	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752720AbYGMLks (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Jul 2008 07:40:48 -0400
+	by vger.kernel.org with ESMTP id S1752735AbYGMLkw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Jul 2008 07:40:52 -0400
 Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
           by mtaout02-winn.ispmail.ntl.com with ESMTP
-          id <20080713114547.JWNT7070.mtaout02-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
-          Sun, 13 Jul 2008 12:45:47 +0100
+          id <20080713114556.JWPM7070.mtaout02-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
+          Sun, 13 Jul 2008 12:45:56 +0100
 Received: from localhost.localdomain ([86.7.22.36])
           by aamtaout03-winn.ispmail.ntl.com with ESMTP
-          id <20080713115117.IIM8797.aamtaout03-winn.ispmail.ntl.com@localhost.localdomain>;
-          Sun, 13 Jul 2008 12:51:17 +0100
+          id <20080713115127.IJN8797.aamtaout03-winn.ispmail.ntl.com@localhost.localdomain>;
+          Sun, 13 Jul 2008 12:51:27 +0100
 In-Reply-To: <20080713113853.18845.37686.stgit@localhost.localdomain>
 User-Agent: StGIT/0.14.3.163.g06f9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88303>
 
-The new scheme allows '[<branch>:]<patch>' and '[<branch>:]{base}'
-(the latter showing the base of a stack). The former format allows
-symbols like ^ and ^{...}.
+The patch rewrites git_id() to use the new id format and coverts the
+commands using this function. The git_id() will be removed once all the
+commands are converted to the new infrastructure where git_commit() will
+be used instead.
 
 Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
 ---
 
- stgit/commands/common.py   |   33 +++++++++++++++++++++++++++++++++
- stgit/commands/id.py       |   28 ++++++++++++----------------
- stgit/lib/git.py           |    4 ++--
- t/t0001-subdir-branches.sh |   24 ++++++++++--------------
- t/t1200-push-modified.sh   |    2 +-
- t/t1201-pull-trailing.sh   |    2 +-
- t/t2200-rebase.sh          |    2 +-
- 7 files changed, 60 insertions(+), 35 deletions(-)
+ stgit/commands/common.py  |   98 +++++++--------------------------------------
+ stgit/commands/diff.py    |   23 +++++------
+ stgit/commands/files.py   |   10 ++---
+ stgit/commands/mail.py    |    8 ++--
+ stgit/commands/pick.py    |   10 ++---
+ stgit/commands/refresh.py |    4 +-
+ stgit/commands/series.py  |    4 +-
+ t/t2000-sync.sh           |    2 -
+ 8 files changed, 43 insertions(+), 116 deletions(-)
 
 diff --git a/stgit/commands/common.py b/stgit/commands/common.py
-index 029ec65..0133f1a 100644
+index 0133f1a..0413aac 100644
 --- a/stgit/commands/common.py
 +++ b/stgit/commands/common.py
-@@ -28,6 +28,7 @@ from stgit.run import *
- from stgit import stack, git, basedir
- from stgit.config import config, file_extensions
- from stgit.lib import stack as libstack
-+from stgit.lib import git as libgit
+@@ -35,101 +35,35 @@ class CmdException(StgException):
+     pass
  
- # Command exception class
- class CmdException(StgException):
-@@ -116,6 +117,38 @@ def git_id(crt_series, rev):
- 
-     raise CmdException, 'Unknown patch or revision: %s' % rev
- 
-+def git_commit(name, repository, branch = None):
-+    """Return the a Commit object if 'name' is a patch name or Git commit.
-+    The patch names allowed are in the form '<branch>:<patch>' and can
-+    be followed by standard symbols used by git-rev-parse. If <patch>
-+    is '{base}', it represents the bottom of the stack.
-+    """
-+    # Try a [branch:]patch name first
-+    try:
-+        branch, patch = name.split(':', 1)
+ # Utility functions
+-class RevParseException(StgException):
+-    """Revision spec parse error."""
+-    pass
+-
+ def parse_rev(rev):
+-    """Parse a revision specification into its
+-    patchname@branchname//patch_id parts. If no branch name has a slash
+-    in it, also accept / instead of //."""
+-    if '/' in ''.join(git.get_heads()):
+-        # We have branch names with / in them.
+-        branch_chars = r'[^@]'
+-        patch_id_mark = r'//'
+-    else:
+-        # No / in branch names.
+-        branch_chars = r'[^@/]'
+-        patch_id_mark = r'(/|//)'
+-    patch_re = r'(?P<patch>[^@/]+)'
+-    branch_re = r'@(?P<branch>%s+)' % branch_chars
+-    patch_id_re = r'%s(?P<patch_id>[a-z.]*)' % patch_id_mark
+-
+-    # Try //patch_id.
+-    m = re.match(r'^%s$' % patch_id_re, rev)
+-    if m:
+-        return None, None, m.group('patch_id')
+-
+-    # Try path[@branch]//patch_id.
+-    m = re.match(r'^%s(%s)?%s$' % (patch_re, branch_re, patch_id_re), rev)
+-    if m:
+-        return m.group('patch'), m.group('branch'), m.group('patch_id')
+-
+-    # Try patch[@branch].
+-    m = re.match(r'^%s(%s)?$' % (patch_re, branch_re), rev)
+-    if m:
+-        return m.group('patch'), m.group('branch'), None
+-
+-    # No, we can't parse that.
+-    raise RevParseException
+-
+-def git_id(crt_series, rev):
+-    """Return the GIT id
++    """Parse a revision specification into its branch:patch parts.
+     """
+-    if not rev:
+-        return None
+-
+-    # try a GIT revision first
+     try:
+-        return git.rev_parse(rev + '^{commit}')
+-    except git.GitException:
+-        pass
++        branch, patch = rev.split(':', 1)
 +    except ValueError:
-+        patch = name
-+    if not branch:
-+        branch = repository.current_branch_name
-+
-+    # The stack base
-+    if patch.startswith('{base}'):
-+        base_id = repository.get_stack(branch).base.sha1
-+        return repository.rev_parse(base_id + patch[6:])
-+
-+    # Other combination of branch and patch
-+    try:
-+        return repository.rev_parse('patches/%s/%s' % (branch, patch),
-+                                    discard_stderr = True)
-+    except libgit.RepositoryException:
-+        pass
-+
-+    # Try a Git commit
-+    try:
-+        return repository.rev_parse(name, discard_stderr = True)
-+    except libgit.RepositoryException:
-+        raise CmdException('%s: Unknown patch or revision name' % name)
-+
- def check_local_changes():
-     if git.local_changes():
-         raise CmdException('local changes in the tree. Use "refresh" or'
-diff --git a/stgit/commands/id.py b/stgit/commands/id.py
-index 94b0229..3819acc 100644
---- a/stgit/commands/id.py
-+++ b/stgit/commands/id.py
-@@ -15,28 +15,24 @@ along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- """
++        branch = None
++        patch = rev
  
--import sys, os
- from optparse import OptionParser, make_option
+-    # try an StGIT patch name
+-    try:
+-        patch, branch, patch_id = parse_rev(rev)
+-        if branch == None:
+-            series = crt_series
+-        else:
+-            series = stack.Series(branch)
+-        if patch == None:
+-            patch = series.get_current()
+-            if not patch:
+-                raise CmdException, 'No patches applied'
+-        if patch in series.get_applied() or patch in series.get_unapplied() or \
+-               patch in series.get_hidden():
+-            if patch_id in ['top', '', None]:
+-                return series.get_patch(patch).get_top()
+-            elif patch_id == 'bottom':
+-                return series.get_patch(patch).get_bottom()
+-            elif patch_id == 'top.old':
+-                return series.get_patch(patch).get_old_top()
+-            elif patch_id == 'bottom.old':
+-                return series.get_patch(patch).get_old_bottom()
+-            elif patch_id == 'log':
+-                return series.get_patch(patch).get_log()
+-        if patch == 'base' and patch_id == None:
+-            return series.get_base()
+-    except RevParseException:
+-        pass
+-    except stack.StackException:
+-        pass
++    return (branch, patch)
  
--from stgit.commands.common import *
--from stgit.utils import *
--from stgit.out import *
--from stgit import stack, git
+-    raise CmdException, 'Unknown patch or revision: %s' % rev
++def git_id(crt_series, rev):
++    """Return the GIT id
++    """
++    # TODO: remove this function once all the occurrences were converted
++    # to git_commit()
++    repository = libstack.Repository.default()
++    return git_commit(rev, repository, crt_series.get_name()).sha1
+ 
+-def git_commit(name, repository, branch = None):
++def git_commit(name, repository, branch_name = None):
+     """Return the a Commit object if 'name' is a patch name or Git commit.
+     The patch names allowed are in the form '<branch>:<patch>' and can
+     be followed by standard symbols used by git-rev-parse. If <patch>
+     is '{base}', it represents the bottom of the stack.
+     """
+     # Try a [branch:]patch name first
+-    try:
+-        branch, patch = name.split(':', 1)
+-    except ValueError:
+-        patch = name
++    branch, patch = parse_rev(name)
+     if not branch:
+-        branch = repository.current_branch_name
++        branch = branch_name or repository.current_branch_name
+ 
+     # The stack base
+     if patch.startswith('{base}'):
+diff --git a/stgit/commands/diff.py b/stgit/commands/diff.py
+index fd6be34..c57f720 100644
+--- a/stgit/commands/diff.py
++++ b/stgit/commands/diff.py
+@@ -30,17 +30,14 @@ help = 'show the tree diff'
+ usage = """%prog [options] [<files or dirs>]
+ 
+ Show the diff (default) or diffstat between the current working copy
+-or a tree-ish object and another tree-ish object. File names can also
+-be given to restrict the diff output. The tree-ish object can be a
+-standard git commit, tag or tree. In addition to these, the command
+-also supports 'base', representing the bottom of the current stack,
+-and '[patch][//[bottom | top]]' for the patch boundaries (defaulting to
+-the current one):
++or a tree-ish object and another tree-ish object (defaulting to HEAD).
++File names can also be given to restrict the diff output. The
++tree-ish object can be an StGIT patch, a standard git commit, tag or
++tree. In addition to these, the command also supports '{base}',
++representing the bottom of the current stack.
+ 
+-rev = '([patch][//[bottom | top]]) | <tree-ish> | base'
 -
-+from stgit.out import out
-+from stgit.commands import common
-+from stgit.lib import stack
+-If neither bottom nor top are given but a '//' is present, the command
+-shows the specified patch (defaulting to the current one)."""
++rev = '[branch:](<patch>|{base}) | <tree-ish>'
++"""
  
- help = 'print the GIT hash value of a StGIT reference'
- usage = """%prog [options] [id]
+ directory = DirectoryHasRepository()
+ options = [make_option('-r', '--range',
+@@ -67,8 +64,8 @@ def func(parser, options, args):
+                 rev = strip_suffix('/', rev)
+                 if rev.endswith('/'):
+                     rev = strip_suffix('/', rev)
+-                rev1 = rev + '//bottom'
+-                rev2 = rev + '//top'
++                rev1 = rev + 'HEAD^'
++                rev2 = rev + 'HEAD'
+             else:
+                 rev1 = rev_list[0]
+                 rev2 = None
+@@ -82,7 +79,7 @@ def func(parser, options, args):
+         rev2 = None
  
--Print the hash value of a GIT id (defaulting to HEAD). In addition to
--the standard GIT id's like heads and tags, this command also accepts
--'base[@<branch>]' and '[<patch>[@<branch>]][//[bottom | top]]'. If no
--'top' or 'bottom' are passed and <patch> is a valid patch name, 'top'
--will be used by default."""
--
--directory = DirectoryHasRepository()
--options = [make_option('-b', '--branch',
--                       help = 'use BRANCH instead of the default one')]
-+Print the SHA1 value of a Git id (defaulting to HEAD). In addition to
-+the standard Git id's like heads and tags, this command also accepts
-+'[<branch>:]<patch>' and '[<branch>:]{base}' showing the id of a patch
-+or the base of the stack. If no branch is specified, it defaults to the
-+current one. The bottom of a patch is accessible with the
-+'[<branch>:]<patch>^' format."""
+     diff_str = git.diff(args, git_id(crt_series, rev1),
+-                        git_id(crt_series, rev2),
++                        rev2 and git_id(crt_series, rev2),
+                         diff_flags = options.diff_flags)
+     if options.stat:
+         out.stdout_raw(git.diffstat(diff_str) + '\n')
+diff --git a/stgit/commands/files.py b/stgit/commands/files.py
+index b43b12f..d240872 100644
+--- a/stgit/commands/files.py
++++ b/stgit/commands/files.py
+@@ -26,7 +26,7 @@ from stgit import stack, git
  
-+directory = common.DirectoryHasRepositoryLib()
-+options = []
  
- def func(parser, options, args):
-     """Show the applied patches
-@@ -48,4 +44,4 @@ def func(parser, options, args):
+ help = 'show the files modified by a patch (or the current patch)'
+-usage = """%prog [options] [<patch>]
++usage = """%prog [options] [[<branch>:]<patch>]
+ 
+ List the files modified by the given patch (defaulting to the current
+ one). Passing the '--stat' option shows the diff statistics for the
+@@ -38,8 +38,6 @@ directory = DirectoryHasRepository()
+ options = [make_option('-s', '--stat',
+                        help = 'show the diff stat',
+                        action = 'store_true'),
+-           make_option('-b', '--branch',
+-                       help = 'use BRANCH instead of the default one'),
+            make_option('--bare',
+                        help = 'bare file names (useful for scripting)',
+                        action = 'store_true')
+@@ -50,14 +48,14 @@ def func(parser, options, args):
+     """Show the files modified by a patch (or the current patch)
+     """
+     if len(args) == 0:
+-        patch = ''
++        patch = 'HEAD'
+     elif len(args) == 1:
+         patch = args[0]
      else:
          parser.error('incorrect number of arguments')
  
--    out.stdout(git_id(crt_series, id_str))
-+    out.stdout(common.git_commit(id_str, directory.repository).sha1)
-diff --git a/stgit/lib/git.py b/stgit/lib/git.py
-index 6ccdfa7..4746da3 100644
---- a/stgit/lib/git.py
-+++ b/stgit/lib/git.py
-@@ -422,11 +422,11 @@ class Repository(RunWithEnv):
-     refs = property(lambda self: self.__refs)
-     def cat_object(self, sha1):
-         return self.run(['git', 'cat-file', '-p', sha1]).raw_output()
--    def rev_parse(self, rev):
-+    def rev_parse(self, rev, discard_stderr = False):
-         try:
-             return self.get_commit(self.run(
-                     ['git', 'rev-parse', '%s^{commit}' % rev]
--                    ).output_one_line())
-+                    ).discard_stderr(discard_stderr).output_one_line())
-         except run.RunException:
-             raise RepositoryException('%s: No such revision' % rev)
-     def get_tree(self, sha1):
-diff --git a/t/t0001-subdir-branches.sh b/t/t0001-subdir-branches.sh
-index 69c11a3..3f7962a 100755
---- a/t/t0001-subdir-branches.sh
-+++ b/t/t0001-subdir-branches.sh
-@@ -18,25 +18,21 @@ test_expect_success 'Create a patch' \
-    stg new foo -m "Add foo.txt" &&
-    stg refresh'
+-    rev1 = git_id(crt_series, '%s//bottom' % patch)
+-    rev2 = git_id(crt_series, '%s//top' % patch)
++    rev1 = git_id(crt_series, '%s^' % patch)
++    rev2 = git_id(crt_series, '%s' % patch)
  
--test_expect_success 'Old and new id with non-slashy branch' \
--  'stg id foo &&
--   stg id foo// &&
--   stg id foo/ &&
--   stg id foo//top &&
--   stg id foo/top &&
--   stg id foo@master &&
--   stg id foo@master//top &&
--   stg id foo@master/top'
-+test_expect_success 'Try id with non-slashy branch' \
-+  'stg id &&
-+   stg id foo &&
-+   stg id foo^ &&
-+   stg id master:foo &&
-+   stg id master:foo^'
+     if options.stat:
+         out.stdout_raw(git.diffstat(git.diff(rev1 = rev1, rev2 = rev2)) + '\n')
+diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
+index c87d67e..e04dc2f 100644
+--- a/stgit/commands/mail.py
++++ b/stgit/commands/mail.py
+@@ -383,8 +383,8 @@ def __build_cover(tmpl, patches, msg_id, options):
+                  'shortlog':     stack.shortlog(crt_series.get_patch(p)
+                                                 for p in patches),
+                  'diffstat':     git.diffstat(git.diff(
+-                     rev1 = git_id(crt_series, '%s//bottom' % patches[0]),
+-                     rev2 = git_id(crt_series, '%s//top' % patches[-1])))}
++                     rev1 = git_id(crt_series, '%s^' % patches[0]),
++                     rev2 = git_id(crt_series, '%s' % patches[-1])))}
  
- test_expect_success 'Clone branch to slashier name' \
-   'stg branch --clone x/y/z'
+     try:
+         msg_string = tmpl % tmpl_dict
+@@ -460,8 +460,8 @@ def __build_message(tmpl, patch, patch_nr, total_nr, msg_id, ref_id, options):
+     else:
+         number_str = ''
  
--test_expect_success 'Try new form of id with slashy branch' \
-+test_expect_success 'Try new id with slashy branch' \
-   'stg id foo &&
--   stg id foo// &&
--   stg id foo//top &&
--   stg id foo@x/y/z &&
--   stg id foo@x/y/z//top'
-+   stg id foo^ &&
-+   stg id x/y/z:foo &&
-+   stg id x/y/z:foo^'
+-    diff = git.diff(rev1 = git_id(crt_series, '%s//bottom' % patch),
+-                    rev2 = git_id(crt_series, '%s//top' % patch),
++    diff = git.diff(rev1 = git_id(crt_series, '%s^' % patch),
++                    rev2 = git_id(crt_series, '%s' % patch),
+                     diff_flags = options.diff_flags)
+     tmpl_dict = {'patch':        patch,
+                  'sender':       sender,
+diff --git a/stgit/commands/pick.py b/stgit/commands/pick.py
+index 1f7c84b..2a670e8 100644
+--- a/stgit/commands/pick.py
++++ b/stgit/commands/pick.py
+@@ -87,8 +87,8 @@ def __pick_commit(commit_id, patchname, options):
  
- test_expect_success 'Try old id with slashy branch' '
-    command_error stg id foo/ &&
-diff --git a/t/t1200-push-modified.sh b/t/t1200-push-modified.sh
-index 6ebd0a1..2edc760 100755
---- a/t/t1200-push-modified.sh
-+++ b/t/t1200-push-modified.sh
-@@ -36,7 +36,7 @@ test_expect_success \
-     (
-         cd foo &&
-         GIT_DIR=../bar/.git git-format-patch --stdout \
--          $(cd ../bar && stg id base@master)..HEAD | git-am -3 -k
-+          $(cd ../bar && stg id master:{base})..HEAD | git-am -3 -k
-     )
- '
+         out.done()
+     elif options.update:
+-        rev1 = git_id(crt_series, '//bottom')
+-        rev2 = git_id(crt_series, '//top')
++        rev1 = git_id(crt_series, 'HEAD^')
++        rev2 = git_id(crt_series, 'HEAD')
+         files = git.barefiles(rev1, rev2).split('\n')
  
-diff --git a/t/t1201-pull-trailing.sh b/t/t1201-pull-trailing.sh
-index 9d70fe0..8a74873 100755
---- a/t/t1201-pull-trailing.sh
-+++ b/t/t1201-pull-trailing.sh
-@@ -30,7 +30,7 @@ test_expect_success \
-     'Port those patches to orig tree' \
-     '(cd foo &&
-       GIT_DIR=../bar/.git git-format-patch --stdout \
--          $(cd ../bar && stg id base@master)..HEAD |
-+          $(cd ../bar && stg id master:{base})..HEAD |
-       git-am -3 -k
-      )
+         out.start('Updating with commit %s' % commit_id)
+@@ -115,10 +115,8 @@ def __pick_commit(commit_id, patchname, options):
+         patchname = newpatch.get_name()
+ 
+         # find a patchlog to fork from
+-        (refpatchname, refbranchname, refpatchid) = parse_rev(patchname)
+-        if refpatchname and not refpatchid and \
+-               (not refpatchid or refpatchid == 'top'):
+-            # FIXME: should also support picking //top.old
++        refbranchname, refpatchname = parse_rev(patchname)
++        if refpatchname:
+             if refbranchname:
+                 # assume the refseries is OK, since we already resolved
+                 # commit_str to a git_id
+diff --git a/stgit/commands/refresh.py b/stgit/commands/refresh.py
+index 4695c62..73e4ee0 100644
+--- a/stgit/commands/refresh.py
++++ b/stgit/commands/refresh.py
+@@ -103,8 +103,8 @@ def func(parser, options, args):
+             between = applied[:applied.index(patch):-1]
+             pop_patches(crt_series, between, keep = True)
+         elif options.update:
+-            rev1 = git_id(crt_series, '//bottom')
+-            rev2 = git_id(crt_series, '//top')
++            rev1 = git_id(crt_series, 'HEAD^')
++            rev2 = git_id(crt_series, 'HEAD')
+             patch_files = git.barefiles(rev1, rev2).split('\n')
+             files = [f for f in files if f in patch_files]
+             if not files:
+diff --git a/stgit/commands/series.py b/stgit/commands/series.py
+index 04183bd..c11c74f 100644
+--- a/stgit/commands/series.py
++++ b/stgit/commands/series.py
+@@ -88,7 +88,7 @@ def __print_patch(stack, patch, branch_str, prefix, empty_prefix, length, option
+     elif options.empty and stack.patches.get(patch).is_empty():
+         prefix = empty_prefix
+ 
+-    patch_str = patch + branch_str
++    patch_str = branch_str + patch
+ 
+     if options.description or options.author:
+         patch_str = patch_str.ljust(length)
+@@ -164,7 +164,7 @@ def func(parser, options, args):
+         return
+ 
+     if options.showbranch:
+-        branch_str = '@' + stack.name
++        branch_str = stack.name + ':'
+     else:
+         branch_str = ''
+ 
+diff --git a/t/t2000-sync.sh b/t/t2000-sync.sh
+index 9852eb8..f4e8b07 100755
+--- a/t/t2000-sync.sh
++++ b/t/t2000-sync.sh
+@@ -37,7 +37,7 @@ test_expect_success \
+ test_expect_success \
+     'Create a branch with empty patches' \
      '
-diff --git a/t/t2200-rebase.sh b/t/t2200-rebase.sh
-index a6f43bc..256eaaa 100755
---- a/t/t2200-rebase.sh
-+++ b/t/t2200-rebase.sh
-@@ -27,7 +27,7 @@ test_expect_success \
- 	'Rebase to previous commit' \
- 	'
- 	stg rebase master~1 &&
--	test `stg id base@stack` = `git rev-parse master~1` &&
-+	test `stg id stack:{base}` = `git rev-parse master~1` &&
- 	test `stg applied | wc -l` = 1
- 	'
- 
+-    stg branch -c foo base &&
++    stg branch -c foo {base} &&
+     stg new p1 -m p1 &&
+     stg new p2 -m p2 &&
+     stg new p3 -m p3 &&
