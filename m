@@ -1,61 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Added --export option to git-send-email.
-Date: Sun, 13 Jul 2008 15:05:53 -0700
-Message-ID: <7vvdz9o2wu.fsf@gitster.siamese.dyndns.org>
-References: <20080710170735.4c5b237a@linux360.ro>
- <7vskudr11m.fsf@gitster.siamese.dyndns.org>
- <32541b130807131432j78e5100dyea20893268321466@mail.gmail.com>
- <7vbq11qxfb.fsf@gitster.siamese.dyndns.org>
- <32541b130807131444s5e9ea0d6v9610dd5871467fc9@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git pull is slow
+Date: Sun, 13 Jul 2008 22:11:41 +0000
+Message-ID: <20080713221141.GC12708@spearce.org>
+References: <g5570s$d5m$1@ger.gmane.org> <g57jkp$ekm$1@ger.gmane.org> <48776169.20705@op5.se> <alpine.DEB.1.00.0807111443280.8950@racer> <4878A442.6020405@arcor.de> <alpine.DEB.1.00.0807121546590.8950@racer> <20080713011512.GB31050@spearce.org> <alpine.DEB.1.00.0807131555560.4816@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Eduard - Gabriel Munteanu" <eduard.munteanu@linux360.ro>,
-	ryan@michonline.com, git@vger.kernel.org
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 00:07:43 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Stephan Hennig <mailing_list@arcor.de>,
+	Nicolas Pitre <nico@cam.org>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 14 00:12:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KI9jA-0002Lm-Ij
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 00:07:32 +0200
+	id 1KI9o8-0003Pl-Aa
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 00:12:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751173AbYGMWGC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2008 18:06:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751252AbYGMWGB
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 18:06:01 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64751 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750989AbYGMWGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2008 18:06:01 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9583421704;
-	Sun, 13 Jul 2008 18:05:59 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id EF40921703; Sun, 13 Jul 2008 18:05:54 -0400 (EDT)
-In-Reply-To: <32541b130807131444s5e9ea0d6v9610dd5871467fc9@mail.gmail.com>
- (Avery Pennarun's message of "Sun, 13 Jul 2008 17:44:16 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E01441CC-5127-11DD-8EC2-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1751884AbYGMWLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2008 18:11:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754075AbYGMWLm
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 18:11:42 -0400
+Received: from george.spearce.org ([209.20.77.23]:37433 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751595AbYGMWLm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2008 18:11:42 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 935963836B; Sun, 13 Jul 2008 22:11:41 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807131555560.4816@eeepc-johanness>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88351>
 
-"Avery Pennarun" <apenwarr@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Sun, 13 Jul 2008, Shawn O. Pearce wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > ...
+> > > I expect this to touch the resolve_delta() function of index-pack.c in a 
+> > > major way, though.
+> > 
+> > Yea, that's going to be ugly.  The "cache" you speak of above is held on 
+> > the call stack as resolv_delta() recurses through the delta chain to 
+> > reconstruct objects and generate their SHA-1s.  There isn't a way to 
+> > release these objects when memory gets low so your worst case scenario 
+> > is a 100M+ blob with a delta chain of 50 or more - that will take you 5G 
+> > of memory to pass through index-pack.
+> 
+> Actually, there is...
+> 
+> You would only need to tap into the "release_pack_memory()" mechanism, 
+> adding a sort of a "smart pointer" that knows how to reconstruct its 
+> contents.
 
-> So by encoding it this way, someone with a modern mailer could...
+I guess you don't really know how index-pack is organized than.
+It is not quite that simple.
 
-Heh, so by that definition Gnus is not modern enough; neither is webmail
-interface at gmail.
+I think we want to use the core.deltabasecachelimit parameter inside
+of index-pack to limit the size of the cache, but evict based on
+the callstack depth.  Objects deeper back in the callstack should
+evict before objects closer to the top of the stack.
 
->From which has originally zero level of >
->From which has one
->>From which has two
->>>From which has three
+Reconstruction is a bit complex as we don't have the machinary in
+sha1_file.c available to us, as the index is not available, as we
+are still in the process of creating the damn thing.
 
-I am reasonably sure the above will be sent with one, one, two and three
-gt before "From".  Is your mailer modern enough?
+I'm working up a patch series to resolve this.  I'm going to shutup
+now and just try to post working code sometime this evening.
+
+-- 
+Shawn.
