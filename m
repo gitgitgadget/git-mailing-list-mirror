@@ -1,375 +1,962 @@
 From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: [PATCH 3/4] Convert git_id() to the new id format
-Date: Sun, 13 Jul 2008 12:40:48 +0100
-Message-ID: <20080713114047.18845.34899.stgit@localhost.localdomain>
+Subject: [PATCH 4/4] Remove the applied/unapplied commands
+Date: Sun, 13 Jul 2008 12:40:57 +0100
+Message-ID: <20080713114057.18845.74524.stgit@localhost.localdomain>
 References: <20080713113853.18845.37686.stgit@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 To: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 13 13:42:04 2008
+X-From: git-owner@vger.kernel.org Sun Jul 13 13:42:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHzxl-0006Jf-2o
-	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 13:41:57 +0200
+	id 1KHzxv-0006OZ-HT
+	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 13:42:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752751AbYGMLky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2008 07:40:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752741AbYGMLky
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 07:40:54 -0400
-Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:57304 "EHLO
-	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752735AbYGMLkw (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Jul 2008 07:40:52 -0400
+	id S1752774AbYGMLlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2008 07:41:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752772AbYGMLlG
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 07:41:06 -0400
+Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:34935 "EHLO
+	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752764AbYGMLlC (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Jul 2008 07:41:02 -0400
 Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout02-winn.ispmail.ntl.com with ESMTP
-          id <20080713114556.JWPM7070.mtaout02-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
-          Sun, 13 Jul 2008 12:45:56 +0100
+          by mtaout03-winn.ispmail.ntl.com with ESMTP
+          id <20080713114718.CZTG16629.mtaout03-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
+          Sun, 13 Jul 2008 12:47:18 +0100
 Received: from localhost.localdomain ([86.7.22.36])
           by aamtaout03-winn.ispmail.ntl.com with ESMTP
-          id <20080713115127.IJN8797.aamtaout03-winn.ispmail.ntl.com@localhost.localdomain>;
-          Sun, 13 Jul 2008 12:51:27 +0100
+          id <20080713115136.IKS8797.aamtaout03-winn.ispmail.ntl.com@localhost.localdomain>;
+          Sun, 13 Jul 2008 12:51:36 +0100
 In-Reply-To: <20080713113853.18845.37686.stgit@localhost.localdomain>
 User-Agent: StGIT/0.14.3.163.g06f9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88304>
 
-The patch rewrites git_id() to use the new id format and coverts the
-commands using this function. The git_id() will be removed once all the
-commands are converted to the new infrastructure where git_commit() will
-be used instead.
+This patch moves the applied/unapplied functionality to the 'series'
+command via the corresponding options.
 
 Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
 ---
 
- stgit/commands/common.py  |   98 +++++++--------------------------------------
- stgit/commands/diff.py    |   23 +++++------
- stgit/commands/files.py   |   10 ++---
- stgit/commands/mail.py    |    8 ++--
- stgit/commands/pick.py    |   10 ++---
- stgit/commands/refresh.py |    4 +-
- stgit/commands/series.py  |    4 +-
- t/t2000-sync.sh           |    2 -
- 8 files changed, 43 insertions(+), 116 deletions(-)
+ stgit/commands/applied.py   |   51 -------------------------------------------
+ stgit/commands/series.py    |   25 ++++++++++++++++-----
+ stgit/commands/unapplied.py |   50 ------------------------------------------
+ stgit/main.py               |    4 ---
+ t/t1002-branch-clone.sh     |    6 +++--
+ t/t1003-new.sh              |    4 ++-
+ t/t1200-push-modified.sh    |   12 +++++-----
+ t/t1203-pop.sh              |   12 +++++-----
+ t/t1204-pop-keep.sh         |   12 +++++-----
+ t/t1205-push-subdir.sh      |    4 ++-
+ t/t1301-repair.sh           |   12 +++++-----
+ t/t1302-repair-interop.sh   |   20 ++++++++---------
+ t/t1500-float.sh            |   14 ++++++------
+ t/t1501-sink.sh             |    2 +-
+ t/t1600-delete-one.sh       |   28 ++++++++++++------------
+ t/t1601-delete-many.sh      |   24 ++++++++++----------
+ t/t2000-sync.sh             |   48 ++++++++++++++++++++--------------------
+ t/t2200-rebase.sh           |    4 ++-
+ t/t2500-clean.sh            |   12 +++++-----
+ t/t2600-coalesce.sh         |   12 +++++-----
+ t/t3000-dirty-merge.sh      |    8 +++----
+ t/t4000-upgrade.sh          |    4 ++-
+ 22 files changed, 138 insertions(+), 230 deletions(-)
+ delete mode 100644 stgit/commands/applied.py
+ delete mode 100644 stgit/commands/unapplied.py
 
-diff --git a/stgit/commands/common.py b/stgit/commands/common.py
-index 0133f1a..0413aac 100644
---- a/stgit/commands/common.py
-+++ b/stgit/commands/common.py
-@@ -35,101 +35,35 @@ class CmdException(StgException):
-     pass
- 
- # Utility functions
--class RevParseException(StgException):
--    """Revision spec parse error."""
--    pass
+diff --git a/stgit/commands/applied.py b/stgit/commands/applied.py
+deleted file mode 100644
+index e57c796..0000000
+--- a/stgit/commands/applied.py
++++ /dev/null
+@@ -1,51 +0,0 @@
 -
- def parse_rev(rev):
--    """Parse a revision specification into its
--    patchname@branchname//patch_id parts. If no branch name has a slash
--    in it, also accept / instead of //."""
--    if '/' in ''.join(git.get_heads()):
--        # We have branch names with / in them.
--        branch_chars = r'[^@]'
--        patch_id_mark = r'//'
+-__copyright__ = """
+-Copyright (C) 2005, Catalin Marinas <catalin.marinas@gmail.com>
+-
+-This program is free software; you can redistribute it and/or modify
+-it under the terms of the GNU General Public License version 2 as
+-published by the Free Software Foundation.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License
+-along with this program; if not, write to the Free Software
+-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-"""
+-
+-from optparse import make_option
+-from stgit.out import *
+-from stgit.commands import common
+-
+-
+-help = 'print the applied patches'
+-usage = """%prog [options]
+-
+-List the patches from the series which have already been pushed onto
+-the stack. They are listed in the order in which they were pushed, the
+-last one being the current (topmost) patch."""
+-
+-directory = common.DirectoryHasRepositoryLib()
+-options = [make_option('-b', '--branch',
+-                       help = 'use BRANCH instead of the default branch'),
+-           make_option('-c', '--count',
+-                       help = 'print the number of applied patches',
+-                       action = 'store_true')]
+-
+-
+-def func(parser, options, args):
+-    """Show the applied patches
+-    """
+-    if len(args) != 0:
+-        parser.error('incorrect number of arguments')
+-
+-    s = directory.repository.get_stack(options.branch)
+-
+-    if options.count:
+-        out.stdout(len(s.patchorder.applied))
 -    else:
--        # No / in branch names.
--        branch_chars = r'[^@/]'
--        patch_id_mark = r'(/|//)'
--    patch_re = r'(?P<patch>[^@/]+)'
--    branch_re = r'@(?P<branch>%s+)' % branch_chars
--    patch_id_re = r'%s(?P<patch_id>[a-z.]*)' % patch_id_mark
--
--    # Try //patch_id.
--    m = re.match(r'^%s$' % patch_id_re, rev)
--    if m:
--        return None, None, m.group('patch_id')
--
--    # Try path[@branch]//patch_id.
--    m = re.match(r'^%s(%s)?%s$' % (patch_re, branch_re, patch_id_re), rev)
--    if m:
--        return m.group('patch'), m.group('branch'), m.group('patch_id')
--
--    # Try patch[@branch].
--    m = re.match(r'^%s(%s)?$' % (patch_re, branch_re), rev)
--    if m:
--        return m.group('patch'), m.group('branch'), None
--
--    # No, we can't parse that.
--    raise RevParseException
--
--def git_id(crt_series, rev):
--    """Return the GIT id
-+    """Parse a revision specification into its branch:patch parts.
-     """
--    if not rev:
--        return None
--
--    # try a GIT revision first
-     try:
--        return git.rev_parse(rev + '^{commit}')
--    except git.GitException:
--        pass
-+        branch, patch = rev.split(':', 1)
-+    except ValueError:
-+        branch = None
-+        patch = rev
- 
--    # try an StGIT patch name
--    try:
--        patch, branch, patch_id = parse_rev(rev)
--        if branch == None:
--            series = crt_series
--        else:
--            series = stack.Series(branch)
--        if patch == None:
--            patch = series.get_current()
--            if not patch:
--                raise CmdException, 'No patches applied'
--        if patch in series.get_applied() or patch in series.get_unapplied() or \
--               patch in series.get_hidden():
--            if patch_id in ['top', '', None]:
--                return series.get_patch(patch).get_top()
--            elif patch_id == 'bottom':
--                return series.get_patch(patch).get_bottom()
--            elif patch_id == 'top.old':
--                return series.get_patch(patch).get_old_top()
--            elif patch_id == 'bottom.old':
--                return series.get_patch(patch).get_old_bottom()
--            elif patch_id == 'log':
--                return series.get_patch(patch).get_log()
--        if patch == 'base' and patch_id == None:
--            return series.get_base()
--    except RevParseException:
--        pass
--    except stack.StackException:
--        pass
-+    return (branch, patch)
- 
--    raise CmdException, 'Unknown patch or revision: %s' % rev
-+def git_id(crt_series, rev):
-+    """Return the GIT id
-+    """
-+    # TODO: remove this function once all the occurrences were converted
-+    # to git_commit()
-+    repository = libstack.Repository.default()
-+    return git_commit(rev, repository, crt_series.get_name()).sha1
- 
--def git_commit(name, repository, branch = None):
-+def git_commit(name, repository, branch_name = None):
-     """Return the a Commit object if 'name' is a patch name or Git commit.
-     The patch names allowed are in the form '<branch>:<patch>' and can
-     be followed by standard symbols used by git-rev-parse. If <patch>
-     is '{base}', it represents the bottom of the stack.
-     """
-     # Try a [branch:]patch name first
--    try:
--        branch, patch = name.split(':', 1)
--    except ValueError:
--        patch = name
-+    branch, patch = parse_rev(name)
-     if not branch:
--        branch = repository.current_branch_name
-+        branch = branch_name or repository.current_branch_name
- 
-     # The stack base
-     if patch.startswith('{base}'):
-diff --git a/stgit/commands/diff.py b/stgit/commands/diff.py
-index fd6be34..c57f720 100644
---- a/stgit/commands/diff.py
-+++ b/stgit/commands/diff.py
-@@ -30,17 +30,14 @@ help = 'show the tree diff'
- usage = """%prog [options] [<files or dirs>]
- 
- Show the diff (default) or diffstat between the current working copy
--or a tree-ish object and another tree-ish object. File names can also
--be given to restrict the diff output. The tree-ish object can be a
--standard git commit, tag or tree. In addition to these, the command
--also supports 'base', representing the bottom of the current stack,
--and '[patch][//[bottom | top]]' for the patch boundaries (defaulting to
--the current one):
-+or a tree-ish object and another tree-ish object (defaulting to HEAD).
-+File names can also be given to restrict the diff output. The
-+tree-ish object can be an StGIT patch, a standard git commit, tag or
-+tree. In addition to these, the command also supports '{base}',
-+representing the bottom of the current stack.
- 
--rev = '([patch][//[bottom | top]]) | <tree-ish> | base'
--
--If neither bottom nor top are given but a '//' is present, the command
--shows the specified patch (defaulting to the current one)."""
-+rev = '[branch:](<patch>|{base}) | <tree-ish>'
-+"""
- 
- directory = DirectoryHasRepository()
- options = [make_option('-r', '--range',
-@@ -67,8 +64,8 @@ def func(parser, options, args):
-                 rev = strip_suffix('/', rev)
-                 if rev.endswith('/'):
-                     rev = strip_suffix('/', rev)
--                rev1 = rev + '//bottom'
--                rev2 = rev + '//top'
-+                rev1 = rev + 'HEAD^'
-+                rev2 = rev + 'HEAD'
-             else:
-                 rev1 = rev_list[0]
-                 rev2 = None
-@@ -82,7 +79,7 @@ def func(parser, options, args):
-         rev2 = None
- 
-     diff_str = git.diff(args, git_id(crt_series, rev1),
--                        git_id(crt_series, rev2),
-+                        rev2 and git_id(crt_series, rev2),
-                         diff_flags = options.diff_flags)
-     if options.stat:
-         out.stdout_raw(git.diffstat(diff_str) + '\n')
-diff --git a/stgit/commands/files.py b/stgit/commands/files.py
-index b43b12f..d240872 100644
---- a/stgit/commands/files.py
-+++ b/stgit/commands/files.py
-@@ -26,7 +26,7 @@ from stgit import stack, git
- 
- 
- help = 'show the files modified by a patch (or the current patch)'
--usage = """%prog [options] [<patch>]
-+usage = """%prog [options] [[<branch>:]<patch>]
- 
- List the files modified by the given patch (defaulting to the current
- one). Passing the '--stat' option shows the diff statistics for the
-@@ -38,8 +38,6 @@ directory = DirectoryHasRepository()
- options = [make_option('-s', '--stat',
-                        help = 'show the diff stat',
-                        action = 'store_true'),
--           make_option('-b', '--branch',
--                       help = 'use BRANCH instead of the default one'),
-            make_option('--bare',
-                        help = 'bare file names (useful for scripting)',
-                        action = 'store_true')
-@@ -50,14 +48,14 @@ def func(parser, options, args):
-     """Show the files modified by a patch (or the current patch)
-     """
-     if len(args) == 0:
--        patch = ''
-+        patch = 'HEAD'
-     elif len(args) == 1:
-         patch = args[0]
-     else:
-         parser.error('incorrect number of arguments')
- 
--    rev1 = git_id(crt_series, '%s//bottom' % patch)
--    rev2 = git_id(crt_series, '%s//top' % patch)
-+    rev1 = git_id(crt_series, '%s^' % patch)
-+    rev2 = git_id(crt_series, '%s' % patch)
- 
-     if options.stat:
-         out.stdout_raw(git.diffstat(git.diff(rev1 = rev1, rev2 = rev2)) + '\n')
-diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
-index c87d67e..e04dc2f 100644
---- a/stgit/commands/mail.py
-+++ b/stgit/commands/mail.py
-@@ -383,8 +383,8 @@ def __build_cover(tmpl, patches, msg_id, options):
-                  'shortlog':     stack.shortlog(crt_series.get_patch(p)
-                                                 for p in patches),
-                  'diffstat':     git.diffstat(git.diff(
--                     rev1 = git_id(crt_series, '%s//bottom' % patches[0]),
--                     rev2 = git_id(crt_series, '%s//top' % patches[-1])))}
-+                     rev1 = git_id(crt_series, '%s^' % patches[0]),
-+                     rev2 = git_id(crt_series, '%s' % patches[-1])))}
- 
-     try:
-         msg_string = tmpl % tmpl_dict
-@@ -460,8 +460,8 @@ def __build_message(tmpl, patch, patch_nr, total_nr, msg_id, ref_id, options):
-     else:
-         number_str = ''
- 
--    diff = git.diff(rev1 = git_id(crt_series, '%s//bottom' % patch),
--                    rev2 = git_id(crt_series, '%s//top' % patch),
-+    diff = git.diff(rev1 = git_id(crt_series, '%s^' % patch),
-+                    rev2 = git_id(crt_series, '%s' % patch),
-                     diff_flags = options.diff_flags)
-     tmpl_dict = {'patch':        patch,
-                  'sender':       sender,
-diff --git a/stgit/commands/pick.py b/stgit/commands/pick.py
-index 1f7c84b..2a670e8 100644
---- a/stgit/commands/pick.py
-+++ b/stgit/commands/pick.py
-@@ -87,8 +87,8 @@ def __pick_commit(commit_id, patchname, options):
- 
-         out.done()
-     elif options.update:
--        rev1 = git_id(crt_series, '//bottom')
--        rev2 = git_id(crt_series, '//top')
-+        rev1 = git_id(crt_series, 'HEAD^')
-+        rev2 = git_id(crt_series, 'HEAD')
-         files = git.barefiles(rev1, rev2).split('\n')
- 
-         out.start('Updating with commit %s' % commit_id)
-@@ -115,10 +115,8 @@ def __pick_commit(commit_id, patchname, options):
-         patchname = newpatch.get_name()
- 
-         # find a patchlog to fork from
--        (refpatchname, refbranchname, refpatchid) = parse_rev(patchname)
--        if refpatchname and not refpatchid and \
--               (not refpatchid or refpatchid == 'top'):
--            # FIXME: should also support picking //top.old
-+        refbranchname, refpatchname = parse_rev(patchname)
-+        if refpatchname:
-             if refbranchname:
-                 # assume the refseries is OK, since we already resolved
-                 # commit_str to a git_id
-diff --git a/stgit/commands/refresh.py b/stgit/commands/refresh.py
-index 4695c62..73e4ee0 100644
---- a/stgit/commands/refresh.py
-+++ b/stgit/commands/refresh.py
-@@ -103,8 +103,8 @@ def func(parser, options, args):
-             between = applied[:applied.index(patch):-1]
-             pop_patches(crt_series, between, keep = True)
-         elif options.update:
--            rev1 = git_id(crt_series, '//bottom')
--            rev2 = git_id(crt_series, '//top')
-+            rev1 = git_id(crt_series, 'HEAD^')
-+            rev2 = git_id(crt_series, 'HEAD')
-             patch_files = git.barefiles(rev1, rev2).split('\n')
-             files = [f for f in files if f in patch_files]
-             if not files:
+-        for pn in s.patchorder.applied:
+-            out.stdout(pn)
 diff --git a/stgit/commands/series.py b/stgit/commands/series.py
-index 04183bd..c11c74f 100644
+index c11c74f..b7899d7 100644
 --- a/stgit/commands/series.py
 +++ b/stgit/commands/series.py
-@@ -88,7 +88,7 @@ def __print_patch(stack, patch, branch_str, prefix, empty_prefix, length, option
-     elif options.empty and stack.patches.get(patch).is_empty():
-         prefix = empty_prefix
+@@ -37,7 +37,13 @@ options = [make_option('-b', '--branch',
+            make_option('-a', '--all',
+                        help = 'show all patches, including the hidden ones',
+                        action = 'store_true'),
+-           make_option('--hidden',
++           make_option('-A', '--applied',
++                       help = 'show the applied patches only',
++                       action = 'store_true'),
++           make_option('-U', '--unapplied',
++                       help = 'show the unapplied patches only',
++                       action = 'store_true'),
++           make_option('-H', '--hidden',
+                        help = 'show the hidden patches only',
+                        action = 'store_true'),
+            make_option('-m', '--missing', metavar = 'BRANCH',
+@@ -112,17 +118,24 @@ def func(parser, options, args):
+         stack = directory.repository.get_stack(options.missing)
  
--    patch_str = patch + branch_str
-+    patch_str = branch_str + patch
- 
-     if options.description or options.author:
-         patch_str = patch_str.ljust(length)
-@@ -164,7 +164,7 @@ def func(parser, options, args):
-         return
- 
-     if options.showbranch:
--        branch_str = '@' + stack.name
-+        branch_str = stack.name + ':'
+     # current series patches
+-    if options.all:
++    applied = unapplied = hidden = ()
++    if options.applied or options.unapplied or options.hidden:
++        if options.all:
++            raise common.CmdException, \
++                '--all cannot be used with --applied/unapplied/hidden'
++        if options.applied:
++            applied = stack.patchorder.applied
++        if options.unapplied:
++            unapplied = stack.patchorder.unapplied
++        if options.hidden:
++            hidden = stack.patchorder.hidden
++    elif options.all:
+         applied = stack.patchorder.applied
+         unapplied = stack.patchorder.unapplied
+         hidden = stack.patchorder.hidden
+-    elif options.hidden:
+-        applied = unapplied = ()
+-        hidden = stack.patchorder.hidden
      else:
-         branch_str = ''
+         applied = stack.patchorder.applied
+         unapplied = stack.patchorder.unapplied
+-        hidden = ()
  
+     if options.missing:
+         cmp_patches = cmp_stack.patchorder.all
+diff --git a/stgit/commands/unapplied.py b/stgit/commands/unapplied.py
+deleted file mode 100644
+index 7323346..0000000
+--- a/stgit/commands/unapplied.py
++++ /dev/null
+@@ -1,50 +0,0 @@
+-
+-__copyright__ = """
+-Copyright (C) 2005, Catalin Marinas <catalin.marinas@gmail.com>
+-
+-This program is free software; you can redistribute it and/or modify
+-it under the terms of the GNU General Public License version 2 as
+-published by the Free Software Foundation.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License
+-along with this program; if not, write to the Free Software
+-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-"""
+-
+-from optparse import make_option
+-from stgit.out import *
+-from stgit.commands import common
+-
+-
+-help = 'print the unapplied patches'
+-usage = """%prog [options]
+-
+-List the patches from the series which are not pushed onto the stack.
+-They are listed in the reverse order in which they were popped."""
+-
+-directory = common.DirectoryHasRepositoryLib()
+-options = [make_option('-b', '--branch',
+-                       help = 'use BRANCH instead of the default branch'),
+-           make_option('-c', '--count',
+-                       help = 'print the number of unapplied patches',
+-                       action = 'store_true')]
+-
+-
+-def func(parser, options, args):
+-    """Show the unapplied patches
+-    """
+-    if len(args) != 0:
+-        parser.error('incorrect number of arguments')
+-
+-    s = directory.repository.get_stack(options.branch)
+-
+-    if options.count:
+-        out.stdout(len(s.patchorder.unapplied))
+-    else:
+-        for pn in s.patchorder.unapplied:
+-            out.stdout(pn)
+diff --git a/stgit/main.py b/stgit/main.py
+index aa1f8ef..7be8e14 100644
+--- a/stgit/main.py
++++ b/stgit/main.py
+@@ -59,7 +59,6 @@ class Commands(dict):
+         return getattr(stgit.commands, cmd_mod)
+ 
+ commands = Commands({
+-    'applied':          'applied',
+     'branch':           'branch',
+     'delete':           'delete',
+     'diff':             'diff',
+@@ -96,7 +95,6 @@ commands = Commands({
+     'status':           'status',
+     'sync':             'sync',
+     'top':              'top',
+-    'unapplied':        'unapplied',
+     'uncommit':         'uncommit',
+     'unhide':           'unhide'
+     })
+@@ -107,7 +105,6 @@ repocommands = (
+     'id',
+     )
+ stackcommands = (
+-    'applied',
+     'branch',
+     'clean',
+     'coalesce',
+@@ -125,7 +122,6 @@ stackcommands = (
+     'series',
+     'sink',
+     'top',
+-    'unapplied',
+     'uncommit',
+     'unhide',
+     )
+diff --git a/t/t1002-branch-clone.sh b/t/t1002-branch-clone.sh
+index 19bdc45..1303b41 100755
+--- a/t/t1002-branch-clone.sh
++++ b/t/t1002-branch-clone.sh
+@@ -29,16 +29,16 @@ test_expect_success \
+     '
+     stg branch --clone foo &&
+     stg new p1 -m "p1" &&
+-    test $(stg applied -c) -eq 1
++    test $(stg series --applied -c) -eq 1
+     '
+ 
+ test_expect_success \
+     'Clone the current StGIT branch' \
+     '
+     stg branch --clone bar &&
+-    test $(stg applied -c) -eq 1 &&
++    test $(stg series --applied -c) -eq 1 &&
+     stg new p2 -m "p2" &&
+-    test $(stg applied -c) -eq 2
++    test $(stg series --applied -c) -eq 2
+     '
+ 
+ test_done
+diff --git a/t/t1003-new.sh b/t/t1003-new.sh
+index 0be5d9b..826e41d 100755
+--- a/t/t1003-new.sh
++++ b/t/t1003-new.sh
+@@ -17,13 +17,13 @@ test_expect_success \
+ test_expect_success \
+     'Create a named patch' '
+     stg new foo -m foobar &&
+-    [ $(stg applied -c) -eq 1 ]
++    [ $(stg series --applied -c) -eq 1 ]
+ '
+ 
+ test_expect_success \
+     'Create a patch without giving a name' '
+     stg new -m yo &&
+-    [ $(stg applied -c) -eq 2 ]
++    [ $(stg series --applied -c) -eq 2 ]
+ '
+ 
+ test_done
+diff --git a/t/t1200-push-modified.sh b/t/t1200-push-modified.sh
+index 2edc760..113e41d 100755
+--- a/t/t1200-push-modified.sh
++++ b/t/t1200-push-modified.sh
+@@ -26,8 +26,8 @@ test_expect_success \
+         printf "a\nc\n" > file && git add file && stg refresh &&
+         stg new p2 -m p2 &&
+         printf "a\nb\nc\n" > file && stg refresh &&
+-        [ "$(echo $(stg applied))" = "p1 p2" ] &&
+-        [ "$(echo $(stg unapplied))" = "" ]
++        [ "$(echo $(stg series --applied --noprefix))" = "p1 p2" ] &&
++        [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
+     )
+ '
+ 
+@@ -57,8 +57,8 @@ test_expect_success \
+     'Rollback the push' '
+     (
+         cd bar && stg push --undo &&
+-        [ "$(echo $(stg applied))" = "" ] &&
+-        [ "$(echo $(stg unapplied))" = "p1 p2" ]
++        [ "$(echo $(stg series --applied --noprefix))" = "" ] &&
++        [ "$(echo $(stg series --unapplied --noprefix))" = "p1 p2" ]
+     )
+ '
+ 
+@@ -66,8 +66,8 @@ test_expect_success \
+     'Push those patches while checking they were merged upstream' '
+     (
+         cd bar && stg push --merged --all
+-        [ "$(echo $(stg applied))" = "p1 p2" ] &&
+-        [ "$(echo $(stg unapplied))" = "" ]
++        [ "$(echo $(stg series --applied --noprefix))" = "p1 p2" ] &&
++        [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
+     )
+ '
+ 
+diff --git a/t/t1203-pop.sh b/t/t1203-pop.sh
+index 6e49b4d..e1ed577 100755
+--- a/t/t1203-pop.sh
++++ b/t/t1203-pop.sh
+@@ -12,22 +12,22 @@ test_expect_success \
+     for i in 0 1 2 3 4 5 6 7 8 9; do
+         stg new p$i -m p$i;
+     done &&
+-    [ "$(echo $(stg applied))" = "p0 p1 p2 p3 p4 p5 p6 p7 p8 p9" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2 p3 p4 p5 p6 p7 p8 p9" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
+ '
+ 
+ test_expect_success \
+     'Pop half the patches' '
+     stg pop -n 5 &&
+-    [ "$(echo $(stg applied))" = "p0 p1 p2 p3 p4" ] &&
+-    [ "$(echo $(stg unapplied))" = "p5 p6 p7 p8 p9" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2 p3 p4" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p5 p6 p7 p8 p9" ]
+ '
+ 
+ test_expect_success \
+     'Pop the remaining patches' '
+     stg pop -a &&
+-    [ "$(echo $(stg applied))" = "" ] &&
+-    [ "$(echo $(stg unapplied))" = "p0 p1 p2 p3 p4 p5 p6 p7 p8 p9" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p0 p1 p2 p3 p4 p5 p6 p7 p8 p9" ]
+ '
+ 
+ test_done
+diff --git a/t/t1204-pop-keep.sh b/t/t1204-pop-keep.sh
+index 35f4ec0..db473f2 100755
+--- a/t/t1204-pop-keep.sh
++++ b/t/t1204-pop-keep.sh
+@@ -11,8 +11,8 @@ test_expect_success 'Create a few patches' '
+         git add patch$i.txt &&
+         stg refresh
+     done &&
+-    [ "$(echo $(stg applied))" = "p0 p1 p2" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
+ '
+ 
+ test_expect_success 'Make some non-conflicting local changes' '
+@@ -21,8 +21,8 @@ test_expect_success 'Make some non-conflicting local changes' '
+ 
+ test_expect_success 'Pop two patches, keeping local changes' '
+     stg pop -n 2 --keep &&
+-    [ "$(echo $(stg applied))" = "p0" ] &&
+-    [ "$(echo $(stg unapplied))" = "p1 p2" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p0" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p1 p2" ] &&
+     [ "$(echo $(ls patch?.txt))" = "patch0.txt" ] &&
+     [ "$(echo $(cat patch0.txt))" = "patch0 local" ]
+ '
+@@ -34,8 +34,8 @@ test_expect_success 'Reset and push patches again' '
+ 
+ test_expect_success 'Pop a patch without local changes' '
+     stg pop --keep &&
+-    [ "$(echo $(stg applied))" = "p0 p1" ] &&
+-    [ "$(echo $(stg unapplied))" = "p2" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p2" ] &&
+     [ "$(echo $(ls patch?.txt))" = "patch0.txt patch1.txt" ]
+ '
+ 
+diff --git a/t/t1205-push-subdir.sh b/t/t1205-push-subdir.sh
+index 945eb74..f852762 100755
+--- a/t/t1205-push-subdir.sh
++++ b/t/t1205-push-subdir.sh
+@@ -12,8 +12,8 @@ test_expect_success 'Create some patches' '
+         git add x.txt foo/y.txt &&
+         stg refresh
+     done &&
+-    [ "$(echo $(stg applied))" = "p0 p1 p2" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
+ '
+ 
+ test_expect_success 'Fast-forward push from a subdir' '
+diff --git a/t/t1301-repair.sh b/t/t1301-repair.sh
+index 33f8f6d..8d5d4e5 100755
+--- a/t/t1301-repair.sh
++++ b/t/t1301-repair.sh
+@@ -37,9 +37,9 @@ test_expect_success \
+     '
+ 
+ test_expect_success 'Turn one GIT commit into a patch' '
+-    [ $(stg applied | wc -l) -eq 1 ] &&
++    [ $(stg series --applied -c) -eq 1 ] &&
+     stg repair &&
+-    [ $(stg applied | wc -l) -eq 2 ]
++    [ $(stg series --applied -c) -eq 2 ]
+     '
+ 
+ test_expect_success \
+@@ -55,9 +55,9 @@ test_expect_success \
+     '
+ 
+ test_expect_success 'Turn three GIT commits into patches' '
+-    [ $(stg applied | wc -l) -eq 2 ] &&
++    [ $(stg series --applied -c) -eq 2 ] &&
+     stg repair &&
+-    [ $(stg applied | wc -l) -eq 5 ]
++    [ $(stg series --applied -c) -eq 5 ]
+     '
+ 
+ test_expect_success \
+@@ -72,9 +72,9 @@ test_expect_success \
+     '
+ 
+ test_expect_success 'Repair in the presence of a merge commit' '
+-    [ $(stg applied | wc -l) -eq 5 ] &&
++    [ $(stg series --applied -c) -eq 5 ] &&
+     stg repair &&
+-    [ $(stg applied | wc -l) -eq 0 ]
++    [ $(stg series --applied -c) -eq 0 ]
+ '
+ 
+ test_done
+diff --git a/t/t1302-repair-interop.sh b/t/t1302-repair-interop.sh
+index 3ea48e7..224c4ba 100755
+--- a/t/t1302-repair-interop.sh
++++ b/t/t1302-repair-interop.sh
+@@ -21,8 +21,8 @@ test_expect_success 'Create five patches' '
+     for i in 0 1 2 3 4; do
+         stg new p$i -m p$i;
+     done &&
+-    [ "$(echo $(stg applied))" = "p0 p1 p2 p3 p4" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2 p3 p4" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
+ '
+ 
+ test_expect_success 'Pop two patches with git-reset' '
+@@ -30,14 +30,14 @@ test_expect_success 'Pop two patches with git-reset' '
+     command_error stg refresh &&
+     stg repair &&
+     stg refresh &&
+-    [ "$(echo $(stg applied))" = "p0 p1 p2" ] &&
+-    [ "$(echo $(stg unapplied))" = "p3 p4" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p3 p4" ]
+ '
+ 
+ test_expect_success 'Create a new patch' '
+     stg new q0 -m q0 &&
+-    [ "$(echo $(stg applied))" = "p0 p1 p2 q0" ] &&
+-    [ "$(echo $(stg unapplied))" = "p3 p4" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2 q0" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p3 p4" ]
+ '
+ 
+ test_expect_success 'Go to an unapplied patch with with git-reset' '
+@@ -45,15 +45,15 @@ test_expect_success 'Go to an unapplied patch with with git-reset' '
+     command_error stg refresh &&
+     stg repair &&
+     stg refresh &&
+-    [ "$(echo $(stg applied))" = "p0 p1 p2 p3" ] &&
+-    [ "$(echo $(stg unapplied))" = "q0 p4" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2 p3" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "q0 p4" ]
+ '
+ 
+ test_expect_success 'Go back to below the stack base with git-reset' '
+     git reset --hard foo-tag &&
+     stg repair &&
+-    [ "$(echo $(stg applied))" = "" ] &&
+-    [ "$(echo $(stg unapplied))" = "p0 p1 p2 p3 q0 p4" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p0 p1 p2 p3 q0 p4" ]
+ '
+ 
+ test_done
+diff --git a/t/t1500-float.sh b/t/t1500-float.sh
+index 778fde4..e44af3a 100755
+--- a/t/t1500-float.sh
++++ b/t/t1500-float.sh
+@@ -20,37 +20,37 @@ test_expect_success \
+ 	 stg new F -m "f" && echo F >f.txt && git add f.txt && stg refresh &&
+ 	 stg new G -m "g" && echo G >g.txt && git add g.txt && stg refresh &&
+ 	 stg pop &&
+-	 test "$(echo $(stg applied))" = "A B C D E F"
++	 test "$(echo $(stg series --applied --noprefix))" = "A B C D E F"
+ 	'
+ 
+ test_expect_success \
+ 	'Float A to top' \
+ 	'stg float A &&
+-	 test "$(echo $(stg applied))" = "B C D E F A"
++	 test "$(echo $(stg series --applied --noprefix))" = "B C D E F A"
+ 	'
+ test_expect_success \
+ 	'Float A to top (noop)' \
+ 	'stg float A &&
+-	 test "$(echo $(stg applied))" = "B C D E F A"
++	 test "$(echo $(stg series --applied --noprefix))" = "B C D E F A"
+ 	'
+ test_expect_success \
+ 	'Float B C to top' \
+ 	'stg float B C &&
+-	 test "$(echo $(stg applied))" = "D E F A B C"
++	 test "$(echo $(stg series --applied --noprefix))" = "D E F A B C"
+ 	'
+ test_expect_success \
+ 	'Float E A to top' \
+ 	'stg float E A &&
+-	 test "$(echo $(stg applied))" = "D F B C E A"
++	 test "$(echo $(stg series --applied --noprefix))" = "D F B C E A"
+ 	'
+ test_expect_success \
+ 	'Float E to top' \
+ 	'stg float E &&
+-	 test "$(echo $(stg applied))" = "D F B C A E"
++	 test "$(echo $(stg series --applied --noprefix))" = "D F B C A E"
+ 	'
+ test_expect_success \
+ 	'Float G F to top' \
+ 	'stg float G F &&
+-	 test "$(echo $(stg applied))" = "D B C A E G F"
++	 test "$(echo $(stg series --applied --noprefix))" = "D B C A E G F"
+ 	'
+ test_done
+diff --git a/t/t1501-sink.sh b/t/t1501-sink.sh
+index ac9e25d..32931cd 100755
+--- a/t/t1501-sink.sh
++++ b/t/t1501-sink.sh
+@@ -22,7 +22,7 @@ test_expect_success 'sink without applied patches' '
+ 
+ test_expect_success 'sink a specific patch without applied patches' '
+     stg sink y &&
+-    test $(echo $(stg applied)) = "y"
++    test $(echo $(stg series --applied --noprefix)) = "y"
+ '
+ 
+ test_done
+diff --git a/t/t1600-delete-one.sh b/t/t1600-delete-one.sh
+index b526a55..ef0b29d 100755
+--- a/t/t1600-delete-one.sh
++++ b/t/t1600-delete-one.sh
+@@ -19,27 +19,27 @@ test_expect_success \
+ test_expect_success \
+     'Try to delete a non-existing patch' \
+     '
+-    [ $(stg applied | wc -l) -eq 1 ] &&
++    [ $(stg series --applied -c) -eq 1 ] &&
+     command_error stg delete bar &&
+-    [ $(stg applied | wc -l) -eq 1 ]
++    [ $(stg series --applied -c) -eq 1 ]
+     '
+ 
+ test_expect_success \
+     'Try to delete the topmost patch while dirty' \
+     '
+     echo dirty >> foo.txt &&
+-    [ $(stg applied | wc -l) -eq 1 ] &&
++    [ $(stg series --applied -c) -eq 1 ] &&
+     command_error stg delete foo &&
+-    [ $(stg applied | wc -l) -eq 1 ] &&
++    [ $(stg series --applied -c) -eq 1 ] &&
+     git reset --hard
+     '
+ 
+ test_expect_success \
+     'Delete the topmost patch' \
+     '
+-    [ $(stg applied | wc -l) -eq 1 ] &&
++    [ $(stg series --applied -c) -eq 1 ] &&
+     stg delete foo &&
+-    [ $(stg applied | wc -l) -eq 0 ]
++    [ $(stg series --applied -c) -eq 0 ]
+     '
+ 
+ test_expect_success \
+@@ -55,9 +55,9 @@ test_expect_success \
+ test_expect_success \
+     'Delete an unapplied patch' \
+     '
+-    [ $(stg unapplied | wc -l) -eq 1 ] &&
++    [ $(stg series --unapplied -c) -eq 1 ] &&
+     stg delete foo &&
+-    [ $(stg unapplied | wc -l) -eq 0 ]
++    [ $(stg series --unapplied -c) -eq 0 ]
+     '
+ 
+ test_expect_success \
+@@ -76,9 +76,9 @@ test_expect_success \
+ test_expect_success \
+     'Try to delete a non-topmost applied patch' \
+     '
+-    [ $(stg applied | wc -l) -eq 2 ] &&
++    [ $(stg series --applied -c) -eq 2 ] &&
+     stg delete foo &&
+-    [ $(stg applied | wc -l) -eq 1 ]
++    [ $(stg series --applied -c) -eq 1 ]
+     '
+ 
+ test_expect_success \
+@@ -99,11 +99,11 @@ test_expect_success \
+ test_expect_success \
+     'Delete a patch in another branch' \
+     '
+-    [ $(stg applied | wc -l) -eq 2 ] &&
+-    [ $(stg applied -b br | wc -l) -eq 1 ] &&
++    [ $(stg series --applied -c) -eq 2 ] &&
++    [ $(stg series --applied -b br -c) -eq 1 ] &&
+     stg delete -b br baz &&
+-    [ $(stg applied | wc -l) -eq 2 ] &&
+-    [ $(stg applied -b br | wc -l) -eq 0 ]
++    [ $(stg series --applied -c) -eq 2 ] &&
++    [ $(stg series --applied -b br -c) -eq 0 ]
+     '
+ 
+ test_done
+diff --git a/t/t1601-delete-many.sh b/t/t1601-delete-many.sh
+index bc5364f..cb7fb0d 100755
+--- a/t/t1601-delete-many.sh
++++ b/t/t1601-delete-many.sh
+@@ -25,31 +25,31 @@ test_expect_success \
+ test_expect_success \
+     'Delete some patches' \
+     '
+-    [ "$(echo $(stg applied))" = "p0 p1 p2 p3 p4" ] &&
+-    [ "$(echo $(stg unapplied))" = "p5 p6 p7 p8 p9" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2 p3 p4" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p5 p6 p7 p8 p9" ] &&
+     stg delete p7 p6 p3 p4 &&
+-    [ "$(echo $(stg applied))" = "p0 p1 p2" ] &&
+-    [ "$(echo $(stg unapplied))" = "p5 p8 p9" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p5 p8 p9" ]
+     '
+ 
+ test_expect_success \
+     'Delete some more patches, some of which do not exist' \
+     '
+-    [ "$(echo $(stg applied))" = "p0 p1 p2" ] &&
+-    [ "$(echo $(stg unapplied))" = "p5 p8 p9" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p5 p8 p9" ] &&
+     command_error stg delete p7 p8 p2 p0 &&
+-    [ "$(echo $(stg applied))" = "p0 p1 p2" ] &&
+-    [ "$(echo $(stg unapplied))" = "p5 p8 p9" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p5 p8 p9" ]
+     '
+ 
+ test_expect_success \
+     'Delete a range of patches' \
+     '
+-    [ "$(echo $(stg applied))" = "p0 p1 p2" ] &&
+-    [ "$(echo $(stg unapplied))" = "p5 p8 p9" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p5 p8 p9" ] &&
+     stg delete p1..p8 &&
+-    [ "$(echo $(stg applied))" = "p0" ] &&
+-    [ "$(echo $(stg unapplied))" = "p9" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p9" ]
+     '
+ 
+ test_done
 diff --git a/t/t2000-sync.sh b/t/t2000-sync.sh
-index 9852eb8..f4e8b07 100755
+index f4e8b07..00ea7bd 100755
 --- a/t/t2000-sync.sh
 +++ b/t/t2000-sync.sh
-@@ -37,7 +37,7 @@ test_expect_success \
- test_expect_success \
-     'Create a branch with empty patches' \
+@@ -30,8 +30,8 @@ test_expect_success \
+     stg refresh &&
+     stg export &&
+     stg pop &&
+-    [ "$(echo $(stg applied))" = "p1 p2" ] &&
+-    [ "$(echo $(stg unapplied))" = "p3" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p1 p2" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p3" ]
      '
--    stg branch -c foo base &&
-+    stg branch -c foo {base} &&
+ 
+ test_expect_success \
+@@ -41,16 +41,16 @@ test_expect_success \
      stg new p1 -m p1 &&
      stg new p2 -m p2 &&
      stg new p3 -m p3 &&
+-    [ "$(echo $(stg applied))" = "p1 p2 p3" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p1 p2 p3" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
+     '
+ 
+ test_expect_success \
+     'Synchronise second patch with the master branch' \
+     '
+     stg sync -B master p2 &&
+-    [ "$(echo $(stg applied))" = "p1 p2 p3" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p1 p2 p3" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ] &&
+     test $(cat foo2.txt) = "foo2"
+     '
+ 
+@@ -58,8 +58,8 @@ test_expect_success \
+     'Synchronise the first two patches with the master branch' \
+     '
+     stg sync -B master -a &&
+-    [ "$(echo $(stg applied))" = "p1 p2 p3" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p1 p2 p3" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ] &&
+     test $(cat foo1.txt) = "foo1" &&
+     test $(cat foo2.txt) = "foo2"
+     '
+@@ -68,8 +68,8 @@ test_expect_success \
+     'Synchronise all the patches with the exported series' \
+     '
+     stg sync -s patches-master/series -a &&
+-    [ "$(echo $(stg applied))" = "p1 p2 p3" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p1 p2 p3" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ] &&
+     test $(cat foo1.txt) = "foo1" &&
+     test $(cat foo2.txt) = "foo2" &&
+     test $(cat foo3.txt) = "foo3"
+@@ -79,8 +79,8 @@ test_expect_success \
+     'Modify the master patches' \
+     '
+     stg branch master &&
+-    [ "$(echo $(stg applied))" = "p1 p2" ] &&
+-    [ "$(echo $(stg unapplied))" = "p3" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p1 p2" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p3" ] &&
+     stg goto p1 &&
+     echo bar1 >> foo1.txt &&
+     stg refresh &&
+@@ -91,8 +91,8 @@ test_expect_success \
+     stg goto p3 &&
+     echo bar3 >> foo3.txt &&
+     stg refresh &&
+-    [ "$(echo $(stg applied))" = "p1 p2 p3" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p1 p2 p3" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ] &&
+     stg export &&
+     stg branch foo
+     '
+@@ -101,8 +101,8 @@ test_expect_success \
+     'Synchronise second patch with the master branch' \
+     '
+     stg sync -B master p2 &&
+-    [ "$(echo $(stg applied))" = "p1 p2 p3" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p1 p2 p3" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ] &&
+     test $(cat bar2.txt) = "bar2"
+     '
+ 
+@@ -115,13 +115,13 @@ test_expect_success \
+ test_expect_success \
+     'Restore the stack status after the failed sync' \
+     '
+-    [ "$(echo $(stg applied))" = "p1" ] &&
+-    [ "$(echo $(stg unapplied))" = "p2 p3" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p1" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p2 p3" ] &&
+     stg resolved -a &&
+     stg refresh &&
+     stg goto p3
+-    [ "$(echo $(stg applied))" = "p1 p2 p3" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p1 p2 p3" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
+     '
+ 
+ test_expect_success \
+@@ -133,12 +133,12 @@ test_expect_success \
+ test_expect_success \
+     'Restore the stack status after the failed sync' \
+     '
+-    [ "$(echo $(stg applied))" = "p1 p2 p3" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p1 p2 p3" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ] &&
+     stg resolved -a &&
+     stg refresh &&
+-    [ "$(echo $(stg applied))" = "p1 p2 p3" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p1 p2 p3" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
+     '
+ 
+ test_done
+diff --git a/t/t2200-rebase.sh b/t/t2200-rebase.sh
+index 256eaaa..adbf242 100755
+--- a/t/t2200-rebase.sh
++++ b/t/t2200-rebase.sh
+@@ -28,7 +28,7 @@ test_expect_success \
+ 	'
+ 	stg rebase master~1 &&
+ 	test `stg id stack:{base}` = `git rev-parse master~1` &&
+-	test `stg applied | wc -l` = 1
++	test `stg series --applied -c` = 1
+ 	'
+ 
+ test_expect_success \
+@@ -40,7 +40,7 @@ test_expect_success \
+ test_expect_success \
+ 	'Check patches were re-applied' \
+ 	'
+-	test $(stg applied | wc -l) = 1
++	test $(stg series --applied -c) = 1
+ 	'
+ 
+ test_done
+diff --git a/t/t2500-clean.sh b/t/t2500-clean.sh
+index abde9cf..99fd29f 100755
+--- a/t/t2500-clean.sh
++++ b/t/t2500-clean.sh
+@@ -17,11 +17,11 @@ test_expect_success 'Initialize StGit stack' '
+ '
+ 
+ test_expect_success 'Clean empty patches' '
+-    [ "$(echo $(stg applied))" = "e0 p0 e1" ] &&
+-    [ "$(echo $(stg unapplied))" = "e2" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "e0 p0 e1" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "e2" ] &&
+     stg clean &&
+-    [ "$(echo $(stg applied))" = "p0" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
+ '
+ 
+ test_expect_success 'Create a conflict' '
+@@ -37,8 +37,8 @@ test_expect_success 'Create a conflict' '
+ 
+ test_expect_success 'Make sure conflicting patches are preserved' '
+     stg clean &&
+-    [ "$(echo $(stg applied))" = "p0 p2 p1" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p2 p1" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
+ '
+ 
+ test_done
+diff --git a/t/t2600-coalesce.sh b/t/t2600-coalesce.sh
+index f13a309..ef5bf99 100755
+--- a/t/t2600-coalesce.sh
++++ b/t/t2600-coalesce.sh
+@@ -15,17 +15,17 @@ test_expect_success 'Initialize StGit stack' '
+ '
+ 
+ test_expect_success 'Coalesce some patches' '
+-    [ "$(echo $(stg applied))" = "p0 p1 p2 p3" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2 p3" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ] &&
+     stg coalesce --name=q0 --message="wee woo" p1 p2 &&
+-    [ "$(echo $(stg applied))" = "p0 q0 p3" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 q0 p3" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
+ '
+ 
+ test_expect_success 'Coalesce at stack top' '
+     stg coalesce --name=q1 --message="wee woo wham" q0 p3 &&
+-    [ "$(echo $(stg applied))" = "p0 q1" ] &&
+-    [ "$(echo $(stg unapplied))" = "" ]
++    [ "$(echo $(stg series --applied --noprefix))" = "p0 q1" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
+ '
+ 
+ test_done
+diff --git a/t/t3000-dirty-merge.sh b/t/t3000-dirty-merge.sh
+index 4dd6da3..f0f79d5 100755
+--- a/t/t3000-dirty-merge.sh
++++ b/t/t3000-dirty-merge.sh
+@@ -24,11 +24,11 @@ test_expect_success 'Pop one patch and update the other' '
+ 
+ test_expect_success 'Push with dirty worktree' '
+     echo 4 > a &&
+-    [ "$(echo $(stg applied))" = "p1" ] &&
+-    [ "$(echo $(stg unapplied))" = "p2" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p1" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p2" ] &&
+     conflict stg goto p2 &&
+-    [ "$(echo $(stg applied))" = "p1" ] &&
+-    [ "$(echo $(stg unapplied))" = "p2" ] &&
++    [ "$(echo $(stg series --applied --noprefix))" = "p1" ] &&
++    [ "$(echo $(stg series --unapplied --noprefix))" = "p2" ] &&
+     [ "$(echo $(cat a))" = "4" ]
+ '
+ 
+diff --git a/t/t4000-upgrade.sh b/t/t4000-upgrade.sh
+index ea9bf0b..b89c720 100755
+--- a/t/t4000-upgrade.sh
++++ b/t/t4000-upgrade.sh
+@@ -14,8 +14,8 @@ for ver in 0.12 0.8; do
+ 
+     test_expect_success \
+         "v$ver: Check the list of applied and unapplied patches" '
+-        [ "$(echo $(stg applied))" = "p0 p1 p2" ] &&
+-        [ "$(echo $(stg unapplied))" = "p3 p4" ]
++        [ "$(echo $(stg series --applied --noprefix))" = "p0 p1 p2" ] &&
++        [ "$(echo $(stg series --unapplied --noprefix))" = "p3 p4" ]
+     '
+ 
+     test_expect_success \
