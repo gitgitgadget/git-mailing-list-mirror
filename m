@@ -1,91 +1,87 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: Re: [RFC PATCH] Fix quadratic performance in rewrite_one.
-Date: Sun, 13 Jul 2008 04:37:58 +0400
-Organization: TEPKOM
-Message-ID: <200807130437.59141.angavrilov@gmail.com>
-References: <200807122200.58187.angavrilov@gmail.com> <alpine.LFD.1.10.0807121550320.2959@woody.linux-foundation.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git pull is slow
+Date: Sun, 13 Jul 2008 01:15:12 +0000
+Message-ID: <20080713011512.GB31050@spearce.org>
+References: <g5570s$d5m$1@ger.gmane.org> <g57jkp$ekm$1@ger.gmane.org> <48776169.20705@op5.se> <alpine.DEB.1.00.0807111443280.8950@racer> <4878A442.6020405@arcor.de> <alpine.DEB.1.00.0807121546590.8950@racer>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Jul 13 02:39:18 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Stephan Hennig <mailing_list@arcor.de>,
+	Nicolas Pitre <nico@cam.org>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 13 03:16:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KHpcT-0001YE-IL
-	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 02:39:17 +0200
+	id 1KHqCo-0001n1-1r
+	for gcvg-git-2@gmane.org; Sun, 13 Jul 2008 03:16:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbYGMAiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jul 2008 20:38:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbYGMAiO
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 20:38:14 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:18454 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750972AbYGMAiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jul 2008 20:38:13 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1816377fgg.17
-        for <git@vger.kernel.org>; Sat, 12 Jul 2008 17:38:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=+MfL2kTThImdrdQCago6u8G1k30U8kJ1OoTsGNHXAYs=;
-        b=jSRdiWNm+9O2W2uWa5HKAIkcFRKyK2sdQm2y1DqKERk8o1Q/ZClpKzwPaLuBdZo2dJ
-         7LkoepOWqRwIOmSvQ9NWel2iVOCzbSfH2pitq5cdrytpayopj8EWlt9cWu6APwaiTOkr
-         YiAXUzeP/a9cSs1x0beqIYf1qGQoP/JEQjNpI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=lEOXOJUmDavoee92cxWg+DntLZPm6KnzykdH17PGdV7X/8Vn8Gc+8rG4YTSOp04Ut4
-         pjfzIxB3Be4uRfLKY5g20N9NkFDkDkLAQiB6dW/aTkb1Ed2mLMX4kdOtqqBceewRmvYv
-         hLeIx7cCGQOD+ZUkipZ4fmIkqk8fhYLW6rWfE=
-Received: by 10.86.59.2 with SMTP id h2mr12170424fga.12.1215909491235;
-        Sat, 12 Jul 2008 17:38:11 -0700 (PDT)
-Received: from desktop2 ( [92.255.84.130])
-        by mx.google.com with ESMTPS id 3sm3810767fge.3.2008.07.12.17.38.10
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 12 Jul 2008 17:38:10 -0700 (PDT)
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.LFD.1.10.0807121550320.2959@woody.linux-foundation.org>
+	id S1752106AbYGMBPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jul 2008 21:15:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751648AbYGMBPO
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jul 2008 21:15:14 -0400
+Received: from george.spearce.org ([209.20.77.23]:38759 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751233AbYGMBPN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jul 2008 21:15:13 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 36B56382A6; Sun, 13 Jul 2008 01:15:12 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807121546590.8950@racer>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88279>
 
-On Sunday 13 July 2008 02:55:27 Linus Torvalds wrote:
-> On Sat, 12 Jul 2008, Alexander N. Gavrilov wrote:
-> > Parent commits are usually older than their children. Thus,
-> > on each iteration of the loop in rewrite_one, add_parents_to_list
-> > traverses all commits previously processed by the loop.
-> > It performs very poorly in case of very long rewrite chains.
->
-> Good call, but you don't seem to invalidate the cache when we remove
-> things from the list.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Sat, 12 Jul 2008, Stephan Hennig wrote:
+> > 
+> > Thanks for having a look at this!  What does "problem with the pack" 
+> > mean?  Do you think it is a Git problem (client or server side?) or just 
+> > a misconfiguration?
+> 
+> I thought that the blobs in the pack are just too similar.  That makes for 
+> a good compression, since you get many relatively small deltas.  But it 
+> also makes for a lot of work to reconstruct the blobs.
+> 
+> I suspected that you run out of space for the cache holding some 
+> reconstructed blobs (to prevent reconstructing all of them from scratch).
+...
+> Whoa. As you can see, your puny little 3.3 megabyte pack is blown to a 
+> full 555 megabyte in RAM.
+...
+> I expect this to touch the resolve_delta() function of index-pack.c in a 
+> major way, though.
 
-The cache is local to rewrite_one, and is invalidated by exiting from that 
-function. Other users of add_parents_to_list just pass NULL as cache_ptr, 
-thus causing insert_by_date_cached to degenerate into a simple 
-insert_by_date.
+Yea, that's going to be ugly.  The "cache" you speak of above is held
+on the call stack as resolv_delta() recurses through the delta chain
+to reconstruct objects and generate their SHA-1s.  There isn't a way to
+release these objects when memory gets low so your worst case scenario
+is a 100M+ blob with a delta chain of 50 or more - that will take you
+5G of memory to pass through index-pack.
 
-> The top of the limit_list() loop does that "get top entry from list, an
-> free it", and I'm not seeing you invalidating the cache if that entry that
-> just got free'd happened to be the cache entry?
+jgit isn't any better here.
 
-This type of workflow can be expected to keep the list relatively short 
-(roughly limited by the number of simultaneously existing branches); and if 
-it is already long, new entries will probably be added near the beginning 
-anyway, so there doesn't seem to be any need to use caching. 
+What we need to do is maintain a list of the objects we are holding
+on the call stack, and reduce ones up near the top when memory
+gets low.  Then upon recursing back up we can just recreate the
+object if we had to throw it out.  The higher up on the stack the
+object is, the less likely we are to need it in the near future.
 
-rewrite_one() is special in that it can sometimes walk through thousands of 
-commits at once and put them all into the list -- i.e. it is bound not by the 
-width of the history, but by its length.
+The more that I think about this, the easier it sounds to implement.
+I may try to look at it a little later this evening.
+ 
+> P.S.: It seems that "git verify-pack -v" only shows the sizes of the 
+> deltas.  Might be interesting to some to show the unpacked _full_ size, 
+> too.
 
-Alexander
+It wouldn't be very difficult to get that unpacked size.  We just have
+to deflate enough of the delta to see the delta header and obtain the
+inflated object size from that.  Unfortunately there is not an API in
+sha1_file.c to offer that information to callers.
+
+-- 
+Shawn.
