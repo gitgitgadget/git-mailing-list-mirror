@@ -1,73 +1,80 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] bash completion: Append space after file names have been
-	completed
-Date: Mon, 14 Jul 2008 00:22:03 +0000
-Message-ID: <20080714002203.GA13749@spearce.org>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [PATCH 2/3] add new Git::Repo API
+Date: Mon, 14 Jul 2008 03:04:33 +0200
+Message-ID: <487AA621.40701@gmail.com>
+References: <4876B223.4070707@gmail.com> <1215738665-5153-1-git-send-email-LeWiemann@gmail.com> <7vmyklpiqk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, John Hawley <warthog19@eaglescrag.net>,
+	Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 02:23:11 2008
+X-From: git-owner@vger.kernel.org Mon Jul 14 03:05:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIBqL-0007Jt-Er
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 02:23:05 +0200
+	id 1KICVc-00084S-H9
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 03:05:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754423AbYGNAWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2008 20:22:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754484AbYGNAWF
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 20:22:05 -0400
-Received: from george.spearce.org ([209.20.77.23]:54494 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754398AbYGNAWE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2008 20:22:04 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 17B073836B; Mon, 14 Jul 2008 00:22:03 +0000 (UTC)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753624AbYGNBEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2008 21:04:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753598AbYGNBEl
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 21:04:41 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:16207 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753422AbYGNBEk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2008 21:04:40 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1987106fgg.17
+        for <git@vger.kernel.org>; Sun, 13 Jul 2008 18:04:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=e70ZOQp+S/1jQfZeGrUBwz8ARWzFpm07T5w7s7vB9Fw=;
+        b=pP7RO8UQtDKyFyIWY5C4u+yOKavwZQE2nMcecsnp7xMfG9JxKE/M7hRDnsGlQLvnKr
+         z8AhzWqyqkshAXsf38q4J8mnN1q5uqezty36q/6dQktrx+qYwcMdZ3n1mi+kPiqC2Kvf
+         LOWHkhrsL/hXN0svbmK58KI/ZpMfwmnAnQzTI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=eb5Vm6gsB/FM0Kyy/puFt7fTfnbn8wE7i6ROpJUq7Y8vuq+7LFcBnE7OnZlGhtgCiC
+         YICUSZVOhEVrR8F/eLO+UviUtJ6zPZBUth8GJx7AXEMrZRIHR33PW27NWPifWnh8txdu
+         9zUfiGsrWDET8WBjCivEGJCWFIsGN8tP1ypPI=
+Received: by 10.86.1.11 with SMTP id 11mr13539402fga.27.1215997476614;
+        Sun, 13 Jul 2008 18:04:36 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.204.92])
+        by mx.google.com with ESMTPS id e11sm6071872fga.4.2008.07.13.18.04.33
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 13 Jul 2008 18:04:35 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <7vmyklpiqk.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88364>
 
-When completing `git show origin/maint:Makef<tab>` we should add a
-space after the filename has been completed, so that the user can
-immediately begin the next argument.
+Junio C Hamano wrote:
+> This probably is something the person who mentors you as a GSoC student
+> should tell you, and shouldn't come from me,
 
-I also added a special case for the symlink variant so we treat it
-just like a normal blob, as there are no items below it in the Git
-tree structure.
+No, thanks for telling me.  I'm actually keeping John quite busy with
+the server side on kernel.org, and wouldn't currently expect him to look
+at the patches I'm sending.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- contrib/completion/git-completion.bash |   10 +++++++++-
- 1 files changed, 9 insertions(+), 1 deletions(-)
+> I would have preferred to see the first paragraph of yours stated more
+> diplomaticly; it sounds rather unilateral ultimatum to me.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 9a1c66a..790d1c6 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -294,9 +294,17 @@ __git_complete_file ()
- 			ls="$ref"
- 			;;
- 	    esac
-+		local IFS=$'\n'
- 		COMPREPLY=($(compgen -P "$pfx" \
- 			-W "$(git --git-dir="$(__gitdir)" ls-tree "$ls" \
--				| sed '/^100... blob /s,^.*	,,
-+				| sed '/^100... blob /{
-+				           s,^.*	,,
-+				           s,$, ,
-+				       }
-+				       /^120000 blob /{
-+				           s,^.*	,,
-+				           s,$, ,
-+				       }
- 				       /^040000 tree /{
- 				           s,^.*	,,
- 				           s,$,/,
--- 
-1.5.6.2.393.g45096
+Apologies; I was trying to hold off developers who'd see duplicate
+functionality and run off at me screaming "unacceptable! impure!!one".
+I should've phrased it more carefully.
+
+> This patch was not signed-off, but I assume it was simply forgotten
+
+Yup.  In the unlikely case it gets applied as-is, feel free to add it.
+
+(I'll reply to Jakub's email shortly, unless I fall asleep in the
+meantime. ^^)
