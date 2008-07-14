@@ -1,37 +1,38 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=0.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=unavailable autolearn_force=no version=3.4.0
-Received: (qmail 4634 invoked by uid 111); 14 Jul 2008 02:08:08 -0000
+Received: (qmail 4652 invoked by uid 111); 14 Jul 2008 02:08:15 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 13 Jul 2008 22:08:00 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 13 Jul 2008 22:08:08 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753637AbYGNCHw (ORCPT <rfc822;peff@peff.net>);
-	Sun, 13 Jul 2008 22:07:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753620AbYGNCHv
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 22:07:51 -0400
-Received: from george.spearce.org ([209.20.77.23]:36303 "EHLO
+	id S1753742AbYGNCHy (ORCPT <rfc822;peff@peff.net>);
+	Sun, 13 Jul 2008 22:07:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753620AbYGNCHy
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jul 2008 22:07:54 -0400
+Received: from george.spearce.org ([209.20.77.23]:36310 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753243AbYGNCHt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2008 22:07:49 -0400
+	with ESMTP id S1753557AbYGNCHv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2008 22:07:51 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id B3B3B383A8; Mon, 14 Jul 2008 02:07:48 +0000 (UTC)
+	id 1F2CB38419; Mon, 14 Jul 2008 02:07:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id D97FE3836B;
-	Mon, 14 Jul 2008 02:07:47 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 663AD383A4;
+	Mon, 14 Jul 2008 02:07:48 +0000 (UTC)
 From:	"Shawn O. Pearce" <spearce@spearce.org>
 To:	Junio C Hamano <gitster@pobox.com>
 Cc:	git@vger.kernel.org, Stephan Hennig <mailing_list@arcor.de>,
 	Nicolas Pitre <nico@cam.org>, Andreas Ericsson <ae@op5.se>
-Subject: [PATCH 1/4] index-pack: Refactor base arguments of resolve_delta into a struct
-Date:	Sun, 13 Jul 2008 22:07:44 -0400
-Message-Id: <1216001267-33235-2-git-send-email-spearce@spearce.org>
+Subject: [PATCH 2/4] index-pack: Chain the struct base_data on the stack for traversal
+Date:	Sun, 13 Jul 2008 22:07:45 -0400
+Message-Id: <1216001267-33235-3-git-send-email-spearce@spearce.org>
 X-Mailer: git-send-email 1.5.6.2.393.g45096
-In-Reply-To: <1216001267-33235-1-git-send-email-spearce@spearce.org>
+In-Reply-To: <1216001267-33235-2-git-send-email-spearce@spearce.org>
 References: <1216001267-33235-1-git-send-email-spearce@spearce.org>
+ <1216001267-33235-2-git-send-email-spearce@spearce.org>
 In-Reply-To: <20080713011512.GB31050@spearce.org>
 References: <20080713011512.GB31050@spearce.org>
 To:	Junio C Hamano <gitster@pobox.com>
@@ -42,181 +43,118 @@ X-Mailing-List:	git@vger.kernel.org
 X-Old-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 
-We need to discard base objects which are not recently used if our
-memory gets low, such as when we are unpacking a long delta chain
-of a very large object.
+We need to release earlier inflated base objects when memory gets
+low, which means we need to be able to walk up or down the stack
+to locate the objects we want to release, and free their data.
 
-To support tracking the available base objects we combine the
-pointer and size into a struct.  Future changes would allow the
-data pointer to be free'd and marked NULL if memory gets low.
+The new link/unlink routines allow inserting and removing the struct
+base_data during recursion inside resolve_delta, and the global
+base_cache gives us the head of the chain (bottom of the stack)
+so we can traverse it.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- index-pack.c |   60 +++++++++++++++++++++++++++++++--------------------------
- 1 files changed, 33 insertions(+), 27 deletions(-)
+ index-pack.c |   34 +++++++++++++++++++++++++++++++---
+ 1 files changed, 31 insertions(+), 3 deletions(-)
 
 diff --git a/index-pack.c b/index-pack.c
-index 25db5db..db03478 100644
+index db03478..6c59fd3 100644
 --- a/index-pack.c
 +++ b/index-pack.c
-@@ -26,6 +26,11 @@ union delta_base {
- 	off_t offset;
+@@ -27,6 +27,8 @@ union delta_base {
  };
  
-+struct base_data {
-+	void *data;
-+	unsigned long size;
-+};
-+
- /*
-  * Even if sizeof(union delta_base) == 24 on 64-bit archs, we really want
-  * to memcmp() only the first 20 bytes.
-@@ -426,25 +431,25 @@ static void sha1_object(const void *data, unsigned long size,
- 	}
+ struct base_data {
++	struct base_data *base;
++	struct base_data *child;
+ 	void *data;
+ 	unsigned long size;
+ };
+@@ -48,6 +50,7 @@ struct delta_entry
+ 
+ static struct object_entry *objects;
+ static struct delta_entry *deltas;
++static struct base_data *base_cache;
+ static int nr_objects;
+ static int nr_deltas;
+ static int nr_resolved_deltas;
+@@ -216,6 +219,27 @@ static void bad_object(unsigned long offset, const char *format, ...)
+ 	die("pack has bad object at offset %lu: %s", offset, buf);
  }
  
--static void resolve_delta(struct object_entry *delta_obj, void *base_data,
--			  unsigned long base_size, enum object_type type)
-+static void resolve_delta(struct object_entry *delta_obj,
-+			  struct base_data *base_obj, enum object_type type)
++static void link_base_data(struct base_data *base, struct base_data *c)
++{
++	if (base)
++		base->child = c;
++	else
++		base_cache = c;
++
++	c->base = base;
++	c->child = NULL;
++}
++
++static void unlink_base_data(struct base_data *c)
++{
++	struct base_data *base = c->base;
++	if (base)
++		base->child = NULL;
++	else
++		base_cache = NULL;
++	free(c->data);
++}
++
+ static void *unpack_entry_data(unsigned long offset, unsigned long size)
  {
- 	void *delta_data;
- 	unsigned long delta_size;
--	void *result;
--	unsigned long result_size;
- 	union delta_base delta_base;
- 	int j, first, last;
-+	struct base_data result;
- 
- 	delta_obj->real_type = type;
- 	delta_data = get_data_from_pack(delta_obj);
- 	delta_size = delta_obj->size;
--	result = patch_delta(base_data, base_size, delta_data, delta_size,
--			     &result_size);
-+	result.data = patch_delta(base_obj->data, base_obj->size,
-+			     delta_data, delta_size,
-+			     &result.size);
- 	free(delta_data);
--	if (!result)
-+	if (!result.data)
- 		bad_object(delta_obj->idx.offset, "failed to apply delta");
--	sha1_object(result, result_size, type, delta_obj->idx.sha1);
-+	sha1_object(result.data, result.size, type, delta_obj->idx.sha1);
+ 	z_stream stream;
+@@ -452,6 +476,8 @@ static void resolve_delta(struct object_entry *delta_obj,
+ 	sha1_object(result.data, result.size, type, delta_obj->idx.sha1);
  	nr_resolved_deltas++;
  
++	link_base_data(base_obj, &result);
++
  	hashcpy(delta_base.sha1, delta_obj->idx.sha1);
-@@ -452,7 +457,7 @@ static void resolve_delta(struct object_entry *delta_obj, void *base_data,
+ 	if (!find_delta_children(&delta_base, &first, &last)) {
  		for (j = first; j <= last; j++) {
- 			struct object_entry *child = objects + deltas[j].obj_no;
- 			if (child->real_type == OBJ_REF_DELTA)
--				resolve_delta(child, result, result_size, type);
-+				resolve_delta(child, &result, type);
+@@ -471,7 +497,7 @@ static void resolve_delta(struct object_entry *delta_obj,
  		}
  	}
  
-@@ -462,11 +467,11 @@ static void resolve_delta(struct object_entry *delta_obj, void *base_data,
- 		for (j = first; j <= last; j++) {
- 			struct object_entry *child = objects + deltas[j].obj_no;
- 			if (child->real_type == OBJ_OFS_DELTA)
--				resolve_delta(child, result, result_size, type);
-+				resolve_delta(child, &result, type);
- 		}
- 	}
- 
--	free(result);
-+	free(result.data);
+-	free(result.data);
++	unlink_base_data(&result);
  }
  
  static int compare_delta_entry(const void *a, const void *b)
-@@ -481,7 +486,6 @@ static void parse_pack_objects(unsigned char *sha1)
- {
- 	int i;
- 	struct delta_entry *delta = deltas;
--	void *data;
- 	struct stat st;
- 
- 	/*
-@@ -496,7 +500,7 @@ static void parse_pack_objects(unsigned char *sha1)
- 				nr_objects);
- 	for (i = 0; i < nr_objects; i++) {
- 		struct object_entry *obj = &objects[i];
--		data = unpack_raw_entry(obj, &delta->base);
-+		void *data = unpack_raw_entry(obj, &delta->base);
- 		obj->real_type = obj->type;
- 		if (obj->type == OBJ_REF_DELTA || obj->type == OBJ_OFS_DELTA) {
- 			nr_deltas++;
-@@ -545,6 +549,7 @@ static void parse_pack_objects(unsigned char *sha1)
- 		struct object_entry *obj = &objects[i];
- 		union delta_base base;
- 		int j, ref, ref_first, ref_last, ofs, ofs_first, ofs_last;
-+		struct base_data base_obj;
- 
- 		if (obj->type == OBJ_REF_DELTA || obj->type == OBJ_OFS_DELTA)
+@@ -562,6 +588,7 @@ static void parse_pack_objects(unsigned char *sha1)
  			continue;
-@@ -555,22 +560,22 @@ static void parse_pack_objects(unsigned char *sha1)
- 		ofs = !find_delta_children(&base, &ofs_first, &ofs_last);
- 		if (!ref && !ofs)
- 			continue;
--		data = get_data_from_pack(obj);
-+		base_obj.data = get_data_from_pack(obj);
-+		base_obj.size = obj->size;
-+
+ 		base_obj.data = get_data_from_pack(obj);
+ 		base_obj.size = obj->size;
++		link_base_data(NULL, &base_obj);
+ 
  		if (ref)
  			for (j = ref_first; j <= ref_last; j++) {
- 				struct object_entry *child = objects + deltas[j].obj_no;
- 				if (child->real_type == OBJ_REF_DELTA)
--					resolve_delta(child, data,
--						      obj->size, obj->type);
-+					resolve_delta(child, &base_obj, obj->type);
- 			}
- 		if (ofs)
- 			for (j = ofs_first; j <= ofs_last; j++) {
- 				struct object_entry *child = objects + deltas[j].obj_no;
+@@ -575,7 +602,7 @@ static void parse_pack_objects(unsigned char *sha1)
  				if (child->real_type == OBJ_OFS_DELTA)
--					resolve_delta(child, data,
--						      obj->size, obj->type);
-+					resolve_delta(child, &base_obj, obj->type);
+ 					resolve_delta(child, &base_obj, obj->type);
  			}
--		free(data);
-+		free(base_obj.data);
+-		free(base_obj.data);
++		unlink_base_data(&base_obj);
  		display_progress(progress, nr_resolved_deltas);
  	}
  }
-@@ -656,28 +661,29 @@ static void fix_unresolved_deltas(int nr_unresolved)
- 
- 	for (i = 0; i < n; i++) {
- 		struct delta_entry *d = sorted_by_pos[i];
--		void *data;
--		unsigned long size;
- 		enum object_type type;
- 		int j, first, last;
-+		struct base_data base_obj;
- 
- 		if (objects[d->obj_no].real_type != OBJ_REF_DELTA)
+@@ -670,6 +697,7 @@ static void fix_unresolved_deltas(int nr_unresolved)
+ 		base_obj.data = read_sha1_file(d->base.sha1, &type, &base_obj.size);
+ 		if (!base_obj.data)
  			continue;
--		data = read_sha1_file(d->base.sha1, &type, &size);
--		if (!data)
-+		base_obj.data = read_sha1_file(d->base.sha1, &type, &base_obj.size);
-+		if (!base_obj.data)
- 			continue;
++		link_base_data(NULL, &base_obj);
  
  		find_delta_children(&d->base, &first, &last);
  		for (j = first; j <= last; j++) {
- 			struct object_entry *child = objects + deltas[j].obj_no;
- 			if (child->real_type == OBJ_REF_DELTA)
--				resolve_delta(child, data, size, type);
-+				resolve_delta(child, &base_obj, type);
- 		}
- 
--		if (check_sha1_signature(d->base.sha1, data, size, typename(type)))
-+		if (check_sha1_signature(d->base.sha1, base_obj.data,
-+				base_obj.size, typename(type)))
+@@ -683,7 +711,7 @@ static void fix_unresolved_deltas(int nr_unresolved)
  			die("local object %s is corrupt", sha1_to_hex(d->base.sha1));
--		append_obj_to_pack(d->base.sha1, data, size, type);
--		free(data);
-+		append_obj_to_pack(d->base.sha1, base_obj.data,
-+			base_obj.size, type);
-+		free(base_obj.data);
+ 		append_obj_to_pack(d->base.sha1, base_obj.data,
+ 			base_obj.size, type);
+-		free(base_obj.data);
++		unlink_base_data(&base_obj);
  		display_progress(progress, nr_resolved_deltas);
  	}
  	free(sorted_by_pos);
