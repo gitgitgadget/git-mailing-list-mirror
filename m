@@ -1,173 +1,224 @@
 From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 6/6] archive: remove extra arguments parsing code
-Date: Mon, 14 Jul 2008 21:22:05 +0200
-Message-ID: <487BA75D.7080208@lsrfire.ath.cx>
-References: <487B92FC.5030103@lsrfire.ath.cx>
+Subject: [PATCH 1/6] archive: remove args member from struct archiver
+Date: Mon, 14 Jul 2008 21:23:45 +0200
+Message-ID: <487BA7C1.3000109@lsrfire.ath.cx>
+References: <487B8E81.5030402@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 21:36:24 2008
+X-From: git-owner@vger.kernel.org Mon Jul 14 21:36:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KITqE-0000zW-79
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 21:36:10 +0200
+	id 1KITqi-0001Bx-CF
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 21:36:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754847AbYGNTfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 15:35:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754605AbYGNTfL
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 15:35:11 -0400
-Received: from india601.server4you.de ([85.25.151.105]:45937 "EHLO
+	id S1754887AbYGNTfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 15:35:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754867AbYGNTfT
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 15:35:19 -0400
+Received: from india601.server4you.de ([85.25.151.105]:45936 "EHLO
 	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754491AbYGNTfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 15:35:08 -0400
+	with ESMTP id S1753647AbYGNTfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 15:35:09 -0400
 Received: from [10.0.1.200] (p57B7FF09.dip.t-dialin.net [87.183.255.9])
-	by india601.server4you.de (Postfix) with ESMTPSA id A666D2F8073;
-	Mon, 14 Jul 2008 21:24:15 +0200 (CEST)
+	by india601.server4you.de (Postfix) with ESMTPSA id 91F982F81FC;
+	Mon, 14 Jul 2008 21:24:21 +0200 (CEST)
 User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <487B92FC.5030103@lsrfire.ath.cx>
+In-Reply-To: <487B8E81.5030402@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88457>
 
-Replace the code that calls backend specific argument parsers by a
-simple flag mechanism.  This reduces code size and complexity.
-
-We can add back such a mechanism (based on incremental parse_opt(),
-perhaps) when we need it.  The compression level parameter, though,
-is going to be shared by future compressing backends like tgz.
+Pass struct archiver and struct archiver_args explicitly to
+parse_archive_args
+and remove the latter from the former.  This allows us to get rid of struct
+archiver_desc and simplifies the code a bit.
 
 Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
- archive-zip.c     |   13 -------------
- archive.h         |    6 +-----
- builtin-archive.c |   29 ++++++++++++++++-------------
- 3 files changed, 17 insertions(+), 31 deletions(-)
+ archive.h                |    5 +---
+ builtin-archive.c        |   51
++++++++++++++++++++---------------------------
+ builtin-upload-archive.c |   11 +++++----
+ 3 files changed, 28 insertions(+), 39 deletions(-)
 
-diff --git a/archive-zip.c b/archive-zip.c
-index 8131289..d56e5cf 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -282,16 +282,3 @@ int write_zip_archive(struct archiver_args *args)
- 
- 	return err;
- }
--
--void *parse_extra_zip_args(int argc, const char **argv)
--{
--	for (; argc > 0; argc--, argv++) {
--		const char *arg = argv[0];
--
--		if (arg[0] == '-' && isdigit(arg[1]) && arg[2] == '\0')
--			zlib_compression_level = arg[1] - '0';
--		else
--			die("Unknown argument for zip format: %s", arg);
--	}
--	return NULL;
--}
 diff --git a/archive.h b/archive.h
-index 88ee3be..96bb1cd 100644
+index ddf004a..1b24ae3 100644
 --- a/archive.h
 +++ b/archive.h
-@@ -13,19 +13,16 @@ struct archiver_args {
- 	time_t time;
- 	const char **pathspec;
- 	unsigned int verbose : 1;
--	void *extra;
- };
- 
- typedef int (*write_archive_fn_t)(struct archiver_args *);
- 
--typedef void *(*parse_extra_args_fn_t)(int argc, const char **argv);
--
- typedef int (*write_archive_entry_fn_t)(struct archiver_args *args, const unsigned char *sha1, const char *path, size_t pathlen, unsigned int mode, void *buffer, unsigned long size);
- 
+@@ -21,14 +21,11 @@ typedef void *(*parse_extra_args_fn_t)(int argc,
+const char **argv);
+
  struct archiver {
  	const char *name;
+-	struct archiver_args args;
  	write_archive_fn_t write_archive;
--	parse_extra_args_fn_t parse_extra;
-+	unsigned int flags;
+ 	parse_extra_args_fn_t parse_extra;
  };
- 
- extern int parse_archive_args(int argc, const char **argv, const struct archiver **ar, struct archiver_args *args);
-@@ -41,7 +38,6 @@ extern void parse_pathspec_arg(const char **pathspec,
-  */
- extern int write_tar_archive(struct archiver_args *);
- extern int write_zip_archive(struct archiver_args *);
--extern void *parse_extra_zip_args(int argc, const char **argv);
- 
- extern int write_archive_entries(struct archiver_args *args, write_archive_entry_fn_t write_entry);
- 
+
+-extern int parse_archive_args(int argc,
+-			      const char **argv,
+-			      struct archiver *ar);
++extern int parse_archive_args(int argc, const char **argv, const struct
+archiver **ar, struct archiver_args *args);
+
+ extern void parse_treeish_arg(const char **treeish,
+ 			      struct archiver_args *ar_args,
 diff --git a/builtin-archive.c b/builtin-archive.c
-index e7f4ec6..88204bf 100644
+index c2e0c1e..6ee3677 100644
 --- a/builtin-archive.c
 +++ b/builtin-archive.c
-@@ -15,9 +15,11 @@
+@@ -15,12 +15,7 @@
  static const char archive_usage[] = \
- "git-archive --format=<fmt> [--prefix=<prefix>/] [--verbose] [<extra>] <tree-ish> [path...]";
- 
-+#define USES_ZLIB_COMPRESSION 1
-+
- const struct archiver archivers[] = {
--	{ "tar", write_tar_archive, NULL },
--	{ "zip", write_zip_archive, parse_extra_zip_args },
-+	{ "tar", write_tar_archive },
-+	{ "zip", write_zip_archive, USES_ZLIB_COMPRESSION },
+ "git-archive --format=<fmt> [--prefix=<prefix>/] [--verbose] [<extra>]
+<tree-ish> [path...]";
+
+-static struct archiver_desc
+-{
+-	const char *name;
+-	write_archive_fn_t write_archive;
+-	parse_extra_args_fn_t parse_extra;
+-} archivers[] = {
++const struct archiver archivers[] = {
+ 	{ "tar", write_tar_archive, NULL },
+ 	{ "zip", write_zip_archive, parse_extra_zip_args },
  };
- 
- static int run_remote_archiver(const char *remote, int argc,
-@@ -137,10 +139,9 @@ void parse_treeish_arg(const char **argv, struct archiver_args *ar_args,
- int parse_archive_args(int argc, const char **argv, const struct archiver **ar,
- 		struct archiver_args *args)
+@@ -79,21 +74,15 @@ static int run_remote_archiver(const char *remote,
+int argc,
+ 	return !!rv;
+ }
+
+-static int init_archiver(const char *name, struct archiver *ar)
++static const struct archiver *lookup_archiver(const char *name)
  {
--	const char *extra_argv[MAX_EXTRA_ARGS];
--	int extra_argc = 0;
- 	const char *format = "tar";
- 	const char *base = "";
-+	int compression_level = -1;
- 	int verbose = 0;
- 	int i;
- 
-@@ -168,12 +169,12 @@ int parse_archive_args(int argc, const char **argv, const struct archiver **ar,
- 			i++;
- 			break;
- 		}
--		if (arg[0] == '-') {
--			if (extra_argc > MAX_EXTRA_ARGS - 1)
--				die("Too many extra options");
--			extra_argv[extra_argc++] = arg;
-+		if (arg[0] == '-' && isdigit(arg[1]) && arg[2] == '\0') {
-+			compression_level = arg[1] - '0';
- 			continue;
- 		}
-+		if (arg[0] == '-')
-+			die("Unknown argument: %s", arg);
- 		break;
+-	int rv = -1, i;
++	int i;
+
+ 	for (i = 0; i < ARRAY_SIZE(archivers); i++) {
+-		if (!strcmp(name, archivers[i].name)) {
+-			memset(ar, 0, sizeof(*ar));
+-			ar->name = archivers[i].name;
+-			ar->write_archive = archivers[i].write_archive;
+-			ar->parse_extra = archivers[i].parse_extra;
+-			rv = 0;
+-			break;
+-		}
++		if (!strcmp(name, archivers[i].name))
++			return &archivers[i];
  	}
- 
-@@ -184,11 +185,13 @@ int parse_archive_args(int argc, const char **argv, const struct archiver **ar,
- 	if (!*ar)
+-	return rv;
++	return NULL;
+ }
+
+ void parse_pathspec_arg(const char **pathspec, struct archiver_args
+*ar_args)
+@@ -145,7 +134,8 @@ void parse_treeish_arg(const char **argv, struct
+archiver_args *ar_args,
+ 	ar_args->time = archive_time;
+ }
+
+-int parse_archive_args(int argc, const char **argv, struct archiver *ar)
++int parse_archive_args(int argc, const char **argv, const struct
+archiver **ar,
++		struct archiver_args *args)
+ {
+ 	const char *extra_argv[MAX_EXTRA_ARGS];
+ 	int extra_argc = 0;
+@@ -190,17 +180,18 @@ int parse_archive_args(int argc, const char
+**argv, struct archiver *ar)
+ 	/* We need at least one parameter -- tree-ish */
+ 	if (argc - 1 < i)
+ 		usage(archive_usage);
+-	if (init_archiver(format, ar) < 0)
++	*ar = lookup_archiver(format);
++	if (!*ar)
  		die("Unknown archive format '%s'", format);
- 
--	if (extra_argc) {
--		if (!(*ar)->parse_extra)
--			die("'%s' format does not handle %s",
--			    (*ar)->name, extra_argv[0]);
--		args->extra = (*ar)->parse_extra(extra_argc, extra_argv);
-+	if (compression_level != -1) {
-+		if ((*ar)->flags & USES_ZLIB_COMPRESSION)
-+			zlib_compression_level = compression_level;
-+		else {
-+			die("Argument not supported for format '%s': -%d",
-+					format, compression_level);
-+		}
+
+ 	if (extra_argc) {
+-		if (!ar->parse_extra)
++		if (!(*ar)->parse_extra)
+ 			die("'%s' format does not handle %s",
+-			    ar->name, extra_argv[0]);
+-		ar->args.extra = ar->parse_extra(extra_argc, extra_argv);
++			    (*ar)->name, extra_argv[0]);
++		args->extra = (*ar)->parse_extra(extra_argc, extra_argv);
  	}
- 	args->verbose = verbose;
- 	args->base = base;
+-	ar->args.verbose = verbose;
+-	ar->args.base = base;
++	args->verbose = verbose;
++	args->base = base;
+
+ 	return i;
+ }
+@@ -238,7 +229,8 @@ static const char *extract_remote_arg(int *ac, const
+char **av)
+
+ int cmd_archive(int argc, const char **argv, const char *prefix)
+ {
+-	struct archiver ar;
++	const struct archiver *ar = NULL;
++	struct archiver_args args;
+ 	int tree_idx;
+ 	const char *remote = NULL;
+
+@@ -248,14 +240,13 @@ int cmd_archive(int argc, const char **argv, const
+char *prefix)
+
+ 	setvbuf(stderr, NULL, _IOLBF, BUFSIZ);
+
+-	memset(&ar, 0, sizeof(ar));
+-	tree_idx = parse_archive_args(argc, argv, &ar);
++	tree_idx = parse_archive_args(argc, argv, &ar, &args);
+ 	if (prefix == NULL)
+ 		prefix = setup_git_directory();
+
+ 	argv += tree_idx;
+-	parse_treeish_arg(argv, &ar.args, prefix);
+-	parse_pathspec_arg(argv + 1, &ar.args);
++	parse_treeish_arg(argv, &args, prefix);
++	parse_pathspec_arg(argv + 1, &args);
+
+-	return ar.write_archive(&ar.args);
++	return ar->write_archive(&args);
+ }
+diff --git a/builtin-upload-archive.c b/builtin-upload-archive.c
+index 371400d..295e24c 100644
+--- a/builtin-upload-archive.c
++++ b/builtin-upload-archive.c
+@@ -19,7 +19,8 @@ static const char lostchild[] =
+
+ static int run_upload_archive(int argc, const char **argv, const char
+*prefix)
+ {
+-	struct archiver ar;
++	const struct archiver *ar;
++	struct archiver_args args;
+ 	const char *sent_argv[MAX_ARGS];
+ 	const char *arg_cmd = "argument ";
+ 	char *p, buf[4096];
+@@ -65,12 +66,12 @@ static int run_upload_archive(int argc, const char
+**argv, const char *prefix)
+ 	sent_argv[sent_argc] = NULL;
+
+ 	/* parse all options sent by the client */
+-	treeish_idx = parse_archive_args(sent_argc, sent_argv, &ar);
++	treeish_idx = parse_archive_args(sent_argc, sent_argv, &ar, &args);
+
+-	parse_treeish_arg(sent_argv + treeish_idx, &ar.args, prefix);
+-	parse_pathspec_arg(sent_argv + treeish_idx + 1, &ar.args);
++	parse_treeish_arg(sent_argv + treeish_idx, &args, prefix);
++	parse_pathspec_arg(sent_argv + treeish_idx + 1, &args);
+
+-	return ar.write_archive(&ar.args);
++	return ar->write_archive(&args);
+ }
+
+ static void error_clnt(const char *fmt, ...)
 -- 
 1.5.6.2.212.g08b51
