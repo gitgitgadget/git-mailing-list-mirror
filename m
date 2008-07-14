@@ -1,77 +1,96 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Closing the merge window for 1.6.0
-Date: Mon, 14 Jul 2008 13:54:34 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0807141351540.12484@xanadu.home>
-References: <7vod5kd3im.fsf@gitster.siamese.dyndns.org>
- <7v3amv1e8n.fsf@gitster.siamese.dyndns.org>
- <7vprpwhp7t.fsf@gitster.siamese.dyndns.org>
- <7vlk0ffhw3.fsf@gitster.siamese.dyndns.org>
- <7vtzf1w0rj.fsf@gitster.siamese.dyndns.org>
- <7vabgqsc37.fsf@gitster.siamese.dyndns.org>
- <7vtzetjbif.fsf@gitster.siamese.dyndns.org>
- <7vzlokhpk7.fsf@gitster.siamese.dyndns.org>
- <20080714085555.GJ32184@machine.or.cz>
- <alpine.DEB.1.00.0807141256310.8950@racer>
- <20080714124109.25414.qmail@06d015ec9c6744.315fe32.mid.smarden.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Mon Jul 14 19:55:43 2008
+From: Ciaran McCreesh <ciaran.mccreesh@googlemail.com>
+Subject: [PATCH] Make git-add -i accept ranges like 7-
+Date: Mon, 14 Jul 2008 19:06:24 +0100
+Message-ID: <1216058784-32584-1-git-send-email-ciaran.mccreesh@googlemail.com>
+Cc: Ciaran McCreesh <ciaran.mccreesh@googlemail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 14 20:07:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KISGu-00089S-TN
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 19:55:37 +0200
+	id 1KISSS-00044a-GW
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 20:07:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752415AbYGNRyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 13:54:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753888AbYGNRyg
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 13:54:36 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:56116 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752352AbYGNRyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 13:54:36 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K4000EQACEZ8RE0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 14 Jul 2008 13:54:35 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080714124109.25414.qmail@06d015ec9c6744.315fe32.mid.smarden.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1753060AbYGNSGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 14:06:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752442AbYGNSGd
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 14:06:33 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:11182 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751935AbYGNSGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 14:06:32 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so274242ugf.16
+        for <git@vger.kernel.org>; Mon, 14 Jul 2008 11:06:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=+xT6v+j7cv61PiMotytIHrJBmWOJAHHjlqKRMm/Fc08=;
+        b=Ch2Q08YtDL5aVurLAx1Qy3EQCAcWLKpN3djBg87FwVri9Jvohdb92tpqgtBTgE9e3c
+         rRxWxhug6N/WXNKLyTMZrncios21e89yr9fAeAvadJ/m5qothhdpNj9q7rPin3V7xamF
+         MGunwDQJwJ5Ogq5AoR6T/eCbqCfQr8PFZuQQM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=tZ0ARj/9/pXUlYRx8uTk/4uaWL4LF41IGet7F73FIm1zs6PZwpE5BbFw0RKXZnZbg5
+         A1EA6yao8tIVCaqel6P6Bp97qKCeoH9a88S94v2yyLayj6VMlrs9Yk6DA9GIkQ/7sR/G
+         9cDCv9/oUjhvck15wpOqNKBpbKt0InO4Vdwuo=
+Received: by 10.66.239.16 with SMTP id m16mr1870151ugh.9.1216058791045;
+        Mon, 14 Jul 2008 11:06:31 -0700 (PDT)
+Received: from localhost.localdomain ( [92.235.187.79])
+        by mx.google.com with ESMTPS id o1sm1904580uge.2.2008.07.14.11.06.29
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 14 Jul 2008 11:06:30 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88441>
 
-On Mon, 14 Jul 2008, Gerrit Pape wrote:
+git-add -i ranges expect number-number. But for the supremely lazy, typing in
+that second number when selecting "from patch 7 to the end" is wasted effort.
+So treat an empty second number in a range as "until the last item".
 
-> On Mon, Jul 14, 2008 at 12:57:56PM +0100, Johannes Schindelin wrote:
-> > On Mon, 14 Jul 2008, Petr Baudis wrote:
-> > > I'm saying this because I believe the best conservative upper bound for 
-> > > backwards compatibility is Git version in Debian stable. It gets 
-> > > probably the most stale from all the widely used software distributions 
-> > > using Git, and it *is* quite widely used. Etch carries v1.4.4.4, which 
-> > > fails miserably on the new packs.
-> > 
-> > Can't we just hit Debian's Git maintainer with a clue bat or a bus, 
-> 
-> Please don't.  It wouldn't help, rather the opposite I think, espacially
-> the bus.  We don't introduce new upstream versions into a Debian stable
-> release, there's a great effort done for each stable release to reach
-> high quality integration of all the software packages available in
-> Debian.  Once that status is reached, only security fixes and criticial
-> usability fixes are added.
+Signed-off-by: Ciaran McCreesh <ciaran.mccreesh@googlemail.com>
+---
+ Documentation/git-add.txt |    5 +++--
+ git-add--interactive.perl |    6 +++---
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-Please consider it as a critical usability problem.
-
-Maybe we can release 1.4.5 with the ability to read index v2?  That 
-wouldn't be hard to backport the reading part of it.
-
-
-Nicolas
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 46dd56c..3558905 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -187,8 +187,9 @@ update::
+    "Update>>".  When the prompt ends with double '>>', you can
+    make more than one selection, concatenated with whitespace or
+    comma.  Also you can say ranges.  E.g. "2-5 7,9" to choose
+-   2,3,4,5,7,9 from the list.  You can say '*' to choose
+-   everything.
++   2,3,4,5,7,9 from the list.  If the second number in a range is
++   omitted, all remaining patches are taken.  E.g. "7-" to choose
++   7,8,9 from the list.  You can say '*' to choose everything.
+ +
+ What you chose are then highlighted with '*',
+ like this:
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 801d7c0..72a8858 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -406,9 +406,9 @@ sub list_and_choose {
+ 			if ($choice =~ s/^-//) {
+ 				$choose = 0;
+ 			}
+-			# A range can be specified like 5-7
+-			if ($choice =~ /^(\d+)-(\d+)$/) {
+-				($bottom, $top) = ($1, $2);
++			# A range can be specified like 5-7 or 5-.
++			if ($choice =~ /^(\d*)-(\d*)$/) {
++				($bottom, $top) = ($1, length($2) ? $2 : 1 + @stuff);
+ 			}
+ 			elsif ($choice =~ /^\d+$/) {
+ 				$bottom = $top = $choice;
+-- 
+1.5.6.2
