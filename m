@@ -1,120 +1,102 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Errors importing Apache Synapse SVN using Git
-Date: Mon, 14 Jul 2008 01:16:15 -0700
-Message-ID: <20080714081615.GB10304@hand.yhbt.net>
-References: <4875F5D6.9080906@wso2.com> <4875FA23.30603@wso2.com> <48774A0F.2070805@fastmail.fm>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-X-From: git-owner@vger.kernel.org Mon Jul 14 10:18:13 2008
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: [PATCH] bash: Add long option completion for 'git send-email'
+Date: Mon, 14 Jul 2008 11:21:02 +0300
+Message-ID: <1216023662-9109-1-git-send-email-tlikonen@iki.fi>
+Cc: spearce@spearce.org, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 14 10:22:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIJG6-00026t-6y
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 10:18:10 +0200
+	id 1KIJJw-00035o-Ld
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 10:22:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755954AbYGNIRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 04:17:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755976AbYGNIRK
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 04:17:10 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:38557 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754976AbYGNIRI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 04:17:08 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id D90802DC095
-	for <git@vger.kernel.org>; Mon, 14 Jul 2008 01:17:05 -0700 (PDT)
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 6686D2DC095;
-	Mon, 14 Jul 2008 01:16:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <48774A0F.2070805@fastmail.fm>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-DSPAM-Confidence: 0.9986
-X-DSPAM-Probability: 0.0000
-X-DSPAM-Processed: Mon Jul 14 01:16:35 2008
-X-DSPAM-Result: Whitelisted
-X-DSPAM-Signature: 487b0b63151027614567052
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on cpma
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=7.0 tests=ALL_TRUSTED,AWL,BAYES_00,
-	SPF_HELO_PASS autolearn=ham version=3.1.7-deb
+	id S1756137AbYGNIVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 04:21:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756123AbYGNIVI
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 04:21:08 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:46448 "EHLO
+	kirsi1.rokki.sonera.fi" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756128AbYGNIVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 04:21:07 -0400
+Received: from mithlond.arda.local (80.220.180.181) by kirsi1.rokki.sonera.fi (8.5.014)
+        id 483E837C01E72EAF; Mon, 14 Jul 2008 11:21:04 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1KIJIs-0002NH-R1; Mon, 14 Jul 2008 11:21:02 +0300
+X-Mailer: git-send-email 1.5.6.3.316.g01fc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88398>
 
-Michael J Gruber <michaeljgruber+gmane@fastmail.fm> wrote:
-> Asankha C. Perera venit, vidit, dixit 10.07.2008 14:01:
-> >Hi All
-> >
-> >I am an Apache Synapse developer, and want to import the Synapse SVN 
-> >repo into Git, so that Ohloh can properly get the Synapse history 
-> >(http://www.ohloh.net/topics/1326?page=1#post_6287)
-> >
-> >However, when I try the command: "git svn clone --trunk=trunk 
-> >--tags=tags --branches=branches http://svn.apache.org/repos/asf/synapse" 
-> >it seems to take forever, (or at least until the next network glitch), 
-> >and keeps filling up a file with just plain zeros ("0") : 
-> >./.git/svn/trunk/.rev_db.13f79535-47bb-0310-9956-ffa450edef68
+Add the following long options to be completed with 'git send-email':
 
-The latest versions of git-svn should be vastly more space efficient
-with .rev_map files.
+    --bcc --cc --cc-cmd --chain-reply-to --compose --dry-run
+    --envelope-sender --from --identity --in-reply-to
+    --no-chain-reply-to --no-signed-off-by-cc --no-suppress-from
+    --no-thread --quiet --signed-off-by-cc --smtp-pass --smtp-server
+    --smtp-server-port --smtp-ssl --smtp-user --subject --suppress-cc
+    --suppress-from --thread --to
+
+Short ones like --to and --cc are not usable for actual completion
+because of the shortness itself and because there are longer ones which
+start with same letters (--thread, --compose). It's still useful to have
+these shorter options _listed_ when user presses TAB key after typing
+two dashes. It gives user an idea what options are available (and --to
+and --cc are probably the most commonly used).
+
+Signed-off-by: Teemu Likonen <tlikonen@iki.fi>
+---
+ contrib/completion/git-completion.bash |   20 ++++++++++++++++++++
+ 1 files changed, 20 insertions(+), 0 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index d268e6f..b15f3a9 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -905,6 +905,24 @@ _git_rebase ()
+ 	__gitcomp "$(__git_refs)"
+ }
  
-> Okay, besides the zero offset, there seems to be big problem with the 
-> svn repo:
-> 
-> svn list -r 234478 http://svn.apache.org/repos/asf/synapse
-> branches/
-> site/
-> tags/
-> trunk/
-> 
-> svn list -r 234478 http://svn.apache.org/repos/asf|grep synapse
-
-Ah, that's because it started off in the /incubator directory, not /synapse:
-
-$ svn log -v -r 234478 http://svn.apache.org/repos/asf
-------------------------------------------------------------------------
-r234478 | dims | 2005-08-22 05:39:51 -0700 (Mon, 22 Aug 2005) | 3 lines
-Changed paths:
-   A /incubator/synapse/branches
-   A /incubator/synapse/site
-   A /incubator/synapse/tags
-   A /incubator/synapse/trunk
-
-init synapse SVN
-
-
-------------------------------------------------------------------------
-
-> Right, nothing returned.
-> 
-> git-svn insists on using http://svn.apache.org/repos/asf as the base 
-> URL, which is basically correct, but doesn't work for this repo.
-> 
-> Even editing .git/config and .git/svn/metadata (after git svn init, 
-> befire the first fetch) to change the url doesn't help. git svn still 
-> uses .../asf. Is this as intended? cc'ing the git svn author.
-
-Can you try using the latest git-svn and also --no-follow-parent?
-
---no-follow-parent won't traverse copy history so it may be faster,
-but you'll get an incomplete history.
-
-On the other hand, it looks like the asf repo is hopelessly slow
-for history retrieval.
-
-I'm pulling the asf log (svn log -v http://svn.apache.org/repos/asf >
-tmp.log) but it's taking forever...  git-svn uses basically the same
-operation as 'svn log -v' and I've yet to see an SVN server take this
-long to show history.
-
-I've gotten 70,000 revisions after over one hour with the above svn log
-command.  I'm going to restart this from a server with a better
-connection since I need to power off this one when I sleep.
-
++_git_send_email ()
++{
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	case "$cur" in
++	--*)
++		__gitcomp "--bcc --cc --cc-cmd --chain-reply-to --compose
++			--dry-run --envelope-sender --from --identity
++			--in-reply-to --no-chain-reply-to --no-signed-off-by-cc
++			--no-suppress-from --no-thread --quiet
++			--signed-off-by-cc --smtp-pass --smtp-server
++			--smtp-server-port --smtp-ssl --smtp-user --subject
++			--suppress-cc --suppress-from --thread --to"
++		return
++		;;
++	esac
++	__git_complete_file
++}
++
+ _git_config ()
+ {
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+@@ -1376,6 +1394,7 @@ _git ()
+ 	rebase)      _git_rebase ;;
+ 	remote)      _git_remote ;;
+ 	reset)       _git_reset ;;
++	send-email)  _git_send_email ;;
+ 	shortlog)    _git_shortlog ;;
+ 	show)        _git_show ;;
+ 	show-branch) _git_log ;;
+@@ -1435,6 +1454,7 @@ complete -o default -o nospace -F _git_rebase git-rebase
+ complete -o default -o nospace -F _git_config git-config
+ complete -o default -o nospace -F _git_remote git-remote
+ complete -o default -o nospace -F _git_reset git-reset
++complete -o default -o nospace -F _git_send_email git-send-email
+ complete -o default -o nospace -F _git_shortlog git-shortlog
+ complete -o default -o nospace -F _git_show git-show
+ complete -o default -o nospace -F _git_stash git-stash
 -- 
-Eric Wong
+1.5.6.3.316.g01fc
