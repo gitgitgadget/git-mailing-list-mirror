@@ -1,65 +1,61 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fix reduce_heads
-Date: Mon, 14 Jul 2008 11:30:24 +0200 (CEST)
-Message-ID: <alpine.LSU.1.00.0807141128240.3486@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <402c10cd0807132107s29c470f7hb834bd5c00ef399e@mail.gmail.com>
+Subject: Re: [PATCH 3/4] index-pack: Track the object_entry that creates each
+ base_data
+Date: Mon, 14 Jul 2008 12:15:06 +0200 (CEST)
+Message-ID: <alpine.LSU.1.00.0807141214260.32392@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <1216001267-33235-1-git-send-email-spearce@spearce.org> <1216001267-33235-2-git-send-email-spearce@spearce.org> <1216001267-33235-3-git-send-email-spearce@spearce.org> <1216001267-33235-4-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Sverre Hvammen Johansen <hvammen@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 11:31:29 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Stephan Hennig <mailing_list@arcor.de>,
+	Nicolas Pitre <nico@cam.org>, Andreas Ericsson <ae@op5.se>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jul 14 12:16:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIKP0-00071A-O7
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 11:31:27 +0200
+	id 1KIL6J-0004UM-8c
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 12:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755884AbYGNJa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 05:30:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756253AbYGNJa1
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 05:30:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56875 "HELO mail.gmx.net"
+	id S1756451AbYGNKPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 06:15:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756417AbYGNKPL
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 06:15:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34145 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750923AbYGNJa0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 05:30:26 -0400
-Received: (qmail invoked by alias); 14 Jul 2008 09:30:24 -0000
+	id S1756102AbYGNKPK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 06:15:10 -0400
+Received: (qmail invoked by alias); 14 Jul 2008 10:15:08 -0000
 Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp038) with SMTP; 14 Jul 2008 11:30:24 +0200
+  by mail.gmx.net (mp015) with SMTP; 14 Jul 2008 12:15:08 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Q8ZN0T7AQUfTSJuUNPxHFJOHIQIn1DfQCoKKwIr
-	kpqeqSJrYndIb6
+X-Provags-ID: V01U2FsdGVkX19XH3cm+ylXdxfAlp7dMsDv37bdATCl7PT2FkzYhx
+	EA+y6rBb9fsUBC
 X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <402c10cd0807132107s29c470f7hb834bd5c00ef399e@mail.gmail.com>
+In-Reply-To: <1216001267-33235-4-git-send-email-spearce@spearce.org>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+X-FuHaFi: 0.76
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88408>
 
 Hi,
 
-On Sun, 13 Jul 2008, Sverre Hvammen Johansen wrote:
+On Sun, 13 Jul 2008, Shawn O. Pearce wrote:
 
-> Reduce_heads used by build in merge failed to find the correct
-> heads in cases where duplicate heads are specified.
+> This however means we must add the missing baes object to the end
+> of our packfile prior to calling resolve_delta() on each of the
+> dependent deltas.  Adding the base first ensures we can read the
+> base back from the pack we indexing, as if it had been included by
+> the remote side.
 
-I liked Junio's explanation better.
+s/baes/base/
 
-> This should fix the last breakage I found. ([PATCH/Test] Build in
-> merge is broken)
-> I have squashed in Miklos's fix and the two tests cases to protect this.
+Otherwise very clear.
 
-I'd rather not have it squashed in.  Miklos is a GSoC student, and at the 
-end I want to show the shortlog to tell Google how he fared.
-
-Unfortunately, Miklos is on holiday this week, so he cannot send a mail of 
-his own.  Junio, could you fake a commit message with a sign-off for 
-Miklos, or do you want me to do it?
-
-Ciao,
+Thanks,
 Dscho
