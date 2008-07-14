@@ -1,83 +1,78 @@
-From: vb <vb@vsbe.com>
-Subject: Syncing up to a tree with a numeric EXTRAVERSION
-Date: Mon, 14 Jul 2008 12:24:33 -0700
-Message-ID: <f608b67d0807141224v258172a7pfe655a0ceb0f8efd@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Syncing up to a tree with a numeric EXTRAVERSION
+Date: Mon, 14 Jul 2008 21:29:47 +0200
+Message-ID: <20080714192947.GS10347@genesis.frugalware.org>
+References: <f608b67d0807141224v258172a7pfe655a0ceb0f8efd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 14 21:25:36 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="mb9HKoJ6ED9lkHVp"
+Cc: git@vger.kernel.org
+To: vb <vb@vsbe.com>
+X-From: git-owner@vger.kernel.org Mon Jul 14 21:30:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KITfy-0005cy-Cs
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 21:25:34 +0200
+	id 1KITl2-0007aP-0E
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 21:30:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754463AbYGNTYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 15:24:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754386AbYGNTYf
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 15:24:35 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:17079 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753659AbYGNTYf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 15:24:35 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so1551371nfc.21
-        for <git@vger.kernel.org>; Mon, 14 Jul 2008 12:24:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition:x-google-sender-auth;
-        bh=7VjZG+WpWdPsJOWAwQjlTbPoqqW8a5X29MKxhVZWy7I=;
-        b=mNLR/zJZxC/iuAU94omcnbTtABTTz0r+tqnNEr9GTutrxUQ6hz4/+mJI4aZUIpL7mR
-         JDxbirkmkoUNvsOLc45rI3gqXpK486f1vcYDw7xs0+1mBQIVl8HNntL7EptqKPV4uFUP
-         gLd/RsoT/SSYQu3g0irdiMqHxQqpvH06NyKBM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=d5qrvrN372S6u/hH5vZW7z4yRU3alid4Jo6ZcucvbS4602jbyzQLUfZqkFpWezC5li
-         EQjm9BTvx3jMokBF4ctiGEeLLOxPvp9N25kBJ7cnGKpd4FDaO8AwIGRgPa0/wFhC/Zx3
-         KfhubsDjMfW68kQ9KXXwJkG0hA5aCYRFAeCWc=
-Received: by 10.210.125.13 with SMTP id x13mr9174687ebc.88.1216063473639;
-        Mon, 14 Jul 2008 12:24:33 -0700 (PDT)
-Received: by 10.210.79.13 with HTTP; Mon, 14 Jul 2008 12:24:33 -0700 (PDT)
+	id S1754732AbYGNT3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 15:29:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754736AbYGNT3t
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 15:29:49 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:60141 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754386AbYGNT3t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 15:29:49 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id C5BBD1B2509;
+	Mon, 14 Jul 2008 21:29:47 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id D7AF24465E;
+	Mon, 14 Jul 2008 20:53:26 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 60E7311901B3; Mon, 14 Jul 2008 21:29:47 +0200 (CEST)
 Content-Disposition: inline
-X-Google-Sender-Auth: ceb643456f13683d
+In-Reply-To: <f608b67d0807141224v258172a7pfe655a0ceb0f8efd@mail.gmail.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88452>
-
-I have vendor provided linux tree which includes some vendor specific
-code. The tree's top level Makefile has this header:
-
-VERSION = 2
-PATCHLEVEL = 6
-SUBLEVEL = 19
-EXTRAVERSION = .2
-NAME=Avast! A bilge rat!
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88453>
 
 
-so, this is what I want to pull from the repository to see what's
-different. The thing is that when I go to the Makefile history in the
-master git repository
-(http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=history;f=Makefile;h=e3c5eb66ec52dee13127e3b2b83f84c3184bd8be;hb=bce7f793daec3e65ec5c5705d2457b81fe7b5725;pg=1)
-I don't see a tag for this version, all which is there between 19-rc6
-and 20-rc1 are
+--mb9HKoJ6ED9lkHVp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-2006-12-14 	Linus Torvalds 	Linux v2.6.20-rc1  v2.6.20-rc1
-2006-12-13 	Jeff Dike 	[PATCH] Fix crossbuilding checkstack
-2006-12-12 	Samuel Tardieu 	Use consistent casing in help message
-2006-12-10 	Oleg Verych 	[PATCH] kbuild: fix-rR-is-now-default
-2006-11-29 	Linus Torvalds 	Linux 2.6.19 v2.6.19
-2006-11-16 	Linus Torvalds 	Linux 2.6.19-rc6 v2.6.19-rc6
+On Mon, Jul 14, 2008 at 12:24:33PM -0700, vb <vb@vsbe.com> wrote:
+> VERSION =3D 2
+> PATCHLEVEL =3D 6
+> SUBLEVEL =3D 19
+> EXTRAVERSION =3D .2
+> NAME=3DAvast! A bilge rat!
+>=20
+> (...)
+>=20
+> so, the question is where do I find the tree with the Makefile
+> EXTRAVERSION set to .2?
 
-so, the question is where do I find the tree with the Makefile
-EXTRAVERSION set to .2?
+git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.19.y.git ?
 
+Hope this helps.
 
-TIA,
-vadim
+--mb9HKoJ6ED9lkHVp
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkh7qSsACgkQe81tAgORUJYkswCeJkMdcQsIinNFZF0zQe5oVHEN
+jqoAnjMb2j2kgEgJNs6YmIPuTLpFQI6N
+=RLbA
+-----END PGP SIGNATURE-----
+
+--mb9HKoJ6ED9lkHVp--
