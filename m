@@ -1,59 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Closing the merge window for 1.6.0
-Date: Mon, 14 Jul 2008 12:57:56 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807141256310.8950@racer>
-References: <7vk5ggipuw.fsf@gitster.siamese.dyndns.org> <7vej6l3lp7.fsf@gitster.siamese.dyndns.org> <7vod5kd3im.fsf@gitster.siamese.dyndns.org> <7v3amv1e8n.fsf@gitster.siamese.dyndns.org> <7vprpwhp7t.fsf@gitster.siamese.dyndns.org> <7vlk0ffhw3.fsf@gitster.siamese.dyndns.org>
- <7vtzf1w0rj.fsf@gitster.siamese.dyndns.org> <7vabgqsc37.fsf@gitster.siamese.dyndns.org> <7vtzetjbif.fsf@gitster.siamese.dyndns.org> <7vzlokhpk7.fsf@gitster.siamese.dyndns.org> <20080714085555.GJ32184@machine.or.cz>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Add testcase for merge.log
+Date: Mon, 14 Jul 2008 14:06:30 +0200
+Message-ID: <20080714120630.GN10347@genesis.frugalware.org>
+References: <7v7ibuqisc.fsf@gitster.siamese.dyndns.org> <1215678742-14042-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Jul 14 13:59:27 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="qojgPxTeg8qiMNPS"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 14 14:07:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIMhl-0003S1-BB
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 13:58:57 +0200
+	id 1KIMq2-0006ZZ-Pr
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 14:07:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753152AbYGNL56 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 07:57:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753113AbYGNL55
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 07:57:57 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52194 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753111AbYGNL55 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 07:57:57 -0400
-Received: (qmail invoked by alias); 14 Jul 2008 11:57:55 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp053) with SMTP; 14 Jul 2008 13:57:55 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19UdCMpPhZUzM5aSMG2u7UTdYHeqXGGFMHqhgnfAx
-	sOwZ627m4WVVhr
-X-X-Sender: gene099@racer
-In-Reply-To: <20080714085555.GJ32184@machine.or.cz>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.72
+	id S1751018AbYGNMGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 08:06:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751087AbYGNMGc
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 08:06:32 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:59115 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751001AbYGNMGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 08:06:32 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 20A581B2509;
+	Mon, 14 Jul 2008 14:06:31 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id CF8E44465E;
+	Mon, 14 Jul 2008 13:30:20 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id E035111901B3; Mon, 14 Jul 2008 14:06:30 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1215678742-14042-1-git-send-email-vmiklos@frugalware.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88416>
 
-Hi,
 
-On Mon, 14 Jul 2008, Petr Baudis wrote:
+--qojgPxTeg8qiMNPS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I'm saying this because I believe the best conservative upper bound for 
-> backwards compatibility is Git version in Debian stable. It gets 
-> probably the most stale from all the widely used software distributions 
-> using Git, and it *is* quite widely used. Etch carries v1.4.4.4, which 
-> fails miserably on the new packs.
+On Thu, Jul 10, 2008 at 10:32:22AM +0200, Miklos Vajna <vmiklos@frugalware.=
+org> wrote:
+> On Thu, Jul 10, 2008 at 12:50:59AM -0700, Junio C Hamano <gitster@pobox.c=
+om> wrote:
+> > The command forgot the configuration variable when rewritten in C.
+>=20
+> Thanks. Here is a testcase.
 
-Can't we just hit Debian's Git maintainer with a clue bat or a bus, 
-whichever is easier, and force them to upgrade _in_ Etch?  It's not like 
-we haven't had _several_ stable releases in-between.
+As far as I see this has been forgotten. Should I resend it on top of
+current mv/merge-in-c?
 
-Ciao,
-Dscho
+Thanks.
+
+--qojgPxTeg8qiMNPS
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkh7QUYACgkQe81tAgORUJYVsACfSax/II5Hcm7vIDekBWoPxK7x
+Ej8AmgOBJe2Qi/VkDFyRWvhMIYFuAVru
+=inJ3
+-----END PGP SIGNATURE-----
+
+--qojgPxTeg8qiMNPS--
