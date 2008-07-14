@@ -1,69 +1,104 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/4] Honor core.deltaBaseCacheLimit during index-pack
-Date: Mon, 14 Jul 2008 13:25:54 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807141322140.8950@racer>
-References: <20080713011512.GB31050@spearce.org> <1216001267-33235-1-git-send-email-spearce@spearce.org> <alpine.LFD.1.10.0807132220570.12484@xanadu.home> <20080714031242.GA14542@spearce.org> <alpine.LSU.1.00.0807141216390.32392@wbgn129.biozentrum.uni-wuerzburg.de>
- <m31w1wu1hc.fsf@localhost.localdomain> <487B439F.8040902@op5.se>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] bash completion: Fix the . -> .. revision range	completion
+Date: Mon, 14 Jul 2008 14:39:44 +0200
+Message-ID: <487B4910.5030509@op5.se>
+References: <20080713111847.29801.8969.stgit@localhost> <7vskudpiqq.fsf@gitster.siamese.dyndns.org> <20080713230724.GJ10151@machine.or.cz> <7vhcatnz80.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0807131649380.3305@woody.linux-foundation.org> <20080714000021.GB13066@spearce.org> <alpine.LFD.1.10.0807132210430.3305@woody.linux-foundation.org> <20080714062755.GA15992@spearce.org> <20080714064719.GA26446@atjola.homenet> <20080714065018.GB26446@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@cam.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Stephan Hennig <mailing_list@arcor.de>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Jul 14 14:26:56 2008
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 14 14:42:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIN8q-0005Hy-4S
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 14:26:56 +0200
+	id 1KINN3-0002sk-Uf
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 14:41:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753157AbYGNMZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 08:25:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753019AbYGNMZ4
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 08:25:56 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55091 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751977AbYGNMZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 08:25:56 -0400
-Received: (qmail invoked by alias); 14 Jul 2008 12:25:54 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp055) with SMTP; 14 Jul 2008 14:25:54 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/8QOViWb38hMXvJfm58ROldGNz+GQu+/wzGwf/bm
-	FRV4hEzdW+9vzb
-X-X-Sender: gene099@racer
-In-Reply-To: <487B439F.8040902@op5.se>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1753297AbYGNMkm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jul 2008 08:40:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753277AbYGNMkm
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 08:40:42 -0400
+Received: from mail.op5.se ([193.201.96.20]:58671 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753271AbYGNMkk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 08:40:40 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 7EA9E1B80082;
+	Mon, 14 Jul 2008 14:40:38 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id wbrXlanTUVk6; Mon, 14 Jul 2008 14:40:35 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.188])
+	by mail.op5.se (Postfix) with ESMTP id EEE4D1B80048;
+	Mon, 14 Jul 2008 14:40:34 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <20080714065018.GB26446@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88422>
 
-Hi,
+Bj=F6rn Steinbrink wrote:
+> On 2008.07.14 08:47:19 +0200, Bj=F6rn Steinbrink wrote:
+>> On 2008.07.14 06:27:55 +0000, Shawn O. Pearce wrote:
+>>> Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>>>> On Mon, 14 Jul 2008, Shawn O. Pearce wrote:
+>>>>>> Does it fix this one too:
+>>>>>>
+>>>>>> 	git show origin/pu:Makef<tab>
+>>>>>>
+>>>>>> which totally screws up and becomes
+>>>>>>
+>>>>>> 	git show Makefile
+>>>>>>
+>>>>>> dropping the version specifier?
+>>> What is $COMP_WORDBREAKS set to in your shell?  In mine it
+>>> appears to be:
+>>>
+>>> 	" \"'@><=3D;|&(:"
+>>>
+>>> which is the I believe the shell default.
+>>>
+>>> Bj=F6rn Steinbrink (doener on #git) is running bash 3.2.39 from
+>>> Debian and has the same setting, and the completion works correctly
+>>> there too.  He reports that removing : from COMP_WORDBREAKS will
+>>> get the behavior you are reporting as broken.
+>>>
+>>> I have to say, this sounds to me like you (or some package on your
+>>> system) modified COMP_WORDBREAKS away from the default that other
+>>> distributions use and that is what is breaking us here.  Since we
+>>> can have only one setting for this variable in the shell I do not
+>>> thing it would be a good idea for our completion package to force
+>>> a specific setting upon the user.
+>> Seems that gvfs comes with a completion script that deliberately dro=
+ps
+>> the : from COMP_WORDBREAKS. Do you have that installed Linus?
+>=20
+> Ah crap, I should have mentioned which file I'm talking about... It's
+> /etc/profile.d/gvfs-bash-completion.sh
+>=20
 
-On Mon, 14 Jul 2008, Andreas Ericsson wrote:
+I have that file, and I'm seeing the same issue as Linus.
 
-> Sorry for being clueless here, but why does the older versions need
-> to be kept in-memory anyway? Aren't we applying the delta each time
-> we find one, repeatedly creating a new base-object in-memory for
-> each delta? If we aren't doing that, why do we need more than just
-> a small amount of memory just for keeping the delta?
+E13 at http://tiswww.case.edu/php/chet/bash/FAQ mentions it, but
+doesn't (imo) give a strong reason why it drops colon from
+COMP_WORDBREAKS, as filenames with colons in them aren't exactly
+common.
 
-Think of a delta chain of 49 delta objects, 1 base object.  Now 
-reconstruct all of the objects.
-
-If you do it one by one, not storing the intermediate results, you end up 
-applying 1 delta for the first, 2 for the second (first the first, then 
-the second), and so on, in total 1 + 2 + 3 + ... + 49 = 49 * 50 / 2 = 1225 
-times.
-
-Compare that to the 49 times when reusing the intermediate results.
-
-Ciao,
-Dscho
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
