@@ -1,82 +1,76 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 0/4] Honor core.deltaBaseCacheLimit during index-pack
-Date: Mon, 14 Jul 2008 14:16:31 +0200
-Message-ID: <487B439F.8040902@op5.se>
-References: <20080713011512.GB31050@spearce.org>	<1216001267-33235-1-git-send-email-spearce@spearce.org>	<alpine.LFD.1.10.0807132220570.12484@xanadu.home>	<20080714031242.GA14542@spearce.org>	<alpine.LSU.1.00.0807141216390.32392@wbgn129.biozentrum.uni-wuerzburg.de> <m31w1wu1hc.fsf@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix relative built-in paths to be relative to the command
+ invocation
+Date: Mon, 14 Jul 2008 13:20:39 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807141319420.8950@racer>
+References: <7v1w1yupn4.fsf@gitster.siamese.dyndns.org> <1215981083-10815-1-git-send-email-johannes.sixt@telecom.at> <1215981083-10815-2-git-send-email-johannes.sixt@telecom.at> <1215981083-10815-3-git-send-email-johannes.sixt@telecom.at>
+ <1215981083-10815-4-git-send-email-johannes.sixt@telecom.at> <alpine.DEB.1.00.0807132141130.8950@racer> <1216018557.487af87d7bd28@webmail.eunet.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@cam.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Stephan Hennig <mailing_list@arcor.de>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 14:18:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Mon Jul 14 14:21:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIN0d-0002OZ-QL
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 14:18:28 +0200
+	id 1KIN3j-0003WF-US
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 14:21:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752985AbYGNMR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 08:17:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752811AbYGNMR0
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 08:17:26 -0400
-Received: from mail.op5.se ([193.201.96.20]:38619 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752615AbYGNMRZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 08:17:25 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 521C324B0C54;
-	Mon, 14 Jul 2008 14:17:23 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7sKa3bY0ZMv7; Mon, 14 Jul 2008 14:17:22 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [192.168.1.188])
-	by mail.op5.se (Postfix) with ESMTP id 4D30524B0C51;
-	Mon, 14 Jul 2008 14:17:22 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <m31w1wu1hc.fsf@localhost.localdomain>
+	id S1752691AbYGNMUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 08:20:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753019AbYGNMUl
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 08:20:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35554 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752205AbYGNMUl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 08:20:41 -0400
+Received: (qmail invoked by alias); 14 Jul 2008 12:20:39 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp026) with SMTP; 14 Jul 2008 14:20:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19F8sxyoopFaukilo6yd7tMJ+PPmeE8ukKQRk6JuY
+	L5Ed6oyVEcv2ib
+X-X-Sender: gene099@racer
+In-Reply-To: <1216018557.487af87d7bd28@webmail.eunet.at>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88420>
 
-Jakub Narebski wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> On Mon, 14 Jul 2008, Shawn O. Pearce wrote:
+Hi,
+
+On Mon, 14 Jul 2008, Johannes Sixt wrote:
+
+> Zitat von Johannes Schindelin <Johannes.Schindelin@gmx.de>:
 > 
->>> The only other alternative I can come up with is to change pack-objects 
->>> (or at least its defaults) so we don't generate these massive delta 
->>> chains.  But there are already packs in the wild that use these chains, 
->>> resulting in performance problems for clients.
->> But the long chains make the pack actually as efficient as it is...
+> > On Sun, 13 Jul 2008, Johannes Sixt wrote:
+> >
+> > > @@ -84,7 +90,7 @@ static void add_path(struct strbuf *out, const char
+> > > *path)
+> > >  	}
+> > >  }
+> > >
+> > > -void setup_path(const char *cmd_path)
+> > > +void setup_path(void)
+> >
+> > It seems to me that this patch would not do anything different, but 
+> > with less code change, if setup_path() would set argv0_path, and not a 
+> > new function was introduced.
 > 
-> Perhaps Shawn thought here about limiting delta chain not by its
-> *length*, but by its *size* (as required when unpacking last object
-> in a delta chanin).
-> 
-> What do you think about this idea?
+> This is just to play a safe game. I had it that way, but I decided to have
+> the call to the new git_set_argv0_path() early in git.c because the call
+> to setup_path() in git.c is very late, and it could happen that we call
+> system_path() (which needs argv0_path) before that. Although I didn't audit
+> the code whether this really happens.
 
-Sorry for being clueless here, but why does the older versions need
-to be kept in-memory anyway? Aren't we applying the delta each time
-we find one, repeatedly creating a new base-object in-memory for
-each delta? If we aren't doing that, why do we need more than just
-a small amount of memory just for keeping the delta?
+Well, okay... I would have rather seen it not change (since there was no 
+bug to fix), or as a separate patch, but it's Junio's call.
 
-Feel free to tell me to go away if I'm being stupid. I'm just
-curious and probably won't be able to hack up any patches anyway.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Ciao,
+Dscho
