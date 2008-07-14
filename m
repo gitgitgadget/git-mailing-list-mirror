@@ -1,165 +1,66 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 5/5] Allow add_path() to add non-existent directories to the path
-Date: Mon, 14 Jul 2008 23:41:29 +0200
-Message-ID: <1216071689-14823-6-git-send-email-johannes.sixt@telecom.at>
-References: <1216025226.487b128a031fd@webmail.eunet.at>
- <1216071689-14823-1-git-send-email-johannes.sixt@telecom.at>
- <1216071689-14823-2-git-send-email-johannes.sixt@telecom.at>
- <1216071689-14823-3-git-send-email-johannes.sixt@telecom.at>
- <1216071689-14823-4-git-send-email-johannes.sixt@telecom.at>
- <1216071689-14823-5-git-send-email-johannes.sixt@telecom.at>
-Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
-	Johannes Sixt <johannes.sixt@telecom.at>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 23:43:11 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] commit walk machinery is dangerous !
+Date: Mon, 14 Jul 2008 14:55:00 -0700
+Message-ID: <7vbq10f7wr.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.10.0807141641110.12484@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Jul 14 23:56:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIVp0-0002R9-VA
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 23:43:03 +0200
+	id 1KIW1k-0006Fd-JH
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 23:56:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756951AbYGNVll (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 17:41:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756989AbYGNVlk
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 17:41:40 -0400
-Received: from smtp5.srv.eunet.at ([193.154.160.227]:40595 "EHLO
-	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756951AbYGNVld (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 17:41:33 -0400
-Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp5.srv.eunet.at (Postfix) with ESMTP id C175A13AE10;
-	Mon, 14 Jul 2008 23:41:31 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6.3.323.g1e58
-In-Reply-To: <1216071689-14823-5-git-send-email-johannes.sixt@telecom.at>
+	id S1750975AbYGNVzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 17:55:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751002AbYGNVzM
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 17:55:12 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40482 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750939AbYGNVzM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 17:55:12 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 80CFA26AFF;
+	Mon, 14 Jul 2008 17:55:10 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id D6FDA26AFD; Mon, 14 Jul 2008 17:55:07 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.10.0807141641110.12484@xanadu.home> (Nicolas
+ Pitre's message of "Mon, 14 Jul 2008 16:54:24 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 879B7EDE-51EF-11DD-B334-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88471>
 
-This function had used make_absolute_path(); but this function dies if
-the directory that contains the entry whose relative path was supplied in
-the argument does not exist. This is a problem if the argument is, for
-example, "../libexec/git-core", and that "../libexec" does not exist.
+Nicolas Pitre <nico@cam.org> writes:
 
-Since the resolution of symbolic links is not required for elements in
-PATH, we can fall back to using make_nonrelative_path(), which simply
-prepends $PWD to the path.
+> However this time a corruption turned up and exposed what I think is a 
+> major flaw in git's error checking.  To demonstrate it, I created the 
+> following test case.  Turning the error() into a die() on line 772 of 
+> commit.c makes this test pass but I don't know if this is the 
+> appropriate fix (e.g. some attempt to parse non existing commits could 
+> be valid usage, etc.).  Note this is critical only for git versions 
+> later than commit 8eca0b47ff15.
 
-We have to move make_nonrelative_path() alongside make_absolute_path() in
-abspath.c so that git-shell can be linked. See 5b8e6f85f.
+Which probably means we should revert that commit as faulty?  IIRC, before
+that commit we did check and error out correctly but you loosened the
+check to introduce "a major flaw" with that commit.
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- abspath.c  |   36 ++++++++++++++++++++++++++++++++++++
- exec_cmd.c |    2 +-
- path.c     |   36 ------------------------------------
- 3 files changed, 37 insertions(+), 37 deletions(-)
+$ for b in maint master next pu
+  do
+      echo -n $b; git cat-file blob $b:commit.c | wc -l
+  done
+maint 672
+master 672
+next 779
+pu 789
 
-diff --git a/abspath.c b/abspath.c
-index 4f95a95..0d56124 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -66,3 +66,39 @@ const char *make_absolute_path(const char *path)
- 
- 	return buf;
- }
-+
-+static const char *get_pwd_cwd(void)
-+{
-+	static char cwd[PATH_MAX + 1];
-+	char *pwd;
-+	struct stat cwd_stat, pwd_stat;
-+	if (getcwd(cwd, PATH_MAX) == NULL)
-+		return NULL;
-+	pwd = getenv("PWD");
-+	if (pwd && strcmp(pwd, cwd)) {
-+		stat(cwd, &cwd_stat);
-+		if (!stat(pwd, &pwd_stat) &&
-+		    pwd_stat.st_dev == cwd_stat.st_dev &&
-+		    pwd_stat.st_ino == cwd_stat.st_ino) {
-+			strlcpy(cwd, pwd, PATH_MAX);
-+		}
-+	}
-+	return cwd;
-+}
-+
-+const char *make_nonrelative_path(const char *path)
-+{
-+	static char buf[PATH_MAX + 1];
-+
-+	if (is_absolute_path(path)) {
-+		if (strlcpy(buf, path, PATH_MAX) >= PATH_MAX)
-+			die("Too long path: %.*s", 60, path);
-+	} else {
-+		const char *cwd = get_pwd_cwd();
-+		if (!cwd)
-+			die("Cannot determine the current working directory");
-+		if (snprintf(buf, PATH_MAX, "%s/%s", cwd, path) >= PATH_MAX)
-+			die("Too long path: %.*s", 60, path);
-+	}
-+	return buf;
-+}
-diff --git a/exec_cmd.c b/exec_cmd.c
-index c236034..0ed768d 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -50,7 +50,7 @@ static void add_path(struct strbuf *out, const char *path)
- 		if (is_absolute_path(path))
- 			strbuf_addstr(out, path);
- 		else
--			strbuf_addstr(out, make_absolute_path(path));
-+			strbuf_addstr(out, make_nonrelative_path(path));
- 
- 		strbuf_addch(out, PATH_SEP);
- 	}
-diff --git a/path.c b/path.c
-index 504eae0..9df447b 100644
---- a/path.c
-+++ b/path.c
-@@ -291,42 +291,6 @@ int adjust_shared_perm(const char *path)
- 	return 0;
- }
- 
--static const char *get_pwd_cwd(void)
--{
--	static char cwd[PATH_MAX + 1];
--	char *pwd;
--	struct stat cwd_stat, pwd_stat;
--	if (getcwd(cwd, PATH_MAX) == NULL)
--		return NULL;
--	pwd = getenv("PWD");
--	if (pwd && strcmp(pwd, cwd)) {
--		stat(cwd, &cwd_stat);
--		if (!stat(pwd, &pwd_stat) &&
--		    pwd_stat.st_dev == cwd_stat.st_dev &&
--		    pwd_stat.st_ino == cwd_stat.st_ino) {
--			strlcpy(cwd, pwd, PATH_MAX);
--		}
--	}
--	return cwd;
--}
--
--const char *make_nonrelative_path(const char *path)
--{
--	static char buf[PATH_MAX + 1];
--
--	if (is_absolute_path(path)) {
--		if (strlcpy(buf, path, PATH_MAX) >= PATH_MAX)
--			die ("Too long path: %.*s", 60, path);
--	} else {
--		const char *cwd = get_pwd_cwd();
--		if (!cwd)
--			die("Cannot determine the current working directory");
--		if (snprintf(buf, PATH_MAX, "%s/%s", cwd, path) >= PATH_MAX)
--			die ("Too long path: %.*s", 60, path);
--	}
--	return buf;
--}
--
- const char *make_relative_path(const char *abs, const char *base)
- {
- 	static char buf[PATH_MAX + 1];
--- 
-1.5.6.3.323.g1e58
+Hmph...
