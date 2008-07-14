@@ -1,92 +1,146 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: Re: git-rebase eats empty commits
-Date: Mon, 14 Jul 2008 17:01:08 +0200
-Message-ID: <g5fpnm$3jb$1@ger.gmane.org>
-References: <g4vrrm$g35$1@ger.gmane.org> <20080712221207.GB22323@leksak.fem-net>
+From: "=?UTF-8?Q?Jo=C3=A3o_Abecasis?=" <joao@abecasis.name>
+Subject: Re: [PATCH] git-svn: find-rev and rebase for SVN::Mirror repositories
+Date: Mon, 14 Jul 2008 16:27:21 +0100
+Message-ID: <7bf6f1d20807140827u56abc74fs4e289384db054a0e@mail.gmail.com>
+References: <7bf6f1d20807081908kdf9f615taa532ae579b457d7@mail.gmail.com>
+	 <20080714091243.GA27794@untitled>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 14 17:02:54 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: git@vger.kernel.org
+To: "Eric Wong" <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Jul 14 17:28:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIPZC-00066Q-8t
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 17:02:18 +0200
+	id 1KIPyS-0007Ky-O4
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 17:28:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754036AbYGNPBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 11:01:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754021AbYGNPBU
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 11:01:20 -0400
-Received: from main.gmane.org ([80.91.229.2]:59886 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753799AbYGNPBT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 11:01:19 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KIPYD-00056j-Ae
-	for git@vger.kernel.org; Mon, 14 Jul 2008 15:01:17 +0000
-Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 14 Jul 2008 15:01:17 +0000
-Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 14 Jul 2008 15:01:17 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <20080712221207.GB22323@leksak.fem-net>
+	id S1754071AbYGNP1Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 11:27:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754047AbYGNP1Z
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 11:27:25 -0400
+Received: from gv-out-0910.google.com ([216.239.58.187]:30841 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754031AbYGNP1Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 11:27:24 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so877046gvc.37
+        for <git@vger.kernel.org>; Mon, 14 Jul 2008 08:27:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=1EwokDRXFcYISuUBIfasshD4eD8TsHOM7JrfA+rR/gk=;
+        b=oMG8Jf100sxpevoww/kMZOszXct0WXDROW7yuv7kyzXw05kjqa567RMNxEuZ0AhRNr
+         kTBzWWGidlNWngHg1nlNXG8qDuX30XIomaC6vWLjpOk1+CjPHTb+vTDUVK8d6VNj8mEU
+         Y8dQoTqlJxh5TQ80tSaMhCC1ciX/M3J7pfIvU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=FfmSf5APzob51C3j53+Gmtlqls6udfxrJ1DlTMcgMzyLHD837znQsZ4sMBB81U5Gq5
+         5OIld/C0HEWTYvcj2+XK72NcPOYU9NqqR/fHWhcP5oWeoRZfC8qH1kx7wb0g5qzLlsST
+         3FVb0VhqXT80Geqe00bB7xVNVQkz7SiCBCK+c=
+Received: by 10.125.119.3 with SMTP id w3mr3463845mkm.24.1216049241297;
+        Mon, 14 Jul 2008 08:27:21 -0700 (PDT)
+Received: by 10.125.131.3 with HTTP; Mon, 14 Jul 2008 08:27:21 -0700 (PDT)
+In-Reply-To: <20080714091243.GA27794@untitled>
+Content-Disposition: inline
+X-Google-Sender-Auth: 9339cedc1adb8c10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88432>
 
-Stephan Beyer venit, vidit, dixit 13.07.2008 00:12:
-> Hi,
-> 
-> Michael J Gruber wrote:
->> "git commit" allows empty commits with the "--allow-empty" option, i.e.  
->> commits which introduce no change at all. This is sometimes useful for  
->> keeping a log of untracked work related to tracked content.
->>
->> "git rebase" removes empty commits, for the good reason that rebasing  
->> may make certain commits obsolete; but I don't want that in the case  
->> mentioned above. Is there any way to specify "--preserve-empty" or 
->> similar?
-> 
-> First I can speak for git-sequencer: there is no such thing as a
-> "preserve empty" option, but currently, when you are picking a commit
-> that has already been applied so that no changes occur, it will pause.
-> (It will not pause if it is a fast-forward.)
-> Yet, I was unsure if this is a "correct" behavior, but it seemed to be
-> useful, because you can inspect the situation.
-> 
-> In my mind, the same should happen with an empty commit, so I tested it:
->  1. It pauses.
->  2. In that pause I only need to run "git commit --allow-empty" and I have
->     the picked empty patch with that commit message.
-> 
-> So if this behavior is kept, there is no such need for such an option.
-> 
-> Now I'm checking it with the old rebase-i (I'm always referring to
-> git-rebase--interactive as rebase-i) and exactly the same behavior
-> occurs.
-> 
-> But rebase is not rebase-i.
-> So I've also checked both, pure rebase and rebase-m: then the empty commit
-> is lost.
-> 
-> To sum up, use rebase -i and when it's pausing, do "git commit --allow-empty"
-> and then "git rebase --continue" and you have what you want.
-
-I assume this is with git from master? With git 1.5.6.2 rebase -i 
-doesn't stop there, not even when I change "pick" to "edit"!
-
-So, I guess for now I'll use my hacked git-rebase ("-m", I didn't hack 
-git-format-patch), maybe 1.6.0 will behave as described above. Anyway 
-thanks for the hint about distinguishing between rebase and rebase -i.
-
-Michael
+SGkgRXJpYywKClRoYW5rcyBmb3IgeW91ciByZXBseSBhbmQgY29tbWVudHMuCgpFcmljIFdvbmcg
+PG5vcm1hbHBlcnNvbkB5aGJ0Lm5ldD4gd3JvdGU6Cj4gSm/Do28gQWJlY2FzaXMgPGpvYW9AYWJl
+Y2FzaXMubmFtZT4gd3JvdGU6Cj4+IGZpbmQtcmV2IGFuZCByZWJhc2UgZXJyb3Igb3V0IG9uIHN2
+bSBiZWNhdXNlIGdpdC1zdm4gZG9lc24ndCB0cmFjZSB0aGUgb3JpZ2luYWwKPj4gc3ZuIHJldmlz
+aW9uIG51bWJlcnMgYmFjayB0byBnaXQgY29tbWl0cy4gVGhlIHVwZGF0ZWQgdGVzdCBjYXNlLCBp
+bmNsdWRlZCBpbiB0aGUKPj4gcGF0Y2gsIHNob3dzIHRoZSBpc3N1ZSBhbmQgcGFzc2VzIHdpdGgg
+dGhlIHJlc3Qgb2YgdGhlIHBhdGNoIGFwcGxpZWQuCj4+Cj4+IFRoaXMgZml4ZXMgR2l0OjpTVk46
+OmZpbmRfYnlfdXJsIHRvIGZpbmQgYnJhbmNoZXMgYmFzZWQgb24gdGhlIHN2bTpzb3VyY2UgVVJM
+LAo+PiB3aGVyZSB1c2VTdm1Qcm9wcyBpcyBzZXQuIEFsc28gbWFrZXMgc3VyZSBjbWRfZmluZF9y
+ZXYgYW5kIHdvcmtpbmdfaGVhZF9pbmZvIHVzZQo+PiB0aGUgaW5mb3JtYXRpb24gdGhleSBoYXZl
+IHRvIGNvcnJlY3RseSB0cmFjayB0aGUgc291cmNlIHJlcG9zaXRvcnkuIFRoaXMgaXMKPj4gZW5v
+dWdoIHRvIGdldCBmaW5kLXJldiBhbmQgcmViYXNlIHdvcmtpbmcuCj4+Cj4+IFNpZ25lZC1vZmYt
+Ynk6IEpvw6NvIEFiZWNhc2lzIDxqb2FvQGFiZWNhc2lzLm5hbWU+Cj4+IC0tLQo+PiBJbmNpZGVu
+dGFsbHksIEkndmUgdHJpZWQgc3VibWl0dGluZyB0aGVzZSBmaXhlcyBiZWZvcmUsIGJ1dCBmYWls
+ZWQgdG8KPj4gZ2V0IG11Y2ggYXR0ZW50aW9uLCBzbyBJIGNvdWxkIGJlIGRvaW5nIHNvbWV0aGlu
+ZyB3cm9uZy4uLiBBbnkgaW5wdXQKPj4gb24gdGhlIHBhdGNoIG9yIG15IGFwcHJvYWNoIHRvIHRo
+aXMgbGlzdCBpcyBhcHByZWNpYXRlZC4gVGhpcyB0aW1lIEkKPj4gcmV3b3JkZWQgdGhlIGNvbW1p
+dCBtZXNzYWdlIGFuZCBhZGRlZCBFcmljIFdvbmcgdG8gdGhlIENDIGxpc3QsIHNpbmNlCj4+IGhl
+IHNlZW1zIHRvIGJlIEFjaydpbmcgZ2l0LXN2biBwYXRjaGVzLgo+Cj4gSGkgSm/Do28sCj4KPiBT
+b3JyeSwgSSBoYXZlbid0IGJlZW4gZm9sbG93aW5nIHRoZSBtYWlsaW5nIGxpc3QgbXVjaCBsYXRl
+bHksIGFuZAo+IGV2ZW4ga2VlcGluZyB1cCB3aXRoIG15IGluYm94IGlzIGdldHRpbmcgdG8gYmUg
+YSBjaG9yZSA6KAoKSSBjYW4gcmVsYXRlIHRvIHRoYXQgOy0pCgo+IFRoZSBjb21taXQgbWVzc2Fn
+ZSBzaG91bGQgYmUgd3JhcHBlZCBhdCA3MiBjaGFyYWN0ZXJzIG9yIGxlc3MuCj4gU29tZSBmdXJ0
+aGVyIG5vdGVzIGJlbG93IChtb3N0bHkgd2hpdGVzcGFjZSBpc3N1ZXMsIGJ1dCBvbmUKPiByZWdy
+ZXNzaW9uKS4KCk5vdGVkLgoKPj4gIHN1YiByZWFkX2FsbF9yZW1vdGVzIHsKPj4gICAgICAgbXkg
+JHIgPSB7fTsKPj4gKyAgICAgICAgbXkgJHVzZXN2bXByb3BzID0gZXZhbCB7IGNvbW1hbmRfb25l
+bGluZShxdy9jb25maWcgLS1ib29sCj4+ICsgICAgICAgICAgICBzdm4udXNlU3ZtUHJvcHMvKSB9
+Owo+PiArICAgICAgICAkdXNlc3ZtcHJvcHMgPSAkdXNlc3ZtcHJvcHMgZXEgJ3RydWUnIGlmICR1
+c2Vzdm1wcm9wczsKPgo+IEFsd2F5cyB1c2UgdGFicyBmb3IgaW5kZW50YXRpb24gKGJ1dCBzcGFj
+ZXMgZm9yIGFsaWdubWVudCBpcyBhbHJpZ2h0KS4KPgo+IEknZCBhbHNvIHJhdGhlciBub3QgcHJv
+cGFnYXRlIHRoZSBjcmF6eSBhbGxsb3dlcmNhc2V3aXRob3V0dW5kZXJzY29yZXMKPiBjb252ZW50
+aW9uIG9mIGdpdC1jb25maWcgaW50byBjb2RlLCBlaXRoZXIuICAkdXNlc19zdm1fcHJvcHMgaXMg
+bXVjaAo+IGVhc2llciB0byBwYXJzZSB3aGVuIEknbSBoYWxmLWF3YWtlIDopCgpEb25lIQoKPj4g
+ICAgICAgZm9yZWFjaCAoZ3JlcCB7IHMvXnN2bi1yZW1vdGVcLi8vIH0gY29tbWFuZChxdy9jb25m
+aWcgLWwvKSkgewo+PiAgICAgICAgICAgICAgIGlmIChtIV4oLispXC5mZXRjaD1ccyooLiopXHMq
+OlxzKnJlZnMvcmVtb3Rlcy8oLispXHMqJCEpIHsKPj4gICAgICAgICAgICAgICAgICAgICAgIG15
+ICgkcmVtb3RlLCAkbG9jYWxfcmVmLCAkcmVtb3RlX3JlZikgPSAoJDEsICQyLCAkMyk7Cj4+ICAg
+ICAgICAgICAgICAgICAgICAgICAkbG9jYWxfcmVmID1+IHN7Xi99e307Cj4+ICAgICAgICAgICAg
+ICAgICAgICAgICAkci0+eyRyZW1vdGV9LT57ZmV0Y2h9LT57JGxvY2FsX3JlZn0gPSAkcmVtb3Rl
+X3JlZjsKPj4gKyAgICAgICAgICAgICAgICAgICAgICRyLT57JHJlbW90ZX0tPntzdm19ID0ge30g
+aWYgJHVzZXN2bXByb3BzOwo+PiArICAgICAgICAgICAgIH0gZWxzaWYgKG0hXiguKylcLnVzZXN2
+bXByb3BzPVxzKiguKilccyokISkgewo+PiArICAgICAgICAgICAgICAgICAgICAgJHItPnskMX0t
+Pntzdm19ID0ge307Cj4+ICAgICAgICAgICAgICAgfSBlbHNpZiAobSFeKC4rKVwudXJsPVxzKigu
+KilccyokISkgewo+PiAgICAgICAgICAgICAgICAgICAgICAgJHItPnskMX0tPnt1cmx9ID0gJDI7
+Cj4+ICAgICAgICAgICAgICAgfSBlbHNpZiAobSFeKC4rKVwuKGJyYW5jaGVzfHRhZ3MpPQo+PiBA
+QCAtMTQzNyw2ICsxNDQzLDIxIEBAIHN1YiByZWFkX2FsbF9yZW1vdGVzIHsKPj4gICAgICAgICAg
+ICAgICAgICAgICAgIH0KPj4gICAgICAgICAgICAgICB9Cj4+ICAgICAgIH0KPj4gKwo+PiArICAg
+ICBtYXAgewo+PiArICAgICAgICAgICAgIGlmIChkZWZpbmVkICRyLT57JF99LT57c3ZtfSkgewo+
+PiArICAgICAgICAgICAgICAgICAgICAgbXkgJHN2bTsKPj4gKyAgICAgICAgICAgICAgICAgICAg
+IGV2YWwgewo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICBteSAkc2VjdGlvbiA9ICJz
+dm4tcmVtb3RlLiRfIjsKPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJHN2bSA9IHsK
+Pj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzb3VyY2UgPT4gdG1wX2Nv
+bmZpZygnLS1nZXQnLCAiJHNlY3Rpb24uc3ZtLXNvdXJjZSIpLAo+PiArICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIHJlcGxhY2UgPT4gdG1wX2NvbmZpZygnLS1nZXQnLCAiJHNl
+Y3Rpb24uc3ZtLXJlcGxhY2UiKSwKPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfQo+
+PiArICAgICAgICAgICAgICAgICAgICAgfTsKPj4gKyAgICAgICAgICAgICAgICAgICAgICRyLT57
+JF99LT57c3ZtfSA9ICRzdm07Cj4+ICsgICAgICAgICAgICAgfQo+PiArICAgICB9IGtleXMgJSRy
+Owo+PiArCj4KPiBQbGVhc2Ugd3JhcCBhbGwgY29kZSBhdCA4MC1jb2x1bW5zLgoKT2tpZG9raS4g
+SSBqdXN0IHdhc24ndCBzdXJlIGhvdyB3aWRlIHdhcyBhIHRhYiA7LSkKCj4+IEBAIC0xNTYzLDEz
+ICsxNTg0LDIxIEBAIHN1YiBmaW5kX2J5X3VybCB7ICMgcmVwb3Nfcm9vdCBhbmQsIHBhdGggYXJl
+IG9wdGlvbmFsCj4+ICAgICAgICAgICAgICAgfQo+PiAgICAgICAgICAgICAgIG15ICRwID0gJHBh
+dGg7Cj4+ICAgICAgICAgICAgICAgbXkgJHJ3ciA9IHJld3JpdGVfcm9vdCh7cmVwb19pZCA9PiAk
+cmVwb19pZH0pOwo+PiArICAgICAgICAgICAgIG15ICRzdm0gPSAkcmVtb3Rlcy0+eyRyZXBvX2lk
+fS0+e3N2bX0KPj4gKyAgICAgICAgICAgICAgICAgICAgIGlmIGRlZmluZWQgJHJlbW90ZXMtPnsk
+cmVwb19pZH0tPntzdm19Owo+PiAgICAgICAgICAgICAgIHVubGVzcyAoZGVmaW5lZCAkcCkgewo+
+PiAgICAgICAgICAgICAgICAgICAgICAgJHAgPSAkZnVsbF91cmw7Cj4+ICAgICAgICAgICAgICAg
+ICAgICAgICBteSAkeiA9ICR1Owo+PiArICAgICAgICAgICAgICAgICAgICAgbXkgJHByZWZpeCA9
+ICcnOwo+PiAgICAgICAgICAgICAgICAgICAgICAgaWYgKCRyd3IpIHsKPj4gICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgJHogPSAkcndyOwo+PiArICAgICAgICAgICAgICAgICAgICAgfSBl
+bHNpZiAoZGVmaW5lZCAkc3ZtKSB7Cj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICR6
+ID0gJHN2bS0+e3NvdXJjZX07Cj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICRwcmVm
+aXggPSAkc3ZtLT57cmVwbGFjZX07Cj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICRw
+cmVmaXggPX4gcyNeXFEkdVxFKD86L3wkKSMjOwo+PiArICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAkcHJlZml4ID1+IHMjLyQjIzsKPj4gICAgICAgICAgICAgICAgICAgICAgIH0KPj4gLSAg
+ICAgICAgICAgICAgICAgICAgICRwID1+IHMjXlxRJHpcRSg/Oi98JCkjIyBvciBuZXh0Owo+PiAr
+ICAgICAgICAgICAgICAgICAgICAgJHAgPX4gcyNeXFEkelxFKD89L3wkKSMkcHJlZml4IyBvciBu
+ZXh0Owo+Cj4gVGhpcyBicm9rZSB0OTEwMCBmb3IgbWUgYXQ6ICdhYmxlIHRvIGRjb21taXQgdG8g
+YSBzdWJkaXJlY3RvcnknCj4gQ2hhbmdpbmcgdGhlID89IGJhY2sgdG8gPzogd29ya3MuCgpEdWgh
+IE1pc3NlZCB0aGF0LiBJIGhhZCB0byBtYWtlIGEgY291cGxlIG9mIHR3ZWFrcyBhZnRlciB0aGUg
+dGVzdHMKd2VyZSB3b3JraW5nLCBiZWNhdXNlIEkgaGFkIHNvbWUgYW5vdGhlciB0ZXN0IGNhc2Ug
+dGhhdCB3YXMgYnJlYWtpbmcKc29tZXdoZXJlLiBBbnl3YXksIG15IG90aGVyIHRlc3QgY2FzZSAo
+d2hpY2ggaXMgdGhlIG9uZSB3aGVyZSBJIG5lZWQKaXQgdG8gd29yaykgd29ya3Mgd2l0aG91dCB0
+aGF0IGNoYW5nZSBhZnRlciBhbGwuCgo+IFRoYW5rcyBmb3IgdGhlIHBhdGNoLCBwbGVhc2UgbGV0
+IHVzIGtub3cgaWYgdGhhdCBjaGFuZ2UgaXMgT0suCgpMZXQncyBnbyB3aXRoIHRoYXQsIHNpbmNl
+IGl0IHdvcmtzLiBJZiBJIGRvIGZpbmQgYSB0ZXN0IGNhc2Ugd2hlcmUgaXQKYnJlYWtzIHdlJ2xs
+IGZpeCBpdCBsYXRlci4KClVwZGF0ZWQgcGF0Y2ggY29taW5nIHVwLgoKQ2hlZXJzLAoKCkpvw6Nv
+Cg==
