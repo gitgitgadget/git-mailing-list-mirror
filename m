@@ -1,88 +1,122 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] bash completion: Fix the . -> .. revision range
-	completion
-Date: Mon, 14 Jul 2008 08:50:18 +0200
-Message-ID: <20080714065018.GB26446@atjola.homenet>
-References: <20080713111847.29801.8969.stgit@localhost> <7vskudpiqq.fsf@gitster.siamese.dyndns.org> <20080713230724.GJ10151@machine.or.cz> <7vhcatnz80.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0807131649380.3305@woody.linux-foundation.org> <20080714000021.GB13066@spearce.org> <alpine.LFD.1.10.0807132210430.3305@woody.linux-foundation.org> <20080714062755.GA15992@spearce.org> <20080714064719.GA26446@atjola.homenet>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH] Fix relative built-in paths to be relative to the command invocation
+Date: Mon, 14 Jul 2008 08:55:57 +0200
+Message-ID: <1216018557.487af87d7bd28@webmail.eunet.at>
+References: <7v1w1yupn4.fsf@gitster.siamese.dyndns.org> <1215981083-10815-1-git-send-email-johannes.sixt@telecom.at> <1215981083-10815-2-git-send-email-johannes.sixt@telecom.at> <1215981083-10815-3-git-send-email-johannes.sixt@telecom.at> <1215981083-10815-4-git-send-email-johannes.sixt@telecom.at> <alpine.DEB.1.00.0807132141130.8950@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jul 14 08:51:21 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 14 08:57:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIHu4-0005eR-UI
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 08:51:21 +0200
+	id 1KIHzb-0006wi-Ov
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 08:57:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753754AbYGNGuX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jul 2008 02:50:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753745AbYGNGuX
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 02:50:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57202 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753648AbYGNGuW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 02:50:22 -0400
-Received: (qmail invoked by alias); 14 Jul 2008 06:50:20 -0000
-Received: from i577BB7AC.versanet.de (EHLO atjola.local) [87.123.183.172]
-  by mail.gmx.net (mp061) with SMTP; 14 Jul 2008 08:50:20 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/1TyM7+zn14030f/phavrv8GcaXrceLBxodAXf00
-	rpKtLOJIpVdcLb
-Content-Disposition: inline
-In-Reply-To: <20080714064719.GA26446@atjola.homenet>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+	id S1753892AbYGNG4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 02:56:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753045AbYGNG4D
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 02:56:03 -0400
+Received: from smtp1.srv.eunet.at ([193.154.160.119]:41278 "EHLO
+	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752575AbYGNG4B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 02:56:01 -0400
+Received: from webmail01.si.eunet.at (webmail01.srv.eunet.at [193.154.180.195])
+	by smtp1.srv.eunet.at (Postfix) with ESMTPS id C72A6348D1;
+	Mon, 14 Jul 2008 08:55:58 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by webmail01.si.eunet.at (8.13.1/8.13.1) with ESMTP id m6E6tvbo024337;
+	Mon, 14 Jul 2008 08:55:57 +0200
+Received: from cm56-163-160.liwest.at (cm56-163-160.liwest.at [86.56.163.160]) 
+	by webmail.eunet.at (IMP) with HTTP 
+	for <johsixt@mbox.eunet.at>; Mon, 14 Jul 2008 08:55:57 +0200
+In-Reply-To: <alpine.DEB.1.00.0807132141130.8950@racer>
+User-Agent: Internet Messaging Program (IMP) 3.2.8
+X-Originating-IP: 86.56.163.160
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88388>
 
-On 2008.07.14 08:47:19 +0200, Bj=F6rn Steinbrink wrote:
-> On 2008.07.14 06:27:55 +0000, Shawn O. Pearce wrote:
-> > Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> > > On Mon, 14 Jul 2008, Shawn O. Pearce wrote:
-> > > > >=20
-> > > > > Does it fix this one too:
-> > > > >=20
-> > > > > 	git show origin/pu:Makef<tab>
-> > > > >=20
-> > > > > which totally screws up and becomes
-> > > > >=20
-> > > > > 	git show Makefile
-> > > > >=20
-> > > > > dropping the version specifier?
-> >=20
-> > What is $COMP_WORDBREAKS set to in your shell?  In mine it
-> > appears to be:
-> >=20
-> > 	" \"'@><=3D;|&(:"
-> >=20
-> > which is the I believe the shell default.
-> >=20
-> > Bj=F6rn Steinbrink (doener on #git) is running bash 3.2.39 from
-> > Debian and has the same setting, and the completion works correctly
-> > there too.  He reports that removing : from COMP_WORDBREAKS will
-> > get the behavior you are reporting as broken.
-> >=20
-> > I have to say, this sounds to me like you (or some package on your
-> > system) modified COMP_WORDBREAKS away from the default that other
-> > distributions use and that is what is breaking us here.  Since we
-> > can have only one setting for this variable in the shell I do not
-> > thing it would be a good idea for our completion package to force
-> > a specific setting upon the user.
->=20
-> Seems that gvfs comes with a completion script that deliberately drop=
-s
-> the : from COMP_WORDBREAKS. Do you have that installed Linus?
+Zitat von Johannes Schindelin <Johannes.Schindelin@gmx.de>:
 
-Ah crap, I should have mentioned which file I'm talking about... It's
-/etc/profile.d/gvfs-bash-completion.sh
+> Hi,
+>
+> On Sun, 13 Jul 2008, Johannes Sixt wrote:
+>
+> > diff --git a/Makefile b/Makefile
+> > index 4796565..2bdb9bf 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -1301,7 +1301,7 @@ remove-dashes:
+> >  ### Installation rules
+> >
+> >  ifeq ($(firstword $(subst /, ,$(template_dir))),..)
+> > -template_instdir = $(gitexecdir)/$(template_dir)
+> > +template_instdir = $(shell cd '$(bindir_SQ)/$(template_dir_SQ)' && pwd)
+>
+> What is this for?  Did the original line stop working?
 
-Bj=F6rn, getting some coffee now
+I could just have changed $(gitexecdir) to $(bindir), but in the
+make-execpath-relative patch we will need the normalized gitexec_instdir
+because its value is compared to $(bindir). So the extra $(shell...) in
+_this_ patch is only that the final result looks consistent.
+
+> > diff --git a/exec_cmd.c b/exec_cmd.c
+> > index 8899e31..45f92eb 100644
+> > --- a/exec_cmd.c
+> > +++ b/exec_cmd.c
+> > @@ -5,6 +5,7 @@
+> >
+> >  extern char **environ;
+> >  static const char *argv_exec_path;
+> > +static const char *argv0_path;
+> >
+> >  static const char *builtin_exec_path(void)
+> >  {
+> > @@ -42,14 +43,19 @@ static const char *builtin_exec_path(void)
+> >
+> >  const char *system_path(const char *path)
+> >  {
+> > -	if (!is_absolute_path(path)) {
+> > +	if (!is_absolute_path(path) && argv0_path) {
+> >  		struct strbuf d = STRBUF_INIT;
+> > -		strbuf_addf(&d, "%s/%s", git_exec_path(), path);
+> > +		strbuf_addf(&d, "%s/%s", argv0_path, path);
+> >  		path = strbuf_detach(&d, NULL);
+> >  	}
+> >  	return path;
+> >  }
+> >
+> > +void git_set_argv0_path(const char *path)
+> > +{
+> > +	argv0_path = path;
+> > +}
+> > +
+> >  void git_set_argv_exec_path(const char *exec_path)
+> >  {
+> >  	argv_exec_path = exec_path;
+> > @@ -84,7 +90,7 @@ static void add_path(struct strbuf *out, const char
+> *path)
+> >  	}
+> >  }
+> >
+> > -void setup_path(const char *cmd_path)
+> > +void setup_path(void)
+>
+> It seems to me that this patch would not do anything different, but with
+> less code change, if setup_path() would set argv0_path, and not a new
+> function was introduced.
+
+This is just to play a safe game. I had it that way, but I decided to have
+the call to the new git_set_argv0_path() early in git.c because the call
+to setup_path() in git.c is very late, and it could happen that we call
+system_path() (which needs argv0_path) before that. Although I didn't audit
+the code whether this really happens.
+
+-- Hannes
