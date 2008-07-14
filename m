@@ -1,65 +1,65 @@
 From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH 2/2] Reuse the same temp index in a transaction
-Date: Mon, 14 Jul 2008 08:35:51 +0200
-Message-ID: <20080714063551.GD20751@diana.vm.bytemark.co.uk>
-References: <20080702060113.11361.39006.stgit@yoghurt> <20080702061314.11361.28297.stgit@yoghurt> <b0943d9e0807120324l7674c010w9a8e4a0bbdeeee65@mail.gmail.com>
+Subject: Re: [StGIT PATCH 3/4] Convert git_id() to the new id format
+Date: Mon, 14 Jul 2008 08:44:34 +0200
+Message-ID: <20080714064434.GE20751@diana.vm.bytemark.co.uk>
+References: <20080619214023.27794.97039.stgit@localhost.localdomain> <20080619214222.27794.74083.stgit@localhost.localdomain> <20080622154854.GC4468@diana.vm.bytemark.co.uk> <b0943d9e0807130420v37e36f30sef8b7745fa55b688@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 08:37:19 2008
+X-From: git-owner@vger.kernel.org Mon Jul 14 08:45:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIHgR-0002i6-Hk
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 08:37:15 +0200
+	id 1KIHoa-0004RH-Jg
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 08:45:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754521AbYGNGf6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jul 2008 02:35:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752990AbYGNGf6
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 02:35:58 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3351 "EHLO
+	id S1752835AbYGNGom convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jul 2008 02:44:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752575AbYGNGom
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 02:44:42 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4632 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753539AbYGNGf5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 02:35:57 -0400
+	with ESMTP id S1750766AbYGNGol (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 02:44:41 -0400
 Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KIHf5-0005i7-00; Mon, 14 Jul 2008 07:35:51 +0100
+	id 1KIHnW-0005ki-00; Mon, 14 Jul 2008 07:44:34 +0100
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0807120324l7674c010w9a8e4a0bbdeeee65@mail.gmail.com>
+In-Reply-To: <b0943d9e0807130420v37e36f30sef8b7745fa55b688@mail.gmail.com>
 X-Manual-Spam-Check: kha@treskal.com, clean
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88384>
 
-On 2008-07-12 11:24:24 +0100, Catalin Marinas wrote:
+On 2008-07-13 12:20:25 +0100, Catalin Marinas wrote:
 
-> 2008/7/2 Karl Hasselstr=F6m <kha@treskal.com>:
+> 2008/6/22 Karl Hasselstr=F6m <kha@treskal.com>:
 >
-> > Instead of making a new temp index every time we need one, just
-> > keep reusing the same one. And keep track of which tree is
-> > currently stored in it -- if we do several consecutive successful
-> > pushes, it's always going to be the "right" tree so that we don't
-> > have to call read-tree before each patch application.
-> >
-> > The motivation behind this change is of course that it makes
-> > things faster.
-> >
-> > (The same simple test as in the previous patch -- pushing 250
-> > patches in a 32k-file repository, with one file-level merge
-> > necessary per push -- went from 0.36 to 0.19 seconds per patch
-> > with this patch applied.)
+> > Very nice parameter rename here, now that we have Branch objects
+> > (and use a crappy language with no type system).
 >
-> That's an impressive improvement (together with the previous patch).
-> Is this with the new patch log infrastructure?
+> It has a type system but no compile-time checking
 
-Yes, with all the bells and whistles -- in particular, with the
-overhead of the simplified log. (But note that it's a synthetic
-benchmark, and not a real linux-kernel patch series.)
+Yeah, that's what I meant.
+
+> (I'm more in favour of static typing but no time to rewrite stgit
+> :-)).
+
+Me too.
+
+> > The corresponding TODO comment now would be that pick should be
+> > able to pick patches from the past, from the stack log.
+>
+> How would the syntax look like?
+
+We'd want to support <committish>:patch, for any committish that's a
+stack log (either simplified or full). Not sure if we'd want a more
+pretty-looking format as well.
 
 --=20
 Karl Hasselstr=F6m, kha@treskal.com
