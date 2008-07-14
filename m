@@ -1,82 +1,77 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [git pull] core/softirq for v2.6.27
-Date: Mon, 14 Jul 2008 10:46:23 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0807141026200.3305@woody.linux-foundation.org>
-References: <20080714144243.GA21079@elte.hu> <20080714092215.0efd7fa3.akpm@linux-foundation.org> <20080714163141.GA21068@elte.hu> <20080714094422.e7ae255a.akpm@linux-foundation.org> <alpine.LFD.1.10.0807140948220.3305@woody.linux-foundation.org>
- <alpine.LFD.1.10.0807141019010.3305@woody.linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Closing the merge window for 1.6.0
+Date: Mon, 14 Jul 2008 13:54:34 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0807141351540.12484@xanadu.home>
+References: <7vod5kd3im.fsf@gitster.siamese.dyndns.org>
+ <7v3amv1e8n.fsf@gitster.siamese.dyndns.org>
+ <7vprpwhp7t.fsf@gitster.siamese.dyndns.org>
+ <7vlk0ffhw3.fsf@gitster.siamese.dyndns.org>
+ <7vtzf1w0rj.fsf@gitster.siamese.dyndns.org>
+ <7vabgqsc37.fsf@gitster.siamese.dyndns.org>
+ <7vtzetjbif.fsf@gitster.siamese.dyndns.org>
+ <7vzlokhpk7.fsf@gitster.siamese.dyndns.org>
+ <20080714085555.GJ32184@machine.or.cz>
+ <alpine.DEB.1.00.0807141256310.8950@racer>
+ <20080714124109.25414.qmail@06d015ec9c6744.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ingo Molnar <mingo@elte.hu>,
-	Git Mailing List <git@vger.kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-To: Andrew Morton <akpm@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 19:49:51 2008
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Mon Jul 14 19:55:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KISBH-0005oD-5K
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 19:49:47 +0200
+	id 1KISGu-00089S-TN
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 19:55:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754296AbYGNRss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 13:48:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754107AbYGNRss
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 13:48:48 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:39652 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754117AbYGNRss (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jul 2008 13:48:48 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6EHkOLA027727
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 14 Jul 2008 10:46:25 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6EHkNPj019680;
-	Mon, 14 Jul 2008 10:46:24 -0700
-In-Reply-To: <alpine.LFD.1.10.0807141019010.3305@woody.linux-foundation.org>
+	id S1752415AbYGNRyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 13:54:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753888AbYGNRyg
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 13:54:36 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:56116 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752352AbYGNRyg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 13:54:36 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K4000EQACEZ8RE0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 14 Jul 2008 13:54:35 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20080714124109.25414.qmail@06d015ec9c6744.315fe32.mid.smarden.org>
 User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.9 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88440>
 
+On Mon, 14 Jul 2008, Gerrit Pape wrote:
 
-
-On Mon, 14 Jul 2008, Linus Torvalds wrote:
+> On Mon, Jul 14, 2008 at 12:57:56PM +0100, Johannes Schindelin wrote:
+> > On Mon, 14 Jul 2008, Petr Baudis wrote:
+> > > I'm saying this because I believe the best conservative upper bound for 
+> > > backwards compatibility is Git version in Debian stable. It gets 
+> > > probably the most stale from all the widely used software distributions 
+> > > using Git, and it *is* quite widely used. Etch carries v1.4.4.4, which 
+> > > fails miserably on the new packs.
+> > 
+> > Can't we just hit Debian's Git maintainer with a clue bat or a bus, 
 > 
-> Some really ugly scripting like this will do it:
-> 
-> 	#!/bin/sh
-> 	git log --pretty='format:commit %H
-> 	Author: %an <%ae>
+> Please don't.  It wouldn't help, rather the opposite I think, espacially
+> the bus.  We don't introduce new upstream versions into a Debian stable
+> release, there's a great effort done for each stable release to reach
+> high quality integration of all the software packages available in
+> Debian.  Once that status is reached, only security fixes and criticial
+> usability fixes are added.
 
-Side note: you can make it a one-liner with '%n' (not \n') if you want, ie
+Please consider it as a critical usability problem.
 
-	#!/bin/sh
-	git log --pretty='format:commit %H%nAuthor: %an <%ae>%n%n %s (%h)%n' $@ | git shortlog
+Maybe we can release 1.4.5 with the ability to read index v2?  That 
+wouldn't be hard to backport the reading part of it.
 
-if you want to make it look even more like line noise.
 
-And if you want to be _really_ fancy, you can even make it a git 
-alias. Just add somethign like this to your ~/.gitconfig file:
-
-	[alias]
-		mylog=!GIT_PAGER='git --no-pager shortlog' git log --pretty='format:commit %H%nAuthor: %an <%ae>%n%n %s (%h)%n'
-
-which is the _real_ git-mans way to do it.
-
-It does the "shortlog" output by using "git shortlog" as a pager, but then 
-to avoid recursion, we have to turn off paging of shortlog output itself. 
-Heh. And the reason to do that is that the arguments always go to the end, 
-so since we want to give the args to "git log", we can't put the pipe at 
-the end.
-
-I will have to go wash up after writing the above.
-
-		Linus
+Nicolas
