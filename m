@@ -1,133 +1,85 @@
-From: "=?UTF-8?Q?Jo=C3=A3o_Abecasis?=" <joao@abecasis.name>
-Subject: Re: [PATCH] git-svn: find-rev and rebase for SVN::Mirror repositories
-Date: Mon, 14 Jul 2008 16:28:04 +0100
-Message-ID: <7bf6f1d20807140828ve04bc16u96d0245209491b2e@mail.gmail.com>
-References: <7bf6f1d20807081908kdf9f615taa532ae579b457d7@mail.gmail.com>
-	 <20080714091243.GA27794@untitled>
-	 <7bf6f1d20807140827u56abc74fs4e289384db054a0e@mail.gmail.com>
+From: Frederik Schwarzer <schwarzerf@gmail.com>
+Subject: [PATCH] typo
+Date: Mon, 14 Jul 2008 18:30:24 +0200
+Message-ID: <200807141830.24844.schwarzerf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org
-To: "Eric Wong" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Jul 14 17:29:12 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 14 18:34:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIPzD-0007Yb-5u
-	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 17:29:11 +0200
+	id 1KIQzx-0006Jt-37
+	for gcvg-git-2@gmane.org; Mon, 14 Jul 2008 18:34:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754206AbYGNP2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 11:28:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754186AbYGNP2M
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 11:28:12 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:29135 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754047AbYGNP2L (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 11:28:11 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so2406916ywe.1
-        for <git@vger.kernel.org>; Mon, 14 Jul 2008 08:28:06 -0700 (PDT)
+	id S1754920AbYGNQdA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 12:33:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754481AbYGNQdA
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 12:33:00 -0400
+Received: from fk-out-0910.google.com ([209.85.128.186]:28625 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754011AbYGNQc7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Jul 2008 12:32:59 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so2929973fkq.5
+        for <git@vger.kernel.org>; Mon, 14 Jul 2008 09:32:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=h8CXnzCZEM/4RR5xokM8Eq0hxdz0vBND5OakS2tVS8M=;
-        b=YIM6X6eYyX219KpFMHP8Dst15if8kz2ZrDC96U+nRYV4Q03LYj7UwN8i8YkMLV8GYU
-         XGJMgnj0yHeRzpTBafI+A5K1kqK1VmOw7IKUEKR/bpliDNYRPg4AXUL908bphBYZfx2f
-         KQZvBA9fO/unrFQI/TueD5AmlB+e5Unx6tOlY=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=Lu0Y/EGt1q7eRMGsQrA4Ex+8VG31yfwFJnATLi9Rl8w=;
+        b=IkFw5rlVkHL4pjtovYnm2mMfWVMLPn3ti+dPOG/Sp2cGzLUNkH2dotDPUwy+458cUH
+         ZfClXLxpnNlewuA7KsdxsVcjjfgtPLiL/wVlKhN5RGcBqD0ubTLMb+ScimMZbeVygLsG
+         8c29VTmuIOnbrSQROpar8Bem1F1zxSjzpt2D4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=eZKywuIuRSRj9LeY/av7Xa2TDo2Wu99GmsaxDxFE8fLOieM9bQ69CGASdyj214RP5M
-         ZOpET1suIoFN/6281i8yyfi5y87kWb/U4qK+4vSVmCa6JBcie/YL2chJdFVNMXVj8we9
-         0kIAXbKcqjHZ3TvPeUfS5mv7O1IrbvBZTN3jA=
-Received: by 10.125.107.19 with SMTP id j19mr3451334mkm.91.1216049284905;
-        Mon, 14 Jul 2008 08:28:04 -0700 (PDT)
-Received: by 10.125.131.3 with HTTP; Mon, 14 Jul 2008 08:28:04 -0700 (PDT)
-In-Reply-To: <7bf6f1d20807140827u56abc74fs4e289384db054a0e@mail.gmail.com>
+        h=from:to:subject:date:user-agent:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        b=wneZW2ayB+h69ustCdE+HhzTBlHc6gVmC18sJQShbY7pBTyZKIivBtn8UEXyKZpno5
+         Csz+LEes2qoQ4V+R2gOY09jHQn4LallxAguXjduVyihpAt+i9tynPt3JkOFKlIM5/mjJ
+         1CeZoXHWXK+5TgjGOE3pTg8ShvB339TkwJmAM=
+Received: by 10.86.52.6 with SMTP id z6mr14586438fgz.18.1216053177593;
+        Mon, 14 Jul 2008 09:32:57 -0700 (PDT)
+Received: from pino.localnet ( [78.54.223.123])
+        by mx.google.com with ESMTPS id e11sm7490438fga.4.2008.07.14.09.32.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 14 Jul 2008 09:32:56 -0700 (PDT)
+User-Agent: KMail/1.10.0 (Linux/2.6.25-fs; KDE/4.0.85; i686; ; )
 Content-Disposition: inline
-X-Google-Sender-Auth: 9c324ee141e62f6e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88434>
 
-ZmluZC1yZXYgYW5kIHJlYmFzZSBlcnJvciBvdXQgb24gc3ZtIGJlY2F1c2UgZ2l0LXN2biBkb2Vz
-bid0IHRyYWNlIHRoZQpvcmlnaW5hbCBzdm4gcmV2aXNpb24gbnVtYmVycyBiYWNrIHRvIGdpdCBj
-b21taXRzLiBUaGUgdXBkYXRlZCB0ZXN0CmNhc2UsIGluY2x1ZGVkIGluIHRoZSBwYXRjaCwgc2hv
-d3MgdGhlIGlzc3VlIGFuZCBwYXNzZXMgd2l0aCB0aGUgcmVzdCBvZgp0aGUgcGF0Y2ggYXBwbGll
-ZC4KClRoaXMgZml4ZXMgR2l0OjpTVk46OmZpbmRfYnlfdXJsIHRvIGZpbmQgYnJhbmNoZXMgYmFz
-ZWQgb24gdGhlCnN2bTpzb3VyY2UgVVJMLCB3aGVyZSB1c2VTdm1Qcm9wcyBpcyBzZXQuIEFsc28g
-bWFrZXMgc3VyZSBjbWRfZmluZF9yZXYKYW5kIHdvcmtpbmdfaGVhZF9pbmZvIHVzZSB0aGUgaW5m
-b3JtYXRpb24gdGhleSBoYXZlIHRvIGNvcnJlY3RseSB0cmFjawp0aGUgc291cmNlIHJlcG9zaXRv
-cnkuIFRoaXMgaXMgZW5vdWdoIHRvIGdldCBmaW5kLXJldiBhbmQgcmViYXNlCndvcmtpbmcuCgpT
-aWduZWQtb2ZmLWJ5OiBKb8OjbyBBYmVjYXNpcyA8am9hb0BhYmVjYXNpcy5uYW1lPgotLS0KIGdp
-dC1zdm4ucGVybCAgICAgICAgICAgICAgICAgICAgIHwgICAzOSArKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrLS0tCiB0L3Q5MTEwLWdpdC1zdm4tdXNlLXN2bS1wcm9wcy5zaCB8ICAg
-IDkgKysrKysrKysKIDIgZmlsZXMgY2hhbmdlZCwgNDQgaW5zZXJ0aW9ucygrKSwgNCBkZWxldGlv
-bnMoLSkKCmRpZmYgLS1naXQgYS9naXQtc3ZuLnBlcmwgYi9naXQtc3ZuLnBlcmwKaW5kZXggYTM2
-NmM4OS4uMGFhOTk0YSAxMDA3NTUKLS0tIGEvZ2l0LXN2bi5wZXJsCisrKyBiL2dpdC1zdm4ucGVy
-bApAQCAtNTM3LDEzICs1MzcsMTMgQEAgc3ViIGNtZF9maW5kX3JldiB7CiAJCW15ICRoZWFkID0g
-c2hpZnQ7CiAJCSRoZWFkIHx8PSAnSEVBRCc7CiAJCW15IEByZWZzOwotCQlteSAodW5kZWYsIHVu
-ZGVmLCB1bmRlZiwgJGdzKSA9IHdvcmtpbmdfaGVhZF9pbmZvKCRoZWFkLCBcQHJlZnMpOworCQlt
-eSAodW5kZWYsIHVuZGVmLCAkdXVpZCwgJGdzKSA9IHdvcmtpbmdfaGVhZF9pbmZvKCRoZWFkLCBc
-QHJlZnMpOwogCQl1bmxlc3MgKCRncykgewogCQkJZGllICJVbmFibGUgdG8gZGV0ZXJtaW5lIHVw
-c3RyZWFtIFNWTiBpbmZvcm1hdGlvbiBmcm9tICIsCiAJCQkgICAgIiRoZWFkIGhpc3RvcnlcbiI7
-CiAJCX0KIAkJbXkgJGRlc2lyZWRfcmV2aXNpb24gPSBzdWJzdHIoJHJldmlzaW9uX29yX2hhc2gs
-IDEpOwotCQkkcmVzdWx0ID0gJGdzLT5yZXZfbWFwX2dldCgkZGVzaXJlZF9yZXZpc2lvbik7CisJ
-CSRyZXN1bHQgPSAkZ3MtPnJldl9tYXBfZ2V0KCRkZXNpcmVkX3JldmlzaW9uLCAkdXVpZCk7CiAJ
-fSBlbHNlIHsKIAkJbXkgKHVuZGVmLCAkcmV2LCB1bmRlZikgPSBjbXRfbWV0YWRhdGEoJHJldmlz
-aW9uX29yX2hhc2gpOwogCQkkcmVzdWx0ID0gJHJldjsKQEAgLTExNjIsNyArMTE2Miw3IEBAIHN1
-YiB3b3JraW5nX2hlYWRfaW5mbyB7CiAJCWlmIChkZWZpbmVkICR1cmwgJiYgZGVmaW5lZCAkcmV2
-KSB7CiAJCQluZXh0IGlmICRtYXh7JHVybH0gYW5kICRtYXh7JHVybH0gPCAkcmV2OwogCQkJaWYg
-KG15ICRncyA9IEdpdDo6U1ZOLT5maW5kX2J5X3VybCgkdXJsKSkgewotCQkJCW15ICRjID0gJGdz
-LT5yZXZfbWFwX2dldCgkcmV2KTsKKwkJCQlteSAkYyA9ICRncy0+cmV2X21hcF9nZXQoJHJldiwg
-JHV1aWQpOwogCQkJCWlmICgkYyAmJiAkYyBlcSAkaGFzaCkgewogCQkJCQljbG9zZSAkZmg7ICMg
-YnJlYWsgdGhlIHBpcGUKIAkJCQkJcmV0dXJuICgkdXJsLCAkcmV2LCAkdXVpZCwgJGdzKTsKQEAg
-LTE0MTYsMTEgKzE0MTYsMTcgQEAgc3ViIGZldGNoX2FsbCB7Cgogc3ViIHJlYWRfYWxsX3JlbW90
-ZXMgewogCW15ICRyID0ge307CisJbXkgJHVzZV9zdm1fcHJvcHMgPSBldmFsIHsgY29tbWFuZF9v
-bmVsaW5lKHF3L2NvbmZpZyAtLWJvb2wKKwkgICAgc3ZuLnVzZVN2bVByb3BzLykgfTsKKwkkdXNl
-X3N2bV9wcm9wcyA9ICR1c2Vfc3ZtX3Byb3BzIGVxICd0cnVlJyBpZiAkdXNlX3N2bV9wcm9wczsK
-IAlmb3JlYWNoIChncmVwIHsgcy9ec3ZuLXJlbW90ZVwuLy8gfSBjb21tYW5kKHF3L2NvbmZpZyAt
-bC8pKSB7CiAJCWlmIChtIV4oLispXC5mZXRjaD1ccyooLiopXHMqOlxzKnJlZnMvcmVtb3Rlcy8o
-LispXHMqJCEpIHsKIAkJCW15ICgkcmVtb3RlLCAkbG9jYWxfcmVmLCAkcmVtb3RlX3JlZikgPSAo
-JDEsICQyLCAkMyk7CiAJCQkkbG9jYWxfcmVmID1+IHN7Xi99e307CiAJCQkkci0+eyRyZW1vdGV9
-LT57ZmV0Y2h9LT57JGxvY2FsX3JlZn0gPSAkcmVtb3RlX3JlZjsKKwkJCSRyLT57JHJlbW90ZX0t
-Pntzdm19ID0ge30gaWYgJHVzZV9zdm1fcHJvcHM7CisJCX0gZWxzaWYgKG0hXiguKylcLnVzZXN2
-bXByb3BzPVxzKiguKilccyokISkgeworCQkJJHItPnskMX0tPntzdm19ID0ge307CiAJCX0gZWxz
-aWYgKG0hXiguKylcLnVybD1ccyooLiopXHMqJCEpIHsKIAkJCSRyLT57JDF9LT57dXJsfSA9ICQy
-OwogCQl9IGVsc2lmIChtIV4oLispXC4oYnJhbmNoZXN8dGFncyk9CkBAIC0xNDM3LDYgKzE0NDMs
-MjMgQEAgc3ViIHJlYWRfYWxsX3JlbW90ZXMgewogCQkJfQogCQl9CiAJfQorCisJbWFwIHsKKwkJ
-aWYgKGRlZmluZWQgJHItPnskX30tPntzdm19KSB7CisJCQlteSAkc3ZtOworCQkJZXZhbCB7CisJ
-CQkJbXkgJHNlY3Rpb24gPSAic3ZuLXJlbW90ZS4kXyI7CisJCQkJJHN2bSA9IHsKKwkJCQkJc291
-cmNlID0+IHRtcF9jb25maWcoJy0tZ2V0JywKKwkJCQkJICAgICIkc2VjdGlvbi5zdm0tc291cmNl
-IiksCisJCQkJCXJlcGxhY2UgPT4gdG1wX2NvbmZpZygnLS1nZXQnLAorCQkJCQkgICAgIiRzZWN0
-aW9uLnN2bS1yZXBsYWNlIiksCisJCQkJfQorCQkJfTsKKwkJCSRyLT57JF99LT57c3ZtfSA9ICRz
-dm07CisJCX0KKwl9IGtleXMgJSRyOworCiAJJHI7CiB9CgpAQCAtMTU2MywxMyArMTU4NiwyMSBA
-QCBzdWIgZmluZF9ieV91cmwgeyAjIHJlcG9zX3Jvb3QgYW5kLCBwYXRoIGFyZSBvcHRpb25hbAog
-CQl9CiAJCW15ICRwID0gJHBhdGg7CiAJCW15ICRyd3IgPSByZXdyaXRlX3Jvb3Qoe3JlcG9faWQg
-PT4gJHJlcG9faWR9KTsKKwkJbXkgJHN2bSA9ICRyZW1vdGVzLT57JHJlcG9faWR9LT57c3ZtfQor
-CQkJaWYgZGVmaW5lZCAkcmVtb3Rlcy0+eyRyZXBvX2lkfS0+e3N2bX07CiAJCXVubGVzcyAoZGVm
-aW5lZCAkcCkgewogCQkJJHAgPSAkZnVsbF91cmw7CiAJCQlteSAkeiA9ICR1OworCQkJbXkgJHBy
-ZWZpeCA9ICcnOwogCQkJaWYgKCRyd3IpIHsKIAkJCQkkeiA9ICRyd3I7CisJCQl9IGVsc2lmIChk
-ZWZpbmVkICRzdm0pIHsKKwkJCQkkeiA9ICRzdm0tPntzb3VyY2V9OworCQkJCSRwcmVmaXggPSAk
-c3ZtLT57cmVwbGFjZX07CisJCQkJJHByZWZpeCA9fiBzI15cUSR1XEUoPzovfCQpIyM7CisJCQkJ
-JHByZWZpeCA9fiBzIy8kIyM7CiAJCQl9Ci0JCQkkcCA9fiBzI15cUSR6XEUoPzovfCQpIyMgb3Ig
-bmV4dDsKKwkJCSRwID1+IHMjXlxRJHpcRSg/Oi98JCkjJHByZWZpeCMgb3IgbmV4dDsKIAkJfQog
-CQlmb3JlYWNoIG15ICRmIChrZXlzICUkZmV0Y2gpIHsKIAkJCW5leHQgaWYgJGYgbmUgJHA7CmRp
-ZmYgLS1naXQgYS90L3Q5MTEwLWdpdC1zdm4tdXNlLXN2bS1wcm9wcy5zaCBiL3QvdDkxMTAtZ2l0
-LXN2bi11c2Utc3ZtLXByb3BzLnNoCmluZGV4IDA0NzY1OWYuLjA0ZDJhNjUgMTAwNzU1Ci0tLSBh
-L3QvdDkxMTAtZ2l0LXN2bi11c2Utc3ZtLXByb3BzLnNoCisrKyBiL3QvdDkxMTAtZ2l0LXN2bi11
-c2Utc3ZtLXByb3BzLnNoCkBAIC00OSw0ICs0OSwxMyBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICd2
-ZXJpZnkgbWV0YWRhdGEgZm9yIC9kaXInICIKIAkgICBncmVwICdeZ2l0LXN2bi1pZDogJGRpcl91
-cmxAMSAkdXVpZCQnCiAJIgoKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2ZpbmQgY29tbWl0IGJhc2Vk
-IG9uIFNWTiByZXZpc2lvbiBudW1iZXInICIKKyAgICAgICAgZ2l0LXN2biBmaW5kLXJldiByMTIg
-fAorCSAgICBncmVwIGBnaXQgcmV2LXBhcnNlIEhFQURgCisgICAgICAgICIKKwordGVzdF9leHBl
-Y3Rfc3VjY2VzcyAnZW1wdHkgcmViYXNlJyAiCisJZ2l0LXN2biByZWJhc2UKKwkiCisKIHRlc3Rf
-ZG9uZQotLSAKMS41LjYK
+>From ffa0baf13d033b3dc6b49e86ed3de9fb3003ec4e Mon Sep 17 00:00:00 2001
+From: Frederik Schwarzer <schwarzerf@gmail.com>
+Date: Mon, 14 Jul 2008 18:22:52 +0200
+Subject: [PATCH] typo
+
+full stop in the middle of the sentence
+
+Signed-off-by: Frederik Schwarzer <schwarzerf@gmail.com>
+---
+ git-svn.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index a366c89..8478ca6 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -4619,7 +4619,7 @@ sub migrate_from_v1 {
+ 	mkpath([$svn_dir]);
+ 	print STDERR "Data from a previous version of git-svn exists, but\n\t",
+ 	             "$svn_dir\n\t(required for this version ",
+-	             "($::VERSION) of git-svn) does not. exist\n";
++	             "($::VERSION) of git-svn) does not exist.\n";
+ 	my ($fh, $ctx) = command_output_pipe(qw/rev-parse --symbolic --all/);
+ 	while (<$fh>) {
+ 		my $x = $_;
+-- 
+1.5.6.2
