@@ -1,55 +1,62 @@
-From: Boaz Harrosh <bharrosh@panasas.com>
-Subject: Re: applying and committing patches in a single git command
-Date: Tue, 15 Jul 2008 11:53:50 +0300
-Message-ID: <487C659E.60606@panasas.com>
-References: <ce513bcc0807150150l783e9ff1kd7780dc59f4b5a3d@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Closing the merge window for 1.6.0
+Date: Tue, 15 Jul 2008 11:09:13 +0200
+Message-ID: <20080715090913.GN10151@machine.or.cz>
+References: <7vod5kd3im.fsf@gitster.siamese.dyndns.org> <7v3amv1e8n.fsf@gitster.siamese.dyndns.org> <7vprpwhp7t.fsf@gitster.siamese.dyndns.org> <7vlk0ffhw3.fsf@gitster.siamese.dyndns.org> <7vtzf1w0rj.fsf@gitster.siamese.dyndns.org> <7vabgqsc37.fsf@gitster.siamese.dyndns.org> <7vtzetjbif.fsf@gitster.siamese.dyndns.org> <7vzlokhpk7.fsf@gitster.siamese.dyndns.org> <20080714085555.GJ32184@machine.or.cz> <7vtzesff91.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Erez Zilber <erezzi.list@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 10:55:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 15 11:10:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIgJc-0007AR-Ij
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 10:55:21 +0200
+	id 1KIgY6-0003mP-3a
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 11:10:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754336AbYGOIyW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2008 04:54:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755289AbYGOIyW
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 04:54:22 -0400
-Received: from gw-colo-pa.panasas.com ([66.238.117.130]:30728 "EHLO
-	natasha.panasas.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754223AbYGOIyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2008 04:54:21 -0400
-Received: from daytona.int.panasas.com (daytona.int.panasas.com [172.17.28.41])
-	by natasha.panasas.com (8.13.1/8.13.1) with ESMTP id m6F8s9oA010056;
-	Tue, 15 Jul 2008 04:54:09 -0400
-Received: from bh-buildlin2.bhalevy.com ([172.17.28.136]) by daytona.int.panasas.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 15 Jul 2008 04:53:20 -0400
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <ce513bcc0807150150l783e9ff1kd7780dc59f4b5a3d@mail.gmail.com>
-X-OriginalArrivalTime: 15 Jul 2008 08:53:20.0948 (UTC) FILETIME=[3B7AE740:01C8E658]
+	id S1754049AbYGOJJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 05:09:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754013AbYGOJJR
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 05:09:17 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:40974 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752645AbYGOJJQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2008 05:09:16 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 68A0C393BEB9; Tue, 15 Jul 2008 11:09:13 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vtzesff91.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88543>
 
-Erez Zilber wrote:
-> Hi,
+On Mon, Jul 14, 2008 at 12:16:26PM -0700, Junio C Hamano wrote:
+> Yeah, I think git-repack, git-gc, git-pack-objects and git-index-pack on
+> the server side need a knob to tell it to stay conservative because the
+> repository may be served over dumb protocols to avoid this problem.
 > 
-> Someone created a patch with git-format-patch and sent it to me. I
-> would like to apply & commit the patch. If I use git-apply, it only
-> patches my tree without committing it. Now, I need to copy the commit
-> log, run git-commit and paste the commit log there. Is there a more
-> intelligent way to do that?
+> That knob could even be called
 > 
-> Thanks,
-> Erez
-> 
-git-am, can take all bunch of them at once
+> 	[repack]
+>         	usedeltabaseoffset = false
+> 	[pack]
+>         	indexversion = 1
 
-Boaz
+Can you please mention this in release notes? Until now, I actually
+thought you're speaking about a hypothetical improvement, not a knob we
+actually have. :-) (BTW, turning off the usedeltabaseoffset is not
+critical at least Debian-wise, and I think that really is the oldest Git
+in widespread use.)
+
+Now, there is of course still the issue of default behaviour, but at
+least my concern is somewhat eased now. :-)
+
+-- 
+				Petr "Pasky" Baudis
+GNU, n. An animal of South Africa, which in its domesticated state
+resembles a horse, a buffalo and a stag. In its wild condition it is
+something like a thunderbolt, an earthquake and a cyclone. -- A. Pierce
