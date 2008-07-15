@@ -1,84 +1,109 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH 3/3] gitweb: use new Git::Repo API, and add optional caching
-Date: Tue, 15 Jul 2008 01:56:52 +0200
-Message-ID: <487BE7C4.2050207@gmail.com>
-References: <4876B223.4070707@gmail.com> <200807142323.22761.jnareb@gmail.com> <487BDB34.7010002@gmail.com> <200807150114.44402.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Mon, 14 Jul 2008 17:03:14 -0700
+Message-ID: <7vhcasdnel.fsf@gitster.siamese.dyndns.org>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
+ <7vmyn4hr8f.fsf@gitster.siamese.dyndns.org>
+ <7vmymsjz6x.fsf@gitster.siamese.dyndns.org>
+ <7vabijxhk4.fsf@gitster.siamese.dyndns.org>
+ <7vwslhg8qe.fsf@gitster.siamese.dyndns.org>
+ <7vhccfiksy.fsf@gitster.siamese.dyndns.org>
+ <7vod6k6zg4.fsf@gitster.siamese.dyndns.org>
+ <7v4p7xwsfp.fsf@gitster.siamese.dyndns.org>
+ <7v3anb19n7.fsf@gitster.siamese.dyndns.org>
+ <7vwskjazql.fsf@gitster.siamese.dyndns.org>
+ <7vk5ggipuw.fsf@gitster.siamese.dyndns.org>
+ <7vej6l3lp7.fsf@gitster.siamese.dyndns.org>
+ <7vod5kd3im.fsf@gitster.siamese.dyndns.org>
+ <7v3amv1e8n.fsf@gitster.siamese.dyndns.org>
+ <7vprpwhp7t.fsf@gitster.siamese.dyndns.org>
+ <7vlk0ffhw3.fsf@gitster.siamese.dyndns.o rg>
+ <7vtzf1w0rj.fsf@gitster.siamese.dyndns.org>
+ <7vabgqsc37.fsf@gitster.siamese.dyndns.org>
+ <7vtzetjbif.fsf@gitster.siamese.dyndns.org> <487BDD56.7010505@gmail.com>
+ <487BDF57.4090900@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, John Hawley <warthog19@eaglescrag.net>,
-	Petr Baudis <pasky@suse.cz>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 01:58:05 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 15 02:04:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIXva-0005VI-CB
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 01:57:58 +0200
+	id 1KIY1m-0007cW-RH
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 02:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759950AbYGNX46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 19:56:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759951AbYGNX46
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 19:56:58 -0400
-Received: from fk-out-0910.google.com ([209.85.128.188]:47664 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759948AbYGNX45 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 19:56:57 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so3028687fkq.5
-        for <git@vger.kernel.org>; Mon, 14 Jul 2008 16:56:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=dATxajrayiS28OLoZJ94nlOMc5ecYovVEzf2Dgh96Uw=;
-        b=ptOjr2vSEGGW2RyGMWDmpCeExJQvhG0mbjuEfHdG/nIoK91rwd6NAPeM9IjlnlUb7v
-         tdE296NO9ZdHBybw/TTIbiPja38gweWUdl3PnZeRBMClbQW/H2HnApkD3GRz/T7yt47n
-         RSS6drEWntm35ofSRE5HcTQVumDZ4e54MGwU8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=KYL8+HryXp9bIsS20iJyFOBoMNNcDD03rQ0DdcX6DlHvr7S7G/uIQgdt5vYHGkD1FS
-         tSAcXvvBcVBq14ALulmIXsfcDQaf+K7IkBxFz8ALhLa70B5bgv3JWL7zNKTklAMZ1ikt
-         urs9DvmMzGIigyYjoThj8QXR+gj1X0yFbE0YU=
-Received: by 10.187.223.6 with SMTP id a6mr2063625far.45.1216079815528;
-        Mon, 14 Jul 2008 16:56:55 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.226.181])
-        by mx.google.com with ESMTPS id 12sm12854025fks.9.2008.07.14.16.56.51
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 14 Jul 2008 16:56:55 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <200807150114.44402.jnareb@gmail.com>
+	id S932284AbYGOADW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 20:03:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932272AbYGOADV
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 20:03:21 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47487 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760066AbYGOADU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 20:03:20 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1201227D00;
+	Mon, 14 Jul 2008 20:03:19 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3B90327CFF; Mon, 14 Jul 2008 20:03:16 -0400 (EDT)
+In-Reply-To: <487BDF57.4090900@gmail.com> (Lea Wiemann's message of "Tue, 15
+ Jul 2008 01:20:55 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6E5693F2-5201-11DD-A702-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88485>
 
-Jakub Narebski wrote:
+Lea Wiemann <lewiemann@gmail.com> writes:
+
 > Lea Wiemann wrote:
->> Gitweb's cache is actually never out-of-date
-> 
-> Could you explain then how gitweb cache is invalidated?
+>> It'll be fixed in the next version I post
+>
+> By the way Junio, how do you prefer to get reposts of patch sequences?
+> Should I repost the whole sequence under a new common parent message, or
+> can I simply post v2 of each patch in the sequence as a followup to its
+> respective v1?
 
-Sure; from gitweb.perl:
+I do not have major preference either way, but for a long series, I'd
+prefer a resend to be independent from the previous series, i.e.
 
-# Transient cache entries (like get_sha1('HEAD')) are automatically
-# invalidated when an mtime of either the repository's root directory
-# or of the refs directory or any subdirectory changes.  This
-# mechanism *should* detect changes to the repository reliably if you
-# only use git or rsync to write to it,
+        [PATCH 0/3]
+        .[PATCH 1/3]
+        ..[PATCH 2/3]
+        ...[PATCH 3/3]
 
-IOW, gitweb will do a small number of (inexpensive) stat calls on those
-directories each time it's called, and use the most recent mtime as part
-of the cache key for transient entries.  Hence those transient entries
-will automatically become invalid once the most recent mtime changes.
+        [PATCH 0/4 v2]
+        .[PATCH 1/4 v2]
+        ..[PATCH 2/4 v2]
+        ...[PATCH 3/4 v2]
+        ....[PATCH 4/4 v2]
+        
+I can live with the first one from the new series being a follow-up to the
+first one from the old series, i.e.:
 
-(If any of the relevant directories has been modified since the last
-time gitweb checked, gitweb will re-scan the whole tree to check for new
-directories, and record their mtimes as well.  See get_last_modification
-if you're interested in more gory details.)
+        [PATCH 0/3]
+        .[PATCH 1/3]
+        ..[PATCH 2/3]
+        ...[PATCH 3/3]
+        .[PATCH 0/4 v2]
+        ..[PATCH 1/4 v2]
+        ...[PATCH 2/4 v2]
+        ....[PATCH 3/4 v2]
+        .....[PATCH 4/4 v2]
 
-The punchline is, the cache never returns outdated data.
+but _not_ with this, i.e. N/M being followup to old N/M:
+
+        [PATCH 0/3]
+        .[PATCH 0/4 v2]
+        .[PATCH 1/3]
+        ..[PATCH 1/4 v2]
+        ..[PATCH 2/3]
+        ...[PATCH 2/4 v2]
+        ...[PATCH 3/3]
+        ....[PATCH 3/4 v2]
+        .....[PATCH 4/4 v2]
