@@ -1,90 +1,109 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: git-rebase eats empty commits
-Date: Tue, 15 Jul 2008 22:19:02 +0200
-Message-ID: <20080715201902.GC6244@leksak.fem-net>
-References: <g4vrrm$g35$1@ger.gmane.org> <20080712221207.GB22323@leksak.fem-net> <g5fpnm$3jb$1@ger.gmane.org>
+From: Yves Orton <yves.orton@booking.com>
+Subject: Re: [PATCH] git rev-parse: Fix --show-cdup inside symlinked  
+	directory
+Date: Tue, 15 Jul 2008 22:26:27 +0200
+Message-ID: <1216153587.19334.204.camel@gemini>
+References: <1216131208.19334.171.camel@gemini>
+	 <20080715145920.13529.25603.stgit@localhost>
+	 <alpine.DEB.1.00.0807151614510.8950@racer>
+	 <20080715154036.GR10151@machine.or.cz> <1216140100.19334.189.camel@gemini>
+	 <1216141099.19334.196.camel@gemini> <487CF5A4.2070700@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-X-From: git-owner@vger.kernel.org Tue Jul 15 22:20:15 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	gitster@pobox.com, git@vger.kernel.org
+To: Rogan Dawes <lists@dawes.za.net>
+X-From: git-owner@vger.kernel.org Tue Jul 15 22:28:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIr0R-0000kC-5o
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 22:20:15 +0200
+	id 1KIr7h-0004WK-P7
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 22:27:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758636AbYGOUTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2008 16:19:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757554AbYGOUTK
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 16:19:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51954 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756161AbYGOUTJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2008 16:19:09 -0400
-Received: (qmail invoked by alias); 15 Jul 2008 20:19:05 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp046) with SMTP; 15 Jul 2008 22:19:05 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/QzXtjLGrQQVO6IJdGehs8Z6O6AI1/RFUNW8lwaF
-	+EanBxfoDKsebq
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KIqzG-0004Rq-FI; Tue, 15 Jul 2008 22:19:02 +0200
-Content-Disposition: inline
-In-Reply-To: <g5fpnm$3jb$1@ger.gmane.org>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+	id S1762781AbYGOU0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 16:26:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758821AbYGOU0g
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 16:26:36 -0400
+Received: from msx2.activehotels.net ([62.190.24.12]:39581 "EHLO
+	mx2.activehotels.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1762703AbYGOU0e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2008 16:26:34 -0400
+Received: from p5098d9db.dip0.t-ipconnect.de ([80.152.217.219] helo=[192.168.250.20])
+	by mx2.activehotels.net with esmtpsa (SSLv3:AES256-SHA:256)
+	(Exim 4.50)
+	id 1KIr6S-0000nw-Km; Tue, 15 Jul 2008 21:26:28 +0100
+In-Reply-To: <487CF5A4.2070700@dawes.za.net>
+X-Mailer: Evolution 2.22.3.1 
+X-AH-Spam-Helo: [192.168.250.20]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88593>
 
-Hi,
+On Tue, 2008-07-15 at 21:08 +0200, Rogan Dawes wrote:
+> Yves Orton wrote:
+> 
+> > Hmm, realizing that was the workdir it wanted i tried it like so:
+> > 
+> > [dmq@somewhere apps]$ git --work-tree="$(git-rev-parse --git-dir)/.."
+> > pull --rebase
+> > /usr/bin/git-sh-setup: line 139: cd: /home/dmq/git_tree/main/apps/.git:
+> > No such file or directory
+> > Unable to determine absolute path of git directory
+> > 
+> > Yet:
+> > 
+> > [dmq@somewhere apps]$ git-rev-parse --git-dir
+> > /home/dmq/git_tree/main/.git
+> > 
+> > is correct.
+> > 
+> 
+> Are you sure you don't want to specify the --git-dir rather than the 
+> work dir?
+> 
+> i.e.
+> 
+> git --git-dir="$(git-rev-parse --git-dir)" pull --rebase
 
-Michael J Gruber wrote:
-> Stephan Beyer venit, vidit, dixit 13.07.2008 00:12:
->> To sum up, use rebase -i and when it's pausing, do "git commit --allow-empty"
->> and then "git rebase --continue" and you have what you want.
->
-> I assume this is with git from master? With git 1.5.6.2 rebase -i  
-> doesn't stop there, not even when I change "pick" to "edit"!
+That doesnt seem to work correctly either. If i do it from the symlinked
+directory i get a notice about each file needing an update. While it
+works as expected from the real repo directory.
 
-Hmm, in fact this is with my git from Debian, from master and my
-sequencer-based one:
+I think this shows what i mean:
 
-	$ /usr/bin/git --version
-	git version 1.5.6
-	$ ./git --version
-	git version 1.5.6.3.350.g6c11a
-	$ git --version
-	git version 1.5.6.3.506.g902dd
+demerphq@gemini:~/git_test/bar$ git status
+# On branch master
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#
+#       modified:   bar
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+demerphq@gemini:~/git_test/bar$ git commit -a -m'changed bar'
+Created commit 7cbbdc9: changed bar
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+demerphq@gemini:~/git_test/bar$ git --git-dir="$(git-rev-parse
+--git-dir)" pull --rebase
+bar/bar: needs update
+refusing to pull with rebase: your working tree is not up-to-date
+demerphq@gemini:~/git_test/bar$ cd ../foo2
+demerphq@gemini:~/git_test/foo2$ git --git-dir="$(git-rev-parse
+--git-dir)" pull --rebase
+Current branch master is up to date.
+demerphq@gemini:~/git_test/foo2$ cd ..
+demerphq@gemini:~/git_test$ ls -lart
+total 24
+drwxr-xr-x   4 demerphq demerphq  4096 2008-07-15 22:17 foo
+drwxr-xr-x 116 demerphq demerphq 12288 2008-07-15 22:18 ..
+lrwxrwxrwx   1 demerphq demerphq     8 2008-07-15 22:20 bar -> foo2/bar
+drwxr-xr-x   4 demerphq demerphq  4096 2008-07-15 22:20 .
+drwxr-xr-x   4 demerphq demerphq  4096 2008-07-15 22:21 foo2
 
-And, btw, the reason of this behavior is no special case in rebase-i,
-it's just that git-cherry-pick fails (exit status != 0), if you pick an
-empty commit (and then rebase-i will pause because of conflict). And
-*this* is because builtin-revert.c runs git-commit without --allow-empty.
-This has never changed, so I cannot believe that the behavior changed in
-any version of git. Or I am missing a point.
 
-	$ git cherry-pick empty		# empty is an empty commit tagged as "empty"
-	Already uptodate!
-	Finished one cherry-pick.
-	# Not currently on any branch.
-	# Untracked files:
-	[...]
-	nothing added to commit but untracked files present (use "git add" to track)
-	$ echo $?
-	1
-	$ EDITOR=touch git commit --allow-empty
-	Created commit 145f1d0: empty
 
-The same happens when doing rebase -i instead of cherry-pick.
-
-Regards,
-  Stephan
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+Yves
