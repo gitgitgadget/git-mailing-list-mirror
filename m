@@ -1,143 +1,69 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [RFC/PATCH 1/2 (No Wrap)] Avoid rescanning unchanged entries in search for copies.
-Date: Wed, 16 Jul 2008 02:05:20 +0400
-Organization: TEPKOM
-Message-ID: <200807160205.20908.angavrilov@gmail.com>
-References: <200807160158.34994.angavrilov@gmail.com> <200807160159.56228.angavrilov@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Closing the merge window for 1.6.0
+Date: Wed, 16 Jul 2008 00:10:42 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807160005540.2990@eeepc-johanness>
+References: <7vtzf1w0rj.fsf@gitster.siamese.dyndns.org> <7vabgqsc37.fsf@gitster.siamese.dyndns.org> <7vtzetjbif.fsf@gitster.siamese.dyndns.org> <7vzlokhpk7.fsf@gitster.siamese.dyndns.org> <20080714085555.GJ32184@machine.or.cz> <alpine.DEB.1.00.0807141256310.8950@racer>
+ <20080714124109.25414.qmail@06d015ec9c6744.315fe32.mid.smarden.org> <alpine.LFD.1.10.0807141351540.12484@xanadu.home> <7v3amcgujd.fsf@gitster.siamese.dyndns.org> <20080715092023.GO10151@machine.or.cz> <20080715150626.GA2925@dpotapov.dyndns.org>
+ <alpine.DEB.1.00.0807151623120.8950@racer> <7v3amb0ymg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 16 00:06:49 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dmitry Potapov <dpotapov@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	Nicolas Pitre <nico@cam.org>, Gerrit Pape <pape@smarden.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 16 00:11:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIsfI-0008Kz-Di
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 00:06:32 +0200
+	id 1KIsjk-0001VA-BA
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 00:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751967AbYGOWFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2008 18:05:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753475AbYGOWFd
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 18:05:33 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:41076 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751643AbYGOWFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2008 18:05:32 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2349444fgg.17
-        for <git@vger.kernel.org>; Tue, 15 Jul 2008 15:05:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=MLPIl/sEDxPKWxGItsgN9ggdsna2jfdAxeU2OaT5gK0=;
-        b=ecLavjbJHMmDJ2KuSsSU+DW2rrTzLpQpTDvMAwVxx9LcxxmOgCvsLAle7gwnyzzD/r
-         yGyGqj7S62Jv2dpJRvOjJJtMEy37A8j3M1CCctDaUl6qX3qHchoT+sQkCjxMU0uFwsDH
-         +DCtG2++7G1/4mfu/SsRVd3YbH4EwT9jQHS0U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=D9rRmmy5G52wLenbLxvXZ4pdnaNkHA+FdYfrtEuyfSQIYHRT9QDKq0jKR4uMGZEkKr
-         Z1aDUBYRxwmqEDmMca3mevOsJR4eLArWsSvke54PqYtaTf5/g7t5x1Y4tcYNW6bpxoHD
-         KHos90sgBW2qGTHjnlUENZ3LrerSo8m+qJU7I=
-Received: by 10.86.98.10 with SMTP id v10mr969785fgb.39.1216159530282;
-        Tue, 15 Jul 2008 15:05:30 -0700 (PDT)
-Received: from desktop2 ( [92.255.84.130])
-        by mx.google.com with ESMTPS id l19sm5465263fgb.7.2008.07.15.15.05.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 15 Jul 2008 15:05:29 -0700 (PDT)
-User-Agent: KMail/1.9.9
-In-Reply-To: <200807160159.56228.angavrilov@gmail.com>
-Content-Disposition: inline
+	id S1755990AbYGOWKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 18:10:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755959AbYGOWKI
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 18:10:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50246 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755787AbYGOWKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2008 18:10:06 -0400
+Received: (qmail invoked by alias); 15 Jul 2008 22:10:05 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp051) with SMTP; 16 Jul 2008 00:10:05 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/xtHQUAL/xCHJ0qQ+qubzC0kovZSTaiJFZKpCgEj
+	GW1gPNPV7Sov+N
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7v3amb0ymg.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88609>
 
-Repeatedly comparing the same entry against the same set
-of blobs in search for copies is quite pointless. This
-huge waste of effort can be avoided using a flag in
-the blame_entry structure.
+Hi,
 
-Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
----
+On Tue, 15 Jul 2008, Junio C Hamano wrote:
 
-	I'm terribly sorry, word wrap was turned on. I disabled it permanently.
+> What troubles me the most is that you seem to be forgetting that we are 
+> using git to manage our codebase.
 
-	-- Alexander
+I don't.  I have vivid memories of updating an ancient git repository of 
+Git itself, which had some almost forgotten changes in it.  That was in 
+the bad old days, when the version number did not even have a "1" in it.
 
- builtin-blame.c |   21 +++++++++++++++++++--
- 1 files changed, 19 insertions(+), 2 deletions(-)
+It could not even fetch the current git.git.
 
-diff --git a/builtin-blame.c b/builtin-blame.c
-index b451f6c..a6cf6b6 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -161,6 +161,10 @@ struct blame_entry {
- 	 */
- 	char guilty;
- 
-+	/* true if the entry has been scanned for copies in the current parent
-+	 */
-+	char scanned;
-+
- 	/* the line number of the first line of this group in the
- 	 * suspect's file; internally all line numbers are 0 based.
- 	 */
-@@ -1048,12 +1052,12 @@ static struct blame_list *setup_blame_list(struct scoreboard *sb,
- 	struct blame_list *blame_list = NULL;
- 
- 	for (e = sb->ent, num_ents = 0; e; e = e->next)
--		if (!e->guilty && same_suspect(e->suspect, target))
-+		if (!e->scanned && !e->guilty && same_suspect(e->suspect, target))
- 			num_ents++;
- 	if (num_ents) {
- 		blame_list = xcalloc(num_ents, sizeof(struct blame_list));
- 		for (e = sb->ent, i = 0; e; e = e->next)
--			if (!e->guilty && same_suspect(e->suspect, target))
-+			if (!e->scanned && !e->guilty && same_suspect(e->suspect, target))
- 				blame_list[i++].ent = e;
- 	}
- 	*num_ents_p = num_ents;
-@@ -1061,6 +1065,16 @@ static struct blame_list *setup_blame_list(struct scoreboard *sb,
- }
- 
- /*
-+ * Reset the scanned status on all entries.
-+ */
-+static void reset_scanned_flag(struct scoreboard *sb)
-+{
-+	struct blame_entry *e;
-+	for (e = sb->ent; e; e = e->next)
-+		e->scanned = 0;
-+}
-+
-+/*
-  * For lines target is suspected for, see if we can find code movement
-  * across file boundary from the parent commit.  porigin is the path
-  * in the parent we already tried.
-@@ -1152,6 +1166,8 @@ static int find_copy_in_parent(struct scoreboard *sb,
- 				split_blame(sb, split, blame_list[j].ent);
- 				made_progress = 1;
- 			}
-+			else
-+				blame_list[j].ent->scanned = 1;
- 			decref_split(split);
- 		}
- 		free(blame_list);
-@@ -1164,6 +1180,7 @@ static int find_copy_in_parent(struct scoreboard *sb,
- 			break;
- 		}
- 	}
-+	reset_scanned_flag(sb);
- 	diff_flush(&diff_opts);
- 	diff_tree_release_paths(&diff_opts);
- 	return retval;
--- 
-1.5.6.2.39.gd084
+I do _not_ want that to happen to anybody else, _even if_ we leave 1.4.4.4 
+Behind as if it was an American Child.
+
+Having said that, I do not have the resources to test and fix everything 
+that may arise from Debian being seemingly unable to update to Git 1.5.  
+So I agree completely that the ball is in Debian's half, and if they let 
+it rot, it is sad, but I cannot help it.
+
+Ciao,
+Dscho
