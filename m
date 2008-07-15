@@ -1,77 +1,146 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: git stash save --keep-index
-Date: Tue, 15 Jul 2008 16:50:43 +0200
-Message-ID: <bd6139dc0807150750u1eff0389x9e4b61822032c65d@mail.gmail.com>
-References: <bd6139dc0807150531k4f0a1a4yee2c8ec2b98ee39c@mail.gmail.com>
-	 <20080715142615.GI8224@neumann>
-Reply-To: sverre@rabbelier.nl
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] git rev-parse: Fix --show-cdup inside symlinked directory
+Date: Tue, 15 Jul 2008 16:59:45 +0200
+Message-ID: <20080715145920.13529.25603.stgit@localhost>
+References: <1216131208.19334.171.camel@gemini>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailinglist" <git@vger.kernel.org>
-To: "=?ISO-8859-1?Q?SZEDER_G=E1bor?=" <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Jul 15 16:51:54 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jul 15 17:01:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIlsX-00053l-B7
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 16:51:45 +0200
+	id 1KIm1P-0000Vp-5U
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 17:00:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755162AbYGOOuq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jul 2008 10:50:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755112AbYGOOup
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 10:50:45 -0400
-Received: from rn-out-0910.google.com ([64.233.170.190]:13968 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751911AbYGOOuo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Jul 2008 10:50:44 -0400
-Received: by rn-out-0910.google.com with SMTP id k40so1536936rnd.17
-        for <git@vger.kernel.org>; Tue, 15 Jul 2008 07:50:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=2NY2uxIOz2VH6m51IExWjmLS5H7kR4tj5SgO7WoS2IA=;
-        b=BKZkS+JIEl59D2NjqYZImk8bYMjkZcacSM7xvQKlq2bt7bWiArvVX2Rr3Cw6sfb9eN
-         qKF8NjSIe36v/tnROV1j0jqgnpgn8Q82d2zIkPb+Nu5vF3u1HMt2S/12GzY3d7Vs7FK7
-         L709WDeOYGGCBaNgFUJpihPul9ImoiiENWBAg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=IJ9SNAmP/dMHkEd/UWASP40Q7xH9BOUPMywQsZk6Dfm9gWwvN1crn/pnK9tT0z7Eqc
-         PN3zl3SSed1yZjvS/GyQn4G0Z1a2lX3S8eAG87T51zHEF1+qBU4C5n+RPYoOOLRk0gxV
-         ZdmhayAwD1ksZfTC+9KNcZvLm9PJO2lq6b9SE=
-Received: by 10.142.12.14 with SMTP id 14mr4693662wfl.308.1216133443367;
-        Tue, 15 Jul 2008 07:50:43 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Tue, 15 Jul 2008 07:50:43 -0700 (PDT)
-In-Reply-To: <20080715142615.GI8224@neumann>
-Content-Disposition: inline
+	id S1751889AbYGOO74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 10:59:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbYGOO74
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 10:59:56 -0400
+Received: from [212.249.11.140] ([212.249.11.140]:25922 "EHLO pixie.suse.cz"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750908AbYGOO7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2008 10:59:55 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by pixie.suse.cz (Postfix) with ESMTP id 263DD2ACC7D;
+	Tue, 15 Jul 2008 16:59:45 +0200 (CEST)
+In-Reply-To: <1216131208.19334.171.camel@gemini>
+User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88562>
 
-On Tue, Jul 15, 2008 at 4:26 PM, SZEDER G=E1bor <szeder@ira.uka.de> wro=
-te:
-> If there are unstaged changes in the worktree, then yes, 'git stash
-> apply/pop' will error out complaining about dirty state.  However, if
-> there are changes in the index, but no unstaged changes in the
-> worktree, then apply/pop should work (assuming there are no conflicts=
-,
-> of course).
->
-> So, you won't need that temporary commit, if you have not modified
-> anything or have added all changes to the index since 'git stash
-> save --keep-index'.
+Consider the scenario when someone makes a symlink into a working tree
+subdirectory at an unrelated place, then attempts to work inside the
+symlinked directory. The scenario is a bit unwieldly, but most of
+the Git will handle it fine - except git rev-parse --show-cdup. That
+will output a sequence of ../ which will work wrong inside the symlink
+using shell cd builtin.
 
-Mhhh, ok, I can live with that, thanks!
+This patch changes --show-cdup to always show absolute workdir path
+instead. I think this should hopefully cause no compatibility problems;
+the testsuite is passing fine, at least.  The patch also adds
+a --show-cdup check and this particular scenartio to the t1500 test.
 
---=20
-Cheers,
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-Sverre Rabbelier
+ Documentation/git-rev-parse.txt |    4 ++--
+ builtin-rev-parse.c             |   15 +++++----------
+ t/t1500-rev-parse.sh            |   18 ++++++++++++++++--
+ 3 files changed, 23 insertions(+), 14 deletions(-)
+
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 088f971..4c289d0 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -103,8 +103,8 @@ OPTIONS
+ 
+ --show-cdup::
+ 	When the command is invoked from a subdirectory, show the
+-	path of the top-level directory relative to the current
+-	directory (typically a sequence of "../", or an empty string).
++	path of the top-level directory, or an empty string if the
++	current directory is the top-level directory.
+ 
+ --git-dir::
+ 	Show `$GIT_DIR` if defined else show the path to the .git directory.
+diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
+index a7860ed..011d16c 100644
+--- a/builtin-rev-parse.c
++++ b/builtin-rev-parse.c
+@@ -500,22 +500,17 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--show-cdup")) {
+-				const char *pfx = prefix;
+-				if (!is_inside_work_tree()) {
++				if (prefix) {
++					/* We are not at the top level yet */
+ 					const char *work_tree =
+ 						get_git_work_tree();
+ 					if (work_tree)
+ 						printf("%s\n", work_tree);
+ 					continue;
++				} else {
++					/* Backwards compatibility */
++					putchar('\n');
+ 				}
+-				while (pfx) {
+-					pfx = strchr(pfx, '/');
+-					if (pfx) {
+-						pfx++;
+-						printf("../");
+-					}
+-				}
+-				putchar('\n');
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--git-dir")) {
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index 85da4ca..2f0bf15 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -26,9 +26,14 @@ test_rev_parse() {
+ 	"test '$1' = \"\$(git rev-parse --show-prefix)\""
+ 	shift
+ 	[ $# -eq 0 ] && return
++
++	test_expect_success "$name: cdup" \
++	"test '$1' = \"\$(git rev-parse --show-cdup)\""
++	shift
++	[ $# -eq 0 ] && return
+ }
+ 
+-# label is-bare is-inside-git is-inside-work prefix
++# label is-bare is-inside-git is-inside-work prefix cdup
+ 
+ test_rev_parse toplevel false false true ''
+ 
+@@ -38,11 +43,20 @@ cd objects || exit 1
+ test_rev_parse .git/objects/ false true false ''
+ cd ../.. || exit 1
+ 
++basedir=$(pwd)
+ mkdir -p sub/dir || exit 1
+ cd sub/dir || exit 1
+-test_rev_parse subdirectory false false true sub/dir/
++test_rev_parse subdirectory false false true sub/dir/ "$basedir"
+ cd ../.. || exit 1
+ 
++# Scenario: Working within a subdirectory symlinked out of the working tree
++mkdir -p maindir || exit 1
++(mv .git maindir && mkdir -p maindir/sub2 && ln -s maindir/sub2 .) || exit 1
++cd sub2 || exit 1
++test_rev_parse 'symlinked subdirectory' false false true sub2/ "$basedir"/maindir
++cd .. || exit 1
++(rm sub2 && mv maindir/.git . && rm -r maindir) || exit 1
++
+ git config core.bare true
+ test_rev_parse 'core.bare = true' true false false
+ 
