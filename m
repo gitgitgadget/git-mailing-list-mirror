@@ -1,112 +1,77 @@
 From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: git config oddity
-Date: Tue, 15 Jul 2008 16:44:51 +0200
-Message-ID: <bd6139dc0807150744l78eb8d54ld167d3a9a5a600f@mail.gmail.com>
+Subject: Re: git stash save --keep-index
+Date: Tue, 15 Jul 2008 16:50:43 +0200
+Message-ID: <bd6139dc0807150750u1eff0389x9e4b61822032c65d@mail.gmail.com>
+References: <bd6139dc0807150531k4f0a1a4yee2c8ec2b98ee39c@mail.gmail.com>
+	 <20080715142615.GI8224@neumann>
 Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailinglist" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 15 16:46:17 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailinglist" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?SZEDER_G=E1bor?=" <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Jul 15 16:51:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIlnA-0002t0-EU
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 16:46:12 +0200
+	id 1KIlsX-00053l-B7
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 16:51:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753750AbYGOOoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2008 10:44:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753688AbYGOOox
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 10:44:53 -0400
-Received: from rn-out-0910.google.com ([64.233.170.191]:10643 "EHLO
+	id S1755162AbYGOOuq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jul 2008 10:50:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755112AbYGOOup
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 10:50:45 -0400
+Received: from rn-out-0910.google.com ([64.233.170.190]:13968 "EHLO
 	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753566AbYGOOow (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2008 10:44:52 -0400
-Received: by rn-out-0910.google.com with SMTP id k40so1535052rnd.17
-        for <git@vger.kernel.org>; Tue, 15 Jul 2008 07:44:52 -0700 (PDT)
+	with ESMTP id S1751911AbYGOOuo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jul 2008 10:50:44 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so1536936rnd.17
+        for <git@vger.kernel.org>; Tue, 15 Jul 2008 07:50:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=EjqZk2W+0NyOPfsK33x3PzDzFVGzsnIJepVAQ+URznw=;
-        b=fSpiuW28Rj9nWsb++KKQWqyrnF+UP8/kHK2W0c186YqxFpu0I3qPz9AUiN1QlsTROv
-         4Aoq+qP7Gd8Qtfh4TA9aCCrMBJwxDhDdkLVrH/h9xjQw5jOk4VB9auSw11p8462nmFQ5
-         MDn7s3nMyDsehncBh1El4/9rCyfULS/Wok918=
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=2NY2uxIOz2VH6m51IExWjmLS5H7kR4tj5SgO7WoS2IA=;
+        b=BKZkS+JIEl59D2NjqYZImk8bYMjkZcacSM7xvQKlq2bt7bWiArvVX2Rr3Cw6sfb9eN
+         qKF8NjSIe36v/tnROV1j0jqgnpgn8Q82d2zIkPb+Nu5vF3u1HMt2S/12GzY3d7Vs7FK7
+         L709WDeOYGGCBaNgFUJpihPul9ImoiiENWBAg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=bf5YBzu88wi8/MX12/0KvOFD0V5rnIzKlDey2EyZjfMEruVJ2MdPz3whdxPwM/glPy
-         gLaJyBMnvikohRSrVCqA5H2d0fwM0rmNz4zEzLPZHw9aMzVqqupIW3EDnUutztVSSbXN
-         TXKJ6jimd/ybJeKLeEmidM/tAyK3Tq2PgcXW4=
-Received: by 10.142.203.19 with SMTP id a19mr4691625wfg.179.1216133091606;
-        Tue, 15 Jul 2008 07:44:51 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Tue, 15 Jul 2008 07:44:51 -0700 (PDT)
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=IJ9SNAmP/dMHkEd/UWASP40Q7xH9BOUPMywQsZk6Dfm9gWwvN1crn/pnK9tT0z7Eqc
+         PN3zl3SSed1yZjvS/GyQn4G0Z1a2lX3S8eAG87T51zHEF1+qBU4C5n+RPYoOOLRk0gxV
+         ZdmhayAwD1ksZfTC+9KNcZvLm9PJO2lq6b9SE=
+Received: by 10.142.12.14 with SMTP id 14mr4693662wfl.308.1216133443367;
+        Tue, 15 Jul 2008 07:50:43 -0700 (PDT)
+Received: by 10.143.38.17 with HTTP; Tue, 15 Jul 2008 07:50:43 -0700 (PDT)
+In-Reply-To: <20080715142615.GI8224@neumann>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88561>
 
-Heya,
+On Tue, Jul 15, 2008 at 4:26 PM, SZEDER G=E1bor <szeder@ira.uka.de> wro=
+te:
+> If there are unstaged changes in the worktree, then yes, 'git stash
+> apply/pop' will error out complaining about dirty state.  However, if
+> there are changes in the index, but no unstaged changes in the
+> worktree, then apply/pop should work (assuming there are no conflicts=
+,
+> of course).
+>
+> So, you won't need that temporary commit, if you have not modified
+> anything or have added all changes to the index since 'git stash
+> save --keep-index'.
 
-I noticed today that when unsetting the last value in a group git
-config leaves the empty group header. I was somewhat surprised here,
-but I am guessing it has a purpose? Anyway, I also noticed (and this
-threw my manual config parser off) that when later on an option is set
-to that empty group, a new group is created with the same name. Is
-this something I have to deal with in my parser (e.g., should I keep
-scanning the file for occurrences of my header and allow for empty
-groups, or is this a bug in git config? Either is fine with me, was
-just wondering :).
+Mhhh, ok, I can live with that, thanks!
 
------------------
-sverre@Laptop-Sverre:~/code$ mkdir config-oddity
-sverre@Laptop-Sverre:~/code$ cd config-oddity/
-sverre@Laptop-Sverre:~/code/config-oddity$ git init
-Initialized empty Git repository in /home/sverre/code/config-oddity/.git/
-sverre@Laptop-Sverre:~/code/config-oddity$ cat .git/config
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-sverre@Laptop-Sverre:~/code/config-oddity$ git config foo.bar spam
-sverre@Laptop-Sverre:~/code/config-oddity$ cat .git/config # as expected
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-[foo]
-	bar = spam
-sverre@Laptop-Sverre:~/code/config-oddity$ git config --unset foo.bar
-sverre@Laptop-Sverre:~/code/config-oddity$ cat .git/config # dubious,
-but acceptable
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-[foo]
-sverre@Laptop-Sverre:~/code/config-oddity$ git config foo.bar eggs
-sverre@Laptop-Sverre:~/code/config-oddity$ cat .git/config # errr? two
-[foo] headers?
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-[foo]
-[foo]
-	bar = eggs
-sverre@Laptop-Sverre:~/code/config-oddity$
------------------
-
--- 
+--=20
 Cheers,
 
 Sverre Rabbelier
