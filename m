@@ -1,93 +1,173 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] bash: Add long option completion for 'git send-email'
-Date: Tue, 15 Jul 2008 04:38:39 +0000
-Message-ID: <20080715043839.GE2432@spearce.org>
-References: <1216023662-9109-1-git-send-email-tlikonen@iki.fi>
+Subject: [PATCH v2] index-pack: Honor core.deltaBaseCacheLimit when
+	resolving deltas
+Date: Tue, 15 Jul 2008 04:45:34 +0000
+Message-ID: <20080715044534.GA2794@spearce.org>
+References: <20080715031800.GD1700@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Tue Jul 15 06:39:42 2008
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>,
+	Stephan Hennig <mailing_list@arcor.de>,
+	Andreas Ericsson <ae@op5.se>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 15 06:47:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIcKB-0007lk-W5
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 06:39:40 +0200
+	id 1KIcRp-0000rM-Vn
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 06:47:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348AbYGOEil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2008 00:38:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752178AbYGOEil
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 00:38:41 -0400
-Received: from george.spearce.org ([209.20.77.23]:35832 "EHLO
+	id S1751631AbYGOEpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 00:45:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbYGOEpf
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 00:45:35 -0400
+Received: from george.spearce.org ([209.20.77.23]:60217 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751809AbYGOEik (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2008 00:38:40 -0400
+	with ESMTP id S1751446AbYGOEpf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2008 00:45:35 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id F10033836B; Tue, 15 Jul 2008 04:38:39 +0000 (UTC)
+	id BE30D383A4; Tue, 15 Jul 2008 04:45:34 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1216023662-9109-1-git-send-email-tlikonen@iki.fi>
+In-Reply-To: <20080715031800.GD1700@spearce.org>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88520>
 
-Teemu Likonen <tlikonen@iki.fi> wrote:
-> Add the following long options to be completed with 'git send-email':
-...
-> Short ones like --to and --cc are not usable for actual completion
+If we are trying to resolve deltas for a long delta chain composed
+of multi-megabyte objects we can easily run into requiring 500M+
+of memory to hold each object in the chain on the call stack while
+we recurse into the dependent objects and resolve them.
 
-I agree, these are worth including.
+We now use a simple delta cache that discards objects near the
+bottom of the call stack first, as they are the most least recently
+used objects in this current delta chain.  If we recurse out of a
+chain we may find the base object is no longer available, as it was
+free'd to keep memory under the deltaBaseCacheLimit.  In such cases
+we must unpack the base object again, which will require recursing
+back to the root of the top of the delta chain as we released that
+root first.
 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index d268e6f..b15f3a9 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -905,6 +905,24 @@ _git_rebase ()
->  	__gitcomp "$(__git_refs)"
->  }
->  
-> +_git_send_email ()
-> +{
-> +	local cur="${COMP_WORDS[COMP_CWORD]}"
-> +	case "$cur" in
-> +	--*)
-> +		__gitcomp "--bcc --cc --cc-cmd --chain-reply-to --compose
-> +			--dry-run --envelope-sender --from --identity
-> +			--in-reply-to --no-chain-reply-to --no-signed-off-by-cc
-> +			--no-suppress-from --no-thread --quiet
-> +			--signed-off-by-cc --smtp-pass --smtp-server
-> +			--smtp-server-port --smtp-ssl --smtp-user --subject
-> +			--suppress-cc --suppress-from --thread --to"
-> +		return
-> +		;;
-> +	esac
-> +	__git_complete_file
+The astute reader will probably realize that we can still exceed
+the delta base cache limit, but this happens only if the most
+recent base plus the delta plus the inflated dependent sum up to
+more than the base cache limit.  Due to the way patch_delta is
+currently implemented we cannot operate in less memory anyway.
 
-Don't use __git_complete_file here.  As far as I remember,
-git-send-email does not accept "origin/maint:some.patch"
-as an email to extract from Git prior to sending.  It looks
-for files in the local filesystem.  So you want standard bash
-completion for anything not starting with --.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
 
-Just use COMPREPLY=() at the end.  See _git_am for an example.
+ Version 2 plugs the case Nico noticed, where the patch was causing
+ the exact behavior it was trying to prevent while recovering from
+ what it did to avoid the excessive memory usage in the first place.
 
-> @@ -1435,6 +1454,7 @@ complete -o default -o nospace -F _git_rebase git-rebase
->  complete -o default -o nospace -F _git_config git-config
->  complete -o default -o nospace -F _git_remote git-remote
->  complete -o default -o nospace -F _git_reset git-reset
-> +complete -o default -o nospace -F _git_send_email git-send-email
->  complete -o default -o nospace -F _git_shortlog git-shortlog
->  complete -o default -o nospace -F _git_show git-show
->  complete -o default -o nospace -F _git_stash git-stash
+ The change was in get_base_data() where we now unpack the delta
+ after we have unpacked the base.  Nico and I both missed that we
+ must also bump base_cache_used when we restore the base, and we
+ must also prune the bases in case this base has caused us to go
+ over the limit.
 
-Hmm.  With dash form commands gone in 1.6 we should remove these.
+ :-)
 
-But I suspect this completion patch could be shipped in the next
-1.5.6 maint release as its really quite trivial.  Junio, any comment
-on that?
+ index-pack.c |   48 ++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 46 insertions(+), 2 deletions(-)
 
+diff --git a/index-pack.c b/index-pack.c
+index 7239e89..b4ec736 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -52,6 +52,7 @@ struct delta_entry
+ static struct object_entry *objects;
+ static struct delta_entry *deltas;
+ static struct base_data *base_cache;
++static size_t base_cache_used;
+ static int nr_objects;
+ static int nr_deltas;
+ static int nr_resolved_deltas;
+@@ -220,6 +221,20 @@ static void bad_object(unsigned long offset, const char *format, ...)
+ 	die("pack has bad object at offset %lu: %s", offset, buf);
+ }
+ 
++static void prune_base_data(struct base_data *retain)
++{
++	struct base_data *b = base_cache;
++	for (b = base_cache;
++	     base_cache_used > delta_base_cache_limit && b;
++	     b = b->child) {
++		if (b->data && b != retain) {
++			free(b->data);
++			b->data = NULL;
++			base_cache_used -= b->size;
++		}
++	}
++}
++
+ static void link_base_data(struct base_data *base, struct base_data *c)
+ {
+ 	if (base)
+@@ -229,6 +244,8 @@ static void link_base_data(struct base_data *base, struct base_data *c)
+ 
+ 	c->base = base;
+ 	c->child = NULL;
++	base_cache_used += c->size;
++	prune_base_data(c);
+ }
+ 
+ static void unlink_base_data(struct base_data *c)
+@@ -238,7 +255,10 @@ static void unlink_base_data(struct base_data *c)
+ 		base->child = NULL;
+ 	else
+ 		base_cache = NULL;
+-	free(c->data);
++	if (c->data) {
++		free(c->data);
++		base_cache_used -= c->size;
++	}
+ }
+ 
+ static void *unpack_entry_data(unsigned long offset, unsigned long size)
+@@ -456,6 +476,30 @@ static void sha1_object(const void *data, unsigned long size,
+ 	}
+ }
+ 
++static void *get_base_data(struct base_data *c)
++{
++	if (!c->data) {
++		struct object_entry *obj = c->obj;
++
++		if (obj->type == OBJ_REF_DELTA || obj->type == OBJ_OFS_DELTA) {
++			void *base = get_base_data(c->base);
++			void *raw = get_data_from_pack(obj);
++			c->data = patch_delta(
++				base, c->base->size,
++				raw, obj->size,
++				&c->size);
++			free(raw);
++			if (!c->data)
++				bad_object(obj->idx.offset, "failed to apply delta");
++		} else
++			c->data = get_data_from_pack(obj);
++
++		base_cache_used += c->size;
++		prune_base_data(c);
++	}
++	return c->data;
++}
++
+ static void resolve_delta(struct object_entry *delta_obj,
+ 			  struct base_data *base_obj, enum object_type type)
+ {
+@@ -468,7 +512,7 @@ static void resolve_delta(struct object_entry *delta_obj,
+ 	delta_obj->real_type = type;
+ 	delta_data = get_data_from_pack(delta_obj);
+ 	delta_size = delta_obj->size;
+-	result.data = patch_delta(base_obj->data, base_obj->size,
++	result.data = patch_delta(get_base_data(base_obj), base_obj->size,
+ 			     delta_data, delta_size,
+ 			     &result.size);
+ 	free(delta_data);
 -- 
-Shawn.
+1.5.6.2.393.g45096
