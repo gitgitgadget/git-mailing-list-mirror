@@ -1,75 +1,93 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] bash completion: Fix the . -> .. revision range
-	completion
-Date: Tue, 15 Jul 2008 04:25:53 +0000
-Message-ID: <20080715042553.GD2432@spearce.org>
-References: <20080713111847.29801.8969.stgit@localhost> <7vskudpiqq.fsf@gitster.siamese.dyndns.org> <20080713230724.GJ10151@machine.or.cz> <7vhcatnz80.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0807131649380.3305@woody.linux-foundation.org> <20080714000021.GB13066@spearce.org> <alpine.LFD.1.10.0807132210430.3305@woody.linux-foundation.org> <20080714062755.GA15992@spearce.org> <alpine.LFD.1.10.0807140741580.3305@woody.linux-foundation.org>
+Subject: Re: [PATCH] bash: Add long option completion for 'git send-email'
+Date: Tue, 15 Jul 2008 04:38:39 +0000
+Message-ID: <20080715043839.GE2432@spearce.org>
+References: <1216023662-9109-1-git-send-email-tlikonen@iki.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jul 15 06:26:54 2008
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Jul 15 06:39:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIc7p-0005UF-4a
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 06:26:53 +0200
+	id 1KIcKB-0007lk-W5
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 06:39:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751966AbYGOEZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2008 00:25:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751890AbYGOEZy
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 00:25:54 -0400
-Received: from george.spearce.org ([209.20.77.23]:60683 "EHLO
+	id S1752348AbYGOEil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 00:38:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752178AbYGOEil
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 00:38:41 -0400
+Received: from george.spearce.org ([209.20.77.23]:35832 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751867AbYGOEZy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2008 00:25:54 -0400
+	with ESMTP id S1751809AbYGOEik (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2008 00:38:40 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id 7C99F3836B; Tue, 15 Jul 2008 04:25:53 +0000 (UTC)
+	id F10033836B; Tue, 15 Jul 2008 04:38:39 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0807140741580.3305@woody.linux-foundation.org>
+In-Reply-To: <1216023662-9109-1-git-send-email-tlikonen@iki.fi>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88519>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> On Mon, 14 Jul 2008, Shawn O. Pearce wrote:
-> > 
-> > What is $COMP_WORDBREAKS set to in your shell?  In mine it
-> > appears to be:
-> > 
-> > 	" \"'@><=;|&(:"
-> 
-> Ahhah. Indeed. I don't have the ':'.
+Teemu Likonen <tlikonen@iki.fi> wrote:
+> Add the following long options to be completed with 'git send-email':
 ...
-> Umm, if so, git should just set it in the completion script, no?
+> Short ones like --to and --cc are not usable for actual completion
 
-OK, so it turns out not having : in COMP_WORDBREAKS is a very common
-case that we should somehow deal with, to aid our users.
+I agree, these are worth including.
 
-I'm concerned about just setting COMP_WORDBREAKS back to the default
-in the git completion script because then we get into an ordering
-game with the profile scripts, don't we?  If git completion sources
-before the gvfs script we don't get our COMP_WORDBREAKS setting.
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index d268e6f..b15f3a9 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -905,6 +905,24 @@ _git_rebase ()
+>  	__gitcomp "$(__git_refs)"
+>  }
+>  
+> +_git_send_email ()
+> +{
+> +	local cur="${COMP_WORDS[COMP_CWORD]}"
+> +	case "$cur" in
+> +	--*)
+> +		__gitcomp "--bcc --cc --cc-cmd --chain-reply-to --compose
+> +			--dry-run --envelope-sender --from --identity
+> +			--in-reply-to --no-chain-reply-to --no-signed-off-by-cc
+> +			--no-suppress-from --no-thread --quiet
+> +			--signed-off-by-cc --smtp-pass --smtp-server
+> +			--smtp-server-port --smtp-ssl --smtp-user --subject
+> +			--suppress-cc --suppress-from --thread --to"
+> +		return
+> +		;;
+> +	esac
+> +	__git_complete_file
 
-I think we may need to do two things.
+Don't use __git_complete_file here.  As far as I remember,
+git-send-email does not accept "origin/maint:some.patch"
+as an email to extract from Git prior to sending.  It looks
+for files in the local filesystem.  So you want standard bash
+completion for anything not starting with --.
 
-If COMP_WORDBREAKS doesn't contain a :, try to reset it to include
-one when the script is sourced.  This may "fix" git completion but
-make gvfs completion act differently, resulting in a thread on the
-gvfs lists.  ;-)
+Just use COMPREPLY=() at the end.  See _git_am for an example.
 
-If COMP_WORDBREAKS doesn't contain : during a completion event than
-we need to do what your original patch asked, which is to include
-"$ref:" in the prefix, so the ref isn't lost.
+> @@ -1435,6 +1454,7 @@ complete -o default -o nospace -F _git_rebase git-rebase
+>  complete -o default -o nospace -F _git_config git-config
+>  complete -o default -o nospace -F _git_remote git-remote
+>  complete -o default -o nospace -F _git_reset git-reset
+> +complete -o default -o nospace -F _git_send_email git-send-email
+>  complete -o default -o nospace -F _git_shortlog git-shortlog
+>  complete -o default -o nospace -F _git_show git-show
+>  complete -o default -o nospace -F _git_stash git-stash
 
-At least we understand the problem now, finally.  I'll try to write
-up a patch for it tomorrow.  Unfortunately packing to move has been
-really sucking up my time lately.
- 
+Hmm.  With dash form commands gone in 1.6 we should remove these.
+
+But I suspect this completion patch could be shipped in the next
+1.5.6 maint release as its really quite trivial.  Junio, any comment
+on that?
+
 -- 
 Shawn.
