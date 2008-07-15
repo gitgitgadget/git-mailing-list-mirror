@@ -1,90 +1,112 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: Closing the merge window for 1.6.0
-Date: Tue, 15 Jul 2008 18:46:28 +0200
-Message-ID: <bd6139dc0807150946j709d9776xf61828d132aa34ad@mail.gmail.com>
-References: <7vtzf1w0rj.fsf@gitster.siamese.dyndns.org>
-	 <20080714085555.GJ32184@machine.or.cz>
-	 <alpine.DEB.1.00.0807141256310.8950@racer>
-	 <20080714124109.25414.qmail@06d015ec9c6744.315fe32.mid.smarden.org>
-	 <alpine.LFD.1.10.0807141351540.12484@xanadu.home>
-	 <7v3amcgujd.fsf@gitster.siamese.dyndns.org>
-	 <20080715092023.GO10151@machine.or.cz>
-	 <20080715150626.GA2925@dpotapov.dyndns.org>
-	 <alpine.DEB.1.00.0807151623120.8950@racer>
-	 <alpine.LFD.1.10.0807151213000.12484@xanadu.home>
-Reply-To: sverre@rabbelier.nl
+From: "Geoffrey Irving" <irving@naml.us>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 15 Jul 2008 09:48:51 -0700
+Message-ID: <7f9d599f0807150948x14c09b0dmb932e86378f0c46d@mail.gmail.com>
+References: <7vlk4snpj3.fsf@gitster.siamese.dyndns.org>
+	 <7vod5kd3im.fsf@gitster.siamese.dyndns.org>
+	 <7v3amv1e8n.fsf@gitster.siamese.dyndns.org>
+	 <7vprpwhp7t.fsf@gitster.siamese.dyndns.org>
+	 <7vlk0ffhw3.fsf@gitster.siamese.dyndns.org>
+	 <7vtzf1w0rj.fsf@gitster.siamese.dyndns.org>
+	 <7vabgqsc37.fsf@gitster.siamese.dyndns.org>
+	 <7vtzetjbif.fsf@gitster.siamese.dyndns.org>
+	 <7f9d599f0807142038w62ccb69fv42d6dcf3dd4f2afd@mail.gmail.com>
+	 <alpine.DEB.1.00.0807151117450.3487@eeepc-johanness>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Dmitry Potapov" <dpotapov@gmail.com>,
-	"Petr Baudis" <pasky@suse.cz>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Gerrit Pape" <pape@smarden.org>, git@vger.kernel.org
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Jul 15 18:47:33 2008
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 15 18:50:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIngZ-0003RX-3R
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 18:47:31 +0200
+	id 1KInjD-0004U7-FS
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 18:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753805AbYGOQqd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2008 12:46:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754152AbYGOQqc
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 12:46:32 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:25936 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753693AbYGOQqc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2008 12:46:32 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so5404359wfd.4
-        for <git@vger.kernel.org>; Tue, 15 Jul 2008 09:46:29 -0700 (PDT)
+	id S1753856AbYGOQsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 12:48:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752960AbYGOQsx
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 12:48:53 -0400
+Received: from rv-out-0506.google.com ([209.85.198.229]:62150 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753029AbYGOQsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2008 12:48:52 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so6083610rvb.1
+        for <git@vger.kernel.org>; Tue, 15 Jul 2008 09:48:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
+        h=domainkey-signature:received:received:message-id:date:from:sender
          :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=JfzLbfk8kpOwIJGpEAfmfDdYcvFB+AUEadbjKJ3HFtg=;
-        b=x3z8tj195b5Jfhmw5kHcV3LLx1U5mvYkDW710cd/eNBVocJdp95mOkOkqZ0F9Um7Nd
-         yb5WOsrhRFFXTKFX9zXSLxO5ezRIz0yceIr4yproC9T2iAIPPBO7T/GNvSpxdWS1hCGw
-         B62iRxViBZ6Qmxr59uCTrCkj5xQmEkQutIEhQ=
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=F0tV4KiJGhGeeUvO8M/UMgckA/ojfRrqo+p+C5VC7Go=;
+        b=LwE4hYF4YgfiPAORQfaLQ6m515awOPQEHhj69PomHBP21LcacyUTsOzyTe3Kh0aELf
+         E+eZGiRrt3dy6yOUqne3ou6w8iMnP43tfRDb/mrlb08dUWi1Jl+BNUt4/7ChZk/rSXbz
+         HyP4wyVdKL6mLRMVv4THTYRGGSFZ+ZuWpBD48=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=BJWISK0kEvZAWacJXqt5DqiDKDoxL4MaSVyjqCRs319FTyDCyk36N5rhgwtWXwt+qJ
-         wVGLjPrEduOWVONEGC2iQz1p+/ASut/+ykHUtdoZY/tT+k7qlfjm8/0O98Jrn1H7wdIM
-         9q5W4gK9QVwtafztI6xfRyx16YvzT80JqM4HM=
-Received: by 10.142.48.14 with SMTP id v14mr4743617wfv.133.1216140389052;
-        Tue, 15 Jul 2008 09:46:29 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Tue, 15 Jul 2008 09:46:28 -0700 (PDT)
-In-Reply-To: <alpine.LFD.1.10.0807151213000.12484@xanadu.home>
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=WnK6CEhUs1HOUyNCQc0jdDBgXVrPh6OLB9rOxiEMYGtX8RFRmkCyCX86tvAdT9ApMD
+         VvdHhaV49Ae52Lbj1wA0oR2jzk7x7WvGofgHXbc+u/MtIfqKk53XmJJ98SKlc/c6QXRp
+         RJbVqXWd3wmxc2KSM3vV91NuAQLU7AQplcnY4=
+Received: by 10.140.127.20 with SMTP id z20mr7586254rvc.77.1216140532152;
+        Tue, 15 Jul 2008 09:48:52 -0700 (PDT)
+Received: by 10.141.202.6 with HTTP; Tue, 15 Jul 2008 09:48:51 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0807151117450.3487@eeepc-johanness>
 Content-Disposition: inline
+X-Google-Sender-Auth: 9f9b9edc7ebe8ec3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88579>
 
-On Tue, Jul 15, 2008 at 6:26 PM, Nicolas Pitre <nico@cam.org> wrote:
-> Anyway this is all hand waving until someone can come with some evidence
-> that git 1.4.4 is actually used by a significant amount of people, and
-> that those people depend on dumb transfer protocols.
+On Tue, Jul 15, 2008 at 2:22 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Mon, 14 Jul 2008, Geoffrey Irving wrote:
+>
+>> The problem (beyond the basic problem of me not having tried running the
+>> tests) is that the current caching code isn't taking into account the
+>> changing values of diff_options.  t6007 computes a patch-id for a commit
+>> with one value of options.paths, and then tries to compute a _different_
+>> patch-id for the same commit using a different value of options.paths.
+>>
+>> Here are a few different ways of fixing this:
+>>
+>> 1. Modify commit_patch_id in patch-ids.c to compute a sha1 of the
+>>    diff_options structure and xor it with the commit sha1 to get a truly
+>>    unique hash of the input.  This means the optimization can be safely
+>>    applied for all patch-id computations regardless of the diff_options.
+>>    I can add a diff_options_sha1 function in diff.[ch] to compute the
+>>    checksum.
+>>
+>> 2. Restrict commit_patch_id in patch-ids.c to apply the optimization
+>>    only if options.nr_paths is zero, and perhaps a few other conditions.
+>>    This is rather fragile, since it would mean that the cache would
+>>    break if someone decided to change the default diff options.
+>
+> Funnily, (2) contradicts (1).  The patch id is _different_ when you have
+> nr_paths > 0.  At least in the general case.
+>
+> So what you propose in (1) will not work, unless you also hash the path
+> names (in the correct order, otherwise you'll end up with two hashes).
 
-Can't we add a msg to 1.4.4.x when it finds pack version 2 to upgrade
-to 1.5.x? Gets rid of the problem all together while still giving the
-user a reasonable message when it finds a repo version 2.
-Hey, here's an idea, can't we have 1.4.4.x just give that msg for everything?
+The sha1 would include paths, of course, since it's part of diff_options.
 
-$cat git
-#!/bin/sh
+> OTOH I would be really surprised if you needed --cherry-pick with paths
+> and/or diff options more than once for the same commits.  So the caching
+> does not make sense to begin with (especially since we do not have a
+> proper way of gc'ing it, right?).
+>
+> So I'd suggest saving diff_opts before the command line parsing, and
+> disable the cache when it is different _and/or_ (||) nr_paths.
 
-echo "Please upgrade to 1.5.x, version 1.4.x is no longer supported
-nor should you even want to use it </cluebat>"
+I'll attach the patch to the other thread.
 
--- 
-Cheers,
-
-Sverre Rabbelier
+Geoffrey
