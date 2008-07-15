@@ -1,66 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Closing the merge window for 1.6.0
-Date: Wed, 16 Jul 2008 00:45:42 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807160044480.2990@eeepc-johanness>
-References: <7vtzf1w0rj.fsf@gitster.siamese.dyndns.org> <7vabgqsc37.fsf@gitster.siamese.dyndns.org> <7vtzetjbif.fsf@gitster.siamese.dyndns.org> <7vzlokhpk7.fsf@gitster.siamese.dyndns.org> <20080714085555.GJ32184@machine.or.cz> <alpine.DEB.1.00.0807141256310.8950@racer>
- <20080714124109.25414.qmail@06d015ec9c6744.315fe32.mid.smarden.org> <alpine.LFD.1.10.0807141351540.12484@xanadu.home> <7v3amcgujd.fsf@gitster.siamese.dyndns.org> <20080715092023.GO10151@machine.or.cz> <20080715150626.GA2925@dpotapov.dyndns.org>
- <alpine.DEB.1.00.0807151623120.8950@racer> <7v3amb0ymg.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807160005540.2990@eeepc-johanness> <7vd4lezske.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] bash completion: Fix the . -> .. revision range
+	completion
+Date: Tue, 15 Jul 2008 23:38:51 +0000
+Message-ID: <20080715233851.GA23672@spearce.org>
+References: <7vskudpiqq.fsf@gitster.siamese.dyndns.org> <20080713230724.GJ10151@machine.or.cz> <7vhcatnz80.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0807131649380.3305@woody.linux-foundation.org> <20080714000021.GB13066@spearce.org> <alpine.LFD.1.10.0807132210430.3305@woody.linux-foundation.org> <20080714062755.GA15992@spearce.org> <alpine.LFD.1.10.0807140741580.3305@woody.linux-foundation.org> <20080715042553.GD2432@spearce.org> <487C5A2D.3000707@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dmitry Potapov <dpotapov@gmail.com>, Petr Baudis <pasky@suse.cz>,
-	Nicolas Pitre <nico@cam.org>, Gerrit Pape <pape@smarden.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 00:46:10 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Wed Jul 16 01:39:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KItHd-0003eG-HK
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 00:46:09 +0200
+	id 1KIu7b-0001FI-RH
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 01:39:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756662AbYGOWpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2008 18:45:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756252AbYGOWpI
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 18:45:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58697 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755262AbYGOWpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2008 18:45:07 -0400
-Received: (qmail invoked by alias); 15 Jul 2008 22:45:05 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp019) with SMTP; 16 Jul 2008 00:45:05 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19hHCwAxLthEMbJM66LNUtVbnYDI63ZBIsWcRkFvh
-	4U/ts0efXlRCP9
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7vd4lezske.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.73
+	id S1753492AbYGOXiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 19:38:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753427AbYGOXiw
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 19:38:52 -0400
+Received: from george.spearce.org ([209.20.77.23]:43281 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752682AbYGOXiw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2008 19:38:52 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 8DC793836B; Tue, 15 Jul 2008 23:38:51 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <487C5A2D.3000707@op5.se>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88614>
 
-Hi,
+Andreas Ericsson <ae@op5.se> wrote:
+> I beat you to it ;-) This works just fine for me regardless of whether
+> or not I have a colon in COMP_WORDBREAKS.
+...
+> Subject: git-completion.bash: Handle "rev:path" completion properly
+...
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index d268e6f..e138022 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -293,7 +293,11 @@ __git_complete_file ()
+> 		*)
+> 			ls="$ref"
+> 			;;
+> -	    esac
+> +		esac
+> +		# When completing something like 'rev:path', bash behaves
+> +		# differently whether or not COMP_WORDBREAKS contains a
+> +		# colon or not. This lets it handle both cases
+> +		test "${COMP_WORDBREAKS//:}" = "$COMP_WORDBREAKS" && pfx="$ref:$pfx"
+> 		COMPREPLY=($(compgen -P "$pfx" \
+> 			-W "$(git --git-dir="$(__gitdir)" ls-tree "$ls" \
+> 				| sed '/^100... blob /s,^.*	,,
 
-On Tue, 15 Jul 2008, Junio C Hamano wrote:
+Yea, I did more or less the same thing in my patch, but I also
+handled this fix in git-fetch and git-push.  The : is also used
+there in a refspec and we support completion the right side of the
+: in both cases (and yes, on git-push that can be slow as we do
+network IO, possibly over SSH).
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Having said that, I do not have the resources to test and fix 
-> > everything that may arise from Debian being seemingly unable to update 
-> > to Git 1.5.
-> 
-> Heh, what happent to your earlier "a few minutes for Junio to change and 
-> commit"?
+So I'm in favor of my patch over yours, but only because of
+the fetch and push fixes as well.
 
-That was meant for the integration of the patch that makes the 
-backwards-incompatible patch.
-
-Not for the necessary forward-compatible changes.
-
-Ciao,
-Dscho
+-- 
+Shawn.
