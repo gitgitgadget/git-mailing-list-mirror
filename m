@@ -1,58 +1,51 @@
-From: Heikki Orsila <shdl@zakalwe.fi>
-Subject: Re: [PATCH] Documentation/git-submodule.txt: Add Description section
-Date: Tue, 15 Jul 2008 21:37:05 +0300
-Message-ID: <20080715183705.GD4379@zakalwe.fi>
-References: <20080715102119.26321.78530.stgit@localhost>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] index-pack: Honor core.deltaBaseCacheLimit when
+ resolving deltas
+Date: Tue, 15 Jul 2008 11:48:20 -0700
+Message-ID: <7vabgj0yrv.fsf@gitster.siamese.dyndns.org>
+References: <20080715031800.GD1700@spearce.org>
+ <20080715044534.GA2794@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Jul 15 20:38:09 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>,
+	Stephan Hennig <mailing_list@arcor.de>,
+	Andreas Ericsson <ae@op5.se>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jul 15 20:49:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIpPb-0004UQ-Bm
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 20:38:07 +0200
+	id 1KIpad-0008Ve-Mw
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 20:49:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754399AbYGOShH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2008 14:37:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754594AbYGOShH
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 14:37:07 -0400
-Received: from zakalwe.fi ([80.83.5.154]:39414 "EHLO zakalwe.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751661AbYGOShG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2008 14:37:06 -0400
-Received: by zakalwe.fi (Postfix, from userid 1023)
-	id 1D4DB2BC39; Tue, 15 Jul 2008 21:37:05 +0300 (EEST)
-Content-Disposition: inline
-In-Reply-To: <20080715102119.26321.78530.stgit@localhost>
-User-Agent: Mutt/1.5.11
+	id S1754903AbYGOSsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 14:48:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754913AbYGOSsc
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 14:48:32 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60704 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754704AbYGOSsb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2008 14:48:31 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DDFE22CA7E;
+	Tue, 15 Jul 2008 14:48:29 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 43F7D2CA78; Tue, 15 Jul 2008 14:48:22 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9DEDBD00-529E-11DD-B75B-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88586>
 
-On Tue, Jul 15, 2008 at 12:22:07PM +0200, Petr Baudis wrote:
-> +Submodules are a special kind of tree entries which do not refer to a blob or
-> +a directory, but to a particular tree in another repository (living at a given
-> +URL). 
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Better to say what a submodule is, rather than what it isn't:
+>  Version 2 plugs the case Nico noticed, where the patch was causing
+>  the exact behavior it was trying to prevent while recovering from
+>  what it did to avoid the excessive memory usage in the first place.
 
-"Submodules are a special kind of tree entries which refer to a 
-particular tree in another repository ..."
-
-Also, I think you should make the following explicit:
-
-"A submodule is visible as subdirectory in the working directory.
-However, the submodule is not part of the main repository.
-This is a differene to "remotes". In remotes only the contents of 
-other repositories is tracked, but their content is not visible in the
-working directory."
-
--- 
-Heikki Orsila
-heikki.orsila@iki.fi
-http://www.iki.fi/shd
+Thanks both; it makes sense.
