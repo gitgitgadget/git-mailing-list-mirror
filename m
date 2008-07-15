@@ -1,67 +1,57 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: [PATCH] git rev-parse: Fix --show-cdup inside symlinked   directory
-Date: Tue, 15 Jul 2008 21:08:20 +0200
-Message-ID: <487CF5A4.2070700@dawes.za.net>
-References: <1216131208.19334.171.camel@gemini>	 <20080715145920.13529.25603.stgit@localhost>	 <alpine.DEB.1.00.0807151614510.8950@racer>	 <20080715154036.GR10151@machine.or.cz>  <1216140100.19334.189.camel@gemini> <1216141099.19334.196.camel@gemini>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	gitster@pobox.com, git@vger.kernel.org
-To: Yves Orton <yves.orton@booking.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 21:10:06 2008
+From: "W Snyder" <wsnyder@wsnyder.org>
+Subject: git-svn: add/obey a hooks/prepare-commit-msg
+Date: Tue, 15 Jul 2008 15:10:25 -0400 (EDT)
+Message-ID: <20080715191025.43B9811BB3@wsnyder.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 15 21:11:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIpuX-0007es-FI
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 21:10:05 +0200
+	id 1KIpw9-0000Cz-G0
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 21:11:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759342AbYGOTI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2008 15:08:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762793AbYGOTI4
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 15:08:56 -0400
-Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:58756 "EHLO
-	spunkymail-a3.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1759342AbYGOTIz (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Jul 2008 15:08:55 -0400
-Received: from [192.168.201.100] (unknown [41.246.241.230])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by spunkymail-a3.g.dreamhost.com (Postfix) with ESMTP id 3ED3015D4ED;
-	Tue, 15 Jul 2008 12:08:50 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <1216141099.19334.196.camel@gemini>
+	id S1762481AbYGOTKj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 15:10:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761283AbYGOTKg
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 15:10:36 -0400
+Received: from qmta03.westchester.pa.mail.comcast.net ([76.96.62.32]:56276
+	"EHLO QMTA03.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754687AbYGOTKf (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jul 2008 15:10:35 -0400
+Received: from OMTA06.westchester.pa.mail.comcast.net ([76.96.62.51])
+	by QMTA03.westchester.pa.mail.comcast.net with comcast
+	id qF3K1Z00116LCl053KAZ1K; Tue, 15 Jul 2008 19:10:33 +0000
+Received: from wsnyder.org ([24.91.159.26])
+	by OMTA06.westchester.pa.mail.comcast.net with comcast
+	id qKAR1Z00D0aTpm03SKAR6z; Tue, 15 Jul 2008 19:10:25 +0000
+X-Authority-Analysis: v=1.0 c=1 a=-1bqaIEjc8kA:10 a=uAvsjA9mcioA:10
+ a=4S75kIoMmfewEBsk06UA:9 a=LYREXTfCTVSAyHISe7bWKKhgZb4A:4 a=c06vB5MgL9cA:10
+Received: by wsnyder.org (Postfix, from userid 1017)
+	id 43B9811BB3; Tue, 15 Jul 2008 15:10:25 -0400 (EDT)
+X-ssh-sendmail: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88589>
 
-Yves Orton wrote:
 
-> Hmm, realizing that was the workdir it wanted i tried it like so:
-> 
-> [dmq@somewhere apps]$ git --work-tree="$(git-rev-parse --git-dir)/.."
-> pull --rebase
-> /usr/bin/git-sh-setup: line 139: cd: /home/dmq/git_tree/main/apps/.git:
-> No such file or directory
-> Unable to determine absolute path of git directory
-> 
-> Yet:
-> 
-> [dmq@somewhere apps]$ git-rev-parse --git-dir
-> /home/dmq/git_tree/main/.git
-> 
-> is correct.
-> 
+First, thanks for git-svn!
 
-Are you sure you don't want to specify the --git-dir rather than the 
-work dir?
+I'm trying to make a edit to the log message when pulling
+from SVN into GIT using git-svn.
 
-i.e.
+It's going bidirectionally, so I don't want to
+git-filter-branch.
 
-git --git-dir="$(git-rev-parse --git-dir)" pull --rebase
+I tried creating a hooks/prepare-commit-msg script; it works
+ok when manually doing a "git-commit" but seems to be
+ignored by "git-svn fetch".  I made a hacked-up copy of
+git-svn that edits the log message the way I want and it all
+seems to work.
 
-Rogan
+Can support for obeying commit-msg hooks be added to
+git-svn?  Or, is there another way to do this?
+
+Thanks!
