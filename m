@@ -1,48 +1,97 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Git rebase failure: .dotest overwritten
-Date: Tue, 15 Jul 2008 23:48:45 +0200
-Message-ID: <487D1B3D.70500@lsrfire.ath.cx>
-References: <73fd69b50807151408i6a916da6p7b89fe81e65fc717@mail.gmail.com> <20080715212211.GL6244@leksak.fem-net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git-gui: Allow "Stage Line" to stage adjacent
+ changes independently
+Date: Tue, 15 Jul 2008 14:49:24 -0700
+Message-ID: <7vy742zul7.fsf@gitster.siamese.dyndns.org>
+References: <1216156261-9687-1-git-send-email-johannes.sixt@telecom.at>
+ <1216156261-9687-2-git-send-email-johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Joe Fiorini <joe@faithfulgeek.org>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jari Aalto <jari.aalto@cante.net>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Tue Jul 15 23:49:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Tue Jul 15 23:50:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIsP9-0002hl-E1
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 23:49:51 +0200
+	id 1KIsPr-0002v9-I9
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 23:50:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762214AbYGOVst convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jul 2008 17:48:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762188AbYGOVst
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 17:48:49 -0400
-Received: from india601.server4you.de ([85.25.151.105]:56966 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762072AbYGOVss (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2008 17:48:48 -0400
-Received: from [10.0.1.200] (p57B7DE67.dip.t-dialin.net [87.183.222.103])
-	by india601.server4you.de (Postfix) with ESMTPSA id 724DA2F8070;
-	Tue, 15 Jul 2008 23:48:46 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <20080715212211.GL6244@leksak.fem-net>
+	id S1755176AbYGOVte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 17:49:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754475AbYGOVte
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 17:49:34 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63978 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753520AbYGOVtd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2008 17:49:33 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 47B3A2DAE4;
+	Tue, 15 Jul 2008 17:49:32 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 9F93D2DAE0; Tue, 15 Jul 2008 17:49:27 -0400 (EDT)
+In-Reply-To: <1216156261-9687-2-git-send-email-johannes.sixt@telecom.at>
+ (Johannes Sixt's message of "Tue, 15 Jul 2008 23:11:01 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E86B861E-52B7-11DD-B2E5-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88601>
 
-Stephan Beyer schrieb:
-> git-rebase (without -i/-m) generates a directory called ".dotest/" to
-> save temporary stuff like the commits you want to rebase.
+Johannes Sixt <johannes.sixt@telecom.at> writes:
 
-In February it was discussed to move .dotest below $GIT_DIR.  There was
-even a patch (to rename it to .git-dotest).  I suspect the upcoming
-version 1.6.0 is a good opportunity to finally remove this wart.
+> Consider this hunk:
+>
+>   @@ -10,4 +10,4 @@
+>    context before
+>   -old 1
+>   -old 2
+>   +new 1
+>   +new 2
+>    context after
+>
+> [Nomenclature: to "stage change 2" means to stage lines "-old 1" and
+> "+new 1", in any order; likewise for "unstage" and "change 2".]
 
-Ren=E9
+You lost me.
+
+Do you mean to say that you always interpret the above hunk as:
+
+   @@ -10,4 +10,4 @@
+    context before
+   -old 1
+   +new 1
+   -old 2
+   +new 2
+    context after
+
+and call "replace 'old 1' with 'new 1'" as "change 1", "replace 'old
+2' with 'new 2'" as "change 2"?
+
+If it is what you are doing, it does not make much sense to me.  "new 1"
+may correspond to "old 1" and "old 2" while "new 2" may be an independent
+addition.  E.g.
+
+   @@ -10,4 +10,4 @@
+    context before
+   -#define add(x,y) \
+   - (x) + (y)
+   +#define add(x,y) ((x)+(y))
+   +#define sub(x,y) ((x)-(y))
+    context after
+
+I might want to pick bugfix of add() definition without using the new
+definition of sub().
+
+Please call
+
+	"-old 1" - change #1
+        "-old 2" - change #2
+        "+new 1" - change #3
+        "+new 2" - change #4
+
+and try explaining what you are doing again, pretty please?
