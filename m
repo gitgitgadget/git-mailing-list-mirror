@@ -1,80 +1,115 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH 3/3] gitweb: use new Git::Repo API, and add optional caching
-Date: Tue, 15 Jul 2008 03:50:10 +0200
-Message-ID: <487C0252.4030804@gmail.com>
-References: <4876B223.4070707@gmail.com> <200807150114.44402.jnareb@gmail.com> <487BE7C4.2050207@gmail.com> <200807150252.52604.jnareb@gmail.com> <487BFA67.3020304@gmail.com> <alpine.LSU.1.00.0807150326050.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH 2/2] test case for previous commit
+Date: Mon, 14 Jul 2008 21:50:46 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0807142147270.12484@xanadu.home>
+References: <alpine.LFD.1.10.0807141641110.12484@xanadu.home>
+ <7vbq10f7wr.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.10.0807141904250.12484@xanadu.home>
+ <7vod50dote.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.10.0807141937180.12484@xanadu.home>
+ <alpine.LFD.1.10.0807142134450.12484@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	John Hawley <warthog19@eaglescrag.net>,
-	Petr Baudis <pasky@suse.cz>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 15 03:51:17 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 15 03:51:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIZhE-0007Y0-39
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 03:51:16 +0200
+	id 1KIZht-0007jt-In
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 03:51:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756732AbYGOBuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 21:50:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756360AbYGOBuQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 21:50:16 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:37855 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755173AbYGOBuP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 21:50:15 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2200044fgg.17
-        for <git@vger.kernel.org>; Mon, 14 Jul 2008 18:50:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=uMFreSDkwfpe41e69QDGD1lDyXMlRlYVloWvfHv7VdE=;
-        b=SH+63nT4Qaor3TWXz69FkFWYTm7fwsFIAenq6TwL0Zlngx7yX/JhR57tM9esDeQQcY
-         hysBL4AQT6aiYe9dW/9KDx3/PLqKlIVg53Sb0DG8Zf/ueCxPYCSmktDd4Mkga2aRr0iS
-         rV4WiE96ny+Bzry3mSHnfFm5/5/ovRUlvYC0g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=MfUMI+jaqaKU0PW/rYlWMnRqowE6A5eGFKC9LaxseZFJROb3C4L2whMAsqEToJaa+s
-         PohEi8yq/2syrPg09YWXawgwIEYqg8UWvpFI3U4pk1TYnPL/X3V54Ki/h5s5z459IPA3
-         T9Bb9S71oNz7q6bBxxCeYUd6QHOk1t9E8XHIY=
-Received: by 10.86.23.17 with SMTP id 17mr15223886fgw.32.1216086613584;
-        Mon, 14 Jul 2008 18:50:13 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.226.181])
-        by mx.google.com with ESMTPS id 3sm4371770fge.3.2008.07.14.18.50.11
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 14 Jul 2008 18:50:13 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <alpine.LSU.1.00.0807150326050.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+	id S1755476AbYGOBus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 21:50:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755218AbYGOBus
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 21:50:48 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:48578 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755173AbYGOBur (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 21:50:47 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K4000DDZYGMK960@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 14 Jul 2008 21:50:46 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <alpine.LFD.1.10.0807142134450.12484@xanadu.home>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88498>
 
-Johannes Schindelin wrote:
-> Wasn't the main page (i.e. the projects list) the reason why kernel.org 
-> has its own little caching mechanism in the first place?
-> 
-> And did Pasky not report recently that repo.or.cz got substantially less 
-> loaded with some caching of its own?
+Here's a test demonstrating a case of what was broken before
+(and fixed by) the previous patch.
 
-Yes, you need *some* caching mechanism.  Once you have that, it's fine,
-at least if the page cache is hot.  (The x-thousand stat calls that my
-caching implementation issues don't actually take that much time; I
-suspect the ~1000 calls to memcached are the more expensive [and
-optimizable] part, though I'd have to benchmark that.)
-
-Mainline vs. my caching implementation (both with hot page cache) on
-odin3.kernel.org:
-
-$ time wget -qO/dev/null http://localhost/git-lewiemann/vanilla/
-real    0m3.070s
-$ time wget -qO/dev/null http://localhost/git-lewiemann/
-real    0m0.719s
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
+diff --git a/t/t6011-rev-list-with-bad-commit.sh b/t/t6011-rev-list-with-bad-commit.sh
+new file mode 100755
+index 0000000..e51eb41
+--- /dev/null
++++ b/t/t6011-rev-list-with-bad-commit.sh
+@@ -0,0 +1,60 @@
++#!/bin/sh
++
++test_description='git rev-list should notice bad commits'
++
++. ./test-lib.sh
++
++# Note:
++# - compression level is set to zero to make "corruptions" easier to perform
++# - reflog is disabled to avoid extra references which would twart the test
++
++test_expect_success 'setup' \
++   '
++   git init &&
++   git config core.compression 0 &&
++   git config core.logallrefupdates false &&
++   echo "foo" > foo &&
++   git add foo &&
++   git commit -m "first commit" &&
++   echo "bar" > bar &&
++   git add bar &&
++   git commit -m "second commit" &&
++   echo "baz" > baz &&
++   git add baz &&
++   git commit -m "third commit" &&
++   echo "foo again" >> foo &&
++   git add foo &&
++   git commit -m "fourth commit" &&
++   git repack -a -f -d
++   '
++
++test_expect_success 'verify number of revisions' \
++   '
++   revs=$(git rev-list --all | wc -l) &&
++   test $revs -eq 4 &&
++   first_commit=$(git rev-parse HEAD~3)
++   '
++
++test_expect_success 'corrupt second commit object' \
++   '
++   perl -i.bak -pe "s/second commit/socond commit/" .git/objects/pack/*.pack &&
++   test_must_fail git fsck --full
++   '
++
++test_expect_success 'rev-list should fail' \
++   '
++   test_must_fail git rev-list --all > /dev/null
++   '
++
++test_expect_success 'git repack _MUST_ fail' \
++   '
++   test_must_fail git repack -a -f -d
++   '
++
++test_expect_success 'first commit is still available' \
++   '
++   git log $first_commit
++   '
++
++test_done
++
