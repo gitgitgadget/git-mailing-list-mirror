@@ -1,69 +1,172 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Closing the merge window for 1.6.0
-Date: Wed, 16 Jul 2008 00:10:42 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807160005540.2990@eeepc-johanness>
-References: <7vtzf1w0rj.fsf@gitster.siamese.dyndns.org> <7vabgqsc37.fsf@gitster.siamese.dyndns.org> <7vtzetjbif.fsf@gitster.siamese.dyndns.org> <7vzlokhpk7.fsf@gitster.siamese.dyndns.org> <20080714085555.GJ32184@machine.or.cz> <alpine.DEB.1.00.0807141256310.8950@racer>
- <20080714124109.25414.qmail@06d015ec9c6744.315fe32.mid.smarden.org> <alpine.LFD.1.10.0807141351540.12484@xanadu.home> <7v3amcgujd.fsf@gitster.siamese.dyndns.org> <20080715092023.GO10151@machine.or.cz> <20080715150626.GA2925@dpotapov.dyndns.org>
- <alpine.DEB.1.00.0807151623120.8950@racer> <7v3amb0ymg.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] cherry: cache patch-ids to avoid repeating work
+Date: Tue, 15 Jul 2008 15:14:38 -0700
+Message-ID: <7vod4yztf5.fsf@gitster.siamese.dyndns.org>
+References: <7f9d599f0807082053w4603d0bbgfead9127c33b78b5@mail.gmail.com>
+ <alpine.DEB.1.00.0807101526380.18205@racer>
+ <7f9d599f0807100733s4435a9bga89749f2f6e10cf@mail.gmail.com>
+ <7v3amglxmb.fsf@gitster.siamese.dyndns.org>
+ <7f9d599f0807110758y6c4ea7bepd726daf4fe5f074c@mail.gmail.com>
+ <alpine.DEB.1.00.0807111635400.8950@racer>
+ <7f9d599f0807110841r329dfb95g786a576bd981dd1b@mail.gmail.com>
+ <alpine.DEB.1.00.0807111647080.8950@racer>
+ <7vej60jln6.fsf@gitster.siamese.dyndns.org>
+ <7f9d599f0807122014y5190463j62d106a01bf31c86@mail.gmail.com>
+ <7f9d599f0807150957o78d46204x280668c763fba2bf@mail.gmail.com>
+ <alpine.DEB.1.00.0807152255020.2990@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dmitry Potapov <dpotapov@gmail.com>, Petr Baudis <pasky@suse.cz>,
-	Nicolas Pitre <nico@cam.org>, Gerrit Pape <pape@smarden.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 00:11:14 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Geoffrey Irving <irving@naml.us>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 16 00:15:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIsjk-0001VA-BA
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 00:11:08 +0200
+	id 1KIsoF-0002uz-T6
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 00:15:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755990AbYGOWKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2008 18:10:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755959AbYGOWKI
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 18:10:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50246 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755787AbYGOWKG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2008 18:10:06 -0400
-Received: (qmail invoked by alias); 15 Jul 2008 22:10:05 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp051) with SMTP; 16 Jul 2008 00:10:05 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/xtHQUAL/xCHJ0qQ+qubzC0kovZSTaiJFZKpCgEj
-	GW1gPNPV7Sov+N
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7v3amb0ymg.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1756289AbYGOWOs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 18:14:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756061AbYGOWOs
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 18:14:48 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36324 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755789AbYGOWOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2008 18:14:47 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4472E2DD03;
+	Tue, 15 Jul 2008 18:14:46 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 1D8562DD02; Tue, 15 Jul 2008 18:14:40 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0807152255020.2990@eeepc-johanness> (Johannes
+ Schindelin's message of "Tue, 15 Jul 2008 23:52:22 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6ED3A512-52BB-11DD-9583-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88610>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Tue, 15 Jul 2008, Junio C Hamano wrote:
+> Okay, it seems like I never have time to review this, so I'll just 
+> take a few minutes to comment on some aspects:
+>
+>> @@ -1094,6 +1104,8 @@ int cmd_cherry(int argc, const char **argv,
+>> const char *prefix)
+>>  	const char *limit = NULL;
+>>  	int verbose = 0;
+>> 
+>> +	git_config(git_cherry_config, NULL);
+>> +
+>>  	if (argc > 1 && !strcmp(argv[1], "-v")) {
+>>  		verbose = 1;
+>>  		argc--;
+>
+> Is this really purely for cherry, and not at all for "log --cherry-pick"?  
+> Maybe it should be "cache.patchIds" to begin with.
 
-> What troubles me the most is that you seem to be forgetting that we are 
-> using git to manage our codebase.
+What other things would we want caches for?
 
-I don't.  I have vivid memories of updating an ancient git repository of 
-Git itself, which had some almost forgotten changes in it.  That was in 
-the bad old days, when the version number did not even have a "1" in it.
+As a general rule, I'd prefer keeping these unproven new features opt
+in (i.e. default to false unless explicitly asked for).
 
-It could not even fetch the current git.git.
+>> +union cached_sha1_map_header {
+>> +	struct {
+>> +		char signature[4]; /* CS1M */
+>> +		uint32_t version;
+>> +		uint32_t count;
+>> +		uint32_t size;
+>> +		uint32_t pad; /* pad to 20 bytes */
+>> +	} u;
+>> +	/* pad header out to 40 bytes.  As a consistency
+>> +	 * check, pad.value stores the sha1 of pad.key. */
+>> +	struct cached_sha1_entry pad;
+>
+> Why does it have to be a union?
 
-I do _not_ want that to happen to anybody else, _even if_ we leave 1.4.4.4 
-Behind as if it was an American Child.
+Hmm.  I think you are right.
 
-Having said that, I do not have the resources to test and fix everything 
-that may arise from Debian being seemingly unable to update to Git 1.5.  
-So I agree completely that the ball is in Debian's half, and if they let 
-it rot, it is sad, but I cannot help it.
+	struct cached_sha1_map_header {
+        	char signature[4];
+                uint32_t version;
+                uint32_t count;
+                uint32_t size;
+                uint32_t unused;
+		unsigned char csum[20];
+	};
 
-Ciao,
-Dscho
+would equally be good, as long as we assume the struct is naturally
+packed.  I do agree with you that it may not worth checking only the
+header, though. 
+
+>> +static const char *signature = "CS1M";
+>
+> Carrie Scr*ws 1 Man?
+
+No Idea ;-)
+
+>> +	cache->mmapped = 0;
+>> +	cache->dirty = 1;
+>
+> Is it already dirty?  I don't think so.
+
+This flag is more about "do we need to write it back to file", and when it
+starts out without reading from an existing file, we always need to as
+long as the table contains something at the end of the processing.
+
+You could instead check (!cache->mmapped && cache->count) for that, I
+guess.
+
+>> +	cache->entries = calloc(size, sizeof(struct cached_sha1_entry));
+>> +	if (!cache->entries) {
+>> +		warning("failed to allocate empty map of size %"PRIu32" for %s",
+>> +			size, git_path(cache->filename));
+>
+> xcalloc() to the rescue.
+
+This is purely optional cache and we would want to degrade to operate
+without it if any of these fails.  xcalloc() won't let you do so.
+
+> Really, I think that these checks should be _made_ unnecessary, by 
+> restricting the size of the cache.  IMO Caching more than 2^10 patch ids 
+> (completely made up on the spot) is probably even detrimental, and it 
+> might be better to just scratch them all and start with a new cache then.
+
+Probably.  Or fall back on uncached operation.
+
+>> +static int init_cached_sha1_map(struct cached_sha1_map *cache)
+>> +{
+>>
+>> [...]
+>>
+>> +	SHA1_Init(&ctx);
+>> +	SHA1_Update(&ctx, header.pad.key, 20);
+>> +	SHA1_Final(header.pad.key, &ctx); /* reuse pad.key to store its sha1 */
+>> +	if (hashcmp(header.pad.key, header.pad.value)) {
+>> +		warning("%s header has invalid sha1", filename);
+>> +		goto empty;
+>> +	}
+>
+> I do not think that it is worth checking that.  If you do not trust your 
+> hard disk, you might just as well jump out the window.
+>
+> Checking just takes too much time.
+
+This is only checking the header, so it won't take much time, but I tend
+to doubt the value of this.
+
+>> +	/* mmap entire file so that file / memory blocks are aligned */
+>> +	map_size = sizeof(struct cached_sha1_entry) * (cache->size + 1);
+>> +	cache->entries = mmap(NULL, map_size,
+>> +		PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
+>
+> AFAIR there were _serious_ performance issues with mmap() on non-Linux 
+> platforms.  I chose pread() in my original implementation for a reason.
+
+That is not a reason to punish users on platforms with working mmap(2) ;-).
