@@ -1,79 +1,94 @@
-From: Yves Orton <yves.orton@booking.com>
-Subject: Re: [PATCH] git rev-parse: Fix --show-cdup inside symlinked
-	directory
-Date: Tue, 15 Jul 2008 18:58:19 +0200
-Message-ID: <1216141099.19334.196.camel@gemini>
-References: <1216131208.19334.171.camel@gemini>
-	 <20080715145920.13529.25603.stgit@localhost>
-	 <alpine.DEB.1.00.0807151614510.8950@racer>
-	 <20080715154036.GR10151@machine.or.cz>  <1216140100.19334.189.camel@gemini>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: Closing the merge window for 1.6.0
+Date: Tue, 15 Jul 2008 21:04:12 +0400
+Message-ID: <20080715170412.GB2925@dpotapov.dyndns.org>
+References: <7vtzetjbif.fsf@gitster.siamese.dyndns.org> <7vzlokhpk7.fsf@gitster.siamese.dyndns.org> <20080714085555.GJ32184@machine.or.cz> <alpine.DEB.1.00.0807141256310.8950@racer> <20080714124109.25414.qmail@06d015ec9c6744.315fe32.mid.smarden.org> <alpine.LFD.1.10.0807141351540.12484@xanadu.home> <7v3amcgujd.fsf@gitster.siamese.dyndns.org> <20080715092023.GO10151@machine.or.cz> <20080715150626.GA2925@dpotapov.dyndns.org> <alpine.DEB.1.00.0807151623120.8950@racer>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	gitster@pobox.com, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Jul 15 18:59:29 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@cam.org>, Gerrit Pape <pape@smarden.org>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 15 19:06:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIns7-0008BQ-6r
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 18:59:27 +0200
+	id 1KInxp-0001ny-2d
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 19:05:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762005AbYGOQ6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2008 12:58:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762001AbYGOQ6Z
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 12:58:25 -0400
-Received: from msx2.activehotels.net ([62.190.24.12]:60948 "EHLO
-	mx2.activehotels.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1761999AbYGOQ6Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2008 12:58:24 -0400
-Received: from p5098d9db.dip0.t-ipconnect.de ([80.152.217.219] helo=[192.168.250.20])
-	by mx2.activehotels.net with esmtpsa (SSLv3:AES256-SHA:256)
-	(Exim 4.50)
-	id 1KInr2-0006pd-R2; Tue, 15 Jul 2008 17:58:21 +0100
-In-Reply-To: <1216140100.19334.189.camel@gemini>
-X-Mailer: Evolution 2.22.3.1 
-X-AH-Spam-Helo: [192.168.250.20]
+	id S1754850AbYGOREV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 13:04:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755073AbYGOREV
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 13:04:21 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:63301 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754369AbYGOREU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2008 13:04:20 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2311832fgg.17
+        for <git@vger.kernel.org>; Tue, 15 Jul 2008 10:04:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=+6gOTqUBO5dr5O9G46+YMcBZp1FyqjLdddC8ObZYhEM=;
+        b=W0lYuq1wvJYprqwjPl+VI88ls9xlqXvfS4pscCiw9uQQT+dtRW3X9bd9Yxzb64+ZcN
+         /sEBhIYX4KJP4sfVh0W9nVK4viKhZBduC3C7iEk8mXEmyogK36VpnPFgzHo2OWAuRn7s
+         derYSTnSIJFXy2CxAWFzV0ru1F7qe3xKR3m6g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=e79U9a9CV/x5TQKw3LKsvSxmf48y5qLTovGe4o4oFf34Wr/tWUfMLmIhQehlr74xVH
+         9Ml51KuB+LgutNICFRqRhHrSwpsFkN7rELDm2tA1QLL6/eT29UCuPh5WNCVsECnmXbCP
+         My9bKsRcuHQbbFC6PeAWixUYFl4hbjTNhiohc=
+Received: by 10.86.96.18 with SMTP id t18mr585018fgb.17.1216141456731;
+        Tue, 15 Jul 2008 10:04:16 -0700 (PDT)
+Received: from localhost ( [85.140.171.254])
+        by mx.google.com with ESMTPS id d4sm310778fga.8.2008.07.15.10.04.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 15 Jul 2008 10:04:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807151623120.8950@racer>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88582>
 
-On Tue, 2008-07-15 at 18:41 +0200, Yves Orton wrote:
-> On Tue, 2008-07-15 at 17:40 +0200, Petr Baudis wrote:
-> > 
-> >   P.S.: Either way, there is a possible workaround to tell git about the
-> > working directory manually using git --work-tree=... that I missed to
-> > mention on IRC, Yves.
+On Tue, Jul 15, 2008 at 04:27:02PM +0100, Johannes Schindelin wrote:
 > 
-> Hmm, am i using it wrong then?
+> >From the time balance sheet, it does not look good at all: a few minutes 
+> for Junio to change and commit, up to a few hours (because they missed it 
+> in the release notes) for probably more than hundred repository 
+> maintainers that are not subscribed to the Git mailing list.
+
+If you just grab sources and never read release notes, there is nothing
+that can help you. If Git 1.6.0 is not the right moment to do these
+changes then Git 1.6.1 is neither, regardless whether Debian will
+release Lenny by that time or not. People do not upgrade their distro in
+the day of release. Some upgraded to Etch not so long ago. So, should we
+wait for another year till 1.7.0?
+
 > 
-> [dmq@somewhere apps]$ git-rev-parse --git-dir
-> /home/dmq/git_tree/main/.git
-> [dmq@somewhere apps]$ git --work-tree="$(git-rev-parse --git-dir)" pull
-> --rebase
-> /usr/bin/git-sh-setup: line 139: cd: .git: No such file or directory
-> Unable to determine absolute path of git directory
+> And I absolutely agree with Pasky that this does _nothing_ in the vague 
+> direction of wielding a reputation of being easy to use.
 
-Hmm, realizing that was the workdir it wanted i tried it like so:
+I don't think Git 1.4 is easy to use. If you want Git that is easy to
+use install Git 1.5.x. And, it is *much* easier to install Git from
+backports then to deal with usability issues of Git 1.4 and the lack
+of community support.  So, I don't see how this change may hurt.
 
-[dmq@somewhere apps]$ git --work-tree="$(git-rev-parse --git-dir)/.."
-pull --rebase
-/usr/bin/git-sh-setup: line 139: cd: /home/dmq/git_tree/main/apps/.git:
-No such file or directory
-Unable to determine absolute path of git directory
-
-Yet:
-
-[dmq@somewhere apps]$ git-rev-parse --git-dir
-/home/dmq/git_tree/main/.git
-
-is correct.
-
-> cheers,
-> yves
-> ps: not on list, please cc me on replies (sorry for the hassle)
 > 
+> Sure, we can make it easy on ourselves.  And it is just as easy to make it 
+> hard on others.  If you're okay with that, I am not.
+
+It has *nothing* to do with making easy on ourselves and hard on others.
+The question here is what is the appropriate time to change these default
+settings, and I believe that *major* releases are the appropriate time
+while minor ones are not.
+
+
+Dmitry
