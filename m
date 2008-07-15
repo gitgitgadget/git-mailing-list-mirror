@@ -1,101 +1,112 @@
-From: "Peter Harris" <git@peter.is-a-geek.org>
-Subject: Re: Standard "git svn init ; git svn fetch" behavior
-Date: Tue, 15 Jul 2008 10:37:32 -0400
-Message-ID: <eaa105840807150737u11b02f50xba2c8201ce96eec0@mail.gmail.com>
-References: <487C88D0.30609@sneakemail.com>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: git config oddity
+Date: Tue, 15 Jul 2008 16:44:51 +0200
+Message-ID: <bd6139dc0807150744l78eb8d54ld167d3a9a5a600f@mail.gmail.com>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Peter_Valdemar_M=F8rch_(Lists)?=" 
-	<4ux6as402@sneakemail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 16:38:46 2008
+Content-Transfer-Encoding: 7bit
+To: "Git Mailinglist" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 15 16:46:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIlfx-0008Pw-39
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 16:38:45 +0200
+	id 1KIlnA-0002t0-EU
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 16:46:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751001AbYGOOhq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jul 2008 10:37:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751406AbYGOOhq
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 10:37:46 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:53044 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750944AbYGOOhp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Jul 2008 10:37:45 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so2607661ywe.1
-        for <git@vger.kernel.org>; Tue, 15 Jul 2008 07:37:39 -0700 (PDT)
+	id S1753750AbYGOOoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2008 10:44:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753688AbYGOOox
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 10:44:53 -0400
+Received: from rn-out-0910.google.com ([64.233.170.191]:10643 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753566AbYGOOow (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2008 10:44:52 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so1535052rnd.17
+        for <git@vger.kernel.org>; Tue, 15 Jul 2008 07:44:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=qRObH0jIsffIdvEsrscr4aranjZkbNT4qOkMF9mNCPI=;
-        b=HbJWAlg/pU4O5ZnaCtKcksLxMwsZa84HZRDpuH0tmJkML+mS0ZxzgjfxGv9DJw8A3T
-         mxOYSBn11A+GojcZfc6VjICNCS/sPRBEpwNYe5r563w+l+ZNZvs5JaLmQfMSCbmA4pu1
-         4fa934mMX8Zr2QUBPHFcPAvZCg7B+3yi6RHoM=
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=EjqZk2W+0NyOPfsK33x3PzDzFVGzsnIJepVAQ+URznw=;
+        b=fSpiuW28Rj9nWsb++KKQWqyrnF+UP8/kHK2W0c186YqxFpu0I3qPz9AUiN1QlsTROv
+         4Aoq+qP7Gd8Qtfh4TA9aCCrMBJwxDhDdkLVrH/h9xjQw5jOk4VB9auSw11p8462nmFQ5
+         MDn7s3nMyDsehncBh1El4/9rCyfULS/Wok918=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=kBBt7cEbWVKeFa3ELj3HqgLX721cqG6cP6yn6bqdF9BQQCjgXO87K8le/FD/USy4z8
-         JL7ASpZZHW/DGEuE9Xg9QLWMdIx7XcS8YD7RETzJgtkH9xcLNz5D2jNvkF5bBfBL4Jp8
-         IejXoW5LUGSfkD7S9vK2Z+wvvM4lmQDlD+P6k=
-Received: by 10.125.121.18 with SMTP id y18mr3541200mkm.113.1216132657659;
-        Tue, 15 Jul 2008 07:37:37 -0700 (PDT)
-Received: by 10.125.159.20 with HTTP; Tue, 15 Jul 2008 07:37:32 -0700 (PDT)
-In-Reply-To: <487C88D0.30609@sneakemail.com>
+        h=message-id:date:from:reply-to:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=bf5YBzu88wi8/MX12/0KvOFD0V5rnIzKlDey2EyZjfMEruVJ2MdPz3whdxPwM/glPy
+         gLaJyBMnvikohRSrVCqA5H2d0fwM0rmNz4zEzLPZHw9aMzVqqupIW3EDnUutztVSSbXN
+         TXKJ6jimd/ybJeKLeEmidM/tAyK3Tq2PgcXW4=
+Received: by 10.142.203.19 with SMTP id a19mr4691625wfg.179.1216133091606;
+        Tue, 15 Jul 2008 07:44:51 -0700 (PDT)
+Received: by 10.143.38.17 with HTTP; Tue, 15 Jul 2008 07:44:51 -0700 (PDT)
 Content-Disposition: inline
-X-Google-Sender-Auth: b6f59f69bfc71313
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88560>
 
-On Tue, Jul 15, 2008 at 7:24 AM, "Peter Valdemar M=F8rch (Lists)" wrote=
-:
->
-> 1) It seems the svn tags were converted into git branches such as
-> "tags/mytag". Is that normal?
+Heya,
 
-Yes.
+I noticed today that when unsetting the last value in a group git
+config leaves the empty group header. I was somewhat surprised here,
+but I am guessing it has a purpose? Anyway, I also noticed (and this
+threw my manual config parser off) that when later on an option is set
+to that empty group, a new group is created with the same name. Is
+this something I have to deal with in my parser (e.g., should I keep
+scanning the file for occurrences of my header and allow for empty
+groups, or is this a bug in git config? Either is fine with me, was
+just wondering :).
 
-Subversion doesn't really have tags. They're just branches with 'tag'
-in the name. git-svn wants them to be branches on the git side so that
-it can track future commits to the 'tag'.
+-----------------
+sverre@Laptop-Sverre:~/code$ mkdir config-oddity
+sverre@Laptop-Sverre:~/code$ cd config-oddity/
+sverre@Laptop-Sverre:~/code/config-oddity$ git init
+Initialized empty Git repository in /home/sverre/code/config-oddity/.git/
+sverre@Laptop-Sverre:~/code/config-oddity$ cat .git/config
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+sverre@Laptop-Sverre:~/code/config-oddity$ git config foo.bar spam
+sverre@Laptop-Sverre:~/code/config-oddity$ cat .git/config # as expected
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[foo]
+	bar = spam
+sverre@Laptop-Sverre:~/code/config-oddity$ git config --unset foo.bar
+sverre@Laptop-Sverre:~/code/config-oddity$ cat .git/config # dubious,
+but acceptable
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[foo]
+sverre@Laptop-Sverre:~/code/config-oddity$ git config foo.bar eggs
+sverre@Laptop-Sverre:~/code/config-oddity$ cat .git/config # errr? two
+[foo] headers?
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[foo]
+[foo]
+	bar = eggs
+sverre@Laptop-Sverre:~/code/config-oddity$
+-----------------
 
-> Re: 2) Why does master end up being off of tags/mytag instead of off =
-of
-> trunk?
->
-> I would have expected, that "master" ended up tracking "trunk", and n=
-ot
-> tags/mytag. Why track an obscure tag instead of trunk?
+-- 
+Cheers,
 
-Some projects work on trunk and keep a maint branch. Some projects
-work on branches, and only merge bug fixes to trunk. To facilitate
-this model, git-svn tries to guess which branch is your working
-branch, and picks that one to be master.
-
-In this case, you were unlucky enough to have the most recent commit
-be on a tag-branch.
-
-> Is there a smarter way to find out what branchpoint was used to creat=
-e
-> "master"? (I'm new to git, and find it difficult to see what my branc=
-hes
-> were "made from")
-
-Git doesn't know what any particular branch was "made from", as the
-branch point in question may be an ancestor of any number of other
-branches.
-
-git-svn does keep track of the subversion branch you are working on.
-"git svn info"
-
-Peter Harris
+Sverre Rabbelier
