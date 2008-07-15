@@ -1,91 +1,96 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 0/4] Honor core.deltaBaseCacheLimit during index-pack
-Date: Mon, 14 Jul 2008 23:06:57 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0807142306130.12484@xanadu.home>
-References: <20080713011512.GB31050@spearce.org>
- <1216001267-33235-1-git-send-email-spearce@spearce.org>
- <alpine.LFD.1.10.0807132220570.12484@xanadu.home>
- <20080714031242.GA14542@spearce.org>
- <alpine.LSU.1.00.0807141216390.32392@wbgn129.biozentrum.uni-wuerzburg.de>
- <m31w1wu1hc.fsf@localhost.localdomain> <487B439F.8040902@op5.se>
- <alpine.DEB.1.00.0807141322140.8950@racer> <487B4BD8.5030208@op5.se>
- <alpine.LFD.1.10.0807142203530.12484@xanadu.home>
- <20080715024741.GB1700@spearce.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Closing the merge window for 1.6.0
+Date: Tue, 15 Jul 2008 15:14:47 +1200
+Message-ID: <46a038f90807142014l2c120467pe4a76b2c35a145f9@mail.gmail.com>
+References: <7vlk0ffhw3.fsf@gitster.siamese.dyndns.org>
+	 <7vabgqsc37.fsf@gitster.siamese.dyndns.org>
+	 <7vtzetjbif.fsf@gitster.siamese.dyndns.org>
+	 <7vzlokhpk7.fsf@gitster.siamese.dyndns.org>
+	 <20080714085555.GJ32184@machine.or.cz>
+	 <alpine.DEB.1.00.0807141256310.8950@racer>
+	 <20080714124109.25414.qmail@06d015ec9c6744.315fe32.mid.smarden.org>
+	 <alpine.LFD.1.10.0807141351540.12484@xanadu.home>
+	 <7v3amcgujd.fsf@gitster.siamese.dyndns.org>
+	 <20080714191903.GB5788@mithlond.arda.local>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Stephan Hennig <mailing_list@arcor.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jul 15 05:08:18 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Nicolas Pitre" <nico@cam.org>, "Gerrit Pape" <pape@smarden.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
+To: "Teemu Likonen" <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Jul 15 05:15:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIatm-0006sr-4d
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 05:08:18 +0200
+	id 1KIb11-0000BL-GL
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 05:15:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761394AbYGODHD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 23:07:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761997AbYGODHB
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 23:07:01 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:60269 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761986AbYGODG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 23:06:57 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K4100DQB1ZLK9B0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 14 Jul 2008 23:06:57 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080715024741.GB1700@spearce.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1752809AbYGODOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 23:14:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752782AbYGODOt
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 23:14:49 -0400
+Received: from wf-out-1314.google.com ([209.85.200.172]:39357 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751321AbYGODOs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 23:14:48 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so5159899wfd.4
+        for <git@vger.kernel.org>; Mon, 14 Jul 2008 20:14:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=V27VkpMXBEpUfuf+g6ak4aJX1zSgOej2w+oPTAVLANQ=;
+        b=JxSioFFo/bk+XsADzS8R+MjRGu1neBW5AkHiE8bwYm1jdWaZsd4bunvEEYCkmjaYDj
+         hIPbUQfFKNqVtUwqkWXYLLNrq7BwQPk7IG6Z4RFhwNhAKQAEmrgZCl/YIv7+z2LI9j16
+         ezRJ19xzO+vHgNGcfjqXYYQbjHsuadsyeX4Zw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=scSMpWOLiFrC4ZGJ3lmPNxQgCylnoFOOf2Hfr3qv9bbOjWL/PL66Cu6fD9bHDVMFtq
+         MEwFT23nLI2dtufvox8c18GCeBKPnqX+d530G33N88TiVcxqMuyvfpNtxuSeUnfOwMoh
+         n0ZcAz1UNHgHHe2FEFzg+reVSrBhLkBw2o5Ok=
+Received: by 10.142.154.20 with SMTP id b20mr4466357wfe.99.1216091687588;
+        Mon, 14 Jul 2008 20:14:47 -0700 (PDT)
+Received: by 10.142.223.21 with HTTP; Mon, 14 Jul 2008 20:14:47 -0700 (PDT)
+In-Reply-To: <20080714191903.GB5788@mithlond.arda.local>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88509>
 
-On Tue, 15 Jul 2008, Shawn O. Pearce wrote:
+On Tue, Jul 15, 2008 at 7:19 AM, Teemu Likonen <tlikonen@iki.fi> wrote:
+>> But as the upstream, we have our own deprecation schedule.
+>
+> As Debian stable (4.0 "Etch") and its git 1.4.4.4 was mentioned I'd like
+> to point out that git 1.5.6 is available for Etch users from
+> kind-of-semi-official <www.backports.org>. So I guess Debian stable
+> users aren't left completely behind. Git's web page already advertises
+> backports.org version for Etch.
 
-> Nicolas Pitre <nico@cam.org> wrote:
-> > 
-> > Those delta chains aren't simple chained lists.  They are trees of 
-> > deltas where one object might be the base for an unlimited number of 
-> > deltas of depth 1, and in turn each of those deltas might constitute the 
-> > base for an unlimited number of deltas of depth 2, and so on.
-> > 
-> > So what the code does is to find out which objects are not deltas but 
-> > are the base for a delta.  Then, for each of them, all deltas having 
-> > given object for base are found and they are recursively resolved so 
-> > each resolved delta is then considered a possible base for more deltas, 
-> > etc.  In other words, those deltas are resolved by walking the delta 
-> > tree in a "depth first" fashion.
-> > 
-> > If we discard previous delta bases, we will have to recreate them each 
-> > time a delta sibling is processed.  And if those delta bases are 
-> > themselves deltas then you have an explosion of delta results to 
-> > re-compute.
-> 
-> Yes, it would be horrible if we had to recompute 10 deltas in order
-> to recover a previously discarded delta base in order to visit new
-> siblings.
-> 
-> But its even more horrible that we use 512M of memory in our working
-> set size on a 256M machine to process a pack that is only 300M in
-> size, due to long delta chains on large objects.  In such a case
-> the system will swap and perform fairly poorly due to the huge disk
-> IO necessary to keep moving the working set around.
-> 
-> We're better off keeping our memory usage low and recomputing
-> the delta base when we need to return to it to process a sibling.
+I concur. Users of git on Etch are using backports AFAIK.
 
-Please relax!  ;-)
+We still have the case of the "casual" user, who does not know much
+about git, but installs it to clone & review a project's code. There,
+if v1.4.4 complains with a useful message, the casual user will swear
+a bit and grab a backport. If it dies a horrible uninformative death,
+then we will get  bogus bug reports, flamage, the works.
 
-And have a look in your mbox.
+cheers,
 
 
-Nicolas
+
+m
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
