@@ -1,76 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git rev-parse: Fix --show-cdup inside symlinked
- directory
-Date: Tue, 15 Jul 2008 16:19:30 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807151614510.8950@racer>
-References: <1216131208.19334.171.camel@gemini> <20080715145920.13529.25603.stgit@localhost>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] archive: refactor and cleanup
+Date: Tue, 15 Jul 2008 08:21:54 -0700
+Message-ID: <7vtzer2mwd.fsf@gitster.siamese.dyndns.org>
+References: <487BA74E.5070208@lsrfire.ath.cx> <487BE440.9010006@gmail.com>
+ <487C568F.6030705@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Jul 15 17:20:40 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Jul 15 17:23:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KImKM-0008Ae-V6
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 17:20:31 +0200
+	id 1KImMq-0000lb-Sq
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 17:23:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752559AbYGOPTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2008 11:19:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752380AbYGOPTc
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 11:19:32 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33188 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757554AbYGOPTb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2008 11:19:31 -0400
-Received: (qmail invoked by alias); 15 Jul 2008 15:19:30 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp058) with SMTP; 15 Jul 2008 17:19:30 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18zMa8ySWEzRZ7rRFBs9aVMHM9UnViCh6begn+Zgq
-	tTl3TvSdDql4ia
-X-X-Sender: gene099@racer
-In-Reply-To: <20080715145920.13529.25603.stgit@localhost>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1753701AbYGOPWG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jul 2008 11:22:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753611AbYGOPWE
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jul 2008 11:22:04 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33414 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753352AbYGOPWD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jul 2008 11:22:03 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 088A92D447;
+	Tue, 15 Jul 2008 11:22:01 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 006992D446; Tue, 15 Jul 2008 11:21:57 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C59713D2-5281-11DD-A7D7-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88566>
 
-Hi,
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-On Tue, 15 Jul 2008, Petr Baudis wrote:
+> Lea Wiemann schrieb:
+> ...
+>> Feel free to ping me on IRC (lea_w in #git) if you need help.
+>
+> I've slacked long enough to become a complete noob again.  Oh, well.
 
-> Consider the scenario when someone makes a symlink into a working tree
-> subdirectory at an unrelated place, then attempts to work inside the
-> symlinked directory. The scenario is a bit unwieldly, but most of
-> the Git will handle it fine - except git rev-parse --show-cdup. That
-> will output a sequence of ../ which will work wrong inside the symlink
-> using shell cd builtin.
+Lol ;-)
 
-Short version: do not use symlinks in the working directory, if you do not 
-want to track the _symlink_.
-
-Long version: there are a lot of problems with that, and --show-cdup is 
-the least of the problems.  A checkout, for example, is able to kill the 
-symlink and check out a fresh copy of the subdirectory.
-
-AFAICT this is a concious decision: If you want to track a symlink, track 
-a symlink, but if you want to track a subdirectory, you will have to track 
-a subdirectory, and it cannot be a symlink.
-
-> This patch changes --show-cdup to always show absolute workdir path
-> instead. I think this should hopefully cause no compatibility problems;
-> the testsuite is passing fine, at least.
-
-See the thread where I proposed a change like this, back with the infamous 
-worktree desaster, and Junio NACKed; or the thread where Linus rightfully 
-insists that git_dir should be relative if possible, for performance 
-reasons.
-
-Hth,
-Dscho
+The series looks good.  Thanks.
