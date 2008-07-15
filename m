@@ -1,95 +1,175 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 0/4] Honor core.deltaBaseCacheLimit during index-pack
-Date: Tue, 15 Jul 2008 02:47:41 +0000
-Message-ID: <20080715024741.GB1700@spearce.org>
-References: <20080713011512.GB31050@spearce.org> <1216001267-33235-1-git-send-email-spearce@spearce.org> <alpine.LFD.1.10.0807132220570.12484@xanadu.home> <20080714031242.GA14542@spearce.org> <alpine.LSU.1.00.0807141216390.32392@wbgn129.biozentrum.uni-wuerzburg.de> <m31w1wu1hc.fsf@localhost.localdomain> <487B439F.8040902@op5.se> <alpine.DEB.1.00.0807141322140.8950@racer> <487B4BD8.5030208@op5.se> <alpine.LFD.1.10.0807142203530.12484@xanadu.home>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 2/4] index-pack: Chain the struct base_data on the stack
+ for traversal
+Date: Mon, 14 Jul 2008 22:48:35 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0807142240460.12484@xanadu.home>
+References: <1216001267-33235-1-git-send-email-spearce@spearce.org>
+ <1216001267-33235-2-git-send-email-spearce@spearce.org>
+ <1216001267-33235-3-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Stephan Hennig <mailing_list@arcor.de>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Jul 15 04:48:48 2008
+	Stephan Hennig <mailing_list@arcor.de>,
+	Andreas Ericsson <ae@op5.se>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jul 15 04:49:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIaau-0002l0-0K
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 04:48:48 +0200
+	id 1KIabj-0002tG-6n
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 04:49:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756518AbYGOCrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 22:47:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756391AbYGOCrn
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 22:47:43 -0400
-Received: from george.spearce.org ([209.20.77.23]:60124 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756253AbYGOCrm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 22:47:42 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id AB95E3836B; Tue, 15 Jul 2008 02:47:41 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0807142203530.12484@xanadu.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1761051AbYGOCsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 22:48:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760988AbYGOCsi
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 22:48:38 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:38575 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759704AbYGOCsh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 22:48:37 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K4100IPD14Z2OK0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 14 Jul 2008 22:48:36 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1216001267-33235-3-git-send-email-spearce@spearce.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88503>
 
-Nicolas Pitre <nico@cam.org> wrote:
+On Sun, 13 Jul 2008, Shawn O. Pearce wrote:
+
+> We need to release earlier inflated base objects when memory gets
+> low, which means we need to be able to walk up or down the stack
+> to locate the objects we want to release, and free their data.
 > 
-> Those delta chains aren't simple chained lists.  They are trees of 
-> deltas where one object might be the base for an unlimited number of 
-> deltas of depth 1, and in turn each of those deltas might constitute the 
-> base for an unlimited number of deltas of depth 2, and so on.
+> The new link/unlink routines allow inserting and removing the struct
+> base_data during recursion inside resolve_delta, and the global
+> base_cache gives us the head of the chain (bottom of the stack)
+> so we can traverse it.
 > 
-> So what the code does is to find out which objects are not deltas but 
-> are the base for a delta.  Then, for each of them, all deltas having 
-> given object for base are found and they are recursively resolved so 
-> each resolved delta is then considered a possible base for more deltas, 
-> etc.  In other words, those deltas are resolved by walking the delta 
-> tree in a "depth first" fashion.
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+
+You don't really need that 'base' pointer, do you?  When linking a new 
+child, then the 'child' pointer simply has to be overwritten.  there is 
+a window where that 'child' pointer would be invalid after the child 
+structure has been discarded, but no walking of the list should occur at 
+that point anyway.
+
+> ---
+>  index-pack.c |   34 +++++++++++++++++++++++++++++++---
+>  1 files changed, 31 insertions(+), 3 deletions(-)
 > 
-> If we discard previous delta bases, we will have to recreate them each 
-> time a delta sibling is processed.  And if those delta bases are 
-> themselves deltas then you have an explosion of delta results to 
-> re-compute.
+> diff --git a/index-pack.c b/index-pack.c
+> index db03478..6c59fd3 100644
+> --- a/index-pack.c
+> +++ b/index-pack.c
+> @@ -27,6 +27,8 @@ union delta_base {
+>  };
+>  
+>  struct base_data {
+> +	struct base_data *base;
+> +	struct base_data *child;
+>  	void *data;
+>  	unsigned long size;
+>  };
+> @@ -48,6 +50,7 @@ struct delta_entry
+>  
+>  static struct object_entry *objects;
+>  static struct delta_entry *deltas;
+> +static struct base_data *base_cache;
+>  static int nr_objects;
+>  static int nr_deltas;
+>  static int nr_resolved_deltas;
+> @@ -216,6 +219,27 @@ static void bad_object(unsigned long offset, const char *format, ...)
+>  	die("pack has bad object at offset %lu: %s", offset, buf);
+>  }
+>  
+> +static void link_base_data(struct base_data *base, struct base_data *c)
+> +{
+> +	if (base)
+> +		base->child = c;
+> +	else
+> +		base_cache = c;
+> +
+> +	c->base = base;
+> +	c->child = NULL;
+> +}
+> +
+> +static void unlink_base_data(struct base_data *c)
+> +{
+> +	struct base_data *base = c->base;
+> +	if (base)
+> +		base->child = NULL;
+> +	else
+> +		base_cache = NULL;
+> +	free(c->data);
+> +}
+> +
+>  static void *unpack_entry_data(unsigned long offset, unsigned long size)
+>  {
+>  	z_stream stream;
+> @@ -452,6 +476,8 @@ static void resolve_delta(struct object_entry *delta_obj,
+>  	sha1_object(result.data, result.size, type, delta_obj->idx.sha1);
+>  	nr_resolved_deltas++;
+>  
+> +	link_base_data(base_obj, &result);
+> +
+>  	hashcpy(delta_base.sha1, delta_obj->idx.sha1);
+>  	if (!find_delta_children(&delta_base, &first, &last)) {
+>  		for (j = first; j <= last; j++) {
+> @@ -471,7 +497,7 @@ static void resolve_delta(struct object_entry *delta_obj,
+>  		}
+>  	}
+>  
+> -	free(result.data);
+> +	unlink_base_data(&result);
+>  }
+>  
+>  static int compare_delta_entry(const void *a, const void *b)
+> @@ -562,6 +588,7 @@ static void parse_pack_objects(unsigned char *sha1)
+>  			continue;
+>  		base_obj.data = get_data_from_pack(obj);
+>  		base_obj.size = obj->size;
+> +		link_base_data(NULL, &base_obj);
+>  
+>  		if (ref)
+>  			for (j = ref_first; j <= ref_last; j++) {
+> @@ -575,7 +602,7 @@ static void parse_pack_objects(unsigned char *sha1)
+>  				if (child->real_type == OBJ_OFS_DELTA)
+>  					resolve_delta(child, &base_obj, obj->type);
+>  			}
+> -		free(base_obj.data);
+> +		unlink_base_data(&base_obj);
+>  		display_progress(progress, nr_resolved_deltas);
+>  	}
+>  }
+> @@ -670,6 +697,7 @@ static void fix_unresolved_deltas(int nr_unresolved)
+>  		base_obj.data = read_sha1_file(d->base.sha1, &type, &base_obj.size);
+>  		if (!base_obj.data)
+>  			continue;
+> +		link_base_data(NULL, &base_obj);
+>  
+>  		find_delta_children(&d->base, &first, &last);
+>  		for (j = first; j <= last; j++) {
+> @@ -683,7 +711,7 @@ static void fix_unresolved_deltas(int nr_unresolved)
+>  			die("local object %s is corrupt", sha1_to_hex(d->base.sha1));
+>  		append_obj_to_pack(d->base.sha1, base_obj.data,
+>  			base_obj.size, type);
+> -		free(base_obj.data);
+> +		unlink_base_data(&base_obj);
+>  		display_progress(progress, nr_resolved_deltas);
+>  	}
+>  	free(sorted_by_pos);
+> -- 
+> 1.5.6.2.393.g45096
+> 
 
-Yes, it would be horrible if we had to recompute 10 deltas in order
-to recover a previously discarded delta base in order to visit new
-siblings.
 
-But its even more horrible that we use 512M of memory in our working
-set size on a 256M machine to process a pack that is only 300M in
-size, due to long delta chains on large objects.  In such a case
-the system will swap and perform fairly poorly due to the huge disk
-IO necessary to keep moving the working set around.
-
-We're better off keeping our memory usage low and recomputing
-the delta base when we need to return to it to process a sibling.
-
-Please.  Remember that index-pack, unlike unpack-objects, does not
-hold the unresolved deltas in memory while processing the input.
-It assumes the total size of the unresolved deltas may exceed
-the available memory for our working set and writes them to disk,
-to be read back in later during the resolving phase.
-
-At some point it is possible for the completely inflated delta
-chain to exceed the physical memory of the system.  As soon as you
-do that you are committed to some form of swapping.  We can probably
-do that better from the packfile by reinflating the super compressed
-deltas than letting the OS page in huge tracts of the virtual address
-space off the swap device.  Plus the OS does not need to expend disk
-IO to swap out the pages, we have already spent that cost when we
-wrote the pack file down to disk as part of our normal operation.
-
-I don't like adding code either.  But I think I'm right.  We really
-need to not allow index-pack to create these massive working sets
-and assume the operating system is going to be able to handle
-it magically.  Memory is not infinite, even if the Turing machine
-theory claims it is.
-
--- 
-Shawn.
+Nicolas
