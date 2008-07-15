@@ -1,98 +1,115 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: [PATCH 3/3] gitweb: use new Git::Repo API, and add optional
-	caching
-Date: Mon, 14 Jul 2008 19:03:21 -0700
-Message-ID: <1216087401.18836.11.camel@localhost.localdomain>
-References: <4876B223.4070707@gmail.com>
-	 <200807150114.44402.jnareb@gmail.com> <487BE7C4.2050207@gmail.com>
-	 <200807150252.52604.jnareb@gmail.com> <487BFA67.3020304@gmail.com>
-	 <alpine.LSU.1.00.0807150326050.3486@wbgn129.biozentrum.uni-wuerzburg.de>
-	 <487C0252.4030804@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 0/4] Honor core.deltaBaseCacheLimit during index-pack
+Date: Mon, 14 Jul 2008 22:21:41 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0807142203530.12484@xanadu.home>
+References: <20080713011512.GB31050@spearce.org>
+ <1216001267-33235-1-git-send-email-spearce@spearce.org>
+ <alpine.LFD.1.10.0807132220570.12484@xanadu.home>
+ <20080714031242.GA14542@spearce.org>
+ <alpine.LSU.1.00.0807141216390.32392@wbgn129.biozentrum.uni-wuerzburg.de>
+ <m31w1wu1hc.fsf@localhost.localdomain> <487B439F.8040902@op5.se>
+ <alpine.DEB.1.00.0807141322140.8950@racer> <487B4BD8.5030208@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Petr Baudis <pasky@suse.cz>
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 04:04:40 2008
+	Jakub Narebski <jnareb@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Stephan Hennig <mailing_list@arcor.de>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Jul 15 04:22:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIZu6-0001jj-1Q
-	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 04:04:34 +0200
+	id 1KIaBi-0005DH-Ta
+	for gcvg-git-2@gmane.org; Tue, 15 Jul 2008 04:22:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751947AbYGOCDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2008 22:03:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754385AbYGOCDe
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 22:03:34 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:53485 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751692AbYGOCDd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2008 22:03:33 -0400
-Received: from [10.255.255.200] (65-115-68-195.dia.static.qwest.net [65.115.68.195])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id m6F23Qtp026831
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 14 Jul 2008 19:03:26 -0700
-In-Reply-To: <487C0252.4030804@gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-4.fc8) 
-X-Virus-Scanned: ClamAV 0.88.7/7713/Mon Jul 14 14:59:25 2008 on shards.monkeyblade.net
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Mon, 14 Jul 2008 19:03:27 -0700 (PDT)
+	id S1756897AbYGOCVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2008 22:21:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756490AbYGOCVn
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jul 2008 22:21:43 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:16224 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755860AbYGOCVm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2008 22:21:42 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K4000NK2ZW53551@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 14 Jul 2008 22:21:42 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <487B4BD8.5030208@op5.se>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88500>
 
-To continue with that benchmarking it seems if gitweb-caching isn't hot
-it takes about 3 seconds, if it is I'm about 7x faster than Lea's ;-)
+On Mon, 14 Jul 2008, Andreas Ericsson wrote:
 
-$ time wget -qO/dev/null http://localhost/git/
-
-real    0m2.952s
-user    0m0.001s
-sys     0m0.004s
-$ time wget -qO/dev/null http://localhost/git/
-
-real    0m0.108s
-user    0m0.001s
-sys     0m0.001s
-
-But regardless of who's faster - I would still argue there are two
-reasons to at least have some caching, even if it's crappy:
-
-1) Prevent the thundering heard problem - many requests for the same
-thing all generating the same data is bad, and kills I/O
-
-2) Relatively static data can be generated once and stick around for a
-bit and serve more requests more efficiently.  Now I agree that
-invalidating the cache on a new mtime is better than my current
-algorithm (which is purely time based on the cache data vs. the original
-data, with some allowances for back-off due to load).
-
-- John 'Warthog9' Hawley
-
-On Tue, 2008-07-15 at 03:50 +0200, Lea Wiemann wrote:
 > Johannes Schindelin wrote:
-> > Wasn't the main page (i.e. the projects list) the reason why kernel.org 
-> > has its own little caching mechanism in the first place?
+> > Hi,
 > > 
-> > And did Pasky not report recently that repo.or.cz got substantially less 
-> > loaded with some caching of its own?
+> > On Mon, 14 Jul 2008, Andreas Ericsson wrote:
+> > 
+> > > Sorry for being clueless here, but why does the older versions need
+> > > to be kept in-memory anyway? Aren't we applying the delta each time
+> > > we find one, repeatedly creating a new base-object in-memory for
+> > > each delta? If we aren't doing that, why do we need more than just
+> > > a small amount of memory just for keeping the delta?
+> > 
+> > Think of a delta chain of 49 delta objects, 1 base object.  Now reconstruct
+> > all of the objects.
+> > 
+> > If you do it one by one, not storing the intermediate results, you end up
+> > applying 1 delta for the first, 2 for the second (first the first, then the
+> > second), and so on, in total 1 + 2 + 3 + ... + 49 = 49 * 50 / 2 = 1225
+> > times.
+> > 
+> > Compare that to the 49 times when reusing the intermediate results.
+> > 
 > 
-> Yes, you need *some* caching mechanism.  Once you have that, it's fine,
-> at least if the page cache is hot.  (The x-thousand stat calls that my
-> caching implementation issues don't actually take that much time; I
-> suspect the ~1000 calls to memcached are the more expensive [and
-> optimizable] part, though I'd have to benchmark that.)
+> That's only true if you discard the result of applying D1 to DB though.
+> What I'm wondering is; Why isn't it done like this (pseudo-code):
 > 
-> Mainline vs. my caching implementation (both with hot page cache) on
-> odin3.kernel.org:
+> while (delta = find_earlier_delta(sha1)) {
+> 	if (is_base_object(delta)) {
+> 		base_object = delta;
+> 		break;
+> 	}
+> 	push_delta(delta, patch_stack);
+> }
 > 
-> $ time wget -qO/dev/null http://localhost/git-lewiemann/vanilla/
-> real    0m3.070s
-> $ time wget -qO/dev/null http://localhost/git-lewiemann/
-> real    0m0.719s
+> while (pop_delta(patch_stack))
+> 	apply_delta(base_object, delta);
+> 
+> 
+> 
+> where "apply_delta" replaces the base_object->blob with the delta
+> applied, releasing the previously used memory?
+> 
+> That way, you'll never use more memory than the largest ever size
+> of the object + 1 delta at a time and still not apply the delta
+> more than delta_chain_length-1 times.
+
+Those delta chains aren't simple chained lists.  They are trees of 
+deltas where one object might be the base for an unlimited number of 
+deltas of depth 1, and in turn each of those deltas might constitute the 
+base for an unlimited number of deltas of depth 2, and so on.
+
+So what the code does is to find out which objects are not deltas but 
+are the base for a delta.  Then, for each of them, all deltas having 
+given object for base are found and they are recursively resolved so 
+each resolved delta is then considered a possible base for more deltas, 
+etc.  In other words, those deltas are resolved by walking the delta 
+tree in a "depth first" fashion.
+
+If we discard previous delta bases, we will have to recreate them each 
+time a delta sibling is processed.  And if those delta bases are 
+themselves deltas then you have an explosion of delta results to 
+re-compute.
+
+
+Nicolas
