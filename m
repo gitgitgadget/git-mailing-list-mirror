@@ -1,142 +1,60 @@
-From: "Nigel Magnay" <nigel.magnay@gmail.com>
-Subject: Re: git submodules and commit
-Date: Wed, 16 Jul 2008 13:48:09 +0100
-Message-ID: <320075ff0807160548qae5d702jafe3df63363c512c@mail.gmail.com>
-References: <320075ff0807160331j30e8f832m4de3e3bbe9c26801@mail.gmail.com>
-	 <320075ff0807160332k5e49c256tb4191de628ecf41c@mail.gmail.com>
-	 <487DD1C7.3070701@viscovery.net>
-	 <320075ff0807160402s7429291ela288b42d99c1ec53@mail.gmail.com>
-	 <487DDCFC.9020007@viscovery.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: MSysGit Stability
+Date: Wed, 16 Jul 2008 13:58:35 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807161356100.8950@racer>
+References: <73fd69b50807151458u22a383a3l343779e47f4161fa@mail.gmail.com> <eaa105840807160532t73e6b851h5b78c0d8ad4c1c1a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Jul 16 14:49:21 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Joe Fiorini <joe@faithfulgeek.org>, git@vger.kernel.org
+To: Peter Harris <git@peter.is-a-geek.org>
+X-From: git-owner@vger.kernel.org Wed Jul 16 15:00:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJ6RT-0005hw-J3
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 14:49:12 +0200
+	id 1KJ6bZ-0002nK-5f
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 14:59:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754702AbYGPMsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 08:48:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754676AbYGPMsM
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 08:48:12 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:33076 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754652AbYGPMsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 08:48:11 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so2715948ywe.1
-        for <git@vger.kernel.org>; Wed, 16 Jul 2008 05:48:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=e3gUDpTs7fM4eg1QKhasNEeARJfm1F+Efc0tvwcLC+o=;
-        b=fnuSTSyS96gZhWEc1QGqKSpBBLimM0X5FLjzUKbbMp03iLa0VwaUzaPotAfXDCAXof
-         q/kLi7njmkwHLXO85k+zS1pASs+atdREHaULoBXAWWdNLbGUmHTD7y3kB4uDY9GWIm9e
-         VSzAxjsmPOiOTfE7LoyRXwB1vwbZRnxkudXrE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=iWABwZ3MGFETtxCoAoB/Qh1p4ZLZN2XWPjWTaQkBVVX+9dzaAzNDPg/xpEPPAMfSge
-         Wh7rgOX+otadSv5vYgGB3gUHi8OdEjJfBK5ZlrZ4VHSMD/vk2fZZbTAvQpCGFj4IPoN1
-         qCgZVmUydViW/zFFYOV5YX8BlznsohjjyEBG0=
-Received: by 10.103.22.11 with SMTP id z11mr851504mui.83.1216212489553;
-        Wed, 16 Jul 2008 05:48:09 -0700 (PDT)
-Received: by 10.103.246.15 with HTTP; Wed, 16 Jul 2008 05:48:09 -0700 (PDT)
-In-Reply-To: <487DDCFC.9020007@viscovery.net>
-Content-Disposition: inline
+	id S1754676AbYGPM6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 08:58:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755165AbYGPM6h
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 08:58:37 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48194 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753608AbYGPM6g (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 08:58:36 -0400
+Received: (qmail invoked by alias); 16 Jul 2008 12:58:34 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp013) with SMTP; 16 Jul 2008 14:58:34 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX186hA1UIcY60Eyvpb8YvIrKgDCJjOKsg9KyLu7SuX
+	8wYBJxTnuO0uNm
+X-X-Sender: gene099@racer
+In-Reply-To: <eaa105840807160532t73e6b851h5b78c0d8ad4c1c1a@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88677>
 
-> Ah, is this your actual scenario? Just to make sure we are talking about
-> the same thing:
->
-> - You own superproject P.
-> - $Maintainer owns submodule S.
-> - You use S in P.
-> - You make changes to S that you would like $Maintainer to include in the
-> next release.
-> x You use in P your changes to S while $Maintainer has not yet released a
-> new version of S with your changes.
-> - Finally your changes arrive via the new release of S.
->
-> That *is* the intended use-case for submodules. But you have to play the
-> game by the rules:
->
+Hi,
 
-Yes, that is the situation - with the proviso that it's not always
-clear in company environments who $Maintainer actually is. For
-example, if the only changes occurring in S come from me, then chances
-are come release cycle, $Maintainer == me.
+On Wed, 16 Jul 2008, Peter Harris wrote:
 
-P and S aren't distant projects, they're closely coupled.
+> On Tue, Jul 15, 2008 at 5:58 PM, Joe Fiorini wrote:
+> >
+> >   Does anyone have experience running Git on Windows?
+> 
+> I use msysgit regularly. The core git is quite stable, although
+> occasionally peripherals have a bit of trouble. For example, git-svn
+> was broken recently.
 
-> - $Maintainer defines the official states of S.
->
-Yes - there is one branch ('master') which the changes eventually
-should be merged to, and releases will be performed on
+Note that git-svn will be removed in the next alpha release of msysGit, 
+due to lack of people interested in fixing the thing.  No, complaining and 
+asking others to do all the work does not account for "interest".
 
-> - You must never commit an unofficial state of S in P.
->
-
-If by that you mean that the only person to move the branch 'master'
-is $Maintainer, then I agree.
-If by that you mean that you can't commit at all to the S tree (and
-the S submodule pointer) then I don't agree, and I think that's a
-serious limitation in productivity.
-
-> The critical step in above list I marked with x:
->
-> - During the period where only *you* have the new changes to S, you must
-> *not* commit your submodule state to P. Instead, you write P in such a way
-> that it can work with both the old version of S and the upcoming release
-> that will have your changes[*]. This way you make sure that your consumers
-> of P always have a working version regardless of which version of S they use.
->
-
-Just to be clear - there's more than just 'me' working on P - there's
-a whole team of people working on it. And there's Q R S and T teams
-also working on projects that also have S.
-
-Changes that happen to S are, often, new features or bug fixes. We
-can't just stop because there isn't an 'official' version of S yet
-(and the official version might end up simply being a FF anyway), so
-saying 'don't commit your submodule state to P' is unrealistic.
-
-And that should be the big advantage of git. If we suddenly find we
-need some additional functionality in S, we just add it to our
-P-branch-of-S. The $Maintainer (if he exists) can review these
-upcoming changes in the tree, and merge them to master as appropriate
-(or work with the projects to iron out cross-branch
-incompatibilities). The best example is that S is a "product", and (by
-management decree), the only product changes that happen will occur
-because of *projects* (like P). And we can do this (and it's
-infinitely better than svn, where 'ooh, branches too hard, everyone in
-[P-T] just commit to trunk'. But the UI is an ache.
-
-
-> - After you have received the new release of S from $Maintainer, you
-> commit the new state of S in P. And if you are nice to your consumers of
-> P, then you *do not* remove the workaround from P just yet, so that you
-> don't force them to upgrade S. You will remove it later only if it becomes
-> a maintainance burden.
->
-Maintaining backwards compatibility isn't an issue at all for us.
-
-> [*] If it is not possible to make P work with old and new versions, then
-> you have to work closely with the $Maintainer so that you never need
-> commit an unofficial state of S into P.
->
-> -- Hannes
->
->
+Ciao,
+Dscho
