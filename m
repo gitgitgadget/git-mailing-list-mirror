@@ -1,93 +1,104 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: [PATCH,RFC] Implement 'git rm --if-missing'
-Date: Wed, 16 Jul 2008 14:17:33 -0400
-Message-ID: <32541b130807161117h54e97825o9119655f73138341@mail.gmail.com>
-References: <1216231250-21141-1-git-send-email-ciaran.mccreesh@googlemail.com>
-	 <20080716180617.GO32184@machine.or.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Considering teaching plumbing to users harmful
+Date: Wed, 16 Jul 2008 11:18:10 -0700
+Message-ID: <7v7iblsnfh.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0807161804400.8950@racer>
+ <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Ciaran McCreesh" <ciaran.mccreesh@googlemail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Jul 16 20:18:55 2008
+To: "Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 16 20:19:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJBaR-0003S7-Bc
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 20:18:47 +0200
+	id 1KJBax-0003dS-3x
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 20:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758184AbYGPSRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 14:17:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757791AbYGPSRi
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 14:17:38 -0400
-Received: from wx-out-0506.google.com ([66.249.82.235]:46993 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757500AbYGPSRh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 14:17:37 -0400
-Received: by wx-out-0506.google.com with SMTP id h29so3450850wxd.4
-        for <git@vger.kernel.org>; Wed, 16 Jul 2008 11:17:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=fKzzWpIjNQCedf1adN4UUevewFTpC39kmJHtGIH0b1g=;
-        b=Z7vRyIgwgIxjWf6qLcBrgDdLTDrqINpCa+KN2lsBUToTWDv8jHpyAdrPAS8zsuGe/1
-         KqOoK1QsCZPkrYrft1cXn9cZ5IZpyKA4DhOVujaX2pXfdrSaDzrFdsG4TnBRgIFWEN1k
-         OWxmAiqxjjmhhiJ7sxVasvU1t+LPq1rR9Yy4Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=rSKdKbOY5Hp9ERUzO1EClvyhbbzYSKQRZqW+dEf/QQ0JJRSu0Q3cafBd48PoJyxg12
-         3832YdgdLE7YUJ0Jwdee/w5KGanamQQPj8UTb3ACZPvpsMBHZKQ4qzKxEgQ7GLp4AE7V
-         9EyubJqK1XXaLqBw4U+SquIAL+4jXawkU6CmY=
-Received: by 10.100.7.1 with SMTP id 1mr1711649ang.99.1216232256124;
-        Wed, 16 Jul 2008 11:17:36 -0700 (PDT)
-Received: by 10.100.8.19 with HTTP; Wed, 16 Jul 2008 11:17:33 -0700 (PDT)
-In-Reply-To: <20080716180617.GO32184@machine.or.cz>
-Content-Disposition: inline
+	id S1753715AbYGPSST (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 14:18:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753742AbYGPSST
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 14:18:19 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50402 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753003AbYGPSSS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 14:18:18 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1AA1D225CD;
+	Wed, 16 Jul 2008 14:18:16 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 48E07225CC; Wed, 16 Jul 2008 14:18:12 -0400 (EDT)
+In-Reply-To: <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>
+ (Avery Pennarun's message of "Wed, 16 Jul 2008 13:53:44 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8F3CA238-5363-11DD-9716-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88707>
 
-On 7/16/08, Petr Baudis <pasky@suse.cz> wrote:
->  On Wed, Jul 16, 2008 at 07:00:50PM +0100, Ciaran McCreesh wrote:
->  > git rm --if-missing will only remove files if they've already been removed from
->  > disk.
->  >
->  > Signed-off-by: Ciaran McCreesh <ciaran.mccreesh@googlemail.com>
+"Avery Pennarun" <apenwarr@gmail.com> writes:
+
+> On 7/16/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>>  Am I the only one who deems teaching plumbing to users ("I like it raw!
+>>  So I teach it the same way!") harmful?
 >
->   what is the usage scenario? The porcelain options space is a precious
->  resource, so please explain why do you need this and who is going to use
->  it (especially with such a long name).
+> I believe the only way you can get away with such a simple learning
+> sequence is if your workflow is as simple as that you seem to
+> describe: everyone has push access to the central 'master'.
+>
+> That works (and mostly just as well as any other "supposedly easy"
+> VCS, like svn), but because git's power is so tempting, almost
+> nobody's real-life repository actually works like that.
+>
+> At the very least, there will be branches.  And where there are
+> branches, there's merging.  And with merging comes merge conflicts.
 
-I see the idea here: right now you can do:
+Well, you are wrong.  Even when people work only with a single branch
+'master', once you have more than one repository involved, there's already
+merging.  Dscho just described how he would guide new people into the
+process without going into the details in that message, by the time his
+audiences need merge conflict resolution they are already comfortable with
+the index.
 
-         touch a b c
-         git add .
+>        git diff :{1,3}:path/to/filename
+>
+> Which is a great command, but svn definitely makes it easier to do the
+> same thing.
 
-And have it auto-add all the new files, so "git commit" will work.
-But there is no equivalent for rm, because for obvious reasons,
+I've never seen anybody who finds "diff :{1,3}:path" *useful*.
 
-        rm b c
-        git rm .
+Well, if you are coming from SVN or CVS where a merge is just a large goo
+of everything that happened on a side branch squashed into one, perhaps it
+might look useful.
 
-Doesn't do the same thing.  And "git add ." doesn't auto-recognize
-deletions, which probably also makes sense.
+What you should learn and teach instead is:
 
-"git commit -a", on the other hand, will automatically commit all
-deletions for you.  But you don't always want to commit *all* your
-changes just because you want to commit all your deletions.
+	git log -p --merge
 
-That said, --if-missing is a bit unwieldy.  I don't have a better
-suggestion though.
+This shows individual changes from the commits involved in the conflict
+with rationale (of course your committers must be disciplined enough to
+write usable commit log messages for you to take full benefit of this).
+Add path/to/filename if you want to process one path at a time.  Also
+adding --left-right to the command line may make it more understandable if
+you are merging two histories, both of which are from other people, and
+you do not know which commit is from which side of the merge.
 
-Have fun,
+> Even if you have a repo with widespread push access, git's log looks
+> annoying compared to svn because of all the merge commits.  That's a
+> primary reason why rebase was invented, of course.
 
-Avery
+Please don't talk nonsense if you do not know history.  I invented rebase
+primarily because I wanted to help e-mail based contributors.  There is
+nothing about merge avoidance to it.
+
+You can skip merges with "git log --no-merges", just in case you didn't
+know.
+
+I won't comment on the remainder but that is not because I agree with
+anything you said there ;-)
