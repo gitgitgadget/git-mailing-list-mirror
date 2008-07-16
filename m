@@ -1,61 +1,88 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: git submodules and commit
-Date: Wed, 16 Jul 2008 12:47:35 +0200
-Message-ID: <487DD1C7.3070701@viscovery.net>
-References: <320075ff0807160331j30e8f832m4de3e3bbe9c26801@mail.gmail.com> <320075ff0807160332k5e49c256tb4191de628ecf41c@mail.gmail.com>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: [PATCH] Use SHELL_PATH
+Date: Wed, 16 Jul 2008 12:47:43 +0200
+Message-ID: <bd6139dc0807160347n2ebcd64fy7a15fe94bfabe580@mail.gmail.com>
+References: <g5jj21$bsp$1@ger.gmane.org>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nigel Magnay <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 12:48:37 2008
+Cc: git@vger.kernel.org
+To: namsh@posdata.co.kr
+X-From: git-owner@vger.kernel.org Wed Jul 16 12:48:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJ4Yn-0004Kp-1Z
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 12:48:37 +0200
+	id 1KJ4Ys-0004Np-Nt
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 12:48:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753011AbYGPKri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 06:47:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753749AbYGPKri
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 06:47:38 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:6318 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751688AbYGPKri (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 06:47:38 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KJ4Xn-0007KY-SE; Wed, 16 Jul 2008 12:47:36 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 936E16D9; Wed, 16 Jul 2008 12:47:35 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <320075ff0807160332k5e49c256tb4191de628ecf41c@mail.gmail.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754467AbYGPKrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 06:47:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754210AbYGPKrq
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 06:47:46 -0400
+Received: from qw-out-2122.google.com ([74.125.92.26]:34692 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754106AbYGPKrp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 06:47:45 -0400
+Received: by qw-out-2122.google.com with SMTP id 3so267517qwe.37
+        for <git@vger.kernel.org>; Wed, 16 Jul 2008 03:47:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=QAeG7JREfzzdxVundfOvqBrIE0SoKAbJDkmNU0L1ZT0=;
+        b=BEGG5dGyMSnn8k26I6ycn3EkIswnDemekJJm9TUzyyK/uVWT+JAokngUVQO7Y87WrF
+         nlLxU3KkNB0Kn/Z66URuvE1Zch9ffbAUb92chlHgWrZIt//c8+5tZG5UaWnIiJrjhb75
+         2VGSLvWEdniotF1x4WcCqo6UKuzkGOjmKKQJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=ulz1f8/U8JlQk6HeIfCuc8NdbwjkKSCgQf0OjWtwkf5x2EEVGwG5+hhFEPzYwwGebx
+         /PdZiZMr0Ufe3eI177Yvjiudfnz+NgILPKtpw7bP0zED04YctPOe1LGKkRZ4mQ1V3weV
+         IAXQtdnzCU7kdGg6a1FhjD1gc0jQK7f6Nt1Y8=
+Received: by 10.142.156.19 with SMTP id d19mr5089401wfe.261.1216205263878;
+        Wed, 16 Jul 2008 03:47:43 -0700 (PDT)
+Received: by 10.143.38.17 with HTTP; Wed, 16 Jul 2008 03:47:43 -0700 (PDT)
+In-Reply-To: <g5jj21$bsp$1@ger.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88666>
 
-Nigel Magnay schrieb:
-> For me, in some really high proportion of cases, I think I want 'git
-> commit' to mean 'commit to any child repositories, any sibling
-> repositories, and any parent repositories (updating the submodule sha1
-> as appropriate). In other words, 'pretend like the whole thing is one
-> big repo'.
+On Wed, Jul 16, 2008 at 3:31 AM, SungHyun Nam <goweol@gmail.com> wrote:
+>
+> Signed-off-by: SungHyun Nam <goweol@gmail.com>
+> ---
+>  t/Makefile |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/t/Makefile b/t/Makefile
+> index a778865..0d65ced 100644
+> --- a/t/Makefile
+> +++ b/t/Makefile
+> @@ -26,7 +26,7 @@ clean:
+>        $(RM) -r 'trash directory' test-results
+>
+>  aggregate-results:
+> -       ./aggregate-results.sh test-results/t*-*
+> +       '$(SHELL_PATH_SQ)' ./aggregate-results.sh test-results/t*-*
+>
+>  # we can test NO_OPTIMIZE_COMMITS independently of LC_ALL
+>  full-svn-test:
+> --
+> 1.5.6.3.350.g6c11a
 
-And I think that this is the problem: If this way of commiting your
-changes is *required* in the *majority* of cases, then you are IMO outside
-the intended use-case of submodules. You are better served by really
-making this one big repo.
+It is not clear to me what this patch does, there is no justification
+in the commit msg either. Instead you say what is being done, which we
+can see from the commit diff. Please clarify?
 
-IMO, submodules are to be used if you can afford to advance parent project
-and submodules at different paces; i.e. if the parent project can work
-with newer versions of the submodules (and possibly in a degraded mode
-even with outdated versions).
+-- 
+Cheers,
 
--- Hannes
+Sverre Rabbelier
