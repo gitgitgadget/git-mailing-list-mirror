@@ -1,69 +1,107 @@
-From: "Peter Harris" <git@peter.is-a-geek.org>
-Subject: Re: MSysGit Stability
-Date: Wed, 16 Jul 2008 08:33:00 -0400
-Message-ID: <eaa105840807160532t73e6b851h5b78c0d8ad4c1c1a@mail.gmail.com>
-References: <73fd69b50807151458u22a383a3l343779e47f4161fa@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Documentation/git-cherry-pick.txt et al.: Fix misleading -n
+	description
+Date: Wed, 16 Jul 2008 14:35:22 +0200
+Message-ID: <20080716123344.5875.88693.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Joe Fiorini" <joe@faithfulgeek.org>
-X-From: git-owner@vger.kernel.org Wed Jul 16 14:34:10 2008
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 16 14:36:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJ6Cw-00009K-9e
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 14:34:10 +0200
+	id 1KJ6Fd-0001A1-C6
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 14:36:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754289AbYGPMdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 08:33:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753542AbYGPMdK
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 08:33:10 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:18595 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752122AbYGPMdJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 08:33:09 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so2715142ywe.1
-        for <git@vger.kernel.org>; Wed, 16 Jul 2008 05:33:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=2HFEHBEfN8ps09XU7ZfB7UA4Op0pMSlmot4FpKyILPw=;
-        b=u7RRxdirObx2b1V/LefyFW4wPk6VwefJd5Yu+aotq8kxFafgYV30inTlgq3cO7qG+U
-         xnvolNurkwK/0OVAhdvHCHihSZnqRHoimlQlT87XiuWUmGSTZH4Jus+VqyJTIopDlSNz
-         Zc82PDCiy4ogB/TELJqfNub7WdBoWb3stFwEM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=ZQxvEEfMhuZkyQqwEeXZcvxe3XhR3GtgUEQKq+IEqW50Aoy9P9Q/KOVnB7sTK77XSu
-         NPLkFIxuYbroWYxuzNfjctdupqEoe6I5P/YvzdHXcXyIUlO1w5UO5M0UshaQYjUNKwC7
-         XXw21IpxZqBbR6x/X1INVnTNna1xlDSXq8KbQ=
-Received: by 10.125.142.5 with SMTP id u5mr3615859mkn.126.1216211580012;
-        Wed, 16 Jul 2008 05:33:00 -0700 (PDT)
-Received: by 10.125.159.20 with HTTP; Wed, 16 Jul 2008 05:32:59 -0700 (PDT)
-In-Reply-To: <73fd69b50807151458u22a383a3l343779e47f4161fa@mail.gmail.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: ea68bfb5dc817d51
+	id S1754481AbYGPMf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 08:35:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754496AbYGPMf6
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 08:35:58 -0400
+Received: from [212.249.11.140] ([212.249.11.140]:14260 "EHLO pixie.suse.cz"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754415AbYGPMf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 08:35:57 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by pixie.suse.cz (Postfix) with ESMTP id CAC5F2AC73C;
+	Wed, 16 Jul 2008 14:35:22 +0200 (CEST)
+User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88675>
 
-On Tue, Jul 15, 2008 at 5:58 PM, Joe Fiorini wrote:
->
->   Does anyone have experience running Git on Windows?
+The manual page of git-cherry-pick and git-revert asserts that -n works
+primarily on the working tree, while in fact the primary object it operates
+on is the index, and the changes only "accidentally" propagate to the
+working tree. This e.g. leads innocent #git IRC folks to believe that you
+can use -n to prepare changes for git-add -i staging.
 
-I use msysgit regularly. The core git is quite stable, although
-occasionally peripherals have a bit of trouble. For example, git-svn
-was broken recently.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-Overall, I would recommend msysgit for anyone stuck on Windows.
+  I'm actually not *entirely* sure about the exact working tree vs. index
+semantics of the -n parameter, this is a guess based on the code.
+Unfortunately, I'm currently too busy with other things to check
+thoroughly, and I'm sure other people on the list will know off-hand.
 
-Peter Harris
+ Documentation/git-cherry-pick.txt |   10 +++++-----
+ Documentation/git-revert.txt      |   16 ++++++++--------
+ 2 files changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index a691173..50fb3d5 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -58,14 +58,14 @@ OPTIONS
+ 	Usually the command automatically creates a commit with
+ 	a commit log message stating which commit was
+ 	cherry-picked.  This flag applies the change necessary
+-	to cherry-pick the named commit to your working tree,
+-	but does not make the commit.  In addition, when this
+-	option is used, your working tree does not have to match
++	to cherry-pick the named commit to your working tree
++	and the index, but does not make the commit.  In addition,
++	when this option is used, your index does not have to match
+ 	the HEAD commit.  The cherry-pick is done against the
+-	beginning state of your working tree.
++	beginning state of your index.
+ +
+ This is useful when cherry-picking more than one commits'
+-effect to your working tree in a row.
++effect to your index in a row.
+ 
+ -s::
+ --signoff::
+diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+index 5411edc..271850f 100644
+--- a/Documentation/git-revert.txt
++++ b/Documentation/git-revert.txt
+@@ -43,16 +43,16 @@ OPTIONS
+ -n::
+ --no-commit::
+ 	Usually the command automatically creates a commit with
+-	a commit log message stating which commit was reverted.
+-	This flag applies the change necessary to revert the
+-	named commit to your working tree, but does not make the
+-	commit.  In addition, when this option is used, your
+-	working tree does not have to match the HEAD commit.
+-	The revert is done against the beginning state of your
+-	working tree.
++	a commit log message stating which commit was
++	reverted.  This flag applies the change necessary
++	to revert the named commit to your working tree
++	and the index, but does not make the commit.  In addition,
++	when this option is used, your index does not have to match
++	the HEAD commit.  The revert is done against the
++	beginning state of your index.
+ +
+ This is useful when reverting more than one commits'
+-effect to your working tree in a row.
++effect to your index in a row.
+ 
+ -s::
+ --signoff::
