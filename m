@@ -1,142 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Considering teaching plumbing to users harmful
-Date: Wed, 16 Jul 2008 13:12:53 -0700
-Message-ID: <7vr69tpoze.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0807161804400.8950@racer>
- <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>
- <7v7iblsnfh.fsf@gitster.siamese.dyndns.org>
- <32541b130807161151x19c20f9t91b7fb9b8c7b8c7b@mail.gmail.com>
- <7vmykhr6h1.fsf@gitster.siamese.dyndns.org>
- <32541b130807161229ob4c21cbsc6c86ee3e42c4101@mail.gmail.com>
- <7vabghr5br.fsf@gitster.siamese.dyndns.org>
- <32541b130807161246l579d3a5em65496ee9119ef1ef@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+From: David Christensen <david@endpoint.com>
+Subject: Re: [PATCH,RFC] Implement 'git rm --if-missing'
+Date: Wed, 16 Jul 2008 14:43:27 -0500
+Message-ID: <D5EB71BB-FEA1-4900-AB72-914367B029AB@endpoint.com>
+References: <1216231250-21141-1-git-send-email-ciaran.mccreesh@googlemail.com> <7vtzepr7g5.fsf@gitster.siamese.dyndns.org> <20080716185811.GA3517@xp.machine.xx>
+Mime-Version: 1.0 (Apple Message framework v928.1)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ciaran McCreesh <ciaran.mccreesh@googlemail.com>,
 	git@vger.kernel.org
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 22:14:19 2008
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 16 22:14:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJDO0-0001fw-Tj
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 22:14:05 +0200
+	id 1KJDOj-0001wT-Vw
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 22:14:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755577AbYGPUNE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 16:13:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755297AbYGPUND
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 16:13:03 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36352 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754967AbYGPUNB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 16:13:01 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4769F24EC2;
-	Wed, 16 Jul 2008 16:13:00 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 4D21C24EC1; Wed, 16 Jul 2008 16:12:55 -0400 (EDT)
-In-Reply-To: <32541b130807161246l579d3a5em65496ee9119ef1ef@mail.gmail.com>
- (Avery Pennarun's message of "Wed, 16 Jul 2008 15:46:34 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 96876310-5373-11DD-A725-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1754484AbYGPUNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 16:13:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755297AbYGPUNu
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 16:13:50 -0400
+Received: from sb3.endpoint.com ([64.34.193.88]:52678 "EHLO mail.endcrypt.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753774AbYGPUNu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 16:13:50 -0400
+X-Greylist: delayed 1817 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jul 2008 16:13:49 EDT
+Received: from [192.168.1.140] (188.142.45.66.cm.sunflower.com [66.45.142.188])
+	by mail.endcrypt.com (Postfix) with ESMTP id B601C37DDF5;
+	Wed, 16 Jul 2008 19:43:27 +0000 (UTC)
+In-Reply-To: <20080716185811.GA3517@xp.machine.xx>
+X-Mailer: Apple Mail (2.928.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88740>
 
-"Avery Pennarun" <apenwarr@gmail.com> writes:
+On Jul 16, 2008, at 1:58 PM, Peter Baumann wrote:
 
-> On 7/16/08, Junio C Hamano <gitster@pobox.com> wrote:
->>  You said svn makes it easier because it makes it very hard to do merges
->>  and forces users to stay away from them.  This results in user doing "svn
->>  update" which is to resolve conflicts with large uncommitted changes but
->>  keeps the history straight single-strand-of-pearls.
+> On Wed, Jul 16, 2008 at 11:48:42AM -0700, Junio C Hamano wrote:
+>> Ciaran McCreesh <ciaran.mccreesh@googlemail.com> writes:
 >>
->>  I am not saying the merge based workflow in git does not have any room to
->>  improve.  I am just saying that there is nothing we can learn from svn in
->>  that area.  "Solves it by not letting us to do merges" is not a solution.
+>>> git rm --if-missing will only remove files if they've already been  
+>>> removed from
+>>> disk.
+>>
+>> This probably is a borderline with feaping creaturism.  What's the  
+>> use of
+>> it in a real workflow that you need this for?
+>>
+>> "git add -u" may be too broad in that it also adds anything  
+>> modified, but
+>> so is --if-missing too broad in that it removes anything removed,  
+>> and if
+>> you are going to limit by giving pathspecs _anyway_, then...
+>>
+>> Old timers might just do:
+>>
+>> 	git diff --name-only --diff-filter=D |
+>>        git update-index --remove --stdin
+>>
+>> ;-)
+>>
 >
-> What svn does is essentially an unsafe version of
+> Ah. This comes in handy. I already searched for a command to delete  
+> all
+> missing files. After reading through the fine manual of 'git rm', I  
+> went
+> to git update-index but didn't come up with a solution to my problem.
 >
->        git stash && git pull x y && git stash apply
+> But I have to say, an argument to 'git rm' would be preferable than  
+> the
+> above plumping.
 
-If you are advocating that mode of operation to be easy in git, you should
-think again.  That pull (be it with or without --rebase) can conflict and
-you would need to resolve it, and then your "stash pop" can conflict
-again.  You can have your own "git avery-up" alias which is your "svn up"
-equivalent, but if you train users with that first, the users have to
-learn how to cope with conflicts in individual steps anyway.
 
-Making these three into a single alias is not an improvement either.  If
-you are not ready to incorporate other's changes to your history, why are
-you pulling?  Being distributed gives the power of working independently
-and at your own pace.  You should train your brain to think about the
-workflow first.  "You should stash before pull" is _not_ a good advice.
-"Do not pull when you are not ready" is.
+Wouldn't:
 
-Suppose you are about to finish something you have been cooking (say a
-series of five logical commits), you've made three of these commits
-already, and what you have in your work tree and the index is to be split
-into the last two commits.  Somehow you learn that $x above has a updated
-version.
+git rm $(git ls-files --deleted)
 
-Yes, running "git stash && git pull --rebase && git stash pop" would be
-better than running "git pull --rebase" alone from that state.  But that
-would mean your history would have your first 3 commits (of 5 commit
-series), somebody else's totally unrelated commits, and then you will work
-on finishing the remaining 2 commits on top of it.  Why?  Why is such a
-bogus linear history any better?
+do the trick, or am I missing something?
 
-With git, instead, you have the choice:
+Regards,
 
-	* "git fetch" first to see if it is truly urgent; otherwise you
-          don't even have to pull.  First finish whatever you were doing
-          and then make the pull
-
-	    $ make commit 1
-            $ make commit 2
-            $ git pull
-
-	  This results in a merge but it is a good merge.  The resulting
-	  history shows your 5 commits are isolated work independently
-	  developed while that urgent thing was being done elsewhere.
-
-	* if it is, then, you save away your work and pull first:
-
-	    $ git branch mywork
-            $ git stash save "remaining two commits' worth of changes"
-            $ git reset --hard HEAD~3 # wipe your 3 commits
-            $ git pull
-
-	  and then continue working:
-
-	    $ git checkout mywork
-            $ git stash pop
-            $ make commit 1
-            $ make commit 2
-
-	  and finally integrate:
-
-            $ git checkout master
-            $ git merge mywork
-
-	  or if you really want linear, pretend all 5 of your commits
-	  were done on top of that urgent thing.
-
-            $ git rebase master
-            $ git checkout master
-            $ git merge mywork
-
-> And that's actually a good example of what I'm talking about; in svn,
-> that's just "svn up",...
-
-What you forgot to add in the above is that in svn the equivalent of "pull
-x y" step will always fast forward because you will not be making forked
-development with the upstream.  In svn it's just "svn up" and it results
-in a linear history because that command does not work with merges.  By
-definition, not working with merges will result in linear history.
+David
+--
+David Christensen
+End Point Corporation
+david@endpoint.com
