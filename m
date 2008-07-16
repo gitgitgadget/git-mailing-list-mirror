@@ -1,80 +1,54 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 0/5] add pack index v2 reading capability to git v1.4.4.4
-Date: Wed, 16 Jul 2008 10:04:18 -0700
-Message-ID: <7vprpdsqul.fsf@gitster.siamese.dyndns.org>
+Date: Wed, 16 Jul 2008 10:08:05 -0700
+Message-ID: <7vhcapsqoa.fsf@gitster.siamese.dyndns.org>
 References: <1216189899-14279-1-git-send-email-nico@cam.org>
  <alpine.LFD.1.10.0807160924340.2835@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
-	Gerrit Pape <pape@smarden.org>
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jul 16 19:05:58 2008
+X-From: git-owner@vger.kernel.org Wed Jul 16 19:09:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJARV-000068-EN
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 19:05:50 +0200
+	id 1KJAV6-0001Y1-J1
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 19:09:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755223AbYGPREa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 13:04:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756191AbYGPREa
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 13:04:30 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35464 "EHLO
+	id S1757458AbYGPRIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 13:08:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757058AbYGPRIN
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 13:08:13 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53823 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755081AbYGPRE3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 13:04:29 -0400
+	with ESMTP id S1754854AbYGPRIN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 13:08:13 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5589238C55;
-	Wed, 16 Jul 2008 13:04:27 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3ED4C2E1E2;
+	Wed, 16 Jul 2008 13:08:12 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 95FF338C54; Wed, 16 Jul 2008 13:04:22 -0400 (EDT)
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id D6EEE2E1E0; Wed, 16 Jul 2008 13:08:07 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.10.0807160924340.2835@woody.linux-foundation.org>
+ (Linus Torvalds's message of "Wed, 16 Jul 2008 09:25:17 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3F7D9450-5359-11DD-A69E-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: C5878092-5359-11DD-A94A-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88697>
 
 Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> On Wed, 16 Jul 2008, Nicolas Pitre wrote:
->> 
->> Junio: if you could just apply them, tag the result as v1.4.4.5 and
->> push it out then at that point it simply will be up to Debian to make
->> it available as a "major usability fix".
->
 > Actually, it fixes a crash. Didn't 1.4.4 SIGSEGV without this on pack-v2?
->
-> So you don't even have to sell it as a usability issue, but literally as a 
-> bugfix.
 
-It's tagged and pushed out to both kernel.org and repo.or.cz.  Thanks, Nico.
+I do not think it should SEGV.  The pack-idx signature was chosen rather
+carefully to allow older ones to die gracefully.
 
-I won't be doing my usual full release engineering on this one, but I did:
+    error: non-monotonic index
+    error: Could not read 4a588075c54cd5902e5f4d43b9d6b0c31d0f9769
 
- - repack a copy of git.git to use pack idx version #2 for trial.
-
-	Hint.  A handy way to tell which version of packfile you have is
-	to run this:
-
-	$ od -c .git/objects/pack/pack-$your_pack_id.idx | head -n 1
-        
-        If the output begins with "377 t 0 c", you have pack idx version
-        #2.
-
- - check "git log" from v1.4.4.4 (fails) and v1.4.4.5 (reads ok)
-
- - repack this copy with "git repack" from 1.4.4.5.  This produced a
-   repository usable by v1.4.4.4.
-
-I also updated /pub/scm/git/git.git/config at kernel.org to use
-
-	[pack]
-        	indexVersion = 1
-
-for now.  The repository is also repacked with pack idx version #1.
+But as I said in the other message, it's tagged and pushed out already.
