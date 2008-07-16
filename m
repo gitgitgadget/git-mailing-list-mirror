@@ -1,119 +1,113 @@
 From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [PATCH v2] Fix buffer overflow in git-grep
-Date: Wed, 16 Jul 2008 19:33:29 +0400
-Message-ID: <1216222409-31785-1-git-send-email-dpotapov@gmail.com>
-References: <alpine.DEB.1.00.0807161232110.8503@eeepc-johanness>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Dmitry Potapov <dpotapov@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 16 17:34:54 2008
+Subject: [PATCH v2] Fix buffer overflow in prepare_attr_stack
+Date: Wed, 16 Jul 2008 19:39:55 +0400
+Message-ID: <20080716153955.GE2925@dpotapov.dyndns.org>
+References: <37fcd2780807160733o156e49c6m51314ff18764ccd5@mail.gmail.com> <1216220043-27678-1-git-send-email-dpotapov@gmail.com> <1216220043-27678-2-git-send-email-dpotapov@gmail.com> <487E11F7.60601@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Jul 16 17:41:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJ91Y-0002op-3h
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 17:34:36 +0200
+	id 1KJ97p-0006Y4-QQ
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 17:41:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756589AbYGPPdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 11:33:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756661AbYGPPdg
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 11:33:36 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:58075 "EHLO
+	id S1756672AbYGPPkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 11:40:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756505AbYGPPkG
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 11:40:06 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:1106 "EHLO
 	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756376AbYGPPdf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 11:33:35 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so2730170ywe.1
-        for <git@vger.kernel.org>; Wed, 16 Jul 2008 08:33:34 -0700 (PDT)
+	with ESMTP id S1756191AbYGPPkF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 11:40:05 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so2730820ywe.1
+        for <git@vger.kernel.org>; Wed, 16 Jul 2008 08:40:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=lRC0gcCqQsbj4RuwVYBX+7vyvST6hKyj6zdu/ecjUIQ=;
-        b=Fr1mv07DfNHrFVWrplcbmtmVwayn5kVVuUjc/ov2jkF3o0jQZw0YV/q/ZwlE9ErTKe
-         srQ/jTmQjQDTCg13APXat2mekd/PpY/IYJT/ucvnkVA2hbumVujBB3H6q5fZ5/Q8N6Ml
-         yQ7GykgkEo2tlggOqy8BEHsiXa8fPOy0qxml8=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=mjGf1KNkpG+zlQ3e5dLNbRiLZsDM1R6QjM2w/UzqY7A=;
+        b=TAsOUDYLQiPlabFPUPfSVVdwqlwUM3pvqV76JMOKd58EN+V+0jjOvrlC4nCPKTcf5h
+         9M/0JB2GECAxL4peHf+v9NQUMYDrttElF/Sd/EqkMJynF2ecvKHyiMPLU/dVqw4LAUSP
+         /g2VDWePaac4MJt6WrNHmjuudOKmm9EOwb1EI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=tWGfuWs/JfN9HJxCOvjns+9vIt0gCgRXl4skvL6+BqqJT567iv0iLPVEMMlQXCR9IR
-         M63w+c2GRp7W0vHRWeibcuP5Om351ik+twk+vApSzAv9grv6vsOGie47JrNe+1wwfk4E
-         QeTHTjd9V3swzhtt4u/uo4ueZi5c2iNM+POwM=
-Received: by 10.103.203.15 with SMTP id f15mr1021665muq.0.1216222413725;
-        Wed, 16 Jul 2008 08:33:33 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=o0H0wbfoO7p33uhlwe3dDH5UeHgxqHLlQIGSV/cGrA6NZb52y8K9Imh7iuNWrKYKDp
+         kjoaB0ZvzYH4dvLySztulEqBFF9uIC4C33wY2Wb18hG987nHAOuh4wmZXhVFIh1yax93
+         s8G7SrWddO+5H27WjIraAG8WmiDahAn/I7dO0=
+Received: by 10.103.249.7 with SMTP id b7mr1013961mus.2.1216222799216;
+        Wed, 16 Jul 2008 08:39:59 -0700 (PDT)
 Received: from localhost ( [85.141.237.219])
-        by mx.google.com with ESMTPS id s10sm2924729muh.10.2008.07.16.08.33.31
+        by mx.google.com with ESMTPS id g1sm6934355muf.7.2008.07.16.08.39.57
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 16 Jul 2008 08:33:32 -0700 (PDT)
-X-Mailer: git-send-email 1.5.6.3.1.g4e6bb
-In-Reply-To: <alpine.DEB.1.00.0807161232110.8503@eeepc-johanness>
+        Wed, 16 Jul 2008 08:39:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <487E11F7.60601@viscovery.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88690>
 
-If PATH_MAX on your system is smaller than any path stored in the git
-repository, that can cause memory corruption inside of the grep_tree
-function used by git-grep.
+If PATH_MAX on your system is smaller than a path stored in the git repo,
+it may cause the buffer overflow in prepare_attr_stack.
 
 Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
 ---
-I have converted grep_tree code to use path_buf.
 
- builtin-grep.c |   26 ++++++++++++++------------
- 1 files changed, 14 insertions(+), 12 deletions(-)
+On Wed, Jul 16, 2008 at 05:21:27PM +0200, Johannes Sixt wrote:
+> Dmitry Potapov schrieb:
+> > +			pathbuf.len = 0;
+> 
+> +			strbuf_reset(&pathbuf);
+> 
+> -- Hannes
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index ef29910..507bb95 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -427,33 +427,35 @@ static int grep_tree(struct grep_opt *opt, const char **paths,
- 	struct name_entry entry;
- 	char *down;
- 	int tn_len = strlen(tree_name);
--	char *path_buf = xmalloc(PATH_MAX + tn_len + 100);
+ attr.c |   15 +++++++++------
+ 1 files changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/attr.c b/attr.c
+index 0fb47d3..17f6a4d 100644
+--- a/attr.c
++++ b/attr.c
+@@ -459,7 +459,9 @@ static void prepare_attr_stack(const char *path, int dirlen)
+ {
+ 	struct attr_stack *elem, *info;
+ 	int len;
+-	char pathbuf[PATH_MAX];
 +	struct strbuf pathbuf;
 +
-+	strbuf_init(&pathbuf, PATH_MAX + tn_len);
++	strbuf_init(&pathbuf, dirlen+2+strlen(GITATTRIBUTES_FILE));
  
- 	if (tn_len) {
--		tn_len = sprintf(path_buf, "%s:", tree_name);
--		down = path_buf + tn_len;
--		strcat(down, base);
--	}
--	else {
--		down = path_buf;
--		strcpy(down, base);
-+		strbuf_add(&pathbuf, tree_name, tn_len);
-+		strbuf_addch(&pathbuf, ':');
-+		tn_len = pathbuf.len;
- 	}
--	len = strlen(path_buf);
-+	strbuf_addstr(&pathbuf, base);
-+	len = pathbuf.len;
- 
- 	while (tree_entry(tree, &entry)) {
--		strcpy(path_buf + len, entry.path);
-+		int te_len = tree_entry_len(entry.path, entry.sha1);
-+		pathbuf.len = len;
-+		strbuf_add(&pathbuf, entry.path, te_len);
- 
- 		if (S_ISDIR(entry.mode))
- 			/* Match "abc/" against pathspec to
- 			 * decide if we want to descend into "abc"
- 			 * directory.
- 			 */
--			strcpy(path_buf + len + tree_entry_len(entry.path, entry.sha1), "/");
+ 	/*
+ 	 * At the bottom of the attribute stack is the built-in
+@@ -510,13 +512,14 @@ static void prepare_attr_stack(const char *path, int dirlen)
+ 			len = strlen(attr_stack->origin);
+ 			if (dirlen <= len)
+ 				break;
+-			memcpy(pathbuf, path, dirlen);
+-			memcpy(pathbuf + dirlen, "/", 2);
+-			cp = strchr(pathbuf + len + 1, '/');
++			strbuf_reset(&pathbuf);
++			strbuf_add(&pathbuf, path, dirlen);
 +			strbuf_addch(&pathbuf, '/');
- 
-+		down = pathbuf.buf + tn_len;
- 		if (!pathspec_matches(paths, down))
- 			;
- 		else if (S_ISREG(entry.mode))
--			hit |= grep_sha1(opt, entry.sha1, path_buf, tn_len);
-+			hit |= grep_sha1(opt, entry.sha1, pathbuf.buf, tn_len);
- 		else if (S_ISDIR(entry.mode)) {
- 			enum object_type type;
- 			struct tree_desc sub;
++			cp = strchr(pathbuf.buf + len + 1, '/');
+ 			strcpy(cp + 1, GITATTRIBUTES_FILE);
+-			elem = read_attr(pathbuf, 0);
++			elem = read_attr(pathbuf.buf, 0);
+ 			*cp = '\0';
+-			elem->origin = strdup(pathbuf);
++			elem->origin = strdup(pathbuf.buf);
+ 			elem->prev = attr_stack;
+ 			attr_stack = elem;
+ 			debug_push(elem);
 -- 
-1.5.6.3.1.g4e6bb
+1.5.6.3.3.geccd
