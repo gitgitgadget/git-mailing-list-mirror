@@ -1,67 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 6/7] git rm: Support for removing submodules
-Date: Thu, 17 Jul 2008 00:41:57 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807170038430.4318@eeepc-johanness>
-References: <20080716190753.19772.93357.stgit@localhost> <20080716191134.19772.85003.stgit@localhost>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Considering teaching plumbing to users harmful
+Date: Wed, 16 Jul 2008 15:41:35 -0700
+Message-ID: <7vod4xo3j4.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0807161804400.8950@racer>
+ <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>
+ <7v7iblsnfh.fsf@gitster.siamese.dyndns.org>
+ <32541b130807161151x19c20f9t91b7fb9b8c7b8c7b@mail.gmail.com>
+ <7vmykhr6h1.fsf@gitster.siamese.dyndns.org>
+ <32541b130807161229ob4c21cbsc6c86ee3e42c4101@mail.gmail.com>
+ <7vabghr5br.fsf@gitster.siamese.dyndns.org>
+ <32541b130807161246l579d3a5em65496ee9119ef1ef@mail.gmail.com>
+ <7vr69tpoze.fsf@gitster.siamese.dyndns.org> <20080716223205.GK2167@mit.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Jul 17 00:42:27 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jul 17 00:42:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJFhR-0003Ss-0Q
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 00:42:17 +0200
+	id 1KJFhr-0003dJ-I6
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 00:42:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751972AbYGPWlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 18:41:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751944AbYGPWlS
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 18:41:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56649 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751306AbYGPWlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 18:41:17 -0400
-Received: (qmail invoked by alias); 16 Jul 2008 22:41:15 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp029) with SMTP; 17 Jul 2008 00:41:15 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+yC94DptCyYwPj8cCSdcRSivWV4c37G7QjIkczD1
-	SHwd2ahuBXCyU+
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080716191134.19772.85003.stgit@localhost>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.75
+	id S1758857AbYGPWlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 18:41:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758695AbYGPWlo
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 18:41:44 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38176 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758462AbYGPWln (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 18:41:43 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4BDAF2D3A7;
+	Wed, 16 Jul 2008 18:41:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 8BE062D3A4; Wed, 16 Jul 2008 18:41:37 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5C7794FA-5388-11DD-A2A0-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88776>
 
-Hi,
+Theodore Tso <tytso@mit.edu> writes:
 
-On Wed, 16 Jul 2008, Petr Baudis wrote:
+> So from a pedagogical perspective, what I would probably do is show
+> them how to replicate svn-up, and explain to them how this script
+> works:
+>
+> #!/bin/sh
+> # git-up
+>
+> if git diff --quiet && git diff --quiet --cached ; then
+> 	git pull $*
+> else
+> 	git stash ; git pull $*; git stash pop
+> fi
 
-> This patch adds support for removing submodules to 'git rm', including 
-> removing the appropriate sections from the .gitmodules file to reflect 
-> this
+Looks good, except:
 
-I have no time to look at the whole series, or even at the patch, but I 
-have concerns.  Do you really remove the whole directory?  Because if you 
-do, you remove more than what can be possibly reconstructed from the 
-object store.
+	if git diff ....; then
+		git pull "$@"
+	else
+        	git stash && git pull "$@" && git stash pop
+	fi
 
-That is much more dangerous than what "git rm" does.
-
-For example, you can have local branches, remote settings, untracked 
-files, etc. in the subdirectory.  And that cannot be recovered once 
-deleted.
-
-I wonder if it really makes sense to integrate that into git-rm, and not 
-git-submodule, if only to introduce another level of consideration for the 
-user before committing what is potentially a big mistake.
-
-Ciao,
-Dscho
+to make sure the conflict notices won't be scrolled off by error messages
+from the later commands.
