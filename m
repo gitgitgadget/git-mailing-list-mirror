@@ -1,82 +1,86 @@
-From: "Barak A. Pearlmutter" <barak@cs.nuim.ie>
-Subject: git-cvsexportcommit keyword mismatch issue
-Date: Wed, 16 Jul 2008 10:09:06 +0100
-Message-ID: <E1KJ30U-0004EL-BV@corti>
-Reply-To: barak+git@cs.nuim.ie
-Content-Transfer-Encoding: 7BIT
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: [PATCH] Fix buffer overflow in git-grep
+Date: Wed, 16 Jul 2008 14:15:45 +0400
+Message-ID: <1216203345-18233-1-git-send-email-dpotapov@gmail.com>
+Cc: Dmitry Potapov <dpotapov@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 16 12:10:18 2008
+X-From: git-owner@vger.kernel.org Wed Jul 16 12:16:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJ3xa-0000Ok-Ub
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 12:10:11 +0200
+	id 1KJ442-0002TU-VF
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 12:16:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759280AbYGPKJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 06:09:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759260AbYGPKJK
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 06:09:10 -0400
-Received: from banyan.nuim.ie ([149.157.1.4]:35062 "EHLO banyan.nuim.ie"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758899AbYGPKJJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 06:09:09 -0400
-X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jul 2008 06:09:08 EDT
-Received: from corti ([149.157.192.252])
- by mango.nuim.ie (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3
- 2007; 32bit)) with ESMTPS id <0K4300AKNDF61Q30@mango.nuim.ie> for
- git@vger.kernel.org; Wed, 16 Jul 2008 10:09:06 +0100 (IST)
-Received: from barak by corti with local (Exim 4.69)
-	(envelope-from <barak@cs.nuim.ie>)	id 1KJ30U-0004EL-BV; Wed,
- 16 Jul 2008 10:09:06 +0100
+	id S1755969AbYGPKPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 06:15:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755970AbYGPKPw
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 06:15:52 -0400
+Received: from gv-out-0910.google.com ([216.239.58.189]:12721 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755706AbYGPKPv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 06:15:51 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so1022161gvc.37
+        for <git@vger.kernel.org>; Wed, 16 Jul 2008 03:15:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=o0dpKl9rBfXKZQ/B7drnEZQ3vHuPyXD/FMY827z/w1A=;
+        b=TH6rsPHUpj+k9Ot8qCF/K2+GCLK1I8cDEDFk4MEi4yY9P5Qe+2SggVOpW9GWZVL1w+
+         7Zqsz8RkjvCmKqAy8OU1SnCPAATvnR7ftF4qovE2qBYmZDkBrYtanGGjlYuBuLLT8eP0
+         fcOteVLrixFwcylxNWyTC0QwoOj9XddBGXIIs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=qt5eg9kQ0xGfHGwMaLvkgVb/bp0DQwy0TcJQEkURoA99+jGBopXCh/tzuDlxEz2GUV
+         wkL/LLdCHVJq49x18jAsWow/avDnRwlyS9RZjo6BPeyDPgsBVHMsheCwDqn4Lm7ny5Bn
+         JxgGKFbMFqxFPUuqC1U3Juu+Qz0P8+as2fXHw=
+Received: by 10.86.54.3 with SMTP id c3mr1768077fga.55.1216203350067;
+        Wed, 16 Jul 2008 03:15:50 -0700 (PDT)
+Received: from localhost ( [85.141.237.219])
+        by mx.google.com with ESMTPS id d4sm981211fga.8.2008.07.16.03.15.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 16 Jul 2008 03:15:49 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6.3.1.gb5587a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88655>
 
-I used git-cvsimport -k to create my own git repo to deal with a
-project that uses CVS.  I push my mods upstream using
-git-cvsexportcommit.  This works fine *unless* there is a keyword
-mismatch, i.e., some file in git has $Id: foo$ while in CVS keyword
-expansion somehow changed it to $Id: bar$.  In that case
-git-cvsexportcommit barfs with a patch failure.
+If PATH_MAX on your system is smaller than any path stored in the git
+repository, that can cause memory corruption inside of the grep_tree
+function used by git-grep.
 
-When that happens I use git-format-patch to generate a patch file and
-integrate it manually.  BLECH!  This also confuses git-cvsimport when
-I try to pull upstream changes, so I end up manually resolving the
-keyword conflict again at that point, i.e., twice.
+Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+---
+ builtin-grep.c |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
 
-Simply avoiding expanded keywords should solve the problem.  I thought
-git-cvsimport -k would keep them out of my git repo, but no such luck.
-Even when I use "cvs checkout -kk" for the CVS sandbox and then
-"git-cvsimport -k", keywords were *still* expanded in my git repo.
-(This is with both git 1.4.4.4 and git 1.5.6.)  Either the -k switch
-to git-cvsimport is busted, or I'm doing something wrong.  In any case
-even if this approached worked it would introduce a host of new
-issues, since others on the project *are* using keyword expansion, and
-the build process relies upon them.
-
-One solution that occurs to me would be for git-cvsexportcommit to do
-the dirty work of ignoring keyword mismatches for files that do not
-have keywords disabled in CVS.  It seems like it is in the best
-position to solve the problem---everything else is hacking around to
-avoid it instead of actually solving it, which gets brittle.  So what
-I'm hoping is that this lengthy discourse of mine will convince
-someone to add code to git-cvsexportcommit that causes the patch
-creation and application stuff inside it to ignore keyword expansion
-mismatches (on files which do not have -kb on in CVS), perhaps by
-simply contracting keywords on all files/patches from both CVS/git at
-an early stage.
-
-The same hack could be used in git-cvsimport to avoid the same problem
-in the other direction, albeit with a little more work since keywords
-that were not unexpanded in the git files would need to be re-expanded
-in git to avoid gratuitous keyword-value-change patches.
-
-
-Or perhaps I'm missing some other solution...?
---
-Barak A. Pearlmutter
- Hamilton Institute & Dept Comp Sci, NUI Maynooth, Co. Kildare, Ireland
- http://www.bcl.hamilton.ie/~barak/
+diff --git a/builtin-grep.c b/builtin-grep.c
+index ef29910..530a53d 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -441,14 +441,17 @@ static int grep_tree(struct grep_opt *opt, const char **paths,
+ 	len = strlen(path_buf);
+ 
+ 	while (tree_entry(tree, &entry)) {
+-		strcpy(path_buf + len, entry.path);
++		int te_len = tree_entry_len(entry.path, entry.sha1);
++		if (len + te_len >= PATH_MAX + tn_len)
++			die ("path too long: %s", path_buf+tn_len);
++		memcpy(path_buf + len, entry.path, te_len);
+ 
+ 		if (S_ISDIR(entry.mode))
+ 			/* Match "abc/" against pathspec to
+ 			 * decide if we want to descend into "abc"
+ 			 * directory.
+ 			 */
+-			strcpy(path_buf + len + tree_entry_len(entry.path, entry.sha1), "/");
++			strcpy(path_buf + len + te_len, "/");
+ 
+ 		if (!pathspec_matches(paths, down))
+ 			;
+-- 
+1.5.6.3.1.gb5587a
