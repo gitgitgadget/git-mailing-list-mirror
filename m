@@ -1,121 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH,RFC] Implement 'git rm --if-missing'
-Date: Wed, 16 Jul 2008 11:48:42 -0700
-Message-ID: <7vtzepr7g5.fsf@gitster.siamese.dyndns.org>
-References: <1216231250-21141-1-git-send-email-ciaran.mccreesh@googlemail.com>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: Considering teaching plumbing to users harmful
+Date: Wed, 16 Jul 2008 14:51:30 -0400
+Message-ID: <32541b130807161151x19c20f9t91b7fb9b8c7b8c7b@mail.gmail.com>
+References: <alpine.DEB.1.00.0807161804400.8950@racer>
+	 <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>
+	 <7v7iblsnfh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ciaran McCreesh <ciaran.mccreesh@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 20:49:51 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 16 20:52:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJC4T-0006hc-6O
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 20:49:49 +0200
+	id 1KJC74-0007lE-Tf
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 20:52:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754137AbYGPSst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 14:48:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754113AbYGPSst
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 14:48:49 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63827 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753849AbYGPSst (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 14:48:49 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6AAF522A7D;
-	Wed, 16 Jul 2008 14:48:47 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A3BB822A76; Wed, 16 Jul 2008 14:48:44 -0400 (EDT)
-In-Reply-To: <1216231250-21141-1-git-send-email-ciaran.mccreesh@googlemail.com> (Ciaran
- McCreesh's message of "Wed, 16 Jul 2008 19:00:50 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D2CB06D0-5367-11DD-ACB6-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753828AbYGPSvc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 14:51:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753832AbYGPSvc
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 14:51:32 -0400
+Received: from an-out-0708.google.com ([209.85.132.240]:40555 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753722AbYGPSvb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 14:51:31 -0400
+Received: by an-out-0708.google.com with SMTP id d40so80907and.103
+        for <git@vger.kernel.org>; Wed, 16 Jul 2008 11:51:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=uRkRHvgXQplSh2tb+J6ebSB0JzCQx4G3R/Ue0vTkfNM=;
+        b=fOn3BAQruq4dxObpWVCExkwyr42GSSkPkKkQp9CAQx2pmUf+PKM6WY7S+I1C7jiOca
+         5A6OZezqZRYfZV1uQo3qn1FIKEuPLqv9wPZbTAjdHq9Fv/iXa8XqkvxbdADQePLmoZlk
+         ZWSqGgPVCDdpfeDfogbJsfhLQo0InxcR2fH1k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=YNzSo9qxz19JPizdy+NDn1LLnonwdqpoGOrnDIoPeCHs/WL4eVyjid2g+INY2Jr4zY
+         itKuoeebih2RYaAYrjBPwQlpcJK5jJkH8PMLKGyCtaCpRsSfBl6JTmDmCOZN/XKSPLA+
+         Hv+V0KYZD7lBFQz3cakewNv2vpqPLIt3Kz4uo=
+Received: by 10.100.108.20 with SMTP id g20mr2588128anc.105.1216234290474;
+        Wed, 16 Jul 2008 11:51:30 -0700 (PDT)
+Received: by 10.100.8.19 with HTTP; Wed, 16 Jul 2008 11:51:30 -0700 (PDT)
+In-Reply-To: <7v7iblsnfh.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88716>
 
-Ciaran McCreesh <ciaran.mccreesh@googlemail.com> writes:
+On 7/16/08, Junio C Hamano <gitster@pobox.com> wrote:
+> "Avery Pennarun" <apenwarr@gmail.com> writes:
+>  >        git diff :{1,3}:path/to/filename
+>  >
+>  > Which is a great command, but svn definitely makes it easier to do the
+>  > same thing.
+>
+> I've never seen anybody who finds "diff :{1,3}:path" *useful*.
 
-> git rm --if-missing will only remove files if they've already been removed from
-> disk.
+Dunno.  I use it frequently, and it works great for me.  Perhaps my
+brain is just poisoned by svn.
 
-This probably is a borderline with feaping creaturism.  What's the use of
-it in a real workflow that you need this for?
+I've never tried "git log -p --merge".  I'll try it next time.  This
+is certainly not common knowledge, however.  (But to save Dscho the
+trouble: git usability in general is not the subject of this thread.)
 
-"git add -u" may be too broad in that it also adds anything modified, but
-so is --if-missing too broad in that it removes anything removed, and if
-you are going to limit by giving pathspecs _anyway_, then...
+>  > Even if you have a repo with widespread push access, git's log looks
+>  > annoying compared to svn because of all the merge commits.  That's a
+>  > primary reason why rebase was invented, of course.
+>
+> Please don't talk nonsense if you do not know history.  I invented rebase
+>  primarily because I wanted to help e-mail based contributors.  There is
+>  nothing about merge avoidance to it.
 
-Old timers might just do:
+Sorry, I mixed up git-rerere and git-rebase.  From git-rerere's man page:
 
-	git diff --name-only --diff-filter=D |
-        git update-index --remove --stdin
+       When your topic branch is long-lived, however, your topic branch would
+       end up having many such "Merge from master" commits on it, which would
+       unnecessarily clutter the development history. Readers of the Linux
+       kernel mailing list may remember that Linus complained about such too
+       frequent test merges when a subsystem maintainer asked to pull from a
+       branch full of "useless merges".
 
-;-)
+Nowadays, I'm pretty sure people use git-rebase to avoid this sort of
+problem (or "git pull --rebase" presumably wouldn't have appeared),
+but I can now see how git-rebase was not written *for* this problem.
 
-> diff --git a/builtin-rm.c b/builtin-rm.c
-> index 22c9bd1..4b89705 100644
-> --- a/builtin-rm.c
-> +++ b/builtin-rm.c
-> @@ -125,7 +125,7 @@ static int check_local_mod(unsigned char *head, int index_only)
->  static struct lock_file lock_file;
->  
->  static int show_only = 0, force = 0, index_only = 0, recursive = 0, quiet = 0;
-> -static int ignore_unmatch = 0;
-> +static int ignore_unmatch = 0, if_missing = 0;
+Anyway, my point was that git-rebase (or at least git-rerere and
+git-reset) are needed if you want to avoid a lot of merge commits.
+And, to relate it back to this thread, git-rebase cannot possibly be
+understood without understanding git internals, and git internals are
+easiest to understand by learning the plumbing.
 
-Not your fault in entirety, but we should drop these " = 0"
-initializations for static variables in a clean-up patch.
+svn avoids these excess merges by default, albeit because it puts your
+working copy at risk every time you do "svn update".
 
->  static struct option builtin_rm_options[] = {
->  	OPT__DRY_RUN(&show_only),
-> @@ -135,6 +135,7 @@ static struct option builtin_rm_options[] = {
->  	OPT_BOOLEAN('r', NULL,             &recursive,  "allow recursive removal"),
->  	OPT_BOOLEAN( 0 , "ignore-unmatch", &ignore_unmatch,
->  				"exit with a zero status even if nothing matched"),
-> +	OPT_BOOLEAN( 0 , "if-missing",     &if_missing, "only remove missing files"),
+>  You can skip merges with "git log --no-merges", just in case you didn't
+>  know.
 
-Perhaps the command should error out if some of the named files still
-exist in the working tree?
+Perhaps this is mostly a user education or documentation issue.  I
+know about --no-merges, but it's unclear that this is really a safe
+thing to use, particularly if some of your merges have conflicts.
+Leaving them out leaves out an important part of history.  Do you use
+this option yourself?
 
-> @@ -168,6 +169,12 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
->  		struct cache_entry *ce = active_cache[i];
->  		if (!match_pathspec(pathspec, ce->name, ce_namelen(ce), 0, seen))
->  			continue;
-> +		if (if_missing)
-> +		{
-> +			struct stat st;
-> +			if ((lstat(ce->name, &st) == 0) || (errno != ENOENT))
-> +				continue;
-> +		}
+Have fun,
 
- (1) (Style).  Opening brace comes on the same line as "if ()".
-
- (2) (Design). How should this new option interact with --cached mode of
-     operation?
-
- (3) (Design). Shouldn't "git rm --if-missing" without any pathspec remove
-     all missing paths from the index?
-
- (4) If lstat fails due to I/O error or something, you do not continue and
-     add that path you did not get ENOENT for to the kill-list.  Is that
-     desirable?
-
- (5) I wonder if lstat() is enough here.  
-
-     Consider:
-
-	- current commit has "kernel" symlink to "linux-2.6/" directory but
-          you want to remove kernel and move directory linux-2.6 to it, so:
-
-          - you run "rm kernel; mv linux-2.6 kernel"
-
-	  - then you run "git rm --if-missing -- kernel"
-
-     What should the command do?
+Avery
