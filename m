@@ -1,75 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Theodore Tso <tytso@mit.edu>
 Subject: Re: Considering teaching plumbing to users harmful
-Date: Wed, 16 Jul 2008 15:41:35 -0700
-Message-ID: <7vod4xo3j4.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0807161804400.8950@racer>
- <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>
- <7v7iblsnfh.fsf@gitster.siamese.dyndns.org>
- <32541b130807161151x19c20f9t91b7fb9b8c7b8c7b@mail.gmail.com>
- <7vmykhr6h1.fsf@gitster.siamese.dyndns.org>
- <32541b130807161229ob4c21cbsc6c86ee3e42c4101@mail.gmail.com>
- <7vabghr5br.fsf@gitster.siamese.dyndns.org>
- <32541b130807161246l579d3a5em65496ee9119ef1ef@mail.gmail.com>
- <7vr69tpoze.fsf@gitster.siamese.dyndns.org> <20080716223205.GK2167@mit.edu>
+Date: Wed, 16 Jul 2008 18:49:54 -0400
+Message-ID: <20080716224954.GL2167@mit.edu>
+References: <alpine.DEB.1.00.0807161804400.8950@racer> <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com> <7v7iblsnfh.fsf@gitster.siamese.dyndns.org> <32541b130807161151x19c20f9t91b7fb9b8c7b8c7b@mail.gmail.com> <7vmykhr6h1.fsf@gitster.siamese.dyndns.org> <32541b130807161229ob4c21cbsc6c86ee3e42c4101@mail.gmail.com> <alpine.DEB.1.00.0807170024310.4318@eeepc-johanness>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jul 17 00:42:52 2008
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 17 00:51:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJFhr-0003dJ-I6
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 00:42:43 +0200
+	id 1KJFpq-00063P-2N
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 00:50:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758857AbYGPWlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 18:41:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758695AbYGPWlo
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 18:41:44 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38176 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758462AbYGPWln (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 18:41:43 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4BDAF2D3A7;
-	Wed, 16 Jul 2008 18:41:42 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8BE062D3A4; Wed, 16 Jul 2008 18:41:37 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5C7794FA-5388-11DD-A2A0-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1755736AbYGPWt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 18:49:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753662AbYGPWt6
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 18:49:58 -0400
+Received: from www.church-of-our-saviour.org ([69.25.196.31]:37705 "EHLO
+	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752012AbYGPWt5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 18:49:57 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1KJFoo-0005RW-Sm; Wed, 16 Jul 2008 18:49:54 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1KJFoo-0005BE-Aa; Wed, 16 Jul 2008 18:49:54 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807170024310.4318@eeepc-johanness>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88777>
 
-Theodore Tso <tytso@mit.edu> writes:
+On Thu, Jul 17, 2008 at 12:28:27AM +0200, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Wed, 16 Jul 2008, Avery Pennarun wrote:
+> 
+> > I find it interesting how git usability discussions tend to go.
+> 
+> I find it not interesting at all, even slightly annoying, that I cannot 
+> seem to start a perfectly valid discussion about advocating porcelain, and 
+> trying to even avoid mentioning plumbing in user-visible documentation, 
+> without somebody highjacking the thread to talk about svn.
 
-> So from a pedagogical perspective, what I would probably do is show
-> them how to replicate svn-up, and explain to them how this script
-> works:
->
-> #!/bin/sh
-> # git-up
->
-> if git diff --quiet && git diff --quiet --cached ; then
-> 	git pull $*
-> else
-> 	git stash ; git pull $*; git stash pop
-> fi
+I've already said I agree with you, but maybe it would be helpful if
+you focused the discussion a little more with a concrete suggestion
+about how we could improve the user-visible documentation.  For
+example, it is already the case that "git help" only shows porcelain
+commands, that has been a big step forward.
 
-Looks good, except:
+So a concrete suggestion might be to move the list of plumbing
+commands from the top-level git man page to a "git-plumbing" man page.
 
-	if git diff ....; then
-		git pull "$@"
-	else
-        	git stash && git pull "$@" && git stash pop
-	fi
+I'll note that the git user manual is pretty good about avoiding the
+use of git plumbing commands.  It's not until Chapter 9, "Low Level
+Git Commands" that it start going into the plumbing.  (There are a
+couple of mentions of git rev-parse before chapter 9, but that's about
+it that I could find).
 
-to make sure the conflict notices won't be scrolled off by error messages
-from the later commands.
+Was there other git documentation where you think there is too many
+references to git plumbing?
+
+						- Ted
