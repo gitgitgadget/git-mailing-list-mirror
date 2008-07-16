@@ -1,76 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fix buffer overflow in git-grep
-Date: Wed, 16 Jul 2008 12:35:06 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807161232110.8503@eeepc-johanness>
-References: <1216203345-18233-1-git-send-email-dpotapov@gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: MSysGit Stability
+Date: Wed, 16 Jul 2008 14:42:07 +0400
+Message-ID: <20080716104207.GC2925@dpotapov.dyndns.org>
+References: <73fd69b50807151458u22a383a3l343779e47f4161fa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 12:35:58 2008
+To: Joe Fiorini <joe@faithfulgeek.org>
+X-From: git-owner@vger.kernel.org Wed Jul 16 12:43:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJ4MQ-0000Vh-Cg
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 12:35:50 +0200
+	id 1KJ4Tg-0002pi-IZ
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 12:43:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759790AbYGPKea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 06:34:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759775AbYGPKe3
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 06:34:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60836 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759758AbYGPKe2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 06:34:28 -0400
-Received: (qmail invoked by alias); 16 Jul 2008 10:34:26 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness) [88.107.142.10]
-  by mail.gmx.net (mp035) with SMTP; 16 Jul 2008 12:34:26 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+swHkjuQOsOB3GIl9LyPmOrayOoqVT3oHG0ZQ1Ya
-	Rt2x6zfV8l9Yaj
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <1216203345-18233-1-git-send-email-dpotapov@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+	id S1756022AbYGPKmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 06:42:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755978AbYGPKmN
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 06:42:13 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:24482 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755523AbYGPKmN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 06:42:13 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so492104ugf.16
+        for <git@vger.kernel.org>; Wed, 16 Jul 2008 03:42:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=E0dhLBd0S7y1qczkXfnSUYQR7yk/CljEAiTov8/JlAo=;
+        b=XMHGEA5/Ku2qiRA9767d63zfn5KoNvgD/G+LVCN8mjaA7WjanAhlhl+OZwAb4bPMeo
+         wDjfLVwZBEs2mQcDY8i1QSZTPhEDOS96Z6GmCgr1i2pQWl9xtE71JN7ye9H6ZpBkLAp2
+         46Xu0JAeXtJvnijL4mE1xtnPUa41Dx2dd1bRQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=i3JQRA4SBKQlgO5s3LTUNzOcZcj10k+Ha8vTmfxZYAKE06zB7tBgPCGBmEP58uSmTf
+         lyI+y3xKTeWSGVniY9FtsHCkunkTTBuL3huWmYnBJjHFrRCc/v7+wcPojmw0aXbulODI
+         39P/oQ2Rp4R4fnKu/QTdGFAxOSi6MaxRbpwpg=
+Received: by 10.86.36.11 with SMTP id j11mr1860775fgj.7.1216204931345;
+        Wed, 16 Jul 2008 03:42:11 -0700 (PDT)
+Received: from localhost ( [85.141.237.219])
+        by mx.google.com with ESMTPS id 3sm769952fge.3.2008.07.16.03.42.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 16 Jul 2008 03:42:10 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <73fd69b50807151458u22a383a3l343779e47f4161fa@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88660>
 
-Hi,
+On Tue, Jul 15, 2008 at 05:58:43PM -0400, Joe Fiorini wrote:
+> I'm curious which is better to use and if MSysGit is
+> even stable yet.  Does anyone have experience running Git on Windows?
 
-On Wed, 16 Jul 2008, Dmitry Potapov wrote:
+Personally, I don't use it because I rarely use Windows, but I know
+people who do since the beginning of this year, and in general they are
+happy with it. It works faster than Cygwin version due to some Git
+specific optimization put into mingw compatibility layer. So, the only
+complain I heard so far is from people who got Cygwin on their computer,
+and they don't like that MSysGit installs MSys, which means another set
+of POSIX utilities such as bash but different version (usually more old)
+and having a different HOME directory.
 
-> If PATH_MAX on your system is smaller than any path stored in the git 
-> repository, that can cause memory corruption inside of the grep_tree 
-> function used by git-grep.
-
-Let me guess: Windows? *giggles*
-
-> diff --git a/builtin-grep.c b/builtin-grep.c
-> index ef29910..530a53d 100644
-> --- a/builtin-grep.c
-> +++ b/builtin-grep.c
-> @@ -441,14 +441,17 @@ static int grep_tree(struct grep_opt *opt, const char **paths,
->  	len = strlen(path_buf);
->  
->  	while (tree_entry(tree, &entry)) {
-> -		strcpy(path_buf + len, entry.path);
-> +		int te_len = tree_entry_len(entry.path, entry.sha1);
-> +		if (len + te_len >= PATH_MAX + tn_len)
-> +			die ("path too long: %s", path_buf+tn_len);
-> +		memcpy(path_buf + len, entry.path, te_len);
-
-That is brutal.  Does grep_tree() not work on tree objects in memory?  In 
-that case, you prevent the user from grepping, only because she is on a 
-suboptimal platform, _even if_ even that platform could cope with it.
-
-It's not like the path is ever used to access a file, right?
-
-Maybe you should convert the path_buf to a strbuf instead.
-
-Ciao,
-Dscho
+Dmitry
