@@ -1,104 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jesper Eskilson <jesper.eskilson@iar.se>
 Subject: Re: Considering teaching plumbing to users harmful
-Date: Wed, 16 Jul 2008 11:18:10 -0700
-Message-ID: <7v7iblsnfh.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0807161804400.8950@racer>
- <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>
+Date: Wed, 16 Jul 2008 20:19:26 +0200
+Message-ID: <487E3BAE.80500@iar.se>
+References: <alpine.DEB.1.00.0807161804400.8950@racer> <487E34EC.40708@iar.se> <alpine.DEB.1.00.0807161913440.8986@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 20:19:22 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 16 20:20:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJBax-0003dS-3x
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 20:19:19 +0200
+	id 1KJBc7-00045a-3V
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 20:20:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753715AbYGPSST (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 14:18:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753742AbYGPSST
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 14:18:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50402 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753003AbYGPSSS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 14:18:18 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1AA1D225CD;
-	Wed, 16 Jul 2008 14:18:16 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 48E07225CC; Wed, 16 Jul 2008 14:18:12 -0400 (EDT)
-In-Reply-To: <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>
- (Avery Pennarun's message of "Wed, 16 Jul 2008 13:53:44 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8F3CA238-5363-11DD-9716-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752917AbYGPSTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 14:19:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752828AbYGPSTc
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 14:19:32 -0400
+Received: from mail1.iar.com ([193.58.238.150]:3639 "EHLO mail1.iar.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752012AbYGPSTb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 14:19:31 -0400
+X-Greylist: delayed 1731 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jul 2008 14:19:31 EDT
+Received: from exchange.iar.se ([10.200.10.15])
+	by mail1.iar.com (mail1.iar.com)
+	(MDaemon PRO v9.6.5)
+	with ESMTP id md50001360061.msg
+	for <git@vger.kernel.org>; Wed, 16 Jul 2008 20:19:28 +0200
+X-Spam-Processed: mail1.iar.com, Wed, 16 Jul 2008 20:19:28 +0200
+	(not processed: message from trusted or authenticated source)
+X-MDRemoteIP: 10.200.10.15
+X-Return-Path: Jesper.Eskilson@iar.se
+X-Envelope-From: Jesper.Eskilson@iar.se
+X-MDaemon-Deliver-To: git@vger.kernel.org
+Received: from seupp-jesper.ad.iar.com ([10.200.22.3]) by exchange.iar.se with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 16 Jul 2008 20:19:26 +0200
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <alpine.DEB.1.00.0807161913440.8986@racer>
+X-OriginalArrivalTime: 16 Jul 2008 18:19:26.0391 (UTC) FILETIME=[7ADFF470:01C8E770]
+X-MDAV-Processed: mail1.iar.com, Wed, 16 Jul 2008 20:19:29 +0200
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88708>
 
-"Avery Pennarun" <apenwarr@gmail.com> writes:
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Wed, 16 Jul 2008, Jesper Eskilson wrote:
+> 
+>> Johannes Schindelin wrote:
+>>
+>>> Now, it makes me really, really sad that Git has a reputation of being 
+>>> complicated, but I regularly hear from _my_ users that they do not 
+>>> understand how that came about.
+>> Well, Git is not the easiest tool on the market to learn. For people 
+>> used to centralized systems such as RCS/CVS/Subversion, many concepts 
+>> are truly alien. I've recently experienced a transition at our company 
+>> from MKS/SI (a RCS derivative) to Subversion, and the mental gap was for 
+>> many users HUGE. Had we done the transition from MKS/SI to Git, I'm sure
+>>  several user's brains would have exploded.
+>>
+>> From my perspective, the concept I found most difficult to grasp at the 
+>> very beginning was how the index worked, and many of the introductory 
+>> texts on Git that I looked through only very brielfy explained the 
+>> purpose of the index: Why is it there? Why is it called "index"? How 
+>> does it fit into a typical workflow? Having a CVS/Subversion background, 
+>> it took a while for me to really assimilate the concept.
+> 
+> What does your answer have to do with my mail, i.e. with plumbing?
 
-> On 7/16/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->>  Am I the only one who deems teaching plumbing to users ("I like it raw!
->>  So I teach it the same way!") harmful?
->
-> I believe the only way you can get away with such a simple learning
-> sequence is if your workflow is as simple as that you seem to
-> describe: everyone has push access to the central 'master'.
->
-> That works (and mostly just as well as any other "supposedly easy"
-> VCS, like svn), but because git's power is so tempting, almost
-> nobody's real-life repository actually works like that.
->
-> At the very least, there will be branches.  And where there are
-> branches, there's merging.  And with merging comes merge conflicts.
+Nothing, really. I just wanted to comment on your note on Git having a 
+reputation being complicated.
 
-Well, you are wrong.  Even when people work only with a single branch
-'master', once you have more than one repository involved, there's already
-merging.  Dscho just described how he would guide new people into the
-process without going into the details in that message, by the time his
-audiences need merge conflict resolution they are already comfortable with
-the index.
-
->        git diff :{1,3}:path/to/filename
->
-> Which is a great command, but svn definitely makes it easier to do the
-> same thing.
-
-I've never seen anybody who finds "diff :{1,3}:path" *useful*.
-
-Well, if you are coming from SVN or CVS where a merge is just a large goo
-of everything that happened on a side branch squashed into one, perhaps it
-might look useful.
-
-What you should learn and teach instead is:
-
-	git log -p --merge
-
-This shows individual changes from the commits involved in the conflict
-with rationale (of course your committers must be disciplined enough to
-write usable commit log messages for you to take full benefit of this).
-Add path/to/filename if you want to process one path at a time.  Also
-adding --left-right to the command line may make it more understandable if
-you are merging two histories, both of which are from other people, and
-you do not know which commit is from which side of the merge.
-
-> Even if you have a repo with widespread push access, git's log looks
-> annoying compared to svn because of all the merge commits.  That's a
-> primary reason why rebase was invented, of course.
-
-Please don't talk nonsense if you do not know history.  I invented rebase
-primarily because I wanted to help e-mail based contributors.  There is
-nothing about merge avoidance to it.
-
-You can skip merges with "git log --no-merges", just in case you didn't
-know.
-
-I won't comment on the remainder but that is not because I agree with
-anything you said there ;-)
+-- 
+/Jesper
