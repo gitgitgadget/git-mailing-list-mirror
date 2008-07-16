@@ -1,61 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-cvsexportcommit keyword mismatch issue
-Date: Wed, 16 Jul 2008 12:31:11 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807161229460.8503@eeepc-johanness>
-References: <E1KJ30U-0004EL-BV@corti>
+From: "Nigel Magnay" <nigel.magnay@gmail.com>
+Subject: git submodules and commit
+Date: Wed, 16 Jul 2008 11:32:48 +0100
+Message-ID: <320075ff0807160332k5e49c256tb4191de628ecf41c@mail.gmail.com>
+References: <320075ff0807160331j30e8f832m4de3e3bbe9c26801@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Barak A. Pearlmutter" <barak@cs.nuim.ie>
-X-From: git-owner@vger.kernel.org Wed Jul 16 12:31:34 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 16 12:33:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJ4IG-0007eJ-1M
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 12:31:32 +0200
+	id 1KJ4KW-0008M3-8X
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 12:33:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755817AbYGPKad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 06:30:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755185AbYGPKad
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 06:30:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45616 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754065AbYGPKad (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 06:30:33 -0400
-Received: (qmail invoked by alias); 16 Jul 2008 10:30:31 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness) [88.107.142.10]
-  by mail.gmx.net (mp002) with SMTP; 16 Jul 2008 12:30:31 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18/tdwSksk/RVH6pjS+8QvY0ECEh7GUv0uUYy3+tL
-	yzKSsMRHrUE3gc
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <E1KJ30U-0004EL-BV@corti>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1756677AbYGPKcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 06:32:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756676AbYGPKcx
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 06:32:53 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:5183 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756672AbYGPKcu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 06:32:50 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so2710113ywe.1
+        for <git@vger.kernel.org>; Wed, 16 Jul 2008 03:32:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=+Xv5mOCu9w9WL46P9frrRQVbUtMCEyxHLEIrozjW7LQ=;
+        b=SjEIjhKw+jn07avFEhd+ssx/T7qRSBFFxzyZUJTPJ+FSbDCPDGj27zEHSIXS+oDIx2
+         NU+uFLz3GNB2zw7p1E3GjH7CExwCAMg5x2uGHnImAWO7Jpy0p1TMo5IYGfs6YkdLb+wx
+         Ha/cVBClidWBKPD70orJ39kuO6D/dF8NHcU5I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=wyy8NCsIuhYlvQBIx9qBEuscx2KKBpivwmQNI8vdR2c4IxjKo5TUnUXRoYWcnYCDIP
+         iO6qWLW5+Z4FZ3wlRkuqn/x0TAgI+AEAsQnnG76WIJFUNN1vrkSo1J1RJqL3B2/PYf+F
+         X0xCe7HnSDBEqqfDvXNQSU9/EonWWMozTnDYY=
+Received: by 10.103.49.7 with SMTP id b7mr735693muk.104.1216204368363;
+        Wed, 16 Jul 2008 03:32:48 -0700 (PDT)
+Received: by 10.103.246.15 with HTTP; Wed, 16 Jul 2008 03:32:48 -0700 (PDT)
+In-Reply-To: <320075ff0807160331j30e8f832m4de3e3bbe9c26801@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88658>
 
-Hi,
+I wonder if this is a fairly common pattern. We tend to have modules
+as git repositories, and projects that tie together those git
+repositories as submodules. In general, > 90% of the work is done in
+one module, and the following stanza gets used a lot:
 
-On Wed, 16 Jul 2008, Barak A. Pearlmutter wrote:
+cd /proj/modA
+git commit -s -m "Some change"
+git push
 
-> So what I'm hoping is that this lengthy discourse of mine will convince 
-> someone to add code to git-cvsexportcommit that causes the patch 
-> creation and application stuff inside it to ignore keyword expansion 
-> mismatches (on files which do not have -kb on in CVS), perhaps by simply 
-> contracting keywords on all files/patches from both CVS/git at an early 
-> stage.
+cd ..
+git add modA
+git commit -s -m "Some change (modA)"
+git push
 
-I doubt that this is going to happen.  Obviously, it has been nonbody's 
-itch _enough_ to scratch it.
+But since this is much more cumbersome than (say) "svn ci", what often
+happens is developers just commit into modA, then carry on. Or for
+people just learning git, they somtimes screw up, and push the parent
+proj but not the child modA
 
-I see your problem, but unless you start hacking, I do not see it being 
-solved anytime soon.
+This is a shame, as it means any external people pulling updates
+directly from proj will not get this change (e.g. CI tools
+speculatively compiling against every developer tree).
 
-Ciao,
-Dscho
+For me, in some really high proportion of cases, I think I want 'git
+commit' to mean 'commit to any child repositories, any sibling
+repositories, and any parent repositories (updating the submodule sha1
+as appropriate). In other words, 'pretend like the whole thing is one
+big repo'.
+
+I guess it probably gets sticky when there are merge conflicts. Is
+anyone working on this kind of thing; I might be able to give some
+time to help work on it?
