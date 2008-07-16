@@ -1,83 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Reformat "your branch has diverged..." lines to reduce
- line length.
-Date: Wed, 16 Jul 2008 15:03:16 -0700
-Message-ID: <7v3am9pjvf.fsf@gitster.siamese.dyndns.org>
-References: <1216235967-9510-1-git-send-email-apenwarr@gmail.com>
- <7v4p6pr4ob.fsf@gitster.siamese.dyndns.org>
- <32541b130807161327k17f3a58ay5ab2da75963a2d50@mail.gmail.com>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: Considering teaching plumbing to users harmful
+Date: Thu, 17 Jul 2008 00:09:46 +0200
+Message-ID: <20080716220946.GC18558@leksak.fem-net>
+References: <alpine.DEB.1.00.0807161804400.8950@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 00:04:29 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 17 00:11:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJF6o-0008G6-Qs
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 00:04:27 +0200
+	id 1KJFDF-0002fy-8y
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 00:11:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757079AbYGPWDZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 18:03:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756877AbYGPWDZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 18:03:25 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35605 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756202AbYGPWDY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 18:03:24 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 828BC2F068;
-	Wed, 16 Jul 2008 18:03:21 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 930352F066; Wed, 16 Jul 2008 18:03:18 -0400 (EDT)
-In-Reply-To: <32541b130807161327k17f3a58ay5ab2da75963a2d50@mail.gmail.com>
- (Avery Pennarun's message of "Wed, 16 Jul 2008 16:27:15 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 01197DA8-5383-11DD-8824-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1758153AbYGPWJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 18:09:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758176AbYGPWJ5
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 18:09:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56136 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757735AbYGPWJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 18:09:56 -0400
+Received: (qmail invoked by alias); 16 Jul 2008 22:09:55 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp002) with SMTP; 17 Jul 2008 00:09:55 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX19QkNV+bv9QyAmXDStrtqho840cRO2qX5WZq30gVe
+	Zt4r+gs3f0RCrH
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KJFBy-0002Yy-Rt; Thu, 17 Jul 2008 00:09:46 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807161804400.8950@racer>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88769>
 
-"Avery Pennarun" <apenwarr@gmail.com> writes:
+Hi,
 
->>         Your branch is ahead of 'origin/add-chickens2' by 21 commits.
->>
->>         Your branch is behind 'origin/add-chickens2' by 1 commit.
->>
->>         Your branch and 'origin/add-chickens2' have diverged, and have
->>         21 and 1 different commit(s) each, respectively.
->>
->>  I moved "respectively" so that the variable parts will come close to the
->>  beginning of physical line.
->
-> Well, the fact that the number of commits is "variable" isn't so
-> important, unless you start diverging by 1e9 commits or something :)
+Johannes Schindelin wrote:
+[...]
+> 
+> I had the pleasure of introducing Git to a few users in the last months 
+> and in my opinion, restricting myself to teaching them these commands 
+> first helped tremendously:
+> 
+> - clone, pull, status, add, commit, push, log
+> 
+> All of these were presented without options, to keep things simple.
 
-No, no, no.  The point is not about keeping it on screen when "less -S"
-chops at the right end.  The point is to limit eye-movement of the user;
-i.e. presenting important information consistently at around the same
-column, closer to the left edge.  Probably the line break should be before
-"and have" to make it even easier to read.
+Basically I agree, but depending on the user's foreign SCM knowledge
+it could be useful to talk about some basic "low-level" concepts of git
+(without talking about the plumbing).
 
->>         Your branch and 'origin/add-chickens2' have diverged,
->>         and have 21 and 1 different commit(s) each, respectively.
+I mean:
+ - objects (commits, trees, blobs ... in very short)
+ - index
+and perhaps
+ - refs (at least branches)
 
-> Alternatively, your rephrasing above made me think of the idea of just
-> printing *both* of the first two messages in the "diverging" case.
+I was told that before I've seen a first git command and I still think
+that was very useful.
 
-I do not think it is such a good idea --- we invite silly comments like
-"You say X is ahead of Y, and X is behind of Y, which is true?".
+Hmm, just recalling, my first git commands were:
+ 1. init
+ 2. add
+ 3. status
+ 4. commit
+ 5. diff
+ 6. log
+ 7. branch
+ 8. checkout
+in this order, approximately. :)
 
-> Please let me know if you want me to resubmit the patch with your
-> suggestions or whether you'll handle it.  I'm still a little vague on
-> the exact patch approval process.
+(And I've used rebase before merge and I haven't used clone/pull/push for
+a long time.)
 
-It is very much more "consensus building" than "approval", and at this
-point we wait for a day or two to see if people come up with even better
-alternatives.  Just be kind enough to prod me if I forget after a few
-days, though ;-)
+It seems I haven't touched any plumbing before I've started with GSoC :)
+
+I also think that for a user it is totally irrelevant if it is plumbing or
+porcelain she is using, as long as it works. I mean, if I tought someone
+using git, I'd never use the words "porcelain" or "plumbing".
+
+Regards,
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
