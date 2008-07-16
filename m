@@ -1,95 +1,195 @@
-From: "Chris Cowan" <chris.o.cowan@gmail.com>
-Subject: Hacks for AIX
-Date: Wed, 16 Jul 2008 12:57:43 -0500
-Message-ID: <5855afd30807161057v54ed4112jaea3bc07cebf44d4@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+From: Ciaran McCreesh <ciaran.mccreesh@googlemail.com>
+Subject: [PATCH,RFC] Implement 'git rm --if-missing'
+Date: Wed, 16 Jul 2008 19:00:50 +0100
+Message-ID: <1216231250-21141-1-git-send-email-ciaran.mccreesh@googlemail.com>
+Cc: Ciaran McCreesh <ciaran.mccreesh@googlemail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 16 19:58:54 2008
+X-From: git-owner@vger.kernel.org Wed Jul 16 20:02:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJBH5-0003j5-8j
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 19:58:47 +0200
+	id 1KJBKB-00056J-AJ
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 20:01:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753293AbYGPR5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 13:57:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753425AbYGPR5r
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 13:57:47 -0400
-Received: from an-out-0708.google.com ([209.85.132.248]:48176 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752919AbYGPR5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 13:57:44 -0400
-Received: by an-out-0708.google.com with SMTP id d40so77688and.103
-        for <git@vger.kernel.org>; Wed, 16 Jul 2008 10:57:43 -0700 (PDT)
+	id S1752359AbYGPSBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 14:01:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752337AbYGPSBA
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 14:01:00 -0400
+Received: from fk-out-0910.google.com ([209.85.128.184]:10056 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752290AbYGPSA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 14:00:59 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so3548312fkq.5
+        for <git@vger.kernel.org>; Wed, 16 Jul 2008 11:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=4dPdF4EpYHbJwHwb0ctM/CotNU1e1eTIyX17eYpZemo=;
-        b=KFs+Xu4D230SMkd/xQOIQSTHc680nSBJMVsUke+9NYI6EqN24dTp9Rw3veYkg5cspb
-         YnOD4NeWWfXKRbyK+bFch0LTO6+Zd60R7H0nzIBx2TtAbXVtnAKvZ3pnjdDoqT8DPg+S
-         DSnkQyTO3MDaMvSF4iLax9wJKSKWvhEq/cvng=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=pUgxQ4SFDeFXeawtU8i8YB8e7MCx/LFANLb3mqCxMDg=;
+        b=H+TMUQB5Kfi0v8BxPn/JpBVESGQdXNLYwK7q7oXMxl5TdlV9Hn6qhJyEfsV42w7Qet
+         EY8bGyrXbdEfS4NVIrMFf/94nWcqNNKlDZAxi53E+Od5N3okjMjqOGUN3uS5i884izT6
+         QKO0bcmhRVwCXXJPqhi7kj/jR8/2b8HHGCYDY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=JLMzCNzivGzyZp+wKDTdYEqPWXr1CZ3Fh4kQWD3xDI/CWKsSDSJgTwS4ME9sVQzdpd
-         4RwQRso7k0IznU8Vl3MvLPivP7Qo3J54oZ+G3xcTpcQXKQselYbt3ATVaibQBCWQmjMU
-         MQpALgZ/1SRVke48i6mGG3pun0tZrJZAq2qtw=
-Received: by 10.100.215.14 with SMTP id n14mr2452780ang.148.1216231063617;
-        Wed, 16 Jul 2008 10:57:43 -0700 (PDT)
-Received: by 10.100.212.16 with HTTP; Wed, 16 Jul 2008 10:57:43 -0700 (PDT)
-Content-Disposition: inline
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=eqsnSKpgly7k4iqvoKiuBT0qw0lE/RqeWNPpFZHCMVuvbBY8jLUH3GP7bpIssM0QzM
+         h7Y/BP9wmH+YZIg6bXxZZmEq14S3eG+Duey+TnguJYDc31o7y6cqz39igJiH4JtgpScq
+         4K0pOxYYQy1N4sSYe2trefHx6gcKvirhMzRZw=
+Received: by 10.187.233.6 with SMTP id k6mr197467far.64.1216231256845;
+        Wed, 16 Jul 2008 11:00:56 -0700 (PDT)
+Received: from localhost.localdomain ( [92.235.187.79])
+        by mx.google.com with ESMTPS id o37sm944337hub.34.2008.07.16.11.00.55
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 16 Jul 2008 11:00:56 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88702>
 
-I saw some earlier postings about this, so I thought I would share my
-solution (I'm using xlc, BTW).   The following tests were broken for
-me (using a pull from 2 days ago).
+git rm --if-missing will only remove files if they've already been removed from
+disk.
 
-    * t0002-gitfile.sh
-    * t1002-read-tree-m-u-2way.sh
-    * t2201-add-update-typechange.sh
-    * t4109-apply-multifrag.sh
-    * t4110-apply-scan.sh
-    * t7002-grep.sh
+Signed-off-by: Ciaran McCreesh <ciaran.mccreesh@googlemail.com>
+---
 
+There's nothing here that can't be done using git update-index, but git rm
+is less scary.
 
-The problems all seem to be rooted in the default utilities shipped with AIX:
+Regarding exit status: I'm not sure whether exit status should be based upon
+whether any files were actually removed, or whether it should be based upon
+whether or not all of the supplied patterns were matched. I've gone for the
+latter, so that 'git rm --if-missing -r .' succeeds if there's nothing to
+remove.
 
-    * /usr/bin/grep - behaves badly in t7002.   I believe it is test
-12 and related to the -n -w -e combination of options.
-    * /usr/bin/diff - has problems with -u and -U.
-                         I saw the $GIT_CMP_TEST env var, but this is
-not used everywhere within the test scripts above.
-    * /usr/bin/patch - really old version, doesn't do well with some
-diff formats.   I avoid using it.
-    * /usr/bin/install - doesn't behave the expected way either.
+I'm not sure whether 'missing' is the best word. '--if-noent' might be more
+appropriate, but less familiar to some. Or is this worth a short option?
 
-In some cases, the tests could have been made more portable by using a
-plain "diff" rather than "diff -u", for example.
+ Documentation/git-rm.txt |    8 +++++++-
+ builtin-rm.c             |    9 ++++++++-
+ t/t3600-rm.sh            |   43 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 58 insertions(+), 2 deletions(-)
 
-Fortunately, there are optional freeware versions that can be
-installed for all of these (along with tar and wish too).   These
-versions if installed, are all found in /usr/linux/bin (or
-equivalently /opt/freeware/bin), I just wish they weren't optional.  I
-have found that having these utilities installed and prepending
-/usr/linux/bin to the PATH results in a clean make test and build.
-
-I also saw one instance where the behavior of git-grep was affected by
-the grep selected at build time.    I'm not sure if there's other
-instances within the code base, but I'm wondering whether the
-configure script can be changed to do the check for /usr/linux/bin and
-use those versions?   I can imagine that similar problems may occur on
-Solaris and HPUX.
-
-Otherwise, I'm quite happy with git.
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index 4d0c495..f9335f3 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -7,7 +7,8 @@ git-rm - Remove files from the working tree and from the index
+ 
+ SYNOPSIS
+ --------
+-'git rm' [-f] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <file>...
++'git rm' [-f] [-n] [-r] [--cached] [--ignore-unmatch] [--if-missing]
++	  [--quiet] [--] <file>...
+ 
+ DESCRIPTION
+ -----------
+@@ -61,6 +62,11 @@ OPTIONS
+ --ignore-unmatch::
+ 	Exit with a zero status even if no files matched.
+ 
++--if-missing::
++	Only remove files if they have been removed from disk. Exit status
++	is still based upon whether matches succeed, not whether a remove
++	actually took place.
++
+ -q::
+ --quiet::
+ 	'git-rm' normally outputs one line (in the form of an "rm" command)
+diff --git a/builtin-rm.c b/builtin-rm.c
+index 22c9bd1..4b89705 100644
+--- a/builtin-rm.c
++++ b/builtin-rm.c
+@@ -125,7 +125,7 @@ static int check_local_mod(unsigned char *head, int index_only)
+ static struct lock_file lock_file;
+ 
+ static int show_only = 0, force = 0, index_only = 0, recursive = 0, quiet = 0;
+-static int ignore_unmatch = 0;
++static int ignore_unmatch = 0, if_missing = 0;
+ 
+ static struct option builtin_rm_options[] = {
+ 	OPT__DRY_RUN(&show_only),
+@@ -135,6 +135,7 @@ static struct option builtin_rm_options[] = {
+ 	OPT_BOOLEAN('r', NULL,             &recursive,  "allow recursive removal"),
+ 	OPT_BOOLEAN( 0 , "ignore-unmatch", &ignore_unmatch,
+ 				"exit with a zero status even if nothing matched"),
++	OPT_BOOLEAN( 0 , "if-missing",     &if_missing, "only remove missing files"),
+ 	OPT_END(),
+ };
+ 
+@@ -168,6 +169,12 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 		struct cache_entry *ce = active_cache[i];
+ 		if (!match_pathspec(pathspec, ce->name, ce_namelen(ce), 0, seen))
+ 			continue;
++		if (if_missing)
++		{
++			struct stat st;
++			if ((lstat(ce->name, &st) == 0) || (errno != ENOENT))
++				continue;
++		}
+ 		add_list(ce->name);
+ 	}
+ 
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index f542f0a..c7c1810 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -143,6 +143,45 @@ test_expect_success '"rm" command suppressed with --quiet' '
+ 	git commit -m "remove file from rm --quiet test"
+ '
+ 
++test_expect_success 'Test that "rm --if-missing" works' '
++	echo frotz > test-file &&
++	echo frotz > other-file &&
++	git add test-file other-file &&
++	git commit -m "add files from rm --if-missing test" &&
++	rm test-file &&
++	git rm --if-missing test-file other-file &&
++	! git ls-files --error-unmatch test-file &&
++	git ls-files --error-unmatch other-file &&
++	git rm other-file &&
++	git commit -m "remove file from rm --if-missing test"
++'
++
++test_expect_success 'Test that "rm --if-missing -r *" works' '
++	echo frotz > test-file &&
++	mkdir -p frotz &&
++	echo frotz > frotz/other-file &&
++	git add test-file frotz/other-file &&
++	git commit -m "add file from rm --if-missing -r * test" &&
++	rm frotz/other-file
++	git rm --if-missing --ignore-unmatch -r \* &&
++	git ls-files --error-unmatch test-file &&
++	git rm test-file &&
++	git commit -m "remove file from rm --missing -r * test &&
++	! test -d frotz"
++'
++
++test_expect_success 'Test that "rm --if-missing -r *" works even if nothing is removed' '
++	echo frotz > test-file &&
++	mkdir -p frotz &&
++	echo frotz > frotz/other-file &&
++	git add test-file frotz/other-file &&
++	git commit -m "add file from rm --if-missing -r * test" &&
++	git rm --if-missing --ignore-unmatch -r \* &&
++	git rm test-file frotz/other-file &&
++	git commit -m "remove file from rm --missing -r * test &&
++	! test -d frotz"
++'
++
+ # Now, failure cases.
+ test_expect_success 'Re-add foo and baz' '
+ 	git add foo baz &&
+@@ -217,4 +256,8 @@ test_expect_success 'Remove nonexistent file returns nonzero exit status' '
+ 	! git rm nonexistent
+ '
+ 
++test_expect_success 'Test that "rm --if-missing nonexistent" fails' '
++	! git rm --if-missing nonexistent
++'
++
+ test_done
 -- 
-CC
+1.5.6.3.385.g7c3f1
