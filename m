@@ -1,131 +1,95 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: Considering teaching plumbing to users harmful
-Date: Wed, 16 Jul 2008 13:53:44 -0400
-Message-ID: <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>
-References: <alpine.DEB.1.00.0807161804400.8950@racer>
+From: "Chris Cowan" <chris.o.cowan@gmail.com>
+Subject: Hacks for AIX
+Date: Wed, 16 Jul 2008 12:57:43 -0500
+Message-ID: <5855afd30807161057v54ed4112jaea3bc07cebf44d4@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 16 19:54:50 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 16 19:58:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJBDB-0001zr-FK
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 19:54:45 +0200
+	id 1KJBH5-0003j5-8j
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 19:58:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348AbYGPRxq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 13:53:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752691AbYGPRxq
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 13:53:46 -0400
-Received: from hs-out-0708.google.com ([64.233.178.248]:6168 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752279AbYGPRxp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 13:53:45 -0400
-Received: by hs-out-0708.google.com with SMTP id 4so1501862hsl.5
-        for <git@vger.kernel.org>; Wed, 16 Jul 2008 10:53:44 -0700 (PDT)
+	id S1753293AbYGPR5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 13:57:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753425AbYGPR5r
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 13:57:47 -0400
+Received: from an-out-0708.google.com ([209.85.132.248]:48176 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752919AbYGPR5o (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 13:57:44 -0400
+Received: by an-out-0708.google.com with SMTP id d40so77688and.103
+        for <git@vger.kernel.org>; Wed, 16 Jul 2008 10:57:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=8rZvxqW4/s/MjYHHxlTe4TkB79DVNqb4lfOoj5t8Q+8=;
-        b=cvujuTPdKSIsZONnQnvp9g7HM3wLz6JS1xc6KNteDY3CU6lsYnV8bsgEkUQKDzqpbd
-         oDkgkktoyKCGb0pAGYQKmEDIvLUs52JsL3DZpn+3pbAbYRe2mQ5AMdmcB10VPaIFURyf
-         m919y0F4knfhs38YmFlWOQEfSSvi/PDv6DH9E=
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=4dPdF4EpYHbJwHwb0ctM/CotNU1e1eTIyX17eYpZemo=;
+        b=KFs+Xu4D230SMkd/xQOIQSTHc680nSBJMVsUke+9NYI6EqN24dTp9Rw3veYkg5cspb
+         YnOD4NeWWfXKRbyK+bFch0LTO6+Zd60R7H0nzIBx2TtAbXVtnAKvZ3pnjdDoqT8DPg+S
+         DSnkQyTO3MDaMvSF4iLax9wJKSKWvhEq/cvng=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=SEh4TN99n94kh13Gf2rBBFNAdE6C6XYjIzqWUX0Xnc8+hJjjpuwJH8S/2FNo17CAvv
-         CPIYWA6i0g879m27tVB6KJZuv1MS9bZP7cynxOjdu1UlOfWLW4ylJmIGJ9IzVrCxcDXf
-         fCH4ZTIXnbNZjWcwhE0PPcR41+ccCgaaDwtLE=
-Received: by 10.100.57.6 with SMTP id f6mr2518665ana.58.1216230824139;
-        Wed, 16 Jul 2008 10:53:44 -0700 (PDT)
-Received: by 10.100.8.19 with HTTP; Wed, 16 Jul 2008 10:53:44 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0807161804400.8950@racer>
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=JLMzCNzivGzyZp+wKDTdYEqPWXr1CZ3Fh4kQWD3xDI/CWKsSDSJgTwS4ME9sVQzdpd
+         4RwQRso7k0IznU8Vl3MvLPivP7Qo3J54oZ+G3xcTpcQXKQselYbt3ATVaibQBCWQmjMU
+         MQpALgZ/1SRVke48i6mGG3pun0tZrJZAq2qtw=
+Received: by 10.100.215.14 with SMTP id n14mr2452780ang.148.1216231063617;
+        Wed, 16 Jul 2008 10:57:43 -0700 (PDT)
+Received: by 10.100.212.16 with HTTP; Wed, 16 Jul 2008 10:57:43 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88701>
 
-On 7/16/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->  Am I the only one who deems teaching plumbing to users ("I like it raw!
->  So I teach it the same way!") harmful?
+I saw some earlier postings about this, so I thought I would share my
+solution (I'm using xlc, BTW).   The following tests were broken for
+me (using a pull from 2 days ago).
 
-I believe the only way you can get away with such a simple learning
-sequence is if your workflow is as simple as that you seem to
-describe: everyone has push access to the central 'master'.
+    * t0002-gitfile.sh
+    * t1002-read-tree-m-u-2way.sh
+    * t2201-add-update-typechange.sh
+    * t4109-apply-multifrag.sh
+    * t4110-apply-scan.sh
+    * t7002-grep.sh
 
-That works (and mostly just as well as any other "supposedly easy"
-VCS, like svn), but because git's power is so tempting, almost
-nobody's real-life repository actually works like that.
 
-At the very least, there will be branches.  And where there are
-branches, there's merging.  And with merging comes merge conflicts.
-And with merge conflicts comes the crazy (yes, very useful, but still
-crazy) conflicted index features.  And so you suddenly need to find
-out about things like
+The problems all seem to be rooted in the default utilities shipped with AIX:
 
-       git diff :{1,3}:path/to/filename
+    * /usr/bin/grep - behaves badly in t7002.   I believe it is test
+12 and related to the -n -w -e combination of options.
+    * /usr/bin/diff - has problems with -u and -U.
+                         I saw the $GIT_CMP_TEST env var, but this is
+not used everywhere within the test scripts above.
+    * /usr/bin/patch - really old version, doesn't do well with some
+diff formats.   I avoid using it.
+    * /usr/bin/install - doesn't behave the expected way either.
 
-Which is a great command, but svn definitely makes it easier to do the
-same thing.
+In some cases, the tests could have been made more portable by using a
+plain "diff" rather than "diff -u", for example.
 
-Even if you have a repo with widespread push access, git's log looks
-annoying compared to svn because of all the merge commits.  That's a
-primary reason why rebase was invented, of course.   But teaching
-people about rebase vs. merge is highly nontrivial.  "git pull
---rebase" helps a little, but it's still nontrivial, particularly when
-local patch #3 of 5 has a conflict.
+Fortunately, there are optional freeware versions that can be
+installed for all of these (along with tar and wish too).   These
+versions if installed, are all found in /usr/linux/bin (or
+equivalently /opt/freeware/bin), I just wish they weren't optional.  I
+have found that having these utilities installed and prepending
+/usr/linux/bin to the PATH results in a clean make test and build.
 
-Also, inevitably, someone will ask "what happened to those simple svn
-revision numbers?" or "when I do a merge, why are the patches from
-branch #1 interspersed with the ones from branch #2 in git log?"  The
-answers are "look at gitk to see the real merge history, that's way
-more powerful than svn, and check out git-bisect!" and "use git log
---topo-order" respectively, but those are pretty nontrivial answers
-too.
+I also saw one instance where the behavior of git-grep was affected by
+the grep selected at build time.    I'm not sure if there's other
+instances within the code base, but I'm wondering whether the
+configure script can be changed to do the check for /usr/linux/bin and
+use those versions?   I can imagine that similar problems may occur on
+Solaris and HPUX.
 
-Submodules, which are critical to large-scale software development,
-are also very complicated.  You can't explain how to use them without
-knowing about .git/config, the difference between that and
-.gitmodules, the concept of gitlinks (and therefore the concepts of
-trees and blobs), the idea of a "disconnected HEAD" (which all
-submodules check out by default), the idea that pushing submodules in
-the wrong order can create references to non-existing commitids, and
-so on.  In contrast, the lame svn:externals mechanism is far easier to
-explain.
-
-The "problem" with learning git is that it's so powerful.  A person
-can feel like they've "learned all the svn there is to learn" in a
-couple of days, because it really doesn't do all that much.  But with
-git, if you want to make it *appear* simple, you have to artificially
-restrict what you tell people, and because the git *developers* don't
-work using that restricted subset of commands, the abstraction always
-leaks.
-
-Example: "git remote" didn't originally even have an "rm" subcommand.
-Why?  Because real git developers knew they could delete a remote by
-editing .git/config, and it never even occurred to anyone to do it any
-other way.  I still do it by editing the file, because the file is in
-a nice format and it's still easier than typing "git remote".
-
-The svn developers have the same annoyingly small subset of commands
-that their users do.  It means svn is much less powerful, but it also
-means that subset is actually enough to somehow handle *all* the tasks
-a user will run into.  After all, there's no other way.
-
-That said, it's debatable if all this is actually a problem.  If I
-wanted simple-minded, I'd use svn.  Ironically, the plumbing is the
-only part of git that isn't supposed to ever change, so it's the most
-valuable knowledge to have. Why *not* teach it?
-
-Have fun,
-
-Avery
+Otherwise, I'm quite happy with git.
+-- 
+CC
