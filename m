@@ -1,78 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Considering teaching plumbing to users harmful
-Date: Wed, 16 Jul 2008 12:09:46 -0700
-Message-ID: <7vmykhr6h1.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0807161804400.8950@racer>
- <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>
- <7v7iblsnfh.fsf@gitster.siamese.dyndns.org>
- <32541b130807161151x19c20f9t91b7fb9b8c7b8c7b@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [RFC][PATCH 0/7] Submodule support in git mv, git rm
+Date: Wed, 16 Jul 2008 21:11:02 +0200
+Message-ID: <20080716190753.19772.93357.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 21:12:20 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 16 21:13:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJCOs-0008KD-Eg
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 21:10:54 +0200
+	id 1KJCQ4-0000m3-LB
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 21:12:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754193AbYGPTJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 15:09:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754149AbYGPTJz
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 15:09:55 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38711 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753790AbYGPTJz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 15:09:55 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6B1E722F83;
-	Wed, 16 Jul 2008 15:09:53 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A2FB922F5F; Wed, 16 Jul 2008 15:09:48 -0400 (EDT)
-In-Reply-To: <32541b130807161151x19c20f9t91b7fb9b8c7b8c7b@mail.gmail.com>
- (Avery Pennarun's message of "Wed, 16 Jul 2008 14:51:30 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C5635224-536A-11DD-A56A-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1754377AbYGPTLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 15:11:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754149AbYGPTLJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 15:11:09 -0400
+Received: from 159-162.104-92.cust.bluewin.ch ([92.104.162.159]:64249 "EHLO
+	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752219AbYGPTLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 15:11:08 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by pixie.suse.cz (Postfix) with ESMTP id BB8F12ACC76;
+	Wed, 16 Jul 2008 21:11:02 +0200 (CEST)
+User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88720>
 
-"Avery Pennarun" <apenwarr@gmail.com> writes:
+The following series implements submodule support in git mv and git rm,
+plus enhancing the submodules testsuite a bit. I'd appreciate comments,
+especially on the git mv change, since the index_path_src_sha1 is
+really a horrible hack.
 
-> svn avoids these excess merges by default, albeit because it puts your
-> working copy at risk every time you do "svn update".
+The pinnacle of this series was supposed to be merge-recursive support
+for submodule-somethingelese conflicts, however that seems a bit more
+complicated than I expected, so I decided to first send the rest for
+a review.
 
-By default?  As if it has other mode of operation.
+---
 
-Of course if you do not allow any commits in between to make the history
-truly forked, you won't see merge commits.  It is like saying that you
-like your broken keyboard whose SHIFT key does not work because you think
-capital letters look ugly and your keyboard protects you from typing them
-by accident.
+Petr Baudis (7):
+      t7403: Submodule git mv, git rm testsuite
+      git rm: Support for removing submodules
+      git mv: Support moving submodules
+      submodule.*: Introduce simple C interface for submodule lookup by path
+      git submodule add: Fix naming clash handling
+      t7400: Add short "git submodule add" testsuite
+      git-mv: Remove dead code branch
 
-Is that an improvement?
 
-I won't waste my time further on the apples and rotten oranges comparison,
-but you should perhaps listen to Linus's talk where he talks about why it
-sucks that SVN/CVS _encourage_ you to keep your local changes uncommitted
-for several weeks.
-
->>  You can skip merges with "git log --no-merges", just in case you didn't
->>  know.
->
-> Perhaps this is mostly a user education or documentation issue.  I
-> know about --no-merges, but it's unclear that this is really a safe
-> thing to use, particularly if some of your merges have conflicts.
-> Leaving them out leaves out an important part of history.  Do you use
-> this option yourself?
-
-Very rarely.  When I run "git shortlog" for summary, it often is handy,
-but otherwise no.
+ Documentation/git-rm.txt   |    6 +
+ Makefile                   |    2 
+ builtin-mv.c               |   67 ++++++++++--
+ builtin-rm.c               |   65 ++++++++++--
+ cache.h                    |    2 
+ git-submodule.sh           |   15 ++-
+ sha1_file.c                |   10 ++
+ submodule.c                |   50 +++++++++
+ submodule.h                |    8 +
+ t/t7400-submodule-basic.sh |   39 +++++++
+ t/t7403-submodule-mvrm.sh  |  242 ++++++++++++++++++++++++++++++++++++++++++++
+ 11 files changed, 476 insertions(+), 30 deletions(-)
+ create mode 100644 submodule.c
+ create mode 100644 submodule.h
+ create mode 100755 t/t7403-submodule-mvrm.sh
