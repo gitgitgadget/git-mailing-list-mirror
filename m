@@ -1,202 +1,79 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: git submodules and commit
-Date: Wed, 16 Jul 2008 11:43:03 -0400
-Message-ID: <32541b130807160843k25f1d7d3u8bfecd6c1c6eab91@mail.gmail.com>
-References: <320075ff0807160331j30e8f832m4de3e3bbe9c26801@mail.gmail.com>
-	 <320075ff0807160332k5e49c256tb4191de628ecf41c@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Use SHELL_PATH
+Date: Wed, 16 Jul 2008 08:46:05 -0700
+Message-ID: <7vr69tu91e.fsf@gitster.siamese.dyndns.org>
+References: <g5jj21$bsp$1@ger.gmane.org>
+ <bd6139dc0807160347n2ebcd64fy7a15fe94bfabe580@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Nigel Magnay" <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 17:44:30 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: namsh@posdata.co.kr, git@vger.kernel.org
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Wed Jul 16 17:47:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJ9Al-00084m-TJ
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 17:44:08 +0200
+	id 1KJ9E7-0001NI-9q
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 17:47:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755382AbYGPPnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 11:43:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755563AbYGPPnH
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 11:43:07 -0400
-Received: from an-out-0708.google.com ([209.85.132.244]:23568 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755223AbYGPPnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 11:43:04 -0400
-Received: by an-out-0708.google.com with SMTP id d40so68948and.103
-        for <git@vger.kernel.org>; Wed, 16 Jul 2008 08:43:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=JHd+Rn0IZCQdjuD1aKiRgV5p/MTmuvJEmF+LMKcBzuc=;
-        b=KjP5UC5oujJRQDpDxuHpc/0VOgOld0m+cnfvL5t+av7Uj2p5BmvWiwgNL6RJ1NVHvO
-         BxN5t6BPwxME8XsdsxdxkcBxAVMeZmEKfHBBjb0eYOg0c6KmyKOGugS7TXiVf5Gg666D
-         rl7z/7pCXkoNOQz2jNIGVNXCe80vh1Vs+YLfE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=JJbLrbsYU1xEb7PCzCiWSQr8bq3MtXqZLf+3MqmzSvQgNFNUNIWWTPnfYT+CkJ2H2v
-         qE2HAPVzLtuh4435wNcSpyOHLIKbgiZcOuququc7faL9/JA176fm4kP5GYN0nvY7Ou02
-         WStfVeUtm4n0tDOOuv3r13IIgxQVi6ZnEGhdk=
-Received: by 10.100.93.19 with SMTP id q19mr2210027anb.139.1216222983465;
-        Wed, 16 Jul 2008 08:43:03 -0700 (PDT)
-Received: by 10.100.8.19 with HTTP; Wed, 16 Jul 2008 08:43:03 -0700 (PDT)
-In-Reply-To: <320075ff0807160332k5e49c256tb4191de628ecf41c@mail.gmail.com>
-Content-Disposition: inline
+	id S1758012AbYGPPqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 11:46:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757715AbYGPPqP
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 11:46:15 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65020 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758508AbYGPPqO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 11:46:14 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8662B2E9F7;
+	Wed, 16 Jul 2008 11:46:12 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id ACCA62E9F6; Wed, 16 Jul 2008 11:46:07 -0400 (EDT)
+In-Reply-To: <bd6139dc0807160347n2ebcd64fy7a15fe94bfabe580@mail.gmail.com>
+ (Sverre Rabbelier's message of "Wed, 16 Jul 2008 12:47:43 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 512C3A72-534E-11DD-8F60-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88692>
 
-On 7/16/08, Nigel Magnay <nigel.magnay@gmail.com> wrote:
-> I wonder if this is a fairly common pattern. We tend to have modules
->  as git repositories, and projects that tie together those git
->  repositories as submodules. [and submodules are necessary because they're
->  shared between multiple supermodules].
+"Sverre Rabbelier" <alturin@gmail.com> writes:
 
-I have exactly the same problem as you, and have been working on
-improving my own workflow so that someday I can offer patches that
-might be generally applicable.
+> On Wed, Jul 16, 2008 at 3:31 AM, SungHyun Nam <goweol@gmail.com> wrote:
+>>
+>> Signed-off-by: SungHyun Nam <goweol@gmail.com>
+>> ---
+>>  t/Makefile |    2 +-
+>>  1 files changed, 1 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/t/Makefile b/t/Makefile
+>> index a778865..0d65ced 100644
+>> --- a/t/Makefile
+>> +++ b/t/Makefile
+>> @@ -26,7 +26,7 @@ clean:
+>>        $(RM) -r 'trash directory' test-results
+>>
+>>  aggregate-results:
+>> -       ./aggregate-results.sh test-results/t*-*
+>> +       '$(SHELL_PATH_SQ)' ./aggregate-results.sh test-results/t*-*
+>>
+>>  # we can test NO_OPTIMIZE_COMMITS independently of LC_ALL
+>>  full-svn-test:
+>> --
+>> 1.5.6.3.350.g6c11a
+>
+> It is not clear to me what this patch does, there is no justification
+> in the commit msg either. Instead you say what is being done, which we
+> can see from the commit diff. Please clarify?
 
-In the meantime, my solution is... some shell scripts checked in at
-the top level of my project. :)
+It wants to make sure that the shell specified from the toplevel Makefile
+(or from make command line) is used to run the aggregation script.  It is
+often necessary when platform /bin/sh is not quite POSIX (e.g. the script
+in question uses arithmetic expansion "$(( $var1 + $var2 ))").
 
-In one of my applications, I have a /wv submodule, which provides a
-cross-platform build environment.  That environment respectively
-contains a /wv/wvstreams submodule, which is a library that we use.
-
-When I make a change to wvstreams that's needed for my application, I
-need to check into wvstreams, then check that link into wv, then check
-that link into the application.  Then, when I push, I have to make
-sure to always push wvstreams first, then wv, then application, or
-else other users can end up with "commit id xxxxxx not found" type
-errors.
-
-So basically, committing is always harmless, since I can do anything I
-want in my own repo (and I want to be able to update wvstreams
-*without* always updating wv, and so on).  The tricky part is pushing.
- Here's the script I wrote to make sure I don't screw up when pushing:
-
-
-~/src/vx-lin $ cat push-git-modules
-#!/bin/sh -x
-set -e
-test -e wv/wvstreams/Makefile
-(cd wv/wvstreams && git push origin HEAD:master) &&
-(cd wv && git push origin HEAD:master) &&
-git push origin HEAD:master ||
-echo "Failed!"
-
-
-Now, this script is pretty flawed.  Notably, it always pushes to the
-'master' branch, which is stupid.  However, it works in our particular
-workflow, because wvstreams isn't being modified by too many
-developers and it's okay if we all commit to master.  This is also
-aided by the fact that people are trained to push only after they've
-made all the unit tests pass, etc.  And further, individual apps don't
-have to update their wvstreams to the latest anyway unless they really
-need the latest changes, which is a wonderful feature of git
-submodules.
-
-Now, sometimes the above push script will fail.  In my experience,
-this is only when someone else has pushed in something before you,
-which means a fast-forward is not possible on at least one of the
-repos.  When that happens, you have to pull first, using this script:
-
-~/src/vx-lin $ cat newest-git-modules
-#!/bin/sh -x
-set -e
-test -e wv/wvstreams/Makefile
-git pull origin master &&
-(cd wv && git pull origin master) &&
-(cd wv/wvstreams && git pull origin master) ||
-echo "Failed!"
-
-This pulls in the latest version of application, wv, and wvstreams, in
-that order, and stops in case of any merge conflicts so that you can
-resolve them by hand.  It's safe to run the above script more than
-once in case you're not sure if it's done or not.
-
-After pulling the new modules, you may need to make new commits to
-update to the latest submodule commits - if that's indeed what you
-want.  And then you can run push-git-modules, and be reasonably
-assured that it will work (unless someone made another push while you
-were fixing conflicts).
-
-Finally, I have another script that retrieves the *currently linked*
-version of the git modules.  I wish git-checkout would do this
-automatically, but it doesn't, for apparently-difficult-to-resolve
-safety reasons.  Anyway, note that this script uses the existence of
-submodule/Makefile as "proof" that the submodule was checked out
-correctly.
-
-
-~/src/vx-lin $ cat get-git-modules
-#!/bin/sh -x
-set -e
-git submodule init
-git submodule update
-test -e wv/Makefile
-(cd wv && git submodule init && git submodule update)
-test -e wv/wvstreams/Makefile
-
-
->  I guess it probably gets sticky when there are merge conflicts. Is
->  anyone working on this kind of thing; I might be able to give some
->  time to help work on it?
-
-So as you can see, my scripts are crappy.  However, they have already
-drastically reduced the number of mistakes made by developers in my
-group (especially commits lost due to 'git submodule update' at the
-wrong time, and pushes of the supermodule before the submodule).
-
-If you want to work with me on my new submodule workflow (and I'd
-certainly appreciate it!) then I'd suggest one or more of the
-following starting points:
-
-- Take the recursive push, pull, and update operations described
-above, make them general (ie. not referring to my submodules by name
-:)), and add them as commands in the real git-submodule script.  The
-trickiest part here will be figuring out which remote branch to
-push/pull.
-
-- Perhaps add a "recursive commit" operation that recursively
-auto-commits submodule refs, for use after running the
-newest-git-modules script.  The commit message could be auto-generated
-using something like "git-whatchanged" on the submodule.
-
-- See what can be done about making git-checkout automatically
-git-submodule-update *if and only if* the currently checked-out commit
-of the submodule exactly matches the one that was checked out last
-time, *and* the desired commit is already available in the submodule
-repo (which is not necessarily the case, if you haven't fetched it
-yet).  That is, as with any file in git, if it hasn't changed from the
-one in the repo, you know you won't lose any information if you just
-auto-replace it with the new version.
-
-- Fix git-submodule-update to not just switch submodule branches if
-you've made checkins in that submodule.  Right now, commits to a
-submodule by default don't go to any branch, so if you subsequently
-run git-submodule-update, your commits are lost (except for the
-reflog).  This is very un-git-like in general, and
-git-submodule-update should be much more polite.
-
-Note that git-submodule is only about 800 lines of shell.  It's
-remarkably straightforward to make it do whatever you want.  The hard
-part is figuring out what you want, and making sure you don't stomp on
-*other* people's workflows while you're there.
-
-Also note that even if you don't contribute any of the above, I'm
-planning to someday make time to do it myself :)  But don't hold your
-breath.  I've been busy.
-
-Have fun,
-
-Avery
+Just saying "Use specified shell to run shell scripts" on the title line
+would be sufficient, but I wonder if this is the only remaining place...
