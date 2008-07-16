@@ -1,88 +1,83 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Considering teaching plumbing to users harmful
-Date: Thu, 17 Jul 2008 01:59:17 +0400
-Message-ID: <20080716215917.GG2925@dpotapov.dyndns.org>
-References: <alpine.DEB.1.00.0807161804400.8950@racer> <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com> <7v7iblsnfh.fsf@gitster.siamese.dyndns.org> <32541b130807161151x19c20f9t91b7fb9b8c7b8c7b@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Reformat "your branch has diverged..." lines to reduce
+ line length.
+Date: Wed, 16 Jul 2008 15:03:16 -0700
+Message-ID: <7v3am9pjvf.fsf@gitster.siamese.dyndns.org>
+References: <1216235967-9510-1-git-send-email-apenwarr@gmail.com>
+ <7v4p6pr4ob.fsf@gitster.siamese.dyndns.org>
+ <32541b130807161327k17f3a58ay5ab2da75963a2d50@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 00:00:26 2008
+Cc: git@vger.kernel.org
+To: "Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 00:04:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJF2t-0006cx-LA
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 00:00:24 +0200
+	id 1KJF6o-0008G6-Qs
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 00:04:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755887AbYGPV7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 17:59:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755010AbYGPV7Y
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 17:59:24 -0400
-Received: from fk-out-0910.google.com ([209.85.128.190]:59587 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755498AbYGPV7X (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 17:59:23 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so3609635fkq.5
-        for <git@vger.kernel.org>; Wed, 16 Jul 2008 14:59:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=8BWSLBO0IAa0WjOjg3lRzYZhdXc+wR1Pf6KGZjAv1yk=;
-        b=rSkv6TL6p/liwAZH1dM3J01Ii+G/mEq6OKvDEasi/SBKoxrNv74oekl/GiKQJr69Ci
-         i0hfcAEXwhqxXSXh67yaTOLw+pWNgXJucIpDcFvSnNWY1k+1RNcNCpFYzKlWFYSHJJMS
-         /1iDkVEP3rqdmZUQcckMSVt5oN/KwavWnwGxg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=RzysF5ePXEiKHsbRP+NX0InNOfM2hDFtlOJZCHXEOwj0wZ7h7t4WGRJIZV5VuBDEdQ
-         Q+G15fGts1HksqZPTfGNhLP6Hc4sP5jI/89lyNgKRshKpM/H0W0cOIqJgiCbsDq536bX
-         iUrlEp4XACCQpsxw4Wqyo2zLtcE82AXGdDB+U=
-Received: by 10.86.80.5 with SMTP id d5mr2786465fgb.26.1216245561721;
-        Wed, 16 Jul 2008 14:59:21 -0700 (PDT)
-Received: from localhost ( [85.141.190.235])
-        by mx.google.com with ESMTPS id l19sm1343192fgb.7.2008.07.16.14.59.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 16 Jul 2008 14:59:21 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <32541b130807161151x19c20f9t91b7fb9b8c7b8c7b@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1757079AbYGPWDZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 18:03:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756877AbYGPWDZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 18:03:25 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35605 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756202AbYGPWDY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 18:03:24 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 828BC2F068;
+	Wed, 16 Jul 2008 18:03:21 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 930352F066; Wed, 16 Jul 2008 18:03:18 -0400 (EDT)
+In-Reply-To: <32541b130807161327k17f3a58ay5ab2da75963a2d50@mail.gmail.com>
+ (Avery Pennarun's message of "Wed, 16 Jul 2008 16:27:15 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 01197DA8-5383-11DD-8824-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88768>
 
-On Wed, Jul 16, 2008 at 02:51:30PM -0400, Avery Pennarun wrote:
-> 
-> svn avoids these excess merges by default, albeit because it puts your
-> working copy at risk every time you do "svn update".
+"Avery Pennarun" <apenwarr@gmail.com> writes:
 
-You can do "git pull --rebase" if you like. And there is a configuration
-option that allows you to avoid typing --rebase every time. Or did you
-mean to being to do that without saving your changes? I think the later
-is really a bogus idea, and it should not be encouraged. The worst than
-that can be only say "svn update" while you still have not saved changes
-in your editor. Then you will have even more fun. So the rule should be:
-save your changes first, and only then pull from the upstream.
+>>         Your branch is ahead of 'origin/add-chickens2' by 21 commits.
+>>
+>>         Your branch is behind 'origin/add-chickens2' by 1 commit.
+>>
+>>         Your branch and 'origin/add-chickens2' have diverged, and have
+>>         21 and 1 different commit(s) each, respectively.
+>>
+>>  I moved "respectively" so that the variable parts will come close to the
+>>  beginning of physical line.
+>
+> Well, the fact that the number of commits is "variable" isn't so
+> important, unless you start diverging by 1e9 commits or something :)
 
-BTW, one thing is to avoid excessive merges, and the other thing is to
-do not have this feature at all. SVN is still not capable to merge,
-because merge means to have more than one parent. SVN cannot do that.
-What SVN does instead is very limited and buggy cherry-picking:
-http://subversion.tigris.org/issues/show_bug.cgi?id=2897
+No, no, no.  The point is not about keeping it on screen when "less -S"
+chops at the right end.  The point is to limit eye-movement of the user;
+i.e. presenting important information consistently at around the same
+column, closer to the left edge.  Probably the line break should be before
+"and have" to make it even easier to read.
 
-In fact, this is not cherry-picking patches but per-file cherry-picking
-and due to limitations of their automatic revision filtering, they have
-a nice feature -- to edit svn:mergeinfo manually. Obviously, it is
-impossible to visualize this per-file property well. Thus when you are
-going to merge something in SVN, you have no slightest idea what you are
-really doing.
+>>         Your branch and 'origin/add-chickens2' have diverged,
+>>         and have 21 and 1 different commit(s) each, respectively.
 
-Have fun,
-Dmitry
+> Alternatively, your rephrasing above made me think of the idea of just
+> printing *both* of the first two messages in the "diverging" case.
+
+I do not think it is such a good idea --- we invite silly comments like
+"You say X is ahead of Y, and X is behind of Y, which is true?".
+
+> Please let me know if you want me to resubmit the patch with your
+> suggestions or whether you'll handle it.  I'm still a little vague on
+> the exact patch approval process.
+
+It is very much more "consensus building" than "approval", and at this
+point we wait for a day or two to see if people come up with even better
+alternatives.  Just be kind enough to prod me if I forget after a few
+days, though ;-)
