@@ -1,55 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] t/test-lib.sh: Let test_must_fail fail on signals
- only
-Date: Tue, 15 Jul 2008 22:54:25 -0700
-Message-ID: <7v4p6qwezy.fsf@gitster.siamese.dyndns.org>
-References: <1215877672-17049-1-git-send-email-s-beyer@gmx.net>
- <20080716051829.GB4030@segfault.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 16 07:55:35 2008
+From: Vincent Kergonna <git@kergonna.fr>
+Subject: Re: MSysGit Stability
+Date: Wed, 16 Jul 2008 07:22:48 +0200
+Message-ID: <B4CB1F12-22A5-4CEE-979B-E4209DE7A72B@kergonna.fr>
+References: <73fd69b50807151458u22a383a3l343779e47f4161fa@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v928.1)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Joe Fiorini <joe@faithfulgeek.org>
+X-From: git-owner@vger.kernel.org Wed Jul 16 07:56:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KIzzC-0004V0-46
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 07:55:34 +0200
+	id 1KIzzr-0004jt-JE
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 07:56:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753955AbYGPFye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 01:54:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753385AbYGPFyd
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 01:54:33 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50372 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753071AbYGPFyc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 01:54:32 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 35F9A35A05;
-	Wed, 16 Jul 2008 01:54:31 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 964D435A04; Wed, 16 Jul 2008 01:54:27 -0400 (EDT)
-In-Reply-To: <20080716051829.GB4030@segfault.peff.net> (Jeff King's message
- of "Wed, 16 Jul 2008 01:18:29 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A8BADFC6-52FB-11DD-A942-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752615AbYGPFzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 01:55:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752578AbYGPFzP
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 01:55:15 -0400
+Received: from tulipe.kergonna.fr ([91.121.105.123]:47496 "EHLO
+	tulipe.kergonna.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752013AbYGPFzO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 01:55:14 -0400
+X-Greylist: delayed 1941 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jul 2008 01:55:14 EDT
+Received: from bgn92-5-88-162-31-192.fbx.proxad.net ([88.162.31.192] helo=[192.168.0.11])
+	by tulipe.kergonna.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <git@kergonna.fr>)
+	id 1KIzfX-0006sf-B7; Wed, 16 Jul 2008 07:35:15 +0200
+In-Reply-To: <73fd69b50807151458u22a383a3l343779e47f4161fa@mail.gmail.com>
+X-Mailer: Apple Mail (2.928.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88639>
 
-Jeff King <peff@peff.net> writes:
 
-> This is probably a fine protective measure, and it looks like Junio has
-> already applied it. But shouldn't any git commands returning such values
-> be fixed? Which commands return such bogus error codes?
+On Jul 15, 2008, at 23:58 , Joe Fiorini wrote:
 
-Anything that returns error() from its cmd_xxx() routine, for example,
-would end up exiting with (-1).  Is it "such bogus" error codes, though?
+> Hey all,
 
-I am somewhat tired tonight, so I'll leave it up to the list to do the
-grepping and go to bed ;-)
+Hi,
+
+>
+>
+> I'm going to be working with a small dev shop in the near future and
+> we would like to use Git for our project.  Two of us are on Macs, but
+> the other is on Windows.  I know the options are MSysGit or Git
+> through cygwin.  I'm curious which is better to use and if MSysGit is
+> even stable yet.  Does anyone have experience running Git on Windows?
+> Any experiences you can share?  Is MSysGit ready yet or should we
+> wait?
+
+We are using MSysGit at work. We've had no problem with it so far  
+(using it for about four months).  I think you can safely use MSysGit  
+on Windows. Since it comes with a dedicated installer It is easier to  
+install/upgrade than the cygwin version.
+
+>
+>
+> Thanks all!
+> Joe
+>
+
+	Vincent
+
+> -- 
+> joe fiorini
+> http://www.faithfulgeek.org
+> // freelancing & knowledge sharing
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
