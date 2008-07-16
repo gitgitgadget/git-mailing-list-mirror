@@ -1,161 +1,72 @@
-From: "Jukka Zitting" <jukka.zitting@gmail.com>
-Subject: git-svn: Trouble after project has moved in svn
-Date: Thu, 17 Jul 2008 01:12:00 +0300
-Message-ID: <510143ac0807161512w44a612bcndc53713639b0b70a@mail.gmail.com>
+From: Torsten Paul <Torsten.Paul@gmx.de>
+Subject: gitk: Author/Committer name with special characters
+Date: Thu, 17 Jul 2008 00:24:37 +0200
+Message-ID: <487E7525.7000708@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
+Cc: Paul Mackerras <paulus@samba.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 17 00:13:08 2008
+X-From: git-owner@vger.kernel.org Thu Jul 17 00:25:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJFF8-0003Ly-Ea
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 00:13:03 +0200
+	id 1KJFRV-0007JU-JC
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 00:25:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756281AbYGPWMD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 18:12:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755736AbYGPWMD
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 18:12:03 -0400
-Received: from wr-out-0506.google.com ([64.233.184.235]:26606 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755498AbYGPWMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 18:12:01 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so4230796wri.5
-        for <git@vger.kernel.org>; Wed, 16 Jul 2008 15:12:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=WcBTyTJ/J2gE/rkLP9eovlEx+LZkD/ifkRBKeJAEf5c=;
-        b=PLSoCjDneiX7rU9YQqJROxihEKsDhe1aO5gjLzxke5JEA4+ixHAiJhZDlR9ohtvUjx
-         cpMKXhOykVW/gGqSrKPDjB6+RIIAbdYzr/VmabnWH/IOfzv/XzVKh9Sn9t8pc2u/44Ma
-         b1L/hsV5D64R4jg6g2XRh/oSYTAO7CHm1ncVc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=ED26U2p5Jp0UUJHdL+WT0aNn7GvC83v062j5mCF9DLwSEGmS4NQScveSqvp/unGeU5
-         Y7h+3LxrU49zJnvazPJlK0cOSiG3pCLivqk51vgyJdbfAkb7DIM+xD+BvClJqRc83VII
-         Tksf+8TE8HJzwFD5LpaEJi4kr42QGhznUUoD8=
-Received: by 10.90.27.5 with SMTP id a5mr2241291aga.85.1216246320036;
-        Wed, 16 Jul 2008 15:12:00 -0700 (PDT)
-Received: by 10.90.115.13 with HTTP; Wed, 16 Jul 2008 15:12:00 -0700 (PDT)
-Content-Disposition: inline
+	id S1753967AbYGPWYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 18:24:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755010AbYGPWYv
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 18:24:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41488 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753662AbYGPWYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 18:24:50 -0400
+Received: (qmail invoked by alias); 16 Jul 2008 22:24:48 -0000
+Received: from unknown (EHLO [10.161.241.10]) [92.117.241.10]
+  by mail.gmx.net (mp057) with SMTP; 17 Jul 2008 00:24:48 +0200
+X-Authenticated: #1774914
+X-Provags-ID: V01U2FsdGVkX1/sZsoKz0Ls/ltLXSaqXA5uN/ClxtbAP8PvZmChk+
+	wpFV92JRF6UCSX
+User-Agent: Mozilla-Thunderbird 2.0.0.14 (X11/20080509)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88771>
 
-Hi,
+Hi!
 
-Somewhat related to the recent thread about Apache Synapse, I'm having
-trouble making a git-svn clone of a project that has been moved around
-in a Subversion repository.
+I'm tracking a subversion repository which is running on
+a windows machine with git-svn. The user names look like
+DOMAIN\username and that's giving a strange display in
+gitk as the backslash sequence is evaluated.
 
-See the script at the end of this message for a simple test case that
-does the following svn commits:
+I'm not sure if I found the correct place to prevent this,
+so I'd like to ask if the following change would be the
+correct thing to prepare as patch...
 
-    PREPARE: creates projectA with the standard trunk,branches,tags structure
-    VERSION1: first version of README.txt in projectA/trunk
-    TAG1: tags projectA/trunk to projectA/tags/v1
-    MOVE: moves projectA to projectB
-    VERSION2: second version of README.txt in projectB/trunk
-    TAG2: tags projectB/trunk to projectB/tags/v2
+ciao,
+   Torsten.
 
-The resulting repository structure is:
 
-    /projectB/
-        trunk/
-            README.txt # version 2
-        branches/
-        tags/
-            v1/
-                README.txt # version 1
-            v2/
-                README.txt # version 2
-
-Here's the git commit graph created by the test case:
-
-    * TAG2 <- refs/remotes/tags/v2
-    | * VERSION2 <- refs/remotes/trunk
-    |/
-    * MOVE
-    * VERSION1 <- refs/remotes/trunk@3
-    | * MOVE <- refs/remotes/tags/v1
-    | * TAG1 <- refs/remotes/tags/v1@3
-    |/
-    * PREPARE <- refs/remotes/tags/v1@1
-
-The most pressing issue is that the refs/remotes/tags/v1 branch starts
-directly from the first PREPARE commit instead of VERSION1. Also, the
-branch point of refs/remotes/tags/v2 seems to be incorrect, it should
-be based on the VERSION2 commit instead of MOVE.
-
-A more accurate commit graph would be:
-
-    * TAG2 <- refs/remotes/tags/v2
-    * VERSION2 <- refs/remotes/trunk
-    * MOVE
-    | * MOVE <- refs/remotes/tags/v1
-    | * TAG1
-    |/
-    * VERSION1
-    * PREPARE
-
-Or even (but I guess git-svn needs to map each svn commit to at least
-one git commit, so this probably wouldn't work):
-
-    * VERSION2 <- refs/remotes/trunk, refs/remotes/tags/v2
-    * VERSION1 <- refs/remotes/tags/v1
-    * PREPARE
-
-I tried working my way through git-svn.perl to figure out how to
-improve the way git-svn tracks svn moves, but so far I couldn't figure
-out how to do that. Any ideas or hints?
-
-BR,
-
-Jukka Zitting
-
-=====
-#!/bin/sh
-
-REPO=`pwd`/repo
-svnadmin create $REPO
-
-svn checkout file://$REPO checkout
-cd checkout
-
-svn mkdir projectA
-svn mkdir projectA/trunk
-svn mkdir projectA/branches
-svn mkdir projectA/tags
-svn commit -m PREPARE
-
-echo VERSION1 > projectA/trunk/README.txt
-svn add projectA/trunk/README.txt
-svn commit -m VERSION1
-
-svn copy projectA/trunk projectA/tags/v1
-svn commit -m TAG1
-svn update
-
-svn move projectA projectB
-svn commit -m MOVE
-
-echo VERSION2 > projectB/trunk/README.txt
-svn commit -m VERSION2
-
-svn copy projectB/trunk projectB/tags/v2
-svn commit -m TAG2
-svn update
-
-mkdir ../git
-cd ../git
-
-git svn init -s file://$REPO/projectB
-git svn fetch
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index fddcb45..f114fa2 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -1510,10 +1510,10 @@ proc parsecommit {id contents listed} {
+         set tag [lindex $line 0]
+         if {$tag == "author"} {
+             set audate [lindex $line end-1]
+-           set auname [lrange $line 1 end-2]
++           set auname [join [lrange [split $line] 1 end-2]]
+         } elseif {$tag == "committer"} {
+             set comdate [lindex $line end-1]
+-           set comname [lrange $line 1 end-2]
++           set comname [join [lrange [split $line] 1 end-2]]
+         }
+      }
+      set headline {}
