@@ -1,112 +1,96 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/2] git-gui: Allow "Stage Line" to stage adjacent   changes
- independently
-Date: Wed, 16 Jul 2008 09:15:15 +0200
-Message-ID: <487DA003.3090905@viscovery.net>
-References: <1216156261-9687-1-git-send-email-johannes.sixt@telecom.at> <1216156261-9687-2-git-send-email-johannes.sixt@telecom.at> <7vy742zul7.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] bash completion: Fix the . -> .. revision range	completion
+Date: Wed, 16 Jul 2008 09:20:24 +0200
+Message-ID: <487DA138.8040004@op5.se>
+References: <7vskudpiqq.fsf@gitster.siamese.dyndns.org> <20080713230724.GJ10151@machine.or.cz> <7vhcatnz80.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0807131649380.3305@woody.linux-foundation.org> <20080714000021.GB13066@spearce.org> <alpine.LFD.1.10.0807132210430.3305@woody.linux-foundation.org> <20080714062755.GA15992@spearce.org> <alpine.LFD.1.10.0807140741580.3305@woody.linux-foundation.org> <20080715042553.GD2432@spearce.org> <487C5A2D.3000707@op5.se> <20080715233851.GA23672@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 09:16:31 2008
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Jul 16 09:22:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJ1FT-0001Ru-FU
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 09:16:27 +0200
+	id 1KJ1LA-0003Ap-OL
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 09:22:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758650AbYGPHPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 03:15:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758648AbYGPHPW
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 03:15:22 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:56518 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758589AbYGPHPU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 03:15:20 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KJ1EK-0006u9-3d; Wed, 16 Jul 2008 09:15:16 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id AAED76D9; Wed, 16 Jul 2008 09:15:15 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7vy742zul7.fsf@gitster.siamese.dyndns.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754367AbYGPHVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 03:21:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754202AbYGPHVW
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 03:21:22 -0400
+Received: from mail.op5.se ([193.201.96.20]:35055 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753385AbYGPHVV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 03:21:21 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 69BB71B80383;
+	Wed, 16 Jul 2008 09:21:30 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id hn4Q2etpnC3i; Wed, 16 Jul 2008 09:21:26 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.199])
+	by mail.op5.se (Postfix) with ESMTP id AFF831B8037B;
+	Wed, 16 Jul 2008 09:21:26 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <20080715233851.GA23672@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88649>
 
-Junio C Hamano schrieb:
-> Johannes Sixt <johannes.sixt@telecom.at> writes:
+Shawn O. Pearce wrote:
+> Andreas Ericsson <ae@op5.se> wrote:
+>> I beat you to it ;-) This works just fine for me regardless of whether
+>> or not I have a colon in COMP_WORDBREAKS.
+> ...
+>> Subject: git-completion.bash: Handle "rev:path" completion properly
+> ...
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index d268e6f..e138022 100755
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -293,7 +293,11 @@ __git_complete_file ()
+>> 		*)
+>> 			ls="$ref"
+>> 			;;
+>> -	    esac
+>> +		esac
+>> +		# When completing something like 'rev:path', bash behaves
+>> +		# differently whether or not COMP_WORDBREAKS contains a
+>> +		# colon or not. This lets it handle both cases
+>> +		test "${COMP_WORDBREAKS//:}" = "$COMP_WORDBREAKS" && pfx="$ref:$pfx"
+>> 		COMPREPLY=($(compgen -P "$pfx" \
+>> 			-W "$(git --git-dir="$(__gitdir)" ls-tree "$ls" \
+>> 				| sed '/^100... blob /s,^.*	,,
 > 
->> Consider this hunk:
->>
->>   @@ -10,4 +10,4 @@
->>    context before
->>   -old 1
->>   -old 2
->>   +new 1
->>   +new 2
->>    context after
->>
->> [Nomenclature: to "stage change 2" means to stage lines "-old 1" and
->> "+new 1", in any order; likewise for "unstage" and "change 2".]
+> Yea, I did more or less the same thing in my patch, but I also
+> handled this fix in git-fetch and git-push.  The : is also used
+> there in a refspec and we support completion the right side of the
+> : in both cases (and yes, on git-push that can be slow as we do
+> network IO, possibly over SSH).
 > 
-> You lost me.
+> So I'm in favor of my patch over yours, but only because of
+> the fetch and push fixes as well.
 > 
-> Do you mean to say that you always interpret the above hunk as:
-> 
->    @@ -10,4 +10,4 @@
->     context before
->    -old 1
->    +new 1
->    -old 2
->    +new 2
->     context after
-> 
-> and call "replace 'old 1' with 'new 1'" as "change 1", "replace 'old
-> 2' with 'new 2'" as "change 2"?
 
-No, it is not that I *always* interpret it this way. There is a problem to
-fix only if I *want* to interpret it this way. Probably that's what I have
-to make clear?
+I agree, although I'd rather not have seen the case statement in
+yours. It's bash completion after all, so no need to be "portably
+fast" ;-)
 
-> If it is what you are doing, it does not make much sense to me.  "new 1"
-> may correspond to "old 1" and "old 2" while "new 2" may be an independent
-> addition.  E.g.
-> 
->    @@ -10,4 +10,4 @@
->     context before
->    -#define add(x,y) \
->    - (x) + (y)
->    +#define add(x,y) ((x)+(y))
->    +#define sub(x,y) ((x)-(y))
->     context after
-> 
-> I might want to pick bugfix of add() definition without using the new
-> definition of sub().
+I don't care that much though so long as it gets fixed.
 
-In order to that, there is nothing to fix; you can do that today without
-this patch.
-
-> Please call
-> 
-> 	"-old 1" - change #1
->         "-old 2" - change #2
->         "+new 1" - change #3
->         "+new 2" - change #4
-> 
-> and try explaining what you are doing again, pretty please?
-
-No, this sounds like 4 independent changes, and that is not what this fix
-is about.
-
-I'll try to come up with a better wording.
-
--- Hannes
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
