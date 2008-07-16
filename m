@@ -1,91 +1,75 @@
-From: David Christensen <david@endpoint.com>
-Subject: Re: [PATCH,RFC] Implement 'git rm --if-missing'
-Date: Wed, 16 Jul 2008 14:43:27 -0500
-Message-ID: <D5EB71BB-FEA1-4900-AB72-914367B029AB@endpoint.com>
-References: <1216231250-21141-1-git-send-email-ciaran.mccreesh@googlemail.com> <7vtzepr7g5.fsf@gitster.siamese.dyndns.org> <20080716185811.GA3517@xp.machine.xx>
-Mime-Version: 1.0 (Apple Message framework v928.1)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ciaran McCreesh <ciaran.mccreesh@googlemail.com>,
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Considering teaching plumbing to users harmful
+Date: Wed, 16 Jul 2008 16:13:33 -0400
+Message-ID: <20080716201333.GI2167@mit.edu>
+References: <alpine.DEB.1.00.0807161804400.8950@racer> <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com> <alpine.DEB.1.00.0807161902400.8986@racer> <32541b130807161135h64024151xc60e23d222a3a508@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 16 22:14:52 2008
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 16 22:14:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJDOj-0001wT-Vw
-	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 22:14:50 +0200
+	id 1KJDOW-0001sD-3t
+	for gcvg-git-2@gmane.org; Wed, 16 Jul 2008 22:14:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754484AbYGPUNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 16:13:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755297AbYGPUNu
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 16:13:50 -0400
-Received: from sb3.endpoint.com ([64.34.193.88]:52678 "EHLO mail.endcrypt.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753774AbYGPUNu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 16:13:50 -0400
-X-Greylist: delayed 1817 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jul 2008 16:13:49 EDT
-Received: from [192.168.1.140] (188.142.45.66.cm.sunflower.com [66.45.142.188])
-	by mail.endcrypt.com (Postfix) with ESMTP id B601C37DDF5;
-	Wed, 16 Jul 2008 19:43:27 +0000 (UTC)
-In-Reply-To: <20080716185811.GA3517@xp.machine.xx>
-X-Mailer: Apple Mail (2.928.1)
+	id S1753725AbYGPUNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 16:13:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753386AbYGPUNh
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 16:13:37 -0400
+Received: from www.church-of-our-saviour.org ([69.25.196.31]:39006 "EHLO
+	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752116AbYGPUNg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 16:13:36 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1KJDNW-0004yt-9R; Wed, 16 Jul 2008 16:13:34 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1KJDNV-0003pj-Ki; Wed, 16 Jul 2008 16:13:33 -0400
+Content-Disposition: inline
+In-Reply-To: <32541b130807161135h64024151xc60e23d222a3a508@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88741>
 
-On Jul 16, 2008, at 1:58 PM, Peter Baumann wrote:
+On Wed, Jul 16, 2008 at 02:35:16PM -0400, Avery Pennarun wrote:
+> In svn, a branch is a revision-controlled directory.  In git, a branch
+> is a "ref".  What's a ref?  Well, it's a name for a commit.  What's a
+> commit?  Well, it's a blob.  What's a blob?  Err, that's complicated.
+> What happens when I delete a branch?  Well, it's still in the reflog.
+> What's the reflog?  Well, it's the local revision history of each
+> branch.  Local?  Why not shared?  In svn, the revision history of each
+> branch is shared, but in git, you don't need to, because...
+> 
+> Even git branches are surprisingly concept heavy, unless your users
+> ask a lot fewer questions than mine.  The really critical question is
+> why it's so easy to delete a branch in git, and that leads rapidly
+> into the commit-tree stuff, which is always a spiral into plumbing as
+> you try to explain the tree of commits.
 
-> On Wed, Jul 16, 2008 at 11:48:42AM -0700, Junio C Hamano wrote:
->> Ciaran McCreesh <ciaran.mccreesh@googlemail.com> writes:
->>
->>> git rm --if-missing will only remove files if they've already been  
->>> removed from
->>> disk.
->>
->> This probably is a borderline with feaping creaturism.  What's the  
->> use of
->> it in a real workflow that you need this for?
->>
->> "git add -u" may be too broad in that it also adds anything  
->> modified, but
->> so is --if-missing too broad in that it removes anything removed,  
->> and if
->> you are going to limit by giving pathspecs _anyway_, then...
->>
->> Old timers might just do:
->>
->> 	git diff --name-only --diff-filter=D |
->>        git update-index --remove --stdin
->>
->> ;-)
->>
->
-> Ah. This comes in handy. I already searched for a command to delete  
-> all
-> missing files. After reading through the fine manual of 'git rm', I  
-> went
-> to git update-index but didn't come up with a solution to my problem.
->
-> But I have to say, an argument to 'git rm' would be preferable than  
-> the
-> above plumping.
+I don't think you need to go into the plumbing to explain the commit
+tree.  What I normally do is tell people that branches point at
+commits, and that commits are identified by commit ID's, which can be
+full SHA-1 hashes, or which can be abbreviated for convenience's sake.
+It's not strictly necessary to tell them about the commit-tree
+plumbing command; just that each commit creates a snapshot, and that
+commits can have one or more parents, plus the commit mesage, plus the
+snapshot.
 
+I do absolutely agree with Johannes' assertion that you don't have to
+explain commit-tree, git-rev-list, and all the rest.  The only reason
+why users will need to see git-rev-list is because git-log references
+it so prominently, and some of the more powerful git-log options are
+only documented in git-rev-list.
 
-Wouldn't:
-
-git rm $(git ls-files --deleted)
-
-do the trick, or am I missing something?
-
-Regards,
-
-David
---
-David Christensen
-End Point Corporation
-david@endpoint.com
+							- Ted
