@@ -1,67 +1,71 @@
-From: Eric Blake <ebb9@byu.net>
-Subject: Re: [PATCH] gitk - work around stderr redirection on Cygwin
-Date: Wed, 16 Jul 2008 21:55:39 -0600
-Message-ID: <487EC2BB.5050503@byu.net>
-References: <1213462668-424-1-git-send-email-mlevedahl@gmail.com> <487A6780.7030500@gmail.com> <7vfxqdqxh7.fsf@gitster.siamese.dyndns.org> <487A7949.9050800@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] t/test-lib.sh: Let test_must_fail fail on signals
+	only
+Date: Thu, 17 Jul 2008 01:18:34 -0400
+Message-ID: <20080717051833.GA3100@sigio.intra.peff.net>
+References: <1215877672-17049-1-git-send-email-s-beyer@gmx.net> <20080716051829.GB4030@segfault.peff.net> <7v4p6qwezy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, paulus@samba.org,
-	git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 06:02:08 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 07:18:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJKgu-0002M6-Pz
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 06:02:05 +0200
+	id 1KJLsu-0007tn-Je
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 07:18:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750754AbYGQEBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 00:01:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750745AbYGQEBE
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 00:01:04 -0400
-Received: from qmta10.westchester.pa.mail.comcast.net ([76.96.62.17]:54520
-	"EHLO QMTA10.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750749AbYGQEBD (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Jul 2008 00:01:03 -0400
-X-Greylist: delayed 331 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Jul 2008 00:01:03 EDT
-Received: from OMTA01.westchester.pa.mail.comcast.net ([76.96.62.11])
-	by QMTA10.westchester.pa.mail.comcast.net with comcast
-	id qoe41Z00J0EZKEL5ArvCl9; Thu, 17 Jul 2008 03:55:12 +0000
-Received: from [192.168.0.101] ([67.166.125.73])
-	by OMTA01.westchester.pa.mail.comcast.net with comcast
-	id qrvV1Z0051b8C2B3MrvW6f; Thu, 17 Jul 2008 03:55:30 +0000
-X-Authority-Analysis: v=1.0 c=1 a=UWQKEY4vnqcA:10 a=VBO98226iYoA:10
- a=LYtJsjGHvCJbuDAVTooA:9 a=y1y7SWNqdzh__eUe2NUA:9
- a=GuAOy6ycRwfEJROfgteorTPhdBQA:4 a=eDFNAWYWrCwA:10 a=oLyKKK6XQo0A:10
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <487A7949.9050800@gmail.com>
-X-Enigmail-Version: 0.95.6
+	id S1750998AbYGQFRd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 01:17:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751114AbYGQFRd
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 01:17:33 -0400
+Received: from peff.net ([208.65.91.99]:3306 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750954AbYGQFRc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 01:17:32 -0400
+Received: (qmail 12442 invoked by uid 111); 17 Jul 2008 05:17:30 -0000
+Received: from sigio.intra.peff.net (HELO sigio.intra.peff.net) (10.0.0.10)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 17 Jul 2008 01:17:30 -0400
+Received: by sigio.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Jul 2008 01:18:34 -0400
+Content-Disposition: inline
+In-Reply-To: <7v4p6qwezy.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88803>
 
-According to Mark Levedahl on 7/13/2008 3:53 PM:
->>>    
->>>> Cygwin is *still* shipping with antiquated Tcl 8.4.1
->>>>       
->>> Ping. This bug is in 1.5.6.x, and thus also in the current Cygwin git
->>> release: as a result, several gitk context menu items cause
->>> errors. (Let me know if I should resend the patch).
+On Tue, Jul 15, 2008 at 10:54:25PM -0700, Junio C Hamano wrote:
 
-> I certainly have this patch in my tree so the folks I supply git to who 
-> use Cygwin have this patch. The question of whether to maintain this out 
-> of tree for the official Cygwin release is up to Eric.
+> Anything that returns error() from its cmd_xxx() routine, for example,
+> would end up exiting with (-1).  Is it "such bogus" error codes, though?
 
-Could you point me to the patch?  I need to roll the Cygwin git release of
-1.5.6.3 anyway (in part because cygwin has upgraded from perl 5.8 to
-5.10).  This sounds like something worth me including as a vendor patch,
-if it does not get folded into the main repo.
+I think it is bogus, because it is being implicitly truncated to an
+unsigned 8-bit value (at least on Linux -- I have no idea what other
+platforms do). So your -1 is actually 255. Portably speaking, C defines
+only the macros EXIT_SUCCESS and EXIT_FAILURE; in practice, I don't know
+what is most common.
 
--- 
-Don't work too hard, make some time for fun as well!
+Bad side effects of not treating your exit codes as unsigned 8-bit
+integers:
 
-Eric Blake             ebb9@byu.net
+  - the exit values are easily confused with other things, like signal
+    death. As in this case. We have modified our checking code in the
+    test scripts, but there may be other, less robust code out there.
+
+  - other exit values can be mistaken as success. Obviously 256, -256,
+    512, -512, etc all produce an erroneous "success". Now we aren't
+    doing this, as we are using "-1", but it just seems a bit cleaner to
+    be up front about what is happening (and the 255 we end up with is
+    unnecessarily confusing; some documents, like this one:
+
+      http://tldp.org/LDP/abs/html/exitcodes.html
+
+    claim 255 as "out of range").
+
+So what we are doing now isn't terrible, but since it was noted (and did
+in fact cause a problem!), I just expected a "let's stop doing that"
+patch in the original series.
+
+-Peff
