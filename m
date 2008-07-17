@@ -1,92 +1,71 @@
-From: "Dmitry Potapov" <dpotapov@gmail.com>
-Subject: Re: [PATCH/rfc] git-svn.perl: workaround assertions in svn library 1.5.0
-Date: Thu, 17 Jul 2008 22:37:48 +0400
-Message-ID: <37fcd2780807171137m1c5a8197vc94b2a42ac53a297@mail.gmail.com>
-References: <20080706192850.32547.qmail@4480698c45f1ed.315fe32.mid.smarden.org>
-	 <20080717140856.10213.qmail@c0f13986110104.315fe32.mid.smarden.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Considering teaching plumbing to users harmful
+Date: Thu, 17 Jul 2008 19:43:51 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807171940160.8986@racer>
+References: <alpine.DEB.1.00.0807161804400.8950@racer> <7vmykhpn6z.fsf@gitster.siamese.dyndns.org> <20080717155538.GE11759@fieldses.org> <alpine.DEB.1.00.0807171915420.8986@racer> <7vtzeofjpi.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Eric Wong" <normalperson@yhbt.net>
-To: "Gerrit Pape" <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Thu Jul 17 20:39:01 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 20:44:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJYNO-0004Zv-3O
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 20:38:50 +0200
+	id 1KJYTD-00071m-IZ
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 20:44:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757966AbYGQShv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 14:37:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758161AbYGQShu
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 14:37:50 -0400
-Received: from el-out-1112.google.com ([209.85.162.183]:44515 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757745AbYGQShu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 14:37:50 -0400
-Received: by el-out-1112.google.com with SMTP id z25so23232ele.1
-        for <git@vger.kernel.org>; Thu, 17 Jul 2008 11:37:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=qtq207rZRvmBkQXQNrnkIYtTrefBVYGQOInOVOOCY/0=;
-        b=NJ1WfUIlpIGfITmDq//bRHxUeuMqHcYn0iJbGGH06h8rsW1g6J32GHQf9APtB8uKfs
-         6/WChg3igMPuxiqELSB62MX9Xz5hazXKryX9XwzjhMHBMPL6RJpBxij7mETbgOEA6aD9
-         TzXU4M2YVLTQQfdlgxQ78UuFwVTwECkF81GAM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=cpBBjZu+hDXVal0iJFJqn92HyuJkg/zR770ilp9f7tpj5mTKwO5YfPPjCK6NtnSW9/
-         zAK5Bk6bnZUYaNI/FCN4FnMk/JqTmj46+Cymyv4U9Qps8k7rUXemOfhyFV3pSfLcGv8C
-         IBWf6cgQkL2PIU6ukoD34oaSagJvqWzElq25A=
-Received: by 10.142.132.2 with SMTP id f2mr766324wfd.22.1216319868799;
-        Thu, 17 Jul 2008 11:37:48 -0700 (PDT)
-Received: by 10.143.32.3 with HTTP; Thu, 17 Jul 2008 11:37:48 -0700 (PDT)
-In-Reply-To: <20080717140856.10213.qmail@c0f13986110104.315fe32.mid.smarden.org>
-Content-Disposition: inline
+	id S1758183AbYGQSnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 14:43:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758161AbYGQSnv
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 14:43:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36121 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754513AbYGQSnv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 14:43:51 -0400
+Received: (qmail invoked by alias); 17 Jul 2008 18:43:49 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp022) with SMTP; 17 Jul 2008 20:43:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/o3hVzyC/o0lwqb+1643aACLeW2b7rEhjL7hNTgW
+	iibBKrM64j+KLi
+X-X-Sender: gene099@racer
+In-Reply-To: <7vtzeofjpi.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88901>
 
-On Thu, Jul 17, 2008 at 6:08 PM, Gerrit Pape <pape@smarden.org> wrote:
->
-> Hi, while this commit fixed the selftests, it unfortunately is a
-> regression
->
->  http://thread.gmane.org/gmane.comp.version-control.git/87822/
->  http://bugs.debian.org/490400
+Hi,
 
-This particular breakage is easy to fix:
+On Thu, 17 Jul 2008, Junio C Hamano wrote:
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 3750e47..a5a5b1b 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1226,7 +1226,7 @@ sub linearize_history {
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> Is there a way to commit the contents of a tarball without using 
+> >> plumbing?  I occasionally want to track an upstream that I know only 
+> >> as a series of tarballs, so I do something like:
+> >> 
+> >> 	cd repo/
+> >> 	git checkout upstream
+> >> 	rm -rf *
+> >> 	tar -xzvf ../new-version.tar.gz
+> >
+> > How about "git add -u" and "git add ."?
+> 
+> It would work only if new version never removes files.
 
- sub find_file_type_and_diff_status {
-        my ($path) = @_;
--       return ('dir', '') if $path eq '.';
-+       return ('dir', '') if $path eq '';
+You made me doubt for a second there.  But "git add -u" updates the index 
+when a tracked files was deleted.  So after "rm -rf *", "git add -u" would 
+empty the index.
 
-        my $diff_output =
-            command_oneline(qw(diff --cached --name-status --), $path) || "";
+AFAICT this has been a part of "git add -u" ever since dfdac5d(git-add -u: 
+match the index with working tree.), i.e. ever since the "-u" option was 
+added.
 
-but it could be some other places in git-svn that may need correction too.
-
->
-> I'm still not sure whether this is a git-svn problem, or actually a
-> problem in subversion 1.5.0
-
-Accordingly to SVN developers you do not use SVN API correctly,
-therefore you got assert. So, the problem in git-svn.
-http://svn.haxx.se/dev/archive-2008-01/0425.shtml
-
-Dmitry
+Ciao,
+Dscho
