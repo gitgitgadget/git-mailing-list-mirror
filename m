@@ -1,59 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Considering teaching plumbing to users harmful
-Date: Thu, 17 Jul 2008 11:29:13 -0700
-Message-ID: <7vtzeofjpi.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0807161804400.8950@racer>
- <7vmykhpn6z.fsf@gitster.siamese.dyndns.org>
- <20080717155538.GE11759@fieldses.org>
- <alpine.DEB.1.00.0807171915420.8986@racer>
+From: "Dmitry Potapov" <dpotapov@gmail.com>
+Subject: Re: [PATCH/rfc] git-svn.perl: workaround assertions in svn library 1.5.0
+Date: Thu, 17 Jul 2008 22:37:48 +0400
+Message-ID: <37fcd2780807171137m1c5a8197vc94b2a42ac53a297@mail.gmail.com>
+References: <20080706192850.32547.qmail@4480698c45f1ed.315fe32.mid.smarden.org>
+	 <20080717140856.10213.qmail@c0f13986110104.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 17 20:30:39 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Eric Wong" <normalperson@yhbt.net>
+To: "Gerrit Pape" <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Thu Jul 17 20:39:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJYFF-0000ub-Jy
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 20:30:26 +0200
+	id 1KJYNO-0004Zv-3O
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 20:38:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757837AbYGQS3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 14:29:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757745AbYGQS3W
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 14:29:22 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36234 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754916AbYGQS3V (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 14:29:21 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9D9D430BB5;
-	Thu, 17 Jul 2008 14:29:20 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C8AC530BB0; Thu, 17 Jul 2008 14:29:15 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0807171915420.8986@racer> (Johannes
- Schindelin's message of "Thu, 17 Jul 2008 19:16:37 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 45BEC94E-542E-11DD-869F-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1757966AbYGQShv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 14:37:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758161AbYGQShu
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 14:37:50 -0400
+Received: from el-out-1112.google.com ([209.85.162.183]:44515 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757745AbYGQShu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 14:37:50 -0400
+Received: by el-out-1112.google.com with SMTP id z25so23232ele.1
+        for <git@vger.kernel.org>; Thu, 17 Jul 2008 11:37:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=qtq207rZRvmBkQXQNrnkIYtTrefBVYGQOInOVOOCY/0=;
+        b=NJ1WfUIlpIGfITmDq//bRHxUeuMqHcYn0iJbGGH06h8rsW1g6J32GHQf9APtB8uKfs
+         6/WChg3igMPuxiqELSB62MX9Xz5hazXKryX9XwzjhMHBMPL6RJpBxij7mETbgOEA6aD9
+         TzXU4M2YVLTQQfdlgxQ78UuFwVTwECkF81GAM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=cpBBjZu+hDXVal0iJFJqn92HyuJkg/zR770ilp9f7tpj5mTKwO5YfPPjCK6NtnSW9/
+         zAK5Bk6bnZUYaNI/FCN4FnMk/JqTmj46+Cymyv4U9Qps8k7rUXemOfhyFV3pSfLcGv8C
+         IBWf6cgQkL2PIU6ukoD34oaSagJvqWzElq25A=
+Received: by 10.142.132.2 with SMTP id f2mr766324wfd.22.1216319868799;
+        Thu, 17 Jul 2008 11:37:48 -0700 (PDT)
+Received: by 10.143.32.3 with HTTP; Thu, 17 Jul 2008 11:37:48 -0700 (PDT)
+In-Reply-To: <20080717140856.10213.qmail@c0f13986110104.315fe32.mid.smarden.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88900>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
->> Is there a way to commit the contents of a tarball without using
->> plumbing?  I occasionally want to track an upstream that I know only as
->> a series of tarballs, so I do something like:
->> 
->> 	cd repo/
->> 	git checkout upstream
->> 	rm -rf *
->> 	tar -xzvf ../new-version.tar.gz
+On Thu, Jul 17, 2008 at 6:08 PM, Gerrit Pape <pape@smarden.org> wrote:
 >
-> How about "git add -u" and "git add ."?
+> Hi, while this commit fixed the selftests, it unfortunately is a
+> regression
+>
+>  http://thread.gmane.org/gmane.comp.version-control.git/87822/
+>  http://bugs.debian.org/490400
 
-It would work only if new version never removes files.
+This particular breakage is easy to fix:
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 3750e47..a5a5b1b 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1226,7 +1226,7 @@ sub linearize_history {
+
+ sub find_file_type_and_diff_status {
+        my ($path) = @_;
+-       return ('dir', '') if $path eq '.';
++       return ('dir', '') if $path eq '';
+
+        my $diff_output =
+            command_oneline(qw(diff --cached --name-status --), $path) || "";
+
+but it could be some other places in git-svn that may need correction too.
+
+>
+> I'm still not sure whether this is a git-svn problem, or actually a
+> problem in subversion 1.5.0
+
+Accordingly to SVN developers you do not use SVN API correctly,
+therefore you got assert. So, the problem in git-svn.
+http://svn.haxx.se/dev/archive-2008-01/0425.shtml
+
+Dmitry
