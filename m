@@ -1,46 +1,83 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Documentation/git-merge.txt: Expand the How Merge
-	Works section
-Date: Thu, 17 Jul 2008 18:42:19 +0200
-Message-ID: <20080717164219.GX32184@machine.or.cz>
-References: <20080717162922.12081.96582.stgit@localhost>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 17 18:43:23 2008
+From: Len Brown <lenb@kernel.org>
+Subject: Segmentation fault      git pull
+Date: Thu, 17 Jul 2008 12:52:27 -0400
+Message-ID: <200807171652.m6HGqR2h006100@localhost.localdomain>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 17 18:53:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJWZc-000114-MP
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 18:43:21 +0200
+	id 1KJWjh-0005g2-NY
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 18:53:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755746AbYGQQmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 12:42:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755050AbYGQQmW
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 12:42:22 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:48703 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752105AbYGQQmV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 12:42:21 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id DAD182C4C027; Thu, 17 Jul 2008 18:42:19 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080717162922.12081.96582.stgit@localhost>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1756797AbYGQQwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 12:52:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756293AbYGQQwr
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 12:52:47 -0400
+Received: from vms046pub.verizon.net ([206.46.252.46]:41069 "EHLO
+	vms046pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756722AbYGQQwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 12:52:46 -0400
+Received: from localhost.localdomain ([64.140.212.33])
+ by vms046.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
+ 3 2006)) with ESMTPA id <0K4500B0JTJGKR36@vms046.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 17 Jul 2008 11:52:29 -0500 (CDT)
+Received: from localhost.localdomain (d975xbx2 [127.0.0.1])
+	by localhost.localdomain (8.14.2/8.14.2) with ESMTP id m6HGqRXB006105	for
+ <git@vger.kernel.org>; Thu, 17 Jul 2008 12:52:27 -0400
+Received: (from lenb@localhost)	by localhost.localdomain (8.14.2/8.14.2/Submit)
+ id m6HGqR2h006100	for git@vger.kernel.org; Thu, 17 Jul 2008 12:52:27 -0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88880>
 
-On Thu, Jul 17, 2008 at 06:29:32PM +0200, Petr Baudis wrote:
->  foo                         |    1 
->  2 files changed, 59 insertions(+), 35 deletions(-)
->  create mode 100644 foo
+$ git --version
+git version 1.5.6.3.439.g1e10
 
-*Cough* Sorry about this. I think there is currently no need to merge
-the 'foo' bit. ;-)
+...while doing a pull on my vanilla linus' linux tracking tree,
+which I have not touched in about a week.
 
-				Petr "Pasky" Baudis
+$ good.morning
+...
++ git checkout master
+Already on "master"
++ git pull
+remote: Counting objects: 31759, done.
+remote: Compressing objects: 100% (5397/5397), done.
+remote: Total 28193 (delta 23770), reused 27116 (delta 22765)
+Receiving objects: 100% (28193/28193), 6.76 MiB | 526 KiB/s, done.
+Resolving deltas: 100% (23770/23770), completed with 3141 local objects.
+From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+   f57e916..33af79d  master     -> origin/master
+From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+ * [new tag]         v2.6.26    -> v2.6.26
+Updating f57e916..33af79d
+/lab/bin/good.morning: line 8:  5610 Segmentation fault      git pull
+...
+$ git pull
+Updating f57e916..33af79d
+fatal: unable to create '.git/index.lock': File exists
+[lenb@d975xbx2 linus (master)]$ rm .git/index.lock
+
+git status
+shows no local changes, just a few untracked files i have left around.
+
+clues?
+
+thanks,
+-Len
+
+ps.
+$ cat /lab/bin/good.morning 
+#!/bin/bash -x
+cd ~/src/git
+git checkout master
+git pull
+make -j4 install
+cd ~/src/linus
+git checkout master
+git pull
+...
