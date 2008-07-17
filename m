@@ -1,93 +1,87 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Teach git submodule update to use distributed
-	repositories
-Date: Thu, 17 Jul 2008 16:38:33 +0200
-Message-ID: <20080717143833.GV32184@machine.or.cz>
-References: <320075ff0807170508j3d3c1ef8j49df576fc47debe2@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Contributors, please check your names
+Date: Thu, 17 Jul 2008 07:49:48 -0700 (PDT)
+Message-ID: <m3sku8sh01.fsf@localhost.localdomain>
+References: <7v8ww0j4ye.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nigel Magnay <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 16:39:49 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 16:51:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJUds-0003Zu-Ge
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 16:39:36 +0200
+	id 1KJUp4-0001He-1z
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 16:51:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756566AbYGQOig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 10:38:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754641AbYGQOig
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 10:38:36 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56477 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755978AbYGQOif (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 10:38:35 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 6C3C02C4C025; Thu, 17 Jul 2008 16:38:33 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <320075ff0807170508j3d3c1ef8j49df576fc47debe2@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1754641AbYGQOuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 10:50:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758183AbYGQOuB
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 10:50:01 -0400
+Received: from ti-out-0910.google.com ([209.85.142.187]:46264 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754289AbYGQOt7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 10:49:59 -0400
+Received: by ti-out-0910.google.com with SMTP id b6so3363844tic.23
+        for <git@vger.kernel.org>; Thu, 17 Jul 2008 07:49:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=30b8AJpUiPXnCT2Yg8KwaGvdyCTdQdsGVeKx5oJSzSU=;
+        b=i7g96wjep2suGfIlC5ahncroYy6vsBTTtRN4jVEyilcgbTpFrGsSrtzNMfiMahEf7E
+         uUr2nUu1Amsno7NEuZS1xvTM1Kagfymm+rv6g2S84TQo5mOrh2vjIrXQHMElE23D4YZ5
+         ygefG9rBbQbtKv5IzpenoZiePOjNIhWBFXLeI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=HC77bGkTn1RCJYTyvxshtCfHT8np77hZ5fT1lhkPHStiC6sOO1HcXMJ7vz7BVk0znR
+         o0PE15coYdhqlc0rGBY1A/25cWj5hFR6jCEbVq4uG8LcYKaUh+qOnwxiYoJ1EdrKZTP7
+         GqCoFPNe6jE6IHKMqAmfiNwUozc8RUqVETWT4=
+Received: by 10.150.192.7 with SMTP id p7mr547706ybf.91.1216306196619;
+        Thu, 17 Jul 2008 07:49:56 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.254.74])
+        by mx.google.com with ESMTPS id m30sm15130elf.12.2008.07.17.07.49.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 17 Jul 2008 07:49:49 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m6HEnKVk011521;
+	Thu, 17 Jul 2008 16:49:20 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m6HEnJ9V011518;
+	Thu, 17 Jul 2008 16:49:19 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7v8ww0j4ye.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88860>
 
-On Thu, Jul 17, 2008 at 01:08:19PM +0100, Nigel Magnay wrote:
-> When doing a git submodule update, it fetches any missing submodule
-> commits from the repository specified in .gitmodules. If you instead
-> want to pull from another repository, you currently need to do a fetch
-> in each submodule by hand.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> There is a "mailmap" mechanism to consolidate them; it allows us to
+> specify what human-readable name should be used for given e-mail address.
+> The hypothetical Mr. Thor might want to say "I am A. U. Thor; some commits
+> from me, <author@example.xz>, are marked without abbreviating periods in
+> my name", and we can add this entry to the toplevel .mailmap file to fix
+> it:
 > 
-> Signed-off-by: Nigel Magnay <nigel.magnay@gmail.com>
+> 	A. U. Thor <author@example.xz>
+> 
+> It tells the shortlog (and --pretty=format:%aN in recent enough git)
+> mechanism to give huma readable name "A. U. Thor" anytime it sees
+> <author@example.xz> e-mail address, regardless of what the Author:
+> header in the commit object says.
 
-I don't think it is good idea to hijack git submodule update for this.
-This command has a specific purpose:
-
-	"When I pulled new version of the main tree, bring my
-	submodule checkouts in line with whatever is specified
-	within the new tree revision."
-
-Your usage scenario has nothing to do with that, it is about "batch
-manipulation" of all the submodules at once in a certain way. I think
-using the same command for two conceptually pretty much unrelated
-purposes will only clutter up the UI, and we should think of a better
-general interface pattern for these operations.
-
-In the new git-submodule description, it is said that
-
-	"This command will manage the tree entries and contents of the
-	gitmodules file for you."
-
-and I think we should keep it at this; anything that is related to
-submodules, but does not do this directly, would IMHO live better
-as some kind of "submodule-recursive" extension of other existing
-commands. Say, would this particular need of yours be served by a
-hypothetical command like
-
-	git checkout --submodules nifty
-
-to check out branch nifty of all submodules or am I misunderstanding
-what are you trying to achieve?
-
-If not, then actually even _much_ more elegant solution for this
-particular problem would be to store submodule.*.branch in .gitmodules
-appropriate to the -b parameter of git submodule add. Then, in branch
-'nifty' of the main project, you would set submodule.*.branch to 'nifty'
-too.  Then, in order to bring all the submodules to the latest version,
-I could imagine something like
-
-	git pull --submodules
-
-(and possibly just abort at the first sight of a conflict, for
-starters).
-
-Let's figure up some UI that is nifty and clean. ;-)
+What about if some authors use different _email_ address, instead?
+Is there any way for shortlog to consider them the same?
 
 -- 
-				Petr "Pasky" Baudis
-GNU, n. An animal of South Africa, which in its domesticated state
-resembles a horse, a buffalo and a stag. In its wild condition it is
-something like a thunderbolt, an earthquake and a cyclone. -- A. Pierce
+Jakub Narebski
+Poland
+ShadeHawk on #git
