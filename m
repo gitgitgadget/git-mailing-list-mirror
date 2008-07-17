@@ -1,63 +1,51 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: What's cooking in git.git (topics)
-Date: Thu, 17 Jul 2008 15:09:00 +0200
-Message-ID: <20080717130900.GB8421@leksak.fem-net>
-References: <7vej6l3lp7.fsf@gitster.siamese.dyndns.org> <7vod5kd3im.fsf@gitster.siamese.dyndns.org> <7v3amv1e8n.fsf@gitster.siamese.dyndns.org> <7vprpwhp7t.fsf@gitster.siamese.dyndns.org> <7vlk0ffhw3.fsf@gitster.siamese.dyndns.org> <7vtzf1w0rj.fsf@gitster.siamese.dyndns.org> <7vabgqsc37.fsf@gitster.siamese.dyndns.org> <7vtzetjbif.fsf@gitster.siamese.dyndns.org> <7vfxqawlja.fsf@gitster.siamese.dyndns.org> <7vlk01hqzz.fsf@gitster.siamese.dyndns.org>
+From: Heikki Orsila <shdl@zakalwe.fi>
+Subject: Re: [PATCH] Documentation/git-submodule.txt: Further clarify the description
+Date: Thu, 17 Jul 2008 16:37:29 +0300
+Message-ID: <20080717133729.GF4379@zakalwe.fi>
+References: <20080717121813.GC10151@machine.or.cz> <20080717122911.32334.73465.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 15:10:19 2008
+Content-Type: text/plain; charset=iso-8859-1
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Jul 17 15:38:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJTFD-0007PI-EF
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 15:10:03 +0200
+	id 1KJTgk-0001XZ-Es
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 15:38:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755750AbYGQNJF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 09:09:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755817AbYGQNJE
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 09:09:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48441 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755719AbYGQNJC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 09:09:02 -0400
-Received: (qmail invoked by alias); 17 Jul 2008 13:09:01 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp028) with SMTP; 17 Jul 2008 15:09:01 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX194yHhl8JR4SDNNewVcvOcKMd6uSIiMlNDVLaj4qh
-	SiVzuEEDApedB5
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KJTEC-0004Ej-24; Thu, 17 Jul 2008 15:09:00 +0200
+	id S1754916AbYGQNhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 09:37:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754718AbYGQNhb
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 09:37:31 -0400
+Received: from zakalwe.fi ([80.83.5.154]:57749 "EHLO zakalwe.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754195AbYGQNha (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 09:37:30 -0400
+Received: by zakalwe.fi (Postfix, from userid 1023)
+	id 127242BC39; Thu, 17 Jul 2008 16:37:29 +0300 (EEST)
 Content-Disposition: inline
-In-Reply-To: <7vlk01hqzz.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+In-Reply-To: <20080717122911.32334.73465.stgit@localhost>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88850>
 
-Hi,
+On Thu, Jul 17, 2008 at 02:29:20PM +0200, Petr Baudis wrote:
+> +Submodules allow foreign repositories to be embedded within a dedicated
+> +subdirectory of the source tree, always pointed at a particular commit.
+> +They are not to be confused with remotes, which are meant mainly for branches
+> +of the same project; submodules are meant for different projects you would like
+> +to make part of your source tree, while the history of the two projects still
+> +stays completely independent and you cannot modify the contents of the
+> +submodule from within the main project.
 
-Junio C Hamano wrote:
-> * sb/sequencer (Tue Jul 1 04:38:34 2008 +0200) 4 commits
->  . Migrate git-am to use git-sequencer
->  . Add git-sequencer test suite (t3350)
->  . Add git-sequencer prototype documentation
->  . Add git-sequencer shell prototype
-> 
-> I haven't looked at the updated series yet.  I should, but nobody else
-> seems to be looking at these patches, which is somewhat depressing but
-> understandable.  Summer is slower ;-)
-
-imho there is no need to hurry, but if I can help, just tell me how.
-
-Regards.
+That is nice, thanks!
 
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+Heikki Orsila
+heikki.orsila@iki.fi
+http://www.iki.fi/shd
