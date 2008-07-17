@@ -1,78 +1,53 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
 Subject: Re: Considering teaching plumbing to users harmful
-Date: Thu, 17 Jul 2008 11:57:23 -0400
-Message-ID: <20080717155723.GF11759@fieldses.org>
-References: <alpine.DEB.1.00.0807161804400.8950@racer> <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com> <7v7iblsnfh.fsf@gitster.siamese.dyndns.org> <32541b130807161151x19c20f9t91b7fb9b8c7b8c7b@mail.gmail.com> <7vmykhr6h1.fsf@gitster.siamese.dyndns.org> <32541b130807161229ob4c21cbsc6c86ee3e42c4101@mail.gmail.com> <alpine.DEB.1.00.0807170024310.4318@eeepc-johanness> <63BEA5E623E09F4D92233FB12A9F79430238A144@emailmn.mqsoftware.com> <20080717145120.GW32184@machine.or.cz>
+Date: Thu, 17 Jul 2008 18:03:46 +0200
+Message-ID: <20080717160346.GA26862@diana.vm.bytemark.co.uk>
+References: <alpine.DEB.1.00.0807161804400.8950@racer> <7vmykhpn6z.fsf@gitster.siamese.dyndns.org> <20080717155538.GE11759@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Craig L. Ching" <cching@mqsoftware.com>,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Jul 17 17:58:29 2008
+	git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Thu Jul 17 18:06:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJVsC-0007sl-Np
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 17:58:29 +0200
+	id 1KJVzb-0002K2-ED
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 18:06:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757273AbYGQP53 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 11:57:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757145AbYGQP53
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 11:57:29 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:48665 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756175AbYGQP53 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 11:57:29 -0400
-Received: from bfields by fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1KJVr9-0003RF-VR; Thu, 17 Jul 2008 11:57:23 -0400
+	id S1757505AbYGQQFF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jul 2008 12:05:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757486AbYGQQFF
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 12:05:05 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1538 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756410AbYGQQFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 12:05:04 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KJVxK-00074U-00; Thu, 17 Jul 2008 17:03:46 +0100
 Content-Disposition: inline
-In-Reply-To: <20080717145120.GW32184@machine.or.cz>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <20080717155538.GE11759@fieldses.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88869>
 
-On Thu, Jul 17, 2008 at 04:51:20PM +0200, Petr Baudis wrote:
-> On Thu, Jul 17, 2008 at 09:21:58AM -0500, Craig L. Ching wrote:
-> > Maybe if Git had a few different workflows
-> > documented that might help.  I know we have a "Git for SVN Users"
-> > workflow, but if you want to move beyond that, it might be good to have
-> > some of the more complex workflows documented.  I think some people have
-> > hinted at that suggestion but that maybe it just hasn't been explicitly
-> > said.
-> 
-> Yes, very recently, someone on #git asked about existing documented
-> workflows, and there is very little. It would be interesting project for
-> someone to build a 'Garden of Git Workflows' (or a Labyrinth) -
+On 2008-07-17 11:55:38 -0400, J. Bruce Fields wrote:
 
-That's been requested for a long time, but nobody's gotten around to it.
+> Is there a way to commit the contents of a tarball without using
+> plumbing?
 
-It might be nice if it could be made a superset of everyday.txt.
+contrib/fast-import/import-tars.perl
 
---b.
+It currently lacks a bit in flexibility, IIRC, but it does its job
+well.
 
-> for each
-> workflow, detailed self-contained documentation ranging from lone developer
-> with topic branches over repo.or.cz/github forks workflow, the workflows
-> of "leaf contributors", lieutenants and main integrators of the mail-oriented
-> kernel/git workflow, up to the single-central-repository workflows.
-> 
-> There are bits here and there, but the main problem is that they are not
-> self-contained. It might be nice to have something like a set of military
-> manuals, appropriate for the roles of the particular developers.
-> 
-> -- 
-> 				Petr "Pasky" Baudis
-> GNU, n. An animal of South Africa, which in its domesticated state
-> resembles a horse, a buffalo and a stag. In its wild condition it is
-> something like a thunderbolt, an earthquake and a cyclone. -- A. Pierce
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
