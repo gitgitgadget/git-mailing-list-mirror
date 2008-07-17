@@ -1,72 +1,60 @@
-From: Lars Noschinski <lars@public.noschinski.de>
-Subject: [PATCH] testsuite for cvs co -c
-Date: Thu, 17 Jul 2008 19:00:30 +0200
-Message-ID: <1216314030-10887-6-git-send-email-lars@public.noschinski.de>
-References: <1216314030-10887-1-git-send-email-lars@public.noschinski.de>
- <1216314030-10887-2-git-send-email-lars@public.noschinski.de>
- <1216314030-10887-3-git-send-email-lars@public.noschinski.de>
- <1216314030-10887-4-git-send-email-lars@public.noschinski.de>
- <1216314030-10887-5-git-send-email-lars@public.noschinski.de>
-Cc: lars@public.noschinski.de, fabian.emmes@rwth-aachen.de
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 17 19:02:25 2008
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Documentation/RelNotes-1.6.0.txt: Expand on the incompatible
+	packfiles
+Date: Thu, 17 Jul 2008 19:01:30 +0200
+Message-ID: <20080717170118.14083.87086.stgit@localhost>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jul 17 19:03:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJWrg-0000Xh-OI
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 19:02:01 +0200
+	id 1KJWsU-0000un-Re
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 19:02:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757486AbYGQRAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 13:00:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757081AbYGQRAn
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 13:00:43 -0400
-Received: from smtprelay09.ispgateway.de ([80.67.29.23]:59550 "EHLO
-	smtprelay09.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757199AbYGQRAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 13:00:38 -0400
-Received: from [137.226.194.201] (helo=localhost.localdomain)
-	by smtprelay09.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1KJWqK-0007Q9-Py; Thu, 17 Jul 2008 19:00:36 +0200
-X-Mailer: git-send-email 1.5.6.2
-In-Reply-To: <1216314030-10887-5-git-send-email-lars@public.noschinski.de>
-X-Df-Sender: 336680
+	id S1756789AbYGQRBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 13:01:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756309AbYGQRBv
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 13:01:51 -0400
+Received: from [212.249.11.140] ([212.249.11.140]:51586 "EHLO pixie.suse.cz"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754052AbYGQRBu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 13:01:50 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by pixie.suse.cz (Postfix) with ESMTP id 2F93E2AC73C;
+	Thu, 17 Jul 2008 19:01:31 +0200 (CEST)
+User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88887>
 
-From: Fabian Emmes <fabian.emmes@rwth-aachen.de>
+Note that v1.4.4.5 supports pack index v2, and describe how to keep
+your repositories backwards-compatible, shall you need to.
 
-Check that all branches are displayed.
-
-Signed-off-by: Fabian Emmes <fabian.emmes@rwth-aachen.de>
-Signed-off-by: Lars Noschinski <lars@public.noschinski.de>
+Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
- t/t9400-git-cvsserver-server.sh |   11 +++++++++++
- 1 files changed, 11 insertions(+), 0 deletions(-)
 
-diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-index 8120087..4b91f8d 100755
---- a/t/t9400-git-cvsserver-server.sh
-+++ b/t/t9400-git-cvsserver-server.sh
-@@ -477,4 +477,15 @@ test_expect_success 'cvs status (no subdirs in header)' '
-     ! grep / <../out
- '
+ Documentation/RelNotes-1.6.0.txt |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/RelNotes-1.6.0.txt b/Documentation/RelNotes-1.6.0.txt
+index b29ba25..9bbb07e 100644
+--- a/Documentation/RelNotes-1.6.0.txt
++++ b/Documentation/RelNotes-1.6.0.txt
+@@ -21,7 +21,9 @@ main git.git codebase.
+ By default, packfiles created with this version uses delta-base-offset
+ encoding introduced in v1.4.4.  Pack idx files are using version 2 that
+ allows larger packs and added robustness thanks to its CRC checking,
+-introduced in v1.5.2.
++introduced in v1.5.2 and v1.4.4.5.  If you want to keep your repositories
++backwards compatible past these versions, set repack.useDeltaBaseOffset
++to false or pack.indexVersion to 1, respectively.
  
-+#------------
-+# CVS CHECKOUT
-+#------------
-+
-+cd "$WORKDIR"
-+test_expect_success 'cvs co -c (shows module database)' '
-+    GIT_CONFIG="$git_config" cvs co -c > out &&
-+    grep "^master[	 ]\+master$" < out &&
-+    ! grep -v "^master[	 ]\+master$" < out
-+'
-+
- test_done
--- 
-1.5.6.2
+ GIT_CONFIG, which was only documented as affecting "git config", but
+ actually affected all git commands, now only affects "git config".
