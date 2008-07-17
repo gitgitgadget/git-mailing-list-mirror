@@ -1,69 +1,93 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Considering teaching plumbing to users harmful
-Date: Thu, 17 Jul 2008 10:26:54 -0400
-Message-ID: <20080717142654.GQ2167@mit.edu>
-References: <alpine.DEB.1.00.0807161804400.8950@racer> <487EF519.5070902@sneakemail.com> <20080717125536.GO2167@mit.edu> <487F4A9A.1090108@morch.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Teach git submodule update to use distributed
+	repositories
+Date: Thu, 17 Jul 2008 16:38:33 +0200
+Message-ID: <20080717143833.GV32184@machine.or.cz>
+References: <320075ff0807170508j3d3c1ef8j49df576fc47debe2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Peter Valdemar =?iso-8859-1?Q?M=F8rch?= <lists@morch.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 16:28:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nigel Magnay <nigel.magnay@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 16:39:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJUSa-0006T8-Uf
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 16:27:57 +0200
+	id 1KJUds-0003Zu-Ge
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 16:39:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756952AbYGQO05 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jul 2008 10:26:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756579AbYGQO05
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 10:26:57 -0400
-Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:41420 "EHLO
-	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756566AbYGQO04 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 10:26:56 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1KJURb-0002Gn-JJ; Thu, 17 Jul 2008 10:26:55 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1KJURa-0004kB-Ur; Thu, 17 Jul 2008 10:26:54 -0400
+	id S1756566AbYGQOig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 10:38:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754641AbYGQOig
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 10:38:36 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:56477 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755978AbYGQOif (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 10:38:35 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 6C3C02C4C025; Thu, 17 Jul 2008 16:38:33 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <487F4A9A.1090108@morch.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <320075ff0807170508j3d3c1ef8j49df576fc47debe2@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88859>
 
-On Thu, Jul 17, 2008 at 03:35:22PM +0200, Peter Valdemar M=F8rch wrote:
-> E.g. something I seem to succeed with sometimes, but not consistently=
- is =20
-> the equivalent of "svn revert -R .". "git help reset"? Yup: "git rese=
-t =20
-> --hard HEAD ." When I run into merge conflicts, I'll probably look at=
- =20
-> such a doc again, but other than that I'll probably use man pages mos=
-t.
+On Thu, Jul 17, 2008 at 01:08:19PM +0100, Nigel Magnay wrote:
+> When doing a git submodule update, it fetches any missing submodule
+> commits from the repository specified in .gitmodules. If you instead
+> want to pull from another repository, you currently need to do a fetch
+> in each submodule by hand.
+> 
+> Signed-off-by: Nigel Magnay <nigel.magnay@gmail.com>
 
-You find quick alias to be a useful replacement for "svn revert -R
-<file>" (aka "hg revert <file>" and "bg revert <file>"):
+I don't think it is good idea to hijack git submodule update for this.
+This command has a specific purpose:
 
-git config --global alias.revert-file "checkout HEAD --"
+	"When I pulled new version of the main tree, bring my
+	submodule checkouts in line with whatever is specified
+	within the new tree revision."
 
-Once you run this command, you can now do "git revert-file <file>"
-which I personally find very handy.  Sometimes I only want to revert
-one file, and not all of the files in the working directory, which is
-what "git reset --hard" will do.
+Your usage scenario has nothing to do with that, it is about "batch
+manipulation" of all the submodules at once in a certain way. I think
+using the same command for two conceptually pretty much unrelated
+purposes will only clutter up the UI, and we should think of a better
+general interface pattern for these operations.
 
-(Note that "git revert" does something else useful, but which is not
-the same as "hg revert", "bk revert" and "svn revert". Oh well, nobody
-ever said DSCM's had to be consistent.)
+In the new git-submodule description, it is said that
 
-						- Ted
+	"This command will manage the tree entries and contents of the
+	gitmodules file for you."
+
+and I think we should keep it at this; anything that is related to
+submodules, but does not do this directly, would IMHO live better
+as some kind of "submodule-recursive" extension of other existing
+commands. Say, would this particular need of yours be served by a
+hypothetical command like
+
+	git checkout --submodules nifty
+
+to check out branch nifty of all submodules or am I misunderstanding
+what are you trying to achieve?
+
+If not, then actually even _much_ more elegant solution for this
+particular problem would be to store submodule.*.branch in .gitmodules
+appropriate to the -b parameter of git submodule add. Then, in branch
+'nifty' of the main project, you would set submodule.*.branch to 'nifty'
+too.  Then, in order to bring all the submodules to the latest version,
+I could imagine something like
+
+	git pull --submodules
+
+(and possibly just abort at the first sight of a conflict, for
+starters).
+
+Let's figure up some UI that is nifty and clean. ;-)
+
+-- 
+				Petr "Pasky" Baudis
+GNU, n. An animal of South Africa, which in its domesticated state
+resembles a horse, a buffalo and a stag. In its wild condition it is
+something like a thunderbolt, an earthquake and a cyclone. -- A. Pierce
