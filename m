@@ -1,77 +1,73 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: Considering teaching plumbing to users harmful
-Date: Thu, 17 Jul 2008 03:01:15 +0200
-Message-ID: <20080717010115.GD18558@leksak.fem-net>
-References: <alpine.DEB.1.00.0807161804400.8950@racer> <20080716220946.GC18558@leksak.fem-net> <alpine.DEB.1.00.0807170120170.4318@eeepc-johanness>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH (GIT-GUI)] Fix pre-commit hooks under MinGW/MSYS
+Date: Thu, 17 Jul 2008 01:18:22 +0000
+Message-ID: <20080717011822.GB16740@spearce.org>
+References: <200807170012.28769.angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 17 03:02:31 2008
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 03:22:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJHt3-0006Fu-SR
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 03:02:26 +0200
+	id 1KJICq-0002qu-2I
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 03:22:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759105AbYGQBB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 21:01:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759207AbYGQBB1
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 21:01:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46484 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759066AbYGQBB0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 21:01:26 -0400
-Received: (qmail invoked by alias); 17 Jul 2008 01:01:24 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp062) with SMTP; 17 Jul 2008 03:01:24 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/ekToyE2beBaY4PcSHCitdWbgn1mfIkdP5UuzNQP
-	0d5zH6bP+rTqm2
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KJHrv-0005x1-G2; Thu, 17 Jul 2008 03:01:15 +0200
+	id S1753889AbYGQBSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 21:18:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753282AbYGQBSX
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 21:18:23 -0400
+Received: from george.spearce.org ([209.20.77.23]:33010 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750718AbYGQBSX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 21:18:23 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id CF367382A4; Thu, 17 Jul 2008 01:18:22 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807170120170.4318@eeepc-johanness>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+In-Reply-To: <200807170012.28769.angavrilov@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88796>
 
-Hi,
-
-Johannes Schindelin wrote:
-> Hi,
+Alexander Gavrilov <angavrilov@gmail.com> wrote:
+> Apply the work-around for checking the executable
+> permission of hook files not only on Cygwin, but on
+> Windows in general.
 > 
-> On Thu, 17 Jul 2008, Stephan Beyer wrote:
+> Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+> ---
+> 	This is a fix for msysgit issue #118.
+> 	(http://code.google.com/p/msysgit/issues/detail?id=118)
 > 
-> > I also think that for a user it is totally irrelevant if it is plumbing 
-> > or porcelain she is using, as long as it works. I mean, if I tought 
-> > someone using git, I'd never use the words "porcelain" or "plumbing".
-> 
-> So you would say that remembering the name "rev-parse" is just as easy as 
-> remembering "show"?
+> 	I've already sent this patch, but resend it as I haven't received any reply,
+> 	and it is not in git-gui.git yet.
 
-"show" is an intuitional name, "rev-parse" is not.[1]
-But that wasn't my point. The point was, that it is not important to a
-user whether the tool is called "plumbing" or "porcelain"; that these
-terms have no value for the user, if she just wants to get a job done.
+Thanks.  I'm not sure why I dropped this earlier, but it is
+in my git-gui tree now.
 
-Of course, "usually" porcelain is more helpful and as I've said (or
-at least tried to say), I don't think there is any plumbing that's
-useful for a git beginner.
-
-Regards,
-  Stephan
-
-Footnote:
- 1. A further comment about the intuitionality or "remembering":
-    git-apply is plumbing and has an intuitional name (hence easy to
-    remember), git-am is porcelain and does not have one.
+ 
+> diff --git a/git-gui.sh b/git-gui.sh
+> index e6e8890..2d14bf2 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -473,10 +473,10 @@ proc githook_read {hook_name args} {
+>  	set pchook [gitdir hooks $hook_name]
+>  	lappend args 2>@1
+>  
+> -	# On Cygwin [file executable] might lie so we need to ask
+> +	# On Windows [file executable] might lie so we need to ask
+>  	# the shell if the hook is executable.  Yes that's annoying.
+>  	#
+> -	if {[is_Cygwin]} {
+> +	if {[is_Windows]} {
+>  		upvar #0 _sh interp
+>  		if {![info exists interp]} {
+>  			set interp [_which sh]
 
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+Shawn.
