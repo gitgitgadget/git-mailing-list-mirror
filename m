@@ -1,87 +1,62 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: Considering teaching plumbing to users harmful
-Date: Thu, 17 Jul 2008 14:10:11 -0700
-Message-ID: <E2027B3B-CF7F-48C2-84C4-3A10131926E1@sb.org>
-References: <alpine.DEB.1.00.0807161804400.8950@racer> <20080717202609.GA32184@machine.or.cz> <57BAA376-10A4-4E3F-BB8E-37B46E8C49D3@sb.org> <200807172303.19339.jnareb@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v928.1)
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>, David Kastrup <dak@gnu.org>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 23:11:23 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 0/4] Honor core.deltaBaseCacheLimit during index-pack
+Date: Thu, 17 Jul 2008 21:35:50 +0000
+Message-ID: <20080717213550.GA2798@spearce.org>
+References: <20080714031242.GA14542@spearce.org> <alpine.LSU.1.00.0807141216390.32392@wbgn129.biozentrum.uni-wuerzburg.de> <m31w1wu1hc.fsf@localhost.localdomain> <487B439F.8040902@op5.se> <alpine.DEB.1.00.0807141322140.8950@racer> <487B4BD8.5030208@op5.se> <alpine.LFD.1.10.0807142203530.12484@xanadu.home> <20080715024741.GB1700@spearce.org> <487F6E04.9050106@arcor.de> <alpine.LFD.1.10.0807171215020.3110@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Stephan Hennig <mailing_list@arcor.de>,
+	Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Jul 17 23:36:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJaks-00011O-BL
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 23:11:14 +0200
+	id 1KJb9f-0000ms-Fv
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 23:36:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759699AbYGQVKP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jul 2008 17:10:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759549AbYGQVKP
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 17:10:15 -0400
-Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:45543 "EHLO
-	randymail-a3.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756791AbYGQVKN convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 17:10:13 -0400
-Received: from [10.100.18.129] (dsl092-049-214.sfo4.dsl.speakeasy.net [66.92.49.214])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a3.g.dreamhost.com (Postfix) with ESMTP id 765D4185DB4;
-	Thu, 17 Jul 2008 14:10:12 -0700 (PDT)
-In-Reply-To: <200807172303.19339.jnareb@gmail.com>
-X-Mailer: Apple Mail (2.928.1)
+	id S932615AbYGQVfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 17:35:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758965AbYGQVfw
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 17:35:52 -0400
+Received: from george.spearce.org ([209.20.77.23]:33373 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759031AbYGQVfv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 17:35:51 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 2A74F382A4; Thu, 17 Jul 2008 21:35:50 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0807171215020.3110@xanadu.home>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88923>
 
-On Jul 17, 2008, at 2:03 PM, Jakub Narebski wrote:
+Nicolas Pitre <nico@cam.org> wrote:
+> On Thu, 17 Jul 2008, Stephan Hennig wrote:
+> > Even though Git now makes some efforts to substitute runtime
+> > for memory to be able to operate with low(er) memory, I think it would
+> > still be informative for a user that repository and hardware, resp.
+> > core.deltaBaseCacheLimit, are, say, incompatible.  If valuable objects
+> > have to be discarded due to memory restrictions a warning could be
+> > issued to make the user aware of this fact, e.g.,
+> > 
+> >   Warning! Low memory. Git might be slowing down.
+> 
+> Well, I disagree.  First we don't know how slow git would effectively be 
+> since all (my) concerns so far were totally theoretical.  It will still 
+> work better than, say, 'git verify-pack' nevertheless. And git should 
+> just do its best regardless and avoid being needlessly verbose.
 
-> Dnia czwartek 17. lipca 2008 22:40, Kevin Ballard napisa=C5=82:
->> On Jul 17, 2008, at 1:26 PM, Petr Baudis wrote:
->>> On Thu, Jul 17, 2008 at 01:12:57PM -0700, Kevin Ballard wrote:
->
->>>> There is one facet of submodules that annoys me, because it
->>>> prevents me from using them as a replacement for svn:externals.
->>>> Namely, the submodule refers to a specific repository, but not
->>>> a path within that repository.  I work with svn repos that use
->>>> svn:externals to peg revisions (as is appropriate) but they all
->>>> refer to various paths within the other repositories, and the
->>>> only way I can deal with that is to throw symlinks everywhere.
->>>
->>> Actually, is this a big problem? Git can track symlinks and without
->>> adding support for overall partial checkouts, adding this would fee=
-l
->>> like too huge a hack to me.
->>>
->>> Also, when converting to a different VCS, it might be sensible to
->>> adjust
->>> your modules setup a bit as well - the requirement to include only
->>> particular subdirectory of a submodule sounds rather strange to me.
->>
->> The problem is right now I maintain a bunch of git-svn mirrors of
->> internal svn repos, but the company isn't willing to switch to git.
->> And we use subtree externals links to do things like pull in the
->> models from one rails app into another, or pull in various
->> subdirectories of the "support" repository.
->
-> I think the correct solution would be to make 'models' separate
-> repository... or create interim repository containing only changes
-> to 'models', and having 'models' as its top directory.
+Actually, this warning may be a good idea.  I'll post an RFC patch
+for it in a few minutes.  If people hate the idea, that's what an
+RFC is for.  :)
 
-That would require significantly more work to deal with than using =20
-symlinks like I described, since the company is not willing to adjust =20
-anything to help with my git usage (as I'm the only git user here).
-
--Kevin Ballard
-
---=20
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+-- 
+Shawn.
