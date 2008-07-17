@@ -1,87 +1,67 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [RFC PATCH] index-pack: Issue a warning if deltaBaseCacheLimit is
-	too small
-Date: Thu, 17 Jul 2008 22:02:51 +0000
-Message-ID: <20080717220251.GA3072@spearce.org>
-References: <20080717213550.GA2798@spearce.org>
+From: "Craig L. Ching" <cching@mqsoftware.com>
+Subject: RE: Subversion's do-everything-via-copying paradigm ( was RE:  Re: Considering teaching plumbing to users harmful)
+Date: Thu, 17 Jul 2008 17:06:10 -0500
+Message-ID: <63BEA5E623E09F4D92233FB12A9F79430238A1B4@emailmn.mqsoftware.com>
+References: <alpine.DEB.1.00.0807161804400.8950@racer><32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com><alpine.DEB.1.00.0807161902400.8986@racer><32541b130807161135h64024151xc60e23d222a3a508@mail.gmail.com><alpine.LNX.1.00.0807161605550.19665@iabervon.org><861w1sn4id.fsf@lola.quinscape.zz><m3od4wse30.fsf@localhost.localdomain><86k5fk1ooq.fsf@lola.quinscape.zz><63BEA5E623E09F4D92233FB12A9F79430238A16B@emailmn.mqsoftware.com> <85sku8gr1q.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>,
-	Stephan Hennig <mailing_list@arcor.de>
-X-From: git-owner@vger.kernel.org Fri Jul 18 00:03:55 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "David Kastrup" <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Jul 18 00:08:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJbZq-0000qW-0B
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 00:03:54 +0200
+	id 1KJbdn-00022V-Bw
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 00:07:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754793AbYGQWCx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 18:02:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754770AbYGQWCw
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 18:02:52 -0400
-Received: from george.spearce.org ([209.20.77.23]:43754 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754513AbYGQWCw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 18:02:52 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 7D535382A4; Thu, 17 Jul 2008 22:02:51 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20080717213550.GA2798@spearce.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1758902AbYGQWG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 18:06:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758627AbYGQWG6
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 18:06:58 -0400
+Received: from mail.de.mqsoftware.com ([66.192.70.108]:21552 "EHLO
+	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758061AbYGQWG5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Jul 2008 18:06:57 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <85sku8gr1q.fsf@lola.goethe.zz>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Subversion's do-everything-via-copying paradigm ( was RE:  Re: Considering teaching plumbing to users harmful)
+Thread-Index: AcjoV8o5soyqdo92SdCtFF7gGs31EwAARn9Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88929>
 
-Its rare that we should exceed deltaBaseCacheLimit while resolving
-delta compressed objects.  By default this limit is 16M, and most
-chains are under 50 objects in length.  This affords about 327K per
-object in the chain, which is quite large by source code standards.
-
-If we have to recreate a prior delta base because we evicted it to
-stay within the deltaBaseCacheLimit we can warn the user that their
-configured limit is perhaps too low for this repository data set.
-If the user keeps seeing the warning they can research it in the
-documentation, and consider setting it higher on this repository,
-or just globally on their system.
-
-Suggested-by: Stephan Hennig <mailing_list@arcor.de>
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- index-pack.c |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
-
-diff --git a/index-pack.c b/index-pack.c
-index ac20a46..97533d6 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -53,6 +53,7 @@ static struct object_entry *objects;
- static struct delta_entry *deltas;
- static struct base_data *base_cache;
- static size_t base_cache_used;
-+static int oom_warning;
- static int nr_objects;
- static int nr_deltas;
- static int nr_resolved_deltas;
-@@ -481,6 +482,13 @@ static void *get_base_data(struct base_data *c)
- 	if (!c->data) {
- 		struct object_entry *obj = c->obj;
  
-+		if (!oom_warning && verbose) {
-+			if (progress)
-+				fputc('\n', stderr);
-+			warning("One or more delta chains are larger than deltaBaseCache.");
-+			oom_warning = 1;
-+		}
-+
- 		if (obj->type == OBJ_REF_DELTA || obj->type == OBJ_OFS_DELTA) {
- 			void *base = get_base_data(c->base);
- 			void *raw = get_data_from_pack(obj);
--- 
-1.5.6.3.569.ga9185
+
+> -----Original Message-----
+> From: David Kastrup [mailto:dak@gnu.org] 
+> Sent: Thursday, July 17, 2008 4:05 PM
+> To: Craig L. Ching
+> Cc: git@vger.kernel.org
+> Subject: Re: Subversion's do-everything-via-copying paradigm 
+> ( was RE: Re: Considering teaching plumbing to users harmful)
+> 
+> "Craig L. Ching" <cching@mqsoftware.com> writes:
+> 
+> > Does it not bother you that renaming a file is a copy + delete [1].
+> > Have they fixed that yet?  That was one of the biggest 
+> reasons we never
+> > moved to subversion.
+> 
+> Never bit me.
+> 
+Ignorance is bliss as they say ;-)
+
+> -- 
+> David Kastrup, Kriemhildstr. 15, 44793 Bochum
+> 
+
+Cheers,
+Craig
