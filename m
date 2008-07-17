@@ -1,145 +1,70 @@
-From: "Nigel Magnay" <nigel.magnay@gmail.com>
-Subject: Re: [PATCH] Teach git submodule update to use distributed repositories
-Date: Thu, 17 Jul 2008 15:03:30 +0100
-Message-ID: <320075ff0807170703l57fe26d2h1e9c4db1c38dd6f1@mail.gmail.com>
-References: <320075ff0807170508j3d3c1ef8j49df576fc47debe2@mail.gmail.com>
-	 <alpine.DEB.1.00.0807171311010.8986@racer>
-	 <320075ff0807170520r200e546ejbad2ed103bd65f82@mail.gmail.com>
-	 <320075ff0807170521s26693381m60648468cce1c41c@mail.gmail.com>
-	 <alpine.DEB.1.00.0807171351380.8986@racer>
+From: Gerrit Pape <pape@smarden.org>
+Subject: Re: [PATCH/rfc] git-svn.perl: workaround assertions in svn library
+	1.5.0
+Date: Thu, 17 Jul 2008 14:08:56 +0000
+Message-ID: <20080717140856.10213.qmail@c0f13986110104.315fe32.mid.smarden.org>
+References: <20080706192850.32547.qmail@4480698c45f1ed.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 17 16:04:39 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Jul 17 16:09:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJU5w-0004PK-9d
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 16:04:32 +0200
+	id 1KJUAd-0006VB-7e
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 16:09:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755978AbYGQODd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 10:03:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756857AbYGQODd
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 10:03:33 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:33824 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755079AbYGQODc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 10:03:32 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so1952186yxm.1
-        for <git@vger.kernel.org>; Thu, 17 Jul 2008 07:03:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Dfg94m40JLIsMlA095q2YwS54XTnTjezYiat6imkvds=;
-        b=PjkbxXgqwU74eFcdVI40XS00Al9LDdmxoladD8JSqD/2Le8yfMviUoqQs1jKvzFCj+
-         w4tLOZx34Dxe/ar33zn1S7ns8AImaYev96D6ELZsVDM6RwQDAcYh3KQpfDtgp7YX8LRy
-         DnMjxT8DYoIR5Ht1sad0bEjuMO3i5uZsvQB2w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=nLy6BxI1yZAxoKKiE6/oC5yjOm97iUCoHfI7kZ2Ke9NlrFAidF3ZbHdYLFYao1ZfAM
-         3uzsMc8+tl6UAdcTMUBG7BKxXGPkoAOOSolqFTqGTdbGBZPTX9USxtTtTf9CpxNJ+mVb
-         1kjIgr2OXphuGOMc9MGfCx+4QYI1svBRo6QDc=
-Received: by 10.103.222.12 with SMTP id z12mr1959019muq.12.1216303410499;
-        Thu, 17 Jul 2008 07:03:30 -0700 (PDT)
-Received: by 10.103.246.15 with HTTP; Thu, 17 Jul 2008 07:03:30 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0807171351380.8986@racer>
+	id S1754795AbYGQOIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 10:08:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755298AbYGQOIY
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 10:08:24 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:52803 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754401AbYGQOIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 10:08:24 -0400
+Received: (qmail 10214 invoked by uid 1000); 17 Jul 2008 14:08:56 -0000
 Content-Disposition: inline
+In-Reply-To: <20080706192850.32547.qmail@4480698c45f1ed.315fe32.mid.smarden.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88855>
 
-On Thu, Jul 17, 2008 at 1:58 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Thu, 17 Jul 2008, Nigel Magnay wrote:
->
->> On Thu, Jul 17, 2008 at 1:13 PM, Johannes Schindelin
->> <Johannes.Schindelin@gmx.de> wrote:
->>
->> > On Thu, 17 Jul 2008, Nigel Magnay wrote:
->> >
->> >> When doing a git submodule update, it fetches any missing submodule
->> >> commits from the repository specified in .gitmodules.
->> >
->> > Huh?  It takes what is in .git/config!  Not what is in .gitmodules.
->>
->> Huh? And where does .git/config get it from? Oh, that's right,
->> .gitmodules.
->
-> Oh, that's right, after "git submodule init".  Right before you are
-> supposed to change them if your setup commands that.
->
->> > So if you have another remote (or URL, e.g. if you have ssh:// access,
->> > but the .gitmodules file lists git://), just edit .git/config.
->>
->> So for my usecase, you'd have me go in and change *evey single one* of
->> my submodule refs from the centralised repository, *every time* I want
->> to do a peer review?
->
-> No.
->
->> Doesn't the current system strike you as being somewhat centralised in
->> nature?
->
-> No.
->
->> > I meant, that is the whole _point_ of having a two-step init/update
->> > procedure.
->>
->> Are you just determined that submodules should remain useless for "the
->> rest of us"?
->
-> No.
->
-> If you really need to change the "origin" back and forth between reviews,
-> while the committed state of the superproject stays the same, then
-> something is seriously awkward and needs to be streamlined in your setup.
->
-> Because when the superproject's revision stays the same, "git submodule
-> update" may fetch additional objects if you specify another remote, but it
-> will check out just the same revisions of the submodules.  Because they
-> were committed as such.
->
-> But if you want to get objects from another server (as opposed to update
-> the submodules' working directories to the latest committed revisions),
-> which happens to have the identical layout of the principal server (which
-> I would deem another setup peculiarity to be fixed), you might want to
-> look into the recurse patch that was flying about on this list a few
-> months back.
+On Sun, Jul 06, 2008 at 07:28:50PM +0000, Gerrit Pape wrote:
+> With subversion 1.5.0 (C and perl libraries) the git-svn selftest
+> t9101-git-svn-props.sh fails at test 25 and 26.  The following commands
 
-The layout wouldn't be the same - the submodules would be in the
-corresponding subdirectories (I guess it could have some other,
-stranger layout, but I'd consider that peculiar). So you're right, the
-layout is different, which makes editing the config all the more
-tedious.
+> The breakage was reported by Lucas Nussbaum through
+>  http://bugs.debian.org/489108
 
-I don't want to change the *origin* back and forth. I want to be able
-to use repos with submodules in them as easily and as transparently
-and in the same distributed way as git allows me to do if they don't
-contain submodules. I.E I don't want it to be such a sisyphean
-challenge every time with umpteen scripts to complete a usecase that
-really ought to be supported as standard. The very first thing that
-I've hit is that submodule update only talks to origin, so 'git pull
-fred && git submodule update' falls flat on its face. Why am I being
-forced to update config just to have a look-see at fred's project?
+> ---
+>  git-svn.perl |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
+> 
+> I ran into this on Debian/unstable.  With svn 1.5.0 the selftest fails
+> without the patch, with svn 1.4.6 it succeeds with and without the
+> patch.  I'm not familar with the svn interfaces, not sure whether this
+> is a regression in subversion, or a bug in git-svn.
 
-Your attitude seems to be that the status-quo is in some way
-desirable; "It's no wonder that this tool is awkward to use in your
-workflow.". This workflow is really common, and there's actual, real
-people on this list complaining about it. Don't we think it could be
-improved to be non-awkward ?
+Hi, while this commit fixed the selftests, it unfortunately is a
+regression
 
-In the ideal UI, it ought to be possible to make the use of projects
-with submodules (almost) completely transparent, like it is in the
-vcs-that-dare-not-speak-it's-name.
+ http://thread.gmane.org/gmane.comp.version-control.git/87822/
+ http://bugs.debian.org/490400
+
+I'm still not sure whether this is a git-svn problem, or actually a
+problem in subversion 1.5.0
+
+ $ perl -MSVN::Client -e \
+ 'sub print_names { print "<$_[0]>\n"; } $ctx=new SVN::Client;
+ $ctx->status(".", "BASE", \&print_names, 1, 1, 0, 1);' | head -5
+ perl:
+ /build/buildd/subversion-1.5.0dfsg1/subversion/libsvn_subr/path.c:119: svn_path_join: Assertion `is_canonical(base, blen)' failed.
+ $ 
+ [0]
+
+Regards, Gerrit.
+
+[0] http://bugs.debian.org/359679
