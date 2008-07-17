@@ -1,61 +1,85 @@
-From: Lars Noschinski <lars-2008-1@usenet.noschinski.de>
-Subject: Re: git-cvsexportcommit keyword mismatch issue
-Date: Wed, 16 Jul 2008 23:16:26 +0000 (UTC)
-Message-ID: <20080716231622.GA5399@lars.home.noschinski.de>
-References: <E1KJ30U-0004EL-BV@corti>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Considering teaching plumbing to users harmful
+Date: Thu, 17 Jul 2008 02:25:05 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807170218280.4318@eeepc-johanness>
+References: <alpine.DEB.1.00.0807161804400.8950@racer> <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com> <7v7iblsnfh.fsf@gitster.siamese.dyndns.org> <32541b130807161151x19c20f9t91b7fb9b8c7b8c7b@mail.gmail.com> <7vmykhr6h1.fsf@gitster.siamese.dyndns.org>
+ <32541b130807161229ob4c21cbsc6c86ee3e42c4101@mail.gmail.com> <alpine.DEB.1.00.0807170024310.4318@eeepc-johanness> <20080716224954.GL2167@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 17 02:11:19 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jul 17 02:25:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJH5T-0003cI-5f
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 02:11:11 +0200
+	id 1KJHJU-0007FM-Pc
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 02:25:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461AbYGQAKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 20:10:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbYGQAKM
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 20:10:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:52352 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751133AbYGQAKK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 20:10:10 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1KJH4M-0003aP-8U
-	for git@vger.kernel.org; Thu, 17 Jul 2008 00:10:02 +0000
-Received: from xdsl-87-78-234-55.netcologne.de ([87.78.234.55])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 17 Jul 2008 00:10:02 +0000
-Received: from lars-2008-1 by xdsl-87-78-234-55.netcologne.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 17 Jul 2008 00:10:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: xdsl-87-78-234-55.netcologne.de
-Content-Disposition: inline
-In-Reply-To: <E1KJ30U-0004EL-BV@corti>
-User-Agent: mutt-ng/devel-r804 (Linux)
+	id S1759637AbYGQAY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 20:24:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759636AbYGQAY1
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 20:24:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40278 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754776AbYGQAY0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 20:24:26 -0400
+Received: (qmail invoked by alias); 17 Jul 2008 00:24:24 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp057) with SMTP; 17 Jul 2008 02:24:24 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX199RzJ3d/R9w56MngiKPxjvny8eBfeK26bNtFM52/
+	kVu/iNS3pjJOOQ
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <20080716224954.GL2167@mit.edu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88789>
 
-* Barak A. Pearlmutter <barak@cs.nuim.ie> [08-07-16 11:09]:
->Simply avoiding expanded keywords should solve the problem.  I thought
->git-cvsimport -k would keep them out of my git repo, but no such luck.
->Even when I use "cvs checkout -kk" for the CVS sandbox and then
->"git-cvsimport -k", keywords were *still* expanded in my git repo.
->(This is with both git 1.4.4.4 and git 1.5.6.)  Either the -k switch
->to git-cvsimport is busted, or I'm doing something wrong.
+Hi,
 
-git-cvsimport -k works for me as of version 1.5.5.2 and 1.5.6.2.
+On Wed, 16 Jul 2008, Theodore Tso wrote:
 
-In my opinion, git-cvsexportcommit misses an option -k to do cvs update
-with -kk (as -kk is sticky for already checked out files, but not for
-the whole repository, so new files will not get -kk set). If I cannot
-get rid of this cvs repository soon, I'll probably cook up a patch for
-it.
+> I've already said I agree with you, but maybe it would be helpful if you 
+> focused the discussion a little more with a concrete suggestion about 
+> how we could improve the user-visible documentation.
+
+Well, I was not sure if I was full of shot or not.
+
+> So a concrete suggestion might be to move the list of plumbing commands 
+> from the top-level git man page to a "git-plumbing" man page.
+
+I think that would not help much.
+
+As I replied to Dimitry, I could imagine that moving the plumbing into its 
+own manual section would be a way.
+
+> I'll note that the git user manual is pretty good about avoiding the use 
+> of git plumbing commands.  It's not until Chapter 9, "Low Level Git 
+> Commands" that it start going into the plumbing.  (There are a couple of 
+> mentions of git rev-parse before chapter 9, but that's about it that I 
+> could find).
+
+Well, rev-parse is one of my pet peeves this day.  rev-parse is _nothing_ 
+but plumbing.
+
+> Was there other git documentation where you think there is too many 
+> references to git plumbing?
+
+Actually, the problem arose with a few "tutorials" on the web, and their 
+creators violently arguing for their ways (and me being more and more 
+uncertain if they are wrong or me).
+
+And then I saw people on IRC doing the same thing.  Realizing that the 
+recipients of the "help" were more confused than before, and just typed 
+what was written (they would probably even have typed "rm -rf $HOME") 
+because they had given up trying to understand.
+
+Ciao,
+Dscho
