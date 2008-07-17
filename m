@@ -1,78 +1,85 @@
-From: Stephan Hennig <mailing_list@arcor.de>
-Subject: Re: [PATCH 0/4] Honor core.deltaBaseCacheLimit during index-pack
-Date: Thu, 17 Jul 2008 18:06:28 +0200
-Message-ID: <487F6E04.9050106@arcor.de>
-References: <20080713011512.GB31050@spearce.org> <1216001267-33235-1-git-send-email-spearce@spearce.org> <alpine.LFD.1.10.0807132220570.12484@xanadu.home> <20080714031242.GA14542@spearce.org> <alpine.LSU.1.00.0807141216390.32392@wbgn129.biozentrum.uni-wuerzburg.de> <m31w1wu1hc.fsf@localhost.localdomain> <487B439F.8040902@op5.se> <alpine.DEB.1.00.0807141322140.8950@racer> <487B4BD8.5030208@op5.se> <alpine.LFD.1.10.0807142203530.12484@xanadu.home> <20080715024741.GB1700@spearce.org>
+From: "Craig L. Ching" <cching@mqsoftware.com>
+Subject: Subversion is actually not so simple (was RE: Considering teaching plumbing to users harmful)
+Date: Thu, 17 Jul 2008 11:11:37 -0500
+Message-ID: <63BEA5E623E09F4D92233FB12A9F79430238A167@emailmn.mqsoftware.com>
+References: <alpine.DEB.1.00.0807161804400.8950@racer><32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com><alpine.DEB.1.00.0807161902400.8986@racer><32541b130807161135h64024151xc60e23d222a3a508@mail.gmail.com><alpine.LNX.1.00.0807161605550.19665@iabervon.org><861w1sn4id.fsf@lola.quinscape.zz> <m3od4wse30.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@cam.org>, Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 17 18:09:19 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Jakub Narebski" <jnareb@gmail.com>, "David Kastrup" <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Jul 17 18:13:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJW2e-0003r3-VL
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 18:09:17 +0200
+	id 1KJW6n-0005fv-69
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 18:13:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756707AbYGQQIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 12:08:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756569AbYGQQIR
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 12:08:17 -0400
-Received: from main.gmane.org ([80.91.229.2]:59748 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752861AbYGQQIQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 12:08:16 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KJW1e-0007Fq-1V
-	for git@vger.kernel.org; Thu, 17 Jul 2008 16:08:14 +0000
-Received: from dialin-145-254-066-169.pools.arcor-ip.net ([145.254.66.169])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 17 Jul 2008 16:08:14 +0000
-Received: from mailing_list by dialin-145-254-066-169.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 17 Jul 2008 16:08:14 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dialin-145-254-066-169.pools.arcor-ip.net
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12
-In-Reply-To: <20080715024741.GB1700@spearce.org>
+	id S1756944AbYGQQM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 12:12:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757386AbYGQQMZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 12:12:25 -0400
+Received: from mail.de.mqsoftware.com ([66.192.70.108]:3836 "EHLO
+	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756944AbYGQQMY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Jul 2008 12:12:24 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <m3od4wse30.fsf@localhost.localdomain>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Subversion is actually not so simple (was RE: Considering teaching plumbing to users harmful)
+Thread-Index: AcjoJUfmPKmqiOjZTW2ypc0n9sa3AAAAFeJQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88872>
 
-Shawn O. Pearce schrieb:
+ 
 
-> We're better off keeping our memory usage low and recomputing
-> the delta base when we need to return to it to process a sibling.
+> -----Original Message-----
+> From: git-owner@vger.kernel.org 
+> [mailto:git-owner@vger.kernel.org] On Behalf Of Jakub Narebski
+> Sent: Thursday, July 17, 2008 10:52 AM
+> To: David Kastrup
+> Cc: git@vger.kernel.org
+> Subject: Re: Considering teaching plumbing to users harmful
+> 
+> Subversion is simple if you are limited to simple things; but 
+> the same is true with Git.  I find for example the whole 'properties'
+> mechanism and its use seriously not simple.
+> 
+Yes, that's exactly right.  Because SVN's underlying repository is
+complex, it sometimes falls out in the UI.  If you stick with the way
+SVN wants you to do things, you can get along with it fairly well.  But
+that's the problem, it's just not flexible.  On the other hand, Git's
+concept of the repository is so simple and clean, it's a DAG and you can
+actually do a lot more with fewer commands.  But then you can do so much
+more as well and work the way *you* want to.
 
-Thanks to all who have had a look at this issue!  From a user's
-perspective I have one more suggestions and a question:
+For instance, SVN has a history of having to invent concepts that just
+shouldn't need to be invented.  Their latest release includes something
+they call "merge tracking", but it falls on the floor in the face of
+what they call "reflective merging." [1]  I don't find "merge tracking"
+and "reflective merges" concepts that I should *have* to understand when
+it comes to working with a VCS, the VCS should just *do* those things.
+Those concepts just don't exist in Git.  Frankly, I don't find
+Subversion to be easier to use than Git at all and this is coming from a
+very long-time CVS user.  I do find, however, that Git has a very large
+vocabulary and that does take some time to learn, but I'd argue that
+this is due to it's inherent flexibility than it is due to any inherent
+flaws.
 
-First, it would have helped me to bring this issue onto the list if I
-had earlier known that this was no misconfiguration, but a memory
-problem.  Even though Git now makes some efforts to substitute runtime
-for memory to be able to operate with low(er) memory, I think it would
-still be informative for a user that repository and hardware, resp.
-core.deltaBaseCacheLimit, are, say, incompatible.  If valuable objects
-have to be discarded due to memory restrictions a warning could be
-issued to make the user aware of this fact, e.g.,
+[1] -- http://blogs.open.collab.net/svn/2008/07/subversion-merg.html
 
-  Warning! Low memory. Git might be slowing down.
+> --
+> Jakub Narebski
+> Poland
+> ShadeHawk on #git
+> --
 
-
-Second, while there have been some changes to Git now, as a poor user,
-how can I make use of that changes?  I think, updating my client should
-only help with pushing.  For pulling, I have to wait for repo.or.cz to
-update to Git 1.6.0, right?
-
-Best regards,
-Stephan Hennig
+Cheers,
+Craig
