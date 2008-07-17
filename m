@@ -1,68 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Documentation/gitignore.txt: Clarify gitignore vs tracked
-	files
-Date: Thu, 17 Jul 2008 18:36:32 +0200
-Message-ID: <20080717163622.12592.29919.stgit@localhost>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Considering teaching plumbing to users harmful
+Date: Thu, 17 Jul 2008 09:38:40 -0700
+Message-ID: <7vzlogh3e7.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0807161804400.8950@racer>
+ <487EF519.5070902@sneakemail.com> <20080717125536.GO2167@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 17 18:38:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Peter Valdemar =?utf-8?Q?M=C3=B8rch_=28Lists=29?= 
+	<4ux6as402@sneakemail.com>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jul 17 18:39:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJWUr-0007eL-1u
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 18:38:25 +0200
+	id 1KJWWC-00088A-6D
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 18:39:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755824AbYGQQgj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 12:36:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755338AbYGQQgi
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 12:36:38 -0400
-Received: from [212.249.11.140] ([212.249.11.140]:49287 "EHLO pixie.suse.cz"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755178AbYGQQgi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 12:36:38 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by pixie.suse.cz (Postfix) with ESMTP id 1555F2AC73C;
-	Thu, 17 Jul 2008 18:36:33 +0200 (CEST)
-User-Agent: StGIT/0.14.2
+	id S1753043AbYGQQis (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 12:38:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755178AbYGQQis
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 12:38:48 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63782 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753028AbYGQQir (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 12:38:47 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6784739A18;
+	Thu, 17 Jul 2008 12:38:46 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id B285A39A13; Thu, 17 Jul 2008 12:38:42 -0400 (EDT)
+In-Reply-To: <20080717125536.GO2167@mit.edu> (Theodore Tso's message of "Thu,
+ 17 Jul 2008 08:55:36 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D36F4044-541E-11DD-94B5-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88878>
 
-Explain more carefully that `.gitignore` concerns only untracked files
-and there is no way to make git ignore local changes in already tracked
-files.
+Theodore Tso <tytso@mit.edu> writes:
 
-This is currently probably one of the top FAQs at #git and the documentation
-could be more explicit about this.
+> Have you taken a look at the intro-level materials such as "Everyday
+> Git in 20 commands or so"[1], the git tutorial[2], the official "Git's
+> User Manual"[3], or the "Git-SVN crash course"[4]?  Those are probably
+> the best place to begin --- and to basically treat the git man pages
+> as reference materials with a huge number of controls that you won't
+> use or need to use for a long time --- if ever.
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+Good advice.
 
- Documentation/gitignore.txt |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index fc0efd8..ac3c776 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -13,9 +13,12 @@ DESCRIPTION
- -----------
- 
- A `gitignore` file specifies intentionally untracked files that
--git should ignore.  Each line in a `gitignore` file specifies a
--pattern.
-+git should ignore.
-+Note that all the `gitignore` files really concern only files
-+that are not already tracked by git; there is no direct mechanism
-+to make git ignore your local modifications in already tracked files.
- 
-+Each line in a `gitignore` file specifies a pattern.
- When deciding whether to ignore a path, git normally checks
- `gitignore` patterns from multiple sources, with the following
- order of precedence, from highest to lowest (within one level of
+One caution is that I wrote the Everyday quite a while ago, certainly way
+before 1.5.0, and I suspect the set of best commands and best ways to do
+what these sections demonstrate to do may have changed.  I do not think
+old ways stopped working (that would be a regression), but there would be
+better ways invented after the document was last updated.
