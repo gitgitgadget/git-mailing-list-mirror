@@ -1,108 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Considering teaching plumbing to users harmful
-Date: Thu, 17 Jul 2008 02:02:04 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807170152190.4318@eeepc-johanness>
-References: <alpine.DEB.1.00.0807161804400.8950@racer> <7vmykhpn6z.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807170100320.4318@eeepc-johanness> <7vk5flo0si.fsf@gitster.siamese.dyndns.org>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: GSoC podcast 18: Git
+Date: Thu, 17 Jul 2008 02:02:47 +0200
+Message-ID: <bd6139dc0807161702m48f3caefre2202fc7cdbdee5a@mail.gmail.com>
+References: <alpine.DEB.1.00.0807170133150.4318@eeepc-johanness>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 02:02:29 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, spearce@spearce.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 17 02:03:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJGwy-000149-Gn
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 02:02:24 +0200
+	id 1KJGyM-0001TC-8J
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 02:03:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130AbYGQABZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2008 20:01:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbYGQABZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 20:01:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46582 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750939AbYGQABZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2008 20:01:25 -0400
-Received: (qmail invoked by alias); 17 Jul 2008 00:01:23 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp037) with SMTP; 17 Jul 2008 02:01:23 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ymeVKDvgynXKyBHu1Sv2BkEq0WgO/5g7U5iYKwp
-	+6CSzpQwTEidoL
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7vk5flo0si.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1758844AbYGQACu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2008 20:02:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758372AbYGQACu
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jul 2008 20:02:50 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:22792 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753907AbYGQACt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2008 20:02:49 -0400
+Received: by qw-out-2122.google.com with SMTP id 3so414799qwe.37
+        for <git@vger.kernel.org>; Wed, 16 Jul 2008 17:02:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=jJ43Cyh+AiRF/vFwAeBqOPmlFvXS6eMhwP8nmq0b2go=;
+        b=PvLkJjh5TknCjiOONmqcYNAGrGq8N7e6UtzVY8EXhi5sccOjrSsz/EwW1zI498dQgJ
+         TMVXDB9HariSnmQx8mOifXjrSQ2k5wXnwajFhBX08dV2N0+7SA4uZ4NaaS2azVXlVvvI
+         FcNw2jxDHqV+Xs/ioLsJwonuYNAOj0GlUUkak=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=ixpuDs7jjHBXAoOXap59aHFkD33aoffvUEJazNAs1SeBIIezF/LIWidupBrnTjBncP
+         vlGAmaY2eofezzhIGcKDw6D8IvhKKTR0hh0Qxp0vQV+EwCfko5bqrAbJBdcTz5ZNY4Uy
+         gNQkbFSz7jNYfAuYmQpeOVs9D/YaQGmXFXxEM=
+Received: by 10.142.194.1 with SMTP id r1mr343855wff.192.1216252967724;
+        Wed, 16 Jul 2008 17:02:47 -0700 (PDT)
+Received: by 10.143.38.17 with HTTP; Wed, 16 Jul 2008 17:02:47 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0807170133150.4318@eeepc-johanness>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88787>
 
-Hi,
+On Thu, Jul 17, 2008 at 1:35 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi list,
+>
+> you might be interested in listening to Leslie Hawthorn interviewing Git's
+> GSoC administrator (Shawn) and his lazy bum^Wbackup administrator (yours
+> truly).
 
-On Wed, 16 Jul 2008, Junio C Hamano wrote:
+Interesting! What is the subject of the interview though?
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Wed, 16 Jul 2008, Junio C Hamano wrote:
-> >
-> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >> 
-> >> > Am I the only one who deems teaching plumbing to users ("I like it 
-> >> > raw!  So I teach it the same way!") harmful?
-> >> 
-> >> I think that justification is harmful.
-> >> 
-> >> More productive way to think about it is to identify cases where we 
-> >> _need_ to go down to combination of the plumbing commands in our 
-> >> daily workflow, with today's command set.  That would give us a good 
-> >> indication that some Porcelain may need to be enhanced.
-> >> 
-> >> An example. I find myself running "git read-tree -m -u $another_state" 
-> >> while redoing a series inside a "rebase -i" session to move commit 
-> >> boundaries.  There may need an insn that says "use that tree" instead of 
-> >> "edit" and running "read-tree -m -u" by hand.  This does not bother me 
-> >> too much, but there probably are other examples.
-> >> 
-> >> Another example.  I often run "git ls-files -u" while looking at which 
-> >> paths are conflicting.  ls-files is classified as plumbing, but it does 
-> >> not bother me as much as having to see the staged long object names in 
-> >> this output.  Other people, however, might find it yucky, and we might 
-> >> want "git merge --unmerged" or something that lists the paths (and only 
-> >> paths, no stage information) that still have conflicts.
-> >
-> > I agree that if you know Git internals -- and you and me do -- it comes in 
-> > _right_ handy to know the 100+ commands with many options by heart.
-> >
-> > However, my point was about telling users, especially new ones.
-> 
-> Perhaps you did not read my first paragraph?
+-- 
+Cheers,
 
-Well, I did.
-
-But as was visible from the thread including this message:
-
-http://thread.gmane.org/gmane.comp.version-control.git/59935/focus=62021
-
-I take it that we do not really have to go down to the plumbing that 
-often.
-
-Sure, advanced usage is nice, and often involves plumbing, especially for 
-scripting.  And there is a time to explain plumbing.  But I think that the 
-first lesson is not it.  Not even the second or the third.
-
-And as I said in my first mail, I consider it harmful to _start out_ with 
-plumbing.
-
-And other answers in this thread (the ones that do not try to highjack the 
-thread to talk about a crappy but popular SCM) make me even more certain 
-of that.
-
-Ciao,
-Dscho
-
-P.S.: Of course, there may be users who like to spend a lot of time 
-grasping the internals of Git first, before issuing their first Git 
-command.  Just like there are people who like electrodes on their thighs.
+Sverre Rabbelier
