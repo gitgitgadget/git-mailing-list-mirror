@@ -1,91 +1,117 @@
-From: "Nigel Magnay" <nigel.magnay@gmail.com>
-Subject: Re: [PATCH] Teach git submodule update to use distributed repositories
-Date: Thu, 17 Jul 2008 13:21:28 +0100
-Message-ID: <320075ff0807170521s26693381m60648468cce1c41c@mail.gmail.com>
-References: <320075ff0807170508j3d3c1ef8j49df576fc47debe2@mail.gmail.com>
-	 <alpine.DEB.1.00.0807171311010.8986@racer>
-	 <320075ff0807170520r200e546ejbad2ed103bd65f82@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Documentation/git-submodule.txt: Further clarify the
+	description
+Date: Thu, 17 Jul 2008 14:29:20 +0200
+Message-ID: <20080717122911.32334.73465.stgit@localhost>
+References: <20080717121813.GC10151@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 17 14:22:37 2008
+Cc: git@vger.kernel.org, Heikki Orsila <shdl@zakalwe.fi>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jul 17 14:31:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJSVB-00036v-V1
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 14:22:30 +0200
+	id 1KJScy-0007HP-N6
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 14:30:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756656AbYGQMVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 08:21:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756495AbYGQMVb
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 08:21:31 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:5260 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753118AbYGQMVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 08:21:30 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so1943354yxm.1
-        for <git@vger.kernel.org>; Thu, 17 Jul 2008 05:21:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=f3bzDyRcln2M6e67bX/DLhG2dmZHkHCOIQWGzj5WfCY=;
-        b=XDdquDJk0szIwJ2sUtu8TGafGi9m8lqqXQkO413isf5NV077fcivb6lFT4NHxkEt5p
-         uy3e/xXxWY/eoSHJVN2TXXprZf1jaIXt2T8DCF8wE6s5WTameuOnkdIAs96q5k7K7UIK
-         b/6GyaaHodXAhnxDoYnV06BohAm5ZGFVJCl/g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=dBhNASS6aXJMjBA2uyb4BlPkT3yPXGzGT6Oq1nS5HHnKeHhNcXmYtPGN4BUVFi8b4M
-         H78MqRiKn5omhASu2HVdLBINPJW9LDk23v0gIoGzlWIgLAxv5PRPKQEQbCZTOBJ6WuvQ
-         hsyU71yWmQyywYzjGYT0GVPpA9aYG4qZgEhk0=
-Received: by 10.103.20.7 with SMTP id x7mr1867115mui.75.1216297288474;
-        Thu, 17 Jul 2008 05:21:28 -0700 (PDT)
-Received: by 10.103.246.15 with HTTP; Thu, 17 Jul 2008 05:21:28 -0700 (PDT)
-In-Reply-To: <320075ff0807170520r200e546ejbad2ed103bd65f82@mail.gmail.com>
-Content-Disposition: inline
+	id S1755242AbYGQM3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 08:29:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753889AbYGQM3c
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 08:29:32 -0400
+Received: from [212.249.11.140] ([212.249.11.140]:48747 "EHLO pixie.suse.cz"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751296AbYGQM3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 08:29:31 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by pixie.suse.cz (Postfix) with ESMTP id A17512AC73C;
+	Thu, 17 Jul 2008 14:29:20 +0200 (CEST)
+In-Reply-To: <20080717121813.GC10151@machine.or.cz>
+User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88840>
 
-On Thu, Jul 17, 2008 at 1:13 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Thu, 17 Jul 2008, Nigel Magnay wrote:
->
->> When doing a git submodule update, it fetches any missing submodule
->> commits from the repository specified in .gitmodules.
->
-> Huh?  It takes what is in .git/config!  Not what is in .gitmodules.
->
+This patch rewrites the general description yet again, first clarifying
+the high-level concept, mentioning the difference to remotes and using
+the subtree merge strategy, then getting to the details about tree
+entries and .gitmodules file.
 
-Huh? And where does .git/config get it from? Oh, that's right, .gitmodules.
+The patch also makes few smallar grammar fixups of the rest of the
+description and clarifies how does 'init' relate to 'update --init'.
 
-> So if you have another remote (or URL, e.g. if you have ssh:// access, but
-> the .gitmodules file lists git://), just edit .git/config.
->
+Cc: Heikki Orsila <shdl@zakalwe.fi>
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-So for my usecase, you'd have me go in and change *evey single one* of
-my submodule refs from the centralised repository, *every time* I want
-to do a peer review?
+ Documentation/git-submodule.txt |   39 +++++++++++++++++++++++++++------------
+ 1 files changed, 27 insertions(+), 12 deletions(-)
 
-Doesn't the current system strike you as being somewhat centralised in nature?
-
-> I meant, that is the whole _point_ of having a two-step init/update
-> procedure.
->
-
-Are you just determined that submodules should remain useless for "the
-rest of us"?
-
-> Ciao,
-> Dscho
->
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index bb4e6fb..01d0d91 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -18,24 +18,35 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ -----------
+-Submodules are a special kind of tree entries which refer to a particular tree
+-state in another repository.  The tree entry describes
+-the existence of a submodule with the given name and the exact revision that
+-should be used, while an entry in `.gitmodules` file gives the location of
+-the repository.
+-
+-When checked out, submodules will maintain their own independent repositories
+-within their directories; the only link between the submodule and the "parent
+-project" is the tree entry within the parent project mentioned above.
++Submodules allow foreign repositories to be embedded within a dedicated
++subdirectory of the source tree, always pointed at a particular commit.
++They are not to be confused with remotes, which are meant mainly for branches
++of the same project; submodules are meant for different projects you would like
++to make part of your source tree, while the history of the two projects still
++stays completely independent and you cannot modify the contents of the
++submodule from within the main project.  In case you want to merge the project
++histories, possibly make local modifications within the tree, but also do not
++mind that your repository will bulk up with all the contents of the other
++project, consider adding a remote for the other project and using the 'subtree'
++merge strategy instead of setting up a submodule.
++
++Submodules are composed from a special kind of tree entry (so-called `gitlink`)
++in the main repository that refers to a particular commit object within
++the (completely separate) inner repository, and a record in the `.gitmodules`
++file at the root of the source tree, assigning a logical name to the submodule
++and describing the default URL the submodule shall be cloned from. The logical
++name can be used for overriding this URL within your local repository
++configuration (see 'submodule init').
+ 
+ This command will manage the tree entries and contents of the gitmodules file
+-for you, as well as inspecting the status of your submodules and updating them.
++for you, as well as inspect the status of your submodules and update them.
+ When adding a new submodule to the tree, the 'add' subcommand is to be used.
+ However, when pulling a tree containing submodules, these will not be checked
+ out by default; the 'init' and 'update' subcommands will maintain submodules
+ checked out and at appropriate revision in your working tree. You can inspect
+ the current status of your submodules using the 'submodule' subcommand and get
+-an overview of changes 'update' would perform using the 'summary' subcommand.
++an overview of the changes 'update' would perform using the 'summary'
++subcommand.
+ 
+ 
+ COMMANDS
+@@ -81,7 +92,11 @@ init::
+ 	Initialize the submodules, i.e. register in .git/config each submodule
+ 	name and url found in .gitmodules. The key used in .git/config is
+ 	`submodule.$name.url`. This command does not alter existing information
+-	in .git/config.
++	in .git/config. You can then customize the submodule clone URLs in
++	.git/config for your local setup and proceed to 'git submodule update';
++	you can also just use 'git submodule update --init' without
++	the explicit 'init' step if you do not intend to customize any
++	submodule URLs.
+ 
+ update::
+ 	Update the registered submodules, i.e. clone missing submodules and
