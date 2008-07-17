@@ -1,77 +1,87 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Considering teaching plumbing to users harmful
-Date: Thu, 17 Jul 2008 23:02:01 +0200
-Message-ID: <85wsjkgr7a.fsf@lola.goethe.zz>
-References: <alpine.DEB.1.00.0807161804400.8950@racer>
-	<32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>
-	<alpine.DEB.1.00.0807161902400.8986@racer>
-	<32541b130807161135h64024151xc60e23d222a3a508@mail.gmail.com>
-	<alpine.LNX.1.00.0807161605550.19665@iabervon.org>
-	<861w1sn4id.fsf@lola.quinscape.zz>
-	<m3od4wse30.fsf@localhost.localdomain>
-	<86k5fk1ooq.fsf@lola.quinscape.zz>
-	<6B9BBA72-6E75-47E3-911A-4A5309090807@sb.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [RFC PATCH] index-pack: Issue a warning if deltaBaseCacheLimit is
+	too small
+Date: Thu, 17 Jul 2008 22:02:51 +0000
+Message-ID: <20080717220251.GA3072@spearce.org>
+References: <20080717213550.GA2798@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Thu Jul 17 23:57:09 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>,
+	Stephan Hennig <mailing_list@arcor.de>
+X-From: git-owner@vger.kernel.org Fri Jul 18 00:03:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJbTI-00077c-1D
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 23:57:08 +0200
+	id 1KJbZq-0000qW-0B
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 00:03:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757190AbYGQV4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 17:56:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757273AbYGQV4E
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 17:56:04 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:40132 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757190AbYGQVz7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 17:55:59 -0400
-Received: from localhost ([127.0.0.1]:38345 helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.67)
-	(envelope-from <dak@gnu.org>)
-	id 1KJbRZ-00071e-KV; Thu, 17 Jul 2008 17:55:21 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id C76C91C142BA; Thu, 17 Jul 2008 23:02:01 +0200 (CEST)
-In-Reply-To: <6B9BBA72-6E75-47E3-911A-4A5309090807@sb.org> (Kevin Ballard's
-	message of "Thu, 17 Jul 2008 13:15:01 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+	id S1754793AbYGQWCx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 18:02:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754770AbYGQWCw
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 18:02:52 -0400
+Received: from george.spearce.org ([209.20.77.23]:43754 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754513AbYGQWCw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 18:02:52 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 7D535382A4; Thu, 17 Jul 2008 22:02:51 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20080717213550.GA2798@spearce.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88928>
 
-Kevin Ballard <kevin@sb.org> writes:
+Its rare that we should exceed deltaBaseCacheLimit while resolving
+delta compressed objects.  By default this limit is 16M, and most
+chains are under 50 objects in length.  This affords about 327K per
+object in the chain, which is quite large by source code standards.
 
-> On Jul 17, 2008, at 9:05 AM, David Kastrup wrote:
->
->> How much have you worked with Subversion so far?  I am doing quite a
->> bit of work with it, and the do-everything-via-copying paradigm does
->> not get in my hair.  It actually means that I have to remember fewer
->> commands.  And it is pretty easy to understand.
->
-> Sure, it's simpler, but the overhead in creating and using a branch is
-> much larger. I have to extract the URL from the repository (since
-> naturally I only have trunk checked out),
+If we have to recreate a prior delta base because we evicted it to
+stay within the deltaBaseCacheLimit we can warn the user that their
+configured limit is perhaps too low for this repository data set.
+If the user keeps seeing the warning they can research it in the
+documentation, and consider setting it higher on this repository,
+or just globally on their system.
 
-Say something like svn info and then use cut&paste.
+Suggested-by: Stephan Hennig <mailing_list@arcor.de>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ index-pack.c |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
 
-> issue a command to copy by URL, then issue an `svn switch` command,
-> and then I have to remember that I have a switched repository.
-
-Huh?  How is that different to remembering a switched branch?  Anyway,
-one tends to check out different branches in different workdirs.
-
-> Switching between branches is a pain, especially if you have
-> uncommitted work. There's a reason I never bothered to use branches
-> when I used subversion.
-
-Looks like it.
-
+diff --git a/index-pack.c b/index-pack.c
+index ac20a46..97533d6 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -53,6 +53,7 @@ static struct object_entry *objects;
+ static struct delta_entry *deltas;
+ static struct base_data *base_cache;
+ static size_t base_cache_used;
++static int oom_warning;
+ static int nr_objects;
+ static int nr_deltas;
+ static int nr_resolved_deltas;
+@@ -481,6 +482,13 @@ static void *get_base_data(struct base_data *c)
+ 	if (!c->data) {
+ 		struct object_entry *obj = c->obj;
+ 
++		if (!oom_warning && verbose) {
++			if (progress)
++				fputc('\n', stderr);
++			warning("One or more delta chains are larger than deltaBaseCache.");
++			oom_warning = 1;
++		}
++
+ 		if (obj->type == OBJ_REF_DELTA || obj->type == OBJ_OFS_DELTA) {
+ 			void *base = get_base_data(c->base);
+ 			void *raw = get_data_from_pack(obj);
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+1.5.6.3.569.ga9185
