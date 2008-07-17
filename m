@@ -1,49 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Testsuite: Unset CVS_SERVER
-Date: Thu, 17 Jul 2008 13:53:03 -0400
-Message-ID: <20080717175303.GA8197@sigill.intra.peff.net>
-References: <1216288877-12140-1-git-send-email-lars@public.noschinski.de> <1216288877-12140-2-git-send-email-lars@public.noschinski.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Considering teaching plumbing to users harmful
+Date: Thu, 17 Jul 2008 19:16:37 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807171915420.8986@racer>
+References: <alpine.DEB.1.00.0807161804400.8950@racer> <7vmykhpn6z.fsf@gitster.siamese.dyndns.org> <20080717155538.GE11759@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, fabian.emmes@rwth-aachen.de
-To: Lars Noschinski <lars@public.noschinski.de>
-X-From: git-owner@vger.kernel.org Thu Jul 17 19:54:22 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Thu Jul 17 20:17:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJXgD-0003eB-99
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 19:54:13 +0200
+	id 1KJY2q-0004Av-W3
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 20:17:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758099AbYGQRxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 13:53:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757721AbYGQRxJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 13:53:09 -0400
-Received: from peff.net ([208.65.91.99]:2920 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757429AbYGQRxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 13:53:07 -0400
-Received: (qmail 16617 invoked by uid 111); 17 Jul 2008 17:53:04 -0000
-Received: from lawn-128-61-17-22.lawn.gatech.edu (HELO sigill.intra.peff.net) (128.61.17.22)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 17 Jul 2008 13:53:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Jul 2008 13:53:03 -0400
-Content-Disposition: inline
-In-Reply-To: <1216288877-12140-2-git-send-email-lars@public.noschinski.de>
+	id S1757058AbYGQSQh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 14:16:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757648AbYGQSQh
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 14:16:37 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47089 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756410AbYGQSQh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 14:16:37 -0400
+Received: (qmail invoked by alias); 17 Jul 2008 18:16:35 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp019) with SMTP; 17 Jul 2008 20:16:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19ZZA43frRZsAU6XmUyodnpDQ7XDrTne8vj1AtKxn
+	apWaQnJvPK4z8E
+X-X-Sender: gene099@racer
+In-Reply-To: <20080717155538.GE11759@fieldses.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88894>
 
-On Thu, Jul 17, 2008 at 12:01:13PM +0200, Lars Noschinski wrote:
+Hi,
 
-> The CVS_SERVER environment variable cane cause some of the cvsimport tests
-> to fail. So unset this variable at the beginning of the test script.
+On Thu, 17 Jul 2008, J. Bruce Fields wrote:
 
-This is definitely an improvement. However, the cvs manual lists a
-number of CVS* variables. Perhaps it would be better to simply scrub the
-environment of any variable matching that pattern? I don't know how
-commonly used some of the other ones are.
+> On Wed, Jul 16, 2008 at 01:51:31PM -0700, Junio C Hamano wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> > > Am I the only one who deems teaching plumbing to users ("I like it raw!  
+> > > So I teach it the same way!") harmful?
+> > 
+> > I think that justification is harmful.
+> > 
+> > More productive way to think about it is to identify cases where we _need_
+> > to go down to combination of the plumbing commands in our daily workflow,
+> > with today's command set.  That would give us a good indication that some
+> > Porcelain may need to be enhanced.
+> 
+> Is there a way to commit the contents of a tarball without using
+> plumbing?  I occasionally want to track an upstream that I know only as
+> a series of tarballs, so I do something like:
+> 
+> 	cd repo/
+> 	git checkout upstream
+> 	rm -rf *
+> 	tar -xzvf ../new-version.tar.gz
 
--Peff
+How about "git add -u" and "git add ."?
+
+Ciao,
+Dscho
