@@ -1,70 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach git submodule update to use distributed
- repositories
-Date: Thu, 17 Jul 2008 15:16:20 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807171513560.8986@racer>
-References: <320075ff0807170508j3d3c1ef8j49df576fc47debe2@mail.gmail.com>  <alpine.DEB.1.00.0807171311010.8986@racer>  <320075ff0807170520r200e546ejbad2ed103bd65f82@mail.gmail.com>  <320075ff0807170521s26693381m60648468cce1c41c@mail.gmail.com> 
- <alpine.DEB.1.00.0807171351380.8986@racer> <320075ff0807170703l57fe26d2h1e9c4db1c38dd6f1@mail.gmail.com>
+From: "Craig L. Ching" <cching@mqsoftware.com>
+Subject: RE: Considering teaching plumbing to users harmful
+Date: Thu, 17 Jul 2008 09:21:58 -0500
+Message-ID: <63BEA5E623E09F4D92233FB12A9F79430238A144@emailmn.mqsoftware.com>
+References: <alpine.DEB.1.00.0807161804400.8950@racer>  <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>  <7v7iblsnfh.fsf@gitster.siamese.dyndns.org>  <32541b130807161151x19c20f9t91b7fb9b8c7b8c7b@mail.gmail.com>  <7vmykhr6h1.fsf@gitster.siamese.dyndns.org> <32541b130807161229ob4c21cbsc6c86ee3e42c4101@mail.gmail.com> <alpine.DEB.1.00.0807170024310.4318@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nigel Magnay <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 16:17:30 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 16:24:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJUIL-0001aE-CT
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 16:17:21 +0200
+	id 1KJUOY-0004Wo-AP
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 16:23:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755873AbYGQOQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 10:16:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756549AbYGQOQU
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 10:16:20 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38298 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755772AbYGQOQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 10:16:19 -0400
-Received: (qmail invoked by alias); 17 Jul 2008 14:16:18 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp048) with SMTP; 17 Jul 2008 16:16:18 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Jf6EoOWdJh/G/cwyzQcsH6aXvWaC72hxxLkq3fU
-	HQWHWFtNEfmwjM
-X-X-Sender: gene099@racer
-In-Reply-To: <320075ff0807170703l57fe26d2h1e9c4db1c38dd6f1@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.74
+	id S1758189AbYGQOWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 10:22:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758558AbYGQOWr
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 10:22:47 -0400
+Received: from emailmn.mqsoftware.com ([66.192.70.108]:55005 "EHLO
+	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758189AbYGQOWq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Jul 2008 10:22:46 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <alpine.DEB.1.00.0807170024310.4318@eeepc-johanness>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Considering teaching plumbing to users harmful
+Thread-Index: AcjnkzbQdi2szRrdQdK8ZNcNz+t56wAgTuXw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88857>
 
-Hi,
+ 
 
-On Thu, 17 Jul 2008, Nigel Magnay wrote:
+> -----Original Message-----
+> From: git-owner@vger.kernel.org 
+> [mailto:git-owner@vger.kernel.org] On Behalf Of Johannes Schindelin
+> Sent: Wednesday, July 16, 2008 5:28 PM
+> To: Avery Pennarun
+> Cc: Junio C Hamano; git@vger.kernel.org
+> Subject: Re: Considering teaching plumbing to users harmful
+> 
+> So can those people who have something to say about _my_ 
+> subject of discussion please speak up?  I think this issue 
+> has not been discussed properly.
+> 
+I've read this whole thread with great interest as I started learning
+and using git a few months ago.  While I agree with you to a degree,
+there is a class of "newbies" to git who need more than just the basics
+that you outlined.  For instance, I'm in the process of evaluating
+VCS's, and DVCS's in particular, to replace CVS at our workplace.
+Because of that, I need to get "up to speed" as fast as I can.  I need
+to know about branches, how to browse history, merging, conflicts, etc.
+It is true, though, that I have a lot of experience doing these things
+already by virtue of the fact that I've used VCS's for over a decade and
+have been evaluating DVCS's for at least the past 3 years, so I have a
+bit of a head start on these things.  To learn about these things,
+though, the sheer size of Git's vocabulary is huge compared to other
+DVCS's.  That's a *good* thing, but it also makes it a bit harder to
+learn it all.  It's just a fact of life.
 
-> Your attitude seems to be that the status-quo is in some way desirable; 
-> "It's no wonder that this tool is awkward to use in your workflow.". 
-> This workflow is really common, and there's actual, real people on this 
-> list complaining about it. Don't we think it could be improved to be 
-> non-awkward ?
+The first DVCS I learned was monotone.  And I think what helped me the
+most in learning it is that it's syntax is very simple (you'd probably
+say limited compared to git, but that's neither here nor there, if you
+stick to your original list, git is as simple as monotone), it's
+repository format, the fact that each developer could keep one
+repository and create workspaces off of it was perfect for our
+workflows.  What I think really helped with learning monotone is that
+they had a bunch of common workflows already documented and we could
+simply try them out.  Maybe if Git had a few different workflows
+documented that might help.  I know we have a "Git for SVN Users"
+workflow, but if you want to move beyond that, it might be good to have
+some of the more complex workflows documented.  I think some people have
+hinted at that suggestion but that maybe it just hasn't been explicitly
+said.
 
-I do not think that the status quo is the best possible.
+> Thanks.
+> Dscho
+> --
 
-But I think that the way you go makes things so confusing that those who 
-use it apart from you will have problems.
-
-For example, in your setup everybody would have to install _different_ 
-remotes in every submodule.
-
-And then some would ask themselves why the original origin was not good 
-enough.
-
-And others would specify "-o origin" all the time, thinking it was 
-required.
-
-There must be a better way to promote submodules to a usable state,
-Dscho
+Cheers,
+Craig
