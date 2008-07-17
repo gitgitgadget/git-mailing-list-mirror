@@ -1,99 +1,78 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Considering teaching plumbing to users harmful
-Date: Thu, 17 Jul 2008 18:05:25 +0200
-Message-ID: <86k5fk1ooq.fsf@lola.quinscape.zz>
-References: <alpine.DEB.1.00.0807161804400.8950@racer>
-	<32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>
-	<alpine.DEB.1.00.0807161902400.8986@racer>
-	<32541b130807161135h64024151xc60e23d222a3a508@mail.gmail.com>
-	<alpine.LNX.1.00.0807161605550.19665@iabervon.org>
-	<861w1sn4id.fsf@lola.quinscape.zz>
-	<m3od4wse30.fsf@localhost.localdomain>
+From: Stephan Hennig <mailing_list@arcor.de>
+Subject: Re: [PATCH 0/4] Honor core.deltaBaseCacheLimit during index-pack
+Date: Thu, 17 Jul 2008 18:06:28 +0200
+Message-ID: <487F6E04.9050106@arcor.de>
+References: <20080713011512.GB31050@spearce.org> <1216001267-33235-1-git-send-email-spearce@spearce.org> <alpine.LFD.1.10.0807132220570.12484@xanadu.home> <20080714031242.GA14542@spearce.org> <alpine.LSU.1.00.0807141216390.32392@wbgn129.biozentrum.uni-wuerzburg.de> <m31w1wu1hc.fsf@localhost.localdomain> <487B439F.8040902@op5.se> <alpine.DEB.1.00.0807141322140.8950@racer> <487B4BD8.5030208@op5.se> <alpine.LFD.1.10.0807142203530.12484@xanadu.home> <20080715024741.GB1700@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Nicolas Pitre <nico@cam.org>, Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 17 18:07:09 2008
+X-From: git-owner@vger.kernel.org Thu Jul 17 18:09:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJW08-0002Yi-M7
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 18:06:41 +0200
+	id 1KJW2e-0003r3-VL
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 18:09:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757287AbYGQQFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 12:05:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756545AbYGQQFl
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 12:05:41 -0400
-Received: from main.gmane.org ([80.91.229.2]:59724 "EHLO ciao.gmane.org"
+	id S1756707AbYGQQIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 12:08:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756569AbYGQQIR
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 12:08:17 -0400
+Received: from main.gmane.org ([80.91.229.2]:59748 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756241AbYGQQFk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 12:05:40 -0400
+	id S1752861AbYGQQIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 12:08:16 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KJVz3-00077v-Nm
-	for git@vger.kernel.org; Thu, 17 Jul 2008 16:05:33 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+	id 1KJW1e-0007Fq-1V
+	for git@vger.kernel.org; Thu, 17 Jul 2008 16:08:14 +0000
+Received: from dialin-145-254-066-169.pools.arcor-ip.net ([145.254.66.169])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 17 Jul 2008 16:05:33 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Thu, 17 Jul 2008 16:08:14 +0000
+Received: from mailing_list by dialin-145-254-066-169.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 17 Jul 2008 16:05:33 +0000
+        for <git@vger.kernel.org>; Thu, 17 Jul 2008 16:08:14 +0000
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-Cancel-Lock: sha1:li7f8RYdlD0A31vxbfYjM6a3LTk=
+X-Gmane-NNTP-Posting-Host: dialin-145-254-066-169.pools.arcor-ip.net
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12
+In-Reply-To: <20080715024741.GB1700@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88871>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Shawn O. Pearce schrieb:
 
-> David Kastrup <dak@gnu.org> writes:
->
->> Daniel Barkalow <barkalow@iabervon.org> writes:
->
->> > SVN branches are incredible confusing because they fail to
->> > distinguish the directory structure of the project's source tree
->> > from the arrangement of available latest versions.
->> 
->> That is because there _is_ no difference.  You just store different
->> versions in different places.  What they are named is a convention,
->> nothing more, nothing less.
->
-> Branching by copying (!) and tagging by copying (!!!) is abuse
-> of the fact that copying in Subversion is cheap.
+> We're better off keeping our memory usage low and recomputing
+> the delta base when we need to return to it to process a sibling.
 
-Uh, no.  A lot of work has been invested into ensuring that copying in
-Subversion in cheap _exactly_ because of the design decision to
-implement branching and tagging via copying.
+Thanks to all who have had a look at this issue!  From a user's
+perspective I have one more suggestions and a question:
 
-It is not an accident that copying is cheap.
+First, it would have helped me to bring this issue onto the list if I
+had earlier known that this was no misconfiguration, but a memory
+problem.  Even though Git now makes some efforts to substitute runtime
+for memory to be able to operate with low(er) memory, I think it would
+still be informative for a user that repository and hardware, resp.
+core.deltaBaseCacheLimit, are, say, incompatible.  If valuable objects
+have to be discarded due to memory restrictions a warning could be
+issued to make the user aware of this fact, e.g.,
 
-> Distinguishing between branch part of directory name by _convention_
-> is design mistake; the fact that the tool doesn't help to ensure that
-> (a) tags lie on branch (b) tags _doesn't change_ is an example of this
-> stupidity.
+  Warning! Low memory. Git might be slowing down.
 
-How much have you worked with Subversion so far?  I am doing quite a bit
-of work with it, and the do-everything-via-copying paradigm does not get
-in my hair.  It actually means that I have to remember fewer commands.
-And it is pretty easy to understand.
 
->> Really, Subversion is rather simple to understand.  But it is not a
->> DVCS.  Moving a history from one repository to another is not really
->> feasible unless you are doing straight mirroring.
->
-> Subversion is simple if you are limited to simple things; but the
-> same is true with Git.  I find for example the whole 'properties'
-> mechanism and its use seriously not simple.
+Second, while there have been some changes to Git now, as a poor user,
+how can I make use of that changes?  I think, updating my client should
+only help with pushing.  For pulling, I have to wait for repo.or.cz to
+update to Git 1.6.0, right?
 
-Granted, particularly concerning the external property. OTOH, it makes
-the equivalent of git submodules rather cheap (and I actually still have
-no idea how git submodules properly work and what implications they
-have).
-
--- 
-David Kastrup
+Best regards,
+Stephan Hennig
