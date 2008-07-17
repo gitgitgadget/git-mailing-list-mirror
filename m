@@ -1,70 +1,70 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: Re: [PATCH/rfc] git-svn.perl: workaround assertions in svn library
-	1.5.0
-Date: Thu, 17 Jul 2008 14:08:56 +0000
-Message-ID: <20080717140856.10213.qmail@c0f13986110104.315fe32.mid.smarden.org>
-References: <20080706192850.32547.qmail@4480698c45f1ed.315fe32.mid.smarden.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Teach git submodule update to use distributed
+ repositories
+Date: Thu, 17 Jul 2008 15:16:20 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807171513560.8986@racer>
+References: <320075ff0807170508j3d3c1ef8j49df576fc47debe2@mail.gmail.com>  <alpine.DEB.1.00.0807171311010.8986@racer>  <320075ff0807170520r200e546ejbad2ed103bd65f82@mail.gmail.com>  <320075ff0807170521s26693381m60648468cce1c41c@mail.gmail.com> 
+ <alpine.DEB.1.00.0807171351380.8986@racer> <320075ff0807170703l57fe26d2h1e9c4db1c38dd6f1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Jul 17 16:09:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nigel Magnay <nigel.magnay@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 16:17:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJUAd-0006VB-7e
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 16:09:23 +0200
+	id 1KJUIL-0001aE-CT
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 16:17:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754795AbYGQOIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 10:08:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755298AbYGQOIY
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 10:08:24 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:52803 "HELO a.mx.smarden.org"
+	id S1755873AbYGQOQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 10:16:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756549AbYGQOQU
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 10:16:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38298 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754401AbYGQOIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 10:08:24 -0400
-Received: (qmail 10214 invoked by uid 1000); 17 Jul 2008 14:08:56 -0000
-Content-Disposition: inline
-In-Reply-To: <20080706192850.32547.qmail@4480698c45f1ed.315fe32.mid.smarden.org>
+	id S1755772AbYGQOQT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 10:16:19 -0400
+Received: (qmail invoked by alias); 17 Jul 2008 14:16:18 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp048) with SMTP; 17 Jul 2008 16:16:18 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Jf6EoOWdJh/G/cwyzQcsH6aXvWaC72hxxLkq3fU
+	HQWHWFtNEfmwjM
+X-X-Sender: gene099@racer
+In-Reply-To: <320075ff0807170703l57fe26d2h1e9c4db1c38dd6f1@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88856>
 
-On Sun, Jul 06, 2008 at 07:28:50PM +0000, Gerrit Pape wrote:
-> With subversion 1.5.0 (C and perl libraries) the git-svn selftest
-> t9101-git-svn-props.sh fails at test 25 and 26.  The following commands
+Hi,
 
-> The breakage was reported by Lucas Nussbaum through
->  http://bugs.debian.org/489108
+On Thu, 17 Jul 2008, Nigel Magnay wrote:
 
-> ---
->  git-svn.perl |    2 ++
->  1 files changed, 2 insertions(+), 0 deletions(-)
-> 
-> I ran into this on Debian/unstable.  With svn 1.5.0 the selftest fails
-> without the patch, with svn 1.4.6 it succeeds with and without the
-> patch.  I'm not familar with the svn interfaces, not sure whether this
-> is a regression in subversion, or a bug in git-svn.
+> Your attitude seems to be that the status-quo is in some way desirable; 
+> "It's no wonder that this tool is awkward to use in your workflow.". 
+> This workflow is really common, and there's actual, real people on this 
+> list complaining about it. Don't we think it could be improved to be 
+> non-awkward ?
 
-Hi, while this commit fixed the selftests, it unfortunately is a
-regression
+I do not think that the status quo is the best possible.
 
- http://thread.gmane.org/gmane.comp.version-control.git/87822/
- http://bugs.debian.org/490400
+But I think that the way you go makes things so confusing that those who 
+use it apart from you will have problems.
 
-I'm still not sure whether this is a git-svn problem, or actually a
-problem in subversion 1.5.0
+For example, in your setup everybody would have to install _different_ 
+remotes in every submodule.
 
- $ perl -MSVN::Client -e \
- 'sub print_names { print "<$_[0]>\n"; } $ctx=new SVN::Client;
- $ctx->status(".", "BASE", \&print_names, 1, 1, 0, 1);' | head -5
- perl:
- /build/buildd/subversion-1.5.0dfsg1/subversion/libsvn_subr/path.c:119: svn_path_join: Assertion `is_canonical(base, blen)' failed.
- $ 
- [0]
+And then some would ask themselves why the original origin was not good 
+enough.
 
-Regards, Gerrit.
+And others would specify "-o origin" all the time, thinking it was 
+required.
 
-[0] http://bugs.debian.org/359679
+There must be a better way to promote submodules to a usable state,
+Dscho
