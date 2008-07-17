@@ -1,117 +1,70 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Documentation/git-submodule.txt: Further clarify the
-	description
-Date: Thu, 17 Jul 2008 14:29:20 +0200
-Message-ID: <20080717122911.32334.73465.stgit@localhost>
-References: <20080717121813.GC10151@machine.or.cz>
+Subject: Re: [PATCH 6/7] git rm: Support for removing submodules
+Date: Thu, 17 Jul 2008 14:35:01 +0200
+Message-ID: <20080717123501.GD10151@machine.or.cz>
+References: <20080716190753.19772.93357.stgit@localhost> <20080716191134.19772.85003.stgit@localhost> <alpine.DEB.1.00.0807170038430.4318@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Heikki Orsila <shdl@zakalwe.fi>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 17 14:31:16 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 17 14:36:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJScy-0007HP-N6
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 14:30:33 +0200
+	id 1KJSiK-0001fN-On
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 14:36:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755242AbYGQM3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 08:29:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753889AbYGQM3c
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 08:29:32 -0400
-Received: from [212.249.11.140] ([212.249.11.140]:48747 "EHLO pixie.suse.cz"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751296AbYGQM3b (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 08:29:31 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by pixie.suse.cz (Postfix) with ESMTP id A17512AC73C;
-	Thu, 17 Jul 2008 14:29:20 +0200 (CEST)
-In-Reply-To: <20080717121813.GC10151@machine.or.cz>
-User-Agent: StGIT/0.14.2
+	id S1753118AbYGQMfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 08:35:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752350AbYGQMfF
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 08:35:05 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:54875 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751296AbYGQMfF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 08:35:05 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id E010B2C4C025; Thu, 17 Jul 2008 14:35:01 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807170038430.4318@eeepc-johanness>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88841>
 
-This patch rewrites the general description yet again, first clarifying
-the high-level concept, mentioning the difference to remotes and using
-the subtree merge strategy, then getting to the details about tree
-entries and .gitmodules file.
+  Hi,
 
-The patch also makes few smallar grammar fixups of the rest of the
-description and clarifies how does 'init' relate to 'update --init'.
+On Thu, Jul 17, 2008 at 12:41:57AM +0200, Johannes Schindelin wrote:
+> On Wed, 16 Jul 2008, Petr Baudis wrote:
+> 
+> > This patch adds support for removing submodules to 'git rm', including 
+> > removing the appropriate sections from the .gitmodules file to reflect 
+> > this
+> 
+> I have no time to look at the whole series, or even at the patch, but I 
+> have concerns.  Do you really remove the whole directory?  Because if you 
+> do, you remove more than what can be possibly reconstructed from the 
+> object store.
 
-Cc: Heikki Orsila <shdl@zakalwe.fi>
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+  no; I remove only the index entry and the empty directory made for
+non-checked-out submodules (I just try rmdir() and ignore ENOTEMPTY
+error).  I make that clear in git rm documentation, but not in the patch
+description; I will fix that.
 
- Documentation/git-submodule.txt |   39 +++++++++++++++++++++++++++------------
- 1 files changed, 27 insertions(+), 12 deletions(-)
+> I wonder if it really makes sense to integrate that into git-rm, and not 
+> git-submodule, if only to introduce another level of consideration for the 
+> user before committing what is potentially a big mistake.
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index bb4e6fb..01d0d91 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -18,24 +18,35 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Submodules are a special kind of tree entries which refer to a particular tree
--state in another repository.  The tree entry describes
--the existence of a submodule with the given name and the exact revision that
--should be used, while an entry in `.gitmodules` file gives the location of
--the repository.
--
--When checked out, submodules will maintain their own independent repositories
--within their directories; the only link between the submodule and the "parent
--project" is the tree entry within the parent project mentioned above.
-+Submodules allow foreign repositories to be embedded within a dedicated
-+subdirectory of the source tree, always pointed at a particular commit.
-+They are not to be confused with remotes, which are meant mainly for branches
-+of the same project; submodules are meant for different projects you would like
-+to make part of your source tree, while the history of the two projects still
-+stays completely independent and you cannot modify the contents of the
-+submodule from within the main project.  In case you want to merge the project
-+histories, possibly make local modifications within the tree, but also do not
-+mind that your repository will bulk up with all the contents of the other
-+project, consider adding a remote for the other project and using the 'subtree'
-+merge strategy instead of setting up a submodule.
-+
-+Submodules are composed from a special kind of tree entry (so-called `gitlink`)
-+in the main repository that refers to a particular commit object within
-+the (completely separate) inner repository, and a record in the `.gitmodules`
-+file at the root of the source tree, assigning a logical name to the submodule
-+and describing the default URL the submodule shall be cloned from. The logical
-+name can be used for overriding this URL within your local repository
-+configuration (see 'submodule init').
- 
- This command will manage the tree entries and contents of the gitmodules file
--for you, as well as inspecting the status of your submodules and updating them.
-+for you, as well as inspect the status of your submodules and update them.
- When adding a new submodule to the tree, the 'add' subcommand is to be used.
- However, when pulling a tree containing submodules, these will not be checked
- out by default; the 'init' and 'update' subcommands will maintain submodules
- checked out and at appropriate revision in your working tree. You can inspect
- the current status of your submodules using the 'submodule' subcommand and get
--an overview of changes 'update' would perform using the 'summary' subcommand.
-+an overview of the changes 'update' would perform using the 'summary'
-+subcommand.
- 
- 
- COMMANDS
-@@ -81,7 +92,11 @@ init::
- 	Initialize the submodules, i.e. register in .git/config each submodule
- 	name and url found in .gitmodules. The key used in .git/config is
- 	`submodule.$name.url`. This command does not alter existing information
--	in .git/config.
-+	in .git/config. You can then customize the submodule clone URLs in
-+	.git/config for your local setup and proceed to 'git submodule update';
-+	you can also just use 'git submodule update --init' without
-+	the explicit 'init' step if you do not intend to customize any
-+	submodule URLs.
- 
- update::
- 	Update the registered submodules, i.e. clone missing submodules and
+  That is good question and I forgot to elaborate on this in the cover
+letter. However, I believe that integrating this functionality into the
+basic commands makes for a smoother user experience, following the
+principle of the least surprise. It is difficult for me to argue
+extensively in further favor of this choice, though. :-)
+
+-- 
+				Petr "Pasky" Baudis
+GNU, n. An animal of South Africa, which in its domesticated state
+resembles a horse, a buffalo and a stag. In its wild condition it is
+something like a thunderbolt, an earthquake and a cyclone. -- A. Pierce
