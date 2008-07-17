@@ -1,62 +1,50 @@
-From: Lars Noschinski <lars@public.noschinski.de>
-Subject: [PATCH] Testsuite: Unset CVS_SERVER
-Date: Thu, 17 Jul 2008 12:01:13 +0200
-Message-ID: <1216288877-12140-2-git-send-email-lars@public.noschinski.de>
-References: <1216288877-12140-1-git-send-email-lars@public.noschinski.de>
-Cc: fabian.emmes@rwth-aachen.de,
-	Lars Noschinski <lars@public.noschinski.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 17 12:11:37 2008
+From: Heikki Orsila <shdl@zakalwe.fi>
+Subject: Re: [PATCHv2] Documentation/git-submodule.txt: Add Description section
+Date: Thu, 17 Jul 2008 13:41:24 +0300
+Message-ID: <20080717104124.GE4379@zakalwe.fi>
+References: <20080715183705.GD4379@zakalwe.fi> <20080716184248.6524.38463.stgit@localhost>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Jul 17 12:42:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJQSQ-00074m-99
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 12:11:30 +0200
+	id 1KJQwL-0007vK-Ux
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 12:42:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755929AbYGQKKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 06:10:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755595AbYGQKKb
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 06:10:31 -0400
-Received: from smtprelay11.ispgateway.de ([80.67.29.28]:47660 "EHLO
-	smtprelay11.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755887AbYGQKKa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 06:10:30 -0400
-Received: from [137.226.194.201] (helo=localhost.localdomain)
-	by smtprelay11.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1KJQIb-0007y9-OW; Thu, 17 Jul 2008 12:01:21 +0200
-X-Mailer: git-send-email 1.5.6.2
-In-Reply-To: <1216288877-12140-1-git-send-email-lars@public.noschinski.de>
-X-Df-Sender: 336680
+	id S1755424AbYGQKl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 06:41:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755340AbYGQKl0
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 06:41:26 -0400
+Received: from zakalwe.fi ([80.83.5.154]:55115 "EHLO zakalwe.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755309AbYGQKl0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 06:41:26 -0400
+Received: by zakalwe.fi (Postfix, from userid 1023)
+	id B75892BC39; Thu, 17 Jul 2008 13:41:24 +0300 (EEST)
+Content-Disposition: inline
+In-Reply-To: <20080716184248.6524.38463.stgit@localhost>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88830>
 
-From: Fabian Emmes <fabian.emmes@rwth-aachen.de>
+On Wed, Jul 16, 2008 at 08:44:12PM +0200, Petr Baudis wrote:
+> I have adjusted the description a bit; however, I believe mentioning
+> remotes in
+> the description would only raise the danger of confusion - I emphasized the
+> level of separation, though.
 
-The CVS_SERVER environment variable cane cause some of the cvsimport tests
-to fail. So unset this variable at the beginning of the test script.
+I think not doing a comparison actually creates confusion. My immediate 
+thought about submodules was "how does this differ from remotes? why do 
+submodules exist rather than just remotes?"
 
-Signed-off-by: Fabian Emmes <fabian.emmes@rwth-aachen.de>
-Signed-off-by: Lars Noschinski <lars@public.noschinski.de>
----
- t/t9600-cvsimport.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/t/t9600-cvsimport.sh b/t/t9600-cvsimport.sh
-index 1e01e5c..0d7786a 100755
---- a/t/t9600-cvsimport.sh
-+++ b/t/t9600-cvsimport.sh
-@@ -5,6 +5,7 @@ test_description='git-cvsimport basic tests'
- 
- CVSROOT=$(pwd)/cvsroot
- export CVSROOT
-+unset CVS_SERVER
- # for clean cvsps cache
- HOME=$(pwd)
- export HOME
 -- 
-1.5.6.2
+Heikki Orsila
+heikki.orsila@iki.fi
+http://www.iki.fi/shd
