@@ -1,78 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] t/test-lib.sh: Let test_must_fail fail on signals
- only
-Date: Thu, 17 Jul 2008 00:25:44 -0700
-Message-ID: <7vabghkm4n.fsf@gitster.siamese.dyndns.org>
-References: <1215877672-17049-1-git-send-email-s-beyer@gmx.net>
- <20080716051829.GB4030@segfault.peff.net>
- <7v4p6qwezy.fsf@gitster.siamese.dyndns.org>
- <20080717051833.GA3100@sigio.intra.peff.net>
- <7v3am9m5ne.fsf@gitster.siamese.dyndns.org>
- <20080717060143.GA3338@sigill.intra.peff.net>
- <7vlk01komq.fsf@gitster.siamese.dyndns.org>
- <20080717063856.GA10450@sigill.intra.peff.net>
- <487EF31D.8090007@viscovery.net>
+From: =?ISO-8859-1?Q?=22Peter_Valdemar_M=F8rch_=28Lists=29=22?= 
+	<4ux6as402@sneakemail.com>
+Subject: Re: Considering teaching plumbing to users harmful
+Date: Thu, 17 Jul 2008 09:30:33 +0200
+Message-ID: <487EF519.5070902@sneakemail.com>
+References: <alpine.DEB.1.00.0807161804400.8950@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Stephan Beyer <s-beyer@gmx.net>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jul 17 09:26:56 2008
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 17 09:31:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJNtA-0005r2-66
-	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 09:26:56 +0200
+	id 1KJNxo-0007Cj-JB
+	for gcvg-git-2@gmane.org; Thu, 17 Jul 2008 09:31:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751864AbYGQHZ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 03:25:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbYGQHZ5
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 03:25:57 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54838 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751121AbYGQHZ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 03:25:57 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1C4822F6C0;
-	Thu, 17 Jul 2008 03:25:54 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 9A1322F6BF; Thu, 17 Jul 2008 03:25:46 -0400 (EDT)
-In-Reply-To: <487EF31D.8090007@viscovery.net> (Johannes Sixt's message of
- "Thu, 17 Jul 2008 09:22:05 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 97349716-53D1-11DD-80D5-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1759524AbYGQHaj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jul 2008 03:30:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759513AbYGQHai
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 03:30:38 -0400
+Received: from morch.com ([193.58.255.207]:50171 "EHLO morch.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758093AbYGQHag (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 03:30:36 -0400
+Received: from [192.168.1.214] (ANice-157-1-140-70.w90-52.abo.wanadoo.fr [90.52.83.70])
+	by morch.com (Postfix) with ESMTP id 0F4BF2831
+	for <git@vger.kernel.org>; Thu, 17 Jul 2008 09:32:03 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080502)
+In-Reply-To: <alpine.DEB.1.00.0807161804400.8950@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88811>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Johannes Schindelin Johannes.Schindelin-at-gmx.de |Lists| wrote:
+> there have been a number of occasions where I came across people tryi=
+ng to=20
+> be helpful and teaching Git newbies a few tricks.
+>=20
+> However, in quite a number of cases, which seem to surge over the las=
+t=20
+> weeks, I see people suggesting the use of rev-parse, ls-tree, rev-lis=
+t=20
+> etc.
 
-> Jeff King schrieb:
->> On Wed, Jul 16, 2008 at 11:31:41PM -0700, Junio C Hamano wrote:
->>> Is it that somebody do not want 255 exit value, or anything that has 7th
->>> bit set?  2488df8 (builtin run_command: do not exit with -1., 2007-11-13)
->>> suggests otherwise at least for Windows runtime, so what we currently have
->>> that does extra truncation ourselves might be sufficient.
->> 
->> Johannes will have to answer that; however, the truncation there does
->> leave the extra 7th bit. Maybe & 0x7f would be more appropriate?
->
-> I never found out the real reason why -1 would not be recognized as
-> "failure"; the conclusion of my debugging session was that MSYS bash has
-> an issue, and I chose to append '& 0xff' because the documentation of
-> WEXITSTATUS() says that it can receive only 8 bits of the exit() code. The
-> intention of 2488df8 was to keep as much information as possible. But if
-> that extra information hurts, we should better truncate to 7 bits.
->
-> The source code of Windows's C runtime suggests that any value that fits
-> in 4 bytes can be supplied to exit() and can be received by cwait()
-> (Windows's version of waitpid()); but I haven't looked at how MSYS
-> implements waitpit() and whether it can receive that much information.
+As a total git newbie (5 days) coming from svn, I *am* bewildered. Even=
+=20
+sticking to porcelain, it is a feature-rich new tool I have in my hands=
+!
 
-Well, POSIX cannot do that much anyway, but does allow 8-bit, so I'd say
-the current code is fine.
+I'm missing clarity about what is porcelain and what is plumbing. `git=20
+help` shows
+
+"The most commonly used git commands are:"  add .. tag.
+
+Is this list exactly the list of porcelain commands? Then say so there.=
+=20
+Neither `git help diff` nor `git help ls-tree` say whether they are=20
+porcelain or plumbing commands. `git help diff` mentions git-diff-index=
+,=20
+which i suspect is plumbing. When I read a man page, it would be nice t=
+o=20
+know whether a command (either the topic of the page or another=20
+mentioned command) is intended as porcelain or not.
+
+Also, I'm guessing that some switches for some porcelain commands have=20
+plumbing purposes and vice versa. I hope not, but if so that would be=20
+nice to have documented in 'git help *'
+
+All of this of course assumes that there is consensus and a clear=20
+distinction between what is porcelain and what is plumbing which I'm=20
+don't even know if there is.
+
+Peter
+--=20
+Peter Valdemar M=F8rch
+http://www.morch.com
