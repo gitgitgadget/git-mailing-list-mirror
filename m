@@ -1,448 +1,108 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] Add ANSI control code emulation for the Windows console
-Date: Fri, 18 Jul 2008 09:34:44 +0200
-Message-ID: <1216366485-12201-4-git-send-email-johannes.sixt@telecom.at>
-References: <1216366485-12201-1-git-send-email-johannes.sixt@telecom.at>
- <1216366485-12201-2-git-send-email-johannes.sixt@telecom.at>
- <1216366485-12201-3-git-send-email-johannes.sixt@telecom.at>
-Cc: git@vger.kernel.org, Peter Harris <git@peter.is-a-geek.org>,
-	Johannes Sixt <johannes.sixt@telecom.at>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 09:36:12 2008
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: Considering teaching plumbing to users harmful
+Date: Fri, 18 Jul 2008 11:41:11 +0400
+Message-ID: <20080718074111.GL2925@dpotapov.dyndns.org>
+References: <alpine.DEB.1.00.0807161804400.8950@racer> <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com> <alpine.DEB.1.00.0807161902400.8986@racer> <32541b130807161135h64024151xc60e23d222a3a508@mail.gmail.com> <alpine.LNX.1.00.0807161605550.19665@iabervon.org> <861w1sn4id.fsf@lola.quinscape.zz> <m3od4wse30.fsf@localhost.localdomain> <86k5fk1ooq.fsf@lola.quinscape.zz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Jul 18 09:42:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJkVW-0003a0-6G
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 09:36:02 +0200
+	id 1KJkbv-00061g-Mi
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 09:42:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbYGRHe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 03:34:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752346AbYGRHe5
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 03:34:57 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:48429 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751345AbYGRHet (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 03:34:49 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@eudaptics.com>)
-	id 1KJkUI-0004B3-KS; Fri, 18 Jul 2008 09:34:47 +0200
-Received: from srv.linz.viscovery (srv.linz.viscovery [192.168.1.4])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 68492FF4F; Fri, 18 Jul 2008 09:34:46 +0200 (CEST)
-Received: by srv.linz.viscovery (Postfix, from userid 1000)
-	id 19E2DFA48; Fri, 18 Jul 2008 09:34:45 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6.1.275.g0a3e0f
-In-Reply-To: <1216366485-12201-3-git-send-email-johannes.sixt@telecom.at>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753947AbYGRHl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 03:41:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756689AbYGRHlZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 03:41:25 -0400
+Received: from gv-out-0910.google.com ([216.239.58.191]:62448 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755916AbYGRHlX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 03:41:23 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so53666gvc.37
+        for <git@vger.kernel.org>; Fri, 18 Jul 2008 00:41:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=O6afOqX41ko6YoH48HaJrX3eOOMTVCkrxsQuAteP4Lg=;
+        b=Kobr1Mk9KF69ZKqrQUa6jJ73pfqoOcmLhOo8Y8A2J76DiMMP0SuSekBcQDHnHhLnIh
+         +0rChyGx8vNufHIxmRiCrODZOekr2fZlueL4eIsIO2TazhvG1RwxBZ9aufoZR83L4tCg
+         5rYLUHm/O2YUnVEuySwGY5vvgkzzXrubQlmBg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=VlBD96h52HGD8jvFK1qHNVmxrzuaXL5yPZnciAIhLjYaLac/+vmTINkEjuBm7boY0m
+         w6YiWp6Qikf2hzj86zn0agT70HJFVOHIZjFcv7o4ifGX6jarEqTDHbDK3PQdh0HICti/
+         G/Qpdtrh2gtw2ZoALf47E72o2Sm6TKme+GUpM=
+Received: by 10.103.12.8 with SMTP id p8mr2699491mui.102.1216366879297;
+        Fri, 18 Jul 2008 00:41:19 -0700 (PDT)
+Received: from localhost ( [85.140.168.212])
+        by mx.google.com with ESMTPS id y37sm7911885mug.9.2008.07.18.00.41.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 18 Jul 2008 00:41:18 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <86k5fk1ooq.fsf@lola.quinscape.zz>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89003>
 
-From: Peter Harris <git@peter.is-a-geek.org>
+On Thu, Jul 17, 2008 at 06:05:25PM +0200, David Kastrup wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > Distinguishing between branch part of directory name by _convention_
+> > is design mistake; the fact that the tool doesn't help to ensure that
+> > (a) tags lie on branch (b) tags _doesn't change_ is an example of this
+> > stupidity.
+> 
+> How much have you worked with Subversion so far?  I am doing quite a bit
+> of work with it, and the do-everything-via-copying paradigm does not get
+> in my hair.  It actually means that I have to remember fewer commands.
+> And it is pretty easy to understand.
 
-This adds only the minimum necessary to keep git pull/merge's diffstat from
-wrapping. Notably absent is support for the K (erase) operation, and support
-for POSIX write.
+Staying on trunk, try to compare your files foo and bar with version
+1.0. With Git, it is simple
+git v1.0 -- foo bar
+but I don't think you can do that so easily with SVN.
 
-Signed-off-by: Peter Harris <git@peter.is-a-geek.org>
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- Makefile         |    2 +-
- compat/mingw.h   |   11 ++
- compat/winansi.c |  345 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 357 insertions(+), 1 deletions(-)
- create mode 100644 compat/winansi.c
+But the real problem with the do-everything-via-copying paradigm is
+that now revisions do not identify anything meaningful without some
+path. This leads to problems if you try to implement merge. In Git,
+it is simple -- merge is a commit with more than one parent. You cannot
+do like that in SVN. Instead, you have to track merges per file. This
+is not just waste of resources, but this merges is very difficult if
+not impossible to visulize in any useful way. But if you cannot see
+something, you cannot control it well. So, not accidently, in systems
+with inter-file branching, creating feature branches is discouraged.
 
-diff --git a/Makefile b/Makefile
-index 78e08d3..2c6cc9d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -740,7 +740,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat
- 	COMPAT_CFLAGS += -DSNPRINTF_SIZE_CORR=1
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
--	COMPAT_OBJS += compat/mingw.o compat/fnmatch.o compat/regex.o
-+	COMPAT_OBJS += compat/mingw.o compat/fnmatch.o compat/regex.o compat/winansi.o
- 	EXTLIBS += -lws2_32
- 	X = .exe
- 	template_dir = ../share/git-core/templates/
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 6bc049a..5f11114 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -194,6 +194,17 @@ sig_handler_t mingw_signal(int sig, sig_handler_t handler);
- #define signal mingw_signal
- 
- /*
-+ * ANSI emulation wrappers
-+ */
-+
-+int winansi_fputs(const char *str, FILE *stream);
-+int winansi_printf(const char *format, ...) __attribute__((format (printf, 1, 2)));
-+int winansi_fprintf(FILE *stream, const char *format, ...) __attribute__((format (printf, 2, 3)));
-+#define fputs winansi_fputs
-+#define printf(...) winansi_printf(__VA_ARGS__)
-+#define fprintf(...) winansi_fprintf(__VA_ARGS__)
-+
-+/*
-  * git specific compatibility
-  */
- 
-diff --git a/compat/winansi.c b/compat/winansi.c
-new file mode 100644
-index 0000000..e2d96df
---- /dev/null
-+++ b/compat/winansi.c
-@@ -0,0 +1,345 @@
-+/*
-+ * Copyright 2008 Peter Harris <git@peter.is-a-geek.org>
-+ */
-+
-+#include <windows.h>
-+#include "../git-compat-util.h"
-+
-+/*
-+ Functions to be wrapped:
-+*/
-+#undef printf
-+#undef fprintf
-+#undef fputs
-+/* TODO: write */
-+
-+/*
-+ ANSI codes used by git: m, K
-+
-+ This file is git-specific. Therefore, this file does not attempt
-+ to implement any codes that are not used by git.
-+
-+ TODO: K
-+*/
-+
-+static HANDLE console;
-+static WORD plain_attr;
-+static WORD attr;
-+static int negative;
-+
-+static void init(void)
-+{
-+	CONSOLE_SCREEN_BUFFER_INFO sbi;
-+
-+	static int initialized = 0;
-+	if (initialized)
-+		return;
-+
-+	console = GetStdHandle(STD_OUTPUT_HANDLE);
-+	if (console == INVALID_HANDLE_VALUE)
-+		console = NULL;
-+
-+	if (!console)
-+		return;
-+
-+	GetConsoleScreenBufferInfo(console, &sbi);
-+	attr = plain_attr = sbi.wAttributes;
-+	negative = 0;
-+
-+	initialized = 1;
-+}
-+
-+
-+#define FOREGROUND_ALL (FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE)
-+#define BACKGROUND_ALL (BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE)
-+
-+static void set_console_attr(void)
-+{
-+	WORD attributes = attr;
-+	if (negative) {
-+		attributes &= ~FOREGROUND_ALL;
-+		attributes &= ~BACKGROUND_ALL;
-+
-+		/* This could probably use a bitmask
-+		   instead of a series of ifs */
-+		if (attr & FOREGROUND_RED)
-+			attributes |= BACKGROUND_RED;
-+		if (attr & FOREGROUND_GREEN)
-+			attributes |= BACKGROUND_GREEN;
-+		if (attr & FOREGROUND_BLUE)
-+			attributes |= BACKGROUND_BLUE;
-+
-+		if (attr & BACKGROUND_RED)
-+			attributes |= FOREGROUND_RED;
-+		if (attr & BACKGROUND_GREEN)
-+			attributes |= FOREGROUND_GREEN;
-+		if (attr & BACKGROUND_BLUE)
-+			attributes |= FOREGROUND_BLUE;
-+	}
-+	SetConsoleTextAttribute(console, attributes);
-+}
-+
-+static const char *set_attr(const char *str)
-+{
-+	const char *func;
-+	size_t len = strspn(str, "0123456789;");
-+	func = str + len;
-+
-+	switch (*func) {
-+	case 'm':
-+		do {
-+			long val = strtol(str, (char **)&str, 10);
-+			switch (val) {
-+			case 0: /* reset */
-+				attr = plain_attr;
-+				negative = 0;
-+				break;
-+			case 1: /* bold */
-+				attr |= FOREGROUND_INTENSITY;
-+				break;
-+			case 2:  /* faint */
-+			case 22: /* normal */
-+				attr &= ~FOREGROUND_INTENSITY;
-+				break;
-+			case 3:  /* italic */
-+				/* Unsupported */
-+				break;
-+			case 4:  /* underline */
-+			case 21: /* double underline */
-+				/* Wikipedia says this flag does nothing */
-+				/* Furthermore, mingw doesn't define this flag
-+				attr |= COMMON_LVB_UNDERSCORE; */
-+				break;
-+			case 24: /* no underline */
-+				/* attr &= ~COMMON_LVB_UNDERSCORE; */
-+				break;
-+			case 5:  /* slow blink */
-+			case 6:  /* fast blink */
-+				/* We don't have blink, but we do have
-+				   background intensity */
-+				attr |= BACKGROUND_INTENSITY;
-+				break;
-+			case 25: /* no blink */
-+				attr &= ~BACKGROUND_INTENSITY;
-+				break;
-+			case 7:  /* negative */
-+				negative = 1;
-+				break;
-+			case 27: /* positive */
-+				negative = 0;
-+				break;
-+			case 8:  /* conceal */
-+			case 28: /* reveal */
-+				/* Unsupported */
-+				break;
-+			case 30: /* Black */
-+				attr &= ~FOREGROUND_ALL;
-+				break;
-+			case 31: /* Red */
-+				attr &= ~FOREGROUND_ALL;
-+				attr |= FOREGROUND_RED;
-+				break;
-+			case 32: /* Green */
-+				attr &= ~FOREGROUND_ALL;
-+				attr |= FOREGROUND_GREEN;
-+				break;
-+			case 33: /* Yellow */
-+				attr &= ~FOREGROUND_ALL;
-+				attr |= FOREGROUND_RED | FOREGROUND_GREEN;
-+				break;
-+			case 34: /* Blue */
-+				attr &= ~FOREGROUND_ALL;
-+				attr |= FOREGROUND_BLUE;
-+				break;
-+			case 35: /* Magenta */
-+				attr &= ~FOREGROUND_ALL;
-+				attr |= FOREGROUND_RED | FOREGROUND_BLUE;
-+				break;
-+			case 36: /* Cyan */
-+				attr &= ~FOREGROUND_ALL;
-+				attr |= FOREGROUND_GREEN | FOREGROUND_BLUE;
-+				break;
-+			case 37: /* White */
-+				attr |= FOREGROUND_RED |
-+					FOREGROUND_GREEN |
-+					FOREGROUND_BLUE;
-+				break;
-+			case 38: /* Unknown */
-+				break;
-+			case 39: /* reset */
-+				attr &= ~FOREGROUND_ALL;
-+				attr |= (plain_attr & FOREGROUND_ALL);
-+				break;
-+			case 40: /* Black */
-+				attr &= ~BACKGROUND_ALL;
-+				break;
-+			case 41: /* Red */
-+				attr &= ~BACKGROUND_ALL;
-+				attr |= BACKGROUND_RED;
-+				break;
-+			case 42: /* Green */
-+				attr &= ~BACKGROUND_ALL;
-+				attr |= BACKGROUND_GREEN;
-+				break;
-+			case 43: /* Yellow */
-+				attr &= ~BACKGROUND_ALL;
-+				attr |= BACKGROUND_RED | BACKGROUND_GREEN;
-+				break;
-+			case 44: /* Blue */
-+				attr &= ~BACKGROUND_ALL;
-+				attr |= BACKGROUND_BLUE;
-+				break;
-+			case 45: /* Magenta */
-+				attr &= ~BACKGROUND_ALL;
-+				attr |= BACKGROUND_RED | BACKGROUND_BLUE;
-+				break;
-+			case 46: /* Cyan */
-+				attr &= ~BACKGROUND_ALL;
-+				attr |= BACKGROUND_GREEN | BACKGROUND_BLUE;
-+				break;
-+			case 47: /* White */
-+				attr |= BACKGROUND_RED |
-+					BACKGROUND_GREEN |
-+					BACKGROUND_BLUE;
-+				break;
-+			case 48: /* Unknown */
-+				break;
-+			case 49: /* reset */
-+				attr &= ~BACKGROUND_ALL;
-+				attr |= (plain_attr & BACKGROUND_ALL);
-+				break;
-+			default:
-+				/* Unsupported code */
-+				break;
-+			}
-+			str++;
-+		} while (*(str-1) == ';');
-+
-+		set_console_attr();
-+		break;
-+	case 'K':
-+		/* TODO */
-+		break;
-+	default:
-+		/* Unsupported code */
-+		break;
-+	}
-+
-+	return func + 1;
-+}
-+
-+static int ansi_emulate(const char *str, FILE *stream)
-+{
-+	int rv = 0;
-+	const char *pos = str;
-+
-+	while (*pos) {
-+		pos = strstr(str, "\033[");
-+		if (pos) {
-+			size_t len = pos - str;
-+
-+			if (len) {
-+				size_t out_len = fwrite(str, 1, len, stream);
-+				rv += out_len;
-+				if (out_len < len)
-+					return rv;
-+			}
-+
-+			str = pos + 2;
-+			rv += 2;
-+
-+			fflush(stream);
-+
-+			pos = set_attr(str);
-+			rv += pos - str;
-+			str = pos;
-+		} else {
-+			rv += strlen(str);
-+			fputs(str, stream);
-+			return rv;
-+		}
-+	}
-+	return rv;
-+}
-+
-+int winansi_fputs(const char *str, FILE *stream)
-+{
-+	int rv;
-+
-+	if (!isatty(fileno(stream)))
-+		return fputs(str, stream);
-+
-+	init();
-+
-+	if (!console)
-+		return fputs(str, stream);
-+
-+	rv = ansi_emulate(str, stream);
-+
-+	if (rv >= 0)
-+		return 0;
-+	else
-+		return EOF;
-+}
-+
-+static int winansi_vfprintf(FILE *stream, const char *format, va_list list)
-+{
-+	int len, rv;
-+	char small_buf[256];
-+	char *buf = small_buf;
-+	va_list cp;
-+
-+	if (!isatty(fileno(stream)))
-+		goto abort;
-+
-+	init();
-+
-+	if (!console)
-+		goto abort;
-+
-+	va_copy(cp, list);
-+	len = vsnprintf(small_buf, sizeof(small_buf), format, cp);
-+	va_end(cp);
-+
-+	if (len > sizeof(small_buf) - 1) {
-+		buf = malloc(len + 1);
-+		if (!buf)
-+			goto abort;
-+
-+		len = vsnprintf(buf, len + 1, format, list);
-+	}
-+
-+	rv = ansi_emulate(buf, stream);
-+
-+	if (buf != small_buf)
-+		free(buf);
-+	return rv;
-+
-+abort:
-+	rv = vfprintf(stream, format, list);
-+	return rv;
-+}
-+
-+int winansi_fprintf(FILE *stream, const char *format, ...)
-+{
-+	va_list list;
-+	int rv;
-+
-+	va_start(list, format);
-+	rv = winansi_vfprintf(stream, format, list);
-+	va_end(list);
-+
-+	return rv;
-+}
-+
-+int winansi_printf(const char *format, ...)
-+{
-+	va_list list;
-+	int rv;
-+
-+	va_start(list, format);
-+	rv = winansi_vfprintf(stdout, format, list);
-+	va_end(list);
-+
-+	return rv;
-+}
--- 
-1.5.6.1.275.g0a3e0f
+Besides having fewer commands doesn't necessary mean easier to learn
+or to use. If you have one command that conflates different concepts,
+it is usually more difficult than having a devote command per concept.
+
+Can you remove the concept of branches and merges and have your VCS
+still useful? Well, you can say "we don't use branches, every developer
+commits directly on trunk". The consequence of that choice is that a lot
+of work-in-progress code is pushed to trunk. But no one has the perfect
+foresight. Some ideas will turn out to be not so good. Some developers
+will not finish their work and will be reassigned to more urgent tasks.
+As result, just as release time approaches, you have a lot of unfinished
+crap in your trunk. Of course, if you don't care about quality of your
+software, it may be easier for you to work in this way.
+
+However, if you do care about quality, you have to use feature branches
+for WIP, and for this workflow to work, you need that merging is really
+easy.  Git makes that for you, yet you may need to learn new concepts --
+branching and merging.  Thus comparision of what is easier or difficult
+is meaningless without defining goals. It is always easy to be sloppy
+and don't care...
+
+Dmitry
