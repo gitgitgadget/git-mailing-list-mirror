@@ -1,91 +1,61 @@
-From: "Nigel Magnay" <nigel.magnay@gmail.com>
-Subject: Re: [PATCH] Teach git submodule update to use distributed repositories
-Date: Fri, 18 Jul 2008 10:18:27 +0100
-Message-ID: <320075ff0807180218k7cfd4b07l67a1c82af0d61653@mail.gmail.com>
-References: <320075ff0807170508j3d3c1ef8j49df576fc47debe2@mail.gmail.com>
-	 <m363r3y42v.fsf@localhost.localdomain>
-	 <7vwsjj8t3s.fsf@gitster.siamese.dyndns.org>
-	 <200807181107.18098.jnareb@gmail.com>
+From: Nick Andrew <nick@nick-andrew.net>
+Subject: Re: [PATCH] Enable git rev-list to parse --quiet
+Date: Fri, 18 Jul 2008 19:20:01 +1000
+Message-ID: <20080718092001.GD16102@mail.local.tull.net>
+References: <20080718040459.13073.76896.stgit@marcab.local.tull.net> <7v8wvzeojm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Petr Baudis" <pasky@suse.cz>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 11:19:44 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 18 11:21:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJm7r-0000cK-Mj
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 11:19:44 +0200
+	id 1KJm9A-000158-Ug
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 11:21:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755098AbYGRJSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 05:18:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755197AbYGRJSb
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 05:18:31 -0400
-Received: from gv-out-0910.google.com ([216.239.58.184]:3755 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755098AbYGRJSa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 05:18:30 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so60173gvc.37
-        for <git@vger.kernel.org>; Fri, 18 Jul 2008 02:18:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=HU2gKMQjFGP6BsqUsuOnq77HLm4vVToMJLBoE88IDo0=;
-        b=gRAEYtKE0cHiOX9mtORP+mI4cb1gUQJkHmUCJpRAEhcR1watnBaiInMC4OvEw1tk1d
-         EOmyQUVNzuVw+M85TxGUX8GE8i627kNt7KDSNUi77oczld/Z9Kxco147IbLBtqQlTYsd
-         BQRUk+RYcag6rk7IFRsUjnU1HCcFikgf6RwXo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=OJT1DEdYWqg+DB0gjtFMO7Z4llL5fX9R/9mfRUx2PhMrnZkNLam4jv6cgA5YN0ddpn
-         1+j4al5tugM0BoC7JvBP1JfmKhGRdB3PCaXO5BTgTvPLDwFJtJdo9ayxtICPaiWE9SXx
-         DeDhHTun3/B9RqZua3ZiYuyOmC39x8FIdRnA0=
-Received: by 10.103.172.9 with SMTP id z9mr2774323muo.122.1216372708085;
-        Fri, 18 Jul 2008 02:18:28 -0700 (PDT)
-Received: by 10.103.246.15 with HTTP; Fri, 18 Jul 2008 02:18:27 -0700 (PDT)
-In-Reply-To: <200807181107.18098.jnareb@gmail.com>
+	id S1752649AbYGRJUG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 05:20:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753698AbYGRJUF
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 05:20:05 -0400
+Received: from vps1.tull.net ([66.180.172.116]:57227 "HELO vps1.tull.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753479AbYGRJUE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 05:20:04 -0400
+Received: (qmail 3288 invoked by uid 1015); 18 Jul 2008 19:20:03 +1000
+Received: from [10.0.0.67] (HELO tull.net) (10.0.0.67) by vps1.tull.net (qpsmtpd/0.26) with SMTP; Fri, 18 Jul 2008 19:20:03 +1000
+Received: (qmail 19220 invoked by uid 1000); 18 Jul 2008 19:20:01 +1000
 Content-Disposition: inline
+In-Reply-To: <7v8wvzeojm.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SMTPD: qpsmtpd/0.26, http://develooper.com/code/qpsmtpd/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89018>
 
-On Fri, Jul 18, 2008 at 10:07 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> Junio C Hamano wrote:
->
->> [...] It is understandable that you would
->> want to script something that recurses into the submodules that you have
->> checked out (or submodules that Fred wants you to look at), do the
->> equivalent of "git fetch ../fred" you did at the toplevel to automate that
->> step, but I very much agree with Pasky here in that it feels very wrong to
->> hijack "submodule update" for it.
->
-> There were two proposals how to deal with fetching all submodules:
-> (a) git-submodule recursing into submodules, IIRC even with some
-> implementation (b) new "git submodule fetch" command.
->
+On Thu, Jul 17, 2008 at 10:42:21PM -0700, Junio C Hamano wrote:
+> Thanks for noticing, but this replaces one breakage with another.
+> 
+> Your new behaviour is a new "tell me if it is an empty set" option, and it
+> means quite different thing from what --quiet does.
 
-Yes - I think there's a few more options and possible combinations
+Fair enough. Yes, I want to find out if it is an empty set. The
+manpage does say "fully connected" which I interpreted to mean
+that one set of commits is a subset of the other..
 
-a. git submodule update having <repository> <refspec> to recurse into
-submodules (a)(original patch)
-b. git submodule fetch
-c. git fetch --submodules
-d. git fetch (automatically recurse if there are submodules)
-e. git fetch (automatically recurse if there is some setting in .git/config)
+I want to automatically (e.g. in crontab) update a git repo to the latest
+HEAD from a remote branch ... but with the possibility that the local
+repo has local changes, and I want no chance of merge failure. In other
+words, "git fetch remote; git merge origin/master" and only do the
+merge if it's a fast-forward. If there are any local commits, or local
+uncommitted changes, then leave the local working tree alone.
 
-I started at (a) and agree that it's a bad choice.
-Any of b-e would work for me.
-My (personal) preferences would be for d/e, then c, then b - but -
-that's based on my belief that submodules are a pretty fundamental
-thing and having a separate UI is bad.
+So my idea was to use "git rev-list --quiet master ^origin/master"
+and check the exit code; if zero do "git merge origin/master". Without
+a working "--quiet" nor exit code I can pipe the output to "wc -l"
+but is there a more efficient/reliable way to implement the requirement?
+
+Nick.
