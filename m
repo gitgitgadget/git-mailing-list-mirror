@@ -1,7 +1,7 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 11/28] Add option handler for PathTreeFilter values
-Date: Thu, 17 Jul 2008 21:44:04 -0400
-Message-ID: <1216345461-59382-12-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 12/28] Add option handler for RefSpec values
+Date: Thu, 17 Jul 2008 21:44:05 -0400
+Message-ID: <1216345461-59382-13-git-send-email-spearce@spearce.org>
 References: <1216345461-59382-1-git-send-email-spearce@spearce.org>
  <1216345461-59382-2-git-send-email-spearce@spearce.org>
  <1216345461-59382-3-git-send-email-spearce@spearce.org>
@@ -13,58 +13,58 @@ References: <1216345461-59382-1-git-send-email-spearce@spearce.org>
  <1216345461-59382-9-git-send-email-spearce@spearce.org>
  <1216345461-59382-10-git-send-email-spearce@spearce.org>
  <1216345461-59382-11-git-send-email-spearce@spearce.org>
+ <1216345461-59382-12-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>,
 	Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 03:47:31 2008
+X-From: git-owner@vger.kernel.org Fri Jul 18 03:47:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJf4B-0006LD-Kw
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 03:47:28 +0200
+	id 1KJf4F-0006LD-Kn
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 03:47:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758679AbYGRBpO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 21:45:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758638AbYGRBpK
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 21:45:10 -0400
-Received: from george.spearce.org ([209.20.77.23]:47015 "EHLO
+	id S1758965AbYGRBpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 21:45:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758915AbYGRBpe
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 21:45:34 -0400
+Received: from george.spearce.org ([209.20.77.23]:47016 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757897AbYGRBos (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1757939AbYGRBos (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 17 Jul 2008 21:44:48 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 4233B38569; Fri, 18 Jul 2008 01:44:33 +0000 (UTC)
+	id 958513856A; Fri, 18 Jul 2008 01:44:33 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.2 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 2DD0638262;
+	by george.spearce.org (Postfix) with ESMTP id 87A55383A8;
 	Fri, 18 Jul 2008 01:44:27 +0000 (UTC)
 X-Mailer: git-send-email 1.5.6.3.569.ga9185
-In-Reply-To: <1216345461-59382-11-git-send-email-spearce@spearce.org>
+In-Reply-To: <1216345461-59382-12-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88962>
 
-Converts one or more Strings, up to the end of the command line,
-into a PathFilterGroup.  The filter group can be used with a
-TreeWalk to limit its results.
+Converts a string into a RefSpec.  RefSpec values are popular
+on the command line for transport programs like fetch and push.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../jgit/pgm/opt/PathTreeFilterHandler.java        |  102 ++++++++++++++++++++
- 1 files changed, 102 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/PathTreeFilterHandler.java
+ .../org/spearce/jgit/pgm/opt/RefSpecHandler.java   |   78 ++++++++++++++++++++
+ 1 files changed, 78 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/RefSpecHandler.java
 
-diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/PathTreeFilterHandler.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/PathTreeFilterHandler.java
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/RefSpecHandler.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/RefSpecHandler.java
 new file mode 100644
-index 0000000..8a0b5a6
+index 0000000..959b215
 --- /dev/null
-+++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/PathTreeFilterHandler.java
-@@ -0,0 +1,102 @@
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/RefSpecHandler.java
+@@ -0,0 +1,78 @@
 +/*
 + * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
 + *
@@ -104,27 +104,20 @@ index 0000000..8a0b5a6
 +
 +package org.spearce.jgit.pgm.opt;
 +
-+import java.util.ArrayList;
-+import java.util.List;
-+
 +import org.kohsuke.args4j.CmdLineException;
 +import org.kohsuke.args4j.CmdLineParser;
-+import org.kohsuke.args4j.Option;
 +import org.kohsuke.args4j.OptionDef;
 +import org.kohsuke.args4j.spi.OptionHandler;
 +import org.kohsuke.args4j.spi.Parameters;
 +import org.kohsuke.args4j.spi.Setter;
-+import org.spearce.jgit.treewalk.filter.PathFilter;
-+import org.spearce.jgit.treewalk.filter.PathFilterGroup;
-+import org.spearce.jgit.treewalk.filter.TreeFilter;
++import org.spearce.jgit.transport.RefSpec;
 +
 +/**
-+ * Create a {@link TreeFilter} to patch math names.
++ * Custom argument handler {@link RefSpec} from string values.
 + * <p>
-+ * This handler consumes all arguments to the end of the command line, and is
-+ * meant to be used on an {@link Option} of name "--".
++ * Assumes the parser has been initialized with a Repository.
 + */
-+public class PathTreeFilterHandler extends OptionHandler<TreeFilter> {
++public class RefSpecHandler extends OptionHandler<RefSpec> {
 +	/**
 +	 * Create a new handler for the command name.
 +	 * <p>
@@ -134,37 +127,20 @@ index 0000000..8a0b5a6
 +	 * @param option
 +	 * @param setter
 +	 */
-+	public PathTreeFilterHandler(final CmdLineParser parser,
-+			final OptionDef option, final Setter<? super TreeFilter> setter) {
++	public RefSpecHandler(final CmdLineParser parser, final OptionDef option,
++			final Setter<? super RefSpec> setter) {
 +		super(parser, option, setter);
 +	}
 +
 +	@Override
 +	public int parseArguments(final Parameters params) throws CmdLineException {
-+		final List<PathFilter> filters = new ArrayList<PathFilter>();
-+		for (int idx = 0;; idx++) {
-+			final String path;
-+			try {
-+				path = params.getParameter(idx);
-+			} catch (CmdLineException cle) {
-+				break;
-+			}
-+			filters.add(PathFilter.create(path));
-+		}
-+
-+		if (filters.size() == 0)
-+			return 0;
-+		if (filters.size() == 1) {
-+			setter.addValue(filters.get(0));
-+			return 1;
-+		}
-+		setter.addValue(PathFilterGroup.create(filters));
-+		return filters.size();
++		setter.addValue(new RefSpec(params.getParameter(0)));
++		return 1;
 +	}
 +
 +	@Override
 +	public String getDefaultMetaVariable() {
-+		return "path ...";
++		return "refspec";
 +	}
 +}
 -- 
