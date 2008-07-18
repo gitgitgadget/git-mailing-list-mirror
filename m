@@ -1,81 +1,136 @@
-From: Lea Wiemann <lewiemann@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: [PATCH 2/3] add new Git::Repo API
-Date: Fri, 18 Jul 2008 18:51:47 +0200
-Message-ID: <4880CA23.40003@gmail.com>
-References: <4876B223.4070707@gmail.com> <200807180149.18565.jnareb@gmail.com> <48809D31.5030008@gmail.com> <200807181735.15278.jnareb@gmail.com>
+Date: Fri, 18 Jul 2008 18:54:07 +0200
+Message-ID: <20080718165407.GU10151@machine.or.cz>
+References: <4876B223.4070707@gmail.com> <1215738665-5153-1-git-send-email-LeWiemann@gmail.com> <20080714014051.GK10151@machine.or.cz> <200807150141.39186.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, John Hawley <warthog19@eaglescrag.net>,
-	Petr Baudis <pasky@suse.cz>
+Content-Type: text/plain; charset=us-ascii
+Cc: Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org,
+	John Hawley <warthog19@eaglescrag.net>
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 18:53:00 2008
+X-From: git-owner@vger.kernel.org Fri Jul 18 18:55:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJtCM-0003zk-B3
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 18:52:50 +0200
+	id 1KJtEh-0004xf-Oa
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 18:55:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756912AbYGRQvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 12:51:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756909AbYGRQvv
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 12:51:51 -0400
-Received: from fk-out-0910.google.com ([209.85.128.190]:63835 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755386AbYGRQvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 12:51:50 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so286057fkq.5
-        for <git@vger.kernel.org>; Fri, 18 Jul 2008 09:51:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=0Fh71EUPdyfUZtyaaL3WdbQeajG6DhUOJELnj/oC9X8=;
-        b=fQuSjBUn0zJZSoH0edC5yvJl1ulbxWDPLx0ZvxWbcugNQBeIajAbpgazS4/z4CxRAk
-         fLamomtCDlZnzmXiKbMhHygN9ZpvUt/3hdoFDf0peaztfSjTH/L+gD30XC9wq7MbA3W1
-         p4wR10VP42YA0HSF5tovk6xCHM5aEP3GArwww=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=n8AAyhh4zWkDzMcqvGQVdg5qlh1emLQj4daKTLeagvnVgllAcMVSp1MdjCfN9mvOvZ
-         yRPo/3WLhvgeQ3vaqIAYP+pVrmMnHY22iAWATTZVavcUmICyF7pZg0myCTBN4Cv5Ymyq
-         N1dpPTf5QZdSTkQWsGIKREd/qDsNfM6ZaAayA=
-Received: by 10.181.24.14 with SMTP id b14mr267316bkj.22.1216399909345;
-        Fri, 18 Jul 2008 09:51:49 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.253.216])
-        by mx.google.com with ESMTPS id 22sm3780731fkr.4.2008.07.18.09.51.47
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 18 Jul 2008 09:51:48 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <200807181735.15278.jnareb@gmail.com>
+	id S1755886AbYGRQyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 12:54:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760682AbYGRQyL
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 12:54:11 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:51631 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760643AbYGRQyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 12:54:09 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 6B8F6393B320; Fri, 18 Jul 2008 18:54:07 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <200807150141.39186.jnareb@gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89053>
 
-Jakub Narebski wrote:
-> Besides if decoding is done in Perl API, we can convert it simply
-> to Perl internal form (which, IIUC, in modern Perl is UTF-8 and
-> marked as such).
+On Tue, Jul 15, 2008 at 01:41:38AM +0200, Jakub Narebski wrote:
+> On Mon, 14 July 2008, Petr Baudis wrote:
+> > Here is an idea: Introduce Git::Command object that will have very
+> > general interface and look like
+> > 
+> > 	my $c = Git::Command->new(['git', '--git-dir=.', 'cat-file', \
+> > 		'-p', 'bla'], {pipe_out=>1})
+> > 	...
+> > 	$c->close();
+> 
+> Errr... how do you read from such a pipe?  <$c> I think wouldn't work,
+> unless you would use some trickery...
 
-FWIW, Perl strings actually contain non-encoded Unicode code points.
-IOW, they're not byte strings.
+That's good point; it might either be done using some trickery, or
+$c->pipe. The idea behind having a special object for it though is to
+have *unified* (no matter how simple) error handling. You might not
+detect the command erroring out at the open time.
 
-> Still I think that putting cmd_output and other in Git::Repo
-> is not a good API.
+Is there a better approach for solving this?
 
-Yup; that's why I'm underscore-prefixing it (and taking it out of the
-man page) for the next version of this patch.
+> > and a Git::CommandFactory with a nicer interface that would look like
+> > 
+> > 	my $cf = Git::CommandFactory->new('git', '--git-dir=.');
+> > 	my $c = $cf->output_pipe('cat-file', '-p', 'bla');
+> > 	$c->close();
+> > 
+> > Then, Git::Repo would have a single Git::CommandFactory instance
+> > pre-initialized with the required calling convention, and returned by
+> > e.g. cmd() method. Then, from the user POV, you would just:
+> > 
+> > 	my $repo = Git::Repo->new;
+> > 	$repo->cmd->output_pipe('cat-file', '-p', 'bla');
+> > 
+> > Or am I overdoing it?
+> 
+> You are probably overdoing it.
+> 
+> 
+> I think it would be good to have the following interface
+> 
+> Git->output_pipe('ls-remotes', $URL, '--heads');
 
-> By the way, would you prefer if I commented on 3/3 patch as it is now,
-> [...] or would you rather I wait for next round (next version) of patches?
+This is problematic; I think mixing the new and old interface within a
+single class is very bad idea, we should have Git::Standalone or
+something for this. Or, just, default Git::CommandFactory. ;-)
 
-I suggest you wait for the next version of the patch series, which I'll
-post in a few hours.  There are quite a few changes; I'll list them in
-the parent message for the series.
+> [...]
+> $r = Git::Repo->new(<git_dir>);
+> $r->output_pipe('ls_tree', 'HEAD');
+> [...]
+> $nb = Git::Repo::NonBare->new(<git_dir>[, <working_area>]);
+> $nb->output_pipe('ls-files');
+> 
+> 
+> How can it be done with minimal effort, unfortunately I don't know...
 
--- Lea
+Well, this interface is almost identical to what I delineated, except
+that I have the extra ->cmd-> step there. But maybe, we could go with
+your API and instead have Git::CommandFactory as a base of Git::Repo?
+The hierarchy would be
+
+	Git::CommandFactory - provides the cmd_pipe toolkit
+		|
+	    Git::Repo       - provides repository model
+		|
+	Git::Repo::NonBare  - additional working-copy-related methods
+
+I think I will post a sample implementation sometime over the weekend.
+
+> > Another thing is clearly describing how error handling is going to work.
+> > I have not much against ditching Error.pm, but just saying "die + eval"
+> > does not cut it - how about possible sideband data? E.g. the failure
+> > mode of Git.pm's command() method includes passing the error'd command
+> > output in the exception object. How are we going to handle it? Now, it
+> > might be actually okay to say that we _aren't_ going to handle this if
+> > it is deemed unuseful, but that needs to be determined too. I don't know
+> > off the top of my head.
+> 
+> I think that the solution might be some output_pipe option on how to
+> treat command exit status, command STDERR, and errors when invoking
+> command (for example command not found).
+> 
+> Mentioned http://http://www.perl.com/pub/a/2002/11/14/exception.html
+> explains why one might want to use Error.pm.
+
+The arguments against its usage that popped up over the year(s?):
+
+	(i) It is not standard practice in the Perl world
+
+	(ii) It is syntactically ambiguous, c.f. Lea's report about
+	the missing semicolon
+
+	(iii) The usage of closures in this way has inherent memory leak
+	issues
+
+-- 
+				Petr "Pasky" Baudis
+As in certain cults it is possible to kill a process if you know
+its true name.  -- Ken Thompson and Dennis M. Ritchie
