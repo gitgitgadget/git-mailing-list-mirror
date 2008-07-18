@@ -1,130 +1,120 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Considering teaching plumbing to users harmful
-Date: Fri, 18 Jul 2008 10:19:19 +0200
-Message-ID: <48805207.80504@op5.se>
-References: <alpine.DEB.1.00.0807161804400.8950@racer>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Teach git submodule update to use distributed repositories
+Date: Fri, 18 Jul 2008 01:45:23 -0700 (PDT)
+Message-ID: <m363r3y42v.fsf@localhost.localdomain>
+References: <320075ff0807170508j3d3c1ef8j49df576fc47debe2@mail.gmail.com>
+	<alpine.DEB.1.00.0807171311010.8986@racer>
+	<320075ff0807170520r200e546ejbad2ed103bd65f82@mail.gmail.com>
+	<320075ff0807170521s26693381m60648468cce1c41c@mail.gmail.com>
+	<alpine.DEB.1.00.0807171351380.8986@racer>
+	<320075ff0807170703l57fe26d2h1e9c4db1c38dd6f1@mail.gmail.com>
+	<alpine.DEB.1.00.0807171513560.8986@racer>
+	<320075ff0807170807l1537e34ev510deda537e4d11e@mail.gmail.com>
+	<20080717182253.GZ32184@machine.or.cz>
+	<320075ff0807180111q4ca55cc4v15487af35f6fa63c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 18 10:21:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Petr Baudis" <pasky@suse.cz>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Nigel Magnay" <nigel.magnay@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 18 10:46:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJlDI-0008Su-BN
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 10:21:16 +0200
+	id 1KJlbn-0007V0-EZ
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 10:46:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752567AbYGRIUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 04:20:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751860AbYGRIUQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 04:20:16 -0400
-Received: from mail.op5.se ([193.201.96.20]:53272 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752076AbYGRIUO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 04:20:14 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id D790824B0040;
-	Fri, 18 Jul 2008 10:20:36 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id J4cNHuhlQc-z; Fri, 18 Jul 2008 10:20:32 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [192.168.1.199])
-	by mail.op5.se (Postfix) with ESMTP id 59DC124B003C;
-	Fri, 18 Jul 2008 10:20:32 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <alpine.DEB.1.00.0807161804400.8950@racer>
+	id S1751685AbYGRIp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 04:45:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753124AbYGRIp3
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 04:45:29 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:44808 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753039AbYGRIp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 04:45:27 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so115897fgg.17
+        for <git@vger.kernel.org>; Fri, 18 Jul 2008 01:45:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=tqi3cnvsjeANXjNxU18FCamzeAif6CHEj44al26UARQ=;
+        b=RQg9YZAa79FP8E0ALm7QcFRvPTixbEMBqOdtq6KmY2m4FTaqAdgElFKcX0qWZOhC1q
+         bF3mWoO/59vuwUl2YZL7cPiMFqYpdlpseTYZdqozDB/D2u07qCKmrAanEDekLLTKOIHv
+         pyPJ0gtUListxxTFtU2UPceX4H462VFMPRSTE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=dOYsLqIahE2Y2rha9G8b7yPKbtpgja3eACDOwtkPRdWmD/U5+Faw9TPyIqr2IsncWF
+         SQOXQ1UH8TCX3D2dTXkEseuyt70dyAFW30qO7U5sGOLhgny/lQS1Nv3zPkg2lIJ0ps7W
+         Z4sfNc1MAG08k9+xEh66tXu9DJn5TPgIjdB2c=
+Received: by 10.86.70.8 with SMTP id s8mr5536711fga.31.1216370724412;
+        Fri, 18 Jul 2008 01:45:24 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.254.74])
+        by mx.google.com with ESMTPS id l12sm1773173fgb.6.2008.07.18.01.45.20
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 18 Jul 2008 01:45:23 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m6I8iXE4003638;
+	Fri, 18 Jul 2008 10:44:45 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m6I8i9RU003631;
+	Fri, 18 Jul 2008 10:44:09 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <320075ff0807180111q4ca55cc4v15487af35f6fa63c@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89009>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> there have been a number of occasions where I came across people trying to 
-> be helpful and teaching Git newbies a few tricks.
-> 
-> However, in quite a number of cases, which seem to surge over the last 
-> weeks, I see people suggesting the use of rev-parse, ls-tree, rev-list 
-> etc.
-> 
-> Their rationale is invariably "but I found it useful", and they seem to be 
-> unable to recognize the puzzlement in the faces of the people they are 
-> trying to help.
-> 
-> Instead they insist that they did nothing wrong.
-> 
-> I had the pleasure of introducing Git to a few users in the last months 
-> and in my opinion, restricting myself to teaching them these commands 
-> first helped tremendously:
-> 
-> - clone, pull, status, add, commit, push, log
-> 
-> All of these were presented without options, to keep things simple.
-> 
-> In particular, I refrained from giving them the "-a" option to commit.  
-> That seemed to help incredibly with their embracing the index as a natural 
-> concept (which it is).
-> 
-> Often I presented the "pull" and "push" commands _only_ with "origin 
-> master" ("origin is where the repository came from, and master is the 
-> branch; you will want to use other parameters here after you used Git for 
-> a while").
-> 
-> _After_ they grew comfortable with Git, I taught them a few options here 
-> and there, not hiding, but also not promoting the full range of options.
-> 
-> So the next tricks were
-> 
-> - log -p, rm, diff, diff --cached, show
-> 
-> The last one is "show", and with that command, I taught the 
-> "<commit>:" and "<commit>:<file>" syntax, too (which some Git old-timers 
-> did not know about ;-)
-> 
+"Nigel Magnay" <nigel.magnay@gmail.com> writes:
 
-Thanks for the excellent write-up. I wish I'd had this when I did the
-introductory courses at my dayjob. With those simple commands, 90%
-of the users get access to 90% of the usefulness of git, imo. And,
-more importantly, it's enough to get them started right away.
+> On Thu, Jul 17, 2008 at 7:22 PM, Petr Baudis <pasky@suse.cz> wrote:
+>> On Thu, Jul 17, 2008 at 04:07:11PM +0100, Nigel Magnay wrote:
+>>> And it works, but
+>>>
+>>> $ git pull fred
+>>> $ git submodule update
+>>>
+>>> Can leave you with problems, because if a submodule wasn't pushed to
+>>> origin, you won't have it available. This is because the commands are
+>>> equivalent to
+>>>
+>>> $ git pull fred
+>>> for each submodule()
+>>>   cd submodule
+>>>   git fetch origin
+>>>   git checkout <sha1>
 
-
-> The pace needed to be adjusted to the users, in my experience, but not the 
-> order.
+> "Someone says 'please review the state of my tree, _before_ I push it
+> out to a (central) repository"
 > 
-> Now, it makes me really, really sad that Git has a reputation of being 
-> complicated, but I regularly hear from _my_ users that they do not 
-> understand how that came about.
+> Fred is a person (and != origin). His tree(s) are entirely correct and
+> consistent, and he doesn't yet wish to push to origin (and perhaps he
+> cannot, because he does not have permission to do so).
 > 
-> Am I the only one who deems teaching plumbing to users ("I like it raw!  
-> So I teach it the same way!") harmful?
+> All the tutorials give credit to the fact that in git you don't need a
+> central server - you can pull directly from people. Except in the case
+> where you're using submodules, where you're basically forced to
+> hand-modify .git/config (in this instance, to point to where 'fred' is
+> storing his submodule trees) before doing a submodule update. This
+> makes git complicated for users.
 > 
+> I'm trying to improve the UI for projects using submodules to make it
+> mostly transparent; the best way I can come up with is to pick on
+> individual usecases and show that they're a particular pain and that
+> perhaps they don't need to be.
 
-I wholeheartedly agree. Telling people about "git rev-list" on day one
-is probably the single greatest mistake I've ever done wrt git. To the
-non-gitizen, it takes some mumbo-jumbo arguments and spits out a long
-list of mumbo-jumbo output. Had I started with "git log" instead, it
-would have been infinitely easier to explain how each commit has a
-totally unique name.
-
-In addition, I'd recommend setting
-color.branch=auto
-color.diff=auto
-color.pager=true
-color.status=true
-before starting the "course". It makes the learning experience a whole
-lot nicer.
+I _think_ that you can currently work around this problem by using
+URL rewriting (url.<base>.insteadOf).
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Jakub Narebski
+Poland
+ShadeHawk on #git
