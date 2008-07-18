@@ -1,92 +1,76 @@
-From: SungHyun Nam <namsh@posdata.co.kr>
-Subject: Re: Re* git-remote SEGV on t5505 test.
-Date: Fri, 18 Jul 2008 18:07:49 +0900
-Message-ID: <48805D65.1060704@posdata.co.kr>
-References: <g5osl6$4g3$1@ger.gmane.org> <7vsku7es3n.fsf@gitster.siamese.dyndns.org> <48802DCD.2090704@posdata.co.kr> <7vsku7d8ak.fsf_-_@gitster.siamese.dyndns.org> <7vk5fjd7x5.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Fri, 18 Jul 2008 02:08:19 -0700
+Message-ID: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org>
+References: <7vlk01hqzz.fsf@gitster.siamese.dyndns.org>
+ <20080718175040.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 18 11:09:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Fri Jul 18 11:09:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJlxl-0005sz-Ft
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 11:09:17 +0200
+	id 1KJlxx-0005vw-De
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 11:09:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754582AbYGRJIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 05:08:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754247AbYGRJH7
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 05:07:59 -0400
-Received: from main.gmane.org ([80.91.229.2]:52696 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753572AbYGRJH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 05:07:58 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KJlwQ-0003Mt-9u
-	for git@vger.kernel.org; Fri, 18 Jul 2008 09:07:55 +0000
-Received: from 203.238.196.197 ([203.238.196.197])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 Jul 2008 09:07:54 +0000
-Received: from namsh by 203.238.196.197 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 Jul 2008 09:07:54 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 203.238.196.197
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <7vk5fjd7x5.fsf@gitster.siamese.dyndns.org>
-X-Stationery: 0.4.10
+	id S1753698AbYGRJI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 05:08:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753479AbYGRJI0
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 05:08:26 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44968 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753447AbYGRJI0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 05:08:26 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C8869312BC;
+	Fri, 18 Jul 2008 05:08:25 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id EE3F8312BB; Fri, 18 Jul 2008 05:08:21 -0400 (EDT)
+In-Reply-To: <20080718175040.6117@nanako3.lavabit.com> (Nanako Shiraishi's
+ message of "Fri, 18 Jul 2008 17:50:40 +0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 145211CE-54A9-11DD-AB8C-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89014>
 
-Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> SungHyun Nam <namsh@posdata.co.kr> writes:
+Nanako Shiraishi <nanako3@lavabit.com> writes:
+
+> Quoting Junio C Hamano <gitster@pobox.com>:
+>
+>> * xx/merge-in-c-into-next (Wed Jul 9 13:51:46 2008 -0700) 4 commits
+>>  + Teach git-merge -X<option> again.
+>>  + Merge branch 'jc/merge-theirs' into xx/merge-in-c-into-next
+>>  + builtin-merge.c: use parse_options_step() "incremental parsing"
+>>    machinery
+>>  + Merge branch 'ph/parseopt-step-blame' into xx/merge-in-c-into-next
 >>
->>>     Is it possible that we can use 'SHELL_PATH' here?
->> It is not just possible but we really should.  There are other test
->> scripts that use hardcoded /bin/sh, but by setting SHELL_PATH the user is
->> already telling us that what the vendor has in /bin/sh isn't adequately
->> POSIX enough, and we really should try to honor that.
->>
->> "git grep -n /bin/sh t/t*sh | grep -v ':1:#!'" would tell you which ones
->> are suspect.
-> 
-> SungHyun, I did not test this patch myself (all my shells grok $() command
-> substitutions), so I won't be committing this until/unless I see a "tested
-> on system X and works fine".
+>> This needs to be merged to master iff/when merge-theirs gets merged,
+>> but I do not think this series is widely supported, so both are on hold.
+>
+> Why do you say it is not widely supported?  I may be wrong but I think
+> you developed these patches after somebody from the mailing list asked
+> for this feature.
 
-I tested it on Solaris and works fine. ^^
+Well, for one thing, I do not believe in their cause.  As I wrote in the
+log messages for these commits (actually not these above which is a series
+for merge fixup, but the other topic), I do not think it is a sensible
+thing to say "let's take as much automerge results as possible to salvage
+our changes where they do not overlap with what the upstream did, but I
+would give up our changes to places that the upstream also touched,
+because I do not understand what they did well enough to be able to
+resolve the merge conflicts correctly", and "merge -Xtheirs" is exactly
+that.
 
-$ uname -sro
-SunOS 5.9 Solaris
-
-$ SHELL_PATH=/bin/bash bash ./t9001-send-email.sh
-*   ok 1: prepare reference tree
-*   ok 2: Setup helper tool
-*   ok 3: Extract patches
-*   ok 4: Send patches
-*   ok 5: Verify commandline
-*   ok 6: Show all headers
-*   ok 7: reject long lines
-*   ok 8: no patch was sent
-*   ok 9: allow long lines with --no-validate
-*   ok 10: Invalid In-Reply-To
-*   ok 11: Valid In-Reply-To when prompting
-*   ok 12: setup fake editor
-*   ok 13: --compose works
-*   ok 14: first message is compose text
-*   ok 15: second message is patch
-*   ok 16: sendemail.cc set
-*   ok 17: sendemail.cc unset
-*   ok 18: --compose adds MIME for utf8 body
-*   ok 19: --compose respects user mime type
-*   ok 20: --compose adds MIME for utf8 subject
-* passed all 20 test(s)
+That also was the reason I did not add any documentation to it.  But I do
+like the change to the infrastructure to allow passing strategy-specific
+options through git-merge and git-pull.  Perhaps I should write something
+up, if only to salvage that -X<option> part, even though I am very much
+inclined to discard -Xtheirs (and -Xours) part.
