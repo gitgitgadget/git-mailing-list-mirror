@@ -1,76 +1,94 @@
-From: "Jukka Zitting" <jukka.zitting@gmail.com>
-Subject: Re: git-svn: Trouble after project has moved in svn
-Date: Fri, 18 Jul 2008 21:27:48 +0300
-Message-ID: <510143ac0807181127y62b16ef1jf62e00bfc6c854ea@mail.gmail.com>
-References: <510143ac0807161512w44a612bcndc53713639b0b70a@mail.gmail.com>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: Suggestion: doc restructuring [was: Re: Considering teaching
+ plumbing to users harmful]
+Date: Fri, 18 Jul 2008 13:26:09 -0500
+Message-ID: <4880E041.8070001@freescale.com>
+References: <alpine.DEB.1.00.0807161804400.8950@racer> <48806D03.30603@fastmail.fm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 18 20:28:51 2008
+Cc: git@vger.kernel.org
+To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+X-From: git-owner@vger.kernel.org Fri Jul 18 20:32:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJuhF-0000vX-Pn
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 20:28:50 +0200
+	id 1KJukS-00023h-Dn
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 20:32:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755222AbYGRS1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 14:27:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755211AbYGRS1u
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 14:27:50 -0400
-Received: from wr-out-0506.google.com ([64.233.184.234]:23307 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755206AbYGRS1t (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 14:27:49 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so297170wri.5
-        for <git@vger.kernel.org>; Fri, 18 Jul 2008 11:27:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=EERbZkj3qaKnF7ux3NeV8jRF01MK7Qjk5zR95lFuVkA=;
-        b=IVT2Iois3HoFUAc6QTjf9Y5gPFMcmGhgnZBStTwyqUN6TdfzsSe7sl73PCgtEzpf/7
-         3Pap5DDVNmEohTWDo8k9Ji3QU4mAB97i0clAAEJk9/lvl079+fysCgD8S0Se5Wzf9w6O
-         L8Xb86XjwQtiwFlZU74ZXC9L2Q1MYwZmTAAEc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=eRvLARscVXpMHtoFw4yFkCHfHBbnuhfVKaNUqJ52wqGw3d8G7E/bvYhngBEKpOZeIx
-         66MWxHtDZQhTKp3bN6GLTLtKoN1jJB/FbIEkRiWyQuGA2o15kFQRsC62JdQlWHJJtIPK
-         7wzD/7RqzIMyAfMx4stOttzYgKdhHrb/4iIFQ=
-Received: by 10.90.29.13 with SMTP id c13mr481798agc.114.1216405668729;
-        Fri, 18 Jul 2008 11:27:48 -0700 (PDT)
-Received: by 10.90.115.13 with HTTP; Fri, 18 Jul 2008 11:27:48 -0700 (PDT)
-In-Reply-To: <510143ac0807161512w44a612bcndc53713639b0b70a@mail.gmail.com>
-Content-Disposition: inline
+	id S1755409AbYGRSbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 14:31:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755565AbYGRSbI
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 14:31:08 -0400
+Received: from de01egw01.freescale.net ([192.88.165.102]:44153 "EHLO
+	de01egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755118AbYGRSbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 14:31:07 -0400
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by de01egw01.freescale.net (8.12.11/az33egw01) with ESMTP id m6IIQB7j003706;
+	Fri, 18 Jul 2008 11:26:13 -0700 (MST)
+Received: from [10.214.73.22] ([10.214.73.22])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m6IIQ7Kn005331;
+	Fri, 18 Jul 2008 13:26:07 -0500 (CDT)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <48806D03.30603@fastmail.fm>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89070>
 
-Hi,
+Michael J Gruber wrote:
+> Johannes Schindelin venit, vidit, dixit 16.07.2008 19:21:
+> ...
+>>
+>> Am I the only one who deems teaching plumbing to users ("I like it 
+>> raw!  So I teach it the same way!") harmful?
+>>
+>> Ciao,
+>> Dscho "who is sad"
+> 
+> In an attempt at making not only Dscho happier I suggest a restructuring 
+> of the man pages in the following way:
+> 
+> In each man page, put a note which says something like:
+> "This is part of linkgit:gitplumbing[7]." and the like
+> It should be in a prominent place, such as the last line of "DESCRIPTION".
+> 
+> gitplumbing[7] etc. pages should contain:
+> - a definition of the respective term together with appropriate usage 
+> advice (regular use/scripting..., "Let there be dragons.")
+> - a list of commands like we have in git[1] right now
+> 
+> With the current situation, people don't look at git[1] in order to find 
+> out what they're supposed to use. It's too long anyways, and could link 
+> the above pages instead.
+> 
+> If there's enough interest/agreement I'd come up with a refactoring patch.
+> 
+> Michael
 
-On Thu, Jul 17, 2008 at 1:12 AM, Jukka Zitting <jukka.zitting@gmail.com> wrote:
-> Somewhat related to the recent thread about Apache Synapse, I'm having
-> trouble making a git-svn clone of a project that has been moved around
-> in a Subversion repository.
+I'd like to throw my beef with the main Git man page
+out there for consideration as well...
 
-Ah, silly me, my test script was broken. Thanks to Michael J. Gruber
-for pointing out that I should have used created the tags using svn
-URLs instead of working copy path or at least done an "svn update"
-before tagging. After fixing my test script the git-svn result was
-exactly as I was hoping to see.
+When I hit the man page, which I do on line quite frequently,
+I usually use it as an index to get to the real, current man
+page for a particular command.  (I am at git.kernel.org for
+other reasons all the time, so it is convenient.)
 
-I think that covers my last barrier for creating experimental git
-mirrors of various Apache codebases. Check out
-http://mail-archives.apache.org/mod_mbox/www-infrastructure-dev/ for
-more on git experiments at Apache.
+The current sub-setting and organization is painful because
+it doesn't have a comprehensive, linear, alphabetized list
+of commands from which to select the real man page.  I never
+know which "section" to find a given command.  Is it an
+Ancillary "manipulator" command?  Or maybe just a "Manipulation"
+command, or maybe an "Interrogation" command?  A "Helper"?
 
-BR,
+I always have to painfully search the page for it instead.
 
-Jukka Zitting
+I'm not saying get rid of the Categorical organization.
+I am saying, we need a first-page with a straight, alphabetized
+command index somewhere easy and located conveniently.
+
+Thanks for listening,
+jdl
