@@ -1,65 +1,130 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: stgit: bug with refresh and -p
-Date: Fri, 18 Jul 2008 10:41:27 +0200
-Message-ID: <20080718084127.GA7042@diana.vm.bytemark.co.uk>
-References: <9e4733910807171829q6abdcfc2m90c40a70dbc8fef5@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Considering teaching plumbing to users harmful
+Date: Fri, 18 Jul 2008 10:19:19 +0200
+Message-ID: <48805207.80504@op5.se>
+References: <alpine.DEB.1.00.0807161804400.8950@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Catalin Marinas <catalin.marinas@gmail.com>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 10:20:17 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 18 10:21:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJlCI-00089c-UZ
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 10:20:15 +0200
+	id 1KJlDI-0008Su-BN
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 10:21:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495AbYGRITO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jul 2008 04:19:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751346AbYGRITO
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 04:19:14 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2132 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751468AbYGRITM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 04:19:12 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KJlWp-000261-00; Fri, 18 Jul 2008 09:41:27 +0100
-Content-Disposition: inline
-In-Reply-To: <9e4733910807171829q6abdcfc2m90c40a70dbc8fef5@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1752567AbYGRIUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 04:20:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751860AbYGRIUQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 04:20:16 -0400
+Received: from mail.op5.se ([193.201.96.20]:53272 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752076AbYGRIUO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 04:20:14 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id D790824B0040;
+	Fri, 18 Jul 2008 10:20:36 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id J4cNHuhlQc-z; Fri, 18 Jul 2008 10:20:32 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.199])
+	by mail.op5.se (Postfix) with ESMTP id 59DC124B003C;
+	Fri, 18 Jul 2008 10:20:32 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <alpine.DEB.1.00.0807161804400.8950@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89008>
 
-On 2008-07-17 21:29:01 -0400, Jon Smirl wrote:
+Johannes Schindelin wrote:
+> Hi,
+> 
+> there have been a number of occasions where I came across people trying to 
+> be helpful and teaching Git newbies a few tricks.
+> 
+> However, in quite a number of cases, which seem to surge over the last 
+> weeks, I see people suggesting the use of rev-parse, ls-tree, rev-list 
+> etc.
+> 
+> Their rationale is invariably "but I found it useful", and they seem to be 
+> unable to recognize the puzzlement in the faces of the people they are 
+> trying to help.
+> 
+> Instead they insist that they did nothing wrong.
+> 
+> I had the pleasure of introducing Git to a few users in the last months 
+> and in my opinion, restricting myself to teaching them these commands 
+> first helped tremendously:
+> 
+> - clone, pull, status, add, commit, push, log
+> 
+> All of these were presented without options, to keep things simple.
+> 
+> In particular, I refrained from giving them the "-a" option to commit.  
+> That seemed to help incredibly with their embracing the index as a natural 
+> concept (which it is).
+> 
+> Often I presented the "pull" and "push" commands _only_ with "origin 
+> master" ("origin is where the repository came from, and master is the 
+> branch; you will want to use other parameters here after you used Git for 
+> a while").
+> 
+> _After_ they grew comfortable with Git, I taught them a few options here 
+> and there, not hiding, but also not promoting the full range of options.
+> 
+> So the next tricks were
+> 
+> - log -p, rm, diff, diff --cached, show
+> 
+> The last one is "show", and with that command, I taught the 
+> "<commit>:" and "<commit>:<file>" syntax, too (which some Git old-timers 
+> did not know about ;-)
+> 
 
-> A refresh with -p is not picking up newly added files.
->
-> jonsmirl@terra:~/fs$ stg status
-> ? include/linux/i2c/max9485.h
-> jonsmirl@terra:~/fs$ git add include/linux/i2c/max9485.h
-> jonsmirl@terra:~/fs$ stg refresh -p max9485
-> Checking for changes in the working directory ... done
-> Popping patches "jds-audio" - "jds-psc" ... done
-> Refreshing patch "max9485" ... done
-> Fast-forwarded patches "jds-psc" - "jds-audio"
-> jonsmirl@terra:~/fs$ stg status
-> ? include/linux/i2c/max9485.h
-> jonsmirl@terra:~/fs$ stg --version
-> Stacked GIT 0.14.3.163.g06f9
+Thanks for the excellent write-up. I wish I'd had this when I did the
+introductory courses at my dayjob. With those simple commands, 90%
+of the users get access to 90% of the usefulness of git, imo. And,
+more importantly, it's enough to get them started right away.
 
-Hmm, I don't immediately see why this happens. I've posted a bug about
-it: https://gna.org/bugs/index.php?12038
 
-It's fixed by the refresh rewrite in my experimental branch, but
-there's no test for it, so I had to check by hand.
+> The pace needed to be adjusted to the users, in my experience, but not the 
+> order.
+> 
+> Now, it makes me really, really sad that Git has a reputation of being 
+> complicated, but I regularly hear from _my_ users that they do not 
+> understand how that came about.
+> 
+> Am I the only one who deems teaching plumbing to users ("I like it raw!  
+> So I teach it the same way!") harmful?
+> 
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+I wholeheartedly agree. Telling people about "git rev-list" on day one
+is probably the single greatest mistake I've ever done wrt git. To the
+non-gitizen, it takes some mumbo-jumbo arguments and spits out a long
+list of mumbo-jumbo output. Had I started with "git log" instead, it
+would have been infinitely easier to explain how each commit has a
+totally unique name.
+
+In addition, I'd recommend setting
+color.branch=auto
+color.diff=auto
+color.pager=true
+color.status=true
+before starting the "course". It makes the learning experience a whole
+lot nicer.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
