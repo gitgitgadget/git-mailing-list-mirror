@@ -1,61 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re* git-remote SEGV on t5505 test.
-Date: Thu, 17 Jul 2008 23:26:46 -0700
-Message-ID: <7vk5fjd7x5.fsf@gitster.siamese.dyndns.org>
-References: <g5osl6$4g3$1@ger.gmane.org>
- <7vsku7es3n.fsf@gitster.siamese.dyndns.org> <48802DCD.2090704@posdata.co.kr>
- <7vsku7d8ak.fsf_-_@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: SungHyun Nam <namsh@posdata.co.kr>
-X-From: git-owner@vger.kernel.org Fri Jul 18 08:27:53 2008
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] builtin-clone: Use is_dir_sep() instead of '/'
+Date: Fri, 18 Jul 2008 09:34:43 +0200
+Message-ID: <1216366485-12201-3-git-send-email-johannes.sixt@telecom.at>
+References: <1216366485-12201-1-git-send-email-johannes.sixt@telecom.at>
+ <1216366485-12201-2-git-send-email-johannes.sixt@telecom.at>
+Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 18 09:36:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJjRX-0002NP-LI
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 08:27:52 +0200
+	id 1KJkVV-0003a0-HM
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 09:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752513AbYGRG0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 02:26:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbYGRG0x
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 02:26:53 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39987 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752307AbYGRG0w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 02:26:52 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A10252CECF;
-	Fri, 18 Jul 2008 02:26:51 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0B6CF2CECC; Fri, 18 Jul 2008 02:26:48 -0400 (EDT)
-In-Reply-To: <7vsku7d8ak.fsf_-_@gitster.siamese.dyndns.org> (Junio C.
- Hamano's message of "Thu, 17 Jul 2008 23:18:43 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8225CCFC-5492-11DD-B6A4-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752343AbYGRHez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 03:34:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752004AbYGRHey
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 03:34:54 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:4675 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751856AbYGRHet (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 03:34:49 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@eudaptics.com>)
+	id 1KJkUI-0002lb-FJ; Fri, 18 Jul 2008 09:34:46 +0200
+Received: from srv.linz.viscovery (srv.linz.viscovery [192.168.1.4])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 232B1FF0C; Fri, 18 Jul 2008 09:34:46 +0200 (CEST)
+Received: by srv.linz.viscovery (Postfix, from userid 1000)
+	id E7623FA46; Fri, 18 Jul 2008 09:34:45 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.1.275.g0a3e0f
+In-Reply-To: <1216366485-12201-2-git-send-email-johannes.sixt@telecom.at>
+X-Spam-Score: -0.8 (/)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_60=1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88998>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ builtin-clone.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> SungHyun Nam <namsh@posdata.co.kr> writes:
->
->>     Is it possible that we can use 'SHELL_PATH' here?
->
-> It is not just possible but we really should.  There are other test
-> scripts that use hardcoded /bin/sh, but by setting SHELL_PATH the user is
-> already telling us that what the vendor has in /bin/sh isn't adequately
-> POSIX enough, and we really should try to honor that.
->
-> "git grep -n /bin/sh t/t*sh | grep -v ':1:#!'" would tell you which ones
-> are suspect.
-
-SungHyun, I did not test this patch myself (all my shells grok $() command
-substitutions), so I won't be committing this until/unless I see a "tested
-on system X and works fine".
+diff --git a/builtin-clone.c b/builtin-clone.c
+index 643c7d4..fddf47f 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -115,7 +115,7 @@ static char *guess_dir_name(const char *repo, int is_bundle)
+ 			if (!after_slash_or_colon)
+ 				end = p;
+ 			p += 7;
+-		} else if (*p == '/' || *p == ':') {
++		} else if (is_dir_sep(*p) || *p == ':') {
+ 			if (end == limit)
+ 				end = p;
+ 			after_slash_or_colon = 1;
+-- 
+1.5.6.1.275.g0a3e0f
