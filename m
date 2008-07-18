@@ -1,181 +1,81 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Lea Wiemann <lewiemann@gmail.com>
 Subject: Re: [PATCH 2/3] add new Git::Repo API
-Date: Fri, 18 Jul 2008 18:48:28 +0200
-Message-ID: <20080718164828.GT10151@machine.or.cz>
-References: <4876B223.4070707@gmail.com> <1215738665-5153-1-git-send-email-LeWiemann@gmail.com> <20080714014051.GK10151@machine.or.cz> <200807150141.39186.jnareb@gmail.com> <4876B223.4070707@gmail.com> <1215738665-5153-1-git-send-email-LeWiemann@gmail.com> <20080714014051.GK10151@machine.or.cz> <487BD0F3.2060508@gmail.com>
+Date: Fri, 18 Jul 2008 18:51:47 +0200
+Message-ID: <4880CA23.40003@gmail.com>
+References: <4876B223.4070707@gmail.com> <200807180149.18565.jnareb@gmail.com> <48809D31.5030008@gmail.com> <200807181735.15278.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, John Hawley <warthog19@eaglescrag.net>
-To: Lea Wiemann <lewiemann@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 18:49:33 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, John Hawley <warthog19@eaglescrag.net>,
+	Petr Baudis <pasky@suse.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 18 18:53:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJt99-0002UN-9E
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 18:49:31 +0200
+	id 1KJtCM-0003zk-B3
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 18:52:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756797AbYGRQsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 12:48:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756327AbYGRQsb
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 12:48:31 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:58376 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756208AbYGRQsa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 12:48:30 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 2B947393B489; Fri, 18 Jul 2008 18:48:28 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200807150141.39186.jnareb@gmail.com> <487BD0F3.2060508@gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1756912AbYGRQvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 12:51:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756909AbYGRQvv
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 12:51:51 -0400
+Received: from fk-out-0910.google.com ([209.85.128.190]:63835 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755386AbYGRQvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 12:51:50 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so286057fkq.5
+        for <git@vger.kernel.org>; Fri, 18 Jul 2008 09:51:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=0Fh71EUPdyfUZtyaaL3WdbQeajG6DhUOJELnj/oC9X8=;
+        b=fQuSjBUn0zJZSoH0edC5yvJl1ulbxWDPLx0ZvxWbcugNQBeIajAbpgazS4/z4CxRAk
+         fLamomtCDlZnzmXiKbMhHygN9ZpvUt/3hdoFDf0peaztfSjTH/L+gD30XC9wq7MbA3W1
+         p4wR10VP42YA0HSF5tovk6xCHM5aEP3GArwww=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=n8AAyhh4zWkDzMcqvGQVdg5qlh1emLQj4daKTLeagvnVgllAcMVSp1MdjCfN9mvOvZ
+         yRPo/3WLhvgeQ3vaqIAYP+pVrmMnHY22iAWATTZVavcUmICyF7pZg0myCTBN4Cv5Ymyq
+         N1dpPTf5QZdSTkQWsGIKREd/qDsNfM6ZaAayA=
+Received: by 10.181.24.14 with SMTP id b14mr267316bkj.22.1216399909345;
+        Fri, 18 Jul 2008 09:51:49 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.253.216])
+        by mx.google.com with ESMTPS id 22sm3780731fkr.4.2008.07.18.09.51.47
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 18 Jul 2008 09:51:48 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
+In-Reply-To: <200807181735.15278.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89052>
 
-In order to keep this mail within sensible size, I have trimmed some of
-the bits - basically, the default reply is usually ranging from "Fair
-enough" to "Great!" :-)
+Jakub Narebski wrote:
+> Besides if decoding is done in Perl API, we can convert it simply
+> to Perl internal form (which, IIUC, in modern Perl is UTF-8 and
+> marked as such).
 
-On Tue, Jul 15, 2008 at 12:19:31AM +0200, Lea Wiemann wrote:
-> > First, I don't think it's good idea at all to put the pipe-related stuff
-> > to Git::Repo - this is botched up API just like the current one.
-> 
-> Well, they're more like helper methods.  Since they don't fit into the
-> design goals of the Git::Repo API at all, I'd suggest we just
-> underscore-prefix them and take them out of the man page.  (The only
-> reason why I hadn't done this is that gitweb uses $repo->cmd_output
-> extensively, so it'd end up with a lot of underscore calls.  But I
-> suppose we can either alias _cmd_output to cmd_output in gitweb's
-> CachedRepo subclass, or live with $repo->_cmd_output calls.)  Does
-> underscore-prefixing sound good to you?
+FWIW, Perl strings actually contain non-encoded Unicode code points.
+IOW, they're not byte strings.
 
-I think this is one problematic point we keep hitting - my opinion is
-that we _need_ such a wrapper _publically_, because it tends to be
-actually the main use-case of Git.pm, and that this wrapper should be:
+> Still I think that putting cmd_output and other in Git::Repo
+> is not a good API.
 
-	(i) both available standalone for commands like ls-remote
+Yup; that's why I'm underscore-prefixing it (and taking it out of the
+man page) for the next version of this patch.
 
-	(ii) and available as part of Git::Repo instance, to have the
-	right arguments passed to Git automagically
+> By the way, would you prefer if I commented on 3/3 patch as it is now,
+> [...] or would you rather I wait for next round (next version) of patches?
 
-So you define cmd_output() and seem to argue that this command should
-not be called directly and is not interesting for the outside. But the
-experience shows that the pipe interface is actually the _most_ used
-part of the Git Perl API, and in fact you mentioned that as part of your
-gitweb migration to Git::Repo, you will temporarily introduce calls to
-_cmd_output(), the "internal" API. :-) Sure, it's only temporary, but
-many won't have the luxury to adjust the Git::Repo API to provide all
-the operations they need, and ultimately they will need to defer to the
-pipe interface.
+I suggest you wait for the next version of the patch series, which I'll
+post in a few hours.  There are quite a few changes; I'll list them in
+the parent message for the series.
 
-> > It should be actually very easy to start with moving all the pipe
-> > functionality to Git::Command.
-> 
-> Creating a new (Git::Command) API is very much non-trivial, apart from
-> the fact that I'm not convinced that we need Git::Command, and that a
-> clean command interface neither falls out of Git.pm nor Git::Repo.
-
-As I said, majority of Git API usage is actually the pipe API. So we
-should figure out how to provide it. I agree that it's not immediately
-within your scope, but you are introducing new Perl API and this just
-needs to be embedded somewhere there consistently.
-
-> >> [Git::Commit->new, Git::Tag->new:]
-> >> +Calls to this method are free, since it does not check whether $sha1
-> >> +exists and has the right type.  However, accessing any of the commit
-> >> +object's properties will fail if $sha1 is not a valid commit object.
-> > 
-> > This is nice idea, but I'd also provide a well-defined way for the user
-> > to verify the object's validity at a good moment; basically, make load()
-> > a public method. The user can deal with errors then and rely on
-> > error-free behavior later.
-> 
-> No, you should never pass in an invalid SHA1 in the first place.  The
-> above piece of documentation is just a warning that bugs will show up
-> delayed.  IOW, this is not the right place to have your error handling.
-> 
-> If you're getting a SHA1 through the user-interface, check its existence
-> with get_sha1 before passing it to the constructor.
-
-But that's an expensive operation, you need extra Git exec for this,
-while all the Git commands can do the checks for you, if you give them
-the chance.
-
-I was doing pretty much this thing in Cogito (initially out of
-necessity) and it made it ungodly slow for any kind of batch operations.
-
-> >> +Note that $sha1 must be the SHA1 of a commit object; tag objects are
-> >> +not dereferenced.
-> > 
-> > Why not?
-> 
-> Because the SHA1 might resolve to an object of the wrong type, which
-> means you have to do error handling in Git::Object objects; that's the
-> wrong place.
-> 
-> If tag-resolving is really needed, we can add an optional $type
-> parameter to get_sha1, which will cause get_sha1 to resolve the object
-> until a $type object is found, or return undef if the object is or
-> resolves to an object of the wrong type.
-
-See above why I think you should reconsider requiring the explicit
-"resolving" step.
-
-> I have resolving code in gitweb's git_get_sha1_or_die (which I didn't
-> implement in Git::Repo since it uses some customized error reporting).
-> The resolving code could conceivably be extracted and moved to get_sha1.
->  I think there are a few things to ponder and maybe discuss, so I'd do
-> that in a separate patch (if I get around it before the end of the project).
-
-The thing that concerns me about this is that this might show that your
-approach to error handling is not flexible enough for some real-world
-usage and this might be a design mistake - is that not so? I didn't look
-at the code.
-
-> >> [Snipped a lot of quoting --LW]
-> >> +=item $repo->repo_dir
-> >> +=item $repo->git_binary
-> >> +=item $repo->version
-> >> +sub _get_git_cmd {
-> > 
-> > This definitely does not belong to a Git::Repo object.
-> 
-> Which of those methods are you referring to?  I think $repo->version
-> might reasonably be removed (and the code re-added to gitweb); I'll do
-> so unless you object.  _get_git_cmd is already underscored, and repo_dir
-> and git_binary only access attributes passed in through the constructor,
-> so I think those three should stay.
-
-Sorry, you're right about repo_dir and possibly git_binary. My main
-concern was about the command pipe handling itself, but I elaborated on
-that above already.
-
-> >> +=item $repo->get_refs
-> >> +=item $repo->get_refs($pattern)
-> > 
-> > Again, the refs should be properly integrated into the object structure.
-> 
-> Really?  I think it's generally fine for get_refs to exist and to live
-> in Git::Repo.
-> 
-> Its return value (currently an an arrayref of [$sha1, $object_type,
-> $ref_name] arrayrefs) might need improvement though, and I find the
-> $pattern parameter pretty suspect (in that it smells like a for-each-ref
-> wrapper).  Since get_refs is unused at the moment (gitweb ended up
-> needing the slightly different show-ref), I'll remove it for now.  (Same
-> thing about me not being a fan of premature API design applies.)
-
-Just a note, the thing is that you might want to add some methods for
-inspecting and mutating the refs, and at the same time this is not a
-repository-specific concept, but you can get the same structure from
-git ls-remote call. That's why I think it would make sense to make
-a separate object out of it. But that's moot point now that the API
-won't be there yet.
-
--- 
-				Petr "Pasky" Baudis
-As in certain cults it is possible to kill a process if you know
-its true name.  -- Ken Thompson and Dennis M. Ritchie
+-- Lea
