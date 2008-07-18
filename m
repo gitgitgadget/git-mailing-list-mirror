@@ -1,71 +1,59 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: GSoC podcast 18: Git
-Date: Fri, 18 Jul 2008 09:56:37 +0200
-Message-ID: <vpqd4lbiq16.fsf@bauges.imag.fr>
-References: <alpine.DEB.1.00.0807170133150.4318@eeepc-johanness>
+From: "Lennart Borgman (gmail)" <lennart.borgman@gmail.com>
+Subject: Re: Git bash - is this MSYS bash or something else?
+Date: Fri, 18 Jul 2008 10:06:18 +0200
+Message-ID: <48804EFA.7070505@gmail.com>
+References: <487FE830.5000101@gmail.com> <288BA074-4995-47FB-BD22-75D36BF77A44@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, spearce@spearce.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 18 09:59:37 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Fri Jul 18 10:07:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJksL-00024G-2f
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 09:59:37 +0200
+	id 1KJl02-0004MX-1I
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 10:07:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753251AbYGRH6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 03:58:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752408AbYGRH6h
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 03:58:37 -0400
-Received: from imag.imag.fr ([129.88.30.1]:34747 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751927AbYGRH6h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 03:58:37 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m6I7uh86007560
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 18 Jul 2008 09:56:43 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KJkpR-0001AS-Vg; Fri, 18 Jul 2008 09:56:37 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KJkpR-0004sj-TD; Fri, 18 Jul 2008 09:56:37 +0200
-In-Reply-To: <alpine.DEB.1.00.0807170133150.4318@eeepc-johanness> (Johannes Schindelin's message of "Thu\, 17 Jul 2008 01\:35\:52 +0200 \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 18 Jul 2008 09:56:44 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753094AbYGRIGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 04:06:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751345AbYGRIGd
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 04:06:33 -0400
+Received: from ch-smtp02.sth.basefarm.net ([80.76.149.213]:33775 "EHLO
+	ch-smtp02.sth.basefarm.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752526AbYGRIGb (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Jul 2008 04:06:31 -0400
+Received: from c83-254-145-59.bredband.comhem.se ([83.254.145.59]:60601 helo=[127.0.0.1])
+	by ch-smtp02.sth.basefarm.net with esmtp (Exim 4.68)
+	(envelope-from <lennart.borgman@gmail.com>)
+	id 1KJkyz-0001Fw-85; Fri, 18 Jul 2008 10:06:29 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.9) Gecko/20071031 Thunderbird/2.0.0.9 Mnenhy/0.7.5.666
+In-Reply-To: <288BA074-4995-47FB-BD22-75D36BF77A44@zib.de>
+X-Antivirus: avast! (VPS 080712-0, 2008-07-12), Outbound message
+X-Antivirus-Status: Clean
+X-Originating-IP: 83.254.145.59
+X-Scan-Result: No virus found in message 1KJkyz-0001Fw-85.
+X-Scan-Signature: ch-smtp02.sth.basefarm.net 1KJkyz-0001Fw-85 7d30c443f8d30a700347476c0c65d440
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89005>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Steffen Prohaska wrote:
+> 
+> On Jul 18, 2008, at 2:47 AM, Lennart Borgman (gmail) wrote:
+> 
+>> I wonder if the bash.exe that comes with GIT is MSYS bash or a rewrite?
+> 
+> It is the MSYS bash.
 
-> Hi list,
->
-> you might be interested in listening to Leslie Hawthorn interviewing Git's 
-> GSoC administrator (Shawn) and his lazy bum^Wbackup administrator (yours 
-> truly).
->
-> I haven't seen it being mentioned on the official blog, but after waiting 
-> for over an hour, I figured I could just send the direct link:
->
-> http://google-developer-podcast.googlecode.com/files/gsocpodcast018.ogg
+Thanks Steffen.
 
-Interesting.
+>> Does it follow the usual MSYS bash rules?
+> 
+> What does this mean?
 
-Didn't listen the whole thing yet, but there's a sentence from Shawn
-that summarizes really well the point behind private Vs public stuff:
-
- "Make it look like you are a better programmer than you really are."
-
--- 
-Matthieu
+I just wondered if something was changed regarding starting of programs 
+from MSYS bash.
