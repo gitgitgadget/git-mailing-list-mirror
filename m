@@ -1,86 +1,131 @@
-From: SungHyun Nam <namsh@posdata.co.kr>
-Subject: Re: git-remote SEGV on t5505 test.
-Date: Fri, 18 Jul 2008 14:44:45 +0900
-Message-ID: <48802DCD.2090704@posdata.co.kr>
-References: <g5osl6$4g3$1@ger.gmane.org> <7vsku7es3n.fsf@gitster.siamese.dyndns.org>
+From: Alexander Gavrilov <angavrilov@gmail.com>
+Subject: [PATCH (GITK) 1/3] gitk: Kill back-end processes on window close.
+Date: Fri, 18 Jul 2008 09:45:43 +0400
+Organization: TEPKOM
+Message-ID: <200807180945.43504.angavrilov@gmail.com>
+References: <200807180944.48570.angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Cc: Paul Mackerras <paulus@samba.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 18 07:46:40 2008
+X-From: git-owner@vger.kernel.org Fri Jul 18 07:46:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJinf-0001ty-S0
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 07:46:40 +0200
+	id 1KJinv-0001yh-NX
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 07:46:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751882AbYGRFpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 01:45:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751373AbYGRFpV
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 01:45:21 -0400
-Received: from main.gmane.org ([80.91.229.2]:50201 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751582AbYGRFpU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 01:45:20 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KJimG-0004Sv-K2
-	for git@vger.kernel.org; Fri, 18 Jul 2008 05:45:13 +0000
-Received: from 203.238.196.197 ([203.238.196.197])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 Jul 2008 05:45:12 +0000
-Received: from namsh by 203.238.196.197 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 Jul 2008 05:45:12 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 203.238.196.197
-User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
-In-Reply-To: <7vsku7es3n.fsf@gitster.siamese.dyndns.org>
-X-Stationery: 0.4.10
+	id S1751856AbYGRFpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 01:45:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751927AbYGRFpy
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 01:45:54 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:4681 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751709AbYGRFpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 01:45:54 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so78636nfc.21
+        for <git@vger.kernel.org>; Thu, 17 Jul 2008 22:45:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:organization:to:subject
+         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=pmDqd7H4Y5WI3+yBiw8REMD/I1+jBLiyngg7IudvDPU=;
+        b=BsMJJ8imo+gKcIsQMJFmLCDXzSGJJl2Qu+ZkbWh+l6yUELEWa93bi47QVZh2Wf2ie9
+         cViT7dVQWzYr/oUnvLg+6sWNkVhkD/5t82PipHiTbXS8PYZcJiyPWtiexTNc6vb2ygQT
+         YDujATm1ygQLaDfVWl1Hb1YSWD9G3JoqI7LkE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:organization:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Vx/QaxVKsMYT3F+/rWCgQqweMJ8e1DPP2jLyk7JShumTEY1PCMvmzYADBe4uJ712dN
+         BwlWW8PEiiQoR+Zp0dpNl7AA2LQ5020uVW81QIaoUzpid+Wm5zJZWX/8c2kEy+OQ8Zc/
+         bzarMDBOkzjJGPb4/RIJaN8I3K3Yf/OKTufeU=
+Received: by 10.210.72.19 with SMTP id u19mr1889198eba.55.1216359950481;
+        Thu, 17 Jul 2008 22:45:50 -0700 (PDT)
+Received: from desktop2 ( [92.255.84.130])
+        by mx.google.com with ESMTPS id c22sm1128778ika.1.2008.07.17.22.45.49
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 17 Jul 2008 22:45:49 -0700 (PDT)
+User-Agent: KMail/1.9.9
+In-Reply-To: <200807180944.48570.angavrilov@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88988>
 
-Junio C Hamano wrote:
-> SungHyun Nam <namsh@posdata.co.kr> writes:
-> 
->> And the 'skip_prefix()' returns NULL in this case.
->> (The old skip_prefix() never returns NULL).
-> 
-> Thanks.  Something like this?
+When collecting commits for a rarely changed, or recently
+created file or directory, rev-list may work for a noticeable
+period of time without producing any output. Such processes
+don't receive SIGPIPE for a while after gitk is closed, thus
+becoming runaway CPU hogs.
 
-With this patch, 'make test' passed all the tests successfully.
-I ran test with GIT_SKIP_TESTS="t90?? t91?? t92?? t94??".
+Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+---
+ gitk |   35 +++++++++++++++++++++++++----------
+ 1 files changed, 25 insertions(+), 10 deletions(-)
 
-Regards,
-namsh
-
-P.S I skipped svn/cvs test because I don't need them (And no
-     svn/cvs installed).  But, I skipped send-email test because it
-     fails.  I thought I don't need to use send-email.
-
-     And now I check what caused fail.  The problem was this test
-     script generates 'fake.sendmail' which uses '/bin/sh'.
-
-     Is it possible that we can use 'SHELL_PATH' here?  Or could
-     you apply the patch below?
-
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index de5b980..0320aa1 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -16,7 +16,7 @@ test_expect_success \
-      '(echo "#!/bin/sh"
-        echo shift
-        echo output=1
--      echo "while test -f commandline\$output; do
-output=\$((\$output+1)); done"
-+      echo "while test -f commandline\$output; do output=\`expr
-\$output + 1\`; done"
-        echo for a
-        echo do
-        echo "  echo \"!\$a!\""
+diff --git a/gitk b/gitk
+index fddcb45..29d79d6 100755
+--- a/gitk
++++ b/gitk
+@@ -375,19 +375,33 @@ proc start_rev_list {view} {
+     return 1
+ }
+ 
++proc stop_instance {inst} {
++    global commfd leftover
++
++    set fd $commfd($inst)
++    catch {
++	set pid [pid $fd]
++	exec kill $pid
++    }
++    catch {close $fd}
++    nukefile $fd
++    unset commfd($inst)
++    unset leftover($inst)
++}
++
++proc stop_backends {} {
++    global commfd
++
++    foreach inst [array names commfd] {
++	stop_instance $inst
++    }
++}
++
+ proc stop_rev_list {view} {
+-    global commfd viewinstances leftover
++    global viewinstances
+ 
+     foreach inst $viewinstances($view) {
+-	set fd $commfd($inst)
+-	catch {
+-	    set pid [pid $fd]
+-	    exec kill $pid
+-	}
+-	catch {close $fd}
+-	nukefile $fd
+-	unset commfd($inst)
+-	unset leftover($inst)
++	stop_instance $inst
+     }
+     set viewinstances($view) {}
+ }
+@@ -2103,6 +2117,7 @@ proc makewindow {} {
+     bind . <$M1B-minus> {incrfont -1}
+     bind . <$M1B-KP_Subtract> {incrfont -1}
+     wm protocol . WM_DELETE_WINDOW doquit
++    bind . <Destroy> {stop_backends}
+     bind . <Button-1> "click %W"
+     bind $fstring <Key-Return> {dofind 1 1}
+     bind $sha1entry <Key-Return> gotocommit
+-- 
+1.5.6.2.39.gd084
