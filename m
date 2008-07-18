@@ -1,95 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Fri, 18 Jul 2008 02:58:26 -0700
-Message-ID: <7vtzen7bul.fsf@gitster.siamese.dyndns.org>
-References: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org>
- <7vlk01hqzz.fsf@gitster.siamese.dyndns.org>
- <20080718175040.6117@nanako3.lavabit.com>
- <20080718182010.6117@nanako3.lavabit.com>
- <20080718094404.GB32184@machine.or.cz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Teach git submodule update to use distributed
+	repositories
+Date: Fri, 18 Jul 2008 12:00:48 +0200
+Message-ID: <20080718100048.GN10151@machine.or.cz>
+References: <320075ff0807170520r200e546ejbad2ed103bd65f82@mail.gmail.com> <320075ff0807170521s26693381m60648468cce1c41c@mail.gmail.com> <alpine.DEB.1.00.0807171351380.8986@racer> <320075ff0807170703l57fe26d2h1e9c4db1c38dd6f1@mail.gmail.com> <alpine.DEB.1.00.0807171513560.8986@racer> <320075ff0807170807l1537e34ev510deda537e4d11e@mail.gmail.com> <20080717182253.GZ32184@machine.or.cz> <320075ff0807180111q4ca55cc4v15487af35f6fa63c@mail.gmail.com> <20080718091608.GL10151@machine.or.cz> <320075ff0807180236u4e7f5f9bm81b702d14c052de8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Jul 18 11:59:37 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nigel Magnay <nigel.magnay@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 18 12:01:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJmkQ-0004RZ-Fg
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 11:59:34 +0200
+	id 1KJmmb-00057K-9j
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 12:01:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754392AbYGRJ6g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 05:58:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754573AbYGRJ6f
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 05:58:35 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52027 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754358AbYGRJ6f (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 05:58:35 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B620831516;
-	Fri, 18 Jul 2008 05:58:33 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 54F1331512; Fri, 18 Jul 2008 05:58:29 -0400 (EDT)
-In-Reply-To: <20080718094404.GB32184@machine.or.cz> (Petr Baudis's message of
- "Fri, 18 Jul 2008 11:44:04 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 152F07B2-54B0-11DD-A918-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1754623AbYGRKAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 06:00:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754364AbYGRKAu
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 06:00:50 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:56274 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752649AbYGRKAu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 06:00:50 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id A2D3C2C4C02A; Fri, 18 Jul 2008 12:00:48 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <320075ff0807180236u4e7f5f9bm81b702d14c052de8@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89025>
 
-Petr Baudis <pasky@suse.cz> writes:
+On Fri, Jul 18, 2008 at 10:36:51AM +0100, Nigel Magnay wrote:
+> On Fri, Jul 18, 2008 at 10:16 AM, Petr Baudis <pasky@suse.cz> wrote:
+> > snip
+> >
+> >        "How do we mass-supply custom submodule URLs when publishing the
+> >        customized main repository at a custom location too?"
+> >
+> Yes - that is an additional problem.
 
-> On Fri, Jul 18, 2008 at 06:20:10PM +0900, Nanako Shiraishi wrote:
->> I do not know if "I do not understand what they did well enough" is the only reason people would want to use that feature. Isn't it better to let people decide that for themselves?
->
-> It is dangerous to introduce new options just because we think someone,
-> sometimes might find it useful, especially if they potentially encourage
-> a bad workflow. Adding options and commands is expensive since it
-> complicates the UI further, thus we should add further only when we have
-> good reason for it.
->
->> > That also was the reason I did not add any documentation to it.
->
-> I was actually looking for something like this based on some question on
-> #git (about git pull -s theirs possibility), and did stumble upon these
-> patches, but quickly gave up on them since it wasn't immediately clear
-> for me from the patch description exactly how the workflow looks like
-> (it doesn't really seem to work like the opposite of -s ours nor is it a
-> separate strategy... huh) and the options were completely undocumented.
+Wait, I'm lost again - _additional_ problem? How does it differ from the
+_original_ problem, how does it differ from what you're explaining below
+and how does what you're explaining below differ from the original
+problem?
 
-Heh, now you have some readings to do ;-)
+Or are we talking exclusively about what I summed up above now?
 
-I tried not to sound too negative when describing -Xours and -Xtheirs
-there, but actually I think "-s theirs" is even worse.  It is how you
-would discard what you did (perhaps because the other side has much better
-solution than your hack), but that can be much more easily and cleanly
-done with:
+> If I may expand the usecase just so it's clear (and to check we're
+> talkiing the same language)
+> 
+> I do something like
+> $ git remote add fred git://fredcomputer/superproject/.git
+> $ git fetch --submodules fred
 
-	$ git reset --hard origin
+I think you mean git pull --submodules fred. Well, actually, you want to
+pull the main repository, then submodule update (_not_ pull in the
+submodules). See? This is part of the "semantic swamp" I mentioned
+before.
 
-Some poeple might say "But with 'merge -s theirs', I can keep what I did,
-too".  That reset is simply discarding what I did.
+I think it should be somehow part of the _main_ project's fred branch
+that in this branch, the subprojects should be fetched from a different
+location; thus, you would still do
 
-That logic also is flawed.  You can instead:
+	$ git remote add fred git://fredcomputer/superproject/.git
+	$ git pull fred
+	$ git submodule update
 
-	$ git branch i-was-stupid
-        $ git reset --hard origin
+where either the submodule update takes the info from fred's adjusted
+.gitmodules, or it is an implicit part of the branch as in fred tells
+you to run the update command with some extra arguments.
 
-if you really want to keep record of your failure.
+However, I still believe the information should primarily stem from the
+main repository; consider e.g. if you do not have some of the submodules
+checked out when you switch to fred, then figure out that in fred's
+branch, you really do want them checked out.
 
-One big problem "-s theirs" has, compared to the above "reset to origin,
-discarding or setting aside the failed history" is that your 'master'
-history that your further development is based on will keep your failed
-crap in it forever if you did "-s theirs".  Hopefully you will become a
-better programmer over time, and you may eventually have something worth
-sharing with the world near the tip of your master branch.  When that
-happens, however, you _cannot_ offer your master branch to be pulled by
-the upstream, as the wider world will not be interested in your earlier
-mistakes at all.
+-- 
+				Petr "Pasky" Baudis
+GNU, n. An animal of South Africa, which in its domesticated state
+resembles a horse, a buffalo and a stag. In its wild condition it is
+something like a thunderbolt, an earthquake and a cyclone. -- A. Pierce
