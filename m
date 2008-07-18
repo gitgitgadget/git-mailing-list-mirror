@@ -1,68 +1,76 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: sparse checkout UI
-Date: Fri, 18 Jul 2008 20:03:05 +0700
-Message-ID: <fcaeb9bf0807180603i23ae3568r80631dafc2888f39@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Documentation/git-merge.txt: Expand the How Merge
+	Works   section
+Date: Fri, 18 Jul 2008 15:18:00 +0200
+Message-ID: <20080718131800.GP10151@machine.or.cz>
+References: <20080717162922.12081.96582.stgit@localhost> <7v3am8gytp.fsf@gitster.siamese.dyndns.org> <20080717185451.GJ10151@machine.or.cz> <7vd4lcfgoo.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 18 15:04:20 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 18 15:19:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJpd5-0002Yj-6p
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 15:04:11 +0200
+	id 1KJprW-00008n-PL
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 15:19:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758117AbYGRNDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 09:03:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758071AbYGRNDJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 09:03:09 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:43842 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758033AbYGRNDH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 09:03:07 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so147064fgg.17
-        for <git@vger.kernel.org>; Fri, 18 Jul 2008 06:03:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=6Bp5To7C1eBmMMePBARm2tSp4RIXgAyj90977MLM/VM=;
-        b=LWYL2wXUSYK87isOd9fyr56kV3kfwHCO5mvlz3SdxjNFqskFI9sFJyQgvw8rEhPGQ6
-         gHeXgma1F0F2cDt+bkvQkLjvrcp0IsQb2qTayoB6KGgfQ2ye9A/a28msm8pnklna4aeS
-         mUUJWBohsK2eqzd85btTBvGBQI1J9BSajN2zs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=B8TAk980aJyEMb2o1Fp6vGWRlgnvYx/BKUTe0ukhj/rHIx+Qmr9qN1XwKynQutqJG6
-         JBN0BXo9CcooEfzUbB8OPMHs52jX7obUutkAmsbwNi3kf1/qHK/cR1Mp0TQqt/wJObo3
-         5qgGVc8hO/gKTr8vhA7WeCC5PcxpyOX+eqSUg=
-Received: by 10.86.89.1 with SMTP id m1mr273541fgb.68.1216386185436;
-        Fri, 18 Jul 2008 06:03:05 -0700 (PDT)
-Received: by 10.86.93.13 with HTTP; Fri, 18 Jul 2008 06:03:05 -0700 (PDT)
+	id S1755054AbYGRNSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 09:18:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755033AbYGRNSG
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 09:18:06 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:38716 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754829AbYGRNSE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 09:18:04 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 29051244C01A; Fri, 18 Jul 2008 15:18:00 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <7vd4lcfgoo.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89037>
 
-Hi,
+  Hi,
 
-I gave up on subtree checkout, the cvs/svn way (making subtree
-toplevel worktree). Instead I have been working on sparse checkout,
-which better fits Git's "working at toplevel worktree" philosophy.
-Things are shaping up, but I still have not figured out UI for
-entering/leaving/updating sparse checkout.
+On Thu, Jul 17, 2008 at 12:34:31PM -0700, Junio C Hamano wrote:
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> >   I'm not sure if I should resend the updated patch, or if you already
+> > included your comments yourself.
+> 
+> When I send my review comments out, I generally expect an updated version,
+> unless I explicitly say "will apply with tweaks, no need to resend".
 
-Should it be an option for git-checkout, like "git checkout
---sparse=git-gui"? Or making it a separate command? git-clone may need
-"--sparse-checkout" option anyway, to be able to do sparse checkout
-from the beginning.
+  ok, that is pretty much what I expected, I just wanted to avoid doing
+duplicate work. :-)
 
-Opinions?
+..snip..
+> yes, I am strongly hinting to drop that description; it
+> is not even remotely interesting
+
+  I have tried to salvage the now-subsection for a while yet, but
+ultimately, I now feel as well that it is not worth it; the meat of it
+can be summed up in a single sentence that I have re-added to the main
+section.
+
+> However, I think we may want to talk about "How to tell if your merge did
+> not even touch your index nor working tree" somewhere in the manual.
+> "When there are conflicts, these things happen" part talks about how to
+> resolve conflicts, but when merge refuses to avoid losing local changes,
+> the instruction in that part does not apply.
+
+  I'm not sure if this is worth pondering about? The action would feel
+rather obvious to me - get rid of the local changes somehow, either
+committing them or stashing them or wiping them out. Is that worth
+elaborating, or is there more to it?
+
 -- 
-Duy
+				Petr "Pasky" Baudis
+GNU, n. An animal of South Africa, which in its domesticated state
+resembles a horse, a buffalo and a stag. In its wild condition it is
+something like a thunderbolt, an earthquake and a cyclone. -- A. Pierce
