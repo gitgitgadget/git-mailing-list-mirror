@@ -1,168 +1,145 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-remote SEGV on t5505 test.
-Date: Thu, 17 Jul 2008 21:25:32 -0700
-Message-ID: <7vsku7es3n.fsf@gitster.siamese.dyndns.org>
-References: <g5osl6$4g3$1@ger.gmane.org>
+From: Nick Andrew <nick@nick-andrew.net>
+Subject: [PATCH] Enable git rev-list to parse --quiet
+Date: Fri, 18 Jul 2008 14:05:00 +1000
+Message-ID: <20080718040459.13073.76896.stgit@marcab.local.tull.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: SungHyun Nam <namsh@posdata.co.kr>
-X-From: git-owner@vger.kernel.org Fri Jul 18 06:26:48 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 18 06:49:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJhYJ-0004SU-78
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 06:26:43 +0200
+	id 1KJhu1-0008Db-6M
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 06:49:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751040AbYGREZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 00:25:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750859AbYGREZm
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 00:25:42 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52044 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750777AbYGREZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 00:25:41 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 98D0230024;
-	Fri, 18 Jul 2008 00:25:39 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C481530022; Fri, 18 Jul 2008 00:25:34 -0400 (EDT)
-In-Reply-To: <g5osl6$4g3$1@ger.gmane.org> (SungHyun Nam's message of "Fri, 18
- Jul 2008 10:46:02 +0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 93AA3D48-5481-11DD-BDB5-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751345AbYGREsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 00:48:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751308AbYGREsJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 00:48:09 -0400
+Received: from vps1.tull.net ([66.180.172.116]:57771 "HELO vps1.tull.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751284AbYGREsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 00:48:08 -0400
+Received: (qmail 16354 invoked by uid 1015); 18 Jul 2008 14:48:07 +1000
+Received: from [10.0.0.67] (HELO mail.local.tull.net) (10.0.0.67) by vps1.tull.net (qpsmtpd/0.26) with SMTP; Fri, 18 Jul 2008 14:48:07 +1000
+Received: (qmail 16141 invoked by uid 1015); 18 Jul 2008 14:48:05 +1000
+X-Spam-Status: No, hits=-3.4 required=5.0	tests=ALL_TRUSTED,AWL,BAYES_00
+X-Spam-Check-By: mail.local.tull.net
+Received: from [10.0.0.1] (HELO marcab.local.tull.net) (10.0.0.1)    by mail.local.tull.net (qpsmtpd/0.40) with SMTP; Fri, 18 Jul 2008 14:47:59 +1000
+Received: by marcab.local.tull.net (sSMTP sendmail emulation); Fri, 18 Jul 2008 14:47:58 +1000
+Mail-From: nobody Fri Jul 18 14:05:00 2008
+User-Agent: StGIT/0.14.2
+X-SMTPD: qpsmtpd/0.26, http://develooper.com/code/qpsmtpd/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88982>
 
-SungHyun Nam <namsh@posdata.co.kr> writes:
+Enable git rev-list to parse --quiet
 
-> And the 'skip_prefix()' returns NULL in this case.
-> (The old skip_prefix() never returns NULL).
+git rev-list never sees the --quiet option because --quiet is
+also an option for diff-files.
 
-Thanks.  Something like this?
+Example:
 
- builtin-remote.c |   51 +++++++++++++++++++--------------------------------
- 1 files changed, 19 insertions(+), 32 deletions(-)
+$ ./git rev-list --quiet ^HEAD~2 HEAD
+1e102bf7c83281944ffd9202a7d35c514e4a5644
+3bf0dd1f4e75ee1591169b687ce04dff00ae2e3e
+$ echo $?
+0
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index 1491354..db12668 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -147,6 +147,15 @@ struct branch_info {
+The fix scans the argument list to detect --quiet before passing it
+to setup_revisions(). It also arranges to count the number of commits
+or objects (whether sent to STDOUT or not) so --quiet can return an
+appropriate exit code (1 if there were commits/objects, 0 otherwise).
+
+After fix:
+
+$ ./git rev-list --quiet ^HEAD~2 HEAD
+$ echo $?
+1
+---
+
+ builtin-rev-list.c |   28 ++++++++++++++++++++++++----
+ 1 files changed, 24 insertions(+), 4 deletions(-)
+
+
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 8e1720c..e2e5e13 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -52,6 +52,11 @@ static const char rev_list_usage[] =
  
- static struct path_list branch_list;
+ static struct rev_info revs;
  
-+static const char *abbrev_ref(const char *name, const char *prefix)
-+{
-+	const char *abbrev = skip_prefix(name, prefix);
-+	if (abbrev)
-+		return abbrev;
-+	return name;
-+}
-+#define abbrev_branch(name) abbrev_ref((name), "refs/heads/")
++/* Count of number of commits or objects noticed (even if not output).
++ * Used by --quiet option to set an appropriate exit status.
++ */
++static int seen_count;
 +
- static int config_read_branches(const char *key, const char *value, void *cb)
- {
- 	if (!prefixcmp(key, "branch.")) {
-@@ -176,18 +185,12 @@ static int config_read_branches(const char *key, const char *value, void *cb)
- 			info->remote = xstrdup(value);
- 		} else {
- 			char *space = strchr(value, ' ');
--			const char *ptr = skip_prefix(value, "refs/heads/");
--			if (ptr)
--				value = ptr;
-+			value = abbrev_branch(value);
- 			while (space) {
- 				char *merge;
- 				merge = xstrndup(value, space - value);
- 				path_list_append(merge, &info->merge);
--				ptr = skip_prefix(space + 1, "refs/heads/");
--				if (ptr)
--					value = ptr;
--				else
--					value = space + 1;
-+				value = abbrev_branch(space + 1);
- 				space = strchr(value, ' ');
- 			}
- 			path_list_append(xstrdup(value), &info->merge);
-@@ -219,12 +222,7 @@ static int handle_one_branch(const char *refname,
- 	refspec.dst = (char *)refname;
- 	if (!remote_find_tracking(states->remote, &refspec)) {
- 		struct path_list_item *item;
--		const char *name, *ptr;
--		ptr = skip_prefix(refspec.src, "refs/heads/");
--		if (ptr)
--			name = ptr;
--		else
--			name = refspec.src;
-+		const char *name = abbrev_branch(refspec.src);
- 		/* symbolic refs pointing nowhere were handled already */
- 		if ((flags & REF_ISSYMREF) ||
- 				unsorted_path_list_has_path(&states->tracked,
-@@ -253,7 +251,6 @@ static int get_ref_states(const struct ref *ref, struct ref_states *states)
- 		struct path_list *target = &states->tracked;
- 		unsigned char sha1[20];
- 		void *util = NULL;
--		const char *ptr;
- 
- 		if (!ref->peer_ref || read_ref(ref->peer_ref->name, sha1))
- 			target = &states->new;
-@@ -262,10 +259,7 @@ static int get_ref_states(const struct ref *ref, struct ref_states *states)
- 			if (hashcmp(sha1, ref->new_sha1))
- 				util = &states;
- 		}
--		ptr = skip_prefix(ref->name, "refs/heads/");
--		if (!ptr)
--			ptr = ref->name;
--		path_list_append(ptr, target)->util = util;
-+		path_list_append(abbrev_branch(ref->name), target)->util = util;
+ static int bisect_list;
+ static int show_timestamp;
+ static int hdr_termination;
+@@ -167,12 +172,14 @@ static void finish_commit(struct commit *commit)
  	}
- 	free_refs(fetch_map);
+ 	free(commit->buffer);
+ 	commit->buffer = NULL;
++	seen_count++;
+ }
  
-@@ -460,10 +454,8 @@ static int append_ref_to_tracked_list(const char *refname,
+ static void finish_object(struct object_array_entry *p)
+ {
+ 	if (p->item->type == OBJ_BLOB && !has_sha1_file(p->item->sha1))
+ 		die("missing blob object '%s'", sha1_to_hex(p->item->sha1));
++	seen_count++;
+ }
  
- 	memset(&refspec, 0, sizeof(refspec));
- 	refspec.dst = (char *)refname;
--	if (!remote_find_tracking(states->remote, &refspec)) {
--		path_list_append(skip_prefix(refspec.src, "refs/heads/"),
--			&states->tracked);
--	}
-+	if (!remote_find_tracking(states->remote, &refspec))
-+		path_list_append(abbrev_branch(refspec.src), &states->tracked);
+ static void show_object(struct object_array_entry *p)
+@@ -588,6 +595,17 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	init_revisions(&revs, prefix);
+ 	revs.abbrev = 0;
+ 	revs.commit_format = CMIT_FMT_UNSPECIFIED;
++
++	/* Parse options which are also recognised by git-diff-files */
++	for (i = 1 ; i < argc; i++) {
++		const char *arg = argv[i];
++
++		if (!strcmp(arg, "--quiet")) {
++			quiet = 1;
++			continue;
++		}
++	}
++
+ 	argc = setup_revisions(argc, argv, &revs, NULL);
  
+ 	for (i = 1 ; i < argc; i++) {
+@@ -621,10 +639,6 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 			read_revisions_from_stdin(&revs);
+ 			continue;
+ 		}
+-		if (!strcmp(arg, "--quiet")) {
+-			quiet = 1;
+-			continue;
+-		}
+ 		usage(rev_list_usage);
+ 
+ 	}
+@@ -700,9 +714,15 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
++	seen_count = 0;
++
+ 	traverse_commit_list(&revs,
+ 		quiet ? finish_commit : show_commit,
+ 		quiet ? finish_object : show_object);
+ 
++	if (quiet) {
++		return seen_count ? 1 : 0;
++	}
++
  	return 0;
  }
-@@ -530,15 +522,10 @@ static int show(int argc, const char **argv)
- 					"es" : "");
- 			for (i = 0; i < states.remote->push_refspec_nr; i++) {
- 				struct refspec *spec = states.remote->push + i;
--				const char *p = "", *q = "";
--				if (spec->src)
--					p = skip_prefix(spec->src, "refs/heads/");
--				if (spec->dst)
--					q = skip_prefix(spec->dst, "refs/heads/");
- 				printf(" %s%s%s%s", spec->force ? "+" : "",
--					p ? p : spec->src,
--					spec->dst ? ":" : "",
--					q ? q : spec->dst);
-+				       abbrev_branch(spec->src),
-+				       spec->dst ? ":" : "",
-+				       spec->dst ? abbrev_branch(spec->dst) : "");
- 			}
- 			printf("\n");
- 		}
-@@ -588,7 +575,7 @@ static int prune(int argc, const char **argv)
- 				result |= delete_ref(refname, NULL);
- 
- 			printf(" * [%s] %s\n", dry_run ? "would prune" : "pruned",
--			       skip_prefix(refname, "refs/remotes/"));
-+			       abbrev_ref(refname, "refs/remotes/"));
- 		}
- 
- 		/* NEEDSWORK: free remote */
