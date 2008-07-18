@@ -1,139 +1,105 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Documentation/git-submodule.txt: Further clarify the
-	description
-Date: Fri, 18 Jul 2008 15:40:41 +0200
-Message-ID: <20080718134008.26901.17348.stgit@localhost>
-References: <20080718133644.GQ10151@machine.or.cz>
+Subject: [PATCH] Documentation: How to ignore local changes in tracked files
+Date: Fri, 18 Jul 2008 16:11:07 +0200
+Message-ID: <20080718141038.28693.4887.stgit@localhost>
+References: <20080717182619.GG10151@machine.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Heikki Orsila <shdl@zakalwe.fi>
+Cc: git@vger.kernel.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jul 18 15:41:58 2008
+X-From: git-owner@vger.kernel.org Fri Jul 18 16:12:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJqDW-0001gP-Qk
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 15:41:51 +0200
+	id 1KJqgw-00067C-AD
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 16:12:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754458AbYGRNkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 09:40:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755554AbYGRNkt
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 09:40:49 -0400
-Received: from [212.249.11.140] ([212.249.11.140]:39687 "EHLO pixie.suse.cz"
+	id S1756432AbYGROLO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 10:11:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756097AbYGROLO
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 10:11:14 -0400
+Received: from [212.249.11.140] ([212.249.11.140]:46611 "EHLO pixie.suse.cz"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754458AbYGRNks (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 09:40:48 -0400
+	id S1754790AbYGROLN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 10:11:13 -0400
 Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by pixie.suse.cz (Postfix) with ESMTP id 30DC82ACC76;
-	Fri, 18 Jul 2008 15:40:42 +0200 (CEST)
-In-Reply-To: <20080718133644.GQ10151@machine.or.cz>
+	by pixie.suse.cz (Postfix) with ESMTP id 709292ACC76;
+	Fri, 18 Jul 2008 16:11:07 +0200 (CEST)
+In-Reply-To: <20080717182619.GG10151@machine.or.cz>
 User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89042>
 
-This patch rewrites the general description yet again, first clarifying
-the high-level concept, mentioning the difference to remotes and using
-the subtree merge strategy, then getting to the details about tree
-entries and .gitmodules file.
+This patch explains more carefully that `.gitignore` concerns only
+untracked files and refers the reader to
 
-The patch also makes few smallar grammar fixups within the rest of the
-description and clarifies how does 'init' relate to 'update --init'.
+	git update-index --assume-unchanged
 
-Cc: Heikki Orsila <shdl@zakalwe.fi>
+in the need of ignoring uncommitted changes in already tracked files.
+The description of this option is lifted to a more "porcelainish"
+level and explains the caveats of this usecase.
+
+Whether feasible or not, I believe adding this functionality to
+the porcelain is out of the scope of this patch. (And I personally
+think that referring to the plumbing in the case of such a special
+usage is fine.)
+
+This is currently probably one of the top FAQs at #git and the
+--assume-unchanged switch is not widely known; gitignore(5) is the first
+place where people are likely to look for it.
+
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- Documentation/git-submodule.txt |   68 ++++++++++++++++++++++++++-------------
- 1 files changed, 46 insertions(+), 22 deletions(-)
+ Documentation/git-update-index.txt |   10 ++++++++++
+ Documentation/gitignore.txt        |   11 ++++++++---
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index bb4e6fb..755142c 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -18,24 +18,43 @@ SYNOPSIS
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index a91fd21..6b930bc 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -88,6 +88,16 @@ OPTIONS
+ 	sometimes helpful when working with a big project on a
+ 	filesystem that has very slow lstat(2) system call
+ 	(e.g. cifs).
+++
++This option can be also used as a coarse file-level mechanism
++to ignore uncommitted changes in tracked files (akin to what
++`.gitignore` does for untracked files).
++You should remember that an explicit 'git add' operation will
++still cause the file to be refreshed from the working tree.
++Git will fail (gracefully) in case it needs to modify this file
++in the index e.g. when merging in a commit;
++thus, in case the assumed-untracked file is changed upstream,
++you will need to handle the situation manually.
  
- DESCRIPTION
+ -g::
+ --again::
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index fc0efd8..59321a2 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -13,9 +13,14 @@ DESCRIPTION
  -----------
--Submodules are a special kind of tree entries which refer to a particular tree
--state in another repository.  The tree entry describes
--the existence of a submodule with the given name and the exact revision that
--should be used, while an entry in `.gitmodules` file gives the location of
--the repository.
+ 
+ A `gitignore` file specifies intentionally untracked files that
+-git should ignore.  Each line in a `gitignore` file specifies a
+-pattern.
 -
--When checked out, submodules will maintain their own independent repositories
--within their directories; the only link between the submodule and the "parent
--project" is the tree entry within the parent project mentioned above.
--
--This command will manage the tree entries and contents of the gitmodules file
--for you, as well as inspecting the status of your submodules and updating them.
--When adding a new submodule to the tree, the 'add' subcommand is to be used.
--However, when pulling a tree containing submodules, these will not be checked
--out by default; the 'init' and 'update' subcommands will maintain submodules
--checked out and at appropriate revision in your working tree. You can inspect
--the current status of your submodules using the 'submodule' subcommand and get
--an overview of changes 'update' would perform using the 'summary' subcommand.
-+Submodules allow foreign repositories to be embedded within
-+a dedicated subdirectory of the source tree, always pointed
-+at a particular commit.
++git should ignore.
++Note that all the `gitignore` files really concern only files
++that are not already tracked by git;
++in order to ignore uncommitted changes in already tracked files,
++please refer to the 'git update-index --assume-unchanged'
++documentation.
 +
-+They are not to be confused with remotes, which are meant mainly
-+for branches of the same project; submodules are meant for
-+different projects you would like to make part of your source tree,
-+while the history of the two projects still stays completely
-+independent and you cannot modify the contents of the submodule
-+from within the main project.
-+In case you want to merge the project histories, possibly make
-+local modifications within the subtree, and considered the fact
-+that all users will have to download and check out the subtree,
-+you may choose to add a remote for the other project and use
-+the 'subtree' merge strategy instead of setting up a submodule.
-+
-+Submodules are composed from a so-called `gitlink` tree entry
-+in the main repository that refers to a particular commit object
-+within the (completely separate) inner repository,
-+and a record in the `.gitmodules` file at the root of the source
-+tree, assigning a logical name to the submodule and describing
-+the default URL the submodule shall be cloned from.
-+The logical name can be used for overriding this URL within your
-+local repository configuration (see 'submodule init').
-+
-+This command will manage the tree entries and contents of the
-+gitmodules file for you, as well as inspect the status of your
-+submodules and update them.
-+When adding a new submodule to the tree, the 'add' subcommand
-+is to be used.  However, when pulling a tree containing submodules,
-+these will not be checked out by default;
-+the 'init' and 'update' subcommands will maintain submodules
-+checked out and at appropriate revision in your working tree.
-+You can briefly inspect the up-to-date status of your submodules
-+using the 'status' subcommand and get a detailed overview of the
-+difference between the index and checkouts using the 'summary'
-+subcommand.
- 
- 
- COMMANDS
-@@ -78,10 +97,15 @@ status::
- 	repository. This command is the default command for 'git-submodule'.
- 
- init::
--	Initialize the submodules, i.e. register in .git/config each submodule
--	name and url found in .gitmodules. The key used in .git/config is
--	`submodule.$name.url`. This command does not alter existing information
--	in .git/config.
-+	Initialize the submodules, i.e. register each submodule name
-+	and url found in .gitmodules into .git/config.
-+	The key used in .git/config is `submodule.$name.url`.
-+	This command does not alter existing information in .git/config.
-+	You can then customize the submodule clone URLs in .git/config
-+	for your local setup and proceed to 'git submodule update';
-+	you can also just use 'git submodule update --init' without
-+	the explicit 'init' step if you do not intend to customize
-+	any submodule locations.
- 
- update::
- 	Update the registered submodules, i.e. clone missing submodules and
++Each line in a `gitignore` file specifies a pattern.
+ When deciding whether to ignore a path, git normally checks
+ `gitignore` patterns from multiple sources, with the following
+ order of precedence, from highest to lowest (within one level of
