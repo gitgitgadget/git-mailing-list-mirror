@@ -1,64 +1,48 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Addremove equivalent [was: Re: Considering teaching plumbing to
- users harmful]
-Date: Sat, 19 Jul 2008 01:03:22 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807190102390.3064@eeepc-johanness>
-References: <alpine.DEB.1.00.0807161804400.8950@racer>  <7vmykhpn6z.fsf@gitster.siamese.dyndns.org>  <20080717155538.GE11759@fieldses.org>  <alpine.DEB.1.00.0807171915420.8986@racer>  <7vtzeofjpi.fsf@gitster.siamese.dyndns.org>  <alpine.DEB.1.00.0807171940160.8986@racer>
-  <48806897.1080404@fastmail.fm> <76718490807181318o228171f9j836aaca2edb9b377@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: Hacks for AIX
+Date: Fri, 18 Jul 2008 18:14:07 -0500
+Message-ID: <JG5kjY-tH7BPWcgn8u14UlNtG-iT5ab0jyExlDkbmv3hzFsVs2Ve0Q@cipher.nrlssc.navy.mil>
+References: <5855afd30807161057v54ed4112jaea3bc07cebf44d4@mail.gmail.com> <7v3am9sn2p.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>,
-	git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 19 01:03:39 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Chris Cowan <chris.o.cowan@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 19 01:15:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJyzC-00007S-73
-	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 01:03:38 +0200
+	id 1KJzAd-00030n-Bn
+	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 01:15:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756759AbYGRXCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 19:02:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755806AbYGRXCh
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 19:02:37 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40081 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753101AbYGRXCg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 19:02:36 -0400
-Received: (qmail invoked by alias); 18 Jul 2008 23:02:35 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp031) with SMTP; 19 Jul 2008 01:02:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/zpOYIppjzYE/9W3baoqJxBgJju4BqAgSVNc2wZB
-	8lKv7RfQ0AAvve
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <76718490807181318o228171f9j836aaca2edb9b377@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68
+	id S1757531AbYGRXO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 19:14:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754827AbYGRXO1
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 19:14:27 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:59523 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757531AbYGRXO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 19:14:27 -0400
+Received: by mail.nrlssc.navy.mil id m6INE8US007783; Fri, 18 Jul 2008 18:14:08 -0500
+In-Reply-To: <7v3am9sn2p.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 18 Jul 2008 23:14:07.0852 (UTC) FILETIME=[FAAC4AC0:01C8E92B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89086>
 
-Hi,
+Junio C Hamano wrote:
+> "Chris Cowan" <chris.o.cowan@gmail.com> writes:
 
-On Fri, 18 Jul 2008, Jay Soffian wrote:
-
-> On Fri, Jul 18, 2008 at 5:55 AM, Michael J Gruber
-> <michaeljgruber+gmane@fastmail.fm> wrote:
-> > sometimes I find my self wanting an "addremove", such as in a situation like
+>>     * /usr/bin/patch - really old version, doesn't do well with some
+>> diff formats.   I avoid using it.
 > 
-> I have the following aliased as "addremove":
-> 
->   git ls-files -d -m -o -z --exclude-standard \
->   | xargs -0 git update-index --add --remove
+> t4109 seems to use patch to produce expected output for the tests; we
+> should ship a precomputed expected results.  Do you know of any other
+> places "patch" is used?
 
-But that is everything, _except_ easy for newbies!!!
+t4110 also uses patch in the same way.
 
-I still suggest "git add -u && git add .".
-
-Hth,
-Dscho
+-brandon
