@@ -1,7 +1,7 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 14/28] Add option handler for RevTree values
-Date: Thu, 17 Jul 2008 21:44:07 -0400
-Message-ID: <1216345461-59382-15-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 11/28] Add option handler for PathTreeFilter values
+Date: Thu, 17 Jul 2008 21:44:04 -0400
+Message-ID: <1216345461-59382-12-git-send-email-spearce@spearce.org>
 References: <1216345461-59382-1-git-send-email-spearce@spearce.org>
  <1216345461-59382-2-git-send-email-spearce@spearce.org>
  <1216345461-59382-3-git-send-email-spearce@spearce.org>
@@ -13,9 +13,6 @@ References: <1216345461-59382-1-git-send-email-spearce@spearce.org>
  <1216345461-59382-9-git-send-email-spearce@spearce.org>
  <1216345461-59382-10-git-send-email-spearce@spearce.org>
  <1216345461-59382-11-git-send-email-spearce@spearce.org>
- <1216345461-59382-12-git-send-email-spearce@spearce.org>
- <1216345461-59382-13-git-send-email-spearce@spearce.org>
- <1216345461-59382-14-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>,
 	Marek Zawirski <marek.zawirski@gmail.com>
@@ -24,50 +21,50 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJf4D-0006LD-Lf
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 03:47:30 +0200
+	id 1KJf4B-0006LD-Kw
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 03:47:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758586AbYGRBp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 21:45:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932074AbYGRBpX
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 21:45:23 -0400
-Received: from george.spearce.org ([209.20.77.23]:47018 "EHLO
+	id S1758679AbYGRBpO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 21:45:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758638AbYGRBpK
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 21:45:10 -0400
+Received: from george.spearce.org ([209.20.77.23]:47015 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758034AbYGRBot (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 21:44:49 -0400
+	with ESMTP id S1757897AbYGRBos (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 21:44:48 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 6BDA538575; Fri, 18 Jul 2008 01:44:37 +0000 (UTC)
+	id 4233B38569; Fri, 18 Jul 2008 01:44:33 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+X-Spam-Status: No, score=-4.2 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 44E5938421;
-	Fri, 18 Jul 2008 01:44:28 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 2DD0638262;
+	Fri, 18 Jul 2008 01:44:27 +0000 (UTC)
 X-Mailer: git-send-email 1.5.6.3.569.ga9185
-In-Reply-To: <1216345461-59382-14-git-send-email-spearce@spearce.org>
+In-Reply-To: <1216345461-59382-11-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88961>
 
-Converts a String into a RevTree, including parsing the string
-with SHA-1 revision syntax and dereferencing through annotated
-tags as necessary.
+Converts one or more Strings, up to the end of the command line,
+into a PathFilterGroup.  The filter group can be used with a
+TreeWalk to limit its results.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../org/spearce/jgit/pgm/opt/RevTreeHandler.java   |  109 ++++++++++++++++++++
- 1 files changed, 109 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/RevTreeHandler.java
+ .../jgit/pgm/opt/PathTreeFilterHandler.java        |  102 ++++++++++++++++++++
+ 1 files changed, 102 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/PathTreeFilterHandler.java
 
-diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/RevTreeHandler.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/RevTreeHandler.java
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/PathTreeFilterHandler.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/PathTreeFilterHandler.java
 new file mode 100644
-index 0000000..eabc08a
+index 0000000..8a0b5a6
 --- /dev/null
-+++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/RevTreeHandler.java
-@@ -0,0 +1,109 @@
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/PathTreeFilterHandler.java
+@@ -0,0 +1,102 @@
 +/*
 + * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
 + *
@@ -107,27 +104,27 @@ index 0000000..eabc08a
 +
 +package org.spearce.jgit.pgm.opt;
 +
-+import java.io.IOException;
++import java.util.ArrayList;
++import java.util.List;
 +
 +import org.kohsuke.args4j.CmdLineException;
 +import org.kohsuke.args4j.CmdLineParser;
++import org.kohsuke.args4j.Option;
 +import org.kohsuke.args4j.OptionDef;
 +import org.kohsuke.args4j.spi.OptionHandler;
 +import org.kohsuke.args4j.spi.Parameters;
 +import org.kohsuke.args4j.spi.Setter;
-+import org.spearce.jgit.errors.IncorrectObjectTypeException;
-+import org.spearce.jgit.errors.MissingObjectException;
-+import org.spearce.jgit.lib.ObjectId;
-+import org.spearce.jgit.revwalk.RevTree;
++import org.spearce.jgit.treewalk.filter.PathFilter;
++import org.spearce.jgit.treewalk.filter.PathFilterGroup;
++import org.spearce.jgit.treewalk.filter.TreeFilter;
 +
 +/**
-+ * Custom argument handler {@link RevTree} from string values.
++ * Create a {@link TreeFilter} to patch math names.
 + * <p>
-+ * Assumes the parser has been initialized with a Repository.
++ * This handler consumes all arguments to the end of the command line, and is
++ * meant to be used on an {@link Option} of name "--".
 + */
-+public class RevTreeHandler extends OptionHandler<RevTree> {
-+	private final org.spearce.jgit.pgm.opt.CmdLineParser clp;
-+
++public class PathTreeFilterHandler extends OptionHandler<TreeFilter> {
 +	/**
 +	 * Create a new handler for the command name.
 +	 * <p>
@@ -137,44 +134,37 @@ index 0000000..eabc08a
 +	 * @param option
 +	 * @param setter
 +	 */
-+	public RevTreeHandler(final CmdLineParser parser, final OptionDef option,
-+			final Setter<? super RevTree> setter) {
++	public PathTreeFilterHandler(final CmdLineParser parser,
++			final OptionDef option, final Setter<? super TreeFilter> setter) {
 +		super(parser, option, setter);
-+		clp = (org.spearce.jgit.pgm.opt.CmdLineParser) parser;
 +	}
 +
 +	@Override
 +	public int parseArguments(final Parameters params) throws CmdLineException {
-+		final String name = params.getParameter(0);
-+		final ObjectId id;
-+		try {
-+			id = clp.getRepository().resolve(name);
-+		} catch (IOException e) {
-+			throw new CmdLineException(e.getMessage());
++		final List<PathFilter> filters = new ArrayList<PathFilter>();
++		for (int idx = 0;; idx++) {
++			final String path;
++			try {
++				path = params.getParameter(idx);
++			} catch (CmdLineException cle) {
++				break;
++			}
++			filters.add(PathFilter.create(path));
 +		}
-+		if (id == null)
-+			throw new CmdLineException(name + " is not a tree");
 +
-+		final RevTree c;
-+		try {
-+			c = clp.getRevWalk().parseTree(id);
-+		} catch (ClassCastException e) {
-+			throw new CmdLineException(name + " is not a tree");
-+		} catch (MissingObjectException e) {
-+			throw new CmdLineException(name + " is not a tree");
-+		} catch (IncorrectObjectTypeException e) {
-+			throw new CmdLineException(name + " is not a tree");
-+		} catch (IOException e) {
-+			throw new CmdLineException("cannot read " + name + ": "
-+					+ e.getMessage());
++		if (filters.size() == 0)
++			return 0;
++		if (filters.size() == 1) {
++			setter.addValue(filters.get(0));
++			return 1;
 +		}
-+		setter.addValue(c);
-+		return 1;
++		setter.addValue(PathFilterGroup.create(filters));
++		return filters.size();
 +	}
 +
 +	@Override
 +	public String getDefaultMetaVariable() {
-+		return "tree-ish";
++		return "path ...";
 +	}
 +}
 -- 
