@@ -1,60 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Suggestion: doc restructuring
-Date: Fri, 18 Jul 2008 12:50:16 -0700
-Message-ID: <7v3am76kg7.fsf@gitster.siamese.dyndns.org>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: Addremove equivalent [was: Re: Considering teaching plumbing to users harmful]
+Date: Fri, 18 Jul 2008 16:18:41 -0400
+Message-ID: <76718490807181318o228171f9j836aaca2edb9b377@mail.gmail.com>
 References: <alpine.DEB.1.00.0807161804400.8950@racer>
- <48806D03.30603@fastmail.fm> <4880E041.8070001@freescale.com>
+	 <7vmykhpn6z.fsf@gitster.siamese.dyndns.org>
+	 <20080717155538.GE11759@fieldses.org>
+	 <alpine.DEB.1.00.0807171915420.8986@racer>
+	 <7vtzeofjpi.fsf@gitster.siamese.dyndns.org>
+	 <alpine.DEB.1.00.0807171940160.8986@racer>
+	 <48806897.1080404@fastmail.fm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>,
-	git@vger.kernel.org
-To: Jon Loeliger <jdl@freescale.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 21:51:31 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Michael J Gruber" <michaeljgruber+gmane@fastmail.fm>
+X-From: git-owner@vger.kernel.org Fri Jul 18 22:19:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJvzH-0005yy-3Z
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 21:51:31 +0200
+	id 1KJwQY-0007gS-TS
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 22:19:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754576AbYGRTu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 15:50:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754564AbYGRTu0
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 15:50:26 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58849 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753427AbYGRTuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 15:50:25 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1378531758;
-	Fri, 18 Jul 2008 15:50:24 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 419DB31757; Fri, 18 Jul 2008 15:50:18 -0400 (EDT)
-In-Reply-To: <4880E041.8070001@freescale.com> (Jon Loeliger's message of
- "Fri, 18 Jul 2008 13:26:09 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C2FDB10C-5502-11DD-84C9-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1755551AbYGRUSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 16:18:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756515AbYGRUSn
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 16:18:43 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:22027 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753775AbYGRUSm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 16:18:42 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so175450yxm.1
+        for <git@vger.kernel.org>; Fri, 18 Jul 2008 13:18:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=jU0ySVy5dvQuWvjiPpmqNhgHYp7NjLpnvQPz82yn+Yo=;
+        b=SFWw06gut1a9VRRz3VXywYOlB1PjoRByT7UvJMLBFfeuyqGWYWAAonVUO0NCbHIIQx
+         O5IaTuGzScqmSp2q6AyGbur//bu0SxJJGTyvubHRk5WOvONCOSPR0eW8EvjdGyh+nqgJ
+         KOqWQvyRkhqYrkMgFzvfGAkopqYL1Y29CIx5c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=SH6nyN0IAUcoaI54mCpU6G5gxlLhiVWQ/AeO+6dU8tbvbAYbpVGCsI4D0C1xT4ksEu
+         EbjrY8tjTuvLw6z9buEgx3H53OFqdH1ogN38fgYEaqXCGiBz6atb4ydFMhMJHMxd3E4N
+         Qkg1mE1i5pYI9D3Zy7h+p+ef/pZQmsqfQpBow=
+Received: by 10.150.52.2 with SMTP id z2mr606933ybz.45.1216412321318;
+        Fri, 18 Jul 2008 13:18:41 -0700 (PDT)
+Received: by 10.150.149.15 with HTTP; Fri, 18 Jul 2008 13:18:41 -0700 (PDT)
+In-Reply-To: <48806897.1080404@fastmail.fm>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89076>
 
-Jon Loeliger <jdl@freescale.com> writes:
+On Fri, Jul 18, 2008 at 5:55 AM, Michael J Gruber
+<michaeljgruber+gmane@fastmail.fm> wrote:
+> sometimes I find my self wanting an "addremove", such as in a situation like
 
-> The current sub-setting and organization is painful because
-> it doesn't have a comprehensive, linear, alphabetized list
-> of commands from which to select the real man page.  I never
-> know which "section" to find a given command.  Is it an
-> Ancillary "manipulator" command?  Or maybe just a "Manipulation"
-> command, or maybe an "Interrogation" command?  A "Helper"?
->
-> I always have to painfully search the page for it instead.
+I have the following aliased as "addremove":
 
-When you are on-line (like your case to read kernel.org webpage), it is
-rather easy with ^F (or whatever browser you use lets you search).
+  git ls-files -d -m -o -z --exclude-standard \
+  | xargs -0 git update-index --add --remove
 
-But I do agree with you that on printed medium we would want a nice
-alphabetized list somewhere.
+http://www-cs-students.stanford.edu/~blynn/gitmagic/ch05.html
+
+j.
