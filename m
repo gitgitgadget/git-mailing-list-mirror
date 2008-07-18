@@ -1,7 +1,7 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 09/28] Add option handler for AbstractTreeIterator values
-Date: Thu, 17 Jul 2008 21:44:02 -0400
-Message-ID: <1216345461-59382-10-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 07/28] Define our own extended CmdLineParser for extra parsing support
+Date: Thu, 17 Jul 2008 21:44:00 -0400
+Message-ID: <1216345461-59382-8-git-send-email-spearce@spearce.org>
 References: <1216345461-59382-1-git-send-email-spearce@spearce.org>
  <1216345461-59382-2-git-send-email-spearce@spearce.org>
  <1216345461-59382-3-git-send-email-spearce@spearce.org>
@@ -9,8 +9,6 @@ References: <1216345461-59382-1-git-send-email-spearce@spearce.org>
  <1216345461-59382-5-git-send-email-spearce@spearce.org>
  <1216345461-59382-6-git-send-email-spearce@spearce.org>
  <1216345461-59382-7-git-send-email-spearce@spearce.org>
- <1216345461-59382-8-git-send-email-spearce@spearce.org>
- <1216345461-59382-9-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>,
 	Marek Zawirski <marek.zawirski@gmail.com>
@@ -19,52 +17,58 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJf2s-00060p-S9
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 03:46:07 +0200
+	id 1KJf2r-00060p-Gc
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 03:46:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757950AbYGRBpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 21:45:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758627AbYGRBpF
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 21:45:05 -0400
-Received: from george.spearce.org ([209.20.77.23]:47013 "EHLO
+	id S1758383AbYGRBpB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 21:45:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757911AbYGRBo6
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 21:44:58 -0400
+Received: from george.spearce.org ([209.20.77.23]:46959 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757784AbYGRBor (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 21:44:47 -0400
+	with ESMTP id S1757696AbYGRBoc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 21:44:32 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 0A48A3851C; Fri, 18 Jul 2008 01:44:32 +0000 (UTC)
+	id 44DA2384FB; Fri, 18 Jul 2008 01:44:31 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+X-Spam-Status: No, score=-4.1 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 6F42A38420;
-	Fri, 18 Jul 2008 01:44:26 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id ADCC93841D;
+	Fri, 18 Jul 2008 01:44:25 +0000 (UTC)
 X-Mailer: git-send-email 1.5.6.3.569.ga9185
-In-Reply-To: <1216345461-59382-9-git-send-email-spearce@spearce.org>
+In-Reply-To: <1216345461-59382-7-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88958>
 
-Converts String to AbstractTreeIterator on demand.  A string
-that can be resolved as a RevTree is read with a canonical
-tree iterator, as it is a standard Git tree already stored in
-the object database.  Otherwise we assume it is a local file
-and scan the filesystem, as it may be a working directory.
+A specialized CmdLineParser subclass is used to automatically handle
+`--git-dir=foo`, as args4j wants to see `--git-dir foo` instead.
+We split on the first equal sign on a long option and use that to
+delimit the value from the option name.
+
+We stop this long option fixup at the first -- found on the command
+line, as this is a traditional delimiter between options and only
+arguments.  This is an assumption that all of our users of a command
+line parser support would want to terminate option parsing at the
+first -- they see on the command line, and thus it is OK to stop
+our GNU long optino style cleanup.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../jgit/pgm/opt/AbstractTreeIteratorHandler.java  |  121 ++++++++++++++++++++
- 1 files changed, 121 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/AbstractTreeIteratorHandler.java
+ .../org/spearce/jgit/pgm/opt/CmdLineParser.java    |  157 ++++++++++++++++++++
+ 1 files changed, 157 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/CmdLineParser.java
 
-diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/AbstractTreeIteratorHandler.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/AbstractTreeIteratorHandler.java
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/CmdLineParser.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/CmdLineParser.java
 new file mode 100644
-index 0000000..31d1c84
+index 0000000..257d88f
 --- /dev/null
-+++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/AbstractTreeIteratorHandler.java
-@@ -0,0 +1,121 @@
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/opt/CmdLineParser.java
+@@ -0,0 +1,157 @@
 +/*
 + * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
 + *
@@ -104,86 +108,122 @@ index 0000000..31d1c84
 +
 +package org.spearce.jgit.pgm.opt;
 +
-+import java.io.File;
-+import java.io.IOException;
++import java.util.ArrayList;
 +
++import org.kohsuke.args4j.Argument;
 +import org.kohsuke.args4j.CmdLineException;
-+import org.kohsuke.args4j.CmdLineParser;
-+import org.kohsuke.args4j.OptionDef;
-+import org.kohsuke.args4j.spi.OptionHandler;
-+import org.kohsuke.args4j.spi.Parameters;
-+import org.kohsuke.args4j.spi.Setter;
-+import org.spearce.jgit.errors.IncorrectObjectTypeException;
-+import org.spearce.jgit.errors.MissingObjectException;
-+import org.spearce.jgit.lib.ObjectId;
-+import org.spearce.jgit.treewalk.AbstractTreeIterator;
-+import org.spearce.jgit.treewalk.CanonicalTreeParser;
-+import org.spearce.jgit.treewalk.FileTreeIterator;
++import org.kohsuke.args4j.IllegalAnnotationError;
++import org.kohsuke.args4j.Option;
++import org.spearce.jgit.lib.Repository;
++import org.spearce.jgit.pgm.TextBuiltin;
++import org.spearce.jgit.revwalk.RevWalk;
 +
 +/**
-+ * Custom argument handler {@link AbstractTreeIterator} from string values.
++ * Extended command line parser which handles --foo=value arguments.
 + * <p>
-+ * Assumes the parser has been initialized with a Repository.
++ * The args4j package does not natively handle --foo=value and instead prefers
++ * to see --foo value on the command line. Many users are used to the GNU style
++ * --foo=value long option, so we convert from the GNU style format to the
++ * args4j style format prior to invoking args4j for parsing.
 + */
-+public class AbstractTreeIteratorHandler extends
-+		OptionHandler<AbstractTreeIterator> {
-+	private final org.spearce.jgit.pgm.opt.CmdLineParser clp;
++public class CmdLineParser extends org.kohsuke.args4j.CmdLineParser {
++	private final Repository db;
++
++	private RevWalk walk;
 +
 +	/**
-+	 * Create a new handler for the command name.
-+	 * <p>
-+	 * This constructor is used only by args4j.
++	 * Creates a new command line owner that parses arguments/options and set
++	 * them into the given object.
 +	 * 
-+	 * @param parser
-+	 * @param option
-+	 * @param setter
++	 * @param bean
++	 *            instance of a class annotated by {@link Option} and
++	 *            {@link Argument}. this object will receive values.
++	 * 
++	 * @throws IllegalAnnotationError
++	 *             if the option bean class is using args4j annotations
++	 *             incorrectly.
 +	 */
-+	public AbstractTreeIteratorHandler(final CmdLineParser parser,
-+			final OptionDef option,
-+			final Setter<? super AbstractTreeIterator> setter) {
-+		super(parser, option, setter);
-+		clp = (org.spearce.jgit.pgm.opt.CmdLineParser) parser;
++	public CmdLineParser(final Object bean) {
++		this(bean, null);
++	}
++
++	/**
++	 * Creates a new command line owner that parses arguments/options and set
++	 * them into the given object.
++	 * 
++	 * @param bean
++	 *            instance of a class annotated by {@link Option} and
++	 *            {@link Argument}. this object will receive values.
++	 * @param repo
++	 *            repository this parser can translate options through.
++	 * @throws IllegalAnnotationError
++	 *             if the option bean class is using args4j annotations
++	 *             incorrectly.
++	 */
++	public CmdLineParser(final Object bean, Repository repo) {
++		super(bean);
++		if (repo == null && bean instanceof TextBuiltin)
++			repo = ((TextBuiltin) bean).getRepository();
++		this.db = repo;
 +	}
 +
 +	@Override
-+	public int parseArguments(final Parameters params) throws CmdLineException {
-+		final String name = params.getParameter(0);
++	public void parseArgument(final String... args) throws CmdLineException {
++		final ArrayList<String> tmp = new ArrayList<String>(args.length);
++		for (int argi = 0; argi < args.length; argi++) {
++			final String str = args[argi];
++			if (str.equals("--")) {
++				while (argi < args.length)
++					tmp.add(args[argi++]);
++				break;
++			}
 +
-+		if (new File(name).isDirectory()) {
-+			setter.addValue(new FileTreeIterator(new File(name)));
-+			return 1;
++			if (str.startsWith("--")) {
++				final int eq = str.indexOf('=');
++				if (eq > 0) {
++					tmp.add(str.substring(0, eq));
++					tmp.add(str.substring(eq + 1));
++					continue;
++				}
++			}
++
++			tmp.add(str);
 +		}
 +
-+		final ObjectId id;
-+		try {
-+			id = clp.getRepository().resolve(name);
-+		} catch (IOException e) {
-+			throw new CmdLineException(e.getMessage());
-+		}
-+		if (id == null)
-+			throw new CmdLineException(name + " is not a tree");
-+
-+		final CanonicalTreeParser p = new CanonicalTreeParser();
-+		try {
-+			p.reset(clp.getRepository(), clp.getRevWalk().parseTree(id));
-+		} catch (ClassCastException e) {
-+			throw new CmdLineException(name + " is not a tree");
-+		} catch (MissingObjectException e) {
-+			throw new CmdLineException(name + " is not a tree");
-+		} catch (IncorrectObjectTypeException e) {
-+			throw new CmdLineException(name + " is not a tree");
-+		} catch (IOException e) {
-+			throw new CmdLineException("cannot read " + name + ": "
-+					+ e.getMessage());
-+		}
-+
-+		setter.addValue(p);
-+		return 1;
++		super.parseArgument(tmp.toArray(new String[tmp.size()]));
 +	}
 +
-+	@Override
-+	public String getDefaultMetaVariable() {
-+		return "tree-ish";
++	/**
++	 * Get the repository this parser translates values through.
++	 * 
++	 * @return the repository, if specified during construction.
++	 */
++	public Repository getRepository() {
++		if (db == null)
++			throw new IllegalStateException("No Git repository configured.");
++		return db;
++	}
++
++	/**
++	 * Get the revision walker used to support option parsing.
++	 * 
++	 * @return the revision walk used by this option parser.
++	 */
++	public RevWalk getRevWalk() {
++		if (walk == null)
++			walk = new RevWalk(getRepository());
++		return walk;
++	}
++
++	/**
++	 * Get the revision walker used to support option parsing.
++	 * <p>
++	 * This method does not initialize the RevWalk and may return null.
++	 * 
++	 * @return the revision walk used by this option parser, or null.
++	 */
++	public RevWalk getRevWalkGently() {
++		return walk;
 +	}
 +}
 -- 
