@@ -1,74 +1,74 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] Move launch_editor() from builtin-tag.c to editor.c
-Date: Fri, 18 Jul 2008 03:26:04 +0200
-Message-ID: <20080718012604.GF8421@leksak.fem-net>
-References: <1216341378-15444-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0807180313200.2906@eeepc-johanness>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: stgit: bug with refresh and -p
+Date: Thu, 17 Jul 2008 21:29:01 -0400
+Message-ID: <9e4733910807171829q6abdcfc2m90c40a70dbc8fef5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 18 03:27:19 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 18 03:30:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJekd-0001sD-SM
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 03:27:16 +0200
+	id 1KJenM-0002Vv-G3
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 03:30:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756709AbYGRB0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 21:26:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755095AbYGRB0K
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 21:26:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53094 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754168AbYGRB0J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 21:26:09 -0400
-Received: (qmail invoked by alias); 18 Jul 2008 01:26:07 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp052) with SMTP; 18 Jul 2008 03:26:07 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+LqgQ1GjKLInZyi75O2jPpMq1V410dKP2j/8j6Zq
-	pHqL46+wFGTVrJ
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KJejU-0005UN-1E; Fri, 18 Jul 2008 03:26:04 +0200
+	id S1755932AbYGRB3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 21:29:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754758AbYGRB3E
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 21:29:04 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:36794 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752321AbYGRB3C (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 21:29:02 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so55239yxm.1
+        for <git@vger.kernel.org>; Thu, 17 Jul 2008 18:29:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=Z3fWth2AZxYZzc5n064ohxnSbOHn7FoUWkITty9kWtU=;
+        b=xznrYJFGOESdB7T+sp5ndANw78o/kUo+hp0fFIQVRwz72rveo7n8khZ0pm4K3/B2GU
+         s9m+Hw7LHQxPp5SDsJRAb9fxG0n18hdL8uN1eu/7LIeAQzJZxzN3VJChKBFuEXtBulR/
+         1AzsAfL9vuMBxmIfaL8udza3NJd0ed/j2jSZM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=coQ2qykHNid7DyYyLKsjtn3i8RwebgCgtDPn92F7mBGKf0Rmr9Gau+RXW3y5+VX/B8
+         lVTuuFFmfhIl4Pic4hVqGtPnPGO3l748uU/wBaXZkroM5NHP3QP4Kel0hyN17TH0hmVz
+         eaENax8i3Eo5VX3JRuzz+gs0dQNuLAwu2A1FY=
+Received: by 10.151.111.1 with SMTP id o1mr1345750ybm.194.1216344541227;
+        Thu, 17 Jul 2008 18:29:01 -0700 (PDT)
+Received: by 10.150.205.1 with HTTP; Thu, 17 Jul 2008 18:29:01 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807180313200.2906@eeepc-johanness>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88948>
 
-Hi,
+A refresh with -p is not picking up newly added files.
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Fri, 18 Jul 2008, Stephan Beyer wrote:
-> 
-> > launch_editor() is declared in strbuf.h but defined in builtin-tag.c. 
-> > This patch moves launch_editor() into a new source file editor.c, but 
-> > keeps the declaration in strbuf.h.
-> 
-> Sorry, but that has been tried before.  Junio pointed out that 
-> launch_editor() iss too die()-happy, and that the messages are too bound 
-> to the current callers.
-
-Ah, a short note: this is not a real "libify" patch. It is more an
-"Oh, launch_editor is used for git-commit and git-tag, but it is only
- defined in builtin_tag.c, but declared (as libgit.a member) in strbuf.h,
- so let's move it" patch without further changes.
-
-But of course you and Junio are right.
-
-> You need to at least provide an add-on patch to fix both issues.
-
-Tomorrow, I need sleep first :)
-
-Regards.
+jonsmirl@terra:~/fs$ stg status
+? include/linux/i2c/max9485.h
+jonsmirl@terra:~/fs$ git add include/linux/i2c/max9485.h
+jonsmirl@terra:~/fs$ stg refresh -p max9485
+Checking for changes in the working directory ... done
+Popping patches "jds-audio" - "jds-psc" ... done
+Refreshing patch "max9485" ... done
+Fast-forwarded patches "jds-psc" - "jds-audio"
+jonsmirl@terra:~/fs$ stg status
+? include/linux/i2c/max9485.h
+jonsmirl@terra:~/fs$ stg --version
+Stacked GIT 0.14.3.163.g06f9
+git version 1.5.6.1
+Python version 2.5.2 (r252:60911, Apr 21 2008, 11:17:30)
+[GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)]
+jonsmirl@terra:~/fs$
 
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+Jon Smirl
+jonsmirl@gmail.com
