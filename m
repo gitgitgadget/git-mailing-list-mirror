@@ -1,88 +1,107 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: Considering teaching plumbing to users harmful
-Date: Sat, 19 Jul 2008 01:02:35 +0800
-Message-ID: <46dff0320807181002i33320669ica5e407adc30d8b6@mail.gmail.com>
-References: <alpine.DEB.1.00.0807161804400.8950@racer>
-	 <32541b130807161053w24a21d7bh1fa800a714ce75db@mail.gmail.com>
-	 <7v7iblsnfh.fsf@gitster.siamese.dyndns.org>
-	 <32541b130807161151x19c20f9t91b7fb9b8c7b8c7b@mail.gmail.com>
-	 <7vmykhr6h1.fsf@gitster.siamese.dyndns.org>
-	 <32541b130807161229ob4c21cbsc6c86ee3e42c4101@mail.gmail.com>
-	 <7vabghr5br.fsf@gitster.siamese.dyndns.org>
-	 <32541b130807161246l579d3a5em65496ee9119ef1ef@mail.gmail.com>
-	 <7vr69tpoze.fsf@gitster.siamese.dyndns.org>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH] Test that we can add a new file to a non-topmost patch
+	with refresh -p
+Date: Fri, 18 Jul 2008 19:03:06 +0200
+Message-ID: <20080718170225.10086.17504.stgit@yoghurt>
+References: <20080718084127.GA7042@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Avery Pennarun" <apenwarr@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 19:03:38 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jon Smirl <jonsmirl@gmail.com>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 18 19:04:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJtMo-00083S-2S
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 19:03:38 +0200
+	id 1KJtNN-0008Fu-NU
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 19:04:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755806AbYGRRCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 13:02:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756208AbYGRRCj
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 13:02:39 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:8797 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755776AbYGRRCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 13:02:38 -0400
-Received: by qw-out-2122.google.com with SMTP id 3so175877qwe.37
-        for <git@vger.kernel.org>; Fri, 18 Jul 2008 10:02:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Nf6hcH5ip0B0HSx9azsMeDq8T/Wpq+UnCcfQvdeG92k=;
-        b=UEQPl0aG8hTduvcE4CjcAaZP1Ioo6iuGPpsHPKqHjlE4rGAXIq4QfN0iWcJztJjdan
-         fB+eA/QdYozLyoNid2bMtKrj38FEDPuHBw3NGB45w1MO6/Y4y0RYzsDcoaJuSgkWhzGe
-         W+G/NSrU3lXe2cY8732zRiwoh6irdys5PusJg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=fFInEfMxXtdW13hBj8R86rrICUfKxDMN2hl8Ip0HmPC6YiYM6yzMrJqK35/Ge3VfQG
-         l/3036U1SuvrFg5ID2BmDRm9r9za6/eNRpKOdDbCNKwAL4tPPZ5tbv0YORWvjfyFQ4o2
-         0TSIatBJkIYcHO/GIyXW+M7K7sZ9NCONV2qfQ=
-Received: by 10.150.49.1 with SMTP id w1mr455708ybw.24.1216400555791;
-        Fri, 18 Jul 2008 10:02:35 -0700 (PDT)
-Received: by 10.151.114.1 with HTTP; Fri, 18 Jul 2008 10:02:35 -0700 (PDT)
-In-Reply-To: <7vr69tpoze.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1756581AbYGRRDP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jul 2008 13:03:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756625AbYGRRDP
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 13:03:15 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2122 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756402AbYGRRDO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 13:03:14 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1KJthr-0003yW-00; Fri, 18 Jul 2008 18:25:23 +0100
+In-Reply-To: <20080718084127.GA7042@diana.vm.bytemark.co.uk>
+User-Agent: StGIT/0.14.3.197.gba718
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89056>
 
-On Thu, Jul 17, 2008 at 4:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
+We currently can't -- this is bug 12038, found by Jon Smirl. See
 
-> Suppose you are about to finish something you have been cooking (say a
-> series of five logical commits), you've made three of these commits
-> already, and what you have in your work tree and the index is to be split
-> into the last two commits.  Somehow you learn that $x above has a updated
-> version.
->
-> Yes, running "git stash && git pull --rebase && git stash pop" would be
-> better than running "git pull --rebase" alone from that state.  But that
-> would mean your history would have your first 3 commits (of 5 commit
-> series), somebody else's totally unrelated commits, and then you will work
-> on finishing the remaining 2 commits on top of it.
+  https://gna.org/bugs/index.php?12038
 
-Hmm, the first 3 commits are not pushed out, right? So by "rebase",
-the history should be first the somebody else's commits
-(origin/master), then the first 3 commits, then the remaining 2
-commits?:
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+
+---
+
+Here's a proper test that demonstrates the bug. It applies to the
+stable branch.
+
+ t/t2701-refresh-p.sh |   46 ++++++++++++++++++++++++++++++++++++++++++=
+++++
+ 1 files changed, 46 insertions(+), 0 deletions(-)
+ create mode 100755 t/t2701-refresh-p.sh
 
 
--- 
-Ping Yin
+diff --git a/t/t2701-refresh-p.sh b/t/t2701-refresh-p.sh
+new file mode 100755
+index 0000000..d42e90f
+--- /dev/null
++++ b/t/t2701-refresh-p.sh
+@@ -0,0 +1,46 @@
++#!/bin/sh
++
++test_description=3D'Run "stg refresh -p"'
++
++. ./test-lib.sh
++
++# Ignore our own temp files.
++cat >> .git/info/exclude <<EOF
++expected*.txt
++files*.txt
++status*.txt
++EOF
++
++test_expect_success 'Initialize StGit stack' '
++    stg init &&
++    for i in 1 2; do
++        echo x > $i.txt &&
++        git add $i.txt &&
++        stg new p$i -m "Patch $i" &&
++        stg refresh
++    done
++'
++
++touch expected0.txt
++cat > expected1.txt <<EOF
++A 1.txt
++A new.txt
++EOF
++cat > expected2.txt <<EOF
++A 2.txt
++EOF
++test_expect_failure 'Add new file to non-top patch' '
++    stg status > status1.txt &&
++    diff -u expected0.txt status1.txt &&
++    echo y > new.txt &&
++    git add new.txt &&
++    stg refresh -p p1 &&
++    stg status > status2.txt &&
++    diff -u expected0.txt status2.txt &&
++    stg files p1 > files1.txt &&
++    diff -u expected1.txt files1.txt &&
++    stg files p2 > files2.txt &&
++    diff -u expected2.txt files2.txt
++'
++
++test_done
