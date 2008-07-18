@@ -1,67 +1,70 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Enable git rev-list to parse --quiet
-Date: Fri, 18 Jul 2008 12:50:11 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807181246590.3932@eeepc-johanness>
-References: <20080718040459.13073.76896.stgit@marcab.local.tull.net> <7v8wvzeojm.fsf@gitster.siamese.dyndns.org> <20080718092001.GD16102@mail.local.tull.net>
+Subject: Re: [PATCH] Link git-shell only to a subset of libgit.a
+Date: Fri, 18 Jul 2008 12:55:16 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807181253080.3932@eeepc-johanness>
+References: <20080718005814.GA4155@spearce.org> <1216343070-20237-1-git-send-email-s-beyer@gmx.net> <20080718060321.GJ2925@dpotapov.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nick Andrew <nick@nick-andrew.net>
-X-From: git-owner@vger.kernel.org Fri Jul 18 12:51:22 2008
+Cc: Stephan Beyer <s-beyer@gmx.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 18 12:55:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJnXi-0003ld-13
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 12:50:30 +0200
+	id 1KJncd-0006HM-M1
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 12:55:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751700AbYGRKtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 06:49:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751571AbYGRKta
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 06:49:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53214 "HELO mail.gmx.net"
+	id S1754683AbYGRKye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 06:54:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755233AbYGRKyd
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 06:54:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40876 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751217AbYGRKta (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 06:49:30 -0400
-Received: (qmail invoked by alias); 18 Jul 2008 10:49:28 -0000
+	id S1751577AbYGRKyd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 06:54:33 -0400
+Received: (qmail invoked by alias); 18 Jul 2008 10:54:31 -0000
 Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp033) with SMTP; 18 Jul 2008 12:49:28 +0200
+  by mail.gmx.net (mp006) with SMTP; 18 Jul 2008 12:54:31 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19E/JE7dyhEfMDMnvxi7EslcThkf4x3fMS1ReLStX
-	n59WGJNXz+faxQ
+X-Provags-ID: V01U2FsdGVkX18W0ftWsoIWkUctkQHzVbfpeH2JVl4fdbZJ5w24aL
+	t3lQvWi5MYaQqa
 X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080718092001.GD16102@mail.local.tull.net>
+In-Reply-To: <20080718060321.GJ2925@dpotapov.dyndns.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89029>
 
 Hi,
 
-On Fri, 18 Jul 2008, Nick Andrew wrote:
+On Fri, 18 Jul 2008, Dmitry Potapov wrote:
 
-> I want to automatically (e.g. in crontab) update a git repo to the 
-> latest HEAD from a remote branch ... but with the possibility that the 
-> local repo has local changes, and I want no chance of merge failure. In 
-> other words, "git fetch remote; git merge origin/master" and only do the 
-> merge if it's a fast-forward. If there are any local commits, or local 
-> uncommitted changes, then leave the local working tree alone.
+> On Fri, Jul 18, 2008 at 03:04:30AM +0200, Stephan Beyer wrote:
+> > Commit 5b8e6f85 introduced stubs for three functions that make no 
+> > sense for git-shell. But those stubs defined libgit.a functions a 
+> > second time so that a linker can complain.
+> > 
+> > Now git-shell is only linked to a subset of libgit.a.
+> > 
+> > Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 > 
-> So my idea was to use "git rev-list --quiet master ^origin/master" and 
-> check the exit code; if zero do "git merge origin/master". Without a 
-> working "--quiet" nor exit code I can pipe the output to "wc -l" but is 
-> there a more efficient/reliable way to implement the requirement?
+> I agree, it is probably better to specify explicitly what files to link 
+> for git-shell if we want to keep it small and avoid the problem with 
+> some linkers.
 
-Yes. Check if "$(git rev-parse master)" is different from "$(git rev-parse 
-origin/master)" (to avoid unnecessary merging), and then that "$(git 
-merge-base master origin/master)" is equal to "$(git rev-parse master)".
+It is also more elegant in general, as it does not play tricks to do what 
+we want, but it does explicitely what we want.
 
-Note: this is plumbing, meant for scripting (which is exactly your 
-scenario).  Do not teach this to new Git users.
+FWIW I only removed almost the exact launch_editor() patch Stephan posted 
+from my personal Git fork because of this trickery (which I did not have 
+the time to fix).
 
 Ciao,
 Dscho
