@@ -1,68 +1,89 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] shrink git-shell by avoiding redundant dependencies
-Date: Fri, 18 Jul 2008 00:58:14 +0000
-Message-ID: <20080718005814.GA4155@spearce.org>
-References: <1214602538-7888-1-git-send-email-dpotapov@gmail.com> <7vod5mpmp7.fsf@gitster.siamese.dyndns.org> <20080627223107.GH5737@dpotapov.dyndns.org> <20080718002620.GE8421@leksak.fem-net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH] Link git-shell only to a subset of libgit.a
+Date: Fri, 18 Jul 2008 03:04:30 +0200
+Message-ID: <1216343070-20237-1-git-send-email-s-beyer@gmx.net>
+References: <20080718005814.GA4155@spearce.org>
 Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Jul 18 02:59:21 2008
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Stephan Beyer <s-beyer@gmx.net>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jul 18 03:06:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJeJc-0004Lo-AB
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 02:59:20 +0200
+	id 1KJePf-0005qA-DV
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 03:05:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753222AbYGRA6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2008 20:58:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755843AbYGRA6P
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 20:58:15 -0400
-Received: from george.spearce.org ([209.20.77.23]:59068 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751659AbYGRA6P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2008 20:58:15 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id B9794382A4; Fri, 18 Jul 2008 00:58:14 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20080718002620.GE8421@leksak.fem-net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1757866AbYGRBEg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2008 21:04:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756367AbYGRBEg
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jul 2008 21:04:36 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37488 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754661AbYGRBEg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2008 21:04:36 -0400
+Received: (qmail invoked by alias); 18 Jul 2008 01:04:34 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp030) with SMTP; 18 Jul 2008 03:04:34 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX195k2dL6RN5J8FwXSqM4IXgzFVS0s1hxwjS0yEviZ
+	ACSigkqKJF/czH
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KJeOc-0005Gn-Dg; Fri, 18 Jul 2008 03:04:30 +0200
+X-Mailer: git-send-email 1.5.6.3.390.g7b30
+In-Reply-To: <20080718005814.GA4155@spearce.org>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/88943>
 
-Stephan Beyer <s-beyer@gmx.net> wrote:
-> >  
-> > +/* Stubs for functions that make no sense for git-shell. These stubs
-> > + * are provided here to avoid linking in external redundant modules.
-> > + */
-> > +void release_pack_memory(size_t need, int fd){}
-> > +void trace_argv_printf(const char **argv, const char *fmt, ...){}
-> > +void trace_printf(const char *fmt, ...){}
-> 
-> I don't really understand why this works.
-> You redefine libgit.a functions here
+Commit 5b8e6f85 introduced stubs for three functions that make no sense
+for git-shell. But those stubs defined libgit.a functions a second time
+so that a linker can complain.
 
-On Solaris you cannot compile git with the Solaris compiler
-and linker, as the linker will not put up with the duplicate
-definition of these functions.
+Now git-shell is only linked to a subset of libgit.a.
 
-I told my co-worker who is taking over "that git stuff" from
-me at day-job to post a message to the list, or look at the
-Solaris manual pages and figure out what he needs to do in
-the Makefile to get it to work right.  Neither has happened
-yet, and those day-job systems are the only Solaris boxen I
-touch, so I won't be fixing it anytime soon myself.
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+---
+Hi Shawn,
 
-I have to wonder why its important we avoid linking to
-all of libgit.a here.  So what if git-shell is a little
-bigger?  This is certainly not fully portable, and does
-give warnings on some systems.
+does this compile on Solaris?
 
+
+For Dmitry: this is even smaller, but not significant ;-)
+
+Before:
+  text    data     bss     dec     hex filename
+ 24798    1304    8232   34334    861e git-shell
+
+After:
+   text    data     bss     dec     hex filename
+  24504    1264    8248   34016    84e0 git-shell
+
+*hide&run*
+Stephan.
+
+ Makefile |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 4bec4b3..a5626dc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1204,6 +1204,9 @@ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+ 
++git-shell$X: compat/strlcpy.o abspath.o ctype.o exec_cmd.o quote.o strbuf.o usage.o wrapper.o shell.o
++	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^)
++
+ $(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
+ $(patsubst git-%$X,%.o,$(PROGRAMS)): $(LIB_H) $(wildcard */*.h)
+ builtin-revert.o wt-status.o: wt-status.h
 -- 
-Shawn.
+1.5.6.3.390.g7b30
