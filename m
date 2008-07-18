@@ -1,68 +1,102 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Fri, 18 Jul 2008 18:20:10 +0900
-Message-ID: <20080718182010.6117@nanako3.lavabit.com>
-References: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org>
- <7vlk01hqzz.fsf@gitster.siamese.dyndns.org>
- <20080718175040.6117@nanako3.lavabit.com>
+From: "Nigel Magnay" <nigel.magnay@gmail.com>
+Subject: Re: [PATCH] Teach git submodule update to use distributed repositories
+Date: Fri, 18 Jul 2008 10:36:51 +0100
+Message-ID: <320075ff0807180236u4e7f5f9bm81b702d14c052de8@mail.gmail.com>
+References: <320075ff0807170508j3d3c1ef8j49df576fc47debe2@mail.gmail.com>
+	 <320075ff0807170520r200e546ejbad2ed103bd65f82@mail.gmail.com>
+	 <320075ff0807170521s26693381m60648468cce1c41c@mail.gmail.com>
+	 <alpine.DEB.1.00.0807171351380.8986@racer>
+	 <320075ff0807170703l57fe26d2h1e9c4db1c38dd6f1@mail.gmail.com>
+	 <alpine.DEB.1.00.0807171513560.8986@racer>
+	 <320075ff0807170807l1537e34ev510deda537e4d11e@mail.gmail.com>
+	 <20080717182253.GZ32184@machine.or.cz>
+	 <320075ff0807180111q4ca55cc4v15487af35f6fa63c@mail.gmail.com>
+	 <20080718091608.GL10151@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 11:22:17 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri Jul 18 11:37:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJmAD-0001PY-NH
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 11:22:10 +0200
+	id 1KJmPU-0006KC-48
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 11:37:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752954AbYGRJVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 05:21:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753543AbYGRJVF
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 05:21:05 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:41519 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752954AbYGRJVE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 05:21:04 -0400
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 85BA4C840E;
-	Fri, 18 Jul 2008 04:20:54 -0500 (CDT)
-Received: from nanako3.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id 7IYYQ8F2NNHE; Fri, 18 Jul 2008 04:21:02 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=aUFOgl7d1D0W+HliLWcIDJuvBV4bPaHSEdtPA+Af2Hxo+0WUPUlLGV4Nd9RqhC2YZRTqZjbihJyaxMWN89beM6+SWs1oTAVb8Wd5/XkyUQIsyD4RLTwZup5az47hiiITMdUH9x7+IjXs0MiLnNBd4UT2yOfF9i4KzgX8ibyYp6c=;
-  h=From:Subject:To:Cc:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Quoting Junio C Hamano <gitster@pobox.com>;
-In-Reply-To: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org>
+	id S1753698AbYGRJgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 05:36:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753733AbYGRJgy
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 05:36:54 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:61360 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753602AbYGRJgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 05:36:54 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so85338ywe.1
+        for <git@vger.kernel.org>; Fri, 18 Jul 2008 02:36:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=mogiBly71ktqFci7uT6PXvXcd08NTfipUE11cggrdow=;
+        b=U8ekYY+owwc8G97ycWX7pFo9pkgVyXGAjzqpr4hO3XcSSzIPF0ANpF4uxg96dGMOzu
+         lEQR+dcvoMOtbBDdKfN0A8JnXrX7cIG0JweoJFqTN2kbs4VtvkhUCG3PgqvQWK5ZUGm7
+         Z+PC7LvJxsOYzaCCoiTvpCojHiHefvULBss/s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=EaQbjO9izWDFAJ4sHtaGNcKNG3Z/t40SPsHnCJt/Xj0JRQ0ES8Z/VgRbyuGsbR1ub1
+         Ef/S8GjxqA7RpWvSYQvdG2RZr5p0I81dIv4J3IRmCrZQTal5LG5T/40sycWLyrVKvh5L
+         4tfl4P15m4CAgQTII66ioukx0qgHbSbmcCW60=
+Received: by 10.102.228.10 with SMTP id a10mr2789173muh.109.1216373811888;
+        Fri, 18 Jul 2008 02:36:51 -0700 (PDT)
+Received: by 10.103.246.15 with HTTP; Fri, 18 Jul 2008 02:36:51 -0700 (PDT)
+In-Reply-To: <20080718091608.GL10151@machine.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89020>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+On Fri, Jul 18, 2008 at 10:16 AM, Petr Baudis <pasky@suse.cz> wrote:
+> snip
+>
+>        "How do we mass-supply custom submodule URLs when publishing the
+>        customized main repository at a custom location too?"
+>
+Yes - that is an additional problem.
 
-> Well, for one thing, I do not believe in their cause.  As I wrote in the
-> log messages for these commits (actually not these above which is a series
-> for merge fixup, but the other topic), I do not think it is a sensible
-> thing to say "let's take as much automerge results as possible to salvage
-> our changes where they do not overlap with what the upstream did, but I
-> would give up our changes to places that the upstream also touched,
-> because I do not understand what they did well enough to be able to
-> resolve the merge conflicts correctly", and "merge -Xtheirs" is exactly
-> that.
+If I may expand the usecase just so it's clear (and to check we're
+talkiing the same language)
 
-I do not know if "I do not understand what they did well enough" is the only reason people would want to use that feature. Isn't it better to let people decide that for themselves?
+I do something like
+$ git remote add fred git://fredcomputer/superproject/.git
+$ git fetch --submodules fred
 
-> That also was the reason I did not add any documentation to it.  But I do
-> like the change to the infrastructure to allow passing strategy-specific
-> options through git-merge and git-pull.  Perhaps I should write something
-> up, if only to salvage that -X<option> part, even though I am very much
-> inclined to discard -Xtheirs (and -Xours) part.
+And when the recursive fetching enters a submodule, it is trying
+itself to do something like
+$ git fetch fred
 
-I think such a documentation will help people to decide if 'theirs' option makes sense for their workflow.
+At which point
+1) the submodule also has a remote specified for fred. In which case
+it can continue
+2) the submodule doesn't have remote specified for fred. How to solve
+this case? (I.E how does 'my' git 'discover' where fred's git
+repositories are for the submodules?)
+ a) By getting some information from fred, either in *Fred's*
+superproject .git/config (or some other readable file)
+ b) By reading some information out of the superproject .gitmodules
+that has been fetched from fred
+ c) By calculating a relative URL based on the supposition that fred
+has working copies laid out in the filesystem.
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+I was tentatively suggesing (c), with a backup of (a) for the minority
+cases where you weren't pulling from a person but from a mirror or
+something. Having the client edit config files just feels like a hack
+to me, regardless of whether scripts are enabled to do it.
