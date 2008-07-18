@@ -1,78 +1,67 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Git Branding Overview, Re: Git.or.cz Experimental Design
-Date: Fri, 18 Jul 2008 12:39:18 +0200
-Message-ID: <20080718103918.GO10151@machine.or.cz>
-References: <5fb1d2400807022011w7f8d79dbk68a64dc1b8b01d98@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Enable git rev-list to parse --quiet
+Date: Fri, 18 Jul 2008 12:50:11 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807181246590.3932@eeepc-johanness>
+References: <20080718040459.13073.76896.stgit@marcab.local.tull.net> <7v8wvzeojm.fsf@gitster.siamese.dyndns.org> <20080718092001.GD16102@mail.local.tull.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Baldwin <baldwindavid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 12:40:31 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nick Andrew <nick@nick-andrew.net>
+X-From: git-owner@vger.kernel.org Fri Jul 18 12:51:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJnNs-0007aB-Gp
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 12:40:20 +0200
+	id 1KJnXi-0003ld-13
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 12:50:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754735AbYGRKjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 06:39:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754208AbYGRKjV
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 06:39:21 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:57253 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752567AbYGRKjU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 06:39:20 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id C35F4393B333; Fri, 18 Jul 2008 12:39:18 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <5fb1d2400807022011w7f8d79dbk68a64dc1b8b01d98@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751700AbYGRKtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 06:49:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751571AbYGRKta
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 06:49:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53214 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751217AbYGRKta (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 06:49:30 -0400
+Received: (qmail invoked by alias); 18 Jul 2008 10:49:28 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp033) with SMTP; 18 Jul 2008 12:49:28 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19E/JE7dyhEfMDMnvxi7EslcThkf4x3fMS1ReLStX
+	n59WGJNXz+faxQ
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <20080718092001.GD16102@mail.local.tull.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89028>
 
-  Hi,
+Hi,
 
-On Wed, Jul 02, 2008 at 11:11:02PM -0400, David Baldwin wrote:
-> Hello Petr:
-> I hope you are doing well.  I was looking at the git.or.cz site tonight and
-> thought it could perhaps use a little freshening up from a design
-> standpoint.  Therefore, I messed around with the default stylesheet and the
-> home page a bit and made a logo.  You can take a look at the experimental
-> design at this address...
-> http://baldwindev.com/git.or.cz/
+On Fri, 18 Jul 2008, Nick Andrew wrote:
+
+> I want to automatically (e.g. in crontab) update a git repo to the 
+> latest HEAD from a remote branch ... but with the possibility that the 
+> local repo has local changes, and I want no chance of merge failure. In 
+> other words, "git fetch remote; git merge origin/master" and only do the 
+> merge if it's a fast-forward. If there are any local commits, or local 
+> uncommitted changes, then leave the local working tree alone.
 > 
-> It's really just a few little changes.  If you're interested in implementing
-> any of this into the current site, feel free to grab the changes from my
-> github git repository.  You can see the few text changes in the diff...
-> http://github.com/bilson/gitorcz_redesign/tree/master
+> So my idea was to use "git rev-list --quiet master ^origin/master" and 
+> check the exit code; if zero do "git merge origin/master". Without a 
+> working "--quiet" nor exit code I can pipe the output to "wc -l" but is 
+> there a more efficient/reliable way to implement the requirement?
 
-  I'm not sure if this is really an improvement on the current state,
-but then again, the current state pretty much matches my idea and maybe
-others will agree that your proposal is better. Thus, it's better to
-show this to the Git community at large. :-)
+Yes. Check if "$(git rev-parse master)" is different from "$(git rev-parse 
+origin/master)" (to avoid unnecessary merging), and then that "$(git 
+merge-base master origin/master)" is equal to "$(git rev-parse master)".
 
-  If you or anyone is shooting for a re-design, I would suggest to
-somehow relate to the current "Git brandings" in use:
+Note: this is plumbing, meant for scripting (which is exactly your 
+scenario).  Do not teach this to new Git users.
 
-	http://git.or.cz/git-logo.png
-	http://henrik.nyh.se/uploads/git-logo.png
-
-  If you think you have a cooler logo, that's fine too, but then it's
-again better to present it explicitly, I believe. The latter is used
-especially within mSysGit, the former is used more widely - at the
-current homepage, as Gitweb logo, and in various modifications like
-
-	http://git.nyh.se/git-favicon.png
-	http://members.cox.net/junkio/git.png
-	http://unfuddle.com/images/screens/source.big.jpg
-		(top left ;)
-
--- 
-				Petr "Pasky" Baudis
-GNU, n. An animal of South Africa, which in its domesticated state
-resembles a horse, a buffalo and a stag. In its wild condition it is
-something like a thunderbolt, an earthquake and a cyclone. -- A. Pierce
+Ciao,
+Dscho
