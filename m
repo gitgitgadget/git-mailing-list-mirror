@@ -1,88 +1,81 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Teach git submodule update to use distributed
-	repositories
-Date: Fri, 18 Jul 2008 12:00:48 +0200
-Message-ID: <20080718100048.GN10151@machine.or.cz>
-References: <320075ff0807170520r200e546ejbad2ed103bd65f82@mail.gmail.com> <320075ff0807170521s26693381m60648468cce1c41c@mail.gmail.com> <alpine.DEB.1.00.0807171351380.8986@racer> <320075ff0807170703l57fe26d2h1e9c4db1c38dd6f1@mail.gmail.com> <alpine.DEB.1.00.0807171513560.8986@racer> <320075ff0807170807l1537e34ev510deda537e4d11e@mail.gmail.com> <20080717182253.GZ32184@machine.or.cz> <320075ff0807180111q4ca55cc4v15487af35f6fa63c@mail.gmail.com> <20080718091608.GL10151@machine.or.cz> <320075ff0807180236u4e7f5f9bm81b702d14c052de8@mail.gmail.com>
+From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+Subject: Suggestion: doc restructuring [was: Re: Considering teaching plumbing
+ to users harmful]
+Date: Fri, 18 Jul 2008 12:14:27 +0200
+Message-ID: <48806D03.30603@fastmail.fm>
+References: <alpine.DEB.1.00.0807161804400.8950@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nigel Magnay <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 12:01:53 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 18 12:15:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KJmmb-00057K-9j
-	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 12:01:49 +0200
+	id 1KJn01-0000cT-4F
+	for gcvg-git-2@gmane.org; Fri, 18 Jul 2008 12:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754623AbYGRKAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 06:00:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754364AbYGRKAu
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 06:00:50 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56274 "EHLO machine.or.cz"
+	id S1754262AbYGRKOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 06:14:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752976AbYGRKOl
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 06:14:41 -0400
+Received: from main.gmane.org ([80.91.229.2]:60511 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752649AbYGRKAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 06:00:50 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id A2D3C2C4C02A; Fri, 18 Jul 2008 12:00:48 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <320075ff0807180236u4e7f5f9bm81b702d14c052de8@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752821AbYGRKOk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 06:14:40 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KJmyx-0005wW-Ns
+	for git@vger.kernel.org; Fri, 18 Jul 2008 10:14:35 +0000
+Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 18 Jul 2008 10:14:35 +0000
+Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 18 Jul 2008 10:14:35 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <alpine.DEB.1.00.0807161804400.8950@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89026>
 
-On Fri, Jul 18, 2008 at 10:36:51AM +0100, Nigel Magnay wrote:
-> On Fri, Jul 18, 2008 at 10:16 AM, Petr Baudis <pasky@suse.cz> wrote:
-> > snip
-> >
-> >        "How do we mass-supply custom submodule URLs when publishing the
-> >        customized main repository at a custom location too?"
-> >
-> Yes - that is an additional problem.
-
-Wait, I'm lost again - _additional_ problem? How does it differ from the
-_original_ problem, how does it differ from what you're explaining below
-and how does what you're explaining below differ from the original
-problem?
-
-Or are we talking exclusively about what I summed up above now?
-
-> If I may expand the usecase just so it's clear (and to check we're
-> talkiing the same language)
+Johannes Schindelin venit, vidit, dixit 16.07.2008 19:21:
+...
 > 
-> I do something like
-> $ git remote add fred git://fredcomputer/superproject/.git
-> $ git fetch --submodules fred
+> Am I the only one who deems teaching plumbing to users ("I like it raw!  
+> So I teach it the same way!") harmful?
+> 
+> Ciao,
+> Dscho "who is sad"
 
-I think you mean git pull --submodules fred. Well, actually, you want to
-pull the main repository, then submodule update (_not_ pull in the
-submodules). See? This is part of the "semantic swamp" I mentioned
-before.
+In an attempt at making not only Dscho happier I suggest a restructuring 
+of the man pages in the following way:
 
-I think it should be somehow part of the _main_ project's fred branch
-that in this branch, the subprojects should be fetched from a different
-location; thus, you would still do
+In each man page, put a note which says something like:
+"This is part of linkgit:gitplumbing[7]." and the like
+It should be in a prominent place, such as the last line of "DESCRIPTION".
 
-	$ git remote add fred git://fredcomputer/superproject/.git
-	$ git pull fred
-	$ git submodule update
+gitplumbing[7] etc. pages should contain:
+- a definition of the respective term together with appropriate usage 
+advice (regular use/scripting..., "Let there be dragons.")
+- a list of commands like we have in git[1] right now
 
-where either the submodule update takes the info from fred's adjusted
-.gitmodules, or it is an implicit part of the branch as in fred tells
-you to run the update command with some extra arguments.
+With the current situation, people don't look at git[1] in order to find 
+out what they're supposed to use. It's too long anyways, and could link 
+the above pages instead.
 
-However, I still believe the information should primarily stem from the
-main repository; consider e.g. if you do not have some of the submodules
-checked out when you switch to fred, then figure out that in fred's
-branch, you really do want them checked out.
+If there's enough interest/agreement I'd come up with a refactoring patch.
 
--- 
-				Petr "Pasky" Baudis
-GNU, n. An animal of South Africa, which in its domesticated state
-resembles a horse, a buffalo and a stag. In its wild condition it is
-something like a thunderbolt, an earthquake and a cyclone. -- A. Pierce
+Michael
+
+
+P.S.: For me
+porcellaine = artistic, fragile
+plumbing = plain, robust
+Which one would you choose for daily hard work? ;)
