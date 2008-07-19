@@ -1,115 +1,56 @@
-From: Olivier Marin <dkr+ml.git@free.fr>
-Subject: [PATCH V2] builtin-rm: fix index lock file path
-Date: Sat, 19 Jul 2008 18:24:46 +0200
-Message-ID: <4882154E.5050806@free.fr>
-References: <20080719082314.GA15419@mail.local.tull.net> <48821485.6050507@free.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sat, 19 Jul 2008 09:55:09 -0700
+Message-ID: <7v4p6l3jbm.fsf@gitster.siamese.dyndns.org>
+References: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org>
+ <7vlk01hqzz.fsf@gitster.siamese.dyndns.org>
+ <20080718175040.6117@nanako3.lavabit.com>
+ <20080718182010.6117@nanako3.lavabit.com>
+ <7v63r38r4r.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0807181351370.3932@eeepc-johanness>
+ <7vabge30dh.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0807191311220.3305@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Nick Andrew <nick@nick-andrew.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Sat Jul 19 18:25:48 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 19 18:56:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKFFj-0000Cs-GQ
-	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 18:25:47 +0200
+	id 1KKFjF-0000WP-V3
+	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 18:56:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753560AbYGSQYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2008 12:24:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753538AbYGSQYs
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jul 2008 12:24:48 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:59546 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753536AbYGSQYs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2008 12:24:48 -0400
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id E6C2B12B6C1;
-	Sat, 19 Jul 2008 18:24:46 +0200 (CEST)
-Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 9208B12B6DE;
-	Sat, 19 Jul 2008 18:24:46 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-In-Reply-To: <48821485.6050507@free.fr>
+	id S1754069AbYGSQzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2008 12:55:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753958AbYGSQzR
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jul 2008 12:55:17 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41461 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753950AbYGSQzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2008 12:55:16 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3FA8A334C6;
+	Sat, 19 Jul 2008 12:55:15 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 905A0334C5; Sat, 19 Jul 2008 12:55:11 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0807191311220.3305@eeepc-johanness> (Johannes
+ Schindelin's message of "Sat, 19 Jul 2008 13:19:46 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 75A89442-55B3-11DD-A1F4-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89113>
 
-From: Olivier Marin <dkr@freesurf.fr>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-When hold_locked_index() is called with a relative git_dir and you are
-outside the work tree, the lock file become relative to the current
-directory. So when later setup_work_tree() change the current directory
-it breaks lock file path and commit_locked_index() fails.
+> Yes, I agree, if all strategies fail, it is dubitable that we find a 
+> metric that will always find the "best" one.  But if one fails and the 
+> next one does not, it is obvious what is correct.
 
-This patch move index locking code after setup_work_tree() call to make
-lock file relative to the working tree as it should be and add a test
-case.
-
-Noticed by Nick Andrew.
-
-Signed-off-by: Olivier Marin <dkr@freesurf.fr>
----
-
- The same with the test case!
-
- builtin-rm.c  |   10 +++++-----
- t/t3600-rm.sh |   12 ++++++++++++
- 2 files changed, 17 insertions(+), 5 deletions(-)
-
-diff --git a/builtin-rm.c b/builtin-rm.c
-index 56454ec..ee8247b 100644
---- a/builtin-rm.c
-+++ b/builtin-rm.c
-@@ -146,11 +146,6 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_default_config, NULL);
- 
--	newfd = hold_locked_index(&lock_file, 1);
--
--	if (read_cache() < 0)
--		die("index file corrupt");
--
- 	argc = parse_options(argc, argv, builtin_rm_options, builtin_rm_usage, 0);
- 	if (!argc)
- 		usage_with_options(builtin_rm_usage, builtin_rm_options);
-@@ -158,6 +153,11 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	if (!index_only)
- 		setup_work_tree();
- 
-+	newfd = hold_locked_index(&lock_file, 1);
-+
-+	if (read_cache() < 0)
-+		die("index file corrupt");
-+
- 	pathspec = get_pathspec(prefix, argv);
- 	seen = NULL;
- 	for (i = 0; pathspec[i] ; i++)
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 316775e..79c06ad 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -217,4 +217,16 @@ test_expect_success 'Remove nonexistent file returns nonzero exit status' '
- 	test_must_fail git rm nonexistent
- '
- 
-+test_expect_success 'Call "rm" from outside the work tree' '
-+	mkdir repo &&
-+	cd repo &&
-+	git init &&
-+	echo something > somefile &&
-+	git add somefile &&
-+	git commit -m "add a file" &&
-+	(cd .. &&
-+	 git --git-dir=repo/.git --work-tree=repo rm somefile) &&
-+	test_must_fail git ls-files --error-unmatch somefile
-+'
-+
- test_done
--- 
-1.5.6.3.440.g489d7
+Not at all.  Imagine the case where one of them is either ours or theirs.
