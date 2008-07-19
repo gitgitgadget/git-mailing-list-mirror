@@ -1,93 +1,82 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Statictics on Git.pm usage in git commands (was: [PATCH 2/3]
-	add new Git::Repo API)
-Date: Sat, 19 Jul 2008 23:14:03 +0200
-Message-ID: <20080719211403.GA10151@machine.or.cz>
-References: <4876B223.4070707@gmail.com> <487BD0F3.2060508@gmail.com> <20080718164828.GT10151@machine.or.cz> <200807192254.24622.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Rename ".dotest/" to ".git/rebase" and ".dotest-merge"
+ to "rebase-merge"
+Date: Sat, 19 Jul 2008 14:52:14 -0700
+Message-ID: <7vd4l9zgmp.fsf@gitster.siamese.dyndns.org>
+References: <73fd69b50807151408i6a916da6p7b89fe81e65fc717@mail.gmail.com>
+ <20080715212211.GL6244@leksak.fem-net> <487D1B3D.70500@lsrfire.ath.cx>
+ <alpine.DEB.1.00.0807160245440.2841@eeepc-johanness>
+ <20080716012619.GM8185@mit.edu> <7viqv5r637.fsf@gitster.siamese.dyndns.org>
+ <4882454D.2080500@free.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org,
-	John Hawley <warthog19@eaglescrag.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 19 23:15:18 2008
+Cc: Theodore Tso <tytso@mit.edu>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Joe Fiorini <joe@faithfulgeek.org>, git@vger.kernel.org,
+	Jari Aalto <jari.aalto@cante.net>
+To: Olivier Marin <dkr+ml.git@free.fr>
+X-From: git-owner@vger.kernel.org Sat Jul 19 23:53:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKJlm-0006p9-73
-	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 23:15:10 +0200
+	id 1KKKMq-0007WB-QF
+	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 23:53:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754098AbYGSVOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2008 17:14:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754096AbYGSVOI
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jul 2008 17:14:08 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:49250 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754092AbYGSVOH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2008 17:14:07 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id A4E702C4C02A; Sat, 19 Jul 2008 23:14:03 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200807192254.24622.jnareb@gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1754368AbYGSVw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2008 17:52:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754151AbYGSVw3
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jul 2008 17:52:29 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38074 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753984AbYGSVw2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2008 17:52:28 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7AF33379CE;
+	Sat, 19 Jul 2008 17:52:26 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 97069379CB; Sat, 19 Jul 2008 17:52:16 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F9E8670E-55DC-11DD-A4FF-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89136>
 
-On Sat, Jul 19, 2008 at 10:54:24PM +0200, Jakub Narebski wrote:
-> On Fri, 18 July 2008, Petr Baudis wrote:
-> 
-> > But the experience shows that the pipe interface is actually
-> > the _most_ used part of the Git Perl API.
+Olivier Marin <dkr+ml.git@free.fr> writes:
 
-  Note that I referred both to scripts that are part of Git and
-(actually more) to various third-party scripts I wrote externally.
+> It tries to apply patches even on a dirty tree which makes difficult
+> to automatically do a "git reset --hard" with --skip or --abort and
+> forces the user to clean the index by hand if last patch failed with
+> unmerged files.
+>
+> So, do some people still use "git am" with a dirty tree or will a
+> patch that make it work like "git rebase" be accepted?
 
-> Here is some statistics on the usage of Git Perl API among built-in
-> and contrib commands.
+Anything that changes "am" to require a clean working tree will NEVER be
+accepted.  I personally rely on the ability for it to run in a dirty tree,
+so does Linus.
 
-  Thanks!
+	Side note.  Anything that changes "merge" to require a clean
+	working tree is also unacceptable.  Cf.
 
-> The situation is worse for scripts in 'contrib/'.  From those, only
-> contrib/examples/git-remote.perl uses Git.pm; neither blameview,
-> continuous, git-import and import-tars in fast-import, setgitperms
-> and update-paranoid in hooks, stats, nor other Perl scripts in
-> examples (git-rerere, git-svnimport) include "use Git".
+	http://thread.gmane.org/gmane.comp.version-control.git/9073/focus=9089
 
-  I have actually once converted blameview to use Git locally, but in
-the end never got around to submit it; I wonder if I have the source
-still around somewhere. Not so important, I guess.
+	Linus talks about "patch" in the paragraph second to the last one
+	in the message; back then he was talking about "git-applymbox" but
+	the same argument there applies to its newer incarnation "git-am".
 
-> Below there are stats on how different commands from Git.pm are
-> used in mentioned Perl scripts:
-> 
-> 2. git-cvsexportcommit.perl uses (besides ->repository() constructor)
->    only once ->config; so I guess that current interface wrapping
->    git-config should stay, because parsing whole config for such
->    situation would be overkill.
+	Side note #2.  It would have been nice if "rebase" were also
+	written in such a way that it can work in a dirty tree as long as
+	local changes did not interfere with the operation, but it is a
+	lot more involved.
 
-  I don't understand. Parsing whole config happen will either happen in
-git-config or in Git::Config, and the performance difference is so tiny
-that it is not really worth the API complexity, I believe.
-
-> 3. git-send-email.perl uses 5 config, 2 config_bool, 2 ident_person
->    (for author and for committer), 1 version, and of course once
->    ->repository() constructor.  
-> 
->    Here we can see how to work around current API to: it uses
->    Git::config(@repo, "sendemail.identity") form, where 
->    	my $repo = eval { Git->repository() };
->    	my @repo = $repo ? ($repo) : ();
->    to make it work both with git repository (using repo config), and
->    outside/without git repository, using only user and system git
->    config.
-
-  With the envisioned model, it could use $git which would be either
-a reference to a Git::Standalone singleton or Git::Repo instance.
-
--- 
-				Petr "Pasky" Baudis
-As in certain cults it is possible to kill a process if you know
-its true name.  -- Ken Thompson and Dennis M. Ritchie
+When I looked at the "am --abort" patch briefly, I had an impression (by
+reading its test case) that it correctly refrained from doing the
+destructive "reset --hard".
