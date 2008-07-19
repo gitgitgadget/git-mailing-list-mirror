@@ -1,58 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: copy selected history between repostories
-Date: Fri, 18 Jul 2008 21:21:07 -0400
-Message-ID: <20080719012107.GA14068@sigill.intra.peff.net>
-References: <18533605.post@talk.nabble.com> <20080719010122.GA12047@mail.local.tull.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH] Support gitlinks in fast-import/export.
+Date: Sat, 19 Jul 2008 03:22:16 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807190321040.3064@eeepc-johanness>
+References: <200807182103.37272.angavrilov@gmail.com> <20080718204338.GB27528@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: luisgutz <luis@xmos.com>, git@vger.kernel.org
-To: Nick Andrew <nick@nick-andrew.net>
-X-From: git-owner@vger.kernel.org Sat Jul 19 03:22:13 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alexander Gavrilov <angavrilov@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Jul 19 03:22:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KK19F-0005co-SG
-	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 03:22:10 +0200
+	id 1KK19Z-0005fv-RW
+	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 03:22:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754097AbYGSBVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 21:21:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753554AbYGSBVL
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 21:21:11 -0400
-Received: from peff.net ([208.65.91.99]:3090 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753143AbYGSBVK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 21:21:10 -0400
-Received: (qmail 28018 invoked by uid 111); 19 Jul 2008 01:21:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 18 Jul 2008 21:21:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Jul 2008 21:21:07 -0400
-Content-Disposition: inline
-In-Reply-To: <20080719010122.GA12047@mail.local.tull.net>
+	id S1753629AbYGSBVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 21:21:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754144AbYGSBVb
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 21:21:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34954 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753554AbYGSBVa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 21:21:30 -0400
+Received: (qmail invoked by alias); 19 Jul 2008 01:21:28 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp015) with SMTP; 19 Jul 2008 03:21:28 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/LFVJJVyjL3dC7MD4YPvm/19wmu4kmgJgAQlM2LN
+	9W0W13r5YUcL62
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <20080718204338.GB27528@spearce.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89096>
 
-On Sat, Jul 19, 2008 at 11:01:22AM +1000, Nick Andrew wrote:
+Hi,
 
-> I couldn't figure out git-filter-branch, so I did the following,
-> which worked for me:
-> 
-> First, export commits as patches in mbox format:
-> 
-> 	git log -p --first-parent --reverse --pretty=email $* > mbox
-> [...]
-> 
-> Finally, import into new repo:
-> 
-> 	git-am mbox2
+On Fri, 18 Jul 2008, Shawn O. Pearce wrote:
 
-Note that this will lose any interesting history topology you had, like
-branching and merging (and it may have trouble applying all patches in
-that case, too). But if your history was a straight line, it should
-produce equivalent results.
+> Alexander Gavrilov <angavrilov@gmail.com> wrote:
+> 
+> > 	I noticed that fast-export & fast-import cannot work with 
+> > 	repositories using submodules: import complains about an invalid 
+> > 	mode, and export fails while trying to open the SHA as a blob.
+> > 
+> > 	As I didn't see any particular reason for it to be so, I tried to 
+> > 	implement support for gitlinks.
+> > 
+> > 	What I'm unsure of is, should fast-export try to reuse commit 
+> > 	marks for gitlinks where it happened to recognize the object, or 
+> > 	always output the SHA as it is stored in the tree?
+> 
+> Its unlikely that the commit objects are in the repository the export is 
+> running in, so its unlikely you can use a mark.  Its fine to just always 
+> output the SHA-1 I think.
 
--Peff
+Oh, I just realized that fast-import expects changes, instead of full 
+snapshots.
+
+So strike all my suggestions regarding gitlink marks.
+
+Sorry,
+Dscho
