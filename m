@@ -1,87 +1,130 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH] Windows: set gitexecdir = $(bindir)
-Date: Sat, 19 Jul 2008 10:52:19 +0200
-Message-ID: <200807191052.20057.johannes.sixt@telecom.at>
-References: <1216366485-12201-1-git-send-email-johannes.sixt@telecom.at> <1216366485-12201-5-git-send-email-johannes.sixt@telecom.at> <7vej5q67dq.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] builtin-clone: Use is_dir_sep() instead of '/'
+Date: Sat, 19 Jul 2008 11:32:45 +0200
+Message-ID: <200807191132.45648.johannes.sixt@telecom.at>
+References: <1216366485-12201-1-git-send-email-johannes.sixt@telecom.at> <1216366485-12201-3-git-send-email-johannes.sixt@telecom.at> <7vk5fi67dx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sat Jul 19 10:53:26 2008
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 19 11:34:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KK8Bw-0005sZ-LA
-	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 10:53:25 +0200
+	id 1KK8pV-0006LC-0A
+	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 11:34:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752140AbYGSIwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2008 04:52:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752093AbYGSIwZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jul 2008 04:52:25 -0400
-Received: from smtp4.srv.eunet.at ([193.154.160.226]:41420 "EHLO
-	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751814AbYGSIwY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2008 04:52:24 -0400
+	id S1752667AbYGSJcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2008 05:32:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752513AbYGSJcu
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jul 2008 05:32:50 -0400
+Received: from smtp2.srv.eunet.at ([193.154.160.116]:52345 "EHLO
+	smtp2.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752436AbYGSJct (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2008 05:32:49 -0400
 Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp4.srv.eunet.at (Postfix) with ESMTP id 1625797323;
-	Sat, 19 Jul 2008 10:52:21 +0200 (CEST)
+	by smtp2.srv.eunet.at (Postfix) with ESMTP id 832C3BEEA1;
+	Sat, 19 Jul 2008 11:32:46 +0200 (CEST)
 Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 80CD71D3B4;
-	Sat, 19 Jul 2008 10:52:20 +0200 (CEST)
+	by dx.sixt.local (Postfix) with ESMTP id BAD181D3D4;
+	Sat, 19 Jul 2008 11:32:45 +0200 (CEST)
 User-Agent: KMail/1.9.9
-In-Reply-To: <7vej5q67dq.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7vk5fi67dx.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89105>
 
 On Samstag, 19. Juli 2008, Junio C Hamano wrote:
-> Sorry, I am not sure if I understand what you are trying to solve.  If you
-> have ../libexec/git-core/ in GIT_EXEC_PATH (or have builtin_exec_path()
-> use it), then your installation would look like this:
->
-> 	[[some random place]]
->         	bin/git
->                 libexec/git-core/git-add
->                 libexec/git-core/git-del
->                 libexec/git-core/git-dir
->                 ...
->
-> and if "git" can figure out it is "[[some random place]]/bin/git",
-> it can find its subcommands from neighbouring directory, that is still
-> inside the random place the user told the installer to use, can't it?
+> Ok, but the surrounding code in this function look very suspicious.
 
-Yes, but...
+How about this then?
 
-Take as an example 'git pull'.
+-- snip --
+builtin-clone: Rewrite guess_dir_name()
 
-- The first call to git will derive the exec-path 
-$prefix/bin/../libexec/git-core and prepend it to $PATH.
+The function has to do three small and independent tasks, but all of them
+were crammed into a single loop. This rewrites the function entirely by
+unrolling these tasks.
 
-- Calls to builtin git commands from inside 'git pull' will then derive the 
-exec-path $prefix/bin/../libexec/git-core/../libexec/git-core, that is 
-$prefix/libexec/libexec/git-core, and prepend it to $PATH as well. That 
-directory does not exist - usually - and it does not hurt. But it feels dirty 
-and potentially dangerous.
+We also now use is_dir_sep(c) instead of c == '/' to increase portability,
+which actually was the primary reason to touch this code.
 
-> > This counteracts the aims of the "dash-less" change on Windows, but
-> > better this way than having no working git at all.
->
-> I'd agree to the extent that anything is better than having no working
-> git, but this somewhat feels backwards.
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ builtin-clone.c |   55 ++++++++++++++++++++++++++-----------------------------
+ 1 files changed, 26 insertions(+), 29 deletions(-)
 
-It certainly does.
-
-I'm hoping that the msysgit crew has an opinion on this. CMD users like me do 
-not care how cluttered $PATH is because there is no command completion that 
-would reveal the 100+ git commands. But msysgit users who are working from a 
-bash may want to have them hidden outside $PATH. Or maybe they do not care.
-
--- Hannes
+diff --git a/builtin-clone.c b/builtin-clone.c
+index 8112716..91667d5 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -95,35 +95,32 @@ static char *get_repo_path(const char *repo, int *is_bundle)
+ 
+ static char *guess_dir_name(const char *repo, int is_bundle)
+ {
+-	const char *p, *start, *end, *limit;
+-	int after_slash_or_colon;
+-
+-	/* Guess dir name from repository: strip trailing '/',
+-	 * strip trailing '[:/]*.{git,bundle}', strip leading '.*[/:]'. */
+-
+-	after_slash_or_colon = 1;
+-	limit = repo + strlen(repo);
+-	start = repo;
+-	end = limit;
+-	for (p = repo; p < limit; p++) {
+-		const char *prefix = is_bundle ? ".bundle" : ".git";
+-		if (!prefixcmp(p, prefix)) {
+-			if (!after_slash_or_colon)
+-				end = p;
+-			p += strlen(prefix) - 1;
+-		} else if (!prefixcmp(p, ".bundle")) {
+-			if (!after_slash_or_colon)
+-				end = p;
+-			p += 7;
+-		} else if (*p == '/' || *p == ':') {
+-			if (end == limit)
+-				end = p;
+-			after_slash_or_colon = 1;
+-		} else if (after_slash_or_colon) {
+-			start = p;
+-			end = limit;
+-			after_slash_or_colon = 0;
+-		}
++	const char *end = repo + strlen(repo), *start, *dot;
++
++	/*
++	 * Strip trailing slashes
++	 */
++	while (repo < end && is_dir_sep(end[-1]))
++		end--;
++
++	/*
++	 * Find last component, but be prepared that repo could have
++	 * the form  "remote.example.com:foo.git", i.e. no slash
++	 * in the directory part.
++	 */
++	start = end;
++	while (repo < start && !is_dir_sep(start[-1]) && start[-1] != ':')
++		start--;
++
++	/*
++	 * Strip .{bundle,git}.
++	 */
++	if (is_bundle) {
++		if (end - start > 7 && !strcmp(end - 7, ".bundle"))
++			end -= 7;
++	} else {
++		if (end - start > 4 && !strcmp(end - 4, ".git"))
++			end -= 4;
+ 	}
+ 
+ 	return xstrndup(start, end - start);
+-- 
+1.5.6.3.443.g5f70e
