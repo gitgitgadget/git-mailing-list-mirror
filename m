@@ -1,130 +1,55 @@
-From: Nick Andrew <nick@nick-andrew.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: copy selected history between repostories
-Date: Sat, 19 Jul 2008 11:01:22 +1000
-Message-ID: <20080719010122.GA12047@mail.local.tull.net>
-References: <18533605.post@talk.nabble.com>
+Date: Sat, 19 Jul 2008 03:12:55 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807190311440.3064@eeepc-johanness>
+References: <18533605.post@talk.nabble.com> <20080719010122.GA12047@mail.local.tull.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: luisgutz <luis@xmos.com>
-X-From: git-owner@vger.kernel.org Sat Jul 19 03:02:39 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: luisgutz <luis@xmos.com>, git@vger.kernel.org
+To: Nick Andrew <nick@nick-andrew.net>
+X-From: git-owner@vger.kernel.org Sat Jul 19 03:13:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KK0qM-0001nT-G9
-	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 03:02:38 +0200
+	id 1KK10X-0003vX-IU
+	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 03:13:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755324AbYGSBB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 21:01:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752621AbYGSBB0
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 21:01:26 -0400
-Received: from vps1.tull.net ([66.180.172.116]:52458 "HELO vps1.tull.net"
+	id S1756727AbYGSBMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 21:12:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758636AbYGSBMM
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 21:12:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44209 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751592AbYGSBB0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 21:01:26 -0400
-Received: (qmail 11887 invoked by uid 1015); 19 Jul 2008 11:01:25 +1000
-Received: from [10.0.0.67] (HELO tull.net) (10.0.0.67) by vps1.tull.net (qpsmtpd/0.26) with SMTP; Sat, 19 Jul 2008 11:01:25 +1000
-Received: (qmail 12208 invoked by uid 1000); 19 Jul 2008 11:01:22 +1000
-Content-Disposition: inline
-In-Reply-To: <18533605.post@talk.nabble.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SMTPD: qpsmtpd/0.26, http://develooper.com/code/qpsmtpd/
+	id S1758629AbYGSBMK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 21:12:10 -0400
+Received: (qmail invoked by alias); 19 Jul 2008 01:12:08 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp061) with SMTP; 19 Jul 2008 03:12:08 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1++TpMsZ1y+ytbe+w/aWSiZaiZyfJDQOibEZwXACP
+	RCM1EYka2FiPOI
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <20080719010122.GA12047@mail.local.tull.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89093>
 
-On Fri, Jul 18, 2008 at 09:58:49AM -0700, luisgutz wrote:
-> Is there any way to import that directory into repoA with all it's history,
-> but NOT the history from the other commits?
-> Another way of putting is this: can I make git forget the history of all
-> other commits but those from this directory?
+Hi,
 
-I couldn't figure out git-filter-branch, so I did the following,
-which worked for me:
+On Sat, 19 Jul 2008, Nick Andrew wrote:
 
-First, export commits as patches in mbox format:
+> 	myfilter scripts=bin perllib=lib < mbox > mbox2
 
-	git log -p --first-parent --reverse --pretty=email $* > mbox
+Note that if your repository only contains text files, "git fast-export | 
+my-filter | git fast-import --force" would have worked faster, probably.
 
-Second, run the mbox file through a filter which selectively
-renames files (since almost always I want the files in a different
-directory in the new repository):
+But I am glad you figured out how to do what you wanted to do.
 
-	myfilter scripts=bin perllib=lib < mbox > mbox2
-
-Finally, import into new repo:
-
-	git-am mbox2
-
-It's a bit slow on the import step but it meets my needs at this time.
-
-Nick.
-
-Filter script follows, for what it's worth ...
-
-
-#!/usr/bin/perl
-#	@(#) git-filter-rename.pl
-#
-#	Read an mbox file containing patches on standard input,
-#	modify the filenames within according to a list of substitutions
-#	supplied on the command line, and write the modified mbox file
-#	to standard output.
-
-my @subs;
-
-foreach (@ARGV) {
-	if (/(.*)=(.*)/) {
-		my $len = length($1);
-		push(@subs, [ $1, $2, $len ]);
-	} else {
-		print STDERR "Unknown arg: $_\n";
-	}
-}
-
-while (<STDIN>) {
-	chomp;
-	my $line = $_;
-
-	if ($line =~ /^(---|\+\+\+) ([ab]\/)(.+)$/) {
-		my $line_1 = $1;
-		my $line_2 = $2;
-		my $line_3 = $3;
-
-		subFilename($line_3);
-
-		print "$line_1 $line_2$line_3\n";
-		next;
-	}
-
-	if ($line =~ /^diff --git ([ab]\/)(\S+) ([ab]\/)(\S+)/) {
-		my ($line_1, $line_2, $line_3, $line_4) = ($1, $2, $3, $4);
-		subFilename($line_2);
-		subFilename($line_4);
-		print "diff --git $line_1$line_2 $line_3$line_4\n";
-		next;
-	}
-
-	print $line, "\n";
-}
-
-exit(0);
-
-# ------------------------------------------------------------------------
-# Substitute a filename in-place (modifies argument)
-# ------------------------------------------------------------------------
-
-sub subFilename {
-
-	foreach my $lr (@subs) {
-		my ($lhs, $rhs, $len) = @$lr;
-		if (substr($_[0], 0, $len) eq $lhs) {
-			print STDERR "Match on $lhs, $_[0]\n";
-			substr($_[0], 0, $len) = $rhs;
-			last;
-		}
-	}
-}
+Ciao,
+Dscho
