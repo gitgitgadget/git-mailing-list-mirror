@@ -1,73 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Windows: set gitexecdir = $(bindir)
-Date: Fri, 18 Jul 2008 17:32:33 -0700
-Message-ID: <7vej5q67dq.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] builtin-clone: Use is_dir_sep() instead of '/'
+Date: Fri, 18 Jul 2008 17:32:26 -0700
+Message-ID: <7vk5fi67dx.fsf@gitster.siamese.dyndns.org>
 References: <1216366485-12201-1-git-send-email-johannes.sixt@telecom.at>
  <1216366485-12201-2-git-send-email-johannes.sixt@telecom.at>
  <1216366485-12201-3-git-send-email-johannes.sixt@telecom.at>
- <1216366485-12201-4-git-send-email-johannes.sixt@telecom.at>
- <1216366485-12201-5-git-send-email-johannes.sixt@telecom.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
 To: Johannes Sixt <johannes.sixt@telecom.at>
 X-From: git-owner@vger.kernel.org Sat Jul 19 02:33:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KK0ON-0003tz-7G
-	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 02:33:43 +0200
+	id 1KK0OG-0003qy-AD
+	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 02:33:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752807AbYGSAcl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 20:32:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752493AbYGSAck
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 20:32:40 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42609 "EHLO
+	id S1752433AbYGSAch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2008 20:32:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbYGSAch
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 20:32:37 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42600 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752318AbYGSAcj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2008 20:32:39 -0400
+	with ESMTP id S1752326AbYGSAcg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2008 20:32:36 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D000532C21;
-	Fri, 18 Jul 2008 20:32:38 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5F63F32C18;
+	Fri, 18 Jul 2008 20:32:33 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 77ADA32C1E; Fri, 18 Jul 2008 20:32:35 -0400 (EDT)
+ ESMTPSA id 6303E32C0D; Fri, 18 Jul 2008 20:32:28 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 30E6F954-552A-11DD-AA4E-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2DA5C87E-552A-11DD-BAEC-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89091>
 
 Johannes Sixt <johannes.sixt@telecom.at> writes:
 
-> The "dash-less" change aims to remove git commands from $PATH. It does so
-> by defining a GIT_EXEC_PATH that is different from $(bindir). On Windows
-> we want a relocatable installation of the git tool, so we cannot use an
-> absolute GIT_EXEC_PATH.  Therefore, the implementation of
-> builtin_exec_path() on Windows derives the exec-path from the command
-> invocation,...
+> Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+> ---
+>  builtin-clone.c |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/builtin-clone.c b/builtin-clone.c
+> index 643c7d4..fddf47f 100644
+> --- a/builtin-clone.c
+> +++ b/builtin-clone.c
+> @@ -115,7 +115,7 @@ static char *guess_dir_name(const char *repo, int is_bundle)
+>  			if (!after_slash_or_colon)
+>  				end = p;
+>  			p += 7;
+> -		} else if (*p == '/' || *p == ':') {
+> +		} else if (is_dir_sep(*p) || *p == ':') {
+>  			if (end == limit)
+>  				end = p;
+>  			after_slash_or_colon = 1;
 
-Sorry, I am not sure if I understand what you are trying to solve.  If you
-have ../libexec/git-core/ in GIT_EXEC_PATH (or have builtin_exec_path()
-use it), then your installation would look like this:
+Ok, but the surrounding code in this function look very suspicious.
 
-	[[some random place]]
-        	bin/git
-                libexec/git-core/git-add
-                libexec/git-core/git-del
-                libexec/git-core/git-dir
-                ...
+ * The variable "prefix" is actually about suffix.
 
-and if "git" can figure out it is "[[some random place]]/bin/git",
-it can find its subcommands from neighbouring directory, that is still
-inside the random place the user told the installer to use, can't it?
+ * "else if" for explicit ".bundle" case look redundant; it would never
+   trigger, I suspect.
 
-> This counteracts the aims of the "dash-less" change on Windows, but better
-> this way than having no working git at all.
-
-I'd agree to the extent that anything is better than having no working
-git, but this somewhat feels backwards.
+ * Values used to increment p for "prefix" case and ".bundle" case are
+   inconsistent.  I think the redundant one increments by the right value
+   (i.e. strlen(prefix)-1 is bogus).
