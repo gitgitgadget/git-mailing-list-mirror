@@ -1,71 +1,81 @@
-From: <info@scotricker.ws>
-Subject: I've visited your website http://git.or.cz/
-Date: Fri, 18 Jul 2008 20:15:13 -0600
-Message-ID: <027101c8e945$47372270$0400a8c0@RUTHDESK>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sat, 19 Jul 2008 14:13:29 +0900
+Message-ID: <20080719141329.6117@nanako3.lavabit.com>
+References: <7vtzen7bul.fsf@gitster.siamese.dyndns.org>
+ <7vr69r8sqk.fsf@gitster.siamese.dyndns.org>
+ <7vlk01hqzz.fsf@gitster.siamese.dyndns.org>
+ <20080718175040.6117@nanako3.lavabit.com>
+ <20080718182010.6117@nanako3.lavabit.com>
+ <20080718094404.GB32184@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 19 04:39:36 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8bit
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 19 07:15:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KK2MB-0002Ua-Oi
-	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 04:39:36 +0200
+	id 1KK4me-00018F-7s
+	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 07:15:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751780AbYGSCih (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2008 22:38:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750772AbYGSCig
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jul 2008 22:38:36 -0400
-Received: from mpls-qmqp-02.inet.qwest.net ([63.231.195.113]:60777 "EHLO
-	mpls-qmqp-02.inet.qwest.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751169AbYGSCig (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Jul 2008 22:38:36 -0400
-Received: from mpls-pop-07.inet.qwest.net (mpls-pop-07.inet.qwest.net [63.231.195.7])
-	by mpls-qmqp-02.inet.qwest.net (Postfix) with QMQP id 9C31D53BE1B
-	for <git@vger.kernel.org>; Sat, 19 Jul 2008 02:15:24 +0000 (UTC)
-Received: from unknown (HELO RUTHDESK) (67.41.96.243)
-  by mpls-pop-07.inet.qwest.net with SMTP; 19 Jul 2008 02:15:24 -0000
-thread-index: AcjpRUc3+c+Hd/DgRCG4TX4ETFz/XQ==
-Thread-Topic: I've visited your website http://git.or.cz/
-X-Mailer: Microsoft CDO for Windows 2000
-Content-Class: urn:content-classes:message
-Importance: normal
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
+	id S1750825AbYGSFOE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2008 01:14:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750813AbYGSFOD
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jul 2008 01:14:03 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:58089 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750746AbYGSFOB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2008 01:14:01 -0400
+Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
+	by karen.lavabit.com (Postfix) with ESMTP id EAC7EC888A;
+	Sat, 19 Jul 2008 00:13:49 -0500 (CDT)
+Received: from nanako3.lavabit.com (212.62.97.23)
+	by lavabit.com with ESMTP id IBU7C92C7TER; Sat, 19 Jul 2008 00:13:58 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=iwobpVjEIumpBu43P5U25Se5rsP4aBfjAf9ruH8vi8CzOKDPaBm/Qrd4XYH0I91IB2Ei22bSt89Dtq98rC7rft/9t++TKqVLbwcBhuUyiRSKHRNlptDWFgYUXZUDCoAxcQBt3Jb99Ly5SiB4usSZh5nFwMFeqfJwDUkS9VHQttU=;
+  h=From:Subject:To:Cc:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Quoting Junio C Hamano <gitster@pobox.com>;
+In-Reply-To: <7vtzen7bul.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 6.7 points;
- *  0.2 NO_REAL_NAME From: does not include a real name
- *  0.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: contactthem.ws]
- *  2.0 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: contactthem.ws]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: contactthem.ws]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89099>
 
-Hi,
+Quoting Junio C Hamano <gitster@pobox.com>:
 
-We've seen your website at http://git.or.cz/ 
-and we love it!
+> I tried not to sound too negative when describing -Xours and -Xtheirs
+> there, but actually I think "-s theirs" is even worse.  It is how you
+> would discard what you did (perhaps because the other side has much better
+> solution than your hack), but that can be much more easily and cleanly
+> done with:
+>
+> 	$ git reset --hard origin
+>
+> Some poeple might say "But with 'merge -s theirs', I can keep what I did,
+> too".  That reset is simply discarding what I did.
+>
+> That logic also is flawed.  You can instead:
+>
+> 	$ git branch i-was-stupid
+>       $ git reset --hard origin
+>
+> if you really want to keep record of your failure.
+>
+> One big problem "-s theirs" has, compared to the above "reset to origin,
+> discarding or setting aside the failed history" is that your 'master'
+> history that your further development is based on will keep your failed
+> crap in it forever if you did "-s theirs".  Hopefully you will become a
+> better programmer over time, and you may eventually have something worth
+> sharing with the world near the tip of your master branch.  When that
+> happens, however, you _cannot_ offer your master branch to be pulled by
+> the upstream, as the wider world will not be interested in your earlier
+> mistakes at all.
 
-We see that your traffic rank is 77673 
-and your link popularity is 128. 
-Also, you have been online since <Online since>. 
+Thanks for sharing your insight.  Perhaps the above can become a separate pargraph to explains why there is no "theirs" merge strategy somewhere in the manual?
 
-With that kind of traffic, we will pay you up to $4,800/month 
-to advertise our links on your website.
-
-If you're interested, read our terms from this page:
-http://www.contactthem.ws/hit.php?s=10&p=2&w=117652
-
-Sincerely,
-
-Scot Ricker
-The ContactThem Network
-505-984-0229 mountain time
-email:    info@scotricker.ws
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
