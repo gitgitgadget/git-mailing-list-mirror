@@ -1,69 +1,168 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "error: non-monotonic index" during fresh linux-2.6.git cloning.
-Date: Sat, 19 Jul 2008 11:15:16 -0700
-Message-ID: <7v8wvx211n.fsf@gitster.siamese.dyndns.org>
-References: <20080719174742.GA4253@2ka.mipt.ru>
- <7vfxq521ab.fsf@gitster.siamese.dyndns.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Documentation/git-merge.txt: Partial rewrite of How Merge
+	Works
+Date: Sat, 19 Jul 2008 20:17:22 +0200
+Message-ID: <20080719181356.4114.91569.stgit@localhost>
+References: <7vprpa67e4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Evgeniy Polyakov <johnpol@2ka.mipt.ru>
-X-From: git-owner@vger.kernel.org Sat Jul 19 20:16:22 2008
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Jul 19 20:18:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKGyj-0007rd-TE
-	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 20:16:22 +0200
+	id 1KKH0s-0008RT-Uv
+	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 20:18:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755001AbYGSSPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2008 14:15:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755032AbYGSSPX
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jul 2008 14:15:23 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58331 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754953AbYGSSPW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2008 14:15:22 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8505A35547;
-	Sat, 19 Jul 2008 14:15:21 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id E01B235545; Sat, 19 Jul 2008 14:15:18 -0400 (EDT)
-In-Reply-To: <7vfxq521ab.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 19 Jul 2008 11:10:04 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A66D7CA4-55BE-11DD-8411-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1755124AbYGSSRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2008 14:17:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755128AbYGSSRe
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jul 2008 14:17:34 -0400
+Received: from 159-162.104-92.cust.bluewin.ch ([92.104.162.159]:59631 "EHLO
+	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755120AbYGSSRe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2008 14:17:34 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by pixie.suse.cz (Postfix) with ESMTP id 420252ACCA2;
+	Sat, 19 Jul 2008 20:17:22 +0200 (CEST)
+In-Reply-To: <7vprpa67e4.fsf@gitster.siamese.dyndns.org>
+User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89123>
 
-Junio C Hamano <gitster@pobox.com> writes:
+The git-merge documentation's "HOW MERGE WORKS" section is confusingly
+composed and actually omits the most interesting part, the merging of
+the arguments into HEAD itself, surprisingly not actually mentioning
+the fast-forward merge anywhere.
 
-> Evgeniy Polyakov <johnpol@2ka.mipt.ru> writes:
->
->> $ git clone http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
->> Getting alternates list for http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
->> Getting pack list for http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
->> Getting index for pack 81cec7c6b26c755e466a79de8dbe1c7b827a48d6
->> error: non-monotonic index
->> /usr/bin/git-clone: line 33:  2025 Segmentation fault git-http-fetch -v -a -w "$tname" "$name" "$1/"
->>
->> $ git --version
->> git version 1.4.4.4
->>
->> Fresh 32bit Debian testing.
->
-> The repository you are cloning uses pack idx version #2; 1.4.4.4 predates it
-> by a wide margin.
+This patch replaces the "[NOTE]" screenful of highly technical details
+by a single sentence summing up the interesting information, and instead
+explains how are the arguments compared with HEAD and the three possible
+inclusion states that are named "Already up-to-date", "Fast-forward"
+and "True merge". It also makes it clear that the rest of the section
+talks only about the true merge situation, and slightly expands the
+talk on solving conflicts.
 
-By the way, Debian folks are very aware of the issue and already has a
-backported material to cut a 1.4.4.5, but I do not know what the release
-schedule for their update is.
+Junio initiated the removal of the Note screenful altogether and
+offered many stylistical fixes.
 
-Is it an option for you to update to a more modern version from say
-backports.org?  Everybody using git for anything serious should be using
-1.5.3 or newer these days.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
+
+> But what I was wondering was if we have given the users enough clues to
+> tell if the above is the right action.  If merge started and conflicted,
+> then forgetting about it and keep going is _not_ the right thing, and the
+> user needs to be able to tell these two very distinct cases apart.
+
+I think that this is already obvious from both the documentation and
+git-merge output; I'm not sure what to improve further on this.
+
+I did make some minor tweaks in the conflict resolution part, though.
+I hope this would be the final patch revision. :-)
+
+ Documentation/git-merge.txt |   76 ++++++++++++++++---------------------------
+ 1 files changed, 29 insertions(+), 47 deletions(-)
+
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 019e4ca..a7487d3 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -57,50 +57,31 @@ HOW MERGE WORKS
+ 
+ A merge is always between the current `HEAD` and one or more
+ commits (usually, branch head or tag), and the index file must
+-exactly match the
+-tree of `HEAD` commit (i.e. the contents of the last commit) when
+-it happens.  In other words, `git diff --cached HEAD` must
+-report no changes.
+-
+-[NOTE]
+-This is a bit of a lie.  In certain special cases, your index is
+-allowed to be different from the tree of the `HEAD` commit.  The most
+-notable case is when your `HEAD` commit is already ahead of what
+-is being merged, in which case your index can have arbitrary
+-differences from your `HEAD` commit.  Also, your index entries
+-may have differences from your `HEAD` commit that match
+-the result of a trivial merge (e.g. you received the same patch
+-from an external source to produce the same result as what you are
+-merging).  For example, if a path did not exist in the common
+-ancestor and your head commit but exists in the tree you are
+-merging into your repository, and if you already happen to have
+-that path exactly in your index, the merge does not have to
+-fail.
+-
+-Otherwise, merge will refuse to do any harm to your repository
+-(that is, it may fetch the objects from remote, and it may even
+-update the local branch used to keep track of the remote branch
+-with `git pull remote rbranch:lbranch`, but your working tree,
+-`.git/HEAD` pointer and index file are left intact).  In addition,
+-merge always sets `.git/ORIG_HEAD` to the original state of HEAD so
+-a problematic merge can be removed by using `git reset ORIG_HEAD`.
+-
+-You may have local modifications in the working tree files.  In
+-other words, 'git-diff' is allowed to report changes.
+-However, the merge uses your working tree as the working area,
+-and in order to prevent the merge operation from losing such
+-changes, it makes sure that they do not interfere with the
+-merge. Those complex tables in read-tree documentation define
+-what it means for a path to "interfere with the merge".  And if
+-your local modifications interfere with the merge, again, it
+-stops before touching anything.
+-
+-So in the above two "failed merge" case, you do not have to
+-worry about loss of data --- you simply were not ready to do
+-a merge, so no merge happened at all.  You may want to finish
+-whatever you were in the middle of doing, and retry the same
+-pull after you are done and ready.
+-
++match the tree of `HEAD` commit (i.e. the contents of the last commit)
++when it starts out.  In other words, `git diff --cached HEAD` must
++report no changes.  (One exception is when the changed index
++entries are already in the same state that would result from
++the merge anyway.)
++
++Three kinds of merge can happen:
++
++* The merged commit is already contained in `HEAD`. This is the
++  simplest case, called "Already up-to-date."
++
++* `HEAD` is already contained in the merged commit. This is the
++  most common case especially when involved through 'git pull':
++  you are tracking an upstream repository, committed no local
++  changes and now you want to update to a newer upstream revision.
++  Your `HEAD` (and the index) is updated to at point the merged
++  commit, without creating an extra merge commit.  This is
++  called "Fast-forward".
++
++* Both the merged commit and `HEAD` are independent and must be
++  tied together by a merge commit that has them both as its parents.
++  The rest of this section describes this "True merge" case.
++
++The chosen merge strategy merges the two commits into a single
++new source tree.
+ When things cleanly merge, these things happen:
+ 
+ 1. The results are updated both in the index file and in your
+@@ -142,12 +123,13 @@ After seeing a conflict, you can do two things:
+ 
+  * Decide not to merge.  The only clean-up you need are to reset
+    the index file to the `HEAD` commit to reverse 2. and to clean
+-   up working tree changes made by 2. and 3.; 'git-reset' can
++   up working tree changes made by 2. and 3.; 'git-reset --hard' can
+    be used for this.
+ 
+  * Resolve the conflicts.  `git diff` would report only the
+-   conflicting paths because of the above 2. and 3.  Edit the
+-   working tree files into a desirable shape, 'git-add' or 'git-rm'
++   conflicting paths because of the above 2. and 3.
++   Edit the working tree files into a desirable shape
++   ('git mergetool' can ease this task), 'git-add' or 'git-rm'
+    them, to make the index file contain what the merge result
+    should be, and run 'git-commit' to commit the result.
+ 
