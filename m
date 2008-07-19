@@ -1,77 +1,325 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH 0/3] Git::Repo API and gitweb caching
-Date: Sat, 19 Jul 2008 07:35:42 +0200
-Message-ID: <48817D2E.9080909@gmail.com>
-References: <4876B223.4070707@gmail.com>
+From: Paul Talacko <gnuruandstuff@yahoo.co.uk>
+Subject: PATCH: git-svn -- apply autoprop properties to an upstream svn repository
+Date: Sat, 19 Jul 2008 07:22:20 +0000 (GMT)
+Message-ID: <525224.5527.qm@web27802.mail.ukl.yahoo.com>
+Reply-To: gnuruandstuff@yahoo.co.uk
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	John Hawley <warthog19@eaglescrag.net>,
-	Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 19 07:36:47 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 19 09:23:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KK57e-00055W-JO
-	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 07:36:47 +0200
+	id 1KK6mp-00015U-Qr
+	for gcvg-git-2@gmane.org; Sat, 19 Jul 2008 09:23:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751237AbYGSFfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2008 01:35:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbYGSFfs
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jul 2008 01:35:48 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:53683 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750704AbYGSFfr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2008 01:35:47 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so270924fgg.17
-        for <git@vger.kernel.org>; Fri, 18 Jul 2008 22:35:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=DPiO00QG4VDb4Ys+/7q6Kd4d+wdRDssDKEjLsiOegs0=;
-        b=KZgdKnqpEQftSYrc4FvczizsR/4CF6nEa0YCoFezxtF6nndbNZblsyWUHE+XYSR0ld
-         JDGKYsiCqnc9Vh43E3u2KNQOqU2dnFhnmjfzy8GstY2n4zUcV3VET1kjpD06Puj7DBSW
-         h8y/vXnLjyujjR84TRAyiD2Hn5LARdAnqegYc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=Hv26KOq7tpze+jLDYnzhJHe8k0Ps0hq21WqaECUdLeGYHMNTi74ZIY9bebwnntCKt8
-         em4zwfnV0DcUb1AN8wxkM3xTjCSq1Tm1nPx1FYjrAJBEvazHCC1ufTzxhEoCthpXp7/C
-         r5+BQGC5GgziL0IPcozBmUiDinOLOye77qeZ0=
-Received: by 10.86.33.10 with SMTP id g10mr1501866fgg.29.1216445745400;
-        Fri, 18 Jul 2008 22:35:45 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.253.216])
-        by mx.google.com with ESMTPS id l12sm1200470fgb.6.2008.07.18.22.35.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 18 Jul 2008 22:35:44 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.14) Gecko/20080421 Thunderbird/2.0.0.14 Mnenhy/0.7.5.666
-In-Reply-To: <4876B223.4070707@gmail.com>
+	id S1751466AbYGSHWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2008 03:22:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbYGSHWX
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jul 2008 03:22:23 -0400
+Received: from web27802.mail.ukl.yahoo.com ([217.146.182.7]:32010 "HELO
+	web27802.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751212AbYGSHWW convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2008 03:22:22 -0400
+Received: (qmail 7547 invoked by uid 60001); 19 Jul 2008 07:22:20 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.co.uk;
+  h=Received:X-Mailer:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=wBUb/ftZtTzhk3W21Xs97ZfbuU8DkRKUXdJ+1wR5hw/MQjpqJJ4zbrDhrvFFBWONGLSh8BxOgDSPk3NIOLyvV8XXZEYwG7kvbkjCSGIApG/QYCJDVgqavKM5rbtiU8oLKfPpKwHg8TJppXiGBbBJe+eFKX6nvwn1Fk0Cpb7DmjU=;
+Received: from [195.70.154.229] by web27802.mail.ukl.yahoo.com via HTTP; Sat, 19 Jul 2008 07:22:20 GMT
+X-Mailer: YahooMailWebService/0.7.218
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89102>
 
-Lea Wiemann wrote:
-> 1) adding the Mechanize tests,
-> 2) adding the Git::Repo API, and (the important part:)
-> 3) making gitweb use the Git::Repo API, and adding caching to gitweb.
+Hello,
 
-I unfortunately didn't have enough time to finish the update to the
-patch series before my vacation; I'll therefore be posting the next
-series only around Aug 12th-13th.  I suggest you wait with any reviewing
-till I've posted the next version, since there'll be quite a few
-changes; also I'll post patch 3 (the gitweb patch) as (at least) two
-separate patches, which will hopefully help with reviewability.
+As suggested a few days ago, there has been some interest git-svn being able to set properties on upstream svn repositories  This is, for example, necessary for committing new files to subversion repositories hosted on sourceforge where svn:mime-type and svn:eol-style properties have to be set for a commit to succeed.
 
-Alright, off to my vacation now -- I'll be completely offline till Aug 10th.
+So, here's a patch that reads the standard subversion config file and applies the "auto-props" to new files being committed to the upstream  repository.  This file is normally in ~/.subversion/config or /etc/subversion/config but this can be overridden with the --config-dir option.
 
-See you then!
+In this patch, I've decided that to keep it consistent with the svn command line tool, that is that git-svn should read the config file by default, but respect the enable-auto-props config option set in that config file.
 
--- Lea
+Also, to keep it consistent with the svn command line tool, the patch includes two new command line options --auto-props and --no-auto-props which both override the enable-auto-props config file option.
+
+The code borrows from SVK::XD, in particular the regexp.  All the SVK code is released under the GPL.
+
+I have also included a test file.
+
+diff --git a/git-svn.perl b/git-svn.perl
+index a366c89..df06220 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -128,6 +128,8 @@ my %cmd = (
+ 			  'dry-run|n' => \$_dry_run,
+ 			  'fetch-all|all' => \$_fetch_all,
+ 			  'no-rebase' => \$_no_rebase,
++                          'auto-props' => \$SVN::Git::Editor::_auto_props,
++                          'no-auto-props' => \$SVN::Git::Editor::_no_auto_props,
+ 			%cmt_opts, %fc_opts } ],
+ 	'set-tree' => [ \&cmd_set_tree,
+ 	                "Set an SVN repository to a git tree-ish",
+@@ -448,8 +450,8 @@ sub cmd_dcommit {
+ 			                log => get_commit_entry($d)->{log},
+ 			                ra => Git::SVN::Ra->new($gs->full_url),
+ 			                config => SVN::Core::config_get_config(
+-			                        $Git::SVN::Ra::config_dir
+-			                ),
++				                $Git::SVN::Ra::config_dir
++					),
+ 			                tree_a => "$d~1",
+ 			                tree_b => $d,
+ 			                editor_cb => sub {
+@@ -3276,7 +3278,7 @@ sub close_edit {
+ }
+ 
+ package SVN::Git::Editor;
+-use vars qw/@ISA $_rmdir $_cp_similarity $_find_copies_harder $_rename_limit/;
++use vars qw/@ISA $_rmdir $_cp_similarity $_find_copies_harder $_rename_limit $_auto_props $_no_auto_props/;
+ use strict;
+ use warnings;
+ use Carp qw/croak/;
+@@ -3309,6 +3311,8 @@ sub new {
+ 	$self->{rm} = { };
+ 	$self->{path_prefix} = length $self->{svn_path} ?
+ 	                       "$self->{svn_path}/" : '';
++	$self->{config} = $opts->{ra}->{config};
++        croak "--auto-props and --no-auto-props are mutually exclusive." if $_auto_props && $_no_auto_props;
+ 	return $self;
+ }
+ 
+@@ -3497,6 +3501,86 @@ sub ensure_path {
+ 	return $bat->{$c};
+ }
+ 
++sub apply_properties {
++    my ( $self, $fbat, $m ) = @_;
++    my $config       = $self->{config}->{config}; 
++    my $svn_auto_prop = {};
++    return if $_no_auto_props;
++    return if ( ! $_auto_props ) && ( ! $config->get_bool ('miscellany', 'enable-auto-props', 0) );
++
++    my $file = $m->{ file_b };
++
++    $config->enumerate(
++        'auto-props',
++        sub {
++            $svn_auto_prop->{ compile_apr_fnmatch( $_[0] ) } = $_[1];
++            1;
++        }
++    );
++    my ( $filebase ) = File::Basename::fileparse( $file );
++	while (my ($pattern, $value) = each %$svn_auto_prop ) {
++	    next unless $filebase =~ m/$pattern/;
++	    for (split (/\s*;\s*/, $value)) {
++		my ($propname, $propvalue) = split (/\s*=\s*/, $_, 2);
++		$self->change_file_prop($fbat, $propname, $propvalue); 
++	    }
++	}
++
++}
++
++
++## Thanks to SVK::XD and the folks Best Practical Solutions, who in
++## turn based this on Barrie Slaymaker's Regexp::Shellish
++sub compile_apr_fnmatch {
++    my $re = shift;
++
++    $re =~ s@
++             (  \\.
++             |  \[                       # character class
++                   [!^]?                 # maybe negation (^ and ! are both supported)
++                   (?: (?:\\.|[^\\\]])   # one item
++                     (?: -               # possibly followed by a dash and another
++                       (?:\\.|[^\\\]]))? # item
++                   )*                    # 0 or more entries (zero case will be checked specially below)
++                (\]?)                    # if this ] doesn't match, that means we fell off end of string!
++             |  .
++            )
++             @
++               if ( $1 eq '?' ) {
++                   '.' ;
++               } elsif ( $1 eq '*' ) {
++                   '.*' ;
++               } elsif ( substr($1, 0, 1) eq '[') {
++                   if ($1 eq '[]') { # should never match
++                       '[^\s\S]';
++                   } elsif ($1 eq '[!]' or $1 eq '[^]') { # 0-length match
++                       '';
++                   } else {
++                       my $temp = $1;
++                       my $failed = $2 eq '';
++                       if ($failed) {
++                           '[^\s\S]';
++                       } else {
++                           $temp =~ s/(\\.|.)/$1 eq '-' ? '-' : quotemeta(substr($1, -1))/ges;
++                           # the previous step puts in backslashes at beginning and end; remove them
++                           $temp =~ s/^\\\[/[/;
++                           $temp =~ s/\\\]$/]/;
++                           # if it started with [^ or [!, it now starts with [\^ or [\!; fix.
++                           $temp =~ s/^\[     # literal [
++                                       \\     # literal backslash
++                                       [!^]   # literal ! or ^
++                                     /[^/x;
++                           $temp;
++                       }
++                   }
++               } else {
++                   quotemeta(substr( $1, -1 ) ); # ie, either quote it, or if it's \x, quote x
++               }
++    @gexs ;
++
++    return qr/\A$re\Z/s;
++}
++
+ sub A {
+ 	my ($self, $m) = @_;
+ 	my ($dir, $file) = split_path($m->{file_b});
+@@ -3505,6 +3589,7 @@ sub A {
+ 					undef, -1);
+ 	print "\tA\t$m->{file_b}\n" unless $::_q;
+ 	$self->chg_file($fbat, $m);
++	$self->apply_properties( $fbat, $m );
+ 	$self->close_file($fbat,undef,$self->{pool});
+ }
+ 
+diff --git a/t/t9124-git-svn-autoprops.sh b/t/t9124-git-svn-autoprops.sh
+new file mode 100644
+index 0000000..ed78c2d
+--- /dev/null
++++ b/t/t9124-git-svn-autoprops.sh
+@@ -0,0 +1,123 @@
++#!/bin/sh
++#
++
++
++
++test_description='git-svn dcommit sets autoprops on files'
++
++. ./lib-git-svn.sh
++
++test_expect_success 'make svn repo' '
++    mkdir import &&
++    cd import &&
++    echo first > firstfile &&
++    svn import -m "Import for autoprops test" . "$svnrepo" > /dev/null &&
++    cd ..  &&
++    git svn init "$svnrepo" &&
++    git svn fetch
++'
++
++
++mkdir config
++cat > config/config <<EOF 
++[miscellany]
++enable-auto-props = yes
++[auto-props]
++*pm =  file-type = perl
++*html = svn:mime-type = text/html; encoding = special
++*bar = private = thingy
++EOF
++
++
++
++test_expect_success 'set svn properties on files' '
++        cd "$gittestrepo" &&
++        echo "blah" > a.pm &&
++        echo "foo" > b.html &&
++        echo "data" > foobar &&
++        git add a.pm b.html foobar &&
++        git commit -m files &&
++        git svn dcommit --config-dir=config
++        '
++
++test_expect_success 'export our properties to an svn repo' '
++
++        mkdir testsvnrepo &&
++        cd testsvnrepo &&
++        svn checkout "$svnrepo" &&
++        cd svnrepo
++        '
++
++test_expect_success 'test properties' '
++        test perl = `svn propget file-type a.pm` &&
++        test thingy = `svn propget private foobar` &&
++        test text/html = `svn propget svn:mime-type b.html` &&
++        test special = `svn propget encoding b.html`
++
++        '
++
++cd ../..
++
++test_expect_success 'no-props overrides config file' '
++        touch overriden-b.html &&
++        git add overriden-b.html &&
++        git commit -m "overriden-b" &&
++        git svn dcommit --no-auto-props --config-dir=config &&
++        cd testsvnrepo &&
++        svn checkout "$svnrepo" &&
++        cd svnrepo &&
++        test -z `svn propget file-type overriden-b.html`
++'
++
++cd ../..
++
++cat > config/config <<EOF 
++[miscellany]
++enable-auto-props = no
++[auto-props]
++*pm =  file-type = perl
++*html = svn:mime-type = text/html; encoding = special
++*bar = private = thingy
++EOF
++
++
++test_expect_success 'test when enable-auto-props is no' '
++        echo "blah" > a_no_props.pm &&
++        echo "foo" > b_no_props.html &&
++        echo "data" > foobar_no_props &&
++        chmod +x foobar_no_props &&
++        git add a_no_props.pm b_no_props.html foobar_no_props &&
++        git commit -m "No props files" &&
++        git svn dcommit --config-dir=config &&
++        cd testsvnrepo &&
++        svn checkout "$svnrepo"  &&
++        cd svnrepo &&
++        test -z `svn propget file-type a_no_props.pm` &&
++        test -z `svn propget private foobar_no_props`  &&
++        test -z `svn propget svn:mime-type b_no_props.html` &&
++        test -z `svn propget encoding b_no_props.html`
++        '
++
++cd ../..
++
++test_expect_success 'auto-props overrides config file' '
++        touch overriden-auto.pm &&
++        git add overriden-auto.pm &&
++        git commit -m "overriden-auto" &&
++        git svn dcommit --auto-props --config-dir=config &&
++        cd testsvnrepo &&
++        svn checkout "$svnrepo" &&
++        cd svnrepo &&
++        test perl = `svn propget file-type overriden-auto.pm`
++'
++cd ../..
++
++test_expect_success 'auto-props and no-auto-props are exclusive' '
++        touch afile &&
++        git add afile &&
++        git commit -m afile &&
++        test_must_fail git svn dcommit --auto-props --no-auto-props
++'
++
++test_done
++
+
+
+
+      __________________________________________________________
+Not happy with your email address?.
+Get the one you really want - millions of new email addresses available now at Yahoo! http://uk.docs.yahoo.com/ymail/new.html
