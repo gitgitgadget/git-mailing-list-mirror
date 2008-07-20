@@ -1,66 +1,68 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Statictics on Git.pm usage in git commands (was: [PATCH 2/3]
-	add new Git::Repo API)
-Date: Sun, 20 Jul 2008 12:49:35 +0200
-Message-ID: <20080720104935.GB10151@machine.or.cz>
-References: <4876B223.4070707@gmail.com> <487BD0F3.2060508@gmail.com> <20080718164828.GT10151@machine.or.cz> <200807192254.24622.jnareb@gmail.com> <alpine.DEB.1.00.0807201233010.3305@eeepc-johanness>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] git-add -a: add all files
+Date: Sun, 20 Jul 2008 12:56:42 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807201250530.3305@eeepc-johanness>
+References: <alpine.DEB.1.00.0807161804400.8950@racer>  <7vmykhpn6z.fsf@gitster.siamese.dyndns.org>  <20080717155538.GE11759@fieldses.org>  <alpine.DEB.1.00.0807171915420.8986@racer>  <7vtzeofjpi.fsf@gitster.siamese.dyndns.org>  <alpine.DEB.1.00.0807171940160.8986@racer>
+  <48806897.1080404@fastmail.fm>  <76718490807181318o228171f9j836aaca2edb9b377@mail.gmail.com>  <7vsku5grpr.fsf@gitster.siamese.dyndns.org>  <7vk5fhgrm6.fsf_-_@gitster.siamese.dyndns.org> <905315640807192120k45b8c0e3k5b341e77c466dde@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org,
-	John Hawley <warthog19@eaglescrag.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 20 12:51:47 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Michael J Gruber <michaeljgruber+gmane@fastmail.fm>,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Tarmigan <tarmigan+git@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 20 12:56:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKWVm-0001uL-EU
-	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 12:51:30 +0200
+	id 1KKWb1-0003Rr-Aj
+	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 12:56:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755668AbYGTKti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 06:49:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755640AbYGTKti
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 06:49:38 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56888 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754556AbYGTKti (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 06:49:38 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 84B1E393B31D; Sun, 20 Jul 2008 12:49:35 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807201233010.3305@eeepc-johanness>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1755877AbYGTKzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 06:55:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755863AbYGTKzy
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 06:55:54 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44827 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754556AbYGTKzy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 06:55:54 -0400
+Received: (qmail invoked by alias); 20 Jul 2008 10:55:52 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp047) with SMTP; 20 Jul 2008 12:55:52 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19wKYZf93Zwwd1DUWnqFNARUVGFGbwR9hpOWoE/ua
+	80RCafX4KGEq89
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <905315640807192120k45b8c0e3k5b341e77c466dde@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89182>
 
-  Hi,
+Hi,
 
-On Sun, Jul 20, 2008 at 12:38:07PM +0200, Johannes Schindelin wrote:
-> You call that "worse"?  Pasky tried to convert all Perl scripts at once 
-> IIRC, and my numerous problems just _making_ the Git scripts led me to 
-> rewrite a few Perl scripts in C, so I could safely exclude the Perl 
-> scripts from my personal fork.
+On Sat, 19 Jul 2008, Tarmigan wrote:
 
-  I don't remember any concrete report of such problems ever reaching
-me; exactly what trouble are you hitting with the Perl scripts using
-Git.pm?  I will be glad to try to fix it.
+> It's too bad that 'commit -a' and 'add -a' will have different
+> meanings.
 
-> I guess that it was this experience which prevented more of the old 
-> scripts from being converted.
-> 
-> But your mention of git-add--interactive actually brings up my pet-peeve: 
-> this script is the only Perl script needed for common operations, i.e. the 
-> only reason msysGit has to ship bloated with Perl.
+Two things:
 
-  _Many_ people seem to be using git-svn, whether we like it or not. ;-)
-Also, isn't git-send-mail rather commonly used? (I wouldn't know, me
-using stg mail.)
+- add and commit are two _different_ operations, not only in name, but 
+  also in nature.  The fact that "commit -a" calls "add" is a _pure_ 
+  convenience.  It does not change the fact that "add" and "commit" are 
+  completely, utterly different.
 
--- 
-				Petr "Pasky" Baudis
-As in certain cults it is possible to kill a process if you know
-its true name.  -- Ken Thompson and Dennis M. Ritchie
+- if you are a heavy user of "commit -a", chances are that your history is 
+  not really useful, because you committed unrelated changes accidentally 
+  in the same commit.
+
+The latter point, BTW, is the reason I _never_ teach the "-a" option 
+(actually, I teach no option at all) in my first two Git lessons.
+
+Ciao,
+Dscho
