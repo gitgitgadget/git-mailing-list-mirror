@@ -1,82 +1,92 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 20 Jul 2008 15:16:54 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807201512560.3305@eeepc-johanness>
-References: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org> <7vlk01hqzz.fsf@gitster.siamese.dyndns.org> <20080718175040.6117@nanako3.lavabit.com> <20080718182010.6117@nanako3.lavabit.com> <7v63r38r4r.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807181351370.3932@eeepc-johanness>
- <7vabge30dh.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807191311220.3305@eeepc-johanness> <20080720130407.GF10347@genesis.frugalware.org>
+Subject: Re: Statictics on Git.pm usage in git commands (was: [PATCH 2/3]
+ add new Git::Repo API)
+Date: Sun, 20 Jul 2008 15:21:38 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807201517120.3305@eeepc-johanness>
+References: <4876B223.4070707@gmail.com> <487BD0F3.2060508@gmail.com> <20080718164828.GT10151@machine.or.cz> <200807192254.24622.jnareb@gmail.com> <alpine.DEB.1.00.0807201233010.3305@eeepc-johanness> <20080720104935.GB10151@machine.or.cz>
+ <alpine.DEB.1.00.0807201420500.3305@eeepc-johanness> <20080720125841.GD10151@machine.or.cz>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sun Jul 20 15:18:04 2008
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org,
+	John Hawley <warthog19@eaglescrag.net>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sun Jul 20 15:21:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKYnb-00030o-GL
-	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 15:18:03 +0200
+	id 1KKYrF-0003r7-Vp
+	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 15:21:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754926AbYGTNQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 09:16:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754250AbYGTNQH
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 09:16:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51871 "HELO mail.gmx.net"
+	id S1756900AbYGTNUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 09:20:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756876AbYGTNUu
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 09:20:50 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60917 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754166AbYGTNQH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 09:16:07 -0400
-Received: (qmail invoked by alias); 20 Jul 2008 13:16:05 -0000
+	id S1754462AbYGTNUu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 09:20:50 -0400
+Received: (qmail invoked by alias); 20 Jul 2008 13:20:48 -0000
 Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp052) with SMTP; 20 Jul 2008 15:16:05 +0200
+  by mail.gmx.net (mp017) with SMTP; 20 Jul 2008 15:20:48 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+S2Xx/OP+SZZAN/A9O0TppsGMBBp7W1tL6jxwCb+
-	W2sl2Jh8weH0xd
+X-Provags-ID: V01U2FsdGVkX1+S3ANjT5uScCVGtaGAISngcC7FSSD6nnyueq+vPT
+	zk6d5MGAt0TbMm
 X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080720130407.GF10347@genesis.frugalware.org>
+In-Reply-To: <20080720125841.GD10151@machine.or.cz>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89201>
 
 Hi,
 
-On Sun, 20 Jul 2008, Miklos Vajna wrote:
+On Sun, 20 Jul 2008, Petr Baudis wrote:
 
-> First, currently you can specify multiple strategies in the config
-> (pull.twohead, pull.octopus) using a space separated list.
-
-Oh, I did not mean to change that.  I just misremembered.
-
-> Second, we could allow custom strategies, as we started to discuss here:
+> On Sun, Jul 20, 2008 at 02:33:46PM +0200, Johannes Schindelin wrote:
+> > On Sun, 20 Jul 2008, Petr Baudis wrote:
+> > 
+> > > On Sun, Jul 20, 2008 at 12:38:07PM +0200, Johannes Schindelin wrote:
+> > >
+> > > > Pasky tried to convert all Perl scripts at once IIRC, and my 
+> > > > numerous problems just _making_ the Git scripts led me to rewrite 
+> > > > a few Perl scripts in C, so I could safely exclude the Perl 
+> > > > scripts from my personal fork.
+> > > 
+> > > I don't remember any concrete report of such problems ever reaching 
+> > > me; exactly what trouble are you hitting with the Perl scripts using 
+> > > Git.pm?  I will be glad to try to fix it.
+> > 
+> > They reached you:
+> > 
+> > http://article.gmane.org/gmane.comp.version-control.git/23153
 > 
-> http://thread.gmane.org/gmane.comp.version-control.git/86584/focus=87684
+> running Git in-place without correctly setting the prefix is not 
+> supported anyway; git wrapper will still be using non-builtin commands 
+> from the prefix location instead of your fresh build.
 
-In my opinion, this would make it easier for interested parties to start 
-implementing that blame-based merge strategy I mentioned.
+There were none.  Anyway, because Git makes it _really_ hard to run 
+in-place, I gave in.  I run Git from $HOME/bin now.
 
-> Third, it would be nice to allow passing extra parameter(s) to the
-> backends, but I do not know what concept is the best here. The
-> strategy1=foo,stategy2=bar limits the input to a single string. Is that
-> enough? Given that recursive=theirs was considered harmful, we don't
-> have too much examples; for subtree the only parameter I could think of
-> is the path, so a string there is enough.
+> > http://thread.gmane.org/gmane.comp.version-control.git/22764/focus=22778
 > 
-> However, further strategies, like blame, could take more parameters,
-> like git blame -C<num> -M<othernum>. Or do I just overcomplicate it? ;-)
+> It seems I fixed this right away?
 
-The common solution is like with gcc's -Wl option, which translates 
-commata into spaces, like so: "-Wl,--machine,i386" is added as "--machine 
-i386" to the linker command line.
+That is not what I remember.  I remember that I had the next issue right 
+away.  I remember that there were problems with ActiveState Perl+Cygwin. 
+And I remember that the Git.xs was not merged in the end.
 
-Our own cvsimport implements the same principle:
+Anyway, this whole discussion is moot, methinks.
 
-	$ git cvsimport -p -b,HEAD
-
-will only update the main branch.
+Let's concentrate back on the real issue: merging the two as-of-now 
+incompatible Perl modules.  It really would be nice to have one pony with 
+one saddle in the end, so that the use of Lea's GSoC project is not 
+limited to gitweb with enabled caching.
 
 Ciao,
 Dscho
