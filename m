@@ -1,68 +1,82 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] builtin-merge.c: Fix option parsing
-Date: Sun, 20 Jul 2008 15:08:25 +0200
-Message-ID: <20080720130825.GG10347@genesis.frugalware.org>
-References: <200807201434.47545.barra_cuda@katamail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 20 Jul 2008 15:16:54 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807201512560.3305@eeepc-johanness>
+References: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org> <7vlk01hqzz.fsf@gitster.siamese.dyndns.org> <20080718175040.6117@nanako3.lavabit.com> <20080718182010.6117@nanako3.lavabit.com> <7v63r38r4r.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807181351370.3932@eeepc-johanness>
+ <7vabge30dh.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807191311220.3305@eeepc-johanness> <20080720130407.GF10347@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="sBy3cog7RUybpTge"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michele Ballabio <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 20 15:09:33 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sun Jul 20 15:18:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKYfI-0000vL-GE
-	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 15:09:28 +0200
+	id 1KKYnb-00030o-GL
+	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 15:18:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756906AbYGTNI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 09:08:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754462AbYGTNI3
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 09:08:29 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:47947 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754166AbYGTNI3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 09:08:29 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id D3CBB1B251F;
-	Sun, 20 Jul 2008 15:08:27 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 0F8E24465E;
-	Sun, 20 Jul 2008 14:28:49 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 5D48D177001C; Sun, 20 Jul 2008 15:08:25 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200807201434.47545.barra_cuda@katamail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1754926AbYGTNQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 09:16:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754250AbYGTNQH
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 09:16:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51871 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754166AbYGTNQH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 09:16:07 -0400
+Received: (qmail invoked by alias); 20 Jul 2008 13:16:05 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp052) with SMTP; 20 Jul 2008 15:16:05 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+S2Xx/OP+SZZAN/A9O0TppsGMBBp7W1tL6jxwCb+
+	W2sl2Jh8weH0xd
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <20080720130407.GF10347@genesis.frugalware.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89200>
 
+Hi,
 
---sBy3cog7RUybpTge
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Sun, 20 Jul 2008, Miklos Vajna wrote:
 
-On Sun, Jul 20, 2008 at 02:34:47PM +0200, Michele Ballabio <barra_cuda@katamail.com> wrote:
-> Now "git merge -m" needs a message, and errors out with the usage
-> text if none is given.
-> This way, t7600-merge.sh is fixed.
+> First, currently you can specify multiple strategies in the config
+> (pull.twohead, pull.octopus) using a space separated list.
 
-Thanks, I was about to fix this, but you were faster. ;-)
+Oh, I did not mean to change that.  I just misremembered.
 
---sBy3cog7RUybpTge
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> Second, we could allow custom strategies, as we started to discuss here:
+> 
+> http://thread.gmane.org/gmane.comp.version-control.git/86584/focus=87684
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+In my opinion, this would make it easier for interested parties to start 
+implementing that blame-based merge strategy I mentioned.
 
-iEYEARECAAYFAkiDOMkACgkQe81tAgORUJZ6LACgpYpFeHhk2RmhAA8eUq5RgIMs
-sbAAnj+V6tOBFj53LsSjGaKPDIBKbzL/
-=NGnG
------END PGP SIGNATURE-----
+> Third, it would be nice to allow passing extra parameter(s) to the
+> backends, but I do not know what concept is the best here. The
+> strategy1=foo,stategy2=bar limits the input to a single string. Is that
+> enough? Given that recursive=theirs was considered harmful, we don't
+> have too much examples; for subtree the only parameter I could think of
+> is the path, so a string there is enough.
+> 
+> However, further strategies, like blame, could take more parameters,
+> like git blame -C<num> -M<othernum>. Or do I just overcomplicate it? ;-)
 
---sBy3cog7RUybpTge--
+The common solution is like with gcc's -Wl option, which translates 
+commata into spaces, like so: "-Wl,--machine,i386" is added as "--machine 
+i386" to the linker command line.
+
+Our own cvsimport implements the same principle:
+
+	$ git cvsimport -p -b,HEAD
+
+will only update the main branch.
+
+Ciao,
+Dscho
