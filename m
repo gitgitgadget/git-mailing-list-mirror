@@ -1,53 +1,72 @@
-From: Lars Noschinski <lars-2008-1@usenet.noschinski.de>
-Subject: Re: What's in git.git (stable)
-Date: Sun, 20 Jul 2008 11:20:34 +0000 (UTC)
-Message-ID: <20080720112034.GA27984@lars.home.noschinski.de>
-References: <7vwsknyz9m.fsf@gitster.siamese.dyndns.org> <7vlk0z9k5f.fsf@gitster.siamese.dyndns.org> <7vej6oipea.fsf@gitster.siamese.dyndns.org> <7vabh93lk6.fsf@gitster.siamese.dyndns.org> <7vwsk4g5py.fsf@gitster.siamese.dyndns.org> <7vr6a7fhwh.fsf@gitster.siamese.dyndns.org> <7v1w25xfd6.fsf@gitster.siamese.dyndns.org> <7vmykljahl.fsf@gitster.siamese.dyndns.org> <7vabgiwlj5.fsf@gitster.siamese.dyndns.org> <7vwsjhgvtn.fsf@gitster.siamese.dyndns.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [RFC variant 2 of 2] "needs update" considered harmful
+Date: Sun, 20 Jul 2008 13:29:57 +0200
+Message-ID: <20080720112957.GE32184@machine.or.cz>
+References: <7vtzelf4mf.fsf@gitster.siamese.dyndns.org> <7v7ibhdmii.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 20 13:21:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 20 13:31:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKWz0-0000ei-Qy
-	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 13:21:43 +0200
+	id 1KKX86-0002xw-E3
+	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 13:31:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756024AbYGTLUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 07:20:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755863AbYGTLUo
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 07:20:44 -0400
-Received: from main.gmane.org ([80.91.229.2]:59677 "EHLO ciao.gmane.org"
+	id S1756141AbYGTLaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 07:30:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755863AbYGTLaA
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 07:30:00 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:38642 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754556AbYGTLUn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 07:20:43 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KKWy1-0000N1-Ol
-	for git@vger.kernel.org; Sun, 20 Jul 2008 11:20:41 +0000
-Received: from p3ee23420.dip0.t-ipconnect.de ([62.226.52.32])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 20 Jul 2008 11:20:41 +0000
-Received: from lars-2008-1 by p3ee23420.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 20 Jul 2008 11:20:41 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: p3ee23420.dip0.t-ipconnect.de
+	id S1754556AbYGTLaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 07:30:00 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 912AC393B31D; Sun, 20 Jul 2008 13:29:57 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vwsjhgvtn.fsf@gitster.siamese.dyndns.org>
-User-Agent: mutt-ng/devel-r804 (Linux)
+In-Reply-To: <7v7ibhdmii.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89185>
 
-* Junio C Hamano <gitster@pobox.com> [08-07-20 03:59]:
->Lars Noschinski (2):
->  cvsserver: Add support for packed refs
->  cvsserver: Add cvs co -c support
+On Sun, Jul 20, 2008 at 12:48:21AM -0700, Junio C Hamano wrote:
+> "git update-index --refresh", "git reset" and "git add --refresh" have
+> reported paths that have local modifications as "needs update" since the
+> beginning of git.
+> 
+> Although this is logically correct in that you need to update the index at
+> that path before you can commit that change, it is now becoming more and
+> more clear, especially with the continuous push for user friendliness
+> since 1.5.0 series, that the message is suboptimal.  After all, the change
+> may be something the user might want to get rid of, and "updating" would
+> be absolutely a wrong thing to do if that is the case.
+> 
+> I prepared two alternatives to solve this.  Both aim to reword the message
+> to more neutral "locally modified".
+> 
+> This patch is a more straightforward variant that changes the message not
+> only for Porcelain commands ("add" and "reset") but also changes the
+> output from the plumbing command "update-index".
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Any specific reason why you did not merge the test for packed refs
-support? Was it considered superfluous?
+I believe this is a good thing. Scripts need to be modified for the
+reorganization anyway, and I'm not sure if there are any actually
+depening on this particular string. I think having inconsistent error
+messaging is worse in long term.
+
+FWIW, looking at Cogito,
+
+	cg-Xlib: git-update-index --refresh | sed 's/needs update$/locally modified/'
+
+is the only reference to this. ;-)
+
+-- 
+				Petr "Pasky" Baudis
+As in certain cults it is possible to kill a process if you know
+its true name.  -- Ken Thompson and Dennis M. Ritchie
