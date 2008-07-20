@@ -1,92 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Statictics on Git.pm usage in git commands (was: [PATCH 2/3]
- add new Git::Repo API)
-Date: Sun, 20 Jul 2008 15:21:38 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807201517120.3305@eeepc-johanness>
-References: <4876B223.4070707@gmail.com> <487BD0F3.2060508@gmail.com> <20080718164828.GT10151@machine.or.cz> <200807192254.24622.jnareb@gmail.com> <alpine.DEB.1.00.0807201233010.3305@eeepc-johanness> <20080720104935.GB10151@machine.or.cz>
- <alpine.DEB.1.00.0807201420500.3305@eeepc-johanness> <20080720125841.GD10151@machine.or.cz>
+From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
+Subject: Re: [RFC variant 2 of 2] "needs update" considered harmful
+Date: Sun, 20 Jul 2008 11:03:04 -0300
+Message-ID: <b8bf37780807200703we8f8608yb009c1039b829b23@mail.gmail.com>
+References: <7vtzelf4mf.fsf@gitster.siamese.dyndns.org>
+	 <7v7ibhdmii.fsf@gitster.siamese.dyndns.org>
+	 <20080720112957.GE32184@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org,
-	John Hawley <warthog19@eaglescrag.net>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sun Jul 20 15:21:52 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sun Jul 20 16:04:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKYrF-0003r7-Vp
-	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 15:21:50 +0200
+	id 1KKZWD-0006Lv-5f
+	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 16:04:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756900AbYGTNUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 09:20:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756876AbYGTNUu
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 09:20:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60917 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754462AbYGTNUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 09:20:50 -0400
-Received: (qmail invoked by alias); 20 Jul 2008 13:20:48 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp017) with SMTP; 20 Jul 2008 15:20:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+S3ANjT5uScCVGtaGAISngcC7FSSD6nnyueq+vPT
-	zk6d5MGAt0TbMm
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080720125841.GD10151@machine.or.cz>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1757030AbYGTODK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Jul 2008 10:03:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757073AbYGTODI
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 10:03:08 -0400
+Received: from fk-out-0910.google.com ([209.85.128.184]:18020 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757030AbYGTODH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Jul 2008 10:03:07 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so659764fkq.5
+        for <git@vger.kernel.org>; Sun, 20 Jul 2008 07:03:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=fhGakbZ8q4I5B65lLSVmsC6cFnDYlTx/nWTPuLQyH24=;
+        b=XVpGt7fQxwAq+lZvXWi7xW8/8dyWEEUMeO07gKSunZGHsQkWGUG600aEbQ+e+7X/0e
+         7lmy3GhANtE0gXLK7HMUi7q9n1TswyTpWTQ4d+hyjR03yGfKvIY5nB9oXXc+lD0kAeZb
+         hx+fL2HDyP4fLxUfq06WEM+7k3lOVVcqYtdV0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=aXctvR8CXFinrYM1RIt9W0ts7GA84gtLr+CVnanQz7BZoCb+QCWP0eFPe0rdiJkeY7
+         akj1TBMa8Vf8vGuR9mX+SR6ZQlA7DQC+6b4VMNLaRu4L/HFfIJc3iyaIVhw77L/Rwzj6
+         KyiwGpjUlSCbzP30cyKR0QTvcfbr2EJrIlhBQ=
+Received: by 10.187.158.2 with SMTP id k2mr17458fao.15.1216562584073;
+        Sun, 20 Jul 2008 07:03:04 -0700 (PDT)
+Received: by 10.187.189.11 with HTTP; Sun, 20 Jul 2008 07:03:04 -0700 (PDT)
+In-Reply-To: <20080720112957.GE32184@machine.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89202>
 
-Hi,
+On Sun, Jul 20, 2008 at 8:29 AM, Petr Baudis <pasky@suse.cz> wrote:
+> On Sun, Jul 20, 2008 at 12:48:21AM -0700, Junio C Hamano wrote:
+>> "git update-index --refresh", "git reset" and "git add --refresh" ha=
+ve
+>> reported paths that have local modifications as "needs update" since=
+ the
+>> beginning of git.
+>>
+>> Although this is logically correct in that you need to update the in=
+dex at
+>> that path before you can commit that change, it is now becoming more=
+ and
+>> more clear, especially with the continuous push for user friendlines=
+s
+>> since 1.5.0 series, that the message is suboptimal.  After all, the =
+change
+>> may be something the user might want to get rid of, and "updating" w=
+ould
+>> be absolutely a wrong thing to do if that is the case.
+>>
+>> I prepared two alternatives to solve this.  Both aim to reword the m=
+essage
+>> to more neutral "locally modified".
+>>
+>> This patch is a more straightforward variant that changes the messag=
+e not
+>> only for Porcelain commands ("add" and "reset") but also changes the
+>> output from the plumbing command "update-index".
+>>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>
+> I believe this is a good thing. Scripts need to be modified for the
 
-On Sun, 20 Jul 2008, Petr Baudis wrote:
+Thanks for doing that. I hope this goes mainline soon.
 
-> On Sun, Jul 20, 2008 at 02:33:46PM +0200, Johannes Schindelin wrote:
-> > On Sun, 20 Jul 2008, Petr Baudis wrote:
-> > 
-> > > On Sun, Jul 20, 2008 at 12:38:07PM +0200, Johannes Schindelin wrote:
-> > >
-> > > > Pasky tried to convert all Perl scripts at once IIRC, and my 
-> > > > numerous problems just _making_ the Git scripts led me to rewrite 
-> > > > a few Perl scripts in C, so I could safely exclude the Perl 
-> > > > scripts from my personal fork.
-> > > 
-> > > I don't remember any concrete report of such problems ever reaching 
-> > > me; exactly what trouble are you hitting with the Perl scripts using 
-> > > Git.pm?  I will be glad to try to fix it.
-> > 
-> > They reached you:
-> > 
-> > http://article.gmane.org/gmane.comp.version-control.git/23153
-> 
-> running Git in-place without correctly setting the prefix is not 
-> supported anyway; git wrapper will still be using non-builtin commands 
-> from the prefix location instead of your fresh build.
-
-There were none.  Anyway, because Git makes it _really_ hard to run 
-in-place, I gave in.  I run Git from $HOME/bin now.
-
-> > http://thread.gmane.org/gmane.comp.version-control.git/22764/focus=22778
-> 
-> It seems I fixed this right away?
-
-That is not what I remember.  I remember that I had the next issue right 
-away.  I remember that there were problems with ActiveState Perl+Cygwin. 
-And I remember that the Git.xs was not merged in the end.
-
-Anyway, this whole discussion is moot, methinks.
-
-Let's concentrate back on the real issue: merging the two as-of-now 
-incompatible Perl modules.  It really would be nice to have one pony with 
-one saddle in the end, so that the use of Lea's GSoC project is not 
-limited to gitweb with enabled caching.
-
-Ciao,
-Dscho
+--=20
+[]s,
+Andr=E9 Goddard
