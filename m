@@ -1,66 +1,99 @@
-From: =?utf-8?q?Steve=20Fr=C3=A9cinaux?= <code@istique.net>
-Subject: [PATCH] Add a notice to the doc of git-ls-tree.
-Date: Mon, 21 Jul 2008 00:25:35 +0200
-Message-ID: <1216592735-23789-1-git-send-email-code@istique.net>
-Cc: =?utf-8?q?Steve=20Fr=C3=A9cinaux?= <code@istique.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 21 00:57:46 2008
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008
+	projects?
+Date: Mon, 21 Jul 2008 00:57:22 +0200
+Message-ID: <20080720225722.GC5950@leksak.fem-net>
+References: <200807080227.43515.jnareb@gmail.com> <200807210029.31543.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Joshua Roys <roysjosh@gmail.com>,
+	Sverre Rabbelier <alturin@gmail.com>,
+	Sverre Rabbelier <sverre@rabbelier.nl>,
+	David Symonds <dsymonds@gmail.com>,
+	Lea Wiemann <LeWiemann@gmail.com>,
+	John Hawley <warthog19@eaglescrag.net>,
+	Marek Zawirski <marek.zawirski@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 00:58:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKhqa-0002Bq-VG
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 00:57:45 +0200
+	id 1KKhrH-0002Jj-B6
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 00:58:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752568AbYGTW4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 18:56:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752815AbYGTW4q
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 18:56:46 -0400
-Received: from smtp-out.mobistar.be ([80.12.204.214]:10237 "EHLO
-	smtp-out.mobistar.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752365AbYGTW4o (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 18:56:44 -0400
-Received: from meplus.info (localhost [127.0.0.1])
-	by mwinf8113.mobistar.be (SMTP Server) with ESMTP id 7C0BA1D002865;
-	Mon, 21 Jul 2008 00:26:03 +0200 (CEST)
-Received: from localhost.localdomain (unknown [91.86.64.35])
-	by mwinf8113.mobistar.be (SMTP Server) with ESMTP id 4E5201D00025D;
-	Mon, 21 Jul 2008 00:26:03 +0200 (CEST)
-X-ME-UUID: 20080720222603320.4E5201D00025D@mwinf8113.mobistar.be
-X-ME-bounce-domain: mobistarmail.be
-X-Mailer: git-send-email 1.5.6.2
+	id S1752943AbYGTW52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 18:57:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbYGTW52
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 18:57:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44341 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752183AbYGTW52 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 18:57:28 -0400
+Received: (qmail invoked by alias); 20 Jul 2008 22:57:26 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp032) with SMTP; 21 Jul 2008 00:57:26 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1/AHbJPLRHA0RG3qEhfE7GODXiFUwD3QGcgcooSX+
+	drVh35Z414DFGL
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KKhqE-0004Ly-NZ; Mon, 21 Jul 2008 00:57:22 +0200
+Content-Disposition: inline
+In-Reply-To: <200807210029.31543.jnareb@gmail.com>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89257>
 
-The notice covers this behaviour:
-if you are in the git/ subdirectory of your repository, it will pick
-the tree corresponding to that directory instead of the root one if you
-specify the root tree object id.
+Hi,
 
-Compare the output of both of those commands:
- git-ls-tree cb44e6571708aa2792c73a289d87586fe3c0c362
- git-cat-file -p cb44e6571708aa2792c73a289d87586fe3c0c362
----
- Documentation/git-ls-tree.txt |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+what you write is quite detailed :)
 
-diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
-index 1cdec22..7cba394 100644
---- a/Documentation/git-ls-tree.txt
-+++ b/Documentation/git-ls-tree.txt
-@@ -21,6 +21,10 @@ though - 'paths' denote just a list of patterns to match, e.g. so specifying
- directory name (without '-r') will behave differently, and order of the
- arguments does not matter.
- 
-+Note that if you give ls-tree the sha1 id of a parent of the tree
-+corresponding to the directory you're in, it will resolve that tree and list
-+its contents instead of listing the contents of the tree you gave.
-+
- OPTIONS
- -------
- <tree-ish>::
+Jakub Narebski wrote:
+> 6. git-sequencer
+> 
+[...]
+> There were some problems with sequencer based implementation of
+> "git am --rebasing", or sequencer based patch application driven
+> ordinary rebase, but I think there were resolved.
+
+They were resolved, but there is a new problem that occured in the
+am --abort thread of Junio: the sequencer-based git-am does not work
+on dirty working tree.
+
+I've also fixed some other minor issues and have not yet sent this to
+the list (because I think I stumble over even more while writing the
+builtin-sequencer.)
+
+> Stephen have started the builtin sequencer (but till now no patches
+> were sent to list: seems to be work in progress).
+
+Right.
+
+> Some performance benchmarks:
+>  * applying 45 patches with git-am 
+>    - 3 seconds using the original 
+>    - 8 seconds using the (scripted) sequencer-based one
+>  * rebasing 100 commits
+>    -  4.8 seconds using the original
+>    - 10.1 seconds using the (scripted) sequencer-based one
+>    -  1.7 seconds using builtin sequencer
+
+:)
+I think I'm going to format-patch the same 100 test commits and then I
+change the "applying 45 patches with git-am" part on the Wiki.
+
+Regards.
+
 -- 
-1.5.6.2
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
