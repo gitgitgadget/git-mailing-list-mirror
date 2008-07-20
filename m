@@ -1,64 +1,73 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] git-shell needs $(COMPAT_OBJS)
-Date: Sun, 20 Jul 2008 21:11:48 +0200
-Message-ID: <200807202111.48332.johannes.sixt@telecom.at>
+From: Jonathan Nieder <jrnieder@uchicago.edu>
+Subject: [PATCH] fix usage string for git grep
+Date: Sun, 20 Jul 2008 14:13:08 -0500 (CDT)
+Message-ID: <20080720141308.BIU48280@m4500-01.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 20 21:12:59 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 20 21:14:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKeKy-0003fc-ED
-	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 21:12:52 +0200
+	id 1KKeMG-00043r-0n
+	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 21:14:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751382AbYGTTLx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 15:11:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751290AbYGTTLw
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 15:11:52 -0400
-Received: from smtp1.srv.eunet.at ([193.154.160.119]:43137 "EHLO
-	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751284AbYGTTLw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 15:11:52 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp1.srv.eunet.at (Postfix) with ESMTP id 20EA533C6F;
-	Sun, 20 Jul 2008 21:11:49 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id D24A11D0C8;
-	Sun, 20 Jul 2008 21:11:48 +0200 (CEST)
-User-Agent: KMail/1.9.9
-Content-Disposition: inline
+	id S1751417AbYGTTNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 15:13:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751392AbYGTTNN
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 15:13:13 -0400
+Received: from smtp00.uchicago.edu ([128.135.12.76]:33847 "EHLO
+	smtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751406AbYGTTNM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 15:13:12 -0400
+Received: from m4500-01.uchicago.edu (m4500-01.uchicago.edu [128.135.249.211])
+	by smtp00.uchicago.edu (8.13.8/8.13.8) with ESMTP id m6KJDEjv016594
+	for <git@vger.kernel.org>; Sun, 20 Jul 2008 14:13:14 -0500
+Received: (from m4500-01.uchicago.edu [128.135.249.215])
+	by m4500-01.uchicago.edu (MOS 3.8.5-GA)
+	with HTTP/1.1 id BIU48280 (AUTH jrnieder@uchicago.edu);
+	Sun, 20 Jul 2008 14:13:08 -0500 (CDT)
+X-Mailer: Mirapoint Webmail Direct 3.8.5-GA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89218>
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+Without this patch, git-grep gives confusing usage information:
+
+	$ git grep --confused
+	usage: git grep <option>* <rev>* [-e] <pattern> [<path>...]
+	$ git grep HEAD pattern
+	fatal: ambiguous argument 'pattern': unknown revision or path no
+	t in the working tree.
+	Use '--' to separate paths from revisions
+
+So put <pattern> before the <rev>s, in accordance with actual correct
+usage.  While we're changing the usage string, we might as well include
+the "--" separating revisions and paths, too.
+
+Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
 ---
-  Discovered by an accidental NO_MMAP=1 in config.mak.
+	Thanks!
 
-  -- Hannes
-
- Makefile |    2 +-
+ builtin-grep.c |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index c676d97..2be40eb 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1203,7 +1203,7 @@ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 7bf6a71..631129d 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -498,7 +498,7 @@ static int grep_object(struct grep_opt *opt, const char **paths,
+ }
  
--git-shell$X: compat/strlcpy.o abspath.o ctype.o exec_cmd.o quote.o strbuf.o usage.o wrapper.o shell.o
-+git-shell$X: abspath.o ctype.o exec_cmd.o quote.o strbuf.o usage.o wrapper.o shell.o $(COMPAT_OBJS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^)
+ static const char builtin_grep_usage[] =
+-"git grep <option>* <rev>* [-e] <pattern> [<path>...]";
++"git grep <option>* [-e] <pattern> <rev>* [[--] <path>...]";
  
- $(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
+ static const char emsg_invalid_context_len[] =
+ "%s: invalid context length argument";
 -- 
-1.5.6.3.443.g5f70e
+1.5.6.4.441.g4b4e9
