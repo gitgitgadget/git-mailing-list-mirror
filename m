@@ -1,57 +1,58 @@
-From: Stephan Beyer <s-beyer@gmx.net>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: [RFC] Stopping those fat "What's cooking in git.git" threads
-Date: Sun, 20 Jul 2008 23:46:16 +0200
-Message-ID: <20080720214616.GB5950@leksak.fem-net>
-References: <20080720205125.GP10347@genesis.frugalware.org> <7vsku44679.fsf@gitster.siamese.dyndns.org> <m3sku4w822.fsf@localhost.localdomain>
+Date: Sun, 20 Jul 2008 23:48:11 +0200
+Message-ID: <20080720214811.GF32184@machine.or.cz>
+References: <20080720205125.GP10347@genesis.frugalware.org> <7vsku44679.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 20 23:47:24 2008
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 20 23:49:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKgkS-0003iU-Fx
-	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 23:47:20 +0200
+	id 1KKgmH-00045k-E3
+	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 23:49:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751048AbYGTVqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 17:46:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750994AbYGTVqV
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 17:46:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42124 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750870AbYGTVqV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 17:46:21 -0400
-Received: (qmail invoked by alias); 20 Jul 2008 21:46:19 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp054) with SMTP; 20 Jul 2008 23:46:19 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/3EeEJRrT3IQbJvDATqQ3YYAQEEknInp5YS5ieMN
-	gGYt3pMMLHZ/0y
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KKgjQ-00045t-Rf; Sun, 20 Jul 2008 23:46:16 +0200
+	id S1751466AbYGTVsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 17:48:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751382AbYGTVsO
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 17:48:14 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:53412 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751214AbYGTVsN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 17:48:13 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 49268393B31D; Sun, 20 Jul 2008 23:48:11 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <m3sku4w822.fsf@localhost.localdomain>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.84
+In-Reply-To: <7vsku44679.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89242>
 
-Hi,
+On Sun, Jul 20, 2008 at 02:05:30PM -0700, Junio C Hamano wrote:
+> I could make "What's cooking" not a follow-up to the previous issue, or
+> perhaps add "(volume 1.6.0, issue 28)" at the end of the Subject.
 
-Jakub Narebski wrote:
-> I think however that patches should rather start a new thread.
+> But I think it is a good idea to change the subject when responding to one
+> part of the message to say which topic your response is about.
+> 
+> I do not know if stripping "In-reply-to" is a great idea, though.  They
+> are responses, aren't they?
 
-If a patch is a consequence of a discussion in a thread, I see no
-reason, why the patch should not be in that thread.
-
-Regards.
+I think responses to the what's cooking mails per se should certainly
+have in-reply-to set properly. I'm rather wondering if there's some
+specific reasons why do you keep all the "What's cooking" mails in a
+single thread? If there is nothing particular, keeping each "What's
+cooking" report in a separate mail might be easier on a portion of
+readers. I will use break-thread now (thanks, didn't know about it!) but
+the practice seems strange to me.
 
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+				Petr "Pasky" Baudis
+As in certain cults it is possible to kill a process if you know
+its true name.  -- Ken Thompson and Dennis M. Ritchie
