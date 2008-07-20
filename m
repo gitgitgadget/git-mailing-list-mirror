@@ -1,81 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Enable git rev-list to parse --quiet
-Date: Sun, 20 Jul 2008 11:31:38 -0700
-Message-ID: <7vwsjg76gl.fsf@gitster.siamese.dyndns.org>
-References: <20080718040459.13073.76896.stgit@marcab.local.tull.net>
- <7v8wvzeojm.fsf@gitster.siamese.dyndns.org>
- <20080718092001.GD16102@mail.local.tull.net>
- <7vwsjhc7kj.fsf@gitster.siamese.dyndns.org>
- <20080720120437.GC15586@mail.local.tull.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Ensure that SSH runs in non-interactive mode
+Date: Sun, 20 Jul 2008 20:33:30 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807202029310.3305@eeepc-johanness>
+References: <1216487215-6927-1-git-send-email-fredrik@dolda2000.com>  <1216490252.10694.58.camel@koto.keithp.com>  <1216491512.3911.9.camel@pc7.dolda2000.com>  <alpine.DEB.1.00.0807201214060.3305@eeepc-johanness> <1216576183.3673.2.camel@pc7.dolda2000.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nick Andrew <nick@nick-andrew.net>
-X-From: git-owner@vger.kernel.org Sun Jul 20 20:32:45 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Keith Packard <keithp@keithp.com>, git@vger.kernel.org,
+	"Edward Z. Yang" <edwardzyang@thewritingpot.com>,
+	Steffen Prohaska <prohaska@zib.de>
+To: Fredrik Tolf <fredrik@dolda2000.com>
+X-From: git-owner@vger.kernel.org Sun Jul 20 20:33:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKdi9-0002A6-0V
-	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 20:32:45 +0200
+	id 1KKdj4-0002MN-5Q
+	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 20:33:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750981AbYGTSbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 14:31:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750870AbYGTSbq
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 14:31:46 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58363 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750756AbYGTSbp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 14:31:45 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E8B2834654;
-	Sun, 20 Jul 2008 14:31:42 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0BF1B34653; Sun, 20 Jul 2008 14:31:39 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 19CE01AC-568A-11DD-A611-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1750939AbYGTScn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 14:32:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750765AbYGTScn
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 14:32:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60598 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750702AbYGTScm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 14:32:42 -0400
+Received: (qmail invoked by alias); 20 Jul 2008 18:32:40 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp026) with SMTP; 20 Jul 2008 20:32:40 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18r90hSR+krVxC4Q1/7Z0jIh7zVmI0zVcxKtUSjqA
+	PIijwt0f1+fWjW
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <1216576183.3673.2.camel@pc7.dolda2000.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89211>
 
-Nick Andrew <nick@nick-andrew.net> writes:
+Hi,
 
-> Exiting a process from within a callback function seems to me to violate
-> the principle of least surprise.
+On Sun, 20 Jul 2008, Fredrik Tolf wrote:
 
-Huh?  Who is surprised?
+> On Sun, 2008-07-20 at 12:27 +0200, Johannes Schindelin wrote:
+>
+> > Well, this was to be expected, after what I wrote in response to 3. in 
+> > http://thread.gmane.org/gmane.comp.version-control.git/76650/focus=2598
+> > 
+> > Reality always catches up with you, and here again we see that plink 
+> > and other siblings of OpenSSH should be best handled with scripts, 
+> > preferably ones that strip out options they do not recognize.
+> 
+> Otherwise, an alternative may be to always install a script, say 
+> `git-ssh', that would invoke the real SSH in a manner specific for the 
+> platform. The exact script installed could even be parametrized by the 
+> Makefile. For systems using OpenSSH, it would probably just consist of 
+> `ssh -xT "$@"'.
+> 
+> What do you think?
 
-I do not know who taught you that "do not exit in a callback" dogma, but I
-suspect it was misrepresented when it was taught to you.
+Umm, why?  I fully expect OpenSSH to be the most common ssh helper.  I 
+fail to see why we should optimize for something else.
 
-A library that calls your function back could be structured this way:
+The GIT_SSH solution works.  Why not just leave things like they are?
 
-	lib() {
-        	perform some set-up that affects external world;
-                call your callback function;
-                clean-up the effect of previous set-up action;
-	}
-
-and exiting from your callback function is not a good idea as it prevents
-the library from doing the necessary clean-up in such a case.
-
-But that is true just in a(n extremely) general case.  Your generalization
-is not particularly useful, methinks, and use of exit(0) in the patch is
-very well justified (rather, I do not think they even need justifying).
-
- - The callback you are looking at is not a general purpose callback for
-   other program's use, but written for a specific use of rev-list;
-
- - The purpose of that exit(0) is to signal "there is something" as
-   quickly as possible, which was what you wanted out of rev-list;
-
- - Revision traversal is a read-only operation and we know that there is
-   no externally visible set-up done in the function you are calling to
-   get your callback called, that needs cleaning up later --- this is not
-   expected to change, as there are longstanding existing callback
-   functions supplied to traverse_commit_list() that die() upon seeing
-   errors already.
+Ciao,
+Dscho
