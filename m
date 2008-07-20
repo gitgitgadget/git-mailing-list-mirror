@@ -1,99 +1,93 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008
-	projects?
-Date: Mon, 21 Jul 2008 00:57:22 +0200
-Message-ID: <20080720225722.GC5950@leksak.fem-net>
-References: <200807080227.43515.jnareb@gmail.com> <200807210029.31543.jnareb@gmail.com>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Mon, 21 Jul 2008 00:58:01 +0200
+Message-ID: <bd6139dc0807201558k6e3d85b8u30d214f16e1040bd@mail.gmail.com>
+References: <20080718182010.6117@nanako3.lavabit.com>
+	 <alpine.DEB.1.00.0807181351370.3932@eeepc-johanness>
+	 <7vabge30dh.fsf@gitster.siamese.dyndns.org>
+	 <alpine.DEB.1.00.0807191311220.3305@eeepc-johanness>
+	 <20080720130407.GF10347@genesis.frugalware.org>
+	 <7vd4l88l77.fsf@gitster.siamese.dyndns.org>
+	 <alpine.DEB.1.00.0807202102370.3305@eeepc-johanness>
+	 <7vd4l85nv5.fsf@gitster.siamese.dyndns.org>
+	 <bd6139dc0807201303u406484e2x127b2391a9920425@mail.gmail.com>
+	 <20080720203306.GO10347@genesis.frugalware.org>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
-	Joshua Roys <roysjosh@gmail.com>,
-	Sverre Rabbelier <alturin@gmail.com>,
-	Sverre Rabbelier <sverre@rabbelier.nl>,
-	David Symonds <dsymonds@gmail.com>,
-	Lea Wiemann <LeWiemann@gmail.com>,
-	John Hawley <warthog19@eaglescrag.net>,
-	Marek Zawirski <marek.zawirski@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 21 00:58:29 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Nanako Shiraishi" <nanako3@lavabit.com>, git@vger.kernel.org
+To: "Miklos Vajna" <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Mon Jul 21 00:59:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKhrH-0002Jj-B6
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 00:58:27 +0200
+	id 1KKhrt-0002Qz-8u
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 00:59:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752943AbYGTW52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 18:57:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbYGTW52
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 18:57:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44341 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752183AbYGTW52 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 18:57:28 -0400
-Received: (qmail invoked by alias); 20 Jul 2008 22:57:26 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp032) with SMTP; 21 Jul 2008 00:57:26 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/AHbJPLRHA0RG3qEhfE7GODXiFUwD3QGcgcooSX+
-	drVh35Z414DFGL
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KKhqE-0004Ly-NZ; Mon, 21 Jul 2008 00:57:22 +0200
+	id S1753040AbYGTW6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 18:58:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752976AbYGTW6F
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 18:58:05 -0400
+Received: from wf-out-1314.google.com ([209.85.200.170]:56187 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752218AbYGTW6C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 18:58:02 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so1296364wfd.4
+        for <git@vger.kernel.org>; Sun, 20 Jul 2008 15:58:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=G2Zv91yTZW3iiuPAJ4NfIJOe+sCgmmbEqcPpPwWGB0s=;
+        b=SCKFLHZfGXPntD/P+x7Tkcv3k9FxukhvqcMN6bFaggEVoxDsBUb5+tAYMz0PxrHmKw
+         2xz24zjOIq0J1NXElTfl1N3GiEqI6y6sMKWiWsea0I7sLk++TQxFhQeG32qMmYsMxOdQ
+         eskGe+o01S66OXbU3RlzY0VVu2eel7SAp3DQU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=G9i3L7tgoF+pCVmU182YmxjeNvtEmobwlSccb3t/qSS8XNlx4KSoq1rNwijHXHqH/B
+         BjH5+hZDViTCqsBeka6quuQUV7p22QDfsWQWhTaR0o1zhdsSujjxPyWZ/EGOsDxbP0Fj
+         8q3zhxWt8BRkPLkWmoZHh5x7RL3wYZqzbsMHQ=
+Received: by 10.142.204.18 with SMTP id b18mr1048224wfg.126.1216594681832;
+        Sun, 20 Jul 2008 15:58:01 -0700 (PDT)
+Received: by 10.143.38.17 with HTTP; Sun, 20 Jul 2008 15:58:01 -0700 (PDT)
+In-Reply-To: <20080720203306.GO10347@genesis.frugalware.org>
 Content-Disposition: inline
-In-Reply-To: <200807210029.31543.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89258>
 
-Hi,
+On Sun, Jul 20, 2008 at 10:33 PM, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> On Sun, Jul 20, 2008 at 10:03:24PM +0200, Sverre Rabbelier <alturin@gmail.com> wrote:
+>> Whatever happened to quotes?
+>>
+>>         $ git merge -s subtree -Xpath="git-gui git-gui/master"
+>
+> Read again what did you wrote. ;-)
+>
+> The current form is
+>
+> git merge -s subtree git-gui/master, so at most it could be
+>
+>        $ git merge -s subtree -Xpath="git-gui" git-gui/master
 
-what you write is quite detailed :)
+Meh, what I ofcourse mean was:
+         $ git merge -s subtree -X"path=git-gui" git-gui/master
 
-Jakub Narebski wrote:
-> 6. git-sequencer
-> 
-[...]
-> There were some problems with sequencer based implementation of
-> "git am --rebasing", or sequencer based patch application driven
-> ordinary rebase, but I think there were resolved.
-
-They were resolved, but there is a new problem that occured in the
-am --abort thread of Junio: the sequencer-based git-am does not work
-on dirty working tree.
-
-I've also fixed some other minor issues and have not yet sent this to
-the list (because I think I stumble over even more while writing the
-builtin-sequencer.)
-
-> Stephen have started the builtin sequencer (but till now no patches
-> were sent to list: seems to be work in progress).
-
-Right.
-
-> Some performance benchmarks:
->  * applying 45 patches with git-am 
->    - 3 seconds using the original 
->    - 8 seconds using the (scripted) sequencer-based one
->  * rebasing 100 commits
->    -  4.8 seconds using the original
->    - 10.1 seconds using the (scripted) sequencer-based one
->    -  1.7 seconds using builtin sequencer
-
-:)
-I think I'm going to format-patch the same 100 test commits and then I
-change the "applying 45 patches with git-am" part on the Wiki.
-
-Regards.
+But that looks rather awkward, which is probably why I typed it the
+way I did? Maybe something like....
+         $ git merge -s subtree -X(--path=git-gui --foo=bar) git-gui/master
 
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+Cheers,
+
+Sverre Rabbelier
