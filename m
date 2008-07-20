@@ -1,91 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Ensure that SSH runs in non-interactive mode
-Date: Sun, 20 Jul 2008 12:51:44 -0700
-Message-ID: <7vhcak5o6n.fsf@gitster.siamese.dyndns.org>
-References: <1216487215-6927-1-git-send-email-fredrik@dolda2000.com>
- <1216490252.10694.58.camel@koto.keithp.com>
- <1216491512.3911.9.camel@pc7.dolda2000.com>
- <alpine.DEB.1.00.0807201214060.3305@eeepc-johanness>
- <7v63r0bejy.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0807202035090.3305@eeepc-johanness>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 20 Jul 2008 12:58:38 -0700
+Message-ID: <7vd4l85nv5.fsf@gitster.siamese.dyndns.org>
+References: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org>
+ <7vlk01hqzz.fsf@gitster.siamese.dyndns.org>
+ <20080718175040.6117@nanako3.lavabit.com>
+ <20080718182010.6117@nanako3.lavabit.com>
+ <7v63r38r4r.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0807181351370.3932@eeepc-johanness>
+ <7vabge30dh.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0807191311220.3305@eeepc-johanness>
+ <20080720130407.GF10347@genesis.frugalware.org>
+ <7vd4l88l77.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0807202102370.3305@eeepc-johanness>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Tolf <fredrik@dolda2000.com>,
-	Keith Packard <keithp@keithp.com>, git@vger.kernel.org,
-	"Edward Z. Yang" <edwardzyang@thewritingpot.com>,
-	Steffen Prohaska <prohaska@zib.de>
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 20 21:52:57 2008
+X-From: git-owner@vger.kernel.org Sun Jul 20 21:59:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKexj-0006qc-LB
-	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 21:52:56 +0200
+	id 1KKf4Q-0000Ew-HJ
+	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 21:59:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751599AbYGTTv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 15:51:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751551AbYGTTv4
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 15:51:56 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64207 "EHLO
+	id S1751590AbYGTT6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 15:58:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751498AbYGTT6v
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 15:58:51 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34294 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498AbYGTTvz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 15:51:55 -0400
+	with ESMTP id S1751214AbYGTT6v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 15:58:51 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 329E92FC71;
-	Sun, 20 Jul 2008 15:51:53 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0B7BD34C39;
+	Sun, 20 Jul 2008 15:58:48 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7B7DB2FC6E; Sun, 20 Jul 2008 15:51:46 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0807202035090.3305@eeepc-johanness> (Johannes
- Schindelin's message of "Sun, 20 Jul 2008 20:57:48 +0200 (CEST)")
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 713F534C38; Sun, 20 Jul 2008 15:58:42 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0807202102370.3305@eeepc-johanness> (Johannes
+ Schindelin's message of "Sun, 20 Jul 2008 21:07:06 +0200 (CEST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4CF0CD0C-5695-11DD-BABC-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 44348022-5696-11DD-9887-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89221>
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> How about this instead?
+>> I personally think -sstrategy=string1,string2,... is simply a bad taste.
+>> 
+>> Why force yourself to parse things by having the users to concatenate
+>> something that the user could give us separated?  If you care about the
+>> order and association between strategy and their options, you can always
+>> do:
+>> 
+>> 	-s strategy1 -X option-1-for-strategy-1 -X option-2-for-strategy-1 \
+>> 	-s strategy2 -X option-1-for-strategy-2 ...
 >
-> -- snipsnap --
-> diff --git a/connect.c b/connect.c
-> index 574f42f..7e7f4d3 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -603,7 +603,8 @@ struct child_process *git_connect(int fd[2], const char *url
->  
->  		*arg++ = ssh;
->  		if (port) {
-> -			*arg++ = "-p";
-> +			const char *opt = getenv("GIT_SSH_PORT_OPTION");
-> +			*arg++ = opt ? opt : "-p";
->  			*arg++ = port;
->  		}
->  		*arg++ = host;
+> You mean something like
+>
+> 	$ git merge -s subtree -X --path -X git-gui/ git-gui/master
+>
+> Wow. :-)
 
-If you only care only about the ones we currently want to support, I do
-not htink it makes any difference either way, but if we are shooting for
-having a minimum-but-reasonable framework to make it easy to support other
-ones that we haven't seen, it feels very much like an inadequate hack to
-waste an envirnoment variable for such a narrow special case.  With this,
-what you really mean is "Plink uses -P instead of -p", right?
+I would envision it to be more like:
 
-I do not know if "plink" is used widely enough to be special cased, but if
-so, I think we would better have an explicit support for it.  Will we add
-GIT_SSH_FORBID_X11_FORWARDING_OPTION environment variable and friends,
-too?
+	$ git merge -s subtree -Xpath=git-gui git-gui/master
 
-The extra environment would not help dealing with an implementation that
-wants --port=90222 (i.e. not as two separate arguments but a single one),
-for example.  You would need the extra wrapper support for that kind of
-thing anyway.  That extra environment _solution_ will need to make an
-assuption that any reasonable implementation would have an option string
-to specify port which may not be "-p" and that is to be followed by a
-separate argument that is a decimal port number, which probably is
-reasonable for this particular "port" thing, but as a general design
-principle I do not think it is a good direction to go.
+which git-merge internally would turn into:
+
+	$ git-merge-subtree --path=git-gui HEAD -- OURS THEIRS
+
+That way both the external command line (that the end users do care about)
+and the internal one (that the strategy programmer would care about) look
+a lot more sensible than your command line, don't they?
