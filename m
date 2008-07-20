@@ -1,70 +1,68 @@
-From: Fredrik Tolf <fredrik@dolda2000.com>
-Subject: Re: [PATCH] Ensure that SSH runs in non-interactive mode
-Date: Sun, 20 Jul 2008 20:42:09 +0200
-Message-ID: <1216579329.3673.5.camel@pc7.dolda2000.com>
-References: <1216487215-6927-1-git-send-email-fredrik@dolda2000.com>
-	 <1216490252.10694.58.camel@koto.keithp.com>
-	 <1216491512.3911.9.camel@pc7.dolda2000.com>
-	 <alpine.DEB.1.00.0807201214060.3305@eeepc-johanness>
-	 <1216576183.3673.2.camel@pc7.dolda2000.com>
-	 <alpine.DEB.1.00.0807202029310.3305@eeepc-johanness>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Teach 'git merge' that 'recur' merge strategy no
+	longer exists
+Date: Sun, 20 Jul 2008 20:50:05 +0200
+Message-ID: <20080720185005.GN10347@genesis.frugalware.org>
+References: <1216555968-31406-1-git-send-email-vmiklos@frugalware.org> <7vmykc76dn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Keith Packard <keithp@keithp.com>, git@vger.kernel.org,
-	"Edward Z. Yang" <edwardzyang@thewritingpot.com>,
-	Steffen Prohaska <prohaska@zib.de>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 20 20:43:49 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="dUCTBDm4d+mXXNar"
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 20 20:51:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKdsl-0004nj-4H
-	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 20:43:43 +0200
+	id 1KKe00-0006at-Jh
+	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 20:51:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750728AbYGTSmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 14:42:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750702AbYGTSmW
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 14:42:22 -0400
-Received: from 1-1-3-7a.rny.sth.bostream.se ([82.182.133.20]:57892 "EHLO
-	nerv.dolda2000.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750695AbYGTSmV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 14:42:21 -0400
-Received: from [IPv6:2002:52b6:8514:200:21d:7dff:fea1:197] ([IPv6:2002:52b6:8514:200:21d:7dff:fea1:197])
-	(authenticated bits=0)
-	by nerv.dolda2000.com (8.13.8/8.13.8/Debian-3) with ESMTP id m6KIgAMb023081
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 20 Jul 2008 20:42:10 +0200
-In-Reply-To: <alpine.DEB.1.00.0807202029310.3305@eeepc-johanness>
-X-Mailer: Evolution 2.22.3.1 
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (nerv.dolda2000.com [IPv6:2002:52b6:8514:200::1]); Sun, 20 Jul 2008 20:42:10 +0200 (CEST)
+	id S1750989AbYGTSuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 14:50:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750736AbYGTSuM
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 14:50:12 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:49076 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750695AbYGTSuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 14:50:11 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 10E151B2524;
+	Sun, 20 Jul 2008 20:50:08 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 127394465E;
+	Sun, 20 Jul 2008 20:10:22 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id B71D0177001C; Sun, 20 Jul 2008 20:50:05 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vmykc76dn.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89214>
 
-On Sun, 2008-07-20 at 20:33 +0200, Johannes Schindelin wrote:
-> > Otherwise, an alternative may be to always install a script, say 
-> > `git-ssh', that would invoke the real SSH in a manner specific for the 
-> > platform. The exact script installed could even be parametrized by the 
-> > Makefile. For systems using OpenSSH, it would probably just consist of 
-> > `ssh -xT "$@"'.
-> > 
-> > What do you think?
-> 
-> Umm, why?  I fully expect OpenSSH to be the most common ssh helper.  I 
-> fail to see why we should optimize for something else.
 
-I guess I just thought the guys trying to port Git to Windows might find
-it helpful as well. I don't really care myself.
+--dUCTBDm4d+mXXNar
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> The GIT_SSH solution works.  Why not just leave things like they are?
+On Sun, Jul 20, 2008 at 11:33:24AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Good eyes, both of you.  Will roll a die and commit one squashed,
+> creditting one of you at random ;-)
 
-I don't think it is a good idea to leave it like it is, because I think
-it is unreasonable to run Git traffic with Minimize-Delay TOS by
-default. If for no other reason, changing the TOS would at least make
-many networks happier.
+I thought commit messages can have multiple Signed-off-by lines. ;-)
 
-Fredrik Tolf
+--dUCTBDm4d+mXXNar
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkiDiN0ACgkQe81tAgORUJbjeQCdFWRk9V8EpjhDZ++hnIroEfJ1
+uYMAn2QwGWEBjS5jBWk6jBBLXEftTFPO
+=N+ei
+-----END PGP SIGNATURE-----
+
+--dUCTBDm4d+mXXNar--
