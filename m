@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] builtin-add.c: restructure the code for maintainability
-Date: Sat, 19 Jul 2008 20:28:55 -0700
-Message-ID: <7vod4tgrns.fsf_-_@gitster.siamese.dyndns.org>
+Subject: [PATCH 2/2] git-add -a: add all files
+Date: Sat, 19 Jul 2008 20:29:53 -0700
+Message-ID: <7vk5fhgrm6.fsf_-_@gitster.siamese.dyndns.org>
 References: <alpine.DEB.1.00.0807161804400.8950@racer>
  <7vmykhpn6z.fsf@gitster.siamese.dyndns.org>
  <20080717155538.GE11759@fieldses.org>
@@ -15,200 +15,109 @@ Content-Type: text/plain; charset=us-ascii
 Cc: "Michael J Gruber" <michaeljgruber+gmane@fastmail.fm>,
 	"Jay Soffian" <jaysoffian@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 20 05:30:07 2008
+X-From: git-owner@vger.kernel.org Sun Jul 20 05:31:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKPcc-0007NX-Ac
-	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 05:30:06 +0200
+	id 1KKPdU-0007V4-By
+	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 05:31:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755325AbYGTD3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2008 23:29:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755324AbYGTD3G
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jul 2008 23:29:06 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37579 "EHLO
+	id S1755298AbYGTDaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2008 23:30:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755295AbYGTDaA
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jul 2008 23:30:00 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45285 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755321AbYGTD3E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2008 23:29:04 -0400
+	with ESMTP id S1755275AbYGTD37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2008 23:29:59 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 097493C2FF;
-	Sat, 19 Jul 2008 23:29:02 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6A8EE3349A;
+	Sat, 19 Jul 2008 23:29:59 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D43BF3C2F8; Sat, 19 Jul 2008 23:28:57 -0400 (EDT)
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 295A133499; Sat, 19 Jul 2008 23:29:54 -0400 (EDT)
 In-Reply-To: <7vsku5grpr.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
  message of "Sat, 19 Jul 2008 20:27:44 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FF6292A2-560B-11DD-A494-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 2195E96E-560C-11DD-98D8-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89155>
 
-The implementation of "git add" has four major codepaths that are mutually
-exclusive:
+People sometimes find that "git add -u && git add ." are 13 keystrokes too
+many.
 
- - if "--interactive" or "--patch" mode, spawn "git add--interactive" and
-   exit without doing anything else.  Otherwise things are handled
-   internally in this C code.
+The support of this has been very low priority for me personally, because
+I almost never do "git add ." in an already populated directory, and if a
+directory is not already populated, there is no point saying "git add -u"
+at the same time.
 
- - if "--update", update the modified files and exit without doing
-   anything else;
+However, for two types of people that are very different from me, this
+mode of operation may make sense and there is no reason to leave it
+unsupported.  That is:
 
- - if "--refresh", do refresh and exit without doing anything else;
+ (1) If you are extremely well disciplined and keep perfect .gitignore, it
+     always is safe to say "git add ."; or
 
- - otherwise, find the paths that match pathspecs and stage their
-   contents.
+ (2) If you are extremely undisciplined and do not even know what files
+     you created, and you do not very much care, it does not matter if
+     "git add ." included everything.
 
-and it led to an unholy mess in the code structure; each of the latter
-three codepaths has separate call to read_cache() even though they are all
-"read the current index, update it and write it back" so logically they
-should read the index once _anyway_.
-
-This cleans up the latter three cases by introducing a handful helper
-variables:
-
- - "add_new_files" is set if we need to scan the working tree for paths
-   that match the pathspec.  This variable is false for "--update" and
-   "--refresh", because they only work on already tracked files.
-
- - "require_pathspec" is set if the user must give at least one pathspec.
-   "--update" does not need it but all the other cases do.
-
-This is in preparation for introducing a new option "-a" that does the
-equivalent of "git add -u && git add ." (aka "addremove").
+So here it is, although I suspect I will not use it myself, ever.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin-add.c |   75 ++++++++++++++++++++++++++++++++------------------------
- 1 files changed, 43 insertions(+), 32 deletions(-)
+ builtin-add.c |   13 +++++++++++--
+ 1 files changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/builtin-add.c b/builtin-add.c
-index bf13aa3..9b2ee8c 100644
+index 9b2ee8c..bc02fd7 100644
 --- a/builtin-add.c
 +++ b/builtin-add.c
-@@ -140,8 +140,6 @@ static void refresh(int verbose, const char **pathspec)
- 	for (specs = 0; pathspec[specs];  specs++)
- 		/* nothing */;
- 	seen = xcalloc(specs, 1);
--	if (read_cache() < 0)
--		die("index file corrupt");
- 	refresh_index(&the_index, verbose ? 0 : REFRESH_QUIET, pathspec, seen);
- 	for (i = 0; i < specs; i++) {
- 		if (!seen[i])
-@@ -216,13 +214,36 @@ static int add_config(const char *var, const char *value, void *cb)
- 	return git_default_config(var, value, cb);
- }
+@@ -190,7 +190,7 @@ static const char ignore_error[] =
+ "The following paths are ignored by one of your .gitignore files:\n";
  
-+static int add_files(struct dir_struct *dir, int flags)
-+{
-+	int i, exit_status = 0;
-+
-+	if (dir->ignored_nr) {
-+		fprintf(stderr, ignore_error);
-+		for (i = 0; i < dir->ignored_nr; i++)
-+			fprintf(stderr, "%s\n", dir->ignored[i]->name);
-+		fprintf(stderr, "Use -f if you really want to add them.\n");
-+		die("no files added");
-+	}
-+
-+	for (i = 0; i < dir->nr; i++)
-+		if (add_file_to_cache(dir->entries[i]->name, flags)) {
-+			if (!ignore_add_errors)
-+				die("adding files failed");
-+			exit_status = 1;
-+		}
-+	return exit_status;
-+}
-+
- int cmd_add(int argc, const char **argv, const char *prefix)
- {
- 	int exit_status = 0;
--	int i, newfd;
-+	int newfd;
- 	const char **pathspec;
- 	struct dir_struct dir;
- 	int flags;
-+	int add_new_files;
-+	int require_pathspec;
+ static int verbose = 0, show_only = 0, ignored_too = 0, refresh_only = 0;
+-static int ignore_add_errors;
++static int ignore_add_errors, addremove;
  
- 	argc = parse_options(argc, argv, builtin_add_options,
- 			  builtin_add_usage, 0);
-@@ -233,53 +254,43 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ static struct option builtin_add_options[] = {
+ 	OPT__DRY_RUN(&show_only),
+@@ -200,6 +200,7 @@ static struct option builtin_add_options[] = {
+ 	OPT_BOOLEAN('p', "patch", &patch_interactive, "interactive patching"),
+ 	OPT_BOOLEAN('f', "force", &ignored_too, "allow adding otherwise ignored files"),
+ 	OPT_BOOLEAN('u', "update", &take_worktree_changes, "update tracked files"),
++	OPT_BOOLEAN('a', "all", &addremove, "add all, noticing removal of tracked files"),
+ 	OPT_BOOLEAN( 0 , "refresh", &refresh_only, "don't add, only refresh the index"),
+ 	OPT_BOOLEAN( 0 , "ignore-errors", &ignore_add_errors, "just skip files which cannot be added because of errors"),
+ 	OPT_END(),
+@@ -254,6 +255,14 @@ int cmd_add(int argc, const char **argv, const char *prefix)
  
  	git_config(add_config, NULL);
  
-+	add_new_files = !take_worktree_changes && !refresh_only;
-+	require_pathspec = !take_worktree_changes;
++	if (addremove && take_worktree_changes)
++		die("-a and -u are mutually incompatible");
++	if (addremove && !argc) {
++		static const char *here[2] = { ".", NULL };
++		argc = 1;
++		argv = here;
++	}
 +
- 	newfd = hold_locked_index(&lock_file, 1);
+ 	add_new_files = !take_worktree_changes && !refresh_only;
+ 	require_pathspec = !take_worktree_changes;
  
- 	flags = ((verbose ? ADD_CACHE_VERBOSE : 0) |
- 		 (show_only ? ADD_CACHE_PRETEND : 0) |
- 		 (ignore_add_errors ? ADD_CACHE_IGNORE_ERRORS : 0));
- 
--	if (take_worktree_changes) {
--		const char **pathspec;
--		if (read_cache() < 0)
--			die("index file corrupt");
--		pathspec = get_pathspec(prefix, argv);
--		exit_status = add_files_to_cache(prefix, pathspec, flags);
--		goto finish;
--	}
--
--	if (argc == 0) {
-+	if (require_pathspec && argc == 0) {
- 		fprintf(stderr, "Nothing specified, nothing added.\n");
- 		fprintf(stderr, "Maybe you wanted to say 'git add .'?\n");
- 		return 0;
- 	}
- 	pathspec = get_pathspec(prefix, argv);
- 
--	if (refresh_only) {
--		refresh(verbose, pathspec);
--		goto finish;
--	}
--
--	fill_directory(&dir, pathspec, ignored_too);
-+	/*
-+	 * If we are adding new files, we need to scan the working
-+	 * tree to find the ones that match pathspecs; this needs
-+	 * to be done before we read the index.
-+	 */
-+	if (add_new_files)
-+		fill_directory(&dir, pathspec, ignored_too);
- 
- 	if (read_cache() < 0)
- 		die("index file corrupt");
- 
--	if (dir.ignored_nr) {
--		fprintf(stderr, ignore_error);
--		for (i = 0; i < dir.ignored_nr; i++) {
--			fprintf(stderr, "%s\n", dir.ignored[i]->name);
--		}
--		fprintf(stderr, "Use -f if you really want to add them.\n");
--		die("no files added");
-+	if (refresh_only) {
-+		refresh(verbose, pathspec);
-+		goto finish;
+@@ -286,7 +295,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		goto finish;
  	}
  
--	for (i = 0; i < dir.nr; i++)
--		if (add_file_to_cache(dir.entries[i]->name, flags)) {
--			if (!ignore_add_errors)
--				die("adding files failed");
--			exit_status = 1;
--		}
-+	if (take_worktree_changes)
-+		exit_status |= add_files_to_cache(prefix, pathspec, flags);
-+
-+	if (add_new_files)
-+		exit_status |= add_files(&dir, flags);
+-	if (take_worktree_changes)
++	if (take_worktree_changes || addremove)
+ 		exit_status |= add_files_to_cache(prefix, pathspec, flags);
  
-  finish:
- 	if (active_cache_changed) {
+ 	if (add_new_files)
 -- 
 1.5.6.4.570.g052e6
