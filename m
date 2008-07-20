@@ -1,73 +1,90 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] git-shell needs $(COMPAT_OBJS)
-Date: Mon, 21 Jul 2008 01:08:33 +0200
-Message-ID: <20080720230833.GT10347@genesis.frugalware.org>
-References: <200807202111.48332.johannes.sixt@telecom.at> <200807202334.36506.johannes.sixt@telecom.at> <7vzloc2odx.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807210034050.3305@eeepc-johanness> <7vprp82nb6.fsf@gitster.siamese.dyndns.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Add a notice to the doc of git-ls-tree.
+Date: Mon, 21 Jul 2008 01:08:46 +0200
+Message-ID: <20080720230846.GH32184@machine.or.cz>
+References: <1216592735-23789-1-git-send-email-code@istique.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="e8HClOqJ7YWh1FLv"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 21 01:09:40 2008
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Steve =?iso-8859-2?Q?Fr=E9cinaux?= <code@istique.net>
+X-From: git-owner@vger.kernel.org Mon Jul 21 01:09:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKi27-0004Nz-6B
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 01:09:39 +0200
+	id 1KKi2G-0004QY-VL
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 01:09:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753049AbYGTXIk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 19:08:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbYGTXIk
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 19:08:40 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:49801 "EHLO virgo.iok.hu"
+	id S1753143AbYGTXIs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Jul 2008 19:08:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753104AbYGTXIs
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 19:08:48 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:47622 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752470AbYGTXIj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 19:08:39 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 3DB261B2557;
-	Mon, 21 Jul 2008 01:08:38 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id D935C4465E;
-	Mon, 21 Jul 2008 00:28:43 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 81239177001C; Mon, 21 Jul 2008 01:08:33 +0200 (CEST)
+	id S1752815AbYGTXIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 19:08:48 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 472A8393B31D; Mon, 21 Jul 2008 01:08:46 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vprp82nb6.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <1216592735-23789-1-git-send-email-code@istique.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89261>
 
-
---e8HClOqJ7YWh1FLv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sun, Jul 20, 2008 at 03:38:53PM -0700, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> That's a rather misguided approach, isn't it?
+On Mon, Jul 21, 2008 at 12:25:35AM +0200, Steve Fr=E9cinaux wrote:
+> The notice covers this behaviour:
+> if you are in the git/ subdirectory of your repository, it will pick
+> the tree corresponding to that directory instead of the root one if y=
+ou
+> specify the root tree object id.
 >=20
-> After all, the work requested by the end user will be handled by code in
-> the main git executable by spawning a subprocess, and you are auditing the
-> codepath that leads to the spawning anyway.
+> Compare the output of both of those commands:
+>  git-ls-tree cb44e6571708aa2792c73a289d87586fe3c0c362
+>  git-cat-file -p cb44e6571708aa2792c73a289d87586fe3c0c362
+> ---
+>  Documentation/git-ls-tree.txt |    4 ++++
+>  1 files changed, 4 insertions(+), 0 deletions(-)
+>=20
+> diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tre=
+e.txt
+> index 1cdec22..7cba394 100644
+> --- a/Documentation/git-ls-tree.txt
+> +++ b/Documentation/git-ls-tree.txt
+> @@ -21,6 +21,10 @@ though - 'paths' denote just a list of patterns to=
+ match, e.g. so specifying
+>  directory name (without '-r') will behave differently, and order of =
+the
+>  arguments does not matter.
+> =20
+> +Note that if you give ls-tree the sha1 id of a parent of the tree
+> +corresponding to the directory you're in, it will resolve that tree =
+and list
+> +its contents instead of listing the contents of the tree you gave.
+> +
+>  OPTIONS
+>  -------
+>  <tree-ish>::
 
-Hm, but then what's the purpose of having git-shell as a not-builtin?
+It's hard to make out what do you mean, the patch description is much
+clearer, paradoxically. Also, this in fact holds for the root tree
+instead of the parent tree, and the behaviour changes from "weird" to
+"simply broken" when you try to list a tree object that is _not_ the
+root project tree from within a subdirectory:
 
---e8HClOqJ7YWh1FLv
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+	git$ git ls-tree HEAD Documentation
+	040000 tree 066c25e86a44d4c7bde2d3e9b91e6891d752efa1    Documentation
+	git/Documentation$ git ls-tree 066c25e86a44d4c7bde2d3e9b91e6891d752efa=
+1
+	git/Documentation$
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+I think that ls-tree simply shouldn't auto-fill its pathspec based on
+current prefix in case no pathspec was supplied. Patch to follow.
 
-iEYEARECAAYFAkiDxXEACgkQe81tAgORUJZh2ACfcTGiIeNn0vWcMYATnoahAclf
-fDgAnjKDZ8ZrMjqv9LRu2lJAdBNP7VmK
-=oze4
------END PGP SIGNATURE-----
-
---e8HClOqJ7YWh1FLv--
+--=20
+				Petr "Pasky" Baudis
+As in certain cults it is possible to kill a process if you know
+its true name.  -- Ken Thompson and Dennis M. Ritchie
