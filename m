@@ -1,48 +1,47 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Ensure that SSH runs in non-interactive mode
-Date: Mon, 21 Jul 2008 00:17:47 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807210012480.3305@eeepc-johanness>
-References: <1216487215-6927-1-git-send-email-fredrik@dolda2000.com> <1216490252.10694.58.camel@koto.keithp.com> <1216491512.3911.9.camel@pc7.dolda2000.com> <alpine.DEB.1.00.0807201214060.3305@eeepc-johanness> <7v63r0bejy.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0807202035090.3305@eeepc-johanness> <7vhcak5o6n.fsf@gitster.siamese.dyndns.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Mon, 21 Jul 2008 00:24:07 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807210020420.3305@eeepc-johanness>
+References: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org> <7vlk01hqzz.fsf@gitster.siamese.dyndns.org> <20080718175040.6117@nanako3.lavabit.com> <20080718182010.6117@nanako3.lavabit.com> <7v63r38r4r.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807181351370.3932@eeepc-johanness>
+ <7vabge30dh.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807191311220.3305@eeepc-johanness> <20080720130407.GF10347@genesis.frugalware.org> <7vd4l88l77.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807202102370.3305@eeepc-johanness>
+ <7vd4l85nv5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Fredrik Tolf <fredrik@dolda2000.com>,
-	Keith Packard <keithp@keithp.com>, git@vger.kernel.org,
-	"Edward Z. Yang" <edwardzyang@thewritingpot.com>,
-	Steffen Prohaska <prohaska@zib.de>
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 21 00:18:02 2008
+X-From: git-owner@vger.kernel.org Mon Jul 21 00:24:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKhE9-0002K0-P7
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 00:18:02 +0200
+	id 1KKhKU-0003kH-4h
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 00:24:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752518AbYGTWRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 18:17:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752547AbYGTWRA
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 18:17:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37331 "HELO mail.gmx.net"
+	id S1752049AbYGTWXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 18:23:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752084AbYGTWXS
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 18:23:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57460 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752421AbYGTWQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 18:16:59 -0400
-Received: (qmail invoked by alias); 20 Jul 2008 22:16:58 -0000
+	id S1751668AbYGTWXS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 18:23:18 -0400
+Received: (qmail invoked by alias); 20 Jul 2008 22:23:15 -0000
 Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp019) with SMTP; 21 Jul 2008 00:16:58 +0200
+  by mail.gmx.net (mp015) with SMTP; 21 Jul 2008 00:23:15 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX182XbkCgUw2KYRbMRkyAIUz/gPaxUxEYcKUnCT/yX
-	CInjBUcbNqfMh7
+X-Provags-ID: V01U2FsdGVkX19hMl9TDjNhYqF7zf0DiLuHdSmjP5enBOpOsWNGNc
+	CLdjdLg1UFA6q6
 X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7vhcak5o6n.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7vd4l85nv5.fsf@gitster.siamese.dyndns.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89247>
 
 Hi,
 
@@ -50,41 +49,47 @@ On Sun, 20 Jul 2008, Junio C Hamano wrote:
 
 > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > How about this instead?
+> >> I personally think -sstrategy=string1,string2,... is simply a bad taste.
+> >> 
+> >> Why force yourself to parse things by having the users to concatenate
+> >> something that the user could give us separated?  If you care about the
+> >> order and association between strategy and their options, you can always
+> >> do:
+> >> 
+> >> 	-s strategy1 -X option-1-for-strategy-1 -X option-2-for-strategy-1 \
+> >> 	-s strategy2 -X option-1-for-strategy-2 ...
 > >
-> > -- snipsnap --
-> > diff --git a/connect.c b/connect.c
-> > index 574f42f..7e7f4d3 100644
-> > --- a/connect.c
-> > +++ b/connect.c
-> > @@ -603,7 +603,8 @@ struct child_process *git_connect(int fd[2], const char *url
-> >  
-> >  		*arg++ = ssh;
-> >  		if (port) {
-> > -			*arg++ = "-p";
-> > +			const char *opt = getenv("GIT_SSH_PORT_OPTION");
-> > +			*arg++ = opt ? opt : "-p";
-> >  			*arg++ = port;
-> >  		}
-> >  		*arg++ = host;
+> > You mean something like
+> >
+> > 	$ git merge -s subtree -X --path -X git-gui/ git-gui/master
+> >
+> > Wow. :-)
 > 
-> If you only care only about the ones we currently want to support, I do
-> not htink it makes any difference either way, but if we are shooting for
-> having a minimum-but-reasonable framework to make it easy to support other
-> ones that we haven't seen, it feels very much like an inadequate hack to
-> waste an envirnoment variable for such a narrow special case.  With this,
-> what you really mean is "Plink uses -P instead of -p", right?
+> I would envision it to be more like:
+> 
+> 	$ git merge -s subtree -Xpath=git-gui git-gui/master
+> 
+> which git-merge internally would turn into:
+> 
+> 	$ git-merge-subtree --path=git-gui HEAD -- OURS THEIRS
+> 
+> That way both the external command line (that the end users do care about)
+> and the internal one (that the strategy programmer would care about) look
+> a lot more sensible than your command line, don't they?
 
-Yeah.  My first attempt was to allow "GIT_SSH='plink.exe -P %p %h'" to 
-work, and for that matter, "git config --global transport.ssh 'plink.exe 
--P %p %h'", but I decided that it would be easier to do the patch I 
-posted.
+I still find it a lot easier to explain
 
-Anyway, I think that this issue wasted enough of my time, as I will never 
-use plink anyway.  As long as the patch does not have an adverse effect on 
-my use case, which happens to be the default case, I will just not bother 
-anymore, even if I think that GIT_SSH=wrapper would be better than special 
-case rarely exercized ssh programs in the source code.
+	$ git -s subtree=git-gui git-gui/master
 
-Ciao,
-Dscho
+to a new user than your command line, especially since
+
+	$ git -X path=git-gui -s subtree git-gui/master
+
+would be a not so obvious mistake, _and_ especially since the 
+implementation of your option parsing would be rather ugly.
+
+But the subject has been discussed to death, and you seem to still prefer 
+the -X way, so I give up.
+
+You win,
+Dscho "who can adapt even to a syntax he does not like"
