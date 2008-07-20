@@ -1,153 +1,98 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 2/3] add new Git::Repo API
-Date: Sun, 20 Jul 2008 23:36:42 +0200
-Message-ID: <20080720213642.GE10151@machine.or.cz>
-References: <4876B223.4070707@gmail.com> <200807150141.39186.jnareb@gmail.com> <20080718165407.GU10151@machine.or.cz> <200807192107.56333.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Stopping those fat "What's cooking in git.git" threads
+Date: Sun, 20 Jul 2008 14:38:04 -0700 (PDT)
+Message-ID: <m3sku4w822.fsf@localhost.localdomain>
+References: <20080720205125.GP10347@genesis.frugalware.org>
+	<7vsku44679.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org,
-	John Hawley <warthog19@eaglescrag.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 20 23:37:53 2008
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 20 23:39:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKgbH-0001Qf-BY
-	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 23:37:51 +0200
+	id 1KKgcZ-0001hu-23
+	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 23:39:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751488AbYGTVgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 17:36:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbYGTVgt
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 17:36:49 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:60296 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750994AbYGTVgq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 17:36:46 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id F3F75393B32A; Sun, 20 Jul 2008 23:36:42 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200807192107.56333.jnareb@gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751417AbYGTViM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 17:38:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751466AbYGTViM
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 17:38:12 -0400
+Received: from ik-out-1112.google.com ([66.249.90.180]:44549 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750870AbYGTViL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 17:38:11 -0400
+Received: by ik-out-1112.google.com with SMTP id c28so782904ika.5
+        for <git@vger.kernel.org>; Sun, 20 Jul 2008 14:38:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=DG64o1yMn+GjqgDU2NXkdBiaXp8m2EiZWK00Dv9YZHQ=;
+        b=taPvA/rt0jDyG9O3RklH89MGoeQ+xaQWr3d90urZWxuJXIRPrMPxIm/k5hrSms/6DK
+         BN3OlDeSgXA38LqzT4Js144AJm2zwO9tGnkwgq0nAlRgb91XOOvPz19dK46Gd+XaiuYA
+         kblhBZiL+nzXh0L1Lgzwe/gdeJtscaqtroOf4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=HrQr6oPNs/4RKbWORjJckxV9w8u9zWSV7+XPIU+911v6ehglmeRn4K5hf19otOTFac
+         noy81ohaigNlTKDgG1DE1KdYmYT8qyyDbWlPM0zlnpbcZSgIvOSwr8oGhB6Cf5xtq1Ld
+         WsAVvauE88ons+pIth+TPBfr4jw0H/5a4l/Z0=
+Received: by 10.210.72.14 with SMTP id u14mr2555000eba.113.1216589885033;
+        Sun, 20 Jul 2008 14:38:05 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.215.213])
+        by mx.google.com with ESMTPS id b36sm6321694ika.5.2008.07.20.14.38.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 20 Jul 2008 14:38:04 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m6KLc1ra009572;
+	Sun, 20 Jul 2008 23:38:02 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m6KLbwxd009569;
+	Sun, 20 Jul 2008 23:37:58 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vsku44679.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89238>
 
-On Sat, Jul 19, 2008 at 09:07:55PM +0200, Jakub Narebski wrote:
-> On Fri, 18 July 2008, Petr Baudis wrote:
-> > On Tue, Jul 15, 2008 at 01:41:38AM +0200, Jakub Narebski wrote:
-> > > On Mon, 14 July 2008, Petr Baudis wrote:
-> > > > Here is an idea: Introduce Git::Command object that will have very
-> > > > general interface and look like
-> > > > 
-> > > > 	my $c = Git::Command->new(['git', '--git-dir=.', 'cat-file', \
-> > > > 		'-p', 'bla'], {pipe_out=>1})
-> > > > 	...
-> > > > 	$c->close();
-> > > 
-> > > Errr... how do you read from such a pipe?  <$c> I think wouldn't work,
-> > > unless you would use some trickery...
-> > 
-> > That's good point; it might either be done using some trickery, or
-> > $c->pipe. The idea behind having a special object for it though is to
-> > have *unified* (no matter how simple) error handling. You might not
-> > detect the command erroring out at the open time.
-> > 
-> > Is there a better approach for solving this?
-> 
-> I don't know if it is _better_ approach, but the _alternate_ approach
-> would be to use:
-> 
->  	my $c = Git::Command->new(['git', '--git-dir=.', 'cat-file', \
->  		'-p', 'bla'], {out=>my $fh, err=>undef})
-> 	... 	
-> 	while (my $line = <$fh>) {
-> 	...
->  	$c->close();
+Junio C Hamano <gitster@pobox.com> writes:
 
-I think this is horribly ugly, you would be *much* better keeping the
-filehandle within $c if going this way.
-
-> And trickery would be to use blessed filehandle, or what?  Or perhaps
-> extending IO::Handle (but not all like using object methods for I/O
-> handles)?
-
-Maybe blessed filehandle is the simplest way; it seems that in case we
-need anything more complex later, it should be possible to replace it
-with an IO::Handle subclass, but that feels like overengineering now.
-
-> I forgot that we cannot obsolete / replace old interface.  Nevertheless
-> it would be nice to be able to use for example
+> Miklos Vajna <vmiklos@frugalware.org> writes:
 > 
-> 	Git::Cmd->output_pipe('ls-remotes', $URL, '--heads');
+> > So here is what I thought about: What about if everyone (except Junio,
+> > of course) would change the subject _and_ remove the In-Reply-To: header
+> > when replying to those mails?
+> >
+> > If those large threads just annoys a few people and most people are
+> > happy with the current situation then sorry for the noise.
 > 
-> but also
-> 
-> 	output_pipe('myscript.sh', <arg1>, <arg2>);
+> I could make "What's cooking" not a follow-up to the previous issue,
 
-I think exported functions should have all a git_ prefix.
+Or perhaps break it from time to time (on major release perhaps?).
 
-> > Well, this interface is almost identical to what I delineated, except
-> > that I have the extra ->cmd-> step there. But maybe, we could go with
-> > your API and instead have Git::CommandFactory as a base of Git::Repo?
-> > The hierarchy would be
-> > 
-> > 	Git::CommandFactory - provides the cmd_pipe toolkit
-> > 		|
-> > 	    Git::Repo       - provides repository model
-> > 		|
-> > 	Git::Repo::NonBare  - additional working-copy-related methods
-> > 
-> > I think I will post a sample implementation sometime over the weekend.
-> 
-> Thanks.
-> 
-> I think this is a very good idea.  Although... you mix somewhat here
-> relationships.  Relationship between Git::CommandFactory (Git::Cmd?)
-> is a bit different than relationship between Git::Repo and
-> Git::Repo::NonBare.  Git::Repo::NonBare is a case of Git::Repo which
-> additionally knows where its working copy (Git::WC?) is, and where
-> inside working copy we are (if we are inside working copy).  Git::Repo
-> uses Git::CommandFactory to route calls to git commands, and to
-> provide default '--git-dir=<repo_path>' argument.
+> or perhaps add "(volume 1.6.0, issue 28)" at the end of the Subject.
 
-Yes, but that does not mean Git::Repo must not inherit from
-Git::CmdFactory. Think of Git::CmdFactory as maybe a kind of Java-sense
-interface to a degree.
+Very good idea.
 
-> What I'd like to have is a way to easily set in _one_ place where git
-> binary can be found, even if we are using different repositories, call
-> git commands not related to git repository.
+> But I think it is a good idea to change the subject when responding to one
+> part of the message to say which topic your response is about.
 > 
-> Should we use
-> 
-> 	Git::Cmd->output_pipe('ls-remotes', $URL, '--heads');
-> or
-> 	output_pipe(GIT, 'ls-remotes', $URL, '--heads');
-> or
-> 	output_pipe($GIT, 'ls-remotes', $URL, '--heads');
-> or
-> 	output_pipe($Git::GIT, 'ls-remotes', $URL, '--heads');
-> 
-> we would want to be able to set where git binary is once (and for all),
-> for example via
-> 
-> 	Git::Cmd->set_git('/usr/local/bin/git');
-> 
-> or something like that.
+> I do not know if stripping "In-reply-to" is a great idea, though.  They
+> are responses, aren't they?
 
-Yes, that should work fine, with the Git::Cmd subclasses looking into
-the singleton.
+The problem with above is if you are replying to many points
+simultaneously.
 
-BTW, I don't like Git::Cmd for the factory interface, since the methods
-create Git::Command objects and then the naming does not make any sense.
-So I'm going to use class names Git::CmdFactory and Git::Cmd for the
-first prototype (since "Command" _is_ too long), unless you have better
-but still clear names.
-
+I think however that patches should rather start a new thread.
 -- 
-				Petr "Pasky" Baudis
-As in certain cults it is possible to kill a process if you know
-its true name.  -- Ken Thompson and Dennis M. Ritchie
+Jakub Narebski
+Poland
+ShadeHawk on #git
