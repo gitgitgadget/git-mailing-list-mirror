@@ -1,56 +1,46 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-shell needs $(COMPAT_OBJS)
-Date: Mon, 21 Jul 2008 00:35:18 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807210034050.3305@eeepc-johanness>
-References: <200807202111.48332.johannes.sixt@telecom.at> <200807202334.36506.johannes.sixt@telecom.at> <7vzloc2odx.fsf@gitster.siamese.dyndns.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Git Branding Overview, Re: Git.or.cz Experimental Design
+Date: Mon, 21 Jul 2008 00:36:45 +0200
+Message-ID: <20080720223645.GG10151@machine.or.cz>
+References: <5fb1d2400807022011w7f8d79dbk68a64dc1b8b01d98@mail.gmail.com> <20080718103918.GO10151@machine.or.cz> <m3od4sw7qj.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 21 00:35:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: David Baldwin <baldwindavid@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 00:37:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKhV1-00061R-RG
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 00:35:28 +0200
+	id 1KKhXH-0006VE-5u
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 00:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752459AbYGTWe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 18:34:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752223AbYGTWe2
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 18:34:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42051 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752183AbYGTWe2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 18:34:28 -0400
-Received: (qmail invoked by alias); 20 Jul 2008 22:34:26 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp018) with SMTP; 21 Jul 2008 00:34:26 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/y/88/edHyK0DgDfQ+9YdDJ5fY0Jch0d7ouQU9RV
-	AeG49TDnkOkx71
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7vzloc2odx.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.77
+	id S1752256AbYGTWgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 18:36:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752119AbYGTWgs
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 18:36:48 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:43655 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752084AbYGTWgr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 18:36:47 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id CBC06393B31D; Mon, 21 Jul 2008 00:36:45 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <m3od4sw7qj.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89250>
 
-Hi,
+On Sun, Jul 20, 2008 at 02:44:54PM -0700, Jakub Narebski wrote:
+> P.P.S. Petr, do you know what's the matter with Git Wiki? It looks
+> like moin4wiki (Wikipeda-like syntax) parser is installed halfway in.
 
-On Sun, 20 Jul 2008, Junio C Hamano wrote:
+As I try to mention frequently, I don't really maintain the Wiki at all.
+The Wikipedia syntax is a manual hack that has a weird history across
+random moinwiki upgrade on the machine, randomly disappearing as Debian
+decides to upgrade the moinwiki package. I have readded the hack now.
 
-> Why do we care about the size of git-shell so much in the first place 
-> anyway to begin with?
-
-It was not me who proposed it, but I guess it was for auditing purposes: 
-git-shell is often the only point of entry for certain untrusted ssh 
-users, and the less code is linked, the less code has to be analyzed for 
-reachability (and then for security holes).
-
-Ciao,
-Dscho
+				Petr "Pasky" Baudis
