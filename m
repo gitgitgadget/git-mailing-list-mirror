@@ -1,59 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-shell needs $(COMPAT_OBJS)
-Date: Sun, 20 Jul 2008 15:15:38 -0700
-Message-ID: <7vzloc2odx.fsf@gitster.siamese.dyndns.org>
-References: <200807202111.48332.johannes.sixt@telecom.at>
- <200807202334.36506.johannes.sixt@telecom.at>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Ensure that SSH runs in non-interactive mode
+Date: Mon, 21 Jul 2008 00:17:47 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807210012480.3305@eeepc-johanness>
+References: <1216487215-6927-1-git-send-email-fredrik@dolda2000.com> <1216490252.10694.58.camel@koto.keithp.com> <1216491512.3911.9.camel@pc7.dolda2000.com> <alpine.DEB.1.00.0807201214060.3305@eeepc-johanness> <7v63r0bejy.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0807202035090.3305@eeepc-johanness> <7vhcak5o6n.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Mon Jul 21 00:17:00 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Fredrik Tolf <fredrik@dolda2000.com>,
+	Keith Packard <keithp@keithp.com>, git@vger.kernel.org,
+	"Edward Z. Yang" <edwardzyang@thewritingpot.com>,
+	Steffen Prohaska <prohaska@zib.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 00:18:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKhD8-00029S-5t
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 00:16:58 +0200
+	id 1KKhE9-0002K0-P7
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 00:18:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756060AbYGTWPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 18:15:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756027AbYGTWPp
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 18:15:45 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54163 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756018AbYGTWPo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 18:15:44 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 346253786E;
-	Sun, 20 Jul 2008 18:15:43 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 9BA453786A; Sun, 20 Jul 2008 18:15:40 -0400 (EDT)
-In-Reply-To: <200807202334.36506.johannes.sixt@telecom.at> (Johannes Sixt's
- message of "Sun, 20 Jul 2008 23:34:36 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 64D12A16-56A9-11DD-96E4-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752518AbYGTWRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 18:17:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752547AbYGTWRA
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 18:17:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37331 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752421AbYGTWQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 18:16:59 -0400
+Received: (qmail invoked by alias); 20 Jul 2008 22:16:58 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp019) with SMTP; 21 Jul 2008 00:16:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX182XbkCgUw2KYRbMRkyAIUz/gPaxUxEYcKUnCT/yX
+	CInjBUcbNqfMh7
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7vhcak5o6n.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.52
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89246>
 
-Johannes Sixt <johannes.sixt@telecom.at> writes:
+Hi,
 
-> On Sonntag, 20. Juli 2008, Johannes Sixt wrote:
->> -git-shell$X: compat/strlcpy.o abspath.o ctype.o exec_cmd.o quote.o
->> strbuf.o usage.o wrapper.o shell.o
->> +git-shell$X: abspath.o ctype.o 
->> exec_cmd.o quote.o strbuf.o usage.o wrapper.o shell.o $(COMPAT_OBJS)
->
-> Unfortunately, that's only half the deal. If we compile with NO_PREAD=1, this 
-> needs read_in_full(),...
+On Sun, 20 Jul 2008, Junio C Hamano wrote:
 
-Well, if compat/* implementations use anything outside compat/ left and
-right, then all bets are off.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > How about this instead?
+> >
+> > -- snipsnap --
+> > diff --git a/connect.c b/connect.c
+> > index 574f42f..7e7f4d3 100644
+> > --- a/connect.c
+> > +++ b/connect.c
+> > @@ -603,7 +603,8 @@ struct child_process *git_connect(int fd[2], const char *url
+> >  
+> >  		*arg++ = ssh;
+> >  		if (port) {
+> > -			*arg++ = "-p";
+> > +			const char *opt = getenv("GIT_SSH_PORT_OPTION");
+> > +			*arg++ = opt ? opt : "-p";
+> >  			*arg++ = port;
+> >  		}
+> >  		*arg++ = host;
+> 
+> If you only care only about the ones we currently want to support, I do
+> not htink it makes any difference either way, but if we are shooting for
+> having a minimum-but-reasonable framework to make it easy to support other
+> ones that we haven't seen, it feels very much like an inadequate hack to
+> waste an envirnoment variable for such a narrow special case.  With this,
+> what you really mean is "Plink uses -P instead of -p", right?
 
-Why do we care about the size of git-shell so much in the first place
-anyway to begin with?
+Yeah.  My first attempt was to allow "GIT_SSH='plink.exe -P %p %h'" to 
+work, and for that matter, "git config --global transport.ssh 'plink.exe 
+-P %p %h'", but I decided that it would be easier to do the patch I 
+posted.
+
+Anyway, I think that this issue wasted enough of my time, as I will never 
+use plink anyway.  As long as the patch does not have an adverse effect on 
+my use case, which happens to be the default case, I will just not bother 
+anymore, even if I think that GIT_SSH=wrapper would be better than special 
+case rarely exercized ssh programs in the source code.
+
+Ciao,
+Dscho
