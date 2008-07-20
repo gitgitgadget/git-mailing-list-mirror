@@ -1,76 +1,81 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: [RFC] Stopping those fat "What's cooking in git.git" threads
-Date: Mon, 21 Jul 2008 01:19:37 +0200
-Message-ID: <bd6139dc0807201619g6c268488kd6b45109a246638d@mail.gmail.com>
-References: <20080720205125.GP10347@genesis.frugalware.org>
-	 <7vsku44679.fsf@gitster.siamese.dyndns.org>
-	 <bd6139dc0807201550v27d6db3epd0d0b4bc663e0351@mail.gmail.com>
-	 <7v3am42lk2.fsf@gitster.siamese.dyndns.org>
-Reply-To: sverre@rabbelier.nl
+From: "=?ISO-8859-1?Q?Steve_Fr=E9cinaux?=" <nudrema@gmail.com>
+Subject: Re: [PATCH] Add a notice to the doc of git-ls-tree.
+Date: Mon, 21 Jul 2008 01:22:58 +0200
+Message-ID: <f35478f50807201622n282e7eefve94ae144bfb720a7@mail.gmail.com>
+References: <1216592735-23789-1-git-send-email-code@istique.net>
+	 <20080720230846.GH32184@machine.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Miklos Vajna" <vmiklos@frugalware.org>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 21 01:20:39 2008
+Cc: "=?ISO-8859-1?Q?Steve_Fr=E9cinaux?=" <code@istique.net>,
+	git@vger.kernel.org
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Jul 21 01:24:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKiCk-0006L6-LV
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 01:20:39 +0200
+	id 1KKiG3-0006wc-0X
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 01:24:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754572AbYGTXTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 19:19:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754470AbYGTXTi
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 19:19:38 -0400
-Received: from wf-out-1314.google.com ([209.85.200.170]:14026 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754320AbYGTXTh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 19:19:37 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so1301973wfd.4
-        for <git@vger.kernel.org>; Sun, 20 Jul 2008 16:19:37 -0700 (PDT)
+	id S1753228AbYGTXXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 19:23:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753161AbYGTXXB
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 19:23:01 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:8537 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752970AbYGTXXB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 19:23:01 -0400
+Received: by an-out-0708.google.com with SMTP id d40so335360and.103
+        for <git@vger.kernel.org>; Sun, 20 Jul 2008 16:22:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=uaRzVgKMEwAc0g4m1g6KeoCoQSPK7gmKhqraRTConFY=;
-        b=kyFYXpj9zg+HOoHiin4fnPWJSDwzOp2eVHGRCPyox2e3agJVtQPB8yDpiZ0akOei45
-         KACqWQjRV63KBtUPyExHQX8wWJu1j0cx6W1Qiy5L+TsPY822H7OQExhFO+kyhdIOG0LZ
-         Neu/z7lSMT18PkJ70DTRxRENqXFhiKdSwUMxo=
+        bh=K3/ZMCDAgBQNzAe/F0Zfut65NVJ8HiOds371gfZeI+0=;
+        b=WE+3WO7bS3j59vFxVHSLbb9AqqUgGzS3ha+qfgTBKdOThM+UXmez378GcWDMzFdYH6
+         ZB5hRO61wWD+1JoZVF/f5YZDO73wdaZge4r9IQBtsrYLjdeNHKa1ymBgqvcKzLlQrnfx
+         J6iQKqA0HBnt2cd5nBBSe9OQztnRPBv5sU97c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=drhCtMz+a0S4NtIQi3yM90AoQOPwpXdlP0EIrmI2m6cj9vHc9DYZn7V4ofbAMiN3lp
-         wz8KSzSFBdfMM+zijGUa2M31iPLuLsQB2FsAfFurh/41/hxj/Rhyy2w7JBcj/FYzouae
-         jT5MwrrPpTo7cJfo+AbI3gvq2jyA9igbv1CZ4=
-Received: by 10.142.125.4 with SMTP id x4mr1041858wfc.349.1216595977455;
-        Sun, 20 Jul 2008 16:19:37 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Sun, 20 Jul 2008 16:19:37 -0700 (PDT)
-In-Reply-To: <7v3am42lk2.fsf@gitster.siamese.dyndns.org>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=IlfNZY4bHPZfMM1oKaWzKw0VWPal0UWz+UhY+o6KGtGrwgDYxSCY3AbqKfjn2gUYw6
+         jDXbe7RexhoAGLnpkDhafWvHQBPtkijQlEcYoFaiXL9OGzB8ixFbPgYt+/GVen9dMYwC
+         uA2WFQoB7qm29BE7N5zt73XVhs2IZ5HH+Mkb8=
+Received: by 10.100.33.11 with SMTP id g11mr1497313ang.26.1216596178113;
+        Sun, 20 Jul 2008 16:22:58 -0700 (PDT)
+Received: by 10.100.250.10 with HTTP; Sun, 20 Jul 2008 16:22:58 -0700 (PDT)
+In-Reply-To: <20080720230846.GH32184@machine.or.cz>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89265>
 
-On Mon, Jul 21, 2008 at 1:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> On Sun, Jul 20, 2008 at 11:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> I could make "What's cooking" not a follow-up to the previous issue, or
->>> perhaps add "(volume 1.6.0, issue 28)" at the end of the Subject.
->>
->> The downside of this is that it'll be less easy to see the difference
->> with the previous version.
+> It's hard to make out what do you mean, the patch description is much
+> clearer, paradoxically.
+
+It is hard to explain such a strange behaviour with a description that
+is both short and generic enough... But I agree with you. I just got
+bitten by this and I thought it was important enough to be specified.
+
+> Also, this in fact holds for the root tree
+> instead of the parent tree, and the behaviour changes from "weird" to
+> "simply broken" when you try to list a tree object that is _not_ the
+> root project tree from within a subdirectory:
 >
-> My vague recollection is that it was Pasky who complained long time ago
-> when "What's in" was not a follow-up to its previous round, which led me
-> to switch my workflow to send them in the current form.  You cannot
-> satisfy certain people no matter what you do.
+>        git$ git ls-tree HEAD Documentation
+>        040000 tree 066c25e86a44d4c7bde2d3e9b91e6891d752efa1    Documentation
+>        git/Documentation$ git ls-tree 066c25e86a44d4c7bde2d3e9b91e6891d752efa1
+>        git/Documentation$
+>
+> I think that ls-tree simply shouldn't auto-fill its pathspec based on
+> current prefix in case no pathspec was supplied. Patch to follow.
 
-Add an interdiff at the bottom of the mail? You can't satisfy
-everybody no matter what you do, but you can come quite far, it
-usually means you have to do a lot of work to do so though.
+I also thought this behaviour was broken. But I didn't want to patch
+it because I was afraid of breaking things that would rely on it,
+despite it seems unexpected enough not to be used...
