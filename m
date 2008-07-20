@@ -1,107 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-shell needs $(COMPAT_OBJS)
-Date: Sun, 20 Jul 2008 15:55:58 -0700
-Message-ID: <7vhcak2mip.fsf@gitster.siamese.dyndns.org>
-References: <200807202111.48332.johannes.sixt@telecom.at>
- <200807202334.36506.johannes.sixt@telecom.at>
- <7vzloc2odx.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Mon Jul 21 00:57:10 2008
+From: =?utf-8?q?Steve=20Fr=C3=A9cinaux?= <code@istique.net>
+Subject: [PATCH] Add a notice to the doc of git-ls-tree.
+Date: Mon, 21 Jul 2008 00:25:35 +0200
+Message-ID: <1216592735-23789-1-git-send-email-code@istique.net>
+Cc: =?utf-8?q?Steve=20Fr=C3=A9cinaux?= <code@istique.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 21 00:57:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKhq0-00025R-3J
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 00:57:08 +0200
+	id 1KKhqa-0002Bq-VG
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 00:57:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752688AbYGTW4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 18:56:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752568AbYGTW4F
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 18:56:05 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60913 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752570AbYGTW4E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 18:56:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 581AD37C1B;
-	Sun, 20 Jul 2008 18:56:03 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 9BBDD37C1A; Sun, 20 Jul 2008 18:56:00 -0400 (EDT)
-In-Reply-To: <7vzloc2odx.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 20 Jul 2008 15:15:38 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 07587848-56AF-11DD-8AA6-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752568AbYGTW4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 18:56:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752815AbYGTW4q
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 18:56:46 -0400
+Received: from smtp-out.mobistar.be ([80.12.204.214]:10237 "EHLO
+	smtp-out.mobistar.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752365AbYGTW4o (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 18:56:44 -0400
+Received: from meplus.info (localhost [127.0.0.1])
+	by mwinf8113.mobistar.be (SMTP Server) with ESMTP id 7C0BA1D002865;
+	Mon, 21 Jul 2008 00:26:03 +0200 (CEST)
+Received: from localhost.localdomain (unknown [91.86.64.35])
+	by mwinf8113.mobistar.be (SMTP Server) with ESMTP id 4E5201D00025D;
+	Mon, 21 Jul 2008 00:26:03 +0200 (CEST)
+X-ME-UUID: 20080720222603320.4E5201D00025D@mwinf8113.mobistar.be
+X-ME-bounce-domain: mobistarmail.be
+X-Mailer: git-send-email 1.5.6.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89256>
 
-Junio C Hamano <gitster@pobox.com> writes:
+The notice covers this behaviour:
+if you are in the git/ subdirectory of your repository, it will pick
+the tree corresponding to that directory instead of the root one if you
+specify the root tree object id.
 
-> Johannes Sixt <johannes.sixt@telecom.at> writes:
->
->> On Sonntag, 20. Juli 2008, Johannes Sixt wrote:
->>> -git-shell$X: compat/strlcpy.o abspath.o ctype.o exec_cmd.o quote.o
->>> strbuf.o usage.o wrapper.o shell.o
->>> +git-shell$X: abspath.o ctype.o 
->>> exec_cmd.o quote.o strbuf.o usage.o wrapper.o shell.o $(COMPAT_OBJS)
->>
->> Unfortunately, that's only half the deal. If we compile with NO_PREAD=1, this 
->> needs read_in_full(),...
->
-> Well, if compat/* implementations use anything outside compat/ left and
-> right, then all bets are off.
+Compare the output of both of those commands:
+ git-ls-tree cb44e6571708aa2792c73a289d87586fe3c0c362
+ git-cat-file -p cb44e6571708aa2792c73a289d87586fe3c0c362
+---
+ Documentation/git-ls-tree.txt |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-If compat/ layer tries to really be about "compatibility", they should not
-be using things like xmalloc() that call release_pack_meory() that is in
-sha1_file.c.  From a quick glance, mingw.c, mmap.c, pread.c are major
-offenders, but others such as setenv.c seem to be carefully written.
-
-Perhaps we should apply a variant of your patch to allow linking from
-compat/ routines to git-shell, so that people affected by the compat layer
-functions that call outside compat layer have incentive to fix them.
-
- Makefile |   10 +++++++---
- 1 files changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 2b670d7..551bde9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -324,6 +324,7 @@ endif
- export PERL_PATH
+diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
+index 1cdec22..7cba394 100644
+--- a/Documentation/git-ls-tree.txt
++++ b/Documentation/git-ls-tree.txt
+@@ -21,6 +21,10 @@ though - 'paths' denote just a list of patterns to match, e.g. so specifying
+ directory name (without '-r') will behave differently, and order of the
+ arguments does not matter.
  
- LIB_FILE=libgit.a
-+COMPAT_LIB = compat/lib.a
- XDIFF_LIB=xdiff/lib.a
- 
- LIB_H += archive.h
-@@ -1203,8 +1204,11 @@ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
- 
--git-shell$X: compat/strlcpy.o abspath.o ctype.o exec_cmd.o quote.o strbuf.o usage.o wrapper.o shell.o
--	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^)
-+$(COMPAT_LIB): $(COMPAT_OBJS)
-+	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(COMPAT_OBJS)
++Note that if you give ls-tree the sha1 id of a parent of the tree
++corresponding to the directory you're in, it will resolve that tree and list
++its contents instead of listing the contents of the tree you gave.
 +
-+git-shell$X: abspath.o ctype.o exec_cmd.o quote.o strbuf.o usage.o wrapper.o shell.o $(COMPAT_LIB)
-+	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(COMPAT_LIB)
- 
- $(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
- $(patsubst git-%$X,%.o,$(PROGRAMS)): $(LIB_H) $(wildcard */*.h)
-@@ -1402,7 +1406,7 @@ distclean: clean
- 
- clean:
- 	$(RM) *.o mozilla-sha1/*.o arm/*.o ppc/*.o compat/*.o xdiff/*.o \
--		$(LIB_FILE) $(XDIFF_LIB)
-+		$(LIB_FILE) $(XDIFF_LIB) $(COMPAT_LIB)
- 	$(RM) $(ALL_PROGRAMS) $(BUILT_INS) git$X
- 	$(RM) $(TEST_PROGRAMS)
- 	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags cscope*
+ OPTIONS
+ -------
+ <tree-ish>::
+-- 
+1.5.6.2
