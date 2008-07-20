@@ -1,96 +1,62 @@
-From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
-Subject: Re: [RFC variant 2 of 2] "needs update" considered harmful
-Date: Sun, 20 Jul 2008 11:03:04 -0300
-Message-ID: <b8bf37780807200703we8f8608yb009c1039b829b23@mail.gmail.com>
-References: <7vtzelf4mf.fsf@gitster.siamese.dyndns.org>
-	 <7v7ibhdmii.fsf@gitster.siamese.dyndns.org>
-	 <20080720112957.GE32184@machine.or.cz>
+From: Fredrik Tolf <fredrik@dolda2000.com>
+Subject: Re: [PATCH] Ensure that SSH runs in non-interactive mode
+Date: Sun, 20 Jul 2008 19:49:43 +0200
+Message-ID: <1216576183.3673.2.camel@pc7.dolda2000.com>
+References: <1216487215-6927-1-git-send-email-fredrik@dolda2000.com>
+	 <1216490252.10694.58.camel@koto.keithp.com>
+	 <1216491512.3911.9.camel@pc7.dolda2000.com>
+	 <alpine.DEB.1.00.0807201214060.3305@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sun Jul 20 16:04:09 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Keith Packard <keithp@keithp.com>, git@vger.kernel.org,
+	"Edward Z. Yang" <edwardzyang@thewritingpot.com>,
+	Steffen Prohaska <prohaska@zib.de>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 20 19:50:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKZWD-0006Lv-5f
-	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 16:04:09 +0200
+	id 1KKd3i-00084X-UM
+	for gcvg-git-2@gmane.org; Sun, 20 Jul 2008 19:50:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757030AbYGTODK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Jul 2008 10:03:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757073AbYGTODI
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 10:03:08 -0400
-Received: from fk-out-0910.google.com ([209.85.128.184]:18020 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757030AbYGTODH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Jul 2008 10:03:07 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so659764fkq.5
-        for <git@vger.kernel.org>; Sun, 20 Jul 2008 07:03:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=fhGakbZ8q4I5B65lLSVmsC6cFnDYlTx/nWTPuLQyH24=;
-        b=XVpGt7fQxwAq+lZvXWi7xW8/8dyWEEUMeO07gKSunZGHsQkWGUG600aEbQ+e+7X/0e
-         7lmy3GhANtE0gXLK7HMUi7q9n1TswyTpWTQ4d+hyjR03yGfKvIY5nB9oXXc+lD0kAeZb
-         hx+fL2HDyP4fLxUfq06WEM+7k3lOVVcqYtdV0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=aXctvR8CXFinrYM1RIt9W0ts7GA84gtLr+CVnanQz7BZoCb+QCWP0eFPe0rdiJkeY7
-         akj1TBMa8Vf8vGuR9mX+SR6ZQlA7DQC+6b4VMNLaRu4L/HFfIJc3iyaIVhw77L/Rwzj6
-         KyiwGpjUlSCbzP30cyKR0QTvcfbr2EJrIlhBQ=
-Received: by 10.187.158.2 with SMTP id k2mr17458fao.15.1216562584073;
-        Sun, 20 Jul 2008 07:03:04 -0700 (PDT)
-Received: by 10.187.189.11 with HTTP; Sun, 20 Jul 2008 07:03:04 -0700 (PDT)
-In-Reply-To: <20080720112957.GE32184@machine.or.cz>
-Content-Disposition: inline
+	id S1757797AbYGTRt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 13:49:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757803AbYGTRt6
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 13:49:58 -0400
+Received: from 1-1-3-7a.rny.sth.bostream.se ([82.182.133.20]:53830 "EHLO
+	nerv.dolda2000.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757700AbYGTRt5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 13:49:57 -0400
+Received: from [IPv6:2002:52b6:8514:200:21d:7dff:fea1:197] ([IPv6:2002:52b6:8514:200:21d:7dff:fea1:197])
+	(authenticated bits=0)
+	by nerv.dolda2000.com (8.13.8/8.13.8/Debian-3) with ESMTP id m6KHnhWR013912
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 20 Jul 2008 19:49:43 +0200
+In-Reply-To: <alpine.DEB.1.00.0807201214060.3305@eeepc-johanness>
+X-Mailer: Evolution 2.22.3.1 
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (nerv.dolda2000.com [IPv6:2002:52b6:8514:200::1]); Sun, 20 Jul 2008 19:49:45 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89203>
 
-On Sun, Jul 20, 2008 at 8:29 AM, Petr Baudis <pasky@suse.cz> wrote:
-> On Sun, Jul 20, 2008 at 12:48:21AM -0700, Junio C Hamano wrote:
->> "git update-index --refresh", "git reset" and "git add --refresh" ha=
-ve
->> reported paths that have local modifications as "needs update" since=
- the
->> beginning of git.
->>
->> Although this is logically correct in that you need to update the in=
-dex at
->> that path before you can commit that change, it is now becoming more=
- and
->> more clear, especially with the continuous push for user friendlines=
-s
->> since 1.5.0 series, that the message is suboptimal.  After all, the =
-change
->> may be something the user might want to get rid of, and "updating" w=
-ould
->> be absolutely a wrong thing to do if that is the case.
->>
->> I prepared two alternatives to solve this.  Both aim to reword the m=
-essage
->> to more neutral "locally modified".
->>
->> This patch is a more straightforward variant that changes the messag=
-e not
->> only for Porcelain commands ("add" and "reset") but also changes the
->> output from the plumbing command "update-index".
->>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> I believe this is a good thing. Scripts need to be modified for the
+On Sun, 2008-07-20 at 12:27 +0200, Johannes Schindelin wrote:
+> Well, this was to be expected, after what I wrote in response to 3. in
+> http://thread.gmane.org/gmane.comp.version-control.git/76650/focus=2598
+> 
+> Reality always catches up with you, and here again we see that plink and 
+> other siblings of OpenSSH should be best handled with scripts, preferably 
+> ones that strip out options they do not recognize.
 
-Thanks for doing that. I hope this goes mainline soon.
+Otherwise, an alternative may be to always install a script, say
+`git-ssh', that would invoke the real SSH in a manner specific for the
+platform. The exact script installed could even be parametrized by the
+Makefile. For systems using OpenSSH, it would probably just consist of
+`ssh -xT "$@"'.
 
---=20
-[]s,
-Andr=E9 Goddard
+What do you think?
+
+Fredrik Tolf
