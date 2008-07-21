@@ -1,149 +1,67 @@
-From: <ncrfgs@tin.it>
-Subject: making a branch with just one file and keeping its whole history
-Date: Mon, 21 Jul 2008 06:18:04 +0200
-Message-ID: <20080721061804.223f7801@mail.tin.it>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Stopping those fat "What's cooking in git.git" threads
+Date: Sun, 20 Jul 2008 21:24:02 -0700
+Message-ID: <7vprp7yie5.fsf@gitster.siamese.dyndns.org>
+References: <20080720205125.GP10347@genesis.frugalware.org>
+ <7vsku44679.fsf@gitster.siamese.dyndns.org>
+ <bd6139dc0807201550v27d6db3epd0d0b4bc663e0351@mail.gmail.com>
+ <7v3am42lk2.fsf@gitster.siamese.dyndns.org>
+ <bd6139dc0807201619g6c268488kd6b45109a246638d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/gFaIBxTxjKsf6.LHxJIoCPA";
- protocol="application/pgp-signature"; micalg=PGP-SHA1
-Cc: madewokherd@gmail.com, ncrfgs@tin.it
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 21 06:24:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Miklos Vajna" <vmiklos@frugalware.org>, git@vger.kernel.org
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Mon Jul 21 06:25:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKmwf-00077O-Tm
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 06:24:22 +0200
+	id 1KKmxU-0007CX-Tx
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 06:25:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbYGUEXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 00:23:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751414AbYGUEXV
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 00:23:21 -0400
-Received: from vsmtp4.tin.it ([212.216.176.224]:57921 "EHLO vsmtp4.tin.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751131AbYGUEXU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 00:23:20 -0400
-X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Jul 2008 00:23:15 EDT
-Received: from mail.tin.it (87.11.137.129) by vsmtp4.tin.it (8.0.016.5)
-        id 485F5E75015BBC61; Mon, 21 Jul 2008 06:18:09 +0200
+	id S1751503AbYGUEYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 00:24:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbYGUEYO
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 00:24:14 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56108 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751452AbYGUEYN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 00:24:13 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id AF9B035285;
+	Mon, 21 Jul 2008 00:24:11 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id DAD7635284; Mon, 21 Jul 2008 00:24:05 -0400 (EDT)
+In-Reply-To: <bd6139dc0807201619g6c268488kd6b45109a246638d@mail.gmail.com>
+ (Sverre Rabbelier's message of "Mon, 21 Jul 2008 01:19:37 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DE85EAF8-56DC-11DD-9A23-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89298>
 
---Sig_/gFaIBxTxjKsf6.LHxJIoCPA
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+"Sverre Rabbelier" <alturin@gmail.com> writes:
 
-Hi,
+> On Mon, Jul 21, 2008 at 1:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> On Sun, Jul 20, 2008 at 11:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>> I could make "What's cooking" not a follow-up to the previous issue, or
+>>>> perhaps add "(volume 1.6.0, issue 28)" at the end of the Subject.
+>>>
+>>> The downside of this is that it'll be less easy to see the difference
+>>> with the previous version.
+>>
+>> My vague recollection is that it was Pasky who complained long time ago
+>> when "What's in" was not a follow-up to its previous round, which led me
+>> to switch my workflow to send them in the current form.  You cannot
+>> satisfy certain people no matter what you do.
+>
+> Add an interdiff at the bottom of the mail? You can't satisfy
+> everybody no matter what you do, but you can come quite far, it
+> usually means you have to do a lot of work to do so though.
 
-I have a working local repository and I'd like to make a branch with just o=
-ne
-file (let's say path2/filename2) and to keep its whole history.
-
-At first I've considered creating a fresh new repo and redirecting
-`git-log -p --follow path2/filename2` output to some other git command.
-
-When later I've discussed the topic on #git@irc.freenode.net I've been poin=
-ted to
-git-filter-branch.
-
-Searching for more info about git-filter-branch on the web I've found a cou=
-ple of
-examples that might be close to what I'd like to accomplish:
-
-from http://loupgaroublond.blogspot.com/2007/12/how-to-split-repository-in-=
-git.html
-	$ git filter-branch --tree-filter 'rm -rf $put_the_files_you_want_to_remov=
-e_here' HEAD
-	$ git reset --hard
-	$ git gc --aggressive
-	$ git prune
-
-from http://log.emmanuelebassi.net/archives/2007/09/when-the-levee-breaks/
-	$ git clone --no-hardlinks /tmp/gtk2-perl Gtk2-SourceView.git
-	$ git filter-branch --subdirectory-filter Gtk2-SourceView HEAD
-	$ git reset --hard
-	$ git gc --aggressive
-	$ git prune
-
-I've also gone through man pages and I've found something interesting:
-	$ git-filter-branch --tree-filter 'rm $filename' HEAD
-or, as far as I understood, equivalent and faster:
-	$ git-filter-branch --index-filter 'git-update-index --remove $filename' H=
-EAD=20
-
-Now, what I'd like to do is complementary to the above example; the differe=
-nce is
-that I don't want to remove just one file and its traces from history; rath=
-er I'd
-like to have a new repo which includes just that file and its history.
-
-So I would need something like the following command:
-	$ git-filter-branch --tree-filter 'keep(?) $filename' HEAD
-
-I think one possible solution would be:
-	$ git-filter-branch --tree-filter 'find ! -type d | grep -v "^./path2/file=
-name2$" | while read FILE; do rm $FILE; done' HEAD
-
-Problems come, I think, if the content you want to keep track of, is placed=
- in a
-file that has been renamed. For example, let's say that the content you wan=
-t to
-keep track of was in:
-	path1/filename1 from commit 1 to commit 1000
-	path2/filename1 from commit 1001 to commit 2000
-	path2/filename2 from commit 2001 to commit 3000
-
-In this case I think one possible solution would be:
-	$ git-filter-branch --tree-filter 'find ! -type d | grep -v "^./path1/file=
-name1$" | grep -v "^./path2/filename1$" | grep -v "^./path2/filename2$" | w=
-hile read FILE; do rm $FILE; done' HEAD
-
-But what happens if in the meanwhile a new file has been created with one o=
-f the
-names we used for the content we want to keep track of? Let's say, followin=
-g the
-previous case, that path2/filename1 has been renamed to path2/filename2 with
-commit 2001, and that with commit 2500 a new file has been created with name
-path1/filename1.
-
-Considering both the solutions I've found on the web and the ones I've been
-suggested on #git@irc.freenode.net I've found four/five possible path to fo=
-llow:
-	a) git log | another git command (later I've been told that git log --foll=
-ows leaves out the initial revision)
-	b) git clone; git filter-branch
-	c) create a new repo with your one file and make an initial commit
-	   then do: (cd repo-with-one-file; git ls-tree)|(cd repo-where-you-want-t=
-he-new-branch; git-mktree)
-	d) git commit-tree that-tree < file-with-commit-message
-	   then: git checkout -b branchname that-commit
-	e) git-am or git apply processing the output of git-log or another
-	   similar command
-
-I hope you guys can help me to make some light on this issue.
-
-
-Thanks in advance. :D
-
-
-P.S.
-Sorry for my bad english but I'm not a native english speaker, I hope that =
-what
-I've written made enough sense to you. :)
-
---Sig_/gFaIBxTxjKsf6.LHxJIoCPA
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Disposition: attachment; filename=signature.asc
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.8 (GNU/Linux)
-
-iEYEARECAAYFAkiEDfwACgkQ8UJozN0kXhkN4wCg4upCrhwOsqG/9wJfXkTfUkLp
-lAMAoI8vaLte9c0XkJDe1CoCjDHWV2TF
-=4Q1n
------END PGP SIGNATURE-----
-
---Sig_/gFaIBxTxjKsf6.LHxJIoCPA--
+Do you think I have an infinite bandwidth?  I don't.
