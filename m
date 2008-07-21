@@ -1,68 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git-add -a: add all files
-Date: Sun, 20 Jul 2008 17:06:41 -0700
-Message-ID: <7vprp814oe.fsf@gitster.siamese.dyndns.org>
-References: <7vtzeofjpi.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0807171940160.8986@racer> <48806897.1080404@fastmail.fm>
- <76718490807181318o228171f9j836aaca2edb9b377@mail.gmail.com>
- <7vsku5grpr.fsf@gitster.siamese.dyndns.org>
- <7vk5fhgrm6.fsf_-_@gitster.siamese.dyndns.org>
- <905315640807192120k45b8c0e3k5b341e77c466dde@mail.gmail.com>
- <alpine.DEB.1.00.0807201250530.3305@eeepc-johanness>
- <76718490807200545l653bbda1l4d13f1e1e698c855@mail.gmail.com>
- <7v4p6k8l36.fsf@gitster.siamese.dyndns.org>
- <20080720235933.GA12454@sigill.intra.peff.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Add a notice to the doc of git-ls-tree.
+Date: Mon, 21 Jul 2008 02:08:24 +0200
+Message-ID: <20080721000824.GI10151@machine.or.cz>
+References: <1216592735-23789-1-git-send-email-code@istique.net> <20080720230846.GH32184@machine.or.cz> <7vy73w16nj.fsf@gitster.siamese.dyndns.org> <7vtzek15b5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Tarmigan <tarmigan+git@gmail.com>, git@vger.kernel.org,
-	Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 21 02:08:17 2008
+Cc: Steve =?iso-8859-2?Q?Fr=E9cinaux?= <code@istique.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 02:09:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKiwq-0006ab-60
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 02:08:16 +0200
+	id 1KKiy3-0006tr-Ig
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 02:09:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758624AbYGUAGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 20:06:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758615AbYGUAGx
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 20:06:53 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63111 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758616AbYGUAGw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 20:06:52 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id AF5E334D59;
-	Sun, 20 Jul 2008 20:06:50 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 2360534D57; Sun, 20 Jul 2008 20:06:42 -0400 (EDT)
-In-Reply-To: <20080720235933.GA12454@sigill.intra.peff.net> (Jeff King's
- message of "Sun, 20 Jul 2008 19:59:33 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EAF8250E-56B8-11DD-A53F-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1758599AbYGUAI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 20:08:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758212AbYGUAI2
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 20:08:28 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:51217 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758550AbYGUAI0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 20:08:26 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id B1598393B32D; Mon, 21 Jul 2008 02:08:24 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vtzek15b5.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89272>
 
-Jeff King <peff@peff.net> writes:
+On Sun, Jul 20, 2008 at 04:53:02PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Petr Baudis <pasky@suse.cz> writes:
+> >
+> >> I think that ls-tree simply shouldn't auto-fill its pathspec based on
+> >> current prefix in case no pathspec was supplied. Patch to follow.
+> >
+> > Have you dug the list archive from mid-to-late December 2005 that prompted
+> > the current behaviour (and introduction of --full-name)?  I haven't.
+> 
+> Now, I did:
+> 
+>     http://thread.gmane.org/gmane.comp.version-control.git/13028/focus=13135
+> 
+> I think the answer is --full-name (cf. a69dd58 (ls-tree: chomp leading
+> directories when run from a subdirectory, 2005-12-23)).
 
-> But again, I haven ever felt the lack of this feature; such usage for me
-> always goes in scripts, where I am more than happy to write out "add .
-> && add -u && commit".
+I don't understand your point now.  --full-name cares only about the
+displaying part; do you suggest that it should be extended to also turn
+off prepending the prefix during the filtering phase? That would make a
+lot of sense, if you are not worried about compatibility trouble.
 
-The reason we did not have such "feature" so far was not because somebody
-high in the git foodchain was opposed to the idea, but simply because
-nobody came up with a usable patch to do so.
-
-I do not have anything fundamentally against "add -A" nor "commit -A".  To
-me, this is in "perhaps nice to have for some people, but I would not use
-it myself and I wouldn't bother" category, not in "I'm opposed -- it would
-promote bad workflow" cateogry.
+-- 
+			Petr "Pasky, missing something" Baudis
+As in certain cults it is possible to kill a process if you know
+its true name.  -- Ken Thompson and Dennis M. Ritchie
