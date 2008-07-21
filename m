@@ -1,164 +1,63 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 6/9] Allow add_path() to add non-existent directories to the path
-Date: Mon, 21 Jul 2008 21:19:55 +0200
-Message-ID: <1216667998-8879-7-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH 1/9] Makefile: Do not install a copy of 'git' in $(gitexecdir)
+Date: Mon, 21 Jul 2008 21:19:50 +0200
+Message-ID: <1216667998-8879-2-git-send-email-johannes.sixt@telecom.at>
 References: <1216667998-8879-1-git-send-email-johannes.sixt@telecom.at>
- <1216667998-8879-2-git-send-email-johannes.sixt@telecom.at>
- <1216667998-8879-3-git-send-email-johannes.sixt@telecom.at>
- <1216667998-8879-4-git-send-email-johannes.sixt@telecom.at>
- <1216667998-8879-5-git-send-email-johannes.sixt@telecom.at>
- <1216667998-8879-6-git-send-email-johannes.sixt@telecom.at>
 Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 21 21:21:57 2008
+X-From: git-owner@vger.kernel.org Mon Jul 21 21:21:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KL0x2-00025p-FU
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 21:21:40 +0200
+	id 1KL0wT-0001rx-FH
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 21:21:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754650AbYGUTUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 15:20:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754222AbYGUTUV
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 15:20:21 -0400
-Received: from smtp1.srv.eunet.at ([193.154.160.119]:39825 "EHLO
+	id S1754482AbYGUTUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 15:20:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754109AbYGUTUE
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 15:20:04 -0400
+Received: from smtp1.srv.eunet.at ([193.154.160.119]:39815 "EHLO
 	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754273AbYGUTUE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 15:20:04 -0400
+	with ESMTP id S1753143AbYGUTUD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 15:20:03 -0400
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp1.srv.eunet.at (Postfix) with ESMTP id 4D0EB33EC0;
-	Mon, 21 Jul 2008 21:20:02 +0200 (CEST)
+	by smtp1.srv.eunet.at (Postfix) with ESMTP id 08C5F33C3E;
+	Mon, 21 Jul 2008 21:20:00 +0200 (CEST)
 X-Mailer: git-send-email 1.6.0.rc0.18.g6aef2
-In-Reply-To: <1216667998-8879-6-git-send-email-johannes.sixt@telecom.at>
+In-Reply-To: <1216667998-8879-1-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89391>
 
-This function had used make_absolute_path(); but this function dies if
-the directory that contains the entry whose relative path was supplied in
-the argument does not exist. This is a problem if the argument is, for
-example, "../libexec/git-core", and that "../libexec" does not exist.
+There is already a copy in $(bindir). A subsequent patch will enable git
+to derive the exec-path from its invocation path. If git is invoked
+recursively, the first invocation puts the exec-path into PATH, so that
+the recursive invocation would find the instance in the exec-path. This
+second instance would again try to derive an exec-path from its invocation
+path, but would base its result on the wrong "bindir".
 
-Since the resolution of symbolic links is not required for elements in
-PATH, we can fall back to using make_nonrelative_path(), which simply
-prepends $PWD to the path.
-
-We have to move make_nonrelative_path() alongside make_absolute_path() in
-abspath.c so that git-shell can be linked. See 5b8e6f85f.
+We do install the copy of git first, but remove it later, so that we can
+use it as the source of the hardlinks for the builtins.
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- abspath.c  |   36 ++++++++++++++++++++++++++++++++++++
- exec_cmd.c |    2 +-
- path.c     |   36 ------------------------------------
- 3 files changed, 37 insertions(+), 37 deletions(-)
+ Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-diff --git a/abspath.c b/abspath.c
-index 4f95a95..0d56124 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -66,3 +66,39 @@ const char *make_absolute_path(const char *path)
- 
- 	return buf;
- }
-+
-+static const char *get_pwd_cwd(void)
-+{
-+	static char cwd[PATH_MAX + 1];
-+	char *pwd;
-+	struct stat cwd_stat, pwd_stat;
-+	if (getcwd(cwd, PATH_MAX) == NULL)
-+		return NULL;
-+	pwd = getenv("PWD");
-+	if (pwd && strcmp(pwd, cwd)) {
-+		stat(cwd, &cwd_stat);
-+		if (!stat(pwd, &pwd_stat) &&
-+		    pwd_stat.st_dev == cwd_stat.st_dev &&
-+		    pwd_stat.st_ino == cwd_stat.st_ino) {
-+			strlcpy(cwd, pwd, PATH_MAX);
-+		}
-+	}
-+	return cwd;
-+}
-+
-+const char *make_nonrelative_path(const char *path)
-+{
-+	static char buf[PATH_MAX + 1];
-+
-+	if (is_absolute_path(path)) {
-+		if (strlcpy(buf, path, PATH_MAX) >= PATH_MAX)
-+			die("Too long path: %.*s", 60, path);
-+	} else {
-+		const char *cwd = get_pwd_cwd();
-+		if (!cwd)
-+			die("Cannot determine the current working directory");
-+		if (snprintf(buf, PATH_MAX, "%s/%s", cwd, path) >= PATH_MAX)
-+			die("Too long path: %.*s", 60, path);
-+	}
-+	return buf;
-+}
-diff --git a/exec_cmd.c b/exec_cmd.c
-index c236034..0ed768d 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -50,7 +50,7 @@ static void add_path(struct strbuf *out, const char *path)
- 		if (is_absolute_path(path))
- 			strbuf_addstr(out, path);
- 		else
--			strbuf_addstr(out, make_absolute_path(path));
-+			strbuf_addstr(out, make_nonrelative_path(path));
- 
- 		strbuf_addch(out, PATH_SEP);
- 	}
-diff --git a/path.c b/path.c
-index 504eae0..9df447b 100644
---- a/path.c
-+++ b/path.c
-@@ -291,42 +291,6 @@ int adjust_shared_perm(const char *path)
- 	return 0;
- }
- 
--static const char *get_pwd_cwd(void)
--{
--	static char cwd[PATH_MAX + 1];
--	char *pwd;
--	struct stat cwd_stat, pwd_stat;
--	if (getcwd(cwd, PATH_MAX) == NULL)
--		return NULL;
--	pwd = getenv("PWD");
--	if (pwd && strcmp(pwd, cwd)) {
--		stat(cwd, &cwd_stat);
--		if (!stat(pwd, &pwd_stat) &&
--		    pwd_stat.st_dev == cwd_stat.st_dev &&
--		    pwd_stat.st_ino == cwd_stat.st_ino) {
--			strlcpy(cwd, pwd, PATH_MAX);
--		}
--	}
--	return cwd;
--}
--
--const char *make_nonrelative_path(const char *path)
--{
--	static char buf[PATH_MAX + 1];
--
--	if (is_absolute_path(path)) {
--		if (strlcpy(buf, path, PATH_MAX) >= PATH_MAX)
--			die ("Too long path: %.*s", 60, path);
--	} else {
--		const char *cwd = get_pwd_cwd();
--		if (!cwd)
--			die("Cannot determine the current working directory");
--		if (snprintf(buf, PATH_MAX, "%s/%s", cwd, path) >= PATH_MAX)
--			die ("Too long path: %.*s", 60, path);
--	}
--	return buf;
--}
--
- const char *make_relative_path(const char *abs, const char *base)
- {
- 	static char buf[PATH_MAX + 1];
+diff --git a/Makefile b/Makefile
+index 551bde9..cbab4f9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1335,6 +1335,7 @@ endif
+ 			'$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X'; \
+ 	fi
+ 	$(foreach p,$(BUILT_INS), $(RM) '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' && ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X' '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' ;)
++	$(RM) '$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X'
+ ifneq (,$X)
+ 	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), $(RM) '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p';)
+ endif
 -- 
 1.6.0.rc0.18.g6aef2
