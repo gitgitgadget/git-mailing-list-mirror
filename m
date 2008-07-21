@@ -1,138 +1,116 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git pull versus fetch/merge
-Date: Mon, 21 Jul 2008 12:23:20 +0200
-Message-ID: <20080721102320.GA19776@atjola.homenet>
-References: <488452D6.1060508@keyaccess.nl>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008 projects?
+Date: Mon, 21 Jul 2008 12:23:45 +0200
+Message-ID: <200807211223.45707.jnareb@gmail.com>
+References: <200807080227.43515.jnareb@gmail.com> <200807210029.31543.jnareb@gmail.com> <1216601739.6523.48.camel@maia.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Takashi Iwai <tiwai@suse.de>
-To: Rene Herman <rene.herman@keyaccess.nl>
-X-From: git-owner@vger.kernel.org Mon Jul 21 12:24:30 2008
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Joshua Roys <roysjosh@gmail.com>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Mon Jul 21 12:25:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKsZC-0007gH-6D
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 12:24:30 +0200
+	id 1KKsZY-0007qX-Rk
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 12:24:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756616AbYGUKXZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jul 2008 06:23:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755674AbYGUKXZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 06:23:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50765 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755145AbYGUKXY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 06:23:24 -0400
-Received: (qmail invoked by alias); 21 Jul 2008 10:23:22 -0000
-Received: from i577B81BB.versanet.de (EHLO atjola.local) [87.123.129.187]
-  by mail.gmx.net (mp003) with SMTP; 21 Jul 2008 12:23:22 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/1HzYdwav1x0Xq2HBo7ZVlTzz3Zmwy4918q5MxLm
-	ZGqxLJKZuEN7hJ
+	id S1756814AbYGUKXx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 06:23:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755674AbYGUKXx
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 06:23:53 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:41535 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757229AbYGUKXw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 06:23:52 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so435131nfc.21
+        for <git@vger.kernel.org>; Mon, 21 Jul 2008 03:23:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=cD9LBVbPVz9/EyqVbzaHqMc0lzYnlMmsNIQyNtkwmFQ=;
+        b=m8zlm5S3GUB3+EsSIBGKoG0j7WEQ+xvq0oOAp0tYKUwqWz9rHJArgRzW5BJYtvBXpt
+         vT/2CYTA9Kj0JXhwo2wLx66BAY6l1ic5kBVWF1+AgGQMVOjTS9AzJo1b06nkL6APT87y
+         XCTdJR/WTIdXBcUTJtDknwItdq5klDMdm1e3c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=WumiO6wKDu0LiOGZGWyCsRsVZlAVcwjaxR0O1PSgL1szw108EkMcNSThT2G20/Llt9
+         HmkiLe/AS/le2HDzVhHrV7rla3Xs1tIH7Prl9LqFLzGYsNgHl/y/Mby+0BqQPuJp/Hwo
+         Hiv2Ls0ccwNfnOWCCBV7w7oyndDlR3N8VU7YM=
+Received: by 10.210.87.19 with SMTP id k19mr3093771ebb.176.1216635831062;
+        Mon, 21 Jul 2008 03:23:51 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.212.51])
+        by mx.google.com with ESMTPS id z33sm7274706ikz.0.2008.07.21.03.23.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 21 Jul 2008 03:23:49 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1216601739.6523.48.camel@maia.lan>
 Content-Disposition: inline
-In-Reply-To: <488452D6.1060508@keyaccess.nl>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89335>
 
-On 2008.07.21 11:11:50 +0200, Rene Herman wrote:
-> Good day.
->
-> A while ago I was here asking about "git pull" versus "git merge" for=
- =20
-> local branches -- now I see a difference for remote ones that I'm not=
- =20
-> sure should be there.
->
-> I gathered before that "git pull <remote> <branch>" should basically =
-be =20
-> shorthand for "git fetch <remote>, git merge <remote>/<branch>". Is t=
-hat =20
-> correct?
->
-> I'm seeing a problem I believe with a specific repository:
->
-> rene@7ixe4:~/src/linux/7ixe4$ git remote show tiwai
-> * remote tiwai
->   URL: git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound-2.6
->   Tracked remote branches
->     devel dma-fix for-linus master upstream
->
-> with "git pull tiwai devel" everything goes well:
->
-> rene@7ixe4:~/src/linux/7ixe4$ git status
-> # On branch master
-> nothing to commit (working directory clean)
-> rene@7ixe4:~/src/linux/7ixe4$ git branch tmp0 v2.6.26
-> rene@7ixe4:~/src/linux/7ixe4$ git branch tmp1 v2.6.26
-> rene@7ixe4:~/src/linux/7ixe4$ git checkout tmp0
-> Switched to branch "tmp0"
-> rene@7ixe4:~/src/linux/7ixe4$ git pull tiwai devel
-> Updating bce7f79..e0bf09b
-> Fast forward
->  Documentation/sound/alsa/ALSA-Configuration.txt    |   17 +-
->  [ ... ]
->
-> and I get a clean merge.
+On Mon, 21 July 2008, Sam Vilain wrote:
+> On Mon, 2008-07-21 at 00:29 +0200, Jakub Narebski wrote:
+> >
+> > 1. GitTorrent
+> >  
+> > Student: Joshua Roys
+> > Mentor: Sam Vilain
+> > 
+> > I never got more response than "it is going slower than I would like, 
+> > [...] Other than that, it's going well, I think." from Joshua Roys.
+> 
+> > Mailing list archives for gittorrent mailing list doesn't show anything 
+> > interesting, either (last post is from 2007).
+> >   http://lists.utsl.gen.nz/pipermail/gittorrent/
+> 
+> That's a valid complaint.  I've posted a summary of the project status
+> there, and will keep as much related discussion as appropriate on-list
+> from here.
 
-"git pull remote branch" does "git fetch remote branch". That only
-fetches that single branch and stores it in FETCH_HEAD. The merge part
-then merges what is in FETCH_HEAD into your current branch.
+You can find it on GMane, too:
+  http://thread.gmane.org/gmane.comp.version-control.git.gittorrent/1
 
-> On the other hand, if I try to do this with a  fetch/merge, I get:
->
-> rene@7ixe4:~/src/linux/7ixe4$ git checkout tmp1
-> Switched to branch "tmp1"
-> rene@7ixe4:~/src/linux/7ixe4$ git fetch tiwai
-> From git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound-2.6
->  ! [rejected]        devel      -> tiwai/devel  (non fast forward)
->  ! [rejected]        dma-fix    -> tiwai/dma-fix  (non fast forward)
->  ! [rejected]        master     -> tiwai/master  (non fast forward)
+It would be nice if it was send to git mailing list too, perhaps
+directing replies to gittorrent mailing list only by default.
 
-The rejected branches had their history rewritten since your last fetch=
-=2E
-Git rejects to update your remote tracking branches in that case. The
-history rewriting might have been an accident, or it might have been
-intentional. Only the owner of that repo is able to tell that.
+A short summary of this thread (please correct me if I am wrong):
 
-You can use -f to force the updates.
+ * Tracker: representing "metainfo" files, working tracker (test)
+   is in progress
 
-> rene@7ixe4:~/src/linux/7ixe4$ git merge tiwai/devel
-> Auto-merged sound/pci/ac97/ac97_patch.c
-> Auto-merged sound/pci/emu10k1/emu10k1_main.c
-> Auto-merged sound/pci/hda/patch_analog.c
-> Auto-merged sound/pci/hda/patch_realtek.c
-> CONFLICT (content): Merge conflict in sound/pci/hda/patch_realtek.c
-> Auto-merged sound/pci/hda/patch_sigmatel.c
-> Automatic merge failed; fix conflicts and then commit the result.
->
-> and me no happy...
->
-> It probably has something to do with that " ! [rejected]" but what is=
- =20
-> that about? Is the repo bad? (and if so, I suspect owner will want to=
- =20
-> know how to avoid it in the future).
->
-> And if it is bad, should I be seeing something with the pull method =20
-> also? Moreover... can I now trust my tmp0 branch?
+ * Core infrastructure: "Commit Reel" sorting algorithm implemented[1]
+   B-tree index for fast querying.
 
-Your fetch/merge approach was different from what your pull approach
-did. tiwai/devel did not get updated by the fetch, which means that you
-tried to merge the old state of that branch and that caused some
-conflicts. OTOH the pull did fetch the latest state from the remote rep=
-o
-and merged that cleanly.
+   To be done is determining minimal set of edge objects which define
+   reel (that can be passed to "git rev-list --objects-edge" to get thin
+   pack representing reel).
 
-Your fetch/merge approach was more like "git pull" without any
-arguments, but with the current branch setup to track tiwai/devel. In
-that case, pull really does a "git fetch tiwai", and it should fail in
-the same way.
+ * Peer to Peer: handshake and two trivial messages[2] implemented.
+   To be done are (minimally) "References", "Blocks", "Request" and
+   "Play" messages.
 
-Bj=F6rn
+Footnotes:
+==========
+[*1*] "the current implementation is quite slow (requiring two calls to
+'git-cat-file' for each object)" <-- why you don't use '--batch' or
+'--batch-check' options to git cat file: see also Git::Repo and friends
+implementation send by Lea Wiemann to git mailing list as part of
+"Gitweb caching" project?  BTW. by keeping discussion off the list,
+you are off the knowledge of git community, too.
+
+[*2*] _What_ are those "two trivial messages"?
+
+-- 
+Jakub Narebski
+Poland
