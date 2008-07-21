@@ -1,113 +1,149 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008
-	projects?
-Date: Sun, 20 Jul 2008 22:22:03 -0500
-Message-ID: <20080721032203.GB2275@spearce.org>
-References: <200807080227.43515.jnareb@gmail.com> <200807210029.31543.jnareb@gmail.com>
+From: <ncrfgs@tin.it>
+Subject: making a branch with just one file and keeping its whole history
+Date: Mon, 21 Jul 2008 06:18:04 +0200
+Message-ID: <20080721061804.223f7801@mail.tin.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
-	Joshua Roys <roysjosh@gmail.com>,
-	Sverre Rabbelier <alturin@gmail.com>,
-	Sverre Rabbelier <sverre@rabbelier.nl>,
-	David Symonds <dsymonds@gmail.com>,
-	Lea Wiemann <LeWiemann@gmail.com>,
-	John Hawley <warthog19@eaglescrag.net>,
-	Marek Zawirski <marek.zawirski@gmail.com>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 21 05:23:09 2008
+Content-Type: multipart/signed; boundary="Sig_/gFaIBxTxjKsf6.LHxJIoCPA";
+ protocol="application/pgp-signature"; micalg=PGP-SHA1
+Cc: madewokherd@gmail.com, ncrfgs@tin.it
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 21 06:24:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKlzQ-0005cY-DI
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 05:23:08 +0200
+	id 1KKmwf-00077O-Tm
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 06:24:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759754AbYGUDWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 23:22:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759067AbYGUDWG
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 23:22:06 -0400
-Received: from george.spearce.org ([209.20.77.23]:33144 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758832AbYGUDWF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 23:22:05 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 39BD0383A5; Mon, 21 Jul 2008 03:22:03 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200807210029.31543.jnareb@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751451AbYGUEXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 00:23:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751414AbYGUEXV
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 00:23:21 -0400
+Received: from vsmtp4.tin.it ([212.216.176.224]:57921 "EHLO vsmtp4.tin.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751131AbYGUEXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 00:23:20 -0400
+X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Jul 2008 00:23:15 EDT
+Received: from mail.tin.it (87.11.137.129) by vsmtp4.tin.it (8.0.016.5)
+        id 485F5E75015BBC61; Mon, 21 Jul 2008 06:18:09 +0200
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89297>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> 1. GitTorrent
->  
-> Student: Joshua Roys
-> Mentor: Sam Vilain
-...
-> There is some activity there... but no summary of it anywhere I could 
-> find. (I wonder if this was the project Johannes and Shawn were talking 
-> about of "going dark" in GSoC 2008 podcast 018...)
+--Sig_/gFaIBxTxjKsf6.LHxJIoCPA
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Yes, this is the project I referred to in the podcast about going dark.
- 
-> 4. Eclipse plugin push support
->  
-> Student: Marek Zawirski
-> Mentor: Shawn O. Pearce
-> 
-> [...] Marek and I simply decided that protocol support was more
-> important than really tight network transport at this point in time.
+Hi,
 
-Correction, the "I" in "Marek and I" isn't Jakub, its Shawn.  This
-is just an editing mistake due to copy and paste from earlier thread.
-Apparently my original paragraph here was already a nice summary of
-the projects decisions thus far.
+I have a working local repository and I'd like to make a branch with just o=
+ne
+file (let's say path2/filename2) and to keep its whole history.
 
-I'm likely to be offline much of the rest of this week (I got lucky
-and found an open access point just now) but Marek is actively
-working on user interface for push support, and I think if he finds
-the time is considering adding delta generation.  That will be a
-lot more time consuming as I think he needs to go back to original
-academic papers to learn an LCS algorithm and then implement that.
+At first I've considered creating a fresh new repo and redirecting
+`git-log -p --follow path2/filename2` output to some other git command.
 
-Copyright and licenses around libxdiff and delta-diff.c won't allow
-us to directly port the diff code to Java and our BSD license.  No,
-I don't want to start a BSD-GPL license war.  Our decision to go
-BSD in jgit may be a thorn in our side in areas such as this, but it
-is probably better for our long-term goals of working more directly
-with the Eclipse Foundation and perhaps also the NetBeans folks.
+When later I've discussed the topic on #git@irc.freenode.net I've been poin=
+ted to
+git-filter-branch.
 
-> SUMMARY:
-> ========
-> From those projects, "git-merge builtin" did what it was meant to do 
-> already.  "Eclipse plugin push support" and "git-statistics" did 
-> minimum what it was meant to do already, and it looks like it would be 
-> finished before August 11.  "Gitweb caching" is after first round of 
-> patches, "git-sequencer" looks like already done; I don't know what is 
-> the state of "GitTorrent" project.
-> 
-> Please correct any mistakes in this summary / writeup.  Thanks in 
-> advance.
+Searching for more info about git-filter-branch on the web I've found a cou=
+ple of
+examples that might be close to what I'd like to accomplish:
 
-I think this is a pretty good summary.  I want to go through the
-mid-term evaluations and summarize those for the mailing list but
-I have not had a chance to do that yet.  With network being spotty
-for the rest of this week it probably won't happen until the weekend.
+from http://loupgaroublond.blogspot.com/2007/12/how-to-split-repository-in-=
+git.html
+	$ git filter-branch --tree-filter 'rm -rf $put_the_files_you_want_to_remov=
+e_here' HEAD
+	$ git reset --hard
+	$ git gc --aggressive
+	$ git prune
 
-I think the quick summary is our students and our mentors think
-their projects are going well.  Jakub's summary above suggests
-very much the same thing.  Its hard to claim a GSoC project isn't
-meeting its goals when the code is already merged, or is at least
-under active patch review.  ;-)
+from http://log.emmanuelebassi.net/archives/2007/09/when-the-levee-breaks/
+	$ git clone --no-hardlinks /tmp/gtk2-perl Gtk2-SourceView.git
+	$ git filter-branch --subdirectory-filter Gtk2-SourceView HEAD
+	$ git reset --hard
+	$ git gc --aggressive
+	$ git prune
 
--- 
-Shawn.
+I've also gone through man pages and I've found something interesting:
+	$ git-filter-branch --tree-filter 'rm $filename' HEAD
+or, as far as I understood, equivalent and faster:
+	$ git-filter-branch --index-filter 'git-update-index --remove $filename' H=
+EAD=20
+
+Now, what I'd like to do is complementary to the above example; the differe=
+nce is
+that I don't want to remove just one file and its traces from history; rath=
+er I'd
+like to have a new repo which includes just that file and its history.
+
+So I would need something like the following command:
+	$ git-filter-branch --tree-filter 'keep(?) $filename' HEAD
+
+I think one possible solution would be:
+	$ git-filter-branch --tree-filter 'find ! -type d | grep -v "^./path2/file=
+name2$" | while read FILE; do rm $FILE; done' HEAD
+
+Problems come, I think, if the content you want to keep track of, is placed=
+ in a
+file that has been renamed. For example, let's say that the content you wan=
+t to
+keep track of was in:
+	path1/filename1 from commit 1 to commit 1000
+	path2/filename1 from commit 1001 to commit 2000
+	path2/filename2 from commit 2001 to commit 3000
+
+In this case I think one possible solution would be:
+	$ git-filter-branch --tree-filter 'find ! -type d | grep -v "^./path1/file=
+name1$" | grep -v "^./path2/filename1$" | grep -v "^./path2/filename2$" | w=
+hile read FILE; do rm $FILE; done' HEAD
+
+But what happens if in the meanwhile a new file has been created with one o=
+f the
+names we used for the content we want to keep track of? Let's say, followin=
+g the
+previous case, that path2/filename1 has been renamed to path2/filename2 with
+commit 2001, and that with commit 2500 a new file has been created with name
+path1/filename1.
+
+Considering both the solutions I've found on the web and the ones I've been
+suggested on #git@irc.freenode.net I've found four/five possible path to fo=
+llow:
+	a) git log | another git command (later I've been told that git log --foll=
+ows leaves out the initial revision)
+	b) git clone; git filter-branch
+	c) create a new repo with your one file and make an initial commit
+	   then do: (cd repo-with-one-file; git ls-tree)|(cd repo-where-you-want-t=
+he-new-branch; git-mktree)
+	d) git commit-tree that-tree < file-with-commit-message
+	   then: git checkout -b branchname that-commit
+	e) git-am or git apply processing the output of git-log or another
+	   similar command
+
+I hope you guys can help me to make some light on this issue.
+
+
+Thanks in advance. :D
+
+
+P.S.
+Sorry for my bad english but I'm not a native english speaker, I hope that =
+what
+I've written made enough sense to you. :)
+
+--Sig_/gFaIBxTxjKsf6.LHxJIoCPA
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Disposition: attachment; filename=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (GNU/Linux)
+
+iEYEARECAAYFAkiEDfwACgkQ8UJozN0kXhkN4wCg4upCrhwOsqG/9wJfXkTfUkLp
+lAMAoI8vaLte9c0XkJDe1CoCjDHWV2TF
+=4Q1n
+-----END PGP SIGNATURE-----
+
+--Sig_/gFaIBxTxjKsf6.LHxJIoCPA--
