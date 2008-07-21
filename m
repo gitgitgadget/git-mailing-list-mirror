@@ -1,103 +1,88 @@
-From: Rene Herman <rene.herman@keyaccess.nl>
-Subject: git pull versus fetch/merge
-Date: Mon, 21 Jul 2008 11:11:50 +0200
-Message-ID: <488452D6.1060508@keyaccess.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Takashi Iwai <tiwai@suse.de>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [PATCH] Enable threaded delta search on *BSD and Linux.
+Date: Mon, 21 Jul 2008 11:23:43 +0200
+Message-ID: <1216632223-14655-1-git-send-email-madcoder@debian.org>
+Cc: gitster@pobox.com, Pierre Habouzit <madcoder@debian.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 21 11:10:46 2008
+X-From: git-owner@vger.kernel.org Mon Jul 21 11:24:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKrPi-0005Hd-VR
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 11:10:39 +0200
+	id 1KKrdP-0000q7-Rq
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 11:24:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754612AbYGUJJi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 05:09:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754806AbYGUJJi
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 05:09:38 -0400
-Received: from smtpq1.tilbu1.nb.home.nl ([213.51.146.200]:45213 "EHLO
-	smtpq1.tilbu1.nb.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754169AbYGUJJh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 05:09:37 -0400
-Received: from [213.51.146.190] (port=45209 helo=smtp1.tilbu1.nb.home.nl)
-	by smtpq1.tilbu1.nb.home.nl with esmtp (Exim 4.60)
-	(envelope-from <rene.herman@keyaccess.nl>)
-	id 1KKrOi-0003Kv-OW; Mon, 21 Jul 2008 11:09:36 +0200
-Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:50909 helo=[192.168.0.3])
-	by smtp1.tilbu1.nb.home.nl with esmtp (Exim 4.60)
-	(envelope-from <rene.herman@keyaccess.nl>)
-	id 1KKrOi-0004dv-FW; Mon, 21 Jul 2008 11:09:36 +0200
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-X-Spam-Score: -1.0 (-)
+	id S1755284AbYGUJXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 05:23:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755034AbYGUJXr
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 05:23:47 -0400
+Received: from pan.madism.org ([88.191.52.104]:57707 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754703AbYGUJXq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 05:23:46 -0400
+Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 8D90E30D77;
+	Mon, 21 Jul 2008 11:23:45 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 188CB4AD4; Mon, 21 Jul 2008 11:23:44 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.4.571.g61acac
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89327>
 
-Good day.
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
 
-A while ago I was here asking about "git pull" versus "git merge" for 
-local branches -- now I see a difference for remote ones that I'm not 
-sure should be there.
+  Following the discussion we had 10 days ago, here is a proposal to enable
+  threaded delta search on systems that are likely to behave properly wrt
+  memory and CPU usage.
 
-I gathered before that "git pull <remote> <branch>" should basically be 
-shorthand for "git fetch <remote>, git merge <remote>/<branch>". Is that 
-correct?
+ Makefile |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-I'm seeing a problem I believe with a specific repository:
-
-rene@7ixe4:~/src/linux/7ixe4$ git remote show tiwai
-* remote tiwai
-   URL: git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound-2.6
-   Tracked remote branches
-     devel dma-fix for-linus master upstream
-
-with "git pull tiwai devel" everything goes well:
-
-rene@7ixe4:~/src/linux/7ixe4$ git status
-# On branch master
-nothing to commit (working directory clean)
-rene@7ixe4:~/src/linux/7ixe4$ git branch tmp0 v2.6.26
-rene@7ixe4:~/src/linux/7ixe4$ git branch tmp1 v2.6.26
-rene@7ixe4:~/src/linux/7ixe4$ git checkout tmp0
-Switched to branch "tmp0"
-rene@7ixe4:~/src/linux/7ixe4$ git pull tiwai devel
-Updating bce7f79..e0bf09b
-Fast forward
-  Documentation/sound/alsa/ALSA-Configuration.txt    |   17 +-
-  [ ... ]
-
-and I get a clean merge. On the other hand, if I try to do this with a 
-fetch/merge, I get:
-
-rene@7ixe4:~/src/linux/7ixe4$ git checkout tmp1
-Switched to branch "tmp1"
-rene@7ixe4:~/src/linux/7ixe4$ git fetch tiwai
- From git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound-2.6
-  ! [rejected]        devel      -> tiwai/devel  (non fast forward)
-  ! [rejected]        dma-fix    -> tiwai/dma-fix  (non fast forward)
-  ! [rejected]        master     -> tiwai/master  (non fast forward)
-rene@7ixe4:~/src/linux/7ixe4$ git merge tiwai/devel
-Auto-merged sound/pci/ac97/ac97_patch.c
-Auto-merged sound/pci/emu10k1/emu10k1_main.c
-Auto-merged sound/pci/hda/patch_analog.c
-Auto-merged sound/pci/hda/patch_realtek.c
-CONFLICT (content): Merge conflict in sound/pci/hda/patch_realtek.c
-Auto-merged sound/pci/hda/patch_sigmatel.c
-Automatic merge failed; fix conflicts and then commit the result.
-
-and me no happy...
-
-It probably has something to do with that " ! [rejected]" but what is 
-that about? Is the repo bad? (and if so, I suspect owner will want to 
-know how to avoid it in the future).
-
-And if it is bad, should I be seeing something with the pull method 
-also? Moreover... can I now trust my tmp0 branch?
-
-Rene.
+diff --git a/Makefile b/Makefile
+index 551bde9..82f89b7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -565,9 +565,11 @@ EXTLIBS =
+ 
+ ifeq ($(uname_S),Linux)
+ 	NO_STRLCPY = YesPlease
++	THREADED_DELTA_SEARCH = YesPlease
+ endif
+ ifeq ($(uname_S),GNU/kFreeBSD)
+ 	NO_STRLCPY = YesPlease
++	THREADED_DELTA_SEARCH = YesPlease
+ endif
+ ifeq ($(uname_S),UnixWare)
+ 	CC = cc
+@@ -665,6 +667,7 @@ ifeq ($(uname_S),FreeBSD)
+ 	BASIC_CFLAGS += -I/usr/local/include
+ 	BASIC_LDFLAGS += -L/usr/local/lib
+ 	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
++	THREADED_DELTA_SEARCH = YesPlease
+ endif
+ ifeq ($(uname_S),OpenBSD)
+ 	NO_STRCASESTR = YesPlease
+@@ -672,6 +675,7 @@ ifeq ($(uname_S),OpenBSD)
+ 	NEEDS_LIBICONV = YesPlease
+ 	BASIC_CFLAGS += -I/usr/local/include
+ 	BASIC_LDFLAGS += -L/usr/local/lib
++	THREADED_DELTA_SEARCH = YesPlease
+ endif
+ ifeq ($(uname_S),NetBSD)
+ 	ifeq ($(shell expr "$(uname_R)" : '[01]\.'),2)
+@@ -680,6 +684,7 @@ ifeq ($(uname_S),NetBSD)
+ 	BASIC_CFLAGS += -I/usr/pkg/include
+ 	BASIC_LDFLAGS += -L/usr/pkg/lib
+ 	ALL_LDFLAGS += -Wl,-rpath,/usr/pkg/lib
++	THREADED_DELTA_SEARCH = YesPlease
+ endif
+ ifeq ($(uname_S),AIX)
+ 	NO_STRCASESTR=YesPlease
+-- 
+1.6.0.rc0.137.g986dd
