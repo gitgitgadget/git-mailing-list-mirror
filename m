@@ -1,84 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (stable)
-Date: Mon, 21 Jul 2008 00:09:08 -0700
-Message-ID: <7vod4rvhm3.fsf@gitster.siamese.dyndns.org>
+From: Peter Vun <pvun@ics.mq.edu.au>
+Subject: cygwin git and network drives
+Date: Mon, 21 Jul 2008 07:09:47 +0000 (UTC)
+Message-ID: <loom.20080721T065829-347@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 21 09:10:15 2008
+X-From: git-owner@vger.kernel.org Mon Jul 21 09:16:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKpXD-0008Oh-2z
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 09:10:15 +0200
+	id 1KKpcv-0001G0-Pr
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 09:16:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752286AbYGUHJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 03:09:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751980AbYGUHJQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 03:09:16 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34794 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750719AbYGUHJP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 03:09:15 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5AB1335A6C;
-	Mon, 21 Jul 2008 03:09:14 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 46B9135A6B; Mon, 21 Jul 2008 03:09:10 -0400 (EDT)
-X-maint-at: 2d9c572578c72bd6691e80a9feed7d631baf007f
-X-master-at: 93310a40eb022a0e36e7c618921931d8ffc31fd1
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: ECC038E6-56F3-11DD-AA51-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751661AbYGUHPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 03:15:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750825AbYGUHPI
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 03:15:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:60212 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750719AbYGUHPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 03:15:07 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1KKpbq-0007vv-IQ
+	for git@vger.kernel.org; Mon, 21 Jul 2008 07:15:03 +0000
+Received: from CPE-61-9-196-200.static.nsw.bigpond.net.au ([61.9.196.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Jul 2008 07:15:02 +0000
+Received: from pvun by CPE-61-9-196-200.static.nsw.bigpond.net.au with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Jul 2008 07:15:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 61.9.196.200 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.16) Gecko/20080702 Firefox/2.0.0.16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89313>
 
-As announced in a separate message, the tip of master was tagged as
-1.6.0-rc0; for people who neglected futureproofing themselves so far, it
-would really be a good time to seriously consider doing so.
+Hi Guys, 
 
-* The 'maint' branch has these fixes since the last announcement.
+I'm currently testing Git on our office network and I noticed on 
+the following site
 
-Jonathan Nieder (1):
-  fix usage string for git grep
+http://git.or.cz/gitwiki/CygwinBinaryInstall
 
-Junio C Hamano (1):
-  refresh-index: fix bitmask assignment
+that is says
 
+Use git on local NTFS disks -- Network drives disks don't support the
+filesystem semantics GIT needs; for interoperability purposes you 
+can store bare repositories on FAT32 disks.
 
-* The 'master' branch has these since the last announcement
-  in addition to the above.
+Does anyone know if the above statement is still valid? Personally, I've 
+tested cygwin Git with network drives a couple of times and I haven't 
+encountered any problems, (yet!!). 
 
-Avery Pennarun (1):
-  Reword "your branch has diverged..." lines to reduce line length
+Any details on Git's limits with regards to this issue would be much
+appreciated. 
 
-Dmitry Potapov (1):
-  git-svn: fix git svn info to work without arguments
-
-Junio C Hamano (8):
-  rerere.autoupdate: change the message when autoupdate is in effect
-  builtin-add.c: restructure the code for maintainability
-  git-add --all: add all files
-  git-add --all: tests
-  git-add --all: documentation
-  Link shell with compat layer functions
-  Move read_in_full() and write_in_full() to wrapper.c
-  "needs update" considered harmful
-
-Lars Noschinski (1):
-  cvsserver: Add testsuite for packed refs
-
-Michele Ballabio (2):
-  builtin-merge.c: Fix option parsing
-  builtin-push.c: Cleanup - use OPT_BIT() and remove some variables
-
-Miklos Vajna (1):
-  Teach 'git merge' that some merge strategies no longer exist
-
-Nanako Shiraishi (1):
-  git am --abort
+Cheers
+Peter
