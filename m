@@ -1,69 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] git-mv: Keep moved index entries inact
-Date: Sun, 20 Jul 2008 21:36:57 -0700
-Message-ID: <7vd4l7yhsm.fsf@gitster.siamese.dyndns.org>
-References: <20080721002354.GK10151@machine.or.cz>
- <20080721002508.26773.92277.stgit@localhost>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Jul 21 06:38:10 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] Ensure that SSH runs in non-interactive mode
+Date: Mon, 21 Jul 2008 07:07:15 +0200
+Message-ID: <5226AAB4-379A-4C44-870A-6040A61C66C1@zib.de>
+References: <1216487215-6927-1-git-send-email-fredrik@dolda2000.com> <1216490252.10694.58.camel@koto.keithp.com> <1216491512.3911.9.camel@pc7.dolda2000.com> <alpine.DEB.1.00.0807201214060.3305@eeepc-johanness> <7v63r0bejy.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807202035090.3305@eeepc-johanness> <7vhcak5o6n.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v926)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Fredrik Tolf <fredrik@dolda2000.com>,
+	Keith Packard <keithp@keithp.com>, git@vger.kernel.org,
+	"Edward Z. Yang" <edwardzyang@thewritingpot.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 07:08:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKn9z-0001OS-V9
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 06:38:08 +0200
+	id 1KKndM-00079q-5J
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 07:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750755AbYGUEhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 00:37:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752210AbYGUEhH
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 00:37:07 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57425 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750724AbYGUEhG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 00:37:06 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 14BCC3532B;
-	Mon, 21 Jul 2008 00:37:05 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D08313532A; Mon, 21 Jul 2008 00:36:59 -0400 (EDT)
-In-Reply-To: <20080721002508.26773.92277.stgit@localhost> (Petr Baudis's
- message of "Mon, 21 Jul 2008 02:25:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: AB715CC2-56DE-11DD-96DF-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1760303AbYGUFH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 01:07:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760290AbYGUFH2
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 01:07:28 -0400
+Received: from mailer.zib.de ([130.73.108.11]:49259 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760288AbYGUFH1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 01:07:27 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m6L56pvX013265;
+	Mon, 21 Jul 2008 07:06:56 +0200 (CEST)
+Received: from [192.168.178.21] (brln-4db92842.pool.einsundeins.de [77.185.40.66])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m6L56nKf011969
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Mon, 21 Jul 2008 07:06:50 +0200 (MEST)
+In-Reply-To: <7vhcak5o6n.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.926)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89301>
 
-Petr Baudis <pasky@suse.cz> writes:
 
-> This patch introduces rename_index_entry_at() into the index toolkit,
-> which will rename an entry while removing any entries the new entry
-> might render duplicate. This is then used in git mv instead
-> of all the file queues, resulting in a major simplification
-> of the code and an inevitable change in git mv -n output format.
->
-> A new test has been added to the testsuite to reflect this change.
-> Also, based on suggestion by Junio about desired symlink behaviour
-> of git mv, I have added two tests for that; however, I do not have
-> need or desire to spend time fixing this, so they are expected
-> to fail for now until someone gets around to fixing that.
+On Jul 20, 2008, at 9:51 PM, Junio C Hamano wrote:
 
-I haven't looked into the builtin-mv changes to see how involved that fix
-would be yet (and I do not use "mv" and this is somewhat lower priority
-for me myself), but I did look at changes to read-cache.c.  I've queued a
-fixed up version in 'pu' for now but I am hoping that we can see some
-comments from more competent people on the patch and move the review
-result to 'next' shortly.
+> I do not know if "plink" is used widely enough to be special cased,  
+> but if
+> so, I think we would better have an explicit support for it.
 
-This may be a change in semantics, but after thinking about it a bit more,
-I think this can even go into maintenance series.  IOW, it is really a
-fix.  Nobody sane should have been relying on the old behaviour that new
-contents of dirty paths are staged in the index sometimes, which was
-simply just crazy.
+Our installer on Windows explicitly supports plink as an alternative to
+OpenSSH.  Putty has a GUI for managing your ssh keys (Pageant).  You  
+need
+to type your password only once to unlock a key and make it available to
+all connections that you start afterwards.
+
+I think it should be special cased.  I use plink myself.
+
+	Steffen
