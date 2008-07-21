@@ -1,70 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] Ensure that SSH runs in non-interactive mode
-Date: Mon, 21 Jul 2008 12:22:20 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807211221310.8986@racer>
-References: <1216598432-18553-1-git-send-email-fredrik@dolda2000.com> <alpine.DEB.1.00.0807210310330.3305@eeepc-johanness> <1216604693.3673.20.camel@pc7.dolda2000.com> <m3fxq3ws16.fsf@localhost.localdomain> <alpine.DEB.1.00.0807211255010.3305@eeepc-johanness>
- <20080721110436.GA8395@sigill.intra.peff.net>
+From: Rene Herman <rene.herman@keyaccess.nl>
+Subject: Re: git pull versus fetch/merge
+Date: Mon, 21 Jul 2008 13:30:12 +0200
+Message-ID: <48847344.5060908@keyaccess.nl>
+References: <488452D6.1060508@keyaccess.nl> <20080721102320.GA19776@atjola.homenet> <48846BC2.4090407@keyaccess.nl> <20080721110900.GA8550@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Fredrik Tolf <fredrik@dolda2000.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	git@vger.kernel.org, Takashi Iwai <tiwai@suse.de>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 21 13:23:29 2008
+X-From: git-owner@vger.kernel.org Mon Jul 21 13:29:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKtUB-0008Kn-4Y
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 13:23:23 +0200
+	id 1KKtZa-0001Z0-Is
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 13:28:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753399AbYGULWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 07:22:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751590AbYGULWY
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 07:22:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42067 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751087AbYGULWX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 07:22:23 -0400
-Received: (qmail invoked by alias); 21 Jul 2008 11:22:21 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp047) with SMTP; 21 Jul 2008 13:22:21 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18tkh0k8GUtEsyec0AeOCE4SN6kfUYTuPX20RbCQQ
-	Kiah1yI179ijoq
-X-X-Sender: gene099@racer
-In-Reply-To: <20080721110436.GA8395@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1751087AbYGUL17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 07:27:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbYGUL17
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 07:27:59 -0400
+Received: from smtpq2.tilbu1.nb.home.nl ([213.51.146.201]:44382 "EHLO
+	smtpq2.tilbu1.nb.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750719AbYGUL17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 07:27:59 -0400
+Received: from [213.51.146.189] (port=39142 helo=smtp2.tilbu1.nb.home.nl)
+	by smtpq2.tilbu1.nb.home.nl with esmtp (Exim 4.60)
+	(envelope-from <rene.herman@keyaccess.nl>)
+	id 1KKtYb-0006aQ-M1; Mon, 21 Jul 2008 13:27:57 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:39360 helo=[192.168.0.3])
+	by smtp2.tilbu1.nb.home.nl with esmtp (Exim 4.60)
+	(envelope-from <rene.herman@keyaccess.nl>)
+	id 1KKo0C-0005wt-25; Mon, 21 Jul 2008 07:32:04 +0200
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <20080721110900.GA8550@sigill.intra.peff.net>
+X-Spam-Score: 1.0 (+)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89348>
 
-Hi,
+On 21-07-08 13:09, Jeff King wrote:
 
-On Mon, 21 Jul 2008, Jeff King wrote:
-
-> On Mon, Jul 21, 2008 at 12:56:14PM +0200, Johannes Schindelin wrote:
+> On Mon, Jul 21, 2008 at 12:58:10PM +0200, Rene Herman wrote:
 > 
-> > > or syntax used in RPM spec macros
-> > > 
-> > >   %{?p:-P %p}
-> > > 
-> > > (and there is complementing %{!?<var>:<expansion>} in RPM spec macro
-> > > language).
-> > 
-> > Yes, this is overkill.  I would even have passed the port argument 
-> > _always_, since the port 22 for ssh is as likely to change as hell will 
-> > not freeze over.  Actually, I am not so sure about the latter.
+>> Thank you. Also due to a reply on the ALSA list by Mark brown I now get  
+>> this. Yes, the remote was rebased while I had it setup as a remote here  
+>> it seems; only recently have it under this name, so I didn't think that  
+>> was the case. After a "git remote rm tiwai, git remote add tiwai <url>"  
+>> things work fine again as it fetched a completely new branch.
 > 
-> But keep in mind that "-p 22" on the command line _overrides_ what the
-> user has in their ssh config, so it is not a good idea to pass it all
-> the time.
+> Note that adding the remote with "git remote add" will add a fetchspec
+> line like this:
+> 
+> [remote "tiwai"]
+>   fetch = +refs/heads/*:+refs/remotes/tiwai/*
+> 
+> where the '+' means to force fetching rewound branches instead of
+> rejecting them (this is safe, since you are just overwriting tracking
+> branches, not your local work).
 
-Oh, good point.  So we might need something distasteful as what Jakub 
-proposed... Hrmpf.
+Not here...
 
-Ciao,
-Dscho
+rene@7ixe4:~/src/linux/7ixe4$ git remote add tmp 
+git://git.alsa-project.org/alsa-kernel.git
+rene@7ixe4:~/src/linux/7ixe4$ tail -3 .git/config 
+
+[remote "tmp"]
+	url = git://git.alsa-project.org/alsa-kernel.git
+	fetch = refs/heads/*:refs/remotes/tmp/*
+rene@7ixe4:~/src/linux/7ixe4$ git --version
+git version 1.5.5
+
+> So this should not come up again; presumably your previous remote
+> configuration was set up differently.
+
+Must be something new or configuration dependent I presume? It's not an 
+option to git-remote it seems (but yes, thanks, I guess I'll add the +s 
+-- a failed merge is warning enough that I need to rebuild whatever 
+branch I'm pulling it into I guess).
+
+Rene.
