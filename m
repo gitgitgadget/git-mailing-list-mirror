@@ -1,57 +1,69 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] Fix git-shell build error when NO_SETENV is defined
-Date: Mon, 21 Jul 2008 03:29:28 +0200
-Message-ID: <20080721012928.GG5950@leksak.fem-net>
-References: <g60la4$diu$1@ger.gmane.org> <1216601017-7871-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0807210321190.3305@eeepc-johanness>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH/rfc] git-svn.perl: workaround assertions in svn library 1.5.0
+Date: Sun, 20 Jul 2008 18:29:55 -0700
+Message-ID: <20080721012955.GA14129@untitled>
+References: <20080706192850.32547.qmail@4480698c45f1ed.315fe32.mid.smarden.org> <20080717140856.10213.qmail@c0f13986110104.315fe32.mid.smarden.org> <37fcd2780807171137m1c5a8197vc94b2a42ac53a297@mail.gmail.com> <7vbq0tibuf.fsf@gitster.siamese.dyndns.org> <20080720201407.GM2925@dpotapov.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: SungHyun Nam <namsh@posdata.co.kr>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 21 03:30:35 2008
+Cc: Junio C Hamano <gitster@pobox.com>, Gerrit Pape <pape@smarden.org>,
+	git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 03:30:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKkET-0006cJ-Ky
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 03:30:34 +0200
+	id 1KKkEq-0006gT-8Q
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 03:30:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756171AbYGUB3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 21:29:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756146AbYGUB3e
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 21:29:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35133 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756107AbYGUB3e (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 21:29:34 -0400
-Received: (qmail invoked by alias); 21 Jul 2008 01:29:32 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp055) with SMTP; 21 Jul 2008 03:29:32 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX18VULQEiy0VVF20U2U4/5KKaDDlyOexjt/WhxPLQq
-	wdsAhS5PfAGtrv
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KKkDQ-0002mh-Mh; Mon, 21 Jul 2008 03:29:28 +0200
+	id S1756396AbYGUB35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 21:29:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756334AbYGUB35
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 21:29:57 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:55789 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755657AbYGUB34 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 21:29:56 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id B96087F419B;
+	Sun, 20 Jul 2008 18:29:55 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807210321190.3305@eeepc-johanness>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.82
+In-Reply-To: <20080720201407.GM2925@dpotapov.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89291>
 
-Johannes Schindelin wrote:
-> Funny.  It was not 24 hours ago that Hannes reported a related issue.  And 
-> he was testing with different options.
+Dmitry Potapov <dpotapov@gmail.com> wrote:
+> On Sat, Jul 19, 2008 at 06:27:36PM -0700, Junio C Hamano wrote:
+> > 
+> > So what's the conclusion of this issue?
+> > 
+> > I'll just revert 2fe403e (git-svn.perl: workaround assertions in svn
+> > library 1.5.0, 2008-07-06) for 1.6.0-rc0 unless I hear better
+> > suggestions.
+> 
+> I have tested the change that I proposed, and it seems to solve the
+> problem and, as far as I can tell, no other correction is necessary.
+> Yet, I don't really understand git-svn well, so I could be wrong.
+> 
+> Reverting 2fe403e will only help users of svn library 1.4, while all
+> new linux distributives, which will include Git 1.6.0, are going to
+> install svn library 1.5.0, and if you use svn library 1.5.0, reverting
+> 2fe403e does not fix anything but only add one more bug. Thus, unless
+> we are going to require to install git-svn only with svn library 1.4,
+> reverting this change does not seem to be very helpful for most users.
+> 
+> So, I hope my patch is better solution...
+> 
+> Dmitry
 
-Oh, seems that I have missed that topic. Gna :)
+Thanks Dmitry,
 
-But fine if everything is working again then.
-
-Regards.
+Your patch works for me on 1.4.3, so if it works with
+1.5.0, consider it: Acked-by: Eric Wong <normalperson@yhbt.net>
 
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+Eric Wong
