@@ -1,85 +1,113 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: [PATCH 2/2] git-add -a: add all files
-Date: Sun, 20 Jul 2008 22:11:08 -0400
-Message-ID: <76718490807201911j11bd4b3k914cec91485f9e0e@mail.gmail.com>
-References: <alpine.DEB.1.00.0807161804400.8950@racer>
-	 <alpine.DEB.1.00.0807171940160.8986@racer>
-	 <48806897.1080404@fastmail.fm>
-	 <76718490807181318o228171f9j836aaca2edb9b377@mail.gmail.com>
-	 <7vsku5grpr.fsf@gitster.siamese.dyndns.org>
-	 <7vk5fhgrm6.fsf_-_@gitster.siamese.dyndns.org>
-	 <905315640807192120k45b8c0e3k5b341e77c466dde@mail.gmail.com>
-	 <alpine.DEB.1.00.0807201250530.3305@eeepc-johanness>
-	 <76718490807200545l653bbda1l4d13f1e1e698c855@mail.gmail.com>
-	 <7v4p6k8l36.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008
+	projects?
+Date: Sun, 20 Jul 2008 22:22:03 -0500
+Message-ID: <20080721032203.GB2275@spearce.org>
+References: <200807080227.43515.jnareb@gmail.com> <200807210029.31543.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	Tarmigan <tarmigan+git@gmail.com>, git@vger.kernel.org,
-	"Michael J Gruber" <michaeljgruber+gmane@fastmail.fm>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 21 04:12:15 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Joshua Roys <roysjosh@gmail.com>,
+	Sverre Rabbelier <alturin@gmail.com>,
+	Sverre Rabbelier <sverre@rabbelier.nl>,
+	David Symonds <dsymonds@gmail.com>,
+	Lea Wiemann <LeWiemann@gmail.com>,
+	John Hawley <warthog19@eaglescrag.net>,
+	Marek Zawirski <marek.zawirski@gmail.com>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 05:23:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKksl-0006Dv-J3
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 04:12:11 +0200
+	id 1KKlzQ-0005cY-DI
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 05:23:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758568AbYGUCLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 22:11:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758557AbYGUCLK
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 22:11:10 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:32661 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758565AbYGUCLJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 22:11:09 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so423994ywe.1
-        for <git@vger.kernel.org>; Sun, 20 Jul 2008 19:11:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Xy8Zg1yN3lmcsyEVnCwUkJ7yhOai2qS1pVfqlgN9ESQ=;
-        b=qIyQEzHAdnw8fPAY8axdnPgNTe3pUucQdENRq7ZMfHh7vup8fdek6KO17pVLB8tI41
-         FT3SndUFyy9NnJprDG09O74g2QHkqa2TMqwj1Fps68JHhZq2J26mBlYNNIT2zaTyA6Zk
-         pANo2F1p2JXiiO57XWlMcRTeggmR89mcFcwv0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=svS2wLGY0yDSJaWI70EJtzAdhRsPR9NgV4Np2YsQNb67Ur9NGj+3j1YtBiF6Znkree
-         tT23RIfXNgAPASjPuVZ6dW/6ClBzlEgHvWqPiySlvIMhv9X+9fccU1O/WDPnBDypIASs
-         dO/x2ym+JzYP6GvC/T6ZYfhbtQCsi5/fTN5AY=
-Received: by 10.150.54.6 with SMTP id c6mr3165389yba.226.1216606268843;
-        Sun, 20 Jul 2008 19:11:08 -0700 (PDT)
-Received: by 10.150.149.15 with HTTP; Sun, 20 Jul 2008 19:11:08 -0700 (PDT)
-In-Reply-To: <7v4p6k8l36.fsf@gitster.siamese.dyndns.org>
+	id S1759754AbYGUDWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 23:22:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759067AbYGUDWG
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 23:22:06 -0400
+Received: from george.spearce.org ([209.20.77.23]:33144 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758832AbYGUDWF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 23:22:05 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 39BD0383A5; Mon, 21 Jul 2008 03:22:03 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <200807210029.31543.jnareb@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89296>
 
-On Sun, Jul 20, 2008 at 2:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I do not understand either of you.  If for whatever reason "add -A" makes
-> sense in your workflow, it's a sign that you are extremely disciplined
-> that changes in your working tree at one point of time where you would
-> issue "add -A" are concentrated on a single topic, and at one of such
-> points you may want to commit.  For such a disciplined person, "commit -a"
-> would make perfect sense there.
->
-> So for such people who would find "add -A" useful, "commit -a" will not be
-> "unrelated changes in the same commit".  And for such people, I would even
-> say "commit -A" would be even more useful, too.
+Jakub Narebski <jnareb@gmail.com> wrote:
+> 1. GitTorrent
+>  
+> Student: Joshua Roys
+> Mentor: Sam Vilain
+...
+> There is some activity there... but no summary of it anywhere I could 
+> find. (I wonder if this was the project Johannes and Shawn were talking 
+> about of "going dark" in GSoC 2008 podcast 018...)
 
-Hah, it's Sunday and my brain wasn't awake. You're right, "commit -a"
-complements when I'd use "add -a" -- namely, when I have a branch that
-is tracking a non-git source: either files I'm rsyncing from another
-VCS or drops I'm getting as tarballs. (I'm aware of import-tars.perl.)
+Yes, this is the project I referred to in the podcast about going dark.
+ 
+> 4. Eclipse plugin push support
+>  
+> Student: Marek Zawirski
+> Mentor: Shawn O. Pearce
+> 
+> [...] Marek and I simply decided that protocol support was more
+> important than really tight network transport at this point in time.
 
-j.
+Correction, the "I" in "Marek and I" isn't Jakub, its Shawn.  This
+is just an editing mistake due to copy and paste from earlier thread.
+Apparently my original paragraph here was already a nice summary of
+the projects decisions thus far.
+
+I'm likely to be offline much of the rest of this week (I got lucky
+and found an open access point just now) but Marek is actively
+working on user interface for push support, and I think if he finds
+the time is considering adding delta generation.  That will be a
+lot more time consuming as I think he needs to go back to original
+academic papers to learn an LCS algorithm and then implement that.
+
+Copyright and licenses around libxdiff and delta-diff.c won't allow
+us to directly port the diff code to Java and our BSD license.  No,
+I don't want to start a BSD-GPL license war.  Our decision to go
+BSD in jgit may be a thorn in our side in areas such as this, but it
+is probably better for our long-term goals of working more directly
+with the Eclipse Foundation and perhaps also the NetBeans folks.
+
+> SUMMARY:
+> ========
+> From those projects, "git-merge builtin" did what it was meant to do 
+> already.  "Eclipse plugin push support" and "git-statistics" did 
+> minimum what it was meant to do already, and it looks like it would be 
+> finished before August 11.  "Gitweb caching" is after first round of 
+> patches, "git-sequencer" looks like already done; I don't know what is 
+> the state of "GitTorrent" project.
+> 
+> Please correct any mistakes in this summary / writeup.  Thanks in 
+> advance.
+
+I think this is a pretty good summary.  I want to go through the
+mid-term evaluations and summarize those for the mailing list but
+I have not had a chance to do that yet.  With network being spotty
+for the rest of this week it probably won't happen until the weekend.
+
+I think the quick summary is our students and our mentors think
+their projects are going well.  Jakub's summary above suggests
+very much the same thing.  Its hard to claim a GSoC project isn't
+meeting its goals when the code is already merged, or is at least
+under active patch review.  ;-)
+
+-- 
+Shawn.
