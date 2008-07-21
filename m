@@ -1,75 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Ensure that SSH runs in non-interactive mode
-Date: Mon, 21 Jul 2008 03:05:17 -0400
-Message-ID: <20080721070517.GB2080@sigill.intra.peff.net>
-References: <1216487215-6927-1-git-send-email-fredrik@dolda2000.com> <1216490252.10694.58.camel@koto.keithp.com> <1216491512.3911.9.camel@pc7.dolda2000.com> <alpine.DEB.1.00.0807201214060.3305@eeepc-johanness> <7v63r0bejy.fsf@gitster.siamese.dyndns.org> <20080721001422.GB12454@sigill.intra.peff.net> <20080721065348.GB24608@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's in git.git (stable)
+Date: Mon, 21 Jul 2008 00:09:08 -0700
+Message-ID: <7vod4rvhm3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Fredrik Tolf <fredrik@dolda2000.com>,
-	Keith Packard <keithp@keithp.com>, git@vger.kernel.org,
-	"Edward Z. Yang" <edwardzyang@thewritingpot.com>,
-	Steffen Prohaska <prohaska@zib.de>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Mon Jul 21 09:06:23 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 21 09:10:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKpTR-0007UG-Al
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 09:06:21 +0200
+	id 1KKpXD-0008Oh-2z
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 09:10:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752443AbYGUHFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 03:05:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752286AbYGUHFU
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 03:05:20 -0400
-Received: from peff.net ([208.65.91.99]:3626 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750719AbYGUHFU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 03:05:20 -0400
-Received: (qmail 9688 invoked by uid 111); 21 Jul 2008 07:05:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 21 Jul 2008 03:05:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Jul 2008 03:05:17 -0400
-Content-Disposition: inline
-In-Reply-To: <20080721065348.GB24608@glandium.org>
+	id S1752286AbYGUHJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 03:09:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751980AbYGUHJQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 03:09:16 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34794 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750719AbYGUHJP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 03:09:15 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5AB1335A6C;
+	Mon, 21 Jul 2008 03:09:14 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 46B9135A6B; Mon, 21 Jul 2008 03:09:10 -0400 (EDT)
+X-maint-at: 2d9c572578c72bd6691e80a9feed7d631baf007f
+X-master-at: 93310a40eb022a0e36e7c618921931d8ffc31fd1
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: ECC038E6-56F3-11DD-AA51-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89312>
 
-On Mon, Jul 21, 2008 at 08:53:48AM +0200, Mike Hommey wrote:
+As announced in a separate message, the tip of master was tagged as
+1.6.0-rc0; for people who neglected futureproofing themselves so far, it
+would really be a good time to seriously consider doing so.
 
-> I'm not sure the ControlMaster option is still followed when using -T. 
+* The 'maint' branch has these fixes since the last announcement.
 
-It is still followed.
+Jonathan Nieder (1):
+  fix usage string for git grep
 
-> Also, IIRC, ControlMaster doesn't exit until slave connections are
-> done, so git ssh sessions granted the master control would stall until
-> then if they happen to have slaves launched. i.e. It can *already* have
-> bad side effects.
+Junio C Hamano (1):
+  refresh-index: fix bitmask assignment
 
-Yes, that is a problem (and IMHO a weakness in the implementation, but
-obviously not git's problem at all).
 
-> Adding '-S none' would ensure ControlMaster would not take effect; on
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-I think that is definitely a mistake; git is one of the main reasons I
-use ControlMaster in the first place.
+Avery Pennarun (1):
+  Reword "your branch has diverged..." lines to reduce line length
 
-> the other hand, it would not allow git's ssh connection to be a slave
-> either. '-o ControlMaster no' could be a solution.
+Dmitry Potapov (1):
+  git-svn: fix git svn info to work without arguments
 
-That is actually quite sensible, and would make this a non-issue, as
-far as I can see.
+Junio C Hamano (8):
+  rerere.autoupdate: change the message when autoupdate is in effect
+  builtin-add.c: restructure the code for maintainability
+  git-add --all: add all files
+  git-add --all: tests
+  git-add --all: documentation
+  Link shell with compat layer functions
+  Move read_in_full() and write_in_full() to wrapper.c
+  "needs update" considered harmful
 
-> All these need to be tested, obviously.
+Lars Noschinski (1):
+  cvsserver: Add testsuite for packed refs
 
-I tested, and doing "ssh -Tx -o 'ControlMaster no'" does the right thing
-(reuse existing session if possible, create a new one with -Tx
-otherwise, and never create a control socket for slaves).
+Michele Ballabio (2):
+  builtin-merge.c: Fix option parsing
+  builtin-push.c: Cleanup - use OPT_BIT() and remove some variables
 
--Peff
+Miklos Vajna (1):
+  Teach 'git merge' that some merge strategies no longer exist
+
+Nanako Shiraishi (1):
+  git am --abort
