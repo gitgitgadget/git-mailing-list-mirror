@@ -1,116 +1,94 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Suggestion: doc restructuring
-Date: Mon, 21 Jul 2008 08:41:44 +0200
-Message-ID: <48842FA8.5070309@op5.se>
-References: <alpine.DEB.1.00.0807161804400.8950@racer> <48806D03.30603@fastmail.fm> <alpine.DEB.1.00.0807190314010.3064@eeepc-johanness> <7vk5fhc6qo.fsf@gitster.siamese.dyndns.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Ensure that SSH runs in non-interactive mode
+Date: Mon, 21 Jul 2008 08:53:48 +0200
+Organization: glandium.org
+Message-ID: <20080721065348.GB24608@glandium.org>
+References: <1216487215-6927-1-git-send-email-fredrik@dolda2000.com> <1216490252.10694.58.camel@koto.keithp.com> <1216491512.3911.9.camel@pc7.dolda2000.com> <alpine.DEB.1.00.0807201214060.3305@eeepc-johanness> <7v63r0bejy.fsf@gitster.siamese.dyndns.org> <20080721001422.GB12454@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael J Gruber <michaeljgruber+gmane@fastmail.fm>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 21 08:44:12 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Fredrik Tolf <fredrik@dolda2000.com>,
+	Keith Packard <keithp@keithp.com>, git@vger.kernel.org,
+	"Edward Z. Yang" <edwardzyang@thewritingpot.com>,
+	Steffen Prohaska <prohaska@zib.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jul 21 08:55:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKp7y-0002Pg-Vf
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 08:44:11 +0200
+	id 1KKpIf-0004ww-79
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 08:55:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757231AbYGUGm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 02:42:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757032AbYGUGm7
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 02:42:59 -0400
-Received: from mail.op5.se ([193.201.96.20]:40192 "EHLO mail.op5.se"
+	id S1755718AbYGUGyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 02:54:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753399AbYGUGyN
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 02:54:13 -0400
+Received: from vuizook.err.no ([194.24.252.247]:44273 "EHLO vuizook.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756911AbYGUGm6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 02:42:58 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id C59A424B0DA6;
-	Mon, 21 Jul 2008 08:43:39 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dcn37M8AWUiF; Mon, 21 Jul 2008 08:43:36 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [172.27.78.10])
-	by mail.op5.se (Postfix) with ESMTP id 170EC1B80380;
-	Mon, 21 Jul 2008 08:43:36 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <7vk5fhc6qo.fsf@gitster.siamese.dyndns.org>
+	id S1755168AbYGUGyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 02:54:12 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1KKpHD-0007mh-KJ; Mon, 21 Jul 2008 08:53:49 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1KKpHI-0006Vs-7L; Mon, 21 Jul 2008 08:53:48 +0200
+Content-Disposition: inline
+In-Reply-To: <20080721001422.GB12454@sigill.intra.peff.net>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89310>
 
-Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Sun, Jul 20, 2008 at 08:14:22PM -0400, Jeff King wrote:
+> On Sun, Jul 20, 2008 at 11:23:13AM -0700, Junio C Hamano wrote:
 > 
->> So what I really would like is this: leave the plumbing pages as they are, 
->> but enhance those pages that users (especially new ones) are likely to see 
->> most often.
+> > I think that is a very sensible approach, but just like we have a few
+> > "built-in" function-header regexps with customization possibilities for
+> > the user, we might want to:
+> > 
+> >  * Have that "-x", "-T" in the command line we generate for OpenSSH;
 > 
-> Regarding the original "do we want to ever teach plumbing to new users?"
-> issue, I suspect that, with sufficient enhancement to Porcelain, we might
-> be able to reach a point where end users can work without ever touching a
-> single plumbing command at all.
+> I am slightly negative on this, because we are setting OpenSSH
+> preferences behind the user's back that they would not normally expect
+> git to be tampering with.
 > 
-> 	Side note, that was why I suggested us to first think about use
-> 	cases in our every day work that we still need to resort to the
-> 	plumbing, so that we can identify what that enhancement would
-> 	consist of.
+> I think the expectation for this is that it impacts only the ssh session
+> used by git.  But because OpenSSH supports the concept of "master" and
+> "slave" sessions (i.e., it can multiplex many sessions over a single ssh
+> session, avoiding authentication and thus reducing latency until the
+> start of the session), what you do in one session can impact other
+> sessions. In particular, if the 'master' does not have x11 forwarding
+> (because it happens to be started by git), then slave connections do not
+> get it. So a user with X11Forwarding and ControlMaster set in his config
+> would usually have everything work, but bad timing with the
+> git-initiated session as the master would unexpectedly break his
+> X11Forwarding for other sessions.
 > 
+> I don't know how commonly the ControlMaster option for openssh is used.
+> I also don't know if this should simply be considered a bug in openssh,
+> since it silently ignores the request for X forwarding.  Personally, I
+> will not be affected because I don't do X forwarding by default, anyway.
+> But I thought I would raise the point.
 
-Half a year or so ago, there were some mailings to the list along the lines
-of "what git commands do you use?", using the bash history and a shell
-oneliner to dig out some crude intel. Here's mine:
-cat ~/.bash_history | grep ^git | awk '{ print $2 }' | grep -v '^--' | sort | uniq --count | sort -nr
-     29 status
-     26 diff
-     19 show
-     17 log
-     11 branch
-      9 grep
-      8 pull
-      8 commit
-      7 fetch
-      7 describe
-      6 rev-list
-      5 help
-      4 push
-      4 merge
-      3 reset
-      3 config
-      3 clone
-      3 add
-      2 rev-parse
-      2 format-patch
-      1 stash
-      1 checkout
-      1 apply
+I'm not sure the ControlMaster option is still followed when using -T. 
+Also, IIRC, ControlMaster doesn't exit until slave connections are
+done, so git ssh sessions granted the master control would stall until
+then if they happen to have slaves launched. i.e. It can *already* have
+bad side effects.
 
-To be fair, rev-parse and rev-list are on there due to some oneline scripting.
-I needed to move commits from several different branches to a single place,
-filtering on author.
+Adding '-S none' would ensure ControlMaster would not take effect; on
+the other hand, it would not allow git's ssh connection to be a slave
+either. '-o ControlMaster no' could be a solution.
 
-> When we reach that point, we might want to restructure the documentation
-> into two volumes.  One volume for end-users who exclusively use the stock
-> git Porcelain, and another that describes plumbing commands for Porcelain
-> writers.
-> 
-> Perhaps move the plumbing documentation to section 3; just like Perl has
-> DBI.3pm and friends there, /usr/share/man/man3/git-cat-file.3git will
-> describe what scripts can do with the command.
+All these need to be tested, obviously.
 
-I like this idea, although newbie users may not know what section 3 is for.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Mike
