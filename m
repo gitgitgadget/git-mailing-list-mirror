@@ -1,83 +1,75 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 4/9] Fix relative built-in paths to be relative to the command invocation
-Date: Mon, 21 Jul 2008 21:19:53 +0200
-Message-ID: <1216667998-8879-5-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH 8/9] Windows: Make sure argv[0] has a path
+Date: Mon, 21 Jul 2008 21:19:57 +0200
+Message-ID: <1216667998-8879-9-git-send-email-johannes.sixt@telecom.at>
 References: <1216667998-8879-1-git-send-email-johannes.sixt@telecom.at>
  <1216667998-8879-2-git-send-email-johannes.sixt@telecom.at>
  <1216667998-8879-3-git-send-email-johannes.sixt@telecom.at>
  <1216667998-8879-4-git-send-email-johannes.sixt@telecom.at>
+ <1216667998-8879-5-git-send-email-johannes.sixt@telecom.at>
+ <1216667998-8879-6-git-send-email-johannes.sixt@telecom.at>
+ <1216667998-8879-7-git-send-email-johannes.sixt@telecom.at>
+ <1216667998-8879-8-git-send-email-johannes.sixt@telecom.at>
 Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 21 21:21:40 2008
+X-From: git-owner@vger.kernel.org Mon Jul 21 21:21:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KL0wz-00025p-Re
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 21:21:38 +0200
+	id 1KL0x3-00025p-Py
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 21:21:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754626AbYGUTUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 15:20:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753571AbYGUTUJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 15:20:09 -0400
-Received: from smtp1.srv.eunet.at ([193.154.160.119]:39824 "EHLO
+	id S1754222AbYGUTU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 15:20:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754672AbYGUTUZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 15:20:25 -0400
+Received: from smtp1.srv.eunet.at ([193.154.160.119]:39828 "EHLO
 	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753749AbYGUTUD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 15:20:03 -0400
+	with ESMTP id S1753143AbYGUTUE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 15:20:04 -0400
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp1.srv.eunet.at (Postfix) with ESMTP id D7A9033EA2;
-	Mon, 21 Jul 2008 21:20:01 +0200 (CEST)
+	by smtp1.srv.eunet.at (Postfix) with ESMTP id 2CBD033EE1;
+	Mon, 21 Jul 2008 21:20:03 +0200 (CEST)
 X-Mailer: git-send-email 1.6.0.rc0.18.g6aef2
-In-Reply-To: <1216667998-8879-4-git-send-email-johannes.sixt@telecom.at>
+In-Reply-To: <1216667998-8879-8-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89387>
 
-$(gitexecdir) (as defined in the Makefile) has gained another path
-component, but the relative paths in the MINGW section of the Makefile,
-which are interpreted relative to it, do not account for it.
-
-Instead of adding another ../ in front of the path, we change the code that
-constructs the absolute paths to do it relative to the command's directory,
-which is essentially $(bindir). We do it this way because we will also
-allow a relative $(gitexecdir) later.
+Since the exec-path on Windows is derived from the program invocation path,
+we must ensure that argv[0] always has a path. Unfortunately, if a program
+is invoked from CMD, argv[0] has no path. But on the other hand, the
+C runtime offers a global variable, _pgmptr, that always has the full path
+to the program. We hook into main() with a preprocessor macro, where we
+replace argv[0].
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- Makefile   |    2 +-
- exec_cmd.c |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ compat/mingw.h |   12 ++++++++++++
+ 1 files changed, 12 insertions(+), 0 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 226dd03..23f2185 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1310,7 +1310,7 @@ remove-dashes:
- ### Installation rules
- 
- ifeq ($(firstword $(subst /, ,$(template_dir))),..)
--template_instdir = $(gitexecdir)/$(template_dir)
-+template_instdir = $(bindir)/$(template_dir)
- else
- template_instdir = $(template_dir)
- endif
-diff --git a/exec_cmd.c b/exec_cmd.c
-index dedb01d..45f92eb 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -43,9 +43,9 @@ static const char *builtin_exec_path(void)
- 
- const char *system_path(const char *path)
- {
--	if (!is_absolute_path(path)) {
-+	if (!is_absolute_path(path) && argv0_path) {
- 		struct strbuf d = STRBUF_INIT;
--		strbuf_addf(&d, "%s/%s", git_exec_path(), path);
-+		strbuf_addf(&d, "%s/%s", argv0_path, path);
- 		path = strbuf_detach(&d, NULL);
- 	}
- 	return path;
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 8ffec51..290a9e6 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -223,3 +223,15 @@ void mingw_open_html(const char *path);
+ char **copy_environ(void);
+ void free_environ(char **env);
+ char **env_setenv(char **env, const char *name);
++
++/*
++ * A replacement of main() that ensures that argv[0] has a path
++ */
++
++#define main(c,v) main(int argc, const char **argv) \
++{ \
++	static int mingw_main(); \
++	argv[0] = xstrdup(_pgmptr); \
++	return mingw_main(argc, argv); \
++} \
++static int mingw_main(c,v)
 -- 
 1.6.0.rc0.18.g6aef2
