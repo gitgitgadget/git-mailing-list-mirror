@@ -1,87 +1,82 @@
-From: Olivier Marin <dkr+ml.git@free.fr>
-Subject: [PATCH] parse-options: fix segmentation fault when a required value
- is missing
-Date: Mon, 21 Jul 2008 20:30:36 +0200
-Message-ID: <4884D5CC.2070007@free.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: making a branch with just one file and keeping its whole
+ history
+Date: Mon, 21 Jul 2008 19:39:45 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807211937390.8986@racer>
+References: <20080721061804.223f7801@mail.tin.it>  <loom.20080721T161926-61@post.gmane.org>  <alpine.DEB.1.00.0807211907270.8986@racer> <279b37b20807211122w3a1e0687wc84693bd95689326@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Jul 21 20:32:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Eric Raible <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 20:40:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KL0Av-00084S-Mi
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 20:31:58 +0200
+	id 1KL0JS-0002PT-SN
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 20:40:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752919AbYGUSaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 14:30:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752964AbYGUSaj
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 14:30:39 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:40002 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751754AbYGUSai (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 14:30:38 -0400
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id CCF6B12B713;
-	Mon, 21 Jul 2008 20:30:36 +0200 (CEST)
-Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 7213E12B6DF;
-	Mon, 21 Jul 2008 20:30:36 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+	id S1752178AbYGUSjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 14:39:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752164AbYGUSjq
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 14:39:46 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46379 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751899AbYGUSjq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 14:39:46 -0400
+Received: (qmail invoked by alias); 21 Jul 2008 18:39:44 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp049) with SMTP; 21 Jul 2008 20:39:44 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+1f7hfjxS16zjXJB6NyIalL7vS5XPuw6M4/BNU1l
+	cUfLSUi7zn8en8
+X-X-Sender: gene099@racer
+In-Reply-To: <279b37b20807211122w3a1e0687wc84693bd95689326@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89383>
 
-From: Olivier Marin <dkr@freesurf.fr>
+Hi,
 
-p->argc represent the number of arguments that have not been parsed yet,
-_including_ the one we are currently parsing. If it is not greater than
-one then there is no more argument.
+On Mon, 21 Jul 2008, Eric Raible wrote:
 
-Signed-off-by: Olivier Marin <dkr@freesurf.fr>
----
- I hope this is the right fix.
+> On Mon, Jul 21, 2008 at 11:08 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Mon, 21 Jul 2008, Eric Raible wrote:
+> >
+> >> http://www.gitcasts.com/posts/empty-branches
+> >
+> > Beware!  This is one of the sites that triggered my mail about considering
+> > teaching plumbing to new users harmful.
+> >
+> > In other words, I think that these "git casts" are not really the best way
+> > to teach Git to new users, but rather confusing.
+> >
+> > Which is a pity, because they are nicely done otherwise.
+> 
+> I understand your concern, but if you treat that particular gitcast 
+> simple as a recipe to be followed it accomplishes the goal in the in the 
+> most straightforward way I've seen.
 
- parse-options.c          |    2 +-
- t/t0040-parse-options.sh |    7 +++++++
- 2 files changed, 8 insertions(+), 1 deletions(-)
+Note, I haven't even bothered to watch that Gitcast, since it would make 
+me mad again.
 
-diff --git a/parse-options.c b/parse-options.c
-index 987b015..71a7acf 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -22,7 +22,7 @@ static int get_arg(struct parse_opt_ctx_t *p, const struct option *opt,
-                p->opt = NULL;
-        } else if (p->argc == 1 && (opt->flags & PARSE_OPT_LASTARG_DEFAULT)) {
-                *arg = (const char *)opt->defval;
--       } else if (p->argc) {
-+       } else if (p->argc > 1) {
-                p->argc--;
-                *arg = *++p->argv;
-        } else
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 6309aed..03dbe00 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -78,6 +78,13 @@ test_expect_success 'long options' '
-        test_cmp expect output
- '
- 
-+test_expect_success 'missing required value' '
-+       test-parse-options -s;
-+       test $? = 129 &&
-+       test-parse-options --string;
-+       test $? = 129
-+'
-+
- cat > expect << EOF
- boolean: 1
- integer: 13
--- 
-1.6.0.rc0.1.g75f42
+> A new-user pure-porcelain way would be to branch then delete all of the 
+> files in the branch.  Which seems a bit dirty to me.
+
+This will not start a new branch, which is what I presume you want to do.  
+The "correct" (as in: probably the best) way to do it is to make a new 
+directory, initialize a new git repository in it, and when you have 
+something, push that branch into the other repository.
+
+However, I think that the OP was talking about something completely 
+different: extracting the history of a single file as a new branch.
+
+Ciao,
+Dscho
