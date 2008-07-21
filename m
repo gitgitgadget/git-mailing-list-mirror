@@ -1,94 +1,106 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] builtin-merge: missing structure bzero.
-Date: Mon, 21 Jul 2008 19:21:19 +0200
-Message-ID: <20080721172119.GE32057@genesis.frugalware.org>
-References: <1216659830-22063-1-git-send-email-madcoder@debian.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git Branding Overview, Re: Git.or.cz Experimental Design
+Date: Mon, 21 Jul 2008 10:23:13 -0700 (PDT)
+Message-ID: <m37ibfw3r7.fsf@localhost.localdomain>
+References: <5fb1d2400807022011w7f8d79dbk68a64dc1b8b01d98@mail.gmail.com>
+	<20080718103918.GO10151@machine.or.cz>
+	<46a038f90807201450w57fdb523m42bc628f2dce7f87@mail.gmail.com>
+	<g61q6n$645$1@ger.gmane.org>
+	<alpine.DEB.1.00.0807211218470.8986@racer>
+	<g61uun$lt0$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Fig2xvG2VGoz8o/s"
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Jul 21 19:22:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+X-From: git-owner@vger.kernel.org Mon Jul 21 19:24:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKz5Z-0000Td-IC
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 19:22:21 +0200
+	id 1KKz7Q-000168-SU
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 19:24:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751040AbYGURVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 13:21:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbYGURVW
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 13:21:22 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:52279 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750967AbYGURVV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 13:21:21 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 78F851B2500;
-	Mon, 21 Jul 2008 19:21:20 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 2A31B4465E;
-	Mon, 21 Jul 2008 18:41:04 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id B1B9811901B3; Mon, 21 Jul 2008 19:21:19 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1216659830-22063-1-git-send-email-madcoder@debian.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1751373AbYGURXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 13:23:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750971AbYGURXS
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 13:23:18 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:14576 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750736AbYGURXQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 13:23:16 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so282099ugf.16
+        for <git@vger.kernel.org>; Mon, 21 Jul 2008 10:23:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=z/9Z69GkDSE4nuXaVtLerVumVkwqWN8IMKhsBY+Mq5w=;
+        b=Rfm5qQk7kR1S+/Yn3ih++IMay3Wh44ptTQh5b5V2VMhfwNm6iVmTJcp64FMMP9Dnpn
+         yNuIo7MXtptbbzeyLTmyvKnLI9B3s4UaTDJTIhT5WSfekb6L41tQqIU7OtdCCwj7GkBp
+         vpL19R7V6+g50ZyvMJOoG6fUxk0hOA3r9lCug=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=Weo4ymQQTslX9zmzw7XMBxBSOAVlG7c+ZpvwuIMJ+LUUVk9cbPKvp7MFEFCNLxs2jl
+         jUAEJsMRnxP87C5Ik7rtTtn0ILYG52i2Pe/pD1eozqcTkiFm2cIBpGe5/ROQynxB7SAh
+         aUjYGR411qC163UgojDBDNgONEjioKZk2Zr8s=
+Received: by 10.67.106.19 with SMTP id i19mr1764631ugm.81.1216660994752;
+        Mon, 21 Jul 2008 10:23:14 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.212.51])
+        by mx.google.com with ESMTPS id 32sm857194ugd.53.2008.07.21.10.23.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 21 Jul 2008 10:23:13 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m6LHNCgg015512;
+	Mon, 21 Jul 2008 19:23:12 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m6LHN9de015509;
+	Mon, 21 Jul 2008 19:23:09 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <g61uun$lt0$1@ger.gmane.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89368>
 
+Michael J Gruber <michaeljgruber+gmane@fastmail.fm> writes:
+> Johannes Schindelin venit, vidit, dixit 21.07.2008 13:20:
+>> On Mon, 21 Jul 2008, Michael J Gruber wrote:
+>>>
+>>> I like that new logo (plusminus G), too, it's very descriptive.
+>>> I just want to raise one question which I can't answer myself:
+>>>   Are there any potential issues with the Helvetica license?
+>>>
+>>> In any case it may be safer do redo it with a GPL sans serif
+>>> font. If one wants to keep the association of the shape of "G"
+>>> with a circular arrow then FreeSans and Nimbus Sans L seem to be
+>>> the only options.
 
---Fig2xvG2VGoz8o/s
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+GPL license for a _font_?  Besides I think that _using_ font in
+a work, as opposed to adding it to some software to use, is permitted
+by any proprietary font license / trademark, but IANAL.
 
-On Mon, Jul 21, 2008 at 07:03:50PM +0200, Pierre Habouzit <madcoder@debian.org> wrote:
-> This cause segfaults when replacing a directory with a submodule in a
-> fast-forward.
+>>> Alternatively, it may be easier to redo it in plain PS. I'll
+>>> attach 2 KISS variants. 1.5k for the eps, 3 colors only.
+>>
+>> You could have spared yourself the trouble:
+> 
+> Thanks for the appreciation ;)
+> 
+>> http://repo.or.cz/w/msysgit.git?a=blob_plain;f=share/resources/gitlogo.svg;h=c0d67e70ab31394f0635c141998e512437a138b4;hb=HEAD
+>> Done without the use of any font at all.
+> 
+> I don't think that was on the wiki before. Henrik's version (which
+> was, and was being discussed here) *is* based on Helvetica.
 
-Thanks.
+Both SVG version mentioned above, and your logos can be now found at
+http://git.or.cz/gitwiki/GitRelatedLogos (please correct any mistakes).
 
-> +test_expect_failure 'Replace a directory with a submodule, with a file conflict' '
-> +	mkdir test &&
-> +	cd test &&
-> +	: create our repository with a sub/a file &&
-> +	git init &&
-> +	mkdir sub && echo a > sub/a &&
-> +	git add sub && git commit -asm"initial repository" &&
-> +	: save this state in a new branch &&
-> +	git branch temp &&
-> +	: then replace sub with it &&
-> +	git rm -rf sub &&
-> +        git submodule add -- "$(pwd)/../submodule/.git/" sub &&
-> +	git commit -asm "replace sub/ with a submodule" &&
-> +	: then try to update the "temp" branch &&
-> +	git checkout temp &&
-
-It seems this one fails. I guess this will be a problem in the low-level
-merge code (read-tree -m) and not in builtin-merge.
-
-> +	git merge master &&
-> +	: and finally cleanse the mess &&
-> +	cd .. &&
-> +	rm -rf test
-> +'
-> +
-> +test_done
-
---Fig2xvG2VGoz8o/s
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkiExY8ACgkQe81tAgORUJZizQCgpJUSiA25w6FZ44FzxHEjaUZr
-lKcAmgPfjlVuCeHmu3Y2C2R1SCtc4Onj
-=rgzR
------END PGP SIGNATURE-----
-
---Fig2xvG2VGoz8o/s--
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
