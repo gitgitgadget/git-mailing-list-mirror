@@ -1,102 +1,98 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: Re: Git Branding Overview, Re: Git.or.cz Experimental Design
-Date: Mon, 21 Jul 2008 14:20:39 +0200
-Message-ID: <g61uun$lt0$1@ger.gmane.org>
-References: <5fb1d2400807022011w7f8d79dbk68a64dc1b8b01d98@mail.gmail.com>  <20080718103918.GO10151@machine.or.cz> <46a038f90807201450w57fdb523m42bc628f2dce7f87@mail.gmail.com> <g61q6n$645$1@ger.gmane.org> <alpine.DEB.1.00.0807211218470.8986@racer>
+From: Marek Zawirski <marek.zawirski@gmail.com>
+Subject: Re: problem using jgit
+Date: Mon, 21 Jul 2008 14:35:46 +0200
+Message-ID: <488482A2.4000601@gmail.com>
+References: <p06240809c4a9d887fda4@[192.168.1.106]> <488467E3.7000107@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 21 14:21:54 2008
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Stephen Bannasch <stephen.bannasch@deanbrook.org>
+X-From: git-owner@vger.kernel.org Mon Jul 21 14:37:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKuOm-0001b9-3v
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 14:21:52 +0200
+	id 1KKudL-0006Wc-37
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 14:36:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751554AbYGUMUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 08:20:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750847AbYGUMUw
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 08:20:52 -0400
-Received: from main.gmane.org ([80.91.229.2]:41056 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750771AbYGUMUv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 08:20:51 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KKuNm-0002im-Hi
-	for git@vger.kernel.org; Mon, 21 Jul 2008 12:20:50 +0000
-Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Jul 2008 12:20:50 +0000
-Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Jul 2008 12:20:50 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-In-Reply-To: <alpine.DEB.1.00.0807211218470.8986@racer>
+	id S1751398AbYGUMfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 08:35:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751394AbYGUMfz
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 08:35:55 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:52133 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751392AbYGUMfy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 08:35:54 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so637013fgg.17
+        for <git@vger.kernel.org>; Mon, 21 Jul 2008 05:35:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=DTPD+v/s59Hfc8XB3lBJUV6axHUjxhG63TW6YXg1aqE=;
+        b=jKOgXiLfk4zFRXEhGH/8YEXYWseWA/4zKV42NQ9piuyrT5RWHK7sCkanqwPs6K19gw
+         NgHRHDAvIMs5Hmvfp+yZQD5b+W+aztUxtB5l1RttbG4jwEPap9dzFLiu9cEisnkKZSDP
+         s0EVWmfwFfR7N9iALoZ670LsvDAJPpUDErswk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=Prrd3TVhcQyEZ4NAY0Azt2L+WkJWzxM+Z5gOOVyxS3rjX+LtmUoIxpGkC8AyOf2GSg
+         2p3bLQv52QHln9jXEfYkv22lR6pXM7cQZxVT+QrQx/zZzYbJhIAx5J0cqP/cCb+pJ7cJ
+         rRy+AcITkPygRv8LkEHrhy1tdWIAT+ZV9w3EE=
+Received: by 10.86.27.19 with SMTP id a19mr4865126fga.56.1216643750572;
+        Mon, 21 Jul 2008 05:35:50 -0700 (PDT)
+Received: from ?192.168.1.167? ( [150.254.6.130])
+        by mx.google.com with ESMTPS id l19sm1959645fgb.7.2008.07.21.05.35.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 21 Jul 2008 05:35:49 -0700 (PDT)
+User-Agent: Mozilla-Thunderbird 2.0.0.14 (X11/20080509)
+In-Reply-To: <488467E3.7000107@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89353>
 
-Johannes Schindelin venit, vidit, dixit 21.07.2008 13:20:
-> Hi,
-> 
-> On Mon, 21 Jul 2008, Michael J Gruber wrote:
-> 
->> Martin Langhoff venit, vidit, dixit 20.07.2008 23:50:
->>> On Fri, Jul 18, 2008 at 10:39 PM, Petr Baudis <pasky@suse.cz> wrote:
->>>> On Wed, Jul 02, 2008 at 11:11:02PM -0400, David Baldwin wrote:
->>>>> http://baldwindev.com/git.or.cz/
->>>> I'm not sure if this is really an improvement on the current state,
->>>> but then again, the current state pretty much matches my idea and maybe
->>>> others will agree that your proposal is better. Thus, it's better to
->>>> show this to the Git community at large. :-)
->>> FWIW, I like it. I like both the better font and whitespace layout and
->>> the 3-color-spot-merge-to-white. As Petr says, we have had the
->>> (apologies, but to me) ugly logo for a while, so it is widely used,
->>> and perhaps it has even grown on people.
->>>
->>> BazaarNG managed to grab the best concept logo of the lot, IMHO, with
->>> the 'merge' roadsign.
->>>
->>>> If you think you have a cooler logo, that's fine too, but then it's
->>>> again better to present it explicitly, I believe.
->>> Can we separate the 2 things? The better fonts and layout look like a win to
->>> me.
->>>
->>> WRT the logo, the current one is not a particularly strong image, and
->>> we haven't spent millions in plastering it over magazines or anything.
->>> So a good new logo would be something to take on.
->> I like that new logo (plusminus G), too, it's very descriptive. I just want to
->> raise one question which I can't answer myself:
+Marek Zawirski wrote:
+> Stephen Bannasch wrote:
+>> I've setup a simple test class that integrates jgit to clone a git 
+>> repository. However I'm getting a NullPointerError when 
+>> RevWalk.parseAny ends up producing a null object id.
 >>
->> Are there any potential issues with the Helvetica license?
+>> The code and the stack trace for the error are here:
 >>
->> In any case it may be safer do redo it with a GPL sans serif font. If one
->> wants to keep the association of the shape of "G" with a circular arrow then
->> FreeSans and Nimbus Sans L seem to be the only options.
+>>   http://pastie.org/237711
 >>
->> Alternatively, it may be easier to redo it in plain PS. I'll attach 2 KISS
->> variants. 1.5k for the eps, 3 colors only.
-> 
-> You could have spared yourself the trouble:
+>> This problem occurs using the jgit from the master branch from this 
+>> repo:
+>>
+>>   git://repo.or.cz/egit.git
+> Hello Stephen,
+>
+> I think you've experienced error caused by the same bug as me, during 
+> my latest fetch/push GUI works few days ago.
+> Your code looks fine, probably  it's actually bug in jgit. I think 
+> it's some regression. Thanks for reporting.
+It's caused by 14a630c3: Cached modification times for symbolic refs too
+Changes introduced by this patch made Repository#getAllRefs() including 
+Ref objects with null ObjectId in case of unresolvable (invalid?) HEAD 
+symbolic ref, and null Ref for HEAD  when it doesn't exist. Previous 
+behavior was just not including such refs in result.
 
-Thanks for the appreciation ;)
+Fix for null Ref is just a matter of simple filtering out null Ref 
+object for HEAD, if it doesn't exist (just is it considered to be legal 
+state of repository when HEAD doesn't exist?).
 
-> 
-> http://repo.or.cz/w/msysgit.git?a=blob_plain;f=share/resources/gitlogo.svg;h=c0d67e70ab31394f0635c141998e512437a138b4;hb=HEAD
-> 
-> Done without the use of any font at all.
-
-I don't think that was on the wiki before. Henrik's version (which was, 
-and was being discussed here) *is* based on Helvetica.
-
-Still, the suggestion stands to replace it by something more polished.
-
-Michael
+To fix null ObjectId issue, we have to either change all clients of this 
+method or revert method to previous behavior. Now it's just unspecified 
+in javadoc.
+Robin, Shawn, what do you think? If we want to have unresolvable refs 
+included, IMO it may be sensible to provide argument includeUnresolbable 
+for Repository#getAllRefs() to let clients avoid burden of filtering 
+them out when they don't need them (most cases, perhaps).
+I can prepare fix for it (rather easy one) as you are unavailable now, 
+let me now what's your opinion.
