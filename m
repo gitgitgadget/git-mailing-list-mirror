@@ -1,63 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-mv: Keep moved index entries inact
-Date: Mon, 21 Jul 2008 00:38:16 -0700
-Message-ID: <7vk5ffvg9j.fsf@gitster.siamese.dyndns.org>
-References: <20080717130651.GU32184@machine.or.cz>
- <20080717223036.20680.9672.stgit@localhost>
- <7vej5pwhub.fsf@gitster.siamese.dyndns.org>
- <20080721002354.GK10151@machine.or.cz>
- <alpine.DEB.1.00.0807210319410.3305@eeepc-johanness>
- <20080721071818.GL10151@machine.or.cz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Add a notice to the doc of git-ls-tree.
+Date: Mon, 21 Jul 2008 09:47:28 +0200
+Message-ID: <20080721074728.GM10151@machine.or.cz>
+References: <1216592735-23789-1-git-send-email-code@istique.net> <20080720230846.GH32184@machine.or.cz> <7vy73w16nj.fsf@gitster.siamese.dyndns.org> <7vtzek15b5.fsf@gitster.siamese.dyndns.org> <20080721000824.GI10151@machine.or.cz> <7vljzw14br.fsf@gitster.siamese.dyndns.org> <20080721002248.GJ10151@machine.or.cz> <7vljzvyi5w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc: Steve =?iso-8859-2?Q?Fr=E9cinaux?= <code@istique.net>,
 	git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Jul 21 09:39:25 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 09:48:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKpzQ-00062R-6E
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 09:39:24 +0200
+	id 1KKq8E-0007yo-Ap
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 09:48:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753127AbYGUHiY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 03:38:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753226AbYGUHiY
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 03:38:24 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51945 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753097AbYGUHiX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 03:38:23 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EFEBB35EFC;
-	Mon, 21 Jul 2008 03:38:21 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 2E37C35EFB; Mon, 21 Jul 2008 03:38:18 -0400 (EDT)
-In-Reply-To: <20080721071818.GL10151@machine.or.cz> (Petr Baudis's message of
- "Mon, 21 Jul 2008 09:18:18 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FE9E88C0-56F7-11DD-8825-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753376AbYGUHrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 03:47:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753336AbYGUHrb
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 03:47:31 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:51998 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753321AbYGUHra (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 03:47:30 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 9598C393B300; Mon, 21 Jul 2008 09:47:28 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vljzvyi5w.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89316>
 
-Petr Baudis <pasky@suse.cz> writes:
+On Sun, Jul 20, 2008 at 09:28:59PM -0700, Junio C Hamano wrote:
+> Sorry, I may have been unclear.  I meant "showing relative to tree-root,
+> unlike showing relative to cwd like we have done forever".
+> 
+> Changing the behaviour would affect usage like this:
+> 
+> 	$ cd some/where
+>         $ git ls-files
+>         $ git ls-tree --name-only -r HEAD^
+> 
+>     cf. http://thread.gmane.org/gmane.comp.version-control.git/13028/focus=13080
 
-> On Mon, Jul 21, 2008 at 03:20:46AM +0200, Johannes Schindelin wrote:
->> On Mon, 21 Jul 2008, Petr Baudis wrote:
->> > I want to make sure the whole index entry is intact, not just the sha1.
->> 
->> "rev-parse :dirty" will have to read the index to get at the object name 
->> of "dirty".  So there you have your index validation for you.
->
->   it will test if the entry stays _valid_, but not whether it stays the
-> _same_.
+  Yes, as I said, by now I agree that this is not acceptable, and thus
+opted for just documenting the behaviour. :-)
 
-You are right.  You would want to catch breakages like a file losing its
-executable bits, which you cannot detect by grabbing "rev-parse :dirty"
-and comparing it with the expected value.
+				Petr "Pasky" Baudis
