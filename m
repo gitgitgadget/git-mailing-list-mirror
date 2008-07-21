@@ -1,83 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] Ensure that SSH runs in non-interactive mode
-Date: Mon, 21 Jul 2008 12:56:14 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807211255010.3305@eeepc-johanness>
-References: <1216598432-18553-1-git-send-email-fredrik@dolda2000.com> <alpine.DEB.1.00.0807210310330.3305@eeepc-johanness> <1216604693.3673.20.camel@pc7.dolda2000.com> <m3fxq3ws16.fsf@localhost.localdomain>
+From: Rene Herman <rene.herman@keyaccess.nl>
+Subject: Re: git pull versus fetch/merge
+Date: Mon, 21 Jul 2008 12:58:10 +0200
+Message-ID: <48846BC2.4090407@keyaccess.nl>
+References: <488452D6.1060508@keyaccess.nl> <20080721102320.GA19776@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Fredrik Tolf <fredrik@dolda2000.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 21 12:56:53 2008
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Takashi Iwai <tiwai@suse.de>
+To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 21 12:57:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKt4K-0000G9-0p
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 12:56:40 +0200
+	id 1KKt4d-0000N9-Hq
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 12:56:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759062AbYGUKz0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 06:55:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757845AbYGUKzZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 06:55:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38289 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759309AbYGUKzY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 06:55:24 -0400
-Received: (qmail invoked by alias); 21 Jul 2008 10:55:22 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp003) with SMTP; 21 Jul 2008 12:55:22 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/8NvQRQfn8dmdgVBJ8Op8764ylnc2mOimtj07L6e
-	wfY+NP9vMBByqy
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <m3fxq3ws16.fsf@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1758276AbYGUKz7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jul 2008 06:55:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757814AbYGUKz7
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 06:55:59 -0400
+Received: from smtpq2.tilbu1.nb.home.nl ([213.51.146.201]:43264 "EHLO
+	smtpq2.tilbu1.nb.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757553AbYGUKz6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 06:55:58 -0400
+Received: from [213.51.146.190] (port=53809 helo=smtp1.tilbu1.nb.home.nl)
+	by smtpq2.tilbu1.nb.home.nl with esmtp (Exim 4.60)
+	(envelope-from <rene.herman@keyaccess.nl>)
+	id 1KKt3c-00019j-Tg; Mon, 21 Jul 2008 12:55:56 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:47943 helo=[192.168.0.3])
+	by smtp1.tilbu1.nb.home.nl with esmtp (Exim 4.60)
+	(envelope-from <rene.herman@keyaccess.nl>)
+	id 1KKt3c-0000sf-5F; Mon, 21 Jul 2008 12:55:56 +0200
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+In-Reply-To: <20080721102320.GA19776@atjola.homenet>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89340>
 
-Hi,
+On 21-07-08 12:23, Bj=F6rn Steinbrink wrote:
 
-On Mon, 21 Jul 2008, Jakub Narebski wrote:
+> Your fetch/merge approach was different from what your pull approach=20
+> did. tiwai/devel did not get updated by the fetch, which means that
+> you tried to merge the old state of that branch and that caused some=20
+> conflicts. OTOH the pull did fetch the latest state from the remote
+> repo and merged that cleanly.
+>=20
+> Your fetch/merge approach was more like "git pull" without any=20
+> arguments, but with the current branch setup to track tiwai/devel. In
+> that case, pull really does a "git fetch tiwai", and it should fail
+> in the same way.
 
-> Fredrik Tolf <fredrik@dolda2000.com> writes:
-> 
-> > [...] Here's some makeshift documentation:
-> > 
-> > The string specified in core.sshcommand is first checked if it matches
-> > any of the built-in templates, in which case it is expanded (I've added
-> > the templates "openssh" and "plink" by default). When used, the string
-> > is split into words, each of which is processed as follows:
-> > 
-> > * If a word is %p, it is replaced by the port number, if specified.
-> >   If the port number is not specified, the word is deleted.
-> > * If a word is %h, it is replaced by the remote host name.
-> > * If a word begins with %P, it is deleted if no port number is
-> >   specified. This is to allow for specifying different port number
-> >   flags for different SSH implementations. The syntax is a bit ugly,
-> >   but I cannot really think of anything that would look better.
-> >   If a port number has been specified, the leading %P is simply deleted.
-> 
-> There is a syntax which would look better, but perhaps it is a bit
-> overkill in this situation.  Namely use either shell conditional
-> expansion:
-> 
->   ${p:+-P $p}
-> 
-> or syntax used in RPM spec macros
-> 
->   %{?p:-P %p}
-> 
-> (and there is complementing %{!?<var>:<expansion>} in RPM spec macro
-> language).
+Thank you. Also due to a reply on the ALSA list by Mark brown I now get=
+=20
+this. Yes, the remote was rebased while I had it setup as a remote here=
+=20
+it seems; only recently have it under this name, so I didn't think that=
+=20
+was the case. After a "git remote rm tiwai, git remote add tiwai <url>"=
+=20
+things work fine again as it fetched a completely new branch.
 
-Yes, this is overkill.  I would even have passed the port argument 
-_always_, since the port 22 for ssh is as likely to change as hell will 
-not freeze over.  Actually, I am not so sure about the latter.
+Hurray for rebasing public trees. This specific branch should be rebase=
+d=20
+only at every kernel release so I guess it's okay. I guess I can just d=
+o
+the git pull always, or the fetch every time and let the reject warn me=
+=20
+that it was rebased after which I'll do the remote rm/add thing again.
 
-Ciao,
-Dscho
+Many thanks for the concrete description of what goes on. Made it obvio=
+us.
+
+Rene.
