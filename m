@@ -1,90 +1,81 @@
-From: Fredrik Tolf <fredrik@dolda2000.com>
-Subject: Re: [PATCH v2] Ensure that SSH runs in non-interactive mode
-Date: Mon, 21 Jul 2008 15:04:09 +0200
-Message-ID: <1216645452.3673.29.camel@pc7.dolda2000.com>
-References: <1216598432-18553-1-git-send-email-fredrik@dolda2000.com>
-	 <alpine.DEB.1.00.0807210310330.3305@eeepc-johanness>
-	 <1216604693.3673.20.camel@pc7.dolda2000.com>
-	 <m3fxq3ws16.fsf@localhost.localdomain>
-	 <alpine.DEB.1.00.0807211255010.3305@eeepc-johanness>
-	 <20080721110436.GA8395@sigill.intra.peff.net>
-	 <alpine.DEB.1.00.0807211221310.8986@racer>
+From: Joshua Roys <roysjosh@gmail.com>
+Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008 projects?
+Followup-To: gmane.comp.version-control.git.gittorrent
+Date: Mon, 21 Jul 2008 09:23:27 -0400
+Message-ID: <48848DCF.30803@gmail.com>
+References: <200807080227.43515.jnareb@gmail.com> <200807210029.31543.jnareb@gmail.com> <1216601739.6523.48.camel@maia.lan> <200807211223.45707.jnareb@gmail.com> <20080721104032.GI32184@machine.or.cz>
+Reply-To: gittorrent@lists.utsl.gen.nz
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 21 15:05:53 2008
+Cc: Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>,
+	Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+To: gittorrent@lists.utsl.gen.nz
+X-From: git-owner@vger.kernel.org Mon Jul 21 15:24:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKv5J-0008NB-Dj
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 15:05:49 +0200
+	id 1KKvNW-0006Bv-Tt
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 15:24:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751720AbYGUNEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 09:04:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751554AbYGUNEb
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 09:04:31 -0400
-Received: from 1-1-3-7a.rny.sth.bostream.se ([82.182.133.20]:59516 "EHLO
-	nerv.dolda2000.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751478AbYGUNEa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 09:04:30 -0400
-Received: from [IPv6:2002:52b6:8514:200:21d:7dff:fea1:197] ([IPv6:2002:52b6:8514:200:21d:7dff:fea1:197])
-	(authenticated bits=0)
-	by nerv.dolda2000.com (8.13.8/8.13.8/Debian-3) with ESMTP id m6LD4D3c011507
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 21 Jul 2008 15:04:13 +0200
-In-Reply-To: <alpine.DEB.1.00.0807211221310.8986@racer>
-X-Mailer: Evolution 2.22.3.1 
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (nerv.dolda2000.com [IPv6:2002:52b6:8514:200::1]); Mon, 21 Jul 2008 15:04:13 +0200 (CEST)
+	id S1752139AbYGUNXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 09:23:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752125AbYGUNXj
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 09:23:39 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:37447 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751427AbYGUNXi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 09:23:38 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so199040yxm.1
+        for <git@vger.kernel.org>; Mon, 21 Jul 2008 06:23:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=5qpjOL7j4kDGrBd8RhAZsBt2UA47X7lYGDaE5D4ngz8=;
+        b=EbW8Heo/OhLL3whWAk53DdO57kRi16BgufXiIRKQpgBu9PCr42A+Q7JeP9Pzg5cSp1
+         L9iKVOWpBKleuFddu50nqlO7NeaS1wM6a6jQktMwTE8XhIqj5UYLmApDqS0Gu7/+rX2A
+         JRlkO6al43xwuHkqe1r2wdEp1024lrdo9GNb8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=lVsmtlIM9vm2dtaqMt5xw5RI4uc+gIgeWNtfa6FN6HEDB7MAplqHkqyrKr9Kwu6ayo
+         o/uiWyjE+6La639oaWhnngxJEU6EEOPnZgypAH4cbsftpqzURb7gFD/QiKvEBu6f2nPC
+         +DJv0+L38tciJO7vHB0RfLO1vqgiRmrUZroPc=
+Received: by 10.151.100.17 with SMTP id c17mr3816326ybm.112.1216646617796;
+        Mon, 21 Jul 2008 06:23:37 -0700 (PDT)
+Received: from ?192.168.1.250? ( [67.167.142.145])
+        by mx.google.com with ESMTPS id 6sm931406ywp.3.2008.07.21.06.23.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 21 Jul 2008 06:23:37 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <20080721104032.GI32184@machine.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89355>
 
-On Mon, 2008-07-21 at 12:22 +0100, Johannes Schindelin wrote:
-> Hi,
+Petr Baudis wrote:
+> On Mon, Jul 21, 2008 at 12:23:45PM +0200, Jakub Narebski wrote:
+>> [*1*] "the current implementation is quite slow (requiring two calls to
+>> 'git-cat-file' for each object)" <-- why you don't use '--batch' or
+>> '--batch-check' options to git cat file: see also Git::Repo and friends
+>> implementation send by Lea Wiemann to git mailing list as part of
+>> "Gitweb caching" project?  BTW. by keeping discussion off the list,
+>> you are off the knowledge of git community, too.
 > 
-> On Mon, 21 Jul 2008, Jeff King wrote:
+> I concur. Only now I realized that this project might be an important
+> Git Perl API user. Can you please reconsider having a separate mailing
+> list for discussions etc.? The traffic seems to be very low anyway, and
+> I'm not sure what benefits does it actually have at all.
 > 
-> > On Mon, Jul 21, 2008 at 12:56:14PM +0200, Johannes Schindelin wrote:
-> > 
-> > > > or syntax used in RPM spec macros
-> > > > 
-> > > >   %{?p:-P %p}
-> > > > 
-> > > > (and there is complementing %{!?<var>:<expansion>} in RPM spec macro
-> > > > language).
-> > > 
-> > > Yes, this is overkill.  I would even have passed the port argument 
-> > > _always_, since the port 22 for ssh is as likely to change as hell will 
-> > > not freeze over.  Actually, I am not so sure about the latter.
-> > 
-> > But keep in mind that "-p 22" on the command line _overrides_ what the
-> > user has in their ssh config, so it is not a good idea to pass it all
-> > the time.
-> 
-> Oh, good point.  So we might need something distasteful as what Jakub 
-> proposed... Hrmpf.
+> 				Petr "Pasky" Baudis
 
-Two suggestions:
+Thank you for that suggestion!  I made it call cat-file only once in 
+batch mode and it goes quite a bit faster now.
 
- * Use %P as I suggested. I know it is kind of ugly, but I might still
-   consider it less ugly than adding full shell-style substitution to
-   the code. Especially considering that it would almost only have to be
-   used inside of Git. Users outside of the Git source would only very
-   seldomly have to touch it. (It would essentially only be those users
-   who both use alternative SSH ports *and* has an non-standard default
-   in their ssh_config *and* use a custom SSH command...)
- * Put the SSH port number and host name in the environment and call
-   "/bin/sh -c" with the textual concatenation of the SSH command and
-   the command that Git wants to call. While a bit more ugly than
-   handling word splitting internally, I don't really think that it has
-   any real ill effects, seeing how the Git command is word-split on the
-   remote side anyhow (I think that has to be SSH's most stupid
-   "feature").
-
-Fredrik Tolf
+Josh
