@@ -1,67 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/4] builtin-add.c: restructure the code for
- maintainability
-Date: Mon, 21 Jul 2008 02:56:35 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807201529150.3305@eeepc-johanness>
-References: <1216534144-23826-1-git-send-email-gitster@pobox.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008
+	projects?
+Date: Mon, 21 Jul 2008 12:55:39 +1200
+Message-ID: <1216601739.6523.48.camel@maia.lan>
+References: <200807080227.43515.jnareb@gmail.com>
+	 <200807210029.31543.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 21 02:56:49 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Joshua Roys <roysjosh@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 02:57:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KKjhl-0007Ue-MG
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 02:56:46 +0200
+	id 1KKji4-0007Ys-Ag
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 02:57:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754475AbYGUAzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jul 2008 20:55:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755136AbYGUAzq
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 20:55:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49951 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753653AbYGUAzp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2008 20:55:45 -0400
-Received: (qmail invoked by alias); 21 Jul 2008 00:55:43 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp017) with SMTP; 21 Jul 2008 02:55:43 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+ES/l4+oaE74zehyRW26FO43axhwlhxl7gePPkIx
-	6Ut/e2JKcQ3NEo
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <1216534144-23826-1-git-send-email-gitster@pobox.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1755630AbYGUA4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2008 20:56:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755314AbYGUA4C
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jul 2008 20:56:02 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:36670 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755208AbYGUA4B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2008 20:56:01 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 7E36521C93C; Mon, 21 Jul 2008 12:55:59 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00,RDNS_DYNAMIC
+	autolearn=no version=3.2.3
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id C251F21C864;
+	Mon, 21 Jul 2008 12:55:39 +1200 (NZST)
+In-Reply-To: <200807210029.31543.jnareb@gmail.com>
+X-Mailer: Evolution 2.22.3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89283>
 
-Hi,
+On Mon, 2008-07-21 at 00:29 +0200, Jakub Narebski wrote:
+> 1. GitTorrent
+>  
+> Student: Joshua Roys
+> Mentor: Sam Vilain
+> 
+> I never got more response than "it is going slower than I would like, 
+> [...] Other than that, it's going well, I think." from Joshua Roys.
 
-On Sat, 19 Jul 2008, Junio C Hamano wrote:
+> Mailing list archives for gittorrent mailing list doesn't show anything 
+> interesting, either (last post is from 2007).
+>   http://lists.utsl.gen.nz/pipermail/gittorrent/
 
+That's a valid complaint.  I've posted a summary of the project status
+there, and will keep as much related discussion as appropriate on-list
+from here.
 
-> diff --git a/builtin-add.c b/builtin-add.c
-> index bf13aa3..9b2ee8c 100644
-> --- a/builtin-add.c
-> +++ b/builtin-add.c
-> [...]
-> +	/*
-> +	 * If we are adding new files, we need to scan the working
-> +	 * tree to find the ones that match pathspecs; this needs
-> +	 * to be done before we read the index.
-> +	 */
+> Besides canonical repository gitweb
+>   http://utsl.gen.nz/gitweb/?p=VCS-Git-Torrent
+> there is also mirror at
+>   http://repo.or.cz/w/VCS-Git-Torrent.git
+> 
+> There is some activity there... but no summary of it anywhere I could 
+> find.
 
-This comment left me scratching my head.  While I do see a breakage when 
-reading the index first, I had the impression that it should not.
+git-log | git-shortlog?  ;)
 
-I can only imagine that the other users of read_directory() depend on some 
-funny interaction between the index and treat_directory().
-
-Ciao,
-Dscho
+Sam.
