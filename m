@@ -1,85 +1,79 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] checkout without arguments does not make sense
-Date: Mon, 21 Jul 2008 22:49:55 +0200
-Message-ID: <20080721204955.GI32057@genesis.frugalware.org>
-References: <200807212206.32818.johannes.sixt@telecom.at>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Documentation/git-ls-tree.txt: Add a caveat about
+	prefixing pathspec
+Date: Mon, 21 Jul 2008 23:04:52 +0200
+Message-ID: <20080721210452.GP10151@machine.or.cz>
+References: <20080720233956.GH10151@machine.or.cz> <20080721075618.14163.45309.stgit@localhost> <7v1w1nvf7q.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="XRI2XbIfl/05pQwm"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Mon Jul 21 22:51:32 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 23:05:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KL2Lm-0007S7-JW
-	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 22:51:19 +0200
+	id 1KL2Zu-0004G7-PT
+	for gcvg-git-2@gmane.org; Mon, 21 Jul 2008 23:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752967AbYGUUt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2008 16:49:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755996AbYGUUt6
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 16:49:58 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:53218 "EHLO virgo.iok.hu"
+	id S1752720AbYGUVEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2008 17:04:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752686AbYGUVEz
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jul 2008 17:04:55 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:44643 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752967AbYGUUt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2008 16:49:58 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id CDB001B257B;
-	Mon, 21 Jul 2008 22:49:55 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 1091D4465E;
-	Mon, 21 Jul 2008 22:09:34 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 6462E11901B3; Mon, 21 Jul 2008 22:49:55 +0200 (CEST)
+	id S1752665AbYGUVEy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2008 17:04:54 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 4F79E393B308; Mon, 21 Jul 2008 23:04:52 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <200807212206.32818.johannes.sixt@telecom.at>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <7v1w1nvf7q.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89404>
 
+On Mon, Jul 21, 2008 at 01:00:57AM -0700, Junio C Hamano wrote:
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> > +Note that within a subdirectory of the working copy, 'git ls-tree'
+> > +will automatically prepend the subdirectory prefix to the specified
+> > +paths and assume just the prefix was specified in case no paths were
+> > +given --- no matter what the tree object is!
+> 
+> Don't be negative upfront.  Explain why this is a good thing first.
+> 
+> 	... were given.  This is useful when you are deep in a
+> 	subdirectory and want to inspect the list of files in an arbitrary
+> 	commit.  E.g.
+> 
+> 		$ cd some/deep/path
+> 		$ git ls-tree --name-only -r HEAD~20
+> 
+> 	will list the files in some/deep/path (i.e. where you are) 20
+> 	commits ago, just like running "/bin/ls" there will give you the
+> 	list of files you have right now.
 
---XRI2XbIfl/05pQwm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Frankly, I think this is overdoing it. I'm all for being positive, but
+it is obvious why this is good thing when you inspect a root tree and
+there's no need to be too wordy about it - it should be enough to
+acknowledge this later by the "as expected" as I note below.
 
-On Mon, Jul 21, 2008 at 10:06:32PM +0200, Johannes Sixt <johannes.sixt@tele=
-com.at> wrote:
-> @@ -487,7 +487,8 @@ int cmd_checkout(int argc, const char **argv, const c=
-har *prefix)
->  		}
-> =20
->  		return checkout_paths(source_tree, pathspec);
-> -	}
-> +	} else if (!new.name && !opts.new_branch)
-> +		usage_with_options(checkout_usage, options);
-> =20
->  	if (new.name && !new.commit) {
->  		die("Cannot switch branch to a non-commit.");
+The documentation should be detailed and complete, but not too chatty,
+or it gets too hard to read again.
 
-Actually I think it _is_ useful, like this:
+> > +Thus, within a subdirectory, 'git ls-tree' behaves as expected
+> > +only when run on a root tree object (e.g. with a 'HEAD' tree-ish,
+> > +but not anymore when passed 'HEAD:Documentation' instead).
+> > +
+> > +
+> >  OPTIONS
+> >  -------
+> >  <tree-ish>::
 
-$ git checkout
-Your branch is ahead of the tracked remote branch 'junio/next' by 1 commit.
-
-How will it be possible to get that info easily after your patch?
-
-Thanks.
-
---XRI2XbIfl/05pQwm
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkiE9nMACgkQe81tAgORUJZFKwCfYxTGSGqYxVERwSL+8RBtJNkU
-XIUAnjDrkqKSn8okExN2+0HbIDpt1wfM
-=+KG9
------END PGP SIGNATURE-----
-
---XRI2XbIfl/05pQwm--
+-- 
+				Petr "Pasky" Baudis
+As in certain cults it is possible to kill a process if you know
+its true name.  -- Ken Thompson and Dennis M. Ritchie
