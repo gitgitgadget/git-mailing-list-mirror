@@ -1,89 +1,150 @@
-From: Harvey Harrison <harvey.harrison@gmail.com>
-Subject: Re: Computing the number of patches in linux-next tree
-Date: Tue, 22 Jul 2008 11:23:28 -0700
-Message-ID: <1216751008.13328.17.camel@brick>
-References: <12c511ca0807220919q4db6ee1fr33dc70fe35c58efe@mail.gmail.com>
-	 <alpine.DEB.1.00.0807221727210.8986@racer>
-	 <7vabg9n93f.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Tony Luck <tony.luck@intel.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 20:24:36 2008
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: [PATCH] parse-options: fix parsing of "--foobar=" with no value
+Date: Tue, 22 Jul 2008 20:44:27 +0200
+Message-ID: <1216752267-12138-1-git-send-email-dkr+ml.git@free.fr>
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Tue Jul 22 20:45:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLMXI-0007W1-R6
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 20:24:33 +0200
+	id 1KLMrb-00075g-JU
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 20:45:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752372AbYGVSXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 14:23:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752741AbYGVSXc
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 14:23:32 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:34901 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752350AbYGVSXb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 14:23:31 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so847919ywe.1
-        for <git@vger.kernel.org>; Tue, 22 Jul 2008 11:23:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=ZzRTDqBpsGKLWxhRsyQvI222cfG+nX5PV14FieEWCzc=;
-        b=R91cXxzj4OwF3naNX8m5WTWJ4odSN7RMVRrH+CQo8SxuJLF+Ap0bESewQTMevOG+N1
-         HfrB8rgW0gQCYRmT7xZhuyiIgCT94DFfNaUfSSAtoiSRh4Xnkuj16zSa+NjE0mETZlgo
-         BenRdKslC3n6psneUmTIRpi8j/3ok+9+WLJag=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=dDHCKICftfF6sN8L75kkdZ469+9mESUl2LV9Zgc4TozENmgEZTnT+tyCwmgHmLvhO2
-         d9ABrBL1iLi0Rni2Lpl+1sspk14iED4a8oJWjSDF9Z+IV/2VfrEKn7LUDXVnJJc2b9hP
-         GSf1xc27s3nqSXuQH846WRg04NAP5VUq+wytE=
-Received: by 10.142.157.15 with SMTP id f15mr1972744wfe.96.1216751009827;
-        Tue, 22 Jul 2008 11:23:29 -0700 (PDT)
-Received: from ?128.189.251.46? ( [128.189.251.46])
-        by mx.google.com with ESMTPS id 27sm2873936wfa.2.2008.07.22.11.23.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 22 Jul 2008 11:23:29 -0700 (PDT)
-In-Reply-To: <7vabg9n93f.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.22.3.1 
+	id S1752741AbYGVSob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 14:44:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751782AbYGVSoa
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 14:44:30 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:36646 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751414AbYGVSoa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 14:44:30 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 4F2A112B6F8;
+	Tue, 22 Jul 2008 20:44:28 +0200 (CEST)
+Received: from localhost.localdomain (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id ED95A12B73D;
+	Tue, 22 Jul 2008 20:44:27 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.rc0.16.gb169.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89510>
 
-On Tue, 2008-07-22 at 10:04 -0700, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Tue, 22 Jul 2008, Tony Luck wrote:
-> >
-> >> git tag | grep next- | sort | while read tag
-> >
-> > This should not be necessary... AFAICT "git tag" sorts its output already.
-> >
-> >> What does the "git-where-did-this-tag-branch-from-linus" command look like?
-> >
-> > git merge-base --all <branch1> <branch2>
-> >
-> > Be warned: there might be multiple merge bases.
-> 
-> I do not think that approach applies to linux-next, which is constantly
-> rewound to the then-tip-of-linus and merge remaining bits.  The question
-> is "where does this branch begin", which does not have an answer in git.
+From: Olivier Marin <dkr@freesurf.fr>
 
-I thought that was what Stephen has the next/stable branch for:
+Before this patch, running a git command with a "--foobar=" argument
+will set the "foobar" option with a random value and continue.
+We should instead, exit with an error if a value is required, or use
+the default one if the value is optional.
 
-git log --pretty=oneline --no-merges next/stable..next/master | wc -l
+This patch fix the above issue and add some test cases.
 
-At least for each day you can find the number of patches....I don't
-think he tags the stable points, so historically that may be a problem.
+Signed-off-by: Olivier Marin <dkr@freesurf.fr>
+---
+ parse-options.c          |    8 ++++----
+ t/t0040-parse-options.sh |   25 +++++++++++++++++++++++++
+ test-parse-options.c     |    3 +++
+ 3 files changed, 32 insertions(+), 4 deletions(-)
 
-Harvey
+diff --git a/parse-options.c b/parse-options.c
+index 71a7acf..67be197 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -17,7 +17,7 @@ static int opterror(const struct option *opt, const char *reason, int flags)
+ static int get_arg(struct parse_opt_ctx_t *p, const struct option *opt,
+ 		   int flags, const char **arg)
+ {
+-	if (p->opt) {
++	if (p->opt && *p->opt) {
+ 		*arg = p->opt;
+ 		p->opt = NULL;
+ 	} else if (p->argc == 1 && (opt->flags & PARSE_OPT_LASTARG_DEFAULT)) {
+@@ -80,7 +80,7 @@ static int get_value(struct parse_opt_ctx_t *p,
+ 	case OPTION_STRING:
+ 		if (unset)
+ 			*(const char **)opt->value = NULL;
+-		else if (opt->flags & PARSE_OPT_OPTARG && !p->opt)
++		else if (opt->flags & PARSE_OPT_OPTARG && (!p->opt || !*p->opt))
+ 			*(const char **)opt->value = (const char *)opt->defval;
+ 		else
+ 			return get_arg(p, opt, flags, (const char **)opt->value);
+@@ -91,7 +91,7 @@ static int get_value(struct parse_opt_ctx_t *p,
+ 			return (*opt->callback)(opt, NULL, 1) ? (-1) : 0;
+ 		if (opt->flags & PARSE_OPT_NOARG)
+ 			return (*opt->callback)(opt, NULL, 0) ? (-1) : 0;
+-		if (opt->flags & PARSE_OPT_OPTARG && !p->opt)
++		if (opt->flags & PARSE_OPT_OPTARG && (!p->opt || !*p->opt))
+ 			return (*opt->callback)(opt, NULL, 0) ? (-1) : 0;
+ 		if (get_arg(p, opt, flags, &arg))
+ 			return -1;
+@@ -102,7 +102,7 @@ static int get_value(struct parse_opt_ctx_t *p,
+ 			*(int *)opt->value = 0;
+ 			return 0;
+ 		}
+-		if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
++		if (opt->flags & PARSE_OPT_OPTARG && (!p->opt || !*p->opt)) {
+ 			*(int *)opt->value = opt->defval;
+ 			return 0;
+ 		}
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index 03dbe00..7ce2e86 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -26,6 +26,8 @@ String options
+     --st <st>             get another string (pervert ordering)
+     -o <str>              get another string
+     --default-string      set string to default
++    --optional-string[=<string>]
++                          set string to optional if none given
+ 
+ Magic arguments
+     --quux                means --quux
+@@ -85,6 +87,29 @@ test_expect_success 'missing required value' '
+ 	test $? = 129
+ '
+ 
++test_expect_success 'missing required value with "--foobar="' '
++	test-parse-options --length=;
++	test $? = 129 &&
++	test-parse-options --len=;
++	test $? = 129
++'
++
++cat > expect << EOF
++boolean: 0
++integer: 0
++string: optional
++abbrev: 7
++verbose: 0
++quiet: no
++dry run: no
++EOF
++
++test_expect_success 'optional value with "--foobar="' '
++	test-parse-options --optional-string= > output 2> output.err &&
++	test ! -s output.err &&
++	test_cmp expect output
++'
++
+ cat > expect << EOF
+ boolean: 1
+ integer: 13
+diff --git a/test-parse-options.c b/test-parse-options.c
+index 2a79e72..76db37e 100644
+--- a/test-parse-options.c
++++ b/test-parse-options.c
+@@ -42,6 +42,9 @@ int main(int argc, const char **argv)
+ 		OPT_STRING('o', NULL, &string, "str", "get another string"),
+ 		OPT_SET_PTR(0, "default-string", &string,
+ 			"set string to default", (unsigned long)"default"),
++		{ OPTION_STRING, 0, "optional-string", &string,
++			"string", "set string to optional if none given",
++			PARSE_OPT_OPTARG, NULL, (unsigned long)"optional" },
+ 		OPT_GROUP("Magic arguments"),
+ 		OPT_ARGUMENT("quux", "means --quux"),
+ 		OPT_GROUP("Standard options"),
+-- 
+1.6.0.rc0.16.gb169.dirty
