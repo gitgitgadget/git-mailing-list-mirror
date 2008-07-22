@@ -1,58 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bring description of git diff --cc up to date
-Date: Tue, 22 Jul 2008 10:09:17 -0700
-Message-ID: <7v63qxn8w2.fsf@gitster.siamese.dyndns.org>
-References: <20080722111947.BIW29914@m4500-01.uchicago.edu>
+From: "Luck, Tony" <tony.luck@intel.com>
+Subject: RE: Computing the number of patches in linux-next tree
+Date: Tue, 22 Jul 2008 10:13:32 -0700
+Message-ID: <57C9024A16AD2D4C97DC78E552063EA306640DDC@orsmsx505.amr.corp.intel.com>
+References: <12c511ca0807220919q4db6ee1fr33dc70fe35c58efe@mail.gmail.com>
+ <alpine.DEB.1.00.0807221727210.8986@racer>
+ <7vabg9n93f.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Greaves <david@dgreaves.com>
-To: Jonathan Nieder <jrnieder@uchicago.edu>
-X-From: git-owner@vger.kernel.org Tue Jul 22 19:10:24 2008
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 22 19:15:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLLNY-0001mB-4i
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 19:10:24 +0200
+	id 1KLLSC-0003Xf-94
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 19:15:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752415AbYGVRJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 13:09:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752288AbYGVRJZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 13:09:25 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63531 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751802AbYGVRJY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 13:09:24 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 609104086A;
-	Tue, 22 Jul 2008 13:09:23 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id CA86B40866; Tue, 22 Jul 2008 13:09:19 -0400 (EDT)
-In-Reply-To: <20080722111947.BIW29914@m4500-01.uchicago.edu> (Jonathan
- Nieder's message of "Tue, 22 Jul 2008 11:19:47 -0500 (CDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EE6D1C40-5810-11DD-8968-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752099AbYGVROM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 13:14:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752119AbYGVROM
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 13:14:12 -0400
+Received: from mga09.intel.com ([134.134.136.24]:44122 "EHLO mga09.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751830AbYGVROL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Jul 2008 13:14:11 -0400
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga102.jf.intel.com with ESMTP; 22 Jul 2008 10:12:47 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.31,232,1215414000"; 
+   d="scan'208";a="420889715"
+Received: from unknown (HELO azsmsx001.amr.corp.intel.com) ([10.2.167.98])
+  by orsmga001.jf.intel.com with ESMTP; 22 Jul 2008 10:13:41 -0700
+Received: from orsmsx505.amr.corp.intel.com (10.22.226.208) by
+ azsmsx001.amr.corp.intel.com (10.2.167.98) with Microsoft SMTP Server (TLS)
+ id 8.1.240.5; Tue, 22 Jul 2008 10:13:40 -0700
+Received: from orsmsx505.amr.corp.intel.com ([10.22.226.208]) by
+ orsmsx505.amr.corp.intel.com ([10.22.226.208]) with mapi; Tue, 22 Jul 2008
+ 10:13:34 -0700
+Thread-Topic: Computing the number of patches in linux-next tree
+Thread-Index: AcjsHRWUU4VIpyhoQ6qcqa3+GtJQIQAADZ1w
+In-Reply-To: <7vabg9n93f.fsf@gitster.siamese.dyndns.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89505>
 
-Jonathan Nieder <jrnieder@uchicago.edu> writes:
-
-> Just to make sure I understand, here is what I think --cc does:
+>> git merge-base --all <branch1> <branch2>
+>>
+>> Be warned: there might be multiple merge bases.
 >
->   - In a two-parent merge, it is exactly as Linus has been
->     ...
->   - In a many-parent merge, the criterion is more stringent.
->     ...
->
-> Is that correct?
+> I do not think that approach applies to linux-next, which is constantly
+> rewound to the then-tip-of-linus and merge remaining bits.  The question
+> is "where does this branch begin", which does not have an answer in git.
 
-The logic in the code does not have separate criteria for two-parent and
-Octopus cases.  Actually Linus talks about "when you have two versions to
-choose from, and if the result matches one of them, then it is not
-interesting".  In a two-parent merge, you cannot have three or more
-possible versions to choose from by definition, can you?
+Using git merge-base on the next-20080701 tag and current Linus tree I get
+76 possible merge bases.  None of them appear to be the "right" one (if
+I check out this tag and look at Next/merge.log the right answer appears
+to be 1702b52 if I'm reading the log correctly).
+
+Perhaps my best hope is to
+        $ git checkout $tag Next/merge.log
+        ... parse merge.log to figure out $base ...
+
+-Tony
