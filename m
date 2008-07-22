@@ -1,71 +1,62 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: problem using jgit
-Date: Tue, 22 Jul 2008 11:58:31 -0500
-Message-ID: <20080722165831.GA11173@spearce.org>
-References: <p06240809c4a9d887fda4@[192.168.1.106]> <488467E3.7000107@gmail.com> <488482A2.4000601@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Fix update-index --refresh for submodules if stat(2)
+ returns st_size 0
+Date: Tue, 22 Jul 2008 18:59:47 +0200
+Message-ID: <48861203.80106@viscovery.net>
+References: <20080721173511.GB5387@steel.home> <4885897C.8010401@viscovery.net> <20080722164604.GA3766@blimp.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stephen Bannasch <stephen.bannasch@deanbrook.org>,
-	git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 18:59:33 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 22 19:00:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLLD1-0006C6-RZ
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 18:59:32 +0200
+	id 1KLLEJ-0006hI-9E
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 19:00:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752232AbYGVQ6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 12:58:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751542AbYGVQ6c
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 12:58:32 -0400
-Received: from george.spearce.org ([209.20.77.23]:57134 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751234AbYGVQ6b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 12:58:31 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 442B6383A5; Tue, 22 Jul 2008 16:58:31 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <488482A2.4000601@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752307AbYGVQ7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 12:59:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752256AbYGVQ7v
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 12:59:51 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:33236 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752146AbYGVQ7v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 12:59:51 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KLLDH-0004nR-N8; Tue, 22 Jul 2008 18:59:49 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 72F986D9; Tue, 22 Jul 2008 18:59:47 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20080722164604.GA3766@blimp.local>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.2 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89501>
 
-Marek Zawirski <marek.zawirski@gmail.com> wrote:
-> Marek Zawirski wrote:
->> Stephen Bannasch wrote:
->>> I've setup a simple test class that integrates jgit to clone a git  
->>> repository. However I'm getting a NullPointerError when  
->>> RevWalk.parseAny ends up producing a null object id.
-...
-> It's caused by 14a630c3: Cached modification times for symbolic refs too
-> Changes introduced by this patch made Repository#getAllRefs() including  
-> Ref objects with null ObjectId in case of unresolvable (invalid?) HEAD  
-> symbolic ref, and null Ref for HEAD  when it doesn't exist. Previous  
-> behavior was just not including such refs in result.
+Alex Riesen schrieb:
+> Johannes Sixt, Tue, Jul 22, 2008 09:17:16 +0200:
+>> Alex Riesen schrieb:
+>>> +	if ((changed & DATA_CHANGED) && (ce->ce_size != 0 || S_ISGITLINK(ce->ce_mode)))
+>> Does this mean that ce->ce_size is non-zero for gitlinks, at least on
+>> Unix?
+> 
+> It is non-zero for directories (which is what gitlinks are in working
+> directories) on UNIX operating systems I met.
+> 
+>> Is this value useful in anyway?
+> 
+> Sometimes it is (the size a directory takes on storage)
 
-My intention here was that if a ref cannot be resolved, it should
-not be reported.  So Ref.getObjectId should never return null, and
-it should also never return an ObjectId for which the object does
-not exist in the Repository's object database(s).  (Though that can
-happen in the face of repository corruption, but lets not go there
-just yet).
+Sure; but is ce->ce_size of gitlinks useful?
 
-So IMHO the RefDatabase code is _wrong_ for returning HEAD with a
-null objectId.
-
-Now this case can happen if HEAD points at a stillborn branch.  This
-is easily reproduced in any repository, e.g. just do:
-
-	git symbolic-ref HEAD refs/heads/`date`
-
-You'll wind up on a branch which doesn't exist.  In this case HEAD
-shouldn't be reported back from RefDatabase, it doesn't exist, as
-branch `date` does not exist either.
-
--- 
-Shawn.
+-- Hannes
