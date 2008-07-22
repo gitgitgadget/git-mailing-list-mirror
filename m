@@ -1,67 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Ignore dirty submodule states in "git pull --rebase"
-Date: Tue, 22 Jul 2008 22:41:41 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807222241200.8986@racer>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: Hacks for AIX
+Date: Tue, 22 Jul 2008 16:42:07 -0500
+Message-ID: <egpEt3GbPWBZ1DtILuSJ02MgOG3IyxmMVqfP6ebtANiJ-7fx7sn29Q@cipher.nrlssc.navy.mil>
+References: <5855afd30807161057v54ed4112jaea3bc07cebf44d4@mail.gmail.com> <7v3am9sn2p.fsf@gitster.siamese.dyndns.org> <7vd4l9c5ud.fsf@gitster.siamese.dyndns.org> <hT7kYDX9f_eBxi8JC0s7jG9oqm8sZ1QCTlEg1n8Dqus7U98hWLWnBA@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jul 22 23:42:44 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Chris Cowan <chris.o.cowan@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 22 23:43:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLPd4-0001K2-VL
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 23:42:43 +0200
+	id 1KLPdf-0001Y8-88
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 23:43:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752860AbYGVVlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 17:41:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752150AbYGVVlm
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 17:41:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41269 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751079AbYGVVll (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 17:41:41 -0400
-Received: (qmail invoked by alias); 22 Jul 2008 21:41:39 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp037) with SMTP; 22 Jul 2008 23:41:39 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18COR4ITo0CISnKb16iPawZcx5xof/c6RmyaVj5Fm
-	bXkyNjveLm6K0w
-X-X-Sender: gene099@racer
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1753154AbYGVVmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 17:42:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbYGVVmT
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 17:42:19 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50505 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753006AbYGVVmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 17:42:18 -0400
+Received: by mail.nrlssc.navy.mil id m6MLg8jj025849; Tue, 22 Jul 2008 16:42:08 -0500
+In-Reply-To: <hT7kYDX9f_eBxi8JC0s7jG9oqm8sZ1QCTlEg1n8Dqus7U98hWLWnBA@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 22 Jul 2008 21:42:07.0949 (UTC) FILETIME=[CA34EFD0:01C8EC43]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89546>
 
+Brandon Casey wrote:
+> Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>>>     * /usr/bin/patch - really old version, doesn't do well with some
+>>>> diff formats.   I avoid using it.
+>>> t4109 seems to use patch to produce expected output for the tests; we
+>>> should ship a precomputed expected results.  Do you know of any other
+>>> places "patch" is used?
+>> As usual, I won't commit this patch unless I hear from people who
+>> potentially would benefit from it.  I do not need such a patch myself and
+>> I really shouldn't be spending too much of my time on these.
+> 
+> 
+> Unless I'm doing something wrong, this doesn't apply cleanly to master.
 
-This is a companion patch to 6848d58c(Ignore dirty submodule states
-during rebase and stash).
+I figured out that your patch was against maint.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- git-pull.sh |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+I see it is now applied to master and it helps out on solaris with old patch.
 
-diff --git a/git-pull.sh b/git-pull.sh
-index 6afd4e2..75c3610 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -107,9 +107,9 @@ error_on_no_merge_candidates () {
- }
- 
- test true = "$rebase" && {
--	git update-index --refresh &&
--	git diff-files --quiet &&
--	git diff-index --cached --quiet HEAD -- ||
-+	git update-index --ignore-submodules --refresh &&
-+	git diff-files --ignore-submodules --quiet &&
-+	git diff-index --ignore-submodules --cached --quiet HEAD -- ||
- 	die "refusing to pull with rebase: your working tree is not up-to-date"
- 
- 	. git-parse-remote &&
--- 
-1.6.0.rc0.22.gf2096d.dirty
+Now I need to get rid of 'diff -U0' in t1002-read-tree-m-u-2way.sh.
+
+-brandon
