@@ -1,67 +1,115 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: git status in clean working dir
-Date: Tue, 22 Jul 2008 09:54:08 +0200
-Message-ID: <48859220.6080509@viscovery.net>
-References: <0ttzeirft8.wl%bremner@pivot.cs.unb.ca> <7vy73ur6pz.fsf@gitster.siamese.dyndns.org> <7vtzeir68z.fsf@gitster.siamese.dyndns.org> <20080722044157.GA20787@sigill.intra.peff.net> <48858D95.7060409@viscovery.net> <20080722074632.GA3999@sigill.intra.peff.net>
+From: david@lang.hm
+Subject: Re: Git Documentation
+Date: Tue, 22 Jul 2008 00:56:02 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0807220035110.1125@asgard.lang.hm>
+References: <d411cc4a0807212035v68c2ed95m93b77c1e61cfec9e@mail.gmail.com> <200807220917.57363.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	David Bremner <bremner@unb.ca>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 22 09:55:13 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Jul 22 09:56:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLCiG-0007O9-0z
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 09:55:12 +0200
+	id 1KLCj5-0007ec-2C
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 09:56:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752127AbYGVHyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 03:54:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752012AbYGVHyN
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 03:54:13 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:22894 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752125AbYGVHyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 03:54:12 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KLChF-0003rs-FK; Tue, 22 Jul 2008 09:54:10 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 209236D9; Tue, 22 Jul 2008 09:54:09 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20080722074632.GA3999@sigill.intra.peff.net>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752182AbYGVHzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 03:55:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752179AbYGVHzD
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 03:55:03 -0400
+Received: from mail.lang.hm ([64.81.33.126]:59896 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752108AbYGVHzC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 03:55:02 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m6M7suQQ018402;
+	Tue, 22 Jul 2008 00:54:56 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <200807220917.57363.johan@herland.net>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89468>
 
-Jeff King schrieb:
-> On Tue, Jul 22, 2008 at 09:34:45AM +0200, Johannes Sixt wrote:
-> 
->>> -		{ "diff-files", cmd_diff_files, RUN_SETUP },
->>> +		{ "diff-files", cmd_diff_files, RUN_SETUP | FORBID_PAGER },
->> Every now and then I want to use 'git -p diff-files', and I think that is
->> a valid use-case. But your suggested patch seems to forbid the pager even
->> in this case. :-(
-> 
-> Actually, it doesn't. If you read earlier in the message, this applies
-> only to pager.* config. That being said, I think Junio's ultimate goal
-> was to not allow stupid people to accidentally set the pager on
-> plumbing, at the expense of any smart people who might want to do it for
-> a good reason.
-> 
-> Though I have to wonder why "git diff --raw" is not enough for you.
+On Tue, 22 Jul 2008, Johan Herland wrote:
 
-Usually, I use plumbing with a pager while I'm writing or debugging a
-script, and I'm studying its output. So, no, I'm not interested in "git
-diff --raw". ;)
+> On Tuesday 22 July 2008, Scott Chacon wrote:
+>> If anyone has any tips on how they think git should be taught, issues
+>> they are asked a lot, problems newbies tend to have, something they
+>> wish there were a screencast for or was better documented, etc -
+>> please do contact me so I can incorporate it.
+>
+> You should at least take a look at this thread:
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/88698
+>
+> (even though it goes off-topic after a while...)
+>
+>> If anyone has any tips on how they think git should be taught...
+>
+> It seems there are primarily two ways to teach Git:
+>
+> 1. Top-down: Start with simple use cases and commands. Teach people a
+> minimal, but necessary set of porcelain commands to get them started. Stay
+> _far_ away from plumbing commands and most of the command options.
+>
+> 2. Bottom-up: Start with how Git structures the data. Talk about blobs,
+> trees, commits, refs, how everything is connected, and how various Git
+> commands query and manipulate this structure. This _may_ involve a fair
+> amount of plumbing commands, especially when discovering how the more
+> complicated high-level commands manipulate the structure.
+>
+> Some people seem to prefer the first approach, other people prefer the other
+> approach. Both paths lead to enlightenment ;). In many cases a bit of both
+> may be useful. HOWEVER, I think it is _very_ important to keep in mind that
+> these are two _different_ approaches, and the contexts in which they are
+> taught should be kept separate. I would almost suggest splitting your
+> website down the middle and make the difference between top-down and
+> bottom-up immediately visible with, say, a different background color, or
+> something else that immediately tells the user what "track" they are
+> following...
 
--- Hannes
+possibly a combination of the two?
+
+under the covers the git data-structures are pretty simple and explaining 
+them (and the minimal tools to manipulate them) isn't that bad.
+
+what gets ugly is when you then try to use the plumbing to do the 
+non-trivial things.
+
+so how about an optional 'under the covers' primer, covering just the 
+trivial plumbing, then the high-level minimal introduction with a link on 
+each of the commands as they are introduced (so that a person can dig into 
+deeper detail if they want to, possibly including 'up until version X 
+this command was implemented by the following script'), followed by links 
+to sample work-flows and a full dive into the plumbing (because at this 
+point the person should know enough to get by, now they need reference 
+material and examples more then a tutorial).
+
+ideally this would let people dive as deep as they are comfortable with, or 
+skim the explanation for the functionality
+
+I think one reason the 'plumbing first' approach gets a bad rap is that 
+it's so easy to get caught up into how clever you can get with the 
+plumbing. it's like teaching someone programming by spending a day 
+introducing them to concepts and language syntax, and then giving them the 
+entries in the obfuscated C contests as examples of how someone can use 
+them to get work done, but skipping any mention of libc or other standard 
+libraries.
+
+on the other hand, teaching only porcelain is like teaching them <insert 
+high-level *th generation buzzword language> without teaching any concept 
+of what they computer is doing under the covers, they can work, and even 
+get useful work done, but they will be limited on how effective they can 
+be.
+
+
+you can't be a great programmer until you can understand both levels, the 
+under-the-covers 'plumbing' and the high level libraries of the 
+'porcelain', trying to ignore either will limit you.
+
+David Lang
