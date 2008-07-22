@@ -1,82 +1,58 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] t7601: extend the 'merge picks up the best result' test
-Date: Tue, 22 Jul 2008 19:05:59 +0200
-Message-ID: <1216746359-21170-1-git-send-email-vmiklos@frugalware.org>
-References: <7v7ibenx75.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 19:07:18 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] bring description of git diff --cc up to date
+Date: Tue, 22 Jul 2008 10:09:17 -0700
+Message-ID: <7v63qxn8w2.fsf@gitster.siamese.dyndns.org>
+References: <20080722111947.BIW29914@m4500-01.uchicago.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Greaves <david@dgreaves.com>
+To: Jonathan Nieder <jrnieder@uchicago.edu>
+X-From: git-owner@vger.kernel.org Tue Jul 22 19:10:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLLJp-000085-LD
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 19:06:34 +0200
+	id 1KLLNY-0001mB-4i
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 19:10:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752412AbYGVRFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 13:05:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752264AbYGVRFe
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 13:05:34 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:40844 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752187AbYGVRFd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 13:05:33 -0400
-Received: from vmobile.example.net (dsl5400FADC.pool.t-online.hu [84.0.250.220])
-	by yugo.frugalware.org (Postfix) with ESMTP id E44B11DDC5B;
-	Tue, 22 Jul 2008 19:05:31 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 861431AA738; Tue, 22 Jul 2008 19:05:59 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6.4.433.g09651.dirty
-In-Reply-To: <7v7ibenx75.fsf@gitster.siamese.dyndns.org>
+	id S1752415AbYGVRJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 13:09:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752288AbYGVRJZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 13:09:25 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63531 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751802AbYGVRJY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 13:09:24 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 609104086A;
+	Tue, 22 Jul 2008 13:09:23 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id CA86B40866; Tue, 22 Jul 2008 13:09:19 -0400 (EDT)
+In-Reply-To: <20080722111947.BIW29914@m4500-01.uchicago.edu> (Jonathan
+ Nieder's message of "Tue, 22 Jul 2008 11:19:47 -0500 (CDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: EE6D1C40-5810-11DD-8968-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89504>
 
-The test only checked if the best result picking code works if there are
-multiple strategies set in the config. Add a similar one that tests if
-the same true if the -s option of git merge was used multiple times.
+Jonathan Nieder <jrnieder@uchicago.edu> writes:
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+> Just to make sure I understand, here is what I think --cc does:
+>
+>   - In a two-parent merge, it is exactly as Linus has been
+>     ...
+>   - In a many-parent merge, the criterion is more stringent.
+>     ...
+>
+> Is that correct?
 
-On Tue, Jul 22, 2008 at 01:24:14AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> Don't.  pull.* has always been defined as "list of strategies", and -s
-> has
-> always been defined to take "a" strategy.
-
-OK. Here is a testcase for the later. As far as I see the behaviour of
-multiple -s was not checked till now.
-
- t/t7601-merge-pull-config.sh |   15 +++++++++++++++
- 1 files changed, 15 insertions(+), 0 deletions(-)
-
-diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
-index 6b9f638..55aa6b5 100755
---- a/t/t7601-merge-pull-config.sh
-+++ b/t/t7601-merge-pull-config.sh
-@@ -112,6 +112,21 @@ test_expect_success 'setup conflicted merge' '
- # recusive is choosen.
- 
- test_expect_success 'merge picks up the best result' '
-+	git config --unset-all pull.twohead &&
-+	git reset --hard c5 &&
-+	git merge -s resolve c6
-+	resolve_count=$(conflict_count) &&
-+	git reset --hard c5 &&
-+	git merge -s recursive c6
-+	recursive_count=$(conflict_count) &&
-+	git reset --hard c5 &&
-+	git merge -s recursive -s resolve c6
-+	auto_count=$(conflict_count) &&
-+	test $auto_count = $recursive_count &&
-+	test $auto_count != $resolve_count
-+'
-+
-+test_expect_success 'merge picks up the best result (from config)' '
- 	git config pull.twohead "recursive resolve" &&
- 	git reset --hard c5 &&
- 	git merge -s resolve c6
--- 
-1.5.6.4.433.g09651.dirty
+The logic in the code does not have separate criteria for two-parent and
+Octopus cases.  Actually Linus talks about "when you have two versions to
+choose from, and if the result matches one of them, then it is not
+interesting".  In a two-parent merge, you cannot have three or more
+possible versions to choose from by definition, can you?
