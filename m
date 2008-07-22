@@ -1,101 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH for master] Rename path_list to string_list
-Date: Tue, 22 Jul 2008 13:09:47 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807221308050.3391@eeepc-johanness>
-References: <alpine.DEB.1.00.0807211858330.8986@racer> <alpine.DEB.1.00.0807211904090.8986@racer> <7v3am2sldy.fsf@gitster.siamese.dyndns.org>
+From: Kristian Amlie <kristian.amlie@trolltech.com>
+Subject: Re: How to find the first commit belonging to any branch
+Date: Tue, 22 Jul 2008 13:18:09 +0200
+Message-ID: <4885C1F1.7060907@trolltech.com>
+References: <4885A39F.5080209@trolltech.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 13:10:02 2008
+Content-Type: text/plain;
+	charset="US-ASCII";
+	format="flowed"
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 22 13:19:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLFkn-0007dB-IA
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 13:10:01 +0200
+	id 1KLFtg-0002f6-Ku
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 13:19:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755687AbYGVLJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 07:09:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755595AbYGVLI7
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 07:08:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49051 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755446AbYGVLI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 07:08:58 -0400
-Received: (qmail invoked by alias); 22 Jul 2008 11:08:57 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness) [88.107.142.10]
-  by mail.gmx.net (mp052) with SMTP; 22 Jul 2008 13:08:57 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+RI419/FyRS7tdxMnV9R4DnClMigjGXgGv4heVkJ
-	zZ2ceYpP8dctgO
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7v3am2sldy.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1751189AbYGVLSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 07:18:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751277AbYGVLSN
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 07:18:13 -0400
+Received: from hoat.troll.no ([62.70.27.150]:33935 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750899AbYGVLSM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 07:18:12 -0400
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 84CE620B06
+	for <git@vger.kernel.org>; Tue, 22 Jul 2008 13:18:07 +0200 (CEST)
+Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 7D8F220A6B
+	for <git@vger.kernel.org>; Tue, 22 Jul 2008 13:18:07 +0200 (CEST)
+Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
+	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id m6MBI767020709
+	for <git@vger.kernel.org>; Tue, 22 Jul 2008 13:18:07 +0200
+Received: from [10.3.5.25] (axis.troll.no [10.3.5.25])
+    by sx01.troll.no (Scalix SMTP Relay 11.3.0.11339)
+    via ESMTP; Tue, 22 Jul 2008 13:18:07 +0200 (CEST)
+In-Reply-To: <7vej5mmfp9.fsf@gitster.siamese.dyndns.org>
+References: <7vej5mmfp9.fsf@gitster.siamese.dyndns.org>
+x-scalix-Hops: 1
+User-Agent: Thunderbird 2.0.0.14 (X11/20080519)
+X-Enigmail-Version: 0.95.6
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89485>
 
-Hi,
-
-On Mon, 21 Jul 2008, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Junio C Hamano wrote:
+> Kristian Amlie <kristian.amlie@trolltech.com> writes:
 > 
-> > @@ -64,9 +65,10 @@ Functions
-> >  
-> >  `string_list_clear`::
-> >  
-> > -	Free a string_list. The `path` pointer of the items will be freed in case
-> > -	the `strdup_strings` member of the string_list is set. The second parameter
-> > -	controls if the `util` pointer of the items should be freed or not.
-> > +	Free a string_list. The `path` pointer of the items will be freed in
-> > +	case the `strdup_strings` member of the string_list is set. The second
-> > +	parameter controls if the `util` pointer of the items should be freed
-> > +	or not.
+>> I have a question about git: I have one commit sha1, and I would like
+>> to know the nearest commit that appears in *any* other branch. The
+>> sha1 that I have does not belong to any branch.
+>>
+>> The obvious thing to do would be to make a for loop and iterate over
+>> existing branches while calling git merge-base, but I'm wondering if
+>> there's a more clever method.
 > 
-> Missed 's/path/string/' here?
+> If the $commit does not belong to any branch, then:
+> 
+>     $ git rev-list --bounardy $commit^0 --not --branches | sed -ne 's/^-//p'
+> 
+> would give you boundary commits of the above traversal, which says:
+> 
+>     Traverse from $commit following the parents, but stop at anything that
+>     is reachable from any breanch.
+> 
+> which means that the ones that are output are the candidates that are on
+> some branch.
+> 
+> So pipe that to name-rev like this, perhaps (untested)?
+> 
+>     $ git rev-list --bounardy $commit^0 --not --branches |
+>       sed -ne 's/^-//p' |
+>       git name-rev --stdin
+> 
+> 
 
-Good catch.  I clearly forgot to grep for "path" in all the files that I 
-touched.  I did that now, but only looked at comments (in the hope that 
-the compiler would have caught the other ones).
+Thanks! That did the trick!
 
--- snipsnap --
-[PATCH] Fix two leftovers from path_list->string_list
-
-In the documentation, where you cannot get compile errors for using the
-wrong member name, there were two mentions of 'path' left.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/technical/api-string-list.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/technical/api-string-list.txt b/Documentation/technical/api-string-list.txt
-index 92b3ecd..293bb15 100644
---- a/Documentation/technical/api-string-list.txt
-+++ b/Documentation/technical/api-string-list.txt
-@@ -41,7 +41,7 @@ memset(&list, 0, sizeof(struct string_list));
- string_list_append("foo", &list);
- string_list_append("bar", &list);
- for (i = 0; i < list.nr; i++)
--	printf("%s\n", list.items[i].path)
-+	printf("%s\n", list.items[i].string)
- ----
- 
- NOTE: It is more efficient to build an unsorted list and sort it
-@@ -113,7 +113,7 @@ Data structures
- 
- * `struct string_list_item`
- 
--Represents an item of the list. The `path` member is a pointer to the
-+Represents an item of the list. The `string` member is a pointer to the
- string, and you may use the `util` member for any purpose, if you want.
- 
- * `struct string_list`
--- 
-1.5.6.2.516.g22071
+Kristian
