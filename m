@@ -1,123 +1,79 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] git-filter-branch.sh: Allow running in bare repositories
-Date: Wed, 23 Jul 2008 00:37:41 +0200
-Message-ID: <20080722223710.29084.61373.stgit@localhost>
+Subject: Re: [PATCH] Documentation/git-ls-tree.txt: Add a caveat about
+	prefixing pathspec
+Date: Wed, 23 Jul 2008 00:47:59 +0200
+Message-ID: <20080722224759.GJ32184@machine.or.cz>
+References: <20080720233956.GH10151@machine.or.cz> <20080721075618.14163.45309.stgit@localhost> <7v1w1nvf7q.fsf@gitster.siamese.dyndns.org> <20080721210452.GP10151@machine.or.cz> <7vd4l6sqqz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jul 23 00:38:54 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 00:49:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLQVP-0002P1-TB
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 00:38:52 +0200
+	id 1KLQfM-00056K-Bk
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 00:49:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753166AbYGVWhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 18:37:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbYGVWhv
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 18:37:51 -0400
-Received: from 159-162.104-92.cust.bluewin.ch ([92.104.162.159]:62543 "EHLO
-	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751782AbYGVWhv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 18:37:51 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by pixie.suse.cz (Postfix) with ESMTP id 7CE4C2ACC76;
-	Wed, 23 Jul 2008 00:37:41 +0200 (CEST)
-User-Agent: StGIT/0.14.2
+	id S1752000AbYGVWsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 18:48:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751882AbYGVWsE
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 18:48:04 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:49458 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751802AbYGVWsD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 18:48:03 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 25C53393B282; Wed, 23 Jul 2008 00:47:59 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vd4l6sqqz.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89555>
 
-Commit 46eb449c restricted git-filter-branch to non-bare repositories
-unnecessarily; git-filter-branch can work on bare repositories just
-fine.
+On Mon, Jul 21, 2008 at 05:32:20PM -0700, Junio C Hamano wrote:
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> >> 	commit.  E.g.
+> >> 
+> >> 		$ cd some/deep/path
+> >> 		$ git ls-tree --name-only -r HEAD~20
+> >> 
+> >> 	will list the files in some/deep/path (i.e. where you are) 20
+> >> 	commits ago, just like running "/bin/ls" there will give you the
+> >> 	list of files you have right now.
+> >
+> > Frankly, I think this is overdoing it. I'm all for being positive, but
+> > it is obvious why this is good thing when you inspect a root tree and
+> > there's no need to be too wordy about it...
+> 
+> I mildly disagree.
 
-This also fixes suspicious shell boolean expression during a check
-for dirty working tree.
+We may throw a dice or go with your version, I don't care *that* much
+about this change, I just wouldn't make it personally.
 
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+> If the person had truly understood that, why do we even have this thread
+> to begin with?
 
- git-filter-branch.sh     |   36 ++++++++++++++++++++----------------
- t/t7003-filter-branch.sh |    8 ++++++++
- 2 files changed, 28 insertions(+), 16 deletions(-)
+To nudge the person to the "aha" moment.
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index d04c346..dcfc6be 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -97,9 +97,11 @@ USAGE="[--env-filter <command>] [--tree-filter <command>] \
- OPTIONS_SPEC=
- . git-sh-setup
- 
--git diff-files --quiet &&
--	git diff-index --cached --quiet HEAD -- ||
--	die "Cannot rewrite branch(es) with a dirty working directory."
-+if [ "$(is_bare_repository)" = false ]; then
-+	(git diff-files --quiet &&
-+	 git diff-index --cached --quiet HEAD --) ||
-+		die "Cannot rewrite branch(es) with a dirty working directory."
-+fi
- 
- tempdir=.git-rewrite
- filter_env=
-@@ -434,18 +436,20 @@ rm -rf "$tempdir"
- 
- trap - 0
- 
--unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
--test -z "$ORIG_GIT_DIR" || {
--	GIT_DIR="$ORIG_GIT_DIR" && export GIT_DIR
--}
--test -z "$ORIG_GIT_WORK_TREE" || {
--	GIT_WORK_TREE="$ORIG_GIT_WORK_TREE" &&
--	export GIT_WORK_TREE
--}
--test -z "$ORIG_GIT_INDEX_FILE" || {
--	GIT_INDEX_FILE="$ORIG_GIT_INDEX_FILE" &&
--	export GIT_INDEX_FILE
--}
--git read-tree -u -m HEAD
-+if [ "$(is_bare_repository)" = false ]; then
-+	unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
-+	test -z "$ORIG_GIT_DIR" || {
-+		GIT_DIR="$ORIG_GIT_DIR" && export GIT_DIR
-+	}
-+	test -z "$ORIG_GIT_WORK_TREE" || {
-+		GIT_WORK_TREE="$ORIG_GIT_WORK_TREE" &&
-+		export GIT_WORK_TREE
-+	}
-+	test -z "$ORIG_GIT_INDEX_FILE" || {
-+		GIT_INDEX_FILE="$ORIG_GIT_INDEX_FILE" &&
-+		export GIT_INDEX_FILE
-+	}
-+	git read-tree -u -m HEAD
-+fi
- 
- exit $ret
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index e26f726..a0ab096 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -38,6 +38,14 @@ test_expect_success 'result is really identical' '
- 	test $H = $(git rev-parse HEAD)
- '
- 
-+test_expect_success 'rewrite bare repository identically' '
-+	(git config core.bare true && cd .git && git-filter-branch branch)
-+'
-+git config core.bare false
-+test_expect_success 'result is really identical' '
-+	test $H = $(git rev-parse HEAD)
-+'
-+
- test_expect_success 'rewrite, renaming a specific file' '
- 	git-filter-branch -f --tree-filter "mv d doh || :" HEAD
- '
+> Description on *what* it does (i.e. "like what ls -a does in the current
+> working directory" we have in the Description section) obviously was not
+> good enough.
+
+I don't understand; what does auto-prefixing have to do with the
+"ls -a" mention?
+
+> It will be better understood if you describe *why* it does
+> it that way at the same time.
+
+My version implies that for examining the root tree, without surplusage.
+
+-- 
+				Petr "Pasky" Baudis
+As in certain cults it is possible to kill a process if you know
+its true name.  -- Ken Thompson and Dennis M. Ritchie
