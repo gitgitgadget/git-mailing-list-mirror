@@ -1,70 +1,90 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
 Subject: Re: [PATCH] parse-options: fix parsing of "--foobar=" with no value
-Date: Tue, 22 Jul 2008 20:53:06 +0200
-Message-ID: <bd6139dc0807221153n18c864b7ve83a316867e892ab@mail.gmail.com>
+Date: Tue, 22 Jul 2008 20:54:27 +0200
+Message-ID: <20080722185427.GA10453@artemis.madism.org>
 References: <1216752267-12138-1-git-send-email-dkr+ml.git@free.fr>
-Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Pierre Habouzit" <madcoder@debian.org>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Olivier Marin" <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Tue Jul 22 20:54:14 2008
+Content-Type: multipart/signed; boundary="d6Gm4EdcadzBjdND";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Olivier Marin <dkr+ml.git@free.fr>
+X-From: git-owner@vger.kernel.org Tue Jul 22 20:55:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLMzz-0001dL-49
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 20:54:11 +0200
+	id 1KLN1G-000212-8B
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 20:55:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753019AbYGVSxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 14:53:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752848AbYGVSxK
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 14:53:10 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:41432 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752722AbYGVSxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 14:53:08 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so854531ywe.1
-        for <git@vger.kernel.org>; Tue, 22 Jul 2008 11:53:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=+d4zL3S8hsJnLazuSMYYzAB4pYdVSkdYhKxFXrNKI1c=;
-        b=T6Ht3JFN59eBFmZIovvtkju77Zx+m3QAT9dWhvdovh89/pMQgulL4RsxpQNKYLXeMS
-         N6xwFORAXWD8/UuL30BWj/xnJCJWDIzf+6m0V/ZmtOINo31xQnjKyxWR9L4+fpRFxvHo
-         /uYk7LvBTwjF6sgSgxioE+bFls9jAT6QGQiJA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=Vstrqpi9un4XIXe3nRf5BoMhHZxQ4HdMzcuth7lYoySUJCM3X/xwpp/pTELpDLzOT/
-         2zVw1ynkVkxr44aFCdJT9KZRCrWIrWlzxNV2+kbT+0QV8SDc9dGLJADBBeRwm+xNHJQ5
-         /r7l7oDoJX+4u37CL4l2LnZuusmm1OuworveM=
-Received: by 10.142.240.19 with SMTP id n19mr1982092wfh.12.1216752786272;
-        Tue, 22 Jul 2008 11:53:06 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Tue, 22 Jul 2008 11:53:06 -0700 (PDT)
-In-Reply-To: <1216752267-12138-1-git-send-email-dkr+ml.git@free.fr>
+	id S1753244AbYGVSyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 14:54:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753236AbYGVSyb
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 14:54:31 -0400
+Received: from pan.madism.org ([88.191.52.104]:46238 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753166AbYGVSya (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 14:54:30 -0400
+Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 1B7D42D4E6;
+	Tue, 22 Jul 2008 20:54:28 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 7535DA27B; Tue, 22 Jul 2008 20:54:27 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Olivier Marin <dkr+ml.git@free.fr>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <1216752267-12138-1-git-send-email-dkr+ml.git@free.fr>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89512>
 
-On Tue, Jul 22, 2008 at 8:44 PM, Olivier Marin <dkr+ml.git@free.fr> wrote:
+
+--d6Gm4EdcadzBjdND
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Jul 22, 2008 at 06:44:27PM +0000, Olivier Marin wrote:
+> From: Olivier Marin <dkr@freesurf.fr>
+>=20
+> Before this patch, running a git command with a "--foobar=3D" argument
+> will set the "foobar" option with a random value and continue.
 > We should instead, exit with an error if a value is required, or use
 > the default one if the value is optional.
 
-This makes no sense, when I run "git foo --bar=" I either mean "set
-bar to empty" or I typo-ed. Why would I specify "--bar=" if I want the
-default value?
+  Wrong, --foobar=3D is the option "foobar" with the argument "" (empty
+string). as soon as you use the --foobar=3D... form, that is the "stuck
+form" for long option, there *is* a value.
 
--- 
-Cheers,
+  IOW --foobar=3D is not the same as --foobar at all. If like you claim,
+--foobar=3D pass a "random" value to the option then *this* is a bug, it
+should pass a pointer to an empty string (IOW a pointer that points to a
+NUL byte), but I see nothing in the code that would explain what you
+claim.
 
-Sverre Rabbelier
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--d6Gm4EdcadzBjdND
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkiGLOEACgkQvGr7W6HudhypPwCdEp959FsPXWtheYFJq4wOKlCs
+5mkAniWNS4/I9YJXEyllXw6Aeu6Xsz0p
+=MFcF
+-----END PGP SIGNATURE-----
+
+--d6Gm4EdcadzBjdND--
