@@ -1,89 +1,252 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] builtin-merge: give a proper error message for invalid
-	strategies in config
-Date: Tue, 22 Jul 2008 09:39:12 +0200
-Message-ID: <20080722073912.GN32057@genesis.frugalware.org>
-References: <1216656647-16897-1-git-send-email-vmiklos@frugalware.org> <7vr69mpl5v.fsf@gitster.siamese.dyndns.org>
+From: Paul Talacko <gnuruandstuff@yahoo.co.uk>
+Subject: Re: [PATCH 2/2] git-svn: make use of svn auto-props optional
+Date: Tue, 22 Jul 2008 07:44:18 +0000 (GMT)
+Message-ID: <940829.27136.qm@web27804.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="OX2aLCKeO1apYW07"
+Content-Type: multipart/mixed; boundary="0-1901950-1216712658=:27136"
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 09:40:14 2008
+To: brad.king@kitware.com
+X-From: git-owner@vger.kernel.org Tue Jul 22 09:45:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLCTm-0002mx-4w
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 09:40:14 +0200
+	id 1KLCYi-0004R3-S5
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 09:45:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751405AbYGVHjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 03:39:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbYGVHjP
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 03:39:15 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:55413 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751218AbYGVHjO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 03:39:14 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 08BB31B2513;
-	Tue, 22 Jul 2008 09:39:13 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id BE3CA4465E;
-	Tue, 22 Jul 2008 08:58:36 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 67769177001D; Tue, 22 Jul 2008 09:39:12 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vr69mpl5v.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1751865AbYGVHoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 03:44:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752381AbYGVHoV
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 03:44:21 -0400
+Received: from web27804.mail.ukl.yahoo.com ([217.146.182.9]:21618 "HELO
+	web27804.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753862AbYGVHoU (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Jul 2008 03:44:20 -0400
+Received: (qmail 27343 invoked by uid 60001); 22 Jul 2008 07:44:18 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.co.uk;
+  h=Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Message-ID;
+  b=yAGsdBFP9fEe5fteMlOtR/TBuel4l+6VghEFhJxJuuLkaVBBQyV5iulj7/7twETb5VE2Ka7lb/IkJj11/6eQ1R2VwSMNjZNU3aGVok8Pnmn7pwmE8ksmI9Ut03Osa3xGZxw4ZuDaI59SdlKXsUXLftRd0i59Ox/F+TUGlLiglmQ=;
+Received: from [195.70.154.229] by web27804.mail.ukl.yahoo.com via HTTP; Tue, 22 Jul 2008 07:44:18 GMT
+X-Mailer: YahooMailWebService/0.7.218
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89462>
 
+--0-1901950-1216712658=:27136
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
---OX2aLCKeO1apYW07
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hello Brad,
 
-On Mon, Jul 21, 2008 at 10:01:16PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> Doesn't this make "git merge -s 'recursive resolve'" to misbehave?
+I submitted a patch for this, including a test file a few days ago.
 
-Depends on what do we expect it to do. ;-)
+My recommendation was to follow the practice as set out by the svn command =
+line tool, which was that git svn respect auto-props in the config file unl=
+ess specifically overridden by --auto-props or --no-auto-props.
 
-My patch unified the handling of pull.twohead / -s option, so it
-(actually unintentionally) made -s accepting multiple strategies as a
-space separated list. Given that we already accept multiple strategies
-as a space separated list in pull.twohead (and we do _not_ use multiple
-pull.twohead entries) I think my patch is more logical.
+My patch is attached.=0A=0A=0A      _______________________________________=
+___________________=0ANot happy with your email address?.=0AGet the one you=
+ really want - millions of new email addresses available now at Yahoo! http=
+://uk.docs.yahoo.com/ymail/new.html
+--0-1901950-1216712658=:27136
+Content-Type: application/octet-stream; name=diff
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="diff"
 
-Though, there was already a thread about how should we specify multiple
-strategies on the commandline; and you suggested in
+ZGlmZiAtLWdpdCBhL2dpdC1zdm4ucGVybCBiL2dpdC1zdm4ucGVybAppbmRl
+eCBhMzY2Yzg5Li5kZjA2MjIwIDEwMDc1NQotLS0gYS9naXQtc3ZuLnBlcmwK
+KysrIGIvZ2l0LXN2bi5wZXJsCkBAIC0xMjgsNiArMTI4LDggQEAgbXkgJWNt
+ZCA9ICgKIAkJCSAgJ2RyeS1ydW58bicgPT4gXCRfZHJ5X3J1biwKIAkJCSAg
+J2ZldGNoLWFsbHxhbGwnID0+IFwkX2ZldGNoX2FsbCwKIAkJCSAgJ25vLXJl
+YmFzZScgPT4gXCRfbm9fcmViYXNlLAorICAgICAgICAgICAgICAgICAgICAg
+ICAgICAnYXV0by1wcm9wcycgPT4gXCRTVk46OkdpdDo6RWRpdG9yOjpfYXV0
+b19wcm9wcywKKyAgICAgICAgICAgICAgICAgICAgICAgICAgJ25vLWF1dG8t
+cHJvcHMnID0+IFwkU1ZOOjpHaXQ6OkVkaXRvcjo6X25vX2F1dG9fcHJvcHMs
+CiAJCQklY210X29wdHMsICVmY19vcHRzIH0gXSwKIAknc2V0LXRyZWUnID0+
+IFsgXCZjbWRfc2V0X3RyZWUsCiAJICAgICAgICAgICAgICAgICJTZXQgYW4g
+U1ZOIHJlcG9zaXRvcnkgdG8gYSBnaXQgdHJlZS1pc2giLApAQCAtNDQ4LDgg
+KzQ1MCw4IEBAIHN1YiBjbWRfZGNvbW1pdCB7CiAJCQkgICAgICAgICAgICAg
+ICAgbG9nID0+IGdldF9jb21taXRfZW50cnkoJGQpLT57bG9nfSwKIAkJCSAg
+ICAgICAgICAgICAgICByYSA9PiBHaXQ6OlNWTjo6UmEtPm5ldygkZ3MtPmZ1
+bGxfdXJsKSwKIAkJCSAgICAgICAgICAgICAgICBjb25maWcgPT4gU1ZOOjpD
+b3JlOjpjb25maWdfZ2V0X2NvbmZpZygKLQkJCSAgICAgICAgICAgICAgICAg
+ICAgICAgICRHaXQ6OlNWTjo6UmE6OmNvbmZpZ19kaXIKLQkJCSAgICAgICAg
+ICAgICAgICApLAorCQkJCSAgICAgICAgICAgICAgICAkR2l0OjpTVk46OlJh
+Ojpjb25maWdfZGlyCisJCQkJCSksCiAJCQkgICAgICAgICAgICAgICAgdHJl
+ZV9hID0+ICIkZH4xIiwKIAkJCSAgICAgICAgICAgICAgICB0cmVlX2IgPT4g
+JGQsCiAJCQkgICAgICAgICAgICAgICAgZWRpdG9yX2NiID0+IHN1YiB7CkBA
+IC0zMjc2LDcgKzMyNzgsNyBAQCBzdWIgY2xvc2VfZWRpdCB7CiB9CiAKIHBh
+Y2thZ2UgU1ZOOjpHaXQ6OkVkaXRvcjsKLXVzZSB2YXJzIHF3L0BJU0EgJF9y
+bWRpciAkX2NwX3NpbWlsYXJpdHkgJF9maW5kX2NvcGllc19oYXJkZXIgJF9y
+ZW5hbWVfbGltaXQvOwordXNlIHZhcnMgcXcvQElTQSAkX3JtZGlyICRfY3Bf
+c2ltaWxhcml0eSAkX2ZpbmRfY29waWVzX2hhcmRlciAkX3JlbmFtZV9saW1p
+dCAkX2F1dG9fcHJvcHMgJF9ub19hdXRvX3Byb3BzLzsKIHVzZSBzdHJpY3Q7
+CiB1c2Ugd2FybmluZ3M7CiB1c2UgQ2FycCBxdy9jcm9hay87CkBAIC0zMzA5
+LDYgKzMzMTEsOCBAQCBzdWIgbmV3IHsKIAkkc2VsZi0+e3JtfSA9IHsgfTsK
+IAkkc2VsZi0+e3BhdGhfcHJlZml4fSA9IGxlbmd0aCAkc2VsZi0+e3N2bl9w
+YXRofSA/CiAJICAgICAgICAgICAgICAgICAgICAgICAiJHNlbGYtPntzdm5f
+cGF0aH0vIiA6ICcnOworCSRzZWxmLT57Y29uZmlnfSA9ICRvcHRzLT57cmF9
+LT57Y29uZmlnfTsKKyAgICAgICAgY3JvYWsgIi0tYXV0by1wcm9wcyBhbmQg
+LS1uby1hdXRvLXByb3BzIGFyZSBtdXR1YWxseSBleGNsdXNpdmUuIiBpZiAk
+X2F1dG9fcHJvcHMgJiYgJF9ub19hdXRvX3Byb3BzOwogCXJldHVybiAkc2Vs
+ZjsKIH0KIApAQCAtMzQ5Nyw2ICszNTAxLDg2IEBAIHN1YiBlbnN1cmVfcGF0
+aCB7CiAJcmV0dXJuICRiYXQtPnskY307CiB9CiAKK3N1YiBhcHBseV9wcm9w
+ZXJ0aWVzIHsKKyAgICBteSAoICRzZWxmLCAkZmJhdCwgJG0gKSA9IEBfOwor
+ICAgIG15ICRjb25maWcgICAgICAgPSAkc2VsZi0+e2NvbmZpZ30tPntjb25m
+aWd9OyAKKyAgICBteSAkc3ZuX2F1dG9fcHJvcCA9IHt9OworICAgIHJldHVy
+biBpZiAkX25vX2F1dG9fcHJvcHM7CisgICAgcmV0dXJuIGlmICggISAkX2F1
+dG9fcHJvcHMgKSAmJiAoICEgJGNvbmZpZy0+Z2V0X2Jvb2wgKCdtaXNjZWxs
+YW55JywgJ2VuYWJsZS1hdXRvLXByb3BzJywgMCkgKTsKKworICAgIG15ICRm
+aWxlID0gJG0tPnsgZmlsZV9iIH07CisKKyAgICAkY29uZmlnLT5lbnVtZXJh
+dGUoCisgICAgICAgICdhdXRvLXByb3BzJywKKyAgICAgICAgc3ViIHsKKyAg
+ICAgICAgICAgICRzdm5fYXV0b19wcm9wLT57IGNvbXBpbGVfYXByX2ZubWF0
+Y2goICRfWzBdICkgfSA9ICRfWzFdOworICAgICAgICAgICAgMTsKKyAgICAg
+ICAgfQorICAgICk7CisgICAgbXkgKCAkZmlsZWJhc2UgKSA9IEZpbGU6OkJh
+c2VuYW1lOjpmaWxlcGFyc2UoICRmaWxlICk7CisJd2hpbGUgKG15ICgkcGF0
+dGVybiwgJHZhbHVlKSA9IGVhY2ggJSRzdm5fYXV0b19wcm9wICkgeworCSAg
+ICBuZXh0IHVubGVzcyAkZmlsZWJhc2UgPX4gbS8kcGF0dGVybi87CisJICAg
+IGZvciAoc3BsaXQgKC9ccyo7XHMqLywgJHZhbHVlKSkgeworCQlteSAoJHBy
+b3BuYW1lLCAkcHJvcHZhbHVlKSA9IHNwbGl0ICgvXHMqPVxzKi8sICRfLCAy
+KTsKKwkJJHNlbGYtPmNoYW5nZV9maWxlX3Byb3AoJGZiYXQsICRwcm9wbmFt
+ZSwgJHByb3B2YWx1ZSk7IAorCSAgICB9CisJfQorCit9CisKKworIyMgVGhh
+bmtzIHRvIFNWSzo6WEQgYW5kIHRoZSBmb2xrcyBCZXN0IFByYWN0aWNhbCBT
+b2x1dGlvbnMsIHdobyBpbgorIyMgdHVybiBiYXNlZCB0aGlzIG9uIEJhcnJp
+ZSBTbGF5bWFrZXIncyBSZWdleHA6OlNoZWxsaXNoCitzdWIgY29tcGlsZV9h
+cHJfZm5tYXRjaCB7CisgICAgbXkgJHJlID0gc2hpZnQ7CisKKyAgICAkcmUg
+PX4gc0AKKyAgICAgICAgICAgICAoICBcXC4KKyAgICAgICAgICAgICB8ICBc
+WyAgICAgICAgICAgICAgICAgICAgICAgIyBjaGFyYWN0ZXIgY2xhc3MKKyAg
+ICAgICAgICAgICAgICAgICBbIV5dPyAgICAgICAgICAgICAgICAgIyBtYXli
+ZSBuZWdhdGlvbiAoXiBhbmQgISBhcmUgYm90aCBzdXBwb3J0ZWQpCisgICAg
+ICAgICAgICAgICAgICAgKD86ICg/OlxcLnxbXlxcXF1dKSAgICMgb25lIGl0
+ZW0KKyAgICAgICAgICAgICAgICAgICAgICg/OiAtICAgICAgICAgICAgICAg
+IyBwb3NzaWJseSBmb2xsb3dlZCBieSBhIGRhc2ggYW5kIGFub3RoZXIKKyAg
+ICAgICAgICAgICAgICAgICAgICAgKD86XFwufFteXFxcXV0pKT8gIyBpdGVt
+CisgICAgICAgICAgICAgICAgICAgKSogICAgICAgICAgICAgICAgICAgICMg
+MCBvciBtb3JlIGVudHJpZXMgKHplcm8gY2FzZSB3aWxsIGJlIGNoZWNrZWQg
+c3BlY2lhbGx5IGJlbG93KQorICAgICAgICAgICAgICAgIChcXT8pICAgICAg
+ICAgICAgICAgICAgICAjIGlmIHRoaXMgXSBkb2Vzbid0IG1hdGNoLCB0aGF0
+IG1lYW5zIHdlIGZlbGwgb2ZmIGVuZCBvZiBzdHJpbmchCisgICAgICAgICAg
+ICAgfCAgLgorICAgICAgICAgICAgKQorICAgICAgICAgICAgIEAKKyAgICAg
+ICAgICAgICAgIGlmICggJDEgZXEgJz8nICkgeworICAgICAgICAgICAgICAg
+ICAgICcuJyA7CisgICAgICAgICAgICAgICB9IGVsc2lmICggJDEgZXEgJyon
+ICkgeworICAgICAgICAgICAgICAgICAgICcuKicgOworICAgICAgICAgICAg
+ICAgfSBlbHNpZiAoIHN1YnN0cigkMSwgMCwgMSkgZXEgJ1snKSB7CisgICAg
+ICAgICAgICAgICAgICAgaWYgKCQxIGVxICdbXScpIHsgIyBzaG91bGQgbmV2
+ZXIgbWF0Y2gKKyAgICAgICAgICAgICAgICAgICAgICAgJ1teXHNcU10nOwor
+ICAgICAgICAgICAgICAgICAgIH0gZWxzaWYgKCQxIGVxICdbIV0nIG9yICQx
+IGVxICdbXl0nKSB7ICMgMC1sZW5ndGggbWF0Y2gKKyAgICAgICAgICAgICAg
+ICAgICAgICAgJyc7CisgICAgICAgICAgICAgICAgICAgfSBlbHNlIHsKKyAg
+ICAgICAgICAgICAgICAgICAgICAgbXkgJHRlbXAgPSAkMTsKKyAgICAgICAg
+ICAgICAgICAgICAgICAgbXkgJGZhaWxlZCA9ICQyIGVxICcnOworICAgICAg
+ICAgICAgICAgICAgICAgICBpZiAoJGZhaWxlZCkgeworICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgJ1teXHNcU10nOworICAgICAgICAgICAgICAgICAg
+ICAgICB9IGVsc2UgeworICAgICAgICAgICAgICAgICAgICAgICAgICAgJHRl
+bXAgPX4gcy8oXFwufC4pLyQxIGVxICctJyA/ICctJyA6IHF1b3RlbWV0YShz
+dWJzdHIoJDEsIC0xKSkvZ2VzOworICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIyB0aGUgcHJldmlvdXMgc3RlcCBwdXRzIGluIGJhY2tzbGFzaGVzIGF0
+IGJlZ2lubmluZyBhbmQgZW5kOyByZW1vdmUgdGhlbQorICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgJHRlbXAgPX4gcy9eXFxcWy9bLzsKKyAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICR0ZW1wID1+IHMvXFxcXSQvXS87CisgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAjIGlmIGl0IHN0YXJ0ZWQgd2l0aCBb
+XiBvciBbISwgaXQgbm93IHN0YXJ0cyB3aXRoIFtcXiBvciBbXCE7IGZpeC4K
+KyAgICAgICAgICAgICAgICAgICAgICAgICAgICR0ZW1wID1+IHMvXlxbICAg
+ICAjIGxpdGVyYWwgWworICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgXFwgICAgICMgbGl0ZXJhbCBiYWNrc2xhc2gKKyAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFshXl0gICAjIGxpdGVy
+YWwgISBvciBeCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgL1teL3g7CisgICAgICAgICAgICAgICAgICAgICAgICAgICAkdGVtcDsK
+KyAgICAgICAgICAgICAgICAgICAgICAgfQorICAgICAgICAgICAgICAgICAg
+IH0KKyAgICAgICAgICAgICAgIH0gZWxzZSB7CisgICAgICAgICAgICAgICAg
+ICAgcXVvdGVtZXRhKHN1YnN0ciggJDEsIC0xICkgKTsgIyBpZSwgZWl0aGVy
+IHF1b3RlIGl0LCBvciBpZiBpdCdzIFx4LCBxdW90ZSB4CisgICAgICAgICAg
+ICAgICB9CisgICAgQGdleHMgOworCisgICAgcmV0dXJuIHFyL1xBJHJlXFov
+czsKK30KKwogc3ViIEEgewogCW15ICgkc2VsZiwgJG0pID0gQF87CiAJbXkg
+KCRkaXIsICRmaWxlKSA9IHNwbGl0X3BhdGgoJG0tPntmaWxlX2J9KTsKQEAg
+LTM1MDUsNiArMzU4OSw3IEBAIHN1YiBBIHsKIAkJCQkJdW5kZWYsIC0xKTsK
+IAlwcmludCAiXHRBXHQkbS0+e2ZpbGVfYn1cbiIgdW5sZXNzICQ6Ol9xOwog
+CSRzZWxmLT5jaGdfZmlsZSgkZmJhdCwgJG0pOworCSRzZWxmLT5hcHBseV9w
+cm9wZXJ0aWVzKCAkZmJhdCwgJG0gKTsKIAkkc2VsZi0+Y2xvc2VfZmlsZSgk
+ZmJhdCx1bmRlZiwkc2VsZi0+e3Bvb2x9KTsKIH0KIApkaWZmIC0tZ2l0IGEv
+dC90OTEyNC1naXQtc3ZuLWF1dG9wcm9wcy5zaCBiL3QvdDkxMjQtZ2l0LXN2
+bi1hdXRvcHJvcHMuc2gKbmV3IGZpbGUgbW9kZSAxMDA2NDQKaW5kZXggMDAw
+MDAwMC4uZWQ3OGMyZAotLS0gL2Rldi9udWxsCisrKyBiL3QvdDkxMjQtZ2l0
+LXN2bi1hdXRvcHJvcHMuc2gKQEAgLTAsMCArMSwxMjMgQEAKKyMhL2Jpbi9z
+aAorIworCisKKwordGVzdF9kZXNjcmlwdGlvbj0nZ2l0LXN2biBkY29tbWl0
+IHNldHMgYXV0b3Byb3BzIG9uIGZpbGVzJworCisuIC4vbGliLWdpdC1zdm4u
+c2gKKwordGVzdF9leHBlY3Rfc3VjY2VzcyAnbWFrZSBzdm4gcmVwbycgJwor
+ICAgIG1rZGlyIGltcG9ydCAmJgorICAgIGNkIGltcG9ydCAmJgorICAgIGVj
+aG8gZmlyc3QgPiBmaXJzdGZpbGUgJiYKKyAgICBzdm4gaW1wb3J0IC1tICJJ
+bXBvcnQgZm9yIGF1dG9wcm9wcyB0ZXN0IiAuICIkc3ZucmVwbyIgPiAvZGV2
+L251bGwgJiYKKyAgICBjZCAuLiAgJiYKKyAgICBnaXQgc3ZuIGluaXQgIiRz
+dm5yZXBvIiAmJgorICAgIGdpdCBzdm4gZmV0Y2gKKycKKworCitta2RpciBj
+b25maWcKK2NhdCA+IGNvbmZpZy9jb25maWcgPDxFT0YgCitbbWlzY2VsbGFu
+eV0KK2VuYWJsZS1hdXRvLXByb3BzID0geWVzCitbYXV0by1wcm9wc10KKypw
+bSA9ICBmaWxlLXR5cGUgPSBwZXJsCisqaHRtbCA9IHN2bjptaW1lLXR5cGUg
+PSB0ZXh0L2h0bWw7IGVuY29kaW5nID0gc3BlY2lhbAorKmJhciA9IHByaXZh
+dGUgPSB0aGluZ3kKK0VPRgorCisKKwordGVzdF9leHBlY3Rfc3VjY2VzcyAn
+c2V0IHN2biBwcm9wZXJ0aWVzIG9uIGZpbGVzJyAnCisgICAgICAgIGNkICIk
+Z2l0dGVzdHJlcG8iICYmCisgICAgICAgIGVjaG8gImJsYWgiID4gYS5wbSAm
+JgorICAgICAgICBlY2hvICJmb28iID4gYi5odG1sICYmCisgICAgICAgIGVj
+aG8gImRhdGEiID4gZm9vYmFyICYmCisgICAgICAgIGdpdCBhZGQgYS5wbSBi
+Lmh0bWwgZm9vYmFyICYmCisgICAgICAgIGdpdCBjb21taXQgLW0gZmlsZXMg
+JiYKKyAgICAgICAgZ2l0IHN2biBkY29tbWl0IC0tY29uZmlnLWRpcj1jb25m
+aWcKKyAgICAgICAgJworCit0ZXN0X2V4cGVjdF9zdWNjZXNzICdleHBvcnQg
+b3VyIHByb3BlcnRpZXMgdG8gYW4gc3ZuIHJlcG8nICcKKworICAgICAgICBt
+a2RpciB0ZXN0c3ZucmVwbyAmJgorICAgICAgICBjZCB0ZXN0c3ZucmVwbyAm
+JgorICAgICAgICBzdm4gY2hlY2tvdXQgIiRzdm5yZXBvIiAmJgorICAgICAg
+ICBjZCBzdm5yZXBvCisgICAgICAgICcKKwordGVzdF9leHBlY3Rfc3VjY2Vz
+cyAndGVzdCBwcm9wZXJ0aWVzJyAnCisgICAgICAgIHRlc3QgcGVybCA9IGBz
+dm4gcHJvcGdldCBmaWxlLXR5cGUgYS5wbWAgJiYKKyAgICAgICAgdGVzdCB0
+aGluZ3kgPSBgc3ZuIHByb3BnZXQgcHJpdmF0ZSBmb29iYXJgICYmCisgICAg
+ICAgIHRlc3QgdGV4dC9odG1sID0gYHN2biBwcm9wZ2V0IHN2bjptaW1lLXR5
+cGUgYi5odG1sYCAmJgorICAgICAgICB0ZXN0IHNwZWNpYWwgPSBgc3ZuIHBy
+b3BnZXQgZW5jb2RpbmcgYi5odG1sYAorCisgICAgICAgICcKKworY2QgLi4v
+Li4KKwordGVzdF9leHBlY3Rfc3VjY2VzcyAnbm8tcHJvcHMgb3ZlcnJpZGVz
+IGNvbmZpZyBmaWxlJyAnCisgICAgICAgIHRvdWNoIG92ZXJyaWRlbi1iLmh0
+bWwgJiYKKyAgICAgICAgZ2l0IGFkZCBvdmVycmlkZW4tYi5odG1sICYmCisg
+ICAgICAgIGdpdCBjb21taXQgLW0gIm92ZXJyaWRlbi1iIiAmJgorICAgICAg
+ICBnaXQgc3ZuIGRjb21taXQgLS1uby1hdXRvLXByb3BzIC0tY29uZmlnLWRp
+cj1jb25maWcgJiYKKyAgICAgICAgY2QgdGVzdHN2bnJlcG8gJiYKKyAgICAg
+ICAgc3ZuIGNoZWNrb3V0ICIkc3ZucmVwbyIgJiYKKyAgICAgICAgY2Qgc3Zu
+cmVwbyAmJgorICAgICAgICB0ZXN0IC16IGBzdm4gcHJvcGdldCBmaWxlLXR5
+cGUgb3ZlcnJpZGVuLWIuaHRtbGAKKycKKworY2QgLi4vLi4KKworY2F0ID4g
+Y29uZmlnL2NvbmZpZyA8PEVPRiAKK1ttaXNjZWxsYW55XQorZW5hYmxlLWF1
+dG8tcHJvcHMgPSBubworW2F1dG8tcHJvcHNdCisqcG0gPSAgZmlsZS10eXBl
+ID0gcGVybAorKmh0bWwgPSBzdm46bWltZS10eXBlID0gdGV4dC9odG1sOyBl
+bmNvZGluZyA9IHNwZWNpYWwKKypiYXIgPSBwcml2YXRlID0gdGhpbmd5CitF
+T0YKKworCit0ZXN0X2V4cGVjdF9zdWNjZXNzICd0ZXN0IHdoZW4gZW5hYmxl
+LWF1dG8tcHJvcHMgaXMgbm8nICcKKyAgICAgICAgZWNobyAiYmxhaCIgPiBh
+X25vX3Byb3BzLnBtICYmCisgICAgICAgIGVjaG8gImZvbyIgPiBiX25vX3By
+b3BzLmh0bWwgJiYKKyAgICAgICAgZWNobyAiZGF0YSIgPiBmb29iYXJfbm9f
+cHJvcHMgJiYKKyAgICAgICAgY2htb2QgK3ggZm9vYmFyX25vX3Byb3BzICYm
+CisgICAgICAgIGdpdCBhZGQgYV9ub19wcm9wcy5wbSBiX25vX3Byb3BzLmh0
+bWwgZm9vYmFyX25vX3Byb3BzICYmCisgICAgICAgIGdpdCBjb21taXQgLW0g
+Ik5vIHByb3BzIGZpbGVzIiAmJgorICAgICAgICBnaXQgc3ZuIGRjb21taXQg
+LS1jb25maWctZGlyPWNvbmZpZyAmJgorICAgICAgICBjZCB0ZXN0c3ZucmVw
+byAmJgorICAgICAgICBzdm4gY2hlY2tvdXQgIiRzdm5yZXBvIiAgJiYKKyAg
+ICAgICAgY2Qgc3ZucmVwbyAmJgorICAgICAgICB0ZXN0IC16IGBzdm4gcHJv
+cGdldCBmaWxlLXR5cGUgYV9ub19wcm9wcy5wbWAgJiYKKyAgICAgICAgdGVz
+dCAteiBgc3ZuIHByb3BnZXQgcHJpdmF0ZSBmb29iYXJfbm9fcHJvcHNgICAm
+JgorICAgICAgICB0ZXN0IC16IGBzdm4gcHJvcGdldCBzdm46bWltZS10eXBl
+IGJfbm9fcHJvcHMuaHRtbGAgJiYKKyAgICAgICAgdGVzdCAteiBgc3ZuIHBy
+b3BnZXQgZW5jb2RpbmcgYl9ub19wcm9wcy5odG1sYAorICAgICAgICAnCisK
+K2NkIC4uLy4uCisKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2F1dG8tcHJvcHMg
+b3ZlcnJpZGVzIGNvbmZpZyBmaWxlJyAnCisgICAgICAgIHRvdWNoIG92ZXJy
+aWRlbi1hdXRvLnBtICYmCisgICAgICAgIGdpdCBhZGQgb3ZlcnJpZGVuLWF1
+dG8ucG0gJiYKKyAgICAgICAgZ2l0IGNvbW1pdCAtbSAib3ZlcnJpZGVuLWF1
+dG8iICYmCisgICAgICAgIGdpdCBzdm4gZGNvbW1pdCAtLWF1dG8tcHJvcHMg
+LS1jb25maWctZGlyPWNvbmZpZyAmJgorICAgICAgICBjZCB0ZXN0c3ZucmVw
+byAmJgorICAgICAgICBzdm4gY2hlY2tvdXQgIiRzdm5yZXBvIiAmJgorICAg
+ICAgICBjZCBzdm5yZXBvICYmCisgICAgICAgIHRlc3QgcGVybCA9IGBzdm4g
+cHJvcGdldCBmaWxlLXR5cGUgb3ZlcnJpZGVuLWF1dG8ucG1gCisnCitjZCAu
+Li8uLgorCit0ZXN0X2V4cGVjdF9zdWNjZXNzICdhdXRvLXByb3BzIGFuZCBu
+by1hdXRvLXByb3BzIGFyZSBleGNsdXNpdmUnICcKKyAgICAgICAgdG91Y2gg
+YWZpbGUgJiYKKyAgICAgICAgZ2l0IGFkZCBhZmlsZSAmJgorICAgICAgICBn
+aXQgY29tbWl0IC1tIGFmaWxlICYmCisgICAgICAgIHRlc3RfbXVzdF9mYWls
+IGdpdCBzdm4gZGNvbW1pdCAtLWF1dG8tcHJvcHMgLS1uby1hdXRvLXByb3Bz
+CisnCisKK3Rlc3RfZG9uZQorCg==
 
-        http://article.gmane.org/gmane.comp.version-control.git/89208
-
-to use -s strategy1 -s strategy2.
-
-In that case, I think your patch is better, and once it hits git.git, I
-would like to send a patch that changes the config parsing as well, so
-that pull.twohead "foo bar" would be invalid, and the user would have to
-have two pull.twohead entries: one for foo and one for bar.
-
-Does this sound reasonable?
-
-Thanks.
-
---OX2aLCKeO1apYW07
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkiFjqAACgkQe81tAgORUJYs5ACgmpyv0bzKEr/WJgb5Iujj1Tq6
-SxwAnAttucHey28IewO6dAzn5PVQlFwJ
-=D991
------END PGP SIGNATURE-----
-
---OX2aLCKeO1apYW07--
+--0-1901950-1216712658=:27136--
