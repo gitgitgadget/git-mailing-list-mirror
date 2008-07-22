@@ -1,69 +1,115 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-filter-branch.sh: Allow running in bare
- repositories
-Date: Wed, 23 Jul 2008 00:27:07 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807230025050.8986@racer>
-References: <20080722223710.29084.61373.stgit@localhost>
+From: Jonathan Nieder <jrnieder@uchicago.edu>
+Subject: Re: [PATCH] bring description of git diff --cc up to date
+Date: Tue, 22 Jul 2008 18:27:18 -0500 (CDT)
+Message-ID: <Pine.GSO.4.62.0807221812470.25746@harper.uchicago.edu>
+References: <20080722111947.BIW29914@m4500-01.uchicago.edu>
+ <7v63qxn8w2.fsf@gitster.siamese.dyndns.org> <7vd4l5lio1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Jul 23 01:28:21 2008
+Cc: git@vger.kernel.org, David Greaves <david@dgreaves.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 01:28:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLRHB-0001hF-3c
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 01:28:13 +0200
+	id 1KLRHn-0001tl-29
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 01:28:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758192AbYGVX1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 19:27:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755077AbYGVX1K
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 19:27:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56609 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758112AbYGVX1I (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 19:27:08 -0400
-Received: (qmail invoked by alias); 22 Jul 2008 23:27:06 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp022) with SMTP; 23 Jul 2008 01:27:06 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+VEOFJsWqVxMBsq5OvZy8JYLowYfDu+unP8JaiQk
-	Hd9k7HWcZOeIc4
-X-X-Sender: gene099@racer
-In-Reply-To: <20080722223710.29084.61373.stgit@localhost>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1758877AbYGVX1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 19:27:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756866AbYGVX1b
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 19:27:31 -0400
+Received: from smtp01.uchicago.edu ([128.135.12.77]:36503 "EHLO
+	smtp01.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758241AbYGVX13 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 19:27:29 -0400
+Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
+	by smtp01.uchicago.edu (8.13.8/8.13.8) with ESMTP id m6MNRJp6004690;
+	Tue, 22 Jul 2008 18:27:19 -0500
+Received: from localhost (jrnieder@localhost)
+	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m6MNRIxC026214;
+	Tue, 22 Jul 2008 18:27:18 -0500 (CDT)
+X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
+In-Reply-To: <7vd4l5lio1.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89565>
 
-Hi,
+Junio C Hamano wrote:
 
-On Wed, 23 Jul 2008, Petr Baudis wrote:
+> Actually Linus talks about "when you have two versions to
+> choose from, and if the result matches one of them, then it is not
+> interesting".
 
-> Commit 46eb449c restricted git-filter-branch to non-bare repositories
-> unnecessarily; git-filter-branch can work on bare repositories just
-> fine.
+That is much better - thanks.  (The description by Linus I was referring
+to was from
+<http://thread.gmane.org/gmane.comp.version-control.git/89415>:
+"So "--cc" only shows output if: the merge itself actually changed
+something from _all_ parents" - which is not too misleading since the
+two-parent case is the usual one.)
 
-I think this is fine.
+How about this, then?
+--- %< ---
+Subject: document diff --cc's long-ago-changed semantics
 
-> This also fixes suspicious shell boolean expression during a check
-> for dirty working tree.
+In February 2006 [1], the definition of "interesting hunk" for
+git's "compact combined diff" format changed, without any
+corresponding change in documentation.  This patch brings the
+documentation up to date.
 
-If you are talking about X && Y || Z, it is well established (and should 
-not be suspicious to a shell hacker like the creator of Cogito) that Z is 
-executed if either X fails, or X succeeds and Y fails.
+[1] commit bf1c32bdec8223785c779779d0a660a099f69a63
+    combine-diff: update --cc "uninteresting hunks" logic
+---
+ Documentation/git-diff-tree.txt    |   12 +++++++-----
+ Documentation/rev-list-options.txt |    9 +++++----
+ 2 files changed, 12 insertions(+), 9 deletions(-)
 
-> +test_expect_success 'rewrite bare repository identically' '
-> +	(git config core.bare true && cd .git && git-filter-branch branch)
-> +'
-> +git config core.bare false
-
-Any reason why this is done outside the test?
-
-Ciao,
-Dscho
+diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
+index 0e45b58..14dc70d 100644
+--- a/Documentation/git-diff-tree.txt
++++ b/Documentation/git-diff-tree.txt
+@@ -92,12 +92,14 @@ include::pretty-options.txt[]
+ --cc::
+ 	This flag changes the way a merge commit patch is displayed,
+ 	in a similar way to the '-c' option. It implies the '-c'
+-	and '-p' options and further compresses the patch output
+-	by omitting hunks that show differences from only one
+-	parent, or show the same change from all but one parent
+-	for an Octopus merge.  When this optimization makes all
++	and '-p' options and makes the patch output
++	even more compact by omitting uninteresting hunks.  A hunk is
++	considered uninteresting if the person merging had two versions
++	to choose between among all of the parents and the result shows
++	no changes from one of those versions.
++	When this optimization makes all
+ 	hunks disappear, the commit itself and the commit log
+-	message is not shown, just like in any other "empty diff" case.
++	message are not shown, just like in any other "empty diff" case.
+ 
+ --always::
+ 	Show the commit itself and the commit log message even
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index b6f5d87..c61d05d 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -111,10 +111,11 @@ options may be given. See linkgit:git-diff-files[1] for more options.
+ 
+ --cc::
+ 
+-	This flag implies the '-c' options and further compresses the
+-	patch output by omitting hunks that show differences from only
+-	one parent, or show the same change from all but one parent for
+-	an Octopus merge.
++	This flag implies the '-c' option and makes the patch output
++	even more compact by omitting uninteresting hunks.  A hunk is
++	considered uninteresting if the person merging had two versions
++	to choose between among all of the parents and the result shows
++	no changes from one of those versions.
+ 
+ -r::
+ 
+-- 
+1.5.6.3.549.g8ca11
