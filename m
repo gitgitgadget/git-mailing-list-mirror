@@ -1,58 +1,69 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: Hacks for AIX
-Date: Tue, 22 Jul 2008 16:42:07 -0500
-Message-ID: <egpEt3GbPWBZ1DtILuSJ02MgOG3IyxmMVqfP6ebtANiJ-7fx7sn29Q@cipher.nrlssc.navy.mil>
-References: <5855afd30807161057v54ed4112jaea3bc07cebf44d4@mail.gmail.com> <7v3am9sn2p.fsf@gitster.siamese.dyndns.org> <7vd4l9c5ud.fsf@gitster.siamese.dyndns.org> <hT7kYDX9f_eBxi8JC0s7jG9oqm8sZ1QCTlEg1n8Dqus7U98hWLWnBA@cipher.nrlssc.navy.mil>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add help.autocorrect to enable/disable autocorrecting
+Date: Tue, 22 Jul 2008 22:44:50 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807222242160.8986@racer>
+References: <alpine.DEB.1.00.0807222100150.8986@racer> <20080722203730.GC5113@blimp.local> <20080722210354.GD5113@blimp.local> <alpine.DEB.1.00.0807222207110.8986@racer> <20080722212633.GF5113@blimp.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Chris Cowan <chris.o.cowan@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 23:43:21 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 22 23:45:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLPdf-0001Y8-88
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 23:43:19 +0200
+	id 1KLPg6-0002MW-6i
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 23:45:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154AbYGVVmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 17:42:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbYGVVmT
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 17:42:19 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50505 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753006AbYGVVmS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 17:42:18 -0400
-Received: by mail.nrlssc.navy.mil id m6MLg8jj025849; Tue, 22 Jul 2008 16:42:08 -0500
-In-Reply-To: <hT7kYDX9f_eBxi8JC0s7jG9oqm8sZ1QCTlEg1n8Dqus7U98hWLWnBA@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 22 Jul 2008 21:42:07.0949 (UTC) FILETIME=[CA34EFD0:01C8EC43]
+	id S1750877AbYGVVov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 17:44:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752022AbYGVVov
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 17:44:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55754 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750855AbYGVVou (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 17:44:50 -0400
+Received: (qmail invoked by alias); 22 Jul 2008 21:44:48 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp015) with SMTP; 22 Jul 2008 23:44:48 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/WZZZ+797W/f5d8z4dpe6U8Jari0pCd9ZJWJhkkp
+	Gk+t2847xcFmED
+X-X-Sender: gene099@racer
+In-Reply-To: <20080722212633.GF5113@blimp.local>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89547>
 
-Brandon Casey wrote:
-> Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>>>     * /usr/bin/patch - really old version, doesn't do well with some
->>>> diff formats.   I avoid using it.
->>> t4109 seems to use patch to produce expected output for the tests; we
->>> should ship a precomputed expected results.  Do you know of any other
->>> places "patch" is used?
->> As usual, I won't commit this patch unless I hear from people who
->> potentially would benefit from it.  I do not need such a patch myself and
->> I really shouldn't be spending too much of my time on these.
-> 
-> 
-> Unless I'm doing something wrong, this doesn't apply cleanly to master.
+Hi,
 
-I figured out that your patch was against maint.
+On Tue, 22 Jul 2008, Alex Riesen wrote:
 
-I see it is now applied to master and it helps out on solaris with old patch.
+> @@ -704,9 +707,10 @@ const char *help_unknown_cmd(const char *cmd)
+>  
+>  	if (!main_cmds.cnt)
+>  		die ("Uh oh.  Your system reports no Git commands at all.");
+> +	git_config(git_help_config, NULL);
+>  	best_similarity = similarity(main_cmds.names[0]->name);
+> -	if (main_cmds.cnt < 2 || best_similarity <
+> -			similarity(main_cmds.names[1]->name)) {
+> +	if (autocorrect && (main_cmds.cnt < 2 ||
+> +		best_similarity < similarity(main_cmds.names[1]->name))) {
+>  		if (!*cwd)
+>  			exit(1);
+>  		if (chdir(cwd))
 
-Now I need to get rid of 'diff -U0' in t1002-read-tree-m-u-2way.sh.
+This "if" already checks if there is only one candidate.  So you should 
+just add an inner "if (autocorrect) ... else single = 1;" or some such.
 
--brandon
+However, I think that the intention of this patch is too much DWIMery, 
+which might be good for me (just like my "git add remote" patch), but not 
+for the general audience.
+
+Ciao,
+Dscho
