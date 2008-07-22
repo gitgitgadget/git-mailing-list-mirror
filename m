@@ -1,69 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add help.autocorrect to enable/disable autocorrecting
-Date: Tue, 22 Jul 2008 22:44:50 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807222242160.8986@racer>
-References: <alpine.DEB.1.00.0807222100150.8986@racer> <20080722203730.GC5113@blimp.local> <20080722210354.GD5113@blimp.local> <alpine.DEB.1.00.0807222207110.8986@racer> <20080722212633.GF5113@blimp.local>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH] rebase -i: only automatically amend commit if HEAD did
+	not change
+Date: Tue, 22 Jul 2008 23:48:58 +0200
+Message-ID: <20080722214858.GC5904@leksak.fem-net>
+References: <alpine.DEB.1.00.0807222235520.8986@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 23:45:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 22 23:50:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLPg6-0002MW-6i
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 23:45:50 +0200
+	id 1KLPkG-0003nv-4i
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 23:50:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750877AbYGVVov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 17:44:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752022AbYGVVov
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 17:44:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55754 "HELO mail.gmx.net"
+	id S1751571AbYGVVtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 17:49:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751329AbYGVVtE
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 17:49:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33139 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750855AbYGVVou (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 17:44:50 -0400
-Received: (qmail invoked by alias); 22 Jul 2008 21:44:48 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp015) with SMTP; 22 Jul 2008 23:44:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/WZZZ+797W/f5d8z4dpe6U8Jari0pCd9ZJWJhkkp
-	Gk+t2847xcFmED
-X-X-Sender: gene099@racer
-In-Reply-To: <20080722212633.GF5113@blimp.local>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+	id S1751404AbYGVVtD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 17:49:03 -0400
+Received: (qmail invoked by alias); 22 Jul 2008 21:49:00 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp048) with SMTP; 22 Jul 2008 23:49:00 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+cpeZxG6GceZR8pcotIlNbQaoOxfxB+5Djl9z9co
+	rAvt6Qe9sX23vU
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KLPj8-0007te-3t; Tue, 22 Jul 2008 23:48:58 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807222235520.8986@racer>
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89548>
 
 Hi,
 
-On Tue, 22 Jul 2008, Alex Riesen wrote:
+Johannes Schindelin wrote:
+> If the user called "rebase -i", marked a commit as "edit", "rebase
+> --continue" would automatically amend the commit when there were
+> staged changes.
+> 
+> However, this is actively wrong when the current commit is not the
+> one marked with "edit".  So guard against this.
 
-> @@ -704,9 +707,10 @@ const char *help_unknown_cmd(const char *cmd)
->  
->  	if (!main_cmds.cnt)
->  		die ("Uh oh.  Your system reports no Git commands at all.");
-> +	git_config(git_help_config, NULL);
->  	best_similarity = similarity(main_cmds.names[0]->name);
-> -	if (main_cmds.cnt < 2 || best_similarity <
-> -			similarity(main_cmds.names[1]->name)) {
-> +	if (autocorrect && (main_cmds.cnt < 2 ||
-> +		best_similarity < similarity(main_cmds.names[1]->name))) {
->  		if (!*cwd)
->  			exit(1);
->  		if (chdir(cwd))
+Hmm, I like it. ;-)
 
-This "if" already checks if there is only one candidate.  So you should 
-just add an inner "if (autocorrect) ... else single = 1;" or some such.
+> @@ -419,7 +419,9 @@ do
+>  		else
+>  			. "$DOTEST"/author-script ||
+>  				die "Cannot find the author identity"
+> -			if test -f "$DOTEST"/amend
+> +			if test -f "$DOTEST"/amend &&
+> +				test $(git rev-parse HEAD) = \
+> +					$(cat "$DOTEST"/amend)
+>  			then
+>  				git reset --soft HEAD^ ||
+>  				die "Cannot rewind the HEAD"
 
-However, I think that the intention of this patch is too much DWIMery, 
-which might be good for me (just like my "git add remote" patch), but not 
-for the general audience.
+So if this fails, a non-amending commit is done.  Agreed. :)
 
-Ciao,
-Dscho
+Regards,
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
