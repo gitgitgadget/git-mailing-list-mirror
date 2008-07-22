@@ -1,105 +1,59 @@
-From: Ben Aurel <ben.aurel@gmail.com>
-Subject: Error: "You have some suspicious patch lines"
-Date: Tue, 22 Jul 2008 09:16:44 +0200
-Message-ID: <4885895C.5050108@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Fix update-index --refresh for submodules if stat(2)
+   returns st_size 0
+Date: Tue, 22 Jul 2008 09:17:16 +0200
+Message-ID: <4885897C.8010401@viscovery.net>
+References: <20080721173511.GB5387@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 22 09:17:58 2008
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Jul 22 09:18:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLC87-0004u3-3X
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 09:17:51 +0200
+	id 1KLC8i-00058a-Bd
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 09:18:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751952AbYGVHQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 03:16:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751927AbYGVHQv
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 03:16:51 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:26678 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751223AbYGVHQu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 03:16:50 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so604284nfc.21
-        for <git@vger.kernel.org>; Tue, 22 Jul 2008 00:16:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding:sender;
-        bh=0YOX5WN+CBdgANWP9XSm2eqQBbUfG5gyC1R+7QmtKBc=;
-        b=H4Nv4HKzdJzj5HUdS5EDOIlql8VhBhEAbvzWhBY9W+wFaii1DPjBVTPkn2w4MP8nTj
-         PyedRS870A81/ysPN2hhbnML4TBdR8c7djhdAfkhQUGNrAtW7Rq09UCXNXw35oH/cpTF
-         m1rJ6LidpEOJ+edl3xs56LdFbhMD9KpfphW2c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding:sender;
-        b=XtW9Y4wKyXePIGjS/1yiJRbrMD+x4cJUif1+HDJrG5skPZ7+dFF4exgF5qgTf4jRBI
-         VnhSm/jlRbw+kU1uNacKlhGha+DwUwwzZm36siwYZBJgspfKT9WY/TE6oB/JRtOgQk3Q
-         mMm79osiY0qRIvIZtuVRKC1CaFx4Lx79oScss=
-Received: by 10.103.228.12 with SMTP id f12mr3304616mur.28.1216711007324;
-        Tue, 22 Jul 2008 00:16:47 -0700 (PDT)
-Received: from administrators-imac.local ( [80.219.229.139])
-        by mx.google.com with ESMTPS id y37sm18039098mug.9.2008.07.22.00.16.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 22 Jul 2008 00:16:46 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (Macintosh/20080421)
+	id S1751842AbYGVHRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 03:17:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751844AbYGVHRU
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 03:17:20 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:56781 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751842AbYGVHRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 03:17:19 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KLC7Y-0003n4-GF; Tue, 22 Jul 2008 09:17:16 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 276546D9; Tue, 22 Jul 2008 09:17:16 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20080721173511.GB5387@steel.home>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89455>
 
-hi
+Alex Riesen schrieb:
+> Can MSys folks please try it? I noticed it when the test
+> t2103-update-index-ignore-missing.sh (the 5th case) started failing.
 
-I working on mac os x 10.5.4 (intel) with git version 1.5.5.3 and I 
-always get this message for most of my perl scripts and also for 
-"Makefile.pre" files:
+I tested it. mingw.git does suffer from the problem, and this fixes it.
 
------------ Message ---------------
-* You have some suspicious patch lines:
-*
-* In src/scripts/trunk/3rdparty/file_sanity.pl
-* trailing whitespace (line 52)
-...
-------------------------------------------
+But!
 
+> +	if ((changed & DATA_CHANGED) && (ce->ce_size != 0 || S_ISGITLINK(ce->ce_mode)))
 
-Editing '.git/hooks/pre-commit' and comment out the following lines 
-(around line 58):
+Does this mean that ce->ce_size is non-zero for gitlinks, at least on
+Unix? Is this value useful in anyway? I don't think so. Then it shouldn't
+be a random value that lstat() happens to return.
 
---
-58            if (/\s$/) {
-59                bad_line("trailing whitespace", $_);
-60             }
---
-
-I still have this message
-
------------ Message ---------------
-$ git commit .
-*
-* You have some suspicious patch lines:
-*
-* In src/scripts/trunk/3rdparty/file_sanity.pl
-* indent SP followed by a TAB (line 112)
------------------------------------------
-
-Editing '.git/hooks/pre-commit' and comment out the following lines
---
- 61             if (/^\s* \t/) {
- 62                 bad_line("indent SP followed by a TAB", $_);
- 63             }
---
-
-And finally "git commit" works again.
-
-The question now is: Is it really necessary to edit the git script 
-everytime? Is there a urgent reason why git refuses to commit because of 
-"suspicious" lines? Is it really necessary?
-
-Thanks
-ben
+-- Hannes
