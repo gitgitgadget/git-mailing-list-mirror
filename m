@@ -1,96 +1,75 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Build configuration to skip ctime for modification test
-Date: Tue, 22 Jul 2008 21:39:01 +0200
-Message-ID: <20080722193901.GA5113@blimp.local>
-References: <20080721173511.GB5387@steel.home> <4885897C.8010401@viscovery.net> <7vy73tltf5.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: exit status 141 from git-svn
+Date: Tue, 22 Jul 2008 19:52:40 +0200
+Message-ID: <20080722175240.GA3561@efreet.light.src>
+References: <loom.20080623T145909-992@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 21:40:22 2008
+Cc: git@vger.kernel.org
+To: Frederik Hohlfeld <frederik.hohlfeld@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 22 21:49:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLNiV-0003Nc-Bi
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 21:40:11 +0200
+	id 1KLNqx-00074P-2q
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 21:48:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752583AbYGVTjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 15:39:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752718AbYGVTjI
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 15:39:08 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.182]:41772 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752183AbYGVTjG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 15:39:06 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg2r44jepV
-Received: from tigra.home (Fa955.f.strato-dslnet.de [195.4.169.85])
-	by post.webmailer.de (klopstock mo6) (RZmta 16.47)
-	with ESMTP id z03849k6MGmDwf ; Tue, 22 Jul 2008 21:39:02 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 2751D277BD;
-	Tue, 22 Jul 2008 21:39:02 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id ED18036D17; Tue, 22 Jul 2008 21:39:01 +0200 (CEST)
+	id S1752645AbYGVTr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 15:47:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752201AbYGVTr4
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 15:47:56 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:58010 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751207AbYGVTrx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 15:47:53 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 42788573DB;
+	Tue, 22 Jul 2008 19:52:46 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id 10d3N5m-yafR; Tue, 22 Jul 2008 19:52:43 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 07B18572DB;
+	Tue, 22 Jul 2008 19:52:42 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.69)
+	(envelope-from <bulb@ucw.cz>)
+	id 1KLM2S-0001KO-8D; Tue, 22 Jul 2008 19:52:40 +0200
 Content-Disposition: inline
-In-Reply-To: <7vy73tltf5.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <loom.20080623T145909-992@post.gmane.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89516>
 
-On Windows, the only file attribute we need (executable) cannot be
-used, so ctime can be ignored as well. Change time is updated when
-file attributes were changed (or it is written to, but in this case,
-mtime is updated as well).
+On Mon, Jun 23, 2008 at 15:00:41 +0000, Frederik Hohlfeld wrote:
+> Hi
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+Sorry for late reply. I just noticed your message after returning from
+holiday *and* getting time to try to catch up with the list. Hope a reply
+might still be useful.
 
-Junio C Hamano, Tue, Jul 22, 2008 19:28:46 +0200:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
+> I have init'ed a git repository with git svn init.
 > 
-> >> +	if ((changed & DATA_CHANGED) && (ce->ce_size != 0 || S_ISGITLINK(ce->ce_mode)))
-> >
-> > Does this mean that ce->ce_size is non-zero for gitlinks, at least on
-> > Unix? Is this value useful in anyway? I don't think so. Then it shouldn't
-> > be a random value that lstat() happens to return.
+> Now I'm using git svn fetch, but it stops after just a few files/revisions. The
+> exit status is 141.
 > 
-> These ce_xxx fields are the values we read from lstat(2) when the user
-> told us to stage that working tree entity, be it a regular file, a
-> symlink, or a directory that is a submodule.  The only thing required for
-> them is that they are stable (i.e. if you haven't touched the working tree
-> entity, the value stays the same), and changes across modification.  The
-> value itself does not have to "mean" anything.
+> What does this 141 want to tell me?
 
-This reminds me... We can't use the only file attribute we care about
-on Windows, so we can as well skip check for ctime. Besides, Google
-Desktop Search keeps changing ctime when crawling files (ok, GDS is a
-major usability nuance anyway, but the point is - we don't use the
-file attribute).
+Unix trivia: When process dies from a signal, it's return status (as returned
+by wait/waitpid(2) is signal_number * 256. However when bourne/POSIX shell
+sees this, it will convert it to 128 + signal_number.
 
- read-cache.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Now 141 - 128 = 13 and signal 13 is SIGPIPE. Process gets a SIGPIPE when it's
+writing to a pipe (or socket) and it gets closed on the reading end, so it
+sounds like a bad redirection somewhere. Aren't you by chance redirecting the
+output to less and than quitting that without first scrolling to the bottom?
 
-diff --git a/read-cache.c b/read-cache.c
-index a50a851..c4f2718 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -181,8 +181,10 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
- 	}
- 	if (ce->ce_mtime != (unsigned int) st->st_mtime)
- 		changed |= MTIME_CHANGED;
-+#ifndef NO_TRUSTABLE_FILEMODE
- 	if (ce->ce_ctime != (unsigned int) st->st_ctime)
- 		changed |= CTIME_CHANGED;
-+#endif
- 
- 	if (ce->ce_uid != (unsigned int) st->st_uid ||
- 	    ce->ce_gid != (unsigned int) st->st_gid)
+(That would be the most situation where process gets SIGPIPE -- and the very
+reason why SIGPIPE exists, so that simple commands (like cat) are simply
+stopped when nobody is interested in their output anymore).
+
 -- 
-1.6.0.rc0.41.g70446
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
