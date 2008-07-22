@@ -1,75 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Difficulty with getting an accurate changelog after cherry-picking
- and merging.
-Date: Tue, 22 Jul 2008 22:14:42 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807222209180.8986@racer>
-References: <7dc909980807221338g707d6104ob8b1534cdf02a77a@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Patches for test suite on sunos
+Date: Tue, 22 Jul 2008 16:15:17 -0500
+Message-ID: <xBk5x6Gn4j_BxeOlNdnKZYx9EVCDUf3daWtIO2qp-b8jRKgjlQ8spQ@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Luuk Paulussen <luuk.paulussen@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 23:15:55 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 22 23:17:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLPD7-0006zQ-WC
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 23:15:54 +0200
+	id 1KLPEl-0007b1-Au
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 23:17:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756505AbYGVVOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 17:14:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756502AbYGVVOm
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 17:14:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52092 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756485AbYGVVOm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 17:14:42 -0400
-Received: (qmail invoked by alias); 22 Jul 2008 21:14:40 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp018) with SMTP; 22 Jul 2008 23:14:40 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/S3fR1nyDShViqa8Wo9Z+gGJEJEG0MEYmCIXUHT3
-	y+8VTsIEnqbolx
-X-X-Sender: gene099@racer
-In-Reply-To: <7dc909980807221338g707d6104ob8b1534cdf02a77a@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1756798AbYGVVPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 17:15:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756808AbYGVVPz
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 17:15:55 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:53998 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756798AbYGVVPy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 17:15:54 -0400
+Received: by mail.nrlssc.navy.mil id m6MLFHcZ020338; Tue, 22 Jul 2008 16:15:17 -0500
+X-OriginalArrivalTime: 22 Jul 2008 21:15:17.0859 (UTC) FILETIME=[0A84B330:01C8EC40]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89532>
 
-Hi,
 
-On Wed, 23 Jul 2008, Luuk Paulussen wrote:
+The following set of patches is a subset of patches I created
+while trying to compile on solaris and get the test suite running.
+Except for the patches to the perl modules section, the rest all
+deal with the test suite. I think these are general improvements
+(or benign changes) and so I am submitting them.
 
-> I'm trying to generate an accurate changelog of changes between 2 tags 
-> on a branch.  There is a merge between these 2 points which includes 
-> changes that were cherry-picked before the start point.  This causes the 
-> changelog to show these changes, despite them already existing before 
-> the start point of the log.
->
-> [...]
-> 
-> I have tried git-cherry and git-log with --cherry-pick and various 
-> things with git-rev-list and git-merge-base.
+With these patches and the others which I will maintain privately,
+I can compile git on solaris using the native c compiler and pass
+nearly all of the test suite with the native shell in /usr/xpg4/bin/sh
+(i.e. ksh). The remaining bits of the test suite that do not pass are
+related to a broken iconv or an ancient build environment.
 
-cherry and --cherry-pick will only skip patches that are on the 
-uninteresting side of a "..." range.
+Here are the tests I am skipping:
 
-I guess that
+GIT_SKIP_TESTS='
+   t3900.1[0-289] t3900.2[023]
+   t3901.*
+   t5000.1[0-24-689] t5000.2[01]
+   t5100.[56] t5100.10
+   t6030.1[2-9] t6030.2[0-9]
+   t9301.4
+'
 
-	$ git log --cherry-pick master...HEAD^
-
-should filter the commits out, but I haven't tried.
-
-> git cherry-pick :/test1
-
-Heh, that is the first time I see :/ in the wild.  I do not use it 
-anymore, and in your case, I would have written "git cherry-pick master^4" 
-to be more precise (and not accidentally pick up a wrong one).
-
-Ciao,
-Dscho
+-brandon
