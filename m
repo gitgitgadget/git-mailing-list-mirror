@@ -1,57 +1,145 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git status in clean working dir
-Date: Tue, 22 Jul 2008 02:06:43 -0400
-Message-ID: <20080722060643.GA25023@sigill.intra.peff.net>
-References: <0ttzeirft8.wl%bremner@pivot.cs.unb.ca> <7vy73ur6pz.fsf@gitster.siamese.dyndns.org> <7vtzeir68z.fsf@gitster.siamese.dyndns.org> <20080722044157.GA20787@sigill.intra.peff.net> <20080722053921.GA4983@glandium.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] bisect: test merge base if good rev is not an ancestor of bad rev
+Date: Tue, 22 Jul 2008 08:15:32 +0200
+Message-ID: <200807220815.32989.chriscool@tuxfamily.org>
+References: <20080710054152.b051989c.chriscool@tuxfamily.org> <200807130837.40961.chriscool@tuxfamily.org> <alpine.DEB.1.00.0807131504130.4816@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	David Bremner <bremner@unb.ca>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Tue Jul 22 08:07:51 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 22 08:12:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLB2K-0005GP-1i
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 08:07:48 +0200
+	id 1KLB75-0006Jc-4X
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 08:12:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289AbYGVGGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 02:06:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751277AbYGVGGp
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 02:06:45 -0400
-Received: from peff.net ([208.65.91.99]:2619 "EHLO peff.net"
+	id S1750971AbYGVGLn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jul 2008 02:11:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbYGVGLn
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 02:11:43 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:47617 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751212AbYGVGGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 02:06:45 -0400
-Received: (qmail 2723 invoked by uid 111); 22 Jul 2008 06:06:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 22 Jul 2008 02:06:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Jul 2008 02:06:43 -0400
+	id S1750869AbYGVGLm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Jul 2008 02:11:42 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 6924D1AB2BB;
+	Tue, 22 Jul 2008 08:11:40 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id E2D571AB2AA;
+	Tue, 22 Jul 2008 08:11:39 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0807131504130.4816@eeepc-johanness>
 Content-Disposition: inline
-In-Reply-To: <20080722053921.GA4983@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89441>
 
-On Tue, Jul 22, 2008 at 07:39:21AM +0200, Mike Hommey wrote:
+Hi,
 
-> > This marks diff-files as FORBID_PAGER; I will leave it to others to
-> > fight about which commands should have it. But it doesn't make sense to
-> > mark "status" since some people obviously _want_ the paging there.
-> 
-> Why not "simply" forbid the pager when output is not a terminal ?
+Le dimanche 13 juillet 2008, Johannes Schindelin a =E9crit :
+> Hi,
+>
+> On Sun, 13 Jul 2008, Christian Couder wrote:
+> > [PATCH] bisect: check all merge bases instead of only one
+>
+> It would have been so much nicer to squash the two patches into one, =
+as
+> we generally frown upon "let's submit one patch that we know is fault=
+y,
+> and then another that fixes it".  That's so CVS/SVN.
 
-We already do that (see pager.c:53). The original poster still had a
-problem, but I don't know if it was for actual usage or simply a toy
+I didn't think the first one was "faulty". It just didn't fix everythin=
+g.
 
-  $ git status
-  $ echo $?
-  $ echo "why don't exit codes work in status?" | mail git@vger
+> > @@ -384,19 +383,21 @@ check_merge_bases() {
+> >  	_skip=3D"$3"
+> >  	for _g in $_good; do
+>
+> I really wonder if we can be blessed with less ugly variable names.=20
+> Maybe some that do not start with an underscore for no apparent reaso=
+n,
 
-question.
+There is a reason though. It's because in "bisect_next", variables with=
+=20
+those names ("good", "bad" and "skip") are already used, so reusing the=
+=20
+same name is not easily possible.
 
--Peff
+> and maybe some that are longer than one letter, so that you have a ch=
+ance
+> to understand later what it is supposed to contain.  I.e. something l=
+ike:
+>
+> 	for good in $good_revisions
+> 	do
+>
+> (You see that I also broke up the "for" and "do" into two lines, as i=
+s
+> common practice in the rest of Git's shell code.)
+
+There are other places in git-bisect.sh where "for" and "do" are in the=
+ same=20
+line. Perhaps one day I will submit a patch to fix these.
+
+> >  		is_merge_base_ok "$_bad" "$_g" && continue
+> > -		_mb=3D$(git merge-base $_g $_bad)
+> > -		if test "$_mb" =3D "$_g" || is_among "$_mb" "$_good"; then
+> > -			mark_merge_base_ok "$_bad" "$_g"
+> > -		elif test "$_mb" =3D "$_bad"; then
+> > -			handle_bad_merge_base "$_bad" "$_g"
+> > -		elif is_among "$_mb" "$_skip"; then
+> > -			handle_skipped_merge_base "$_bad" "$_g" "_mb"
+> > -		else
+> > -			mark_testing_merge_base "$_mb"
+> > -			checkout "$_mb" "a merge base must be tested"
+> > -			checkout_done=3D1
+> > -			break
+> > -		fi
+> > +		for _mb in $(git merge-base --all $_g $_bad); do
+> > +			if test "$_mb" =3D "$_g" || is_among "$_mb" "$_good"; then
+> > +				continue
+> > +			elif test "$_mb" =3D "$_bad"; then
+> > +				handle_bad_merge_base "$_bad" "$_g"
+> > +			elif is_among "$_mb" "$_skip"; then
+> > +				handle_skipped_merge_base "$_bad" "$_g" "_mb"
+> > +			else
+> > +				mark_testing_merge_base "$_mb"
+> > +				checkout "$_mb" "a merge base must be tested"
+> > +				checkout_done=3D1
+> > +				return
+> > +			fi
+> > +		done
+> > +		mark_merge_base_ok "$_bad" "$_g"
+> >  	done
+> >  }
+>
+> I really wonder if we cannot do better than that, in terms of code
+> complexity.
+>
+> For example, I wonder if we should special-case the start, and not ju=
+st
+> check everytime if there are unchecked merge bases instead.  If there
+> are, check the first.
+
+In fact, there was such a thing in my patch, search=20
+for "$GIT_DIR/BISECT_ANCESTORS_OK". But it was a little bit broken if=20
+people didn't test the commit that "git bisect" suggested.
+
+In the next version I will post just after this mail, this is in the 2/=
+2=20
+patch (and hopefully fixed).
+
+> But that can wait until you come back from your vacation...
+>
+> Have fun,
+> Dscho
+
+Thanks,
+Christian.
