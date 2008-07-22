@@ -1,91 +1,132 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Respect crlf attribute even if core.autocrlf has not been
- set
-Date: Tue, 22 Jul 2008 22:56:04 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807222255450.8986@racer>
+Subject: [PATCH v2] git daemon: avoid waking up too often
+Date: Tue, 22 Jul 2008 23:03:01 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807222302440.8986@racer>
+References: <alpine.DEB.1.00.0807222251570.8986@racer>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jul 22 23:57:32 2008
+X-From: git-owner@vger.kernel.org Wed Jul 23 00:04:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLPr1-0006C8-72
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 23:57:07 +0200
+	id 1KLPxm-0000mG-0u
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 00:04:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753833AbYGVV4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 17:56:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753807AbYGVV4H
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 17:56:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50511 "HELO mail.gmx.net"
+	id S1753388AbYGVWDF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 18:03:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753386AbYGVWDD
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 18:03:03 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48483 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753517AbYGVV4E (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 17:56:04 -0400
-Received: (qmail invoked by alias); 22 Jul 2008 21:56:02 -0000
+	id S1753006AbYGVWDB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 18:03:01 -0400
+Received: (qmail invoked by alias); 22 Jul 2008 22:02:59 -0000
 Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp059) with SMTP; 22 Jul 2008 23:56:02 +0200
+  by mail.gmx.net (mp063) with SMTP; 23 Jul 2008 00:02:59 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/h0EZAebPhSBLt3lqNEuB2cYg8uO4siJeN/hN0fh
-	PiuYrJ0DfvfhjY
+X-Provags-ID: V01U2FsdGVkX1+ySZIAThaylcfUT3CjYBiZLvI3PDd3nv9H5h+Pq3
+	hZ02SMGs5x7qwg
 X-X-Sender: gene099@racer
+In-Reply-To: <alpine.DEB.1.00.0807222251570.8986@racer>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+X-FuHaFi: 0.49
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89551>
 
 
-When a file's crlf attribute is explicitely set, it does not make sense
-to ignore it, just because the config variable core.autocrlf has not
-been set.
+To avoid waking up unnecessarily, a pipe is set up that is only ever
+written to by child_handler(), when a child disconnects, as suggested
+per Junio.
 
-This patch does not affect the case when the crlf attribute is unset.
+This avoids waking up the main process every second to see if a child
+was disconnected.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
 
-	There have been no comments on this patch so far, however I think
-	that this is a valid fix which should be in 1.6.0.
+	Darn.  Forgot to commit after fixing the compiler warning:
+	The now-unused variable timeout is gone.
 
- convert.c       |    2 +-
- t/t0020-crlf.sh |   10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletions(-)
+	That is the only difference to the version I have running in
+	production ;-)
 
-diff --git a/convert.c b/convert.c
-index 78efed8..d038d2f 100644
---- a/convert.c
-+++ b/convert.c
-@@ -126,7 +126,7 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
- 	struct text_stat stats;
- 	char *dst;
+ daemon.c |   25 +++++++++++--------------
+ 1 files changed, 11 insertions(+), 14 deletions(-)
+
+diff --git a/daemon.c b/daemon.c
+index 7df41a6..4540e8d 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -16,6 +16,7 @@
+ static int log_syslog;
+ static int verbose;
+ static int reuseaddr;
++static int child_handler_pipe[2];
  
--	if ((action == CRLF_BINARY) || !auto_crlf || !len)
-+	if ((action == CRLF_BINARY) || (!auto_crlf && action < 0) || !len)
- 		return 0;
+ static const char daemon_usage[] =
+ "git daemon [--verbose] [--syslog] [--export-all]\n"
+@@ -788,6 +789,7 @@ static void child_handler(int signo)
+ 				pid = -pid;
+ 			dead_child[reaped % MAX_CHILDREN] = pid;
+ 			children_reaped = reaped + 1;
++			write(child_handler_pipe[1], &status, 1);
+ 			continue;
+ 		}
+ 		break;
+@@ -933,29 +935,24 @@ static int service_loop(int socknum, int *socklist)
+ 	struct pollfd *pfd;
+ 	int i;
  
- 	gather_stats(src, len, &stats);
-diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-index 1be7446..0bb3e6f 100755
---- a/t/t0020-crlf.sh
-+++ b/t/t0020-crlf.sh
-@@ -436,4 +436,14 @@ test_expect_success 'invalid .gitattributes (must not crash)' '
- 
- '
- 
-+test_expect_success 'attribute crlf is heeded even without core.autocrlf' '
+-	pfd = xcalloc(socknum, sizeof(struct pollfd));
++	if (pipe(child_handler_pipe) < 0)
++		die ("Could not set up pipe for child handler");
 +
-+	echo "allcrlf crlf=input" > .gitattributes &&
-+	git config --unset core.autocrlf &&
-+	git add allcrlf &&
-+	git show :allcrlf | append_cr > expect &&
-+	test_cmp allcrlf expect
-+
-+'
-+
- test_done
++	pfd = xcalloc(socknum + 1, sizeof(struct pollfd));
+ 
+ 	for (i = 0; i < socknum; i++) {
+ 		pfd[i].fd = socklist[i];
+ 		pfd[i].events = POLLIN;
+ 	}
++	pfd[socknum].fd = child_handler_pipe[0];
++	pfd[socknum].events = POLLIN;
+ 
+ 	signal(SIGCHLD, child_handler);
+ 
+ 	for (;;) {
+ 		int i;
+-		int timeout;
+ 
+-		/*
+-		 * This 1-sec timeout could lead to idly looping but it is
+-		 * here so that children culled in child_handler() are reported
+-		 * without too much delay.  We could probably set up a pipe
+-		 * to ourselves that we poll, and write to the fd from child_handler()
+-		 * to wake us up (and consume it when the poll() returns...
+-		 */
+-		timeout = (children_spawned != children_deleted) ? 1000 : -1;
+-		i = poll(pfd, socknum, timeout);
+-		if (i < 0) {
++		if (poll(pfd, socknum + 1, -1) < 0) {
+ 			if (errno != EINTR) {
+ 				error("poll failed, resuming: %s",
+ 				      strerror(errno));
+@@ -963,9 +960,9 @@ static int service_loop(int socknum, int *socklist)
+ 			}
+ 			continue;
+ 		}
+-		if (i == 0) {
++		if (pfd[socknum].revents & POLLIN) {
++			read(child_handler_pipe[0], &i, 1);
+ 			check_dead_children();
+-			continue;
+ 		}
+ 
+ 		for (i = 0; i < socknum; i++) {
 -- 
 1.6.0.rc0.22.gf2096d.dirty
