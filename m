@@ -1,58 +1,123 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Documentation/git-filter-branch: Remove Useless Use of
-	Plumbing
-Date: Wed, 23 Jul 2008 00:24:35 +0200
-Message-ID: <20080722222418.15372.62190.stgit@localhost>
+Subject: [PATCH] git-filter-branch.sh: Allow running in bare repositories
+Date: Wed, 23 Jul 2008 00:37:41 +0200
+Message-ID: <20080722223710.29084.61373.stgit@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jul 23 00:25:48 2008
+X-From: git-owner@vger.kernel.org Wed Jul 23 00:38:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLQIk-0007M5-HQ
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 00:25:46 +0200
+	id 1KLQVP-0002P1-TB
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 00:38:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754321AbYGVWYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 18:24:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754134AbYGVWYr
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 18:24:47 -0400
-Received: from 159-162.104-92.cust.bluewin.ch ([92.104.162.159]:56514 "EHLO
+	id S1753166AbYGVWhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 18:37:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbYGVWhv
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 18:37:51 -0400
+Received: from 159-162.104-92.cust.bluewin.ch ([92.104.162.159]:62543 "EHLO
 	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754088AbYGVWYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 18:24:46 -0400
+	with ESMTP id S1751782AbYGVWhv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 18:37:51 -0400
 Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by pixie.suse.cz (Postfix) with ESMTP id 790A52ACC76;
-	Wed, 23 Jul 2008 00:24:35 +0200 (CEST)
+	by pixie.suse.cz (Postfix) with ESMTP id 7CE4C2ACC76;
+	Wed, 23 Jul 2008 00:37:41 +0200 (CEST)
 User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89554>
 
-The example to remove file using index-filter uses git update-index
- --remove where git rm --cached works as well.
+Commit 46eb449c restricted git-filter-branch to non-bare repositories
+unnecessarily; git-filter-branch can work on bare repositories just
+fine.
 
+This also fixes suspicious shell boolean expression during a check
+for dirty working tree.
+
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- Documentation/git-filter-branch.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ git-filter-branch.sh     |   36 ++++++++++++++++++++----------------
+ t/t7003-filter-branch.sh |    8 ++++++++
+ 2 files changed, 28 insertions(+), 16 deletions(-)
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index a3edc00..7ba9dab 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -191,7 +191,7 @@ Thus you may instead want to use `rm -f filename` as the script.
- A significantly faster version:
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index d04c346..dcfc6be 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -97,9 +97,11 @@ USAGE="[--env-filter <command>] [--tree-filter <command>] \
+ OPTIONS_SPEC=
+ . git-sh-setup
  
- --------------------------------------------------------------------------
--git filter-branch --index-filter 'git update-index --remove filename' HEAD
-+git filter-branch --index-filter 'git rm --cached filename' HEAD
- --------------------------------------------------------------------------
+-git diff-files --quiet &&
+-	git diff-index --cached --quiet HEAD -- ||
+-	die "Cannot rewrite branch(es) with a dirty working directory."
++if [ "$(is_bare_repository)" = false ]; then
++	(git diff-files --quiet &&
++	 git diff-index --cached --quiet HEAD --) ||
++		die "Cannot rewrite branch(es) with a dirty working directory."
++fi
  
- Now, you will get the rewritten history saved in HEAD.
+ tempdir=.git-rewrite
+ filter_env=
+@@ -434,18 +436,20 @@ rm -rf "$tempdir"
+ 
+ trap - 0
+ 
+-unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
+-test -z "$ORIG_GIT_DIR" || {
+-	GIT_DIR="$ORIG_GIT_DIR" && export GIT_DIR
+-}
+-test -z "$ORIG_GIT_WORK_TREE" || {
+-	GIT_WORK_TREE="$ORIG_GIT_WORK_TREE" &&
+-	export GIT_WORK_TREE
+-}
+-test -z "$ORIG_GIT_INDEX_FILE" || {
+-	GIT_INDEX_FILE="$ORIG_GIT_INDEX_FILE" &&
+-	export GIT_INDEX_FILE
+-}
+-git read-tree -u -m HEAD
++if [ "$(is_bare_repository)" = false ]; then
++	unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
++	test -z "$ORIG_GIT_DIR" || {
++		GIT_DIR="$ORIG_GIT_DIR" && export GIT_DIR
++	}
++	test -z "$ORIG_GIT_WORK_TREE" || {
++		GIT_WORK_TREE="$ORIG_GIT_WORK_TREE" &&
++		export GIT_WORK_TREE
++	}
++	test -z "$ORIG_GIT_INDEX_FILE" || {
++		GIT_INDEX_FILE="$ORIG_GIT_INDEX_FILE" &&
++		export GIT_INDEX_FILE
++	}
++	git read-tree -u -m HEAD
++fi
+ 
+ exit $ret
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index e26f726..a0ab096 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -38,6 +38,14 @@ test_expect_success 'result is really identical' '
+ 	test $H = $(git rev-parse HEAD)
+ '
+ 
++test_expect_success 'rewrite bare repository identically' '
++	(git config core.bare true && cd .git && git-filter-branch branch)
++'
++git config core.bare false
++test_expect_success 'result is really identical' '
++	test $H = $(git rev-parse HEAD)
++'
++
+ test_expect_success 'rewrite, renaming a specific file' '
+ 	git-filter-branch -f --tree-filter "mv d doh || :" HEAD
+ '
