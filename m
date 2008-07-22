@@ -1,70 +1,119 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] parse-options: fix parsing of "--foobar=" with no value
-Date: Tue, 22 Jul 2008 16:09:11 -0400
-Message-ID: <20080722200911.GA3097@sigill.intra.peff.net>
-References: <1216752267-12138-1-git-send-email-dkr+ml.git@free.fr> <20080722185427.GA10453@artemis.madism.org> <48863436.50309@free.fr>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [SCNR] Re: [FYI PATCH] git wrapper: DWIM mistyped commands
+Date: Tue, 22 Jul 2008 22:16:48 +0200
+Message-ID: <20080722201648.GB11831@artemis.madism.org>
+References: <alpine.DEB.1.00.0807222100150.8986@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Tue Jul 22 22:10:31 2008
+Content-Type: multipart/signed; boundary="St7VIuEGZ6dlpu13";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 22 22:17:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLOBb-0007OY-Mk
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 22:10:16 +0200
+	id 1KLOIx-0001fO-JF
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 22:17:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752165AbYGVUJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 16:09:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751830AbYGVUJP
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 16:09:15 -0400
-Received: from peff.net ([208.65.91.99]:3679 "EHLO peff.net"
+	id S1751768AbYGVUQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 16:16:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751871AbYGVUQv
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 16:16:51 -0400
+Received: from pan.madism.org ([88.191.52.104]:55191 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751058AbYGVUJO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 16:09:14 -0400
-Received: (qmail 8317 invoked by uid 111); 22 Jul 2008 20:09:13 -0000
-Received: from lawn-128-61-16-226.lawn.gatech.edu (HELO sigill.intra.peff.net) (128.61.16.226)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 22 Jul 2008 16:09:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Jul 2008 16:09:11 -0400
+	id S1751690AbYGVUQv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 16:16:51 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 7BD4035B80;
+	Tue, 22 Jul 2008 22:16:49 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 30656D4D0; Tue, 22 Jul 2008 22:16:48 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <48863436.50309@free.fr>
+In-Reply-To: <alpine.DEB.1.00.0807222100150.8986@racer>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89520>
 
-On Tue, Jul 22, 2008 at 09:25:42PM +0200, Olivier Marin wrote:
 
-> I found the "random bug" while migrating "git init" to parse-options. I
-> think you can reproduce it with:
-> 
-> $ git clone --template= <repo>
-> error: ignoring template /var/run/synaptic.socket
-> fatal: cannot opendir /var/run/sudo
-> 
-> But now, it appears the problem is not in parse-options, sorry.
+--St7VIuEGZ6dlpu13
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, the problem is that copy_templates in builtin-init-db.c is totally
-broken for an empty template name. It writes past the beginning of the
-string, and then starts copying at "/". Oops.
+On Tue, Jul 22, 2008 at 08:01:29PM +0000, Johannes Schindelin wrote:
+>=20
+> This patch introduces a modified Damerau-Levenshtein algorithm into
+> Git's code base, and uses it with the following penalties to show some
+> similar commands when an unknown command was encountered:
+>=20
+> 	swap =3D 0, insertion =3D 1, substitution =3D 2, deletion =3D 4
+>=20
+> A typical output would now look like this:
+>=20
+> 	$ git sm
+> 	git: 'sm' is not a git-command. See 'git --help'.
+>=20
+> 	Did you mean one of these?
+> 		am
+> 		rm
+>=20
+> The cut-off is at similarity rating 6, which was empirically determined
+> to give sensible results.
+>=20
+> As a convenience, if there is only one candidate, Git continues under
+> the assumption that the user mistyped it.  Example:
+>=20
+> 	$ git reabse
+> 	WARNING: You called a Git program named 'reabse', which does
+> 	not exist.
+> 	Continuing under the assumption that you meant 'rebase'
+> 	[...]
 
-Maybe something like this is better? It should define --template= to
-mean "don't copy any templates" (and I haven't tested it at all).
+<SCNR>
+    Or use a decent shell:
 
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index 38b4fcb..baf0d09 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -117,6 +117,8 @@ static void copy_templates(const char *template_dir)
- 		template_dir = getenv(TEMPLATE_DIR_ENVIRONMENT);
- 	if (!template_dir)
- 		template_dir = system_path(DEFAULT_GIT_TEMPLATE_DIR);
-+	if (!template_dir[0])
-+		return;
- 	strcpy(template_path, template_dir);
- 	template_len = strlen(template_path);
- 	if (template_path[template_len-1] != '/') {
+    When typing e.g.: git tsa<tab>, it yields:
+    $ git status
+    ---- corrections (errors 1)
+    status        -- show working-tree's status
+    tag           -- create tag object signed with GPG
+    tar-tree      -- create tar archive of the files in the named tree
+    ---- original
+    tsa
+
+    and it even works for non git commands ;)
+</SCNR>
+
+Despite that, I really like your idea. **hint hint** One could even hook th=
+at
+for long options into parse-options.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--St7VIuEGZ6dlpu13
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkiGQDAACgkQvGr7W6HudhzGcwCfYkb0u+ytFUEw5KDSAuBK0SC9
+ykgAoKN+oPw6xlf1cUMeaIfaPWpeG3ps
+=6WoM
+-----END PGP SIGNATURE-----
+
+--St7VIuEGZ6dlpu13--
