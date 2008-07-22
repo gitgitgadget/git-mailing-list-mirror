@@ -1,82 +1,58 @@
-From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: Re: [PATCH] bring description of git diff
- --cc up to date
-Date: Tue, 22 Jul 2008 11:19:47 -0500 (CDT)
-Message-ID: <20080722111947.BIW29914@m4500-01.uchicago.edu>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Computing the number of patches in linux-next tree
+Date: Tue, 22 Jul 2008 17:28:17 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807221727210.8986@racer>
+References: <12c511ca0807220919q4db6ee1fr33dc70fe35c58efe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, David Greaves <david@dgreaves.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 18:21:40 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tony Luck <tony.luck@intel.com>
+X-From: git-owner@vger.kernel.org Tue Jul 22 18:30:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLKcF-0007T7-AZ
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 18:21:31 +0200
+	id 1KLKko-0002Jn-KR
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 18:30:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752182AbYGVQUa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 12:20:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751751AbYGVQUa
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 12:20:30 -0400
-Received: from smtp00.uchicago.edu ([128.135.12.76]:56412 "EHLO
-	smtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751865AbYGVQU3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 12:20:29 -0400
-Received: from m4500-01.uchicago.edu (m4500-01.uchicago.edu [128.135.249.211])
-	by smtp00.uchicago.edu (8.13.8/8.13.8) with ESMTP id m6MGJoUG011496;
-	Tue, 22 Jul 2008 11:19:50 -0500
-Received: (from m4500-01.uchicago.edu [128.135.249.213])
-	by m4500-01.uchicago.edu (MOS 3.8.5-GA)
-	with HTTP/1.1 id BIW29914 (AUTH jrnieder@uchicago.edu);
-	Tue, 22 Jul 2008 11:19:47 -0500 (CDT)
-X-Mailer: Mirapoint Webmail Direct 3.8.5-GA
+	id S1751277AbYGVQ2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 12:28:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750852AbYGVQ2T
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 12:28:19 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54751 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750763AbYGVQ2S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 12:28:18 -0400
+Received: (qmail invoked by alias); 22 Jul 2008 16:28:16 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp043) with SMTP; 22 Jul 2008 18:28:16 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+36fkA/yq3jVJvdhUR4mf1QjIp4yVUUlbSNzSSzQ
+	zQFTACthOgZOMD
+X-X-Sender: gene099@racer
+In-Reply-To: <12c511ca0807220919q4db6ee1fr33dc70fe35c58efe@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89495>
 
-Junio C Hamano wrote:
+Hi,
 
-> Jonathan Nieder <jrnieder@uchicago.edu> writes:
->
->> +	This flag implies the '-c' option and makes the patch output
->> +	even more compact by omitting uninteresting hunks.  A hunk is
->> +	considered interesting only if either (a) it shows changes from
->> +	all parents or (b) in an Octopus merge, it shows different changes
->> +	from at least three different parents.
->
-> I am not sure where that "at lesta three different parents" comes from.
-> It might be that what the logic does can be expressed that way, but that
-> was not the guiding principle why the code does what it currently does.
+On Tue, 22 Jul 2008, Tony Luck wrote:
 
-Yes, exactly - this is what I meant in saying "my proposed text
-does not suggest very strongly what --cc is intended to do".  I
-haven't found any wording yet that both makes it clear what --cc
-actually does and follows a thought process suggesting why.
+> git tag | grep next- | sort | while read tag
 
-Just to make sure I understand, here is what I think --cc does:
+This should not be necessary... AFAICT "git tag" sorts its output already.
 
-  - In a two-parent merge, it is exactly as Linus has been
-    describing it.  A hunk is interesting if and only if
-    it shows changes from both parents.
+> What does the "git-where-did-this-tag-branch-from-linus" command look like?
 
-  - In a many-parent merge, the criterion is more stringent.
-    As in the two-parent merge case, the hunk must show no
-    changes from at least one of the parents, meaning that
-    one of several alternatives for that portion of code
-    was chosen by the code integrator (without mixing and
-    matching or adding additional changes); but further, there
-    must have been only two alternatives for that portion of
-    code to choose between.  If there were three distinct
-    alternatives, no matter what the code integrator does, the
-    hunk will show up (because that is so rare and deserves
-    attention).
+git merge-base --all <branch1> <branch2>
 
-Is that correct?
+Be warned: there might be multiple merge bases.
 
-Thanks for the reading matter.  If it stimulates anyone reading
-into coming up with a better description, they should please let
-me know :)
+Ciao,
+Dscho
