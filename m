@@ -1,107 +1,101 @@
-From: Abhijit Menon-Sen <ams@toroid.org>
-Subject: Re: post-receive-hook emailer
-Date: Tue, 22 Jul 2008 16:10:22 +0530
-Message-ID: <20080722104022.GA6621@toroid.org>
-References: <00AEED4D-BD34-4584-B303-32C5F587EF0F@develooper.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH for master] Rename path_list to string_list
+Date: Tue, 22 Jul 2008 13:09:47 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807221308050.3391@eeepc-johanness>
+References: <alpine.DEB.1.00.0807211858330.8986@racer> <alpine.DEB.1.00.0807211904090.8986@racer> <7v3am2sldy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Ask =?iso-8859-1?Q?Bj=F8rn?= Hansen <ask@develooper.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 12:41:31 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 22 13:10:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLFJ7-0007P4-DT
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 12:41:25 +0200
+	id 1KLFkn-0007dB-IA
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 13:10:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753864AbYGVKk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 06:40:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753769AbYGVKk0
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 06:40:26 -0400
-Received: from fugue.toroid.org ([85.10.196.113]:60529 "EHLO fugue.toroid.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751935AbYGVKkZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 06:40:25 -0400
-Received: from penne.toroid.org (penne-vpn [10.8.0.6])
-	by fugue.toroid.org (Postfix) with ESMTP id 07E91558223;
-	Tue, 22 Jul 2008 12:40:24 +0200 (CEST)
-Received: by penne.toroid.org (Postfix, from userid 1000)
-	id 26DFCADC364; Tue, 22 Jul 2008 16:10:23 +0530 (IST)
-Content-Disposition: inline
-In-Reply-To: <00AEED4D-BD34-4584-B303-32C5F587EF0F@develooper.com>
+	id S1755687AbYGVLJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 07:09:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755595AbYGVLI7
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 07:08:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49051 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755446AbYGVLI6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 07:08:58 -0400
+Received: (qmail invoked by alias); 22 Jul 2008 11:08:57 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness) [88.107.142.10]
+  by mail.gmx.net (mp052) with SMTP; 22 Jul 2008 13:08:57 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+RI419/FyRS7tdxMnV9R4DnClMigjGXgGv4heVkJ
+	zZ2ceYpP8dctgO
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7v3am2sldy.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89484>
 
-Hi Ask.
+Hi,
 
-At 2008-07-22 02:34:35 -0700, ask@develooper.com wrote:
->
-> Anyway - anyone have a mailer that sends diffs and such? :-)
+On Mon, 21 Jul 2008, Junio C Hamano wrote:
 
-Not quite what you want, but I wrote the attached post-receive hook/hack
-to send change notifications by Jabber. "hooks.notify.recipients" should
-contain a list of jabber IDs; and you can change the "git log" line, for
-example by adding "-p --stat" or something, to change what gets sent.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > @@ -64,9 +65,10 @@ Functions
+> >  
+> >  `string_list_clear`::
+> >  
+> > -	Free a string_list. The `path` pointer of the items will be freed in case
+> > -	the `strdup_strings` member of the string_list is set. The second parameter
+> > -	controls if the `util` pointer of the items should be freed or not.
+> > +	Free a string_list. The `path` pointer of the items will be freed in
+> > +	case the `strdup_strings` member of the string_list is set. The second
+> > +	parameter controls if the `util` pointer of the items should be freed
+> > +	or not.
+> 
+> Missed 's/path/string/' here?
 
-It should be trivial to change the last twenty-odd lines to send email
-instead.
+Good catch.  I clearly forgot to grep for "path" in all the files that I 
+touched.  I did that now, but only looked at comments (in the hope that 
+the compiler would have caught the other ones).
 
--- ams
+-- snipsnap --
+[PATCH] Fix two leftovers from path_list->string_list
 
-#!/usr/bin/perl
-# Abhijit Menon-Sen <ams@oryx.com>
+In the documentation, where you cannot get compile errors for using the
+wrong member name, there were two mentions of 'path' left.
 
-use Net::Jabber;
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/technical/api-string-list.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-my $dir;
-chomp( $dir = qx(git rev-parse --git-dir 2>/dev/null) );
-die "GIT_DIR not defined.\n" unless $dir;
-$ENV{GIT_DIR} = $dir;
-
-my $r;
-chomp( $r = qx(git config hooks.notify.recipients) );
-my @recipients = split /,\s*/, $r;
-
-my @changes;
-while ( <> ) {
-    chomp;
-    my ( $old, $new, $ref ) = split / /;
-    $ref =~ s!refs/heads/!!;
-    next unless $ref eq "some/branch";
-    my $s = qx(git log --no-merges --reverse --find-copies-harder --raw -r $old..$new);
-    $s =~ s/^:.*?\t/\t/gsm;
-    push @changes, $s;
-}
-
-exit unless @changes;
-exit unless @recipients;
-
-my $client = new Net::Jabber::Client ();
-$client->Connect(
-    hostname => 'example.com',
-) or die "Cannot connect to jabber server: $!.\n";
-
-my @r = $client->AuthSend(
-    username => 'git',
-    password => 'some-password',
-    resource => 'git'
-);
-die "Cannot authenticate (@r).\n" if $r[0] ne "ok";
-
-foreach my $c (@changes) {
-    for my $r (@recipients) {
-        my $msg = new Net::Jabber::Message ();
-        $msg->SetMessage(
-            to => $r,
-            subject => 'Changes pushed to x:y.git/some/branch',
-            body => $c
-        );
-        $client->Send( $msg );
-    }
-}
-
-$client->Disconnect();
+diff --git a/Documentation/technical/api-string-list.txt b/Documentation/technical/api-string-list.txt
+index 92b3ecd..293bb15 100644
+--- a/Documentation/technical/api-string-list.txt
++++ b/Documentation/technical/api-string-list.txt
+@@ -41,7 +41,7 @@ memset(&list, 0, sizeof(struct string_list));
+ string_list_append("foo", &list);
+ string_list_append("bar", &list);
+ for (i = 0; i < list.nr; i++)
+-	printf("%s\n", list.items[i].path)
++	printf("%s\n", list.items[i].string)
+ ----
+ 
+ NOTE: It is more efficient to build an unsorted list and sort it
+@@ -113,7 +113,7 @@ Data structures
+ 
+ * `struct string_list_item`
+ 
+-Represents an item of the list. The `path` member is a pointer to the
++Represents an item of the list. The `string` member is a pointer to the
+ string, and you may use the `util` member for any purpose, if you want.
+ 
+ * `struct string_list`
+-- 
+1.5.6.2.516.g22071
