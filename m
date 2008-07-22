@@ -1,91 +1,71 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Git Documentation
-Date: Tue, 22 Jul 2008 11:47:38 -0400
-Message-ID: <76718490807220847i298f256bm4c3f85bfde079ee2@mail.gmail.com>
-References: <d411cc4a0807212035v68c2ed95m93b77c1e61cfec9e@mail.gmail.com>
-	 <200807220917.57363.johan@herland.net>
-	 <alpine.DEB.1.10.0807220035110.1125@asgard.lang.hm>
-	 <200807221121.22520.johan@herland.net>
-	 <alpine.DEB.1.00.0807221335560.3391@eeepc-johanness>
+Date: Tue, 22 Jul 2008 17:07:05 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807221705150.8986@racer>
+References: <d411cc4a0807212035v68c2ed95m93b77c1e61cfec9e@mail.gmail.com>  <200807220917.57363.johan@herland.net>  <alpine.DEB.1.10.0807220035110.1125@asgard.lang.hm>  <200807221121.22520.johan@herland.net>  <alpine.DEB.1.00.0807221335560.3391@eeepc-johanness>
+ <76718490807220847i298f256bm4c3f85bfde079ee2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Johan Herland" <johan@herland.net>, david@lang.hm,
-	"Scott Chacon" <schacon@gmail.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 22 17:48:55 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johan Herland <johan@herland.net>, david@lang.hm,
+	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 22 18:08:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLK6S-0002Ve-QG
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 17:48:41 +0200
+	id 1KLKPL-0001aI-DG
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 18:08:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750857AbYGVPrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 11:47:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbYGVPrk
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 11:47:40 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:23777 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750711AbYGVPrk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 11:47:40 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so340279yxm.1
-        for <git@vger.kernel.org>; Tue, 22 Jul 2008 08:47:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=8NiFj+hKr864hlcxGPxenu2zaVkZ5L8mDIhiR7gcqIc=;
-        b=mVYx0VAVSYP6AZZLNIDwDVKU9+HQYSig6C/tgqG+IGrY3p6NukPdHklXf0LlfOraFw
-         eofDFhpj+nZXLyhPC+2w2D4a7sYv5Ajrz65kokoBKbOeZVUoGPOakovRe6rgJlgcXXUb
-         9cH380dDnaCadrns7SD45sY9ELVn4S77EwITc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Kqc77Y0i7Z6npGcpth7bkRhXQfUxPu6lgtoCJra2DftKDJch2AJdHbE2EwfITvsCbb
-         W9KP/1nfLamW44HeuR/MEBLkBv/41ZFj+/h5XOGLUQttwxRHvHuspmvkraKInftBHSce
-         5YJ0ULBqqtjsNOuISGGX/GLa/K0S2LaGLIS9s=
-Received: by 10.150.133.17 with SMTP id g17mr5631527ybd.196.1216741658748;
-        Tue, 22 Jul 2008 08:47:38 -0700 (PDT)
-Received: by 10.150.50.2 with HTTP; Tue, 22 Jul 2008 08:47:38 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0807221335560.3391@eeepc-johanness>
-Content-Disposition: inline
+	id S1753307AbYGVQHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 12:07:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753176AbYGVQHK
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 12:07:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37167 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752609AbYGVQHJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 12:07:09 -0400
+Received: (qmail invoked by alias); 22 Jul 2008 16:07:06 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp001) with SMTP; 22 Jul 2008 18:07:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/xQW8kEQHxHXmMJMjF3G0fLP97zEbyO1LHgVT0Jr
+	wQ5GjzWPAMse9I
+X-X-Sender: gene099@racer
+In-Reply-To: <76718490807220847i298f256bm4c3f85bfde079ee2@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89492>
 
-On Tue, Jul 22, 2008 at 7:40 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Most people hate to know the internals.  They buy the car, and never want
-> to look inside the motor compartment.  They buy wine, and never want to
-> know how it is made.  They buy an iPod and never want to know who
-> assembles it, and how, and in what environment.
+Hi,
 
-I agree with this. And I like the top-down approach. Nonetheless, I
-think there are a few git concepts that are important to understand.
-Specifically, I don't think you can use git without understanding
-the index.
+On Tue, 22 Jul 2008, Jay Soffian wrote:
 
-Unfortunately, git isn't quite as good about abstractions yet as
-some of the items you make analogies to. And even car's leak:
+> On Tue, Jul 22, 2008 at 7:40 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > Most people hate to know the internals.  They buy the car, and never 
+> > want to look inside the motor compartment.  They buy wine, and never 
+> > want to know how it is made.  They buy an iPod and never want to know 
+> > who assembles it, and how, and in what environment.
+> 
+> I agree with this. And I like the top-down approach. Nonetheless, I 
+> think there are a few git concepts that are important to understand. 
+> Specifically, I don't think you can use git without understanding the 
+> index.
 
-   "And you can't drive as fast when it's raining, even though your
-   car has windshield wipers and headlights and a roof and a heater,
-   all of which protect you from caring about the fact that it's
-   raining (they abstract away the weather), but lo, you have to
-   worry about hydroplaning (or aquaplaning in England) and
-   sometimes the rain is so strong you can't see very far ahead so
-   you go slower in the rain, because the weather can never be
-   completely abstracted away, because of the law of leaky
-   abstractions."
+I do not see that the index is an internal.  I see that the term "index" 
+is.  So I think about not even bothering to mention it in my first two Git 
+lessons.
 
-   http://www.joelonsoftware.com/articles/LeakyAbstractions.html
+And you would be surprised to learn that I personally know a few people 
+who use Git happily _without_ knowing any internals.  Now guess why: was 
+it because I explained a few easy-to-grasp commands, or because I made it 
+pretty complicated but thorough?  Exactly.
 
-:-)
-
-j.
+Ciao,
+Dscho
