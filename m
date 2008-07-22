@@ -1,75 +1,69 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not
- been set
-Date: Wed, 23 Jul 2008 00:23:27 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807230019480.8986@racer>
-References: <alpine.DEB.1.00.0807222255450.8986@racer> <20080722231153.GN2925@dpotapov.dyndns.org>
+Subject: Re: [PATCH] git-filter-branch.sh: Allow running in bare
+ repositories
+Date: Wed, 23 Jul 2008 00:27:07 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807230025050.8986@racer>
+References: <20080722223710.29084.61373.stgit@localhost>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 01:25:11 2008
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Jul 23 01:28:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLRDY-0000Fp-IP
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 01:24:28 +0200
+	id 1KLRHB-0001hF-3c
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 01:28:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756795AbYGVXX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 19:23:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757303AbYGVXX3
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 19:23:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50207 "HELO mail.gmx.net"
+	id S1758192AbYGVX1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 19:27:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755077AbYGVX1K
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 19:27:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56609 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757452AbYGVXX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 19:23:27 -0400
-Received: (qmail invoked by alias); 22 Jul 2008 23:23:25 -0000
+	id S1758112AbYGVX1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 19:27:08 -0400
+Received: (qmail invoked by alias); 22 Jul 2008 23:27:06 -0000
 Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp023) with SMTP; 23 Jul 2008 01:23:25 +0200
+  by mail.gmx.net (mp022) with SMTP; 23 Jul 2008 01:27:06 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18JkMdGcIIJ2AJAU7ihGkkmV9T1vPL2+MUDz/XGaz
-	cS8h0C2rs3xu93
+X-Provags-ID: V01U2FsdGVkX1+VEOFJsWqVxMBsq5OvZy8JYLowYfDu+unP8JaiQk
+	Hd9k7HWcZOeIc4
 X-X-Sender: gene099@racer
-In-Reply-To: <20080722231153.GN2925@dpotapov.dyndns.org>
+In-Reply-To: <20080722223710.29084.61373.stgit@localhost>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89564>
 
 Hi,
 
-On Wed, 23 Jul 2008, Dmitry Potapov wrote:
+On Wed, 23 Jul 2008, Petr Baudis wrote:
 
-> On Tue, Jul 22, 2008 at 10:56:04PM +0100, Johannes Schindelin wrote:
-> > 
-> > When a file's crlf attribute is explicitely set, it does not make 
-> > sense to ignore it, just because the config variable core.autocrlf has 
-> > not been set.
-> 
-> Hmm... About a week ago, I was about to propose the same change, but 
-> after reading documentation and some thinking I was not able to convince 
-> myself that this change would be the right thing to do.
+> Commit 46eb449c restricted git-filter-branch to non-bare repositories
+> unnecessarily; git-filter-branch can work on bare repositories just
+> fine.
 
-Well, I have a shared repository, where I set the attribute.  Now, every 
-once in a while, people check in text _with_ CR/LF.  Yes, that is right, I 
-marked it explicitely as crlf, yet I am on the whim of the people choosing 
-to set the config variable or not.
+I think this is fine.
 
-And I could not care less what the documentation says: if it does not make 
-sense, it does not make sense.
+> This also fixes suspicious shell boolean expression during a check
+> for dirty working tree.
 
-> > +test_expect_success 'attribute crlf is heeded even without core.autocrlf' '
-> 
-> s/heeded/needed/
+If you are talking about X && Y || Z, it is well established (and should 
+not be suspicious to a shell hacker like the creator of Cogito) that Z is 
+executed if either X fails, or X succeeds and Y fails.
 
-Nope.  "heeded" is what I meant.  I am not a native speaker, so this could 
-be wrong.  But "needed" is not what I meant (the sentence would not make 
-sense with "needed").
+> +test_expect_success 'rewrite bare repository identically' '
+> +	(git config core.bare true && cd .git && git-filter-branch branch)
+> +'
+> +git config core.bare false
+
+Any reason why this is done outside the test?
 
 Ciao,
 Dscho
