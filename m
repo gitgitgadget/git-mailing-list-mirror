@@ -1,132 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2] git daemon: avoid waking up too often
-Date: Tue, 22 Jul 2008 23:03:01 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807222302440.8986@racer>
-References: <alpine.DEB.1.00.0807222251570.8986@racer>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: [PATCH] rebase -i: only automatically amend commit if HEAD did not change
+Date: Tue, 22 Jul 2008 18:22:34 -0400
+Message-ID: <32541b130807221522r2a43c49cl6400f00dbe7451a0@mail.gmail.com>
+References: <alpine.DEB.1.00.0807222235520.8986@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jul 23 00:04:26 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 23 00:23:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLPxm-0000mG-0u
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 00:04:06 +0200
+	id 1KLQGf-0006nw-F3
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 00:23:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753388AbYGVWDF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 18:03:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753386AbYGVWDD
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 18:03:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48483 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753006AbYGVWDB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 18:03:01 -0400
-Received: (qmail invoked by alias); 22 Jul 2008 22:02:59 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp063) with SMTP; 23 Jul 2008 00:02:59 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+ySZIAThaylcfUT3CjYBiZLvI3PDd3nv9H5h+Pq3
-	hZ02SMGs5x7qwg
-X-X-Sender: gene099@racer
-In-Reply-To: <alpine.DEB.1.00.0807222251570.8986@racer>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.49
+	id S1754746AbYGVWWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 18:22:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754728AbYGVWWh
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 18:22:37 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:21034 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754488AbYGVWWg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 18:22:36 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so902376ywe.1
+        for <git@vger.kernel.org>; Tue, 22 Jul 2008 15:22:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=x3cy1FpN7+bwUY/CaLYg88zvYVmwNl1V5dsOK4aT9S4=;
+        b=bJKXA8pa/ErtS93d+hLxGJAKddVj4N6wAvyM8hucx/dUDryk3ssEgrR9s5FP41cpTT
+         ihkl2rzlLwWRYX4eCehA+gGRsCPNMyxfVomkXXBqkXmCYEC9sYyv4CP63sqHC82IJhZE
+         Uv+MjdaGwuaW49QTDe16qKIHCX0oYX9S9LS5s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=tlTv4UHJ8iOSJdxG/h9jM4y0I9coUwpPjGZmbKOeTaCj0m7y3sec7mubys9N7twHSo
+         mvj+6xp0bYrqrfARvZ7FXIQlqiNUm7Yk4hcgK3AOrJtOmIVlA8Uv9t+zznwKMscianxs
+         9Iylic6TwpsCfT1C0dEkQhyBgKugl3q+loCiQ=
+Received: by 10.150.202.8 with SMTP id z8mr6131874ybf.223.1216765354316;
+        Tue, 22 Jul 2008 15:22:34 -0700 (PDT)
+Received: by 10.150.96.5 with HTTP; Tue, 22 Jul 2008 15:22:34 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0807222235520.8986@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89552>
 
+On 7/22/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>  If the user called "rebase -i", marked a commit as "edit", "rebase
+>  --continue" would automatically amend the commit when there were
+>  staged changes.
+>
+>  However, this is actively wrong when the current commit is not the
+>  one marked with "edit".  So guard against this.
 
-To avoid waking up unnecessarily, a pipe is set up that is only ever
-written to by child_handler(), when a child disconnects, as suggested
-per Junio.
+This patch is perhaps a symptom of something I've been meaning to ask
+about for a while.
 
-This avoids waking up the main process every second to see if a child
-was disconnected.
+Why doesn't "edit" just stage the commit and not auto-commit it at
+all?  That way an amend would *never* be necessary, and rebase
+--continue would always do a commit -a (if there was anything left to
+commit).  The special case fixed by this patch would thus not be
+needed.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+It would also make it more obvious how to remove files from a commit,
+for example, without having to learn about "git reset".  For that
+matter, you wouldn't have to learn about "git commit --amend" either,
+and it would save typing.
 
-	Darn.  Forgot to commit after fixing the compiler warning:
-	The now-unused variable timeout is gone.
+It would also be a little more consistent with "squash", which already
+lets you edit the commit message by default.
 
-	That is the only difference to the version I have running in
-	production ;-)
+Just a thought.  Presumably it was implemented the way it is for some
+reason, but I haven't seen any discussion about it.
 
- daemon.c |   25 +++++++++++--------------
- 1 files changed, 11 insertions(+), 14 deletions(-)
+Have fun,
 
-diff --git a/daemon.c b/daemon.c
-index 7df41a6..4540e8d 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -16,6 +16,7 @@
- static int log_syslog;
- static int verbose;
- static int reuseaddr;
-+static int child_handler_pipe[2];
- 
- static const char daemon_usage[] =
- "git daemon [--verbose] [--syslog] [--export-all]\n"
-@@ -788,6 +789,7 @@ static void child_handler(int signo)
- 				pid = -pid;
- 			dead_child[reaped % MAX_CHILDREN] = pid;
- 			children_reaped = reaped + 1;
-+			write(child_handler_pipe[1], &status, 1);
- 			continue;
- 		}
- 		break;
-@@ -933,29 +935,24 @@ static int service_loop(int socknum, int *socklist)
- 	struct pollfd *pfd;
- 	int i;
- 
--	pfd = xcalloc(socknum, sizeof(struct pollfd));
-+	if (pipe(child_handler_pipe) < 0)
-+		die ("Could not set up pipe for child handler");
-+
-+	pfd = xcalloc(socknum + 1, sizeof(struct pollfd));
- 
- 	for (i = 0; i < socknum; i++) {
- 		pfd[i].fd = socklist[i];
- 		pfd[i].events = POLLIN;
- 	}
-+	pfd[socknum].fd = child_handler_pipe[0];
-+	pfd[socknum].events = POLLIN;
- 
- 	signal(SIGCHLD, child_handler);
- 
- 	for (;;) {
- 		int i;
--		int timeout;
- 
--		/*
--		 * This 1-sec timeout could lead to idly looping but it is
--		 * here so that children culled in child_handler() are reported
--		 * without too much delay.  We could probably set up a pipe
--		 * to ourselves that we poll, and write to the fd from child_handler()
--		 * to wake us up (and consume it when the poll() returns...
--		 */
--		timeout = (children_spawned != children_deleted) ? 1000 : -1;
--		i = poll(pfd, socknum, timeout);
--		if (i < 0) {
-+		if (poll(pfd, socknum + 1, -1) < 0) {
- 			if (errno != EINTR) {
- 				error("poll failed, resuming: %s",
- 				      strerror(errno));
-@@ -963,9 +960,9 @@ static int service_loop(int socknum, int *socklist)
- 			}
- 			continue;
- 		}
--		if (i == 0) {
-+		if (pfd[socknum].revents & POLLIN) {
-+			read(child_handler_pipe[0], &i, 1);
- 			check_dead_children();
--			continue;
- 		}
- 
- 		for (i = 0; i < socknum; i++) {
--- 
-1.6.0.rc0.22.gf2096d.dirty
+Avery
