@@ -1,104 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Error: "You have some suspicious patch lines"
-Date: Tue, 22 Jul 2008 02:13:05 -0700 (PDT)
-Message-ID: <m33am2wade.fsf@localhost.localdomain>
-References: <4885895C.5050108@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git status in clean working dir
+Date: Tue, 22 Jul 2008 02:17:43 -0700
+Message-ID: <7viquymg5k.fsf@gitster.siamese.dyndns.org>
+References: <0ttzeirft8.wl%bremner@pivot.cs.unb.ca>
+ <7vy73ur6pz.fsf@gitster.siamese.dyndns.org>
+ <7vtzeir68z.fsf@gitster.siamese.dyndns.org>
+ <20080722044157.GA20787@sigill.intra.peff.net>
+ <20080722053921.GA4983@glandium.org>
+ <20080722060643.GA25023@sigill.intra.peff.net>
+ <20080722061807.GA6714@glandium.org>
+ <20080722064603.GA25221@sigill.intra.peff.net>
+ <20080722071009.GA3610@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ben Aurel <ben.aurel@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 11:14:26 2008
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org,
+	David Bremner <bremner@unb.ca>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 22 11:18:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLDwh-0007di-93
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 11:14:11 +0200
+	id 1KLE1E-0000gy-77
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 11:18:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754135AbYGVJNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 05:13:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754075AbYGVJNL
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 05:13:11 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:8116 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753649AbYGVJNI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 05:13:08 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so347535ugf.16
-        for <git@vger.kernel.org>; Tue, 22 Jul 2008 02:13:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=ayK1anZjc4hUvijEQ+UR2WfKnV4raoWplGrd/z5l6Oc=;
-        b=wNfbObmBe72yEYj0k4uu90N+eVEtdfGY+DvKUK8zBTVSL753RKjp+3y9pXSgHjBRAC
-         GG1T3f+IQAx6UnBcJLTZC9Yt+EoPtL8HVF3H8UXq2NZFE9k0qwP+F2u8JwWPEw2XZOW6
-         Sx74Cm8+PdpJ491ERr/mCEMFfVZ1FA0GqhCbE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=AhcgYiuUu95Vz1LG0QuqlfB+baNfF+hlvzfeGnGTFPIM2CDUj6Ik0Hou9tnqdMQ8se
-         Den7jN41lcoSsFFKDQxjtau8yar7pBbG5JqyjnM2bg098S+Iw+U3RUsCnugNZizTUPFQ
-         aSVN1bnsQKgIYVPDVLMlMdDZy6J1nUF0d/sKc=
-Received: by 10.103.193.13 with SMTP id v13mr3415984mup.7.1216717986451;
-        Tue, 22 Jul 2008 02:13:06 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.247.139])
-        by mx.google.com with ESMTPS id e10sm18469238muf.3.2008.07.22.02.13.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 22 Jul 2008 02:13:05 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m6M9Ceiw020050;
-	Tue, 22 Jul 2008 11:12:51 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m6M9CU4u020037;
-	Tue, 22 Jul 2008 11:12:30 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4885895C.5050108@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752784AbYGVJRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 05:17:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752726AbYGVJRx
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 05:17:53 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53797 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751306AbYGVJRw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 05:17:52 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6FAEA36D97;
+	Tue, 22 Jul 2008 05:17:51 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 0EB1236D94; Tue, 22 Jul 2008 05:17:45 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0F1CDEB8-57CF-11DD-BEBE-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89475>
 
-Ben Aurel <ben.aurel@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> I working on mac os x 10.5.4 (intel) with git version 1.5.5.3 and I
-> always get this message for most of my perl scripts and also for
-> "Makefile.pre" files:
-> 
-> ----------- Message ---------------
-> * You have some suspicious patch lines:
-> *
-> * In src/scripts/trunk/3rdparty/file_sanity.pl
-> * trailing whitespace (line 52)
-> ...
-> ------------------------------------------
+> On Tue, Jul 22, 2008 at 02:46:04AM -0400, Jeff King wrote:
+>
+>> I am tempted by the "order switching" I mentioned, but that would entail
+>> the git process waiting to clean the pager, during which time it may be
+>> consuming memory. But maybe that isn't worth worrying about.
+>
+> It feels very wrong proposing this during release freeze, but here is
+> the "pager is child of git" implementation.
 
-> The question now is: Is it really necessary to edit the git script
-> everytime? Is there a urgent reason why git refuses to commit because
-> of "suspicious" lines? Is it really necessary?
+Another slight worry I have is if the now-parent git process does the
+right thing when the user kills the pager without viewing the output to
+the end.  git itself will get stuck with write() while the user is
+reading, and then notice that the pipe does not have any more reader when
+the pager is killed.  This fact itself won't change by swapping the
+parent-child relationship, but would we get a sensible behaviour after
+that, or have we been ignoring what happens afterwards only because our
+exit status has been hidden behind the pager?  Running "git log" and
+killing it by "q" (my pager is "less") makes it exit with 141.
 
-.git/hooks/pre-commit is example hook which helps to keep Coding Style,
-and prevents from accidentally comitting nonresolved file-level merge
-conflict (file with conflict markers).
+I shouldn't worry, if everything is written correctly in the other parts
+of the system, this swap should not have much ill effect.
 
-If you want to skip running this hook once (or once upon a time), you
-can use '-n'/'--no-verify' option to "git commit".  Or you can turn this
-example hook off, either by removing execute permission from it, by
-removing it alltogether (you can still find it in templates, usually at
-/usr/share/git-core/templates/hooks/pre-commit), or rename it adding for
-example '.sample' or '.nonactive' suffix.
-
-This hook should not be turned on by default, but if your filesystem is
-executing bit challenged it could be turned on at repository creation
-time unintentionally.  Newer version of git use '.sample' suffix (for
-example pre-commit.sample) instead of relying on not always reliable
-execute bit being unset.
-
-HTH
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+By the way [2/2] was not signed-off.  Just forgotten?
