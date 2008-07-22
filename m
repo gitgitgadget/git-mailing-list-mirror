@@ -1,78 +1,83 @@
-From: Pedro Melo <melo@simplicidade.org>
-Subject: Re: Git Documentation
-Date: Tue, 22 Jul 2008 11:15:40 +0100
-Message-ID: <EDFF27AB-9B74-4868-A0BF-61AC8ED75037@simplicidade.org>
-References: <d411cc4a0807212035v68c2ed95m93b77c1e61cfec9e@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Scott Chacon" <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 12:16:53 2008
+From: "Philippe Bruhat (BooK)" <book@cpan.org>
+Subject: Re: [PATCH] mailinfo: better parse email adresses containg
+	parentheses
+Date: Tue, 22 Jul 2008 12:24:39 +0200
+Message-ID: <20080722102439.GB7792@plop>
+References: <1216647269-12287-1-git-send-email-book@cpan.org> <7v63qyr4kk.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 22 12:25:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLEvG-0008TV-N2
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 12:16:47 +0200
+	id 1KLF3u-0002vD-EL
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 12:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752682AbYGVKPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 06:15:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752593AbYGVKPr
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 06:15:47 -0400
-Received: from mail.sl.pt ([212.55.140.13]:43315 "EHLO sl.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751753AbYGVKPq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 06:15:46 -0400
-Received: (qmail 20184 invoked from network); 22 Jul 2008 10:15:41 -0000
-Received: from unknown (HELO [10.0.0.201]) (melo@[195.23.56.58])
-          (envelope-sender <melo@simplicidade.org>)
-          by mail-sl (qmail-ldap-1.03) with SMTP
-          for <schacon@gmail.com>; 22 Jul 2008 10:15:41 -0000
-In-Reply-To: <d411cc4a0807212035v68c2ed95m93b77c1e61cfec9e@mail.gmail.com>
-Jabber-Id: melo@simplicidade.org
-X-Mailer: Apple Mail (2.926)
+	id S1753359AbYGVKYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 06:24:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753329AbYGVKYm
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 06:24:42 -0400
+Received: from zlonk.bruhat.net ([91.121.102.217]:38771 "EHLO
+	ks354402.kimsufi.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753308AbYGVKYl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 06:24:41 -0400
+Received: from localhost ([127.0.0.1] helo=plop)
+	by ks354402.kimsufi.com with esmtp (Exim 4.63)
+	(envelope-from <philippe.bruhat@free.fr>)
+	id 1KLF2J-0004de-LA
+	for git@vger.kernel.org; Tue, 22 Jul 2008 12:24:03 +0200
+Received: from book by plop with local (Exim 4.69)
+	(envelope-from <philippe.bruhat@free.fr>)
+	id 1KLF2t-0006QN-OI
+	for git@vger.kernel.org; Tue, 22 Jul 2008 12:24:39 +0200
+Content-Disposition: inline
+In-Reply-To: <7v63qyr4kk.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89482>
 
-Hi,
+On Mon, Jul 21, 2008 at 08:16:43PM -0700, Junio C Hamano wrote:
+> >
+> > Signed-off-by: Philippe Bruhat (BooK) <book@cpan.org>
+> 
+> Hmm, tests?
+> 
+> By the way, that second form parses like this:
+> 
+> 	mailbox =
+>         name-addr =
+>         display-name angle-addr = "User Name (me) <user@host>"
+> 
+>         display-name =
+>         phrase = "User Name"
+>         
+>         angle-addr = CFWS "<" addr-spec ">" = "(me) <user@host>"
+> 
+> So strictly speaking, shouldn't we be stripping the whole (me) as garbage?
+> It is not even part of the display-name but is a whitespace equivalent
+> comment.
 
-On Jul 22, 2008, at 4:35 AM, Scott Chacon wrote:
+Well, I use this:
 
-> I'm starting a project to host a really nice, user-friendly, easy to
-> use Git learning materials website for Git newbies to get new users
-> started and make it as easy to learn as possible.  I'll be redoing or
-> editing some of my screencasts from gitcasts.com and starting an open
-> book at github and putting it all in one place for new users to get
-> started easily.  Anyone will be free to submit changes, additions,
-> etc.
->
-> If anyone has any tips on how they think git should be taught, issues
-> they are asked a lot, problems newbies tend to have, something they
-> wish there were a screencast for or was better documented, etc -
-> please do contact me so I can incorporate it.  I would contribute to
-> git itself, but my C-foo is seriously wanting, so if by teaching
-> people properly I can free up some time for you guys, I would love to
-> do so.
->
-> Please let me know if you have any pointers or think anything should
-> really be better documented for end-users.  I plan to do a lot of
-> graphics, screencasts and whatever else makes it as simple as
-> possible.
+    "Philippe Bruhat (BooK)" <book@cpan.org>
 
-A section on usual workflows and setups would be most useful. Some  
-like a pull/push workflow, others a email based workflow.
+as my From: line, and I would like to be able to use it so in git.
 
-As for learning git stuff, I usually point new users to your stuff :).  
-I also point them to Tommi Virtanen "Git for Computer Scientists":http://eagain.net/articles/git-for-computer-scientists/ 
-. It was that article that made it all "click" for me regarding git.
+As git knows the difference between user name and user email, it should
+be able to keep the information separate all the way.
 
-Best regards,
+Which makes me think that since it seems that rebase goes through a
+patch-file step, the problem with my username may actually lie with
+creating the patch file (no quotes around a user name containing parens)
+rather than with parsing the patch  From: line.
+
 -- 
-Pedro Melo
-Blog: http://www.simplicidade.org/notes/
-XMPP ID: melo@simplicidade.org
-Use XMPP!
+ Philippe Bruhat (BooK)
+
+ Everyone's life seems easier from the outside.
+                                    (Moral from Groo The Wanderer #45 (Epic))
