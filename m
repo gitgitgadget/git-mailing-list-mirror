@@ -1,66 +1,121 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] t/t4202-log.sh: add newline at end of file
-Date: Tue, 22 Jul 2008 16:23:31 -0500
-Message-ID: <LYsdPT0j_XgCi1Weyj5TOaloxtMJN0eFb0f6uag-lNlOoVmPI1sKIA@cipher.nrlssc.navy.mil>
-References: <0GfECozN3g0ZvAESKMi76RyOVHEb2OhhwET9GWmEm7pbzYQJub50UlWpZtBa7MGn1UGb-7mzbzE@cipher.nrlssc.navy.mil>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Add help.autocorrect to enable/disable autocorrecting
+Date: Tue, 22 Jul 2008 23:26:33 +0200
+Message-ID: <20080722212633.GF5113@blimp.local>
+References: <alpine.DEB.1.00.0807222100150.8986@racer> <20080722203730.GC5113@blimp.local> <20080722210354.GD5113@blimp.local> <alpine.DEB.1.00.0807222207110.8986@racer>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 22 23:27:37 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 22 23:28:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLPNT-0003dW-SH
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 23:26:36 +0200
+	id 1KLPOS-0004Es-4n
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 23:27:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752201AbYGVVZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 17:25:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752182AbYGVVZf
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 17:25:35 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:52239 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751782AbYGVVZf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 17:25:35 -0400
-Received: by mail.nrlssc.navy.mil id m6MLNViZ023225; Tue, 22 Jul 2008 16:23:31 -0500
-In-Reply-To: <0GfECozN3g0ZvAESKMi76RyOVHEb2OhhwET9GWmEm7pbzYQJub50UlWpZtBa7MGn1UGb-7mzbzE@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 22 Jul 2008 21:23:31.0411 (UTC) FILETIME=[30B2C230:01C8EC41]
+	id S1752977AbYGVV0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 17:26:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753241AbYGVV0g
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 17:26:36 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.182]:37686 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752977AbYGVV0g (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 17:26:36 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg2r44jepV
+Received: from tigra.home (Fa955.f.strato-dslnet.de [195.4.169.85])
+	by post.webmailer.de (fruni mo23) (RZmta 16.47)
+	with ESMTP id I02112k6MIj2nl ; Tue, 22 Jul 2008 23:26:34 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from blimp (unknown [192.168.0.8])
+	by tigra.home (Postfix) with ESMTP id BD508277BD;
+	Tue, 22 Jul 2008 23:26:33 +0200 (CEST)
+Received: by blimp (Postfix, from userid 1000)
+	id BD99836D17; Tue, 22 Jul 2008 23:26:33 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807222207110.8986@racer>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89541>
 
-Some shells hang when parsing the script if the last statement is not
-followed by a newline. So add one.
-
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+It is off by default, to avoid scaring people unless they asked to.
 ---
+Johannes Schindelin, Tue, Jul 22, 2008 23:08:19 +0200:
+> On Tue, 22 Jul 2008, Alex Riesen wrote:
+> 
+> > +	if (autocorrect && (main_cmds.cnt < 2 ||
+> > +		best_similarity < similarity(main_cmds.names[1]->name))) {
+> >  		if (!*cwd)
+> >  			exit(1);
+> >  		if (chdir(cwd))
+> 
+> In that case, you need to put in the "one of these" / "this" conditional 
+> again, which I ripped out because I do not need it any more.
+> 
 
+Of course, missed it. Like this, then.
 
-I expect this is a bug in ksh. The ksh installed on my solaris box went
-into some infinite loop on this script, continually allocating memory.
-Adding the newline fixed it.
+ help.c |   20 ++++++++++++++------
+ 1 files changed, 14 insertions(+), 6 deletions(-)
 
--brandon
-
-
- t/t4202-log.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index b536454..4c8af45 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -71,4 +71,5 @@ test_expect_success 'diff-filter=D' '
+diff --git a/help.c b/help.c
+index 480befe..cf6b459 100644
+--- a/help.c
++++ b/help.c
+@@ -28,6 +28,7 @@ enum help_format {
+ 	HELP_FORMAT_WEB,
+ };
  
++static int autocorrect;
+ static int show_all = 0;
+ static enum help_format help_format = HELP_FORMAT_MAN;
+ static struct option builtin_help_options[] = {
+@@ -269,6 +270,8 @@ static int git_help_config(const char *var, const char *value, void *cb)
+ 	}
+ 	if (!prefixcmp(var, "man."))
+ 		return add_man_viewer_info(var, value);
++	if (!strcmp(var, "help.autocorrect"))
++		autocorrect = git_config_bool(var,value);
  
+ 	return git_default_config(var, value, cb);
+ }
+@@ -704,9 +707,10 @@ const char *help_unknown_cmd(const char *cmd)
  
--test_done
-\ No newline at end of file
-+test_done
+ 	if (!main_cmds.cnt)
+ 		die ("Uh oh.  Your system reports no Git commands at all.");
++	git_config(git_help_config, NULL);
+ 	best_similarity = similarity(main_cmds.names[0]->name);
+-	if (main_cmds.cnt < 2 || best_similarity <
+-			similarity(main_cmds.names[1]->name)) {
++	if (autocorrect && (main_cmds.cnt < 2 ||
++		best_similarity < similarity(main_cmds.names[1]->name))) {
+ 		if (!*cwd)
+ 			exit(1);
+ 		if (chdir(cwd))
+@@ -721,10 +725,14 @@ const char *help_unknown_cmd(const char *cmd)
+ 	fprintf(stderr, "git: '%s' is not a git-command. See 'git --help'.\n", cmd);
+ 
+ 	if (best_similarity < 6) {
+-		fprintf(stderr, "\nDid you mean one of these?\n");
+-
+-		for (i = 0; i < main_cmds.cnt && best_similarity ==
+-				similarity(main_cmds.names[i]->name); i++)
++		int n = 0;
++		while (n < main_cmds.cnt &&
++			best_similarity == similarity(main_cmds.names[n]->name))
++			++n;
++		fprintf(stderr, "\nDid you mean %s?\n",
++			n < 2 ? "this": "one of these");
 +
++		for (i = 0; i < n; i++)
+ 			fprintf(stderr, "\t%s\n", main_cmds.names[i]->name);
+ 	}
+ 
 -- 
-1.6.0.rc0.38.g8b8fb7
+1.6.0.rc0.48.ga184
