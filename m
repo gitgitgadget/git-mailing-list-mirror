@@ -1,71 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git Documentation
-Date: Tue, 22 Jul 2008 17:07:05 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807221705150.8986@racer>
-References: <d411cc4a0807212035v68c2ed95m93b77c1e61cfec9e@mail.gmail.com>  <200807220917.57363.johan@herland.net>  <alpine.DEB.1.10.0807220035110.1125@asgard.lang.hm>  <200807221121.22520.johan@herland.net>  <alpine.DEB.1.00.0807221335560.3391@eeepc-johanness>
- <76718490807220847i298f256bm4c3f85bfde079ee2@mail.gmail.com>
+From: "Tony Luck" <tony.luck@intel.com>
+Subject: Computing the number of patches in linux-next tree
+Date: Tue, 22 Jul 2008 09:19:30 -0700
+Message-ID: <12c511ca0807220919q4db6ee1fr33dc70fe35c58efe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johan Herland <johan@herland.net>, david@lang.hm,
-	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 18:08:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 22 18:20:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLKPL-0001aI-DG
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 18:08:11 +0200
+	id 1KLKbJ-00074Q-32
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 18:20:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753307AbYGVQHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 12:07:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753176AbYGVQHK
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 12:07:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37167 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752609AbYGVQHJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 12:07:09 -0400
-Received: (qmail invoked by alias); 22 Jul 2008 16:07:06 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp001) with SMTP; 22 Jul 2008 18:07:06 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/xQW8kEQHxHXmMJMjF3G0fLP97zEbyO1LHgVT0Jr
-	wQ5GjzWPAMse9I
-X-X-Sender: gene099@racer
-In-Reply-To: <76718490807220847i298f256bm4c3f85bfde079ee2@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1752029AbYGVQTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 12:19:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752022AbYGVQTd
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 12:19:33 -0400
+Received: from rv-out-0506.google.com ([209.85.198.235]:56903 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751958AbYGVQTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 12:19:32 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1941857rvb.1
+        for <git@vger.kernel.org>; Tue, 22 Jul 2008 09:19:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition:x-google-sender-auth;
+        bh=6sVia004WRc/w3xaAoUxM1XdUHL6XmmMspiEegJXcw8=;
+        b=EfStJxFWa/rEP1fz33EP/Ot3GNbdMPbTKVweOU62YEHO5KVacCku6lO+BNideDMBBB
+         Y9f9GBhiKCG5fLZlSZT41TlQn9Oi766QvoZTewF16jvwNIC4+9ZUtYt/XCeTcRtp3bmH
+         QbKmWjW5VWijyB/ghn2OC1AmBfB957U5QgOEk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=P5gsxsUJLiRt8l4NohJuz8YjwXhSX6xPJX9Z+CCjIYkC0HkJdyr+n1/sG6saD+AazJ
+         75lsEgh9AQIWFN0ha2FeVTTUFd9dI32VSmjMn/gB1mxRzk61VCpIc6O0U1l142jlf9VW
+         X1KxWzap1olP0ogbyKVfBvs9H8OF/qe4E1AVw=
+Received: by 10.140.249.20 with SMTP id w20mr18322rvh.21.1216743570748;
+        Tue, 22 Jul 2008 09:19:30 -0700 (PDT)
+Received: by 10.140.188.12 with HTTP; Tue, 22 Jul 2008 09:19:30 -0700 (PDT)
+Content-Disposition: inline
+X-Google-Sender-Auth: 53b2012359fd95ae
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89493>
 
-Hi,
+I tried to produce a graph of the pending avalanche of patches
+sitting in the linux-next tree and came up with this:
 
-On Tue, 22 Jul 2008, Jay Soffian wrote:
+git tag | grep next- | sort | while read tag
+do
+        c=$(git-rev-list --no-merges $tag ^linus | wc -l)
 
-> On Tue, Jul 22, 2008 at 7:40 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > Most people hate to know the internals.  They buy the car, and never 
-> > want to look inside the motor compartment.  They buy wine, and never 
-> > want to know how it is made.  They buy an iPod and never want to know 
-> > who assembles it, and how, and in what environment.
-> 
-> I agree with this. And I like the top-down approach. Nonetheless, I 
-> think there are a few git concepts that are important to understand. 
-> Specifically, I don't think you can use git without understanding the 
-> index.
+        echo ${tag##next-} $c
+done
 
-I do not see that the index is an internal.  I see that the term "index" 
-is.  So I think about not even bothering to mention it in my first two Git 
-lessons.
+Where "linus" is a branch that tracks Linus' tree.  But this gets the
+wrong count
+for old tags because maintainers who use the topic-branch method have
+exactly the same commits in linux-next as eventually end up in Linus ... so
+once Linus pulls these trees, the historical counts change.
 
-And you would be surprised to learn that I personally know a few people 
-who use Git happily _without_ knowing any internals.  Now guess why: was 
-it because I explained a few easy-to-grasp commands, or because I made it 
-pretty complicated but thorough?  Exactly.
+What I really need at this point is the commit from Linus tree that Stephen
+uses as the basis for each next-* tag.  I.e. change the loop body to
 
-Ciao,
-Dscho
+       base=`git-where-did-this-tag-branch-from-linus $tag`
+       c=$(git-rev-list --no-merges $tag ^$base | wc -l)
+
+Is this the right way to do this?
+What does the "git-where-did-this-tag-branch-from-linus" command look like?
+
+-Tony
