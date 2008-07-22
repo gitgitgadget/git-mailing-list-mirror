@@ -1,50 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin-merge-recursive.c: make merge_recursive() static
-Date: Tue, 22 Jul 2008 01:47:25 -0700
-Message-ID: <7vzloamhk2.fsf@gitster.siamese.dyndns.org>
-References: <20080720192127.6117@nanako3.lavabit.com>
- <alpine.DEB.1.00.0807201403070.3305@eeepc-johanness>
+From: Kristian Amlie <kristian.amlie@trolltech.com>
+Subject: How to find the first commit belonging to any branch
+Date: Tue, 22 Jul 2008 11:08:47 +0200
+Message-ID: <4885A39F.5080209@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 22 10:48:39 2008
+Content-Type: text/plain;
+	charset="US-ASCII";
+	format="flowed"
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 22 11:09:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLDXv-0000Da-6l
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 10:48:35 +0200
+	id 1KLDsV-00069n-5O
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 11:09:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753272AbYGVIre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 04:47:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753223AbYGVIre
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 04:47:34 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34984 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753024AbYGVIrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 04:47:33 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BCA7B342C3;
-	Tue, 22 Jul 2008 04:47:31 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 10193342C2; Tue, 22 Jul 2008 04:47:27 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0807201403070.3305@eeepc-johanness> (Johannes
- Schindelin's message of "Sun, 20 Jul 2008 14:03:56 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D280006A-57CA-11DD-9296-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752795AbYGVJIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 05:08:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752791AbYGVJIv
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 05:08:51 -0400
+Received: from hoat.troll.no ([62.70.27.150]:54948 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752718AbYGVJIv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 05:08:51 -0400
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 0BF6C20A6A
+	for <git@vger.kernel.org>; Tue, 22 Jul 2008 11:08:46 +0200 (CEST)
+Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id F074020755
+	for <git@vger.kernel.org>; Tue, 22 Jul 2008 11:08:45 +0200 (CEST)
+Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
+	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id m6M98jXM013651
+	for <git@vger.kernel.org>; Tue, 22 Jul 2008 11:08:45 +0200
+Received: from [10.3.5.25] (axis.troll.no [10.3.5.25])
+    by sx01.troll.no (Scalix SMTP Relay 11.3.0.11339)
+    via ESMTP; Tue, 22 Jul 2008 11:08:45 +0200 (CEST)
+x-scalix-Hops: 1
+User-Agent: Thunderbird 2.0.0.14 (X11/20080519)
+X-Enigmail-Version: 0.95.6
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89473>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi all!
 
-> Of course, we could apply this patch now, and revert it later, increasing 
-> your commit count in the process :-)
+I have a question about git: I have one commit sha1, and I would like to 
+know the nearest commit that appears in *any* other branch. The sha1 
+that I have does not belong to any branch.
 
-Heh, don't tempt people, especially when we would have an interesting
-set of tools for statistics just around the corner ;-)
+The obvious thing to do would be to make a for loop and iterate over 
+existing branches while calling git merge-base, but I'm wondering if 
+there's a more clever method.
+
+Regards
+Kristian Amlie
