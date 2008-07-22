@@ -1,86 +1,78 @@
-From: Olivier Marin <dkr+ml.git@free.fr>
-Subject: [PATCH v2] parse-options: fix segmentation fault when a required value is missing
-Date: Tue, 22 Jul 2008 12:11:33 +0200
-Message-ID: <1216721493-17836-1-git-send-email-dkr+ml.git@free.fr>
-References: <20080721190709.GD2718@artemis.madism.org>
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Tue Jul 22 12:12:35 2008
+From: Pedro Melo <melo@simplicidade.org>
+Subject: Re: Git Documentation
+Date: Tue, 22 Jul 2008 11:15:40 +0100
+Message-ID: <EDFF27AB-9B74-4868-A0BF-61AC8ED75037@simplicidade.org>
+References: <d411cc4a0807212035v68c2ed95m93b77c1e61cfec9e@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v926)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Scott Chacon" <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 22 12:16:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLErC-0007NZ-FX
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 12:12:34 +0200
+	id 1KLEvG-0008TV-N2
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 12:16:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752365AbYGVKLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 06:11:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752010AbYGVKLf
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 06:11:35 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:47791 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751753AbYGVKLe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 06:11:34 -0400
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 7006E12B6D4;
-	Tue, 22 Jul 2008 12:11:33 +0200 (CEST)
-Received: from localhost.localdomain (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 0D2C012B6C6;
-	Tue, 22 Jul 2008 12:11:33 +0200 (CEST)
-X-Mailer: git-send-email 1.6.0.rc0.136.g55999
-In-Reply-To: <20080721190709.GD2718@artemis.madism.org>
+	id S1752682AbYGVKPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 06:15:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752593AbYGVKPr
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 06:15:47 -0400
+Received: from mail.sl.pt ([212.55.140.13]:43315 "EHLO sl.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751753AbYGVKPq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 06:15:46 -0400
+Received: (qmail 20184 invoked from network); 22 Jul 2008 10:15:41 -0000
+Received: from unknown (HELO [10.0.0.201]) (melo@[195.23.56.58])
+          (envelope-sender <melo@simplicidade.org>)
+          by mail-sl (qmail-ldap-1.03) with SMTP
+          for <schacon@gmail.com>; 22 Jul 2008 10:15:41 -0000
+In-Reply-To: <d411cc4a0807212035v68c2ed95m93b77c1e61cfec9e@mail.gmail.com>
+Jabber-Id: melo@simplicidade.org
+X-Mailer: Apple Mail (2.926)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89481>
 
-From: Olivier Marin <dkr@freesurf.fr>
+Hi,
 
-p->argc represent the number of arguments that have not been parsed yet,
-_including_ the one we are currently parsing. If it is not greater than
-one then there is no more argument.
+On Jul 22, 2008, at 4:35 AM, Scott Chacon wrote:
 
-Signed-off-by: Olivier Marin <dkr@freesurf.fr>
-Acked-by: Pierre Habouzit <madcoder@debian.org>
----
+> I'm starting a project to host a really nice, user-friendly, easy to
+> use Git learning materials website for Git newbies to get new users
+> started and make it as easy to learn as possible.  I'll be redoing or
+> editing some of my screencasts from gitcasts.com and starting an open
+> book at github and putting it all in one place for new users to get
+> started easily.  Anyone will be free to submit changes, additions,
+> etc.
+>
+> If anyone has any tips on how they think git should be taught, issues
+> they are asked a lot, problems newbies tend to have, something they
+> wish there were a screencast for or was better documented, etc -
+> please do contact me so I can incorporate it.  I would contribute to
+> git itself, but my C-foo is seriously wanting, so if by teaching
+> people properly I can free up some time for you guys, I would love to
+> do so.
+>
+> Please let me know if you have any pointers or think anything should
+> really be better documented for end-users.  I plan to do a lot of
+> graphics, screencasts and whatever else makes it as simple as
+> possible.
 
- The same, not whitespace damaged! Sorry for the noise.
+A section on usual workflows and setups would be most useful. Some  
+like a pull/push workflow, others a email based workflow.
 
- parse-options.c          |    2 +-
- t/t0040-parse-options.sh |    7 +++++++
- 2 files changed, 8 insertions(+), 1 deletions(-)
+As for learning git stuff, I usually point new users to your stuff :).  
+I also point them to Tommi Virtanen "Git for Computer Scientists":http://eagain.net/articles/git-for-computer-scientists/ 
+. It was that article that made it all "click" for me regarding git.
 
-diff --git a/parse-options.c b/parse-options.c
-index 987b015..71a7acf 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -22,7 +22,7 @@ static int get_arg(struct parse_opt_ctx_t *p, const struct option *opt,
- 		p->opt = NULL;
- 	} else if (p->argc == 1 && (opt->flags & PARSE_OPT_LASTARG_DEFAULT)) {
- 		*arg = (const char *)opt->defval;
--	} else if (p->argc) {
-+	} else if (p->argc > 1) {
- 		p->argc--;
- 		*arg = *++p->argv;
- 	} else
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 6309aed..03dbe00 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -78,6 +78,13 @@ test_expect_success 'long options' '
- 	test_cmp expect output
- '
- 
-+test_expect_success 'missing required value' '
-+	test-parse-options -s;
-+	test $? = 129 &&
-+	test-parse-options --string;
-+	test $? = 129
-+'
-+
- cat > expect << EOF
- boolean: 1
- integer: 13
+Best regards,
 -- 
-1.6.0.rc0.136.g55999
+Pedro Melo
+Blog: http://www.simplicidade.org/notes/
+XMPP ID: melo@simplicidade.org
+Use XMPP!
