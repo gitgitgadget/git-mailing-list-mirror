@@ -1,70 +1,102 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Build configuration to skip ctime for modification test
-Date: Tue, 22 Jul 2008 22:31:29 +0200
-Message-ID: <20080722203128.GB5113@blimp.local>
-References: <20080721173511.GB5387@steel.home> <4885897C.8010401@viscovery.net> <7vy73tltf5.fsf@gitster.siamese.dyndns.org> <20080722193901.GA5113@blimp.local> <alpine.DEB.1.00.0807222115440.8986@racer>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [SCNR] Re: [FYI PATCH] git wrapper: DWIM mistyped commands
+Date: Tue, 22 Jul 2008 22:34:22 +0200
+Message-ID: <20080722203422.GC11831@artemis.madism.org>
+References: <alpine.DEB.1.00.0807222100150.8986@racer> <20080722201648.GB11831@artemis.madism.org> <alpine.DEB.1.00.0807222118030.8986@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+Content-Type: multipart/signed; boundary="qtZFehHsKgwS5rPz";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 22 22:33:09 2008
+X-From: git-owner@vger.kernel.org Tue Jul 22 22:35:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLOXC-0007Si-2D
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 22:32:34 +0200
+	id 1KLOZx-0000Bz-6F
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 22:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750946AbYGVUbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 16:31:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751079AbYGVUbe
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 16:31:34 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.181]:50607 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750868AbYGVUbd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 16:31:33 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg2r44jepV
-Received: from tigra.home (Fa955.f.strato-dslnet.de [195.4.169.85])
-	by post.webmailer.de (fruni mo53) (RZmta 16.47)
-	with ESMTP id 2034efk6MIq4uF ; Tue, 22 Jul 2008 22:31:29 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 11359277BD;
-	Tue, 22 Jul 2008 22:31:29 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id 0DB1436D17; Tue, 22 Jul 2008 22:31:29 +0200 (CEST)
+	id S1752001AbYGVUeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 16:34:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751916AbYGVUeZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 16:34:25 -0400
+Received: from pan.madism.org ([88.191.52.104]:58439 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751830AbYGVUeY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 16:34:24 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id D7C5D37454;
+	Tue, 22 Jul 2008 22:34:23 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id C1A38CDF7; Tue, 22 Jul 2008 22:34:22 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807222115440.8986@racer>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <alpine.DEB.1.00.0807222118030.8986@racer>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89524>
 
-Johannes Schindelin, Tue, Jul 22, 2008 22:17:21 +0200:
+
+--qtZFehHsKgwS5rPz
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Jul 22, 2008 at 08:19:13PM +0000, Johannes Schindelin wrote:
 > Hi,
-> 
-> On Tue, 22 Jul 2008, Alex Riesen wrote:
-> 
-> > +#ifndef NO_TRUSTABLE_FILEMODE
-> >  	if (ce->ce_ctime != (unsigned int) st->st_ctime)
-> >  		changed |= CTIME_CHANGED;
-> > +#endif
-> 
-> Surely you meant trust_executable_bit instead, right?
+>=20
+> On Tue, 22 Jul 2008, Pierre Habouzit wrote:
+>=20
+> > <SCNR>
+> >     Or use a decent shell:
+>=20
+> I tried that:
+>=20
+> 	git reab<tab><tab><TAB><TTAAABBB!>
 
-No. Just what I said: we don't have filemode (like "at all") - so no
-ctime as well. But maybe you're right, and trust_executable_bit is
-more flexible. Or maybe both (the #ifdef _and_ trust_executable_bit)
-and must be used...
+It yields the following here:
 
-> Otherwise, if you really want to tell at compile time,I think for clarity 
-> you have to introduce another #define, since NO_TRUSTABLE_FILEMODE 
-> definitely says something different than CTIME_IS_USELESS.
+    $ git read-tree
+    ---- corrections (errors 1)
+    read-tree  -- read tree information into the directory index
+    rebase     -- rebase local commits to new upstream head
+    ---- original
+    reab
 
-I had that at first (NO_DEPENDABLE_CTIME, than IGNORE_CTIME), than
-deemed it excessive.
+and indeed, it should really suggest rebase first, I suppose I should reord=
+er
+my zsh completion error weights. but oh well...
+
+> > Despite that, I really like your idea. **hint hint**
+>=20
+> I said that _I_ did not mean it for inclusion.  **hint hint**
+
+Damn...
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--qtZFehHsKgwS5rPz
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkiGRE4ACgkQvGr7W6HudhxMlgCaAhmhv7uMJ8nbVjK0sZZGkFPc
+0OQAnRPc/hLN/dN3gqTV8tYSWJuaW0nE
+=4wWi
+-----END PGP SIGNATURE-----
+
+--qtZFehHsKgwS5rPz--
