@@ -1,90 +1,79 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: extracting the history of a single file as a new project [Was: Re: making a branch with just one file and keeping its whole]
-Date: Tue, 22 Jul 2008 08:15:57 +0200
-Message-ID: <bd6139dc0807212315j4d1f1ff7rcc92077a8c70dba7@mail.gmail.com>
-References: <20080721061804.223f7801@mail.tin.it>
-	 <loom.20080721T161926-61@post.gmane.org>
-	 <alpine.DEB.1.00.0807211907270.8986@racer>
-	 <279b37b20807211122w3a1e0687wc84693bd95689326@mail.gmail.com>
-	 <alpine.DEB.1.00.0807211937390.8986@racer>
-	 <20080722041457.52120c2f@mail.tin.it>
-Reply-To: sverre@rabbelier.nl
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: git status in clean working dir
+Date: Tue, 22 Jul 2008 08:18:07 +0200
+Organization: glandium.org
+Message-ID: <20080722061807.GA6714@glandium.org>
+References: <0ttzeirft8.wl%bremner@pivot.cs.unb.ca> <7vy73ur6pz.fsf@gitster.siamese.dyndns.org> <7vtzeir68z.fsf@gitster.siamese.dyndns.org> <20080722044157.GA20787@sigill.intra.peff.net> <20080722053921.GA4983@glandium.org> <20080722060643.GA25023@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, madewokherd@gmail.com
-To: ncrfgs@tin.it, "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 22 08:17:01 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	David Bremner <bremner@unb.ca>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 22 08:19:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLBBB-00079F-K0
-	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 08:16:58 +0200
+	id 1KLBDl-0007k6-9d
+	for gcvg-git-2@gmane.org; Tue, 22 Jul 2008 08:19:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751487AbYGVGP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 02:15:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751329AbYGVGP6
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 02:15:58 -0400
-Received: from wf-out-1314.google.com ([209.85.200.170]:14212 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751256AbYGVGP5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 02:15:57 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so2009392wfd.4
-        for <git@vger.kernel.org>; Mon, 21 Jul 2008 23:15:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=EoXnty4Dzt440DZJ/SsQKQ5mKMNpmYRJwJqK8/uhLr4=;
-        b=l3j81djfVDZgRkGapQjIMEn0FH949whZX8LQNdVg8fVgOVUa3Bwceds8knHF5I2KGh
-         LT40lu6SJsKXFjiT7gggNfPI/lDZfPCfsqrPfKAYz/faNG8jE801ZcnKYBJDx2IlUD/e
-         lt8iJY3tslhA60BHvIJ8Oub0unxLygRQ1/jxY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=Zo9N2LTkXKk0Nmv1kRh2K7cS79eTOZHi3fafhoptDW5UX3odBuRC4OTA9ce28eFGCW
-         z+feltkMf+G/SpDh1kCZdVVdmXjinqmK1zf921nc7YR55QoGawIy232pYzAmVAUhgSbS
-         fNvypsIgdsD3KHEwN9UrXMTXj67K0H0FvHHOo=
-Received: by 10.142.154.20 with SMTP id b20mr1710942wfe.99.1216707357355;
-        Mon, 21 Jul 2008 23:15:57 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Mon, 21 Jul 2008 23:15:57 -0700 (PDT)
-In-Reply-To: <20080722041457.52120c2f@mail.tin.it>
+	id S1753869AbYGVGSX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 02:18:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752073AbYGVGSX
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 02:18:23 -0400
+Received: from vuizook.err.no ([194.24.252.247]:49074 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751958AbYGVGSW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 02:18:22 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1KLBCE-0002aX-97; Tue, 22 Jul 2008 08:18:08 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1KLBCJ-0001nj-5Z; Tue, 22 Jul 2008 08:18:07 +0200
 Content-Disposition: inline
+In-Reply-To: <20080722060643.GA25023@sigill.intra.peff.net>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89445>
 
-On Tue, Jul 22, 2008 at 4:14 AM,  <ncrfgs@tin.it> wrote:
-> Let's say we are at commit #3000, I have this content I want to start a
-> new project from, which has been put in three different files:
->
-> path1/filename1 from commit 1 to commit 1000
-> path2/filename1 from commit 1001 to commit 2000
-> path2/filename2 from commit 2001 to commit 3000
->
-> In the meanwhile path1/filename1 has been created on commit 2500 with
-> path1/filename1 having nothing to do with the new project I'd like to
-> start.
+On Tue, Jul 22, 2008 at 02:06:43AM -0400, Jeff King wrote:
+> On Tue, Jul 22, 2008 at 07:39:21AM +0200, Mike Hommey wrote:
+> 
+> > > This marks diff-files as FORBID_PAGER; I will leave it to others to
+> > > fight about which commands should have it. But it doesn't make sense to
+> > > mark "status" since some people obviously _want_ the paging there.
+> > 
+> > Why not "simply" forbid the pager when output is not a terminal ?
+> 
+> We already do that (see pager.c:53). The original poster still had a
+> problem, but I don't know if it was for actual usage or simply a toy
+> 
+>   $ git status
+>   $ echo $?
+>   $ echo "why don't exit codes work in status?" | mail git@vger
+> 
+> question.
 
-<snip>
+As you said in another branch of the thread, this part would be solved by
+having parent/child being reverted.
 
-> My first idea to accomplish what I'd like to do, was to use the ouput of
-> `git-log -p --follow path2/filename2` with another git command; on
-> #git@freenode I've been suggested to use git-clone and
-> git-filter-branch.
->
+Now, for the case where diff-files can have a pager if the user shoots
+himself in the foot, if the output is not a terminal and pager.c already
+does the right thing, I don't see where diff-files having a pager will
+be a problem.
 
-It would seem that this is a valid use-case for a properly working
-"git log --follow", yes?
+If diff-files' output is a terminal, it's obviously intended to be
+displayed, be it in a script or not. But most of the time, its output
+will be piped, thus not triggering the pager anyways.
 
--- 
-Cheers,
+And for diff-files' exit code, well, see the first paragraph.
 
-Sverre Rabbelier
+Mike
