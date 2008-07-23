@@ -1,152 +1,90 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: regression in  92392b4
-Date: Wed, 23 Jul 2008 14:00:45 +0200
-Message-ID: <20080723120045.GA21274@atjola.homenet>
-References: <20080722231745.GD11831@artemis.madism.org> <20080723101415.GA23769@atjola.homenet> <alpine.DEB.1.00.0807231246560.2830@eeepc-johanness> <20080723111931.GF15243@artemis.madism.org> <alpine.DEB.1.00.0807231235150.8986@racer>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] rebase -i: only automatically amend commit if HEAD did not change
+Date: Wed, 23 Jul 2008 16:01:04 +0400
+Message-ID: <20080723120104.GQ2925@dpotapov.dyndns.org>
+References: <alpine.DEB.1.00.0807222235520.8986@racer> <32541b130807221522r2a43c49cl6400f00dbe7451a0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pierre Habouzit <madcoder@debian.org>, spearce@spearce.org,
-	Git ML <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 23 14:02:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 14:02:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLd2U-0004La-Oo
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 14:01:51 +0200
+	id 1KLd2q-0004UE-UZ
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 14:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750915AbYGWMAu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2008 08:00:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752034AbYGWMAu
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 08:00:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54186 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750875AbYGWMAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 08:00:50 -0400
-Received: (qmail invoked by alias); 23 Jul 2008 12:00:48 -0000
-Received: from i577BBDAB.versanet.de (EHLO atjola.local) [87.123.189.171]
-  by mail.gmx.net (mp033) with SMTP; 23 Jul 2008 14:00:48 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/ac/8RDzjahw3uSQY9JyxSWOP3WgXSoWQG+BXEg1
-	qUxn2OCjBt5kMA
+	id S1752424AbYGWMBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 08:01:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752413AbYGWMBL
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 08:01:11 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:4301 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752332AbYGWMBK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 08:01:10 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1110241fgg.17
+        for <git@vger.kernel.org>; Wed, 23 Jul 2008 05:01:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=Dyw/tnhuq7d0aDbetnQvwZ3bqxLBJrlwgFhJwBzxACU=;
+        b=HOaSflSYSIoA/n2NtiJgqZh7sIzkWJZGLZ2zRyiC/dEilQ4wJ1jWaLwU0xwGaFsoOQ
+         Ev/vxz7qA9UK2+emU0TEcrTw/eZWOAI2uUQDrOejghwEL5J2ipGNM6iz33aFnzFwAitC
+         fJIxuUGuWk1YSdYe4dB51gxEbC0dkwGqs5fB8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=CIM8i2bmRfvHTW3KRaB1InmTaqBYQePSHO7+8+U1kglLLFZFGhfGsNAPNeWTq4n1Jf
+         0ZLPotIya8wd1ja9ZI9dzboLBSKHz45GUthospNayRmsG8bSGcxpfYkDDqIWP6byCjKC
+         /dSXQCUxCwnW3V8oLmXql7Td3pAbPxI/of65A=
+Received: by 10.86.82.6 with SMTP id f6mr7553903fgb.73.1216814468384;
+        Wed, 23 Jul 2008 05:01:08 -0700 (PDT)
+Received: from localhost ( [85.140.170.138])
+        by mx.google.com with ESMTPS id l12sm11052115fgb.6.2008.07.23.05.01.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 23 Jul 2008 05:01:07 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807231235150.8986@racer>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.48
+In-Reply-To: <32541b130807221522r2a43c49cl6400f00dbe7451a0@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89639>
 
-On 2008.07.23 12:37:00 +0100, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Wed, 23 Jul 2008, Pierre Habouzit wrote:
->=20
-> > On Wed, Jul 23, 2008 at 10:49:04AM +0000, Johannes Schindelin wrote=
-:
-> >=20
-> > > On Wed, 23 Jul 2008, Bj=C3=B6rn Steinbrink wrote:
-> > >=20
-> > > > On 2008.07.23 01:17:45 +0200, Pierre Habouzit wrote:
-> > > > >   Hi, here is a manual painful down-secting (opposed to a bis=
-ect ;P) I
-> > > > > did, since git in next cannot fetch on a regular basis for me=
-=2E The
-> > > > > culprit seems to be commit  92392b4:
-> > > > >=20
-> > > > >     =E2=94=8C=E2=94=80(1:11)=E2=94=80=E2=94=80<~/dev/scm/git =
-92392b4....>=E2=94=80=E2=94=80
-> > > > >     =E2=94=94[artemis] git fetch
-> > > > >     remote: Counting objects: 461, done.
-> > > > >     remote: Compressing objects: 100% (141/141), done.
-> > > > >     remote: Total 263 (delta 227), reused 155 (delta 121)
-> > > > >     Receiving objects: 100% (263/263), 95.55 KiB, done.
-> > > > >     fatal: Out of memory, malloc failed
-> > > > >     fatal: index-pack failed
-> > > > >     [2]    16674 abort (core dumped)  git fetch
-> > > > >=20
-> > > > >     =E2=94=8C=E2=94=80(1:12)=E2=94=80=E2=94=80<~/dev/scm/git =
-92392b4....>=E2=94=80=E2=94=80
-> > > > >     =E2=94=94[artemis] git checkout -m HEAD~1; make git-index=
--pack
-> > > > >     Previous HEAD position was 92392b4... index-pack: Honor c=
-ore.deltaBaseCacheLimit when resolving deltas
-> > > > >     HEAD is now at 03993e1... index-pack: Track the object_en=
-try that creates each base_data
-> > > > >     GIT_VERSION =3D 1.5.6.3.3.g03993
-> > > > > 	CC index-pack.o
-> > > > > 	LINK git-index-pack
-> > > > >=20
-> > > > >     =E2=94=8C=E2=94=80(1:12)=E2=94=80=E2=94=80<~/dev/scm/git =
-03993e1....>=E2=94=80=E2=94=80
-> > > > >     =E2=94=94[artemis] git fetch
-> > > > >     remote: Counting objects: 461, done.
-> > > > >     remote: Compressing objects: 100% (141/141), done.
-> > > > >     remote: Total 263 (delta 227), reused 155 (delta 121)
-> > > > >     Receiving objects: 100% (263/263), 95.55 KiB, done.
-> > > > >     Resolving deltas: 100% (227/227), completed with 153 loca=
-l objects.
-> > > > >     From git://git.kernel.org/pub/scm/git/git
-> > > > >        5ba2c22..0868a30  html       -> origin/html
-> > > > >        2857e17..abeeabe  man        -> origin/man
-> > > > >        93310a4..95f8ebb  master     -> origin/master
-> > > > >        559998f..e8bf351  next       -> origin/next
-> > > > >=20
-> > > > > You can see the commit sha's in the prompt. 03993e1 is fine, =
-92392b4 is
-> > > > > broken, I've absolutely no clue about what happens.
-> > > > >=20
-> > > > > All I can say is that at some point in get_data_from_pack, ob=
-j[1].idx
-> > > > > points to something that is *not* a sha so it's probably corr=
-upted.
-> > > > > (from index-pack.c).
-> > > >=20
-> > > > Here's how to reproduce:
-> > >=20
-> > > Funny.  That does not reproduce the bug here at all.
-> > >=20
-> > > But then, it is unsurprising, since both Pierre and me did someth=
-ing=20
-> > > similar yesterday, fetching _just_ the pre-fetch refs into a fres=
-hly=20
-> > > initted Git repository, and then fetching from kernel.org.
-> > >=20
-> > > Tested on x86_64.
-> >=20
-> > I can reproduce on x86_64 here.
->=20
-> Well, I cannot.  However, I get some pread issue on i686.  To be nice=
- to=20
-> kernel.org, I downloaded the pack in question:
->=20
-> 	http://pacific.mpi-cbg.de/git/thin-pack.pack
->=20
-> You should be able to reproduce the behavior by piping this into
->=20
-> git-index-pack --stdin -v --fix-thin --keep=3Dfetch-pack --pack_heade=
-r=3D2,263
+On Tue, Jul 22, 2008 at 06:22:34PM -0400, Avery Pennarun wrote:
+> 
+> This patch is perhaps a symptom of something I've been meaning to ask
+> about for a while.
+> 
+> Why doesn't "edit" just stage the commit and not auto-commit it at
+> all?  That way an amend would *never* be necessary, and rebase
+> --continue would always do a commit -a (if there was anything left to
+> commit).
 
-OK, that gave me a seemingly sane backtrace. What seems to happen (AFA
-my limited knowledge tells me):
+Actually, it would be better to refuse to continue if there are unstaged
+changes in the work tree, and if all changes are staged then just do git
+commit.
 
-In fix_unresolved_deltas, we read base_obj from an existing pack, other
-than the one we're reading. We then link that object to the base cache.=
-=20
+> The special case fixed by this patch would thus not be
+> needed.
+> 
+> It would also make it more obvious how to remove files from a commit,
+> for example, without having to learn about "git reset".  For that
+> matter, you wouldn't have to learn about "git commit --amend" either,
+> and it would save typing.
 
-Then in resolve_delta, we create the "result" base_data object and link
-that one, too. Now this triggers the pruning, and because the cache is
-so small, we prune the object that we read from the existing pack! Fast
-forward a few function calls, we end up in get_base_data trying to
-re-read the data for that object, but this time from the pack that we
-got on stdin. And boom it goes.
+It would not only save typing, but also help to avoid costly mistakes
+where users, being taught to use "git commit --amend" after editing
+during git-rebase, fire this command automatically after a conflict
+resolution and get two commits accidently squashed.
 
-Does that make any sense to you?
+So, I completely agree that the current auto-commit behavior is not very
+user friendly...
 
-Bj=C3=B6rn
+Dmitry
