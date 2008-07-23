@@ -1,167 +1,98 @@
-From: Lee Marlow <lee.marlow@gmail.com>
-Subject: [PATCH] bash completion: Add completion for 'git help'
-Date: Wed, 23 Jul 2008 17:13:15 -0600
-Message-ID: <1216854795-51155-1-git-send-email-lee.marlow@gmail.com>
-Cc: git@vger.kernel.org, Lee Marlow <lee.marlow@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jul 24 01:14:21 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] bring description of git diff --cc up to date
+Date: Wed, 23 Jul 2008 16:15:21 -0700
+Message-ID: <7v3am09oqe.fsf@gitster.siamese.dyndns.org>
+References: <20080722111947.BIW29914@m4500-01.uchicago.edu>
+ <7v63qxn8w2.fsf@gitster.siamese.dyndns.org>
+ <7vd4l5lio1.fsf@gitster.siamese.dyndns.org>
+ <Pine.GSO.4.62.0807221812470.25746@harper.uchicago.edu>
+ <7vfxq1igh0.fsf@gitster.siamese.dyndns.org>
+ <Pine.GSO.4.62.0807222210540.3408@harper.uchicago.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@uchicago.edu>
+X-From: git-owner@vger.kernel.org Thu Jul 24 01:16:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLnXI-0001EE-Fh
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 01:14:20 +0200
+	id 1KLnZQ-0001kN-5z
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 01:16:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754113AbYGWXNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 19:13:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754108AbYGWXNU
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 19:13:20 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:11633 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754097AbYGWXNT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 19:13:19 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so478780yxm.1
-        for <git@vger.kernel.org>; Wed, 23 Jul 2008 16:13:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=x8iarxwNT3SV0G77/Fo2yr0F2CO3smBFioGmVmhJCkM=;
-        b=ULDL0UJ5SWU3rvQyygSdGCRBtjdUcR7qNWm8LziB1AtTHkk+ui4vZQEUSxhqOSEQDV
-         h0PECcimxI0VJ9nAAbX9Bpjefy4vtVtuAXHEpFPLRPTEWYPNO0K2OyRhBb5muo26xKrD
-         rT3y8tJ6Pbto3ntudlxxgFsV852XIS23wg6y8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=t0HtSwVM1SB3I+ff5wb9PXsaa6xBiEYNFwiRPDEGhSc+Zg188wGQdn9PIiA9DLE+kQ
-         tWyxAJqFDQOQmfODUz+A9lCwtYGYPHFzcKzg+o6E+MnnDllbPXCSaOIqBaTrwM2IPrOm
-         tvktqjTdL68pdsxq4p5r2JXCRJXsOuqR4aqwI=
-Received: by 10.151.153.14 with SMTP id f14mr418067ybo.29.1216854798364;
-        Wed, 23 Jul 2008 16:13:18 -0700 (PDT)
-Received: from localhost.localdomain ( [72.14.241.7])
-        by mx.google.com with ESMTPS id 4sm4679452yxq.8.2008.07.23.16.13.16
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 23 Jul 2008 16:13:17 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.rc0.14.g95f8
+	id S1754170AbYGWXPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 19:15:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754058AbYGWXPc
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 19:15:32 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45551 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754054AbYGWXPb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 19:15:31 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 399D23881B;
+	Wed, 23 Jul 2008 19:15:30 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 745573881A; Wed, 23 Jul 2008 19:15:23 -0400 (EDT)
+In-Reply-To: <Pine.GSO.4.62.0807222210540.3408@harper.uchicago.edu> (Jonathan
+ Nieder's message of "Tue, 22 Jul 2008 22:55:06 -0500 (CDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3E14A608-590D-11DD-B7E1-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89803>
 
-Renamed cached __git_commandlist to __git_porcelain_commandlist
-and added __git_all_commandlist that only filters out *--* helpers.
-Completions for 'git help' will use the __git_all_commandlist, while
-__git_porcelain_commandlist is used for git command completion.
-Users who actually read man pages may want to see help for plumbing
-commands.
+Jonathan Nieder <jrnieder@uchicago.edu> writes:
 
-Options added: --all --info --man --web
+> On Tue, 22 Jul 2008, Junio C Hamano wrote:
+>
+> Here's another attempt.  I grimace at the sound of it, but it might be
+> more clear.
 
-Signed-off-by: Lee Marlow <lee.marlow@gmail.com>
----
- contrib/completion/git-completion.bash |   46 +++++++++++++++++++++++++++-----
- 1 files changed, 39 insertions(+), 7 deletions(-)
+Let's just do this.  I think it is clear enough.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 2edb341..0e37b71 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -349,10 +349,10 @@ __git_complete_revlist ()
- 	esac
- }
+ Documentation/git-diff-tree.txt    |   10 +++++-----
+ Documentation/rev-list-options.txt |    6 +++---
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
+index 0e45b58..8c8f35b 100644
+--- a/Documentation/git-diff-tree.txt
++++ b/Documentation/git-diff-tree.txt
+@@ -93,11 +93,11 @@ include::pretty-options.txt[]
+ 	This flag changes the way a merge commit patch is displayed,
+ 	in a similar way to the '-c' option. It implies the '-c'
+ 	and '-p' options and further compresses the patch output
+-	by omitting hunks that show differences from only one
+-	parent, or show the same change from all but one parent
+-	for an Octopus merge.  When this optimization makes all
+-	hunks disappear, the commit itself and the commit log
+-	message is not shown, just like in any other "empty diff" case.
++	by omitting uninteresting hunks whose the contents in the parents
++	have only two variants and the merge result picks one of them
++	without modification.  When all hunks are uninteresting, the commit
++	itself and the commit log message is not shown, just like in any other
++	"empty diff" case.
  
--__git_commands ()
-+__git_all_commands ()
- {
--	if [ -n "$__git_commandlist" ]; then
--		echo "$__git_commandlist"
-+	if [ -n "$__git_all_commandlist" ]; then
-+		echo "$__git_all_commandlist"
- 		return
- 	fi
- 	local i IFS=" "$'\n'
-@@ -360,6 +360,24 @@ __git_commands ()
- 	do
- 		case $i in
- 		*--*)             : helper pattern;;
-+		*) echo $i;;
-+		esac
-+	done
-+}
-+__git_all_commandlist=
-+__git_all_commandlist="$(__git_all_commands 2>/dev/null)"
-+
-+__git_porcelain_commands ()
-+{
-+	if [ -n "$__git_porcelain_commandlist" ]; then
-+		echo "$__git_porcelain_commandlist"
-+		return
-+	fi
-+	local i IFS=" "$'\n'
-+	for i in 'help' $__git_all_commands
-+	do
-+		case $i in
-+		*--*)             : helper pattern;;
- 		applymbox)        : ask gittus;;
- 		applypatch)       : ask gittus;;
- 		archimport)       : import;;
-@@ -427,8 +445,8 @@ __git_commands ()
- 		esac
- 	done
- }
--__git_commandlist=
--__git_commandlist="$(__git_commands 2>/dev/null)"
-+__git_porcelain_commandlist=
-+__git_porcelain_commandlist="$(__git_porcelain_commands 2>/dev/null)"
+ --always::
+ 	Show the commit itself and the commit log message even
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index b6f5d87..3aa3809 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -112,9 +112,9 @@ options may be given. See linkgit:git-diff-files[1] for more options.
+ --cc::
  
- __git_aliases ()
- {
-@@ -767,6 +785,18 @@ _git_gc ()
- 	COMPREPLY=()
- }
+ 	This flag implies the '-c' options and further compresses the
+-	patch output by omitting hunks that show differences from only
+-	one parent, or show the same change from all but one parent for
+-	an Octopus merge.
++	patch output by omitting uninteresting hunks whose contents in
++	the parents have only two variants and the merge result picks
++	one of them without modification.
  
-+_git_help ()
-+{
-+	local cur="${COMP_WORDS[COMP_CWORD]}"
-+	case "$cur" in
-+	--*)
-+		__gitcomp "--all --info --man --web"
-+		return
-+		;;
-+	esac
-+	__gitcomp "$(__git_all_commands)"
-+}
-+
- _git_ls_remote ()
- {
- 	__gitcomp "$(__git_remotes)"
-@@ -1369,7 +1399,8 @@ _git ()
- 		case "$i" in
- 		--git-dir=*) __git_dir="${i#--git-dir=}" ;;
- 		--bare)      __git_dir="." ;;
--		--version|--help|-p|--paginate) ;;
-+		--version|-p|--paginate) ;;
-+		--help) command="help"; break ;;
- 		*) command="$i"; break ;;
- 		esac
- 		c=$((++c))
-@@ -1389,7 +1420,7 @@ _git ()
- 			--help
- 			"
- 			;;
--		*)     __gitcomp "$(__git_commands) $(__git_aliases)" ;;
-+		*)     __gitcomp "$(__git_porcelain_commands) $(__git_aliases)" ;;
- 		esac
- 		return
- 	fi
-@@ -1414,6 +1445,7 @@ _git ()
- 	fetch)       _git_fetch ;;
- 	format-patch) _git_format_patch ;;
- 	gc)          _git_gc ;;
-+	help)        _git_help ;;
- 	log)         _git_log ;;
- 	ls-remote)   _git_ls_remote ;;
- 	ls-tree)     _git_ls_tree ;;
--- 
-1.6.0.rc0.14.g95f8
+ -r::
+ 
