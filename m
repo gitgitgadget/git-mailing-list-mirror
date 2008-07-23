@@ -1,64 +1,70 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: RFC: git rebase -i and root commits
-Date: Wed, 23 Jul 2008 04:02:32 +0200
-Message-ID: <20080723020232.GF5904@leksak.fem-net>
-References: <loom.20080723T013019-412@post.gmane.org>
+From: "Benjamin Kudria" <ben@kudria.net>
+Subject: Git's config core.pager doesn't respect color.pager
+Date: Tue, 22 Jul 2008 22:10:17 -0400
+Message-ID: <d129c0140807221910j37f40e72se9f411d6424077de@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 04:03:39 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 23 04:11:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLTha-0006lS-7j
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 04:03:38 +0200
+	id 1KLTp2-0008Uc-2j
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 04:11:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753054AbYGWCCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 22:02:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752972AbYGWCCi
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 22:02:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39211 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752275AbYGWCCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 22:02:38 -0400
-Received: (qmail invoked by alias); 23 Jul 2008 02:02:36 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp055) with SMTP; 23 Jul 2008 04:02:36 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX18cj0kfS+ccqwzrakQfJL2GWrGaSG0SU3LMY/Xp3+
-	7SUh/giwIce2ho
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KLTgW-0005ja-P1; Wed, 23 Jul 2008 04:02:32 +0200
+	id S1752741AbYGWCKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 22:10:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752012AbYGWCKT
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 22:10:19 -0400
+Received: from rv-out-0506.google.com ([209.85.198.224]:33352 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751916AbYGWCKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 22:10:18 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so2167266rvb.1
+        for <git@vger.kernel.org>; Tue, 22 Jul 2008 19:10:18 -0700 (PDT)
+Received: by 10.141.37.8 with SMTP id p8mr278398rvj.256.1216779017745;
+        Tue, 22 Jul 2008 19:10:17 -0700 (PDT)
+Received: by 10.141.66.5 with HTTP; Tue, 22 Jul 2008 19:10:17 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <loom.20080723T013019-412@post.gmane.org>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.73
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89599>
 
-Hi,
+I'm seeing a problem with git.  It's easier to demonstrate than
+explain.  The relevant parts of my .gitconfig:
 
-Eric Raible wrote:
-> My normal workflow is to create a .gitignore in my initial commit.
-> 
-> When I later realize that I've forgotten something from that file
-> I could of course just commit the changes, but I'd rather use "git rebase -i"
-> in the normal way to make myself appear smarter than I am.
-> Especially since this realization usually comes early on
-> (and certainly before publishing).
-> 
-> But rebase can't go all the way to a root ("fatal: Needed a single revision").
+[core]
+	pager = tig
 
-I think this has been fixed recently.
+[color]
+	diff = auto
+	pager = false
 
-Regards,
-  Stephan
+tig is a console-based git client that can also act as a pager,
+colorizing git output.
+
+So, with the above config, when I do:
+
+git diff | tig
+
+Everything works correctly - git sends no color codes, because of
+color.pager = false.
+
+However, if I do just:
+
+git diff
+
+git uses core.pager to display the output, but still sends color
+codes, which is OK for, say, less, bit not so good for tig, which does
+it's own colorizing, and displays the color codes git sends as-is.
+
+Shouldn't core.pager respect color.pager, and not send the color codes?
+
+Benjamin Kudria
 
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+http://ben.kudria.net | Jabber: ben@kudria.net
