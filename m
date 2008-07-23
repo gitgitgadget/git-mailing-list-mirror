@@ -1,64 +1,91 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: q: faster way to integrate/merge lots of topic branches?
-Date: Wed, 23 Jul 2008 16:14:56 +0200
-Message-ID: <20080723141456.GA13556@elte.hu>
-References: <20080723130518.GA17462@elte.hu> <20080723174140.b749191a.vsu@altlinux.ru> <20080723140959.GB9537@elte.hu>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2008
+Date: Wed, 23 Jul 2008 18:38:10 +0400
+Message-ID: <20080723143810.GR2925@dpotapov.dyndns.org>
+References: <200807230325.04184.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sergey Vlasov <vsu@altlinux.ru>
-X-From: git-owner@vger.kernel.org Wed Jul 23 16:16:30 2008
+Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 16:39:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLf8T-0000it-5o
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 16:16:09 +0200
+	id 1KLfVK-0002As-EP
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 16:39:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752932AbYGWOPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 10:15:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752949AbYGWOPJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 10:15:09 -0400
-Received: from mx2.mail.elte.hu ([157.181.151.9]:50904 "EHLO mx2.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752909AbYGWOPI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 10:15:08 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1KLf7K-0000Vg-TY
-	from <mingo@elte.hu>; Wed, 23 Jul 2008 16:15:07 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 21A693E21AB; Wed, 23 Jul 2008 16:14:55 +0200 (CEST)
+	id S1751025AbYGWOiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 10:38:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbYGWOiR
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 10:38:17 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:53366 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751012AbYGWOiQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 10:38:16 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1144673fgg.17
+        for <git@vger.kernel.org>; Wed, 23 Jul 2008 07:38:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=NtuYVi7r9yTm/yO+uqFzWqW7c7UhKwALWM/KSMqLEts=;
+        b=Qoa70lbIho2W2GRn3qb6T0n4k4jP8ud3Br5KtsEpRPX5U62O8bKOhhic+1o1GVSI0B
+         +Ep0LXWOn0JuQHe9Qss6F+9gF7tANBsddhDC3UsRiHC0M8DE/Yj2I8c8+u0u5bBUxSQM
+         S+Zy90Xk0H06Q9RosF6BazagJv0/TcGXZquLo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=tiy7HzGqzsIJXryRLj0z4EP8ouKsrgI9hjpW3tw9Jg2yo1DfNRm+pjL2ALxjI7nwob
+         bg6/brdfkemNnNVX8b2dWDuHu8eIUJW2o/0VaQGCNepy/Iewo6m2qntQYGmQa3dMnTpG
+         NMzzQyHgipCKMoYlEokBaLa/mFfnYiJn5iz6U=
+Received: by 10.86.87.5 with SMTP id k5mr128631fgb.59.1216823894219;
+        Wed, 23 Jul 2008 07:38:14 -0700 (PDT)
+Received: from localhost ( [85.140.170.138])
+        by mx.google.com with ESMTPS id d6sm4822427fga.2.2008.07.23.07.38.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 23 Jul 2008 07:38:13 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20080723140959.GB9537@elte.hu>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Received-SPF: neutral (mx2: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.1
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.1 required=5.9 tests=BAYES_05 autolearn=no SpamAssassin version=3.2.3
-	-1.1 BAYES_05               BODY: Bayesian spam probability is 1 to 5%
-	[score: 0.0342]
+In-Reply-To: <200807230325.04184.jnareb@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89663>
+
+On Wed, Jul 23, 2008 at 03:25:03AM +0200, Jakub Narebski wrote:
+>    02. What is your preferred non-programming language?
+>   (or) What is the language you want computer communicate with you?
+
+IMHO, the later wording of the question is much better.
+
+>    05. How did you hear about Git?
+>        (single choice?, in 2007 it was free-form)
+>      - Linux kernel news (LKML, LWN, KernelTrap, KernelTraffic,...),
+>        news site or magazine, blog entry, some project uses it,
+>        presentation or seminar (real life, not on-line), SCM research,
+>        IRC, mailing list, other Internet, other off-line, other(*)
+
+I think "friend" would be a reasonable choice here too.
+
+>    09. When did you start using git? From which version?
+>      - pre 1.0, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5
+>      + might be important when checking "what did you find hardest" etc.
+>      + perhaps we should ask in addition to this question, or in place
+>        of this question (replacing it) what git version one uses; it
+>        should be multiple choice, and allow 'master', 'next', 'pu',
+>        'dirty (with own modifications)' versions in addition.
+
+I think: "What version do you use now?" and "How log do you use git?"
+may be more useful here. From which version may give rather confusing
+results because someone may "start" with 1.4 a week ago just because
+that is the version included in Debian Etch and after realizing that
+version 1.4 has serious usability issues upgraded git to 1.5. Besides,
+1.5 is around for a long time now (as most as long as all previous
+versions), so 1.5 can mean either one month of usage or 18 months...
 
 
-* Ingo Molnar <mingo@elte.hu> wrote:
-
-> Even assuming that the filesystem is sane, is my merge-cache 
-> implementation semantically equivalent to a git-merge? One detail is 
-> that i suspect it is not equivalent in the git-merge --no-ff case. 
-> (but that is a not too interesting non-default case anyway)
-
-actually, since --no-ff creates a merge commit and thus propagates the 
-head sha1, this should work fine as well.
-
-(besides the small detail that my script has $1 hardcoded so parameters 
-are not properly passed onto.)
-
-	Ingo
+Dmitry
