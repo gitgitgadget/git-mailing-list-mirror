@@ -1,56 +1,84 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2008
-Date: Wed, 23 Jul 2008 19:17:45 +0200
-Message-ID: <20080723171745.GC5283@blimp.local>
-References: <200807230325.04184.jnareb@gmail.com> <alpine.DEB.1.00.0807231128090.2830@eeepc-johanness>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not
+ been set
+Date: Wed, 23 Jul 2008 18:22:51 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807231817460.8986@racer>
+References: <alpine.DEB.1.00.0807222255450.8986@racer> <7vy73tihl6.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807230203350.8986@racer> <7vej5kfs0w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 23 19:19:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 19:23:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLhzW-0000mV-2E
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 19:19:06 +0200
+	id 1KLi47-0002da-8a
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 19:23:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752976AbYGWRRs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 13:17:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753643AbYGWRRs
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 13:17:48 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.181]:44232 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750893AbYGWRRr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 13:17:47 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg201f5EC7
-Received: from tigra.home (Faf34.f.strato-dslnet.de [195.4.175.52])
-	by post.webmailer.de (fruni mo30) (RZmta 16.47)
-	with ESMTP id n02588k6NGml4w ; Wed, 23 Jul 2008 19:17:46 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id C1E60277BD;
-	Wed, 23 Jul 2008 19:17:45 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id AE07A36D18; Wed, 23 Jul 2008 19:17:45 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807231128090.2830@eeepc-johanness>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751394AbYGWRWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 13:22:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751104AbYGWRWw
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 13:22:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34191 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751089AbYGWRWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 13:22:51 -0400
+Received: (qmail invoked by alias); 23 Jul 2008 17:22:49 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp064) with SMTP; 23 Jul 2008 19:22:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+R0UcNnHCRGXEvdt3fKV7uplkfl9KGKaD6nHl0Ud
+	QuyFG53btN+nOV
+X-X-Sender: gene099@racer
+In-Reply-To: <7vej5kfs0w.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89721>
 
-Johannes Schindelin, Wed, Jul 23, 2008 11:53:27 +0200:
-> >    19. How do you publish/propagate your changes?
-> >        (zero or more: multiple choice)
-> >      - push, pull request, format-patch + email, bundle, other
-> 
-> git svn
-> 
+Hi,
 
-a converter using fast-import/fast-export/plumbing
+On Wed, 23 Jul 2008, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > However, if you want to avoid CRs to _enter_ the repository, when you 
+> > have a lot of binary files tracked, you _do_ want to force all 
+> > repositories to crlf=input.
+> 
+> If you are on a sane system, you do not even want to pay the price of 
+> conversion.  Only people on systems with CRLF line endings should pay 
+> the price (because your aim is to convert on such systems).  Are we 
+> throwing that out of the window when the project decides to use 
+> gitattributes?
+
+Well, if you do not want that, why do you set crlf in the gitattributes to 
+begin with?
+
+> How about setting autocrlf automatically on mingw/msys/cygwin versions, 
+> perhaps via templates or a patch to init-db?  Would that, combined with 
+> user education, be a viable alternative?
+
+On msys we do that.  A few users decided they know better and switched it 
+off.  Me for example.  But I wouldn't do something as stupid as editing a 
+file with an editor that tries to be helpful and adds CR/LFs.
+
+However, Cygwin?  No, they don't.  I don't see them change it, either.
+
+The _only_ way we could do that is by setting auto_crlf in environment, 
+depending on the platform.
+
+HOWEVER: as you can see from the git-svn post this morning, there are 
+known issues with autocrlf.
+
+We also had much fun (not!) with a lot of users who were really happy to 
+insult us for the change to set autocrlf to true by default (via 
+/etc/gitconfig) in msysGit.
+
+Ciao,
+Dscho
