@@ -1,83 +1,56 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not been set
-Date: Wed, 23 Jul 2008 14:33:54 -0400
-Message-ID: <32541b130807231133x37083278u1badd82b5c48e57b@mail.gmail.com>
-References: <alpine.DEB.1.00.0807222255450.8986@racer>
-	 <7vy73tihl6.fsf@gitster.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0807230203350.8986@racer>
-	 <7vej5kfs0w.fsf@gitster.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0807231817460.8986@racer>
-	 <488772BC.80207@workspacewhiz.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Add help.autocorrect to enable/disable autocorrecting
+Date: Wed, 23 Jul 2008 20:44:43 +0200
+Message-ID: <20080723184443.GD5283@blimp.local>
+References: <alpine.DEB.1.00.0807222100150.8986@racer> <20080722203730.GC5113@blimp.local> <20080722210354.GD5113@blimp.local> <alpine.DEB.1.00.0807222207110.8986@racer> <20080722212633.GF5113@blimp.local> <alpine.DEB.1.00.0807222242160.8986@racer> <20080722222510.GA4474@blimp.local> <alpine.DEB.1.00.0807231743030.8986@racer>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Joshua Jensen" <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 20:34:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 23 20:45:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLjAt-00051P-6M
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 20:34:55 +0200
+	id 1KLjLP-0000dh-QE
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 20:45:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753407AbYGWSd4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 14:33:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753293AbYGWSd4
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 14:33:56 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:1808 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752648AbYGWSdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 14:33:55 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so449548yxm.1
-        for <git@vger.kernel.org>; Wed, 23 Jul 2008 11:33:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=NKTUg9jJk6ekgp3F8NFW298KwwZXSBTeJutx9VsCvJk=;
-        b=rLmSD7E8ItPRlOyTqZAPlVBep4zBgH3kGbpIP83I4Ywtcvbc7EAeeJTbFuDF5/eUzm
-         0SFLchuomzWyoCHz6ajB6NiN6gGfRlo4sxRkgX3A8s6C0Axpqw5T43GM4ysCetoejlvp
-         fYBJjW1ygFEPlx70120crUlU3h4QjAie7vsfA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=ryhzHK5zTHtprZDhLu28zPaeQoW1tqGpeGUovYrEpxOKhd8XIHbFnEpbiCRw5dTPpw
-         WZfWGGrEyRAU5/C8SMjXDpj9YZn6iwETEvj4DhY+X7wHTw7DnHqt7YVd+T2q68MDpety
-         3cIu1pZ2069ELJXRkD/5m0o4r7ttZ0NlK/q+M=
-Received: by 10.150.122.13 with SMTP id u13mr612372ybc.63.1216838034346;
-        Wed, 23 Jul 2008 11:33:54 -0700 (PDT)
-Received: by 10.150.96.5 with HTTP; Wed, 23 Jul 2008 11:33:54 -0700 (PDT)
-In-Reply-To: <488772BC.80207@workspacewhiz.com>
+	id S1753161AbYGWSoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 14:44:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753293AbYGWSoq
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 14:44:46 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.180]:14578 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753083AbYGWSop (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 14:44:45 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg201f5EC7
+Received: from tigra.home (Faf34.f.strato-dslnet.de [195.4.175.52])
+	by post.webmailer.de (klopstock mo25) (RZmta 16.47)
+	with ESMTP id 202385k6NG1BgB ; Wed, 23 Jul 2008 20:44:43 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from blimp (unknown [192.168.0.8])
+	by tigra.home (Postfix) with ESMTP id 58285277BD;
+	Wed, 23 Jul 2008 20:44:43 +0200 (CEST)
+Received: by blimp (Postfix, from userid 1000)
+	id 4E1E436D18; Wed, 23 Jul 2008 20:44:43 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807231743030.8986@racer>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89734>
 
-On 7/23/08, Joshua Jensen <jjensen@workspacewhiz.com> wrote:
->  There are certain file formats, such as a Visual Studio .sln file, that
-> MUST be CRLF.  [...]
+Johannes Schindelin, Wed, Jul 23, 2008 18:44:49 +0200:
+> > +	n = 1;
+> > +	while (n < main_cmds.cnt &&
+> > +		best_similarity == similarity(main_cmds.names[n]->name))
+> > +		++n;
+> 
+> Mini-nit: you never ask for the value of n, only if it is 1 or larger.  So 
+> you do not need to count...
 
-It seems like what people really want is some additional file attributes:
-
-1. always CRLF on all platforms (eg. for .bat files)
-2. always LF on all platforms (eg. for shell scripts and perl scripts)
-3. just leave it alone no matter what (eg. for binary files)
-4. convert line endings to LF on checkin, native on checkout (eg. for
-most source files)
-
-Where "native" is defined by some config option, but the choice of #1
-through #4 is defined by .gitattributes.  Thus, the config option
-affects only mode #4 (and perhaps the default mode, as it does now).
-
-The current system works for #3.  With Dscho's patch, #4 works too.  I
-think more kinds of per-file attributes are needed in order to get #1
-and #2.
-
-Avery
+But I do, don't I? AFAICS, I use 0, 1 and >1 (this-these).
