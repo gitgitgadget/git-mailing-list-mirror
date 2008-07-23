@@ -1,112 +1,91 @@
 From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH] git-am: Add colon before the subject that is printed out as being applied
-Date: Wed, 23 Jul 2008 18:46:36 +0200
-Message-ID: <1216831596-30870-1-git-send-email-s-beyer@gmx.net>
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Stephan Beyer <s-beyer@gmx.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 23 18:47:56 2008
+Subject: Re: [PATCH] Rename ".dotest/" to ".git/rebase" and ".dotest-merge"
+	to "rebase-merge"
+Date: Wed, 23 Jul 2008 18:47:39 +0200
+Message-ID: <20080723164739.GB17648@leksak.fem-net>
+References: <487D1B3D.70500@lsrfire.ath.cx> <alpine.DEB.1.00.0807160245440.2841@eeepc-johanness> <20080716012619.GM8185@mit.edu> <7viqv5r637.fsf@gitster.siamese.dyndns.org> <4882350B.6020003@free.fr> <7v3am5zfea.fsf@gitster.siamese.dyndns.org> <20080722234703.GD5904@leksak.fem-net> <7vbq0pifwq.fsf@gitster.siamese.dyndns.org> <20080723011341.GE5904@leksak.fem-net> <48874617.3010108@free.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Theodore Tso <tytso@mit.edu>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Joe Fiorini <joe@faithfulgeek.org>, git@vger.kernel.org,
+	Jari Aalto <jari.aalto@cante.net>
+To: Olivier Marin <dkr+ml.git@free.fr>
+X-From: git-owner@vger.kernel.org Wed Jul 23 18:48:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLhVE-00053X-GK
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 18:47:48 +0200
+	id 1KLhWD-0005XK-Je
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 18:48:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753050AbYGWQqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 12:46:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753032AbYGWQqr
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 12:46:47 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58403 "HELO mail.gmx.net"
+	id S1752648AbYGWQru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 12:47:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752409AbYGWQru
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 12:47:50 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55169 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752994AbYGWQqq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 12:46:46 -0400
-Received: (qmail invoked by alias); 23 Jul 2008 16:46:45 -0000
+	id S1751012AbYGWQrt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 12:47:49 -0400
+Received: (qmail invoked by alias); 23 Jul 2008 16:47:47 -0000
 Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp045) with SMTP; 23 Jul 2008 18:46:45 +0200
+  by mail.gmx.net (mp040) with SMTP; 23 Jul 2008 18:47:47 +0200
 X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+yzl0ImEay8olJY03YYurp2RehpGEuVzht30aNLL
-	M5xDLwIPBc7iqP
+X-Provags-ID: V01U2FsdGVkX18lUctobvolEV0kDGMom+IB1RhP3MmjYMJDAhUJUK
+	TAdMaWPPGpd6eR
 Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
 	(envelope-from <s-beyer@gmx.net>)
-	id 1KLhU4-00082I-S6; Wed, 23 Jul 2008 18:46:36 +0200
-X-Mailer: git-send-email 1.6.0.rc0.102.ga1791
+	id 1KLhV5-00082o-Di; Wed, 23 Jul 2008 18:47:39 +0200
+Content-Disposition: inline
+In-Reply-To: <48874617.3010108@free.fr>
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89709>
 
-git-am output can be confusing, because the subject of the applied
-patch can look like the rest of a sentence starting with "Applying".
-The added colon should make this clearer.
-
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
----
 Hi,
 
-Linus added single quotes to applypatch in 610968199,
-writing:
+Olivier Marin wrote:
+> > The reason of my question was that I *blindly* incorporated the change into
+> > sequencer to make it able to work on a dirty working tree and thus to be
+> > able to migrate am onto it without losing the ability to apply patches
+> > on a dirty working tree....
+> 
+> Are you talking about your seq-proto-dev3 branch?
 
-    Add quotes around the subject line that we print out as being applied.
+Right, and your suggested changes are right, too, and I've incorporated
+them yesterday (with an --allow-dirty option) but I hadn't commited them...
+(Hence, not pushed.)
 
-    My brain just flipped when it tried to read the "Applying" as part
-    of the explanation of the patch, and the sentence didn't make any
-    sense. The quotes make it clear what's going on.
+> > Now, because t4151 does not pass, I am wondering what's the best thing
+> > I could do...
 
-I think he is right ;)
+Well, that was solved...
+The problem was that the additional "HEAD" (that made t4151 work), resulted
+in untracked files in some test cases of sequencer and rebase-i. Those made
+merges fail, because these merges would overwrite these files. So the
+merges failed, and the test cases failed.
 
-Of course, it's debatable whether
-	Applying: foo
-or
-	Applying "foo"
-or
-	Applying 'foo'
-may be the best. I don't really care :)
+I've solved this with the trick that the "HEAD" argument is only added if
+--allow-dirty is set (and git-am uses --allow-dirty of course).
 
-The main reason I chose the colon variant is because the change in t4151
-is less ugly.
+This is perhaps not the cleanest way but seemed to be far more better
+than forcing overwrites on merges (checkouts, etc.).
 
-Another reason: thinking of "ambiguous" subjects:
- -	Applying "Remove "string" from foo.c"
- -	Applying 'Remove 'string' from foo.sh'
- -	Applying: foo.c: Remove "string"
+> Ah, you should change "Applying 6" with "Applying \"6\"" in t4151-am-abort.sh
+> too.
+
+I btw wondered if the quotes are useful in original am.
+Well, I've just sent a patch adding a colon (instead of quotes). Let's
+see ;)
 
 Regards,
   Stephan
 
- git-am.sh           |    2 +-
- t/t4151-am-abort.sh |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-am.sh b/git-am.sh
-index 7864b5f..f4abd9d 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -456,7 +456,7 @@ do
- 		stop_here $this
- 	fi
- 
--	printf 'Applying %s\n' "$FIRSTLINE"
-+	printf 'Applying: %s\n' "$FIRSTLINE"
- 
- 	case "$resolved" in
- 	'')
-diff --git a/t/t4151-am-abort.sh b/t/t4151-am-abort.sh
-index 249093b..f45ab0a 100755
---- a/t/t4151-am-abort.sh
-+++ b/t/t4151-am-abort.sh
-@@ -43,7 +43,7 @@ do
- 
- 	test_expect_success "am$with3 --skip continue after failed am$with3" '
- 		test_must_fail git-am$with3 --skip >output &&
--		test "$(grep "^Applying" output)" = "Applying 6" &&
-+		test "$(grep "^Applying" output)" = "Applying: 6" &&
- 		test_cmp file-2-expect file-2 &&
- 		test ! -f .git/rr-cache/MERGE_RR
- 	'
 -- 
-1.6.0.rc0.102.ga1791
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
