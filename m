@@ -1,71 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bring description of git diff --cc up to date
-Date: Tue, 22 Jul 2008 17:36:43 -0700
-Message-ID: <7vfxq1igh0.fsf@gitster.siamese.dyndns.org>
-References: <20080722111947.BIW29914@m4500-01.uchicago.edu>
- <7v63qxn8w2.fsf@gitster.siamese.dyndns.org>
- <7vd4l5lio1.fsf@gitster.siamese.dyndns.org>
- <Pine.GSO.4.62.0807221812470.25746@harper.uchicago.edu>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: regression in  92392b4
+Date: Tue, 22 Jul 2008 19:41:08 -0500
+Message-ID: <20080723004108.GB14668@spearce.org>
+References: <20080722231745.GD11831@artemis.madism.org> <alpine.DEB.1.00.0807230033000.8986@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Greaves <david@dgreaves.com>
-To: Jonathan Nieder <jrnieder@uchicago.edu>
-X-From: git-owner@vger.kernel.org Wed Jul 23 02:38:04 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Git ML <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 23 02:42:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLSMa-0002pv-C4
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 02:37:52 +0200
+	id 1KLSQl-00042E-3U
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 02:42:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752857AbYGWAgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 20:36:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752860AbYGWAgv
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 20:36:51 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34985 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752857AbYGWAgv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 20:36:51 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 342673770F;
-	Tue, 22 Jul 2008 20:36:50 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 16D9B3770E; Tue, 22 Jul 2008 20:36:45 -0400 (EDT)
-In-Reply-To: <Pine.GSO.4.62.0807221812470.25746@harper.uchicago.edu>
- (Jonathan Nieder's message of "Tue, 22 Jul 2008 18:27:18 -0500 (CDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7060CED4-584F-11DD-BE2E-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751268AbYGWAlL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jul 2008 20:41:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbYGWAlK
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 20:41:10 -0400
+Received: from george.spearce.org ([209.20.77.23]:43138 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750951AbYGWAlJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 20:41:09 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 6043C383A5; Wed, 23 Jul 2008 00:41:08 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807230033000.8986@racer>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89579>
 
-Jonathan Nieder <jrnieder@uchicago.edu> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Wed, 23 Jul 2008, Pierre Habouzit wrote:
+>=20
+> >   Hi, here is a manual painful down-secting (opposed to a bisect ;P=
+) I
+> > did, since git in next cannot fetch on a regular basis for me. The
+> > culprit seems to be commit  92392b4:
+> >=20
+> >     =E2=94=8C=E2=94=80(1:11)=E2=94=80=E2=94=80<~/dev/scm/git 92392b=
+4...>=E2=94=80=E2=94=80
+> >     =E2=94=94[artemis] git fetch
+> >     remote: Counting objects: 461, done.
+> >     remote: Compressing objects: 100% (141/141), done.
+> >     remote: Total 263 (delta 227), reused 155 (delta 121)
+> >     Receiving objects: 100% (263/263), 95.55 KiB, done.
+> >     fatal: Out of memory, malloc failed
+> >     fatal: index-pack failed
+> >     [2]    16674 abort (core dumped)  git fetch
+=2E..
+>=20
+> Just a guess:
+=2E..
+> diff --git a/index-pack.c b/index-pack.c
+> index ac20a46..19c39e5 100644
+> --- a/index-pack.c
+> +++ b/index-pack.c
+> @@ -257,6 +257,7 @@ static void unlink_base_data(struct base_data *c)
+>  		base_cache =3D NULL;
+>  	if (c->data) {
+>  		free(c->data);
+> +		c->data =3D NULL;
+>  		base_cache_used -=3D c->size;
+>  	}
+>  }
 
-> +	This flag implies the '-c' option and makes the patch output
-> +	even more compact by omitting uninteresting hunks.  A hunk is
-> +	considered uninteresting if the person merging had two versions
-> +	to choose between among all of the parents and the result shows
+Oh.  This is a pointless assignment.  If you look at any call sites
+for unlink_base_data() you will find that the struct passed in as
+"c" here is going out of scope after unlink_base_data() returns.  In
+no such case does the value of c->data get tested once this free is
+complete.
 
-Hmm, I am not a native speaker, but the above makes me confused into
-thinking that even if there are 47 parent versions, it is Ok if I looked
-at only two versions and picked from one of them -- the description does
-not seem to make it clear that it is required that the other 45 agree with
-one of the two I looked at and picked from.
+We need the if (c->data) guard because we only want to decrement
+base_cache_used if the memory is still allocated.  It may have been
+released earlier, in which case base_cache_used has already been
+decreased and we don't want to double-decrement it.
 
-    ... if the contents in the parents had only two variants and the merge
-    result picked one of them without modification.
+This patch makes the code more obvious, so Ack I guess, but it is
+not a solution to Pierre's woes.  Something else is wrong.
 
-would be succinct enough, perhaps?
+Reading above shows we got a "fatal: Out of memory, malloc failed"
+right before the segfault.  What's odd is we segfaulted after we
+ran out of memory and should have die'd.
 
-If we want to further elaborate, we could say something like:
+There's at least two bugs in the above output:
 
-    In a two-parent merge, by definition, there can only be two variants
-    to choose from.  Even in a merge with more than two parents, if some
-    parents share the same content, and all the other parents share
-    another, same content, there are only two variants to choose from.
+a) index-pack ran out of memory on a small pull (95 KiB).
+b) fetch segfaulted when index-pack failed.
 
-but I think that is too verbose...
+And this patch will unfortunately address neither of them.  :-|
+
+I've had a long past couple of days, and another one tomorrow.
+I'm not going to be able to debug this myself until perhaps Thursday
+or Friday.  Sorry.  If nobody beats me to it, I will put this on
+the top of the pile and try to fix it once I get back online at my
+new home.
+
+--=20
+Shawn.
