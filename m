@@ -1,78 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] perl/Makefile: update NO_PERL_MAKEMAKER section
-Date: Wed, 23 Jul 2008 16:29:48 -0700
-Message-ID: <7vy73s89hv.fsf@gitster.siamese.dyndns.org>
-References: <0GfECozN3g0ZvAESKMi76RyOVHEb2OhhwET9GWmEm7pbzYQJub50UlWpZtBa7MGn1UGb-7mzbzE@cipher.nrlssc.navy.mil> <XKT02T_QW2tKLHpR7e3VuZjLXv3RP2E0GD54gXKrdIFm8xQsKvAyjg@cipher.nrlssc.navy.mil>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2008
+Date: Thu, 24 Jul 2008 01:30:30 +0200
+Message-ID: <200807240130.31649.jnareb@gmail.com>
+References: <200807230325.04184.jnareb@gmail.com> <alpine.DEB.1.00.0807231414480.8986@racer> <200807231654.18019.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Jul 24 01:30:57 2008
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 01:31:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLnnL-0005is-6Z
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 01:30:55 +0200
+	id 1KLno5-0005ta-FH
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 01:31:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754356AbYGWX3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 19:29:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754462AbYGWX3z
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 19:29:55 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38395 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754333AbYGWX3y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 19:29:54 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7697438327;
-	Wed, 23 Jul 2008 19:29:53 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C85E138325; Wed, 23 Jul 2008 19:29:50 -0400 (EDT)
-In-Reply-To: <XKT02T_QW2tKLHpR7e3VuZjLXv3RP2E0GD54gXKrdIFm8xQsKvAyjg@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Tue, 22 Jul 2008 16:15:41 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 40A227D6-590F-11DD-8418-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1754457AbYGWXam convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2008 19:30:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754601AbYGWXal
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 19:30:41 -0400
+Received: from ik-out-1112.google.com ([66.249.90.179]:29849 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754419AbYGWXal (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 19:30:41 -0400
+Received: by ik-out-1112.google.com with SMTP id c28so1881628ika.5
+        for <git@vger.kernel.org>; Wed, 23 Jul 2008 16:30:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=FwU6h5pD+gljQ8+w0aUHYjCAtkeptO2qpBS6ATWF2QM=;
+        b=ncQmj57tMEQ6KzUZ0Q1vuK0bwhE7TvFDTGi3nwG3C1MpA/l2gdH3ocHdJCPBGkDeZr
+         GiPjgTijyk8RGcltI31q4urmH6asGPfapwTDPaP4qDIM+6FpbCzNAmRrNWbBXkohxE7v
+         OZpSTsmqNVoQ+BJP4gNIL0GvtamArc1XNFkfk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=azfiW7d0C43bZzQjg39F0zGaiIe1vPtComNPMKYc7oVGT2g4VUDtpjSkHjIx8eNcsR
+         jcaPTcdAL/8grZmsBqf3kyQU3xjdRZSUfJNBnjvoIHOuttIFeEAkTT17VWps8qm1V9BP
+         QE7S1lGB59rCpccIgWrdMfdlzdSW/d7j3n7kc=
+Received: by 10.210.142.6 with SMTP id p6mr431988ebd.102.1216855839335;
+        Wed, 23 Jul 2008 16:30:39 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.213.1])
+        by mx.google.com with ESMTPS id 6sm26170431nfv.21.2008.07.23.16.30.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 23 Jul 2008 16:30:38 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200807231654.18019.robin.rosenberg.lists@dewire.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89805>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+Dnia =B6roda 23. lipca 2008 16:54, Robin Rosenberg napisa=B3:
+> onsdagen den 23 juli 2008 15.18.40 skrev Johannes Schindelin:
+>> On Wed, 23 Jul 2008, Jakub Narebski wrote:
+>>> On Wed, 23 Jul 2008, Johannes Schindelin wrote:
+>>>> On Wed, 23 Jul 2008, Jakub Narebski wrote:
+>>>>=20
+>>>>>    04. Which programming languages you are proficient with?
+>>>>>        (The choices include programming languages used by git)
+>>>>>        (zero or more: multiple choice)
+>>>>>      - C, shell, Perl, Python, Tcl/Tk
+>>>>>      + (should we include other languages, like C++, Java, PHP,
+>>>>>         Ruby,...?)
+>>>>=20
+>>>> Yes, I think this should be a long list.
+>>>=20
+>>> I'd rather not have a "laundry list" of languages.  I have put C++
+>>> because QGit uses it, Java because of egit/jgit, PHP for web
+>>> interfaces, Ruby because of GitHub and because of Ruby comminity
+>>> choosing Git.  I should perhaps add Emacs Lisp, HTML+CSS and
+>>> JavaScript here.  What other languages should be considered?
+>>=20
+>> C# at least, since we had one (pretty unsuccessful) attempt at=20
+>> reimplementing Git in it.
+>=20
+> What is the reason for the question? Do we want to know what language=
+s
+> people would like to contribute to Git in or do we want to know what =
+"kind"
+> of programmers are attracted by Git?  Making it a long list should ma=
+ke
+> it easier to tabulate the responses.
 
-> The perl modules must be copied to blib/lib so they are available for
-> testing.
+The idea is, I think, to know what languages people could contribute
+to Git; see analysis of this question at GitSurvey2007 page on git wiki=
+:
+  http://git.or.cz/gitwiki/GitSurvey2007#head-ecb5564d71e4093e2e93e5083=
+80407a26dbcbdea
 
-True, but private-Error needs to be handled a bit more carefully, I
-think.
+C++ is for QGit, Java for egit/jgit, C# for git#/widgit and perhaps
+Git-Cheetah, PHP for web interfaces, Ruby because of GitHub, Python
+because some contrib is in Python, Emacs Lisp for git.el, HTML+CSS
+and JavaScript for web interfaces; perhaps we should also add AsciiDoc
+for documentation.  And of course "I am not programmer" response...
 
-How about this on top of your patch?
+But I'm not too tied to this question; I guess it can be simply
+removed if it doesn't offer some important (for us) information.
 
- perl/Makefile |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/perl/Makefile b/perl/Makefile
-index 2b0d3d5..b8547db 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -25,13 +25,15 @@ $(makfile): ../GIT-CFLAGS Makefile
- 	echo all: private-Error.pm Git.pm > $@
- 	echo '	mkdir -p blib/lib' >> $@
- 	echo '	$(RM) blib/lib/Git.pm; cp Git.pm blib/lib/' >> $@
--	echo '	$(RM) blib/lib/Error.pm; \
--	cp private-Error.pm blib/lib/Error.pm' >> $@
-+	echo '	$(RM) blib/lib/Error.pm' >> $@
-+	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
-+	echo '	cp private-Error.pm blib/lib/Error.pm' >> $@
- 	echo install: >> $@
- 	echo '	mkdir -p $(instdir_SQ)' >> $@
- 	echo '	$(RM) $(instdir_SQ)/Git.pm; cp Git.pm $(instdir_SQ)' >> $@
--	echo '	$(RM) $(instdir_SQ)/Error.pm; \
--	cp private-Error.pm $(instdir_SQ)/Error.pm' >> $@
-+	echo '	$(RM) $(instdir_SQ)/Error.pm' >> $@
-+	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
-+	echo '	cp private-Error.pm $(instdir_SQ)/Error.pm' >> $@
- 	echo instlibdir: >> $@
- 	echo '	echo $(instdir_SQ)' >> $@
- else
+--=20
+Jakub Narebski
+Poland
