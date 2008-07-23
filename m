@@ -1,68 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] git add: do not add files from a submodule
-Date: Tue, 22 Jul 2008 23:40:20 -0700
-Message-ID: <7vhcahgl2j.fsf@gitster.siamese.dyndns.org>
-References: <1216534144-23826-1-git-send-email-gitster@pobox.com>
- <alpine.DEB.1.00.0807201529150.3305@eeepc-johanness>
- <alpine.DEB.1.00.0807210256510.3305@eeepc-johanness>
- <alpine.DEB.1.00.0807222230490.8986@racer>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2] git daemon: avoid waking up too often
+Date: Wed, 23 Jul 2008 08:51:47 +0200
+Message-ID: <4886D503.7030106@viscovery.net>
+References: <alpine.DEB.1.00.0807222251570.8986@racer> <alpine.DEB.1.00.0807222302440.8986@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 23 08:41:31 2008
+X-From: git-owner@vger.kernel.org Wed Jul 23 08:52:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLY2U-0004ec-Co
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 08:41:30 +0200
+	id 1KLYDU-0007SN-0V
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 08:52:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750988AbYGWGka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 02:40:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751029AbYGWGka
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 02:40:30 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51847 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750978AbYGWGk3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 02:40:29 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A268F382FE;
-	Wed, 23 Jul 2008 02:40:25 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 9C743382FD; Wed, 23 Jul 2008 02:40:22 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0807222230490.8986@racer> (Johannes
- Schindelin's message of "Tue, 22 Jul 2008 22:32:03 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3B5DE0EA-5882-11DD-9F01-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1750988AbYGWGvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 02:51:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750976AbYGWGvv
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 02:51:51 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:27161 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750978AbYGWGvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 02:51:50 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KLYCS-0004DT-8e; Wed, 23 Jul 2008 08:51:48 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id DCB8E6B7; Wed, 23 Jul 2008 08:51:47 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <alpine.DEB.1.00.0807222302440.8986@racer>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89604>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Johannes Schindelin schrieb:
+> To avoid waking up unnecessarily, a pipe is set up that is only ever
+> written to by child_handler(), when a child disconnects, as suggested
+> per Junio.
+> 
+> This avoids waking up the main process every second to see if a child
+> was disconnected.
 
-> Do you plan to apply the split-up builtin-add enhancments you did a few 
-> nights ago,...
+This makes porting this beast to Windows practically impossible because we
+cannot have a poll() implementation that waits both on a listening socket
+and a pipe. :-(
 
-I have a few updates to that one, I'll be sending them out shortly.
-
-Switching branches between revs that have and do not have submodule at a
-given path has always been broken.  It is not even a "known breakage",
-which is a word used for something that has a sensible design already is
-worked out but the implementation does not do so.
-
-If we started the process of diagnosing and fixing these issues earlier,
-and had plausible code to address the issue already in 'next' before the
-current -rc cycle started, the topic would have been an obvious candidate
-for the coming release and I'd further say it would be even worth delaying
-the release for a few weeks if it takes more time.  But I have to say it
-is too late for 1.6.0 now if we are just noticing and starting the
-discussion.  This comment goes to the issue Pierre raised last night as
-well.
-
-Nobody prevents us from starting the process to discuss and prepare to put
-something in 'next' for 1.6.1 cycle now, though.
+-- Hannes
