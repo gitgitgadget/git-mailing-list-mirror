@@ -1,75 +1,70 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: q: faster way to integrate/merge lots of topic branches?
-Date: Wed, 23 Jul 2008 11:04:07 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0807231100310.4754@woody.linux-foundation.org>
-References: <20080723130518.GA17462@elte.hu> <20080723135621.GJ22606@neumann> <20080723140441.GA9537@elte.hu>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not
+ been set
+Date: Wed, 23 Jul 2008 12:04:44 -0600
+Message-ID: <488772BC.80207@workspacewhiz.com>
+References: <alpine.DEB.1.00.0807222255450.8986@racer> <7vy73tihl6.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807230203350.8986@racer> <7vej5kfs0w.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807231817460.8986@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Wed Jul 23 20:06:07 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 23 20:12:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLiiT-0002bT-Vs
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 20:05:49 +0200
+	id 1KLipR-0005c9-EZ
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 20:12:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752909AbYGWSEe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 14:04:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752858AbYGWSEe
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 14:04:34 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:37289 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752648AbYGWSEe (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Jul 2008 14:04:34 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6NI483D022906
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 23 Jul 2008 11:04:09 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6NI47XX003919;
-	Wed, 23 Jul 2008 11:04:07 -0700
-In-Reply-To: <20080723140441.GA9537@elte.hu>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.399 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753161AbYGWSL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 14:11:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753101AbYGWSL2
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 14:11:28 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:40406 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753032AbYGWSL2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 14:11:28 -0400
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Jul 2008 14:11:28 EDT
+Received: (qmail 13255 invoked by uid 399); 23 Jul 2008 12:04:47 -0600
+Received: from unknown (HELO ?10.102.18.63?) (jjensen@workspacewhiz.com@204.128.230.1)
+  by hsmail.qwknetllc.com with ESMTPAM; 23 Jul 2008 12:04:47 -0600
+X-Originating-IP: 204.128.230.1
+User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+In-Reply-To: <alpine.DEB.1.00.0807231817460.8986@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89727>
 
+----- Original Message -----
+From: Johannes Schindelin
+Date: 7/23/2008 11:22 AM
+> On msys we do that.  A few users decided they know better and switched it 
+> off.  Me for example.  But I wouldn't do something as stupid as editing a 
+> file with an editor that tries to be helpful and adds CR/LFs.
+>   
+There are certain file formats, such as a Visual Studio .sln file, that 
+MUST be CRLF.  When a .sln file is not CRLF, Visual Studio refuses to 
+read it.  I want to be able to set into the committed .gitattributes 
+file the list of files that must be translated to the proper format 
+regardless of the autocrlf setting.  An example is below:
 
+*.bat crlf
+*.def crlf
+*.dsp crlf
+*.dsw crlf
+*.rc crlf
+*.sln crlf
+*.vcproj crlf
+*.vcp crlf
+*.vcw crlf
 
-Ahh, missed that somebody already suggested it.
+I'm not sure your patch was intended to accomplish the forced crlf 
+settings above, but certainly, this functionality would be useful, if 
+not critical.
 
-On Wed, 23 Jul 2008, Ingo Molnar wrote:
-> 
-> hm, it's very slow:
-> 
->   $ time git branch --no-merged
->   [...]
-> 
->   real    0m9.177s
->   user    0m9.027s
->   sys     0m0.129s
-> 
-> when running it on tip/master:
-> 
->   http://people.redhat.com/mingo/tip.git/README
+Thanks.
 
-We can probably speed it up, but more importantly, even if we don't, it's 
-slow _once_.
-
-It's worth taking a 9s hit, if that means that you can then skip half of 
-the merges entirely, and thus win half of the 53s cost. 
-
-But I'll look if there's a way to cut it down from 9s. I suspect it has to 
-traverse the whole history to make 100% sure that something isn't merged, 
-but even that should be faster than 9s.
-
-		Linus
+Josh
