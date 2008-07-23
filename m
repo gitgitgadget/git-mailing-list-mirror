@@ -1,383 +1,410 @@
 From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH 03/12] Introduce sparse prefix
-Date: Wed, 23 Jul 2008 21:56:03 +0700
-Message-ID: <20080723145603.GA29079@laptop>
+Subject: [PATCH 04/12] Protect index with sparse prefix
+Date: Wed, 23 Jul 2008 21:56:17 +0700
+Message-ID: <20080723145616.GA29090@laptop>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 23 16:57:51 2008
+X-From: git-owner@vger.kernel.org Wed Jul 23 16:57:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLfmS-0002RA-B8
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 16:57:28 +0200
+	id 1KLfme-0002Xt-5c
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 16:57:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752604AbYGWO40 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2008 10:56:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752612AbYGWO40
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 10:56:26 -0400
+	id S1752803AbYGWO4i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2008 10:56:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752753AbYGWO4i
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 10:56:38 -0400
 Received: from ti-out-0910.google.com ([209.85.142.187]:42933 "EHLO
 	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752146AbYGWO4Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 10:56:25 -0400
+	with ESMTP id S1750799AbYGWO4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 10:56:37 -0400
 Received: by ti-out-0910.google.com with SMTP id b6so1202339tic.23
-        for <git@vger.kernel.org>; Wed, 23 Jul 2008 07:56:24 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 23 Jul 2008 07:56:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:date:from:to:subject
          :message-id:mime-version:content-type:content-disposition
          :content-transfer-encoding:user-agent;
-        bh=7CKsc6t7oiRykGPxdv+/iaiW2ZUFzV3kO9rWVQUZOnk=;
-        b=IAO1KDEtugBWYFkuYqtXBcf1TiHo0/1gDqVfWO8XjHMtO4/LRUzCN7IC79Z04LExlA
-         upDfgP8yWgfIZcTxvkm8QhiE1t4rNPxLo77iF6f2xASBb3BmbZAdvSpZCE/Bc0COwebZ
-         9iFAex1h0HvjT0Ffide74H3cSWouV+S4Z6+wg=
+        bh=jZ3oSUo7449UZRdPW80P9kA5vWFS6V9nFA/Vmjsv53o=;
+        b=ux5JCoQB7Sv9UHJ52wTx6tXRsQT6b0TBY2qvbuCebJosHByGY4nt3Qrqlu2uMpCuei
+         x4JBGDEW6z89Sgz7A0zIZK4TJMsffJZXheClcCMuVL1dfyfGiaDTaw5hwfxU/IzfqmkF
+         aeWNAmahbqjFK3oOd5dHWPC1NNZGp97V2dVWw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:subject:message-id:mime-version:content-type
          :content-disposition:content-transfer-encoding:user-agent;
-        b=dJQqAQTCIkd7VAZK6IkJirOTOCf0qtbaPts4/85gCa3r8ndNNRHGVG6O/v/vAtxYfR
-         2tZtfm/poAQ4MPYaedq9X3UaqB94fUG4Z8YlYQzd3ac5Z5f+2iWtbfebWx1/xxr0CIhP
-         HzGdHfQUHBd47in3R92kVTQ3xhZdOn/3WkJUE=
-Received: by 10.110.69.5 with SMTP id r5mr125625tia.17.1216824983454;
-        Wed, 23 Jul 2008 07:56:23 -0700 (PDT)
+        b=KBkzogT0jP18r+jFhLQd+NpC0uOe9lKVyAW1QMJ100b4k42om+Pt7iiAOHnegxDQbM
+         oiHPYsqUGCN5sCKcW/RA8RjettItn6FrxGjovp0LZakQwh/A3QDtOAdVXzCspK2nBeFg
+         KLeQD5G/6x55Nq/PhZRgTbWhugmA8Qg5lynsM=
+Received: by 10.110.5.18 with SMTP id 18mr97281tie.43.1216824996418;
+        Wed, 23 Jul 2008 07:56:36 -0700 (PDT)
 Received: from pclouds@gmail.com ( [117.5.5.7])
-        by mx.google.com with ESMTPS id d4sm14703649tib.13.2008.07.23.07.56.19
+        by mx.google.com with ESMTPS id b4sm15417784tic.14.2008.07.23.07.56.32
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 23 Jul 2008 07:56:21 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 23 Jul 2008 21:56:03 +0700
+        Wed, 23 Jul 2008 07:56:34 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 23 Jul 2008 21:56:17 +0700
 Content-Disposition: inline
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89673>
 
-Sparse prefix is actually a list of prefixes separated by colons,
-that will limit worktree usage within it.
-
-This patch adds core.sparsecheckout and
-"git rev-parse --show-sparse-prefix". This also adds manipulation
-functions that will get used later.
+This ensures no one can write to index outside sparse prefix.
+Protection is usually applied to the_index only. For more
+complicated cases where temporary index is required, thorough
+check will be done by check_index_prefix()
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin-rev-parse.c |    4 +
- cache.h             |   13 +++
- config.c            |    7 ++
- environment.c       |  221 +++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 4 files changed, 245 insertions(+), 0 deletions(-)
+ builtin-commit.c          |   11 +++++
+ builtin-ls-files.c        |    2 +
+ builtin-merge-recursive.c |    4 +-
+ builtin-read-tree.c       |    5 ++
+ cache.h                   |    1 +
+ diff-lib.c                |    3 +
+ read-cache.c              |  107 +++++++++++++++++++++++++++++++++++++=
++++++++-
+ unpack-trees.c            |    3 +
+ unpack-trees.h            |    3 +-
+ 9 files changed, 135 insertions(+), 4 deletions(-)
 
-diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
-index aa71f4a..4200f14 100644
---- a/builtin-rev-parse.c
-+++ b/builtin-rev-parse.c
-@@ -499,6 +499,10 @@ int cmd_rev_parse(int argc, const char **argv, con=
-st char *prefix)
- 					puts(prefix);
- 				continue;
- 			}
-+			if (!strcmp(arg, "--show-sparse-prefix")) {
-+				puts(get_sparse_prefix_str());
-+				continue;
-+			}
- 			if (!strcmp(arg, "--show-cdup")) {
- 				const char *pfx =3D prefix;
- 				if (!is_inside_work_tree()) {
-diff --git a/cache.h b/cache.h
-index 38985aa..4687096 100644
---- a/cache.h
-+++ b/cache.h
-@@ -319,6 +319,19 @@ extern const char *get_git_work_tree(void);
- extern const char *read_gitfile_gently(const char *path);
- extern void set_git_work_tree(const char *tree);
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 97e64de..f2d301a 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -223,6 +223,7 @@ static char *prepare_index(int argc, const char **a=
+rgv, const char *prefix)
+ 	int fd;
+ 	struct string_list partial;
+ 	const char **pathspec =3D NULL;
++	char **saved_sparse_prefix;
 =20
-+extern int sparse_checkout_enabled();
-+extern char **get_sparse_prefix(void);
-+extern const char *get_sparse_prefix_str(void);
-+extern char **save_sparse_prefix();
-+extern char **restore_sparse_prefix(char **prefix);
-+extern int outside_sparse_prefix(const char *prefix);
-+extern int index_outside_sparse_prefix(const char *prefix);
-+extern void set_sparse_prefix(const char *prefix);
-+extern char **split_prefix(const char *env);
-+extern char **combine_prefix_list(char **p1, char **p2);
-+extern void free_prefix_list(char **prefix_list);
-+extern int outside_prefix_list(char **iprefix, const char *prefix);
-+
- #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
+ 	if (interactive) {
+ 		interactive_add(argc, argv, prefix);
+@@ -306,6 +307,13 @@ static char *prepare_index(int argc, const char **=
+argv, const char *prefix)
 =20
- extern const char **get_pathspec(const char *prefix, const char **path=
-spec);
-diff --git a/config.c b/config.c
-index 1e066c7..e7b457b 100644
---- a/config.c
-+++ b/config.c
-@@ -467,6 +467,13 @@ static int git_default_core_config(const char *var=
-, const char *value)
- 		return 0;
- 	}
-=20
-+	if (!strcmp(var, "core.sparsecheckout")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		set_sparse_prefix(value);
-+		return 0;
-+	}
-+
- 	/* Add other config variables here and to Documentation/config.txt. *=
-/
- 	return 0;
- }
-diff --git a/environment.c b/environment.c
-index 4a88a17..94e39b8 100644
---- a/environment.c
-+++ b/environment.c
-@@ -46,9 +46,132 @@ enum rebase_setup_type autorebase =3D AUTOREBASE_NE=
-VER;
- char *git_work_tree_cfg;
- static char *work_tree;
-=20
-+static char **sparse_prefix;
-+
- static const char *git_dir;
- static char *git_object_dir, *git_index_file, *git_refs_dir, *git_graf=
-t_file;
-=20
-+static char *append_slash(const char *prefix, int len)
-+{
-+	char *new_prefix;
-+
-+	if (!*prefix)
-+		return NULL;
-+
-+	if (prefix[len-1] =3D=3D '/')
-+		return xstrndup(prefix, len);
-+
-+	new_prefix =3D xmalloc(len+2);
-+	memcpy(new_prefix, prefix, len);
-+	new_prefix[len] =3D '/';
-+	new_prefix[len+1] =3D '\0';
-+	return new_prefix;
-+}
-+
-+/* this should be sorted as same order as index */
-+static int prefix_compare(const void *prefix1_, const void *prefix2_)
-+{
-+	const char *prefix1 =3D *(const char**)prefix1_;
-+	const char *prefix2 =3D *(const char**)prefix2_;
-+	int len1 =3D strlen(prefix1);
-+	int len2 =3D strlen(prefix2);
-+	int len =3D len1 < len2 ? len1 : len2;
-+	int cmp =3D memcmp(prefix1, prefix2, len);
-+	if (cmp)
-+		return cmp;
-+	if (len1 < len2)
-+		return -1;
-+	if (len1 > len2)
-+		return 1;
-+	return 0;
-+}
-+
-+void free_prefix_list(char **prefix_list)
-+{
-+	char **prefix =3D prefix_list;
-+
-+	if (!prefix)
-+		return;
-+
-+	while (*prefix) {
-+		free(*prefix);
-+		prefix++;
-+	}
-+	free(prefix_list);
-+}
-+
-+char **split_prefix(const char *env)
-+{
-+	int prefix_nr =3D 0;
-+	int prefix_alloc =3D 0;
-+	char **prefix_list =3D NULL;
-+
-+	if (!env)
-+		return NULL;
-+
-+	do {
-+		const char *sep =3D strchr(env, ':');
-+		int len =3D sep ? sep - env : strlen(env);
-+		if (prefix_alloc <=3D prefix_nr+1) {
-+			prefix_alloc =3D alloc_nr(prefix_alloc);
-+			prefix_list =3D xrealloc(prefix_list,
-+						prefix_alloc * sizeof(*prefix_list));
-+		}
-+		prefix_list[prefix_nr++] =3D append_slash(env, len);
-+		env +=3D sep ? len+1 : len;
-+	} while (*env);
-+	prefix_list[prefix_nr] =3D NULL;
-+	qsort(prefix_list, prefix_nr, sizeof(*prefix_list), prefix_compare);
-+	return prefix_list;
-+}
-+
-+char **combine_prefix_list(char **p1, char **p2)
-+{
-+	int len1 =3D 0, len2 =3D 0;
-+	char **p, **p12, *last_prefix;
-+	char **result, **result_p;
+ 	memset(&partial, 0, sizeof(partial));
+ 	partial.strdup_strings =3D 1;
 +
 +	/*
-+	 * if either of them is null, full access,
-+	 * combining them would give full access as well
++	 * this code modifies index but won't write down anything
++	 * so it's safe to turn of sparse_prefix protection for a while
 +	 */
-+	if (!p1 || !p2)
-+		return NULL;
++	saved_sparse_prefix =3D save_sparse_prefix();
 +
-+	for (p =3D p1; *p; p++)
-+		len1++;
-+	for (p =3D p2; *p; p++)
-+		len2++;
+ 	if (list_paths(&partial, initial_commit ? NULL : "HEAD", prefix, path=
+spec))
+ 		exit(1);
+=20
+@@ -313,6 +321,9 @@ static char *prepare_index(int argc, const char **a=
+rgv, const char *prefix)
+ 	if (read_cache() < 0)
+ 		die("cannot read the index");
+=20
++	/* re-enable sparse_prefix again */
++	restore_sparse_prefix(saved_sparse_prefix);
 +
-+	p12 =3D xmalloc((len1+len2+1)*sizeof(*p12));
-+	result =3D xmalloc((len1+len2+1)*sizeof(*result));
-+	memcpy(p12, p1, len1*sizeof(*p12));
-+	memcpy(p12+len1, p2, (len2+1)*sizeof(*p12));
-+	qsort(p12, len1+len2, sizeof(*p12), prefix_compare);
-+
-+	p =3D p12;
-+	last_prefix =3D *p;
-+	p++;
-+	result_p =3D result;
-+	*result_p =3D xstrdup(last_prefix);
-+	result_p++;
-+	while (*p) {
-+		if (!strcmp(*p, last_prefix)) {
-+			p++;
-+			continue;
-+		}
-+		if (!prefixcmp(*p, last_prefix)) {
-+			p++;
-+			continue;
-+		}
-+		*result_p =3D xstrdup(*p);
-+		result_p++;
-+		p++;
+ 	fd =3D hold_locked_index(&index_lock, 1);
+ 	add_remove_files(&partial);
+ 	refresh_cache(REFRESH_QUIET);
+diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+index e8d568e..4d18873 100644
+--- a/builtin-ls-files.c
++++ b/builtin-ls-files.c
+@@ -606,6 +606,8 @@ int cmd_ls_files(int argc, const char **argv, const=
+ char *prefix)
+ 		 */
+ 		if (show_stage || show_unmerged)
+ 			die("ls-files --with-tree is incompatible with -s or -u");
++		/* no need to restore as ls-files never writes index */
++		save_sparse_prefix();
+ 		overlay_tree_on_cache(with_tree, prefix);
+ 	}
+ 	show_files(&dir, prefix);
+diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
+index 43e55bf..7ce015b 100644
+--- a/builtin-merge-recursive.c
++++ b/builtin-merge-recursive.c
+@@ -201,8 +201,10 @@ static int git_merge_trees(int index_only,
+ 	memset(&opts, 0, sizeof(opts));
+ 	if (index_only)
+ 		opts.index_only =3D 1;
+-	else
++	else {
+ 		opts.update =3D 1;
++		opts.check_index_prefix =3D 1;
 +	}
-+	*result_p =3D NULL;
-+	return result;
+ 	opts.merge =3D 1;
+ 	opts.head_idx =3D 2;
+ 	opts.fn =3D threeway_merge;
+diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+index 72a6de3..0883b41 100644
+--- a/builtin-read-tree.c
++++ b/builtin-read-tree.c
+@@ -218,6 +218,11 @@ int cmd_read_tree(int argc, const char **argv, con=
+st char *unused_prefix)
+ 			opts.head_idx =3D 1;
+ 	}
+=20
++	if (get_sparse_prefix()) {
++		read_cache();
++		opts.check_index_prefix =3D 1;
++	}
++
+ 	for (i =3D 0; i < nr_trees; i++) {
+ 		struct tree *tree =3D trees[i];
+ 		parse_tree(tree);
+diff --git a/cache.h b/cache.h
+index 4687096..f6bbadc 100644
+--- a/cache.h
++++ b/cache.h
+@@ -331,6 +331,7 @@ extern char **split_prefix(const char *env);
+ extern char **combine_prefix_list(char **p1, char **p2);
+ extern void free_prefix_list(char **prefix_list);
+ extern int outside_prefix_list(char **iprefix, const char *prefix);
++extern int check_index_prefix(const struct index_state *index, int is_=
+merge);
+=20
+ #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
+=20
+diff --git a/diff-lib.c b/diff-lib.c
+index e7eaff9..2908146 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -73,6 +73,9 @@ int run_diff_files(struct rev_info *revs, unsigned in=
+t option)
+ 		struct cache_entry *ce =3D active_cache[i];
+ 		int changed;
+=20
++		if (index_outside_sparse_prefix(ce->name))
++			continue;
++
+ 		if (DIFF_OPT_TST(&revs->diffopt, QUIET) &&
+ 			DIFF_OPT_TST(&revs->diffopt, HAS_CHANGES))
+ 			break;
+diff --git a/read-cache.c b/read-cache.c
+index a50a851..4fea40e 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -23,6 +23,11 @@
+=20
+ struct index_state the_index;
+=20
++static int outside_cache_prefix(const struct index_state *istate, cons=
+t char *ce_name)
++{
++	return istate =3D=3D &the_index && index_outside_sparse_prefix(ce_nam=
+e);
 +}
 +
- static void setup_git_env(void)
+ static void set_index_entry(struct index_state *istate, int nr, struct=
+ cache_entry *ce)
  {
- 	git_dir =3D getenv(GIT_DIR_ENVIRONMENT);
-@@ -122,6 +245,104 @@ const char *get_git_work_tree(void)
- 	return work_tree;
+ 	istate->cache[nr] =3D ce;
+@@ -396,6 +401,8 @@ int remove_index_entry_at(struct index_state *istat=
+e, int pos)
+ {
+ 	struct cache_entry *ce =3D istate->cache[pos];
+=20
++	if (outside_cache_prefix(istate, ce->name))
++		die("%s: cannot remove from index outside %s", ce->name, get_sparse_=
+prefix_str());
+ 	remove_name_hash(ce);
+ 	istate->cache_changed =3D 1;
+ 	istate->cache_nr--;
+@@ -410,6 +417,10 @@ int remove_index_entry_at(struct index_state *ista=
+te, int pos)
+ int remove_file_from_index(struct index_state *istate, const char *pat=
+h)
+ {
+ 	int pos =3D index_name_pos(istate, path, strlen(path));
++
++	if (outside_cache_prefix(istate, path))
++		die("%s: cannot remove from index from outside %s", path, get_sparse=
+_prefix_str());
++
+ 	if (pos < 0)
+ 		pos =3D -pos-1;
+ 	cache_tree_invalidate_path(istate->cache_tree, path);
+@@ -809,21 +820,43 @@ static int check_file_directory_conflict(struct i=
+ndex_state *istate,
+ 	return retval + has_dir_name(istate, ce, pos, ok_to_replace);
  }
 =20
-+void set_sparse_prefix(const char *flat_sparse_prefix)
++/*
++ * ce_compare only considers stuff that will be written to a tree obje=
+ct
++ * or index stages
++ *
++ * On CE_* flags CE_HASHED, CE_UNHASHED and CE_UPTODATE are out becaus=
+e they
++ * are in-core only, will not be written out
++ */
++#define CE_COMPARE_MASK (CE_STATE_MASK | CE_UPTODATE)
++static int ce_compare(const struct cache_entry *ce1, const struct cach=
+e_entry *ce2)
 +{
-+	free_prefix_list(sparse_prefix);
-+	sparse_prefix =3D split_prefix(flat_sparse_prefix);
++	return ce1->ce_mode =3D=3D ce2->ce_mode &&
++		((ce1->ce_flags ^ ce2->ce_flags) & ~CE_COMPARE_MASK) =3D=3D 0 &&
++		!memcmp(ce1->sha1, ce2->sha1, 20) &&
++		!strcmp(ce1->name, ce2->name);
 +}
 +
-+char **get_sparse_prefix()
-+{
-+	return sparse_prefix;
-+}
-+
-+const char *get_sparse_prefix_str()
-+{
-+	static char **sparse_prefix =3D NULL;
-+	static char *sparse_prefix_str =3D NULL;
-+	int len;
-+	char **prefix;
-+
-+	if (sparse_prefix =3D=3D get_sparse_prefix())
-+		return sparse_prefix ? sparse_prefix_str : "";
-+
-+	sparse_prefix =3D get_sparse_prefix();
-+
-+	if (!sparse_prefix)
-+		return "";
-+
-+	len =3D 0;
-+	for (prefix =3D sparse_prefix; *prefix; prefix++)
-+		len +=3D strlen(*prefix)+1;
-+	if (sparse_prefix_str)
-+		free(sparse_prefix_str);
-+	sparse_prefix_str =3D xmalloc(len);
-+
-+	prefix =3D sparse_prefix;
-+	len =3D strlen(*prefix);
-+	if ((*prefix)[len-1] =3D=3D '/')
-+		len--;
-+	memcpy(sparse_prefix_str, *prefix, len);
-+	prefix++;
-+	while (*prefix) {
-+		int len2 =3D strlen(*prefix);
-+		sparse_prefix_str[len++] =3D ':';
-+		if ((*prefix)[len2-1] =3D=3D '/')
-+			len2--;
-+		memcpy(sparse_prefix_str+len, *prefix, len2);
-+		len +=3D len2;
-+		prefix++;
-+	}
-+	sparse_prefix_str[len] =3D 0;
-+	return sparse_prefix_str;
-+}
-+
-+char **save_sparse_prefix()
-+{
-+	char **prefix =3D sparse_prefix;
-+	sparse_prefix =3D NULL;
-+	return prefix;
-+}
-+
-+char **restore_sparse_prefix(char **prefix)
-+{
-+	char **old_prefix =3D sparse_prefix;
-+	sparse_prefix =3D prefix;
-+	return old_prefix;
-+}
-+
-+int outside_prefix_list(char **iprefix, const char *prefix)
-+{
-+	if (!iprefix)
-+		return 0;
-+
-+	while (*iprefix) {
-+		if (!prefixcmp(prefix, *iprefix))
-+			return 0;
-+		iprefix++;
-+	}
-+	return 1;
-+}
-+
-+int sparse_checkout_enabled()
-+{
-+	static int disable_sparse_checkout =3D -1;
-+	if (disable_sparse_checkout =3D=3D -1)
-+		disable_sparse_checkout =3D getenv("GIT_SPARSE_CHECKOUT_INDEX_ONLY")=
- !=3D NULL;
-+	return !disable_sparse_checkout && get_sparse_prefix();
-+}
-+
-+
-+int outside_sparse_prefix(const char *prefix)
-+{
-+	return sparse_checkout_enabled() && outside_prefix_list(sparse_prefix=
-, prefix);
-+}
-+
-+int index_outside_sparse_prefix(const char *prefix)
-+{
-+	return outside_prefix_list(sparse_prefix, prefix);
-+}
-+
- char *get_object_directory(void)
+ static int add_index_entry_with_check(struct index_state *istate, stru=
+ct cache_entry *ce, int option)
  {
- 	if (!git_object_dir)
+ 	int pos;
+ 	int ok_to_add =3D option & ADD_CACHE_OK_TO_ADD;
+ 	int ok_to_replace =3D option & ADD_CACHE_OK_TO_REPLACE;
+ 	int skip_df_check =3D option & ADD_CACHE_SKIP_DFCHECK;
++	int is_outside =3D outside_cache_prefix(istate, ce->name);
+=20
+ 	cache_tree_invalidate_path(istate->cache_tree, ce->name);
+ 	pos =3D index_name_pos(istate, ce->name, ce->ce_flags);
+=20
+ 	/* existing match? Just replace it. */
+ 	if (pos >=3D 0) {
++		if (is_outside && !ce_compare(istate->cache[pos], ce))
++			die("%s: cannot add to index outside %s", ce->name, get_sparse_pref=
+ix_str());
+ 		replace_index_entry(istate, pos, ce);
+ 		return 0;
+ 	}
++
++	if (is_outside)
++		die("%s: cannot add to index outside %s", ce->name, get_sparse_prefi=
+x_str());
+ 	pos =3D -pos-1;
+=20
+ 	/*
+@@ -858,9 +891,11 @@ int add_index_entry(struct index_state *istate, st=
+ruct cache_entry *ce, int opti
+ {
+ 	int pos;
+=20
+-	if (option & ADD_CACHE_JUST_APPEND)
++	if (option & ADD_CACHE_JUST_APPEND) {
++		if (outside_cache_prefix(istate, ce->name))
++			die("%s: cannot add to index outside %s", ce->name, get_sparse_pref=
+ix_str());
+ 		pos =3D istate->cache_nr;
+-	else {
++	} else {
+ 		int ret;
+ 		ret =3D add_index_entry_with_check(istate, ce, option);
+ 		if (ret <=3D 0)
+@@ -1444,3 +1479,71 @@ int read_index_unmerged(struct index_state *ista=
+te)
+ 	istate->cache_nr =3D dst - istate->cache;
+ 	return !!last;
+ }
++
++int check_index_prefix(const struct index_state *index, int is_merge)
++{
++	unsigned i;
++	char **index_prefix =3D get_sparse_prefix();
++
++	if (!index_prefix)
++		return 1;
++
++	/* Check for unmerged entries first */
++	for (i =3D 0; i < index->cache_nr; i++) {
++		struct cache_entry *ce =3D index->cache[i];
++		if (ce_stage(ce) && index_outside_sparse_prefix(ce->name))
++			return 0;
++	}
++
++	/*
++	 * if is_merge is true, caller has decided that there
++	 * could be changes outside index prefix, return now
++	 */
++	if (is_merge)
++		return 1;
++	else {
++		const struct index_state *idx[2];
++		int prefix_i[2];
++		int index_prefix_nr;
++		unsigned entry_i[2];
++
++		idx[0] =3D &the_index;
++		idx[1] =3D index;
++		prefix_i[0] =3D prefix_i[1] =3D 0;
++		entry_i[0] =3D entry_i[1] =3D 0;
++		index_prefix_nr =3D 0;
++		while (index_prefix[index_prefix_nr])
++			index_prefix_nr++;
++
++		while (entry_i[0] < idx[0]->cache_nr &&
++		       entry_i[1] < idx[1]->cache_nr) {
++			/* ignore anything inside index prefix */
++			int what_index;
++			for (what_index =3D 0; what_index < 2; what_index++) {
++				const struct index_state *idx_p =3D idx[what_index];
++				const char *prefix =3D index_prefix[prefix_i[what_index]];
++				unsigned *entry_ip =3D entry_i+what_index;
++				if (prefix_i[what_index] < index_prefix_nr &&
++				    !prefixcmp(idx_p->cache[*entry_ip]->name, prefix)) {
++					while (*entry_ip < idx_p->cache_nr &&
++					       !prefixcmp(idx_p->cache[*entry_ip]->name, prefix))
++						entry_ip[0]++;
++					prefix_i[what_index]++;
++				}
++			}
++
++			if (entry_i[0] =3D=3D idx[0]->cache_nr || entry_i[1] =3D=3D idx[1]-=
+>cache_nr)
++				break;
++
++			/* does not match */
++			if (!ce_compare(idx[0]->cache[entry_i[0]], idx[1]->cache[entry_i[1]=
+]))
++				return 0;
++
++			entry_i[0]++;
++			entry_i[1]++;
++		}
++
++		return entry_i[0] =3D=3D idx[0]->cache_nr &&
++			entry_i[1] =3D=3D idx[1]->cache_nr;
++	}
++}
+diff --git a/unpack-trees.c b/unpack-trees.c
+index cba0aca..0a6723b 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -408,6 +408,9 @@ int unpack_trees(unsigned len, struct tree_desc *t,=
+ struct unpack_trees_options
+ 	if (o->trivial_merges_only && o->nontrivial_merge)
+ 		return unpack_failed(o, "Merge requires file-level merging");
+=20
++	if (o->check_index_prefix && !check_index_prefix(&o->result, o->merge=
+ && !o->prefix))
++		return unpack_failed(o, "Merge outside index prefix");
++
+ 	o->src_index =3D NULL;
+ 	ret =3D check_updates(o) ? (-2) : 0;
+ 	if (o->dst_index)
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 94e5672..a1b46f9 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -26,7 +26,8 @@ struct unpack_trees_options {
+ 		     verbose_update:1,
+ 		     aggressive:1,
+ 		     skip_unmerged:1,
+-		     gently:1;
++		     gently:1,
++		     check_index_prefix:1;
+ 	const char *prefix;
+ 	int pos;
+ 	struct dir_struct *dir;
 --=20
 1.5.5.GIT
