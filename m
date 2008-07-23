@@ -1,82 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] sort_in_topological_order(): avoid setting a commit
- flag
-Date: Wed, 23 Jul 2008 12:02:30 -0700
-Message-ID: <7vprp4ctkp.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0807230148130.8986@racer>
- <alpine.DEB.1.00.0807230150480.8986@racer>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add help.autocorrect to enable/disable autocorrecting
+Date: Wed, 23 Jul 2008 20:04:40 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807232003420.8986@racer>
+References: <alpine.DEB.1.00.0807222100150.8986@racer> <20080722203730.GC5113@blimp.local> <20080722210354.GD5113@blimp.local> <alpine.DEB.1.00.0807222207110.8986@racer> <20080722212633.GF5113@blimp.local> <alpine.DEB.1.00.0807222242160.8986@racer>
+ <20080722222510.GA4474@blimp.local> <alpine.DEB.1.00.0807231743030.8986@racer> <20080723184443.GD5283@blimp.local> <alpine.DEB.1.00.0807231958210.8986@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: pasky@suse.cz, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 23 21:03:47 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 21:05:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLjco-0006ql-Ti
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 21:03:47 +0200
+	id 1KLjem-00073k-Lq
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 21:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753860AbYGWTCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 15:02:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753661AbYGWTCj
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 15:02:39 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60624 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752649AbYGWTCj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 15:02:39 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4CEAA3765A;
-	Wed, 23 Jul 2008 15:02:37 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8806837657; Wed, 23 Jul 2008 15:02:33 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EA546D64-58E9-11DD-9217-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753773AbYGWTEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 15:04:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753865AbYGWTEk
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 15:04:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54505 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753772AbYGWTEj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 15:04:39 -0400
+Received: (qmail invoked by alias); 23 Jul 2008 19:04:38 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp027) with SMTP; 23 Jul 2008 21:04:38 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18RziAh3ZsRUjd9QDxfr00fqoKLfNdN4/Y0SiXJqQ
+	iTgU+cnSmSqSBu
+X-X-Sender: gene099@racer
+In-Reply-To: <alpine.DEB.1.00.0807231958210.8986@racer>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89742>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> @@ -494,7 +493,8 @@ void sort_in_topological_order(struct commit_list ** list, int lifo)
->  			 * when all their children have been emitted thereby
->  			 * guaranteeing topological order.
->  			 */
-> -			if (!--parent->indegree) {
-> +			if (--parent->indegree == 1) {
-> +				parent->indegree = 0;
->  				if (!lifo)
->  					insert_by_date(parent, &work);
->  				else
-> @@ -505,7 +505,6 @@ void sort_in_topological_order(struct commit_list ** list, int lifo)
->  		 * work_item is a commit all of whose children
->  		 * have already been emitted. we can emit it now.
->  		 */
-> -		commit->object.flags &= ~TOPOSORT;
->  		*pptr = work_item;
->  		pptr = &work_item->next;
->  	}
+On Wed, 23 Jul 2008, Johannes Schindelin wrote:
 
-These two hunks look suspicious.
+> On Wed, 23 Jul 2008, Alex Riesen wrote:
+> 
+> > Johannes Schindelin, Wed, Jul 23, 2008 18:44:49 +0200:
+> > > > +	n = 1;
+> > > > +	while (n < main_cmds.cnt &&
+> > > > +		best_similarity == similarity(main_cmds.names[n]->name))
+> > > > +		++n;
+> > > 
+> > > Mini-nit: you never ask for the value of n, only if it is 1 or larger.  So 
+> > > you do not need to count...
+> > 
+> > But I do, don't I? AFAICS, I use 0, 1 and >1 (this-these).
+> 
+> Yes.  So check cnt > 0 && best_similarity > 5 says if it is 0,
 
-The "tips" used to enter that while() loop with zero indegree, its parents
-examined and then entered the final list pointed by pptr with the toposort
-scratch variables removed and indegree set to zero.  Now with the new +1
-based code, they enter the while() loop with 1 indegree, and enter the
-final list with indegree set to 1.
+Oh, I just realized that my patch is bogus anyway.  It only checks for 
+best_similarity > 5 in the case that the first two commands have equal 
+similarity.  D'oh.
 
-A parent that has only one child that is "tip" is discovered in the
-while() loop, its indegree decremented (so it goes down to zero in the
-original code and 1 in yours) and enters work queue to be processed.  It
-used to have the toposort scratch variable removed in the second hunk
-above, but that is done in the first hunk in your version.
-
-So after this patch, indegree will be all zero for non-tip commits but
-will be one for tip commits.  Is this intended?
-
-I'd suggest dropping the "parent->indegree = 0" assignment and turn the
-second hunk into "commit->indgree = 0" assignment.
+Ciao,
+Dscho
