@@ -1,111 +1,78 @@
-From: Olivier Marin <dkr+ml.git@free.fr>
-Subject: Re: [PATCH] Rename ".dotest/" to ".git/rebase" and ".dotest-merge"
- to "rebase-merge"
-Date: Wed, 23 Jul 2008 16:54:15 +0200
-Message-ID: <48874617.3010108@free.fr>
-References: <73fd69b50807151408i6a916da6p7b89fe81e65fc717@mail.gmail.com> <20080715212211.GL6244@leksak.fem-net> <487D1B3D.70500@lsrfire.ath.cx> <alpine.DEB.1.00.0807160245440.2841@eeepc-johanness> <20080716012619.GM8185@mit.edu> <7viqv5r637.fsf@gitster.siamese.dyndns.org> <4882350B.6020003@free.fr> <7v3am5zfea.fsf@gitster.siamese.dyndns.org> <20080722234703.GD5904@leksak.fem-net> <7vbq0pifwq.fsf@gitster.siamese.dyndns.org> <20080723011341.GE5904@leksak.fem-net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [RFC] Git User's Survey 2008
+Date: Wed, 23 Jul 2008 16:54:17 +0200
+Message-ID: <200807231654.18019.robin.rosenberg.lists@dewire.com>
+References: <200807230325.04184.jnareb@gmail.com> <200807231508.42334.jnareb@gmail.com> <alpine.DEB.1.00.0807231414480.8986@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Theodore Tso <tytso@mit.edu>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?ISO-8859-1?Q?Ren=E9_?= =?ISO-8859-1?Q?Scharfe?= 
-	<rene.scharfe@lsrfire.ath.cx>, Joe Fiorini <joe@faithfulgeek.org>,
-	git@vger.kernel.org, Jari Aalto <jari.aalto@cante.net>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Jul 23 16:55:18 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 23 16:55:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLfkM-0001OE-C8
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 16:55:18 +0200
+	id 1KLfkj-0001Xt-TL
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 16:55:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750959AbYGWOyT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2008 10:54:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750983AbYGWOyS
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 10:54:18 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:49405 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750868AbYGWOyS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 10:54:18 -0400
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 1A96F12B6E8;
-	Wed, 23 Jul 2008 16:54:17 +0200 (CEST)
-Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 4045A12B6F4;
-	Wed, 23 Jul 2008 16:54:16 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-In-Reply-To: <20080723011341.GE5904@leksak.fem-net>
+	id S1751433AbYGWOym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 10:54:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751268AbYGWOym
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 10:54:42 -0400
+Received: from av11-1-sn2.hy.skanova.net ([81.228.8.183]:42940 "EHLO
+	av11-1-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751394AbYGWOym (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 10:54:42 -0400
+Received: by av11-1-sn2.hy.skanova.net (Postfix, from userid 502)
+	id C4A1937F00; Wed, 23 Jul 2008 16:54:39 +0200 (CEST)
+Received: from smtp4-1-sn2.hy.skanova.net (smtp4-1-sn2.hy.skanova.net [81.228.8.92])
+	by av11-1-sn2.hy.skanova.net (Postfix) with ESMTP
+	id 76C8537E96; Wed, 23 Jul 2008 16:54:39 +0200 (CEST)
+Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp4-1-sn2.hy.skanova.net (Postfix) with ESMTP id 568EB37E43;
+	Wed, 23 Jul 2008 16:54:39 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0807231414480.8986@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89667>
 
-Stephan Beyer a =E9crit :
->=20
->>> Perhaps I am confused, but ...
+onsdagen den 23 juli 2008 15.18.40 skrev Johannes Schindelin:
+> Hi,
+> 
+> On Wed, 23 Jul 2008, Jakub Narebski wrote:
+> 
+> > On Wed, 23 Jul 2008, Johannes Schindelin wrote:
+> > > On Wed, 23 Jul 2008, Jakub Narebski wrote:
+> > > 
+> > > Some people prefer to stay anonymous, so I think email is out.
+> > > 
+> > > >    04. Which programming languages you are proficient with?
+> > > >        (The choices include programming languages used by git)
+> > > >        (zero or more: multiple choice)
+> > > >      - C, shell, Perl, Python, Tcl/Tk
+> > > >      + (should we include other languages, like C++, Java, PHP,
+> > > >         Ruby,...?)
+> > > 
+> > > Yes, I think this should be a long list.
+> > 
+> > I'd rather not have a "laundry list" of languages.  I have put C++
+> > because QGit uses it, Java because of egit/jgit, PHP for web
+> > interfaces, Ruby because of GitHub and because of Ruby comminity
+> > choosing Git.  I should perhaps add Emacs Lisp, HTML+CSS and
+> > JavaScript here.  What other languages should be considered?
+> 
+> C# at least, since we had one (pretty unsuccessful) attempt at 
+> reimplementing Git in it.
 
-I can understand. ;-)
+What is the reason for the question? Do we want to know what languages
+people would like to contribute to Git in or do we want to know what "kind"
+of programmers are attracted by Git?  Making it a long list should make
+it easier to tabulate the responses.
 
->>> Why is there "HEAD" and "ORIG_HEAD" and not only "ORIG_HEAD"?
->> Just being a bit defensive -- in this case I think it might be Ok to=
- say
->> "read-tree --reset -u ORIG_HEAD", but I haven't checked in a conflic=
-ted
->> case.
-
-git read-tree --reset -u ORIG_HEAD clears local changes which is not go=
-od.
-
-> Well, the test suite fails:
-> * FAIL 4: am --abort goes back after failed am
->=20
->                         git-am --abort &&
->                         git rev-parse HEAD >actual &&
->                         git rev-parse initial >expect &&
->                         test_cmp expect actual &&
->   here>                 test_cmp file-2-expect file-2 &&
-
-Local changes have been lost.
-
-> The reason of my question was that I *blindly* incorporated the chang=
-e into
-> sequencer to make it able to work on a dirty working tree and thus to=
- be
-> able to migrate am onto it without losing the ability to apply patche=
-s
-> on a dirty working tree....
-
-Are you talking about your seq-proto-dev3 branch?
-
-> All am tests applied afterwards, but the sequencer and the rebase-i
-> test suite failed in a place where I didn't expect it. I *then* had
-> a deeper look at the read-tree line and I was wondering what the "HEA=
-D"
-> should achieve.
-> I removed it and all tests passed. (I didn't have t4151 in my branch
-> at that point.)
->=20
-> Now, because t4151 does not pass, I am wondering what's the best thin=
-g
-> I could do...
-
-I looked at your code. You use reset_almost_hard() instead of "reset --=
-hard",
-it's fine but you does not update require_clean_work_tree() to be less
-restrictive and let the sequencer work with local modifications. Those =
-two
-lines must be removed, I think:
-  git update-index --ignore-submodules --refresh &&
-  git diff-files --quiet --ignore-submodules &&
-
-Try that with the original read-tree line and t4151 should pass.
-
-Ah, you should change "Applying 6" with "Applying \"6\"" in t4151-am-ab=
-ort.sh
-too.
-
-Olivier.
+-- robin
