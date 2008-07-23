@@ -1,72 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git-checkout: improve error messages, detect
- ambiguities.
-Date: Wed, 23 Jul 2008 16:04:08 -0700
-Message-ID: <7v7ibc9p93.fsf@gitster.siamese.dyndns.org>
-References: <1216774940-4955-1-git-send-email-madcoder@debian.org>
- <1216808133-31919-1-git-send-email-madcoder@debian.org>
- <1216808133-31919-2-git-send-email-madcoder@debian.org>
- <1216808133-31919-3-git-send-email-madcoder@debian.org>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH] editor.c: Libify launch_editor()
+Date: Thu, 24 Jul 2008 01:09:23 +0200
+Message-ID: <20080723230923.GA12754@leksak.fem-net>
+References: <alpine.DEB.1.00.0807180313200.2906@eeepc-johanness> <1216380408-21671-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0807181405510.3932@eeepc-johanness>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Jul 24 01:06:03 2008
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 24 01:10:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLnOZ-00077Y-UM
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 01:05:50 +0200
+	id 1KLnTe-0000Fo-Mq
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 01:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752768AbYGWXES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 19:04:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753865AbYGWXES
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 19:04:18 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38381 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754058AbYGWXER (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 19:04:17 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B5F6338746;
-	Wed, 23 Jul 2008 19:04:14 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 3CB8938745; Wed, 23 Jul 2008 19:04:09 -0400 (EDT)
-In-Reply-To: <1216808133-31919-3-git-send-email-madcoder@debian.org> (Pierre
- Habouzit's message of "Wed, 23 Jul 2008 12:15:33 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: AB795D1C-590B-11DD-874D-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753828AbYGWXJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 19:09:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753865AbYGWXJe
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 19:09:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60884 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753778AbYGWXJd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 19:09:33 -0400
+Received: (qmail invoked by alias); 23 Jul 2008 23:09:32 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp023) with SMTP; 24 Jul 2008 01:09:32 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX18vd7Vo+xgvgxEp/0OIlm34g0vQ5JYrrJLztEOpKo
+	BuStLtguCgEwIF
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KLnSV-0007Xj-CC; Thu, 24 Jul 2008 01:09:23 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807181405510.3932@eeepc-johanness>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89800>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+Hi,
 
-> The patch is twofold: it moves the option consistency checks just under
-> the parse_options call so that it doesn't get in the way of the tree
-> reference vs. pathspecs desambiguation.
+Johannes Schindelin wrote:
+> > This patch removes exit()/die() calls and builtin-specific messages from 
+> > launch_editor(), so that it can be used as a general libgit.a function 
+> > to launch an editor.
+> 
+> Thanks.  Now we have to convince Junio that it is a good idea :-)
 
-I think this goes a bit too far.
+Well, I've seen that *a lot* of lib code (15 functions, see below) is in 
+the builtins.
 
-Even if you have a file called 'master' tracked in your project, when you
-say:
+Cleaning that up seems to be good to have a real separation between
+libgit and builtins, but I guess such a change would not find its way
+into 1.6.0, would it?
 
-    $ git checkout master
+Regards,
+  Stephan
 
-that's almost always branch switching.  Forcing "git checkout master --"
-disambiguation for such a common case is simply a wrong thing to do from
-the usability point of view.
+PS: I've spontaneously decided to make a list:
 
-So how about (obviously we are interested only in the case without
-disambiguating '--' here):
+defined-in	func-name	 - used in builtin-\1.c
 
-    (3-1) if there is only one token left and if it is a rev, that's the
-          branch to check out or commit to detach to.
+builtin-add.c:
+	add_files_to_cache()	 - add, checkout, commit
+	interactive_add()	 - add, commit
 
-    (3-2) otherwise the user might have mistyped one of the paths, so help
-          avoiding by making sure the first token is unambiguously either
-          a rev or a path (but not both).
+builtin-archive.c:
+	parse_pathspec_arg()	 - archive, uploard-archive
+
+builtin-init-db.c:
+	init_db()		 - init-db, clone
+
+builtin-ls-files.c:
+	overlay_tree_on_cache()	 - ls-files, commit
+	report_path_error()	 - ls-files, checkout, commit
+
+builtin-mailsplit.c:
+	read_line_with_nul()	 - mailsplit, mailinfo
+
+builtin-merge-recursive.c:
+	write_tree_from_memory() - merge-recursive, checkout
+
+builtin-prune-packed.c:
+	prune_packed_objects()	 - prune-packed, prune
+
+builtin-shortlog.c:
+	shortlog_add_commit()	 - shortlog, log
+	shortlog_init()		 - shortlog, log
+	shortlog_output()	 - shortlog, log
+	shortlog_init()		 - shortlog, log
+
+builtin-stripspace.c:
+	stripspace()		 - stripspace, commit, tag
+
+And launch_editor() that is handled by the patch in this thread.
+
+Then there are functions that are non-static, but not declined in
+any .h file. A patch that makes them static follows in a separate mail.
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
