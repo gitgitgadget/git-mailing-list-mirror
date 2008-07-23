@@ -1,74 +1,115 @@
-From: "Dmitry Potapov" <dpotapov@gmail.com>
-Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not been set
-Date: Wed, 23 Jul 2008 23:33:36 +0400
-Message-ID: <37fcd2780807231233o6e71303doeea53c8f4e5aab67@mail.gmail.com>
-References: <alpine.DEB.1.00.0807222255450.8986@racer>
-	 <7vy73tihl6.fsf@gitster.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0807230203350.8986@racer>
-	 <7vej5kfs0w.fsf@gitster.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0807231817460.8986@racer>
-	 <488772BC.80207@workspacewhiz.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] sort_in_topological_order(): avoid setting a commit
+ flag
+Date: Wed, 23 Jul 2008 20:33:53 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807232014260.8986@racer>
+References: <alpine.DEB.1.00.0807230148130.8986@racer> <alpine.DEB.1.00.0807230150480.8986@racer> <7vprp4ctkp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Joshua Jensen" <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 21:34:41 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: pasky@suse.cz, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 21:34:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLk6i-0003uq-1I
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 21:34:40 +0200
+	id 1KLk6v-0003zM-Ng
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 21:34:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753649AbYGWTdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 15:33:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753578AbYGWTdj
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 15:33:39 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:2261 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753351AbYGWTdi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 15:33:38 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1116719ywe.1
-        for <git@vger.kernel.org>; Wed, 23 Jul 2008 12:33:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=lD03eCmQgiBXf60ZRxVs2nsXRVfw32YalaeDYKsjeRA=;
-        b=SoNI4KHxx+pXJVG1MpmkOjt66VceM5GzB+E4E1vUOvu1BGuf0O5HaAZP3ZRw7NPRLm
-         zVGSbB0YiV52X1wnltbMcLMBVI1UXcYrbcQcdoyiJs6Y7hOpiMA5EGz03uL1oBhwl5wS
-         WvYtGJhMrgIdAD5fP1af9po6OWfVpszNWf/kU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=QGe1RBBCu3O1kLzAhLZuav0bjM/Hgrq+hVZvyqIE2ZrBbX6qR8+NCvyuldL2tFjK8z
-         YgxYpE3h5Edoe7ZY2E5JwMAmXPJ3+ooJCDxbCyEcjt5pTIKgivormBuDo8Q3x0qV6rXK
-         xqqIgPOrSCHxVhPxmATECpaqwdJ3MM78Vtens=
-Received: by 10.142.164.10 with SMTP id m10mr63121wfe.60.1216841616167;
-        Wed, 23 Jul 2008 12:33:36 -0700 (PDT)
-Received: by 10.142.106.16 with HTTP; Wed, 23 Jul 2008 12:33:36 -0700 (PDT)
-In-Reply-To: <488772BC.80207@workspacewhiz.com>
-Content-Disposition: inline
+	id S1754781AbYGWTdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 15:33:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754048AbYGWTdx
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 15:33:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46621 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753091AbYGWTdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 15:33:52 -0400
+Received: (qmail invoked by alias); 23 Jul 2008 19:33:51 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp057) with SMTP; 23 Jul 2008 21:33:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Smx4QSs8SL9S1A4EF+fb3euu5ZiyT6CcHKGWGxE
+	EzPJyU0cQkWF1K
+X-X-Sender: gene099@racer
+In-Reply-To: <7vprp4ctkp.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89754>
 
-On Wed, Jul 23, 2008 at 10:04 PM, Joshua Jensen
-<jjensen@workspacewhiz.com> wrote:
->
-> There are certain file formats, such as a Visual Studio .sln file, that MUST
-> be CRLF.  When a .sln file is not CRLF, Visual Studio refuses to read it.
+Hi,
 
-I wonder what exactly version of Visual Studio you use? All version that
-I have seen had no problem reading .sln with LF ending, though they always
-wrote it back with CRLF. In any case, you can define as binary, so Git will
-not do anything about their EOLs.
+On Wed, 23 Jul 2008, Junio C Hamano wrote:
 
-Dmitry
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > @@ -494,7 +493,8 @@ void sort_in_topological_order(struct commit_list ** list, int lifo)
+> >  			 * when all their children have been emitted thereby
+> >  			 * guaranteeing topological order.
+> >  			 */
+> > -			if (!--parent->indegree) {
+> > +			if (--parent->indegree == 1) {
+> > +				parent->indegree = 0;
+> >  				if (!lifo)
+> >  					insert_by_date(parent, &work);
+> >  				else
+> > @@ -505,7 +505,6 @@ void sort_in_topological_order(struct commit_list ** list, int lifo)
+> >  		 * work_item is a commit all of whose children
+> >  		 * have already been emitted. we can emit it now.
+> >  		 */
+> > -		commit->object.flags &= ~TOPOSORT;
+> >  		*pptr = work_item;
+> >  		pptr = &work_item->next;
+> >  	}
+> 
+> These two hunks look suspicious.
+> 
+> The "tips" used to enter that while() loop with zero indegree, its 
+> parents examined and then entered the final list pointed by pptr with 
+> the toposort scratch variables removed and indegree set to zero.  Now 
+> with the new +1 based code, they enter the while() loop with 1 indegree, 
+> and enter the final list with indegree set to 1.
+
+Almost correct.  The way I did it the if() is entered with indegree == 
+1, but is set indegree to 0 right away.
+
+I did it this way because of these two lines before the if():
+
+                        if (!parent->indegree)
+                                continue;
+
+These are the replacement for the previous
+
+			if (!(parent->object.flags & TOPOSORT))
+                                continue;
+
+Now, if indegree was not set to 0, that if () would not trigger, but in 
+the next one (the first hunk you quoted), indegree was decremented and 
+failed the test == 1.
+
+However, that is correct only by pure chance; I certainly missed that.  
+The correct fix according to my thinking would be to set the indegree to 0 
+when the tips are inserted, too.
+
+> A parent that has only one child that is "tip" is discovered in the 
+> while() loop, its indegree decremented (so it goes down to zero in the 
+> original code and 1 in yours) and enters work queue to be processed.  
+> It used to have the toposort scratch variable removed in the second hunk 
+> above, but that is done in the first hunk in your version.
+> 
+> So after this patch, indegree will be all zero for non-tip commits but
+> will be one for tip commits.  Is this intended?
+
+No.
+
+> I'd suggest dropping the "parent->indegree = 0" assignment and turn the
+> second hunk into "commit->indgree = 0" assignment.
+
+Yeah, that is much simpler.
+
+Thanks,
+Dscho
