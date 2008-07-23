@@ -1,99 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: q: faster way to integrate/merge lots of topic branches?
-Date: Wed, 23 Jul 2008 13:01:57 -0700
-Message-ID: <7v8wvscqtm.fsf@gitster.siamese.dyndns.org>
-References: <20080723130518.GA17462@elte.hu> <20080723135621.GJ22606@neumann>
- <20080723140441.GA9537@elte.hu>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not
+ been set
+Date: Wed, 23 Jul 2008 21:07:10 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807232105470.8986@racer>
+References: <alpine.DEB.1.00.0807222255450.8986@racer> <7vy73tihl6.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807230203350.8986@racer> <7vej5kfs0w.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807231817460.8986@racer>
+ <7vhcagcsmj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Wed Jul 23 22:03:39 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 22:08:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLkYT-00079u-5u
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 22:03:21 +0200
+	id 1KLkdC-00016Z-Rh
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 22:08:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755206AbYGWUCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 16:02:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755198AbYGWUCG
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 16:02:06 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56864 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755202AbYGWUCF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 16:02:05 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id F1DB2395A2;
-	Wed, 23 Jul 2008 16:02:03 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B31BB3959E; Wed, 23 Jul 2008 16:01:59 -0400 (EDT)
-In-Reply-To: <20080723140441.GA9537@elte.hu> (Ingo Molnar's message of "Wed,
- 23 Jul 2008 16:04:42 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 383B2894-58F2-11DD-BA2B-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1755284AbYGWUHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 16:07:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755252AbYGWUHL
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 16:07:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42062 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755207AbYGWUHJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 16:07:09 -0400
+Received: (qmail invoked by alias); 23 Jul 2008 20:07:07 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp010) with SMTP; 23 Jul 2008 22:07:07 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19uy81yhiJuAwgZns/t5Lj4sWecXUjhpRJ8uddO6e
+	AbTQuP59tD4Lz3
+X-X-Sender: gene099@racer
+In-Reply-To: <7vhcagcsmj.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89764>
 
-Ingo Molnar <mingo@elte.hu> writes:
+Hi,
 
-> hm, it's very slow:
->
->   $ time git branch --no-merged
->   [...]
->
->   real    0m9.177s
->   user    0m9.027s
->   sys     0m0.129s
->
-> when running it on tip/master:
->
->   http://people.redhat.com/mingo/tip.git/README
+On Wed, 23 Jul 2008, Junio C Hamano wrote:
 
-Hmmm, does not reproduce for me with a copy of that repository.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Wed, 23 Jul 2008, Junio C Hamano wrote:
+> > ...
+> >> If you are on a sane system, you do not even want to pay the price of 
+> >> conversion.  Only people on systems with CRLF line endings should pay 
+> >> the price (because your aim is to convert on such systems).  Are we 
+> >> throwing that out of the window when the project decides to use 
+> >> gitattributes?
+> >
+> > Well, if you do not want that, why do you set crlf in the 
+> > gitattributes to begin with?
+> 
+> It is not _me_ but the project upstream that needs to interact also with 
+> Windows people who manages gitattributes.  And me personally knows my 
+> editors are not helpful to add CR at the end of lines, so I do not need 
+> the conversion.
 
-$ time git branch -a --no-merged mingo/master
-  linus/master
-  mingo/acpi-for-len
-  mingo/auto-cpus4096-next
-  mingo/auto-kmemcheck-next
-  mingo/auto-test
-  mingo/auto-test-fixes
-  mingo/core/futex-64bit
-  mingo/core/kill-the-BKL
-  mingo/core/percpu-zerobased
-  mingo/cpus4096-for-linus
-  mingo/kmemcheck-for-linus
-  mingo/stackprotector-for-linus
-  mingo/timers/for-linus
-  mingo/tip
-  mingo/tracing/ftrace
-  mingo/tracing/immediates
-  mingo/tracing/markers
-  mingo/tracing/stopmachine-allcpus
-  mingo/tracing/textedit
-  mingo/x86/acpi-rename-acpi_nmi
-  mingo/x86/audit-speedup
-  mingo/x86/crashdump
-  mingo/x86/header-guards
-  mingo/x86/prototypes
-  mingo/x86/sparse-fixes
-  mingo/x86/unify-mce
-  mingo/x86/x2apic
+I know you do.  And I know those users don't.  They do not even know that 
+they should set autocrlf = input in their cygwin Git.
 
-real    0m1.442s
-user    0m1.360s
-sys     0m0.084s
+Or at least, now they do.  After a few hundred commits that have been 
+published _after_ their broken checkins.
 
-With the patch I posted earlier, the time becomes:
-
-real    0m0.600s
-user    0m0.560s
-sys     0m0.040s
+Sigh,
+Dscho
