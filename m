@@ -1,107 +1,92 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: regression in  92392b4
-Date: Tue, 22 Jul 2008 19:41:08 -0500
-Message-ID: <20080723004108.GB14668@spearce.org>
-References: <20080722231745.GD11831@artemis.madism.org> <alpine.DEB.1.00.0807230033000.8986@racer>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Rename ".dotest/" to ".git/rebase" and ".dotest-merge"
+ to "rebase-merge"
+Date: Tue, 22 Jul 2008 17:48:53 -0700
+Message-ID: <7vbq0pifwq.fsf@gitster.siamese.dyndns.org>
+References: <73fd69b50807151408i6a916da6p7b89fe81e65fc717@mail.gmail.com>
+ <20080715212211.GL6244@leksak.fem-net> <487D1B3D.70500@lsrfire.ath.cx>
+ <alpine.DEB.1.00.0807160245440.2841@eeepc-johanness>
+ <20080716012619.GM8185@mit.edu> <7viqv5r637.fsf@gitster.siamese.dyndns.org>
+ <4882350B.6020003@free.fr> <7v3am5zfea.fsf@gitster.siamese.dyndns.org>
+ <20080722234703.GD5904@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Git ML <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 23 02:42:16 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Olivier Marin <dkr+ml.git@free.fr>, Theodore Tso <tytso@mit.edu>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Joe Fiorini <joe@faithfulgeek.org>, git@vger.kernel.org,
+	Jari Aalto <jari.aalto@cante.net>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Jul 23 02:50:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLSQl-00042E-3U
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 02:42:11 +0200
+	id 1KLSYZ-0005wM-6z
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 02:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751268AbYGWAlL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jul 2008 20:41:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbYGWAlK
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 20:41:10 -0400
-Received: from george.spearce.org ([209.20.77.23]:43138 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750951AbYGWAlJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 20:41:09 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6043C383A5; Wed, 23 Jul 2008 00:41:08 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807230033000.8986@racer>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751557AbYGWAtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 20:49:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752165AbYGWAtP
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 20:49:15 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37471 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751543AbYGWAtO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 20:49:14 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9D1C437823;
+	Tue, 22 Jul 2008 20:49:12 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 1403737820; Tue, 22 Jul 2008 20:49:00 -0400 (EDT)
+In-Reply-To: <20080722234703.GD5904@leksak.fem-net> (Stephan Beyer's message
+ of "Wed, 23 Jul 2008 01:47:03 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 2AE69D96-5851-11DD-B6CB-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89580>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Wed, 23 Jul 2008, Pierre Habouzit wrote:
->=20
-> >   Hi, here is a manual painful down-secting (opposed to a bisect ;P=
-) I
-> > did, since git in next cannot fetch on a regular basis for me. The
-> > culprit seems to be commit  92392b4:
-> >=20
-> >     =E2=94=8C=E2=94=80(1:11)=E2=94=80=E2=94=80<~/dev/scm/git 92392b=
-4...>=E2=94=80=E2=94=80
-> >     =E2=94=94[artemis] git fetch
-> >     remote: Counting objects: 461, done.
-> >     remote: Compressing objects: 100% (141/141), done.
-> >     remote: Total 263 (delta 227), reused 155 (delta 121)
-> >     Receiving objects: 100% (263/263), 95.55 KiB, done.
-> >     fatal: Out of memory, malloc failed
-> >     fatal: index-pack failed
-> >     [2]    16674 abort (core dumped)  git fetch
-=2E..
->=20
-> Just a guess:
-=2E..
-> diff --git a/index-pack.c b/index-pack.c
-> index ac20a46..19c39e5 100644
-> --- a/index-pack.c
-> +++ b/index-pack.c
-> @@ -257,6 +257,7 @@ static void unlink_base_data(struct base_data *c)
->  		base_cache =3D NULL;
->  	if (c->data) {
->  		free(c->data);
-> +		c->data =3D NULL;
->  		base_cache_used -=3D c->size;
->  	}
->  }
+Stephan Beyer <s-beyer@gmx.net> writes:
 
-Oh.  This is a pointless assignment.  If you look at any call sites
-for unlink_base_data() you will find that the struct passed in as
-"c" here is going out of scope after unlink_base_data() returns.  In
-no such case does the value of c->data get tested once this free is
-complete.
+> Hi,
+>
+> Junio C Hamano wrote:
+>> Olivier Marin <dkr+ml.git@free.fr> writes:
+>> > @@ -203,9 +204,10 @@ then
+>> >  
+>> >  	case "$abort" in
+>> >  	t)
+>> > -		rm -fr "$dotest" &&
+>> > +		git rerere clear &&
+>> >  		git read-tree -m -u ORIG_HEAD &&
+> [...]
+>> diff --git a/git-am.sh b/git-am.sh
+>> index a44bd7a..5cbf8f4 100755
+>> --- a/git-am.sh
+>> +++ b/git-am.sh
+>> @@ -203,9 +203,9 @@ then
+>>  
+>>  	case "$abort" in
+>>  	t)
+>> -		rm -fr "$dotest" &&
+>> -		git read-tree -m -u ORIG_HEAD &&
+>> -		git reset ORIG_HEAD && :
+>> +		git rerere clear
+>> +		git read-tree --reset -u HEAD ORIG_HEAD
+>
+> Perhaps I am confused, but ...
+> Why is there "HEAD" and "ORIG_HEAD" and not only "ORIG_HEAD"?
 
-We need the if (c->data) guard because we only want to decrement
-base_cache_used if the memory is still allocated.  It may have been
-released earlier, in which case base_cache_used has already been
-decreased and we don't want to double-decrement it.
+Just being a bit defensive -- in this case I think it might be Ok to say
+"read-tree --reset -u ORIG_HEAD", but I haven't checked in a conflicted
+case.
 
-This patch makes the code more obvious, so Ack I guess, but it is
-not a solution to Pierre's woes.  Something else is wrong.
-
-Reading above shows we got a "fatal: Out of memory, malloc failed"
-right before the segfault.  What's odd is we segfaulted after we
-ran out of memory and should have die'd.
-
-There's at least two bugs in the above output:
-
-a) index-pack ran out of memory on a small pull (95 KiB).
-b) fetch segfaulted when index-pack failed.
-
-And this patch will unfortunately address neither of them.  :-|
-
-I've had a long past couple of days, and another one tomorrow.
-I'm not going to be able to debug this myself until perhaps Thursday
-or Friday.  Sorry.  If nobody beats me to it, I will put this on
-the top of the pile and try to fix it once I get back online at my
-new home.
-
---=20
-Shawn.
+If some path was added between ORIG_HEAD (that is where we started from)
+and HEAD (that is where we are and we decide we do not want it), and that
+path is conflicted in the index, a single tree form "read-tree --reset -u
+HEAD" would leave it behind in the working tree, wouldn't it?
