@@ -1,81 +1,105 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
+From: Ingo Molnar <mingo@elte.hu>
 Subject: Re: q: faster way to integrate/merge lots of topic branches?
-Date: Wed, 23 Jul 2008 17:41:40 +0400
-Message-ID: <20080723174140.b749191a.vsu@altlinux.ru>
-References: <20080723130518.GA17462@elte.hu>
+Date: Wed, 23 Jul 2008 16:02:43 +0200
+Message-ID: <20080723140243.GA6678@elte.hu>
+References: <20080723130518.GA17462@elte.hu> <488734D9.9070703@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="PGP-SHA1";
- boundary="Signature=_Wed__23_Jul_2008_17_41_40_+0400_9+D67pea34w7afDw"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Wed Jul 23 16:03:59 2008
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Wed Jul 23 16:04:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLewd-0003ub-WA
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 16:03:56 +0200
+	id 1KLewf-0003ub-6L
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 16:03:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752741AbYGWOCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 10:02:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbYGWOCz
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 10:02:55 -0400
-Received: from mivlgu.ru ([195.20.195.134]:41565 "EHLO mail.mivlgu.ru"
+	id S1752393AbYGWOC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 10:02:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbYGWOC5
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 10:02:57 -0400
+Received: from mx2.mail.elte.hu ([157.181.151.9]:45061 "EHLO mx2.mail.elte.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751104AbYGWOCy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 10:02:54 -0400
-X-Greylist: delayed 1267 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Jul 2008 10:02:54 EDT
-Received: from center4.mivlgu.local (center4.mivlgu.local [192.168.1.4])
-	by mail.mivlgu.ru (Postfix) with SMTP
-	id 8C4B28076; Wed, 23 Jul 2008 17:41:43 +0400 (MSD)
-In-Reply-To: <20080723130518.GA17462@elte.hu>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.12.1; i586-alt-linux-gnu)
+	id S1752393AbYGWOCz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 10:02:55 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1KLevV-0006fy-M3
+	from <mingo@elte.hu>; Wed, 23 Jul 2008 16:02:54 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id A983B3E21AB; Wed, 23 Jul 2008 16:02:43 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <488734D9.9070703@op5.se>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx2: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89656>
 
---Signature=_Wed__23_Jul_2008_17_41_40_+0400_9+D67pea34w7afDw
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
 
-On Wed, 23 Jul 2008 15:05:18 +0200 Ingo Molnar wrote:
+* Andreas Ericsson <ae@op5.se> wrote:
 
-> Anyone can simulate it by switching to the linus/master branch of the
-> current Linux kernel tree, and doing:
+> Ingo Molnar wrote:
+>> I've got the following, possibly stupid question: is there a way to  
+>> merge a healthy number of topic branches into the master branch in a  
+>> quicker way, when most of the branches are already merged up?
+>>
+>> Right now i've got something like this scripted up:
+>>
+>>   for B in $(git-branch | cut -c3- ); do git-merge $B; done 
+>>
+>> It takes a lot of time to run on even a 3.45GHz box:
+>>
+>>   real    0m53.228s
+>>   user    0m41.134s
+>>   sys     0m11.405s
+>>
+>> I just had a workflow incident where i forgot that this script was  
+>> running in one window (53 seconds are a _long_ time to start doing some 
+>> other stuff :-), i switched branches and the script merrily chugged 
+>> away merging branches into a topic branch i did not intend.
+>>
+>> It iterates over 140 branches - but all of them are already merged up.
+>>
 >
->    time for ((i=0; i<140; i++)); do git-merge v2.6.26; done
+> With the builtin merge (which is in next), this should be doable with 
+> an octopus merge, which will eliminate the branches that are already 
+> fully merged, resulting in a less-than-140-way merge (thank gods...). 
+> It also doesn't have the 24-way cap that the scripted version suffers 
+> from.
 >
->    real    1m26.397s
->    user    1m10.048s
->    sys     0m13.944s
+> If it does a good job at your rather extreme use-case, I'd say it's 
+> good enough for 'master' pretty soon :-)
 
-Timing results here (E6750 @ 2.66GHz):
-41.61s user 3.71s system 99% cpu 45.530 total
+hm, while i do love octopus merges [*] for release and bisection-quality 
+purposes, for throw-away (delta-)integration runs it's more manageable 
+to do a predictable series of one-on-one merges.
 
-However, testing whether there is something new to merge could be
-performed significantly faster:
+It results in better git-rerere behavior, has easier (to the human) 
+conflict resolutions and the octopus merge also falls apart quite easily 
+when it runs into conflicts. Furthermore, i've often seen octopus merges 
+fail while a series of 1:1 merges succeeded.
 
-$ time sh -c 'for ((i=0; i<140; i++)); do [ -n "$(git rev-list --max-count=1 v2.6.26 ^HEAD)" ]; done'
-sh -c   5.49s user 0.26s system 99% cpu 5.786 total
+What i could try is to do a speculative octopus merge, in the hope of it 
+just going fine - and then fall back to the serial merge if it fails?
 
-The same loop with "git merge-base v2.6.26 HEAD" takes about 40
-seconds here - apparently finding the merge base is the expensive
-part, and it makes sense to avoid it if you expect that most of your
-branches do not contain anything new to merge.
+The git-fastmerge approach is probably still faster though - and 
+certainly simpler from a workflow POV.
 
---Signature=_Wed__23_Jul_2008_17_41_40_+0400_9+D67pea34w7afDw
-Content-Type: application/pgp-signature
+	Ingo
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.7 (GNU/Linux)
+[*] take a look at these in the Linux kernel -git repo:
 
-iD8DBQFIhzUXW82GfkQfsqIRAupaAJwLb9n9+L4n+ig/TJMbF0eeEeXI+wCfVbjK
-WmX+cpKp8GS3reb2xt6aQ8I=
-=cXUc
------END PGP SIGNATURE-----
-
---Signature=_Wed__23_Jul_2008_17_41_40_+0400_9+D67pea34w7afDw--
+      gitk 3c1ca43fafea41e38cb2d0c1684119af4c1de547
+      gitk 6924d1ab8b7bbe5ab416713f5701b3316b2df85b
