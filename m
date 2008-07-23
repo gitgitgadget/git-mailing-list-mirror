@@ -1,126 +1,80 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH 6/9] builtin-init-db.c: use parse_options()
-Date: Wed, 23 Jul 2008 23:42:09 +0200
-Message-ID: <1216849332-26813-7-git-send-email-barra_cuda@katamail.com>
-References: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com>
-Cc: gitster@pobox.com
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] git-completion.bash: provide completion for 'show-branch'
+Date: Wed, 23 Jul 2008 23:36:15 +0200
+Message-ID: <1216848975-30447-1-git-send-email-trast@student.ethz.ch>
+Cc: gitster@pobox.com, "Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 23 23:37:35 2008
+X-From: git-owner@vger.kernel.org Wed Jul 23 23:37:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLm1b-00026o-Pu
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 23:37:32 +0200
+	id 1KLm1e-00026o-El
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 23:37:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754889AbYGWVf7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 17:35:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755023AbYGWVf6
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 17:35:58 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:37046 "HELO
-	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1755011AbYGWVfx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 17:35:53 -0400
-Received: (qmail 11577 invoked by uid 89); 23 Jul 2008 21:35:44 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
-X-Spam-Level: **
-X-Spam-Status: No, score=2.3 required=5.0 tests=BAYES_50,HELO_LH_LD,RDNS_NONE
-	autolearn=no version=3.2.3
-Received: from unknown (HELO localhost.localdomain) (barra?cuda@katamail.com@80.104.56.10)
-  by smtp2-pc with SMTP; 23 Jul 2008 21:35:43 -0000
-X-Mailer: git-send-email 1.5.6.3
-In-Reply-To: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com>
+	id S1754629AbYGWVgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 17:36:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755026AbYGWVgO
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 17:36:14 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:25733 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754764AbYGWVgE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 17:36:04 -0400
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 23 Jul 2008 23:36:02 +0200
+Received: from localhost.localdomain ([84.75.148.145]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 23 Jul 2008 23:36:01 +0200
+X-Mailer: git-send-email 1.6.0.rc0.16.g0680f
+X-OriginalArrivalTime: 23 Jul 2008 21:36:01.0928 (UTC) FILETIME=[1A745080:01C8ED0C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89773>
 
-Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+It previously used the same as 'log', but the options are quite
+different and the arguments must be single refs (or globs).
+
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- builtin-init-db.c |   56 +++++++++++++++++++++++++++++++++-------------------
- 1 files changed, 35 insertions(+), 21 deletions(-)
+ contrib/completion/git-completion.bash |   18 +++++++++++++++++-
+ 1 files changed, 17 insertions(+), 1 deletions(-)
 
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index 38b4fcb..ea1bed7 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -6,6 +6,7 @@
- #include "cache.h"
- #include "builtin.h"
- #include "exec_cmd.h"
-+#include "parse-options.h"
- 
- #ifndef DEFAULT_GIT_TEMPLATE_DIR
- #define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
-@@ -353,8 +354,17 @@ static int guess_repository_type(const char *git_dir)
- 	return 1;
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 5d260e2..4cfe927 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1210,6 +1210,22 @@ _git_show ()
+ 	__git_complete_file
  }
  
--static const char init_db_usage[] =
--"git init [-q | --quiet] [--bare] [--template=<template-directory>] [--shared[=<permissions>]]";
-+static const char * const init_db_usage[] = {
-+	"git init [-q | --quiet] [--bare] [--template=<dir>] [--shared[=<type>]]",
-+	NULL
-+};
-+
-+static int parse_opt_shared_cb(const struct option *opt, const char *arg,
-+			       int unset)
++_git_show_branch ()
 +{
-+	*(int *)(opt->value) = unset ? 0 : git_config_perm("arg", arg);
-+	return 0;
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	case "$cur" in
++	--*)
++		__gitcomp "
++			--all --remotes --topo-order --current --more=
++			--list --independent --merge-base --no-name
++			--sha1-name --topics --reflog
++			"
++		return
++		;;
++	esac
++	__git_complete_revlist
 +}
- 
- /*
-  * If you want to, you can share the DB area with any number of branches.
-@@ -367,25 +377,29 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 	const char *git_dir;
- 	const char *template_dir = NULL;
- 	unsigned int flags = 0;
--	int i;
--
--	for (i = 1; i < argc; i++, argv++) {
--		const char *arg = argv[1];
--		if (!prefixcmp(arg, "--template="))
--			template_dir = arg+11;
--		else if (!strcmp(arg, "--bare")) {
--			static char git_dir[PATH_MAX+1];
--			is_bare_repository_cfg = 1;
--			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir,
--						sizeof(git_dir)), 0);
--		} else if (!strcmp(arg, "--shared"))
--			shared_repository = PERM_GROUP;
--		else if (!prefixcmp(arg, "--shared="))
--			shared_repository = git_config_perm("arg", arg+9);
--		else if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet"))
--			flags |= INIT_DB_QUIET;
--		else
--			usage(init_db_usage);
-+	int bare = 0;
 +
-+	const struct option options[] = {
-+		OPT_STRING(0, "template", &template_dir, "dir",
-+			   "directory from which templates will be used"),
-+		OPT_BOOLEAN(0, "bare", &bare, "set up a bare repo"),
-+		{ OPTION_CALLBACK, 0, "shared", &shared_repository,
-+		  "type", "type of shared repository",
-+		  PARSE_OPT_OPTARG, parse_opt_shared_cb, PERM_GROUP },
-+		OPT_BIT('q', "quiet", &flags, "be quiet", INIT_DB_QUIET),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, options, init_db_usage, 0);
-+
-+	if (argc > 0)
-+		usage_with_options(init_db_usage, options);
-+
-+	if (bare) {
-+		static char git_dir[PATH_MAX+1];
-+		is_bare_repository_cfg = 1;
-+		setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir,
-+					sizeof(git_dir)), 0);
- 	}
- 
- 	/*
+ _git_stash ()
+ {
+ 	local subcommands='save list show apply clear drop pop create'
+@@ -1428,7 +1444,7 @@ _git ()
+ 	send-email)  _git_send_email ;;
+ 	shortlog)    _git_shortlog ;;
+ 	show)        _git_show ;;
+-	show-branch) _git_log ;;
++	show-branch) _git_show_branch ;;
+ 	stash)       _git_stash ;;
+ 	submodule)   _git_submodule ;;
+ 	svn)         _git_svn ;;
 -- 
-1.5.6.3
+1.6.0.rc0.16.g0680f
