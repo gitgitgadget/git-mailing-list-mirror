@@ -1,70 +1,66 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Build configuration to skip ctime for modification test
-Date: Wed, 23 Jul 2008 21:16:47 +0200
-Message-ID: <20080723191647.GF5283@blimp.local>
-References: <20080721173511.GB5387@steel.home> <4885897C.8010401@viscovery.net> <7vy73tltf5.fsf@gitster.siamese.dyndns.org> <20080722193901.GA5113@blimp.local> <alpine.DEB.1.00.0807222115440.8986@racer> <20080722203128.GB5113@blimp.local> <7vr69lihkt.fsf@gitster.siamese.dyndns.org> <20080723164614.GB5283@blimp.local> <alpine.DEB.1.00.0807231757550.8986@racer>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not
+ been set
+Date: Wed, 23 Jul 2008 12:23:00 -0700
+Message-ID: <7vhcagcsmj.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0807222255450.8986@racer>
+ <7vy73tihl6.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0807230203350.8986@racer>
+ <7vej5kfs0w.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0807231817460.8986@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 23 21:19:00 2008
+X-From: git-owner@vger.kernel.org Wed Jul 23 21:24:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLjqR-00044N-Gu
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 21:17:51 +0200
+	id 1KLjwU-0007dw-Hk
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 21:24:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753475AbYGWTQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 15:16:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753083AbYGWTQw
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 15:16:52 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.182]:25444 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750799AbYGWTQv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 15:16:51 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg201f5EC7
-Received: from tigra.home (Faf34.f.strato-dslnet.de [195.4.175.52])
-	by post.webmailer.de (mrclete mo11) (RZmta 16.47)
-	with ESMTP id 0063d5k6NFE4D3 ; Wed, 23 Jul 2008 21:16:48 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id D1EEB277BD;
-	Wed, 23 Jul 2008 21:16:47 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id CAD6636D18; Wed, 23 Jul 2008 21:16:47 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807231757550.8986@racer>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753083AbYGWTXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 15:23:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752675AbYGWTXI
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 15:23:08 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36462 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752648AbYGWTXG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 15:23:06 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 89F9537A67;
+	Wed, 23 Jul 2008 15:23:05 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id DC65337A66; Wed, 23 Jul 2008 15:23:02 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0807231817460.8986@racer> (Johannes
+ Schindelin's message of "Wed, 23 Jul 2008 18:22:51 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C66CB7F0-58EC-11DD-A5F6-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89750>
 
-Johannes Schindelin, Wed, Jul 23, 2008 18:59:02 +0200:
-> On Wed, 23 Jul 2008, Alex Riesen wrote:
-> 
-> > Because exactly the file mode (the executable bit) is the reason for
-> > checking ctime.
-> 
-> But ctime is broken on Windows.  Because ctime is supposed to change 
-> whenever the _inode_ changes.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-It is not that it is broken. We just don't need it, because the st_mode
-is not used, and the rest of inode information is not used anyway.
+> On Wed, 23 Jul 2008, Junio C Hamano wrote:
+> ...
+>> If you are on a sane system, you do not even want to pay the price of 
+>> conversion.  Only people on systems with CRLF line endings should pay 
+>> the price (because your aim is to convert on such systems).  Are we 
+>> throwing that out of the window when the project decides to use 
+>> gitattributes?
+>
+> Well, if you do not want that, why do you set crlf in the gitattributes to 
+> begin with?
 
-> You have to admit that saying "I ignore the ctime because the executable 
-> bit is broken" must leave the reader puzzled.
+It is not _me_ but the project upstream that needs to interact also with
+Windows people who manages gitattributes.  And me personally knows my
+editors are not helpful to add CR at the end of lines, so I do not need
+the conversion.
 
-This is conclusion. I said "file mode" and "file attributes", which
-is how reason for ctime update is defined in SUSv3. man 2 stat says:
-
-       The field st_ctime is changed by writing or by setting  inode
-       information (i.e., owner, group, link count, mode, etc.).
-
-Not just "inode" but "inode information". Only mode is used, and even
-that is ignored on Windows.
+That was the situation I had in mind.
