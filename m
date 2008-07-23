@@ -1,102 +1,174 @@
-From: Jan Engelhardt <jengelh@medozas.de>
-Subject: Not so happy about build system
-Date: Wed, 23 Jul 2008 11:33:56 +0200 (CEST)
-Message-ID: <alpine.LNX.1.10.0807222036230.23410@fbirervta.pbzchgretzou.qr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] Git User's Survey 2008
+Date: Wed, 23 Jul 2008 11:53:27 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807231128090.2830@eeepc-johanness>
+References: <200807230325.04184.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 23 11:34:59 2008
+Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 11:53:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLakN-0003OT-Cr
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 11:34:59 +0200
+	id 1KLb2N-0002NT-MV
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 11:53:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753978AbYGWJd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 05:33:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753756AbYGWJd6
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 05:33:58 -0400
-Received: from sovereign.computergmbh.de ([85.214.69.204]:36476 "EHLO
-	sovereign.computergmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753370AbYGWJd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 05:33:57 -0400
-Received: by sovereign.computergmbh.de (Postfix, from userid 25121)
-	id 4AEE918043864; Wed, 23 Jul 2008 11:33:56 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by sovereign.computergmbh.de (Postfix) with ESMTP id 437891CF30E94
-	for <git@vger.kernel.org>; Wed, 23 Jul 2008 11:33:56 +0200 (CEST)
-User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
+	id S1752434AbYGWJwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 05:52:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752393AbYGWJwg
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 05:52:36 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42536 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752108AbYGWJwf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 05:52:35 -0400
+Received: (qmail invoked by alias); 23 Jul 2008 09:52:32 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp013) with SMTP; 23 Jul 2008 11:52:32 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/ha654vzbhww/a8otGxeyHKa/9kAZm9zC8xqH6CE
+	lymaruxVpBDC9O
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <200807230325.04184.jnareb@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89618>
 
 Hi,
 
+On Wed, 23 Jul 2008, Jakub Narebski wrote:
 
-I just tried git 1.5.6.4 on a Solaris 10 box. Building mostly went 
-smooth, but a few unhappy edges turned up:
+> First there is a question about the form of survey. Should we use web
+> based survey, as the survey before (http://www.survey.net.nz), sending
+> emails with link to this survey, or perhaps do email based survey,
+> with email Reply-To: address put for this survey alone?
 
-~/git-1.5.6.4>gmake MAKE=gmake
-    LINK git-daemon
-ld: fatal: library -lcurl: not found
-ld: fatal: library -lcrypto: not found
-ld: fatal: File processing errors. No output written to git-daemon
-collect2: ld returned 1 exit status
-gmake: *** [git-daemon] Error 1
+Some people prefer to stay anonymous, so I think email is out.
 
-Of course curl is available, it's just somewhere else. And that is where 
-the fun begins that comes with plain Makefiles.
+>    04. Which programming languages you are proficient with?
+>        (The choices include programming languages used by git)
+>        (zero or more: multiple choice)
+>      - C, shell, Perl, Python, Tcl/Tk
+>      + (should we include other languages, like C++, Java, PHP,
+>         Ruby,...?)
 
-	"What's the variable I ought to set?"
+Yes, I think this should be a long list.
 
-Yes, usually it is LDFLAGS, and this is also true for git. But not 
-everyone necessarily adheres to that, and looking through the Makefile 
-is not fun. That also reminds me of CFLAGS, which about every Makefile 
-write happily sets to
+>    07. What helped you most in learning to use it?
+>        (free form question)
 
-	CFLAGS = -g -O2 -Wall -Wmy-fancy-flags
+Is it possible to have multiple choice, with "other" (free-form)?  Then 
+I'd suggest:
 
-which would give no way to keep -Wmy-fancy-flags while also overriding 
-it. Autotools solved this whereby a developer puts -Wmy-fancy-flags that 
-shall always be present into AM_CFLAGS instead and only puts the really 
-freely choosable flags into CFLAGS. Of course I could list all the 
-developers flags that are needed/wanted (-Wmy-fancy-flags) like
+	Colleague/Instructor, User Manual, Manpages, Tutorials, Tutorials 
+	(elsewhere; not in git.git), Mailing list, IRC, Git Wiki, Other.
 
-	make CFLAGS="-Wdevelopers-fancy-flags -O3 -g0"
+>    08. What did you find hardest in learning Git?
+>        What did you find harderst in using Git?
 
-but one would have to look them up first and and etc.
-Ok, enough Makefile ramblings, as there seems to be a configure script 
-lurking. What's the Makefile good for then if configure will create it 
-anyway?
+s/harderst/hardest.
 
-Trying my luck with configure, I call
+>        (free form question)
 
-	./configure --prefix=$HOME/rt --with-openssl=/opt/csw 
-	--with-curl=/opt/csw
+Again, I'd suggest a multiple choice + Other:
 
-but what I get is that it obviously did not find neither openssl nor 
-curl, though they do exist in /opt/csw/include and /opt/csw/lib:
+	The amount of commands, the amount of options, the index (AKA 
+	staging), branching, user interface, bugs, Other.
 
-	checking for SHA1_Init in -lcrypto... no
-	checking for SHA1_Init in -lssl... no
-	checking for curl_global_init in -lcurl... no
-	checking for XML_ParserCreate in -lexpat... no
+> Other SCMs (shortened compared with 2007 survey)
+> 
+>    10. What other SCM did or do you use?
+>        (zero or more: multiple choice)
+>      - CVS, Subversion, GNU Arch or arch clone (ArX, tla, ...),
+>        Bazaar-NG, Darcs, Mercurial, Monotone, SVK, AccuRev, Perforce,
+>        BitKeeper, ClearCase, MS Visual Source Safe, MS Visual Studio
+>        Team System, custom, other(*)
 
-(someone please fix that)
+PVCS seems to be pretty popular, too.
 
-	./configure --prefix=$HOME/rt --with-openssl=/opt/csw 
-	--with-curl=/opt/csw CFLAGS="-O2 -I/opt/csw/include -L/opt/csw/lib 
-	-R/opt/csw/lib"
-# using /usr/ccs/bin/ld, not GNU ld
+>    11. Why did you choose Git? (if you use Git)
+>        What do you like about using Git?
+>        (free form, not to be tabulated)
 
-That finally made it succeed in finding SHA1_Init. Then however,
+Again, to avoid hassles with free-form:
 
-	~/git-1.5.6.4>make
-	make: Fatal error in reader: Makefile, line 158: Unexpected end 
-	of line seen
+	Mandatory: work, mandatory: open source project I am participating 
+	in, speed, scalability, It's What Linus Uses, Other.
 
-So configure did not create a POSIX-compatible Makefile. Ok, 
-I had gmake, so the story is successfully done here :)
+>    12. Why did you choose other SCMs? (if you use other SCMs)
+>        What do you like about using other SCMs?
+>        Note: please write name of SCMs you are talking about.
+>        (free form, not to be tabulated).
+
+Again:
+
+	ease-of use, simplicity, existing project uses it, I Do Not Like 
+	Linus, Other
+
+>    15. What operating system do you use Git on?
+>        (one or more: multiple choice, as one can use more than one OS)
+>      - Linux, *BSD (FreeBSD, OpenBSD, etc.), MS Windows/Cygwin,
+>        MS Windows/msysGit, MacOS X, other UNIX, other
+
+You should include "Dunno", which gets automatically mapped to "MS 
+Windows/msysGit" ;-)
+
+>    19. How do you publish/propagate your changes?
+>        (zero or more: multiple choice)
+>      - push, pull request, format-patch + email, bundle, other
+
+git svn
+
+You might laugh, but it is a sad fact that some guy promotes "Using Git 
+with Google Code" by using git-svn to drive their crappy Subversion.
+
+>    22. How does Git compare to other SCM tools you have used?
+>      - worse/equal (or comparable)/better
+>    23. What would you most like to see improved about Git?
+>        (features, bugs, plug-ins, documentation, ...)
+
+Maybe here should be another question "What are the most useful features 
+of Git?" but maybe that is covered by earlier questions.
+
+>    24. If you want to see Git more widely used, what do you
+>        think we could do to make this happen?
+>      + Is this question necessary/useful?  Do we need wider adoption?
+
+I agree with Junio: this is not so interesting for us; we are no company, 
+and we have no sales department who could wank of on these answers.
+
+>    27. Which of the following features do you use?
+>        (zero or more: multiple choice)
+>      - git-gui or other commit tool, gitk or other history viewer, patch
+>        management interface (e.g. StGIT), bundle, eol conversion,
+
+For our Windows friends, we should add " (crlf)" to the last item.
+
+>    42. Do you find traffic levels on Git mailing list OK.
+>     -  yes/no? (optional)
+
+/too low?  *ducksandrunsforcover*
+
+>    44. If yes, do you find IRC channel useful?
+>     -  yes/no (optional)
+
+/somewhat.  Even if I would be the only one choosing that option.
+
+>    45. Did you have problems getting GIT help on mailing list or
+>        on IRC channel? What were it? What could be improved?
+>        (free form)
+
+Yeah, I know who will answer to that, and what... "yaddayadda very 
+unfriendly yaddayadda especially that Johannes guy yaddayadda" (you know 
+who you are)... *lol*
+
+Thanks Jakub, I think that your effort is very useful.
+
+Ciao,
+Dscho
