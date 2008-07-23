@@ -1,63 +1,107 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-svn does not seems to work with crlf convertion enabled.
-Date: Wed, 23 Jul 2008 13:57:54 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807231356540.8986@racer>
-References: <200807231544.23472.litvinov2004@gmail.com> <alpine.DEB.1.00.0807231117290.2830@eeepc-johanness> <200807231852.10206.litvinov2004@gmail.com>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: q: faster way to integrate/merge lots of topic branches?
+Date: Wed, 23 Jul 2008 15:05:18 +0200
+Message-ID: <20080723130518.GA17462@elte.hu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Alexander Litvinov <litvinov2004@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 14:58:58 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 23 15:06:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLdvi-0003aA-A6
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 14:58:54 +0200
+	id 1KLe34-0006Ur-5o
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 15:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751415AbYGWM5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 08:57:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbYGWM5z
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 08:57:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35338 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751266AbYGWM5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 08:57:54 -0400
-Received: (qmail invoked by alias); 23 Jul 2008 12:57:52 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp026) with SMTP; 23 Jul 2008 14:57:52 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+WtYpX7yyWGW6rSNcOUimGIgA7oZuh3uwyRpw34H
-	v8N5DRlipVpXrZ
-X-X-Sender: gene099@racer
-In-Reply-To: <200807231852.10206.litvinov2004@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1751590AbYGWNFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 09:05:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751400AbYGWNFb
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 09:05:31 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:32991 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750762AbYGWNFa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 09:05:30 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1KLe1v-0006gF-Os
+	from <mingo@elte.hu>
+	for <git@vger.kernel.org>; Wed, 23 Jul 2008 15:05:28 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id D2EF33E21AB; Wed, 23 Jul 2008 15:05:16 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89644>
 
-Hi,
 
-On Wed, 23 Jul 2008, Alexander Litvinov wrote:
+I've got the following, possibly stupid question: is there a way to 
+merge a healthy number of topic branches into the master branch in a 
+quicker way, when most of the branches are already merged up?
 
-> > On Wed, 23 Jul 2008, Alexander Litvinov wrote:
-> > > In short: I can't clone svn repo into git when crlf convertion is 
-> > > activated.
-> >
-> > This is a known issue, but since nobody with that itch seems to care 
-> > enough to fix it, I doubt it will ever be fixed.
-> 
-> That is a bad news for me. Anyway I will spend some time at holidays 
-> during digging this bug.
+Right now i've got something like this scripted up:
 
-Note that you will have to do your digging using msysGit (i.e. the 
-developer's pack, not the installer for plain Git), since git-svn will be 
-removed from the next official "Windows Git" release, due to lack of 
-fixers.
+  for B in $(git-branch | cut -c3- ); do git-merge $B; done 
 
-Ciao,
-Dscho
+It takes a lot of time to run on even a 3.45GHz box:
+
+  real    0m53.228s
+  user    0m41.134s
+  sys     0m11.405s
+
+I just had a workflow incident where i forgot that this script was 
+running in one window (53 seconds are a _long_ time to start doing some 
+other stuff :-), i switched branches and the script merrily chugged away 
+merging branches into a topic branch i did not intend.
+
+It iterates over 140 branches - but all of them are already merged up.
+
+Anyone can simulate it by switching to the linus/master branch of the 
+current Linux kernel tree, and doing:
+
+   time for ((i=0; i<140; i++)); do git-merge v2.6.26; done
+
+   real    1m26.397s
+   user    1m10.048s
+   sys     0m13.944s
+
+One could argue that determining whether it's all merged up already is a 
+complex task, but but even this seemingly trivial merge of HEAD into 
+HEAD is quite slow:
+
+   time for ((i=0; i<140; i++)); do git-merge HEAD; done
+
+   real    0m17.871s
+   user    0m8.977s
+   sys     0m8.396s
+
+I'm wondering whether there are tricks to speed this up. The real script 
+i'm using is much longer and obscured with boring details like errors, 
+conflicts, etc. - but the above is the gist of it. (and that is what 
+makes it slow primarily)
+
+Using a speculative Octopus might be one approach, but that runs into 
+the octopus merge limitation at 24 branches, and it also is quite slow 
+as well. (and is not equivalent to the serial merge of 140 branches)
+
+I have thought of using the last CommitDate of the topic branch and 
+compare it with the last CommitDate of the master branch [and i can 
+trust those values] - that would be a lot faster - but maybe i'm missing 
+something trivial that makes that approach unworkable. It would also be 
+nice to have a builtin shortcut for that instead of having to go via 
+"git-log --pretty=fuller" to dump the CommitDate field.
+
+builtin-integrate.c perhaps? ;-)
+
+	Ingo
