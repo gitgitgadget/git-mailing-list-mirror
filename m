@@ -1,90 +1,120 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH] rebase -i: only automatically amend commit if HEAD did not change
-Date: Wed, 23 Jul 2008 16:01:04 +0400
-Message-ID: <20080723120104.GQ2925@dpotapov.dyndns.org>
-References: <alpine.DEB.1.00.0807222235520.8986@racer> <32541b130807221522r2a43c49cl6400f00dbe7451a0@mail.gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [PATCH] index-pack: never prune base_cache.
+Date: Wed, 23 Jul 2008 14:11:18 +0200
+Message-ID: <20080723121118.GA20614@artemis.madism.org>
+References: <20080722231745.GD11831@artemis.madism.org> <20080723101415.GA23769@atjola.homenet> <alpine.DEB.1.00.0807231246560.2830@eeepc-johanness> <20080723111931.GF15243@artemis.madism.org> <alpine.DEB.1.00.0807231235150.8986@racer> <20080723120045.GA21274@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 14:02:43 2008
+	spearce@spearce.org, Git ML <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 23 14:12:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLd2q-0004UE-UZ
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 14:02:13 +0200
+	id 1KLdCh-0000Iq-1u
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 14:12:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752424AbYGWMBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 08:01:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752413AbYGWMBL
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 08:01:11 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:4301 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752332AbYGWMBK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 08:01:10 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1110241fgg.17
-        for <git@vger.kernel.org>; Wed, 23 Jul 2008 05:01:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Dyw/tnhuq7d0aDbetnQvwZ3bqxLBJrlwgFhJwBzxACU=;
-        b=HOaSflSYSIoA/n2NtiJgqZh7sIzkWJZGLZ2zRyiC/dEilQ4wJ1jWaLwU0xwGaFsoOQ
-         Ev/vxz7qA9UK2+emU0TEcrTw/eZWOAI2uUQDrOejghwEL5J2ipGNM6iz33aFnzFwAitC
-         fJIxuUGuWk1YSdYe4dB51gxEbC0dkwGqs5fB8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=CIM8i2bmRfvHTW3KRaB1InmTaqBYQePSHO7+8+U1kglLLFZFGhfGsNAPNeWTq4n1Jf
-         0ZLPotIya8wd1ja9ZI9dzboLBSKHz45GUthospNayRmsG8bSGcxpfYkDDqIWP6byCjKC
-         /dSXQCUxCwnW3V8oLmXql7Td3pAbPxI/of65A=
-Received: by 10.86.82.6 with SMTP id f6mr7553903fgb.73.1216814468384;
-        Wed, 23 Jul 2008 05:01:08 -0700 (PDT)
-Received: from localhost ( [85.140.170.138])
-        by mx.google.com with ESMTPS id l12sm11052115fgb.6.2008.07.23.05.01.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 23 Jul 2008 05:01:07 -0700 (PDT)
+	id S1752394AbYGWMLW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2008 08:11:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751955AbYGWMLW
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 08:11:22 -0400
+Received: from pan.madism.org ([88.191.52.104]:54654 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751223AbYGWMLV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 08:11:21 -0400
+Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id AE3D034590;
+	Wed, 23 Jul 2008 14:11:19 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id B6E7CA4D6; Wed, 23 Jul 2008 14:11:18 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	spearce@spearce.org, Git ML <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
 Content-Disposition: inline
-In-Reply-To: <32541b130807221522r2a43c49cl6400f00dbe7451a0@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20080723120045.GA21274@atjola.homenet>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89640>
 
-On Tue, Jul 22, 2008 at 06:22:34PM -0400, Avery Pennarun wrote:
-> 
-> This patch is perhaps a symptom of something I've been meaning to ask
-> about for a while.
-> 
-> Why doesn't "edit" just stage the commit and not auto-commit it at
-> all?  That way an amend would *never* be necessary, and rebase
-> --continue would always do a commit -a (if there was anything left to
-> commit).
+It may belong to something (stdin) that is consumed.
 
-Actually, it would be better to refuse to continue if there are unstaged
-changes in the work tree, and if all changes are staged then just do git
-commit.
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
 
-> The special case fixed by this patch would thus not be
-> needed.
-> 
-> It would also make it more obvious how to remove files from a commit,
-> for example, without having to learn about "git reset".  For that
-> matter, you wouldn't have to learn about "git commit --amend" either,
-> and it would save typing.
+    On Wed, Jul 23, 2008 at 12:00:45PM +0000, Bj=C3=B6rn Steinbrink wro=
+te:
+    > On 2008.07.23 12:37:00 +0100, Johannes Schindelin wrote:
+    > > Hi,
+    > >=20
+    > > Well, I cannot.  However, I get some pread issue on i686.  To b=
+e nice to=20
+    > > kernel.org, I downloaded the pack in question:
+    > >=20
+    > > 	http://pacific.mpi-cbg.de/git/thin-pack.pack
+    > >=20
+    > > You should be able to reproduce the behavior by piping this int=
+o
+    > >=20
+    > > git-index-pack --stdin -v --fix-thin --keep=3Dfetch-pack --pack=
+_header=3D2,263
+    >=20
+    > OK, that gave me a seemingly sane backtrace. What seems to happen=
+ (AFA
+    > my limited knowledge tells me):
+    >=20
+    > In fix_unresolved_deltas, we read base_obj from an existing pack,=
+ other
+    > than the one we're reading. We then link that object to the base =
+cache.=20
+    >=20
+    > Then in resolve_delta, we create the "result" base_data object an=
+d link
+    > that one, too. Now this triggers the pruning, and because the cac=
+he is
+    > so small, we prune the object that we read from the existing pack=
+! Fast
+    > forward a few function calls, we end up in get_base_data trying t=
+o
+    > re-read the data for that object, but this time from the pack tha=
+t we
+    > got on stdin. And boom it goes.
+    >=20
+    > Does that make any sense to you?
 
-It would not only save typing, but also help to avoid costly mistakes
-where users, being taught to use "git commit --amend" after editing
-during git-rebase, fire this command automatically after a conflict
-resolution and get two commits accidently squashed.
+      Yes, that's obvious, the pack that we read from stdin is consumed=
+, we
+    should *NEVER* prune base_cache. And indeed that little patch works=
+ for
+    me.
 
-So, I completely agree that the current auto-commit behavior is not very
-user friendly...
+ index-pack.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Dmitry
+diff --git a/index-pack.c b/index-pack.c
+index ac20a46..eb81ed4 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -227,7 +227,7 @@ static void prune_base_data(struct base_data *retai=
+n)
+ 	for (b =3D base_cache;
+ 	     base_cache_used > delta_base_cache_limit && b;
+ 	     b =3D b->child) {
+-		if (b->data && b !=3D retain) {
++		if (b !=3D base_cache && b->data && b !=3D retain) {
+ 			free(b->data);
+ 			b->data =3D NULL;
+ 			base_cache_used -=3D b->size;
+--=20
+1.6.0.rc0.155.ga0442.dirty
