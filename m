@@ -1,92 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Rename ".dotest/" to ".git/rebase" and ".dotest-merge"
- to "rebase-merge"
-Date: Tue, 22 Jul 2008 17:48:53 -0700
-Message-ID: <7vbq0pifwq.fsf@gitster.siamese.dyndns.org>
-References: <73fd69b50807151408i6a916da6p7b89fe81e65fc717@mail.gmail.com>
- <20080715212211.GL6244@leksak.fem-net> <487D1B3D.70500@lsrfire.ath.cx>
- <alpine.DEB.1.00.0807160245440.2841@eeepc-johanness>
- <20080716012619.GM8185@mit.edu> <7viqv5r637.fsf@gitster.siamese.dyndns.org>
- <4882350B.6020003@free.fr> <7v3am5zfea.fsf@gitster.siamese.dyndns.org>
- <20080722234703.GD5904@leksak.fem-net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 1/2] Add test to show that show-branch misses out the 8th
+ column
+Date: Wed, 23 Jul 2008 01:50:35 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807230148130.8986@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Olivier Marin <dkr+ml.git@free.fr>, Theodore Tso <tytso@mit.edu>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Joe Fiorini <joe@faithfulgeek.org>, git@vger.kernel.org,
-	Jari Aalto <jari.aalto@cante.net>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Jul 23 02:50:15 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: pasky@suse.cz, git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Jul 23 02:51:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLSYZ-0005wM-6z
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 02:50:15 +0200
+	id 1KLSZr-0006DQ-6N
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 02:51:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751557AbYGWAtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 20:49:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752165AbYGWAtP
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 20:49:15 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37471 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751543AbYGWAtO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 20:49:14 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9D1C437823;
-	Tue, 22 Jul 2008 20:49:12 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 1403737820; Tue, 22 Jul 2008 20:49:00 -0400 (EDT)
-In-Reply-To: <20080722234703.GD5904@leksak.fem-net> (Stephan Beyer's message
- of "Wed, 23 Jul 2008 01:47:03 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2AE69D96-5851-11DD-B6CB-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753060AbYGWAuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 20:50:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753006AbYGWAuf
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 20:50:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35343 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752977AbYGWAuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 20:50:35 -0400
+Received: (qmail invoked by alias); 23 Jul 2008 00:50:33 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp043) with SMTP; 23 Jul 2008 02:50:33 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/TO1ojzELT37TTPSN6DsdcKscjanfGhHaa4XZSmp
+	lPsaw7VmCLnz3b
+X-X-Sender: gene099@racer
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89581>
 
-Stephan Beyer <s-beyer@gmx.net> writes:
 
-> Hi,
->
-> Junio C Hamano wrote:
->> Olivier Marin <dkr+ml.git@free.fr> writes:
->> > @@ -203,9 +204,10 @@ then
->> >  
->> >  	case "$abort" in
->> >  	t)
->> > -		rm -fr "$dotest" &&
->> > +		git rerere clear &&
->> >  		git read-tree -m -u ORIG_HEAD &&
-> [...]
->> diff --git a/git-am.sh b/git-am.sh
->> index a44bd7a..5cbf8f4 100755
->> --- a/git-am.sh
->> +++ b/git-am.sh
->> @@ -203,9 +203,9 @@ then
->>  
->>  	case "$abort" in
->>  	t)
->> -		rm -fr "$dotest" &&
->> -		git read-tree -m -u ORIG_HEAD &&
->> -		git reset ORIG_HEAD && :
->> +		git rerere clear
->> +		git read-tree --reset -u HEAD ORIG_HEAD
->
-> Perhaps I am confused, but ...
-> Why is there "HEAD" and "ORIG_HEAD" and not only "ORIG_HEAD"?
+Noticed by Pasky.
 
-Just being a bit defensive -- in this case I think it might be Ok to say
-"read-tree --reset -u ORIG_HEAD", but I haven't checked in a conflicted
-case.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t3202-show-branch-octopus.sh |   59 ++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 59 insertions(+), 0 deletions(-)
+ create mode 100755 t/t3202-show-branch-octopus.sh
 
-If some path was added between ORIG_HEAD (that is where we started from)
-and HEAD (that is where we are and we decide we do not want it), and that
-path is conflicted in the index, a single tree form "read-tree --reset -u
-HEAD" would leave it behind in the working tree, wouldn't it?
+diff --git a/t/t3202-show-branch-octopus.sh b/t/t3202-show-branch-octopus.sh
+new file mode 100755
+index 0000000..8d50c23
+--- /dev/null
++++ b/t/t3202-show-branch-octopus.sh
+@@ -0,0 +1,59 @@
++#!/bin/sh
++
++test_description='test show-branch with more than 8 heads'
++
++. ./test-lib.sh
++
++numbers="1 2 3 4 5 6 7 8 9 10"
++
++test_expect_success 'setup' '
++
++	> file &&
++	git add file &&
++	test_tick &&
++	git commit -m initial &&
++
++	for i in $numbers
++	do
++		git checkout -b branch$i master &&
++		> file$i &&
++		git add file$i &&
++		test_tick &&
++		git commit -m branch$i || break
++	done
++
++'
++
++cat > expect << EOF
++! [branch1] branch1
++ ! [branch2] branch2
++  ! [branch3] branch3
++   ! [branch4] branch4
++    ! [branch5] branch5
++     ! [branch6] branch6
++      ! [branch7] branch7
++       ! [branch8] branch8
++        ! [branch9] branch9
++         * [branch10] branch10
++----------
++         * [branch10] branch10
++        +  [branch9] branch9
++       +   [branch8] branch8
++      +    [branch7] branch7
++     +     [branch6] branch6
++    +      [branch5] branch5
++   +       [branch4] branch4
++  +        [branch3] branch3
++ +         [branch2] branch2
+++          [branch1] branch1
+++++++++++* [branch10^] initial
++EOF
++
++test_expect_failure 'show-branch with more than 8 branches' '
++
++	git show-branch $(for i in $numbers; do echo branch$i; done) > out &&
++	test_cmp expect out
++
++'
++
++test_done
+-- 
+1.6.0.rc0.22.gf2096d.dirty
