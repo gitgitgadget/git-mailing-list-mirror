@@ -1,74 +1,81 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Gitweb; ordering of fork list on summary page (was Vanilla gitweb vs repo.or.cz)
-Date: Wed, 23 Jul 2008 18:10:52 +0100
-Message-ID: <e2b179460807231010m44ff446auc054ead9178c711b@mail.gmail.com>
+From: =?ISO-8859-1?Q?=22Peter_Valdemar_M=F8rch_=28Lists=29=22?= 
+	<4ux6as402@sneakemail.com>
+Subject: git merge after git cherry-pick?
+Date: Wed, 23 Jul 2008 19:14:49 +0200
+Message-ID: <48876709.3090504@sneakemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Jul 23 19:12:29 2008
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 23 19:16:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLhsp-0006e9-6X
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 19:12:11 +0200
+	id 1KLhwf-00087O-Qm
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 19:16:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754603AbYGWRKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 13:10:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754597AbYGWRKz
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 13:10:55 -0400
-Received: from wx-out-0506.google.com ([66.249.82.234]:48180 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752810AbYGWRKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 13:10:54 -0400
-Received: by wx-out-0506.google.com with SMTP id h29so2309653wxd.4
-        for <git@vger.kernel.org>; Wed, 23 Jul 2008 10:10:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=T0xqenjvr8IxCfAr005lgttWfcZ2EBzjxottirG9yBE=;
-        b=Z691xCn/wIWM6pWSAa3XEF0Rw3OF654SYYNa7LazCC4PgjcWPeX0mrrJRXVPKTosmP
-         oo0ryfODURHYkQ3IaOTOefhpW86XlHU6zD+CMkdpJrdcrW52XGVgYa0gyij7tAg+fukm
-         hMi65EYZ1iTNKMqcbkyv/plPsFI8hrFLYyvx0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=X3jt0f04n3WecnVBrjl7FA2dUECWuOf7ccLBhIYJChuQMdSrdq2OY3W8cC/NwUqxFT
-         KIPozzExKTG+mFfFEEyU9F6LMjox4HW7BV2HQSki899+UpPyLSsJJKdTzIl0DJFvZOaT
-         EGpXS9F4/SuTgovABVMmSd1K0Oc1oZp9Qq8LY=
-Received: by 10.70.19.20 with SMTP id 20mr247932wxs.54.1216833052930;
-        Wed, 23 Jul 2008 10:10:52 -0700 (PDT)
-Received: by 10.70.110.16 with HTTP; Wed, 23 Jul 2008 10:10:52 -0700 (PDT)
-Content-Disposition: inline
+	id S1753248AbYGWRO4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2008 13:14:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752858AbYGWRO4
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 13:14:56 -0400
+Received: from morch.com ([193.58.255.207]:38687 "EHLO morch.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753426AbYGWROy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 13:14:54 -0400
+Received: from [192.168.1.214] (ANice-157-1-140-70.w90-52.abo.wanadoo.fr [90.52.83.70])
+	by morch.com (Postfix) with ESMTP id 0B82D2841
+	for <git@vger.kernel.org>; Wed, 23 Jul 2008 19:16:37 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080502)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89717>
 
-2008/7/13 Petr Baudis <pasky@suse.cz>:
->  Then, there is the http://repo.or.cz/w/git/gitweb.git repository,
-> which was my old attempt at maintaining gitweb actively. Unfortunately,
-> this didn't quite work out because of my general lack of time and
-> dedication.
+Hi,
 
-Notwithstanding the above, I've pushed a little 'fix' to the mob branch:
+Still being a newbie...
 
-http://repo.or.cz/w/git/gitweb.git?a=commitdiff;h=3e8f6e9125071a7e17c88efb69c1780d775025bc
+On a branch, b, made off of master, I've made the commits b1, b2, b3 an=
+d=20
+b4.
 
-The list of forks on the summary page was unsorted, this just makes
-them sorted by age, which seems a fair way to decide which forks are
-shown before the list size cut-off (15) kicks in.
+Back on master, I need commit b1 and b3 immediately. So I:
 
-s/noheader/no_header was just to make it obvious what the parameter
-affects, so all the code can be found with one grep, and s/undef/'age'
-just shows the intent, although that parameter isn't what actually
-controls the sort order. Or, I guess, the sorting could be refactored
-out of the header generation code.
+$ git checkout master
+$ git cherry-pick "b1's SHA"
+$ git cherry-pick "b3's SHA"
 
-Mike
+Now, both b and master contain b1 and b3. How do I now create a log of=20
+"what remains to be merged from b to master", i.e. only b2 and b4? And=20
+how do I merge b2 and b4 to master, so master's log shows b1, b3, b2 an=
+d=20
+b4 and doesn't show b1 and b3 twice, which is what I get if I:
+
+$ git merge b
+
+after the cherry-picks above. Also I noticed, that if I merge master=20
+into b (to keep up-to-date with master) b1 and b3 are also mentioned tw=
+ice.
+
+I did notice that cherry-pick created new SHA1 IDs for the commits for=20
+b1 and b3 on master (as indeed man cherry-pick also says). Maybe=20
+cherry-pick is not the right tool for the job. Is there another way to=20
+"copy"/"merge" only b1 and b3 (but not b2 and b4) from b into master=20
+maintaining merge history and avoiding them being mentioned twice later=
+?
+
+At the time of writing b1-b4, I did not know that b1 and b3 would be=20
+needed separately, so I didn't put (b1 and b3) and (b2 and b4) on=20
+separate branches. I did notice though, that they weren't an intricate=20
+part of "the new feature". Is it required that I then do the work in=20
+separate branches?
+
+I hope this is possible as I'm thrilled with git!
+
+Peter
+--=20
+Peter Valdemar M=F8rch
+http://www.morch.com
