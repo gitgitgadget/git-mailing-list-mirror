@@ -1,64 +1,112 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Build configuration to skip ctime for modification test
-Date: Wed, 23 Jul 2008 18:46:14 +0200
-Message-ID: <20080723164614.GB5283@blimp.local>
-References: <20080721173511.GB5387@steel.home> <4885897C.8010401@viscovery.net> <7vy73tltf5.fsf@gitster.siamese.dyndns.org> <20080722193901.GA5113@blimp.local> <alpine.DEB.1.00.0807222115440.8986@racer> <20080722203128.GB5113@blimp.local> <7vr69lihkt.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 18:47:31 2008
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH] git-am: Add colon before the subject that is printed out as being applied
+Date: Wed, 23 Jul 2008 18:46:36 +0200
+Message-ID: <1216831596-30870-1-git-send-email-s-beyer@gmx.net>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Stephan Beyer <s-beyer@gmx.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 23 18:47:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLhUk-0004nH-EM
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 18:47:18 +0200
+	id 1KLhVE-00053X-GK
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 18:47:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752905AbYGWQqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 12:46:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752932AbYGWQqS
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 12:46:18 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.182]:12197 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752393AbYGWQqS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 12:46:18 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg201f5EC7
-Received: from tigra.home (Faf34.f.strato-dslnet.de [195.4.175.52])
-	by post.webmailer.de (fruni mo33) (RZmta 16.47)
-	with ESMTP id c02783k6NGXGYX ; Wed, 23 Jul 2008 18:46:14 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 5D2D1277BD;
-	Wed, 23 Jul 2008 18:46:14 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id 4615436D18; Wed, 23 Jul 2008 18:46:14 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vr69lihkt.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753050AbYGWQqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 12:46:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753032AbYGWQqr
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 12:46:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58403 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752994AbYGWQqq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 12:46:46 -0400
+Received: (qmail invoked by alias); 23 Jul 2008 16:46:45 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp045) with SMTP; 23 Jul 2008 18:46:45 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+yzl0ImEay8olJY03YYurp2RehpGEuVzht30aNLL
+	M5xDLwIPBc7iqP
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KLhU4-00082I-S6; Wed, 23 Jul 2008 18:46:36 +0200
+X-Mailer: git-send-email 1.6.0.rc0.102.ga1791
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89708>
 
-Junio C Hamano, Wed, Jul 23, 2008 02:12:50 +0200:
-> >> Otherwise, if you really want to tell at compile time,I think for clarity 
-> >> you have to introduce another #define, since NO_TRUSTABLE_FILEMODE 
-> >> definitely says something different than CTIME_IS_USELESS.
-> >
-> > I had that at first (NO_DEPENDABLE_CTIME, than IGNORE_CTIME), than
-> > deemed it excessive.
-> 
-> Why is it excessive?  My initial reaction was "what does trustable
-> filemode nor trust_executable_bit has anything to do with ctime".  Please
-> explain.
+git-am output can be confusing, because the subject of the applied
+patch can look like the rest of a sentence starting with "Applying".
+The added colon should make this clearer.
 
-Because exactly the file mode (the executable bit) is the reason for
-checking ctime. Otherwise there is no point: Git doesn't save any
-other data which when changed cause a ctime update. And exactly the
-file mode is completely broken on that cygwin thing. Which is
-precisely pointed by NO_TRUSTABLE_FILEMODE. Hence - just it.
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+---
+Hi,
+
+Linus added single quotes to applypatch in 610968199,
+writing:
+
+    Add quotes around the subject line that we print out as being applied.
+
+    My brain just flipped when it tried to read the "Applying" as part
+    of the explanation of the patch, and the sentence didn't make any
+    sense. The quotes make it clear what's going on.
+
+I think he is right ;)
+
+Of course, it's debatable whether
+	Applying: foo
+or
+	Applying "foo"
+or
+	Applying 'foo'
+may be the best. I don't really care :)
+
+The main reason I chose the colon variant is because the change in t4151
+is less ugly.
+
+Another reason: thinking of "ambiguous" subjects:
+ -	Applying "Remove "string" from foo.c"
+ -	Applying 'Remove 'string' from foo.sh'
+ -	Applying: foo.c: Remove "string"
+
+Regards,
+  Stephan
+
+ git-am.sh           |    2 +-
+ t/t4151-am-abort.sh |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index 7864b5f..f4abd9d 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -456,7 +456,7 @@ do
+ 		stop_here $this
+ 	fi
+ 
+-	printf 'Applying %s\n' "$FIRSTLINE"
++	printf 'Applying: %s\n' "$FIRSTLINE"
+ 
+ 	case "$resolved" in
+ 	'')
+diff --git a/t/t4151-am-abort.sh b/t/t4151-am-abort.sh
+index 249093b..f45ab0a 100755
+--- a/t/t4151-am-abort.sh
++++ b/t/t4151-am-abort.sh
+@@ -43,7 +43,7 @@ do
+ 
+ 	test_expect_success "am$with3 --skip continue after failed am$with3" '
+ 		test_must_fail git-am$with3 --skip >output &&
+-		test "$(grep "^Applying" output)" = "Applying 6" &&
++		test "$(grep "^Applying" output)" = "Applying: 6" &&
+ 		test_cmp file-2-expect file-2 &&
+ 		test ! -f .git/rr-cache/MERGE_RR
+ 	'
+-- 
+1.6.0.rc0.102.ga1791
