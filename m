@@ -1,105 +1,167 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH] Make non-static functions, that may be static, static
-Date: Thu, 24 Jul 2008 01:09:35 +0200
-Message-ID: <1216854575-25893-1-git-send-email-s-beyer@gmx.net>
-Cc: gitster@pobox.com, Stephan Beyer <s-beyer@gmx.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 24 01:10:48 2008
+From: Lee Marlow <lee.marlow@gmail.com>
+Subject: [PATCH] bash completion: Add completion for 'git help'
+Date: Wed, 23 Jul 2008 17:13:15 -0600
+Message-ID: <1216854795-51155-1-git-send-email-lee.marlow@gmail.com>
+Cc: git@vger.kernel.org, Lee Marlow <lee.marlow@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jul 24 01:14:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLnTr-0000KT-6o
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 01:10:47 +0200
+	id 1KLnXI-0001EE-Fh
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 01:14:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753912AbYGWXJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 19:09:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753865AbYGWXJq
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 19:09:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54775 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753907AbYGWXJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 19:09:45 -0400
-Received: (qmail invoked by alias); 23 Jul 2008 23:09:43 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp042) with SMTP; 24 Jul 2008 01:09:43 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+WaBkhwjSWCG9OfQREPdvSkFeq74BkVnfrH70bQu
-	+eYR1VS5Urflc2
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KLnSh-0008P2-Af; Thu, 24 Jul 2008 01:09:35 +0200
-X-Mailer: git-send-email 1.6.0.rc0.102.ga1791
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1754113AbYGWXNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 19:13:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754108AbYGWXNU
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 19:13:20 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:11633 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754097AbYGWXNT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 19:13:19 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so478780yxm.1
+        for <git@vger.kernel.org>; Wed, 23 Jul 2008 16:13:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=x8iarxwNT3SV0G77/Fo2yr0F2CO3smBFioGmVmhJCkM=;
+        b=ULDL0UJ5SWU3rvQyygSdGCRBtjdUcR7qNWm8LziB1AtTHkk+ui4vZQEUSxhqOSEQDV
+         h0PECcimxI0VJ9nAAbX9Bpjefy4vtVtuAXHEpFPLRPTEWYPNO0K2OyRhBb5muo26xKrD
+         rT3y8tJ6Pbto3ntudlxxgFsV852XIS23wg6y8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=t0HtSwVM1SB3I+ff5wb9PXsaa6xBiEYNFwiRPDEGhSc+Zg188wGQdn9PIiA9DLE+kQ
+         tWyxAJqFDQOQmfODUz+A9lCwtYGYPHFzcKzg+o6E+MnnDllbPXCSaOIqBaTrwM2IPrOm
+         tvktqjTdL68pdsxq4p5r2JXCRJXsOuqR4aqwI=
+Received: by 10.151.153.14 with SMTP id f14mr418067ybo.29.1216854798364;
+        Wed, 23 Jul 2008 16:13:18 -0700 (PDT)
+Received: from localhost.localdomain ( [72.14.241.7])
+        by mx.google.com with ESMTPS id 4sm4679452yxq.8.2008.07.23.16.13.16
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 23 Jul 2008 16:13:17 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.rc0.14.g95f8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89802>
 
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+Renamed cached __git_commandlist to __git_porcelain_commandlist
+and added __git_all_commandlist that only filters out *--* helpers.
+Completions for 'git help' will use the __git_all_commandlist, while
+__git_porcelain_commandlist is used for git command completion.
+Users who actually read man pages may want to see help for plumbing
+commands.
+
+Options added: --all --info --man --web
+
+Signed-off-by: Lee Marlow <lee.marlow@gmail.com>
 ---
+ contrib/completion/git-completion.bash |   46 +++++++++++++++++++++++++++-----
+ 1 files changed, 39 insertions(+), 7 deletions(-)
 
-Or are there any reasons against that? :)
-
- builtin-commit.c       |    2 +-
- builtin-config.c       |    2 +-
- builtin-for-each-ref.c |    2 +-
- builtin-merge.c        |    2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 97e64de..9d7100c 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -877,7 +877,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
- 	}
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 2edb341..0e37b71 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -349,10 +349,10 @@ __git_complete_revlist ()
+ 	esac
  }
  
--int git_commit_config(const char *k, const char *v, void *cb)
-+static int git_commit_config(const char *k, const char *v, void *cb)
+-__git_commands ()
++__git_all_commands ()
  {
- 	if (!strcmp(k, "commit.template"))
- 		return git_config_string(&template_file, k, v);
-diff --git a/builtin-config.c b/builtin-config.c
-index 0cf191a..91fdc49 100644
---- a/builtin-config.c
-+++ b/builtin-config.c
-@@ -145,7 +145,7 @@ free_strings:
- 	return ret;
+-	if [ -n "$__git_commandlist" ]; then
+-		echo "$__git_commandlist"
++	if [ -n "$__git_all_commandlist" ]; then
++		echo "$__git_all_commandlist"
+ 		return
+ 	fi
+ 	local i IFS=" "$'\n'
+@@ -360,6 +360,24 @@ __git_commands ()
+ 	do
+ 		case $i in
+ 		*--*)             : helper pattern;;
++		*) echo $i;;
++		esac
++	done
++}
++__git_all_commandlist=
++__git_all_commandlist="$(__git_all_commands 2>/dev/null)"
++
++__git_porcelain_commands ()
++{
++	if [ -n "$__git_porcelain_commandlist" ]; then
++		echo "$__git_porcelain_commandlist"
++		return
++	fi
++	local i IFS=" "$'\n'
++	for i in 'help' $__git_all_commands
++	do
++		case $i in
++		*--*)             : helper pattern;;
+ 		applymbox)        : ask gittus;;
+ 		applypatch)       : ask gittus;;
+ 		archimport)       : import;;
+@@ -427,8 +445,8 @@ __git_commands ()
+ 		esac
+ 	done
+ }
+-__git_commandlist=
+-__git_commandlist="$(__git_commands 2>/dev/null)"
++__git_porcelain_commandlist=
++__git_porcelain_commandlist="$(__git_porcelain_commands 2>/dev/null)"
+ 
+ __git_aliases ()
+ {
+@@ -767,6 +785,18 @@ _git_gc ()
+ 	COMPREPLY=()
  }
  
--char *normalize_value(const char *key, const char *value)
-+static char *normalize_value(const char *key, const char *value)
++_git_help ()
++{
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	case "$cur" in
++	--*)
++		__gitcomp "--all --info --man --web"
++		return
++		;;
++	esac
++	__gitcomp "$(__git_all_commands)"
++}
++
+ _git_ls_remote ()
  {
- 	char *normalized;
- 
-diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-index 76282ad..445039e 100644
---- a/builtin-for-each-ref.c
-+++ b/builtin-for-each-ref.c
-@@ -809,7 +809,7 @@ static struct ref_sort *default_sort(void)
- 	return sort;
- }
- 
--int opt_parse_sort(const struct option *opt, const char *arg, int unset)
-+static int opt_parse_sort(const struct option *opt, const char *arg, int unset)
- {
- 	struct ref_sort **sort_tail = opt->value;
- 	struct ref_sort *s;
-diff --git a/builtin-merge.c b/builtin-merge.c
-index 8825dcf..e78fa18 100644
---- a/builtin-merge.c
-+++ b/builtin-merge.c
-@@ -431,7 +431,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 		sha1_to_hex(remote_head->sha1), remote);
- }
- 
--int git_merge_config(const char *k, const char *v, void *cb)
-+static int git_merge_config(const char *k, const char *v, void *cb)
- {
- 	if (branch && !prefixcmp(k, "branch.") &&
- 		!prefixcmp(k + 7, branch) &&
+ 	__gitcomp "$(__git_remotes)"
+@@ -1369,7 +1399,8 @@ _git ()
+ 		case "$i" in
+ 		--git-dir=*) __git_dir="${i#--git-dir=}" ;;
+ 		--bare)      __git_dir="." ;;
+-		--version|--help|-p|--paginate) ;;
++		--version|-p|--paginate) ;;
++		--help) command="help"; break ;;
+ 		*) command="$i"; break ;;
+ 		esac
+ 		c=$((++c))
+@@ -1389,7 +1420,7 @@ _git ()
+ 			--help
+ 			"
+ 			;;
+-		*)     __gitcomp "$(__git_commands) $(__git_aliases)" ;;
++		*)     __gitcomp "$(__git_porcelain_commands) $(__git_aliases)" ;;
+ 		esac
+ 		return
+ 	fi
+@@ -1414,6 +1445,7 @@ _git ()
+ 	fetch)       _git_fetch ;;
+ 	format-patch) _git_format_patch ;;
+ 	gc)          _git_gc ;;
++	help)        _git_help ;;
+ 	log)         _git_log ;;
+ 	ls-remote)   _git_ls_remote ;;
+ 	ls-tree)     _git_ls_tree ;;
 -- 
-1.6.0.rc0.102.ga1791
+1.6.0.rc0.14.g95f8
