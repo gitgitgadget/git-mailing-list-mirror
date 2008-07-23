@@ -1,69 +1,96 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+From: Ingo Molnar <mingo@elte.hu>
 Subject: Re: q: faster way to integrate/merge lots of topic branches?
-Date: Wed, 23 Jul 2008 16:06:57 +0200
-Message-ID: <8aa486160807230706o20c391f2v60b78973dce62762@mail.gmail.com>
-References: <20080723130518.GA17462@elte.hu>
+Date: Wed, 23 Jul 2008 16:09:59 +0200
+Message-ID: <20080723140959.GB9537@elte.hu>
+References: <20080723130518.GA17462@elte.hu> <20080723174140.b749191a.vsu@altlinux.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Ingo Molnar" <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Wed Jul 23 16:08:23 2008
+To: Sergey Vlasov <vsu@altlinux.ru>
+X-From: git-owner@vger.kernel.org Wed Jul 23 16:11:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLf0Y-0005PC-T5
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 16:07:59 +0200
+	id 1KLf3g-00071u-Fj
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 16:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752201AbYGWOG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 10:06:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751402AbYGWOG7
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 10:06:59 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:47607 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751104AbYGWOG6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 10:06:58 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so409206yxm.1
-        for <git@vger.kernel.org>; Wed, 23 Jul 2008 07:06:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=caJAKXZZGA/LGjEpzvhlGrSgX4nWoCE/ezW8/NEvUGY=;
-        b=ZlOgMXYp3m8yWiglEGPVZNcUixC6FiTHOathKIBt5QqTnuMguH0IgpReNGjNRzuPce
-         inwTueMk1dWDKF6KkPABmFCTHaxOvCnBvDCK9SdliKMxu6/JoYSlTN3VnsO3J6h9kbUY
-         BudziwsWlddhkEBRlXQHVdaQBjoZ2zisgn8DE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=U/SAyY9x1XxZCkxF+Zu5MlOElhLfNHXdRel6m+PV/bhhzbZJOEVLtvE3+OIWBYrv71
-         rUQaiMis5/u7Z153p3rcQmyIyXbD5k8Mc8w0Yn7M3kuNvgqWsLb/Ht2Zy3byuj6dLX1K
-         WVu2Au3UN6kosHqG46yys++lCntO8ZkBjQ3Ps=
-Received: by 10.150.228.2 with SMTP id a2mr134217ybh.245.1216822017877;
-        Wed, 23 Jul 2008 07:06:57 -0700 (PDT)
-Received: by 10.150.95.21 with HTTP; Wed, 23 Jul 2008 07:06:57 -0700 (PDT)
-In-Reply-To: <20080723130518.GA17462@elte.hu>
+	id S1753223AbYGWOKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 10:10:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753249AbYGWOKM
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 10:10:12 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:51209 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752976AbYGWOKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 10:10:11 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1KLf2X-0004RM-Bg
+	from <mingo@elte.hu>; Wed, 23 Jul 2008 16:10:09 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 402753E21AB; Wed, 23 Jul 2008 16:09:55 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20080723174140.b749191a.vsu@altlinux.ru>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89660>
 
-On Wed, Jul 23, 2008 at 15:05, Ingo Molnar <mingo@elte.hu> wrote:
->
-> I've got the following, possibly stupid question: is there a way to
-> merge a healthy number of topic branches into the master branch in a
-> quicker way, when most of the branches are already merged up?
+* Sergey Vlasov <vsu@altlinux.ru> wrote:
 
-You could filter upfront the branches that are already merged up with:
+> On Wed, 23 Jul 2008 15:05:18 +0200 Ingo Molnar wrote:
+> 
+> > Anyone can simulate it by switching to the linus/master branch of the
+> > current Linux kernel tree, and doing:
+> >
+> >    time for ((i=0; i<140; i++)); do git-merge v2.6.26; done
+> >
+> >    real    1m26.397s
+> >    user    1m10.048s
+> >    sys     0m13.944s
+> 
+> Timing results here (E6750 @ 2.66GHz):
+> 41.61s user 3.71s system 99% cpu 45.530 total
+> 
+> However, testing whether there is something new to merge could be
+> performed significantly faster:
+> 
+> $ time sh -c 'for ((i=0; i<140; i++)); do [ -n "$(git rev-list --max-count=1 v2.6.26 ^HEAD)" ]; done'
+> sh -c   5.49s user 0.26s system 99% cpu 5.786 total
+> 
+> The same loop with "git merge-base v2.6.26 HEAD" takes about 40 
+> seconds here - apparently finding the merge base is the expensive 
+> part, and it makes sense to avoid it if you expect that most of your 
+> branches do not contain anything new to merge.
 
-git show-branch --independent <commits>
+using git-fastmerge i get 2.4 seconds:
 
-but it has a limit of 25 refs.
+  $ time for ((i=0; i<140; i++)); do git-fastmerge v2.6.26; done
+  [...]
+  real    0m2.388s
+  user    0m1.211s
+  sys     0m1.131s
 
-Santi
+for something that 'progresses' in a forward manner (which merges do 
+fundamentally) nothing beats the performance of a timestamped cache i 
+think.
+
+at least for my usecase.
+
+Even assuming that the filesystem is sane, is my merge-cache 
+implementation semantically equivalent to a git-merge? One detail is 
+that i suspect it is not equivalent in the git-merge --no-ff case. (but 
+that is a not too interesting non-default case anyway)
+
+	Ingo
