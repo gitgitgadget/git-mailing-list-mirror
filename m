@@ -1,93 +1,235 @@
-From: Lee Marlow <lee.marlow@gmail.com>
-Subject: [PATCH] bash completion: Add long options for 'git rm'
-Date: Wed, 23 Jul 2008 15:21:08 -0600
-Message-ID: <1216848068-49674-1-git-send-email-lee.marlow@gmail.com>
-Cc: git@vger.kernel.org, Lee Marlow <lee.marlow@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jul 23 23:22:20 2008
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH 7/9] builtin-checkout-index.c: use parse_options()
+Date: Wed, 23 Jul 2008 23:42:10 +0200
+Message-ID: <1216849332-26813-8-git-send-email-barra_cuda@katamail.com>
+References: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com>
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 23 23:37:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLlmn-0005Jk-Ve
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 23:22:14 +0200
+	id 1KLm1c-00026o-Eq
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 23:37:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754839AbYGWVVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 17:21:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754764AbYGWVVM
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 17:21:12 -0400
-Received: from rv-out-0506.google.com ([209.85.198.236]:34324 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754558AbYGWVVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 17:21:11 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so2598978rvb.1
-        for <git@vger.kernel.org>; Wed, 23 Jul 2008 14:21:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=GP1YkzLD2pTE5RUVNRKCR+Q0tpLPAPaGfhlE6JzX8ms=;
-        b=Xk7XAEXt7Y9LBS384tjHpGg1WMLqb/xNAqh1pUw9vEhUgg6u9cnfRyAcAiQQAX5Vj6
-         sU2yC0fOjEvAIzFrBfm50pKHqR+ECnhEf4xknFtJyvkrZXsZbUntkIF5msFMzmyVGi5P
-         b6qcwDNjQCKWfYoA7Md/V9YX2lSAehgzgjQBg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=RsVx8lGmOnLfYd268kCSeU+LFT92SUSOWW3gPDjHJhCB3kY5vPq/IFslRdZdUMjvgB
-         uFNtt10cXC6bKddny4PsNxcBx2GNIBOECEdmcxzmjILz/o+SnX7wxRGNW/cyY/meh+Pg
-         qID0GcibndH+MslC852WRdNHZkWlI1woMvFt8=
-Received: by 10.141.69.1 with SMTP id w1mr112879rvk.185.1216848070303;
-        Wed, 23 Jul 2008 14:21:10 -0700 (PDT)
-Received: from localhost.localdomain ( [75.71.41.234])
-        by mx.google.com with ESMTPS id f42sm3638888rvb.5.2008.07.23.14.21.09
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 23 Jul 2008 14:21:09 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.rc0.14.g95f8
+	id S1754847AbYGWVgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 17:36:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754915AbYGWVgA
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 17:36:00 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:37061 "HELO
+	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1754883AbYGWVfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 17:35:55 -0400
+Received: (qmail 11599 invoked by uid 89); 23 Jul 2008 21:35:46 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
+X-Spam-Level: **
+X-Spam-Status: No, score=2.3 required=5.0 tests=BAYES_50,HELO_LH_LD,RDNS_NONE
+	autolearn=no version=3.2.3
+Received: from unknown (HELO localhost.localdomain) (barra?cuda@katamail.com@80.104.56.10)
+  by smtp2-pc with SMTP; 23 Jul 2008 21:35:45 -0000
+X-Mailer: git-send-email 1.5.6.3
+In-Reply-To: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89771>
 
-Options added: --cached --dry-run --ignore-unmatch --quiet
-
-Signed-off-by: Lee Marlow <lee.marlow@gmail.com>
+Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
 ---
- contrib/completion/git-completion.bash |   15 +++++++++++++++
- 1 files changed, 15 insertions(+), 0 deletions(-)
+ builtin-checkout-index.c |  146 +++++++++++++++++++++++++---------------------
+ 1 files changed, 79 insertions(+), 67 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 2edb341..4b7ef69 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1170,6 +1170,20 @@ _git_reset ()
- 	__gitcomp "$(__git_refs)"
+diff --git a/builtin-checkout-index.c b/builtin-checkout-index.c
+index 71ebabf..429c850 100644
+--- a/builtin-checkout-index.c
++++ b/builtin-checkout-index.c
+@@ -40,6 +40,7 @@
+ #include "cache.h"
+ #include "quote.h"
+ #include "cache-tree.h"
++#include "parse-options.h"
+ 
+ #define CHECKOUT_ALL 4
+ static int line_termination = '\n';
+@@ -153,18 +154,76 @@ static void checkout_all(const char *prefix, int prefix_length)
+ 		exit(128);
  }
  
-+_git_rm ()
-+{
-+	__git_has_doubledash && return
+-static const char checkout_cache_usage[] =
+-"git checkout-index [-u] [-q] [-a] [-f] [-n] [--stage=[123]|all] [--prefix=<string>] [--temp] [--] <file>...";
++static const char * const checkout_cache_usage[] = {
++	"git checkout-index [options] [--] <file>...",
++	NULL
++};
 +
-+	local cur="${COMP_WORDS[COMP_CWORD]}"
-+	case "$cur" in
-+	--*)
-+		__gitcomp "--cached --dry-run --ignore-unmatch --quiet"
-+		return
-+		;;
-+	esac
-+	COMPREPLY=()
++static int parse_state_force_cb(const struct option *opt, const char *arg, int unset)
++{
++	struct checkout *t_state = opt->value;
++	t_state->force = unset ? 0 : 1;
++	return 0;
 +}
 +
- _git_shortlog ()
++static int parse_state_quiet_cb(const struct option *opt, const char *arg, int unset)
++{
++	struct checkout *t_state = opt->value;
++	t_state->quiet = unset ? 0 : 1;
++	return 0;
++}
++
++static int parse_state_no_create_cb(const struct option *opt, const char *arg, int unset)
++{
++	struct checkout *t_state = opt->value;
++	t_state->not_new = 1;
++	return 0;
++}
++
++static int parse_state_index_cb(const struct option *opt, const char *arg, int unset)
++{
++	struct checkout *t_state = opt->value;
++	t_state->refresh_cache = unset ? 0 : 1;
++	return 0;
++}
+ 
+ static struct lock_file lock_file;
+ 
+ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
  {
- 	__git_has_doubledash && return
-@@ -1425,6 +1439,7 @@ _git ()
- 	rebase)      _git_rebase ;;
- 	remote)      _git_remote ;;
- 	reset)       _git_reset ;;
-+	rm)          _git_rm ;;
- 	send-email)  _git_send_email ;;
- 	shortlog)    _git_shortlog ;;
- 	show)        _git_show ;;
+-	int i;
+ 	int newfd = -1;
+ 	int all = 0;
+ 	int read_from_stdin = 0;
+ 	int prefix_length;
++	char *stage = NULL;
++
++	const struct option options[] = {
++		OPT_BOOLEAN('a', "all", &all,
++			    "checks out all files in the index"),
++		{ OPTION_CALLBACK, 'f', "force", &state, NULL,
++		  "force overwrite of existing files",
++		  PARSE_OPT_NOARG, parse_state_force_cb, 0 },
++		{ OPTION_CALLBACK, 'q', "quiet", &state, NULL, "be quiet",
++		  PARSE_OPT_NOARG, parse_state_quiet_cb, 0 },
++		{ OPTION_CALLBACK, 'n', "no-create", &state, NULL,
++		  "do not checkout new files, refresh existing ones",
++		  PARSE_OPT_NOARG | PARSE_OPT_NONEG,
++		  parse_state_no_create_cb, 0 },
++		{ OPTION_CALLBACK, 'u', "index", &state, NULL,
++		  "update stat information in the index",
++		  PARSE_OPT_NOARG, parse_state_index_cb, 0 },
++		OPT_SET_INT('z', NULL, &line_termination,
++			    "separate paths with NUL", 0),
++		OPT_BOOLEAN(0, "stdin", &read_from_stdin,
++			    "read paths from stdin"),
++		OPT_BOOLEAN(0, "temp", &to_tempfile,
++			    "write content to temporary files"),
++		OPT_STRING(0, "prefix", &state.base_dir, "string",
++			   "prepend <string> when creating files"),
++		OPT_STRING(0, "stage", &stage, "1|2|3|all",
++			   "copy out files from the named stage"),
++		OPT_END()
++	};
+ 
+ 	git_config(git_default_config, NULL);
+ 	state.base_dir = "";
+@@ -174,71 +233,24 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 		die("invalid cache");
+ 	}
+ 
+-	for (i = 1; i < argc; i++) {
+-		const char *arg = argv[i];
++	argc = parse_options(argc, argv, options, checkout_cache_usage, 0);
+ 
+-		if (!strcmp(arg, "--")) {
+-			i++;
+-			break;
+-		}
+-		if (!strcmp(arg, "-a") || !strcmp(arg, "--all")) {
+-			all = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-f") || !strcmp(arg, "--force")) {
+-			state.force = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet")) {
+-			state.quiet = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-n") || !strcmp(arg, "--no-create")) {
+-			state.not_new = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-u") || !strcmp(arg, "--index")) {
+-			state.refresh_cache = 1;
+-			if (newfd < 0)
+-				newfd = hold_locked_index(&lock_file, 1);
+-			continue;
+-		}
+-		if (!strcmp(arg, "-z")) {
+-			line_termination = 0;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--stdin")) {
+-			if (i != argc - 1)
+-				die("--stdin must be at the end");
+-			read_from_stdin = 1;
+-			i++; /* do not consider arg as a file name */
+-			break;
+-		}
+-		if (!strcmp(arg, "--temp")) {
++	if ((state.refresh_cache) && (newfd < 0))
++		newfd = hold_locked_index(&lock_file, 1);
++	if (state.base_dir)
++		state.base_dir_len = strlen(state.base_dir);
++
++	if (stage) {
++		if (!strcmp(stage, "all")) {
+ 			to_tempfile = 1;
+-			continue;
+-		}
+-		if (!prefixcmp(arg, "--prefix=")) {
+-			state.base_dir = arg+9;
+-			state.base_dir_len = strlen(state.base_dir);
+-			continue;
+-		}
+-		if (!prefixcmp(arg, "--stage=")) {
+-			if (!strcmp(arg + 8, "all")) {
+-				to_tempfile = 1;
+-				checkout_stage = CHECKOUT_ALL;
+-			} else {
+-				int ch = arg[8];
+-				if ('1' <= ch && ch <= '3')
+-					checkout_stage = arg[8] - '0';
+-				else
+-					die("stage should be between 1 and 3 or all");
+-			}
+-			continue;
++			checkout_stage = CHECKOUT_ALL;
++		} else {
++			int ch = stage[0];
++			if ('1' <= ch && ch <= '3')
++				checkout_stage = stage[0] - '0';
++			else
++				die("stage should be between 1 and 3 or all");
+ 		}
+-		if (arg[0] == '-')
+-			usage(checkout_cache_usage);
+-		break;
+ 	}
+ 
+ 	if (state.base_dir_len || to_tempfile) {
+@@ -253,8 +265,8 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	/* Check out named files first */
+-	for ( ; i < argc; i++) {
+-		const char *arg = argv[i];
++	while (argc-- > 0) {
++		const char *arg = *argv++;
+ 		const char *p;
+ 
+ 		if (all)
 -- 
-1.6.0.rc0.14.g95f8
+1.5.6.3
