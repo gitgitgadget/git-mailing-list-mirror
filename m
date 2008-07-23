@@ -1,61 +1,64 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: [PATCH 2/2] sort_in_topological_order(): avoid setting a commit
- flag
-Date: Wed, 23 Jul 2008 10:39:55 -0500
-Message-ID: <488750CB.1040400@freescale.com>
-References: <alpine.DEB.1.00.0807230148130.8986@racer> <alpine.DEB.1.00.0807230150480.8986@racer> <7v7ibdifbp.fsf@gitster.siamese.dyndns.org>
+From: Matthias Kestenholz <mk@spinlock.ch>
+Subject: Re: [RFC] Git User's Survey 2008
+Date: Wed, 23 Jul 2008 17:43:26 +0200
+Message-ID: <1216827806.9938.18.camel@localhost>
+References: <200807230325.04184.jnareb@gmail.com>
+	 <20080723143810.GR2925@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, pasky@suse.cz,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 17:42:57 2008
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Stephan Beyer <s-beyer@gmx.net>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 17:44:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLgTz-0008Bv-LN
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 17:42:28 +0200
+	id 1KLgVy-0000iv-Ol
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 17:44:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751840AbYGWPl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 11:41:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbYGWPl2
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 11:41:28 -0400
-Received: from az33egw02.freescale.net ([192.88.158.103]:36479 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751266AbYGWPl1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 11:41:27 -0400
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id m6NFdvL1014340;
-	Wed, 23 Jul 2008 08:39:58 -0700 (MST)
-Received: from [10.214.72.50] (mvp-10-214-72-50.am.freescale.net [10.214.72.50])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m6NFduTa010778;
-	Wed, 23 Jul 2008 10:39:56 -0500 (CDT)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7v7ibdifbp.fsf@gitster.siamese.dyndns.org>
+	id S1752146AbYGWPnb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 11:43:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752518AbYGWPnb
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 11:43:31 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:2210 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751629AbYGWPna (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 11:43:30 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so510166ugf.16
+        for <git@vger.kernel.org>; Wed, 23 Jul 2008 08:43:28 -0700 (PDT)
+Received: by 10.103.249.19 with SMTP id b19mr114061mus.50.1216827808143;
+        Wed, 23 Jul 2008 08:43:28 -0700 (PDT)
+Received: from ?192.168.1.15? ( [213.3.44.95])
+        by mx.google.com with ESMTPS id g1sm54006305muf.7.2008.07.23.08.43.26
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 23 Jul 2008 08:43:27 -0700 (PDT)
+In-Reply-To: <20080723143810.GR2925@dpotapov.dyndns.org>
+X-Mailer: Evolution 2.22.3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89688>
 
-Junio C Hamano wrote:
+On Wed, 2008-07-23 at 18:38 +0400, Dmitry Potapov wrote:
+> On Wed, Jul 23, 2008 at 03:25:03AM +0200, Jakub Narebski wrote:
+> >    02. What is your preferred non-programming language?
+> >   (or) What is the language you want computer communicate with you?
 > 
-> Do people still actively use show-branch as a G/CUI, especially after that
-> "log --graph" thing was introduced?
+> IMHO, the later wording of the question is much better.
 
-At the risk of sounding Old School, yes.
+I think these are two separate questions. In my case the first is
+(swiss) german, the second is english. I don't like localized software
+too much, I always have to think what a certain german term might mean
+in english to understand computing-specific texts.
 
-While the "log --graph" thing is Really Slick, it has
-grumbly-factors, IMO.  First, I have to set up an alias
-all the time, as "git log --graph --pretty=oneline" is
-grumpy typing.  Second, I always have to widen my screen
-to accommodate reasonable looking output or colrm it.
-(Having it self-colrm to window-width would be nice.)
-(Sure, --abbrev-commit too, but see "First," above. :-))
-Finally, I frequently like seeing a self-limited history
-when all the branches reach their common ancestor.
+That being said I think that the first question is irrelevant for the
+git survey. Maybe we should use the term 'internationalization' or
+'localization' somewhere to make clear what we are talking about. While
+these terms might scare newbies away we can reasonably expect that they
+are known by git users.
 
-HTH,
-jdl
+
+Matthias
