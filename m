@@ -1,95 +1,85 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] index-pack: never prune base_cache.
-Date: Wed, 23 Jul 2008 15:20:31 +0200
-Message-ID: <20080723132031.GC20614@artemis.madism.org>
-References: <20080722231745.GD11831@artemis.madism.org> <20080723101415.GA23769@atjola.homenet> <alpine.DEB.1.00.0807231246560.2830@eeepc-johanness> <20080723111931.GF15243@artemis.madism.org> <alpine.DEB.1.00.0807231235150.8986@racer> <20080723120045.GA21274@atjola.homenet> <20080723121118.GA20614@artemis.madism.org> <20080723125226.GA11679@atjola.homenet> <alpine.DEB.1.00.0807231407040.8986@racer>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: q: faster way to integrate/merge lots of topic branches?
+Date: Wed, 23 Jul 2008 15:40:41 +0200
+Message-ID: <488734D9.9070703@op5.se>
+References: <20080723130518.GA17462@elte.hu>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="qlTNgmc+xy1dBmNv";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
-	spearce@spearce.org, Git ML <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 23 15:21:40 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Wed Jul 23 15:42:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLeHg-0004Fw-L5
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 15:21:37 +0200
+	id 1KLec3-0004Rv-TL
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 15:42:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753825AbYGWNUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 09:20:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753720AbYGWNUf
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 09:20:35 -0400
-Received: from pan.madism.org ([88.191.52.104]:35048 "EHLO hermes.madism.org"
+	id S1752463AbYGWNlk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 09:41:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751772AbYGWNlk
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 09:41:40 -0400
+Received: from mail.op5.se ([193.201.96.20]:44857 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753518AbYGWNUe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 09:20:34 -0400
-Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 55A7432058;
-	Wed, 23 Jul 2008 15:20:33 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 076691F1E73; Wed, 23 Jul 2008 15:20:32 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
-	spearce@spearce.org, Git ML <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807231407040.8986@racer>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1752463AbYGWNlj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 09:41:39 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 96B5A1B8040B;
+	Wed, 23 Jul 2008 15:42:33 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5Hu23ytGK5a2; Wed, 23 Jul 2008 15:42:32 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.194])
+	by mail.op5.se (Postfix) with ESMTP id AF72A1B80409;
+	Wed, 23 Jul 2008 15:42:29 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <20080723130518.GA17462@elte.hu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89650>
 
+Ingo Molnar wrote:
+> I've got the following, possibly stupid question: is there a way to 
+> merge a healthy number of topic branches into the master branch in a 
+> quicker way, when most of the branches are already merged up?
+> 
+> Right now i've got something like this scripted up:
+> 
+>   for B in $(git-branch | cut -c3- ); do git-merge $B; done 
+> 
+> It takes a lot of time to run on even a 3.45GHz box:
+> 
+>   real    0m53.228s
+>   user    0m41.134s
+>   sys     0m11.405s
+> 
+> I just had a workflow incident where i forgot that this script was 
+> running in one window (53 seconds are a _long_ time to start doing some 
+> other stuff :-), i switched branches and the script merrily chugged away 
+> merging branches into a topic branch i did not intend.
+> 
+> It iterates over 140 branches - but all of them are already merged up.
+> 
 
---qlTNgmc+xy1dBmNv
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+With the builtin merge (which is in next), this should be doable with
+an octopus merge, which will eliminate the branches that are already
+fully merged, resulting in a less-than-140-way merge (thank gods...).
+It also doesn't have the 24-way cap that the scripted version suffers
+from.
 
-On Wed, Jul 23, 2008 at 01:09:40PM +0000, Johannes Schindelin wrote:
-> On Wed, 23 Jul 2008, Bj=C3=B6rn Steinbrink wrote:
-> > The patch itself should be fine.
->=20
-> No, since it opens the whole issue of memory explosion again, the same=20
-> issue Shawn's original patch tried to fix.
+If it does a good job at your rather extreme use-case, I'd say it's
+good enough for 'master' pretty soon :-)
 
-  No it won't. Indeed the issue is with fix_unresolved_deltas that
-sometimes put at the root of the chain (in base_cache) something that
-comes from our store, not the pack we are writing. Then starts a delta
-chain resolution.
-
-  It won't explode in memory at all, we just keep the first data of a
-delta chain in memory, that's all. It indeed consumes more memory, but
-we talk about *one* single object per delta chain because we're too lazy
-to memorize where it comes from. It's probably not much of an explosion.
-
-  We also waste that object even when it's from our own pack. Well, I'd
-say "too bad".
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---qlTNgmc+xy1dBmNv
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkiHMB8ACgkQvGr7W6Hudhw6hgCfXxHsid+Y2SpG9nO9Y/EpxZLJ
-UEAAn11/E1+JR0EW2Pf/QruDxUEklPLX
-=d2Oq
------END PGP SIGNATURE-----
-
---qlTNgmc+xy1dBmNv--
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
