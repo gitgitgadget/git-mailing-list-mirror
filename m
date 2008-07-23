@@ -1,85 +1,93 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: q: faster way to integrate/merge lots of topic branches?
-Date: Wed, 23 Jul 2008 15:40:41 +0200
-Message-ID: <488734D9.9070703@op5.se>
-References: <20080723130518.GA17462@elte.hu>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] index-pack: never prune base_cache.
+Date: Wed, 23 Jul 2008 15:44:48 +0200
+Message-ID: <20080723134448.GB11679@atjola.homenet>
+References: <20080722231745.GD11831@artemis.madism.org> <20080723101415.GA23769@atjola.homenet> <alpine.DEB.1.00.0807231246560.2830@eeepc-johanness> <20080723111931.GF15243@artemis.madism.org> <alpine.DEB.1.00.0807231235150.8986@racer> <20080723120045.GA21274@atjola.homenet> <20080723121118.GA20614@artemis.madism.org> <20080723125226.GA11679@atjola.homenet> <alpine.DEB.1.00.0807231407040.8986@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Wed Jul 23 15:42:50 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pierre Habouzit <madcoder@debian.org>, spearce@spearce.org,
+	Git ML <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 23 15:46:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLec3-0004Rv-TL
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 15:42:40 +0200
+	id 1KLefA-0005j2-Fx
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 15:45:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752463AbYGWNlk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 09:41:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751772AbYGWNlk
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 09:41:40 -0400
-Received: from mail.op5.se ([193.201.96.20]:44857 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752463AbYGWNlj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 09:41:39 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 96B5A1B8040B;
-	Wed, 23 Jul 2008 15:42:33 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5Hu23ytGK5a2; Wed, 23 Jul 2008 15:42:32 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [192.168.1.194])
-	by mail.op5.se (Postfix) with ESMTP id AF72A1B80409;
-	Wed, 23 Jul 2008 15:42:29 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <20080723130518.GA17462@elte.hu>
+	id S1751817AbYGWNox convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2008 09:44:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751543AbYGWNox
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 09:44:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40732 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751402AbYGWNox (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 09:44:53 -0400
+Received: (qmail invoked by alias); 23 Jul 2008 13:44:50 -0000
+Received: from i577BBDAB.versanet.de (EHLO atjola.local) [87.123.189.171]
+  by mail.gmx.net (mp007) with SMTP; 23 Jul 2008 15:44:50 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+tVUJmWW2tgVQTZJ2+SLal6YKGKHpVKocCRro0h/
+	bwt+TMPBMrpnUT
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807231407040.8986@racer>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89651>
 
-Ingo Molnar wrote:
-> I've got the following, possibly stupid question: is there a way to 
-> merge a healthy number of topic branches into the master branch in a 
-> quicker way, when most of the branches are already merged up?
-> 
-> Right now i've got something like this scripted up:
-> 
->   for B in $(git-branch | cut -c3- ); do git-merge $B; done 
-> 
-> It takes a lot of time to run on even a 3.45GHz box:
-> 
->   real    0m53.228s
->   user    0m41.134s
->   sys     0m11.405s
-> 
-> I just had a workflow incident where i forgot that this script was 
-> running in one window (53 seconds are a _long_ time to start doing some 
-> other stuff :-), i switched branches and the script merrily chugged away 
-> merging branches into a topic branch i did not intend.
-> 
-> It iterates over 140 branches - but all of them are already merged up.
-> 
+On 2008.07.23 14:09:40 +0100, Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Wed, 23 Jul 2008, Bj=F6rn Steinbrink wrote:
+>=20
+> > On 2008.07.23 14:11:18 +0200, Pierre Habouzit wrote:
+> > > It may belong to something (stdin) that is consumed.
+> >=20
+> > Probably thanks to me, babbling about stdin without having a clue w=
+hat=20
+> > I'm talking about, that rationale is wrong.
+> >=20
+> > We may not prune base_cache since that object might come from a
+> > different pack than the one that we are processing. In such a case,=
+ we
+> > would try to restore the data for that object from the pack we're
+> > processing and fail miserably.
+>=20
+> Then the proper fix would be to load the object from that pack again.
 
-With the builtin merge (which is in next), this should be doable with
-an octopus merge, which will eliminate the branches that are already
-fully merged, resulting in a less-than-140-way merge (thank gods...).
-It also doesn't have the 24-way cap that the scripted version suffers
-from.
+Actually, my analysis was total bullshit. Right after reading the objec=
+t
+from the foreign pack, we also call append_obj_to_pack, so we are
+actually able to reread that object just fine. The real issue seems to
+be that we just forget to initialize some fields.
 
-If it does a good job at your rather extreme use-case, I'd say it's
-good enough for 'master' pretty soon :-)
+This patch fixes the issue for me, but I guess it's not quite the right
+way to do it, pure guesswork.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Bj=F6rn
+
+---
+
+diff --git a/index-pack.c b/index-pack.c
+index ac20a46..33ba8ef 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -699,6 +699,9 @@ static struct object_entry *append_obj_to_pack(
+ 	write_or_die(output_fd, header, n);
+ 	obj[0].idx.crc32 =3D crc32(0, Z_NULL, 0);
+ 	obj[0].idx.crc32 =3D crc32(obj[0].idx.crc32, header, n);
++	obj[0].hdr_size =3D n;
++	obj[0].type =3D type;
++	obj[0].size =3D size;
+ 	obj[1].idx.offset =3D obj[0].idx.offset + n;
+ 	obj[1].idx.offset +=3D write_compressed(output_fd, buf, size, &obj[0]=
+=2Eidx.crc32);
+ 	hashcpy(obj->idx.sha1, sha1);
