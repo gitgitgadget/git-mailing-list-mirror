@@ -1,82 +1,66 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH] am --abort: Add to bash-completion and mention in git-rerere documentation
-Date: Wed, 23 Jul 2008 02:10:25 +0200
-Message-ID: <1216771825-21457-1-git-send-email-s-beyer@gmx.net>
-References: <4882350B.6020003@free.fr>
-Cc: Junio C Hamano <gitster@pobox.com>, Theodore Tso <tytso@mit.edu>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Wed Jul 23 02:11:31 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not
+ been set
+Date: Tue, 22 Jul 2008 17:12:37 -0700
+Message-ID: <7vy73tihl6.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0807222255450.8986@racer>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 23 02:13:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLRx4-0004eJ-Ns
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 02:11:31 +0200
+	id 1KLRzE-00059H-14
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 02:13:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751223AbYGWAKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 20:10:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752165AbYGWAKb
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 20:10:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34571 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750983AbYGWAKa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 20:10:30 -0400
-Received: (qmail invoked by alias); 23 Jul 2008 00:10:28 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp025) with SMTP; 23 Jul 2008 02:10:28 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+V5nNjY3KVwt5J136FJTnFu9raaE+8XCtreZmu30
-	yYxHixMqPdpCEb
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KLRw1-0005ag-2T; Wed, 23 Jul 2008 02:10:25 +0200
-X-Mailer: git-send-email 1.5.6.4.459.gfa44d
-In-Reply-To: <4882350B.6020003@free.fr>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+	id S1753011AbYGWAMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 20:12:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752903AbYGWAMo
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 20:12:44 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:32788 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752823AbYGWAMn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 20:12:43 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8F206374F3;
+	Tue, 22 Jul 2008 20:12:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 91CFF374F1; Tue, 22 Jul 2008 20:12:39 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1186529C-584C-11DD-A4CD-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89574>
 
-The git-rerere documentation talks about commands that invoke
-"git rerere clear" automatically. git am --abort is added and
-a typo is fixed additionally.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
----
- Documentation/git-rerere.txt           |    2 +-
- contrib/completion/git-completion.bash |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+> When a file's crlf attribute is explicitely set, it does not make sense
+> to ignore it, just because the config variable core.autocrlf has not
+> been set.
 
-diff --git a/Documentation/git-rerere.txt b/Documentation/git-rerere.txt
-index beebd53..89f321b 100644
---- a/Documentation/git-rerere.txt
-+++ b/Documentation/git-rerere.txt
-@@ -37,7 +37,7 @@ its working state.
- 'clear'::
- 
- This resets the metadata used by rerere if a merge resolution is to be
--is aborted.  Calling 'git-am --skip' or 'git-rebase [--skip|--abort]'
-+aborted.  Calling 'git-am [--skip|--abort]' or 'git-rebase [--skip|--abort]'
- will automatically invoke this command.
- 
- 'diff'::
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 2edb341..8fc9145 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -489,7 +489,7 @@ _git_am ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}" dir="$(__gitdir)"
- 	if [ -d "$dir"/rebase-apply ]; then
--		__gitcomp "--skip --resolved"
-+		__gitcomp "--skip --resolved --abort"
- 		return
- 	fi
- 	case "$cur" in
--- 
-1.5.6.4.459.gfa44d
+I am not sure if I agree with that reasoning.
+
+Attribute defines what each path is.  Is it a text file, is it a binary?
+The nature of the contents does not change between people on POSIX and
+Windows, and that is why it is described in .gitattributes and cloned
+across repositories.
+
+On the other hand, the configuration defines what to do with contents with
+various attributes in this particular repository.  Do I want to see a text
+file checked out with CRLF endings, or LF?
+
+So it is perfectly valid and normal for a cross-platform minded project to
+use the crlf atttribute to say "These files are text" and expect them to
+be checked out with LF endings on POSIX while making sure they are checked
+out with CRLF on Windows.  Adding CR at the end of line for such files on
+POSIX systems is positively a wrong thing to do in such a case.
+
+Projects like the kernel that originate from LF side of the world may not
+bother marking things as such, though.
