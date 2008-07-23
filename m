@@ -1,71 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH 00/12] Sparse checkout
-Date: Wed, 23 Jul 2008 17:15:44 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807231713280.8986@racer>
-References: <20080723145518.GA29035@laptop>
+From: Derek Fawcus <dfawcus@cisco.com>
+Subject: git-svn - failed to clone repository
+Date: Wed, 23 Jul 2008 17:06:59 +0100
+Message-ID: <20080723160659.GB6705@cisco.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-853453595-1216829745=:8986"
-Cc: git@vger.kernel.org
-To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 18:17:00 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 23 18:18:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLh1B-0008BE-Ep
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 18:16:45 +0200
+	id 1KLh2o-0000YD-LX
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 18:18:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752665AbYGWQPp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 12:15:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752232AbYGWQPp
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 12:15:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35092 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751394AbYGWQPo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 12:15:44 -0400
-Received: (qmail invoked by alias); 23 Jul 2008 16:15:42 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp064) with SMTP; 23 Jul 2008 18:15:42 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+phxhmZf2p33Q7Jf39zv7iIlVPqDaNOHRildUgql
-	ehAzr+ScUwOiM8
-X-X-Sender: gene099@racer
-In-Reply-To: <20080723145518.GA29035@laptop>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.74
+	id S1752409AbYGWQR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 12:17:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751012AbYGWQR1
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 12:17:27 -0400
+Received: from ams-iport-1.cisco.com ([144.254.224.140]:37661 "EHLO
+	ams-iport-1.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751797AbYGWQR0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 12:17:26 -0400
+X-Greylist: delayed 592 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Jul 2008 12:17:26 EDT
+X-IronPort-AV: E=Sophos;i="4.31,239,1215388800"; 
+   d="scan'208";a="15183479"
+Received: from ams-dkim-1.cisco.com ([144.254.224.138])
+  by ams-iport-1.cisco.com with ESMTP; 23 Jul 2008 16:07:32 +0000
+Received: from ams-core-1.cisco.com (ams-core-1.cisco.com [144.254.224.150])
+	by ams-dkim-1.cisco.com (8.12.11/8.12.11) with ESMTP id m6NG7WtR032257
+	for <git@vger.kernel.org>; Wed, 23 Jul 2008 18:07:32 +0200
+Received: from edi-view2.cisco.com (edi-view2.cisco.com [64.103.71.156])
+	by ams-core-1.cisco.com (8.13.8/8.13.8) with ESMTP id m6NG7Vik025481
+	for <git@vger.kernel.org>; Wed, 23 Jul 2008 16:07:32 GMT
+Received: from dfawcus-laptop (localhost [127.0.0.1]) by edi-view2.cisco.com (8.11.2/CISCO.WS.1.2) with ESMTP id m6NG7VX22322 for <git@vger.kernel.org>; Wed, 23 Jul 2008 17:07:31 +0100 (BST)
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; l=1437; t=1216829252; x=1217693252;
+	c=relaxed/simple; s=amsdkim1002;
+	h=Content-Type:From:Subject:Content-Transfer-Encoding:MIME-Version;
+	d=cisco.com; i=dfawcus@cisco.com;
+	z=From:=20Derek=20Fawcus=20<dfawcus@cisco.com>
+	|Subject:=20git-svn=20-=20failed=20to=20clone=20repository
+	|Sender:=20;
+	bh=59VjxQTYU+qRsyjRqepCgJIKDj6zP0tf+l0awevfIs0=;
+	b=t/bAKOeXL0Bd3Y1dH7CDxTiP6YqnfAQQm86/29aETlkqhh+yhYHQq3O6Pu
+	ce3yGSFJcazFMVf4QVzxSieFsPgQTfdi7uxaqsPpfh/CNeA6a1E+DshrDdib
+	wgfLGmQ+6m;
+Authentication-Results: ams-dkim-1; header.From=dfawcus@cisco.com; dkim=pass (
+	sig from cisco.com/amsdkim1002 verified; ); 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89699>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+I tried to create a clone of an svn repository,  and it gave
+up part way through with the following error:
 
---8323329-853453595-1216829745=:8986
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+  Incomplete data: Delta source ended unexpectedly at /usr/bin/git-svn line 3858
 
-Hi,
+Looking at the source,  this is the call '$reporter->finish-report($pool)'
+near the end of gs_do_update.
 
-On Wed, 23 Jul 2008, Nguyễn Thái Ngọc Duy wrote:
+This is using git 1.5.6 from the etch backports repository.
 
-> So in short, sparse prefix will be stored in config, core.sparsecheckout.
+The repository in question was cocotron,  the command being:
 
-Do you really think the prefix should be stored anywhere else than the 
-index?
+  git svn clone http://cocotron.googlecode.com/svn -t tags -b branches -T trunk
 
-With core.sparseCheckout you have to introduce a _sh*tload_ of config 
-loaders.
+It seemed to fail at revision 91,  the last couple of lines of the command output being:
 
-And with core.sparseCheckout you are at the whim of the user, since 
-.git/config is _supposed_ to be user-editable.
+r90 = <hex I can't be bothered to type unless required> (trunk)
+        M    Foundation/NSStream/NSFileHandle.m
 
->From a logical point of view, I'd say that the sparse prefix has nothing 
-to do with the "configuration" of the local repository.
+then followed by the above error.  Looking at the actual revision
+page (http://code.google.com/p/cocotron/source/detail?r=91)
 
-Ciao,
-Dscho
+the only thing that stands out as odd is one file claims to be 'too large to diff'.
+It's ~900k and if one grabs and diffs by hand,  the output is only ~70 lines.
 
---8323329-853453595-1216829745=:8986--
+So - is this at all related to the 'known bug' mentioned earlier - stopped on
+line 3856 when using line ending mapping (I'm not using such),  or is this
+something else?
+
+Last,  assuming I was to simply grab and apply this changeset by hand,
+what would I need to do to fix up metadata so that git-svn could continue
+importing the history?  There are about 200 changesets in the whole repository.
+
+Thanks,
+
+DF
