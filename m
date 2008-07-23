@@ -1,108 +1,107 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Wait help.autocorrect deciseconds before running corrected
-	command
-Date: Wed, 23 Jul 2008 18:41:10 +0200
-Message-ID: <20080723164109.GA5283@blimp.local>
-References: <alpine.DEB.1.00.0807222100150.8986@racer> <20080722203730.GC5113@blimp.local> <20080722210354.GD5113@blimp.local> <alpine.DEB.1.00.0807222207110.8986@racer> <20080722212633.GF5113@blimp.local> <alpine.DEB.1.00.0807222242160.8986@racer> <7vsku1jz4u.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Git User's Survey 2008
+Date: Wed, 23 Jul 2008 09:43:23 -0700
+Message-ID: <7vwsjcft5g.fsf@gitster.siamese.dyndns.org>
+References: <200807230325.04184.jnareb@gmail.com>
+ <alpine.DEB.1.00.0807231128090.2830@eeepc-johanness>
+ <200807231508.42334.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 18:42:20 2008
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 18:45:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLhPp-0002g1-Vu
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 18:42:14 +0200
+	id 1KLhSf-0003oW-Pc
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 18:45:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752830AbYGWQlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 12:41:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752741AbYGWQlN
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 12:41:13 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.181]:63704 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752029AbYGWQlM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 12:41:12 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg201f5EC7
-Received: from tigra.home (Faf34.f.strato-dslnet.de [195.4.175.52])
-	by post.webmailer.de (fruni mo49) (RZmta 16.47)
-	with ESMTP id Y03197k6NGBZG6 ; Wed, 23 Jul 2008 18:41:10 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 45197277BD;
-	Wed, 23 Jul 2008 18:41:10 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id 2DA1736D18; Wed, 23 Jul 2008 18:41:10 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vsku1jz4u.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752759AbYGWQoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 12:44:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752393AbYGWQoH
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 12:44:07 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62470 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752604AbYGWQoG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 12:44:06 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7037338093;
+	Wed, 23 Jul 2008 12:43:47 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id D13AD38090; Wed, 23 Jul 2008 12:43:40 -0400 (EDT)
+In-Reply-To: <200807231508.42334.jnareb@gmail.com> (Jakub Narebski's message
+ of "Wed, 23 Jul 2008 15:08:38 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8559A388-58D6-11DD-ABEF-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89705>
 
-Suggested by Junio, so he has a chance to hit Ctrl-C.
----
-Junio C Hamano, Wed, Jul 23, 2008 01:08:17 +0200:
-> 
-> Please make autocorrect not a binary but optionally the number of
-> deciseconds before it continues, so that I have a chance to hit ^C ;-)
+Jakub Narebski <jnareb@gmail.com> writes:
 
-on top of the last patch.
+> On Wed, 23 Jul 2008, Johannes Schindelin wrote:
+>> On Wed, 23 Jul 2008, Jakub Narebski wrote:
+>> 
+>> Some people prefer to stay anonymous, so I think email is out.
+>> 
+>> >    04. Which programming languages you are proficient with?
+>> >        (The choices include programming languages used by git)
+>> >        (zero or more: multiple choice)
+>> >      - C, shell, Perl, Python, Tcl/Tk
+>> >      + (should we include other languages, like C++, Java, PHP,
+>> >         Ruby,...?)
+>> 
+>> Yes, I think this should be a long list.
+>
+> I'd rather not have a "laundry list" of languages.  I have put C++
+> because QGit uses it, Java because of egit/jgit, PHP for web
+> interfaces, Ruby because of GitHub and because of Ruby comminity
+> choosing Git.  I should perhaps add Emacs Lisp, HTML+CSS and
+> JavaScript here.  What other languages should be considered?
 
- Documentation/config.txt |    9 +++++++++
- help.c                   |    7 ++++++-
- 2 files changed, 15 insertions(+), 1 deletions(-)
+I refrained saying this in my initial response, but my initial reaction
+was "Why are you even asking this?".
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e784805..5bf1d0d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -771,6 +771,15 @@ help.format::
- 	Values 'man', 'info', 'web' and 'html' are supported. 'man' is
- 	the default. 'web' and 'html' are the same.
- 
-+help.autocorrect::
-+	Automatically correct and execute mistyped commands after
-+	waiting for the given number of deciseconds (0.1 sec). If more
-+	than one command can be deduced from the entered text, nothing
-+	will be executed.  If the value of this option is negative,
-+	the corrected command will be executed immediately. If the
-+	value is 0 - the command will be just shown but not executed.
-+	This is the default.
-+
- http.proxy::
- 	Override the HTTP proxy, normally configured using the 'http_proxy'
- 	environment variable (see linkgit:curl[1]).  This can be overridden
-diff --git a/help.c b/help.c
-index 8b25a55..4d52781 100644
---- a/help.c
-+++ b/help.c
-@@ -271,7 +271,7 @@ static int git_help_config(const char *var, const char *value, void *cb)
- 	if (!prefixcmp(var, "man."))
- 		return add_man_viewer_info(var, value);
- 	if (!strcmp(var, "help.autocorrect"))
--		autocorrect = git_config_bool(var,value);
-+		autocorrect = git_config_int(var,value);
- 
- 	return git_default_config(var, value, cb);
- }
-@@ -722,6 +722,11 @@ const char *help_unknown_cmd(const char *cmd)
- 			"which does not exist.\n"
- 			"Continuing under the assumption that you meant '%s'\n",
- 			cmd, main_cmds.names[0]->name);
-+		if (autocorrect > 0) {
-+			fprintf(stderr, "in %0.1f seconds automatically...\n",
-+				(float)autocorrect/10.0);
-+			poll(NULL, 0, autocorrect * 100);
-+		}
- 		return main_cmds.names[0]->name;
- 	}
- 
--- 
-1.6.0.rc0.50.g9c23
+Yes, "getting to know you" demographics are customary done in surveys, and
+you kept it to the minimum which is also good, but I do not think this
+particular question is very interesting.  For one thing, the question
+assumes the participant is a programmer, and we are giving an impression
+that we are interested in better programmers.  Do we *still* require users
+to be a programmer to use git?  I do not think so.  Having to answer "none
+of these" to this question would make you feel unnecessarily bad, even if
+you are not a programmer and you know at the intellectual level that it is
+not your flaw not to be proficient in any.
+
+Asking about geographic location and preferred human languages might help
+to gauge what l10n are desired for GUIs, but even there, don't forget that
+we are no company.  We do not research markets and translate messages to
+missing languages, however popular, before being asked.  That's not how we
+operate.  So the result of these questions will be mainly to satisfy our
+curiosity, nothing more.
+
+"What kind of content do you track" might also be an equally interesting
+question.  It also falls into the curiosity department, though.
+
+> I'm not sure about having multiple choice vs. free-form question here.
+> Multiple choice is easier to analyze, especially if one would want
+> histogram of replies...
+
+And when you expect very many respondents, (1) you cannot afford to
+free-form; and (2) statistics over multiple choices, as long as choices
+are well seeded, will give you a good enough overview picture.
+
+> Again: free form has some hassles, but so does coming up with good
+> choice of fixed answers in multiple choice question.
+
+You need to do at least one or the other, and I do not think there is any
+way to avoid that.  Without a good choices, histogram would become useless
+(not necessarily because the answer will be dominated by "Other", but the
+seeing the choices tends to set the frame of mind when/before somebody
+answers the question).  With free-form, you will spend the rest of your
+life analyzing to get any useful insight.
