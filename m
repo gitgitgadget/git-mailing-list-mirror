@@ -1,73 +1,77 @@
-From: "P. Christeas" <p_christ@hol.gr>
-Subject: [PATCH] Fix git-svnimport against libsvn_ra.
-Date: Wed, 23 Jul 2008 10:10:28 +0300
-Message-ID: <200807231008.39455.p_christ@hol.gr>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] rebase -i: When an 'edit' stops, mention the commit
+Date: Wed, 23 Jul 2008 09:46:35 +0200
+Message-ID: <4886E1DB.7020308@viscovery.net>
 Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Gerrit Pape <pape@smarden.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 23 09:18:45 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 09:47:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLYcO-0006v7-2N
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 09:18:36 +0200
+	id 1KLZ4a-0007fw-8M
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 09:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750983AbYGWHRg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 03:17:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750831AbYGWHRg
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 03:17:36 -0400
-Received: from outgoing.holservices.gr ([62.38.2.44]:50102 "HELO
-	outgoing.holservices.gr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750793AbYGWHRf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 03:17:35 -0400
-Received: (qmail 10965 invoked from network); 23 Jul 2008 03:37:16 -0000
-Received: from unknown (HELO deliver.mail.dc.hol.net) (192.168.20.70)
-  by arete.mail.dc.hol.net with SMTP; 23 Jul 2008 03:37:16 -0000
-Received: from auth-smtp.hol.gr (takeit01.mail.dc.hol.net [192.168.20.71])
-	by deliver.hol.gr (8.12.11/8.11.6) with ESMTP id m6N79sng017745
-	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256 bits) verified OK);
-	Wed, 23 Jul 2008 10:09:54 +0300
-Received: from pfn1.pefnos (ppp079166029101.dsl.hol.gr [79.166.29.101])
-	by auth-smtp.hol.gr (8.13.1/8.13.1) with ESMTP id m6N79r54008122;
-	Wed, 23 Jul 2008 10:09:53 +0300
-Received: from xorhgos2 (cpe-77-83-154-127-dsl.netone.gr [77.83.154.127])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pfn1.pefnos (Postfix) with ESMTP id 83B52FB0A;
-	Wed, 23 Jul 2008 10:09:53 +0300 (EEST)
-Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.93/7599/Tue Jul  1 14:10:31 2008 on takeit01.mail.dc.hol.net
-X-Virus-Status: Clean
+	id S1752537AbYGWHqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 03:46:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752259AbYGWHqn
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 03:46:43 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:65322 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751903AbYGWHqm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 03:46:42 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KLZ3U-0007VN-8N; Wed, 23 Jul 2008 09:46:40 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 062D56B7; Wed, 23 Jul 2008 09:46:35 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89608>
 
-In r27729, libsvn introduced an assert which explicitly
-forbids searching the tree at "/". Luckily enough, it
-still accepts an empty string "" as the starting point.
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-http://svn.collab.net/viewvc/svn/trunk/subversion/libsvn_ra/ra_loader.c?r1=27653&r2=27729
+In a rebase session where more than one commit is to be 'edit'ed, and the
+user spends considerable time to 'edit' a commit, it is easy to forget what
+one wanted to 'edit' at the individual commits. It would be helpful to see
+at which commit the rebase stopped.
+
+Incidentally, if the rebase stopped due to merge conflicts or other errors,
+the commit was already reported ("Could not apply $sha1..."), but when
+rebase stopped after successfully applying an "edit" commit, it would not
+mention it. With this change the commit is reported.
+
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- contrib/examples/git-svnimport.perl |    2 +-
+ git-rebase--interactive.sh |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/contrib/examples/git-svnimport.perl 
-b/contrib/examples/git-svnimport.perl
-index ea8c1b2..a13bb6a 100755
---- a/contrib/examples/git-svnimport.perl
-+++ b/contrib/examples/git-svnimport.perl
-@@ -933,7 +933,7 @@ while ($to_rev < $opt_l) {
- 	$to_rev = $from_rev + $repack_after;
- 	$to_rev = $opt_l if $opt_l < $to_rev;
- 	print "Fetching from $from_rev to $to_rev ...\n" if $opt_v;
--	$svn->{'svn'}->get_log("/",$from_rev,$to_rev,0,1,1,\&commit_all);
-+	$svn->{'svn'}->get_log("",$from_rev,$to_rev,0,1,1,\&commit_all);
- 	my $pid = fork();
- 	die "Fork: $!\n" unless defined $pid;
- 	unless($pid) {
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index e63a864..4e334ba 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -277,7 +277,7 @@ do_next () {
+ 			die_with_patch $sha1 "Could not apply $sha1... $rest"
+ 		make_patch $sha1
+ 		: > "$DOTEST"/amend
+-		warn
++		warn "Stopped at $sha1... $rest"
+ 		warn "You can amend the commit now, with"
+ 		warn
+ 		warn "	git commit --amend"
 -- 
-1.5.6
+1.6.0.rc0.956.g7bc0
+
+	
