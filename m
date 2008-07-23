@@ -1,84 +1,153 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Git User's Survey 2008
-Date: Wed, 23 Jul 2008 17:02:38 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807231701330.8986@racer>
-References: <200807230325.04184.jnareb@gmail.com> <alpine.DEB.1.00.0807231128090.2830@eeepc-johanness> <20080723145455.GS2925@dpotapov.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 18:06:14 2008
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: [FYI PATCH] Added a git search and replace command
+Date: Wed, 23 Jul 2008 17:36:06 +0200
+Message-ID: <1216827366-13587-1-git-send-email-srabbelier@gmail.com>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 23 18:06:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLgoT-0001xa-Il
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 18:03:38 +0200
+	id 1KLgp1-0002Fy-SW
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 18:04:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752434AbYGWQCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 12:02:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751914AbYGWQCi
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 12:02:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58887 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750799AbYGWQCh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 12:02:37 -0400
-Received: (qmail invoked by alias); 23 Jul 2008 16:02:36 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp052) with SMTP; 23 Jul 2008 18:02:36 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+cjUs4q5mcXa37UqUmmb/Z72oBkp1Z6qRgbVOnPL
-	H8VhsWBKIQRD6g
-X-X-Sender: gene099@racer
-In-Reply-To: <20080723145455.GS2925@dpotapov.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1752604AbYGWQDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 12:03:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752741AbYGWQDM
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 12:03:12 -0400
+Received: from cas-mta3-fe.casema.nl ([83.80.1.28]:8746 "EHLO mta-fe.casema.nl"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751914AbYGWQDM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 12:03:12 -0400
+X-Greylist: delayed 1623 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Jul 2008 12:03:11 EDT
+Received: from localhost (cas-filter5.mgmt.casema.nl [10.42.32.118])
+	by mta-fe.casema.nl (Postfix) with ESMTP id 60B873E6E;
+	Wed, 23 Jul 2008 17:36:07 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at casema.nl
+Received: from mta-fe.casema.nl ([10.42.32.28])
+	by localhost (cas-filter5.mgmt.casema.nl [10.42.32.211]) (amavisd-new, port 20024)
+	with ESMTP id zjR07PgTi+Ez; Wed, 23 Jul 2008 17:36:07 +0200 (CEST)
+Received: from localhost.localdomain (535728D8.cable.casema.nl [83.87.40.216])
+	by mta-fe.casema.nl (Postfix) with ESMTP id 1A80E3EFC;
+	Wed, 23 Jul 2008 17:36:07 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.4.570.g052e.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89695>
 
-Hi,
+A simple script that uses 'git ls-files' and xargs to
+search and replace all the specified files.
+---
 
-On Wed, 23 Jul 2008, Dmitry Potapov wrote:
+Not meant for inclusion, just a simple script I wrote up
+when I wanted to change a function name in my repository
+but didn't want to figure out which magic argument to find
+does what I want. Another advantage of using git ls-files
+is that it will prevent that any unrevertable changes will
+be made (since the script checks if the tree is dirty or
+not). I'm sure there's plenty of room for improvement here,
+it's probably not portable at all either, so comments are
+welcome :).
 
-> On Wed, Jul 23, 2008 at 11:53:27AM +0200, Johannes Schindelin wrote:
-> > 
-> > On Wed, 23 Jul 2008, Jakub Narebski wrote:
-> > 
-> > 
-> > >    11. Why did you choose Git? (if you use Git)
-> > >        What do you like about using Git?
-> > >        (free form, not to be tabulated)
-> > 
-> > Again, to avoid hassles with free-form:
-> > 
-> > 	Mandatory: work, mandatory: open source project I am participating 
-> > 	in, speed, scalability, It's What Linus Uses, Other.
-> 
-> If we move away from free-form, it should be much more choices here.
-> 
-> - Ability to work offline
-> - Cryptographic authentication of history.
+ .gitignore |    1 +
+ Makefile   |    1 +
+ git-sar.sh |   61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 63 insertions(+), 0 deletions(-)
+ create mode 100755 git-sar.sh
 
-Cryptographically strong integrity check.  There is no authentication.
-
-> - Distributed development (pull/push from/to more than one remote repo)
-> - Easy to extend functionality through scripting
-> - Efficient storage model
-> - Elegant design
-> - Fast
-> - Good community support
-> - Rewriting patches before publishing (git rebase, commit --amend)
-> - Scalability (Efficient handling of large projects)
-> - Strong support for non-linear development
-> - Support of wide range of protocols for synchronization.
-> ...
-
-Yeah, I would tick all of them, too.
-
-Ciao,
-Dscho
+diff --git a/.gitignore b/.gitignore
+index a213e8e..451cb93 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -108,6 +108,7 @@ git-rev-list
+ git-rev-parse
+ git-revert
+ git-rm
++git-sar
+ git-send-email
+ git-send-pack
+ git-sh-setup
+diff --git a/Makefile b/Makefile
+index b01cf1c..979e9ea 100644
+--- a/Makefile
++++ b/Makefile
+@@ -252,6 +252,7 @@ SCRIPT_SH += git-sh-setup.sh
+ SCRIPT_SH += git-stash.sh
+ SCRIPT_SH += git-submodule.sh
+ SCRIPT_SH += git-web--browse.sh
++SCRIPT_SH += git-sar.sh
+ 
+ SCRIPT_PERL += git-add--interactive.perl
+ SCRIPT_PERL += git-archimport.perl
+diff --git a/git-sar.sh b/git-sar.sh
+new file mode 100755
+index 0000000..db6317b
+--- /dev/null
++++ b/git-sar.sh
+@@ -0,0 +1,61 @@
++#!/bin/bash
++
++do_sed () {
++  sed "$2" $3 > $3.replaced
++  mv $3.replaced $3
++}
++
++do_git_find() {
++  # Sanity check
++  if is_dirty_tree
++  then
++    echo "Refusing to work on a dirty tree"
++  fi
++
++  files=`git ls-files "$1"`
++  if test -z "$files"
++  then
++    echo "Your pathspec did not match any files."
++    exit 1
++  fi
++  echo "$files" | xargs -n 1 git-sar --replace $2
++}
++
++is_dirty_tree () {
++  `git diff --quiet`
++  test $? -ne 0
++}
++
++do_show_usage() {
++  echo "usage: git-sar pathspec sed"
++  exit 128
++}
++
++do_main() {
++  # Verify argument size
++  if test "$#" -le 1 -o "$#" -ge 4
++  then
++    do_show_usage
++  fi
++
++  # Two argument form
++  if test "$#" -eq 2
++  then
++    do_git_find "$@"
++  fi
++
++  # Three argument form, we're calling ourselves through sed
++  if test "$#" -eq 3
++  then
++    # Double check if the user typoed or if we are indeed meta-calling
++    if test "$1" != "--replace"
++    then
++      do_show_usage
++    fi
++
++    do_sed "$@"
++  fi
++}
++
++do_main "$@"
++
+-- 
+1.5.6.4.570.g052e.dirty
