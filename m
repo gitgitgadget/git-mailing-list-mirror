@@ -1,47 +1,66 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 02/12] git-grep: support --no-external-grep
-Date: Wed, 23 Jul 2008 21:05:55 +0200
-Message-ID: <20080723190555.GN32184@machine.or.cz>
-References: <20080723145744.GA29156@laptop> <20080723145718.GA29134@laptop> <20080723145603.GA29079@laptop> <20080723145549.GA29067@laptop> <20080723190129.GM32184@machine.or.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix git-svnimport against libsvn_ra.
+Date: Wed, 23 Jul 2008 12:09:02 -0700
+Message-ID: <7vljzsct9t.fsf@gitster.siamese.dyndns.org>
+References: <200807231008.39455.p_christ@hol.gr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nguy???n =?iso-8859-2?Q?Th=E1i?= Ng???c Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 21:07:07 2008
+Cc: git@vger.kernel.org, Gerrit Pape <pape@smarden.org>
+To: "P. Christeas" <p_christ@hol.gr>
+X-From: git-owner@vger.kernel.org Wed Jul 23 21:10:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLjfu-0007yz-Ji
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 21:06:59 +0200
+	id 1KLjj2-0000la-Un
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 21:10:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753720AbYGWTF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 15:05:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754052AbYGWTF5
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 15:05:57 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:54836 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752823AbYGWTF4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 15:05:56 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 75914393A530; Wed, 23 Jul 2008 21:05:55 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080723190129.GM32184@machine.or.cz>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753342AbYGWTJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 15:09:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753262AbYGWTJM
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 15:09:12 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62658 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752649AbYGWTJL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 15:09:11 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DBB9737782;
+	Wed, 23 Jul 2008 15:09:08 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3471E37780; Wed, 23 Jul 2008 15:09:05 -0400 (EDT)
+In-Reply-To: <200807231008.39455.p_christ@hol.gr> (P. Christeas's message of
+ "Wed, 23 Jul 2008 10:10:28 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D3BBCD30-58EA-11DD-95D3-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89744>
 
-  Hi!
+Thanks.
 
-On Wed, Jul 23, 2008 at 09:01:30PM +0200, Petr Baudis wrote:
-> (Which is also why is it useful to write cover letters for
-> patch series.)
+But the one line description is not descriptive enough, don't you think?
 
-  sorry, I did not notice the cover letter, already separated from the
-rest by a sprouting thread. Which is also why it is useful to thread up
-all the patches. ;-)
+Imagine this line (and nothing else from what you wrote in the body text)
+appearing among 100 other commits.  Can you tell what this commit is about
+3 months from now on?
 
-				Petr "Pasky" Baudis
+Perhaps:
+
+    svnimport: newer libsvn wants us to ask for the root with "", not "/"
+
+> In r27729, libsvn introduced an assert which explicitly
+> forbids searching the tree at "/". Luckily enough, it
+> still accepts an empty string "" as the starting point.
+
+I think you implied by saying "still", asking with an empty string had the
+same effect as asking for the root "/" in earlier versions of SVN, and the
+patch will not break people with older libsvn.  Is that correct?
+
+> http://svn.collab.net/viewvc/svn/trunk/subversion/libsvn_ra/ra_loader.c?r1=27653&r2=27729
+> ---
+
+Sign-off, please?
