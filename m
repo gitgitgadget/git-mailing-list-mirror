@@ -1,70 +1,119 @@
-From: "Benjamin Kudria" <ben@kudria.net>
-Subject: Git's config core.pager doesn't respect color.pager
-Date: Tue, 22 Jul 2008 22:10:17 -0400
-Message-ID: <d129c0140807221910j37f40e72se9f411d6424077de@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@uchicago.edu>
+Subject: Re: [PATCH] bring description of git diff --cc up to date
+Date: Tue, 22 Jul 2008 22:55:06 -0500 (CDT)
+Message-ID: <Pine.GSO.4.62.0807222210540.3408@harper.uchicago.edu>
+References: <20080722111947.BIW29914@m4500-01.uchicago.edu>
+ <7v63qxn8w2.fsf@gitster.siamese.dyndns.org> <7vd4l5lio1.fsf@gitster.siamese.dyndns.org>
+ <Pine.GSO.4.62.0807221812470.25746@harper.uchicago.edu>
+ <7vfxq1igh0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 23 04:11:22 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, David Greaves <david@dgreaves.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 05:56:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLTp2-0008Uc-2j
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 04:11:20 +0200
+	id 1KLVSY-0006TA-1m
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 05:56:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752741AbYGWCKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2008 22:10:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752012AbYGWCKT
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 22:10:19 -0400
-Received: from rv-out-0506.google.com ([209.85.198.224]:33352 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751916AbYGWCKS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2008 22:10:18 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so2167266rvb.1
-        for <git@vger.kernel.org>; Tue, 22 Jul 2008 19:10:18 -0700 (PDT)
-Received: by 10.141.37.8 with SMTP id p8mr278398rvj.256.1216779017745;
-        Tue, 22 Jul 2008 19:10:17 -0700 (PDT)
-Received: by 10.141.66.5 with HTTP; Tue, 22 Jul 2008 19:10:17 -0700 (PDT)
-Content-Disposition: inline
+	id S1751802AbYGWDzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2008 23:55:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751323AbYGWDzN
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jul 2008 23:55:13 -0400
+Received: from smtp00.uchicago.edu ([128.135.12.76]:44504 "EHLO
+	smtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751263AbYGWDzM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2008 23:55:12 -0400
+Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
+	by smtp00.uchicago.edu (8.13.8/8.13.8) with ESMTP id m6N3t9xB032387;
+	Tue, 22 Jul 2008 22:55:09 -0500
+Received: from localhost (jrnieder@localhost)
+	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m6N3t6ha005099;
+	Tue, 22 Jul 2008 22:55:06 -0500 (CDT)
+X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
+In-Reply-To: <7vfxq1igh0.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89600>
 
-I'm seeing a problem with git.  It's easier to demonstrate than
-explain.  The relevant parts of my .gitconfig:
+On Tue, 22 Jul 2008, Junio C Hamano wrote:
 
-[core]
-	pager = tig
+>> +	This flag implies the '-c' option and makes the patch output
+>> +	even more compact by omitting uninteresting hunks.  A hunk is
+>> +	considered uninteresting if the person merging had two versions
+>> +	to choose between among all of the parents and the result shows
+>
+> the above makes me confused into
+> thinking that even if there are 47 parent versions, it is Ok if I looked
+> at only two versions and picked from one of them
 
-[color]
-	diff = auto
-	pager = false
+Here's another attempt.  I grimace at the sound of it, but it might be
+more clear.
 
-tig is a console-based git client that can also act as a pager,
-colorizing git output.
+--- snipsnip ---
+Subject: document diff --cc's long-ago-changed semantics
 
-So, with the above config, when I do:
+In February 2006 [1], the definition of "interesting hunk" for
+git's compact-combined diff format changed without a
+corresponding change in documentation.  This patch brings the
+documentation up to date.
 
-git diff | tig
+[1] commit bf1c32bdec8223785c779779d0a660a099f69a63
+    combine-diff: update --cc "uninteresting hunks" logic
 
-Everything works correctly - git sends no color codes, because of
-color.pager = false.
+Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
+---
+ Documentation/git-diff-tree.txt    |   12 +++++++-----
+ Documentation/rev-list-options.txt |    9 +++++----
+ 2 files changed, 12 insertions(+), 9 deletions(-)
 
-However, if I do just:
-
-git diff
-
-git uses core.pager to display the output, but still sends color
-codes, which is OK for, say, less, bit not so good for tig, which does
-it's own colorizing, and displays the color codes git sends as-is.
-
-Shouldn't core.pager respect color.pager, and not send the color codes?
-
-Benjamin Kudria
-
+diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
+index 0e45b58..7f8dc5b 100644
+--- a/Documentation/git-diff-tree.txt
++++ b/Documentation/git-diff-tree.txt
+@@ -92,12 +92,14 @@ include::pretty-options.txt[]
+ --cc::
+ 	This flag changes the way a merge commit patch is displayed,
+ 	in a similar way to the '-c' option. It implies the '-c'
+-	and '-p' options and further compresses the patch output
+-	by omitting hunks that show differences from only one
+-	parent, or show the same change from all but one parent
+-	for an Octopus merge.  When this optimization makes all
++	and '-p' options and makes the patch output
++	even more compact by omitting uninteresting hunks.  A hunk is
++	considered uninteresting if it shows no changes from at least
++	one of the parents and shows the same changes from each of the
++	parents from which it shows changes.
++	When this optimization makes all
+ 	hunks disappear, the commit itself and the commit log
+-	message is not shown, just like in any other "empty diff" case.
++	message are not shown, just like in any other "empty diff" case.
+ 
+ --always::
+ 	Show the commit itself and the commit log message even
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index b6f5d87..d75de78 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -111,10 +111,11 @@ options may be given. See linkgit:git-diff-files[1] for more options.
+ 
+ --cc::
+ 
+-	This flag implies the '-c' options and further compresses the
+-	patch output by omitting hunks that show differences from only
+-	one parent, or show the same change from all but one parent for
+-	an Octopus merge.
++	This flag implies the '-c' option and makes the patch output
++	even more compact by omitting uninteresting hunks.  A hunk is
++	considered uninteresting if it shows no changes from at least
++	one of the parents and shows the same changes from each of the
++	parents from which it shows changes.
+ 
+ -r::
+ 
 -- 
-http://ben.kudria.net | Jabber: ben@kudria.net
+1.5.6.3.549.g8ca11
