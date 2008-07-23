@@ -1,91 +1,84 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] Rename ".dotest/" to ".git/rebase" and ".dotest-merge"
-	to "rebase-merge"
-Date: Wed, 23 Jul 2008 18:47:39 +0200
-Message-ID: <20080723164739.GB17648@leksak.fem-net>
-References: <487D1B3D.70500@lsrfire.ath.cx> <alpine.DEB.1.00.0807160245440.2841@eeepc-johanness> <20080716012619.GM8185@mit.edu> <7viqv5r637.fsf@gitster.siamese.dyndns.org> <4882350B.6020003@free.fr> <7v3am5zfea.fsf@gitster.siamese.dyndns.org> <20080722234703.GD5904@leksak.fem-net> <7vbq0pifwq.fsf@gitster.siamese.dyndns.org> <20080723011341.GE5904@leksak.fem-net> <48874617.3010108@free.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH 00/12] Sparse checkout
+Date: Wed, 23 Jul 2008 17:55:14 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807231753240.8986@racer>
+References: <20080723145518.GA29035@laptop>  <alpine.DEB.1.00.0807231713280.8986@racer> <fcaeb9bf0807230921m114f5ae0ybfec4917432d6dc7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Theodore Tso <tytso@mit.edu>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Joe Fiorini <joe@faithfulgeek.org>, git@vger.kernel.org,
-	Jari Aalto <jari.aalto@cante.net>
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Wed Jul 23 18:48:51 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1646694251-1216832115=:8986"
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 18:56:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLhWD-0005XK-Je
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 18:48:50 +0200
+	id 1KLhdP-0008UI-5K
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 18:56:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752648AbYGWQru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 12:47:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752409AbYGWQru
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 12:47:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55169 "HELO mail.gmx.net"
+	id S1752810AbYGWQzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 12:55:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752675AbYGWQzO
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 12:55:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60081 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751012AbYGWQrt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 12:47:49 -0400
-Received: (qmail invoked by alias); 23 Jul 2008 16:47:47 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp040) with SMTP; 23 Jul 2008 18:47:47 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX18lUctobvolEV0kDGMom+IB1RhP3MmjYMJDAhUJUK
-	TAdMaWPPGpd6eR
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KLhV5-00082o-Di; Wed, 23 Jul 2008 18:47:39 +0200
-Content-Disposition: inline
-In-Reply-To: <48874617.3010108@free.fr>
+	id S1751869AbYGWQzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 12:55:13 -0400
+Received: (qmail invoked by alias); 23 Jul 2008 16:55:11 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp057) with SMTP; 23 Jul 2008 18:55:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX185Y8MnWkQ567adUyKLHoyzeP2yqWEcYMZFCHXczz
+	BgWZMw7gaf/wBy
+X-X-Sender: gene099@racer
+In-Reply-To: <fcaeb9bf0807230921m114f5ae0ybfec4917432d6dc7@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89710>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-1646694251-1216832115=:8986
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-Olivier Marin wrote:
-> > The reason of my question was that I *blindly* incorporated the change into
-> > sequencer to make it able to work on a dirty working tree and thus to be
-> > able to migrate am onto it without losing the ability to apply patches
-> > on a dirty working tree....
+On Wed, 23 Jul 2008, Nguyen Thai Ngoc Duy wrote:
+
+> On 7/23/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> >  On Wed, 23 Jul 2008, Nguyễn Thái Ngọc Duy wrote:
+> >
+> >  > So in short, sparse prefix will be stored in config, 
+> >  > core.sparsecheckout.
+> >
+> > Do you really think the prefix should be stored anywhere else than the 
+> > index?
+> >
+> > With core.sparseCheckout you have to introduce a _sh*tload_ of config 
+> > loaders.
+> >
+> > And with core.sparseCheckout you are at the whim of the user, since 
+> > .git/config is _supposed_ to be user-editable.
+> >
+> > From a logical point of view, I'd say that the sparse prefix has 
+> > nothing to do with the "configuration" of the local repository.
 > 
-> Are you talking about your seq-proto-dev3 branch?
+> Well, whatever place. I chose .git/config because I did not want to 
+> introduce a new config place. But then how about .git/sparsecheckout?
 
-Right, and your suggested changes are right, too, and I've incorporated
-them yesterday (with an --allow-dirty option) but I hadn't commited them...
-(Hence, not pushed.)
+No, I did mean the index.  This is an attribute of the index: either it is 
+sparsely checked out or not.  You can even have multiple indices 
+(switching between them by setting GIT_INDEX_FILE) which have different 
+prefixes.
 
-> > Now, because t4151 does not pass, I am wondering what's the best thing
-> > I could do...
+Ciao,
+Dscho "who seems to recall that the first series was much less intrusive"
 
-Well, that was solved...
-The problem was that the additional "HEAD" (that made t4151 work), resulted
-in untracked files in some test cases of sequencer and rebase-i. Those made
-merges fail, because these merges would overwrite these files. So the
-merges failed, and the test cases failed.
-
-I've solved this with the trick that the "HEAD" argument is only added if
---allow-dirty is set (and git-am uses --allow-dirty of course).
-
-This is perhaps not the cleanest way but seemed to be far more better
-than forcing overwrites on merges (checkouts, etc.).
-
-> Ah, you should change "Applying 6" with "Applying \"6\"" in t4151-am-abort.sh
-> too.
-
-I btw wondered if the quotes are useful in original am.
-Well, I've just sent a patch adding a colon (instead of quotes). Let's
-see ;)
-
-Regards,
-  Stephan
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+--8323329-1646694251-1216832115=:8986--
