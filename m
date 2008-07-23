@@ -1,82 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not
- been set
-Date: Wed, 23 Jul 2008 20:44:21 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807232041570.8986@racer>
-References: <alpine.DEB.1.00.0807222255450.8986@racer>  <7vy73tihl6.fsf@gitster.siamese.dyndns.org>  <alpine.DEB.1.00.0807230203350.8986@racer>  <7vej5kfs0w.fsf@gitster.siamese.dyndns.org>  <alpine.DEB.1.00.0807231817460.8986@racer>  <488772BC.80207@workspacewhiz.com>
- <32541b130807231133x37083278u1badd82b5c48e57b@mail.gmail.com> <alpine.DEB.1.00.0807231956280.8986@racer> <FB7ABDC5-8505-4FD1-8082-9BB5013E73C6@orakel.ntnu.no>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: git-svn - failed to clone repository
+Date: Wed, 23 Jul 2008 15:49:00 -0400
+Message-ID: <32541b130807231249l1028a757i2f29e9ca6e38fc5a@mail.gmail.com>
+References: <20080723160659.GB6705@cisco.com> <20080723170838.GK22606@neumann>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Joshua Jensen <jjensen@workspacewhiz.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
-X-From: git-owner@vger.kernel.org Wed Jul 23 21:45:30 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Derek Fawcus" <dfawcus@cisco.com>, git@vger.kernel.org
+To: "=?ISO-8859-1?Q?SZEDER_G=E1bor?=" <szeder@fzi.de>
+X-From: git-owner@vger.kernel.org Wed Jul 23 21:50:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLkH4-0008BL-FX
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 21:45:22 +0200
+	id 1KLkLc-0001kI-OQ
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 21:50:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753623AbYGWToV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 15:44:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753599AbYGWToV
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 15:44:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33075 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753577AbYGWToV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 15:44:21 -0400
-Received: (qmail invoked by alias); 23 Jul 2008 19:44:19 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp045) with SMTP; 23 Jul 2008 21:44:19 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+FJ5o3TruFY20YGsFN75rWMte1EpH6eC4KVzpVG+
-	AOh2d3pL5ZRaky
-X-X-Sender: gene099@racer
-In-Reply-To: <FB7ABDC5-8505-4FD1-8082-9BB5013E73C6@orakel.ntnu.no>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1753302AbYGWTtF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2008 15:49:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753091AbYGWTtD
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 15:49:03 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:5914 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750799AbYGWTtB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Jul 2008 15:49:01 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1121030ywe.1
+        for <git@vger.kernel.org>; Wed, 23 Jul 2008 12:49:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=EscilD+zZY7UKMH3H1ldgfruuG5LOrbVH/pn7vCb8KM=;
+        b=tpSSEzJd0u9wrRA7J7D6OJwNeSdPpdvBjvXlHWoVqV3uB9595+tjQ36vDoL9dqcRLv
+         qynw2/r2SFgXdwp5sB0WKdHdJtVQPN8oHbA3CWI0JhsQQZzFMGg1anfPJ4EOFXxZl8RF
+         J7eecBR2+7fPDHavW4J2w/gzwoo9dEIScYBTc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=qaRAAKJ0sVioZX76FZUtQ/bvqRgYcy/CgTf4y+BVjrpJ7QaSPRbbETtcS1noILTPQS
+         YqLy0Wzs95wDISkxyCY1hv23yfx2OBaIlU0fHtovd0lHKchXBHmlNpxK1E7P7A+FfX9y
+         dsSOtz6tXHX7yzShC3PqUGi2oo5dDhXZZymHw=
+Received: by 10.151.112.4 with SMTP id p4mr73401ybm.141.1216842540374;
+        Wed, 23 Jul 2008 12:49:00 -0700 (PDT)
+Received: by 10.150.96.5 with HTTP; Wed, 23 Jul 2008 12:49:00 -0700 (PDT)
+In-Reply-To: <20080723170838.GK22606@neumann>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89760>
 
-Hi,
+On 7/23/08, SZEDER G=E1bor <szeder@fzi.de> wrote:
+> It might not help you, but with svn version 1.4.6 (r28521) (from
+>  Ubuntu 8.04) and current git master the above command has just
+>  finished successfully.
 
-On Wed, 23 Jul 2008, Eyvind Bernhardsen wrote:
+I believe this was fixed by my patch
+29c70e0b3e3183f86f93500882177d0c74069988, which was included in git
+1.5.6.2.
 
-> On 23. juli. 2008, at 20.57, Johannes Schindelin wrote:
-> 
-> >On Wed, 23 Jul 2008, Avery Pennarun wrote:
-> >
-> > >1. always CRLF on all platforms (eg. for .bat files)
-> > >2. always LF on all platforms (eg. for shell scripts and perl scripts)
-> > >3. just leave it alone no matter what (eg. for binary files)
-> >
-> >These are not different, but equal.  "Do no harm to the contents of this
-> >file".
-> 
-> That is only true until someone edits the file in an editor which 
-> prefers the wrong end-of-line marker, and converts to it when saving.  
-> It will be obvious that this has happened if the user does a "git diff" 
-> before committing, but I think the intent of nos. 1 and 2 is for git to 
-> automatically convert the line endings back instead of kicking up a 
-> fuss.
-> 
-> Might be too magical, though.
-
-I deem it not, uhm, magical.  By your reasoning there should be a way for 
-Git to convert a file to UTF-8 when some entertaining person converted the 
-working directory file to ISO-8859-15.
-
-Really, either it is CR/LF on all platforms (and then the project members 
-have to live by it), or it is not.  You cannot have both.
-
-If it is CR/LF on all platforms, you just _commit_ it as CR/LF.  No 
-conversion, not even a brain required.
-
-Ciao,
-Dscho
+Avery
