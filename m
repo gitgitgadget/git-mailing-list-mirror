@@ -1,113 +1,87 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH 3/9] builtin-prune-packed.c: use parse_options()
-Date: Wed, 23 Jul 2008 23:42:06 +0200
-Message-ID: <1216849332-26813-4-git-send-email-barra_cuda@katamail.com>
-References: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 23 23:37:50 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: HP-UX issues (WAS: Re: [RFC] Git User's Survey 2008)
+Date: Wed, 23 Jul 2008 23:38:00 +0200
+Message-ID: <200807232338.04340.jnareb@gmail.com>
+References: <200807230325.04184.jnareb@gmail.com> <7vsku1gqny.fsf@gitster.siamese.dyndns.org> <20080723074747.GA32057@genesis.frugalware.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Jul 23 23:39:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLm1Z-00026o-R3
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 23:37:30 +0200
+	id 1KLm3I-0002n0-Es
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 23:39:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755015AbYGWVfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 17:35:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755509AbYGWVfw
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 17:35:52 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:36991 "HELO
-	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1755013AbYGWVft (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 17:35:49 -0400
-Received: (qmail 11486 invoked by uid 89); 23 Jul 2008 21:35:39 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
-X-Spam-Level: **
-X-Spam-Status: No, score=2.3 required=5.0 tests=BAYES_50,HELO_LH_LD,RDNS_NONE
-	autolearn=no version=3.2.3
-Received: from unknown (HELO localhost.localdomain) (barra?cuda@katamail.com@80.104.56.10)
-  by smtp2-pc with SMTP; 23 Jul 2008 21:35:38 -0000
-X-Mailer: git-send-email 1.5.6.3
-In-Reply-To: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com>
+	id S1754764AbYGWViN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 17:38:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754831AbYGWViM
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 17:38:12 -0400
+Received: from nf-out-0910.google.com ([64.233.182.191]:31983 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751534AbYGWViL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 17:38:11 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so981364nfc.21
+        for <git@vger.kernel.org>; Wed, 23 Jul 2008 14:38:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=GAH9l6brpq6BPAomgzI7GaTDOF5Ci2y0HNUEGQJ0SKM=;
+        b=su4SCUqT550S+ZvKvUzceLzMKWsYithDic5pyZb8XEYrWvoiDR7hT++fXd4jzLfj6p
+         KEKNzzzcnKgN2zitHeRVFH+CPcZeutxRMC/dMAk8ZVCglyo53UjzDzB9taW1EoPAFFaF
+         lJOhkG96h25X2Dsovc784LwibK56rWalWqS8g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=W2r79/nfdYr3TtekxiUkzuM2olZUjhFJ27TRD7I5ojqGGTaNWJd+4jI/d6GdpkMPud
+         V3HlsPZTompJ5OJW+w9VbBs0NXWSNm05s7jchuKbdSLnYSe5qxQsqiiDu7B/zXhqhGqd
+         JX+cUEdgZ9aVFKTELNDjpn5QEUG/1VQ2ULGMA=
+Received: by 10.210.16.11 with SMTP id 11mr278565ebp.187.1216849089784;
+        Wed, 23 Jul 2008 14:38:09 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.213.1])
+        by mx.google.com with ESMTPS id h7sm17928968nfh.34.2008.07.23.14.38.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 23 Jul 2008 14:38:08 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080723074747.GA32057@genesis.frugalware.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89782>
 
-Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
----
- builtin-prune-packed.c |   38 ++++++++++++++++++--------------------
- 1 files changed, 18 insertions(+), 20 deletions(-)
+On Wed, 23 July 2008, Miklos Vajna wrote:
 
-diff --git a/builtin-prune-packed.c b/builtin-prune-packed.c
-index 10cb8df..5866871 100644
---- a/builtin-prune-packed.c
-+++ b/builtin-prune-packed.c
-@@ -1,12 +1,15 @@
- #include "builtin.h"
- #include "cache.h"
- #include "progress.h"
-+#include "parse-options.h"
- 
--static const char prune_packed_usage[] =
--"git prune-packed [-n] [-q]";
-+static const char * const prune_packed_usage[] = {
-+	"git prune-packed [-n] [-q]",
-+	NULL
-+};
- 
- #define DRY_RUN 01
--#define VERBOSE 02
-+#define QUIET 02
- 
- static struct progress *progress;
- 
-@@ -43,7 +46,7 @@ void prune_packed_objects(int opts)
- 	const char *dir = get_object_directory();
- 	int len = strlen(dir);
- 
--	if (opts == VERBOSE)
-+	if (!opts)
- 		progress = start_progress_delay("Removing duplicate objects",
- 			256, 95, 2);
- 
-@@ -67,24 +70,19 @@ void prune_packed_objects(int opts)
- 
- int cmd_prune_packed(int argc, const char **argv, const char *prefix)
- {
--	int i;
--	int opts = VERBOSE;
-+	int opts = 0;
- 
--	for (i = 1; i < argc; i++) {
--		const char *arg = argv[i];
-+	const struct option options[] = {
-+		OPT_BIT('n', "dry-run", &opts, "dry run", DRY_RUN),
-+		OPT_BIT('q', "quiet", &opts, "be quiet", QUIET),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, options, prune_packed_usage, 0);
-+
-+	if (argc > 0)
-+		usage_with_options(prune_packed_usage, options);
- 
--		if (*arg == '-') {
--			if (!strcmp(arg, "-n"))
--				opts |= DRY_RUN;
--			else if (!strcmp(arg, "-q"))
--				opts &= ~VERBOSE;
--			else
--				usage(prune_packed_usage);
--			continue;
--		}
--		/* Handle arguments here .. */
--		usage(prune_packed_usage);
--	}
- 	prune_packed_objects(opts);
- 	return 0;
- }
+> Being more constructive, what a user using HP-UX is supported to do?
+> 
+> 1) Use the patched git from HP.
+> 
+> 2) Have coreutils installed. (But then I think it would be good to list
+> this dependency in INSTALL.)
+
+It would be good idea, although "POSIX-compliant shells" implies
+coreutils somewhat; shell scripts usually do require some utilities,
+like sed, grep, cat, test etc.
+
+> 3) Patch git to use automake's install-sh. (Would such a patch be ever
+> accepted?)
+
+I think it would.  It would allow us also to uncomment the
+AC_PROG_INSTALL line in configure.ac file to find 'install'
+automatically (autoconf requires having install.sh or install-sh
+fallback in the sources).
+
+The problem is coming up with minimal yet portable (at least as
+portable as git itself) fallback install.sh script.
 -- 
-1.5.6.3
+Jakub Narebski
+Poland
