@@ -1,82 +1,128 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2008
-Date: Thu, 24 Jul 2008 00:09:41 +0400
-Message-ID: <20080723200941.GT2925@dpotapov.dyndns.org>
-References: <200807230325.04184.jnareb@gmail.com> <20080723143810.GR2925@dpotapov.dyndns.org> <1216827806.9938.18.camel@localhost>
+From: Pierre Habouzit <madcoder@artemis.madism.org>
+Subject: Re: q: faster way to integrate/merge lots of topic branches?
+Date: Wed, 23 Jul 2008 22:27:22 +0200
+Message-ID: <20080723202722.GA18160@artemis.madism.org>
+References: <20080723130518.GA17462@elte.hu> <alpine.LFD.1.10.0807231027030.4754@woody.linux-foundation.org> <20080723190920.GG20614@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>
-To: Matthias Kestenholz <mk@spinlock.ch>
-X-From: git-owner@vger.kernel.org Wed Jul 23 22:10:58 2008
+Content-Type: multipart/signed; boundary="7JfCtLOvnd9MIVvH";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 23 22:28:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLkfg-0002LI-A6
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 22:10:48 +0200
+	id 1KLkx4-0001Nz-96
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 22:28:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754676AbYGWUJs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 16:09:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754428AbYGWUJs
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 16:09:48 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:40941 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754213AbYGWUJr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 16:09:47 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so540306ugf.16
-        for <git@vger.kernel.org>; Wed, 23 Jul 2008 13:09:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=VafEJp0WS8esteyBYkxdLWiYks998fSSl+0uNdTBwM4=;
-        b=Wdy/pN7TbhQ+7NFS7tu2vKRtiBmOjmF5k4F+lFDKoa7ncm9tVnsfK7n3yWd+0rmrjv
-         CGoZc8pbt0GNg94InabEeTmmpsErSOpo3rR1Nm24sXEJeZL99LYNRqZIwS9sJ5Cs27J8
-         I4zjjKA4JmkbD1MsRU/eECf1mEquJM4myYGPc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=xg1AOMU5Jp/UbR0U/V05otfdhL2ntEHg5qG2kxfWm/YzWYD2pU/8jyees83Qvb8wgP
-         527q3ABu1w8HboUVPZQk3rsKNprlFJFVAg8TwT24a1UC5y0T9n+uVOJV8CQZjnVDZ2bK
-         dn66rYl811fcAicA+Z7CEOzAKKhCt2vpkg1Xs=
-Received: by 10.103.186.7 with SMTP id n7mr146981mup.17.1216843785770;
-        Wed, 23 Jul 2008 13:09:45 -0700 (PDT)
-Received: from localhost ( [85.140.170.251])
-        by mx.google.com with ESMTPS id t10sm22218778muh.17.2008.07.23.13.09.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 23 Jul 2008 13:09:44 -0700 (PDT)
+	id S1755138AbYGWU1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 16:27:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755098AbYGWU1d
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 16:27:33 -0400
+Received: from pan.madism.org ([88.191.52.104]:48999 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754402AbYGWU1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 16:27:32 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id ADA593A7AB;
+	Wed, 23 Jul 2008 22:27:24 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id B3F543ACFA5; Wed, 23 Jul 2008 22:27:22 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@artemis.madism.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <1216827806.9938.18.camel@localhost>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20080723190920.GG20614@artemis.madism.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89767>
 
-On Wed, Jul 23, 2008 at 05:43:26PM +0200, Matthias Kestenholz wrote:
-> On Wed, 2008-07-23 at 18:38 +0400, Dmitry Potapov wrote:
-> > On Wed, Jul 23, 2008 at 03:25:03AM +0200, Jakub Narebski wrote:
-> > >    02. What is your preferred non-programming language?
-> > >   (or) What is the language you want computer communicate with you?
-> > 
-> > IMHO, the later wording of the question is much better.
-> 
-> I think these are two separate questions. In my case the first is
-> (swiss) german, the second is english. I don't like localized software
-> too much, I always have to think what a certain german term might mean
-> in english to understand computing-specific texts.
 
-Wellcome to the club of those who don't like localized software :)
+--7JfCtLOvnd9MIVvH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> That being said I think that the first question is irrelevant for the
-> git survey.
+On Wed, Jul 23, 2008 at 07:09:20PM +0000, Pierre Habouzit wrote:
+> On Wed, Jul 23, 2008 at 05:59:01PM +0000, Linus Torvalds wrote:
+> > In fact, the two top entries in a profile look roughly like:
+> >=20
+> > 	102161   70.2727  libz.so.1.2.3            libz.so.1.2.3            (n=
+o symbols)
+> > 	7685      5.2862  git                      git                      fi=
+nd_pack_entry_one
+> > 	...
+> >=20
+> > ie 70% of the time is just purely unpacking the data, and another 5% is=
+=20
+> > just finding it. We could perhaps improve on it, but not a whole lot.
+>=20
+>   Well there is an easy way though, that could reduce that: using
+> adaptative compression. I proposed a patch once upon a time, that set
+> the compression strengh to 0 for "small" objects with a configurable
+> cut-off. If you do that, most trees, commits messages and so on aren't
+> compressed, and it will reduce (with IIRC a 5-liner) this time quite
+> dramatically.
+>=20
+>   I could maybe resurect it to see if for people that do the kind of
+> things Ingo does it helps. By setting the cut-off at 1k, I had packs
+> being less than 1% bigger IIRC. I'll try to find it again and run your
+> tests with it to see how much it helps.
 
-Exactly. That is why I said the later wording is better. I believe the
-implied question was what language would you like Git to talk with you.
+  Unsurprisingly with a 1024o cutoff, the numbers are (first run is
+forced cold-cache with /proc/.../drop_caches, second is the best run of 5):
 
-Dmitry
+default git:
+
+    3.10user 0.16system 0:08.10elapsed 40%CPU (0avgtext+0avgdata 0maxreside=
+nt)k
+    116152inputs+0outputs (671major+35286minor)pagefaults 0swaps
+
+    2.01user 0.11system 0:02.12elapsed 99%CPU (0avgtext+0avgdata 0maxreside=
+nt)k
+    0inputs+0outputs (0major+35958minor)pagefaults 0swaps
+
+With a 1024k cutoff:
+
+    1.16user 0.13system 0:08.29elapsed 15%CPU (0avgtext+0avgdata 0maxreside=
+nt)k
+    154208inputs+0outputs (947major+39777minor)pagefaults 0swaps
+
+    0.76user 0.06system 0:00.82elapsed 100%CPU (0avgtext+0avgdata 0maxresid=
+ent)k
+    0inputs+0outputs (0major+40724minor)pagefaults 0swaps
+
+
+According to [0], a 1k cutoff meant something like a 10% larger pack. 512o
+meant an almost identical pack in size, but with reduced performance
+improvements.
+
+
+  [0] http://thread.gmane.org/gmane.comp.version-control.git/70019/focus=3D=
+70250
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--7JfCtLOvnd9MIVvH
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkiHlCkACgkQvGr7W6HudhxtgwCgm9WSqZcdeCHlGiHaKmkD4kAj
+F5IAnAu7NT3pg9FGwnVe3KXg4RoZf8ST
+=y0pN
+-----END PGP SIGNATURE-----
+
+--7JfCtLOvnd9MIVvH--
