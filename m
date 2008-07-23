@@ -1,133 +1,82 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH/RFC] git add: do not add files from a submodule
-Date: Wed, 23 Jul 2008 21:02:27 +0200
-Message-ID: <20080723190227.GF20614@artemis.madism.org>
-References: <1216534144-23826-1-git-send-email-gitster@pobox.com> <alpine.DEB.1.00.0807201529150.3305@eeepc-johanness> <alpine.DEB.1.00.0807210256510.3305@eeepc-johanness> <alpine.DEB.1.00.0807222230490.8986@racer> <7vhcahgl2j.fsf@gitster.siamese.dyndns.org> <20080723081333.GA15243@artemis.madism.org> <7v8wvse9l7.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] sort_in_topological_order(): avoid setting a commit
+ flag
+Date: Wed, 23 Jul 2008 12:02:30 -0700
+Message-ID: <7vprp4ctkp.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0807230148130.8986@racer>
+ <alpine.DEB.1.00.0807230150480.8986@racer>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="Qz2CZ664xQdCRdPu";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 21:03:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: pasky@suse.cz, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 23 21:03:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLjcb-0006lh-Bx
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 21:03:33 +0200
+	id 1KLjco-0006ql-Ti
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 21:03:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753693AbYGWTCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 15:02:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753921AbYGWTCc
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 15:02:32 -0400
-Received: from pan.madism.org ([88.191.52.104]:34017 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753108AbYGWTCb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 15:02:31 -0400
-Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 7067A3A786;
-	Wed, 23 Jul 2008 21:02:29 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 0BDC23B10F0; Wed, 23 Jul 2008 21:02:27 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v8wvse9l7.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1753860AbYGWTCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 15:02:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753661AbYGWTCj
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 15:02:39 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60624 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752649AbYGWTCj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 15:02:39 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4CEAA3765A;
+	Wed, 23 Jul 2008 15:02:37 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 8806837657; Wed, 23 Jul 2008 15:02:33 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: EA546D64-58E9-11DD-9217-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89741>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---Qz2CZ664xQdCRdPu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> @@ -494,7 +493,8 @@ void sort_in_topological_order(struct commit_list ** list, int lifo)
+>  			 * when all their children have been emitted thereby
+>  			 * guaranteeing topological order.
+>  			 */
+> -			if (!--parent->indegree) {
+> +			if (--parent->indegree == 1) {
+> +				parent->indegree = 0;
+>  				if (!lifo)
+>  					insert_by_date(parent, &work);
+>  				else
+> @@ -505,7 +505,6 @@ void sort_in_topological_order(struct commit_list ** list, int lifo)
+>  		 * work_item is a commit all of whose children
+>  		 * have already been emitted. we can emit it now.
+>  		 */
+> -		commit->object.flags &= ~TOPOSORT;
+>  		*pptr = work_item;
+>  		pptr = &work_item->next;
+>  	}
 
-On Wed, Jul 23, 2008 at 06:31:16PM +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> > On Wed, Jul 23, 2008 at 06:40:20AM +0000, Junio C Hamano wrote:
-> > ...
-> >> If we started the process of diagnosing and fixing these issues earlie=
-r,
-> >> and had plausible code to address the issue already in 'next' before t=
-he
-> >> current -rc cycle started, the topic would have been an obvious candid=
-ate
-> >> for the coming release and I'd further say it would be even worth dela=
-ying
-> >> the release for a few weeks if it takes more time.  But I have to say =
-it
-> >> is too late for 1.6.0 now if we are just noticing and starting the
-> >> discussion.
-> >
-> >   Well given that we now use submodules at work, and that git is
-> > nowadays somewhere in the top 5 of my most consciously (as opposed to
-> > the compiler that I rarely call by hand) used software suites (among my
-> > editor, my MUA, my shell and my tiling WM), I'm very much interested in
-> > tackling some things about what is (not) done with submodules yet.
->=20
-> Surely the effort is appreciated.
+These two hunks look suspicious.
 
-  okay I'll try to work on this on the git wiki so that collaboration is
-possible.
+The "tips" used to enter that while() loop with zero indegree, its parents
+examined and then entered the final list pointed by pptr with the toposort
+scratch variables removed and indegree set to zero.  Now with the new +1
+based code, they enter the while() loop with 1 indegree, and enter the
+final list with indegree set to 1.
 
->=20
-> >> This comment goes to the issue Pierre raised last night as well.
-> >
-> >   You mean the git checkout issue?
->=20
-> Oh, no; that misuse of parse_opt() that forgot KEEP_DASHDASH one was not
-> what I had in mind.  I meant to say that your "switch branches between an
-> old pre-submodule rev and a new one that has a submodule at where a blob
-> or directory used to be" issue with a good explanation material was a good
-> starting point for submodule improvements for the next cycle.
+A parent that has only one child that is "tip" is discovered in the
+while() loop, its indegree decremented (so it goes down to zero in the
+original code and 1 in yours) and enters work queue to be processed.  It
+used to have the toposort scratch variable removed in the second hunk
+above, but that is done in the first hunk in your version.
 
-  ohh that :)
+So after this patch, indegree will be all zero for non-tip commits but
+will be one for tip commits.  Is this intended?
 
-> I'd like the release schedule not too heavily based on "per feature", but
-> more time-based.
-
-  Yeah, we've seen in the past how it makes a release slip. Though it'd
-be great to say e.g. that we won't do a 1.7.0 release[0] until we have
-an UI for submodules we are prood of. It doesn't mean that we won't have
-a 1.6.21 because it's slow to get into shape ;)
-
-  IOW I'm all for time based releases, with some big milestones that
-when completed bump the git version significantly. And hinting on what
-are those milestones would probably be quite nice. I mean git
-developpement is kind of a hit and run thing: people have an issue, come
-with patches, and go back to their lives (except for a mere 20 regular
-contributors with more than 50 patches). Maybe we should hint some
-direction we would like to see a bit more. examples of such big
-directions are:
-  * submodules UI ;
-  * sparse checkouts ;
-  * ...
-
-
-  [0] I don't really *mean* we must do it for 1.7.0, It's merely an
-      example.
-
---Qz2CZ664xQdCRdPu
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkiHgEEACgkQvGr7W6HudhxeFACfRdIT0zEgzAI3uYcY90U3lIF/
-jkEAniq3D7qwWdZ1ML/XiBWJnHB+ID/L
-=3BS8
------END PGP SIGNATURE-----
-
---Qz2CZ664xQdCRdPu--
+I'd suggest dropping the "parent->indegree = 0" assignment and turn the
+second hunk into "commit->indgree = 0" assignment.
