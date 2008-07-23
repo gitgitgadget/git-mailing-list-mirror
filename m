@@ -1,76 +1,58 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH 0/9] Make gitexecdir relative to $(bindir) on Windows
-Date: Wed, 23 Jul 2008 20:49:18 +0200
-Message-ID: <200807232049.18686.johannes.sixt@telecom.at>
-References: <1216667998-8879-1-git-send-email-johannes.sixt@telecom.at> <200807222131.32828.johannes.sixt@telecom.at> <7vmyk8e9p9.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not
+ been set
+Date: Wed, 23 Jul 2008 19:57:29 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807231956280.8986@racer>
+References: <alpine.DEB.1.00.0807222255450.8986@racer>  <7vy73tihl6.fsf@gitster.siamese.dyndns.org>  <alpine.DEB.1.00.0807230203350.8986@racer>  <7vej5kfs0w.fsf@gitster.siamese.dyndns.org>  <alpine.DEB.1.00.0807231817460.8986@racer>  <488772BC.80207@workspacewhiz.com>
+ <32541b130807231133x37083278u1badd82b5c48e57b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 20:50:24 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Joshua Jensen <jjensen@workspacewhiz.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 20:58:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLjPs-0002Eo-Aa
-	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 20:50:24 +0200
+	id 1KLjXy-0005AZ-T5
+	for gcvg-git-2@gmane.org; Wed, 23 Jul 2008 20:58:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753778AbYGWStY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 14:49:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753689AbYGWStY
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 14:49:24 -0400
-Received: from smtp3.srv.eunet.at ([193.154.160.89]:47822 "EHLO
-	smtp3.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753293AbYGWStX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 14:49:23 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp3.srv.eunet.at (Postfix) with ESMTP id 5402410A78F;
-	Wed, 23 Jul 2008 20:49:21 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id AC2BA1D0E3;
-	Wed, 23 Jul 2008 20:49:20 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vmyk8e9p9.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754401AbYGWS5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 14:57:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754517AbYGWS5a
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 14:57:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49022 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754401AbYGWS53 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 14:57:29 -0400
+Received: (qmail invoked by alias); 23 Jul 2008 18:57:27 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp001) with SMTP; 23 Jul 2008 20:57:27 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19gxkFTIudg/vPSu4K30H0lSAZRvC2DAx+N9+V4wm
+	sUy5NyLQUPIsDV
+X-X-Sender: gene099@racer
+In-Reply-To: <32541b130807231133x37083278u1badd82b5c48e57b@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89737>
 
-On Mittwoch, 23. Juli 2008, Junio C Hamano wrote:
-> Johannes Sixt <johannes.sixt@telecom.at> writes:
-> > On Dienstag, 22. Juli 2008, Johannes Schindelin wrote:
-> >> On Mon, 21 Jul 2008, Johannes Sixt wrote:
-> >> > The problem was that argv[0] does not have a path in certain cases.
-> >>
-> >> Note that the same holds true for Linux when calling a program that is
-> >> in the PATH:
-> >
-> > Oh, boy!
-> >
-> >> I imagine that the proper solution would be to rip out lookup_prog() and
-> >> use it for non-Windows Git, too.  Unless you want to limit the
-> >> usefulness of your patch series to Windows, that is.
-> >
-> > This certainly goes beyond what I am prepared to do. It is not my itch.
-> > The series is already much longer than I wanted, when there is a much
-> > simpler solution that solves *my* problem: to set bindir = $(gitexecdir).
->
-> If you are living in the Windows world, perhaps you could record the
-> installation location in resource somewhere from the installer and look it
-> up at runtime?  Or is it considered a bad practice?
+Hi,
 
-Well, looking at value of _pgmptr *is* "look it up at runtime"; no resources 
-or help from the installer are needed.
+On Wed, 23 Jul 2008, Avery Pennarun wrote:
 
-My rant here is more about that I created a *long* patch series only to find 
-out that it does not have enough genericity to solve the same problem 
-(relocatability) on platforms other than Windows - and I don't want to make 
-it even longer. Windows is special enough that *I* could live with a much 
-simpler solution even though it is a bit retro.
+> 1. always CRLF on all platforms (eg. for .bat files)
+> 2. always LF on all platforms (eg. for shell scripts and perl scripts)
+> 3. just leave it alone no matter what (eg. for binary files)
 
--- Hannes
+These are not different, but equal.  "Do no harm to the contents of this 
+file".
+
+Hth,
+Dscho
