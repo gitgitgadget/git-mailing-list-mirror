@@ -1,152 +1,123 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC PATCH 00/12] Sparse checkout
-Date: Thu, 24 Jul 2008 02:35:45 -0700 (PDT)
-Message-ID: <m3tzefvd3q.fsf@localhost.localdomain>
-References: <20080723145518.GA29035@laptop>
+From: =?ISO-8859-1?Q?=22Peter_Valdemar_M=F8rch_=28Lists=29=22?= 
+	<4ux6as402@sneakemail.com>
+Subject: Re: [PATCH] Document disabling core.whitespace values trailing-space
+ and space-before-tab
+Date: Thu, 24 Jul 2008 11:41:42 +0200
+Message-ID: <48884E56.6070801@sneakemail.com>
+References: <4888144E.8090300@sneakemail.com> <20080724172912.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: =?utf-8?b?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?utf-8?b?YyBEdXk=?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 11:36:56 2008
+Cc: git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 11:42:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLxFh-0001qW-As
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 11:36:49 +0200
+	id 1KLxLU-0003dY-0S
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 11:42:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754805AbYGXJfu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 05:35:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751657AbYGXJfu
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 05:35:50 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:14625 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754729AbYGXJft convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Jul 2008 05:35:49 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so1035987nfc.21
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 02:35:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding:date;
-        bh=v73VitHsvOd/7hqNqSQHGwCwzkCsV8aGPxrFjY/r7v8=;
-        b=ncNduiHWjLCUdGPcC4ZviHe8R+WLCVc2P5KC91kcDI9bS/cxO3X2zrn3MKuSbss9b6
-         VAK41qFu9lBWVOpFXMruIyL+PxNignUa1iULaiab5A8D711/GC+sLH0+Hds085ilmobt
-         Nd23XqMwnDcuHp/cgNEGVMMZIrJ4nSW77jvH8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding:date;
-        b=SrLiPCkAz7wE8TA9GtFUTatylTtKTUk06vXxHMNKJ7kCBymR3GazKAMFKVQKUBNNo2
-         pPZmmHr3Rwe4L55h85ZzgC3GBzHTRkbDraWLFr1ZFd9pQy9lFnRgnN/dXKSlp667N2yG
-         EB+C6Mjt8xgvQTd1Vh/IJOLcJnpdyxjGRE+dI=
-Received: by 10.210.59.14 with SMTP id h14mr56119eba.104.1216892146699;
-        Thu, 24 Jul 2008 02:35:46 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.208.47])
-        by mx.google.com with ESMTPS id 32sm6473253nfu.10.2008.07.24.02.35.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 24 Jul 2008 02:35:45 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m6O9Zfr7003290;
-	Thu, 24 Jul 2008 11:35:41 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m6O9ZbpP003287;
-	Thu, 24 Jul 2008 11:35:37 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080723145518.GA29035@laptop>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751688AbYGXJlr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 05:41:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751623AbYGXJlr
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 05:41:47 -0400
+Received: from morch.com ([193.58.255.207]:34228 "EHLO morch.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751234AbYGXJlq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 05:41:46 -0400
+Received: from [192.168.1.214] (ANice-157-1-37-217.w90-28.abo.wanadoo.fr [90.28.176.217])
+	by morch.com (Postfix) with ESMTP id 8BFA4281D;
+	Thu, 24 Jul 2008 11:43:33 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080502)
+In-Reply-To: <20080724172912.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89858>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+Actually, it gets stranger and stranger!
 
-> I have not looked at non-builtin commands yet, but I think it's not
-> a big deal. We have several rounds before this series is good enough =
-;)
-> So in short, sparse prefix will be stored in config, core.sparsecheck=
-out.
-> you have three new commands to enter/update/leave sparse checkout:
+Nanako Shiraishi nanako3-at-lavabit.com |Lists| wrote:
+>> The '-trailing-space' syntax to disable the trailing-space setting=20
+>> is not obvious and not documented as far as I can see. I would have
+>> assumed a value of '' would disable it.
 >=20
-> git clone --path=3Dprefix       # clone with sparse checkout
-> git checkout --path=3Dprefix    # limit/update checkout paths
-> git checkout --full           # stop sparse checkout
+> Doesn't gitattributes(5) describe the overall syntax in detail?
+
+=46irst, git-config.1 does not mention gitattributes except for specifi=
+c
+settings. core.whitespace is not one of these.
+
+gitattributes.5 has:
+> Sometimes you would need to override an setting of an attribute for a
+>  path to unspecified state. This can be done by listing the name of=20
+> the attribute prefixed with an exclamation point !.
+
+note that this is ! before the *name* of the attribute, and for=20
+"Checking whitespace errors / whitespace":
+
+> The core.whitespace configuration variable allows you to define what=20
+> diff and apply should consider whitespace errors for all paths in the
+>  project (See git-config(1)). This attribute gives you finer control=20
+> per path.
+=2E..
+> Unspecified: Use the value of core.whitespace configuration variable
+>  to decide what to notice as error.
 >=20
-> Other operations should be normal. User attempts to do anything outsi=
-de
-> sparse checkout will get flagged. Git itself should not touch anythin=
-g
-> outside sparse checkout.
->=20
-> One more thing. As files outside sparse checkout will not be checking
-> out, .gitignore and .gitattributes from parent directories (outside
-> sparse checkout) will be gone too. This may lead to surprise.
->=20
-> Comments are welcome.
+> String: Specify a comma separate list of common whitespace problems=20
+> to notice in the same format as core.whitespace configuration=20
+> variable.
 
-A note: my comments here reflects what I have remember from reading
-comments in this thread; I have not examined the code, though.
+So now, git attributes says to unspecify a setting with '!' in front of
+the attribute *name*, which for core.whitespace means use the value fro=
+m
+git-config, which if not specified means to error on e.g. trailing-spac=
+e.
 
+Now, I notice that git's own .gitattributes has this:
+> * whitespace=3D!indent,trail,space
+> *.[ch] whitespace
 
-=46irst, I think that 'sparse checkout' is a better idea than former
-'subtree (partial) checkout'; and I guess it could be easier to code.
+Which I assume actually works, but is invalid according to git-config.1=
+=20
+and gitattributes.5 because:
 
+=46or the first line, neither of the values 'indent', 'trail' nor 'spac=
+e'
+are valid for core.whitespace, and the '!' notation is not defined in
+neither gitattributes.5 nor in git-config.1 for *values*.
 
-Second, I think you can simply special case .git* files (.gitignore,
-=2Egitattributes, .gitmodules), and always check them out for all
-intermediate directories (unless configured otherwise, of course).
-So for example if you have the following directory structure:
+=46or the second line, gitattributes states generally about attributes =
+that:
+> Set: The path has the attribute with special value "true"; this is=20
+> specified by listing only the name of the attribute in the attribute=20
+> list.
 
-  A/.gitignore
-  A/a
-  A/B1/.gitignore
-  A/B1/b
-  A/B2/.gitignore
-  A/B2/c
+A value of true (unspecified would have required:"*.[ch] !whitespace")=20
+is not valid for core.whitespace either.
 
-and you are checking out only subdirectory 'B1' (and all files in it;
-if subdirectories are checked out recursively it depends on
-configuration), and if for example there is .gitignore in every
-directory, then checked out tree would look like this:
+So now (as I read it), neither git-config.1 nor gitattributes.5 specify=
+=20
+how to turn off core.whitespace "elements", but .gitattributes (from gi=
+t=20
+itself) uses one notation (!) with settings that are invalid for other=20
+reaons, while "grep core.whitespace t/*" uses another notation (-) to=20
+turn off elements.
 
-  A/.gitignore
-  A/B1/.gitignore
-  A/B1/b
+Also in t/* the elements have various different names, such as: "trail"=
+,=20
+"trailing", "trailing-space". t/t4019-diff-wserror.sh also uses this:
+> echo "F whitespace=3D-trail" >.gitattributes
+just to make things interesting!
 
-The ability to do this is one of advantages of 'sparse' checkout over
-'subtree' checkout.
+It seems that there is some inconsistency about this. Perhaps=20
+documentation (and changing t/* and .gitattributes accordingly) isn't=20
+such a bad idea! :D
 
-
-Third, about the place where to store information about which paths
-are checked out, and which are not.  There are three possible places
-to store this information:
-
-  1. repository configuration, e.g. `core.sparsecheckout' variable
-     (multivalued?), like for `core.worktree'
-
-  2. some text file in $GIT_DIR, e.g. '.git/sparse', like for shallow
-     clone ("git clone --depth <depth>") it is grafts-like
-     $GIT_DIR/shallow (see Documentation/technical/shallow.txt).
-
-  3. in the index itseld ($GIT_DIR/index), as proposed by Johannes
-     Schindelin.
-
-While I do think that some information about sparseness should be in
-the index, for git to be able to commit from the index for example,
-I don't think it is a good place as the only/main place to store
-information about which paths are checked out; I think that because
-IMVHO git commands should survive hosing (removing) index file.
-
-Just my 2 eurocents.
+Peter
 --=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Peter Valdemar M=F8rch
+http://www.morch.com
