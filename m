@@ -1,97 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Respect crlf attribute in "git add" even if core.autocrlf
- has not been set
-Date: Thu, 24 Jul 2008 13:39:34 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807241334340.8986@racer>
-References: <alpine.DEB.1.00.0807222255450.8986@racer> <7vy73tihl6.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807230203350.8986@racer> <alpine.DEB.1.00.0807230229410.8986@racer> <719E03C0-E8C3-4C35-AE9C-9BD5A7BCDF03@zib.de> <20080723114022.GP2925@dpotapov.dyndns.org>
- <FCAEAB20-750E-47B9-B58D-9BB0CB1EEAFF@zib.de>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH] Preserve cwd in setup_git_directory()
+Date: Thu, 24 Jul 2008 19:40:18 +0700
+Message-ID: <fcaeb9bf0807240540i400fe0d1s7ea8efe72203471d@mail.gmail.com>
+References: <20080724031441.GA26072@laptop>
+	 <alpine.DEB.1.00.0807241324040.8986@racer>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-650875929-1216903175=:8986"
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Thu Jul 24 14:40:53 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Geoff Russell" <geoffrey.russell@gmail.com>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 24 14:41:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM07g-0008PH-Ho
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 14:40:45 +0200
+	id 1KM08L-0000FK-Eu
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 14:41:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757267AbYGXMje (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 08:39:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757246AbYGXMjd
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 08:39:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60370 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754245AbYGXMjc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 08:39:32 -0400
-Received: (qmail invoked by alias); 24 Jul 2008 12:39:31 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp022) with SMTP; 24 Jul 2008 14:39:31 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ate8//jUaQXhcAv/+CcpfE4y53eNG78uQ4Q6TZy
-	iR92hbhCwqedz2
-X-X-Sender: gene099@racer
-In-Reply-To: <FCAEAB20-750E-47B9-B58D-9BB0CB1EEAFF@zib.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1754304AbYGXMkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 08:40:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754132AbYGXMkV
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 08:40:21 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:59355 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753052AbYGXMkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 08:40:20 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1388142fgg.17
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 05:40:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=nm8NTKocYVlr7PKiERExJj36o9Ym2jcHFc51nBfSZ30=;
+        b=luJYxH7O3tGO+Ut7QqHPT9BCfBFu9MhOJA5VLKIPGMgmFRTh2RjARbURxVaCduA+/K
+         PJGETymZwZEAOoHtmK11/jI5ZTgWxKvIs5LDZAEn59oUdueksE+NaT6kx+e/XksW+Qu3
+         WApB9iSZ5SPyCtDZMko8KdQcTnEbSO3LUdmOA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Z6J5+f76F4ZXlk2IJzYdm4QmhNHEWk58CbNFQrXvJMCGtY0nqcmCpsjPXrzGVUvXM6
+         ejmSmwaAYOIRlrFzbAgdTLDEcj7G8xUCp0d6c/Erh1LWrLP4Ow+gZqI4FrvIsqWl14iG
+         j952AND1FrBw4MQQR7FW8GULibENo28Ylyji8=
+Received: by 10.86.77.5 with SMTP id z5mr845981fga.10.1216903218556;
+        Thu, 24 Jul 2008 05:40:18 -0700 (PDT)
+Received: by 10.86.91.2 with HTTP; Thu, 24 Jul 2008 05:40:18 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0807241324040.8986@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89874>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 7/24/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+>
+>  On Thu, 24 Jul 2008, Nguyen Thai Ngoc Duy wrote:
+>
+>  > When GIT_DIR is not set, cwd is used to determine where .git is. If
+>  > core.worktree is set, setup_git_directory() needs to jump back to the
+>  > original cwd in order to calculate worktree, this leads to incorrect
+>  > .git location later in setup_work_tree().
+>
+>
+> I do not understand.  core.worktree is either absolute, in which case
+>  there is no problem.  Or it is relative to where the config lives, no?
 
---8323329-650875929-1216903175=:8986
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+The problem is GIT_DIR is not absolute in this case. So cwd must stay
+where git dir is until it is absolute-ized by setup_work_tree().
 
-Hi,
-
-On Thu, 24 Jul 2008, Steffen Prohaska wrote:
-
-> Dscho,
-> Is the following your use case?
-> 
-> "I am the maintainer of this project.  I know that this project needs
->  crlf conversion, because it is a cross-platform project.  Therefore,
->  I want to force crlf conversion for this specific project, even if
->  the user did not configure core.autocrlf=input on Unix."
-
-No.
-
-My use case is this: a few users work on Windows (Cygwin), others on 
-MacOSX, yet others on Linux.
-
-We often integrate files from somewhere else, and them Windows guys love 
-to edit their files with their anachronistic proprietary crap tools that 
-add CRs where CRs no belongee.
-
-Also, the Windows guys (being Windows guys) cannot be bothered to read 
-documentation, so they did not set autocrlf.
-
-> Your patch provides a solution, though not a very comfortable one.  With
-> your patch applied, you could explicitly list all files (or filetypes)
-> that are text and mark them with 'crlf'.
-
-Why should I want to do that?  I do not _want_ CRs.  And them Windows guys 
-do not need them either; they are often not even aware that their crap 
-tools introduce them.
-
-> You could also specify 'crlf=input', but I don't understand why you want 
-> to specify this.
-
-That's what I do.  And _I_ need to understand why ;-)
-
-Well, seems I will just continue shouting "why did you commit that 
-CR-ridden file?" and get shouted back with "why does this §&%&%&!° Git 
-tool not fix it for me automatically?  Even _Subversion_ can do it."
-
-Ciao,
-Dscho
---8323329-650875929-1216903175=:8986--
+-- 
+Duy
