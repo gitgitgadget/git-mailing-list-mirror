@@ -1,79 +1,69 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] t/: Replace diff [-u|-U0] with test_cmp to allow
-	compilation with old diff
-Date: Thu, 24 Jul 2008 02:19:16 +0200
-Message-ID: <20080724001916.GP32057@genesis.frugalware.org>
-References: <0GfECozN3g0ZvAESKMi76RyOVHEb2OhhwET9GWmEm7pbzYQJub50UlWpZtBa7MGn1UGb-7mzbzE@cipher.nrlssc.navy.mil> <E23rxnPh0xeYPsUuTseZ3Y6bteX3uHIcbLzTlyVPsX_N5fqcvRp1vA@cipher.nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH]
+Date: Wed, 23 Jul 2008 17:22:58 -0700
+Message-ID: <7vej5k8719.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ZH76yXETYuyhTGDD"
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Jul 24 02:20:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Jul 24 02:24:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLoZC-0001Id-FV
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 02:20:22 +0200
+	id 1KLodC-0002Av-LS
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 02:24:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753907AbYGXATT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 20:19:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753974AbYGXATT
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 20:19:19 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:35148 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753729AbYGXATS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 20:19:18 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id BA72C1B252C;
-	Thu, 24 Jul 2008 02:19:17 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 15DAB4465E;
-	Thu, 24 Jul 2008 01:37:43 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 95EC311909DF; Thu, 24 Jul 2008 02:19:16 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <E23rxnPh0xeYPsUuTseZ3Y6bteX3uHIcbLzTlyVPsX_N5fqcvRp1vA@cipher.nrlssc.navy.mil>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1755584AbYGXAXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 20:23:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753974AbYGXAXI
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 20:23:08 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51207 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754058AbYGXAXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 20:23:07 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id ACA2A38EC4;
+	Wed, 23 Jul 2008 20:23:05 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 7C41238EC2; Wed, 23 Jul 2008 20:23:02 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: AF570992-5916-11DD-A7E1-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89820>
 
+f2eba66 (Enable HEAD@{...} and make it independent from the current
+branch, 2007-02-03) introduced dwim_log() to handle <refname>@{...}
+syntax, and as part of its processing, it checks if the ref exists by
+calling refsolve_ref().  It should call it as a reader to make sure the
+call returns NULL for a nonexistent ref (not as a potential writer in
+which case it does not return NULL).
 
---ZH76yXETYuyhTGDD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-On Tue, Jul 22, 2008 at 04:17:43PM -0500, Brandon Casey <casey@nrlssc.navy.mil> wrote:
->  t/t0002-gitfile.sh               |    2 +-
->  t/t1002-read-tree-m-u-2way.sh    |   12 ++++++------
->  t/t2201-add-update-typechange.sh |   10 +++++-----
->  3 files changed, 12 insertions(+), 12 deletions(-)
+ * I found this purely by accident.  "echo >.git/logs/refs/heads/HEAD"
+   would make your "git rev-parse HEAD@{1}" complain about a refname
+   'HEAD' being ambiguous without this patch.
 
-Hmm, after applying this patch, I have:
+ sha1_name.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-~/git/t$ git grep 'diff -U'
-t1002-read-tree-m-u-2way.sh:     diff -U0 M.out 4.out >4diff.out
-t1002-read-tree-m-u-2way.sh:     diff -U0 M.out 5.out >5diff.out
-t1002-read-tree-m-u-2way.sh:     diff -U0 M.out 14.out >14diff.out
-t1002-read-tree-m-u-2way.sh:     diff -U0 M.out 15.out >15diff.out
-
-Any reason you left this out? ;-)
-
---ZH76yXETYuyhTGDD
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkiHyoQACgkQe81tAgORUJacUACgnQXn/b55omvxje3zrTdhCdzh
-qhYAnApToX/8ClehhhvfxyrAJkGM7kwu
-=2gZP
------END PGP SIGNATURE-----
-
---ZH76yXETYuyhTGDD--
+diff --git a/sha1_name.c b/sha1_name.c
+index b0b2167..4fb77f8 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -273,7 +273,7 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
+ 		const char *ref, *it;
+ 
+ 		strcpy(path, mkpath(*p, len, str));
+-		ref = resolve_ref(path, hash, 0, NULL);
++		ref = resolve_ref(path, hash, 1, NULL);
+ 		if (!ref)
+ 			continue;
+ 		if (!stat(git_path("logs/%s", path), &st) &&
