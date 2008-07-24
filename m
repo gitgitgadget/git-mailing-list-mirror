@@ -1,105 +1,57 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [RFC PATCH 00/12] Sparse checkout
-Date: Thu, 24 Jul 2008 15:27:03 +0700
-Message-ID: <fcaeb9bf0807240127p5226822atcd4a0711f1bc9c5c@mail.gmail.com>
-References: <20080723145518.GA29035@laptop>
-	 <alpine.DEB.1.00.0807231713280.8986@racer>
-	 <fcaeb9bf0807230921m114f5ae0ybfec4917432d6dc7@mail.gmail.com>
-	 <alpine.DEB.1.00.0807231753240.8986@racer>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH] Document disabling core.whitespace values trailing-space and space-before-tab
+Date: Thu, 24 Jul 2008 17:29:12 +0900
+Message-ID: <20080724172912.6117@nanako3.lavabit.com>
+References: <4888144E.8090300@sneakemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 24 10:28:18 2008
+To: =?ISO-8859-1?Q?=22Peter_Valdemar_M=F8rch_=28Lists=29=22?= 
+	<4ux6as402@sneakemail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 10:31:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLwBG-0003GE-RV
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 10:28:11 +0200
+	id 1KLwDz-00044B-Tg
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 10:31:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751430AbYGXI1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 04:27:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751431AbYGXI1I
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 04:27:08 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:45564 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751357AbYGXI1F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 04:27:05 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1338417fgg.17
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 01:27:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=3awUi5cvIvFBCHQyXRuD5o5/6kFW5nNomrbue/gAukA=;
-        b=CO5MRAjFz2/7UGJODgH2WNpFngdVQ1xVfR7YI8DNak7DKcNw+YV0disX1+ccaP3GSA
-         1jM9ECxk5z/LdqgAhaus1DPEaivwS4GbZAPQBkF+ofUa3/pTqsdYv5p8Cc8SKWLLb3LK
-         bjSmVt+5nZ5/vOflqnZS0DSyJg8zCkJofjwl4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=dYnWcZjUeNQQjgSWN8MMFzq9HHyMz3y1baekFOyhE4MhA8cyRfKmiI0dwmr4FL0l49
-         d6gbecCzAzG4j3YjdvvDeHca7/b4C+1f/9TLw45p4uOVbRkp/e09oJXLGKSfcnlpgzQ1
-         fxpS8cbMRYf5AxehBocpohTm3z9GyxYds/I8A=
-Received: by 10.86.49.13 with SMTP id w13mr625993fgw.30.1216888023962;
-        Thu, 24 Jul 2008 01:27:03 -0700 (PDT)
-Received: by 10.86.91.2 with HTTP; Thu, 24 Jul 2008 01:27:03 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0807231753240.8986@racer>
-Content-Disposition: inline
+	id S1751149AbYGXI3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 04:29:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbYGXI3o
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 04:29:44 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:36915 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751040AbYGXI3n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 04:29:43 -0400
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id D6CE2C8889;
+	Thu, 24 Jul 2008 03:29:33 -0500 (CDT)
+Received: from nanako3.lavabit.com (212.62.97.20)
+	by lavabit.com with ESMTP id 67RX9NLSKK6X; Thu, 24 Jul 2008 03:29:42 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=Bw2DhxKtjW+K5TMpYyOE4xTI6hx791nCK3Ghnkbg3l+KUBZux4trMg788iOjdniT9ZfwVWWcrubnBHqs3Dmv2dFiqzKiZ6p/DxbyTDSy7lFqxgNNKkzhl9Ok0ozCE8g8/rzKXbuGQUHXUW2N3ihSbhCf0CYdNn62mquouAqyEFg=;
+  h=From:Subject:To:Cc:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Quoting "Peter Valdemar Mrch (Lists)"  <4ux6as402@sneakemail.com>;
+In-Reply-To: <4888144E.8090300@sneakemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89850>
 
-On 7/23/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
->
->  On Wed, 23 Jul 2008, Nguyen Thai Ngoc Duy wrote:
->
->  > On 7/23/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->  >
->
-> > >  On Wed, 23 Jul 2008, Nguyen Thai Ngoc Duy wrote:
->  > >
->  > >  > So in short, sparse prefix will be stored in config,
->  > >  > core.sparsecheckout.
->  > >
->  > > Do you really think the prefix should be stored anywhere else than the
->  > > index?
->  > >
->  > > With core.sparseCheckout you have to introduce a _sh*tload_ of config
->  > > loaders.
->  > >
->  > > And with core.sparseCheckout you are at the whim of the user, since
->  > > .git/config is _supposed_ to be user-editable.
->  > >
->  > > From a logical point of view, I'd say that the sparse prefix has
->  > > nothing to do with the "configuration" of the local repository.
->  >
->  > Well, whatever place. I chose .git/config because I did not want to
->  > introduce a new config place. But then how about .git/sparsecheckout?
->
->
-> No, I did mean the index.  This is an attribute of the index: either it is
->  sparsely checked out or not.  You can even have multiple indices
->  (switching between them by setting GIT_INDEX_FILE) which have different
->  prefixes.
+Quoting "Peter Valdemar Mrch (Lists)"  <4ux6as402@sneakemail.com>:
 
-I don't think so. It's a mask for workdir, right? If you save it it
-index, you can switch index and the prefix as well, but workdir only
-has several subtrees that do not fit any other prefix than the
-original prefix.
+> The '-trailing-space' syntax to disable the trailing-space setting is
+> not obvious and not documented as far as I can see. I would have
+> assumed a value of '' would disable it.
+>
+> Is there a documentation bug here? If so, I suggest this patch. I
+> didn't find anywhere else where the '-setting' syntax was used to
+> disable something.
 
->  Ciao,
->  Dscho "who seems to recall that the first series was much less intrusive"
+Doesn't gitattributes(5) describe the overall syntax in detail?
 
-The first series only took care of index, so yes it's simpler.
 -- 
-Duy
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
