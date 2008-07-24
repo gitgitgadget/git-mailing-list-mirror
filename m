@@ -1,130 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2008
-Date: Thu, 24 Jul 2008 11:52:28 +0200
-Message-ID: <200807241152.29465.jnareb@gmail.com>
-References: <200807230325.04184.jnareb@gmail.com> <200807240130.31649.jnareb@gmail.com> <20080723235359.GB12754@leksak.fem-net>
+From: "Lars Hjemli" <lh@elementstorage.no>
+Subject: Re: [PATCH] builtin-branch.c: optimize --merged and --no-merged
+Date: Thu, 24 Jul 2008 12:03:25 +0200
+Message-ID: <8c5c35580807240303o21596dbbrfca9b9fd0991d91a@mail.gmail.com>
+References: <7vtzeg9rhh.fsf_-_@gitster.siamese.dyndns.org>
+	 <20080724172929.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Thu Jul 24 11:54:04 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Nanako Shiraishi" <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 12:04:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLxWJ-0006xW-R2
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 11:54:00 +0200
+	id 1KLxgY-0001hi-4R
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 12:04:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751605AbYGXJwv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 05:52:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751630AbYGXJwv
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 05:52:51 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:17497 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751212AbYGXJwu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 05:52:50 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so1038170nfc.21
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 02:52:47 -0700 (PDT)
+	id S1751667AbYGXKD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 06:03:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751544AbYGXKD1
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 06:03:27 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:44144 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751426AbYGXKD0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 06:03:26 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so2798936rvb.1
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 03:03:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=6/oGglxpihQ+X2q62cceGvvioSB8YULB4T2BaMChkcA=;
-        b=PWMWYQXeXR3/YMAZJv3uCEyuFEt3lqrKuGrLMBs+GJMtcuiqgdbnWot/MuOowpeTyS
-         KOXa4BifyRHJ3HSS0SjrzySA/kUvTj240s6fp9clFEivbghts1CNNpDXQ9XvM2t1pLP6
-         8vMd74MmXURXQp+DaCTI0gzSe3I2wLhdj7WTw=
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=lxSy4vdk2NAfbLSgo1K06MtJZ4p8EjvRpX8+JCGXc28=;
+        b=wIAXZcdh27QEuF/TFRTxIScy9pEbM7BHUwoDbP44NeWF9OYcZmJJj4tnaut0hzvfij
+         6Ou71CHl2LLnodzXOLS6j5lE85hhKeo2q6P0ITYIw+U2BnkEm6/5+FreHukAQPqjZvtB
+         p5mqvOFF61uzD4T1BuN5tHUZ/if/9peX2C+mk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=F/Q/wsR1+rkGShEha5vHboQ/rH+xMVuezaDzKeHjRUmQnOX7Rgq6Mwrj/E/aK0ZRnU
-         hSlR1nja+CChvNJUma6hwZziJrGEzqG3jyEfm+gWSpUm3ZtjS9HIrVfLIcC7qu2tDv7o
-         4pNZzmnymJc8UhU5BWDME18kqiMcZv2zDsqjs=
-Received: by 10.210.52.9 with SMTP id z9mr104785ebz.12.1216893167172;
-        Thu, 24 Jul 2008 02:52:47 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.208.47])
-        by mx.google.com with ESMTPS id c4sm22619395nfi.13.2008.07.24.02.52.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 24 Jul 2008 02:52:46 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080723235359.GB12754@leksak.fem-net>
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=CWwfVh8NkLUamvXW2+US0i6cuedv0EzHxsOTA4BSfhOlPDofhfCU1L90DHm/T0wbZX
+         DBsfhXSiE6YzSgPdAuMw34DjwF9tqPc91Moo4SKufBoJKFhgSLI79MYIW60hHaKpnyrW
+         zYgpHP/x0+jvQb7BEgBRcmyOw5kF6FOXkiE38=
+Received: by 10.141.86.14 with SMTP id o14mr23285rvl.227.1216893805642;
+        Thu, 24 Jul 2008 03:03:25 -0700 (PDT)
+Received: by 10.141.172.11 with HTTP; Thu, 24 Jul 2008 03:03:25 -0700 (PDT)
+In-Reply-To: <20080724172929.6117@nanako3.lavabit.com>
 Content-Disposition: inline
+X-Google-Sender-Auth: d265de50afb72015
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89860>
 
-On Tue, 24 July 2008, Stephan Beyer wrote:
-> Jakub Narebski wrote:
->> Dnia =C5=9Broda 23. lipca 2008 16:54, Robin Rosenberg napisa=C5=82
->>> onsdagen den 23 juli 2008 15.18.40 skrev Johannes Schindelin:
->>>> On Wed, 23 Jul 2008, Jakub Narebski wrote:
->>>>> On Wed, 23 Jul 2008, Johannes Schindelin wrote:
->>>>>> On Wed, 23 Jul 2008, Jakub Narebski wrote:
->>>>>>=20
->>>>>>>    04. Which programming languages you are proficient with?
->>>>>>>        (The choices include programming languages used by git)
->>>>>>>        (zero or more: multiple choice)
->>>>>>>      - C, shell, Perl, Python, Tcl/Tk
->>>>>>>      + (should we include other languages, like C++, Java, PHP,
->>>>>>>         Ruby,...?)
-> [...]
->>=20
->> The idea is, I think, to know what languages people could contribute
->> to Git; see analysis of this question at GitSurvey2007 page on git w=
-iki:
->>   http://git.or.cz/gitwiki/GitSurvey2007#head-ecb5564d71e4093e2e93e5=
-08380407a26dbcbdea
->=20
-> Oha, is this a Git User's Survey or a Git Potential Contributor's Sur=
-vey?
-> I thought this is some kind of demographic question about the "progra=
-mming
-> background" of the user.
+On Thu, Jul 24, 2008 at 10:29 AM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
+> How is --merged different from --contains?
 
-Well, truth to be told it is both.  We try here to kill two birds with
-one stone: both to have 'programming background' of Git users, and get
-to know which parts of code can have many contributors, and which
-could have troubles attracting contributors because of the language
-they are written in (which is visible in the choice of programming
-languages in 2007 survey).
-=20
-If we want to provide larger number of programming languages to
-chose from (with "other" as fallback), we could take for example
-top 10 from the TIOBE index, or similar sites:
-  http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html (for=
- July 2008)
-  http://lui.arbingersys.com/index.html (Language Usage Indicators, Jul=
- 10, 2008)
+--merged only shows the branches which are contained by (reachable
+from) a specific commit
+--contains only shows the branches which contains (descends from) a
+specific commit
 
-This would bring 'Visual Basic', and perhaps 'Assembly' and 'Lisp'
-to the list of choices.
+And finally, --no-merged only shows the branches which are not
+contained by a specific commit
 
->> And of course "I am not programmer" response...
->=20
-> This doesn't make sense, does it?
->
-> I know that there are non-programmer's who use git for there
-> configuration files and other non-programming track files, but
-> this looks somehow wrong in this survey.
-
-You can manage documents and like (especially written in some
-formatting language), you can manage web pages, you can also
-use git to only _track_ some projects even if you are not
-a programmer yourself.
-
-See for example
-  http://www.kieranhealy.org/blog/archives/2008/06/29/git-bibs/
-  http://journal.code4lib.org/articles/86
-  http://www.scienceforums.net/forum/showthread.php?t=3D33830
-  http://www.secomputing.co.uk/2008/06/engineering-log-book.html
-
---=20
-Jakub Narebski
-Poland
+--
+larsh
