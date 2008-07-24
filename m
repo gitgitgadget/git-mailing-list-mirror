@@ -1,69 +1,78 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: git reset musings
-Date: Thu, 24 Jul 2008 20:51:14 +0200
-Message-ID: <bd6139dc0807241151p177bb8eey6ff0fbd0a5d9008@mail.gmail.com>
-Reply-To: sverre@rabbelier.nl
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: sparse fetch, was Re: [PATCH 08/12] git-clone: support --path
+	to do sparse clone
+Date: Thu, 24 Jul 2008 20:53:32 +0200
+Message-ID: <20080724185332.GQ32184@machine.or.cz>
+References: <20080723145718.GA29134@laptop> <20080724171952.GB21043@sigill.intra.peff.net> <alpine.DEB.1.00.0807241837441.8986@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailinglist" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 24 20:52:18 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	Nguy?n =?iso-8859-2?Q?Th=E1i?= Ng?c Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 24 20:54:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM5vD-00067N-N5
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 20:52:16 +0200
+	id 1KM5xU-0007Be-Eq
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 20:54:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752690AbYGXSvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 14:51:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752662AbYGXSvP
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 14:51:15 -0400
-Received: from wf-out-1314.google.com ([209.85.200.171]:25641 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752537AbYGXSvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 14:51:14 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so3596020wfd.4
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 11:51:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=KCcOKLBEDy4OC2xscbRk2eSOAd8tReWOmQzREE5FAxI=;
-        b=bc5RDB4KLJn/7kVTdRAKOoff9plO7BmlSOTXUxOdaFXZ/msM+JxILxSo4slUofUmY0
-         I824Y4BcZHM1RqpDYAoSSt5xayg42N/nnKafUP6WjB72zfQP+FWfm0D28CpnDNZtG672
-         VeZLERPkTBCRq90Xf/cIoMDuc9IHihQhLZmyU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=l9EToaxjs+z69WrziztD0tNlwzKZr4sS6dRov1+pecsZddfhYNEHrY5AXwT1qwbRKv
-         n6H+OBDmeAxfwMmJxqqcunjnU0PwI+/szklOb47BkqT7R4VRIf1TtzBXOZ8kgkfKNPXM
-         yF5/STK21M9Nxfw+Vpe7E3GjyESmd/o7XsVAo=
-Received: by 10.143.42.6 with SMTP id u6mr215353wfj.140.1216925474494;
-        Thu, 24 Jul 2008 11:51:14 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Thu, 24 Jul 2008 11:51:14 -0700 (PDT)
+	id S1752796AbYGXSxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 14:53:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752543AbYGXSxg
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 14:53:36 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:54580 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752022AbYGXSxf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 14:53:35 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 04FAD393A2E4; Thu, 24 Jul 2008 20:53:33 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807241837441.8986@racer>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89939>
 
-Heya,
+  Hi,
 
-After doing "git reset" you always get a whole bunch of lines saying
-"foo: locally modified". Now I have a "OMG?!" reaction to that every
-so often, where for a brief moment I think something went wrong. A bit
-silly surely, but I suspect that some other users (especially those
-new to git) have had similar reactions. Maybe it would be worth
-letting the user know what's going on? E.g., before suddenly spitting
-out an un-asked-for status report, let the user know that a status
-report is following? Why not just do a 'git status' instead of this
-we-hacked-up-a-quick-status-listing thing?
+On Thu, Jul 24, 2008 at 06:41:03PM +0100, Johannes Schindelin wrote:
+> On Thu, 24 Jul 2008, Jeff King wrote:
+> 
+> > As a user, I would expect "sparse clone" to also be sparse on the 
+> > fetching. That is, to not even bother fetching tree objects that we are 
+> > not going to check out. But that is a whole other can of worms from 
+> > local sparseness, so I think it is worth saving for a different series.
+> 
+> I think this is not even worth of a series.  Sure, it would have benefits 
+> for those who want sparse checkouts.  But it comes for a high price on 
+> everyone else:
+> 
+> - security issues (you'd need to open the git protocol to give you 
+>   something else than a ref, _including_ refs that were deleted)
+> 
+> - performance issues (the server would have to do a lot more, faking 
+>   commits, or in the alternative serving a gazillion more sessions if the 
+>   client does the reconstruction)
+
+  I don't follow how these two issues arise, if the server will do the
+pruning for you. It will just skip entering some tree objects when doing
+object traversal; why opening the git protocol or faking commits? This
+would be a simple extra capability in the protocol.
+
+  One question is what to do with delta chains including unwanted
+objects, but I think that given the objects' associativity for delta
+chains, this shouldn't be huge practical issues and it could be
+affordable in principle to include even unwanted objects.
+
+> ... and I am sure there are tons more issues.
+
+  I do agree on this. :-)
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+				Petr "Pasky" Baudis
+As in certain cults it is possible to kill a process if you know
+its true name.  -- Ken Thompson and Dennis M. Ritchie
