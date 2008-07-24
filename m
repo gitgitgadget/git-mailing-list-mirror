@@ -1,124 +1,130 @@
-From: "marc zonzon" <marc.zonzon@gmail.com>
-Subject: BUG: fetch incorrect interpretation of globing patterns in refspecs
-Date: Thu, 24 Jul 2008 09:07:21 +0200
-Message-ID: <71295b5a0807240007k246973abj1897895d0d67bb6c@mail.gmail.com>
+From: "Lars Hjemli" <lh@elementstorage.no>
+Subject: Re: [PATCH] builtin-branch.c: optimize --merged and --no-merged
+Date: Thu, 24 Jul 2008 09:16:22 +0200
+Message-ID: <8c5c35580807240016y75b69f69h4af47844f57f4539@mail.gmail.com>
+References: <20080723130518.GA17462@elte.hu> <20080723135621.GJ22606@neumann>
+	 <20080723140441.GA9537@elte.hu>
+	 <7vy73seb2p.fsf@gitster.siamese.dyndns.org>
+	 <7vtzeg9rhh.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 24 09:08:25 2008
+Cc: "Ingo Molnar" <mingo@elte.hu>,
+	"=?UTF-8?Q?SZEDER_G=C3=A1bor?=" <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 09:17:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLuw4-0002Lv-El
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 09:08:24 +0200
+	id 1KLv4k-0004kw-VZ
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 09:17:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750744AbYGXHHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 03:07:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750737AbYGXHHY
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 03:07:24 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:1896 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750710AbYGXHHX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 03:07:23 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so1020922nfc.21
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 00:07:21 -0700 (PDT)
+	id S1750817AbYGXHQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 03:16:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750737AbYGXHQX
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 03:16:23 -0400
+Received: from rv-out-0506.google.com ([209.85.198.224]:32109 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750710AbYGXHQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 03:16:22 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so2744873rvb.1
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 00:16:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=7GLnup86OcZNV0W5yUFZM9NFFDK0Er2jWwofTc7ZML8=;
-        b=uMdYNIl5dOEUPa5ZetActhmiCMnbwlyYrNGta7m+5e11DKYtgWFRtVqEO9tLDjh2Sz
-         sPrLBJoCqEGZ1o419BV1Z6JJUMJMWfKIOE8s15mJYVlp9zZP1F506P/eFIYkNNN1jSoK
-         fKTQuqeGJ4FlsuYLONGPOFfJcsMhWRrxy+Ey8=
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=a7IzD9UuFnDRezhEaN/4svzg/weQ3o4sJmqdJ2o/TSE=;
+        b=OJ8hSEadOAacisTqpxT5W25HBH3yCUiI3667cjyqM8dQUVz4quoqKqm94P4LMRfaKT
+         51k1fH8spRxD3SvZoan1YR7iI1nDpcWHHEqqKnHR2rKo7VazfTNWqfccGHt3WAowx3fD
+         BKkkaj9Suiva7iGwZBxUf35OtL30TY23jPgno=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=clu7dLsOcqtMHCYxNIfTXLt6SZlfh3Qn8FWryOnrP1X0sOC7gH4i6Z3yojzakKKHlq
-         FZGAUMsSn21ts0g/rASgmTII+9QJ+dl1tLjbp/BH0/MzLruLJNegFhKRw3UvOl05GP0A
-         gMORi9JS4jsh2zR+hvQUg6r432+x0d1p2zaTU=
-Received: by 10.210.56.10 with SMTP id e10mr901006eba.20.1216883241351;
-        Thu, 24 Jul 2008 00:07:21 -0700 (PDT)
-Received: by 10.210.24.1 with HTTP; Thu, 24 Jul 2008 00:07:21 -0700 (PDT)
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=wzolBtYq6TM2JjRBbaoSFQrPfr967okBm9i00j9giIRJN53XOAqJroMtkxvv9T3BGH
+         qh674AMCBGUmBvDK7M1J60MlVdE+QJSiOedlaHMWbeHjxUgKlGdb3OP58pym7H1Z+BW4
+         bAkZY06r2WYMjnK6o6IageUv+Yyuz0e4Zs0kI=
+Received: by 10.141.171.6 with SMTP id y6mr305720rvo.85.1216883782247;
+        Thu, 24 Jul 2008 00:16:22 -0700 (PDT)
+Received: by 10.141.172.11 with HTTP; Thu, 24 Jul 2008 00:16:22 -0700 (PDT)
+In-Reply-To: <7vtzeg9rhh.fsf_-_@gitster.siamese.dyndns.org>
 Content-Disposition: inline
+X-Google-Sender-Auth: 41e4bf965c817c39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89843>
 
-Helo
+On Thu, Jul 24, 2008 at 12:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Instead, we can let the revision machinery traverse the history as if we
+> are running:
+>
+>    $ git rev-list --branches --not $commit
+>
+> by queueing the tips of branches we encounter as positive refs (this
+> mimicks the "--branches" option in the above command line) and then
+> appending the merge_filter_ref commit as a negative one, and finally
+> calling prepare_revision_walk() to limit the list..
 
-I have a repository repo1 with four branches b_first, b_second,
-b/third,  b/fourth.
-In a repository repo2 I put a remote config with: fetch =
-+refs/heads/b/*:refs/remotes/b/* and I expect a fetch to apply to both
-b/third and  b/fourth.
-But fetch will also catch b_first and b_second even if they don't
-match the globing pattern.
+Nice.
 
-I give the full script to reproduce the bug.
 
-Marc
+> @@ -213,6 +211,7 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
+>  {
+>        struct ref_list *ref_list = (struct ref_list*)(cb_data);
+>        struct ref_item *newitem;
+> +       struct commit *commit;
+>        int kind;
+>        int len;
+>        static struct commit_list branch;
 
----------------------------------------------------------------------------------
-Script started on Thu 24 Jul 2008 08:23:26 AM CEST
-$ mkdir repo1
-$ cd repo1
-$ git init
-Initialized empty Git repository in /shared/home/marc/gits/testbed/repo1/.git/
-$ echo "master branch" > README
-$ git add README
-$ git commit README -m'initial commit in master'
-Created initial commit 9ebc74c: initial commit in master
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 README
-$ git checkout -b  b_first
-Switched to a new branch "b_first"
-$ echo "branch b_first" >| README
-$ git add README
-$ git commit README -m'commit in b_first'
-Created commit 40d985a: commit in b_first
- 1 files changed, 1 insertions(+), 1 deletions(-)
-$ git checkout -b b_second
-Switched to a new branch "b_second"
-$ echo "branch b_second" >| README
-$ git add README
-$ git commit README -m'commit in b_second'
-Created commit 661fe61: commit in b_second
- 1 files changed, 1 insertions(+), 1 deletions(-)
-$ git checkout -b b/third master
-Switched to a new branch "b/third"
-$  echo "branch b/third" >| README
-$ git add README
-$ git commit README -m'commit in b/third'
-Created commit 4f02216: commit in b/third
- 1 files changed, 1 insertions(+), 1 deletions(-)
-$ git checkout -b b/fourth  master
-Switched to a new branch "b/fourth"
-$ echo "branch b/fourth" >| README
-$ git add README
-$ git commit README -m'commit in b/fourth'
-Created commit 068f9da: commit in b/fourth
- 1 files changed, 1 insertions(+), 1 deletions(-)
-$ cd ..
-$ mkdir repo2
-$ cd repo2
-$ git init
-Initialized empty Git repository in /shared/home/marc/gits/testbed/repo2/.git/
-$ git config --add remote.repo1.url ../repo1
-$ git config --add remote.repo1.fetch '+refs/heads/b/*:refs/remotes/b/*'
-$ git fetch -v repo1
-warning: no common commits
-remote: Counting objects: 15, done.
-remote: Compressing objects: 100% (5/5), done.
-remote: Total 15 (delta 2), reused 0 (delta 0)
-Unpacking objects: 100% (15/15), done.
-From ../repo1
- * [new branch]      b/fourth   -> b/fourth
- * [new branch]      b/third    -> b/third
- * [new branch]      b_first    -> b_first
- * [new branch]      b_second   -> b_second
+I think you can drop the 'branch' here.
+
+
+> @@ -239,12 +242,8 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
+>                branch.item = lookup_commit_reference_gently(sha1, 1);
+>                if (!branch.item)
+>                        die("Unable to lookup tip of branch %s", refname);
+
+..and here.
+
+
+-               if (merge_filter == SHOW_NOT_MERGED &&
+-                   has_commit(merge_filter_ref, &branch))
+-                       return 0;
+-               if (merge_filter == SHOW_MERGED &&
+-                   !has_commit(merge_filter_ref, &branch))
+-                       return 0;
++               add_pending_object(&ref_list->revs,
++                                  (struct object *)branch.item, refname);
+
+
+..and use 'commit' instead of 'branch.item' here.
+
+
+> @@ -305,7 +304,13 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+>  {
+>        char c;
+>        int color;
+> -       struct commit *commit;
+> +       struct commit *commit = item->commit;
+> +
+> +       if (merge_filter != NO_FILTER) {
+> +               int is_merged = !!(item->commit->object.flags & UNINTERESTING);
+> +               if (is_merged != (merge_filter == SHOW_MERGED))
+> +                       return;
+> +       }
+
+
+A possible issue here is that `git branch -v --[no]-merged` might use
+a wrong maxwidth, but I'm not sure if it's even worth fixing.
+
+Thanks for cleaning up my mess.
+--
+larsh
