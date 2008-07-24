@@ -1,59 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git status in clean working dir
-Date: Thu, 24 Jul 2008 12:54:55 -0400
-Message-ID: <20080724165455.GD20816@sigill.intra.peff.net>
-References: <0ttzeirft8.wl%bremner@pivot.cs.unb.ca> <7vy73ur6pz.fsf@gitster.siamese.dyndns.org> <7vtzeir68z.fsf@gitster.siamese.dyndns.org> <D42305E3-82DA-46C1-B55F-74AD9AD48197@develooper.com>
+From: Jonathan Nieder <jrnieder@uchicago.edu>
+Subject: [PATCH v2] document that git-tag can tag more than heads
+Date: Thu, 24 Jul 2008 11:55:25 -0500 (CDT)
+Message-ID: <Pine.GSO.4.62.0807241148210.14325@harper.uchicago.edu>
+References: <Pine.GSO.4.62.0807240000470.23113@harper.uchicago.edu>
+ <87prp3652z.fsf@Astalo.kon.iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	David Bremner <bremner@unb.ca>
-To: Ask =?utf-8?B?QmrDuHJu?= Hansen <ask@develooper.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 18:56:06 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Kalle Olavi Niemitalo <kon@iki.fi>
+X-From: git-owner@vger.kernel.org Thu Jul 24 18:56:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM46g-00077X-R0
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 18:55:59 +0200
+	id 1KM47J-0007Oa-48
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 18:56:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752205AbYGXQy5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 12:54:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752026AbYGXQy5
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 12:54:57 -0400
-Received: from peff.net ([208.65.91.99]:3442 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751952AbYGXQy5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 12:54:57 -0400
-Received: (qmail 26012 invoked by uid 111); 24 Jul 2008 16:54:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 24 Jul 2008 12:54:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Jul 2008 12:54:55 -0400
-Content-Disposition: inline
-In-Reply-To: <D42305E3-82DA-46C1-B55F-74AD9AD48197@develooper.com>
+	id S1752250AbYGXQzh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 12:55:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752245AbYGXQzh
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 12:55:37 -0400
+Received: from smtp02.uchicago.edu ([128.135.12.75]:55916 "EHLO
+	smtp02.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752211AbYGXQzg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 12:55:36 -0400
+Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
+	by smtp02.uchicago.edu (8.13.8/8.13.8) with ESMTP id m6OGtPeW030590;
+	Thu, 24 Jul 2008 11:55:25 -0500
+Received: from localhost (jrnieder@localhost)
+	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m6OGtPlq014662;
+	Thu, 24 Jul 2008 11:55:25 -0500 (CDT)
+X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
+In-Reply-To: <87prp3652z.fsf@Astalo.kon.iki.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89911>
 
-On Wed, Jul 23, 2008 at 11:56:48PM -0700, Ask Bj=C3=B8rn Hansen wrote:
+After looking the git-tag manpage, someone on #git wondered how
+to tag a commit that is not a branch head.  This patch changes
+the synopsis to say "<commit> | <object>" instead of "<head>" to
+address his question.
 
->> (2) Then why are we even allowing to configure the plumbing to page?
->
-> I don't have an opinion on the the appropriateness of paging various =
-=20
-> commands, but to solve the problem of scripts getting tripped up by t=
-he=20
-> paging, couldn't the plumping check if STDOUT is a tty and only do th=
-e=20
-> paging if so?
->
-> (In Perl "page_output(...) if $pager_configured and -t STDOUT")
+Samuel Bronson had the idea of putting "<commit> | <object>"
+for "<object>" because most tags point to commits (and for the
+rest of the manpage, all tags point to commits).
 
-We already do this, so "git status >/dev/null" produces the correct exi=
-t
-code. But scripts don't necessarily redirect stdout.
+Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
+---
+ Kalle Olavi Niemitalo wrote:
 
--Peff
+ > git-tag does not automatically dereference tag objects that
+ > point to a commit.  So if you want to use "|", then it should be
+ > "<commit> | <object>".
+
+ Nice catch -- thanks.
+
+ Documentation/git-tag.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index b8dc88f..046ab35 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -9,7 +9,8 @@ git-tag - Create, list, delete or verify a tag object signed with GPG
+ SYNOPSIS
+ --------
+ [verse]
+-'git tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]  <name> [<head>]
++'git tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]
++	<name> [<commit> | <object>]
+ 'git tag' -d <name>...
+ 'git tag' [-n[<num>]] -l [<pattern>]
+ 'git tag' -v <name>...
+-- 
+1.5.6.3.549.g8ca11
