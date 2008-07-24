@@ -1,78 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH 00/12] Sparse checkout
-Date: Thu, 24 Jul 2008 13:42:49 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807241340490.8986@racer>
-References: <20080723145518.GA29035@laptop>  <alpine.DEB.1.00.0807231713280.8986@racer>  <fcaeb9bf0807230921m114f5ae0ybfec4917432d6dc7@mail.gmail.com>  <alpine.DEB.1.00.0807231753240.8986@racer> <fcaeb9bf0807240127p5226822atcd4a0711f1bc9c5c@mail.gmail.com>
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: Re: [PATCH] Rename ".dotest/" to ".git/rebase" and ".dotest-merge"
+ to "rebase-merge"
+Date: Thu, 24 Jul 2008 14:44:40 +0200
+Message-ID: <48887938.3060406@free.fr>
+References: <73fd69b50807151408i6a916da6p7b89fe81e65fc717@mail.gmail.com> <20080715212211.GL6244@leksak.fem-net> <487D1B3D.70500@lsrfire.ath.cx> <alpine.DEB.1.00.0807160245440.2841@eeepc-johanness> <20080716012619.GM8185@mit.edu> <7viqv5r637.fsf@gitster.siamese.dyndns.org> <4882454D.2080500@free.fr> <7vd4l9zgmp.fsf@gitster.siamese.dyndns.org> <4884917A.1060005@free.fr> <7vk5fdiheh.fsf@gitster.siamese.dyndns.org> <488722F5.9030602@free.fr> <7v1w1ke9k5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 14:44:23 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Theodore Tso <tytso@mit.edu>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Joe Fiorini <joe@faithfulgeek.org>, git@vger.kernel.org,
+	Jari Aalto <jari.aalto@cante.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 14:46:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM0Ae-0001S9-TU
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 14:43:49 +0200
+	id 1KM0Cg-0002TA-By
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 14:45:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756651AbYGXMms (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 08:42:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756379AbYGXMms
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 08:42:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57201 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753696AbYGXMmr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 08:42:47 -0400
-Received: (qmail invoked by alias); 24 Jul 2008 12:42:46 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp002) with SMTP; 24 Jul 2008 14:42:46 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/gILdg3fPgIL8LNanxN7t45KAbaTskyl2q/gGtLJ
-	ZuEQIYgkF66yF4
-X-X-Sender: gene099@racer
-In-Reply-To: <fcaeb9bf0807240127p5226822atcd4a0711f1bc9c5c@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1754356AbYGXMop convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 08:44:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753275AbYGXMoo
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 08:44:44 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:54349 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751479AbYGXMoo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 08:44:44 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 47EA412B6E1;
+	Thu, 24 Jul 2008 14:44:42 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 098B712B6CF;
+	Thu, 24 Jul 2008 14:44:40 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <7v1w1ke9k5.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89876>
 
-Hi,
+Junio C Hamano a =C3=A9crit :
+> Olivier Marin <dkr+ml.git@free.fr> writes:
+>=20
+>> Junio C Hamano a =C3=A9crit :
+>>>> diff --git a/git-am.sh b/git-am.sh
+>>> ...
+>>>> @@ -202,8 +202,15 @@ then
+>>> ...
+>>>> +	case "$skip,$abort" in
+>>>> +	t,)
+>>>> +		git rerere clear
+>>>> +		git read-tree --reset -u HEAD HEAD
+>>>> +		orig_head=3D$(cat "$GIT_DIR/ORIG_HEAD")
+>>>> +		git reset HEAD
+>>>> +		git update-ref ORIG_HEAD $orig_head
+>>>> +		;;
+>>> ...
+>> I add reset to unstage paths with no conflict that are left behind.
+>=20
+> Does removing the last three lines (1) change the behaviour?  (2) bre=
+ak any test?
+>=20
+> If the answers are "Yes and No", we would need a few more tests in th=
+e
+> testsuite.
 
-On Thu, 24 Jul 2008, Nguyen Thai Ngoc Duy wrote:
+The answers are "Yes and No" and test case update follow.
 
-> On 7/23/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> >  On Wed, 23 Jul 2008, Nguyen Thai Ngoc Duy wrote:
-> >
-> >  > On 7/23/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> >  >
-> >  > > And with core.sparseCheckout you are at the whim of the user, 
-> >  > > since .git/config is _supposed_ to be user-editable.
-> >  >
-> >  > Well, whatever place. I chose .git/config because I did not want to 
-> >  > introduce a new config place. But then how about 
-> >  > .git/sparsecheckout?
-> >
-> > No, I did mean the index.  This is an attribute of the index: either 
-> > it is sparsely checked out or not.  You can even have multiple indices 
-> > (switching between them by setting GIT_INDEX_FILE) which have 
-> > different prefixes.
-> 
-> I don't think so. It's a mask for workdir, right? If you save it it 
-> index, you can switch index and the prefix as well, but workdir only has 
-> several subtrees that do not fit any other prefix than the original 
-> prefix.
+-- >8 --
+=46rom: Olivier Marin <dkr@freesurf.fr>
+[PATCH] update test case to protect am --skip behaviour
 
-Ah, you adroitly avoided addressing the issue that the user can change the 
-prefix without the index ever noticing.
+Signed-off-by: Olivier Marin <dkr@freesurf.fr>
+---
+ t/t4151-am-abort.sh |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-Well, in any case, if you do not agree that the prefix is really an 
-attribute of the index, then there is nothing else I have to say on this 
-series.
-
-Ciao,
-Dscho
+diff --git a/t/t4151-am-abort.sh b/t/t4151-am-abort.sh
+index f45ab0a..7d86cdf 100755
+--- a/t/t4151-am-abort.sh
++++ b/t/t4151-am-abort.sh
+@@ -17,6 +17,8 @@ test_expect_success setup '
+ 	for i in 2 3 4 5 6
+ 	do
+ 		echo $i >>file-1 &&
++		echo $i >otherfile-$i &&
++		git add otherfile-$i &&
+ 		test_tick &&
+ 		git commit -a -m $i || break
+ 	done &&
+--=20
+1.6.0.rc0.44.gd618.dirty
