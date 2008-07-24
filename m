@@ -1,110 +1,105 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2008
-Date: Thu, 24 Jul 2008 10:24:11 +0200
-Message-ID: <200807241024.11900.jnareb@gmail.com>
-References: <200807230325.04184.jnareb@gmail.com> <20080723145455.GS2925@dpotapov.dyndns.org> <20080723170120.GC17648@leksak.fem-net>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [RFC PATCH 00/12] Sparse checkout
+Date: Thu, 24 Jul 2008 15:27:03 +0700
+Message-ID: <fcaeb9bf0807240127p5226822atcd4a0711f1bc9c5c@mail.gmail.com>
+References: <20080723145518.GA29035@laptop>
+	 <alpine.DEB.1.00.0807231713280.8986@racer>
+	 <fcaeb9bf0807230921m114f5ae0ybfec4917432d6dc7@mail.gmail.com>
+	 <alpine.DEB.1.00.0807231753240.8986@racer>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Thu Jul 24 10:25:28 2008
+Cc: git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 24 10:28:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLw8W-00025o-Dw
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 10:25:20 +0200
+	id 1KLwBG-0003GE-RV
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 10:28:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751221AbYGXIYU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 04:24:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbYGXIYT
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 04:24:19 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:58182 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751040AbYGXIYS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 04:24:18 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so572396ugf.16
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 01:24:17 -0700 (PDT)
+	id S1751430AbYGXI1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 04:27:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751431AbYGXI1I
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 04:27:08 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:45564 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751357AbYGXI1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 04:27:05 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1338417fgg.17
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 01:27:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=f9LQ5KoTjMYxEQfPy07na+ZnBDYeZdTBy+4FFeF1ArM=;
-        b=YGt6szVfsmx7gBDlAOyxyX0IxDoQG+O5dC7B9nTVVGXOOZJeqiQ1fdTOsi6HIx0w9z
-         1EegD343XrQ34lDpitxxBR/P7xhk/wDc+W1M3ehwBBRZsfaJORGnlLLCnNvtB8LUor4Q
-         b/IwYQ5RYZqwMR7QyJMRBkVMTIMpOQIYIjFJs=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=3awUi5cvIvFBCHQyXRuD5o5/6kFW5nNomrbue/gAukA=;
+        b=CO5MRAjFz2/7UGJODgH2WNpFngdVQ1xVfR7YI8DNak7DKcNw+YV0disX1+ccaP3GSA
+         1jM9ECxk5z/LdqgAhaus1DPEaivwS4GbZAPQBkF+ofUa3/pTqsdYv5p8Cc8SKWLLb3LK
+         bjSmVt+5nZ5/vOflqnZS0DSyJg8zCkJofjwl4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=Q66AxXhpSt4mjiUMkAqJduUZBx22a9dju/W8i5Lq/oznf2yaS17tK31C82TpXtHX8j
-         RmiLHuEp90/3Me4ubnmRyaKEiKrTH/lt1syA+F64R2GMO8nSxVjCFFf0kC0ciT3KcXN7
-         Ja5JxT8anKRkzuRwLUMDbknhiT06Jm//fUUAQ=
-Received: by 10.66.236.13 with SMTP id j13mr690054ugh.7.1216887856855;
-        Thu, 24 Jul 2008 01:24:16 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.208.47])
-        by mx.google.com with ESMTPS id m1sm3731406ugc.9.2008.07.24.01.24.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 24 Jul 2008 01:24:15 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080723170120.GC17648@leksak.fem-net>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=dYnWcZjUeNQQjgSWN8MMFzq9HHyMz3y1baekFOyhE4MhA8cyRfKmiI0dwmr4FL0l49
+         d6gbecCzAzG4j3YjdvvDeHca7/b4C+1f/9TLw45p4uOVbRkp/e09oJXLGKSfcnlpgzQ1
+         fxpS8cbMRYf5AxehBocpohTm3z9GyxYds/I8A=
+Received: by 10.86.49.13 with SMTP id w13mr625993fgw.30.1216888023962;
+        Thu, 24 Jul 2008 01:27:03 -0700 (PDT)
+Received: by 10.86.91.2 with HTTP; Thu, 24 Jul 2008 01:27:03 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0807231753240.8986@racer>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89849>
 
-On Wed, 23 July 2008, Stephan Beyer wrote:
-> Dmitry Potapov wrote:
->> On Wed, Jul 23, 2008 at 11:53:27AM +0200, Johannes Schindelin wrote:
->>> On Wed, 23 Jul 2008, Jakub Narebski wrote:
->>>>
->>>>    11. Why did you choose Git? (if you use Git)
->>>>        What do you like about using Git?
->>>>        (free form, not to be tabulated)
->>> 
->>> Again, to avoid hassles with free-form:
->>> 
->>> 	Mandatory: work, mandatory: open source project I am participating 
->>> 	in, speed, scalability, It's What Linus Uses, Other.
->> 
->> If we move away from free-form, it should be much more choices here.
->> 
->> - Ability to work offline
->> - Cryptographic authentication of history.
->> - Distributed development (pull/push from/to more than one remote repo)
->> - Easy to extend functionality through scripting
->> - Efficient storage model
->> - Elegant design
->> - Fast
->> - Good community support
->> - Rewriting patches before publishing (git rebase, commit --amend)
->> - Scalability (Efficient handling of large projects)
->> - Strong support for non-linear development
->> - Support of wide range of protocols for synchronization.
->> ...
-> 
-> Heh, I can imagine git users reading that survey and thinking
->  "What? Git allows me to rewrite patches before publishing?
->   And it provides cryptographic integrity? Sounds good. *click*"
-> 
-> Nevertheless, the list is fine ;)
-> Perhaps also: "Good reputation".
+On 7/23/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+>
+>  On Wed, 23 Jul 2008, Nguyen Thai Ngoc Duy wrote:
+>
+>  > On 7/23/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>  >
+>
+> > >  On Wed, 23 Jul 2008, Nguyen Thai Ngoc Duy wrote:
+>  > >
+>  > >  > So in short, sparse prefix will be stored in config,
+>  > >  > core.sparsecheckout.
+>  > >
+>  > > Do you really think the prefix should be stored anywhere else than the
+>  > > index?
+>  > >
+>  > > With core.sparseCheckout you have to introduce a _sh*tload_ of config
+>  > > loaders.
+>  > >
+>  > > And with core.sparseCheckout you are at the whim of the user, since
+>  > > .git/config is _supposed_ to be user-editable.
+>  > >
+>  > > From a logical point of view, I'd say that the sparse prefix has
+>  > > nothing to do with the "configuration" of the local repository.
+>  >
+>  > Well, whatever place. I chose .git/config because I did not want to
+>  > introduce a new config place. But then how about .git/sparsecheckout?
+>
+>
+> No, I did mean the index.  This is an attribute of the index: either it is
+>  sparsely checked out or not.  You can even have multiple indices
+>  (switching between them by setting GIT_INDEX_FILE) which have different
+>  prefixes.
 
-Perhaps also: "Because it is popular (hype)", and I hope that
-"Ability to track code movement" would have any takers.  Although
-it is hard to distinguish between 'reasons to choose' and 'favourite
-features' list; let's make it more 'reasons to choose' (like "feature
-rich").
+I don't think so. It's a mask for workdir, right? If you save it it
+index, you can switch index and the prefix as well, but workdir only
+has several subtrees that do not fit any other prefix than the
+original prefix.
 
-"Good documentation", perhaps, too?
+>  Ciao,
+>  Dscho "who seems to recall that the first series was much less intrusive"
+
+The first series only took care of index, so yes it's simpler.
 -- 
-Jakub Narebski
-Poland
+Duy
