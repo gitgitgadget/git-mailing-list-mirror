@@ -1,81 +1,106 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
+From: "Jay Soffian" <jaysoffian@gmail.com>
 Subject: Re: [PATCH 01/12] git-grep: read config
-Date: Thu, 24 Jul 2008 21:12:26 +0200
-Message-ID: <bd6139dc0807241212x4904b7a6x5dc8fa84cca32e18@mail.gmail.com>
+Date: Thu, 24 Jul 2008 15:16:37 -0400
+Message-ID: <76718490807241216qcb587d0k7e0f96c011b545f3@mail.gmail.com>
 References: <20080723145535.GA29053@laptop>
 	 <20080724171519.GA21043@sigill.intra.peff.net>
 	 <fcaeb9bf0807241145y16bb5f94q9f7e3c09c3184782@mail.gmail.com>
 	 <bd6139dc0807241153v5055e922p69a176b5b706f98e@mail.gmail.com>
-	 <fcaeb9bf0807241203yd57e675j964594c501ce59a2@mail.gmail.com>
-Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org
-To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 21:13:40 2008
+Cc: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>,
+	"Jeff King" <peff@peff.net>, git@vger.kernel.org
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Thu Jul 24 21:17:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM6Fk-0007kd-0A
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 21:13:28 +0200
+	id 1KM6Jr-0001CZ-Hn
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 21:17:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752767AbYGXTM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 15:12:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752718AbYGXTM1
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 15:12:27 -0400
-Received: from wf-out-1314.google.com ([209.85.200.170]:28921 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751912AbYGXTM0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 15:12:26 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so3607058wfd.4
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 12:12:26 -0700 (PDT)
+	id S1753195AbYGXTQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 15:16:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753095AbYGXTQk
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 15:16:40 -0400
+Received: from py-out-1112.google.com ([64.233.166.176]:21947 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753083AbYGXTQj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 15:16:39 -0400
+Received: by py-out-1112.google.com with SMTP id p76so2227078pyb.10
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 12:16:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=7qYQSq7zM/tSQCHy9SdKnuGGTsSfFzZBDAsyChkknrM=;
-        b=dYOU9L6+VhfZdwwmuAhIWr4GLxbv6kI8rr6fsC1F0MHgrWUGFzsEM294LoK5yX8hhW
-         LfikZC3c3Vfoo9G7pplycPFpgMHfb7qQ4abZCUJvVTmCKCYMH0eDj7yi5t0CB55MOQLS
-         FTZ7uhNFzsX3bDx3S7dK7GpsgPtjPf9dEnnAI=
+        bh=kPGPSQLl5m9Zo/t/YgmMhimCVLRZLv6Alw6GFFX02XE=;
+        b=lPDOeaJDNgJKt1cUaQ7OsYyaqF7mbLScBfqIXnJ0JsUJ4+OrMjrq9IJayLJD+CQDBN
+         5DtpXhrZLYS8TksDqyNvACjfo+bo71NXZJFewlaQGxlEiXLvylD39+rFcMkE0r0Zh7xj
+         8l3MhpDmiqmb34zJ0Z+PPS1R5BCoaQmISQwyc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=FfkevfR4CKwBxNLsKannysWNtSPo/nerxkrN/ydq5j1v0Oby+3amyapWJmcmi3lHSz
-         ukB8zB3NoOQ8WfAi9I9knKYHi/0SNH8719yxSbSX7XQ1W2qP/kaFqZeH9O4u5O2L9yXq
-         WLeOopwg1GC5Vx9OjHVqRcm1AM42CibhZp3Jc=
-Received: by 10.142.216.9 with SMTP id o9mr230518wfg.0.1216926746316;
-        Thu, 24 Jul 2008 12:12:26 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Thu, 24 Jul 2008 12:12:26 -0700 (PDT)
-In-Reply-To: <fcaeb9bf0807241203yd57e675j964594c501ce59a2@mail.gmail.com>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=SuehGVX0jMEejOUn8MXg7EqYMTqWI9w/MYhUcGOWUw6JhHs7GnN8Acc5/KPpMnXtNb
+         +jV2VMNFBG34q6vJ8/CgXkqThi6yMmJltmtcIJKKuX2zkw9ffLRvKb1BcZ0004X3j4Cl
+         nCW2qJvcx+PmAZlxHbOTW201sv+mhpsXUVEfg=
+Received: by 10.65.95.12 with SMTP id x12mr1130217qbl.97.1216926997463;
+        Thu, 24 Jul 2008 12:16:37 -0700 (PDT)
+Received: by 10.150.50.2 with HTTP; Thu, 24 Jul 2008 12:16:37 -0700 (PDT)
+In-Reply-To: <bd6139dc0807241153v5055e922p69a176b5b706f98e@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89947>
 
-On Thu, Jul 24, 2008 at 9:03 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On 7/25/08, Sverre Rabbelier <alturin@gmail.com> wrote:
->> On Thu, Jul 24, 2008 at 8:45 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
->>  >
+On Thu, Jul 24, 2008 at 2:53 PM, Sverre Rabbelier <alturin@gmail.com> wrote:
+> On Thu, Jul 24, 2008 at 8:45 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
 >>
->>  Something went wrong replying here possibly? Or is it just me who is
->>  receiving empty messages? (At least the 3rd empty mail I see.)
 >
-> I blame gmail MTA or my name's having non-ascii chars in it. Combining
-> those two, it produces base64-encoded messages, which are usually
-> refused by vger.
+> Something went wrong replying here possibly? Or is it just me who is
+> receiving empty messages? (At least the 3rd empty mail I see.)
 
-Curiously enough, in the first mail there -are- non-asci characters in
-your name, in the 'empty' mail there are non, instead the 'letter
-decorations' were removed.
+Here's what's going on.
 
--- 
-Cheers,
+1. Gmail will often send messages as base64 encoded, inline. i.e.:
 
-Sverre Rabbelier
+   Content-Type: text/plain; charset=UTF-8
+   Content-Transfer-Encoding: base64
+   Content-Disposition: inline
+
+2. Majordomo is dumb dumb dumb and adds the standard list footer to
+the message. It should probably either not add the footer to such
+messages, or it should do it correctly by base64 decoding them, adding
+the footer, then re-encoding. Anyway, what it sends out is:
+
+   [... prior base64 encoded lines elided ...]
+   b3V0LCBidXQgSSB3aWxsIHByb2JhYmx5IHN0YXkgYXdheSBmcm9tIGNvbmZpZy4KCi0tIApEdXkK
+   --
+   To unsubscribe from this list: send the line "unsubscribe git" in
+   the body of a message to majordomo@vger.kernel.org
+   More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+3. Gmail is dumb dumb dumb and cannot decode such "corrupted"
+messages. They display as completely blank. If you go to gmane you can
+see the message is fine. (I think gmane strips the majordomo added
+footer.)
+
+I've filed a bug against gmail multiple times about this. No idea if
+they'll ever fix it.
+
+I also sent an email to git-owner@vger.kernel.org (which I think was
+/dev/null'ed) offering to patch Majordomo, but got no reply.
+
+I wonder if such a mailing list footer is useful in the first place.
+Perhaps it could just be disabled.
+
+Anyway, my offer to "fix" majordomo still stands. Perhaps someone
+knows who I should contact at vger.kernel.org to find out whether
+they're willing to accept a patch.
+
+j.
