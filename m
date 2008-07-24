@@ -1,85 +1,68 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] index-pack: correctly initialize appended objects
-Date: Thu, 24 Jul 2008 18:32:00 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807241821440.8986@racer>
+Subject: sparse fetch, was Re: [PATCH 08/12] git-clone: support --path to do
+ sparse clone
+Date: Thu, 24 Jul 2008 18:41:03 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807241837441.8986@racer>
+References: <20080723145718.GA29134@laptop> <20080724171952.GB21043@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1630730122-1216920721=:8986"
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Nicolas Pitre <nico@cam.org>, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Thu Jul 24 19:33:01 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 24 19:42:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM4gW-0005ZX-1i
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 19:33:00 +0200
+	id 1KM4pP-00010Y-Pc
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 19:42:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586AbYGXRb6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 13:31:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751532AbYGXRb6
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 13:31:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47410 "HELO mail.gmx.net"
+	id S1751507AbYGXRlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 13:41:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751407AbYGXRlD
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 13:41:03 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37744 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751155AbYGXRb5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 13:31:57 -0400
-Received: (qmail invoked by alias); 24 Jul 2008 17:31:56 -0000
+	id S1751190AbYGXRlB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 13:41:01 -0400
+Received: (qmail invoked by alias); 24 Jul 2008 17:40:59 -0000
 Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp017) with SMTP; 24 Jul 2008 19:31:56 +0200
+  by mail.gmx.net (mp031) with SMTP; 24 Jul 2008 19:40:59 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+E1jc/20aEaptHoMDMYFAFbweMRuNS1Vhu33DDgN
-	MmAZicBe4CcBaU
+X-Provags-ID: V01U2FsdGVkX183bTN5xoo39bryx+ewVcsHqlyDbD+IDW4ni0T+t1
+	44/WRdpHhDK4Hr
 X-X-Sender: gene099@racer
+In-Reply-To: <20080724171952.GB21043@sigill.intra.peff.net>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+X-FuHaFi: 0.75
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89921>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323329-1630730122-1216920721=:8986
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+On Thu, 24 Jul 2008, Jeff King wrote:
 
+> As a user, I would expect "sparse clone" to also be sparse on the 
+> fetching. That is, to not even bother fetching tree objects that we are 
+> not going to check out. But that is a whole other can of worms from 
+> local sparseness, so I think it is worth saving for a different series.
 
-From: Björn Steinbrink <B.Steinbrink@gmx.de>
+I think this is not even worth of a series.  Sure, it would have benefits 
+for those who want sparse checkouts.  But it comes for a high price on 
+everyone else:
 
-When index-pack completes a thin pack it appends objects to the pack.  
-Since the commit 92392b4(index-pack: Honor core.deltaBaseCacheLimit when 
-resolving deltas) such an object can be pruned in case of memory
-pressure.
+- security issues (you'd need to open the git protocol to give you 
+  something else than a ref, _including_ refs that were deleted)
 
-To be able to re-read the object later, a few more fields have to be set.
+- performance issues (the server would have to do a lot more, faking 
+  commits, or in the alternative serving a gazillion more sessions if the 
+  client does the reconstruction)
 
-Noticed by Pierre Habouzit.
+... and I am sure there are tons more issues.
 
-Hopefully-signed-off-by: Björn Steinbrink <B.Steinbrink@gmx.de>
-Hopefully-reviewed-and-signed-off-by: Nicolas Pitre <nico@cam.org>, 
-
---
-
-	This was probably missed in the flurry of patches, scratched 
-	patches, and new patches.
-
-	Nico could you have a quick look?  (I would ask Shawn, but I know 
-	that he is pretty busy with real world issues.)
-
-diff --git a/index-pack.c b/index-pack.c
-index ac20a46..33ba8ef 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -699,6 +699,9 @@ static struct object_entry *append_obj_to_pack(
- 	write_or_die(output_fd, header, n);
- 	obj[0].idx.crc32 = crc32(0, Z_NULL, 0);
- 	obj[0].idx.crc32 = crc32(obj[0].idx.crc32, header, n);
-+	obj[0].hdr_size = n;
-+	obj[0].type = type;
-+	obj[0].size = size;
- 	obj[1].idx.offset = obj[0].idx.offset + n;
- 	obj[1].idx.offset += write_compressed(output_fd, buf, size, &obj[0].idx.crc32);
- 	hashcpy(obj->idx.sha1, sha1);
---8323329-1630730122-1216920721=:8986--
+Ciao,
+Dscho
