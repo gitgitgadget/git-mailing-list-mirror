@@ -1,74 +1,81 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+From: "Sverre Rabbelier" <alturin@gmail.com>
 Subject: Re: [PATCH 01/12] git-grep: read config
-Date: Fri, 25 Jul 2008 02:07:05 +0700
-Message-ID: <fcaeb9bf0807241207y460ebe52o9e9f4958ab07679b@mail.gmail.com>
+Date: Thu, 24 Jul 2008 21:12:26 +0200
+Message-ID: <bd6139dc0807241212x4904b7a6x5dc8fa84cca32e18@mail.gmail.com>
 References: <20080723145535.GA29053@laptop>
 	 <20080724171519.GA21043@sigill.intra.peff.net>
 	 <fcaeb9bf0807241145y16bb5f94q9f7e3c09c3184782@mail.gmail.com>
-	 <20080724185844.GC21186@sigill.intra.peff.net>
+	 <bd6139dc0807241153v5055e922p69a176b5b706f98e@mail.gmail.com>
+	 <fcaeb9bf0807241203yd57e675j964594c501ce59a2@mail.gmail.com>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 24 21:08:08 2008
+Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 21:13:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM6Aa-0005em-Au
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 21:08:08 +0200
+	id 1KM6Fk-0007kd-0A
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 21:13:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752610AbYGXTHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 15:07:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752605AbYGXTHI
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 15:07:08 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:54133 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752543AbYGXTHH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 15:07:07 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1476200fgg.17
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 12:07:05 -0700 (PDT)
+	id S1752767AbYGXTM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 15:12:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752718AbYGXTM1
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 15:12:27 -0400
+Received: from wf-out-1314.google.com ([209.85.200.170]:28921 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751912AbYGXTM0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 15:12:26 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so3607058wfd.4
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 12:12:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=c4ibt9HXpfGxvlO+KGeVAOjaQ6uXu0q07TEe/DW8s9Q=;
-        b=A5HJ4AI9ox9WtNUaazoSQWIXDm3c+GDPEJEMZ56m9ElE5t5BuxTV64PzBflmRHs0+V
-         I6BufxmTR3RrcKXr3XasKL/pO3JMUE4xgkA8eNiVOhciJz3JebRchqXE1yFVsjmrl1h4
-         aIdLhe62TxQ+fVrTp7HboTOIfVuiQwTx6gVaI=
+        bh=7qYQSq7zM/tSQCHy9SdKnuGGTsSfFzZBDAsyChkknrM=;
+        b=dYOU9L6+VhfZdwwmuAhIWr4GLxbv6kI8rr6fsC1F0MHgrWUGFzsEM294LoK5yX8hhW
+         LfikZC3c3Vfoo9G7pplycPFpgMHfb7qQ4abZCUJvVTmCKCYMH0eDj7yi5t0CB55MOQLS
+         FTZ7uhNFzsX3bDx3S7dK7GpsgPtjPf9dEnnAI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Ui8GTyOdlAFDlCO/mmiK6YWiqPwhn96a4yTUCoAkgK/32KtdSBwNcQGCWbhyPqfQId
-         RSIK+/UCRhVBYnRimdazfzHnt1aklW+Ja7+zFPkiZ3SXMReb5RlBH3iSTu9HeJH6VKcg
-         nyhe2gzSUhP7yF/8Xadd0aBvVMm2YzoRjsaXk=
-Received: by 10.86.96.18 with SMTP id t18mr1123795fgb.78.1216926425814;
-        Thu, 24 Jul 2008 12:07:05 -0700 (PDT)
-Received: by 10.86.91.2 with HTTP; Thu, 24 Jul 2008 12:07:05 -0700 (PDT)
-In-Reply-To: <20080724185844.GC21186@sigill.intra.peff.net>
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=FfkevfR4CKwBxNLsKannysWNtSPo/nerxkrN/ydq5j1v0Oby+3amyapWJmcmi3lHSz
+         ukB8zB3NoOQ8WfAi9I9knKYHi/0SNH8719yxSbSX7XQ1W2qP/kaFqZeH9O4u5O2L9yXq
+         WLeOopwg1GC5Vx9OjHVqRcm1AM42CibhZp3Jc=
+Received: by 10.142.216.9 with SMTP id o9mr230518wfg.0.1216926746316;
+        Thu, 24 Jul 2008 12:12:26 -0700 (PDT)
+Received: by 10.143.38.17 with HTTP; Thu, 24 Jul 2008 12:12:26 -0700 (PDT)
+In-Reply-To: <fcaeb9bf0807241203yd57e675j964594c501ce59a2@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89946>
 
-On 7/25/08, Jeff King <peff@peff.net> wrote:
-> On Fri, Jul 25, 2008 at 01:45:58AM +0700, Nguyen Thai Ngoc Duy wrote:
+On Thu, Jul 24, 2008 at 9:03 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> On 7/25/08, Sverre Rabbelier <alturin@gmail.com> wrote:
+>> On Thu, Jul 24, 2008 at 8:45 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+>>  >
+>>
+>>  Something went wrong replying here possibly? Or is it just me who is
+>>  receiving empty messages? (At least the 3rd empty mail I see.)
 >
->  > > The commit message is a bit lacking...what config are we interested in?
->  >
->  > core.sparsecheckout, but I will probably stay away from config.
->
->
-> Right, I kind of guessed that from reading the rest of the series. But
->  that sort of "why" really should go into the commit message.
+> I blame gmail MTA or my name's having non-ascii chars in it. Combining
+> those two, it produces base64-encoded messages, which are usually
+> refused by vger.
 
-There was "why" in the commit before but I wanted to make the first
-two patches independent to this series. Turns out bad, I think :)
+Curiously enough, in the first mail there -are- non-asci characters in
+your name, in the 'empty' mail there are non, instead the 'letter
+decorations' were removed.
+
 -- 
-Duy
+Cheers,
+
+Sverre Rabbelier
