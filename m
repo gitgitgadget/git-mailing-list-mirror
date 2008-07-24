@@ -1,123 +1,130 @@
-From: =?ISO-8859-1?Q?=22Peter_Valdemar_M=F8rch_=28Lists=29=22?= 
-	<4ux6as402@sneakemail.com>
-Subject: Re: [PATCH] Document disabling core.whitespace values trailing-space
- and space-before-tab
-Date: Thu, 24 Jul 2008 11:41:42 +0200
-Message-ID: <48884E56.6070801@sneakemail.com>
-References: <4888144E.8090300@sneakemail.com> <20080724172912.6117@nanako3.lavabit.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2008
+Date: Thu, 24 Jul 2008 11:52:28 +0200
+Message-ID: <200807241152.29465.jnareb@gmail.com>
+References: <200807230325.04184.jnareb@gmail.com> <200807240130.31649.jnareb@gmail.com> <20080723235359.GB12754@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 11:42:51 2008
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Thu Jul 24 11:54:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLxLU-0003dY-0S
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 11:42:48 +0200
+	id 1KLxWJ-0006xW-R2
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 11:54:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751688AbYGXJlr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 05:41:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751623AbYGXJlr
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 05:41:47 -0400
-Received: from morch.com ([193.58.255.207]:34228 "EHLO morch.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751234AbYGXJlq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 05:41:46 -0400
-Received: from [192.168.1.214] (ANice-157-1-37-217.w90-28.abo.wanadoo.fr [90.28.176.217])
-	by morch.com (Postfix) with ESMTP id 8BFA4281D;
-	Thu, 24 Jul 2008 11:43:33 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080502)
-In-Reply-To: <20080724172912.6117@nanako3.lavabit.com>
+	id S1751605AbYGXJwv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 05:52:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751630AbYGXJwv
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 05:52:51 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:17497 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751212AbYGXJwu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 05:52:50 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so1038170nfc.21
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 02:52:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=6/oGglxpihQ+X2q62cceGvvioSB8YULB4T2BaMChkcA=;
+        b=PWMWYQXeXR3/YMAZJv3uCEyuFEt3lqrKuGrLMBs+GJMtcuiqgdbnWot/MuOowpeTyS
+         KOXa4BifyRHJ3HSS0SjrzySA/kUvTj240s6fp9clFEivbghts1CNNpDXQ9XvM2t1pLP6
+         8vMd74MmXURXQp+DaCTI0gzSe3I2wLhdj7WTw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=F/Q/wsR1+rkGShEha5vHboQ/rH+xMVuezaDzKeHjRUmQnOX7Rgq6Mwrj/E/aK0ZRnU
+         hSlR1nja+CChvNJUma6hwZziJrGEzqG3jyEfm+gWSpUm3ZtjS9HIrVfLIcC7qu2tDv7o
+         4pNZzmnymJc8UhU5BWDME18kqiMcZv2zDsqjs=
+Received: by 10.210.52.9 with SMTP id z9mr104785ebz.12.1216893167172;
+        Thu, 24 Jul 2008 02:52:47 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.208.47])
+        by mx.google.com with ESMTPS id c4sm22619395nfi.13.2008.07.24.02.52.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 24 Jul 2008 02:52:46 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080723235359.GB12754@leksak.fem-net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89859>
 
-Actually, it gets stranger and stranger!
-
-Nanako Shiraishi nanako3-at-lavabit.com |Lists| wrote:
->> The '-trailing-space' syntax to disable the trailing-space setting=20
->> is not obvious and not documented as far as I can see. I would have
->> assumed a value of '' would disable it.
+On Tue, 24 July 2008, Stephan Beyer wrote:
+> Jakub Narebski wrote:
+>> Dnia =C5=9Broda 23. lipca 2008 16:54, Robin Rosenberg napisa=C5=82
+>>> onsdagen den 23 juli 2008 15.18.40 skrev Johannes Schindelin:
+>>>> On Wed, 23 Jul 2008, Jakub Narebski wrote:
+>>>>> On Wed, 23 Jul 2008, Johannes Schindelin wrote:
+>>>>>> On Wed, 23 Jul 2008, Jakub Narebski wrote:
+>>>>>>=20
+>>>>>>>    04. Which programming languages you are proficient with?
+>>>>>>>        (The choices include programming languages used by git)
+>>>>>>>        (zero or more: multiple choice)
+>>>>>>>      - C, shell, Perl, Python, Tcl/Tk
+>>>>>>>      + (should we include other languages, like C++, Java, PHP,
+>>>>>>>         Ruby,...?)
+> [...]
+>>=20
+>> The idea is, I think, to know what languages people could contribute
+>> to Git; see analysis of this question at GitSurvey2007 page on git w=
+iki:
+>>   http://git.or.cz/gitwiki/GitSurvey2007#head-ecb5564d71e4093e2e93e5=
+08380407a26dbcbdea
 >=20
-> Doesn't gitattributes(5) describe the overall syntax in detail?
+> Oha, is this a Git User's Survey or a Git Potential Contributor's Sur=
+vey?
+> I thought this is some kind of demographic question about the "progra=
+mming
+> background" of the user.
 
-=46irst, git-config.1 does not mention gitattributes except for specifi=
-c
-settings. core.whitespace is not one of these.
+Well, truth to be told it is both.  We try here to kill two birds with
+one stone: both to have 'programming background' of Git users, and get
+to know which parts of code can have many contributors, and which
+could have troubles attracting contributors because of the language
+they are written in (which is visible in the choice of programming
+languages in 2007 survey).
+=20
+If we want to provide larger number of programming languages to
+chose from (with "other" as fallback), we could take for example
+top 10 from the TIOBE index, or similar sites:
+  http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html (for=
+ July 2008)
+  http://lui.arbingersys.com/index.html (Language Usage Indicators, Jul=
+ 10, 2008)
 
-gitattributes.5 has:
-> Sometimes you would need to override an setting of an attribute for a
->  path to unspecified state. This can be done by listing the name of=20
-> the attribute prefixed with an exclamation point !.
+This would bring 'Visual Basic', and perhaps 'Assembly' and 'Lisp'
+to the list of choices.
 
-note that this is ! before the *name* of the attribute, and for=20
-"Checking whitespace errors / whitespace":
-
-> The core.whitespace configuration variable allows you to define what=20
-> diff and apply should consider whitespace errors for all paths in the
->  project (See git-config(1)). This attribute gives you finer control=20
-> per path.
-=2E..
-> Unspecified: Use the value of core.whitespace configuration variable
->  to decide what to notice as error.
+>> And of course "I am not programmer" response...
 >=20
-> String: Specify a comma separate list of common whitespace problems=20
-> to notice in the same format as core.whitespace configuration=20
-> variable.
+> This doesn't make sense, does it?
+>
+> I know that there are non-programmer's who use git for there
+> configuration files and other non-programming track files, but
+> this looks somehow wrong in this survey.
 
-So now, git attributes says to unspecify a setting with '!' in front of
-the attribute *name*, which for core.whitespace means use the value fro=
-m
-git-config, which if not specified means to error on e.g. trailing-spac=
-e.
+You can manage documents and like (especially written in some
+formatting language), you can manage web pages, you can also
+use git to only _track_ some projects even if you are not
+a programmer yourself.
 
-Now, I notice that git's own .gitattributes has this:
-> * whitespace=3D!indent,trail,space
-> *.[ch] whitespace
+See for example
+  http://www.kieranhealy.org/blog/archives/2008/06/29/git-bibs/
+  http://journal.code4lib.org/articles/86
+  http://www.scienceforums.net/forum/showthread.php?t=3D33830
+  http://www.secomputing.co.uk/2008/06/engineering-log-book.html
 
-Which I assume actually works, but is invalid according to git-config.1=
-=20
-and gitattributes.5 because:
-
-=46or the first line, neither of the values 'indent', 'trail' nor 'spac=
-e'
-are valid for core.whitespace, and the '!' notation is not defined in
-neither gitattributes.5 nor in git-config.1 for *values*.
-
-=46or the second line, gitattributes states generally about attributes =
-that:
-> Set: The path has the attribute with special value "true"; this is=20
-> specified by listing only the name of the attribute in the attribute=20
-> list.
-
-A value of true (unspecified would have required:"*.[ch] !whitespace")=20
-is not valid for core.whitespace either.
-
-So now (as I read it), neither git-config.1 nor gitattributes.5 specify=
-=20
-how to turn off core.whitespace "elements", but .gitattributes (from gi=
-t=20
-itself) uses one notation (!) with settings that are invalid for other=20
-reaons, while "grep core.whitespace t/*" uses another notation (-) to=20
-turn off elements.
-
-Also in t/* the elements have various different names, such as: "trail"=
-,=20
-"trailing", "trailing-space". t/t4019-diff-wserror.sh also uses this:
-> echo "F whitespace=3D-trail" >.gitattributes
-just to make things interesting!
-
-It seems that there is some inconsistency about this. Perhaps=20
-documentation (and changing t/* and .gitattributes accordingly) isn't=20
-such a bad idea! :D
-
-Peter
 --=20
-Peter Valdemar M=F8rch
-http://www.morch.com
+Jakub Narebski
+Poland
