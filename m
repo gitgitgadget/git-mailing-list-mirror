@@ -1,93 +1,64 @@
-From: "Richie Vos" <jerry.vos@gmail.com>
-Subject: [EGIT PATCH] Support linked resources
-Date: Wed, 23 Jul 2008 22:34:06 -0500
-Message-ID: <5a27b7b0807232034t564e8d45l9f6e4bc6429cda60@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/9 v2] Allow the built-in exec path to be relative to
+ the command invocation path
+Date: Wed, 23 Jul 2008 21:21:48 -0700
+Message-ID: <7vd4l37vz7.fsf@gitster.siamese.dyndns.org>
+References: <1216667998-8879-1-git-send-email-johannes.sixt@telecom.at>
+ <1216667998-8879-6-git-send-email-johannes.sixt@telecom.at>
+ <7vfxq0e9lk.fsf@gitster.siamese.dyndns.org>
+ <200807232112.18352.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 24 05:35:09 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Thu Jul 24 06:23:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLrbh-0001d5-9d
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 05:35:09 +0200
+	id 1KLsLz-0002pz-H2
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 06:22:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751288AbYGXDeK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 23:34:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751329AbYGXDeI
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 23:34:08 -0400
-Received: from wf-out-1314.google.com ([209.85.200.171]:15364 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751306AbYGXDeH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 23:34:07 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so3176332wfd.4
-        for <git@vger.kernel.org>; Wed, 23 Jul 2008 20:34:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=v5Se0Nul8kbapvL69h1bX8+ehcX8SM7f4ZoceemLmGY=;
-        b=U+PC8g97mwDOcm1462dmk6EI4MNb7ADTnMn9gQSpH4bAheKUsRAc9vh8UrQH9cP3hp
-         j+acT3TWlrVe6jIp52azLVKFF6uvs6U7z96j5SgX5VFzPFoKZrYiswY94wa5kifcbBXh
-         +sYgrx6oUCn6StWq1nNeXaHhwHWLr+m8FOxq8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=W5xlbycOpdZ/1A0RSnQT/s1xtbqod4tIEdgiYvfCocm5r7A4tsfy1QosaeJiP7h01l
-         RDJBvIr3a0dvxjcqBLwqDeKkrjZYL5WqjdXIkhzWBnwJJ9osnXesQhLU/MeF4KE5jp1i
-         vBUU+qQ/SBzOntJl8ZvYk1PjnVM7usJUcmFC8=
-Received: by 10.142.180.11 with SMTP id c11mr235225wff.159.1216870446892;
-        Wed, 23 Jul 2008 20:34:06 -0700 (PDT)
-Received: by 10.142.241.5 with HTTP; Wed, 23 Jul 2008 20:34:06 -0700 (PDT)
-Content-Disposition: inline
+	id S1752320AbYGXEV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 00:21:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751990AbYGXEV4
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 00:21:56 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63566 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751496AbYGXEV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 00:21:56 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 832A43912F;
+	Thu, 24 Jul 2008 00:21:54 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 818333912D; Thu, 24 Jul 2008 00:21:51 -0400 (EDT)
+In-Reply-To: <200807232112.18352.johannes.sixt@telecom.at> (Johannes Sixt's
+ message of "Wed, 23 Jul 2008 21:12:18 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0BFED8DE-5938-11DD-B0E0-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89833>
 
-I have a project that outputs to a linked directory (for example the
-project is in /projects/foo and the project outputs to /projects/bar).
-This was causing egit to throw a bunch of "file is not in working
-path" errors whenever I rebuilt the project or otherwise interacted
-with that linked directory. I tracked it down to GitIndex's add/remove
-being called on these files even though these files are not part of
-the actual index.
+Johannes Sixt <johannes.sixt@telecom.at> writes:
 
-It seems like egit shouldn't be trying to interact with the index on
-these files, and after looking at it, I decided the best solution
-would be to realize in the RepositoryMapping that these files do not
-point to a repository.
+> It also fixes 'make install' of git-gui as well (sigh!) by not exporting
+> gitexecdir - assuming that Shawn applies the git-gui patch.
 
-I wasn't sure what the best solution for deciding if a file was in the
-same location as the project it is referenced in, but I somewhat
-modeled it off of the way GitIndex's makeKey does its validation.
+Yeah, this seems to break the install quite badly without git-gui patch.
 
-Patch:
-Fixed 'Path is not in working directory' error for linked resources
+If your PATH does not include the bindir you are installing the freshly
+built git, then the Makefile in git-gui runs:
 
-Signed-off-by: Reg Vos <jerry.vos@gmail.com>
----
- .../egit/core/project/RepositoryMapping.java       |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+	ifndef gitexecdir
+		gitexecdir := $(shell git --exec-path)
+	endif
 
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
-b/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
-index 6a0b56f..5863a49 100644
---- a/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
-@@ -236,6 +236,8 @@ public class RepositoryMapping {
- 		IProject project = resource.getProject();
- 		if (project == null)
- 			return null;
-+		if (!project.getLocation().isPrefixOf(resource.getLocation()))
-+			return null;
- 		RepositoryProvider provider = RepositoryProvider.getProvider(project);
- 		if (!(provider instanceof GitProvider))
- 			return null;
--- 
-1.5.4.2
+and miserably fails.  We can assume that somebody who builds and installs
+git-gui as a standalone project already *has* an installed, working git on
+$PATH, so the above ifndef is Ok, but when git-gui is built as part of
+git.git tree, we really should avoid triggering that codepath.
