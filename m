@@ -1,92 +1,61 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2008
-Date: Thu, 24 Jul 2008 16:07:06 +0200
-Message-ID: <200807241607.07540.jnareb@gmail.com>
-References: <200807230325.04184.jnareb@gmail.com> <7vsku1gqny.fsf@gitster.siamese.dyndns.org> <48886B8F.6000304@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+From: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
+	<jean_francois_veillette@yahoo.ca>
+Subject: Re: [EGIT] Supported Eclipse version
+Date: Thu, 24 Jul 2008 10:07:59 -0400
+Message-ID: <89D1384A-403C-4E6E-816C-204AE0AAC30C@yahoo.ca>
+References: <48888A2E.4030302@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v753.1)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
 To: Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 16:08:37 2008
+X-From: git-owner@vger.kernel.org Thu Jul 24 16:09:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM1UT-0003ZI-CQ
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 16:08:21 +0200
+	id 1KM1VD-0003t6-Qt
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 16:09:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751247AbYGXOHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 10:07:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbYGXOHU
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 10:07:20 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:43763 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751149AbYGXOHS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 10:07:18 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so1077895nfc.21
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 07:07:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=Ha6Gvf2mkkdME0FwT8xLM+hruNj4LtXZPf0gpF40ZFI=;
-        b=jZkhJk1qPJLF6NXdW0b7L71RNhD2+4910zNeWWEQDvSyJqMIY1OdEOoH2ATrdiKYHM
-         YtYkxf868nztA7Nms6cNsAZjEPMnaOVI76WFIfsCPf9Ke0cx56+Bq2KHjV3rQZZR+grV
-         zm2FqFfBYi0FI2JjnbhdG6o6r17XjpnK+41Z0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=tT2GlpEuQz4XkJsToVVurI4Pg8AVDkmLq2EIja9bdSWXheh7kkKdB6f7RcQ8RKSC0Q
-         yONwHKUGx8pFYVlvSvXqYbEsTK//9Sh+c7aRF5OKOYG7onnxIITVi+xJPqUg4uxt9xK3
-         OM0lUQglyNgHTwKCZUIBCJkAPQy0JVi0DMQak=
-Received: by 10.210.91.17 with SMTP id o17mr366266ebb.172.1216908436801;
-        Thu, 24 Jul 2008 07:07:16 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.208.47])
-        by mx.google.com with ESMTPS id f4sm27567509nfh.27.2008.07.24.07.07.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 24 Jul 2008 07:07:15 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <48886B8F.6000304@gmail.com>
-Content-Disposition: inline
+	id S1751256AbYGXOII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 10:08:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbYGXOIG
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 10:08:06 -0400
+Received: from smtp103.mail.mud.yahoo.com ([209.191.85.213]:39630 "HELO
+	smtp103.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751221AbYGXOIF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Jul 2008 10:08:05 -0400
+Received: (qmail 21556 invoked from network); 24 Jul 2008 14:08:03 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.ca;
+  h=Received:X-YMail-OSG:X-Yahoo-Newman-Property:In-Reply-To:References:Mime-Version:Content-Type:Message-Id:Cc:Content-Transfer-Encoding:From:Subject:Date:To:X-Mailer;
+  b=QCjuh2uuPv6tW4lql7g59wp1WRSK/uB1dxtiF/mV2HQ7wfi+6YKN70RQB/r0Y1VVkmtBSmWVlXK8IceBciGIIdpG8/CevwSfMrahfounWcuriZoSOc4I8ouJeMd1YCterHH06iKPYYHfGvnxjBQXFQM1ZPLA/8makoeiGFFmVUI=  ;
+Received: from unknown (HELO ?192.168.3.32?) (jean_francois_veillette@207.96.147.134 with plain)
+  by smtp103.mail.mud.yahoo.com with SMTP; 24 Jul 2008 14:08:03 -0000
+X-YMail-OSG: VRBmc7wVM1kXQxkP3IpxgPNWxQL0MGJrX7cFCskXKl9VdlGJLf5aaSOl.WptnX7Ow2TUDdZCl5QMB467hXKjJ65XkHmF7xte8TSEr_oPYjAjL60uxMcBtXJt25oLlwKoKHQ-
+X-Yahoo-Newman-Property: ymail-3
+In-Reply-To: <48888A2E.4030302@gmail.com>
+X-Mailer: Apple Mail (2.753.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89884>
 
-On Tue, 24 July 2008, Marek Zawirski wrote:
-> Junio C Hamano wrote:
->> Jakub Narebski <jnareb@gmail.com> writes:
->> (...)
->>   
->>>    27. Which of the following features do you use?
->>>        (zero or more: multiple choice)
->>>      - git-gui or other commit tool, gitk or other history viewer, patch
->>>        management interface (e.g. StGIT), bundle, eol conversion,
->>>        gitattributes, submodules, separate worktree, reflog, stash,
->>>        shallow clone, detaching HEAD, mergetool, interactive rebase,
->>>        add --interactive or other partial commit helper, commit
->>>        templates, bisect, other (not mentioned here)
->>>     
-> I've got lost a little bit in this discussion, but some question about 
-> used GUI for Git maybe interesting - the above one is touching the 
-> problem. Just egit is missing there.
+> Maybe some users (or developers) from mailing list can tell us  
+> about their opinion?
 
-Actually jgit is in the list of possible choices for the following
-question:
-    16. Which porcelains / interfaces / implementations do you use?
+I think keeping comptability for one version behind the  
+'current' (still compatible 3.3 while 3.4 is the current) is a  
+reasonable goal.
+3.2 is relatively far behind, tools vendor had time to get up to date  
+by now.
+If a user is using a third party version of eclipse based on 3.2,  
+then I guess he should not expect egit to work with it (he should  
+just pray and hope for the best).
 
-But you have remind me about one feature that is missing from the 27.
-list, namely "integration with IDE/editor" (I mean here things like
-egit for Eclipse, future KDevelop DVCS integration, future Anjuta
-Git integration, git.el or DVC for Emacs, plugin for TextMate, etc.)
+For myself, I use 3.3.x, I have not yet moved to 3.4 since my main  
+plugin (WOLips) is not ready yet for 3.4.
 
--- 
-Jakub Narebski
-Poland
+- jfv
