@@ -1,116 +1,100 @@
-From: James Pickens <jepicken@gmail.com>
-Subject: Re: [RFC PATCH 00/12] Sparse checkout
-Date: Thu, 24 Jul 2008 08:24:30 +0000 (UTC)
-Message-ID: <loom.20080724T065737-580@post.gmane.org>
-References: <20080723145518.GA29035@laptop>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 2/2] git-checkout: improve error messages, detect  ambiguities.
+Date: Thu, 24 Jul 2008 10:33:22 +0200
+Message-ID: <20080724083322.GB10950@artemis.madism.org>
+References: <1216774940-4955-1-git-send-email-madcoder@debian.org> <1216808133-31919-1-git-send-email-madcoder@debian.org> <1216808133-31919-2-git-send-email-madcoder@debian.org> <1216808133-31919-3-git-send-email-madcoder@debian.org> <7v7ibc9p93.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 24 10:31:29 2008
+Content-Type: multipart/signed; boundary="xXmbgvnjoT4axfJE";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 10:34:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLwEG-0004Aw-6N
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 10:31:16 +0200
+	id 1KLwHO-0005W0-7b
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 10:34:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751539AbYGXIaN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 04:30:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751570AbYGXIaM
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 04:30:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:56357 "EHLO ciao.gmane.org"
+	id S1751178AbYGXIda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 04:33:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750977AbYGXIda
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 04:33:30 -0400
+Received: from pan.madism.org ([88.191.52.104]:34189 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751539AbYGXIaL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 04:30:11 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1KLwD5-0003hC-1m
-	for git@vger.kernel.org; Thu, 24 Jul 2008 08:30:03 +0000
-Received: from ip72-201-10-203.ph.ph.cox.net ([72.201.10.203])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 08:30:03 +0000
-Received: from jepicken by ip72-201-10-203.ph.ph.cox.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 08:30:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 72.201.10.203 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9) Gecko/2008052906 Firefox/3.0)
+	id S1750744AbYGXId3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 04:33:29 -0400
+Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 66DAB3A98F;
+	Thu, 24 Jul 2008 10:33:24 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id E0A4F464F25; Thu, 24 Jul 2008 10:33:22 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7v7ibc9p93.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89853>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds <at> gmail.com> writ=
-es:
 
-> I have not looked at non-builtin commands yet, but I think it's not
-> a big deal. We have several rounds before this series is good enough =
-;)
-> So in short, sparse prefix will be stored in config, core.sparsecheck=
-out.
-> you have three new commands to enter/update/leave sparse checkout:
+--xXmbgvnjoT4axfJE
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Jul 23, 2008 at 11:04:08PM +0000, Junio C Hamano wrote:
+> Pierre Habouzit <madcoder@debian.org> writes:
 >=20
-> git clone --path=3Dprefix       # clone with sparse checkout
-> git checkout --path=3Dprefix    # limit/update checkout paths
-> git checkout --full           # stop sparse checkout
->
+> > The patch is twofold: it moves the option consistency checks just under
+> > the parse_options call so that it doesn't get in the way of the tree
+> > reference vs. pathspecs desambiguation.
+>=20
+> I think this goes a bit too far.
+>=20
+> Even if you have a file called 'master' tracked in your project, when you
+> say:
+>=20
+>     $ git checkout master
+>=20
+> that's almost always branch switching.  Forcing "git checkout master --"
+> disambiguation for such a common case is simply a wrong thing to do from
+> the usability point of view.
+>=20
+> So how about (obviously we are interested only in the case without
+> disambiguating '--' here):
+>=20
+>     (3-1) if there is only one token left and if it is a rev, that's the
+>           branch to check out or commit to detach to.
+>=20
+>     (3-2) otherwise the user might have mistyped one of the paths, so help
+>           avoiding by making sure the first token is unambiguously either
+>           a rev or a path (but not both).
 
-=46irst things first, thanks a lot for working on this feature.  I have=
- an
-enormous project in CVS (144GB repo, containing 65000 directories and
-463000 files) that I've been wanting to convert to git for a while now,
-and the lack of sparse checkouts was the only thing about git that was
-standing in the way.  The project is so big that checking out the whole
-tree all the time is unworkable, and I think my coworkers would hang me
-if I tried to make them use submodules.  We already use sparse checkout=
-s
-in CVS to make it manageable, so sparse checkout support in git would
-vastly simplify the transition.
+  It sounds really reasonable, and your patch seems really fine.
 
-I played around with the patch briefly, and I have a couple of comments
-on the interface.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-=46irst, I would want a capability to checkout a directory non-recursiv=
-ely.
-I.e., checkout directory A/B, without also checking out directory A/B/C=
-=2E
-Perhaps a modifier could be added to a path element to make it
-non-recursive.
+--xXmbgvnjoT4axfJE
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Second, I would want a capability to checkout and release directories
-incrementally, similar to how we do it in cvs.  For example, I might do
-the following in cvs:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-$ cvs co -l A         # Checkout dir A non-recursively
-$ cd A
-$ cvs up -l -d B1 B2  # Checkout dirs A/B1 and A/B2 non-recursively
-$ cd B1
-$ cvs up -d C1 C2     # Checkout dirs A/B1/C1 and A/B1/C2 recursively
-(Oops, didn't need C2)
-$ cvs release -d C2
+iEYEABECAAYFAkiIPlIACgkQvGr7W6HudhyP9ACfTwb0V91cGhFGNfGIbLPpV+/H
+wiQAnikvNGXwB1H6kBmf2cfyepOuqbiW
+=ChV3
+-----END PGP SIGNATURE-----
 
-At this point I would have the following directory tree, assuming the C=
-1
-directory in the repo contained a D1 directory:
-
-A/
-A/B1/
-A/B1/C1/
-A/B1/C1/D1/
-A/B2/
-
-A similar capability in git would be much appreciated.
-
-=46inally, I noticed what I think is a bug: if you do a partial checkou=
-t of
-a non-existing directory, you just get an empty tree.  I would expect t=
-o
-get an error message in that case.
-
-I hope this is helpful, and thanks again for working on this.
-
-James
+--xXmbgvnjoT4axfJE--
