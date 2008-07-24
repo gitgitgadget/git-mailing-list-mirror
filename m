@@ -1,78 +1,108 @@
-From: david@lang.hm
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [RFC] Git User's Survey 2008
-Date: Thu, 24 Jul 2008 03:37:10 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0807240331220.3721@asgard.lang.hm>
-References: <200807230325.04184.jnareb@gmail.com> <alpine.DEB.1.00.0807231414480.8986@racer> <200807231654.18019.robin.rosenberg.lists@dewire.com> <200807240130.31649.jnareb@gmail.com> <20080723235359.GB12754@leksak.fem-net> <alpine.DEB.1.10.0807232201310.3721@asgard.lang.hm>
- <20080724085725.GA6092@leksak.fem-net>
+Date: Thu, 24 Jul 2008 12:44:17 +0200
+Message-ID: <200807241244.18034.jnareb@gmail.com>
+References: <200807230325.04184.jnareb@gmail.com> <200807231654.18019.robin.rosenberg.lists@dewire.com> <alpine.DEB.1.00.0807231659210.8986@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
 	git@vger.kernel.org
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Thu Jul 24 12:37:15 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 24 12:45:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLyCA-0003S0-PH
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 12:37:15 +0200
+	id 1KLyKC-0006Ag-Q9
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 12:45:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751917AbYGXKgP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 06:36:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752055AbYGXKgP
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 06:36:15 -0400
-Received: from mail.lang.hm ([64.81.33.126]:34779 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751704AbYGXKgO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 06:36:14 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m6OAa6aC014092;
-	Thu, 24 Jul 2008 03:36:06 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <20080724085725.GA6092@leksak.fem-net>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1753890AbYGXKob convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 06:44:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753646AbYGXKob
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 06:44:31 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:10829 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753278AbYGXKo3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 06:44:29 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so580102ugf.16
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 03:44:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=WD3e1r5xqJ4EhEIqSB9jBzlHHpjQM4L53F3BZGlcy/s=;
+        b=h7vTY8iri2IcKObygEFsdY0tuTlTbpGhJy/rg+M3ckC5Eop/OnrIsKKXN1e19YEEwm
+         kRxul40pwjC7PozkyvJvJKWuhGt5KaPo8UJre/kqBwbCS1S2Ln/lCeUNWk9njFDcTOJZ
+         TdKUYnx+Xa86zQ0wJwa2+rPHaeBHHMLpeJMgc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=M8Z+UjVbf7dGIAh4jZMrQQjNm+Fcr6ctrQAblCBDSn8fD5NcrPgGKZfX1ENvUMUus3
+         s9opkvaadkNCu/asPUCILsQ1N3//ivauCHQGWYaNcwIHulZXKotlqKH2vYQNC+9yVIrf
+         PKZIMvwxuxSutELK0Jp8YRAxgxtqhgMNbVGbg=
+Received: by 10.67.116.19 with SMTP id t19mr788498ugm.56.1216896267584;
+        Thu, 24 Jul 2008 03:44:27 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.208.47])
+        by mx.google.com with ESMTPS id e23sm12351253ugd.47.2008.07.24.03.44.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 24 Jul 2008 03:44:26 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.DEB.1.00.0807231659210.8986@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89863>
 
-On Thu, 24 Jul 2008, Stephan Beyer wrote:
+Dnia =C5=9Broda 23. lipca 2008 18:00, Johannes Schindelin napisa=C5=82:
+> On Wed, 23 Jul 2008, Robin Rosenberg wrote:
+>> onsdagen den 23 juli 2008 15.18.40 skrev Johannes Schindelin:
+>>> On Wed, 23 Jul 2008, Jakub Narebski wrote:
+>>>> On Wed, 23 Jul 2008, Johannes Schindelin wrote:
+>>>>> On Wed, 23 Jul 2008, Jakub Narebski wrote:
+>>>>>=20
+>>>>> Some people prefer to stay anonymous, so I think email is out.
+>>>>>=20
+>>>>>>    04. Which programming languages you are proficient with?
+>>>>>>        (The choices include programming languages used by git)
+>>>>>>        (zero or more: multiple choice)
+>>>>>>      - C, shell, Perl, Python, Tcl/Tk
+>>>>>>      + (should we include other languages, like C++, Java, PHP,
+>>>>>>         Ruby,...?)
+>>>>>=20
+>>>>> Yes, I think this should be a long list.
+>>>>=20
+>>>> I'd rather not have a "laundry list" of languages.  I have put C++=
+=20
+>>>> because QGit uses it, Java because of egit/jgit, PHP for web=20
+>>>> interfaces, Ruby because of GitHub and because of Ruby comminity=20
+>>>> choosing Git.  I should perhaps add Emacs Lisp, HTML+CSS and=20
+>>>> JavaScript here.  What other languages should be considered?
+>>>=20
+>>> C# at least, since we had one (pretty unsuccessful) attempt at=20
+>>> reimplementing Git in it.
+>>=20
+>> What is the reason for the question? Do we want to know what languag=
+es
+>> people would like to contribute to Git in or do we want to know what=
+ "kind"
+>> of programmers are attracted by Git?  Making it a long list should m=
+ake
+>> it easier to tabulate the responses.
+>=20
+> "could contribute" is more appropriate IMHO.  Although you might be r=
+ight=20
+> to ask "would like to contribute"... ;-)
 
-> Hi,
->
-> david@lang.hm wrote:
->>>> And of course "I am not programmer" response...
->>>
->>> This doesn't make sense, does it?
->>> I know that there are non-programmer's who use git for there
->>> configuration files and other non-programming track files, but
->>> this looks somehow wrong in this survey.
->>
->> there are non-programmers who use git to track projects that they want to
->> be able to run the latest versions of. they don't program, just git pull;
->> make;make install
->
-> Ahh, you're totally right. :)
-> I wonder if those users take part in a Git User's Survey. We'll see. :)
+I think it is both.  We would like to know what kind of programmers
+(and non-programmers) are attracted to Git, and also what languages
+could people contribute to Git.
 
-it depends on how it gets sent out.
-
-if it's just sent to the git lists you won't have many of those users, if 
-it's sent to lists of projects that use git (and/or publicised in the 
-newsletters of those projects) we'll get a lot more of them.
-
-due to the concern abot spamming too many lists, I'd suggest getting in 
-contact with the project leaders and see what they would like or not like. 
-I suspect that many of them will be happy to have the survey go out to 
-their users so that git can improve based on the feedback and their users 
-can think less about git and more about their project ;-)
-
-if most of the project leaders are willing or eager to get the info out 
-it seems reasonable to go ahead and send a single message out to the other 
-lists, but if a lot of them are opposed, definantly don't send it anywhere 
-you didn't get a response.
-
-David Lang
+--=20
+Jakub Narebski
+Poland
