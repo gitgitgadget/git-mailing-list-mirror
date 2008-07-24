@@ -1,87 +1,66 @@
-From: "Geoff Russell" <geoffrey.russell@gmail.com>
-Subject: Moving .git around
-Date: Thu, 24 Jul 2008 11:02:02 +0930
-Message-ID: <93c3eada0807231832o6b7689c4j2913253d7ced62ba@mail.gmail.com>
-Reply-To: geoffrey.russell@gmail.com
+From: Jonathan Nieder <jrnieder@uchicago.edu>
+Subject: [PATCH] t6030 (bisect): work around Mac OS X "ls"
+Date: Wed, 23 Jul 2008 20:37:35 -0500 (CDT)
+Message-ID: <Pine.GSO.4.62.0807232014030.14945@harper.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 24 03:33:10 2008
+X-From: git-owner@vger.kernel.org Thu Jul 24 03:38:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLpha-0007vJ-Vl
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 03:33:07 +0200
+	id 1KLpn3-0000qp-O1
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 03:38:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751121AbYGXBcH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 21:32:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750995AbYGXBcG
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 21:32:06 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:57078 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750899AbYGXBcE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 21:32:04 -0400
-Received: by an-out-0708.google.com with SMTP id d40so592758and.103
-        for <git@vger.kernel.org>; Wed, 23 Jul 2008 18:32:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=0lOJhyQYQM1guCdVeVvz7ZW5dlqMozL8CRbd7MyDTmk=;
-        b=DGzOc+2WnXRW8lwho5wQoiLiDAxvuaAvWsnJgcU5Aqf9fsJg5+nCVdKhm2qBnaRdKl
-         z6yVYSqC7yTbPMmSf8s09EaKXJAIB5oaac0mR2xmCQJQVKMtbRYrEzARmo8mBH5ljNpf
-         YbVoPTdDylvmF2V1+vcm8kU31bvQY8K4+e/9M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=LcOZqtTmRzcW8GkwksLJhjxhkStP4sFw5rhjr9yrU4yZvI9nQjjya1ixbGWBaSMMTa
-         405XyqS5x5vyaEFt2Bhf31tqPGsACQp32v6RndAXrspgVaQdoJ8Tfz3XWfys0fKnGnAD
-         OIACfNKUdVkJQc57syH+WdfX+mz3biY5jI8a8=
-Received: by 10.100.31.3 with SMTP id e3mr734483ane.21.1216863122873;
-        Wed, 23 Jul 2008 18:32:02 -0700 (PDT)
-Received: by 10.100.8.15 with HTTP; Wed, 23 Jul 2008 18:32:02 -0700 (PDT)
-Content-Disposition: inline
+	id S1752345AbYGXBhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 21:37:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbYGXBhk
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 21:37:40 -0400
+Received: from smtp01.uchicago.edu ([128.135.12.77]:34676 "EHLO
+	smtp01.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752345AbYGXBhj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 21:37:39 -0400
+Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
+	by smtp01.uchicago.edu (8.13.8/8.13.8) with ESMTP id m6O1bZqu018365;
+	Wed, 23 Jul 2008 20:37:36 -0500
+Received: from localhost (jrnieder@localhost)
+	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m6O1bZXG016016;
+	Wed, 23 Jul 2008 20:37:35 -0500 (CDT)
+X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89825>
 
-For reasons which would take a while to explain, I'm building a repository
-in a directory  using "--git-dir=xxxx/.git --work-tree=." and
-then doing an "mv  xxxx/.git ./.git"  and then trying to work with
-that repository  --- but can't
+t6030-bisect-porcelain.sh relies on "ls" exiting with nonzero
+status when asked to list nonexistent files.  Unfortunately,
+/bin/ls on Mac OS X 10.3 exits with exit code 0.  So use "echo
+<shell glob pattern>" and grep instead.
 
-Below is a sample script. The last line (git add) fails with
+Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
+---
+	With this change, all the non-git-svn tests pass on my machine.
+	I think the fix is portable but I do not have the experience to
+	be sure.  So I would be happier if someone looks it over.
 
-fatal: unable to create
-'/usr/local/AusTop/AuPrograms/AuServer/testgit/aaa/bbb/.git/index.lock':
-No such file or directory
+ t/t6030-bisect-porcelain.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-git doesn't seem to realise that there is a .git back up the tree.
-
-I'm using 1.5.5.1
-
-Cheers,
-Geoff Russell
-
------------------------- sample script
-#!/bin/sh
-if [ -d "testgit" ] ; then
-    echo "remove testgit"
-    /bin/rm -rf testgit
-fi
-mkdir testgit && echo yyyy >testgit/sample.sh && cd testgit
-mkdir aaa && mkdir aaa/bbb
-echo xxxx > aaa/bbb/sample2.sh
-mkdir xxx
-git --git-dir=xxx/.git --work-tree=. init
-git --git-dir=xxx/.git --work-tree=. add *.sh
-git --git-dir=xxx/.git --work-tree=. commit  -m demo
-mv xxx/.git .
-cd aaa/bbb
-git add sample2.sh
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 0626544..d19fc1c 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -76,7 +76,7 @@ test_expect_success 'bisect fails if given any junk instead of revs' '
+ 	test_must_fail git bisect start foo $HASH1 -- &&
+ 	test_must_fail git bisect start $HASH4 $HASH1 bar -- &&
+ 	test -z "$(git for-each-ref "refs/bisect/*")" &&
+-	test_must_fail ls .git/BISECT_* &&
++	echo .git/BISECT_* | test_must_fail grep BISECT_[^*] &&
+ 	git bisect start &&
+ 	test_must_fail git bisect good foo $HASH1 &&
+ 	test_must_fail git bisect good $HASH1 bar &&
+-- 
+1.5.6.3.549.g8ca11
