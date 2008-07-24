@@ -1,98 +1,117 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: git rebase to move a batch of patches onto the current branch
-Date: Thu, 24 Jul 2008 15:57:03 -0400
-Message-ID: <32541b130807241257j7820a591if8ca01c66bbcd6b2@mail.gmail.com>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: Re: [PATCH 6/9] builtin-init-db.c: use parse_options()
+Date: Thu, 24 Jul 2008 22:07:01 +0200
+Message-ID: <200807242207.02195.barra_cuda@katamail.com>
+References: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com> <1216849332-26813-7-git-send-email-barra_cuda@katamail.com> <4888AAB2.5050007@free.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 24 21:58:29 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Olivier Marin <dkr+ml.git@free.fr>
+X-From: git-owner@vger.kernel.org Thu Jul 24 22:01:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM6xB-0000Og-Bq
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 21:58:21 +0200
+	id 1KM70O-0001YS-BA
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 22:01:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751600AbYGXT5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 15:57:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751431AbYGXT5H
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 15:57:07 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:45669 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751386AbYGXT5F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 15:57:05 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1302347ywe.1
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 12:57:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=6HX3Osq5Ik0ibVaKSflIuWbco1X4G+I2+oqUdW7LKuU=;
-        b=cXg/zJuc3fuod8P2/UrcBG6cAERq6Og72C5HVH5KlebnIy/6l/8G7u4ZL2/oaZoixA
-         bcCPcszJL0De3+4KW4Z3r7XvzUEAquLYYqD5l4wL+S92prhePs6t5nE/KQl6nPQifu+4
-         go8poam82H8Vd8apMezFe1toLSUs2bGSa9z1I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=SY40oUOtrYctuaPv6HHqdD8G2UI383rK34PwcNrDvNIGv7+DrJ7eDRMQITMxxztGhX
-         8XrYbDTX6nqGIYP98oAfIGDKfBoYcmJLP7NWfwJxvvKrdytC++YI5JCfqwLHlud/JT5I
-         gpiAWXLF2S1/MIDeltzrZfbsDef5CLiVU4NI0=
-Received: by 10.114.184.7 with SMTP id h7mr1009374waf.183.1216929423482;
-        Thu, 24 Jul 2008 12:57:03 -0700 (PDT)
-Received: by 10.150.96.5 with HTTP; Thu, 24 Jul 2008 12:57:03 -0700 (PDT)
+	id S1751860AbYGXUAk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 16:00:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751816AbYGXUAk
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 16:00:40 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:45293 "HELO
+	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1751431AbYGXUAj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Jul 2008 16:00:39 -0400
+Received: (qmail 7637 invoked by uid 89); 24 Jul 2008 20:00:30 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
+X-Spam-Level: *
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_50,RDNS_NONE
+	autolearn=no version=3.2.3
+Received: from unknown (HELO host59-56-dynamic.104-80-r.retail.telecomitalia.it) (barra?cuda@katamail.com@80.104.56.59)
+  by smtp2-pc with SMTP; 24 Jul 2008 20:00:27 -0000
+User-Agent: KMail/1.9.9
+In-Reply-To: <4888AAB2.5050007@free.fr>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89951>
 
-Hi,
+On Thursday 24 July 2008, Olivier Marin wrote:
+> Michele Ballabio a =E9crit :
+> >=20
+> > +	const struct option options[] =3D {
+> > +		OPT_STRING(0, "template", &template_dir, "dir",
+> > +			   "directory from which templates will be used"),
+>=20
+> Perhaps "path", "path to the template repository" to stay consistent =
+with clone.
 
-I often find myself being on a branch and wanting to do the equivalent
-of a series of cherry-picks from another branch into the current one.
-Unfortunately, "git cherry-pick" only does one patch at a time (which
-is very tedious), and "git rebase", which is much less tedious to use,
-seems to specializing in applying your current branch on top of
-another branch, not the other way around.
+Ok.
 
-Currently I do something like this:
+> > +		OPT_BOOLEAN(0, "bare", &bare, "set up a bare repo"),
+>=20
+> s/set up/setup/ and s/repo/repository/?
 
-      git checkout -b tmp branch_with_interesting_stuff~5
-      git rebase --onto mybranch branch_with_interesting_stuff~15
-      git branch -d mybranch
-      git branch -m tmp mybranch
+I think "set up a bare repository" will be fine.
 
-But it seems a little complex when what I *really* want to type is
-something like:
+> > +		{ OPTION_CALLBACK, 0, "shared", &shared_repository,
+> > +		  "type", "type of shared repository",
+>=20
+> What about "permissions", "setup a shared repository"?
 
-      git cherry-pick
-branch_with_interesting_stuff~15..branch_with_interesting_stuff~5
+Ok, but with s/setup/set up/.
 
-and have it give me a rebase-style UI in case of conflicts, etc.  And
-of course, even more bonus points if I can get "rebase -i"
-functionality.
+> > +		  PARSE_OPT_OPTARG, parse_opt_shared_cb, PERM_GROUP },
+>=20
+> Are you sure the default value is really used here?
 
-Am I missing an obvious syntax option here or is this not something
-normal people want to do?
+Yes. Perhaps I don't understand your question. Can you explain what you=
+ mean?
 
-I see that the second option to rebase sounds almost right:
+> Also, perhaps we can play it safer by avoiding changing "share_reposi=
+tory"
+> directly.
+>=20
+> $ git init -> shared_repository =3D=3D PERM_UMASK
+> $ git init --shared --no-shared -> shared_repository =3D=3D 0
+>=20
+> It works because PERM_UMASK =3D=3D 0, but it is a side effect. Don't =
+you think?
 
-       If <branch> is specified, git-rebase will perform an automatic git
-       checkout <branch> before doing anything else. Otherwise it remains
-       on the current branch.
+Would you like this better, with PARSE_OPT_NONEG?
 
-So I could perhaps do this:
++=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0{ OPTION_CALLBACK, 0, "sh=
+ared", &shared_repository,
++=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =A0"permissions", "set u=
+p a shared repository",
++=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =A0PARSE_OPT_OPTARG | PA=
+RSE_OPT_NONEG, parse_opt_shared_cb, PERM_GROUP },
 
-       git rebase --onto mybranch branch_with_interesting_stuff~15 \
-              branch_with_interesting_stuff
+Or do you prefer changing the callback like this:
 
-But it sounds like that would rewrite branch_with_interesting_stuff
-instead of mybranch.
++static int parse_opt_shared_cb(const struct option *opt, const char *a=
+rg,
++=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =
+=A0 =A0 =A0 int unset)
++{
++=A0=A0=A0=A0=A0=A0=A0*(int *)(opt->value) =3D unset ? PERM_UMASK : git=
+_config_perm("arg", arg);
++=A0=A0=A0=A0=A0=A0=A0return 0;
++}
 
-Thanks,
+> > +		OPT_BIT('q', "quiet", &flags, "be quiet", INIT_DB_QUIET),
+>=20
+> OPT__QUIET(&quiet),
+>=20
+> if (quiet)
+> 	flags |=3D INIT_DB_QUIET;
+>=20
+> to use the same quiet option everywhere?
 
-Avery
+I thought about it and decided against ;)
+And it's one line vs four (counting "int quiet =3D 0;"). But I see your=
+ point.
