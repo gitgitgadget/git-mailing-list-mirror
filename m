@@ -1,116 +1,74 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rebase -i: only automatically amend commit if HEAD did
- not change
-Date: Thu, 24 Jul 2008 13:20:51 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807241311450.8986@racer>
-References: <alpine.DEB.1.00.0807222235520.8986@racer> <7vmyk888z5.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] Preserve cwd in setup_git_directory()
+Date: Thu, 24 Jul 2008 13:26:40 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807241324040.8986@racer>
+References: <20080724031441.GA26072@laptop>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 14:21:56 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-933159196-1216902411=:8986"
+Cc: git@vger.kernel.org, Geoff Russell <geoffrey.russell@gmail.com>
+To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 14:28:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLzpT-0000nk-AB
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 14:21:55 +0200
+	id 1KLzvB-0003Mz-0K
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 14:27:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757445AbYGXMUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 08:20:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757439AbYGXMUy
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 08:20:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45027 "HELO mail.gmx.net"
+	id S1752485AbYGXM0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 08:26:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752332AbYGXM0t
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 08:26:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40110 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757414AbYGXMUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 08:20:50 -0400
-Received: (qmail invoked by alias); 24 Jul 2008 12:20:48 -0000
+	id S1750817AbYGXM0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 08:26:48 -0400
+Received: (qmail invoked by alias); 24 Jul 2008 12:26:47 -0000
 Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp062) with SMTP; 24 Jul 2008 14:20:48 +0200
+  by mail.gmx.net (mp032) with SMTP; 24 Jul 2008 14:26:47 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+HhUIx/2eHmQdRk71JoZ1sSOaY84jJdezzTyJFGI
-	gI8dIIW7sivX89
+X-Provags-ID: V01U2FsdGVkX1/bocoC0gnbyTCBPn6E/cfSxdH8rC3zo8TdDdbKW5
+	X8I0z/ZbJzhpFI
 X-X-Sender: gene099@racer
-In-Reply-To: <7vmyk888z5.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <20080724031441.GA26072@laptop>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89871>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-933159196-1216902411=:8986
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Wed, 23 Jul 2008, Junio C Hamano wrote:
+On Thu, 24 Jul 2008, Nguyễn Thái Ngọc Duy wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > If the user called "rebase -i", marked a commit as "edit", "rebase 
-> > --continue" would automatically amend the commit when there were 
-> > staged changes.
-> >
-> > However, this is actively wrong when the current commit is not the one 
-> > marked with "edit".  So guard against this.
-> 
-> At what point in what valid workflow sequence does HEAD become different 
-> from dotest/amend?
+> When GIT_DIR is not set, cwd is used to determine where .git is. If 
+> core.worktree is set, setup_git_directory() needs to jump back to the 
+> original cwd in order to calculate worktree, this leads to incorrect 
+> .git location later in setup_work_tree().
 
-$ rebase -i HEAD~5
+I do not understand.  core.worktree is either absolute, in which case 
+there is no problem.  Or it is relative to where the config lives, no?
 
-	<mark one commit as edit>
+Besides, this touches a _very_ delicate part of Git.  I'd rather not touch 
+it during the -rc cycle.
 
-	<Whoa! While editing, I realize that this contains an unrelated 
-	 bugfix>
+I remember I was opposed to the whole worktree crap, and judging by the 
+sheer amount of bug reports, next to nobody uses it anyway.
 
-$ git reset HEAD^
-$ git add -p
-$ git commit
+It was implemented in a really ugly manner, too, and my attempt to fix it 
+was still messy.  That is why we have _only_ problems with it.
 
-	<Edit a bit here, a bit there>
-
-$ git rebase --continue
-
-
-Sure it is a pilot error.  It hit this pilot, too.
-
-> > @@ -419,7 +419,9 @@ do
-> >  		else
-> >  			. "$DOTEST"/author-script ||
-> >  				die "Cannot find the author identity"
-> > -			if test -f "$DOTEST"/amend
-> > +			if test -f "$DOTEST"/amend &&
-> > +				test $(git rev-parse HEAD) = \
-> > +					$(cat "$DOTEST"/amend)
-> >  			then
-> >  				git reset --soft HEAD^ ||
-> >  				die "Cannot rewind the HEAD"
-> 
-> In what way is this "guarding against it"?
-
-In the way that the user certainly did not mean to amend _this_ HEAD.  
-Another HEAD was marked with "edit".
-
-By not amending, the user has a chance to fix anything unintended in 
-another rebase -i more easily, since the two commits have not been 
-squashed together.
-
-'course, the user should have seen in the editor that popped up that she 
-is squashing two different commits, should have deleted the whole commit 
-message to abort, make the independent commit herself (finding the correct 
-commit to steal the commit message from), then run rebase --continue 
-(which would no longer commit anything, there being nothing to).
-
-However, that course of action is a bit unintuitive.
-
-The way it runs with my patch, at least a user has a chance to fix it up 
-without a Git expert standing nearby.
-
-I will definitely keep this in my personal fork, even in my personal 
-fork of "master" during the rc period.  But if you think it is not worth 
-it, and others seem to be utterly disinterested (instead discussing 
-behavior changes), I will not push further.
-
-Ciao,
+Just thinking of worktree makes me uneasy,
 Dscho
+
+--8323329-933159196-1216902411=:8986--
