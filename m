@@ -1,92 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Respect crlf attribute in "git add" even if core.autocrlf
- has not been set
-Date: Thu, 24 Jul 2008 17:45:07 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807241742220.8986@racer>
-References: <alpine.DEB.1.00.0807222255450.8986@racer> <7vy73tihl6.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807230203350.8986@racer> <alpine.DEB.1.00.0807230229410.8986@racer> <719E03C0-E8C3-4C35-AE9C-9BD5A7BCDF03@zib.de> <20080723114022.GP2925@dpotapov.dyndns.org>
- <FCAEAB20-750E-47B9-B58D-9BB0CB1EEAFF@zib.de> <20080724140959.GU2925@dpotapov.dyndns.org> <alpine.DEB.1.00.0807241537000.8986@racer> <465DE5CD-DA13-42B4-B0D8-961F3D118F59@zib.de>
+From: "Anton Mostovoy" <a@mostovoy.net>
+Subject: git svn throws locale related error when built from source
+Date: Thu, 24 Jul 2008 11:49:52 -0500
+Message-ID: <5FD07FB3AABE444EBC082117C401BEA4@chi.orbitz.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Thu Jul 24 18:46:30 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 24 18:51:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM3xA-0003CW-A8
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 18:46:08 +0200
+	id 1KM41o-000525-QR
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 18:50:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752156AbYGXQpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 12:45:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752128AbYGXQpH
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 12:45:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44570 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750744AbYGXQpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 12:45:06 -0400
-Received: (qmail invoked by alias); 24 Jul 2008 16:45:04 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp040) with SMTP; 24 Jul 2008 18:45:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19fdd9ar3JfBbUmj5UV8cEIFynPo1suwc8hHioteS
-	o4zAYoOW6XUIzQ
-X-X-Sender: gene099@racer
-In-Reply-To: <465DE5CD-DA13-42B4-B0D8-961F3D118F59@zib.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1751722AbYGXQt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 12:49:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751016AbYGXQt5
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 12:49:57 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:13637 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750737AbYGXQt4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 12:49:56 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1257026ywe.1
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 09:49:55 -0700 (PDT)
+Received: by 10.65.53.3 with SMTP id f3mr915479qbk.27.1216918194215;
+        Thu, 24 Jul 2008 09:49:54 -0700 (PDT)
+Received: from AMOSTOVOYT60 ( [198.175.55.5])
+        by mx.google.com with ESMTPS id f45sm13378662pyh.42.2008.07.24.09.49.53
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 24 Jul 2008 09:49:53 -0700 (PDT)
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: AcjsOfNYfcm4CrqoT06C29t9bKC2kgAGeF1gAFVHPEA=
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5512
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89906>
 
-Hi,
+Hi
 
-On Thu, 24 Jul 2008, Steffen Prohaska wrote:
+I built git 1.5.6.3 manually (no package with 1.5.4+ on gutsy), and I am
+getting the error below when running 'git svn rebase'. 
+svn works fine on its own though.  
+The default locale is set to en_US.UTF-8
 
-> On Jul 24, 2008, at 4:38 PM, Johannes Schindelin wrote:
-> 
-> >On Thu, 24 Jul 2008, Dmitry Potapov wrote:
-> >
-> > >On Thu, Jul 24, 2008 at 08:06:29AM +0200, Steffen Prohaska wrote:
-> > > >
-> > > > I am the maintainer of this project.  I know that this project 
-> > > > needs crlf conversion, because it is a cross-platform project. 
-> > > > Therefore, I want to force crlf conversion for this specific 
-> > > > project, even if the user did not configure core.autocrlf=input on 
-> > > > Unix.
-> > >
-> > >I suspect that most problems with crlf is caused by Windows users who 
-> > >have core.autocrlf=false for whatever reason (I suspect without a 
-> > >good reason in most cases).
-> >
-> >Almost correct.  It is _unset_!  And it should be perfectly valid for 
-> >users not having to set anything there.
-> 
-> Why is it unset?  Since 1.5.5, our installer sets core.autocrlf=true
-> on Windows.  So we *do* set a sane default for Windows users.
+svn: error: cannot set LC_ALL locale
+svn: error: environment variable LANG is en_US.UTF-8
+svn: error: please check that your locale name is correct
 
-As I mentioned earlier, these users use Cygwin's Git.  And they do not 
-update frequently.
+I found a workaround that works, but it would be nice to have it work
+properly.
+$> LANG= git svn rebase"
 
-> In the projects I am using git, the problematic platform is *Unix*. To 
-> work around the default on Unix (core.autocrlf=false), I deliver a 
-> custom script to our developers that verifies the setup on Unix and 
-> complains if core.autocrlf is not set to "input".  Since I do this, I 
-> haven't seen any further problems.
+Thanks in advance.
+-Anton
 
-That is exactly the use case I had in mind for my patch.  If we already 
-bother to mark the files with crlf=input in .gitattributes, then Git could 
-be so nice to respect it.
-
-However, I see Junio's point: on sane platforms you have to work hard to 
-get CR-damaged files.  And the regular sane platform user should not be 
-punished for the brain/CR damage a certain monopolist has brought over 
-this planet.
-
-Ciao,
-Dscho
+P.s. I am sending this again, because I did not find the message on
+http://dir.gmane.org/gmane.comp.version-control.git
