@@ -1,99 +1,66 @@
-From: Olivier Marin <dkr+ml.git@free.fr>
-Subject: Re: [PATCH] Rename ".dotest/" to ".git/rebase" and ".dotest-merge"
- to "rebase-merge"
-Date: Thu, 24 Jul 2008 14:44:40 +0200
-Message-ID: <48887938.3060406@free.fr>
-References: <73fd69b50807151408i6a916da6p7b89fe81e65fc717@mail.gmail.com> <20080715212211.GL6244@leksak.fem-net> <487D1B3D.70500@lsrfire.ath.cx> <alpine.DEB.1.00.0807160245440.2841@eeepc-johanness> <20080716012619.GM8185@mit.edu> <7viqv5r637.fsf@gitster.siamese.dyndns.org> <4882454D.2080500@free.fr> <7vd4l9zgmp.fsf@gitster.siamese.dyndns.org> <4884917A.1060005@free.fr> <7vk5fdiheh.fsf@gitster.siamese.dyndns.org> <488722F5.9030602@free.fr> <7v1w1ke9k5.fsf@gitster.siamese.dyndns.org>
+From: "Murphy, John" <john.murphy@bankofamerica.com>
+Subject: Git Gui bug calling gitk
+Date: Thu, 24 Jul 2008 09:01:48 -0400
+Message-ID: <80915B5E107BED488500050294C6F48712136B@ex2k.bankofamerica.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Theodore Tso <tytso@mit.edu>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Joe Fiorini <joe@faithfulgeek.org>, git@vger.kernel.org,
-	Jari Aalto <jari.aalto@cante.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 14:46:19 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 24 15:03:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM0Cg-0002TA-By
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 14:45:54 +0200
+	id 1KM0TC-0001Ao-B6
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 15:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754356AbYGXMop convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 08:44:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753275AbYGXMoo
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 08:44:44 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:54349 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751479AbYGXMoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 08:44:44 -0400
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 47EA412B6E1;
-	Thu, 24 Jul 2008 14:44:42 +0200 (CEST)
-Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 098B712B6CF;
-	Thu, 24 Jul 2008 14:44:40 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-In-Reply-To: <7v1w1ke9k5.fsf@gitster.siamese.dyndns.org>
+	id S1751856AbYGXNBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 09:01:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751552AbYGXNBw
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 09:01:52 -0400
+Received: from vamx04.bankofamerica.com ([171.159.192.80]:37145 "EHLO
+	vadmzmailmx04.bankofamerica.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751816AbYGXNBv (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Jul 2008 09:01:51 -0400
+Received: from vadmzmailmx01.bankofamerica.com ([171.182.200.78])
+	by vadmzmailmx04.bankofamerica.com (8.13.6/8.13.6) with ESMTP id m6OD1nhG031350
+	for <git@vger.kernel.org>; Thu, 24 Jul 2008 13:01:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=bankofamerica.com;
+	s=corp1; t=1216904510; bh=hDHU0RiDn0VTkzPexQ3GUD8z26WGih8Ois5y/B1ml
+	do=; h=Received:Date:From:Subject:To:Message-id:MIME-version:
+	 X-MIMEOLE:Content-type:Content-transfer-encoding:Content-class:
+	 Thread-topic:Thread-index:X-MS-Has-Attach:X-MS-TNEF-Correlator:
+	 X-OriginalArrivalTime:X-Proofpoint-Virus-Version; b=wh+eMZW+oZvRVv
+	+01HvaFsCltovxwyyNb1YqWhDhiIq4m6xoIKnncYxIawYI5U7Gk6NyVy2XvdRQM5m62
+	x+Jf/Ul0PgbzTKT3uS2pe/YvEkxo7I/Zn7Ydn04tPln9hmh1DgBndh+btRjNvUoKran
+	QZxXchvE0lWNM0LvUFaHXVI=
+Received: from memva2mta03.bankofamerica.com (memva2mta03.bankofamerica.com [171.186.140.81])
+	by vadmzmailmx01.bankofamerica.com (8.13.6/8.13.6) with ESMTP id m6OD1n2o030657
+	for <git@vger.kernel.org>; Thu, 24 Jul 2008 13:01:49 GMT
+X-MIMEOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+Thread-topic: Git Gui bug calling gitk
+Thread-index: AcjtjQoIfKHCBjtmRlSAOUALxZzqPw==
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+X-OriginalArrivalTime: 24 Jul 2008 13:01:48.0880 (UTC) FILETIME=[6F048D00:01C8ED8D]
+X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.7160:2.4.4,1.2.40,4.0.166 definitions=2008-07-24_03:2008-07-24,2008-07-24,2008-07-24 signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89877>
 
-Junio C Hamano a =C3=A9crit :
-> Olivier Marin <dkr+ml.git@free.fr> writes:
->=20
->> Junio C Hamano a =C3=A9crit :
->>>> diff --git a/git-am.sh b/git-am.sh
->>> ...
->>>> @@ -202,8 +202,15 @@ then
->>> ...
->>>> +	case "$skip,$abort" in
->>>> +	t,)
->>>> +		git rerere clear
->>>> +		git read-tree --reset -u HEAD HEAD
->>>> +		orig_head=3D$(cat "$GIT_DIR/ORIG_HEAD")
->>>> +		git reset HEAD
->>>> +		git update-ref ORIG_HEAD $orig_head
->>>> +		;;
->>> ...
->> I add reset to unstage paths with no conflict that are left behind.
->=20
-> Does removing the last three lines (1) change the behaviour?  (2) bre=
-ak any test?
->=20
-> If the answers are "Yes and No", we would need a few more tests in th=
-e
-> testsuite.
+I have recently installed git: v1.5.6.1-167-gbf270ab and git gui:
+gitgui-0.10.2-8-g2add5cb
 
-The answers are "Yes and No" and test case update follow.
+>From Git Gui we try to run Visualize Branch History and get the
+following error:
 
--- >8 --
-=46rom: Olivier Marin <dkr@freesurf.fr>
-[PATCH] update test case to protect am --skip behaviour
+Unable to start gitk:
+c:/cygwin/usr/local/git/libexec/git-core/gitk does not exist
 
-Signed-off-by: Olivier Marin <dkr@freesurf.fr>
----
- t/t4151-am-abort.sh |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+I presume this was just an oversight when git- commands were removed
+from the bin directory.
 
-diff --git a/t/t4151-am-abort.sh b/t/t4151-am-abort.sh
-index f45ab0a..7d86cdf 100755
---- a/t/t4151-am-abort.sh
-+++ b/t/t4151-am-abort.sh
-@@ -17,6 +17,8 @@ test_expect_success setup '
- 	for i in 2 3 4 5 6
- 	do
- 		echo $i >>file-1 &&
-+		echo $i >otherfile-$i &&
-+		git add otherfile-$i &&
- 		test_tick &&
- 		git commit -a -m $i || break
- 	done &&
---=20
-1.6.0.rc0.44.gd618.dirty
+-John Murphy
