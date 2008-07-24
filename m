@@ -1,87 +1,71 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: sparse fetch, was Re: [PATCH 08/12] git-clone: support --path to do sparse clone
-Date: Thu, 24 Jul 2008 21:01:15 +0200
-Message-ID: <bd6139dc0807241201v50cd5ef2m58ee7efc05119e20@mail.gmail.com>
-References: <20080723145718.GA29134@laptop>
-	 <20080724171952.GB21043@sigill.intra.peff.net>
-	 <alpine.DEB.1.00.0807241837441.8986@racer>
-	 <20080724185332.GQ32184@machine.or.cz>
-Reply-To: sverre@rabbelier.nl
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH 01/12] git-grep: read config
+Date: Fri, 25 Jul 2008 02:03:59 +0700
+Message-ID: <fcaeb9bf0807241203yd57e675j964594c501ce59a2@mail.gmail.com>
+References: <20080723145535.GA29053@laptop>
+	 <20080724171519.GA21043@sigill.intra.peff.net>
+	 <fcaeb9bf0807241145y16bb5f94q9f7e3c09c3184782@mail.gmail.com>
+	 <bd6139dc0807241153v5055e922p69a176b5b706f98e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Jeff King" <peff@peff.net>,
-	"=?ISO-8859-1?Q?Nguy=3Fn_Th=E1i_Ng=3Fc_Duy?=" <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Jul 24 21:02:47 2008
+Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Thu Jul 24 21:06:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM64w-0003Hf-D1
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 21:02:18 +0200
+	id 1KM67d-0004Qd-KR
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 21:05:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752826AbYGXTBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 15:01:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752718AbYGXTBS
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 15:01:18 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:35364 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751824AbYGXTBR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 15:01:17 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1288521ywe.1
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 12:01:16 -0700 (PDT)
+	id S1752596AbYGXTEE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 15:04:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752861AbYGXTED
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 15:04:03 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:53162 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752596AbYGXTEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 15:04:01 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1475567fgg.17
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 12:03:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=CcRYmQPIfwLJNmX0CgnHSlNF65U3OmwM8g41BKFxYJM=;
-        b=iB6FXhKOerXBHWPHhp1pHdxpjiPUzpcmzPE0Qg4El0aZzArD1NSe/KnZDridtMuLzn
-         xVv/phSUEv1rjadeC/X9nLfyB/VosBFncmEx870SGw7/lyAfsGf4d5etS1kRHE4bTAj7
-         A5WecOohrex9wxbhyui1Gf3ohSxewu/+dmC0A=
+        bh=JjzQsmibjMIvnRrQMKXvoPIqF2yFshHg4pJb/OvZ0iA=;
+        b=x5Jgf8bCOfdZ9krg/YmXk1WaVugqVPBO18ewDyDXMqaVCieNzZvoPv8r99/qOfKk2m
+         HiPUeoK4QHrA4AL642bM4LoqZWuazHayZNjnPZrmgJTYxHGZ+dL7+YM+izTG1kty4lxd
+         u4PNGB8Rq3ebpy2H54fYPUB+8f7ViHHiDRfYc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=FDB4hkdXBSp/ztoJQkidfm+uFPzDurk5TvggQ+2cXmwqVkiI5DiePb2Hai8l+1RTDb
-         QB1opGfkfoyH6lkj6izUpsyYIbAPMamI1jonpdgZXcyz2DaOUv1MygKFhnI4y1JOUskW
-         ikbl8NHqgWPZmiKxuEhtfzahXjdobx+0ccPjA=
-Received: by 10.142.135.16 with SMTP id i16mr219805wfd.144.1216926075252;
-        Thu, 24 Jul 2008 12:01:15 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Thu, 24 Jul 2008 12:01:15 -0700 (PDT)
-In-Reply-To: <20080724185332.GQ32184@machine.or.cz>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=UewsHC4LVomXjnLXQ31PeQFAxNibTU2VVC1zzWhl+dksInC1g6qFUzje2Y/pCmbIxI
+         rRkDKG9EqvaEJVzxquNoVTZvttgk59DQwVyPeElUwuyb4xnFjETDTprWvMPIsIdM2ctL
+         sCeM8TM1Qy63lnB4mShP3kRo9O38lpncuFfJc=
+Received: by 10.86.82.16 with SMTP id f16mr1169011fgb.9.1216926239214;
+        Thu, 24 Jul 2008 12:03:59 -0700 (PDT)
+Received: by 10.86.91.2 with HTTP; Thu, 24 Jul 2008 12:03:59 -0700 (PDT)
+In-Reply-To: <bd6139dc0807241153v5055e922p69a176b5b706f98e@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89944>
 
-On Thu, Jul 24, 2008 at 8:53 PM, Petr Baudis <pasky@suse.cz> wrote:
->  I don't follow how these two issues arise, if the server will do the
-> pruning for you. It will just skip entering some tree objects when doing
-> object traversal; why opening the git protocol or faking commits? This
-> would be a simple extra capability in the protocol.
+On 7/25/08, Sverre Rabbelier <alturin@gmail.com> wrote:
+> On Thu, Jul 24, 2008 at 8:45 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+>  >
+>
+>  Something went wrong replying here possibly? Or is it just me who is
+>  receiving empty messages? (At least the 3rd empty mail I see.)
 
-Wouldn't that be as simple as passing a pathspec to git-rev-list? Not
-a lot of overhead there I reckon.
-
-> One question is what to do with delta chains including unwanted
-> objects, but I think that given the objects' associativity for delta
-> chains, this shouldn't be huge practical issues and it could be
-> affordable in principle to include even unwanted objects.
-
-Just keep them? What we're doing here is trying to optimize in the
-case that someone has a sparse checkout, nothing bad will happen if
-they get too many info surely? (Save for them not getting as much
-improvement as would have been possible would the pack have been
-created differently.)
-
+I blame gmail MTA or my name's having non-ascii chars in it. Combining
+those two, it produces base64-encoded messages, which are usually
+refused by vger.
 -- 
-Cheers,
-
-Sverre Rabbelier
+Duy
