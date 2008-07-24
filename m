@@ -1,93 +1,138 @@
-From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: [PATCH v2] t6030 (bisect): work around Mac OS X "ls"
-Date: Thu, 24 Jul 2008 02:43:51 -0500 (CDT)
-Message-ID: <Pine.GSO.4.62.0807240233310.27074@harper.uchicago.edu>
-References: <Pine.GSO.4.62.0807232014030.14945@harper.uchicago.edu>
- <200807240757.26290.chriscool@tuxfamily.org> <20080724060647.GA24587@glandium.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: [PATCH] Preserve cwd in setup_git_directory()
+Date: Thu, 24 Jul 2008 15:12:22 +0700
+Message-ID: <20080724081222.GA32354@laptop>
+References: <20080724031441.GA26072@laptop> <48882628.7030305@viscovery.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-851401618-1216885431=:27074"
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Jul 24 09:45:30 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Geoff Russell <geoffrey.russell@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Jul 24 10:13:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLvVs-0004dA-N2
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 09:45:25 +0200
+	id 1KLvxK-0006z1-Ll
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 10:13:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751270AbYGXHoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 03:44:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbYGXHoX
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 03:44:23 -0400
-Received: from smtp02.uchicago.edu ([128.135.12.75]:39862 "EHLO
-	smtp02.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751149AbYGXHoX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 03:44:23 -0400
-Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
-	by smtp02.uchicago.edu (8.13.8/8.13.8) with ESMTP id m6O7hpe8027931;
-	Thu, 24 Jul 2008 02:43:51 -0500
-Received: from localhost (jrnieder@localhost)
-	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m6O7hpOB027258;
-	Thu, 24 Jul 2008 02:43:51 -0500 (CDT)
-X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
-In-Reply-To: <20080724060647.GA24587@glandium.org>
+	id S1750997AbYGXIMq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 04:12:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbYGXIMp
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 04:12:45 -0400
+Received: from rv-out-0506.google.com ([209.85.198.227]:36199 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751040AbYGXIMn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 04:12:43 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so2762620rvb.1
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 01:12:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=EDkVVl8Wr4pVUKIAgG5lno0/AYSmFv5H3PTO/JrTZgo=;
+        b=x20lGuMPm3qBDOkeZ5/mMAvPfGkis/d2adSfROwKPYzeM89vlfpj3rADUztZNzJOwB
+         i+0VJxaKY5m8yvDWM2l+mi3v6Bqdrr9UiThzLg7v3e8vNyfTAw/2CquiGlLHN5U9Vl9Y
+         R4CFbvlOUbDEWqIh+Ez3IV6NYdjy4gSBHAJJY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=AgI6Tjx/RvLvRQlyePgGIQgD9D2kgeaoIMLmpu0aVkCicZzfmpIsv3hFDWwxQvU0Du
+         yDgZ6BSNfCGL11ErKBByo+Ttw4KhJm13qgcQS8zVQV2Ff18evmpSfbObrikfANeTy/px
+         L6/Co3mDSrs4lXReeKH8OdPmeJW99xq6G7tcE=
+Received: by 10.114.92.2 with SMTP id p2mr519981wab.223.1216887163286;
+        Thu, 24 Jul 2008 01:12:43 -0700 (PDT)
+Received: from pclouds@gmail.com ( [117.5.2.9])
+        by mx.google.com with ESMTPS id j31sm11375112waf.51.2008.07.24.01.12.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 24 Jul 2008 01:12:42 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 24 Jul 2008 15:12:22 +0700
+Content-Disposition: inline
+In-Reply-To: <48882628.7030305@viscovery.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89846>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+When GIT_DIR is not set, cwd is used to determine where .git is.
+If core.worktree is set, setup_git_directory() needs to jump back
+to the original cwd in order to setup worktree, this leads to
+incorrect .git location later in setup_work_tree().
 
----559023410-851401618-1216885431=:27074
-Content-Type: TEXT/PLAIN; charset=X-UNKNOWN
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-
-t6030-bisect-porcelain.sh relies on "ls" exiting with nonzero
-status when asked to list nonexistent files.  Unfortunately,
-/bin/ls on Mac OS X 10.3 exits with exit code 0.  So look at
-its output instead.
-
-Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
+  On Thu, Jul 24, 2008 at 08:50:16AM +0200, Johannes Sixt wrote:
+  > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy schrieb:
+  > > --- a/setup.c
+  > > +++ b/setup.c
+  > > @@ -577,10 +577,14 @@ const char *setup_git_directory(void)
+  > >  	/* If the work tree is not the default one, recompute prefix */
+  > >  	if (inside_work_tree < 0) {
+  > >  		static char buffer[PATH_MAX + 1];
+  > > +		static char cwd[PATH_MAX + 1];
+  > >  		char *rel;
+  > > +		getcwd(cwd, PATH_MAX);
+  >=20
+  > This needs an error check.
 
-Mike Hommey wrote:
+  Check added.
 
-> On Thu, Jul 24, 2008 at 07:57:26AM +0200, Christian Couder wrote:
->> Le jeudi 24 juillet 2008, Jonathan Nieder a =E9crit :
->>> -=09test_must_fail ls .git/BISECT_* &&
->>> +=09echo .git/BISECT_* | test_must_fail grep BISECT_[^*] &&
->>=20
->> Perhaps the following is simpler:
->>=20
->> +=09test -z "$(ls .git/BISECT_*)" &&
->=20
-> That is still a useless use of ls ;)
+ setup.c             |    5 +++++
+ t/t1501-worktree.sh |   13 ++++++++++++-
+ 2 files changed, 17 insertions(+), 1 deletions(-)
 
-It is much better than what I wrote, at least.
-
-Good night (well, good morning I guess), and thanks.
-
- t/t6030-bisect-porcelain.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 0626544..244fda6 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -76,7 +76,7 @@ test_expect_success 'bisect fails if given any junk inste=
-ad of revs' '
- =09test_must_fail git bisect start foo $HASH1 -- &&
- =09test_must_fail git bisect start $HASH4 $HASH1 bar -- &&
- =09test -z "$(git for-each-ref "refs/bisect/*")" &&
--=09test_must_fail ls .git/BISECT_* &&
-+=09test -z "$(ls .git/BISECT_* 2>/dev/null)" &&
- =09git bisect start &&
- =09test_must_fail git bisect good foo $HASH1 &&
- =09test_must_fail git bisect good $HASH1 bar &&
+diff --git a/setup.c b/setup.c
+index 6cf9094..fa1d696 100644
+--- a/setup.c
++++ b/setup.c
+@@ -577,10 +577,15 @@ const char *setup_git_directory(void)
+ 	/* If the work tree is not the default one, recompute prefix */
+ 	if (inside_work_tree < 0) {
+ 		static char buffer[PATH_MAX + 1];
++		static char cwd[PATH_MAX + 1];
+ 		char *rel;
++		if (!getcwd(cwd, PATH_MAX))
++			die ("Could not get the current working directory");
+ 		if (retval && chdir(retval))
+ 			die ("Could not jump back into original cwd");
+ 		rel =3D get_relative_cwd(buffer, PATH_MAX, get_git_work_tree());
++		if (retval && chdir(cwd))
++			die ("Could not jump back into original cwd");
+ 		return rel && *rel ? strcat(rel, "/") : NULL;
+ 	}
+=20
+diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
+index 2ee88d8..d53d66a 100755
+--- a/t/t1501-worktree.sh
++++ b/t/t1501-worktree.sh
+@@ -29,7 +29,18 @@ test_rev_parse() {
+ }
+=20
+ mkdir -p work/sub/dir || exit 1
+-mv .git repo.git || exit 1
++
++git config core.worktree "$(pwd)"/work
++mv .git work || exit 1
++test_expect_success '--git-dir with relative .git' '
++	(
++	MYPWD=3D"$(pwd)"
++	cd work/sub/dir &&
++	test "$MYPWD"/work/.git =3D "$(git rev-parse --git-dir)"
++	)
++'
++
++mv work/.git repo.git || exit 1
+=20
+ say "core.worktree =3D relative path"
+ GIT_DIR=3Drepo.git
 --=20
-1.5.6.3.549.g8ca11
-
----559023410-851401618-1216885431=:27074--
+1.5.5.GIT
