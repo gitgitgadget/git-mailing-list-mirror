@@ -1,78 +1,90 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH 08/12] git-clone: support --path to do sparse clone
-Date: Fri, 25 Jul 2008 01:47:54 +0700
-Message-ID: <fcaeb9bf0807241147k1175c8a3mffc12e3b3cc1aa3f@mail.gmail.com>
-References: <20080723145718.GA29134@laptop>
-	 <20080724171952.GB21043@sigill.intra.peff.net>
+From: "Lachele Foley (Lists)" <lf.list@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2008
+Date: Thu, 24 Jul 2008 14:50:59 -0400
+Message-ID: <d028d8030807241150j4ce755aal53158c5c88db7078@mail.gmail.com>
+References: <200807230325.04184.jnareb@gmail.com>
+	 <48889591.9020208@freescale.com> <200807242018.27663.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 24 20:49:02 2008
+Cc: "Jon Loeliger" <jdl@freescale.com>, git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 20:52:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM5rz-0004f3-RW
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 20:48:56 +0200
+	id 1KM5uz-000605-Ga
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 20:52:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752379AbYGXSr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 14:47:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbYGXSr4
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 14:47:56 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:48185 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752193AbYGXSrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 14:47:55 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1471998fgg.17
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 11:47:54 -0700 (PDT)
+	id S1752609AbYGXSvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 14:51:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752537AbYGXSvA
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 14:51:00 -0400
+Received: from wf-out-1314.google.com ([209.85.200.171]:25641 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752465AbYGXSu7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 14:50:59 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so3596020wfd.4
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 11:50:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=C0hJL6Br1bj1VKZ9zpwER26Km7bqvhY1UonP4iDjjCA=;
-        b=D/mykRtOPWvVjCuqhNWv97kOytkhij+ZAnkw4C8Nz+1XKmeJEko0BjxiWhAGJspX0U
-         Vhjy02My+BKTALxPRLezroh5fMs5z0q2VlaQIZvPceOWKfrsPdk5+l1Pc843uwGLl3+3
-         Vp2Zs+KhYqEbDTP+i+3jOf9rzOKV0bPUn+4nE=
+        bh=ckSBg7gYhSwpczYME1VpxAfvOhEUZ3sgvaDN3yjb9Ww=;
+        b=bRBUv16mHl8CQCnJEHnWoQGktBo6s+liaDptK/6nrvky2hp9MJo/Ra4FSJhkG1N3Ow
+         r3T56SmVQykXoD4pTC4F4k0qKCOaqJheZlpq/cupJzYWhE0yrmlcYPIAlfyYUJAB+pgg
+         LLY51bfsrYM6GFq8o3Jyn92XZsTqYvaCu8sDY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=OLbKQepnaKU5Bi41JkGN7bkx7OTlyN8k7EhvFAw3fHE1jKpXpRi0mxvzOd8jmtuARn
-         yUU3jPw70bWl5Ls4UMe0XqSoeFdF9+7qjiVLEwxzxZpBaYoinPcFQO5hndMX15hpec0T
-         ns/TF+lF5oyX2tWwvNfo0X0WluGtb/xq4tIPY=
-Received: by 10.86.90.13 with SMTP id n13mr1161441fgb.3.1216925274293;
-        Thu, 24 Jul 2008 11:47:54 -0700 (PDT)
-Received: by 10.86.91.2 with HTTP; Thu, 24 Jul 2008 11:47:54 -0700 (PDT)
-In-Reply-To: <20080724171952.GB21043@sigill.intra.peff.net>
+        b=CRlnWNp1314alkXHJ+4fPT12BBqYEftETRH0pob9Lh40e3INeN6ihaRiB3raYjcqVx
+         4yHejztFg3zRU0n0QrFMTW0R4W6Ey8GIx8eMrrlgWGrmzPpuGDFqJCx1zkK6JyLYAKI6
+         fd1dX7Vgb+/qqShP0gXokZPVtktvHQJnlAUNY=
+Received: by 10.142.254.8 with SMTP id b8mr218427wfi.58.1216925459460;
+        Thu, 24 Jul 2008 11:50:59 -0700 (PDT)
+Received: by 10.142.203.6 with HTTP; Thu, 24 Jul 2008 11:50:59 -0700 (PDT)
+In-Reply-To: <200807242018.27663.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89937>
 
-On 7/25/08, Jeff King <peff@peff.net> wrote:
-> On Wed, Jul 23, 2008 at 09:57:18PM +0700, Nguyen Thai Ngoc Duy wrote:
+>> >    01. What country are you in?
+>> >    02. What is your preferred non-programming language?
+>> >   (or) What is the language you want computer communicate with you?
+>>
+>> How about:  What is your preferred natural language?
 >
->  > +             if (option_sparse_prefix) {
->  > +                     git_config_set("core.sparsecheckout", option_sparse_prefix);
->  > +                     set_sparse_prefix(option_sparse_prefix);
->  > +             }
->  > +
->
->
-> As a user, I would expect "sparse clone" to also be sparse on the
->  fetching. That is, to not even bother fetching tree objects that we are
->  not going to check out. But that is a whole other can of worms from
->  local sparseness, so I think it is worth saving for a different series.
->
->  So instead I would suggest that this be mentioned in the documentation
->  for --path, but there doesn't seem to be any.
+> Perhaps it is a better formulation. I am not native English speaker.
+> (But so would be some people who would answer this survey).
 
-Thanks. Will mention it when I write documentation for this.
+According to Wikipedia
+(http://en.wikipedia.org/wiki/Natural_language), "natural language"
+could include, for example, bee dances.  "...a language that is
+spoken, written, or signed by animals for general-purpose
+communication..."  And, it might also exclude constructed languages
+like Esperanto and Klingon.  How about:
+
+02. What language do you prefer to use when communicating with people?
+
+In case there are, for example, any Klingons, sentient machines, etc.,
+in the audience, the sentence does not assume the answerer is human...
+ :-)  It's a tricky question to write.
+
+I'm a total newbie here, by the way.
+
+01. USA
+02. Probably best I stick to English, but I'm willing to negotiate.
+06. Not sure yet.
+09. Last month.  I think.
+
 -- 
-Duy
+:-) Lachele
+Lachele Foley
+CCRC/UGA
