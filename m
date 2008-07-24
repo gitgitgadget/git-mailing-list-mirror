@@ -1,66 +1,79 @@
-From: Sean Estabrooks <seanlkml@sympatico.ca>
-Subject: Re: Submodules: Publishing a locally created submodule.
-Date: Thu, 24 Jul 2008 12:21:30 -0400
-Message-ID: <BLU0-SMTP14B7D0278740B42D339433AE870@phx.gbl>
-References: <18071eea0807240840g79da962ci8fbc65546d496323@mail.gmail.com>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: git-svn does not seems to work with crlf convertion enabled.
+Date: Thu, 24 Jul 2008 12:28:00 -0400
+Message-ID: <32541b130807240928u695277bfx4873a3f782e3abc@mail.gmail.com>
+References: <200807231544.23472.litvinov2004@gmail.com>
+	 <alpine.DEB.1.00.0807231117290.2830@eeepc-johanness>
+	 <200807231852.10206.litvinov2004@gmail.com>
+	 <20080724142453.GV2925@dpotapov.dyndns.org>
+	 <alpine.DEB.1.00.0807241539400.8986@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "git mailing list" <git@vger.kernel.org>
-To: "Thomas Adam" <thomas.adam22@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 18:28:50 2008
+Cc: "Dmitry Potapov" <dpotapov@gmail.com>,
+	"Alexander Litvinov" <litvinov2004@gmail.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 24 18:29:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM3gP-0004VA-In
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 18:28:50 +0200
+	id 1KM3gf-0004ad-QR
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 18:29:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752009AbYGXQ1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 12:27:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751816AbYGXQ1u
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 12:27:50 -0400
-Received: from blu0-omc3-s12.blu0.hotmail.com ([65.55.116.87]:44283 "EHLO
-	blu0-omc3-s12.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751884AbYGXQ1t (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Jul 2008 12:27:49 -0400
-X-Greylist: delayed 370 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Jul 2008 12:27:49 EDT
-Received: from BLU0-SMTP14 ([65.55.116.72]) by blu0-omc3-s12.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 24 Jul 2008 09:21:38 -0700
-X-Originating-IP: [74.14.67.222]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([74.14.67.222]) by BLU0-SMTP14.blu0.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Thu, 24 Jul 2008 09:21:38 -0700
-Received: from bud.attic.local ([10.10.10.20])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1KM4V6-0000gJ-3d; Thu, 24 Jul 2008 13:21:12 -0400
-In-Reply-To: <18071eea0807240840g79da962ci8fbc65546d496323@mail.gmail.com>
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; x86_64-pc-linux-gnu)
-X-OriginalArrivalTime: 24 Jul 2008 16:21:38.0218 (UTC) FILETIME=[593858A0:01C8EDA9]
+	id S1751763AbYGXQ2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 12:28:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751816AbYGXQ2E
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 12:28:04 -0400
+Received: from py-out-1112.google.com ([64.233.166.178]:43101 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751604AbYGXQ2C (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 12:28:02 -0400
+Received: by py-out-1112.google.com with SMTP id p76so2161577pyb.10
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 09:28:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Zd7Fr4IZJIIN+aartRP1d4kif/2fIOQ1GNbVNes58vA=;
+        b=xBrqPyCWsotYHVwf5y48uNeTa0AsSMr3z4ryWUYDI5NBnpbNvACs/wr9OsLftXkWtj
+         3SO7Y5BmZUqAHLPP1tplxqArKCi0rWYrIQeaYVKdnRGmAcOndoVZtN7VegAsQceNekdx
+         vPU7TPKMBFmvL53jnhtMGPerBctZnKlAGW0uc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=NO20Ua49Vu1AoqZMthTHgXr0epsNEVRNm/hy7qwM2h/o2WLBdMC6cpT4Z03nOAaIb3
+         z4xcyAJCtLn6CpBBczDH99DwEgJcRaK5YLGCZoRpvotVVZFLt4YMoOUH882Vy3/rcD0/
+         VTMUjQeL3plFp59IJUggSkwrlDN68BO4DVihw=
+Received: by 10.65.93.12 with SMTP id v12mr839766qbl.72.1216916881526;
+        Thu, 24 Jul 2008 09:28:01 -0700 (PDT)
+Received: by 10.150.96.5 with HTTP; Thu, 24 Jul 2008 09:28:00 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0807241539400.8986@racer>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89902>
 
-On Thu, 24 Jul 2008 16:40:43 +0100
-"Thomas Adam" <thomas.adam22@gmail.com> wrote:
+On 7/24/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>  On Thu, 24 Jul 2008, Dmitry Potapov wrote:
+>  > Practically all Windows editors do not have problems to open and edit
+>  > files with LF endings, but some of them will write back using CRLF.
+>
+> 95.23% of all statistics are made up on the spot.  I would be surprised if
+>  that was not the case here.
 
-> Now:  I want to make mysubmoduleB a submodule which I can publish to
-> the shared repository and when others pull, to see that submodule and
-> be able to treat it as such.
+Without assigning a specific number, Dmitry's experience matches mine.
+ I haven't seen an editor that can't *read* LF since notepad.  But
+many of them happily mangle the files.
 
-Hi Thomas,
+Of course, notepad is probably at least 50% of the editors most
+Windows users actually use, on a per-transaction basis.
 
-Submodules are very much fully formed independent repositories.   So the
-first step is to create a new Git repo that holds the files you want.  Publish
-this repo in a public place, presumably the same place you published your
-other submodules.
+Have fun,
 
-In your supermodule use  "git submodule add" to include the new public repo
-as a submodule in the directory of your choice.   After which you can commit
-the change and push it out.  Other people will need to do "git submodule update"
-to make their repos aware of the new submodule.
-
-HTH,
-Sean
+Avery
