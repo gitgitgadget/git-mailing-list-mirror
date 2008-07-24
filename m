@@ -1,68 +1,72 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: sparse fetch, was Re: [PATCH 08/12] git-clone: support --path to do
- sparse clone
-Date: Thu, 24 Jul 2008 18:41:03 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807241837441.8986@racer>
-References: <20080723145718.GA29134@laptop> <20080724171952.GB21043@sigill.intra.peff.net>
+Subject: Re: [PATCH v2] t6030 (bisect): work around Mac OS X "ls"
+Date: Thu, 24 Jul 2008 18:44:12 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807241842030.8986@racer>
+References: <Pine.GSO.4.62.0807232014030.14945@harper.uchicago.edu> <200807240757.26290.chriscool@tuxfamily.org> <20080724060647.GA24587@glandium.org> <Pine.GSO.4.62.0807240233310.27074@harper.uchicago.edu> <20080724165434.GA26660@glandium.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 24 19:42:30 2008
+Cc: Jonathan Nieder <jrnieder@uchicago.edu>,
+	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Jul 24 19:45:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM4pP-00010Y-Pc
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 19:42:12 +0200
+	id 1KM4sK-0002DY-4f
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 19:45:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751507AbYGXRlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 13:41:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751407AbYGXRlD
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 13:41:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37744 "HELO mail.gmx.net"
+	id S1751704AbYGXRoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 13:44:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751605AbYGXRoL
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 13:44:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50658 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751190AbYGXRlB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 13:41:01 -0400
-Received: (qmail invoked by alias); 24 Jul 2008 17:40:59 -0000
+	id S1751594AbYGXRoJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 13:44:09 -0400
+Received: (qmail invoked by alias); 24 Jul 2008 17:44:08 -0000
 Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp031) with SMTP; 24 Jul 2008 19:40:59 +0200
+  by mail.gmx.net (mp067) with SMTP; 24 Jul 2008 19:44:08 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX183bTN5xoo39bryx+ewVcsHqlyDbD+IDW4ni0T+t1
-	44/WRdpHhDK4Hr
+X-Provags-ID: V01U2FsdGVkX18LnrtvZ9wL0rIlgIjZ4hzJWmgxy2qOc0T+VwwoCQ
+	v/PzKm5+F4bJLd
 X-X-Sender: gene099@racer
-In-Reply-To: <20080724171952.GB21043@sigill.intra.peff.net>
+In-Reply-To: <20080724165434.GA26660@glandium.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.75
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89922>
 
 Hi,
 
-On Thu, 24 Jul 2008, Jeff King wrote:
+On Thu, 24 Jul 2008, Mike Hommey wrote:
 
-> As a user, I would expect "sparse clone" to also be sparse on the 
-> fetching. That is, to not even bother fetching tree objects that we are 
-> not going to check out. But that is a whole other can of worms from 
-> local sparseness, so I think it is worth saving for a different series.
+> On Thu, Jul 24, 2008 at 02:43:51AM -0500, Jonathan Nieder wrote:
+>
+> > Mike Hommey wrote:
+> > 
+> > > On Thu, Jul 24, 2008 at 07:57:26AM +0200, Christian Couder wrote:
+> > >
+> > >> +	test -z "$(ls .git/BISECT_*)" &&
+> > > 
+> > > That is still a useless use of ls ;)
+> > 
+> > It is much better than what I wrote, at least.
+> 
+> But could also be written with echo instead of ls.
 
-I think this is not even worth of a series.  Sure, it would have benefits 
-for those who want sparse checkouts.  But it comes for a high price on 
-everyone else:
+Sure, but then it looks uglier:
 
-- security issues (you'd need to open the git protocol to give you 
-  something else than a ref, _including_ refs that were deleted)
+		test ".git/BISECT_*" = "$(echo .git/BISECT_*)" &&
 
-- performance issues (the server would have to do a lot more, faking 
-  commits, or in the alternative serving a gazillion more sessions if the 
-  client does the reconstruction)
+and it is much easier to hide a typo there.
 
-... and I am sure there are tons more issues.
+And now the big question: is it performance critical?  Or is obvious 
+correctness the highest goal here?
 
-Ciao,
+Hth,
 Dscho
