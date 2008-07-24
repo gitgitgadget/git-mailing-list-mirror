@@ -1,116 +1,93 @@
-From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH] Preserve cwd in setup_git_directory()
-Date: Thu, 24 Jul 2008 10:14:41 +0700
-Message-ID: <20080724031441.GA26072@laptop>
+From: "Richie Vos" <jerry.vos@gmail.com>
+Subject: [EGIT PATCH] Support linked resources
+Date: Wed, 23 Jul 2008 22:34:06 -0500
+Message-ID: <5a27b7b0807232034t564e8d45l9f6e4bc6429cda60@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Geoff Russell <geoffrey.russell@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 05:16:07 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 24 05:35:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLrJF-0006AL-K5
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 05:16:06 +0200
+	id 1KLrbh-0001d5-9d
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 05:35:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751256AbYGXDPF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2008 23:15:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751234AbYGXDPF
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 23:15:05 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:12935 "EHLO
+	id S1751288AbYGXDeK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 23:34:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751329AbYGXDeI
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 23:34:08 -0400
+Received: from wf-out-1314.google.com ([209.85.200.171]:15364 "EHLO
 	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751212AbYGXDPC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 23:15:02 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so3169663wfd.4
-        for <git@vger.kernel.org>; Wed, 23 Jul 2008 20:15:02 -0700 (PDT)
+	with ESMTP id S1751306AbYGXDeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 23:34:07 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so3176332wfd.4
+        for <git@vger.kernel.org>; Wed, 23 Jul 2008 20:34:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:subject
-         :message-id:mime-version:content-type:content-disposition
-         :content-transfer-encoding:user-agent;
-        bh=C3X9/4M7v9neMyqoI31mzyZkSuhio9xYA1ViTALtFa0=;
-        b=FGXJB1sjLuXpfY5SsfNhnwDKorF8QJwOVeNp7ROR3R1IG/yGr2EFG/4UGl6Imgz8wt
-         zOh7619LeF8o+AAxiPZoVGkB4+Nny20AAD7tMdBcSs5NmezoJoqRJ4Jr8rxkroH0qpbw
-         dI7uQuOe5f/znbKwBsm1xYEzmtYt1Z9Txc7lI=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=v5Se0Nul8kbapvL69h1bX8+ehcX8SM7f4ZoceemLmGY=;
+        b=U+PC8g97mwDOcm1462dmk6EI4MNb7ADTnMn9gQSpH4bAheKUsRAc9vh8UrQH9cP3hp
+         j+acT3TWlrVe6jIp52azLVKFF6uvs6U7z96j5SgX5VFzPFoKZrYiswY94wa5kifcbBXh
+         +sYgrx6oUCn6StWq1nNeXaHhwHWLr+m8FOxq8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        b=VFBKJZSaYCsc6iAcL1JIS0F2cRhpZ34Lk78wmreAh8RHFRgJQ+x+BdqSALCU+IzrwX
-         /fNFX63xxTmjSBybynvYB81fCVK4vuGq7yCFWuqxSxmdGqLtKvHrCLshieC9JWgVO9HV
-         IiOsamzjQcTTif7CkfTqAROsOUB/a1LecILXg=
-Received: by 10.142.148.10 with SMTP id v10mr237159wfd.51.1216869302234;
-        Wed, 23 Jul 2008 20:15:02 -0700 (PDT)
-Received: from pclouds@gmail.com ( [117.5.2.9])
-        by mx.google.com with ESMTPS id 22sm12418876wfd.7.2008.07.23.20.14.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 23 Jul 2008 20:15:01 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 24 Jul 2008 10:14:42 +0700
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=W5xlbycOpdZ/1A0RSnQT/s1xtbqod4tIEdgiYvfCocm5r7A4tsfy1QosaeJiP7h01l
+         RDJBvIr3a0dvxjcqBLwqDeKkrjZYL5WqjdXIkhzWBnwJJ9osnXesQhLU/MeF4KE5jp1i
+         vBUU+qQ/SBzOntJl8ZvYk1PjnVM7usJUcmFC8=
+Received: by 10.142.180.11 with SMTP id c11mr235225wff.159.1216870446892;
+        Wed, 23 Jul 2008 20:34:06 -0700 (PDT)
+Received: by 10.142.241.5 with HTTP; Wed, 23 Jul 2008 20:34:06 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89832>
 
-When GIT_DIR is not set, cwd is used to determine where .git is.
-If core.worktree is set, setup_git_directory() needs to jump back
-to the original cwd in order to calculate worktree, this leads to
-incorrect .git location later in setup_work_tree().
+I have a project that outputs to a linked directory (for example the
+project is in /projects/foo and the project outputs to /projects/bar).
+This was causing egit to throw a bunch of "file is not in working
+path" errors whenever I rebuilt the project or otherwise interacted
+with that linked directory. I tracked it down to GitIndex's add/remove
+being called on these files even though these files are not part of
+the actual index.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+It seems like egit shouldn't be trying to interact with the index on
+these files, and after looking at it, I decided the best solution
+would be to realize in the RepositoryMapping that these files do not
+point to a repository.
+
+I wasn't sure what the best solution for deciding if a file was in the
+same location as the project it is referenced in, but I somewhat
+modeled it off of the way GitIndex's makeKey does its validation.
+
+Patch:
+Fixed 'Path is not in working directory' error for linked resources
+
+Signed-off-by: Reg Vos <jerry.vos@gmail.com>
 ---
- setup.c             |    4 ++++
- t/t1501-worktree.sh |   13 ++++++++++++-
- 2 files changed, 16 insertions(+), 1 deletions(-)
+ .../egit/core/project/RepositoryMapping.java       |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-diff --git a/setup.c b/setup.c
-index 6cf9094..ef58761 100644
---- a/setup.c
-+++ b/setup.c
-@@ -577,10 +577,14 @@ const char *setup_git_directory(void)
- 	/* If the work tree is not the default one, recompute prefix */
- 	if (inside_work_tree < 0) {
- 		static char buffer[PATH_MAX + 1];
-+		static char cwd[PATH_MAX + 1];
- 		char *rel;
-+		getcwd(cwd, PATH_MAX);
- 		if (retval && chdir(retval))
- 			die ("Could not jump back into original cwd");
- 		rel =3D get_relative_cwd(buffer, PATH_MAX, get_git_work_tree());
-+		if (retval && chdir(cwd))
-+			die ("Could not jump back into original cwd");
- 		return rel && *rel ? strcat(rel, "/") : NULL;
- 	}
-=20
-diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-index 2ee88d8..64f8dea 100755
---- a/t/t1501-worktree.sh
-+++ b/t/t1501-worktree.sh
-@@ -29,7 +29,18 @@ test_rev_parse() {
- }
-=20
- mkdir -p work/sub/dir || exit 1
--mv .git repo.git || exit 1
-+
-+git config core.worktree "$(pwd)"/work
-+mv .git work || exit 1
-+test_expect_success '--git-dir with relative .git' '
-+	(
-+	MYPWD=3D"$(pwd)"
-+	cd work/sub/dir &&
-+	test "$MYPWD"/work/.git =3D "$(git rev-parse --git-dir)"
-+	)
-+'
-+
-+mv work/.git repo.git || exit 1
-=20
- say "core.worktree =3D relative path"
- GIT_DIR=3Drepo.git
---=20
-1.5.5.GIT
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
+b/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
+index 6a0b56f..5863a49 100644
+--- a/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
++++ b/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
+@@ -236,6 +236,8 @@ public class RepositoryMapping {
+ 		IProject project = resource.getProject();
+ 		if (project == null)
+ 			return null;
++		if (!project.getLocation().isPrefixOf(resource.getLocation()))
++			return null;
+ 		RepositoryProvider provider = RepositoryProvider.getProvider(project);
+ 		if (!(provider instanceof GitProvider))
+ 			return null;
+-- 
+1.5.4.2
