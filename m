@@ -1,46 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] (unnamed)
-Date: Wed, 23 Jul 2008 17:58:45 -0700
-Message-ID: <7v63qw85dm.fsf@gitster.siamese.dyndns.org>
-References: <7vej5k8719.fsf@gitster.siamese.dyndns.org>
+From: "Geoff Russell" <geoffrey.russell@gmail.com>
+Subject: Moving .git around
+Date: Thu, 24 Jul 2008 11:02:02 +0930
+Message-ID: <93c3eada0807231832o6b7689c4j2913253d7ced62ba@mail.gmail.com>
+Reply-To: geoffrey.russell@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Jul 24 02:59:53 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 24 03:33:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLpBQ-0001R4-Jq
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 02:59:53 +0200
+	id 1KLpha-0007vJ-Vl
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 03:33:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751040AbYGXA6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2008 20:58:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751016AbYGXA6x
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 20:58:53 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40687 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750958AbYGXA6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2008 20:58:52 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 88CE0394C9;
-	Wed, 23 Jul 2008 20:58:51 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0F1FF394C8; Wed, 23 Jul 2008 20:58:48 -0400 (EDT)
-In-Reply-To: <7vej5k8719.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 23 Jul 2008 17:22:58 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: AE5FAF3A-591B-11DD-BE6B-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1751121AbYGXBcH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2008 21:32:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750995AbYGXBcG
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jul 2008 21:32:06 -0400
+Received: from an-out-0708.google.com ([209.85.132.249]:57078 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750899AbYGXBcE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2008 21:32:04 -0400
+Received: by an-out-0708.google.com with SMTP id d40so592758and.103
+        for <git@vger.kernel.org>; Wed, 23 Jul 2008 18:32:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=0lOJhyQYQM1guCdVeVvz7ZW5dlqMozL8CRbd7MyDTmk=;
+        b=DGzOc+2WnXRW8lwho5wQoiLiDAxvuaAvWsnJgcU5Aqf9fsJg5+nCVdKhm2qBnaRdKl
+         z6yVYSqC7yTbPMmSf8s09EaKXJAIB5oaac0mR2xmCQJQVKMtbRYrEzARmo8mBH5ljNpf
+         YbVoPTdDylvmF2V1+vcm8kU31bvQY8K4+e/9M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=LcOZqtTmRzcW8GkwksLJhjxhkStP4sFw5rhjr9yrU4yZvI9nQjjya1ixbGWBaSMMTa
+         405XyqS5x5vyaEFt2Bhf31tqPGsACQp32v6RndAXrspgVaQdoJ8Tfz3XWfys0fKnGnAD
+         OIACfNKUdVkJQc57syH+WdfX+mz3biY5jI8a8=
+Received: by 10.100.31.3 with SMTP id e3mr734483ane.21.1216863122873;
+        Wed, 23 Jul 2008 18:32:02 -0700 (PDT)
+Received: by 10.100.8.15 with HTTP; Wed, 23 Jul 2008 18:32:02 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89824>
 
-Ooops.
+For reasons which would take a while to explain, I'm building a repository
+in a directory  using "--git-dir=xxxx/.git --work-tree=." and
+then doing an "mv  xxxx/.git ./.git"  and then trying to work with
+that repository  --- but can't
 
-I sent out before I can decide what the title should be.  Sorry, will
-think of something.
+Below is a sample script. The last line (git add) fails with
+
+fatal: unable to create
+'/usr/local/AusTop/AuPrograms/AuServer/testgit/aaa/bbb/.git/index.lock':
+No such file or directory
+
+git doesn't seem to realise that there is a .git back up the tree.
+
+I'm using 1.5.5.1
+
+Cheers,
+Geoff Russell
+
+------------------------ sample script
+#!/bin/sh
+if [ -d "testgit" ] ; then
+    echo "remove testgit"
+    /bin/rm -rf testgit
+fi
+mkdir testgit && echo yyyy >testgit/sample.sh && cd testgit
+mkdir aaa && mkdir aaa/bbb
+echo xxxx > aaa/bbb/sample2.sh
+mkdir xxx
+git --git-dir=xxx/.git --work-tree=. init
+git --git-dir=xxx/.git --work-tree=. add *.sh
+git --git-dir=xxx/.git --work-tree=. commit  -m demo
+mv xxx/.git .
+cd aaa/bbb
+git add sample2.sh
