@@ -1,142 +1,152 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [RFC PATCH 00/12] Sparse checkout
-Date: Thu, 24 Jul 2008 16:00:16 +0700
-Message-ID: <fcaeb9bf0807240200x10a6a267h4c37e4566da967ba@mail.gmail.com>
+Date: Thu, 24 Jul 2008 02:35:45 -0700 (PDT)
+Message-ID: <m3tzefvd3q.fsf@localhost.localdomain>
 References: <20080723145518.GA29035@laptop>
-	 <loom.20080724T065737-580@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "James Pickens" <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 11:01:22 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: =?utf-8?b?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?utf-8?b?YyBEdXk=?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 11:36:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLwhM-0005sB-HS
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 11:01:20 +0200
+	id 1KLxFh-0001qW-As
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 11:36:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751414AbYGXJAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 05:00:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751411AbYGXJAT
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 05:00:19 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:56022 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751384AbYGXJAS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 05:00:18 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1343664fgg.17
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 02:00:16 -0700 (PDT)
+	id S1754805AbYGXJfu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 05:35:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751657AbYGXJfu
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 05:35:50 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:14625 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754729AbYGXJft convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Jul 2008 05:35:49 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so1035987nfc.21
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 02:35:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=OewAsd8jQT+nruqvdFTQMROQkMcj97XIVhK6/CsXyA0=;
-        b=Qdcr1BCe1bNzJv/sFikNt4uYEW1LVT3Mod7MamX822LPPUQkeUlxcULSy4x+dQ9e1P
-         EnsisDgsPotBERQyBALvFurRD/6nnyFshklw0C0bi8vR13vuzzewKy0xfcBSiGDvrYoe
-         FlI2Gy1OovSln0RbEOIQtZUiOIXSoCJC+snOY=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding:date;
+        bh=v73VitHsvOd/7hqNqSQHGwCwzkCsV8aGPxrFjY/r7v8=;
+        b=ncNduiHWjLCUdGPcC4ZviHe8R+WLCVc2P5KC91kcDI9bS/cxO3X2zrn3MKuSbss9b6
+         VAK41qFu9lBWVOpFXMruIyL+PxNignUa1iULaiab5A8D711/GC+sLH0+Hds085ilmobt
+         Nd23XqMwnDcuHp/cgNEGVMMZIrJ4nSW77jvH8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=fmkS1xDXPz+G1NcFXc+fuwtk5op0dZaJpwWoBmNA7vorLHCTgtsCIP94JD2bbhowff
-         uZ2QHXoh3xvdGaxKkmNyZdO1f2EcBCaqzYBYGdRJSbRCQnz/NjaNrCzRBlBf92xF9yiC
-         jGGJo9O9y2wJW6AhNRUuTbfawQ3JmDViUxfks=
-Received: by 10.86.70.11 with SMTP id s11mr641126fga.45.1216890016454;
-        Thu, 24 Jul 2008 02:00:16 -0700 (PDT)
-Received: by 10.86.91.2 with HTTP; Thu, 24 Jul 2008 02:00:16 -0700 (PDT)
-In-Reply-To: <loom.20080724T065737-580@post.gmane.org>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding:date;
+        b=SrLiPCkAz7wE8TA9GtFUTatylTtKTUk06vXxHMNKJ7kCBymR3GazKAMFKVQKUBNNo2
+         pPZmmHr3Rwe4L55h85ZzgC3GBzHTRkbDraWLFr1ZFd9pQy9lFnRgnN/dXKSlp667N2yG
+         EB+C6Mjt8xgvQTd1Vh/IJOLcJnpdyxjGRE+dI=
+Received: by 10.210.59.14 with SMTP id h14mr56119eba.104.1216892146699;
+        Thu, 24 Jul 2008 02:35:46 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.208.47])
+        by mx.google.com with ESMTPS id 32sm6473253nfu.10.2008.07.24.02.35.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 24 Jul 2008 02:35:45 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m6O9Zfr7003290;
+	Thu, 24 Jul 2008 11:35:41 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m6O9ZbpP003287;
+	Thu, 24 Jul 2008 11:35:37 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20080723145518.GA29035@laptop>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89857>
 
-On 7/24/08, James Pickens <jepicken@gmail.com> wrote:
-> Nguyen Thai Ngoc Duy <pclouds <at> gmail.com> writes:
->
->  > I have not looked at non-builtin commands yet, but I think it's not
->  > a big deal. We have several rounds before this series is good enough ;)
->  > So in short, sparse prefix will be stored in config, core.sparsecheckout.
->  > you have three new commands to enter/update/leave sparse checkout:
->  >
->  > git clone --path=prefix       # clone with sparse checkout
->  > git checkout --path=prefix    # limit/update checkout paths
->  > git checkout --full           # stop sparse checkout
->  >
->
->
-> First things first, thanks a lot for working on this feature.  I have an
->  enormous project in CVS (144GB repo, containing 65000 directories and
->  463000 files) that I've been wanting to convert to git for a while now,
->  and the lack of sparse checkouts was the only thing about git that was
->  standing in the way.  The project is so big that checking out the whole
->  tree all the time is unworkable, and I think my coworkers would hang me
->  if I tried to make them use submodules.  We already use sparse checkouts
->  in CVS to make it manageable, so sparse checkout support in git would
->  vastly simplify the transition.
->
->  I played around with the patch briefly, and I have a couple of comments
->  on the interface.
->
->  First, I would want a capability to checkout a directory non-recursively.
->  I.e., checkout directory A/B, without also checking out directory A/B/C.
->  Perhaps a modifier could be added to a path element to make it
->  non-recursive.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-This one is difficult (and may probably produce more intrusive patch).
-Let's see what I can do.
+> I have not looked at non-builtin commands yet, but I think it's not
+> a big deal. We have several rounds before this series is good enough =
+;)
+> So in short, sparse prefix will be stored in config, core.sparsecheck=
+out.
+> you have three new commands to enter/update/leave sparse checkout:
+>=20
+> git clone --path=3Dprefix       # clone with sparse checkout
+> git checkout --path=3Dprefix    # limit/update checkout paths
+> git checkout --full           # stop sparse checkout
+>=20
+> Other operations should be normal. User attempts to do anything outsi=
+de
+> sparse checkout will get flagged. Git itself should not touch anythin=
+g
+> outside sparse checkout.
+>=20
+> One more thing. As files outside sparse checkout will not be checking
+> out, .gitignore and .gitattributes from parent directories (outside
+> sparse checkout) will be gone too. This may lead to surprise.
+>=20
+> Comments are welcome.
 
->  Second, I would want a capability to checkout and release directories
->  incrementally, similar to how we do it in cvs.  For example, I might do
->  the following in cvs:
->
->  $ cvs co -l A         # Checkout dir A non-recursively
->  $ cd A
->  $ cvs up -l -d B1 B2  # Checkout dirs A/B1 and A/B2 non-recursively
->  $ cd B1
->  $ cvs up -d C1 C2     # Checkout dirs A/B1/C1 and A/B1/C2 recursively
->  (Oops, didn't need C2)
->  $ cvs release -d C2
->  At this point I would have the following directory tree, assuming the C1
->  directory in the repo contained a D1 directory:
->
->  A/
->  A/B1/
->  A/B1/C1/
->  A/B1/C1/D1/
->  A/B2/
->
->  A similar capability in git would be much appreciated.
-
-You can do that with "git checkout --path" (non-recursive checkout aside):
-
-$ git checkout --path=A                     # checkout full A
-$ git checkout --path=A/B1/C1               # no, limit to A/B1/C1 only
-$ git checkout --path=A/B1/C1:A/B2          # extend to A/B2 too
-
->
->  Finally, I noticed what I think is a bug: if you do a partial checkout of
->  a non-existing directory, you just get an empty tree.  I would expect to
->  get an error message in that case.
-
-Thanks.
-
->  I hope this is helpful, and thanks again for working on this.
->
->  James
->
->
->
->  --
->  To unsubscribe from this list: send the line "unsubscribe git" in
->  the body of a message to majordomo@vger.kernel.org
->  More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+A note: my comments here reflects what I have remember from reading
+comments in this thread; I have not examined the code, though.
 
 
--- 
-Duy
+=46irst, I think that 'sparse checkout' is a better idea than former
+'subtree (partial) checkout'; and I guess it could be easier to code.
+
+
+Second, I think you can simply special case .git* files (.gitignore,
+=2Egitattributes, .gitmodules), and always check them out for all
+intermediate directories (unless configured otherwise, of course).
+So for example if you have the following directory structure:
+
+  A/.gitignore
+  A/a
+  A/B1/.gitignore
+  A/B1/b
+  A/B2/.gitignore
+  A/B2/c
+
+and you are checking out only subdirectory 'B1' (and all files in it;
+if subdirectories are checked out recursively it depends on
+configuration), and if for example there is .gitignore in every
+directory, then checked out tree would look like this:
+
+  A/.gitignore
+  A/B1/.gitignore
+  A/B1/b
+
+The ability to do this is one of advantages of 'sparse' checkout over
+'subtree' checkout.
+
+
+Third, about the place where to store information about which paths
+are checked out, and which are not.  There are three possible places
+to store this information:
+
+  1. repository configuration, e.g. `core.sparsecheckout' variable
+     (multivalued?), like for `core.worktree'
+
+  2. some text file in $GIT_DIR, e.g. '.git/sparse', like for shallow
+     clone ("git clone --depth <depth>") it is grafts-like
+     $GIT_DIR/shallow (see Documentation/technical/shallow.txt).
+
+  3. in the index itseld ($GIT_DIR/index), as proposed by Johannes
+     Schindelin.
+
+While I do think that some information about sparseness should be in
+the index, for git to be able to commit from the index for example,
+I don't think it is a good place as the only/main place to store
+information about which paths are checked out; I think that because
+IMVHO git commands should survive hosing (removing) index file.
+
+Just my 2 eurocents.
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
