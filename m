@@ -1,86 +1,73 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: git-svn does not seems to work with crlf convertion enabled.
-Date: Thu, 24 Jul 2008 18:24:53 +0400
-Message-ID: <20080724142453.GV2925@dpotapov.dyndns.org>
-References: <200807231544.23472.litvinov2004@gmail.com> <alpine.DEB.1.00.0807231117290.2830@eeepc-johanness> <200807231852.10206.litvinov2004@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Respect crlf attribute in "git add" even if core.autocrlf
+ has not been set
+Date: Thu, 24 Jul 2008 15:38:39 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807241537000.8986@racer>
+References: <alpine.DEB.1.00.0807222255450.8986@racer> <7vy73tihl6.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807230203350.8986@racer> <alpine.DEB.1.00.0807230229410.8986@racer> <719E03C0-E8C3-4C35-AE9C-9BD5A7BCDF03@zib.de> <20080723114022.GP2925@dpotapov.dyndns.org>
+ <FCAEAB20-750E-47B9-B58D-9BB0CB1EEAFF@zib.de> <20080724140959.GU2925@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Alexander Litvinov <litvinov2004@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 16:26:03 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 16:40:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KM1lZ-0002af-3J
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 16:26:01 +0200
+	id 1KM1yx-0008M4-PL
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 16:39:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752012AbYGXOZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 10:25:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752009AbYGXOZA
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 10:25:00 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:37432 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751937AbYGXOY7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 10:24:59 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so595998ugf.16
-        for <git@vger.kernel.org>; Thu, 24 Jul 2008 07:24:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=0Ibw24mcugAaqukhBATezUj36QGHH6WrR4AHlVU0ODc=;
-        b=odpCnhC7eMSzQG67Fyj91XKVBevTYvHNZI1kVpQOC8EW8qecF0bZgK/7pky4EpcFE2
-         6bx9EnyGKXpUGTM33idtJvtHM9nY1J+eviK1xI4LeSFyUqJ1Mqtyy2VRTZkvAsEvbsY5
-         ohbJv07kJWG92V9c+h5e1jQbWr7x2ok9F+QtE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=L1iP0sjf5+II1HC4fRFi2kOnowb6B4nx0VZ20/4HicHwD+4qoqxyi4B/fgC+eWc2N3
-         MGm5tgb1n28bx94WoU9xXwXUysBuF2AAhIgqhNghT6eQyMSvehZRSUsC9y3psA6/P84R
-         dMK37mJC9K8VE8MVsISbu3BS4jBLnaxws4Mvk=
-Received: by 10.103.204.1 with SMTP id g1mr131081muq.9.1216909496702;
-        Thu, 24 Jul 2008 07:24:56 -0700 (PDT)
-Received: from localhost ( [85.140.170.251])
-        by mx.google.com with ESMTPS id g1sm60535058muf.7.2008.07.24.07.24.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 24 Jul 2008 07:24:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <200807231852.10206.litvinov2004@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756115AbYGXOij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 10:38:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752830AbYGXOii
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 10:38:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54894 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756035AbYGXOih (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 10:38:37 -0400
+Received: (qmail invoked by alias); 24 Jul 2008 14:38:35 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp032) with SMTP; 24 Jul 2008 16:38:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/0SaYfBlH09ceZvfQON9iyVpT+4sEpzNbX+InbzL
+	P0Lpog2rSx/Gn4
+X-X-Sender: gene099@racer
+In-Reply-To: <20080724140959.GU2925@dpotapov.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89888>
 
-On Wed, Jul 23, 2008 at 06:52:09PM +0700, Alexander Litvinov wrote:
-> > On Wed, 23 Jul 2008, Alexander Litvinov wrote:
-> > > In short: I can't clone svn repo into git when crlf convertion is
-> > > activated.
-> >
-> > This is a known issue, but since nobody with that itch seems to care
-> > enough to fix it, I doubt it will ever be fixed.
+Hi,
+
+On Thu, 24 Jul 2008, Dmitry Potapov wrote:
+
+> On Thu, Jul 24, 2008 at 08:06:29AM +0200, Steffen Prohaska wrote:
+> > 
+> >   I am the maintainer of this project.  I know that this project needs 
+> >   crlf conversion, because it is a cross-platform project.  
+> >   Therefore, I want to force crlf conversion for this specific 
+> >   project, even if the user did not configure core.autocrlf=input on 
+> >   Unix.
 > 
-> That is a bad news for me. Anyway I will spend some time at holidays during 
-> digging this bug. 
+> I suspect that most problems with crlf is caused by Windows users who 
+> have core.autocrlf=false for whatever reason (I suspect without a good 
+> reason in most cases).
 
-I don't want to discourage from digging into this problem, but there are
-two reasons why no one has fixed this issue yet. First, configuration
-CRLF conversion in Git and SVN is quite different, so it may not be easy
-to have the solution that will work in all cases. Second, in many cases,
-you can workaround this issue.
+Almost correct.  It is _unset_!  And it should be perfectly valid for 
+users not having to set anything there.
 
-If I understood your situation correctly, you use SVN repo where text
-files are marked with svn:eol-style=native. In this case, SVN stores
-these files with LF endings internally, and git-svn receives files in
-that format (at least, it is so on Debian).  Practically all Windows
-editors do not have problems to open and edit files with LF endings, but
-some of them will write back using CRLF. You do not want CRLF to get in
-your Git repository, so you can do that by setting core.autocrlf=input.
-This might work for you...
+> But perhaps having core.autocrlf=input as default on Unix and Mac will 
+> be better than the current core.autocrlf=false.
 
-Dmitry
+Have you read Junio's reply?  If so, how can you suggest any change for 
+Unix and Mac?
+
+Ciao,
+Dscho
