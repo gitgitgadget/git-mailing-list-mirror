@@ -1,138 +1,82 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] Respect crlf attribute in "git add" even if core.autocrlf has not been set
-Date: Thu, 24 Jul 2008 08:06:29 +0200
-Message-ID: <FCAEAB20-750E-47B9-B58D-9BB0CB1EEAFF@zib.de>
-References: <alpine.DEB.1.00.0807222255450.8986@racer> <7vy73tihl6.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807230203350.8986@racer> <alpine.DEB.1.00.0807230229410.8986@racer> <719E03C0-E8C3-4C35-AE9C-9BD5A7BCDF03@zib.de> <20080723114022.GP2925@dpotapov.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dmitry Potapov <dpotapov@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 24 08:08:02 2008
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] t6030 (bisect): work around Mac OS X "ls"
+Date: Thu, 24 Jul 2008 08:06:47 +0200
+Organization: glandium.org
+Message-ID: <20080724060647.GA24587@glandium.org>
+References: <Pine.GSO.4.62.0807232014030.14945@harper.uchicago.edu> <200807240757.26290.chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@uchicago.edu>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Thu Jul 24 08:08:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KLtzc-0003AX-Q0
-	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 08:08:01 +0200
+	id 1KLtzn-0003DI-VH
+	for gcvg-git-2@gmane.org; Thu, 24 Jul 2008 08:08:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752618AbYGXGG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 02:06:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752616AbYGXGG7
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 02:06:59 -0400
-Received: from mailer.zib.de ([130.73.108.11]:52795 "EHLO mailer.zib.de"
+	id S1752616AbYGXGHG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jul 2008 02:07:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752632AbYGXGHG
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 02:07:06 -0400
+Received: from vuizook.err.no ([194.24.252.247]:51474 "EHLO vuizook.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752433AbYGXGG6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2008 02:06:58 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m6O667Yp001203;
-	Thu, 24 Jul 2008 08:06:12 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db912b9.pool.einsundeins.de [77.185.18.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m6O665B9003815
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 24 Jul 2008 08:06:06 +0200 (MEST)
-In-Reply-To: <20080723114022.GP2925@dpotapov.dyndns.org>
-X-Mailer: Apple Mail (2.926)
+	id S1752630AbYGXGHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 02:07:05 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1KLtyZ-0008Bj-34; Thu, 24 Jul 2008 08:07:01 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1KLtyR-0006PM-LJ; Thu, 24 Jul 2008 08:06:47 +0200
+Content-Disposition: inline
+In-Reply-To: <200807240757.26290.chriscool@tuxfamily.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89839>
 
+On Thu, Jul 24, 2008 at 07:57:26AM +0200, Christian Couder wrote:
+> Le jeudi 24 juillet 2008, Jonathan Nieder a =E9crit :
+> > t6030-bisect-porcelain.sh relies on "ls" exiting with nonzero
+> > status when asked to list nonexistent files.  Unfortunately,
+> > /bin/ls on Mac OS X 10.3 exits with exit code 0.  So use "echo
+> > <shell glob pattern>" and grep instead.
+> >
+> > Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
+> > ---
+> > 	With this change, all the non-git-svn tests pass on my machine.
+> > 	I think the fix is portable but I do not have the experience to
+> > 	be sure.  So I would be happier if someone looks it over.
+> >
+> >  t/t6030-bisect-porcelain.sh |    2 +-
+> >  1 files changed, 1 insertions(+), 1 deletions(-)
+> >
+> > diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain=
+=2Esh
+> > index 0626544..d19fc1c 100755
+> > --- a/t/t6030-bisect-porcelain.sh
+> > +++ b/t/t6030-bisect-porcelain.sh
+> > @@ -76,7 +76,7 @@ test_expect_success 'bisect fails if given any ju=
+nk
+> > instead of revs' ' test_must_fail git bisect start foo $HASH1 -- &&
+> >  	test_must_fail git bisect start $HASH4 $HASH1 bar -- &&
+> >  	test -z "$(git for-each-ref "refs/bisect/*")" &&
+> > -	test_must_fail ls .git/BISECT_* &&
+> > +	echo .git/BISECT_* | test_must_fail grep BISECT_[^*] &&
+>=20
+> Perhaps the following is simpler:
+>=20
+> +	test -z "$(ls .git/BISECT_*)" &&
 
-On Jul 23, 2008, at 1:40 PM, Dmitry Potapov wrote:
+That is still a useless use of ls ;)
 
-> On Wed, Jul 23, 2008 at 07:49:20AM +0200, Steffen Prohaska wrote:
->>
->> On Jul 23, 2008, at 3:31 AM, Johannes Schindelin wrote:
->>
->>>
->>> -	if ((action == CRLF_BINARY) || !auto_crlf || !len)
->>> +	if ((action == CRLF_BINARY) || (!auto_crlf && action < 0) || !len)
->>
->> I think we should strictly follow the documentation, so this should  
->> read
->>
->> +       if ((action == CRLF_BINARY) || (!auto_crlf && action !=
->> CRLF_INPUT) || !len)
->
-> Well, your expression is correct if we choose to strictly follow to  
-> what
-> the current documentation says, but it is not well written in this  
-> place,
-> and, more importantly, I don't see any use case where you would want  
-> to
-> set crlf=input in .gitattributes, because it is shared among users on
-> different platforms. What you want to specify in it is whether a  
-> file is
-> text or binary. If crlf is set, it means a text file; if unset, it  
-> is a
-> binary file. Regardless of what autocrlf value, I don't see why a text
-> file should be checked in with CRs. So, Dscho's patch makes more sense
-> to me.  This requires correction to the documentation though:
-
-Ok, this and Dscho's earlier mail convinced me.  My patch does not
-make sense at all.  I should have had thought a bit harder ;-)
-
-I have however a related question:
-
-Dscho,
-Is the following your use case?
-
-  "I am the maintainer of this project.  I know that this project needs
-   crlf conversion, because it is a cross-platform project.  Therefore,
-   I want to force crlf conversion for this specific project, even if
-   the user did not configure core.autocrlf=input on Unix."
-
-Your patch provides a solution, though not a very comfortable one.  With
-your patch applied, you could explicitly list all files (or filetypes)
-that are text and mark them with 'crlf'.  Git would not let CRLFs enter
-the repository for these files.  You could also specify 'crlf=input',
-but I don't understand why you want to specify this.  Anyway, you would
-need to explicitly list all text filetypes and explicitly *not list* the
-binary filetypes because they must not be converted.  This is no very
-comfortable, no?
-
-I think what you really want to do is to tell git that the *automatic*
-crlf detection shall be used for all files of your specific project,
-even if the user did not configure core.autocrlf=input.  This would
-avoid listing each filetype separately.
-
-Maybe we could allow 'crlf=guess' in .gitattributes with the following
-documentation:
-
--- 8< --
-Set to string value "guess"::
-
-	Setting `guess` tells git to apply conversion upon checkin
-         if the file content looks like text.  On checkout, however,
-         git applies the conversion specified in `core.autocrlf`.
-         Setting `guess` can be useful to force automatic file type
-         detection for a specific project.
--- >8 --
-
-
-> diff --git a/Documentation/gitattributes.txt b/Documentation/ 
-> gitattributes.txt
-> index d7b4114..448857b 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -99,9 +99,9 @@ This attribute controls the line-ending convention.
-> Set::
->
-> 	Setting the `crlf` attribute on a path is meant to mark
-> -	the path as a "text" file.  'core.autocrlf' conversion
-> -	takes place without guessing the content type by
-> -	inspection.
-> +	the path as a "text" file. Line endings in a text file
-> +	are converted to LF upon checkin, and if 'core.autocrlf'
-> +	is true then to CRLF upon checkout.
->
-> Unset::
-
-Makes sense.
-
-	Steffen
+Mike
