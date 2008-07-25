@@ -1,54 +1,107 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 5/9 v2] Allow the built-in exec path to be relative to
- the command invocation path
-Date: Fri, 25 Jul 2008 10:38:50 +0200
-Message-ID: <4889911A.4040204@viscovery.net>
-References: <1216667998-8879-1-git-send-email-johannes.sixt@telecom.at> <200807232112.18352.johannes.sixt@telecom.at> <7vd4l37vz7.fsf@gitster.siamese.dyndns.org> <200807242124.14583.johannes.sixt@telecom.at> <7v3aly5zz3.fsf@gitster.siamese.dyndns.org> <1216974722.48898f82e80d6@webmail.eunet.at>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase -i: only automatically amend commit if HEAD did
+ not change
+Date: Fri, 25 Jul 2008 01:44:59 -0700
+Message-ID: <7vod4muzck.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0807222235520.8986@racer>
+ <7vmyk888z5.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0807241311450.8986@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Fri Jul 25 10:39:58 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 25 10:46:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMIqC-0007Os-Pe
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 10:39:57 +0200
+	id 1KMIwF-0001dd-KQ
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 10:46:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752296AbYGYIi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 04:38:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752449AbYGYIi5
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 04:38:57 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:5725 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752249AbYGYIi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 04:38:57 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KMIp9-0007cT-C4; Fri, 25 Jul 2008 10:38:51 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 164DCAFCC; Fri, 25 Jul 2008 10:38:51 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <1216974722.48898f82e80d6@webmail.eunet.at>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1755546AbYGYIpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 04:45:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755728AbYGYIpH
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 04:45:07 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40166 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755713AbYGYIpF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 04:45:05 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1FA823A178;
+	Fri, 25 Jul 2008 04:45:05 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id D0EE73A177; Fri, 25 Jul 2008 04:45:01 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FA51238C-5A25-11DD-80B8-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90014>
 
-Johannes Sixt schrieb:
-> Oh, I see: You tested it on Linux, right? This patch series does not work
-> correctly on Linux (Unix? bash?), as Dscho has pointed out, since argv[0]
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-does not work correctly on Linux... *iff gitexecdir is relative*
+>> At what point in what valid workflow sequence does HEAD become different 
+>> from dotest/amend?
+>
+> $ rebase -i HEAD~5
+>
+> 	<mark one commit as edit>
+>
+> 	<Whoa! While editing, I realize that this contains an unrelated 
+> 	 bugfix>
+>
+> $ git reset HEAD^
+> $ git add -p
+> $ git commit
+>
+> 	<Edit a bit here, a bit there>
+>
+> $ git rebase --continue
+>
+> Sure it is a pilot error.  It hit this pilot, too.
+> ...
+> In the way that the user certainly did not mean to amend _this_ HEAD.  
+> Another HEAD was marked with "edit".
 
-> does not have a directory part if "git" is in $PATH. In this case, system_path()
-> just returns its argument, which is the relative path. :-/
+Ok; after this "refraining from incorrectly squashing them", how would the
+user edit the one the user originally intended to edit (I am not
+complaining, but asking for information)?
 
--- Hannes
+So in your workflow example, when there is no pilot error, is this the
+"ideal" sequence?
+
+	$ git rebase -i HEAD~5
+        .. mark one as edit
+        .. ah, the one I wanted to just "edit" actually need to be
+        .. split into two because it has some other thing I need to change
+	$ git reset HEAD^
+	$ git add -p
+        $ git stash --keep-index
+        .. test to verify the initial part
+        $ git commit ;# first part of split commit
+        $ git stash pop
+        .. test test
+        $ git add -p
+        $ git rebase --continue ;# gives you the editor to edit
+
+I wonder if we can make the transcript of the "pilot error" case look like
+this:
+
+	$ git rebase -i HEAD~5
+	...
+	$ git reset HEAD^
+        .. same as above up to...
+        .. test to verify the initial part
+	$ git rebase --continue ;# oops
+	.. gives you the editor to edit the message.
+        .. makes a commit, and says:
+        committed initial part of the change, stopping.
+	.. ah, the command noticed it and did not escape, thanks!
+        $ git stash pop
+        .. test test
+        $ git add -p
+        $ git rebase --continue ;# gives you the editor to edit
+	.. and goes on this time.
