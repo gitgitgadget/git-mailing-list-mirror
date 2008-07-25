@@ -1,76 +1,80 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: sparse fetch, was Re: [PATCH 08/12] git-clone: support --path to do sparse clone
-Date: Fri, 25 Jul 2008 10:54:53 +0200
-Message-ID: <bd6139dc0807250154r141a5dabn9585f3e23e7736ca@mail.gmail.com>
-References: <20080723145718.GA29134@laptop>
-	 <20080724171952.GB21043@sigill.intra.peff.net>
-	 <alpine.DEB.1.00.0807241837441.8986@racer>
-	 <20080724182813.GA21186@sigill.intra.peff.net>
-	 <7v7ibauz94.fsf@gitster.siamese.dyndns.org>
-Reply-To: sverre@rabbelier.nl
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 7/9] builtin-checkout-index.c: use parse_options()
+Date: Fri, 25 Jul 2008 11:01:11 +0200
+Message-ID: <48899657.5090209@lsrfire.ath.cx>
+References: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com>	 <1216849332-26813-8-git-send-email-barra_cuda@katamail.com>	 <alpine.DEB.1.00.0807241543190.8986@racer>	 <200807242208.37192.barra_cuda@katamail.com> <bd6139dc0807241335i3ab5280aq6a46325428ccc70f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?=" 
-	<pclouds@gmail.com>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 25 10:56:07 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michele Ballabio <barra_cuda@katamail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, gitster@pobox.com
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Fri Jul 25 11:02:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMJ5q-0004ik-Ab
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 10:56:06 +0200
+	id 1KMJBy-0006nV-01
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 11:02:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755680AbYGYIy4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 04:54:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755414AbYGYIyz
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 04:54:55 -0400
-Received: from wf-out-1314.google.com ([209.85.200.175]:18534 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755581AbYGYIyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 04:54:53 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so3973303wfd.4
-        for <git@vger.kernel.org>; Fri, 25 Jul 2008 01:54:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=ts/9RMZAsbjHRNF0V0gdmchFVExqyKSW0/jc0Z4jip4=;
-        b=F8ccTveGU5Y+YYtAK7VCmAoSgL6CTPw/OmTx/+UNkpc/K3FWOjvFxR6FJvuBeJPHUz
-         aHAstOOtl4akY1dlNyQyXhHvyljrrdt/qmdoU2BHvMLaotPe83w5gOCWRbq00avFqRm5
-         xMP/geijYyXMUkMgq7M6MQENSbUDqmRsgzouk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=yC5Qh8yfrz+V+GktM1D6nKKPr+gVMn5Sz26NLwFtAZpW87cGLT9cCp7kbB8wrGwKIo
-         lIcwqBtmkDm2KpO7Yyj2rA6q9lBHvsJ8amViLsQbpKkZvcnUAYT/rIjA3RjgaDkA0kze
-         0TA3/MmLi4yFvNJUF82CxXvsFafb+gCkQ1qt4=
-Received: by 10.142.239.13 with SMTP id m13mr460213wfh.218.1216976093158;
-        Fri, 25 Jul 2008 01:54:53 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Fri, 25 Jul 2008 01:54:53 -0700 (PDT)
-In-Reply-To: <7v7ibauz94.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752912AbYGYJBV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2008 05:01:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752639AbYGYJBU
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 05:01:20 -0400
+Received: from india601.server4you.de ([85.25.151.105]:36538 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752912AbYGYJBT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 05:01:19 -0400
+Received: from [10.0.1.200] (p57B7EC0C.dip.t-dialin.net [87.183.236.12])
+	by india601.server4you.de (Postfix) with ESMTPSA id 932C72F8028;
+	Fri, 25 Jul 2008 11:01:17 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <bd6139dc0807241335i3ab5280aq6a46325428ccc70f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90019>
 
-On Fri, Jul 25, 2008 at 10:47, Junio C Hamano <gitster@pobox.com> wrote:
-> For many projects that has src/ and doc/ (git.git being one of them), it
+Sverre Rabbelier schrieb:
+> On Thu, Jul 24, 2008 at 10:08 PM, Michele Ballabio
+> <barra_cuda@katamail.com> wrote:
+>> On Thursday 24 July 2008, Johannes Schindelin wrote:
+>>> On Wed, 23 Jul 2008, Michele Ballabio wrote:
+>>>
+>>>> +           { OPTION_CALLBACK, 'f', "force", &state, NULL,
+>>>> +             "force overwrite of existing files",
+>>>> +             PARSE_OPT_NOARG, parse_state_force_cb, 0 },
+>>> I wonder if this could not be written as
+>>>
+>>>               OPT_BOOLEAN('f', "force", &state.force,
+>>>                       "force overwrite of existing files"),
+>> I did it that way because 'force' is a bitfield.
+>=20
+> I thought there is an OPT_BIT?
 
-We are? That's great, that'd mean I can actually do a 'ls' in the
-git.git root! Oh wait...
-$ ls | wc -l
-693
+OPT_BIT is for flags and bitmasks, not for bitfields.
 
--- 
-Cheers,
+Since you can't get the address of a bitfield member, a function that
+wants to change its value needs to know its name.  Switching to bitmask=
+s
+would make the option parsing code look cleaner, but you'd have to
+change all those bitfield accesses to explicit bitmask operations, e.g.=
+:
 
-Sverre Rabbelier
+	if (state.force)
+		state.force =3D 0;
+
+vs.
+
+	if (state.flags & CHECKOUT_FORCE)
+		state.flags &=3D ~CHECKOUT_FORCE;
+
+In the case of struct checkout, though, we could simply make the
+bitfield members full ints, because there are only a few instances of
+this structure in memory at any given time.  Wasting a few bytes of RAM
+in order to gain much simpler code is OK in this case, I think.
+OPT_BOOLEAN looks a lot nicer than a callback.
+
+Ren=E9
