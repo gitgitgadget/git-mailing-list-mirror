@@ -1,90 +1,85 @@
-From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: Re: [EGIT] Supported Eclipse version
-Date: Fri, 25 Jul 2008 16:12:25 +0200
-Message-ID: <4889DF49.3000903@gmail.com>
-References: <48888A2E.4030302@gmail.com> <89D1384A-403C-4E6E-816C-204AE0AAC30C@yahoo.ca>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH] editor.c: Libify launch_editor()
+Date: Fri, 25 Jul 2008 16:15:17 +0200
+Message-ID: <20080725141517.GB18198@leksak.fem-net>
+References: <alpine.DEB.1.00.0807180313200.2906@eeepc-johanness> <1216380408-21671-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0807181405510.3932@eeepc-johanness> <7vvdyuuzq2.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807251226500.11976@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
-	<jean_francois_veillette@yahoo.ca>
-X-From: git-owner@vger.kernel.org Fri Jul 25 16:13:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 25 16:16:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMO31-000830-7D
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 16:13:31 +0200
+	id 1KMO63-0000kj-OM
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 16:16:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751100AbYGYOMb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2008 10:12:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750974AbYGYOMb
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 10:12:31 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:37877 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750832AbYGYOMa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 10:12:30 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so1251499nfc.21
-        for <git@vger.kernel.org>; Fri, 25 Jul 2008 07:12:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=c+5cprRdIB1ejZTgVTHRwkuPWIvvSNXQeGPmg2ffzFo=;
-        b=LzrbjHdXan/nguws3klpYqhoI1PZsLu6JsR7pRW13LL21RkqB1N5zklJriye1s8f84
-         pJDcsogJ3/XDdWinZ+k0JRkaskr06oAv4TMfmcRT2TuGfW/PC5Oby0pSUKvlxobp9f+N
-         yEHcy1OrsXAwj0q6uqfIaHd3aB3zQKTAF+T0c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=kfOMZRLSdEKxg4fTpi2XIvbJ2Ez6Dp3MC0n5XamTtlEeUcHpR0Ea5GfDcq9tmlfhbt
-         noRq9aw/6Kk/85F8Ec2YlvV124nD7hGeUlCJwazmLWgSD2px0pv4HPrvi0A6sn2B6yZ8
-         ghOJ6WjzukxWJXRe7/DdMFU7B5Ga8K2/Vzex4=
-Received: by 10.210.16.11 with SMTP id 11mr1979095ebp.187.1216995148928;
-        Fri, 25 Jul 2008 07:12:28 -0700 (PDT)
-Received: from ?192.168.1.167? ( [150.254.6.130])
-        by mx.google.com with ESMTPS id f4sm38067762nfh.27.2008.07.25.07.12.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 25 Jul 2008 07:12:27 -0700 (PDT)
-User-Agent: Mozilla-Thunderbird 2.0.0.14 (X11/20080509)
-In-Reply-To: <89D1384A-403C-4E6E-816C-204AE0AAC30C@yahoo.ca>
+	id S1752835AbYGYOP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 10:15:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbYGYOP1
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 10:15:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45759 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752817AbYGYOP0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 10:15:26 -0400
+Received: (qmail invoked by alias); 25 Jul 2008 14:15:24 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp016) with SMTP; 25 Jul 2008 16:15:24 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX18Ie7pdC5UIjy0p9Wy34pcHTPmhSC9W48H3v3ya8r
+	khZfJH660XfRrp
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KMO4j-0005M8-HT; Fri, 25 Jul 2008 16:15:17 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807251226500.11976@eeepc-johanness>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90053>
 
-Jean-Fran=E7ois Veillette wrote:
->> Maybe some users (or developers) from mailing list can tell us about=
-=20
->> their opinion?
->
-> I think keeping comptability for one version behind the 'current'=20
-> (still compatible 3.3 while 3.4 is the current) is a reasonable goal.
-> 3.2 is relatively far behind, tools vendor had time to get up to date=
-=20
-> by now.
-> If a user is using a third party version of eclipse based on 3.2, the=
-n=20
-> I guess he should not expect egit to work with it (he should just pra=
-y=20
-> and hope for the best).
->
-> For myself, I use 3.3.x, I have not yet moved to 3.4 since my main=20
-> plugin (WOLips) is not ready yet for 3.4.
->
-> - jfv
-I would also vote for this change. Especially if there are not many=20
-users screaming that they need egit in Eclipse 3.2.
+Hi,
 
-BTW, I'm using 3.4 version for 2 days and it looks really nice. What's=20
-important, it seems to not be that buggy as early 3.3 releases were.
+Johannes Schindelin wrote:
+> On Fri, 25 Jul 2008, Junio C Hamano wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> > > On Fri, 18 Jul 2008, Stephan Beyer wrote:
+> > >
+> > >> diff --git a/editor.c b/editor.c
+> > >> index 483b62d..5d7f5f9 100644
+> > >> --- a/editor.c
+> > >> +++ b/editor.c
+> > >> @@ -17,9 +17,8 @@ void launch_editor(const char *path, struct strbuf *buffer, const char *const *e
+> > > ...
+> > > Why not "return error()"?
+> > >
+> > > Rest looks obviously correct to me!
+> > 
+> > This is a patch to an existing file editor.c???
+> 
+> Yes, Stephan sent the two patches unrelatedly,
 
-Robin, Shawn, would you accept next patches using 3.3 API?
+Yes, because when I've sent 1/2, I didn't knew that 2/2 will exist.
+So I've just sent the second patch "into this thread" and hoped it would
+be clear how it is meant. :)
 
-Marek
+So, to summarize:
+[PATCH 1/2] http://thread.gmane.org/gmane.comp.version-control.git/88940/focus=88940
+[PATCH 2/2] http://thread.gmane.org/gmane.comp.version-control.git/88940/focus=89035
+
+They still apply cleanly to current master.
+
+> even if they should have been marked "1/2" and "2/2".
+> I hope he does so now.
+
+This means I should send them again?
+
+Regards.
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
