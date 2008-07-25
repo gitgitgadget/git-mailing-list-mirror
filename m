@@ -1,155 +1,122 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] bash completion: Add completion for 'git help'
-Date: Fri, 25 Jul 2008 15:40:51 -0500
-Message-ID: <20080725204051.GB23202@spearce.org>
-References: <1216854795-51155-1-git-send-email-lee.marlow@gmail.com> <1216858043-53646-1-git-send-email-lee.marlow@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Lee Marlow <lee.marlow@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 25 22:41:54 2008
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH] git-reset: Let -q hush "locally modified" messages
+Date: Fri, 25 Jul 2008 22:49:08 +0200
+Message-ID: <1217018948-32475-1-git-send-email-s-beyer@gmx.net>
+Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
+To: Carlos Rica <jasampler@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 25 22:50:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMU6q-0006fx-W0
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 22:41:53 +0200
+	id 1KMUF1-00011m-Oi
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 22:50:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751449AbYGYUkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 16:40:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751436AbYGYUkx
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 16:40:53 -0400
-Received: from george.spearce.org ([209.20.77.23]:58523 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751237AbYGYUkw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 16:40:52 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 058EB383A5; Fri, 25 Jul 2008 20:40:52 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1216858043-53646-1-git-send-email-lee.marlow@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751330AbYGYUtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 16:49:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750991AbYGYUtT
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 16:49:19 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38542 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750827AbYGYUtS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 16:49:18 -0400
+Received: (qmail invoked by alias); 25 Jul 2008 20:49:17 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp067) with SMTP; 25 Jul 2008 22:49:17 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+iPp4cUFaiZj9lJoqHzWIsqrM18vyy6HgVjx4WnQ
+	3sjI3YOQDGDStD
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KMUDs-0008SN-Qb; Fri, 25 Jul 2008 22:49:08 +0200
+X-Mailer: git-send-email 1.6.0.rc0.49.g3d2ce
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.42
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90113>
 
-Lee Marlow <lee.marlow@gmail.com> wrote:
-> Renamed cached __git_commandlist to __git_porcelain_commandlist
-> and added __git_all_commandlist that only filters out *--* helpers.
-> Completions for 'git help' will use the __git_all_commandlist, while
-> __git_porcelain_commandlist is used for git command completion.
-> Users who actually read man pages may want to see help for plumbing
-> commands.
-> 
-> Options added: --all --info --man --web
-> 
-> Signed-off-by: Lee Marlow <lee.marlow@gmail.com>
+git reset -q makes reset more quiet, but "locally modified" messages are
+still shown.  This patch makes them disappear, too.
 
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+---
 
-> This version fixes a small error in the __git_all_commands
-...
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 2edb341..f3bdea4 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -349,10 +349,10 @@ __git_complete_revlist ()
->  	esac
->  }
->  
-> -__git_commands ()
-> +__git_all_commands ()
->  {
-> -	if [ -n "$__git_commandlist" ]; then
-> -		echo "$__git_commandlist"
-> +	if [ -n "$__git_all_commandlist" ]; then
-> +		echo "$__git_all_commandlist"
->  		return
->  	fi
->  	local i IFS=" "$'\n'
-> @@ -360,6 +360,24 @@ __git_commands ()
->  	do
->  		case $i in
->  		*--*)             : helper pattern;;
-> +		*) echo $i;;
-> +		esac
-> +	done
-> +}
-> +__git_all_commandlist=
-> +__git_all_commandlist="$(__git_all_commands 2>/dev/null)"
-> +
-> +__git_porcelain_commands ()
-> +{
-> +	if [ -n "$__git_porcelain_commandlist" ]; then
-> +		echo "$__git_porcelain_commandlist"
-> +		return
-> +	fi
-> +	local i IFS=" "$'\n'
-> +	for i in "help" $(__git_all_commands)
-> +	do
-> +		case $i in
-> +		*--*)             : helper pattern;;
->  		applymbox)        : ask gittus;;
->  		applypatch)       : ask gittus;;
->  		archimport)       : import;;
-> @@ -427,8 +445,8 @@ __git_commands ()
->  		esac
->  	done
->  }
-> -__git_commandlist=
-> -__git_commandlist="$(__git_commands 2>/dev/null)"
-> +__git_porcelain_commandlist=
-> +__git_porcelain_commandlist="$(__git_porcelain_commands 2>/dev/null)"
->  
->  __git_aliases ()
->  {
-> @@ -767,6 +785,18 @@ _git_gc ()
->  	COMPREPLY=()
->  }
->  
-> +_git_help ()
-> +{
-> +	local cur="${COMP_WORDS[COMP_CWORD]}"
-> +	case "$cur" in
-> +	--*)
-> +		__gitcomp "--all --info --man --web"
-> +		return
-> +		;;
-> +	esac
-> +	__gitcomp "$(__git_all_commands)"
-> +}
-> +
->  _git_ls_remote ()
->  {
->  	__gitcomp "$(__git_remotes)"
-> @@ -1369,7 +1399,8 @@ _git ()
->  		case "$i" in
->  		--git-dir=*) __git_dir="${i#--git-dir=}" ;;
->  		--bare)      __git_dir="." ;;
-> -		--version|--help|-p|--paginate) ;;
-> +		--version|-p|--paginate) ;;
-> +		--help) command="help"; break ;;
->  		*) command="$i"; break ;;
->  		esac
->  		c=$((++c))
-> @@ -1389,7 +1420,7 @@ _git ()
->  			--help
->  			"
->  			;;
-> -		*)     __gitcomp "$(__git_commands) $(__git_aliases)" ;;
-> +		*)     __gitcomp "$(__git_porcelain_commands) $(__git_aliases)" ;;
->  		esac
->  		return
->  	fi
-> @@ -1414,6 +1445,7 @@ _git ()
->  	fetch)       _git_fetch ;;
->  	format-patch) _git_format_patch ;;
->  	gc)          _git_gc ;;
-> +	help)        _git_help ;;
->  	log)         _git_log ;;
->  	ls-remote)   _git_ls_remote ;;
->  	ls-tree)     _git_ls_tree ;;
+Hi,
 
+I don't know if this was actually a bug or a feature.
+I considered this a bug, so here's a patch.
+
+Regards,
+  Stephan
+
+
+ builtin-reset.c |   15 +++++++++------
+ 1 files changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/builtin-reset.c b/builtin-reset.c
+index 4d246c3..c24c219 100644
+--- a/builtin-reset.c
++++ b/builtin-reset.c
+@@ -85,7 +85,7 @@ static void print_new_head_line(struct commit *commit)
+ 		printf("\n");
+ }
+ 
+-static int update_index_refresh(int fd, struct lock_file *index_lock)
++static int update_index_refresh(int fd, struct lock_file *index_lock, int flags)
+ {
+ 	int result;
+ 
+@@ -96,7 +96,8 @@ static int update_index_refresh(int fd, struct lock_file *index_lock)
+ 
+ 	if (read_cache() < 0)
+ 		return error("Could not read index");
+-	result = refresh_cache(REFRESH_SAY_CHANGED) ? 1 : 0;
++
++	result = refresh_cache(flags) ? 1 : 0;
+ 	if (write_cache(fd, active_cache, active_nr) ||
+ 			commit_locked_index(index_lock))
+ 		return error ("Could not refresh index");
+@@ -128,7 +129,7 @@ static void update_index_from_diff(struct diff_queue_struct *q,
+ }
+ 
+ static int read_from_tree(const char *prefix, const char **argv,
+-		unsigned char *tree_sha1)
++		unsigned char *tree_sha1, int refresh_flags)
+ {
+ 	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
+ 	int index_fd, index_was_discarded = 0;
+@@ -152,7 +153,7 @@ static int read_from_tree(const char *prefix, const char **argv,
+ 	if (!index_was_discarded)
+ 		/* The index is still clobbered from do_diff_cache() */
+ 		discard_cache();
+-	return update_index_refresh(index_fd, lock);
++	return update_index_refresh(index_fd, lock, refresh_flags);
+ }
+ 
+ static void prepend_reflog_action(const char *action, char *buf, size_t size)
+@@ -246,7 +247,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		else if (reset_type != NONE)
+ 			die("Cannot do %s reset with paths.",
+ 					reset_type_names[reset_type]);
+-		return read_from_tree(prefix, argv + i, sha1);
++		return read_from_tree(prefix, argv + i, sha1,
++				quiet ? REFRESH_QUIET : REFRESH_SAY_CHANGED);
+ 	}
+ 	if (reset_type == NONE)
+ 		reset_type = MIXED; /* by default */
+@@ -286,7 +288,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	case SOFT: /* Nothing else to do. */
+ 		break;
+ 	case MIXED: /* Report what has not been updated. */
+-		update_index_refresh(0, NULL);
++		update_index_refresh(0, NULL,
++				quiet ? REFRESH_QUIET : REFRESH_SAY_CHANGED);
+ 		break;
+ 	}
+ 
 -- 
-Shawn.
+1.6.0.rc0.49.g3d2ce
