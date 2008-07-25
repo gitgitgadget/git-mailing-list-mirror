@@ -1,80 +1,60 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Stitching together two split segments from svn
-Date: Fri, 25 Jul 2008 09:21:28 +0200
-Message-ID: <200807250921.35412.jnareb@gmail.com>
-References: <654935030807241633g763e622br4feb8b4e23ee64e2@mail.gmail.com> <m3ljzqvo6i.fsf@localhost.localdomain> <654935030807241941p620201a2q21bb4513cd21225d@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Document disabling core.whitespace values trailing-space
+ and space-before-tab
+Date: Fri, 25 Jul 2008 00:28:18 -0700
+Message-ID: <7vy73qwhgt.fsf@gitster.siamese.dyndns.org>
+References: <4888144E.8090300@sneakemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Liam Healy" <lnp@healy.washington.dc.us>
-X-From: git-owner@vger.kernel.org Fri Jul 25 09:22:53 2008
+To: =?utf-8?Q?Peter_Valdemar_M=C3=B8rch_=28Lists=29?= 
+	<4ux6as402@sneakemail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 25 09:29:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMHdc-0008Bu-Ns
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 09:22:53 +0200
+	id 1KMHjz-0001a0-8N
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 09:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751286AbYGYHVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 03:21:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750867AbYGYHVx
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 03:21:53 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:5650 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750753AbYGYHVw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 03:21:52 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so1212452nfc.21
-        for <git@vger.kernel.org>; Fri, 25 Jul 2008 00:21:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=LM40bJjSkicYyevymsU9twrYnu3TKMP3FWhFeml3SsE=;
-        b=W3gKng/Cm7xoIZoj4ToTmSY5Q4ubPLBGqf8n7jQXOOrFqEaqfiVFjo+qtsho+U12Ua
-         z9X4La/SWz45gixwUWeedJG44u0AKDDMqKv+nMGsVLbKBWq4A2Uo/z5f/HBdEt8B8pWK
-         VMhneRhtyTlOcRsv/vp/AmWatIxBodwpCsS8Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=M+jPXmZT9KjeHwKqIHaTMQo+kohhU4V2P2xB7RHYui+RePPWP3dCuh/5dXGuDT0r/3
-         uiY4nm5I1enukkQmTftAaZst4V0Q0y91GaAdOVBo6MWzk0ppoFhuRQwhsjZbZShFvrXw
-         G1wpQ4zx08YhxYhWDkRyjs5iAZ3molRSuu9Tk=
-Received: by 10.210.71.13 with SMTP id t13mr1547643eba.42.1216970509594;
-        Fri, 25 Jul 2008 00:21:49 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.243.125])
-        by mx.google.com with ESMTPS id y34sm14830297iky.10.2008.07.25.00.21.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 25 Jul 2008 00:21:47 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <654935030807241941p620201a2q21bb4513cd21225d@mail.gmail.com>
-Content-Disposition: inline
+	id S1751864AbYGYH22 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2008 03:28:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751819AbYGYH21
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 03:28:27 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65064 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751477AbYGYH21 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Jul 2008 03:28:27 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E99143BCFA;
+	Fri, 25 Jul 2008 03:28:23 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3A32E3BCF9; Fri, 25 Jul 2008 03:28:21 -0400 (EDT)
+In-Reply-To: <4888144E.8090300@sneakemail.com> (Peter Valdemar =?utf-8?Q?M?=
+ =?utf-8?Q?=C3=B8rch's?= message of "Thu, 24 Jul 2008 07:34:06 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 43D25F04-5A1B-11DD-B6C7-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90007>
 
-On Fri, 25 Jul 2008, Liam Healy wrote:
-> 
-> Thanks for the advice -- this did exactly what I wanted.
-> 
-> For anyone else wanting to do this: one thing that threw me for a
-> while was that .git/info/grafts does not accept an abbreviated SHA,
-> the full 40 hex digits is needed.  I would see "bad graft data" from
-> gitk with no other explanation.  There is very little documentation
-> that I could find on the grafts file; the best I could find was in the
-> man page for git-filter branch:
->
->   http://www.kernel.org/pub/software/scm/git/docs/git-filter-branch.html.
+"Peter Valdemar M=C3=B8rch (Lists)"  <4ux6as402@sneakemail.com> writes:
 
-You can find definition of grafts in `gitglossary', and where you can
-find them together with description of grafts file format in
-`gitrepository-layout'
--- 
-Jakub Narebski
-Poland
+> This is a multi-part message in MIME format.
+> --------------080005060106030305090009
+> Content-Type: text/plain; charset=3DISO-8859-1; format=3Dflowed
+> Content-Transfer-Encoding: 8bit
+> ...
+> --------------080005060106030305090009
+> Content-Type: text/x-patch;
+>  name=3D"0001-Document-disabling-core.whitespace-values-trailing-s.pa=
+tch"
+> Content-Transfer-Encoding: 8bit
+
+Please do not send patch as attachment.  It is very cumbersome to handl=
+e.
