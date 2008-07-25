@@ -1,80 +1,75 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: [RFC PATCH 00/12] Sparse checkout
-Date: Fri, 25 Jul 2008 10:53:54 -0400
-Message-ID: <32541b130807250753j1071639ao9313a8acad9f4183@mail.gmail.com>
-References: <20080723145518.GA29035@laptop>
-	 <m3tzefvd3q.fsf@localhost.localdomain>
-	 <fcaeb9bf0807240358l6584c063u85179196bd6db30a@mail.gmail.com>
-	 <200807242201.23991.jnareb@gmail.com>
-	 <fcaeb9bf0807241621y60b0341ej8f9f3b591ef12baf@mail.gmail.com>
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: Re: [PATCH 6/9] builtin-init-db.c: use parse_options()
+Date: Fri, 25 Jul 2008 17:20:26 +0200
+Message-ID: <4889EF3A.6040605@free.fr>
+References: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com> <1216849332-26813-7-git-send-email-barra_cuda@katamail.com> <4888AAB2.5050007@free.fr> <alpine.DEB.1.00.0807241801030.8986@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 25 16:55:28 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michele Ballabio <barra_cuda@katamail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 25 17:21:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMOh7-0002TK-6C
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 16:54:57 +0200
+	id 1KMP6o-0005Va-Ip
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 17:21:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751717AbYGYOx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 10:53:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751652AbYGYOx5
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 10:53:57 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:19895 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751402AbYGYOx4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 10:53:56 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1340513ywe.1
-        for <git@vger.kernel.org>; Fri, 25 Jul 2008 07:53:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=ZI3UjxTuQN/z0ohdXEg26bQ/4nK/UTQYSGdSz7cqYlE=;
-        b=nwdARZsOkb+b5qwDJ/MyVwdhz7XTNIsoOSuO14yCUFngS7mUJI2JrVkpM/RQ1a1IXd
-         /YKDo7HFBARpJ3CFCoQUPK8+h0gIxlPXaepoNbJaQ+1/vngP0cK3pipwVhx5DMEfiIje
-         GSO6jrr4uCdUBBsaGadZlvnlkeRUDRbs/PMzw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=HMEWAA9DStbGrFqcDF5PGp/GzBK7G3LYvbnwWs2jjnUlaPjykuXXFrifdVhLYSCPnm
-         Nu48aYMqqGW3/anoM7Y8bmcbppv//lYdo32iZiu0raOOBvO51EH27db4uo12eDc/82Vy
-         ROtEKSEbc7fW3KR33DwD4Eud4B2GqYXKIETxs=
-Received: by 10.114.201.1 with SMTP id y1mr2050238waf.93.1216997634587;
-        Fri, 25 Jul 2008 07:53:54 -0700 (PDT)
-Received: by 10.150.96.5 with HTTP; Fri, 25 Jul 2008 07:53:54 -0700 (PDT)
-In-Reply-To: <fcaeb9bf0807241621y60b0341ej8f9f3b591ef12baf@mail.gmail.com>
-Content-Disposition: inline
+	id S1753560AbYGYPUb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2008 11:20:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753566AbYGYPU3
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 11:20:29 -0400
+Received: from smtp5-g19.free.fr ([212.27.42.35]:57909 "EHLO smtp5-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753407AbYGYPU2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 11:20:28 -0400
+Received: from smtp5-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id 8A4B93F6280;
+	Fri, 25 Jul 2008 17:20:26 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id 345AD3F627E;
+	Fri, 25 Jul 2008 17:20:26 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <alpine.DEB.1.00.0807241801030.8986@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90057>
 
-On 7/24/08, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> I wrote that with svn repos in mind. If those repos are to be
->  partially checked out, .svnignore would be in subdirectories rather
->  than at toplevel. Anyway that may not be true.
+Johannes Schindelin a =E9crit :
+>>
+>>> +		OPT_BOOLEAN(0, "bare", &bare, "set up a bare repo"),
+>> s/set up/setup/
+>=20
+> No.  "setup" is a noun.
 
-As far as I know, this is a misstatement of how svn works.  It uses
-svn:ignore properties, not .svnignore files, and they don't apply
-recursively, so this potential inconsistency wouldn't happen with svn.
- Of course, in the name of this consistency, svn gave up recursive
-ignores.
+Right, sorry.
 
-So anyway, back on topic, the definition of a "well-organized
-repository" is different wth git than with svn for this reason.  I
-would certainly expect most well-organized git repositories to have a
-toplevel .gitignore for the most common stuff.
+> We rely on shared_repository =3D=3D 0 for non-shared repositories _al=
+most=20
+> everywhere_.
 
-Have fun,
+I think we rely on the fact that PERM_UMASK =3D=3D 0 and not on the val=
+ue
+of shared_repository. Not the same thing.
 
-Avery
+That said, perhaps you are right: it is harmless.
+
+>>> +		OPT_BIT('q', "quiet", &flags, "be quiet", INIT_DB_QUIET),
+>> OPT__QUIET(&quiet),
+>>
+>> if (quiet)
+>> 	flags |=3D INIT_DB_QUIET;
+>>
+>> to use the same quiet option everywhere?
+>=20
+> Why?  Doesn't make it more readable, I think.  I'd rather have 3 line=
+s=20
+> less.
+
+Hum.
+
+Olivier.
