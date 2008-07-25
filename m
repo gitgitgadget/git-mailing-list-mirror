@@ -1,77 +1,78 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] index-pack: correctly initialize appended objects
-Date: Fri, 25 Jul 2008 11:42:02 -0500
-Message-ID: <20080725164202.GC21117@spearce.org>
-References: <alpine.DEB.1.00.0807241821440.8986@racer> <7vy73q4jzp.fsf@gitster.siamese.dyndns.org> <20080725115519.GA32487@atjola.homenet> <alpine.DEB.1.00.0807251513240.11976@eeepc-johanness>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH] Add "install-html" rule to top level Makefile
+Date: Fri, 25 Jul 2008 12:55:27 -0400
+Message-ID: <1217004927-75826-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bjjjrn Steinbrink <B.Steinbrink@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 25 18:43:26 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 25 18:56:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMQNp-0007bv-RS
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 18:43:10 +0200
+	id 1KMQan-0004sj-1U
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 18:56:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751886AbYGYQmG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2008 12:42:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751575AbYGYQmF
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 12:42:05 -0400
-Received: from george.spearce.org ([209.20.77.23]:42044 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751864AbYGYQmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 12:42:04 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id F2F98383A5; Fri, 25 Jul 2008 16:42:02 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807251513240.11976@eeepc-johanness>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751303AbYGYQzd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 12:55:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbYGYQzc
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 12:55:32 -0400
+Received: from wr-out-0506.google.com ([64.233.184.236]:9461 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751146AbYGYQzc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 12:55:32 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so2448785wri.5
+        for <git@vger.kernel.org>; Fri, 25 Jul 2008 09:55:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=tsclo/Qc3fXrqRJhcjbqZiaUQ3FA/+aSZ0IwYvWSiYM=;
+        b=M+POjzG6W+k2cpEowHTRxi+htFuwcMwGh/g5O8+MH0BskFzZkCPPK4U10dG6Fmqemr
+         6rGihMnqaxMle3jlqYVa7HBCj2xE1R4gSKeb6/WqXbsebhIR59FebWM6PdCgcKbgNt00
+         KOX3+EJ9VO8LKCRYssXF+v1l+DytXtXKQShiQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=sATD4oHGiBSpmzLZxJJKHvPvqyyCvWimnAUJRVkDdbo9/onx5hvV3bDT46Db5o50Qv
+         1mStu39RSms5h7z9OIf9BTRIYhFqF88RBkZCe081WuJZlBnsr3AMnw5zsE9Z8mc/HOha
+         xxx2kPHpdxOt1PvJVgbcqEURIXF9QMKYt4Gik=
+Received: by 10.100.46.10 with SMTP id t10mr3344775ant.22.1217004931088;
+        Fri, 25 Jul 2008 09:55:31 -0700 (PDT)
+Received: from localhost ( [75.189.159.45])
+        by mx.google.com with ESMTPS id 27sm11381986wra.32.2008.07.25.09.55.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 25 Jul 2008 09:55:30 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.rc0.155.g4fcc6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90071>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Fri, 25 Jul 2008, Bj=C3=B6rn Steinbrink wrote:
-> > On 2008.07.24 22:21:14 -0700, Junio C Hamano wrote:
-> > > Reading get_data_from_pack(), it does rely on hdr_size, idx.offse=
-t and=20
-> > > idx.offset of the next entry to be set correctly.  The function d=
-oes=20
-> > > not seem to use type (which the patch is also setting) nor real_t=
-ype=20
-> > > (which the patch does not set).
-> >=20
-> > type is used in get_base_data().
-> >=20
-> > > However, the code checks objects[nth].real_type all over the plac=
-e in=20
-> > > the code.  Doesn't the lack of real_type assignment in=20
-> > > append_obj_to_pack() affect them in any way?
-> >=20
-> > I had thought that resolve_delta() would set that, but it seems tha=
-t we=20
-> > never call that function like that. Hm...
->=20
-> So, let's add the comment as Nico suggested, and set real_type, too? =
- (And=20
-> it would be smashing if you could verify that the type is indeed corr=
-ectly=20
-> set to non-delta...)
->=20
-> I think that setting real_type is necessary to have less surprises wh=
-en=20
-> the code is extended in the future.
+Add "install-html" rule to top level Makefile
 
-The patch looks correct, but it should set real_type too because
-I'm pretty sure we use that when we unpack the delta base again if
-it was pruned out of memory.
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+ Makefile |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
---=20
-Shawn.
+diff --git a/Makefile b/Makefile
+index d029be3..74b6106 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1355,6 +1355,8 @@ install-info:
+ quick-install-doc:
+ 	$(MAKE) -C Documentation quick-install
+ 
++install-html:
++	$(MAKE) -C Documentation install-html
+ 
+ 
+ ### Maintainer's dist rules
+-- 
+1.6.0.rc0.155.g4fcc6
