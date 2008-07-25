@@ -1,70 +1,69 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] Set TAR in t/Makefile and in t4116-apply-reverse.sh
-Date: Fri, 25 Jul 2008 20:58:18 +0200
-Message-ID: <20080725185818.GA13539@leksak.fem-net>
-References: <TE3N1FoSy-vEEv0qsAyvBwBMMq2RuJCWYw7DNLBC7mEh6PxM1LCsOw@cipher.nrlssc.navy.mil> <1217003860-10609-1-git-send-email-s-beyer@gmx.net> <7vvdytsu7n.fsf@gitster.siamese.dyndns.org> <20080725182416.GG27172@leksak.fem-net> <7vmyk5sska.fsf@gitster.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: git rebase to move a batch of patches onto the current branch
+Date: Fri, 25 Jul 2008 15:16:11 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0807251509390.19665@iabervon.org>
+References: <32541b130807241257j7820a591if8ca01c66bbcd6b2@mail.gmail.com>  <20080724201333.GA3760@blimp.local>  <32541b130807241316x4f85bcdfw12857be575fb3289@mail.gmail.com>  <20080724203049.GC3760@blimp.local>
+ <32541b130807241342h483169d7we955512879075161@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 25 20:59:30 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 25 21:17:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMSVk-0003Lk-S2
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 20:59:29 +0200
+	id 1KMSmw-00035B-AW
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 21:17:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751247AbYGYS63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 14:58:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751309AbYGYS63
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 14:58:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53974 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750878AbYGYS62 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 14:58:28 -0400
-Received: (qmail invoked by alias); 25 Jul 2008 18:58:26 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp054) with SMTP; 25 Jul 2008 20:58:26 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/sNxRr2aPsI8qCdRkHJ1zXgbJeO8ll/XkkLlCVUV
-	MFve2jJTxkmv9G
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KMSUc-0003Zc-1a; Fri, 25 Jul 2008 20:58:18 +0200
-Content-Disposition: inline
-In-Reply-To: <7vmyk5sska.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1755939AbYGYTQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 15:16:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755709AbYGYTQN
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 15:16:13 -0400
+Received: from iabervon.org ([66.92.72.58]:53587 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753019AbYGYTQM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 15:16:12 -0400
+Received: (qmail 31084 invoked by uid 1000); 25 Jul 2008 19:16:11 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 25 Jul 2008 19:16:11 -0000
+In-Reply-To: <32541b130807241342h483169d7we955512879075161@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90090>
 
-Junio C Hamano wrote:
-> Stephan Beyer <s-beyer@gmx.net> writes:
-> >> diff --git a/Makefile b/Makefile
-> >> index b003e3e..1d14209 100644
-> >> --- a/Makefile
-> >> +++ b/Makefile
-> >> @@ -1212,6 +1212,7 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
-> >>  
-> >>  GIT-BUILD-OPTIONS: .FORCE-GIT-BUILD-OPTIONS
-> >>  	@echo SHELL_PATH=\''$(SHELL_PATH_SQ)'\' >$@
-> >> +	@echo TAR=\''$(subst ','\'',$(TAR))'\' >>$@
-> >>  
-> >>  ### Detect Tck/Tk interpreter path changes
-> >>  ifndef NO_TCLTK
+On Thu, 24 Jul 2008, Avery Pennarun wrote:
+
+> On 7/24/08, Alex Riesen <raa.lkml@gmail.com> wrote:
+> > Avery Pennarun, Thu, Jul 24, 2008 22:16:06 +0200:
+> > > On 7/24/08, Alex Riesen <raa.lkml@gmail.com> wrote:
 > >
-> > But then TAR has to be set in test-lib.sh also, to be able to
-> > invoke t5000 and t4116 directly, hasn't it?
+> > > >     gcp3 ()
+> >  > >     {
+> >  > >         git format-patch -k --stdout --full-index "$@" | git am -k -3 --binary
+> >  > >     }
+> >  >
+> >  > But that'll give up when there are conflicts, right?  git-rebase lets
+> >  > me fix them in a nice way.
+> >
+> > No, it same as in rebase. You'll fix them and do "git am --resolved".
+> >  See manpage of git am.
 > 
-> Dosen't test-lib source GIT-BUILD-OPTIONS?
+> Hmm, cool.
+> 
+> So that command isn't too easy to come upon by accident.  If I wanted
+> to submit a patch to make this process a bit more obvious, would it
+> make sense to simply have git-cherry-pick call that sequence when you
+> give it more than one commit?
 
-It does.  Great, then.
+Before terribly long, we'll have "git sequencer", which should be easy to 
+get to do the "rebase -i" thing with cherry-pick-style usage (somebody 
+would just need to write code to generate the correct series of pick 
+statements).
 
-Regards.
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+	-Daniel
+*This .sig left intentionally blank*
