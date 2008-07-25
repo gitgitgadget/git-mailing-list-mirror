@@ -1,52 +1,52 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] bash completion: Add long options for 'git describe'
-Date: Fri, 25 Jul 2008 15:15:32 +0200
-Message-ID: <20080725131532.GB6701@neumann>
-References: <1216980170-14136-1-git-send-email-trast@student.ethz.ch>
+From: Abhijit Menon-Sen <ams@toroid.org>
+Subject: Re: [PATCH] Avoid warning when From: is encoded
+Date: Fri, 25 Jul 2008 18:46:25 +0530
+Message-ID: <20080725131625.GA11221@toroid.org>
+References: <1216991208-18782-1-git-send-email-4ux6as402@sneakemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Jul 25 15:17:28 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Peter Valdemar =?iso-8859-1?Q?M=F8rch?= <4ux6as402@sneakemail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 25 15:18:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMN9u-0001L1-Ll
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 15:16:35 +0200
+	id 1KMNBE-00020B-TW
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 15:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753073AbYGYNPe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2008 09:15:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752899AbYGYNPe
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 09:15:34 -0400
-Received: from francis.fzi.de ([141.21.7.5]:42628 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752865AbYGYNPe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 09:15:34 -0400
-Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 25 Jul 2008 15:15:31 +0200
+	id S1755916AbYGYNQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 09:16:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755939AbYGYNQ3
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 09:16:29 -0400
+Received: from fugue.toroid.org ([85.10.196.113]:44765 "EHLO fugue.toroid.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753177AbYGYNQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 09:16:28 -0400
+Received: from penne.toroid.org (penne-vpn [10.8.0.6])
+	by fugue.toroid.org (Postfix) with ESMTP id 0747C5583A7;
+	Fri, 25 Jul 2008 15:16:27 +0200 (CEST)
+Received: by penne.toroid.org (Postfix, from userid 1000)
+	id 1B1C6ADC368; Fri, 25 Jul 2008 18:46:26 +0530 (IST)
 Content-Disposition: inline
-In-Reply-To: <1216980170-14136-1-git-send-email-trast@student.ethz.ch>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-OriginalArrivalTime: 25 Jul 2008 13:15:31.0805 (UTC) FILETIME=[83EEB0D0:01C8EE58]
+In-Reply-To: <1216991208-18782-1-git-send-email-4ux6as402@sneakemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90047>
 
-Hi,
+At 2008-07-25 15:06:48 +0200, 4ux6as402@sneakemail.com wrote:
+>
+> This is where my non-commit message goes, yeah?
 
-On Fri, Jul 25, 2008 at 12:02:50PM +0200, Thomas Rast wrote:
-> ---
-Signed off by?
+Yes.
 
->  _git_describe ()
->  {
-> +	__git_has_doubledash && return
-This line is superfluous, because 'git describe' does not have any path
-arguments.
+> Are there any form problems with this patch?
 
-G=E1bor
+Looks fine to me (and also to git am).
+
+The patch itself also looks good to me (but I'm not sure if that means I
+should add an Acked-by: line to this message).
+
+-- ams
