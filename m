@@ -1,80 +1,140 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 7/9] builtin-checkout-index.c: use parse_options()
-Date: Fri, 25 Jul 2008 11:01:11 +0200
-Message-ID: <48899657.5090209@lsrfire.ath.cx>
-References: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com>	 <1216849332-26813-8-git-send-email-barra_cuda@katamail.com>	 <alpine.DEB.1.00.0807241543190.8986@racer>	 <200807242208.37192.barra_cuda@katamail.com> <bd6139dc0807241335i3ab5280aq6a46325428ccc70f@mail.gmail.com>
+From: "Geoff Russell" <geoffrey.russell@gmail.com>
+Subject: Re: [PATCH] Preserve cwd in setup_git_directory()
+Date: Fri, 25 Jul 2008 19:18:57 +0930
+Message-ID: <93c3eada0807250248l60c81090sd1953df24cca1421@mail.gmail.com>
+References: <20080724031441.GA26072@laptop>
+	 <alpine.DEB.1.00.0807241324040.8986@racer>
+	 <fcaeb9bf0807240540i400fe0d1s7ea8efe72203471d@mail.gmail.com>
+	 <alpine.DEB.1.00.0807241506340.8986@racer>
+	 <fcaeb9bf0807241137h65292d7egad8cc5f797114607@mail.gmail.com>
+Reply-To: geoffrey.russell@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michele Ballabio <barra_cuda@katamail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, gitster@pobox.com
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Fri Jul 25 11:02:26 2008
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 25 11:50:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMJBy-0006nV-01
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 11:02:26 +0200
+	id 1KMJw2-0004i3-MA
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 11:50:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752912AbYGYJBV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2008 05:01:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752639AbYGYJBU
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 05:01:20 -0400
-Received: from india601.server4you.de ([85.25.151.105]:36538 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752912AbYGYJBT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 05:01:19 -0400
-Received: from [10.0.1.200] (p57B7EC0C.dip.t-dialin.net [87.183.236.12])
-	by india601.server4you.de (Postfix) with ESMTPSA id 932C72F8028;
-	Fri, 25 Jul 2008 11:01:17 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <bd6139dc0807241335i3ab5280aq6a46325428ccc70f@mail.gmail.com>
+	id S1752554AbYGYJs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 05:48:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750934AbYGYJs7
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 05:48:59 -0400
+Received: from an-out-0708.google.com ([209.85.132.251]:53249 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751198AbYGYJs6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 05:48:58 -0400
+Received: by an-out-0708.google.com with SMTP id d40so704609and.103
+        for <git@vger.kernel.org>; Fri, 25 Jul 2008 02:48:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=w2Mr+8ScHk6u0TPZxqLXhME/yKSs22Chpn20uZpqzT0=;
+        b=EYxewu3IemHgc23PNbqFk1ucS+ufgSQ++06S7Rc2a8rw34ErI98WznylJjabuBo85+
+         CYRwCbbamYC6pTcnnJmy5EG2USoLgply4c/9G+qPbPSWD+5DtHfdemdWgOWtxEF0vumf
+         LXcR+6vY/HpMa1Iy8ngsWsYYnIbfdIZ27LwxE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=UhtcycUbpRofrMe0dlwQS7M0MdEdxCcwfmLvwJswDLaFhfUwK60X1VskWWecCwaEHu
+         NLod5LNOylj/mfgnxAVC9+4F7JFQhgUAcWs3h3NavkZVkJc968+wkuMXThvDZ01FxLJi
+         /tpcSFCCscvgAVzGnYAFF7k0J61gWgmV1kSvk=
+Received: by 10.100.190.15 with SMTP id n15mr2508355anf.113.1216979337470;
+        Fri, 25 Jul 2008 02:48:57 -0700 (PDT)
+Received: by 10.100.8.15 with HTTP; Fri, 25 Jul 2008 02:48:57 -0700 (PDT)
+In-Reply-To: <fcaeb9bf0807241137h65292d7egad8cc5f797114607@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90020>
 
-Sverre Rabbelier schrieb:
-> On Thu, Jul 24, 2008 at 10:08 PM, Michele Ballabio
-> <barra_cuda@katamail.com> wrote:
->> On Thursday 24 July 2008, Johannes Schindelin wrote:
->>> On Wed, 23 Jul 2008, Michele Ballabio wrote:
->>>
->>>> +           { OPTION_CALLBACK, 'f', "force", &state, NULL,
->>>> +             "force overwrite of existing files",
->>>> +             PARSE_OPT_NOARG, parse_state_force_cb, 0 },
->>> I wonder if this could not be written as
->>>
->>>               OPT_BOOLEAN('f', "force", &state.force,
->>>                       "force overwrite of existing files"),
->> I did it that way because 'force' is a bitfield.
->=20
-> I thought there is an OPT_BIT?
+Hi,
 
-OPT_BIT is for flags and bitmasks, not for bitfields.
+On 7/25/08, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> On 7/24/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>  > Hi,
+>  >
+>  >  On Thu, 24 Jul 2008, Nguyen Thai Ngoc Duy wrote:
+>  >
+>  >  > On 7/24/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>  >  >
+>  >
+>  > > >  On Thu, 24 Jul 2008, Nguyen Thai Ngoc Duy wrote:
+>  >  > >
+>  >  > >  > When GIT_DIR is not set, cwd is used to determine where .git is. If
+>  >  > >  > core.worktree is set, setup_git_directory() needs to jump back to
+>  >  > >  > the original cwd in order to calculate worktree, this leads to
+>  >  > >  > incorrect .git location later in setup_work_tree().
+>  >  > >
+>  >  > > I do not understand.  core.worktree is either absolute, in which case
+>  >  > > there is no problem.  Or it is relative to where the config lives, no?
+>  >  >
+>  >  > The problem is GIT_DIR is not absolute in this case. So cwd must stay
+>  >  > where git dir is until it is absolute-ized by setup_work_tree().
+>  >
+>  >
+>  > I do not see GIT_DIR being set in your test case at all.
+>  >
+>  >  I do not see how get_git_work_tree() ro get_relative_cwd() should ever be
+>  >  allowed to chdir().
+>  >
+>  >  _If_ they were (which I strongly doubt), they should chdir() back
+>  >  themselves.
+>  >
+>  >  I now wasted easily 30 minutes just trying to make sense of your patch and
+>  >  your response.  And I am still puzzled.
+>  >
+>  >  Your commit message was of no help.
+>
+>
+> Alright, let's look at the code.
+>
+>   1. cwd is moved to toplevel working directory by setup_git_directory_gently()
+>   2. setup_git_env() by default will set git_dir variable as ".git" as
+>  part of check_repository_format_gently()
+>   3. now in setup_git_directory() finds out core.worktree, it chdir()
+>  to get relative prefix
+>   4. setup_work_tree() sees that git_dir is not absolute path, it makes
+>  git_dir absolute
+>
+>  If in step 3, it does not chdir(), step 4 will be right. In this case,
+>  step 3 does chdir() and not going back, access to git repository will
+>  fail as Geoff Russell discovered.
+>  --
+>
+> Duy
+>
 
-Since you can't get the address of a bitfield member, a function that
-wants to change its value needs to know its name.  Switching to bitmask=
-s
-would make the option parsing code look cleaner, but you'd have to
-change all those bitfield accesses to explicit bitmask operations, e.g.=
-:
 
-	if (state.force)
-		state.force =3D 0;
+There seem to be plenty of things happening here which I know nothing
+about, which
+is really why I hit the problem in the first place. I was pretty
+surprised to find that
+my command line switch (--work-tree) was being stored in the config file, which
+ended up causing the problem.  Duy thinks he can fix this, which is
+fine, but as a matter of principle, I'm not keen on command line switches
+being magically saved for me when I didn't ask for this to happen.
+The reason for
+using a command line switch is because I want to override default
+behaviour on this execution, if I wanted to change the default behaviour, then
+I'd set values in the config file.
 
-vs.
+Whatever you decide, I reckon its pretty magical to have a software
+problem, send
+an email to a list and get the solution in 45 minutes.  I've never got that
+service from any other piece of software (or hardware)!
 
-	if (state.flags & CHECKOUT_FORCE)
-		state.flags &=3D ~CHECKOUT_FORCE;
-
-In the case of struct checkout, though, we could simply make the
-bitfield members full ints, because there are only a few instances of
-this structure in memory at any given time.  Wasting a few bytes of RAM
-in order to gain much simpler code is OK in this case, I think.
-OPT_BOOLEAN looks a lot nicer than a callback.
-
-Ren=E9
+Cheers,
+Geoff Russell
