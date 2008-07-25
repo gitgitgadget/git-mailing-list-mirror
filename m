@@ -1,77 +1,63 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Mailing lists, was Re: [RFC] Git User's Survey 2008
-Date: Fri, 25 Jul 2008 11:49:50 -0700
-Message-ID: <7vr69hsss1.fsf@gitster.siamese.dyndns.org>
-References: <200807230325.04184.jnareb@gmail.com>
- <7vsku1gqny.fsf@gitster.siamese.dyndns.org> <48886B8F.6000304@gmail.com>
- <alpine.DEB.1.00.0807241308260.8986@racer>
- <20080725172313.GE21117@spearce.org>
+Subject: Re: [PATCH] Set TAR in t/Makefile and in t4116-apply-reverse.sh
+Date: Fri, 25 Jul 2008 11:54:29 -0700
+Message-ID: <7vmyk5sska.fsf@gitster.siamese.dyndns.org>
+References: <TE3N1FoSy-vEEv0qsAyvBwBMMq2RuJCWYw7DNLBC7mEh6PxM1LCsOw@cipher.nrlssc.navy.mil> <1217003860-10609-1-git-send-email-s-beyer@gmx.net> <7vvdytsu7n.fsf@gitster.siamese.dyndns.org> <20080725182416.GG27172@leksak.fem-net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marek Zawirski <marek.zawirski@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jul 25 20:51:03 2008
+Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Jul 25 20:55:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMSNa-0000Nr-80
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 20:51:02 +0200
+	id 1KMSSE-0002BN-GI
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 20:55:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751839AbYGYSuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 14:50:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751838AbYGYSuB
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 14:50:01 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64891 "EHLO
+	id S1751897AbYGYSyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 14:54:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751895AbYGYSyh
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 14:54:37 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65086 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751797AbYGYSuA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 14:50:00 -0400
+	with ESMTP id S1751191AbYGYSyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 14:54:37 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8709C36D50;
-	Fri, 25 Jul 2008 14:49:59 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 260643BDA1;
+	Fri, 25 Jul 2008 14:54:36 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B27B336D46; Fri, 25 Jul 2008 14:49:52 -0400 (EDT)
-In-Reply-To: <20080725172313.GE21117@spearce.org> (Shawn O. Pearce's message
- of "Fri, 25 Jul 2008 12:23:13 -0500")
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3332B3BDA0; Fri, 25 Jul 2008 14:54:31 -0400 (EDT)
+In-Reply-To: <20080725182416.GG27172@leksak.fem-net> (Stephan Beyer's message
+ of "Fri, 25 Jul 2008 20:24:16 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7B7E85EA-5A7A-11DD-88B2-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 205D7E54-5A7B-11DD-8369-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90088>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Stephan Beyer <s-beyer@gmx.net> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> On Thu, 24 Jul 2008, Marek Zawirski wrote:
->> 
->> > Junio C Hamano wrote:
->> 
->> > > I am not sure how and where, but I think j/egit should also be 
->> > > mentioned and/or asked about.
->> >
->> > There is no separate mailing list for j/egit, we just used private mails 
->> > for some discussions/less important notifications.
->> 
->> I hope not for too much, because this is one of the lessons of last year's 
->> GSoC (and to a large degree this year's Gitorrent project): if you keep 
->> the project too secret, nobody will know, and as a consequence nobody will 
->> care.
+> Hi,
 >
-> We've done most patch review discussions right here on git@vger,
-> but yea, some stuff happens in private.  I think what happens in
-> private this year on egit is really just the standard mentor-student
-> working relationship prior to posting patches for discussion.
+>> diff --git a/Makefile b/Makefile
+>> index b003e3e..1d14209 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -1212,6 +1212,7 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
+>>  
+>>  GIT-BUILD-OPTIONS: .FORCE-GIT-BUILD-OPTIONS
+>>  	@echo SHELL_PATH=\''$(SHELL_PATH_SQ)'\' >$@
+>> +	@echo TAR=\''$(subst ','\'',$(TAR))'\' >>$@
+>>  
+>>  ### Detect Tck/Tk interpreter path changes
+>>  ifndef NO_TCLTK
+>
+> But then TAR has to be set in test-lib.sh also, to be able to
+> invoke t5000 and t4116 directly, hasn't it?
 
-Sorry for causing confusion in the discussion, but I was not talking about
-"mailing list on e/jgit".
-
-What I meant was that we might want to have a few more questions about
-e/jgit as an independent entity in the survey, as it is a completely
-different re-implementation of the same git theme.
+Dosen't test-lib source GIT-BUILD-OPTIONS?
