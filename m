@@ -1,60 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Avoid warning when From: is encoded
-Date: Fri, 25 Jul 2008 09:33:56 -0700
-Message-ID: <7vhcadudmz.fsf@gitster.siamese.dyndns.org>
-References: <1216991208-18782-1-git-send-email-4ux6as402@sneakemail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Peter Valdemar =?utf-8?Q?M=C3=B8rch?= <4ux6as402@sneakemail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 25 18:35:47 2008
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH] Set TAR in t/Makefile and in t4116-apply-reverse.sh
+Date: Fri, 25 Jul 2008 18:37:40 +0200
+Message-ID: <1217003860-10609-1-git-send-email-s-beyer@gmx.net>
+References: <TE3N1FoSy-vEEv0qsAyvBwBMMq2RuJCWYw7DNLBC7mEh6PxM1LCsOw@cipher.nrlssc.navy.mil>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Stephan Beyer <s-beyer@gmx.net>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Jul 25 18:38:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMQGD-0004A5-6f
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 18:35:17 +0200
+	id 1KMQJe-0005l4-1W
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 18:38:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754368AbYGYQeF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2008 12:34:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754331AbYGYQeF
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 12:34:05 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34371 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754273AbYGYQeE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Jul 2008 12:34:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 91E673BE60;
-	Fri, 25 Jul 2008 12:34:02 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C13133BE5F; Fri, 25 Jul 2008 12:33:59 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7D9282EA-5A67-11DD-8185-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751706AbYGYQhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 12:37:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751692AbYGYQhu
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 12:37:50 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36057 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751689AbYGYQhu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 12:37:50 -0400
+Received: (qmail invoked by alias); 25 Jul 2008 16:37:48 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp061) with SMTP; 25 Jul 2008 18:37:48 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+C/0UF662C84/OFBcTlx4ikEM7zNnb79Gn+z0n94
+	s0Yh/fXShjekm/
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KMQIW-0002lV-Iu; Fri, 25 Jul 2008 18:37:40 +0200
+X-Mailer: git-send-email 1.6.0.rc0.102.ga1791
+In-Reply-To: <TE3N1FoSy-vEEv0qsAyvBwBMMq2RuJCWYw7DNLBC7mEh6PxM1LCsOw@cipher.nrlssc.navy.mil>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90068>
 
-Peter Valdemar M=C3=B8rch  <4ux6as402@sneakemail.com> writes:
+Hence, the test passes also when you run "make" in t/
+or when you invoke t4116-apply-reverse.sh directly,
+without $TAR being set.
 
-> From: Peter Valdemar M=C3=B8rch <peter@morch.com>
->
-> In commit 0706bd19ef9b41e7519df2c73796ef93484272fd $1 is used from a =
-regexp
-> without using () to set up $1. Later, when that value was used, it ca=
-used a
-> warning about a variable being undefined.
->
-> Signed-off-by: Peter Valdemar M=C3=B8rch <peter@morch.com>
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+---
+ t/Makefile               |    2 +-
+ t/t4116-apply-reverse.sh |    1 +
+ 2 files changed, 2 insertions(+), 1 deletions(-)
 
-Thanks.  The patch is obviously correct; I think you are fixing 8291db6
-(git-send-email: add charset header if we add encoded 'From', 2007-11-1=
-6),
-not 0706bd1 (send-email: specify content-type of --compose body,
-2008-03-28).
-
-Will apply to maint and merge upwards.
+diff --git a/t/Makefile b/t/Makefile
+index 0d65ced..b720943 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -5,7 +5,7 @@
+ 
+ #GIT_TEST_OPTS=--verbose --debug
+ SHELL_PATH ?= $(SHELL)
+-TAR ?= $(TAR)
++TAR ?= tar
+ RM ?= rm -f
+ 
+ # Shell quote;
+diff --git a/t/t4116-apply-reverse.sh b/t/t4116-apply-reverse.sh
+index 2298ece..3ff5d9e 100755
+--- a/t/t4116-apply-reverse.sh
++++ b/t/t4116-apply-reverse.sh
+@@ -8,6 +8,7 @@ test_description='git apply in reverse
+ '
+ 
+ . ./test-lib.sh
++TAR=${TAR:-tar}
+ 
+ test_expect_success setup '
+ 
+-- 
+1.6.0.rc0.102.ga1791
