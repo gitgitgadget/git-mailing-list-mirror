@@ -1,68 +1,144 @@
-From: Pedro Melo <melo@simplicidade.org>
-Subject: Re: gitweb tags feed, Re: New version announcements?
-Date: Fri, 25 Jul 2008 08:37:54 +0100
-Message-ID: <AB0DDE8E-D36E-4299-A75F-FF92B402B9C1@simplicidade.org>
-References: <3B8DB770-5ADC-4B99-9A12-F1DABA20C34D@bunster.org> <20080724144939.GI10151@machine.or.cz> <Pine.LNX.4.64.0807241600190.7093@reaper.quantumfyre.co.uk> <B7201433-1725-4C3A-85D6-4C036635FD17@simplicidade.org> <Pine.LNX.4.64.0807241818520.7970@reaper.quantumfyre.co.uk>
-Mime-Version: 1.0 (Apple Message framework v753.1)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH 6/9 - v2] builtin-init-db.c: use parse_options()
+Date: Fri, 25 Jul 2008 10:15:18 +0200
+Message-ID: <200807251015.18143.barra_cuda@katamail.com>
+References: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com> <4888AAB2.5050007@free.fr> <200807242207.02195.barra_cuda@katamail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, Jordi Bunster <jordi@bunster.org>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Fri Jul 25 09:38:50 2008
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Olivier Marin <dkr+ml.git@free.fr>
+X-From: git-owner@vger.kernel.org Fri Jul 25 10:10:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMHsy-0004K1-M4
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 09:38:45 +0200
+	id 1KMIN6-00072p-FB
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 10:09:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751923AbYGYHhp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 03:37:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751908AbYGYHhp
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 03:37:45 -0400
-Received: from mail.sl.pt ([212.55.140.13]:45703 "EHLO sl.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751343AbYGYHho (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 03:37:44 -0400
-Received: (qmail 15078 invoked from network); 25 Jul 2008 07:37:37 -0000
-Received: from unknown (HELO [192.168.1.74]) (melo@[82.154.15.84])
-          (envelope-sender <melo@simplicidade.org>)
-          by mail-sl (qmail-ldap-1.03) with SMTP
-          for <pasky@suse.cz>; 25 Jul 2008 07:37:37 -0000
-In-Reply-To: <Pine.LNX.4.64.0807241818520.7970@reaper.quantumfyre.co.uk>
-Jabber-Id: melo@simplicidade.org
-X-Mailer: Apple Mail (2.753.1)
+	id S1752170AbYGYIIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 04:08:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751908AbYGYIIw
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 04:08:52 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:41134 "HELO
+	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1751907AbYGYIIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 04:08:50 -0400
+Received: (qmail 10034 invoked by uid 89); 25 Jul 2008 08:08:34 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
+X-Spam-Level: *
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_50,RDNS_NONE
+	autolearn=no version=3.2.3
+Received: from unknown (HELO host200-56-dynamic.104-80-r.retail.telecomitalia.it) (barra?cuda@katamail.com@80.104.56.200)
+  by smtp2-pc with SMTP; 25 Jul 2008 08:08:33 -0000
+User-Agent: KMail/1.9.9
+In-Reply-To: <200807242207.02195.barra_cuda@katamail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90009>
 
-Hi,
+Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+---
 
-On Jul 24, 2008, at 6:25 PM, Julian Phillips wrote:
-> On Thu, 24 Jul 2008, Pedro Melo wrote:
->> On Jul 24, 2008, at 4:04 PM, Julian Phillips wrote:
->>> > On Thu, Jul 24, 2008 at 10:38:24AM -0400, Jordi Bunster wrote:
->>> > > > > Any way that a git-announce list could be created for  
->>> security fixes > > and
->>> > > new releases? Or maybe an RSS feed on the website?
->>> An RSS feed already exists, have a look at http://gitrss.q42.co.uk/.
->>
->> You might want to look at the script that generates the announces  
->> feed. It missed the 1.5.6.4 announcement.
->>
->> http://article.gmane.org/gmane.comp.version-control.git/89148/ 
->> match=1.5.6.4
->
-> Should be there now.  Thanks. :)
+On Thursday 24 July 2008, Michele Ballabio wrote:
+> +static int parse_opt_shared_cb(const struct option *opt, const char *arg,
+> +                              int unset)
+> +{
+> +       *(int *)(opt->value) = unset ? PERM_UMASK : git_config_perm("arg", arg);
+> +       return 0;
+> +}
+> 
 
-It's there, fixed.
+Did it this way (and changed help strings).
 
-Best regards,
+ builtin-init-db.c |   57 +++++++++++++++++++++++++++++++++-------------------
+ 1 files changed, 36 insertions(+), 21 deletions(-)
+
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index 38b4fcb..42c2e20 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -6,6 +6,7 @@
+ #include "cache.h"
+ #include "builtin.h"
+ #include "exec_cmd.h"
++#include "parse-options.h"
+ 
+ #ifndef DEFAULT_GIT_TEMPLATE_DIR
+ #define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
+@@ -353,8 +354,18 @@ static int guess_repository_type(const char *git_dir)
+ 	return 1;
+ }
+ 
+-static const char init_db_usage[] =
+-"git init [-q | --quiet] [--bare] [--template=<template-directory>] [--shared[=<permissions>]]";
++static const char * const init_db_usage[] = {
++	"git init [-q | --quiet] [--bare] [--template=<dir>] [--shared[=<type>]]",
++	NULL
++};
++
++static int parse_opt_shared_cb(const struct option *opt, const char *arg,
++			       int unset)
++{
++	*(int *)(opt->value) = unset ? PERM_UMASK :
++				       git_config_perm("arg", arg);
++	return 0;
++}
+ 
+ /*
+  * If you want to, you can share the DB area with any number of branches.
+@@ -367,25 +378,29 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 	const char *git_dir;
+ 	const char *template_dir = NULL;
+ 	unsigned int flags = 0;
+-	int i;
+-
+-	for (i = 1; i < argc; i++, argv++) {
+-		const char *arg = argv[1];
+-		if (!prefixcmp(arg, "--template="))
+-			template_dir = arg+11;
+-		else if (!strcmp(arg, "--bare")) {
+-			static char git_dir[PATH_MAX+1];
+-			is_bare_repository_cfg = 1;
+-			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir,
+-						sizeof(git_dir)), 0);
+-		} else if (!strcmp(arg, "--shared"))
+-			shared_repository = PERM_GROUP;
+-		else if (!prefixcmp(arg, "--shared="))
+-			shared_repository = git_config_perm("arg", arg+9);
+-		else if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet"))
+-			flags |= INIT_DB_QUIET;
+-		else
+-			usage(init_db_usage);
++	int bare = 0;
++
++	const struct option options[] = {
++		OPT_STRING(0, "template", &template_dir, "path",
++			   "path to the template directory"),
++		OPT_BOOLEAN(0, "bare", &bare, "set up a bare repository"),
++		{ OPTION_CALLBACK, 0, "shared", &shared_repository,
++		  "permissions", "set up a shared repository",
++		  PARSE_OPT_OPTARG, parse_opt_shared_cb, PERM_GROUP },
++		OPT_BIT('q', "quiet", &flags, "be quiet", INIT_DB_QUIET),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, options, init_db_usage, 0);
++
++	if (argc > 0)
++		usage_with_options(init_db_usage, options);
++
++	if (bare) {
++		static char git_dir[PATH_MAX+1];
++		is_bare_repository_cfg = 1;
++		setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir,
++					sizeof(git_dir)), 0);
+ 	}
+ 
+ 	/*
 -- 
-Pedro Melo
-Blog: http://www.simplicidade.org/notes/
-XMPP ID: melo@simplicidade.org
-Use XMPP!
+1.5.6.3
