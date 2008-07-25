@@ -1,84 +1,83 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [RFC] custom strategies in builtin-merge
-Date: Fri, 25 Jul 2008 13:33:16 +0200
-Message-ID: <20080725113316.GF32057@genesis.frugalware.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] index-pack: correctly initialize appended objects
+Date: Fri, 25 Jul 2008 07:48:24 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0807250742120.9968@xanadu.home>
+References: <alpine.DEB.1.00.0807241821440.8986@racer>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="rVMVguMjBJz39qo3"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 25 13:34:20 2008
+Content-Type: multipart/mixed; boundary="Boundary_(ID_lLDMSvLBaoH53VDzayGwfg)"
+Cc: spearce@spearce.org, git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 25 13:50:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMLYw-0006X3-Ce
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 13:34:18 +0200
+	id 1KMLnz-00031G-UI
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 13:49:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752518AbYGYLdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 07:33:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbYGYLdS
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 07:33:18 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:42644 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752436AbYGYLdR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 07:33:17 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 554341B2516;
-	Fri, 25 Jul 2008 13:33:16 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 23B684465E;
-	Fri, 25 Jul 2008 12:50:53 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 21E161190A09; Fri, 25 Jul 2008 13:33:16 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1755896AbYGYLsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 07:48:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755277AbYGYLsb
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 07:48:31 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:30150 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752473AbYGYLsa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 07:48:30 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K4K00HUV8SOXN00@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 25 Jul 2008 07:48:24 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <alpine.DEB.1.00.0807241821440.8986@racer>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90036>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--Boundary_(ID_lLDMSvLBaoH53VDzayGwfg)
+Content-type: TEXT/PLAIN; charset=iso-8859-1
+Content-transfer-encoding: 8BIT
+
+On Thu, 24 Jul 2008, Johannes Schindelin wrote:
+
+> 
+> From: Björn Steinbrink <B.Steinbrink@gmx.de>
+> 
+> When index-pack completes a thin pack it appends objects to the pack.  
+> Since the commit 92392b4(index-pack: Honor core.deltaBaseCacheLimit when 
+> resolving deltas) such an object can be pruned in case of memory
+> pressure.
+> 
+> To be able to re-read the object later, a few more fields have to be set.
+> 
+> Noticed by Pierre Habouzit.
+> 
+> Hopefully-signed-off-by: Björn Steinbrink <B.Steinbrink@gmx.de>
+> Hopefully-reviewed-and-signed-off-by: Nicolas Pitre <nico@cam.org>, 
+> 
+> --
+> 
+> 	This was probably missed in the flurry of patches, scratched 
+> 	patches, and new patches.
+> 
+> 	Nico could you have a quick look?  (I would ask Shawn, but I know 
+> 	that he is pretty busy with real world issues.)
+
+sorry, I have intermitant connectivity this week, and I'll be off the 
+net for two weeks after that.
+
+Yes, this looks fine, although I'd add a comment mentioning that those 
+extra fields are uninitialized in the thin pack case when objects are 
+appended to the pack since they're already initialized otherwise.
+
+ACK.
 
 
---rVMVguMjBJz39qo3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Nicolas
 
-Hi,
-
-We talked with Dscho about how would it be possible to allow custom
-strategies in builtin-merge and I have a question here.
-
-The problem is that currently merge strategies are always named
-git-merge-foo, but not all git-merge-foo is a merge strategy.
-
-So we talked about two solutions here:
-
-1) Maintain a list of commands that has a git-merge- prefix, but not a
-strategy. This list would currently contain "base, file, index,
-one-file and tree".
-
-2) Require custom strategies to have a different naming scheme, like
-if "foo" is a custom strategy, then it would have to be named
-git-merge-custom-foo, _not_ git-merge-foo.
-
-Both are doable (I prefer 1) a bit), but I thought it's better to ask
-first before I implement any of them.
-
-So, comments?
-
-Thanks.
-
---rVMVguMjBJz39qo3
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkiJufwACgkQe81tAgORUJbxGgCggMJLr0x1gltvCzJpSC0ViU+r
-ezYAn3yuGHsKEnv19P1rdjFQn+hIIy/q
-=zymB
------END PGP SIGNATURE-----
-
---rVMVguMjBJz39qo3--
+--Boundary_(ID_lLDMSvLBaoH53VDzayGwfg)--
