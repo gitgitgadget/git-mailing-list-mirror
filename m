@@ -1,144 +1,90 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH 6/9 - v2] builtin-init-db.c: use parse_options()
-Date: Fri, 25 Jul 2008 10:15:18 +0200
-Message-ID: <200807251015.18143.barra_cuda@katamail.com>
-References: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com> <4888AAB2.5050007@free.fr> <200807242207.02195.barra_cuda@katamail.com>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: sparse fetch, was Re: [PATCH 08/12] git-clone: support --path to do sparse clone
+Date: Fri, 25 Jul 2008 10:14:16 +0200
+Message-ID: <bd6139dc0807250114qc1c6cf5ufa7df0862507010d@mail.gmail.com>
+References: <20080723145718.GA29134@laptop>
+	 <20080724171952.GB21043@sigill.intra.peff.net>
+	 <alpine.DEB.1.00.0807241837441.8986@racer>
+	 <20080724185332.GQ32184@machine.or.cz>
+	 <bd6139dc0807241201v50cd5ef2m58ee7efc05119e20@mail.gmail.com>
+	 <alpine.DEB.1.00.0807250210090.4140@eeepc-johanness>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Fri Jul 25 10:10:08 2008
+Cc: "Petr Baudis" <pasky@suse.cz>, "Jeff King" <peff@peff.net>,
+	"=?ISO-8859-1?Q?Nguy=3Fn_Th=E1i_Ng=3Fc_Duy?=" <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 25 10:15:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMIN6-00072p-FB
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 10:09:52 +0200
+	id 1KMISP-0000WB-Sm
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 10:15:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170AbYGYIIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 04:08:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751908AbYGYIIw
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 04:08:52 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:41134 "HELO
-	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1751907AbYGYIIu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 04:08:50 -0400
-Received: (qmail 10034 invoked by uid 89); 25 Jul 2008 08:08:34 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
-X-Spam-Level: *
-X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_50,RDNS_NONE
-	autolearn=no version=3.2.3
-Received: from unknown (HELO host200-56-dynamic.104-80-r.retail.telecomitalia.it) (barra?cuda@katamail.com@80.104.56.200)
-  by smtp2-pc with SMTP; 25 Jul 2008 08:08:33 -0000
-User-Agent: KMail/1.9.9
-In-Reply-To: <200807242207.02195.barra_cuda@katamail.com>
+	id S1752403AbYGYIOV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 04:14:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752134AbYGYIOT
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 04:14:19 -0400
+Received: from wf-out-1314.google.com ([209.85.200.170]:12673 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751884AbYGYIOR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 04:14:17 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so3957277wfd.4
+        for <git@vger.kernel.org>; Fri, 25 Jul 2008 01:14:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=tcs3zZ2I/mJ3pLFdVIoZlgvcOTU/afiE9pZs1bryVXw=;
+        b=C9YJ8wZVZ/yBRqdFUxJxFwcEPP6dyusu/8qwmcLLqO2IP/kglyV15TUjNdmlOH7Kgb
+         60p5p1eBHOWLorz7IapP8UowZCeEKpxw/eQ2JkVSKGujb7fXwMbjSiJHOegUnGBL87H/
+         n8IfD2Te3m/u423+QOdcPmaguKgBXqY8sOAvA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=qGbnO2oj0k8GEvGr02X8Nx/8Us8ck7YM6gWewQuYHl0FPCDoez8XOVv73prncG1jn3
+         IE1gR7pPlcm7FLJY8YtZg5lFaB7JubH1v1vvadH/kF4m4Ws92v4j8eOiUoUOi7Ad7H2Y
+         00d0aAna1+2sodH9Q7L1e5LAOdEo+eJrvY7xs=
+Received: by 10.142.229.5 with SMTP id b5mr446389wfh.280.1216973656749;
+        Fri, 25 Jul 2008 01:14:16 -0700 (PDT)
+Received: by 10.143.38.17 with HTTP; Fri, 25 Jul 2008 01:14:16 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0807250210090.4140@eeepc-johanness>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90010>
 
-Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
----
+On Fri, Jul 25, 2008 at 02:12, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Thu, 24 Jul 2008, Sverre Rabbelier wrote:
+>> Wouldn't that be as simple as passing a pathspec to git-rev-list? Not a
+>> lot of overhead there I reckon.
+>
+> So the server would _not_ have to deflate the objects to inspect them?  I
+> thought you knew more about Git's object database.
 
-On Thursday 24 July 2008, Michele Ballabio wrote:
-> +static int parse_opt_shared_cb(const struct option *opt, const char *arg,
-> +                              int unset)
-> +{
-> +       *(int *)(opt->value) = unset ? PERM_UMASK : git_config_perm("arg", arg);
-> +       return 0;
-> +}
-> 
+Nope, I did not know this. I thought that the server already had to do
+all that to decide what to send, since not every request asks for the
+same pack (someone might not have updated in 2 month, or someone might
+might be up to date, or anything in between).
 
-Did it this way (and changed help strings).
+>> Just keep them?
+>
+> You'd still have to inspect the objects, which is way more work than the
+> current code has to do.  Remember: in the optimal case, upload-pack does
+> not more than just serve the existing deltas/base objects.
 
- builtin-init-db.c |   57 +++++++++++++++++++++++++++++++++-------------------
- 1 files changed, 36 insertions(+), 21 deletions(-)
+Ah, I can see how that would produce overhead then.
 
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index 38b4fcb..42c2e20 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -6,6 +6,7 @@
- #include "cache.h"
- #include "builtin.h"
- #include "exec_cmd.h"
-+#include "parse-options.h"
- 
- #ifndef DEFAULT_GIT_TEMPLATE_DIR
- #define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
-@@ -353,8 +354,18 @@ static int guess_repository_type(const char *git_dir)
- 	return 1;
- }
- 
--static const char init_db_usage[] =
--"git init [-q | --quiet] [--bare] [--template=<template-directory>] [--shared[=<permissions>]]";
-+static const char * const init_db_usage[] = {
-+	"git init [-q | --quiet] [--bare] [--template=<dir>] [--shared[=<type>]]",
-+	NULL
-+};
-+
-+static int parse_opt_shared_cb(const struct option *opt, const char *arg,
-+			       int unset)
-+{
-+	*(int *)(opt->value) = unset ? PERM_UMASK :
-+				       git_config_perm("arg", arg);
-+	return 0;
-+}
- 
- /*
-  * If you want to, you can share the DB area with any number of branches.
-@@ -367,25 +378,29 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 	const char *git_dir;
- 	const char *template_dir = NULL;
- 	unsigned int flags = 0;
--	int i;
--
--	for (i = 1; i < argc; i++, argv++) {
--		const char *arg = argv[1];
--		if (!prefixcmp(arg, "--template="))
--			template_dir = arg+11;
--		else if (!strcmp(arg, "--bare")) {
--			static char git_dir[PATH_MAX+1];
--			is_bare_repository_cfg = 1;
--			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir,
--						sizeof(git_dir)), 0);
--		} else if (!strcmp(arg, "--shared"))
--			shared_repository = PERM_GROUP;
--		else if (!prefixcmp(arg, "--shared="))
--			shared_repository = git_config_perm("arg", arg+9);
--		else if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet"))
--			flags |= INIT_DB_QUIET;
--		else
--			usage(init_db_usage);
-+	int bare = 0;
-+
-+	const struct option options[] = {
-+		OPT_STRING(0, "template", &template_dir, "path",
-+			   "path to the template directory"),
-+		OPT_BOOLEAN(0, "bare", &bare, "set up a bare repository"),
-+		{ OPTION_CALLBACK, 0, "shared", &shared_repository,
-+		  "permissions", "set up a shared repository",
-+		  PARSE_OPT_OPTARG, parse_opt_shared_cb, PERM_GROUP },
-+		OPT_BIT('q', "quiet", &flags, "be quiet", INIT_DB_QUIET),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, options, init_db_usage, 0);
-+
-+	if (argc > 0)
-+		usage_with_options(init_db_usage, options);
-+
-+	if (bare) {
-+		static char git_dir[PATH_MAX+1];
-+		is_bare_repository_cfg = 1;
-+		setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir,
-+					sizeof(git_dir)), 0);
- 	}
- 
- 	/*
 -- 
-1.5.6.3
+Cheers,
+
+Sverre Rabbelier
