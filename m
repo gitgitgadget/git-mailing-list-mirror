@@ -1,49 +1,48 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 5/6] archive: allow --exec and --remote without equal
- sign
-Date: Fri, 25 Jul 2008 12:54:00 +0200
-Message-ID: <4889B0C8.70908@lsrfire.ath.cx>
-References: <1216982486-5887-1-git-send-email-rene.scharfe@lsrfire.ath.cx> <1216982486-5887-2-git-send-email-rene.scharfe@lsrfire.ath.cx> <1216982486-5887-3-git-send-email-rene.scharfe@lsrfire.ath.cx> <1216982486-5887-4-git-send-email-rene.scharfe@lsrfire.ath.cx> <1216982486-5887-5-git-send-email-rene.scharfe@lsrfire.ath.cx> <1216982486-5887-6-git-send-email-rene.scharfe@lsrfire.ath.cx>
+From: Rene Herman <rene.herman@keyaccess.nl>
+Subject: statistics
+Date: Fri, 25 Jul 2008 13:18:05 +0200
+Message-ID: <4889B66D.4020306@keyaccess.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 25 12:55:07 2008
+X-From: git-owner@vger.kernel.org Fri Jul 25 13:16:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMKx0-0002rE-N6
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 12:55:07 +0200
+	id 1KMLI0-0001HD-3c
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 13:16:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751287AbYGYKyH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2008 06:54:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbYGYKyF
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 06:54:05 -0400
-Received: from india601.server4you.de ([85.25.151.105]:55548 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750930AbYGYKyE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 06:54:04 -0400
-Received: from [10.0.1.200] (p57B7EC0C.dip.t-dialin.net [87.183.236.12])
-	by india601.server4you.de (Postfix) with ESMTPSA id 2C4972F8028;
-	Fri, 25 Jul 2008 12:54:02 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <1216982486-5887-6-git-send-email-rene.scharfe@lsrfire.ath.cx>
+	id S1752022AbYGYLPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 07:15:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751649AbYGYLPq
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 07:15:46 -0400
+Received: from smtpq1.groni1.gr.home.nl ([213.51.130.200]:33320 "EHLO
+	smtpq1.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750706AbYGYLPp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 07:15:45 -0400
+Received: from [213.51.130.188] (port=55495 helo=smtp3.groni1.gr.home.nl)
+	by smtpq1.groni1.gr.home.nl with esmtp (Exim 4.60)
+	(envelope-from <rene.herman@keyaccess.nl>)
+	id 1KMLGx-0007De-D7
+	for git@vger.kernel.org; Fri, 25 Jul 2008 13:15:43 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:43251 helo=[192.168.0.3])
+	by smtp3.groni1.gr.home.nl with esmtp (Exim 4.60)
+	(envelope-from <rene.herman@keyaccess.nl>)
+	id 1KMLGx-0001g9-6E
+	for git@vger.kernel.org; Fri, 25 Jul 2008 13:15:43 +0200
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90033>
 
-Rene Scharfe schrieb:
-> Convert git archive to parse_options().  The parameters --remote and =
---exec
-> are still handled by their special parser.  Define them anyway in ord=
-er for
-> them to show up in the usage notice.
+Hi.
 
-Hmpf, the _real_ subject of this email is "[PATCH 6/6] archive: convert
-to parse_options()"..
+Is there a (non-depressing) way of getting "which files did not change 
+since <rev>" out of git?
 
-Ren=E9
+Rene.
