@@ -1,110 +1,80 @@
-From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: Re: problem using jgit
-Date: Fri, 25 Jul 2008 16:51:58 +0200
-Message-ID: <4889E88E.8000701@gmail.com>
-References: <p06240809c4a9d887fda4@[192.168.1.106]> <488467E3.7000107@gmail.com> <488482A2.4000601@gmail.com> <20080722165831.GA11173@spearce.org>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: [RFC PATCH 00/12] Sparse checkout
+Date: Fri, 25 Jul 2008 10:53:54 -0400
+Message-ID: <32541b130807250753j1071639ao9313a8acad9f4183@mail.gmail.com>
+References: <20080723145518.GA29035@laptop>
+	 <m3tzefvd3q.fsf@localhost.localdomain>
+	 <fcaeb9bf0807240358l6584c063u85179196bd6db30a@mail.gmail.com>
+	 <200807242201.23991.jnareb@gmail.com>
+	 <fcaeb9bf0807241621y60b0341ej8f9f3b591ef12baf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Stephen Bannasch <stephen.bannasch@deanbrook.org>,
-	git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jul 25 16:53:33 2008
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 25 16:55:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMOfM-0001Rt-Uh
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 16:53:09 +0200
+	id 1KMOh7-0002TK-6C
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 16:54:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751578AbYGYOwG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 10:52:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbYGYOwG
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 10:52:06 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:43647 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751479AbYGYOwE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 10:52:04 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so1260158nfc.21
-        for <git@vger.kernel.org>; Fri, 25 Jul 2008 07:52:01 -0700 (PDT)
+	id S1751717AbYGYOx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 10:53:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751652AbYGYOx5
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 10:53:57 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:19895 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751402AbYGYOx4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 10:53:56 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1340513ywe.1
+        for <git@vger.kernel.org>; Fri, 25 Jul 2008 07:53:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=PhK2CwTqyArbnlcDo9pO8c/7YJVFE2HIaFvfPOGyilo=;
-        b=FTPPtKhlWLbv6ku+gLK5V+XZuRBShzXhfPVKVns5Hcqw9sHBzk7n5nKWC2ymd4Q+D3
-         ogtH3etNYXAFSqBlmYHf9d1Wp7s1ZRFIFqxysbDnmNYdRFHCmUJMoau7z2u788wKvJ2Y
-         Li1O+N5kvAjXalCluMvA9HCXFprrVoO+BOITc=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ZI3UjxTuQN/z0ohdXEg26bQ/4nK/UTQYSGdSz7cqYlE=;
+        b=nwdARZsOkb+b5qwDJ/MyVwdhz7XTNIsoOSuO14yCUFngS7mUJI2JrVkpM/RQ1a1IXd
+         /YKDo7HFBARpJ3CFCoQUPK8+h0gIxlPXaepoNbJaQ+1/vngP0cK3pipwVhx5DMEfiIje
+         GSO6jrr4uCdUBBsaGadZlvnlkeRUDRbs/PMzw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=VlBvv/MNBwepsVnP9GWledGR94h4+M63ESMwvFB1Y0UNOPYl9rd2IAr3R1ZfLox9g9
-         qUz17otN4SZmYmp+y2wBBEJXtvKUN0c2dyevHQXu6tIZfYeP5SPEyFROvRKYi7W8ywZW
-         1FwGK/znd0QnkVbwEeC5hkvsc7XkdgRfj/88I=
-Received: by 10.210.50.6 with SMTP id x6mr2063041ebx.87.1216997521748;
-        Fri, 25 Jul 2008 07:52:01 -0700 (PDT)
-Received: from ?192.168.1.167? ( [150.254.6.130])
-        by mx.google.com with ESMTPS id d27sm8867919nfh.37.2008.07.25.07.52.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 25 Jul 2008 07:52:00 -0700 (PDT)
-User-Agent: Mozilla-Thunderbird 2.0.0.14 (X11/20080509)
-In-Reply-To: <20080722165831.GA11173@spearce.org>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=HMEWAA9DStbGrFqcDF5PGp/GzBK7G3LYvbnwWs2jjnUlaPjykuXXFrifdVhLYSCPnm
+         Nu48aYMqqGW3/anoM7Y8bmcbppv//lYdo32iZiu0raOOBvO51EH27db4uo12eDc/82Vy
+         ROtEKSEbc7fW3KR33DwD4Eud4B2GqYXKIETxs=
+Received: by 10.114.201.1 with SMTP id y1mr2050238waf.93.1216997634587;
+        Fri, 25 Jul 2008 07:53:54 -0700 (PDT)
+Received: by 10.150.96.5 with HTTP; Fri, 25 Jul 2008 07:53:54 -0700 (PDT)
+In-Reply-To: <fcaeb9bf0807241621y60b0341ej8f9f3b591ef12baf@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90056>
 
-Shawn O. Pearce wrote:
-> Marek Zawirski <marek.zawirski@gmail.com> wrote:
->   
->> Marek Zawirski wrote:
->>     
->>> Stephen Bannasch wrote:
->>>       
->>>> I've setup a simple test class that integrates jgit to clone a git  
->>>> repository. However I'm getting a NullPointerError when  
->>>> RevWalk.parseAny ends up producing a null object id.
->>>>         
-> ...
->   
->> It's caused by 14a630c3: Cached modification times for symbolic refs too
->> Changes introduced by this patch made Repository#getAllRefs() including  
->> Ref objects with null ObjectId in case of unresolvable (invalid?) HEAD  
->> symbolic ref, and null Ref for HEAD  when it doesn't exist. Previous  
->> behavior was just not including such refs in result.
->>     
->
-> My intention here was that if a ref cannot be resolved, it should
-> not be reported.  So Ref.getObjectId should never return null, and
-> it should also never return an ObjectId for which the object does
-> not exist in the Repository's object database(s).  (Though that can
-> happen in the face of repository corruption, but lets not go there
-> just yet).
->
-> So IMHO the RefDatabase code is _wrong_ for returning HEAD with a
-> null objectId.
->
-> Now this case can happen if HEAD points at a stillborn branch.  This
-> is easily reproduced in any repository, e.g. just do:
->
-> 	git symbolic-ref HEAD refs/heads/`date`
->
-> You'll wind up on a branch which doesn't exist.  In this case HEAD
-> shouldn't be reported back from RefDatabase, it doesn't exist, as
-> branch `date` does not exist either.
->
->   
-Beside of my temporary fix for that that filters null Ref and Ref with 
-null objectId, I think that 2 more issues may need to be resolved:
+On 7/24/08, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> I wrote that with svn repos in mind. If those repos are to be
+>  partially checked out, .svnignore would be in subdirectories rather
+>  than at toplevel. Anyway that may not be true.
 
-1) readRefBasic() method is used for reading arbitrary refs, potentially 
-not only those from well-known prefixes as readRefs() does. Is calling 
-setModified()  appropriate for those other refs?
+As far as I know, this is a misstatement of how svn works.  It uses
+svn:ignore properties, not .svnignore files, and they don't apply
+recursively, so this potential inconsistency wouldn't happen with svn.
+ Of course, in the name of this consistency, svn gave up recursive
+ignores.
 
-2) Am I wrong that setModified() is not called in all cases? Consider 
-empty ref file and just...
-if (line == null || line.length() == 0)
-            return new Ref(Ref.Storage.LOOSE, name, null);
+So anyway, back on topic, the definition of a "well-organized
+repository" is different wth git than with svn for this reason.  I
+would certainly expect most well-organized git repositories to have a
+toplevel .gitignore for the most common stuff.
+
+Have fun,
+
+Avery
