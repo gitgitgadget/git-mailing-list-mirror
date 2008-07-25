@@ -1,84 +1,75 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: git-scm.com
-Date: Fri, 25 Jul 2008 23:36:13 +0200
-Message-ID: <200807252336.13555.johan@herland.net>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH] Test that we can add a new file to a non-topmost patch with refresh -p
+Date: Fri, 25 Jul 2008 22:37:23 +0100
+Message-ID: <b0943d9e0807251437u4c01fb45n98e1b0b29e9c4c78@mail.gmail.com>
+References: <20080718084127.GA7042@diana.vm.bytemark.co.uk>
+	 <20080718170225.10086.17504.stgit@yoghurt>
+	 <20080718180109.GA14825@diana.vm.bytemark.co.uk>
+	 <b0943d9e0807211501g68d1cffeh12bcb34df0f28dae@mail.gmail.com>
+	 <20080722071438.GA16807@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 25 23:37:24 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Jon Smirl" <jonsmirl@gmail.com>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Fri Jul 25 23:38:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMUyZ-0006Ee-Gb
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 23:37:23 +0200
+	id 1KMUzg-0006ZQ-UN
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 23:38:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751668AbYGYVgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 17:36:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751670AbYGYVgT
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 17:36:19 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:64707 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751449AbYGYVgS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 17:36:18 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0K4L00D0300G4C00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 25 Jul 2008 23:36:16 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K4L00IR900DZ3B0@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 25 Jul 2008 23:36:14 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K4L009XP00DLLF0@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Fri, 25 Jul 2008 23:36:13 +0200 (CEST)
-In-reply-to: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1752136AbYGYVh1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2008 17:37:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756501AbYGYVh0
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 17:37:26 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:42948 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756441AbYGYVhY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Jul 2008 17:37:24 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so2183670waf.23
+        for <git@vger.kernel.org>; Fri, 25 Jul 2008 14:37:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=1gTIdq0G5OADkGz20lZpPiRLJL09CZjApIOswZwNsV0=;
+        b=C6UvzqAhRPsugXVfsA95QOj4VU9v09/kRsYIa7d1/bzz86GwnA+rqb5VZqn+yDMxdr
+         78hKY5QqT6uobVtxrocdGdL08sM7jw7lex+Y/CDU7EH0a4y/hfc45X5efT7sgyiEquZU
+         cYwzbcXuaVys3zm1s/e492AUvaukmb+TMXmCI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Rio3hrnosIW+bLOTl8zGcZL0kf4zt06oTvdKUHCX8YBgK8pT9MhCtOtu2HCWukwPYI
+         2wSqv6ac0MRqY9YowR7WgiYJ1oWu7EvbSHdceWZB+BkyWEUrteXpJkJXBoKnr1aHDUSG
+         pv/ichMgekEfIMGLODmG+2gJFVARX0RJa17yY=
+Received: by 10.114.24.1 with SMTP id 1mr2633370wax.74.1217021843714;
+        Fri, 25 Jul 2008 14:37:23 -0700 (PDT)
+Received: by 10.114.193.12 with HTTP; Fri, 25 Jul 2008 14:37:23 -0700 (PDT)
+In-Reply-To: <20080722071438.GA16807@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90119>
 
-On Friday 25 July 2008, Scott Chacon wrote:
-> Hey all,
+2008/7/22 Karl Hasselstr=F6m <kha@treskal.com>:
+> On 2008-07-21 23:01:17 +0100, Catalin Marinas wrote:
 >
-> A followup on the post I did a few days ago about Git documentation.
-> I forked Petr's git.or.cz site and put up a version that I think is a
-> bit more accessible and newbie-friendly at git-scm.com.  I had meant
-> to discuss this with Petr before posting it to you all, but I
-> published a blog post that got a bit more attention than I expected,
-> and I didn't want you all to think I didn't care about your opinion,
-> as some have already accused me of.
+>> I don't think we should spend time on fixing the current code as you
+>> already have a new implementation. Maybe we could add a simple test
+>> and refuse refreshing other than the topmost patch in case of files
+>> added to the index.
 >
-> Anyhow, I'm discussing with Petr about where we want to go from here -
-> what changes he'd like to make, etc, but I obviously value your
-> opinion as well, so please let me know what you think.  The content
-> has barely changed, it's really just a usability overhaul.  I want to
-> make sure that whatever someone is looking for (especially someone
-> new), they can find in a few clicks and a few seconds.
+> Yes, I guess that's OK. Hmm, how do we check that cheaply?
 
-Thanks for the update. Looks good.
+In the stable branch, we already call git.check_status() in the
+refresh implementation, so it's pretty cheap to test.
 
-Minor niggle: On the download page, in the Binaries table, Cygwin is listed 
-before msysGit. I'm under the impression that msysGit is what we really 
-want to be pushing on Windows (it's faster, smaller, and less strange to 
-Windows-people (i.e. less Unix-y)), so you might want to switch the order 
-around.
-
-
-Have fun!
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+--=20
+Catalin
