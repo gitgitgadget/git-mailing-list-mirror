@@ -1,86 +1,97 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] Set TAR in t/Makefile and in t4116-apply-reverse.sh
-Date: Fri, 25 Jul 2008 19:12:19 +0200
-Message-ID: <20080725171219.GE27172@leksak.fem-net>
-References: <TE3N1FoSy-vEEv0qsAyvBwBMMq2RuJCWYw7DNLBC7mEh6PxM1LCsOw@cipher.nrlssc.navy.mil> <1217003860-10609-1-git-send-email-s-beyer@gmx.net> <20080725170522.GG32057@genesis.frugalware.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: [PATCH] index-pack: correctly initialize appended objects
+Date: Fri, 25 Jul 2008 19:13:15 +0200
+Message-ID: <20080725171315.GA27285@atjola.homenet>
+References: <alpine.DEB.1.00.0807251513240.11976@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="61jdw2sOBCFtR2d/"
-Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Jul 25 19:13:39 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
+	spearce@spearce.org, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 25 19:14:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMQrC-0003LU-ED
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 19:13:30 +0200
+	id 1KMQs0-0003gt-DQ
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 19:14:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586AbYGYRMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 13:12:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751519AbYGYRMa
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 13:12:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57427 "HELO mail.gmx.net"
+	id S1751772AbYGYRNT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2008 13:13:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbYGYRNT
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 13:13:19 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55128 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751286AbYGYRM3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 13:12:29 -0400
-Received: (qmail invoked by alias); 25 Jul 2008 17:12:27 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp002) with SMTP; 25 Jul 2008 19:12:27 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+iDLAc1i+icMPZpR1kg0M5U+xDiMuso+DgfYckAF
-	1TjIR0yMEOI82M
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KMQq3-0001f2-OS; Fri, 25 Jul 2008 19:12:19 +0200
+	id S1751611AbYGYRNS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 13:13:18 -0400
+Received: (qmail invoked by alias); 25 Jul 2008 17:13:17 -0000
+Received: from i577BBE25.versanet.de (EHLO atjola.local) [87.123.190.37]
+  by mail.gmx.net (mp064) with SMTP; 25 Jul 2008 19:13:17 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18xGX8oMAsxiRxBTb0ac8gsWxR/bWlbTqF5hRy2lZ
+	GWZAFABKp9lAgN
 Content-Disposition: inline
-In-Reply-To: <20080725170522.GG32057@genesis.frugalware.org>
+In-Reply-To: <alpine.DEB.1.00.0807251513240.11976@eeepc-johanness>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+X-FuHaFi: 0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90075>
 
+When index-pack completes a thin pack it appends objects to the pack.
+Since the commit 92392b4(index-pack: Honor core.deltaBaseCacheLimit whe=
+n
+resolving deltas) such an object can be pruned in case of memory pressu=
+re.
 
---61jdw2sOBCFtR2d/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+To be able to re-read the object later, a few more fields have to be se=
+t.
 
-Hi,
+Noticed by Pierre Habouzit.
 
-Miklos Vajna wrote:
-> On Fri, Jul 25, 2008 at 06:37:40PM +0200, Stephan Beyer <s-beyer@gmx.net>=
- wrote:
-> > Hence, the test passes also when you run "make" in t/
-> > or when you invoke t4116-apply-reverse.sh directly,
-> > without $TAR being set.
->=20
-> Thanks, I just hit this issue today. ;-)
+Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
+Acked-by: Nicolas Pitre <nico@cam.org>
+---
 
-Puh, I'm glad that you're not writing
-"I've hit this issue yesterday and already sent a patch to this list" :)
+    On 2008.07.25 15:15:48 +0200, Johannes Schindelin wrote:
+    > So, let's add the comment as Nico suggested, and set real_type,
+    > too?
 
-Regards,
-  Stephan
+    OK, I hope the comment is what was expected. My lack of knowledge
+    made we wonder what to write... :-/
 
+    > (And it would be smashing if you could verify that the type is
+    > indeed correctly set to non-delta...)
+
+    Hm, we get the object via read_sha1_file, can that return a delta? =
+I
+    would not expect it to.  Sorry, never looked at those code paths
+    (and don't have the time to investigate at the moment).
+
+ index-pack.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/index-pack.c b/index-pack.c
+index ac20a46..d757b07 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -699,6 +699,12 @@ static struct object_entry *append_obj_to_pack(
+ 	write_or_die(output_fd, header, n);
+ 	obj[0].idx.crc32 =3D crc32(0, Z_NULL, 0);
+ 	obj[0].idx.crc32 =3D crc32(obj[0].idx.crc32, header, n);
++	// This object comes from outside the thin pack, so we need to
++	// initialize the size and type fields
++	obj[0].hdr_size =3D n;
++	obj[0].size =3D size;
++	obj[0].type =3D type;
++	obj[0].real_type =3D type;
+ 	obj[1].idx.offset =3D obj[0].idx.offset + n;
+ 	obj[1].idx.offset +=3D write_compressed(output_fd, buf, size, &obj[0]=
+=2Eidx.crc32);
+ 	hashcpy(obj->idx.sha1, sha1);
 --=20
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
-
---61jdw2sOBCFtR2d/
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iD8DBQFIiglzbt3SB/zFBA8RAnE0AJ9noqOww9RhEuj146/klzhxdSlAzQCgtKoP
-htdBIXhOSFdeeN9sfwKTMCE=
-=tSbf
------END PGP SIGNATURE-----
-
---61jdw2sOBCFtR2d/--
+1.6.0.rc0.14.g95f8.dirty
