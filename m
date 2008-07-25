@@ -1,60 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Document disabling core.whitespace values trailing-space
- and space-before-tab
-Date: Fri, 25 Jul 2008 00:28:18 -0700
-Message-ID: <7vy73qwhgt.fsf@gitster.siamese.dyndns.org>
-References: <4888144E.8090300@sneakemail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Peter_Valdemar_M=C3=B8rch_=28Lists=29?= 
-	<4ux6as402@sneakemail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 25 09:29:39 2008
+From: Pedro Melo <melo@simplicidade.org>
+Subject: Re: gitweb tags feed, Re: New version announcements?
+Date: Fri, 25 Jul 2008 08:37:54 +0100
+Message-ID: <AB0DDE8E-D36E-4299-A75F-FF92B402B9C1@simplicidade.org>
+References: <3B8DB770-5ADC-4B99-9A12-F1DABA20C34D@bunster.org> <20080724144939.GI10151@machine.or.cz> <Pine.LNX.4.64.0807241600190.7093@reaper.quantumfyre.co.uk> <B7201433-1725-4C3A-85D6-4C036635FD17@simplicidade.org> <Pine.LNX.4.64.0807241818520.7970@reaper.quantumfyre.co.uk>
+Mime-Version: 1.0 (Apple Message framework v753.1)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, Jordi Bunster <jordi@bunster.org>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Fri Jul 25 09:38:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMHjz-0001a0-8N
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 09:29:27 +0200
+	id 1KMHsy-0004K1-M4
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 09:38:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751864AbYGYH22 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2008 03:28:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751819AbYGYH21
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 03:28:27 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65064 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751477AbYGYH21 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Jul 2008 03:28:27 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E99143BCFA;
-	Fri, 25 Jul 2008 03:28:23 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 3A32E3BCF9; Fri, 25 Jul 2008 03:28:21 -0400 (EDT)
-In-Reply-To: <4888144E.8090300@sneakemail.com> (Peter Valdemar =?utf-8?Q?M?=
- =?utf-8?Q?=C3=B8rch's?= message of "Thu, 24 Jul 2008 07:34:06 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 43D25F04-5A1B-11DD-B6C7-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751923AbYGYHhp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 03:37:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751908AbYGYHhp
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 03:37:45 -0400
+Received: from mail.sl.pt ([212.55.140.13]:45703 "EHLO sl.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751343AbYGYHho (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 03:37:44 -0400
+Received: (qmail 15078 invoked from network); 25 Jul 2008 07:37:37 -0000
+Received: from unknown (HELO [192.168.1.74]) (melo@[82.154.15.84])
+          (envelope-sender <melo@simplicidade.org>)
+          by mail-sl (qmail-ldap-1.03) with SMTP
+          for <pasky@suse.cz>; 25 Jul 2008 07:37:37 -0000
+In-Reply-To: <Pine.LNX.4.64.0807241818520.7970@reaper.quantumfyre.co.uk>
+Jabber-Id: melo@simplicidade.org
+X-Mailer: Apple Mail (2.753.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90008>
 
-"Peter Valdemar M=C3=B8rch (Lists)"  <4ux6as402@sneakemail.com> writes:
+Hi,
 
-> This is a multi-part message in MIME format.
-> --------------080005060106030305090009
-> Content-Type: text/plain; charset=3DISO-8859-1; format=3Dflowed
-> Content-Transfer-Encoding: 8bit
-> ...
-> --------------080005060106030305090009
-> Content-Type: text/x-patch;
->  name=3D"0001-Document-disabling-core.whitespace-values-trailing-s.pa=
-tch"
-> Content-Transfer-Encoding: 8bit
+On Jul 24, 2008, at 6:25 PM, Julian Phillips wrote:
+> On Thu, 24 Jul 2008, Pedro Melo wrote:
+>> On Jul 24, 2008, at 4:04 PM, Julian Phillips wrote:
+>>> > On Thu, Jul 24, 2008 at 10:38:24AM -0400, Jordi Bunster wrote:
+>>> > > > > Any way that a git-announce list could be created for  
+>>> security fixes > > and
+>>> > > new releases? Or maybe an RSS feed on the website?
+>>> An RSS feed already exists, have a look at http://gitrss.q42.co.uk/.
+>>
+>> You might want to look at the script that generates the announces  
+>> feed. It missed the 1.5.6.4 announcement.
+>>
+>> http://article.gmane.org/gmane.comp.version-control.git/89148/ 
+>> match=1.5.6.4
+>
+> Should be there now.  Thanks. :)
 
-Please do not send patch as attachment.  It is very cumbersome to handl=
-e.
+It's there, fixed.
+
+Best regards,
+-- 
+Pedro Melo
+Blog: http://www.simplicidade.org/notes/
+XMPP ID: melo@simplicidade.org
+Use XMPP!
