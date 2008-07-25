@@ -1,78 +1,60 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: [RFC] custom strategies in builtin-merge
-Date: Fri, 25 Jul 2008 13:50:40 +0200
-Message-ID: <bd6139dc0807250450m25a932b8h68fcee13f8c343dc@mail.gmail.com>
-References: <20080725113316.GF32057@genesis.frugalware.org>
-Reply-To: sverre@rabbelier.nl
+From: Rene Herman <rene.herman@keyaccess.nl>
+Subject: Re: statistics
+Date: Fri, 25 Jul 2008 13:55:27 +0200
+Message-ID: <4889BF2F.7050309@keyaccess.nl>
+References: <4889B66D.4020306@keyaccess.nl> <4889B912.9040006@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: "Miklos Vajna" <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Jul 25 13:51:49 2008
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Jul 25 13:54:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMLpn-0003ar-Au
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 13:51:43 +0200
+	id 1KMLs8-0004SH-G6
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 13:54:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752858AbYGYLum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 07:50:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752832AbYGYLum
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 07:50:42 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:45276 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752770AbYGYLul (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 07:50:41 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so4059591wfd.4
-        for <git@vger.kernel.org>; Fri, 25 Jul 2008 04:50:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=DFk1l1Rz3PjpnywzueT2ZGkJ+eL7hOiYld4ulIp3/Vw=;
-        b=Nup/7k84p6dKOE4b8emaCy9UryLuF4Z/0APoRUI+d2IlhHmp70cpFnPELfEK5VnNTp
-         u5TRXUGfsiD/v39v7MMFbkpwi02rG9W5/dFXVneNk9Xa+Ziuw9oyTA9SQZUmWucKnQxY
-         rXYIjN0dezCrd4lLkXcalVImmo/kjNbd2T55w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=ajihiPmJzuFX+UaClIKDbXY+xcwTokGk7B13wsqu7reFagjL3lSvZXQkVvxk4Vaggi
-         Cj8CcqDKAQK2xgCHPlQT3eMblPGyCfa3zeHAFGRUsEnfLYN9I/8zqfZBZ60EMhSngvaN
-         byTP1lmeCmmwCNCwzwLs2Ho4Co1OJ3MY2dov8=
-Received: by 10.142.172.12 with SMTP id u12mr516867wfe.116.1216986640910;
-        Fri, 25 Jul 2008 04:50:40 -0700 (PDT)
-Received: by 10.143.38.17 with HTTP; Fri, 25 Jul 2008 04:50:40 -0700 (PDT)
-In-Reply-To: <20080725113316.GF32057@genesis.frugalware.org>
-Content-Disposition: inline
+	id S1752977AbYGYLxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 07:53:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750753AbYGYLxH
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 07:53:07 -0400
+Received: from smtpq1.groni1.gr.home.nl ([213.51.130.200]:38354 "EHLO
+	smtpq1.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752626AbYGYLxG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 07:53:06 -0400
+Received: from [213.51.130.190] (port=58412 helo=smtp1.groni1.gr.home.nl)
+	by smtpq1.groni1.gr.home.nl with esmtp (Exim 4.60)
+	(envelope-from <rene.herman@keyaccess.nl>)
+	id 1KMLr6-0003zr-WB; Fri, 25 Jul 2008 13:53:04 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:55575 helo=[192.168.0.3])
+	by smtp1.groni1.gr.home.nl with esmtp (Exim 4.60)
+	(envelope-from <rene.herman@keyaccess.nl>)
+	id 1KMLr6-0000y8-Ox; Fri, 25 Jul 2008 13:53:04 +0200
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <4889B912.9040006@viscovery.net>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90038>
 
-On Fri, Jul 25, 2008 at 13:33, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> 1) Maintain a list of commands that has a git-merge- prefix, but not a
-> strategy. This list would currently contain "base, file, index,
-> one-file and tree".
+On 25-07-08 13:29, Johannes Sixt wrote:
 
-Sounds a bit error prone, and could lead to unexpected results if/when
-someone creates a new command ('git merge status' anyone?) which is
-then suddenly treated as a merge strategy.
+> Rene Herman schrieb:
 
-> 2) Require custom strategies to have a different naming scheme, like
-> if "foo" is a custom strategy, then it would have to be named
-> git-merge-custom-foo, _not_ git-merge-foo.
+>> Is there a (non-depressing) way of getting "which files did not change
+>> since <rev>" out of git?
+> 
+> What is "non-depressing"?
+> 
+> Try this if you are using bash:
+> 
+>   comm -13 <(git diff --name-only your-rev-here) <(git ls-files)
 
-I think this is cleaner, what would be even nicer is to change the
-current names too, so name them all "git-merge-stragegy-foo".
+That classifies as non-depressing, thank you. --name-only, process 
+substitution _and_ comm -13 hadn't featured in my attempts yet.
 
--- 
-Cheers,
-
-Sverre Rabbelier
+Rene.
