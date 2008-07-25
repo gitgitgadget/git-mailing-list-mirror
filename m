@@ -1,81 +1,117 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Build configuration to skip ctime for modification
- test
-Date: Thu, 24 Jul 2008 19:00:29 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0807241854580.5249@nehalem.linux-foundation.org>
-References: <20080721173511.GB5387@steel.home> <4885897C.8010401@viscovery.net> <7vy73tltf5.fsf@gitster.siamese.dyndns.org> <20080722193901.GA5113@blimp.local> <alpine.DEB.1.00.0807222115440.8986@racer> <20080722203128.GB5113@blimp.local>
- <7vr69lihkt.fsf@gitster.siamese.dyndns.org> <20080723164614.GB5283@blimp.local> <alpine.DEB.1.00.0807231757550.8986@racer> <20080723191647.GF5283@blimp.local>
+From: "Liam Healy" <lnp@healy.washington.dc.us>
+Subject: Re: Stitching together two split segments from svn
+Date: Thu, 24 Jul 2008 22:41:14 -0400
+Message-ID: <654935030807241941p620201a2q21bb4513cd21225d@mail.gmail.com>
+References: <654935030807241633g763e622br4feb8b4e23ee64e2@mail.gmail.com>
+	 <m3ljzqvo6i.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 25 04:04:39 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 25 04:42:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMCfa-0003PM-8e
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 04:04:34 +0200
+	id 1KMDG7-0002pb-NV
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 04:42:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755363AbYGYCDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2008 22:03:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752855AbYGYCDe
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 22:03:34 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:37360 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755343AbYGYCDd (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Jul 2008 22:03:33 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6P23Rfn009109
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 24 Jul 2008 19:03:28 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6P23PUS017783;
-	Thu, 24 Jul 2008 19:03:26 -0700
-In-Reply-To: <20080723191647.GF5283@blimp.local>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-5.408 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752840AbYGYClR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2008 22:41:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752425AbYGYClR
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jul 2008 22:41:17 -0400
+Received: from an-out-0708.google.com ([209.85.132.249]:63942 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751907AbYGYClQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2008 22:41:16 -0400
+Received: by an-out-0708.google.com with SMTP id d40so685469and.103
+        for <git@vger.kernel.org>; Thu, 24 Jul 2008 19:41:15 -0700 (PDT)
+Received: by 10.100.252.17 with SMTP id z17mr1881464anh.87.1216953674867;
+        Thu, 24 Jul 2008 19:41:14 -0700 (PDT)
+Received: by 10.100.163.6 with HTTP; Thu, 24 Jul 2008 19:41:14 -0700 (PDT)
+In-Reply-To: <m3ljzqvo6i.fsf@localhost.localdomain>
+Content-Disposition: inline
+X-Google-Sender-Auth: eb6d68b728adeae2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/89994>
 
+Jakub,
 
+Thanks for the advice -- this did exactly what I wanted.
 
-On Wed, 23 Jul 2008, Alex Riesen wrote:
-> 
-> It is not that it is broken. We just don't need it, because the st_mode
-> is not used, and the rest of inode information is not used anyway.
+For anyone else wanting to do this: one thing that threw me for a
+while was that .git/info/grafts does not accept an abbreviated SHA,
+the full 40 hex digits is needed.  I would see "bad graft data" from
+gitk with no other explanation.  There is very little documentation
+that I could find on the grafts file; the best I could find was in the
+man page for git-filter branch,
+http://www.kernel.org/pub/software/scm/git/docs/git-filter-branch.html.
 
-That is NOT why git checks the ctime.
+Liam
 
-Git checks the ctime not because it cares about the inode state being 
-modified per se: since it can see that _directly_ - so why should it care 
-about inode state like st_mode?
-
-No, git checks ctime because it in general tries to make it VERY VERY hard 
-for people to try to "fake out" git and replace files from underneath it 
-without git noticing.
-
-It's much easier and much more common for tools to restore 'mtime' when 
-they do some operation on a file than it is for them to restore 'ctime'.
-
-For example, if you rsync files between two hosts, the '-t' flag will make 
-rsync try to keep the mtimes in sync (and it's part of '-a', which is the 
-common form that you'd use for rsync). So if you only look at mtime and 
-size, you often miss the fact that the file has actually been messed with!
-
-Looking at ctime gets around a number of those things. Of course, it can 
-cause git to be _too_ eager in thinking that a file is modified, and an 
-example of that is the insane indexing that 'beagle' does, which actually 
-modifies the files by adding inode extended attributes to them and thus 
-changes ctime due to the indexing. But in general it's a lot better to be 
-too careful than to miss the fact that somebody changed the file.
-
-		Linus
+On Thu, Jul 24, 2008 at 7:48 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> "Liam Healy" <lnp@healy.washington.dc.us> writes:
+>
+>> I have a project whose history is stored in two separate svn
+>> repositories.  The first repository I kept privately during initial
+>> development, the second started when I posted it publicly and does not
+>> have the history of the first.  I am trying to reunite them under git.
+>>  The development of the first was linear, so after using git svn, the
+>> history looks like:
+>>
+>>  a - b - ... - c - d = HEAD (old repository)
+>>
+>> and the second has one branch "ffa":
+>>
+>> (new repository)
+>>  T - d - e - ... - f - g - h - ... - j   master
+>>                       \
+>>                        k - l - .... - m  ffa
+>>
+>> Note that T is the "trunk" initial commit on the svn repo that has no
+>> files.  The second commit d is identical to the HEAD of old, as
+>> verified by git diff.
+>> However, when I remote add these two into a single repository, they
+>> show up as two detached chains, with no connection between them.  I
+>> thought git rebase would reconnect them.  However, when I do that on
+>> each branch (master and ffa), I get the following:
+>>
+>>  a - b - ... - c - d - e - ... - f - g - h - ... - j   master
+>>                       \
+>>                        e - ... -f - g - k - l - .... - m  ffa
+>>
+>> instead of what I would like
+>>
+>>  a - b - ... - c - d - e - ... - f - g - h - ... - j   master
+>>                                      \
+>>                                       k - l - .... - m  ffa
+>>
+>> That is to say, those commits from the new repository that have a
+>> common history for the two branches are duplicated.  The commits are
+>> listed separately and have different SHA IDs, but they are clearly the
+>> same commits (same comments, same svn version number).  Is there any
+>> way to do what I want?  Really, all I want to do is change the parent
+>> of "e" to be the HEAD of the old repository.
+>
+> If this is initial import, and not published anywhere, the simplest (I
+> think) solution would be to use grafts file (.git/info/grafts) to
+> change parent of 'k' from 'g' in ffa to 'g' in master, by adding the
+> line with:
+>
+>  <sha1 of 'k'> <sha1 of 'g' on master>
+>
+> to .git/info/grafts.  Then examine history if everything is now all
+> right (for example using gitk), and if everything is O.K. run
+> git-filter-branch.
+>
+> See documentation for details.
+>
+> --
+> Jakub Narebski
+> Poland
+> ShadeHawk on #git
+>
