@@ -1,66 +1,80 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] Set TAR in t/Makefile and in t4116-apply-reverse.sh
-Date: Fri, 25 Jul 2008 20:24:16 +0200
-Message-ID: <20080725182416.GG27172@leksak.fem-net>
-References: <TE3N1FoSy-vEEv0qsAyvBwBMMq2RuJCWYw7DNLBC7mEh6PxM1LCsOw@cipher.nrlssc.navy.mil> <1217003860-10609-1-git-send-email-s-beyer@gmx.net> <7vvdytsu7n.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 25 20:25:34 2008
+From: Steve Haslam <shaslam@lastminute.com>
+Subject: [PATCH] Remove references to git-fetch-pack from "git clone" documentation.
+Date: Fri, 25 Jul 2008 19:37:48 +0100
+Message-ID: <1217011068-1675-1-git-send-email-shaslam@lastminute.com>
+Cc: Steve Haslam <shaslam@lastminute.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 25 20:39:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMRyq-00084v-VJ
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 20:25:29 +0200
+	id 1KMSC6-0004Z7-7r
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 20:39:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751664AbYGYSY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 14:24:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751519AbYGYSY1
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 14:24:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35975 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751496AbYGYSY0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 14:24:26 -0400
-Received: (qmail invoked by alias); 25 Jul 2008 18:24:25 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp044) with SMTP; 25 Jul 2008 20:24:25 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX193saoKzCR3uUDOS+FaVaXCtYjALhlDZI3XoFOTAh
-	21m+3LDtaqtany
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KMRxg-000478-VL; Fri, 25 Jul 2008 20:24:16 +0200
-Content-Disposition: inline
-In-Reply-To: <7vvdytsu7n.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1751519AbYGYSiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 14:38:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751529AbYGYSiI
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 14:38:08 -0400
+Received: from sglonmg02-out.sabre.com ([151.193.120.24]:11500 "EHLO
+	sglonmg02-out.sabre.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750930AbYGYSiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 14:38:07 -0400
+X-ExtLoop1: From 10.136.85.17
+X-IronPort-AV: E=Sophos;i="4.31,253,1215385200"; 
+   d="scan'208";a="1124593377"
+Received: from sglonms01.global.ad.sabre.com ([10.136.85.17])
+  by sglonmg02-out.sabre.com with ESMTP; 25 Jul 2008 19:38:06 +0100
+Received: from sglonms02.Global.ad.sabre.com ([10.136.85.20]) by sglonms01.Global.ad.sabre.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 25 Jul 2008 19:38:05 +0100
+Received: from localhost.localdomain ([10.104.41.28]) by sglonms02.Global.ad.sabre.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 25 Jul 2008 19:38:05 +0100
+X-Mailer: git-send-email 1.6.0.rc0.43.g1cd6
+X-OriginalArrivalTime: 25 Jul 2008 18:38:05.0193 (UTC) FILETIME=[93735790:01C8EE85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90085>
 
-Hi,
+"git clone" no longer calls "git-fetch-pack", so the documentation is a bit
+stale. Instead, state that the -u option is to be used when accessing a
+repository over ssh.
 
-> diff --git a/Makefile b/Makefile
-> index b003e3e..1d14209 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1212,6 +1212,7 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
->  
->  GIT-BUILD-OPTIONS: .FORCE-GIT-BUILD-OPTIONS
->  	@echo SHELL_PATH=\''$(SHELL_PATH_SQ)'\' >$@
-> +	@echo TAR=\''$(subst ','\'',$(TAR))'\' >>$@
->  
->  ### Detect Tck/Tk interpreter path changes
->  ifndef NO_TCLTK
+Signed-off-by: Steve Haslam <shaslam@lastminute.com>
+---
+This is somewhat related to a patch I just sent; typically I forgot
+about the documentation until after sending it.
 
-But then TAR has to be set in test-lib.sh also, to be able to
-invoke t5000 and t4116 directly, hasn't it?
+ Documentation/git-clone.txt |    9 ++++-----
+ 1 files changed, 4 insertions(+), 5 deletions(-)
 
-Regards.
-
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 91efac9..26fd1b1 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -87,8 +87,8 @@ then the cloned repository will become corrupt.
+ 
+ --quiet::
+ -q::
+-	Operate quietly.  This flag is passed to "rsync" and
+-	'git-fetch-pack' commands when given.
++	Operate quietly.  This flag is also passed to the `rsync'
++	command when given.
+ 
+ --no-checkout::
+ -n::
+@@ -113,9 +113,8 @@ then the cloned repository will become corrupt.
+ 
+ --upload-pack <upload-pack>::
+ -u <upload-pack>::
+-	When given, and the repository to clone from is handled
+-	by 'git-fetch-pack', `--exec=<upload-pack>` is passed to
+-	the command to specify non-default path for the command
++	When given, and the repository to clone from is accessed
++	via ssh, this specifies a non-default path for the command
+ 	run on the other end.
+ 
+ --template=<template_directory>::
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+1.6.0.rc0.43.g1cd6
