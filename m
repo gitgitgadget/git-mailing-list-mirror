@@ -1,83 +1,78 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] index-pack: correctly initialize appended objects
-Date: Fri, 25 Jul 2008 07:48:24 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0807250742120.9968@xanadu.home>
-References: <alpine.DEB.1.00.0807241821440.8986@racer>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: [RFC] custom strategies in builtin-merge
+Date: Fri, 25 Jul 2008 13:50:40 +0200
+Message-ID: <bd6139dc0807250450m25a932b8h68fcee13f8c343dc@mail.gmail.com>
+References: <20080725113316.GF32057@genesis.frugalware.org>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_lLDMSvLBaoH53VDzayGwfg)"
-Cc: spearce@spearce.org, git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 25 13:50:00 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Miklos Vajna" <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Fri Jul 25 13:51:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMLnz-00031G-UI
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 13:49:52 +0200
+	id 1KMLpn-0003ar-Au
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 13:51:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755896AbYGYLsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 07:48:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755277AbYGYLsb
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 07:48:31 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:30150 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752473AbYGYLsa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 07:48:30 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K4K00HUV8SOXN00@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 25 Jul 2008 07:48:24 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.DEB.1.00.0807241821440.8986@racer>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1752858AbYGYLum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 07:50:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752832AbYGYLum
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 07:50:42 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:45276 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752770AbYGYLul (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 07:50:41 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so4059591wfd.4
+        for <git@vger.kernel.org>; Fri, 25 Jul 2008 04:50:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=DFk1l1Rz3PjpnywzueT2ZGkJ+eL7hOiYld4ulIp3/Vw=;
+        b=Nup/7k84p6dKOE4b8emaCy9UryLuF4Z/0APoRUI+d2IlhHmp70cpFnPELfEK5VnNTp
+         u5TRXUGfsiD/v39v7MMFbkpwi02rG9W5/dFXVneNk9Xa+Ziuw9oyTA9SQZUmWucKnQxY
+         rXYIjN0dezCrd4lLkXcalVImmo/kjNbd2T55w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=ajihiPmJzuFX+UaClIKDbXY+xcwTokGk7B13wsqu7reFagjL3lSvZXQkVvxk4Vaggi
+         Cj8CcqDKAQK2xgCHPlQT3eMblPGyCfa3zeHAFGRUsEnfLYN9I/8zqfZBZ60EMhSngvaN
+         byTP1lmeCmmwCNCwzwLs2Ho4Co1OJ3MY2dov8=
+Received: by 10.142.172.12 with SMTP id u12mr516867wfe.116.1216986640910;
+        Fri, 25 Jul 2008 04:50:40 -0700 (PDT)
+Received: by 10.143.38.17 with HTTP; Fri, 25 Jul 2008 04:50:40 -0700 (PDT)
+In-Reply-To: <20080725113316.GF32057@genesis.frugalware.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90037>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Jul 25, 2008 at 13:33, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> 1) Maintain a list of commands that has a git-merge- prefix, but not a
+> strategy. This list would currently contain "base, file, index,
+> one-file and tree".
 
---Boundary_(ID_lLDMSvLBaoH53VDzayGwfg)
-Content-type: TEXT/PLAIN; charset=iso-8859-1
-Content-transfer-encoding: 8BIT
+Sounds a bit error prone, and could lead to unexpected results if/when
+someone creates a new command ('git merge status' anyone?) which is
+then suddenly treated as a merge strategy.
 
-On Thu, 24 Jul 2008, Johannes Schindelin wrote:
+> 2) Require custom strategies to have a different naming scheme, like
+> if "foo" is a custom strategy, then it would have to be named
+> git-merge-custom-foo, _not_ git-merge-foo.
 
-> 
-> From: Björn Steinbrink <B.Steinbrink@gmx.de>
-> 
-> When index-pack completes a thin pack it appends objects to the pack.  
-> Since the commit 92392b4(index-pack: Honor core.deltaBaseCacheLimit when 
-> resolving deltas) such an object can be pruned in case of memory
-> pressure.
-> 
-> To be able to re-read the object later, a few more fields have to be set.
-> 
-> Noticed by Pierre Habouzit.
-> 
-> Hopefully-signed-off-by: Björn Steinbrink <B.Steinbrink@gmx.de>
-> Hopefully-reviewed-and-signed-off-by: Nicolas Pitre <nico@cam.org>, 
-> 
-> --
-> 
-> 	This was probably missed in the flurry of patches, scratched 
-> 	patches, and new patches.
-> 
-> 	Nico could you have a quick look?  (I would ask Shawn, but I know 
-> 	that he is pretty busy with real world issues.)
+I think this is cleaner, what would be even nicer is to change the
+current names too, so name them all "git-merge-stragegy-foo".
 
-sorry, I have intermitant connectivity this week, and I'll be off the 
-net for two weeks after that.
+-- 
+Cheers,
 
-Yes, this looks fine, although I'd add a comment mentioning that those 
-extra fields are uninitialized in the thin pack case when objects are 
-appended to the pack since they're already initialized otherwise.
-
-ACK.
-
-
-Nicolas
-
---Boundary_(ID_lLDMSvLBaoH53VDzayGwfg)--
+Sverre Rabbelier
