@@ -1,56 +1,84 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: statistics
-Date: Fri, 25 Jul 2008 13:29:22 +0200
-Message-ID: <4889B912.9040006@viscovery.net>
-References: <4889B66D.4020306@keyaccess.nl>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [RFC] custom strategies in builtin-merge
+Date: Fri, 25 Jul 2008 13:33:16 +0200
+Message-ID: <20080725113316.GF32057@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Rene Herman <rene.herman@keyaccess.nl>
-X-From: git-owner@vger.kernel.org Fri Jul 25 13:30:31 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="rVMVguMjBJz39qo3"
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 25 13:34:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMLVC-0005TY-KM
-	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 13:30:27 +0200
+	id 1KMLYw-0006X3-Ce
+	for gcvg-git-2@gmane.org; Fri, 25 Jul 2008 13:34:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751907AbYGYL3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 07:29:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751893AbYGYL3Z
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 07:29:25 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:48285 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751820AbYGYL3Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 07:29:25 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KMLUA-0005Au-TC; Fri, 25 Jul 2008 13:29:23 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 820E4AFCC; Fri, 25 Jul 2008 13:29:22 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <4889B66D.4020306@keyaccess.nl>
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1752518AbYGYLdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 07:33:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbYGYLdS
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 07:33:18 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:42644 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752436AbYGYLdR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 07:33:17 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 554341B2516;
+	Fri, 25 Jul 2008 13:33:16 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 23B684465E;
+	Fri, 25 Jul 2008 12:50:53 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 21E161190A09; Fri, 25 Jul 2008 13:33:16 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90035>
 
-Rene Herman schrieb:
-> Hi.
-> 
-> Is there a (non-depressing) way of getting "which files did not change
-> since <rev>" out of git?
 
-What is "non-depressing"?
+--rVMVguMjBJz39qo3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Try this if you are using bash:
+Hi,
 
-  comm -13 <(git diff --name-only your-rev-here) <(git ls-files)
+We talked with Dscho about how would it be possible to allow custom
+strategies in builtin-merge and I have a question here.
 
--- Hannes
+The problem is that currently merge strategies are always named
+git-merge-foo, but not all git-merge-foo is a merge strategy.
+
+So we talked about two solutions here:
+
+1) Maintain a list of commands that has a git-merge- prefix, but not a
+strategy. This list would currently contain "base, file, index,
+one-file and tree".
+
+2) Require custom strategies to have a different naming scheme, like
+if "foo" is a custom strategy, then it would have to be named
+git-merge-custom-foo, _not_ git-merge-foo.
+
+Both are doable (I prefer 1) a bit), but I thought it's better to ask
+first before I implement any of them.
+
+So, comments?
+
+Thanks.
+
+--rVMVguMjBJz39qo3
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkiJufwACgkQe81tAgORUJbxGgCggMJLr0x1gltvCzJpSC0ViU+r
+ezYAn3yuGHsKEnv19P1rdjFQn+hIIy/q
+=zymB
+-----END PGP SIGNATURE-----
+
+--rVMVguMjBJz39qo3--
