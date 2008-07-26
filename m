@@ -1,68 +1,130 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] Modify mingw_main() workaround to avoid link errors
-Date: Sat, 26 Jul 2008 23:36:47 +0200
-Message-ID: <4CCD1862-48FB-412B-80B6-E1B822BF3A87@zib.de>
-References: <1217065304-27815-1-git-send-email-prohaska@zib.de> <1217104655.488b8b0f5ca48@webmail.nextra.at>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sat Jul 26 23:38:13 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH 3/7] builtin-help: make list_commands() a bit more generic
+Date: Sat, 26 Jul 2008 23:40:25 +0200
+Message-ID: <3db8fbf82ab865b9dab5899f9a7e867ef005ecb6.1217108282.git.vmiklos@frugalware.org>
+References: <cover.1217108282.git.vmiklos@frugalware.org>
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@uchicago.edu>
+X-From: git-owner@vger.kernel.org Sat Jul 26 23:41:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMrSs-0001pn-4e
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 23:38:10 +0200
+	id 1KMrVc-0002VK-B8
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 23:41:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757928AbYGZVhB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 17:37:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757932AbYGZVhB
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 17:37:01 -0400
-Received: from mailer.zib.de ([130.73.108.11]:44415 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757821AbYGZVhA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 17:37:00 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m6QLaOFc027186;
-	Sat, 26 Jul 2008 23:36:29 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db83e58.pool.einsundeins.de [77.184.62.88])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m6QLaNQS019524
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sat, 26 Jul 2008 23:36:23 +0200 (MEST)
-In-Reply-To: <1217104655.488b8b0f5ca48@webmail.nextra.at>
-X-Mailer: Apple Mail (2.926)
+	id S1757880AbYGZVj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 17:39:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757746AbYGZVj7
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 17:39:59 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:39752 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756109AbYGZVj7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 17:39:59 -0400
+Received: from vmobile.example.net (dsl5401C493.pool.t-online.hu [84.1.196.147])
+	by yugo.frugalware.org (Postfix) with ESMTP id EAD7A1DDC5B;
+	Sat, 26 Jul 2008 23:39:56 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id AF1C51AA738; Sat, 26 Jul 2008 23:40:25 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.rc0.14.g95f8.dirty
+In-Reply-To: <Pine.GSO.4.62.0807261319310.16184@harper.uchicago.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90286>
 
+That function now takes two paramters to control the prefix of the
+listed commands, and a second parameter to specify the title of the
+table. This can be useful for listing not only all git commands, but
+specific ones, like merge strategies.
 
-On Jul 26, 2008, at 10:37 PM, Johannes Sixt wrote:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-> Zitat von Steffen Prohaska <prohaska@zib.de>:
->> With MinGW's
->>
->>   gcc.exe (GCC) 3.4.5 (mingw special)
->>   GNU ld version 2.17.50 20060824
->>
->> the old define caused link errors:
->>
->>   git.o: In function `main':
->>   C:/msysgit/git/git.c:500: undefined reference to `mingw_main'
->>   collect2: ld returned 1 exit status
->>
->> The modified define works.
+On Sat, Jul 26, 2008 at 01:28:39PM -0500, Jonathan Nieder <jrnieder@uchicago.edu> wrote:
+> >     if (main_cmds.cnt) {
+> > -           printf("available git commands in '%s'\n", exec_path);
+> > +           printf("available %s in '%s'\n", title, exec_path);
+> >             printf("----------------------------");
+> >             mput_char('-', strlen(exec_path));
+> >             putchar('\n');
 >
-> I have the same tools, but not this error. ???
+> Should this be
+>
+>       printf("available %s in '%s'\n", title, exec_path);
+>       printf("----------------");
+>       mput_char('-', strlen(exec_path) + strlen(title));
+>       putchar('\n');
+>
+> ?
+>
+> (same question goes for the if(other_cmds.cnt) block, too)
 
-I cleaned my work tree and built several times but did not
-find out what exactly is causing the error.  So I came up
-with the modified define, which declares the static
-mingw_main in global scope.  I have no clue why I see the
-error that you don't have.
+Right. Here is an updated patch.
 
-	Steffen
+Also available at git://repo.or.cz/git/vmiklos.git, branch 'merge-custom'.
+
+ help.c |   18 ++++++++++--------
+ help.h |    1 +
+ 2 files changed, 11 insertions(+), 8 deletions(-)
+
+diff --git a/help.c b/help.c
+index d71937e..ec7999d 100644
+--- a/help.c
++++ b/help.c
+@@ -501,23 +501,25 @@ static unsigned int load_command_list(const char *prefix)
+ 	return longest;
+ }
+ 
+-static void list_commands(void)
++void list_commands(const char *prefix, const char *title)
+ {
+-	unsigned int longest = load_command_list(NULL);
++	unsigned int longest = load_command_list(prefix);
+ 	const char *exec_path = git_exec_path();
+ 
+ 	if (main_cmds.cnt) {
+-		printf("available git commands in '%s'\n", exec_path);
+-		printf("----------------------------");
+-		mput_char('-', strlen(exec_path));
++		printf("available %s in '%s'\n", title, exec_path);
++		printf("----------------");
++		mput_char('-', strlen(title) + strlen(exec_path));
+ 		putchar('\n');
+ 		pretty_print_string_list(&main_cmds, longest);
+ 		putchar('\n');
+ 	}
+ 
+ 	if (other_cmds.cnt) {
+-		printf("git commands available from elsewhere on your $PATH\n");
+-		printf("---------------------------------------------------\n");
++		printf("%s available from elsewhere on your $PATH\n", title);
++		printf("---------------------------------------");
++		mput_char('-', strlen(title));
++		putchar('\n');
+ 		pretty_print_string_list(&other_cmds, longest);
+ 		putchar('\n');
+ 	}
+@@ -697,7 +699,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 
+ 	if (show_all) {
+ 		printf("usage: %s\n\n", git_usage_string);
+-		list_commands();
++		list_commands("git-", "git commands");
+ 		printf("%s\n", git_more_info_string);
+ 		return 0;
+ 	}
+diff --git a/help.h b/help.h
+index 73da8d6..0741662 100644
+--- a/help.h
++++ b/help.h
+@@ -2,5 +2,6 @@
+ #define HELP_H
+ 
+ int is_git_command(const char *s, const char *prefix);
++void list_commands(const char *prefix, const char *title);
+ 
+ #endif /* HELP_H */
+-- 
+1.6.0.rc0.14.g95f8.dirty
