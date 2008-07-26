@@ -1,102 +1,144 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Official Git Homepage change? Re: git-scm.com
-Date: Sat, 26 Jul 2008 08:21:36 -0700 (PDT)
-Message-ID: <m3d4l0vfgk.fsf@localhost.localdomain>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
-	<20080726015314.GU32184@machine.or.cz>
-	<20080726020951.GV32184@machine.or.cz>
-	<7v4p6dnv5k.fsf@gitster.siamese.dyndns.org>
-	<d411cc4a0807252343n2b9ade68veaebb68664f0a3d7@mail.gmail.com>
-	<7vtzedktmi.fsf@gitster.siamese.dyndns.org>
-	<d411cc4a0807260027t4b9c3b08x1f865ec75d976ef6@mail.gmail.com>
-	<488B394F.9000300@keyaccess.nl>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 7/7] builtin-merge: avoid non-strategy git-merge
+	commands in error message
+Date: Sat, 26 Jul 2008 17:25:02 +0200
+Message-ID: <20080726152502.GL32057@genesis.frugalware.org>
+References: <cover.1217037178.git.vmiklos@frugalware.org> <f311372167c02868ccf5aa4dc03c97b7f956d855.1217037178.git.vmiklos@frugalware.org> <1217073292-27945-1-git-send-email-vmiklos@frugalware.org> <4f2b03391e3f85cf2224f97a2a7765d08707bd73.1217037178.git.vmiklos@frugalware.org> <68749731fe8de8b2a9ffc53963291aeab9256b82.1217037178.git.vmiklos@frugalware.org> <99c90877657be0ed439a9918f500d6ad132550a2.1217037178.git.vmiklos@frugalware.org> <13f39dd6752a34beeb6ecccb51dbc7546ef87182.1217037178.git.vmiklos@frugalware.org> <fc448aa651ad9e8e9d1cf5556a665b5bd6074628.1217037178.git.vmiklos@frugalware.org> <65a569c389352c5d0500b8c44c28e5572352e6ba.1217037178.git.vmiklos@frugalware.org> <alpine.DEB.1.00.0807261701520.26810@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Scott Chacon <schacon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Rene Herman <rene.herman@keyaccess.nl>
-X-From: git-owner@vger.kernel.org Sat Jul 26 17:22:42 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="I+SguG+o2MtpYMn7"
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 26 17:26:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMlbV-0006n5-BU
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 17:22:41 +0200
+	id 1KMlen-0007fV-Km
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 17:26:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752182AbYGZPVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 11:21:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752065AbYGZPVl
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 11:21:41 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:42454 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751886AbYGZPVk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 11:21:40 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so65688ugf.16
-        for <git@vger.kernel.org>; Sat, 26 Jul 2008 08:21:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=qZPMnB/RKlktuE/dw9UI2Ud5GFoRLdi1XraDTGbWyfo=;
-        b=kiIj6tNm1QzqIkSKUi5Q5HIhxZZbFdVbDEn0V0/UEH4Izz/wixzzXx6GYIv+DBddje
-         GiVz0TXYhfLfVJ2jdA5FKRqXhUImrJ8Hpxm1sjih5aJyfD6mBiWzQtvuAO9SFwW7r+VE
-         QsvSUyoesFMFnmA3/lhF6fd6Cr6D3n8swI5UI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=qKuEqjmPg3OyynyMJV4qkms8y9kxCF0SV/oxfjylU8fah/BIMzPdiq2dnZM224uOFZ
-         wEzfXQmu4yRP5w81TeVjOOWhVXVOes1cITu7iXskd5Z1/nw+XDqccybyZQHOJ4JaNjxo
-         PWUWKeIunVcHCD5B1MKA928AlIf45NxgFx6kI=
-Received: by 10.67.116.8 with SMTP id t8mr815592ugm.57.1217085697893;
-        Sat, 26 Jul 2008 08:21:37 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.225.191])
-        by mx.google.com with ESMTPS id m1sm744755ugc.9.2008.07.26.08.21.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 26 Jul 2008 08:21:36 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m6QFLYn6020324;
-	Sat, 26 Jul 2008 17:21:34 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m6QFLV5Z020321;
-	Sat, 26 Jul 2008 17:21:31 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <488B394F.9000300@keyaccess.nl>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752181AbYGZPZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 11:25:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752071AbYGZPZF
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 11:25:05 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:48143 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752065AbYGZPZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 11:25:04 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id DF8F31B24FC;
+	Sat, 26 Jul 2008 17:25:02 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id E02CE4465E;
+	Sat, 26 Jul 2008 16:41:59 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 61D231190A09; Sat, 26 Jul 2008 17:25:02 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807261701520.26810@eeepc-johanness>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90240>
 
-Rene Herman <rene.herman@keyaccess.nl> writes:
 
-> On 26-07-08 09:27, Scott Chacon wrote:
-> 
-> > Perhaps it would be useful to split the mailing list into
-> > core/contrib and support lists?  I would be happy to help out
-> > answering questions - a lot of them come directly to me anyhow
-> > because of the gitcasts site and such.
-> 
-> A git-user list would be welcomed at least by me. It remains to be
-> seen how useful it would be (and stay) as often the user lists for a
-> project dwinddle a bit but I've subcribed and unsubscribed to this
-> list a number of times now since unless I've a specific question to
-> ask, the list is too busy too just sit around on; I end up deleting
-> all list mail unread every night anyway, so I just unsubcribe again.
-> 
-> Maybe a less busy and less implementation focused list could help "me
-> and mine" gradually pick up new tips and tricks. Depends ofcourse on
-> willingness of some of the more proficient to be involved in that list
-> as well...
+--I+SguG+o2MtpYMn7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Well, there _is_ separate Git Users Group at Google Groups
-  http://groups.google.com/group/git-users
-  nntp://news.gmane.org/gmane.comp.version-control.git.user
+On Sat, Jul 26, 2008 at 05:08:11PM +0200, Johannes Schindelin <Johannes.Sch=
+indelin@gmx.de> wrote:
+> > +		memset(&not_strategies, 0, sizeof(struct cmdnames));
+> > +		for (i =3D 0; i < main_cmds.cnt; i++) {
+>=20
+> Looking through all the discovered git commands?  Cute...  But does that=
+=20
+> not exclude the commands that are in PATH, starting with git-merge-, even=
+=20
+> if they are custom strategies?
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+main_cmds contains only commands in /usr/libexec/git-core, while I guess
+custom strategies are elsewhere in PATH, which commands are in
+other_cmds, not in main_cmds.
+
+Sample output at me:
+
+$ git merge -s theirss c2
+HEAD is now at 1f5e3cc c1
+Could not find merge strategy 'theirss'.
+
+available strategies in '/usr/libexec/git-core/'
+--------------------------------------------------
+  octopus     ours        recursive   resolve     subtree
+
+strategies available from elsewhere on your $PATH
+---------------------------------------------------
+  theirs
+
+and I have git-merge-theirs in ~/bin (which is in PATH).
+
+>=20
+> > +			int j, found =3D 0;
+> > +			for (j =3D 0; j < ARRAY_SIZE(all_strategy); j++)
+> > +				if (!strcmp(main_cmds.names[i]->name, all_strategy[j].name))
+> > +					found =3D 1;
+> > +			if (!found)
+> > +				add_cmdname(&not_strategies, main_cmds.names[i]->name, strlen(main=
+_cmds.names[i]->name));
+>=20
+> Better have a local variable "name" instead of writing out=20
+> "main_cmds.names[i]->name" all the time...
+
+Fixed.
+
+> Oh, and you assume that the names are NUL-terminated (which I assume is=
+=20
+> not the case in general, as the len member is the only thing that makes=
+=20
+> struct cmdnames different from struct string_list.
+
+I think the purpose of it is different, but the argument is still valie.
+That len member is to be able to have ->name contain "foo.exe" while
+having len at 3, so that git help -a will avoid the .exe suffixes.
+
+Changed.
+
+(I do not want to resend a full series yet, but I pushed out an amended
+patch to repo.or.cz in the 'merge-custom' branch.)
+
+diff --git a/builtin-merge.c b/builtin-merge.c
+index 4084e07..b0d1de5 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -93,11 +93,12 @@ static struct strategy *get_strategy(const char *name)
+ 		memset(&not_strategies, 0, sizeof(struct cmdnames));
+ 		for (i =3D 0; i < main_cmds.cnt; i++) {
+ 			int j, found =3D 0;
++			char *ent =3D main_cmds.names[i];
+ 			for (j =3D 0; j < ARRAY_SIZE(all_strategy); j++)
+-				if (!strcmp(main_cmds.names[i]->name, all_strategy[j].name))
++				if (!strncmp(ent->name, all_strategy[j].name, ent->len))
+ 					found =3D 1;
+ 			if (!found)
+-				add_cmdname(&not_strategies, main_cmds.names[i]->name, strlen(main_cmd=
+s.names[i]->name));
++				add_cmdname(&not_strategies, ent->name, ent->len);
+ 		}
+ 		fprintf(stderr, "Could not find merge strategy '%s'.\n\n", name);
+ 		list_commands("git-merge-", "strategies", &not_strategies);
+
+--I+SguG+o2MtpYMn7
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkiLQc4ACgkQe81tAgORUJZ5+gCgojb4qwXG5LA+lp/tg5g/CKsQ
+79MAn2446toXJw9d2QVUKAaPfntIdX06
+=zuG0
+-----END PGP SIGNATURE-----
+
+--I+SguG+o2MtpYMn7--
