@@ -1,64 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not
- been set
-Date: Sat, 26 Jul 2008 04:09:41 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807260407170.11976@eeepc-johanness>
-References: <7vej5kfs0w.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807231817460.8986@racer> <488772BC.80207@workspacewhiz.com> <32541b130807231133x37083278u1badd82b5c48e57b@mail.gmail.com> <alpine.DEB.1.00.0807231956280.8986@racer>
- <FB7ABDC5-8505-4FD1-8082-9BB5013E73C6@orakel.ntnu.no> <alpine.DEB.1.00.0807232041570.8986@racer> <3B9933A6-9637-41AE-9133-9B6EA9204E6B@orakel.ntnu.no> <alpine.DEB.1.00.0807250159420.4140@eeepc-johanness> <E0666371-5C5E-4AA9-B67A-16C42477865B@orakel.ntnu.no>
- <20080725140142.GB2925@dpotapov.dyndns.org> <42C252B2-85B9-4D05-B3A2-2A0250D7F5D6@orakel.ntnu.no>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Official Git Homepage change? Re: git-scm.com
+Date: Sat, 26 Jul 2008 04:09:51 +0200
+Message-ID: <20080726020951.GV32184@machine.or.cz>
+References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com> <20080726015314.GU32184@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Joshua Jensen <jjensen@workspacewhiz.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
-X-From: git-owner@vger.kernel.org Sat Jul 26 04:09:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 26 04:11:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMZEB-0003nd-4r
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 04:09:47 +0200
+	id 1KMZFL-00042o-BJ
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 04:10:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752127AbYGZCIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 22:08:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752071AbYGZCIm
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 22:08:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44420 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752026AbYGZCIl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 22:08:41 -0400
-Received: (qmail invoked by alias); 26 Jul 2008 02:08:39 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp010) with SMTP; 26 Jul 2008 04:08:39 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Bojp1clpBKosk7CxFbGpzSwgNxNthLwbtqs/cyy
-	rh7RFPyje+txUV
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <42C252B2-85B9-4D05-B3A2-2A0250D7F5D6@orakel.ntnu.no>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1752162AbYGZCJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 22:09:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752159AbYGZCJy
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 22:09:54 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:57242 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752129AbYGZCJy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 22:09:54 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 8EB54393B32A; Sat, 26 Jul 2008 04:09:51 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080726015314.GU32184@machine.or.cz>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90148>
 
-Hi,
+  Hi,
 
-On Fri, 25 Jul 2008, Eyvind Bernhardsen wrote:
+  oops, so I decided to unbundle this question from the previous post,
+but forgot to modify the subject line...
 
-> That is an excellent argument for why setting "autocrlf=true" by default 
-> on Windows was a bad idea.  Thanks! :)
+  When the git-scm.com site gets refined a bit further, it might make a
+lot of sense to make http://git.or.cz/index.html a redirect to
+http://git-scm.com/ and thus delegate the new site to the official Git
+homepage. Of course, I would be transferring the control of the homepage
+from my hands so I would like to poll the community about how do people
+feel about this - opinion of core Git contributors would be especially
+welcome; I find myself rather happy with the new site, so I will
+implicitly take silence as an agreement.
 
-Well, these days, I tend to give a flying nothing to opinions that are not 
-backed up by any effort toward the project.
+  Here is a breakdown of possible pros and cons that come on my mind:
 
-In other words, if you have not participated in the community process to 
-find what is best for Git, you could just as well say that you want the 
-moon to be green, and I could not care less (in both cases).
+  + The new site has much nicer and more catchy design.
+  + The new site seems to have a lot of potential to grow to a rather
+comprehensive resource.
+  + The new site would probably have much more active maintainer. ;-)
 
-Ciao,
-Dscho
+  - The new site is affiliated with a commercial entity - GitHub.
+The website maintainer also has commercial interest in some published
+Git learning materials, which might generate certain conflict of
+interests; we must trust them that they handle this well.
+  - Both GitHub and Scott seem to be rather distanced from the "core"
+Git development community. This might or might not be an issue.
+  - The new site is implemented in much more complicated way than the
+old one, having a full-fledged Ruby on Rails machinery behind it and
+linking to bunch of obfuscated JavaScript code; I don't think it's that
+big a deal, though.
+
+  The negatives section writeup is longer, but in fact I think the
+positives win here; I also have a bit of bad conscience about not giving
+git.or.cz the amount of time it would deserve...
+
+  P.S.: To simplify matters, I talk only about index.html, but of course
+it would make sense to transfer both the SVN Crash Course _AND_ the Git
+Wiki along; we might keep the Cogito homepage for purely historical
+interest too, I don't know.
+
+-- 
+				Petr "Pasky" Baudis
+As in certain cults it is possible to kill a process if you know
+its true name.  -- Ken Thompson and Dennis M. Ritchie
