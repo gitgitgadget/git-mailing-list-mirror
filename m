@@ -1,70 +1,63 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git-scm.com
-Date: Sat, 26 Jul 2008 15:07:57 +0200
-Message-ID: <20080726130757.GY32184@machine.or.cz>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com> <m3hcadul6j.fsf@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] init: handle empty "template" parameter, was Re: fetch
+ refspec foo/* matches foo*
+Date: Sat, 26 Jul 2008 15:13:26 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807261511490.26810@eeepc-johanness>
+References: <1216854795-51155-1-git-send-email-lee.marlow@gmail.com> <1216858043-53646-1-git-send-email-lee.marlow@gmail.com> <20080725204051.GB23202@spearce.org> <7v1w1hsmnc.fsf@gitster.siamese.dyndns.org> <20080726082405.GA10104@sigill.intra.peff.net>
+ <20080726083356.GB10104@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 26 15:10:14 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jul 26 15:13:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMjW8-0005U5-Vf
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 15:09:01 +0200
+	id 1KMjaP-0007pk-7M
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 15:13:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751600AbYGZNIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 09:08:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751487AbYGZNIA
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 09:08:00 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:41022 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751479AbYGZNH7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 09:07:59 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 3791A393B334; Sat, 26 Jul 2008 15:07:57 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <m3hcadul6j.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751830AbYGZNMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 09:12:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbYGZNMZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 09:12:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37865 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751479AbYGZNMY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 09:12:24 -0400
+Received: (qmail invoked by alias); 26 Jul 2008 13:12:22 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp011) with SMTP; 26 Jul 2008 15:12:22 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+/6VtpjVq/EW5Ar3TU6DUG+7THAvyMWmb1pbgFpm
+	5PP4E7odGcYB9g
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <20080726083356.GB10104@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90222>
 
-On Sat, Jul 26, 2008 at 01:03:26AM -0700, Jakub Narebski wrote:
-> "Scott Chacon" <schacon@gmail.com> writes:
-> 
-> > A followup on the post I did a few days ago about Git documentation.
-> > I forked Petr's git.or.cz site and put up a version that I think is a
-> > bit more accessible and newbie-friendly at git-scm.com.  I had meant
-> > to discuss this with Petr before posting it to you all, but I
-> > published a blog post that got a bit more attention than I expected,
-> > and I didn't want you all to think I didn't care about your opinion,
-> > as some have already accused me of.
-> 
-> On thing I am curious about: how do you plan to have current version
-> of Git in the download / last version section?  Petr Baudis uses
-> custom script, which search git mailing list for "[ANNOUNCE]" posts,
-> and automatically updates download / last version links.
+Hi,
 
-Actually, I scan the last tag on maint branch using git descirbe; the
-ANNOUNCE posts are scanned by the RSS feed. Originally, git-scm scanned
-kernel.org download directory for the latest tarball, but it seemed that
-would break on something like the 1.4.4.5, so it also moved to the git
-describe method:
+On Sat, 26 Jul 2008, Jeff King wrote:
 
-	http://repo.or.cz/w/git-homepage.git?a=blob;f=update.sh
-	http://github.com/schacon/learn-github/tree/master/script/get_version.rb
+> Also, while I have your attention, Junio, here is another bug fix
+> that should go into 1.6.0. I posted the patch as a "how about this" deep
+> in a thread and got no response (which means no complaints, right?).
 
-One Scott's concern that didn't occur to me was that a the time of
-release, we could have broken links between the time tag is created and
-tarballs are wrapped up. I *think* that in practice, this happens at the
-same time, I wonder if Junio could confirm that.
+Again it is in a thread...
 
--- 
-				Petr "Pasky" Baudis
-As in certain cults it is possible to kill a process if you know
-its true name.  -- Ken Thompson and Dennis M. Ritchie
+> This patch just checks for that condition in copy_templates
+> and aborts. As a side effect, this means that --template=
+> now has the meaning "don't copy any templates."
+
+I deem this patch obviously correct, and your reasoning as to what an 
+empty parameter should mean makes sense.
+
+Ciao,
+Dscho
