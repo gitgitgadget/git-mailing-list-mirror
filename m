@@ -1,66 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] custom strategies in builtin-merge
-Date: Fri, 25 Jul 2008 18:12:17 -0700
-Message-ID: <7vvdyto3da.fsf@gitster.siamese.dyndns.org>
-References: <20080725113316.GF32057@genesis.frugalware.org>
- <bd6139dc0807250450m25a932b8h68fcee13f8c343dc@mail.gmail.com>
- <7viqutpjqq.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0807260250480.11976@eeepc-johanness>
+From: "Patrick Aljord" <patcito@gmail.com>
+Subject: Re: git-scm.com
+Date: Fri, 25 Jul 2008 20:38:38 -0500
+Message-ID: <6b6419750807251838h12ea4f19gdff107694e3797c4@mail.gmail.com>
+References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: sverre@rabbelier.nl, Miklos Vajna <vmiklos@frugalware.org>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 26 03:17:21 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "git list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 26 03:39:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMYPO-0002Oe-6f
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 03:17:18 +0200
+	id 1KMYl6-0006kz-Nk
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 03:39:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752051AbYGZBMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 21:12:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751689AbYGZBMZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 21:12:25 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57833 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751309AbYGZBMZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 21:12:25 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C6A6C36F77;
-	Fri, 25 Jul 2008 21:12:23 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 1972736F75; Fri, 25 Jul 2008 21:12:18 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0807260250480.11976@eeepc-johanness> (Johannes
- Schindelin's message of "Sat, 26 Jul 2008 02:51:41 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E757402E-5AAF-11DD-8687-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1751689AbYGZBil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 21:38:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751925AbYGZBil
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 21:38:41 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:28268 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751684AbYGZBik (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 21:38:40 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1772924fgg.17
+        for <git@vger.kernel.org>; Fri, 25 Jul 2008 18:38:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=m4t61EcWoMMIk/7fAKTQpPUGm2Z0Wqyy74dWkZsN504=;
+        b=UmMRHanVAsyK722UXEmInVme8gHqVFAHWAHrDei7rsSY1041L7JhYySEG5Wh/VzU2Z
+         G03/oDicuKg/PnAQgWCPqdwXWtXwJB5cx5wt4AREJYTJ0Is7f13ztGu/48wbIPcZiKRK
+         PD45A8D1u83320mXr2lp6Cfb1Dia5El1ste8o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=NWFBPOgwykcON+OuDNknJfJJvzclpeZFTyxEdri1P81NZw61W0zPdnUV/EUIw84XEy
+         JylvvIw3hQw/Jh2+5gMoNynPdKRS7N90Qo1ZQ01x9ZvePKCTgd0J6b2vHSUwRGMOHE47
+         9Z5isAe/nUNi5h9RbzOCxplX5YS/8Itok4R7c=
+Received: by 10.86.68.20 with SMTP id q20mr518209fga.2.1217036318503;
+        Fri, 25 Jul 2008 18:38:38 -0700 (PDT)
+Received: by 10.86.23.1 with HTTP; Fri, 25 Jul 2008 18:38:38 -0700 (PDT)
+In-Reply-To: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90145>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> ... especially since I hope that we have them builtin soon, and not only 
-> that, but have builtin-merge call them as C functions, not with fork() and 
-> exec().
-
-Because builtin-merge.c does not directly use fork/exec but uses
-run_command() interface, non POSIX platforms can spawn subprocesses just
-fine, can't they?
-
-I do not think at this point it is of any high priority to call strategies
-internally, avoiding fork/exec.  We may apply hundreds of patches per
-minute, but would fork/exec overhead matter for merges?
-
-Especially because some strategies (recursive and perhaps the rumored
-"blame" even more so) are quite data intensive operations, libifying them
-is not worth it, compared to the nice isolation between processes we get
-from running them as a separate program.  We get the necessary clean-up
-after strategy did its thing for almost free (well, "at the cost of
-fork/exec").
+Looks fine but this page looks like a big advertising for Github with
+five links on the middle of the front page + one big logo at the
+bottom.
