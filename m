@@ -1,64 +1,83 @@
-From: Jing Xue <jingxue@digizenstudio.com>
-Subject: Re: Mailing lists, was Re: [RFC] Git User's Survey 2008
-Date: Sat, 26 Jul 2008 11:51:38 -0400
-Message-ID: <20080726155138.GB20695@jabba.hq.digizenstudio.com>
-References: <200807230325.04184.jnareb@gmail.com> <20080725172313.GE21117@spearce.org> <7vr69hsss1.fsf@gitster.siamese.dyndns.org> <200807252352.09751.jnareb@gmail.com> <20080725215707.GC23202@spearce.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 7/7] builtin-merge: avoid non-strategy git-merge
+	commands in error message
+Date: Sat, 26 Jul 2008 18:00:22 +0200
+Message-ID: <20080726160022.GM32057@genesis.frugalware.org>
+References: <1217073292-27945-1-git-send-email-vmiklos@frugalware.org> <4f2b03391e3f85cf2224f97a2a7765d08707bd73.1217037178.git.vmiklos@frugalware.org> <68749731fe8de8b2a9ffc53963291aeab9256b82.1217037178.git.vmiklos@frugalware.org> <99c90877657be0ed439a9918f500d6ad132550a2.1217037178.git.vmiklos@frugalware.org> <13f39dd6752a34beeb6ecccb51dbc7546ef87182.1217037178.git.vmiklos@frugalware.org> <fc448aa651ad9e8e9d1cf5556a665b5bd6074628.1217037178.git.vmiklos@frugalware.org> <65a569c389352c5d0500b8c44c28e5572352e6ba.1217037178.git.vmiklos@frugalware.org> <alpine.DEB.1.00.0807261701520.26810@eeepc-johanness> <20080726152502.GL32057@genesis.frugalware.org> <alpine.DEB.1.00.0807261737260.26810@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 26 17:52:44 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="+U0EQ97FbU8QddnY"
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 26 18:01:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMm4Y-0007vQ-Ho
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 17:52:42 +0200
+	id 1KMmD0-0002DN-In
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 18:01:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752409AbYGZPvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 11:51:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752461AbYGZPvm
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 11:51:42 -0400
-Received: from k2smtpout04-01.prod.mesa1.secureserver.net ([64.202.189.166]:56390
-	"HELO k2smtpout04-01.prod.mesa1.secureserver.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752332AbYGZPvm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 11:51:42 -0400
-Received: (qmail 11890 invoked from network); 26 Jul 2008 15:51:40 -0000
-Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
-  by k2smtpout04-01.prod.mesa1.secureserver.net (64.202.189.166) with ESMTP; 26 Jul 2008 15:51:40 -0000
-Received: from localhost (unknown [127.0.0.1])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 965E8100099
-	for <git@vger.kernel.org>; Sat, 26 Jul 2008 15:51:40 +0000 (UTC)
-Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
-	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tyP6WRa+4ba3 for <git@vger.kernel.org>;
-	Sat, 26 Jul 2008 11:51:39 -0400 (EDT)
-Received: from jabba.hq.digizenstudio.com (ip70-174-133-176.dc.dc.cox.net [70.174.133.176])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id B8EAF10007A
-	for <git@vger.kernel.org>; Sat, 26 Jul 2008 11:51:39 -0400 (EDT)
-Received: by jabba.hq.digizenstudio.com (Postfix, from userid 1000)
-	id CE77648E93; Sat, 26 Jul 2008 11:51:38 -0400 (EDT)
-Mail-Followup-To: git@vger.kernel.org
+	id S1752332AbYGZQA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 12:00:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752460AbYGZQA0
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 12:00:26 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:48226 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752262AbYGZQAZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 12:00:25 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 5F7E71B24FC;
+	Sat, 26 Jul 2008 18:00:24 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id B5C6D4465E;
+	Sat, 26 Jul 2008 17:17:20 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 184BB1190A09; Sat, 26 Jul 2008 18:00:22 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080725215707.GC23202@spearce.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <alpine.DEB.1.00.0807261737260.26810@eeepc-johanness>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90251>
 
-On Fri, Jul 25, 2008 at 04:57:07PM -0500, Shawn O. Pearce wrote:
-> Jakub Narebski <jnareb@gmail.com> wrote:
-> > What question about egit/jgit would you like to have in the survey?
-> 
-> I'm not certain what else I would want to ask that is egit/jgit
-> specific.
 
-Just a thought - how about a question polling whether people would be
-interested in build tool wrappers around jgit - ant tasks, maven
-plugins, etc.?
+--+U0EQ97FbU8QddnY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Cheers.
--- 
-Jing Xue
+On Sat, Jul 26, 2008 at 05:38:55PM +0200, Johannes Schindelin <Johannes.Sch=
+indelin@gmx.de> wrote:
+> > -				if (!strcmp(main_cmds.names[i]->name, all_strategy[j].name))
+> > +				if (!strncmp(ent->name, all_strategy[j].name, ent->len))
+>=20
+> Oops... that is not what I meant.  You'd have to check if=20
+> !all_strategy[j].name[ent->len], too...
+
+Hmm. So let's say ent->name is "ours.exe", ent->len is set to 4.
+
+Then !strncmp(ent->name, all_strategy[j].name, ent->len) will be true,
+and the command will not be added to the exclude list.
+
+However, if I check for !all_strategy[j].name[ent->len], that will be
+false, so 'ours' will be excluded from the available strategy list.
+
+Have I missed something?
+
+Thanks.
+
+--+U0EQ97FbU8QddnY
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkiLShYACgkQe81tAgORUJbBFwCfekVfGrP3seQXH3xilivzSwiv
+6ykAn20QBm7GKkm+b+LIZGpBlbI4YSzT
+=SF3c
+-----END PGP SIGNATURE-----
+
+--+U0EQ97FbU8QddnY--
