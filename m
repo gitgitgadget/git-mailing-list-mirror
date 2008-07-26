@@ -1,58 +1,119 @@
-From: "Patrick Aljord" <patcito@gmail.com>
-Subject: Re: git-scm.com
-Date: Fri, 25 Jul 2008 20:38:38 -0500
-Message-ID: <6b6419750807251838h12ea4f19gdff107694e3797c4@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Official Git Homepage change? Re: git-scm.com
+Date: Sat, 26 Jul 2008 03:53:14 +0200
+Message-ID: <20080726015314.GU32184@machine.or.cz>
 References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "git list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 26 03:39:45 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 26 03:54:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMYl6-0006kz-Nk
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 03:39:45 +0200
+	id 1KMYzI-00012N-2I
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 03:54:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751689AbYGZBil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 21:38:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751925AbYGZBil
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 21:38:41 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:28268 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751684AbYGZBik (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 21:38:40 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1772924fgg.17
-        for <git@vger.kernel.org>; Fri, 25 Jul 2008 18:38:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=m4t61EcWoMMIk/7fAKTQpPUGm2Z0Wqyy74dWkZsN504=;
-        b=UmMRHanVAsyK722UXEmInVme8gHqVFAHWAHrDei7rsSY1041L7JhYySEG5Wh/VzU2Z
-         G03/oDicuKg/PnAQgWCPqdwXWtXwJB5cx5wt4AREJYTJ0Is7f13ztGu/48wbIPcZiKRK
-         PD45A8D1u83320mXr2lp6Cfb1Dia5El1ste8o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=NWFBPOgwykcON+OuDNknJfJJvzclpeZFTyxEdri1P81NZw61W0zPdnUV/EUIw84XEy
-         JylvvIw3hQw/Jh2+5gMoNynPdKRS7N90Qo1ZQ01x9ZvePKCTgd0J6b2vHSUwRGMOHE47
-         9Z5isAe/nUNi5h9RbzOCxplX5YS/8Itok4R7c=
-Received: by 10.86.68.20 with SMTP id q20mr518209fga.2.1217036318503;
-        Fri, 25 Jul 2008 18:38:38 -0700 (PDT)
-Received: by 10.86.23.1 with HTTP; Fri, 25 Jul 2008 18:38:38 -0700 (PDT)
-In-Reply-To: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
+	id S1752623AbYGZBxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 21:53:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752610AbYGZBxS
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 21:53:18 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:56424 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752485AbYGZBxR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 21:53:17 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 44AE3393B321; Sat, 26 Jul 2008 03:53:14 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90146>
 
-Looks fine but this page looks like a big advertising for Github with
-five links on the middle of the front page + one big logo at the
-bottom.
+  Hi,
+
+On Fri, Jul 25, 2008 at 10:35:43AM -0700, Scott Chacon wrote:
+> Anyhow, I'm discussing with Petr about where we want to go from here -
+> what changes he'd like to make, etc, but I obviously value your
+> opinion as well, so please let me know what you think.  The content
+> has barely changed, it's really just a usability overhaul.  I want to
+> make sure that whatever someone is looking for (especially someone
+> new), they can find in a few clicks and a few seconds.
+
+  when the initial NIH reaction passes, I have to admit that I do rather
+like it - and it's not only because you keep mentioning how awesome I am
+in your blog post. ;-)
+
+  I wonder if all the Git users find the heading rather funny as I did,
+instead of unprofessional - but maybe we don't care about users without
+a particular sense of humor. I'm also not overly fond of the color theme
+but I'm perhaps just too heavy of a blue fan.
+
+  Plenty of minor fixes are available for pull at
+
+	git://github.com/pasky/learn-github.git
+	(http://github.com/pasky/learn-github/tree/master)
+
+(Note that I didn't test whether the pages still look ok with my changes
+since I have no Ruby on Rails setup; hopefully they should, though.)
+
+  Other non-trivial nits:
+
+  * I'm feeling a bit uneasy about listing so many projects using Git;
+I haven't heard about quite a few of these and I'm not sure on what
+merit should we list projects. "Prototype" or "Liftweb" and probably
+even "Rubinius", is that going to ring a bell for major part of visitors
+so that they say "oh, even _those_ guys are using Git"?
+
+  * Cut the contributors list at 4 or 5 commits? Below that, the list
+is getting fairly useless anyway and you have trouble with keeping the
+names reasonably well-formed.
+
+  * Reusing captions from command manpages in the Documentation page
+shows nicely how awful they sometimes are. :-) This is probably something
+to fix upstream, though.
+
+  * Is "Git for the lazy" really unique in some regard to deserve to be
+listed among the other resources? I think we should minimalize
+redundancy at the documentation page, the amount of material is already
+overwhelming and it should be obvious for the visitor which document to
+choose based on his needs. I have similar doubts about the 37signals
+resources.
+
+	In other words, "let's keep the resources orthogonal!"
+
+  * There is no reference to the Wiki in the documentation, only to the
+[GitDocumentation] page; I think there should be a reference to the
+[GitFaq] page too - a lot of important points that are not obvious
+to newcomers are covered there. I'm just not sure where exactly to put
+the link.
+
+  * I would go as far as put the link to the Wiki itself to the
+navigation bar, simply since it is such a crucial resource.
+
+  * A guide on maintaining third-party patches is currently missing.
+
+  * The development page is not referenced anywhere; the missing
+information are mailing list details (how to subscribe) and a link to
+SubmittingPatches. Also, I have recently talked with Junio about adding
+a link to the Note from the Maintainer, but we didn't yet figure out
+where to stabilize the location of that page.
+
+> Next, I will be working on the larger end-user documentation project,
+> which will linked to from the documentation page of this site, and
+> probably the main page too.  I'll keep this list updated as I go,
+> since people tend to think I don't care about the community when I try
+> not to waste your time. :)
+
+  How does that compare with the Git user manual? Have you considered
+collaborating on that one, or what are your reasons not to? Or are you
+trying to do something different?
+
+-- 
+				Petr "Pasky" Baudis
+As in certain cults it is possible to kill a process if you know
+its true name.  -- Ken Thompson and Dennis M. Ritchie
