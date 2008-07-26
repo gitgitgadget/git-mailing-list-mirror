@@ -1,56 +1,58 @@
-From: Abhijit Menon-Sen <ams@toroid.org>
-Subject: [PATCH] Clarify that "git log x.c y.h" lists commits that touch either file
-Date: Sat, 26 Jul 2008 22:20:35 +0530
-Message-ID: <20080726165035.GA32046@toroid.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] rev-parse: Add support for the ^! and ^@ syntax
+Date: Sat, 26 Jul 2008 18:54:06 +0200
+Message-ID: <20080726165406.GA26378@atjola.homenet>
+References: <20080726163756.GA25103@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 26 18:51:57 2008
+X-From: git-owner@vger.kernel.org Sat Jul 26 18:55:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMmzn-00025X-Qg
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 18:51:52 +0200
+	id 1KMn31-00030i-3z
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 18:55:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757078AbYGZQui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 12:50:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757076AbYGZQui
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 12:50:38 -0400
-Received: from fugue.toroid.org ([85.10.196.113]:34729 "EHLO fugue.toroid.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757073AbYGZQuh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 12:50:37 -0400
-Received: from penne.toroid.org (penne-vpn [10.8.0.6])
-	by fugue.toroid.org (Postfix) with ESMTP id 20A3A558379;
-	Sat, 26 Jul 2008 18:50:36 +0200 (CEST)
-Received: by penne.toroid.org (Postfix, from userid 1000)
-	id 2FC55ADC368; Sat, 26 Jul 2008 22:20:35 +0530 (IST)
+	id S1753047AbYGZQyL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Jul 2008 12:54:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752838AbYGZQyK
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 12:54:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59715 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751946AbYGZQyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 12:54:09 -0400
+Received: (qmail invoked by alias); 26 Jul 2008 16:54:07 -0000
+Received: from i577BB289.versanet.de (EHLO atjola.local) [87.123.178.137]
+  by mail.gmx.net (mp023) with SMTP; 26 Jul 2008 18:54:07 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+jlH8hmvWjGJJlF4mJwWPXEuKDsrNZOQLFk99WsL
+	+8zeeVjy4f/Vxu
 Content-Disposition: inline
+In-Reply-To: <20080726163756.GA25103@atjola.homenet>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90259>
 
-Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
----
- Documentation/git-log.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On 2008.07.26 18:37:56 +0200, Bj=F6rn Steinbrink wrote:
+> Those shorthands are explained in the rev-parse documentation but wer=
+e not
+> actually supported by rev-parse itself.
+>=20
+> Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
+> ---
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 5a58d5b..05cbac5 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -58,7 +58,7 @@ include::diff-options.txt[]
- 	its size is not included.
- 
- <paths>...::
--	Show only commits that affect the specified paths.
-+	Show only commits that affect any of the specified paths.
- 
- 
- include::rev-list-options.txt[]
--- 
-1.6.0.rc0.43.g2aa74
+Ah crap, forgot to say that I wrote this because I wanted gitk to
+support the ^! syntax and that uses rev-parse to parse its revision
+arguments. My use-case with gitk is to quickly verify a bunch of grafts
+I used to fixup the history in a git-svn repo.
+
+Bj=F6rn
