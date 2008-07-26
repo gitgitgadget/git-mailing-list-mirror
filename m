@@ -1,100 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Official Git Homepage change? Re: git-scm.com
-Date: Sat, 26 Jul 2008 00:11:01 -0700
-Message-ID: <7vtzedktmi.fsf@gitster.siamese.dyndns.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: git-scm.com
+Date: Sat, 26 Jul 2008 19:21:06 +1200
+Message-ID: <46a038f90807260021t429688delacfdf20d01ff7810@mail.gmail.com>
 References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
- <20080726015314.GU32184@machine.or.cz> <20080726020951.GV32184@machine.or.cz>
- <7v4p6dnv5k.fsf@gitster.siamese.dyndns.org>
- <d411cc4a0807252343n2b9ade68veaebb68664f0a3d7@mail.gmail.com>
+	 <alpine.DEB.1.00.0807260422250.11976@eeepc-johanness>
+	 <20080726025402.GF13539@leksak.fem-net>
+	 <alpine.DEB.1.00.0807260506020.26810@eeepc-johanness>
+	 <d411cc4a0807252155o18083ca0yeae6ac43a5e83bec@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Stephan Beyer" <s-beyer@gmx.net>, git@vger.kernel.org
 To: "Scott Chacon" <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 26 09:12:10 2008
+X-From: git-owner@vger.kernel.org Sat Jul 26 09:22:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMdwo-0008Kp-54
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 09:12:10 +0200
+	id 1KMe6V-00025z-7k
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 09:22:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752368AbYGZHLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 03:11:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752293AbYGZHLJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 03:11:09 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49476 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752284AbYGZHLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 03:11:08 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5EF4A3C812;
-	Sat, 26 Jul 2008 03:11:07 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 25D003C811; Sat, 26 Jul 2008 03:11:02 -0400 (EDT)
-In-Reply-To: <d411cc4a0807252343n2b9ade68veaebb68664f0a3d7@mail.gmail.com>
- (Scott Chacon's message of "Fri, 25 Jul 2008 23:43:55 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 046491F8-5AE2-11DD-9B6E-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752429AbYGZHVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 03:21:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752412AbYGZHVJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 03:21:09 -0400
+Received: from wf-out-1314.google.com ([209.85.200.170]:11307 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752214AbYGZHVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 03:21:08 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so4575740wfd.4
+        for <git@vger.kernel.org>; Sat, 26 Jul 2008 00:21:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ifzktBwVojbNQiASk9Uw7ldLLtHt7Dcz2e+JhAvq++w=;
+        b=R3RBTuBLusGGAXcAoOVzRZAvfIo9vfDfht+gs+hzINMHPH/u24si6Ja1o2pSF7whQy
+         ip2fcte+TIL+7Pib9q3u/mcsU0Lskc/fSQsN8Tnqo6t7ylgUvJykqggzzRsKBud8RGsW
+         qBlElLlUlYCaxfFkdq5ANFpU5D70Q0a/N1xi8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=v5prbQ1KDjmQlvLUjGCd8CJdCCYr8b55dSe34kOeoAT9A9ootpLtqha1xi0ziGnFBT
+         +j6yeyp73/U6LElq5lvUL9MMZbZo/ywk8ay3+z7/1vkSYx8mngx8obn+7IVgGKzfxCbD
+         wryYKwhVN149f53GOqTrqT2MiojXPC9y9yk8Y=
+Received: by 10.142.158.17 with SMTP id g17mr842025wfe.17.1217056866850;
+        Sat, 26 Jul 2008 00:21:06 -0700 (PDT)
+Received: by 10.142.223.21 with HTTP; Sat, 26 Jul 2008 00:21:06 -0700 (PDT)
+In-Reply-To: <d411cc4a0807252155o18083ca0yeae6ac43a5e83bec@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90191>
 
-"Scott Chacon" <schacon@gmail.com> writes:
+On Sat, Jul 26, 2008 at 4:55 PM, Scott Chacon <schacon@gmail.com> wrote:
+> I was a bit concerned about using the little guy too, but I've gotten
+> overall very good feedback about him - people seem to like him.  I
+> think it's good to have a little bit of illustration on a page.
 
-> On Fri, Jul 25, 2008 at 9:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> ...
->> These two are directly related.  They might be friendly and well-meaning
->> folks, but I agree that they haven't earned our trust yet.
->>
->> But I do not think it matters that much.
->> ...
->> It's also somewhat interesting to observe that several people I have never
->> heard of in the git circle are simultaneously doing new git books,
->> apparently never asking for much technical advice from core git people, by
->> the way.
->
-> To be honest, I have asked for a fair amount of technical advice from
-> many helpful people in the IRC channel over the past few years.  In my
-> case, one of my best friends - the guy I've been working with for the
-> last 4 years - is Nick Hengeveld, who has something like 50 commits in
-> there - why email the list when I can yell a question over the cube
-> wall?  I'm sure you all have more important things to do than review
-> my book for newbies - I asked Nick to do it.
+It's clearly an inside joke, but I like it. And let's have the
+environmentalists-with-a-sense-of-humour with us. The others can use
+something else :-)
 
-Ah, Nick.  We haven't heard from him for quite some time.  I've actually
-been missed him from time to time whenever http related issues came up.
-Please say hello to him for me ;-).
 
-> If I could code C worth a lick, I'm sure I would have contributed more
-> to this list, but since I have nothing that I feel would be helpful to
-> you, I've passively followed the list.  I'm sorry that you do not
-> consider me a "git community member" just because I don't code C, and
-> so I can't contribute helpfully to core.
 
-I realize I may have sounded somewhat harsh, but that was not my
-intention.  And I do not think what you said is fair, either.
-
-We have had quite a few end user questions on this list, but I do not seem
-to recall any of the names of the book writers, whose books are presumably
-aimed at these people, answering them.  Granted, core coders may be busy
-bunch of people, and the questions and comments from new people sometimes
-tend to be lost in flurry of patch floods.  I and other core coders would
-have greatly appreciated if non-coder experts like yourself helped these
-threads that have never panned out.
-
-I am not complaining.  This cuts both ways.  The patch floods do tend to
-discourage new people from asking basic questions, and lack of answers
-even more so.  But it is not healthy for people who design and code not to
-hear end user feedback.  I personally would want to see the list traffic
-to be inclusive.
-
-The people who design the new features and write code should have easy
-access to the issues the users of all levels have with the software and
-the documentation (and what they find useful as well).  What I am most
-afraid of is that both "We do not bother the coders" and "We are too busy
-to answer every newbie question" mentalities would lead to a fractured
-community.
+m
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
