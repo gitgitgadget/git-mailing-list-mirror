@@ -1,87 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: fetch refspec foo/* matches foo*
-Date: Sat, 26 Jul 2008 04:33:57 -0400
-Message-ID: <20080726083356.GB10104@sigill.intra.peff.net>
-References: <1216854795-51155-1-git-send-email-lee.marlow@gmail.com> <1216858043-53646-1-git-send-email-lee.marlow@gmail.com> <20080725204051.GB23202@spearce.org> <7v1w1hsmnc.fsf@gitster.siamese.dyndns.org> <20080726082405.GA10104@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 26 10:35:04 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH] Modify mingw_main() workaround to avoid link errors
+Date: Sat, 26 Jul 2008 11:41:44 +0200
+Message-ID: <1217065304-27815-1-git-send-email-prohaska@zib.de>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Steffen Prohaska <prohaska@zib.de>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sat Jul 26 11:43:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMfEz-0001Ns-IE
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 10:35:01 +0200
+	id 1KMgJZ-0000iB-U6
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 11:43:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750914AbYGZIeB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 04:34:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751003AbYGZIeB
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 04:34:01 -0400
-Received: from peff.net ([208.65.91.99]:4091 "EHLO peff.net"
+	id S1751600AbYGZJmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 05:42:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751545AbYGZJmk
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 05:42:40 -0400
+Received: from mailer.zib.de ([130.73.108.11]:57723 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750894AbYGZIeA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 04:34:00 -0400
-Received: (qmail 8485 invoked by uid 111); 26 Jul 2008 08:33:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sat, 26 Jul 2008 04:33:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 26 Jul 2008 04:33:57 -0400
-Content-Disposition: inline
-In-Reply-To: <20080726082405.GA10104@sigill.intra.peff.net>
+	id S1751447AbYGZJmj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 05:42:39 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m6Q9fjqD014640;
+	Sat, 26 Jul 2008 11:41:54 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m6Q9fi4o026543;
+	Sat, 26 Jul 2008 11:41:44 +0200 (MEST)
+X-Mailer: git-send-email 1.5.4.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90202>
 
-On Sat, Jul 26, 2008 at 04:24:05AM -0400, Jeff King wrote:
+With MinGW's
 
-> > If not, I think I probably need to take a look at this, reproducing and
-> > possibly fixing, before applying non-fix patches.
-> 
-> I have been meaning to look at it for days, so I finally took a peek.  I
-> was able to reproduce the problem easily. I think it is (almost) as
-> simple as the patch below. In the refspec parsing, we already require
-> globs to come after '/', so this is the analagous check during match.
+   gcc.exe (GCC) 3.4.5 (mingw special)
+   GNU ld version 2.17.50 20060824
 
-Also, while I have your attention, Junio, here is another bug fix
-that should go into 1.6.0. I posted the patch as a "how about this" deep
-in a thread and got no response (which means no complaints, right?).
+the old define caused link errors:
 
--- >8 --
-init: handle empty "template" parameter
+   git.o: In function `main':
+   C:/msysgit/git/git.c:500: undefined reference to `mingw_main'
+   collect2: ld returned 1 exit status
 
-If a user passes "--template=", then our template parameter
-is blank. Unfortunately, copy_templates() assumes it has at
-least one character, and does all sorts of bad things like
-reading from template[-1] and then proceeding to link all of
-'/' into the .git directory.
+The modified define works.
 
-This patch just checks for that condition in copy_templates
-and aborts. As a side effect, this means that --template=
-now has the meaning "don't copy any templates."
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 ---
-I don't really care about the "side effect" behavior, but it seems
-reasonable. The other obvious option is to simply die(). Certainly
-either is better than the current bug.
+ compat/mingw.h |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
- builtin-init-db.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index 38b4fcb..baf0d09 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -117,6 +117,8 @@ static void copy_templates(const char *template_dir)
- 		template_dir = getenv(TEMPLATE_DIR_ENVIRONMENT);
- 	if (!template_dir)
- 		template_dir = system_path(DEFAULT_GIT_TEMPLATE_DIR);
-+	if (!template_dir[0])
-+		return;
- 	strcpy(template_path, template_dir);
- 	template_len = strlen(template_path);
- 	if (template_path[template_len-1] != '/') {
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 290a9e6..a52e657 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -228,9 +228,10 @@ char **env_setenv(char **env, const char *name);
+  * A replacement of main() that ensures that argv[0] has a path
+  */
+ 
+-#define main(c,v) main(int argc, const char **argv) \
++#define main(c,v) dummy_decl_mingw_main(); \
++static int mingw_main(); \
++int main(int argc, const char **argv) \
+ { \
+-	static int mingw_main(); \
+ 	argv[0] = xstrdup(_pgmptr); \
+ 	return mingw_main(argc, argv); \
+ } \
 -- 
-1.6.0.rc0.233.gb3fd2
+1.6.0.rc0.42.g186458
