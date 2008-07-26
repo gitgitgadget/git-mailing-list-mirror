@@ -1,73 +1,86 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] Modify mingw_main() workaround to avoid link errors
-Date: Sat, 26 Jul 2008 11:41:44 +0200
-Message-ID: <1217065304-27815-1-git-send-email-prohaska@zib.de>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Steffen Prohaska <prohaska@zib.de>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sat Jul 26 11:43:51 2008
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] bash completion: Add long options for 'git describe'
+Date: Sat, 26 Jul 2008 12:25:05 +0200
+Message-ID: <200807261225.13949.trast@student.ethz.ch>
+References: <1216980170-14136-1-git-send-email-trast@student.ethz.ch> <20080725131532.GB6701@neumann> <20080725162028.GB21117@spearce.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart2224861.5xcSfJ6sOD";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: SZEDER GGGbor <szeder@ira.uka.de>, git@vger.kernel.org,
+	gitster@pobox.com
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Jul 26 12:26:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMgJZ-0000iB-U6
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 11:43:50 +0200
+	id 1KMgyS-0002jU-1G
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 12:26:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751600AbYGZJmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 05:42:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751545AbYGZJmk
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 05:42:40 -0400
-Received: from mailer.zib.de ([130.73.108.11]:57723 "EHLO mailer.zib.de"
+	id S1751687AbYGZKZB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 06:25:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751600AbYGZKZB
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 06:25:01 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:43690 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751447AbYGZJmj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 05:42:39 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m6Q9fjqD014640;
-	Sat, 26 Jul 2008 11:41:54 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m6Q9fi4o026543;
-	Sat, 26 Jul 2008 11:41:44 +0200 (MEST)
-X-Mailer: git-send-email 1.5.4.4
+	id S1751163AbYGZKZA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 06:25:00 -0400
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 26 Jul 2008 12:24:58 +0200
+Received: from [192.168.0.4] ([84.75.148.145]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 26 Jul 2008 12:24:58 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080725162028.GB21117@spearce.org>
+X-OriginalArrivalTime: 26 Jul 2008 10:24:58.0282 (UTC) FILETIME=[DAB0C0A0:01C8EF09]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90203>
 
-With MinGW's
+--nextPart2224861.5xcSfJ6sOD
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-   gcc.exe (GCC) 3.4.5 (mingw special)
-   GNU ld version 2.17.50 20060824
+Shawn O. Pearce wrote:
+> SZEDER GGGbor <szeder@ira.uka.de> wrote:
+> > >  _git_describe ()
+> > >  {
+> > > +	__git_has_doubledash && return
+> > This line is superfluous, because 'git describe' does not have any path
+> > arguments.
+>=20
+> Yup.  Aside from the two items described above (mising SOB line
+> and the unnecessary double dash test) this patch looks fine.
 
-the old define caused link errors:
+I suppose you're right.  It does (empirically) attempt to parse
+anything following a -- as a revision argument, but similar commands
+like cherry-pick don't handle the -- specially either.
 
-   git.o: In function `main':
-   C:/msysgit/git/git.c:500: undefined reference to `mingw_main'
-   collect2: ld returned 1 exit status
+I'll resend a fixed version.
 
-The modified define works.
+=2D Thomas
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- compat/mingw.h |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 290a9e6..a52e657 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -228,9 +228,10 @@ char **env_setenv(char **env, const char *name);
-  * A replacement of main() that ensures that argv[0] has a path
-  */
- 
--#define main(c,v) main(int argc, const char **argv) \
-+#define main(c,v) dummy_decl_mingw_main(); \
-+static int mingw_main(); \
-+int main(int argc, const char **argv) \
- { \
--	static int mingw_main(); \
- 	argv[0] = xstrdup(_pgmptr); \
- 	return mingw_main(argc, argv); \
- } \
--- 
-1.6.0.rc0.42.g186458
+
+--nextPart2224861.5xcSfJ6sOD
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkiK+4kACgkQqUud07tmzP2pHwCfejQj2YfrL5rwSetafK4Uvk8A
+2TIAn2knwXT3s34r5N/SwGi909YO9B7B
+=d/bE
+-----END PGP SIGNATURE-----
+
+--nextPart2224861.5xcSfJ6sOD--
