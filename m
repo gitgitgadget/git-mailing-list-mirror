@@ -1,93 +1,105 @@
-From: "Scott Chacon" <schacon@gmail.com>
-Subject: Re: git-scm.com
-Date: Fri, 25 Jul 2008 21:55:50 -0700
-Message-ID: <d411cc4a0807252155o18083ca0yeae6ac43a5e83bec@mail.gmail.com>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
-	 <alpine.DEB.1.00.0807260422250.11976@eeepc-johanness>
-	 <20080726025402.GF13539@leksak.fem-net>
-	 <alpine.DEB.1.00.0807260506020.26810@eeepc-johanness>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Stephan Beyer" <s-beyer@gmx.net>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 26 06:57:10 2008
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: git sequencer prototype
+Date: Sat, 26 Jul 2008 07:20:39 +0200
+Message-ID: <1217049644-8874-1-git-send-email-s-beyer@gmx.net>
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Stephan Beyer <s-beyer@gmx.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 26 07:22:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMbq9-0002XH-9y
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 06:57:09 +0200
+	id 1KMcEG-0007zr-Lu
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 07:22:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751579AbYGZEzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 00:55:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751640AbYGZEzw
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 00:55:52 -0400
-Received: from wa-out-1112.google.com ([209.85.146.183]:21894 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751571AbYGZEzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 00:55:52 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so2280483waf.23
-        for <git@vger.kernel.org>; Fri, 25 Jul 2008 21:55:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Y2sClvM2hsLr2rGMoVCwaL6XeLUMaOWWa0p0BSSuAxA=;
-        b=H60Pma4TtZXkdCb9Sum+b1hfBgdm9qyByUgIg7ZpDZJNtRmLdAh6ReRC0IUkkr+hLy
-         u2V/MThtZL27L7vPmB35OF20mGnzQpgTbgyNew0rMRxk5Q7dZ8/7V/rzfYsNy7gY2FhW
-         DqxmQl5YDfbogK3MTFURE6Vx689TXrvQUTNJo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=FN8GkAecPHFNLJ4d8FubjKUgbRkZhBNic/c4ACutBmHJV6KnFan57weu18PM3rIxA9
-         3T4ED++2jl5BDG5gT1zwHZhAb/HBIT0DY7xeFKZlMH28C5mVflM5CcEMJZZJvcxL/XCr
-         /c+PJZsGp8JxEKAyvRoOoGSkkXDqTcdyoU2SE=
-Received: by 10.114.73.14 with SMTP id v14mr2871161waa.163.1217048150602;
-        Fri, 25 Jul 2008 21:55:50 -0700 (PDT)
-Received: by 10.115.22.20 with HTTP; Fri, 25 Jul 2008 21:55:50 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0807260506020.26810@eeepc-johanness>
-Content-Disposition: inline
+	id S1752019AbYGZFU6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 01:20:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbYGZFU5
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 01:20:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39494 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751642AbYGZFU4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 01:20:56 -0400
+Received: (qmail invoked by alias); 26 Jul 2008 05:20:54 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp060) with SMTP; 26 Jul 2008 07:20:54 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1/LU71bDTrLy75oM7HJvHLqX2ls4Y7GZQU2ayu+Zh
+	QqM3UDdrqZspKI
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KMcCy-0002JV-BC; Sat, 26 Jul 2008 07:20:44 +0200
+X-Mailer: git-send-email 1.6.0.rc0.49.gd39f
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90175>
 
-On Fri, Jul 25, 2008 at 8:07 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Sat, 26 Jul 2008, Stephan Beyer wrote:
->
->> Johannes Schindelin wrote:
->> > I do not like the implication that Git eats trees.
->>
->> I still like the picture, though it can hurt environmentalists.
->
-> It's not just environmentalists.  If I put myself in the shoes of a Git
-> newbie, I would get the impression that Git eats my trees, i.e. destroys
-> them.
->
-> Very good first impression.
->
-> Not,
-> Dscho
->
->
+Hi,
 
-I was a bit concerned about using the little guy too, but I've gotten
-overall very good feedback about him - people seem to like him.  I
-think it's good to have a little bit of illustration on a page.
-However, as for your concerns, I think a) it's really hard to argue
-that environmentalists would actually care what that thing is doing
-and b) a newbie to Git will have no idea what a 'tree' is - that is
-really only a sort of inside joke.  You would have to have been using
-git for a good amount of time to know that 'eating a tree' would be a
-bad thing.  That's why I've been telling people that he's _storing_
-trees and that you don't want to be around when he 'gc --prune's :)
+for those who are interested in git-sequencer: here's the latest
+prototype, that should be able to apply to master.
 
-Scott "not top-posting" Chacon
+An outline of the differences to the last sequencer prototype patchset:
+ - typofixes, minor bugfixes
+ - simplifications (seen due to builtin-ification)
+ - introduced --allow-dirty
+   that is used by the git-am migration, to allow
+   usage of git-am on dirty index
+ - set ("keep") ORIG_HEAD; somehow experimental
+
+
+In the last patchset I mentioned the issue, that the prototype is slow
+as hell.  I know some bottlenecks, but I have not even tried to change
+that, because this is no issue for the builtin.
+
+I paste the experiments that I did on my test machine some time ago:
+
+git-am: Apply 100 (trivial) patches
+        original: 5.1s
+ prototype-based: 17s  (wtf!)
+   builtin-based: 2.8s
+
+git-rebase--interactive: Pick 100 (trivial) commits
+        original: 4.8s
+ prototype-based: 10.1s
+   builtin-based: 1.7s
+
+Those times don't have any methodic value, it's just to get an impression.
+Nevertheless some information about that:
+ - performance was only tested one or two times
+ - /proc/cpuinfo says my machine is an AMD 64 X2 with 4013 BogoMIPS
+ - /bin/sh is dash (if the propaganda is true, bash is even slower)
+ - the changes of the patches are equivalent to those of the commits
+
+Regards,
+  Stephan
+
+
+Stephan Beyer (5):
+  Add git-sequencer shell prototype
+  Add git-sequencer documentation
+  Add git-sequencer test suite (t3350)
+  Migrate git-am to use git-sequencer
+  Migrate rebase-i to sequencer
+
+ .gitignore                      |    1 +
+ Documentation/git-sequencer.txt |  676 +++++++++++++
+ Makefile                        |    1 +
+ command-list.txt                |    1 +
+ git-am.sh                       |  632 +++++--------
+ git-rebase--interactive.sh      |  436 ++-------
+ git-rebase.sh                   |    7 +-
+ git-sequencer.sh                | 2042 +++++++++++++++++++++++++++++++++++++++
+ t/t3350-sequencer.sh            |  838 ++++++++++++++++
+ t/t3404-rebase-interactive.sh   |    8 +-
+ t/t4150-am.sh                   |    4 +-
+ 11 files changed, 3889 insertions(+), 757 deletions(-)
+ create mode 100644 Documentation/git-sequencer.txt
+ create mode 100755 git-sequencer.sh
+ create mode 100755 t/t3350-sequencer.sh
