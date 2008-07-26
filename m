@@ -1,69 +1,62 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 6/9] builtin-init-db.c: use parse_options()
-Date: Sat, 26 Jul 2008 02:55:17 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807260254010.11976@eeepc-johanness>
-References: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com> <1216849332-26813-7-git-send-email-barra_cuda@katamail.com> <4888AAB2.5050007@free.fr> <alpine.DEB.1.00.0807241801030.8986@racer> <4889EF3A.6040605@free.fr>
+Subject: Re: [PATCH] Build configuration to skip ctime for modification
+ test
+Date: Sat, 26 Jul 2008 02:57:25 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807260256030.11976@eeepc-johanness>
+References: <4885897C.8010401@viscovery.net> <7vy73tltf5.fsf@gitster.siamese.dyndns.org> <20080722193901.GA5113@blimp.local> <alpine.DEB.1.00.0807222115440.8986@racer> <20080722203128.GB5113@blimp.local> <7vr69lihkt.fsf@gitster.siamese.dyndns.org>
+ <20080723164614.GB5283@blimp.local> <alpine.DEB.1.00.0807231757550.8986@racer> <20080723191647.GF5283@blimp.local> <alpine.LFD.1.10.0807241854580.5249@nehalem.linux-foundation.org> <20080725055547.GA3699@blimp.local>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="658432-1285897971-1217033718=:11976"
-Cc: Michele Ballabio <barra_cuda@katamail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Sat Jul 26 02:55:19 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 26 02:57:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMY44-0006MD-Pm
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 02:55:17 +0200
+	id 1KMY69-0006l2-0b
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 02:57:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751946AbYGZAyR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 20:54:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbYGZAyR
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 20:54:17 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39496 "HELO mail.gmx.net"
+	id S1751983AbYGZA4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 20:56:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751951AbYGZA4Z
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 20:56:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36718 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751922AbYGZAyQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 20:54:16 -0400
-Received: (qmail invoked by alias); 26 Jul 2008 00:54:14 -0000
+	id S1751935AbYGZA4Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 20:56:25 -0400
+Received: (qmail invoked by alias); 26 Jul 2008 00:56:23 -0000
 Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp036) with SMTP; 26 Jul 2008 02:54:14 +0200
+  by mail.gmx.net (mp016) with SMTP; 26 Jul 2008 02:56:23 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX185hVI5jQk5GT0gim3oDfZVTto54ZDmwH4QRtwcP/
-	i4sM+xuuydco2c
+X-Provags-ID: V01U2FsdGVkX1+VRDIIwiCV2DIL/pQZ0qZ6v98y+Ct+o2EeNj2EMY
+	vKVhkqUr/dd4wN
 X-X-Sender: user@eeepc-johanness
-In-Reply-To: <4889EF3A.6040605@free.fr>
+In-Reply-To: <20080725055547.GA3699@blimp.local>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90141>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---658432-1285897971-1217033718=:11976
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90142>
 
 Hi,
 
-On Fri, 25 Jul 2008, Olivier Marin wrote:
+On Fri, 25 Jul 2008, Alex Riesen wrote:
 
-> Johannes Schindelin a écrit :
+> But, given the fact, that somewhere sometimes its very-very annoying to 
+> have even one (un)changed file, something must be done about it. Maybe 
+> just direct
 > 
-> > We rely on shared_repository == 0 for non-shared repositories _almost 
-> > everywhere_.
-> 
-> I think we rely on the fact that PERM_UMASK == 0 and not on the value of 
-> shared_repository. Not the same thing.
+> [...]
+> 	trustctime = false
 
-Just look at all the cases where we ask for "if (shared_repository)".  
-And then look where PERM_UMASK is assigned to.  It _is_ the same thing.
+... which is all Junio and I were asking all along: a separate way to ask 
+for ignoring ctime; not just DWIM it on top of the executable bit.
 
-Hth,
+Ciao,
 Dscho
-
---658432-1285897971-1217033718=:11976--
