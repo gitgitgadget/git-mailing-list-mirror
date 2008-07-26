@@ -1,90 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-scm.com
-Date: Sat, 26 Jul 2008 11:51:17 -0700
-Message-ID: <7vsktweaxm.fsf@gitster.siamese.dyndns.org>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
- <m3hcadul6j.fsf@localhost.localdomain> <20080726130757.GY32184@machine.or.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Mailing lists, was Re: [RFC] Git User's Survey 2008
+Date: Sat, 26 Jul 2008 21:06:42 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807262103410.26810@eeepc-johanness>
+References: <200807230325.04184.jnareb@gmail.com> <m38wvovbh2.fsf@localhost.localdomain> <20080726175121.GA15015@spearce.org> <200807262017.04413.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Jul 26 20:52:35 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Jing Xue <jingxue@digizenstudio.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Marek Zawirski <marek.zawirski@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 26 21:09:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMosV-0006EE-C1
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 20:52:27 +0200
+	id 1KMp8r-0002sd-OP
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 21:09:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170AbYGZSv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 14:51:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752095AbYGZSv2
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 14:51:28 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39759 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752083AbYGZSv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 14:51:27 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4B3263D5AA;
-	Sat, 26 Jul 2008 14:51:26 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 1EF6E3D5A9; Sat, 26 Jul 2008 14:51:19 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D99ECE18-5B43-11DD-80D5-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1750935AbYGZTFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 15:05:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752051AbYGZTFk
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 15:05:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41154 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750928AbYGZTFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 15:05:40 -0400
+Received: (qmail invoked by alias); 26 Jul 2008 19:05:38 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp049) with SMTP; 26 Jul 2008 21:05:38 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19jDKhbybRjvLwYmbWUiNgLcRRIzElXaIFM5uBHXM
+	Hk96x8aHZr7hX6
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <200807262017.04413.jnareb@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90274>
 
-Petr Baudis <pasky@suse.cz> writes:
+Hi,
 
-> One Scott's concern that didn't occur to me was that a the time of
-> release, we could have broken links between the time tag is created and
-> tarballs are wrapped up. I *think* that in practice, this happens at the
-> same time, I wonder if Junio could confirm that.
+On Sat, 26 Jul 2008, Jakub Narebski wrote:
 
-Heh, and you did not Cc: me ;-)?
+> It looks like alternate Git implementation are cropping left and right:
+> jgit in Java, widgit/Git-R-Done and git# GSoC Mono project in C#,...
+> but not all of them maturing.
 
-There is a mirroring process involved between the public machines and the
-machine I push the tag into and place the tarballs.  I do not have control
-over that mirroring.  But modulo that, the tarballs and RPMs are made
-public before the tag and the tips of branches are pushed into the public
-repository.
+Seems as if git# is actively worked on, by a user called "igfgt1".  See
 
-The release procedure goes like this (extend this as an addendum to
-Documentation/howto/maintain-git.txt if somebody feels like it):
+	http://code.google.com/p/mono-soc-2008/source/browse/
 
- * On the development machine outside k.org, create the tag, and prepare
-   RPM for i386;
+However, it appears that the same problem as last year is happening: no 
+communication with those that could help -- us.  For example, the latest 
+change in git# adds a method to "Blob" that returns the content.  Which is 
+obviously read once, never to be freed.
 
- * scp i386 RPM to a private staging area at k.org, and push the tag to a
-   private building area also at k.org;
+I know that it is unfair to rant here, but on the other hand: it is not my 
+itch, and I have tons of other stuff to do.
 
- * run the release procedure in the private building area at k.org, which:
-
-   - builds x86_64 RPM and deposits it to the same private staging area
-     i386 RPM were scp'ed to earlier;
-
-   - builds the source tarball and documentation tarballs;
-
-   - puts all of the above in /pub/software/scm/git/ to be mirrored out;
-
-   - extracts html documentation tarball in /pub/software/scm/git/docs/v*
-     to be mirrored out;
-
-         http://www.kernel.org/pub/software/scm/git/docs/, the "current"
-         documentation page, has links to these "documentation for
-         released versions" and they point at these docs/v* areas.
-
- * push the tag and branch tips out to the public repository, so that it
-   will be mirrored to /pub/scm/git/git.git/ (this updates the "current"
-   documentation pages as a side effect);
-
- * send out the release announcement message to the list.
-
-The 1.4.4.5 backport was an oddball.  I do not think I did anything other
-than simply pushing the tag out.
+Ciao,
+Dscho
