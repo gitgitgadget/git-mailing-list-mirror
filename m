@@ -1,63 +1,107 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [SCRIPT] git-upstream: prints the tracking chain starting at
-	the named ref
-Date: Sat, 26 Jul 2008 18:39:54 +0200
-Message-ID: <20080726163954.GA32184@machine.or.cz>
-References: <26F09105-BFA2-4FA2-86AA-B9E6F9DE3762@slashdot.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Mailing lists, was Re: [RFC] Git User's Survey 2008
+Date: Sat, 26 Jul 2008 09:47:42 -0700 (PDT)
+Message-ID: <m38wvovbh2.fsf@localhost.localdomain>
+References: <200807230325.04184.jnareb@gmail.com>
+	<20080725172313.GE21117@spearce.org>
+	<7vr69hsss1.fsf@gitster.siamese.dyndns.org>
+	<200807252352.09751.jnareb@gmail.com>
+	<20080725215707.GC23202@spearce.org>
+	<20080726155138.GB20695@jabba.hq.digizenstudio.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Scott Collins <scc@slashdot.org>
-X-From: git-owner@vger.kernel.org Sat Jul 26 18:41:13 2008
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marek Zawirski <marek.zawirski@gmail.com>
+To: Jing Xue <jingxue@digizenstudio.com>
+X-From: git-owner@vger.kernel.org Sat Jul 26 18:48:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMmpT-00076w-FB
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 18:41:11 +0200
+	id 1KMmwo-0001Az-5C
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 18:48:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753614AbYGZQj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 12:39:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753560AbYGZQj5
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 12:39:57 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:43584 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753049AbYGZQj4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 12:39:56 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id A525C393B8FA; Sat, 26 Jul 2008 18:39:54 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <26F09105-BFA2-4FA2-86AA-B9E6F9DE3762@slashdot.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752947AbYGZQrp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 12:47:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752872AbYGZQrp
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 12:47:45 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:14161 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752838AbYGZQro (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 12:47:44 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so1366256nfc.21
+        for <git@vger.kernel.org>; Sat, 26 Jul 2008 09:47:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=AoXNMfGd3oKgroD3uctxD230b+BvWWmREcnxPXAfDU0=;
+        b=m7L4hjOFapqRfGi9wwSlp1IRozjMNHzdj0lRjjPU99eXRq7MR3ImDRCHE1HZQT7PfT
+         kyHe7U21/bp7ktZn7ffCJp5q0Hspa1of8HL4kPHoMC/9Zt0sL9CocwrZaDGq2y4fpUY2
+         EqHZTAOzF1SB1cLW8pUPDmMdCgxuK0eMirLrY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=TAF+RQtXV0QxabvFQktk4wL9uDsnlKsyf9BSIhaV1gsc56niUaXkalVdLB0quPXOxZ
+         GtqKk6KquUY/2MBl6LhhlgsBVL5FLzyJpLGaQI/EpzEp7pIZmpguC2uWV83PSLUX3TZv
+         VKYoegkdWCWWh2YQagoTMh9zfnMfzB3VwanNQ=
+Received: by 10.210.86.10 with SMTP id j10mr3564399ebb.31.1217090863080;
+        Sat, 26 Jul 2008 09:47:43 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.225.191])
+        by mx.google.com with ESMTPS id 2sm50374821nfv.5.2008.07.26.09.47.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 26 Jul 2008 09:47:42 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m6QGletj021036;
+	Sat, 26 Jul 2008 18:47:40 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m6QGlbnJ021032;
+	Sat, 26 Jul 2008 18:47:37 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20080726155138.GB20695@jabba.hq.digizenstudio.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90256>
 
-  Hi,
+Jing Xue <jingxue@digizenstudio.com> writes:
 
-On Sat, Jul 26, 2008 at 10:44:29AM -0400, Scott Collins wrote:
-> Here's a script I've sort of `grown' over the past few weeks.
->
-> I use it to quickly see where a tracking branch stands with respect to 
-> upstream refs _without_ actually fetching or even switching to the tracking 
-> branch.  This may not be useful for everyones' work-flows; but I find it 
-> handy. I'm posting because it may be of use to others (and feedback, if 
-> any, can only improve it).
+> On Fri, Jul 25, 2008 at 04:57:07PM -0500, Shawn O. Pearce wrote:
+> > Jakub Narebski <jnareb@gmail.com> wrote:
+> > >
+> > > What question about egit/jgit would you like to have in the survey?
+> > 
+> > I'm not certain what else I would want to ask that is egit/jgit
+> > specific.
+> 
+> Just a thought - how about a question polling whether people would be
+> interested in build tool wrappers around jgit - ant tasks, maven
+> plugins, etc.?
 
-  I wonder why is it a problem to fetch first in your workflow? If there
-is nothing for a fetch, git-upstream is going to be as fast as git fetch
-&& git branch, if there is something for a fetch, you probably want to
-fetch anyway if you're running this script.
+True, there are a lot of tools written in Java, which have or could
+have support for Git: Ant tasks, Maven plugins, Hudson rules
+(continuous integration), JIRA (bug/issue tracker).  Some of them
+perhaps could use jgit, although if I understand correctly jgit is not
+yet full implementation of Git: it is enough for egit, for local clone
+of repository.
 
-  Note that in very recent Git trees, git branch -v will show some
-tracking information, however it could use quite some improvement (print
-something even if the branch equals the remote branch, print the
-ahead/behind combination in case the branch does not fast-forward) -
-maybe it might be more effective to enhance that instead?
+I don't have any idea how to formulate such question.  I think however
+that "hijacking" Git User's Survey to ask a bunch of jgit/egit
+questions would be a good idea.  (By the way I have though about
+asking for feature requests for gitweb...)
+
+I wonder if similar tools like mentioned above, but for the Ruby camp,
+like Capistrano, Merb, Gitosis, whatever use git directly, or do they
+use Ruby interface (and which interface).  I don't think there is
+implementation of Git in Ruby... hmmmm....
 
 -- 
-				Petr "Pasky" Baudis
-As in certain cults it is possible to kill a process if you know
-its true name.  -- Ken Thompson and Dennis M. Ritchie
+Jakub Narebski
+Poland
+ShadeHawk on #git
