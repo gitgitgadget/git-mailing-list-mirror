@@ -1,119 +1,64 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Official Git Homepage change? Re: git-scm.com
-Date: Sat, 26 Jul 2008 03:53:14 +0200
-Message-ID: <20080726015314.GU32184@machine.or.cz>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not
+ been set
+Date: Sat, 26 Jul 2008 04:09:41 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807260407170.11976@eeepc-johanness>
+References: <7vej5kfs0w.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807231817460.8986@racer> <488772BC.80207@workspacewhiz.com> <32541b130807231133x37083278u1badd82b5c48e57b@mail.gmail.com> <alpine.DEB.1.00.0807231956280.8986@racer>
+ <FB7ABDC5-8505-4FD1-8082-9BB5013E73C6@orakel.ntnu.no> <alpine.DEB.1.00.0807232041570.8986@racer> <3B9933A6-9637-41AE-9133-9B6EA9204E6B@orakel.ntnu.no> <alpine.DEB.1.00.0807250159420.4140@eeepc-johanness> <E0666371-5C5E-4AA9-B67A-16C42477865B@orakel.ntnu.no>
+ <20080725140142.GB2925@dpotapov.dyndns.org> <42C252B2-85B9-4D05-B3A2-2A0250D7F5D6@orakel.ntnu.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 26 03:54:30 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
+X-From: git-owner@vger.kernel.org Sat Jul 26 04:09:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMYzI-00012N-2I
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 03:54:24 +0200
+	id 1KMZEB-0003nd-4r
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 04:09:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752623AbYGZBxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 21:53:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752610AbYGZBxS
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 21:53:18 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56424 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752485AbYGZBxR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 21:53:17 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 44AE3393B321; Sat, 26 Jul 2008 03:53:14 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752127AbYGZCIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 22:08:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752071AbYGZCIm
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 22:08:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44420 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752026AbYGZCIl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 22:08:41 -0400
+Received: (qmail invoked by alias); 26 Jul 2008 02:08:39 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp010) with SMTP; 26 Jul 2008 04:08:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Bojp1clpBKosk7CxFbGpzSwgNxNthLwbtqs/cyy
+	rh7RFPyje+txUV
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <42C252B2-85B9-4D05-B3A2-2A0250D7F5D6@orakel.ntnu.no>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90147>
 
-  Hi,
+Hi,
 
-On Fri, Jul 25, 2008 at 10:35:43AM -0700, Scott Chacon wrote:
-> Anyhow, I'm discussing with Petr about where we want to go from here -
-> what changes he'd like to make, etc, but I obviously value your
-> opinion as well, so please let me know what you think.  The content
-> has barely changed, it's really just a usability overhaul.  I want to
-> make sure that whatever someone is looking for (especially someone
-> new), they can find in a few clicks and a few seconds.
+On Fri, 25 Jul 2008, Eyvind Bernhardsen wrote:
 
-  when the initial NIH reaction passes, I have to admit that I do rather
-like it - and it's not only because you keep mentioning how awesome I am
-in your blog post. ;-)
+> That is an excellent argument for why setting "autocrlf=true" by default 
+> on Windows was a bad idea.  Thanks! :)
 
-  I wonder if all the Git users find the heading rather funny as I did,
-instead of unprofessional - but maybe we don't care about users without
-a particular sense of humor. I'm also not overly fond of the color theme
-but I'm perhaps just too heavy of a blue fan.
+Well, these days, I tend to give a flying nothing to opinions that are not 
+backed up by any effort toward the project.
 
-  Plenty of minor fixes are available for pull at
+In other words, if you have not participated in the community process to 
+find what is best for Git, you could just as well say that you want the 
+moon to be green, and I could not care less (in both cases).
 
-	git://github.com/pasky/learn-github.git
-	(http://github.com/pasky/learn-github/tree/master)
-
-(Note that I didn't test whether the pages still look ok with my changes
-since I have no Ruby on Rails setup; hopefully they should, though.)
-
-  Other non-trivial nits:
-
-  * I'm feeling a bit uneasy about listing so many projects using Git;
-I haven't heard about quite a few of these and I'm not sure on what
-merit should we list projects. "Prototype" or "Liftweb" and probably
-even "Rubinius", is that going to ring a bell for major part of visitors
-so that they say "oh, even _those_ guys are using Git"?
-
-  * Cut the contributors list at 4 or 5 commits? Below that, the list
-is getting fairly useless anyway and you have trouble with keeping the
-names reasonably well-formed.
-
-  * Reusing captions from command manpages in the Documentation page
-shows nicely how awful they sometimes are. :-) This is probably something
-to fix upstream, though.
-
-  * Is "Git for the lazy" really unique in some regard to deserve to be
-listed among the other resources? I think we should minimalize
-redundancy at the documentation page, the amount of material is already
-overwhelming and it should be obvious for the visitor which document to
-choose based on his needs. I have similar doubts about the 37signals
-resources.
-
-	In other words, "let's keep the resources orthogonal!"
-
-  * There is no reference to the Wiki in the documentation, only to the
-[GitDocumentation] page; I think there should be a reference to the
-[GitFaq] page too - a lot of important points that are not obvious
-to newcomers are covered there. I'm just not sure where exactly to put
-the link.
-
-  * I would go as far as put the link to the Wiki itself to the
-navigation bar, simply since it is such a crucial resource.
-
-  * A guide on maintaining third-party patches is currently missing.
-
-  * The development page is not referenced anywhere; the missing
-information are mailing list details (how to subscribe) and a link to
-SubmittingPatches. Also, I have recently talked with Junio about adding
-a link to the Note from the Maintainer, but we didn't yet figure out
-where to stabilize the location of that page.
-
-> Next, I will be working on the larger end-user documentation project,
-> which will linked to from the documentation page of this site, and
-> probably the main page too.  I'll keep this list updated as I go,
-> since people tend to think I don't care about the community when I try
-> not to waste your time. :)
-
-  How does that compare with the Git user manual? Have you considered
-collaborating on that one, or what are your reasons not to? Or are you
-trying to do something different?
-
--- 
-				Petr "Pasky" Baudis
-As in certain cults it is possible to kill a process if you know
-its true name.  -- Ken Thompson and Dennis M. Ritchie
+Ciao,
+Dscho
