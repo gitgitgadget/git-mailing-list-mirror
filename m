@@ -1,123 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] git-mv: Keep moved index entries inact
-Date: Fri, 25 Jul 2008 23:46:02 -0700
-Message-ID: <7v8wvpm9cl.fsf@gitster.siamese.dyndns.org>
-References: <20080721002354.GK10151@machine.or.cz>
- <20080721002508.26773.92277.stgit@localhost>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: how about removing --exec-path?
+Date: Sat, 26 Jul 2008 08:48:31 +0200
+Message-ID: <20080726064831.GA3698@blimp.local>
+References: <20080725094015.GA22077@blimp.local> <alpine.DEB.1.00.0807260448210.26810@eeepc-johanness>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Jul 26 08:47:15 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 26 09:07:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMdYg-0001qx-74
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 08:47:14 +0200
+	id 1KMdsR-0007G2-Q6
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 09:07:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751702AbYGZGqO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 02:46:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbYGZGqO
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 02:46:14 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41825 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751486AbYGZGqO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 02:46:14 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 12EE73C67A;
-	Sat, 26 Jul 2008 02:46:09 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id DFA4E3C677; Sat, 26 Jul 2008 02:46:05 -0400 (EDT)
-In-Reply-To: <20080721002508.26773.92277.stgit@localhost> (Petr Baudis's
- message of "Mon, 21 Jul 2008 02:25:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8752E9B0-5ADE-11DD-9B6E-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751848AbYGZHGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 03:06:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751784AbYGZHGj
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 03:06:39 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.180]:17839 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751361AbYGZHGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 03:06:39 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20tf50K7
+Received: from tigra.home (Fad3c.f.strato-dslnet.de [195.4.173.60])
+	by post.webmailer.de (mrclete mo30) (RZmta 16.47)
+	with ESMTP id n06eddk6Q3AXbK ; Sat, 26 Jul 2008 09:06:33 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from blimp (unknown [192.168.0.8])
+	by tigra.home (Postfix) with ESMTP id 04693277BD;
+	Sat, 26 Jul 2008 08:48:31 +0200 (CEST)
+Received: by blimp (Postfix, from userid 1000)
+	id D062736D18; Sat, 26 Jul 2008 08:48:31 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807260448210.26810@eeepc-johanness>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90187>
 
-Petr Baudis <pasky@suse.cz> writes:
+Johannes Schindelin, Sat, Jul 26, 2008 04:49:06 +0200:
+> On Fri, 25 Jul 2008, Alex Riesen wrote:
+> 
+> > The thing has at least this problem: is not passed to upload-pack when
+> > running fetch.
+> 
+> It should be added to PATH, and so it is passed to upload-pack, amongst 
+> others, in a sense.
+> 
 
-> The rewrite of git-mv from a shell script to a builtin was perhaps
-> a little too straightforward: the git add and git rm queues were
-> emulated directly, which resulted in a rather complicated code and
-> caused an inconsistent behaviour when moving dirty index entries;
-> git mv would update the entry based on working tree state,
-> except in case of overwrites, where the new entry would still have
-> sha1 of the old file.
->
-> This patch introduces rename_index_entry_at() into the index toolkit,
-> which will rename an entry while removing any entries the new entry
-> might render duplicate. This is then used in git mv instead
-> of all the file queues, resulting in a major simplification
-> of the code and an inevitable change in git mv -n output format.
-> ...
+Yes, but next time upload-pack runs a program, it adds builtin exec
+path to PATH (because --exec-path not given to transport's uploadpack
+command). So it looks like this:
 
-Thanks.  I think I've managed to fix the rename_index_entry_at() in a
-satisfactory way, and also made builtin-mv to allow "mv -f symlink file"
-and "mv -f file symlink".
+    $GIT_EXEC_PATH:/usr/local/libexec/git-core:/orig/exec-path:\
+    $GIT_EXEC_PATH:/usr/local/libexec/git-core:$ORIG_USER_PATH
 
-I do not agree with the semantics of this test seems to want, though.
-
-> +test_expect_failure 'git mv should follow symlink to a directory' '
-> +
-> +	rm -fr .git &&
-> +	git init &&
-> +	echo 1 >moved &&
-> +	mkdir -p dir &&
-> +	touch dir/.keep &&
-> +	ln -s dir symlink &&
-> +	git add moved dir/.keep symlink &&
-> +	git mv moved symlink &&
-> +	[ ! -e moved ] &&
-> +	[ -f symlink/moved ] &&
-> +	[ $(cat symlink/moved) = 1 ] &&
-> +	[ "$(ls dir)" = "$(ls symlink)" ] &&
-> +	git diff-files --quiet
-> +
-> +'
-
-A symlink to us is just a different kind of blob, and by definition a blob
-is the leaf level of a tree structure that represents the working tree in
-the index. There won't be anything hanging below it, and when adding
-things to the index we should not dereference the symlink to see where it
-leads to.
-
-Traditionally we have been loose about this check, and the normal "git
-add" and "git update-index" codepath is still forever broken, and we
-allow:
-
-	$ mkdir dir
-        $ >dir/file
-        $ ln -s dir symlink
-        $ git add symlink/file
-
-but some codepaths that matter more (because they do larger damage
-unattended, as opposed to the above command sequence that can be avoided
-by user education a bit more easily), such as "git apply" and "git
-read-tree", have been corrected using has_symlink_leading_path() since mid
-2007.  We would need to follow through c40641b (Optimize symlink/directory
-detection, 2008-05-09) and further fix "git add" and "git update-index"
-codepaths to forbid the above command sequence.
-
-So my take on the above test piece is that after:
-
-	>moved
-	mkdir dir
-        >dir/file
-        ln -s dir symlink
-	git add moved dir symlink
-
-This should fail, as it is an overwrite:
-
-	git mv moved symlink
-
-and with "-f", the command should simply remove symlink and replace it
-with a regular file whose contents come from the original "moved".
-
-IOW, what a symlink points at should not matter.
+which kind of useless for debugging. So using GIT_EXEC_PATH is the
+only way (and why did we need more? Working around something?)
