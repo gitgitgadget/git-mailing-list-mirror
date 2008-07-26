@@ -1,80 +1,100 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: PATCH 6/6] archive: convert,to parse_options() [was: [PATCH 5/6]
- archive: allow --exec and --remote without equal sign]
-Date: Sat, 26 Jul 2008 09:09:24 +0200
-Message-ID: <488ACDA4.4010404@lsrfire.ath.cx>
-References: <1216982486-5887-1-git-send-email-rene.scharfe@lsrfire.ath.cx> <1216982486-5887-2-git-send-email-rene.scharfe@lsrfire.ath.cx> <1216982486-5887-3-git-send-email-rene.scharfe@lsrfire.ath.cx> <1216982486-5887-4-git-send-email-rene.scharfe@lsrfire.ath.cx> <1216982486-5887-5-git-send-email-rene.scharfe@lsrfire.ath.cx> <1216982486-5887-6-git-send-email-rene.scharfe@lsrfire.ath.cx> <7vmyk5pjsy.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Official Git Homepage change? Re: git-scm.com
+Date: Sat, 26 Jul 2008 00:11:01 -0700
+Message-ID: <7vtzedktmi.fsf@gitster.siamese.dyndns.org>
+References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
+ <20080726015314.GU32184@machine.or.cz> <20080726020951.GV32184@machine.or.cz>
+ <7v4p6dnv5k.fsf@gitster.siamese.dyndns.org>
+ <d411cc4a0807252343n2b9ade68veaebb68664f0a3d7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 26 09:10:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
+To: "Scott Chacon" <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 26 09:12:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMdvB-0007sL-8Y
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 09:10:29 +0200
+	id 1KMdwo-0008Kp-54
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 09:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752158AbYGZHJ3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Jul 2008 03:09:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752086AbYGZHJ3
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 03:09:29 -0400
-Received: from india601.server4you.de ([85.25.151.105]:48292 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751810AbYGZHJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 03:09:29 -0400
-Received: from [10.0.1.200] (p57B7E6C1.dip.t-dialin.net [87.183.230.193])
-	by india601.server4you.de (Postfix) with ESMTPSA id B2B152F8028;
-	Sat, 26 Jul 2008 09:09:27 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <7vmyk5pjsy.fsf@gitster.siamese.dyndns.org>
+	id S1752368AbYGZHLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 03:11:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752293AbYGZHLJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 03:11:09 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49476 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752284AbYGZHLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 03:11:08 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5EF4A3C812;
+	Sat, 26 Jul 2008 03:11:07 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 25D003C811; Sat, 26 Jul 2008 03:11:02 -0400 (EDT)
+In-Reply-To: <d411cc4a0807252343n2b9ade68veaebb68664f0a3d7@mail.gmail.com>
+ (Scott Chacon's message of "Fri, 25 Jul 2008 23:43:55 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 046491F8-5AE2-11DD-9B6E-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90190>
 
-Junio C Hamano schrieb:
->>  archive.c |  110 +++++++++++++++++++++++++++++++++++++-------------=
-----------
->>  1 files changed, 68 insertions(+), 42 deletions(-)
->=20
-> Hmph, somewhat dubious.
->=20
-> The real point of parse-options was to make the code smaller, easier =
-to
-> maintain and command line handling more consistent.  At least this pa=
-tch
-> seems to fail on the two out of three counts.
+"Scott Chacon" <schacon@gmail.com> writes:
 
-Well, if we hid away the compression level handling in a macro defined
-in parse-options.h, we could save sixteen lines of code.  The patch
-makes the four modes of running archive more explicit, adding three
-usage lines.  Three empty lines are added -- they don't really increase
-the code's size.
+> On Fri, Jul 25, 2008 at 9:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> ...
+>> These two are directly related.  They might be friendly and well-meaning
+>> folks, but I agree that they haven't earned our trust yet.
+>>
+>> But I do not think it matters that much.
+>> ...
+>> It's also somewhat interesting to observe that several people I have never
+>> heard of in the git circle are simultaneously doing new git books,
+>> apparently never asking for much technical advice from core git people, by
+>> the way.
+>
+> To be honest, I have asked for a fair amount of technical advice from
+> many helpful people in the IRC channel over the past few years.  In my
+> case, one of my best friends - the guy I've been working with for the
+> last 4 years - is Nick Hengeveld, who has something like 50 commits in
+> there - why email the list when I can yell a question over the cube
+> wall?  I'm sure you all have more important things to do than review
+> my book for newbies - I asked Nick to do it.
 
-Handling --exec and --remote takes six lines; we didn't do that before
-at this place, but have to now, since we want them to show up in the
-usage.  We have to handle --no-format and --no-prefix, which adds four
-lines.
+Ah, Nick.  We haven't heard from him for quite some time.  I've actually
+been missed him from time to time whenever http related issues came up.
+Please say hello to him for me ;-).
 
-So I don't think the bigger size make this patch dubious, but of course
-I'm biased.  Disallowing --no-format (using a new OPT_STRING_NONEG?) an=
-d
-adding an OPT__COMPRESSION helper might be a good idea (reducing line
-count in archive.c by seventeen).
+> If I could code C worth a lick, I'm sure I would have contributed more
+> to this list, but since I have nothing that I feel would be helpful to
+> you, I've passively followed the list.  I'm sorry that you do not
+> consider me a "git community member" just because I don't code C, and
+> so I can't contribute helpfully to core.
 
-Having parse-options provide a way to make --exec and --remote appear i=
-n
-the usage but to reject them (OPT_UNKNOWN?) is a bit too strange, thoug=
-h.
+I realize I may have sounded somewhat harsh, but that was not my
+intention.  And I do not think what you said is fair, either.
 
-> All of the other patches made obvious sense to me and are queued for =
--rc1
-> but I'd like to backburner this one.
+We have had quite a few end user questions on this list, but I do not seem
+to recall any of the names of the book writers, whose books are presumably
+aimed at these people, answering them.  Granted, core coders may be busy
+bunch of people, and the questions and comments from new people sometimes
+tend to be lost in flurry of patch floods.  I and other core coders would
+have greatly appreciated if non-coder experts like yourself helped these
+threads that have never panned out.
 
-=46air enough.
+I am not complaining.  This cuts both ways.  The patch floods do tend to
+discourage new people from asking basic questions, and lack of answers
+even more so.  But it is not healthy for people who design and code not to
+hear end user feedback.  I personally would want to see the list traffic
+to be inclusive.
 
-Ren=E9
+The people who design the new features and write code should have easy
+access to the issues the users of all levels have with the software and
+the documentation (and what they find useful as well).  What I am most
+afraid of is that both "We do not bother the coders" and "We are too busy
+to answer every newbie question" mentalities would lead to a fractured
+community.
