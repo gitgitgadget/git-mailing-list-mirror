@@ -1,122 +1,151 @@
-From: david@lang.hm
-Subject: Re: git-scm.com
-Date: Fri, 25 Jul 2008 23:27:17 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0807252317050.10571@asgard.lang.hm>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>  <6b6419750807251838h12ea4f19gdff107694e3797c4@mail.gmail.com>  <d411cc4a0807251928g75744b78vac2ce77bf07fbd81@mail.gmail.com>  <20080726023707.GX32184@machine.or.cz> 
- <alpine.DEB.1.10.0807251943280.11335@asgard.lang.hm> <d411cc4a0807252230v76670d3cp2205e40826acc6e2@mail.gmail.com>
+From: "Scott Chacon" <schacon@gmail.com>
+Subject: Re: Official Git Homepage change? Re: git-scm.com
+Date: Fri, 25 Jul 2008 23:43:55 -0700
+Message-ID: <d411cc4a0807252343n2b9ade68veaebb68664f0a3d7@mail.gmail.com>
+References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
+	 <20080726015314.GU32184@machine.or.cz>
+	 <20080726020951.GV32184@machine.or.cz>
+	 <7v4p6dnv5k.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Petr Baudis <pasky@suse.cz>, Patrick Aljord <patcito@gmail.com>,
-	git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 26 08:27:52 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 26 08:45:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMdFw-0005ky-6D
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 08:27:52 +0200
+	id 1KMdWY-0001NS-MH
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 08:45:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754691AbYGZG00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 02:26:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752304AbYGZG00
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 02:26:26 -0400
-Received: from mail.lang.hm ([64.81.33.126]:34076 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752368AbYGZG0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 02:26:25 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m6Q6QFDI023936;
-	Fri, 25 Jul 2008 23:26:15 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <d411cc4a0807252230v76670d3cp2205e40826acc6e2@mail.gmail.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1751865AbYGZGn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 02:43:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751624AbYGZGn5
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 02:43:57 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:32704 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751806AbYGZGn4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 02:43:56 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so2303251waf.23
+        for <git@vger.kernel.org>; Fri, 25 Jul 2008 23:43:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=nVVq+o2eO8LDRShOqFhD72wbuUKJe79gyqlXjjohXJ4=;
+        b=o7lycI96KMPfOGQfrCH6VqhiqqBmQEx/fHXeBQi/q5LNDndPXDHFug6w1SEpmVJtki
+         qf9qOCXvnOKPUvuG3j9LAUSGGoiwq66N+r7QT2Btnn+2U4g0oPEciS52ysrw7mNcHKms
+         nq/jhBwrusMvpDBaJU2nr0mzyCk4imb0JWDVQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=kv8ukOtfOTGJ1sdebZZNc9fDkwFiSNVigPsVQTVY26eBpZetElCfoqpl2qUfol57Z5
+         2a7SgPaReSIE0xxwL5dEhcgvyi5WZBuyszfUhfczMPZ6rQs7udE7w9YLqTg6GBYO9fSO
+         pPpMMhdWvZv7Bf2JtLCa42xgNKOHBtOxziKYU=
+Received: by 10.114.178.13 with SMTP id a13mr2931927waf.158.1217054635540;
+        Fri, 25 Jul 2008 23:43:55 -0700 (PDT)
+Received: by 10.115.22.20 with HTTP; Fri, 25 Jul 2008 23:43:55 -0700 (PDT)
+In-Reply-To: <7v4p6dnv5k.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90185>
 
-On Fri, 25 Jul 2008, Scott Chacon wrote:
-
-> On Fri, Jul 25, 2008 at 7:47 PM,  <david@lang.hm> wrote:
->> On Sat, 26 Jul 2008, Petr Baudis wrote:
->>
->>>  Hi,
->>>
->>> On Fri, Jul 25, 2008 at 07:28:32PM -0700, Scott Chacon wrote:
->>>>
->>>> I am more concerned about the logo at the bottom, and Petr and I are
->>>> discussing this - I can remove the logo, but then I'd have to pay for
->>>> this out of my pocket instead of having a small logo on the page.
->>>
->>>  I actually think that this is *one* reference to GitHub that is
->>> perfectly and 100% okay; if it is sponsoring the hosting, it deserves
->>> the logo, and it is fairly non-intrusive. I _am_ watching out warily
->>> for excessive GitHub references within the rest of the site - if only
->>> because I have kind of personal interest in a competitor of GitHub and
->>> thus don't want GitHub to get unwarranted free advertising. :-)
->>>
->>>                                Petr "Pasky" Baudis
->>
->> since this is a Ruby on Rails site, could the 'five links' that have been
->> bothering people be randomly selected? if every time you go to the site you
->> get a different list of projects it show how broadly git is used. it's not
->> as 'in your face' as managing to select five that cause people to say "wow,
->> they're using this", but different people will react to different sites.
->>
->> if this table gets populated by GitHub, kernel.org, and a couple other
->> sources it should be vendor independant enough (and we need a table like
->> this anyway for the 'list of projects that use git', so it serves two
->> purposes)
->>
->> David Lang
->>
+On Fri, Jul 25, 2008 at 9:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Petr Baudis <pasky@suse.cz> writes:
 >
-> I would really like to have the big ones there all the time ('Linux',
-> 'Ruby on Rails', 'WINE', 'X.org', etc)  Prototype and MooTools are
-> pretty big in the web dev world, which a lot of people are starting to
-> come from - at least Prototype should be there all the time.  For the
-> rest, if we want to pool a bunch of other projects from different
-> places, that would be cool, but they should be active - I don't want
-> people clicking on something above the fold and getting a dead
-> project.  If someone wants to help me vet a list, I'd be happy to do
-> that.
-
-I can see things going either way on this, and I'm sure that the algorithm 
-for the 'best' way to select projects can be tweaked endlessly. I am not 
-that afraid of someone hitting a dead link, especially if you were to list 
-them as 'projects 2,4895,9287,104,18439 of xxxxxx project that have 
-reported using git' with numbers that large people expect that some 
-projects will have gone dead, and even if they are all live today, how 
-frequently did you plan to re-check them to decide they are dead? (and 
-what is your definition of dead?)
-
-> However, that being said, it's going to be difficult to have Github
-> projects not dominate the list a bit.  The fact is that it hosts far,
-> far more projects than any other single hosting service.  Just in
-> fully public projects, the current stats (from the website pages) are
-> something like this:
+>> .... Of course, I would be transferring the control of the homepage
+>> from my hands so I would like to poll the community about how do people
+>> feel about this - opinion of core Git contributors would be especially
+>> welcome...
+>> ...
+>>   - The new site is affiliated with a commercial entity - GitHub.
+>> The website maintainer also has commercial interest in some published
+>> Git learning materials, which might generate certain conflict of
+>> interests; we must trust them that they handle this well.
+>>   - Both GitHub and Scott seem to be rather distanced from the "core"
+>> Git development community. This might or might not be an issue.
 >
-> kernel.org : 475
-> repo.or.cz : 1,553
-> gitorious   : 780
-> github       : 10,560
+> These two are directly related.  They might be friendly and well-meaning
+> folks, but I agree that they haven't earned our trust yet.
 >
-> It hosts far more than that if you include private projects, too.  So,
-> if we want to choose totally randomly, it's going to be at least a 5:1
-> ratio between github projects and all other public hosting providers.
-> If anything, statistically, the current list is conservative in it's
-> links to github projects.  For me to avoid using them is artificially
-> punishing them for having paid plans, which is silly.
+> But I do not think it matters that much.
+>
+> The thing is, git.or.cz may have been the closest thing to the "official"
+> homepage we have had, but that is not because Linus or I or Shawn declared
+> the site is official and/or that the site is trustworthy.  It was because
+> you put efforts preparing the contents worthy to be one-stop shop for git
+> related information, back when there was no such thing.  And the members
+> of the comminity found it a good site.  And you have the wiki there, where
+> there truly have been community participation to enhance the contents.
+>
+> For me personally, pages outside the wiki have never felt like "the
+> official git homepage", not because the contents you prepared were
+> inadequate, but because I did not see much community participation to help
+> enrich it.
+>
+> So I wish the new site success, but the definition of success from my
+> point of view is not how many random visitors it will attract, but how
+> well the site makes the contributors (both to git software itself, and to
+> the site's contents) feel welcomed.  Maybe in time it will become
+> successful enough by _my_ definition of success, and I may recommend
+> kernel.org folks to point at it from http://git.kernel.org/ (link with
+> text "overview") if/when that happens, and I may start mentioning them in
+> the "Note".  We'll see.
+>
+>>   The negatives section writeup is longer, but in fact I think the
+>> positives win here; I also have a bit of bad conscience about not giving
+>> git.or.cz the amount of time it would deserve...
+>
+> Let me thank you for maintaining not just git.or.cz/ but also repo.or.cz/
+> and the wiki.  I personally never visited the "Homepage" but the
+> repositories and the wiki are valuable services you gave back to the
+> community.
+>
+> It's also somewhat interesting to observe that several people I have never
+> heard of in the git circle are simultaneously doing new git books,
+> apparently never asking for much technical advice from core git people, by
+> the way.
+>
 
-as long as there is a mechanism to add things to the list I don't see 
-anything wrong with the frequency reflecting this reality. anyone who 
-thinks the numbers are skewed is free to add other projects to the list.
+To be honest, I have asked for a fair amount of technical advice from
+many helpful people in the IRC channel over the past few years.  In my
+case, one of my best friends - the guy I've been working with for the
+last 4 years - is Nick Hengeveld, who has something like 50 commits in
+there - why email the list when I can yell a question over the cube
+wall?  I'm sure you all have more important things to do than review
+my book for newbies - I asked Nick to do it.
 
-part of this is reducing the room for people to accuse you of impropriaty, 
-if you select the links people can accuse you of playing favorites, if 
-it's random selection and includes competitors entire lists, it's much 
-clearer that you aren't skewing things.
+If I could code C worth a lick, I'm sure I would have contributed more
+to this list, but since I have nothing that I feel would be helpful to
+you, I've passively followed the list.  I'm sorry that you do not
+consider me a "git community member" just because I don't code C, and
+so I can't contribute helpfully to core.
 
-David Lang
+However, I have evangelized Git in person to literally thousands of
+people, and tens of thousands more online.  GitHub hosts over 10,000
+public git projects completely for free, and has contributed a ton
+back to the community, both in code and proselytization efforts.
+
+I hope these things can be taken as proof that we are not simply
+friendly and well meaning, but that we have contributed meaningfully
+to the adoption of Git and are just as committed to it's improvement
+and success as nearly anyone on this list.
+
+We want to help - help you with resources, help new people learn git
+quickly and easily, and help the unconverted see the light.  We highly
+respect you guys and most of the time you don't hear from us because
+we don't want to bother you and take your time away from improving our
+favorite tool.
+
+Feel free to contact or email me at any time with questions, or
+suggestions for improvement - schacon on IRC, schacon at gmail, or
+thescottchacon on AIM.
+
+Scott
