@@ -1,59 +1,58 @@
-From: Rene Herman <rene.herman@keyaccess.nl>
-Subject: Re: [PATCH] Set up argv0_path correctly, even when argv[0] is just
- the basename
-Date: Sat, 26 Jul 2008 16:54:15 +0200
-Message-ID: <488B3A97.6000606@keyaccess.nl>
-References: <1217065304-27815-1-git-send-email-prohaska@zib.de> <alpine.DEB.1.00.0807261613120.26810@eeepc-johanness>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/7] builtin-help: change the current directory back in
+ list_commands_in_dir()
+Date: Sat, 26 Jul 2008 16:58:02 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807261657150.26810@eeepc-johanness>
+References: <cover.1217037178.git.vmiklos@frugalware.org> <f311372167c02868ccf5aa4dc03c97b7f956d855.1217037178.git.vmiklos@frugalware.org> <1217073292-27945-1-git-send-email-vmiklos@frugalware.org>
+ <4f2b03391e3f85cf2224f97a2a7765d08707bd73.1217037178.git.vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 26 16:53:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sat Jul 26 16:58:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMl8n-0005uh-U3
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 16:53:02 +0200
+	id 1KMlDe-0007t6-5Q
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 16:58:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752083AbYGZOwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 10:52:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752071AbYGZOwA
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 10:52:00 -0400
-Received: from smtpq1.groni1.gr.home.nl ([213.51.130.200]:44853 "EHLO
-	smtpq1.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752065AbYGZOv7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 10:51:59 -0400
-Received: from [213.51.130.188] (port=44199 helo=smtp3.groni1.gr.home.nl)
-	by smtpq1.groni1.gr.home.nl with esmtp (Exim 4.60)
-	(envelope-from <rene.herman@keyaccess.nl>)
-	id 1KMl7f-00014J-PX; Sat, 26 Jul 2008 16:51:51 +0200
-Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:59423 helo=[192.168.0.3])
-	by smtp3.groni1.gr.home.nl with esmtp (Exim 4.60)
-	(envelope-from <rene.herman@keyaccess.nl>)
-	id 1KMl7f-000642-IG; Sat, 26 Jul 2008 16:51:51 +0200
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <alpine.DEB.1.00.0807261613120.26810@eeepc-johanness>
-X-Spam-Score: -1.0 (-)
+	id S1752086AbYGZO5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 10:57:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752071AbYGZO5B
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 10:57:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37966 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751886AbYGZO5A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 10:57:00 -0400
+Received: (qmail invoked by alias); 26 Jul 2008 14:56:58 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp047) with SMTP; 26 Jul 2008 16:56:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19FMAUD4Z9FHEWVHmx02ees3TfcfR5MSiXTDJgj3X
+	9ynPQ2zEZo9Xtu
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <4f2b03391e3f85cf2224f97a2a7765d08707bd73.1217037178.git.vmiklos@frugalware.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90233>
 
-On 26-07-08 16:14, Johannes Schindelin wrote:
+Hi,
 
-> When the program 'git' is in the PATH, the argv[0] is set to the
-> basename. However, argv0_path needs the full path, so add a function
-> to discover the program by traversing the PATH manually.
+On Sat, 26 Jul 2008, Miklos Vajna wrote:
 
-While not having read the context for this, this ofcourse sounds like a 
-huge gaping race-condition. If applicable here (as said, did not read 
-context) you generally want to make sure that there's no window that a 
-path could be replaced -- while perhaps not here, that's often the kind 
-of thing that security attacks end up abusing.
+> That function used to do a chdir() without switching back to the 
+> original directory. That was not a problem till this function was used 
+> only inside builtin-help, but once other builtins use it as well, this 
+> is a problem, for example when the object database path is relative.
 
-Rene.
+I had to work around that in my patch "git wrapper: DWIM mistyped 
+commands", too :-)
+
+Ciao,
+Dscho
