@@ -1,125 +1,142 @@
-From: "Scott Chacon" <schacon@gmail.com>
-Subject: Re: Official Git Homepage change? Re: git-scm.com
-Date: Sat, 26 Jul 2008 00:27:32 -0700
-Message-ID: <d411cc4a0807260027t4b9c3b08x1f865ec75d976ef6@mail.gmail.com>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
-	 <20080726015314.GU32184@machine.or.cz>
-	 <20080726020951.GV32184@machine.or.cz>
-	 <7v4p6dnv5k.fsf@gitster.siamese.dyndns.org>
-	 <d411cc4a0807252343n2b9ade68veaebb68664f0a3d7@mail.gmail.com>
-	 <7vtzedktmi.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (Jul 2008, issue #10; Sat, 26)
+Date: Sat, 26 Jul 2008 00:35:41 -0700
+Message-ID: <7vwsj9jdwy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 26 09:28:39 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 26 09:36:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMeCi-0003I7-Cm
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 09:28:36 +0200
+	id 1KMeKe-0004s4-P7
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 09:36:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750894AbYGZH1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 03:27:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750717AbYGZH1d
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 03:27:33 -0400
-Received: from rv-out-0506.google.com ([209.85.198.239]:36444 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750714AbYGZH1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 03:27:33 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so3751631rvb.1
-        for <git@vger.kernel.org>; Sat, 26 Jul 2008 00:27:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=wWrZj1m3obzVjJCbEfyLdpbF3tOWdPLvLhs2naDP+Lw=;
-        b=tTIogyHXZyxD6syg1Wvd504Hla59Kj3Sy8gKrycgADdGX8UCp60Fn3V9FvdMEB2Ng8
-         rWwVFK/23CCKecK1Ex6fACud0XSA92vChOyYq2ljRCGrPpRLpgkh/71Rf0CV7/YoP15u
-         n1Es2uWGGWWieukaSVNK+pO2JTO/J8LAZzzc8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=KxD7HchWgQMI+V7YTsgTZD8CsyKb9uq0tvOpzL/018NAjYDDs7D13//wYJnUY6caCx
-         U0Yr2REkVvWETa1lgD8tWffu+LDiPgfaTVN44cyeYbc4PYc5kfLn3iyRoKajRMs8hbv8
-         7UFn61ZUdZU7FFHnjpxX7N+e8B+XCtloq4zFg=
-Received: by 10.114.124.1 with SMTP id w1mr2972491wac.73.1217057252674;
-        Sat, 26 Jul 2008 00:27:32 -0700 (PDT)
-Received: by 10.115.22.20 with HTTP; Sat, 26 Jul 2008 00:27:32 -0700 (PDT)
-In-Reply-To: <7vtzedktmi.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751285AbYGZHfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 03:35:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751161AbYGZHfs
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 03:35:48 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53692 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750796AbYGZHfr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 03:35:47 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3FBE43C95F;
+	Sat, 26 Jul 2008 03:35:46 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 5C0FE3C95E; Sat, 26 Jul 2008 03:35:43 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 75D7AFC0-5AE5-11DD-85AD-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90193>
 
-Perhaps it would be useful to split the mailing list into core/contrib
-and support lists?  I would be happy to help out answering questions -
-a lot of them come directly to me anyhow because of the gitcasts site
-and such.
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.
 
-Scott
+The topics list the commits in reverse chronological order.  The topics
+meant to be merged to the maintenance series have "maint-" in their names.
 
-On Sat, Jul 26, 2008 at 12:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Scott Chacon" <schacon@gmail.com> writes:
->
->> On Fri, Jul 25, 2008 at 9:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> ...
->>> These two are directly related.  They might be friendly and well-meaning
->>> folks, but I agree that they haven't earned our trust yet.
->>>
->>> But I do not think it matters that much.
->>> ...
->>> It's also somewhat interesting to observe that several people I have never
->>> heard of in the git circle are simultaneously doing new git books,
->>> apparently never asking for much technical advice from core git people, by
->>> the way.
->>
->> To be honest, I have asked for a fair amount of technical advice from
->> many helpful people in the IRC channel over the past few years.  In my
->> case, one of my best friends - the guy I've been working with for the
->> last 4 years - is Nick Hengeveld, who has something like 50 commits in
->> there - why email the list when I can yell a question over the cube
->> wall?  I'm sure you all have more important things to do than review
->> my book for newbies - I asked Nick to do it.
->
-> Ah, Nick.  We haven't heard from him for quite some time.  I've actually
-> been missed him from time to time whenever http related issues came up.
-> Please say hello to him for me ;-).
->
->> If I could code C worth a lick, I'm sure I would have contributed more
->> to this list, but since I have nothing that I feel would be helpful to
->> you, I've passively followed the list.  I'm sorry that you do not
->> consider me a "git community member" just because I don't code C, and
->> so I can't contribute helpfully to core.
->
-> I realize I may have sounded somewhat harsh, but that was not my
-> intention.  And I do not think what you said is fair, either.
->
-> We have had quite a few end user questions on this list, but I do not seem
-> to recall any of the names of the book writers, whose books are presumably
-> aimed at these people, answering them.  Granted, core coders may be busy
-> bunch of people, and the questions and comments from new people sometimes
-> tend to be lost in flurry of patch floods.  I and other core coders would
-> have greatly appreciated if non-coder experts like yourself helped these
-> threads that have never panned out.
->
-> I am not complaining.  This cuts both ways.  The patch floods do tend to
-> discourage new people from asking basic questions, and lack of answers
-> even more so.  But it is not healthy for people who design and code not to
-> hear end user feedback.  I personally would want to see the list traffic
-> to be inclusive.
->
-> The people who design the new features and write code should have easy
-> access to the issues the users of all levels have with the software and
-> the documentation (and what they find useful as well).  What I am most
-> afraid of is that both "We do not bother the coders" and "We are too busy
-> to answer every newbie question" mentalities would lead to a fractured
-> community.
->
+Due to increased activity level from people including GSoC students, I
+expect 'next' to stay somewhat more active than previous rounds during the
+1.6.0-rc cycle.  The request for people who usually follow 'next' is the
+same as usual, though.  After -rc1 is tagged, please run 'master' for your
+daily git use instead, in order to make sure 'master' does what it claims
+to do without regression.
+
+Tentative schedule, my wishful thinking:
+
+ - 1.6.0-rc1 (Jul 27)
+ - 1.6.0-rc2 (Aug  6)
+ - 1.6.0-rc3 (Aug 10)
+
+----------------------------------------------------------------
+[New Topics]
+
+* cc/bisect (Tue Jul 22 08:16:18 2008 +0200) 2 commits
+ . bisect: only check merge bases when needed
+ . bisect: test merge base if good rev is not an ancestor of bad rev
+
+* jc/add-addremove (Tue Jul 22 22:30:40 2008 -0700) 2 commits
+ + builtin-add.c: optimize -A option and "git add ."
+ + builtin-add.c: restructure the code for maintainability
+
+* jk/pager-swap (Tue Jul 22 03:14:12 2008 -0400) 2 commits
+ + spawn pager via run_command interface
+ + run-command: add pre-exec callback
+
+* ph/enable-threaded (Mon Jul 21 11:23:43 2008 +0200) 1 commit
+ + Enable threaded delta search on *BSD and Linux.
+
+----------------------------------------------------------------
+[Cooking]
+
+* pb/sane-mv (Mon Jul 21 02:25:56 2008 +0200) 2 commits
+ - git-mv: Keep moved index entries inact
+ - git-mv: Remove dead code branch
+
+Running "git mv A B" when you have local changes to A automatically staged
+it while moving it to B, which was a longstanding nonsense.  This attempts
+to fix it.  Pasky has other plans to build on a more solidified foundation
+to enhance the command to work with submodules better on top of this.
+
+I think this is of 'next' quality already.
+
+* rs/imap (Wed Jul 9 22:29:02 2008 +0100) 5 commits
+ + Documentation: Improve documentation for git-imap-send(1)
+ + imap-send.c: more style fixes
+ + imap-send.c: style fixes
+ + git-imap-send: Support SSL
+ + git-imap-send: Allow the program to be run from subdirectories of
+   a git tree
+
+Some people seem to prefer having this feature available also with gnutls.
+Such an enhancement can be done in-tree on top of this series if they are
+so inclined.
+
+----------------------------------------------------------------
+[On Hold]
+
+* sg/merge-options (Sun Apr 6 03:23:47 2008 +0200) 1 commit
+ + merge: remove deprecated summary and diffstat options and config
+   variables
+
+This was previously in "will be in master soon" category, but it turns out
+that the synonyms to the ones this one deletes are fairly new invention
+that happend in 1.5.6 timeframe, and we cannot do this just yet.  Perhaps
+in 1.7.0.
+
+* jc/dashless (Thu Jun 26 16:43:34 2008 -0700) 2 commits
+ + Revert "Make clients ask for "git program" over ssh and local
+   transport"
+ + Make clients ask for "git program" over ssh and local transport
+
+This is the "botched" one.  Will be resurrected during 1.7.0 or 1.8.0
+timeframe.
+
+* jk/renamelimit (Sat May 3 13:58:42 2008 -0700) 1 commit
+ . diff: enable "too large a rename" warning when -M/-C is explicitly
+   asked for
+
+This would be the right thing to do for command line use, but gitk will be
+hit due to tcl/tk's limitation, so I am holding this back for now.
+
+----------------------------------------------------------------
+[Dropped]
+
+There are a handful topics that used to be in 'pu' but tentatively dropped
+for now.
+
+*^ cc/bisect (Tue Jul 22 08:16:18 2008 +0200) 2 commits
+*^ gi/cherry-cache (Sat Jul 12 20:14:51 2008 -0700) 1 commit
+*^ jc/grafts (Wed Jul 2 17:14:12 2008 -0700) 1 commit
+*^ sb/sequencer (Tue Jul 1 04:38:34 2008 +0200) 4 commits
+
+I still hold onto their tips and intend to update them with newer versions
+and/or merge them back to 'pu' when I have time, but not right now.
