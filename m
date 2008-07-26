@@ -1,93 +1,55 @@
-From: Roman Zippel <zippel@linux-m68k.org>
-Subject: Re: Bizarre missing changes (git bug?)
-Date: Sat, 26 Jul 2008 05:12:38 +0200
-Message-ID: <200807260512.40088.zippel@linux-m68k.org>
-References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com> <alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Remove references to git-fetch-pack from "git clone"
+ documentation.
+Date: Sat, 26 Jul 2008 05:24:48 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807260523520.26810@eeepc-johanness>
+References: <1217011068-1675-1-git-send-email-shaslam@lastminute.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jul 26 05:21:54 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Steve Haslam <shaslam@lastminute.com>
+X-From: git-owner@vger.kernel.org Sat Jul 26 05:24:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMaLw-0001Vi-JS
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 05:21:53 +0200
+	id 1KMaOl-00020T-8f
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 05:24:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752816AbYGZDUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 23:20:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752777AbYGZDUw
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 23:20:52 -0400
-Received: from smtp-vbr9.xs4all.nl ([194.109.24.29]:3710 "EHLO
-	smtp-vbr9.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752801AbYGZDUv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 23:20:51 -0400
-X-Greylist: delayed 475 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 Jul 2008 23:20:51 EDT
-Received: from squid.home (linux-m68k.xs4all.nl [82.95.193.92])
-	(authenticated bits=0)
-	by smtp-vbr9.xs4all.nl (8.13.8/8.13.8) with ESMTP id m6Q3Cinx058668
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 26 Jul 2008 05:12:50 +0200 (CEST)
-	(envelope-from zippel@linux-m68k.org)
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org>
-Content-Disposition: inline
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1752817AbYGZDXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 23:23:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752614AbYGZDXr
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 23:23:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42605 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751816AbYGZDXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 23:23:47 -0400
+Received: (qmail invoked by alias); 26 Jul 2008 03:23:45 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp048) with SMTP; 26 Jul 2008 05:23:45 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19s60I9VORsz1HEKHkFBVpsrS7ffKhpDdGZSRaDBR
+	I+Dbe86u9TklKs
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <1217011068-1675-1-git-send-email-shaslam@lastminute.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90165>
 
 Hi,
 
-On Monday 21. July 2008, Linus Torvalds wrote:
+On Fri, 25 Jul 2008, Steve Haslam wrote:
 
-> Read up on '--full-history'.
->
-> By default, git simplifies the history for logs that have path
-> simplification: only walking down the side of a merge that all the data
-> came from (ie the unchanged side). So it only leaves merges around if
-> there was changes from _all_ parents.
->
-> So without --full-history, if any parent matches the state, it just
-> removes the merge and picks that parent that contained all the state.
-> Obviously, any changes to that file can be sufficiently explained by
-> walking just that limited history, because they must have changed in
-> _that_ history too!
+> "git clone" no longer calls "git-fetch-pack",
 
-Is that really a good default behaviour? Is there a way to change that 
-default?
+So it calls it internally, avoiding fork() and exec().  But the code is 
+still git-fetch-pack's.  The difference should be lost on the regular Git 
+user.
 
-I'm currently looking into converting the m68k CVS repository and I'd like to 
-properly regenerate it as two separate lines of development. The problem is 
-if I look at the file history, I often only see one side of the changes when 
-things got merged because of this default.
-What makes this worse is that graphical front ends may inherit this behaviour. 
-I tested this with qgit and it only shows half of the history. giggle 
-retrieves the history like --full-history, but it lacks empty merges, so it 
-makes it harder to see what got merged when.
-For example a history that actually looks this:
-
-linux -+-----import----+-----------import----+------...
-m68k   \-commit-commit-\-merge-commit-commit-\-merge...
-
-Without the merges it looks like this:
-
-linux -+-----import----------------import--------------+...
-m68k   \-commit-commit---------commit-commit           \...
-
-And without --full-history these "loose ends" aren't visible as in qgit.
-
-When researching historical changes one wants to know when something was 
-introduced and when it was merged, but this simplification makes it harder 
-than it really has to be.
-IMO the default should be to show the complete history, so one doesn't miss 
-something by accident that might be important or as the original example 
-shows it might be confusing if one sees a change with "git log --stat id.." 
-and the change disappears when one looks at "git log path".
-
-bye, Roman
+Ciao,
+Dscho
