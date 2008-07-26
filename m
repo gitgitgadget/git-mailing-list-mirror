@@ -1,72 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 7/7] builtin-merge: avoid non-strategy git-merge commands
- in error message
-Date: Sat, 26 Jul 2008 17:08:11 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807261701520.26810@eeepc-johanness>
-References: <cover.1217037178.git.vmiklos@frugalware.org> <f311372167c02868ccf5aa4dc03c97b7f956d855.1217037178.git.vmiklos@frugalware.org> <1217073292-27945-1-git-send-email-vmiklos@frugalware.org> <4f2b03391e3f85cf2224f97a2a7765d08707bd73.1217037178.git.vmiklos@frugalware.org>
- <68749731fe8de8b2a9ffc53963291aeab9256b82.1217037178.git.vmiklos@frugalware.org> <99c90877657be0ed439a9918f500d6ad132550a2.1217037178.git.vmiklos@frugalware.org> <13f39dd6752a34beeb6ecccb51dbc7546ef87182.1217037178.git.vmiklos@frugalware.org>
- <fc448aa651ad9e8e9d1cf5556a665b5bd6074628.1217037178.git.vmiklos@frugalware.org> <65a569c389352c5d0500b8c44c28e5572352e6ba.1217037178.git.vmiklos@frugalware.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT PATCH] Support linked resources
+Date: Sat, 26 Jul 2008 17:07:18 +0200
+Message-ID: <200807261707.18299.robin.rosenberg.lists@dewire.com>
+References: <5a27b7b0807232034t564e8d45l9f6e4bc6429cda60@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat Jul 26 17:08:15 2008
+To: "Richie Vos" <jerry.vos@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 26 17:09:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMlNW-0002hi-EM
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 17:08:14 +0200
+	id 1KMlOO-0002xK-2B
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 17:09:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752316AbYGZPHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 11:07:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752445AbYGZPHK
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 11:07:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53735 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752244AbYGZPHJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 11:07:09 -0400
-Received: (qmail invoked by alias); 26 Jul 2008 15:07:07 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp013) with SMTP; 26 Jul 2008 17:07:07 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19jdwgPdopjx84ugrGCqDPEAIh25tFy4UjXLQVuCE
-	x3KeGhPjWUHEtc
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <65a569c389352c5d0500b8c44c28e5572352e6ba.1217037178.git.vmiklos@frugalware.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1752396AbYGZPII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 11:08:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752182AbYGZPIG
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 11:08:06 -0400
+Received: from av9-2-sn3.vrr.skanova.net ([81.228.9.186]:50499 "EHLO
+	av9-2-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752332AbYGZPIG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 11:08:06 -0400
+Received: by av9-2-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id AEA9F380F0; Sat, 26 Jul 2008 17:08:02 +0200 (CEST)
+Received: from smtp3-1-sn3.vrr.skanova.net (smtp3-1-sn3.vrr.skanova.net [81.228.9.101])
+	by av9-2-sn3.vrr.skanova.net (Postfix) with ESMTP
+	id 5A28137E9A; Sat, 26 Jul 2008 17:08:02 +0200 (CEST)
+Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp3-1-sn3.vrr.skanova.net (Postfix) with ESMTP id E251F37E45;
+	Sat, 26 Jul 2008 17:08:01 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <5a27b7b0807232034t564e8d45l9f6e4bc6429cda60@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90235>
 
-Hi,
+torsdagen den 24 juli 2008 05.34.06 skrev Richie Vos:
+> I have a project that outputs to a linked directory (for example the
+> project is in /projects/foo and the project outputs to /projects/bar).
+> This was causing egit to throw a bunch of "file is not in working
+> path" errors whenever I rebuilt the project or otherwise interacted
+> with that linked directory. I tracked it down to GitIndex's add/remove
+> being called on these files even though these files are not part of
+> the actual index.
+> 
+> It seems like egit shouldn't be trying to interact with the index on
+> these files, and after looking at it, I decided the best solution
+> would be to realize in the RepositoryMapping that these files do not
+> point to a repository.
 
-On Sat, 26 Jul 2008, Miklos Vajna wrote:
+I'd be inclined to prefer ignoring any non-plain resource, always. Linked
+resources are either absolute or relative to a variable. Other than that 
+there is an analogy to symbolic links. Git manages the link, not its
+content (unless handled elsewhere). The link in this case is in the
+.project file and thus managed there.
 
-> +		memset(&not_strategies, 0, sizeof(struct cmdnames));
-> +		for (i = 0; i < main_cmds.cnt; i++) {
+EGit could still managed the resource, but not via the link, but rather at
+the place it is located, iff that happens to be in a project managed by Egit.
 
-Looking through all the discovered git commands?  Cute...  But does that 
-not exclude the commands that are in PATH, starting with git-merge-, even 
-if they are custom strategies?
-
-> +			int j, found = 0;
-> +			for (j = 0; j < ARRAY_SIZE(all_strategy); j++)
-> +				if (!strcmp(main_cmds.names[i]->name, all_strategy[j].name))
-> +					found = 1;
-> +			if (!found)
-> +				add_cmdname(&not_strategies, main_cmds.names[i]->name, strlen(main_cmds.names[i]->name));
-
-Better have a local variable "name" instead of writing out 
-"main_cmds.names[i]->name" all the time...
-
-Oh, and you assume that the names are NUL-terminated (which I assume is 
-not the case in general, as the len member is the only thing that makes 
-struct cmdnames different from struct string_list.
-
-Ciao,
-Dscho
+-- robin
