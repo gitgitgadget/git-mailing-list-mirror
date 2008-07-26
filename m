@@ -1,56 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 5/5] Migrate rebase-i to sequencer
-Date: Sat, 26 Jul 2008 16:52:33 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807261652050.26810@eeepc-johanness>
-References: <1217049644-8874-1-git-send-email-s-beyer@gmx.net> <1217049644-8874-2-git-send-email-s-beyer@gmx.net> <1217049644-8874-3-git-send-email-s-beyer@gmx.net> <1217049644-8874-4-git-send-email-s-beyer@gmx.net> <1217049644-8874-5-git-send-email-s-beyer@gmx.net>
- <1217049644-8874-6-git-send-email-s-beyer@gmx.net>
+From: Rene Herman <rene.herman@keyaccess.nl>
+Subject: Re: [PATCH] Set up argv0_path correctly, even when argv[0] is just
+ the basename
+Date: Sat, 26 Jul 2008 16:54:15 +0200
+Message-ID: <488B3A97.6000606@keyaccess.nl>
+References: <1217065304-27815-1-git-send-email-prohaska@zib.de> <alpine.DEB.1.00.0807261613120.26810@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Sat Jul 26 16:52:33 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 26 16:53:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMl8J-0005kI-N9
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 16:52:32 +0200
+	id 1KMl8n-0005uh-U3
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 16:53:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752051AbYGZOvc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 10:51:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751983AbYGZOvb
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 10:51:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55449 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751954AbYGZOvb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 10:51:31 -0400
-Received: (qmail invoked by alias); 26 Jul 2008 14:51:29 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp066) with SMTP; 26 Jul 2008 16:51:29 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+uTlkFRBuu+jf5Bjqb7sPIpU7kmqZom2SzJ2dQo1
-	3c8fQlfU2qThCW
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <1217049644-8874-6-git-send-email-s-beyer@gmx.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.78
+	id S1752083AbYGZOwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 10:52:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752071AbYGZOwA
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 10:52:00 -0400
+Received: from smtpq1.groni1.gr.home.nl ([213.51.130.200]:44853 "EHLO
+	smtpq1.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752065AbYGZOv7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 10:51:59 -0400
+Received: from [213.51.130.188] (port=44199 helo=smtp3.groni1.gr.home.nl)
+	by smtpq1.groni1.gr.home.nl with esmtp (Exim 4.60)
+	(envelope-from <rene.herman@keyaccess.nl>)
+	id 1KMl7f-00014J-PX; Sat, 26 Jul 2008 16:51:51 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:59423 helo=[192.168.0.3])
+	by smtp3.groni1.gr.home.nl with esmtp (Exim 4.60)
+	(envelope-from <rene.herman@keyaccess.nl>)
+	id 1KMl7f-000642-IG; Sat, 26 Jul 2008 16:51:51 +0200
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <alpine.DEB.1.00.0807261613120.26810@eeepc-johanness>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90232>
 
-Hi,
+On 26-07-08 16:14, Johannes Schindelin wrote:
 
-On Sat, 26 Jul 2008, Stephan Beyer wrote:
+> When the program 'git' is in the PATH, the argv[0] is set to the
+> basename. However, argv0_path needs the full path, so add a function
+> to discover the program by traversing the PATH manually.
 
-> For git-rebase-i -p (preserving merges) merges should be
-> rewritten. For this, the sequencer instructions "mark", "merge"
-> and "reset" are used.
+While not having read the context for this, this ofcourse sounds like a 
+huge gaping race-condition. If applicable here (as said, did not read 
+context) you generally want to make sure that there's no window that a 
+path could be replaced -- while perhaps not here, that's often the kind 
+of thing that security attacks end up abusing.
 
-Ah, the ugliness returns.
-
-Ciao,
-Dscho
+Rene.
