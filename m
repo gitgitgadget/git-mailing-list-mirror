@@ -1,67 +1,52 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Mailing lists, was Re: [RFC] Git User's Survey 2008
-Date: Sat, 26 Jul 2008 12:51:21 -0500
-Message-ID: <20080726175121.GA15015@spearce.org>
-References: <200807230325.04184.jnareb@gmail.com> <20080725172313.GE21117@spearce.org> <7vr69hsss1.fsf@gitster.siamese.dyndns.org> <200807252352.09751.jnareb@gmail.com> <20080725215707.GC23202@spearce.org> <20080726155138.GB20695@jabba.hq.digizenstudio.com> <m38wvovbh2.fsf@localhost.localdomain>
+From: Jonathan Nieder <jrnieder@uchicago.edu>
+Subject: Re: [PATCH 1/7] Make is_git_command() usable outside builtin-help
+Date: Sat, 26 Jul 2008 13:12:36 -0500 (CDT)
+Message-ID: <Pine.GSO.4.62.0807261301300.15728@harper.uchicago.edu>
+References: <cover.1217037178.git.vmiklos@frugalware.org>
+ <f311372167c02868ccf5aa4dc03c97b7f956d855.1217037178.git.vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jing Xue <jingxue@digizenstudio.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marek Zawirski <marek.zawirski@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 26 19:52:31 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sat Jul 26 20:13:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMnwN-0003jf-4g
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 19:52:23 +0200
+	id 1KMoH7-0001xT-Kt
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 20:13:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753445AbYGZRvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 13:51:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbYGZRvX
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 13:51:23 -0400
-Received: from george.spearce.org ([209.20.77.23]:36436 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751946AbYGZRvW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 13:51:22 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id C70E8383A5; Sat, 26 Jul 2008 17:51:21 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <m38wvovbh2.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752181AbYGZSMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 14:12:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752170AbYGZSMt
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 14:12:49 -0400
+Received: from smtp00.uchicago.edu ([128.135.12.76]:52689 "EHLO
+	smtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751946AbYGZSMs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 14:12:48 -0400
+Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
+	by smtp00.uchicago.edu (8.13.8/8.13.8) with ESMTP id m6QICd1C000961;
+	Sat, 26 Jul 2008 13:12:39 -0500
+Received: from localhost (jrnieder@localhost)
+	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m6QICaTp016024;
+	Sat, 26 Jul 2008 13:12:37 -0500 (CDT)
+X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
+In-Reply-To: <f311372167c02868ccf5aa4dc03c97b7f956d855.1217037178.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90267>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Jing Xue <jingxue@digizenstudio.com> writes:
-> > 
-> > Just a thought - how about a question polling whether people would be
-> > interested in build tool wrappers around jgit - ant tasks, maven
-> > plugins, etc.?
-> 
-> True, there are a lot of tools written in Java, which have or could
-> have support for Git: Ant tasks, Maven plugins, Hudson rules
-> (continuous integration), JIRA (bug/issue tracker).  Some of them
-> perhaps could use jgit, although if I understand correctly jgit is not
-> yet full implementation of Git: it is enough for egit, for local clone
-> of repository.
+On Sat, 26 Jul 2008, Miklos Vajna wrote:
 
-  What Java based build tools would you like to see Git support in?
-  (choose zero or more, multiple choice)
-  Ant, Maven, Hudson, JIRA, other
- 
-> I wonder if similar tools like mentioned above, but for the Ruby camp,
-> like Capistrano, Merb, Gitosis, whatever use git directly, or do they
-> use Ruby interface (and which interface).  I don't think there is
-> implementation of Git in Ruby... hmmmm....
+> +	if (!prefix)
+> +		prefix = "git-";
+> +       	prefix_len = strlen(prefix);
 
-There is an implementation in Ruby, but I'm not sure what its
-state is.
+The whitespace gave me a start: the diff markup moved the prefix_len
+line to the next tab stop, so at first glance it seems there are missing
+braces here.  But it is an illusion.  (I mention this so others might
+avoid wasting time worrying about it.)
 
--- 
-Shawn.
+I like the patch so far.  Thanks for the pleasant reading.
