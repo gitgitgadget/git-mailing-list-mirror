@@ -1,64 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Set up argv0_path correctly, even when argv[0] is just
- the basename
-Date: Sat, 26 Jul 2008 19:42:36 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807261940450.26810@eeepc-johanness>
-References: <1217065304-27815-1-git-send-email-prohaska@zib.de> <alpine.DEB.1.00.0807261613120.26810@eeepc-johanness> <7vod4kft7d.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Mailing lists, was Re: [RFC] Git User's Survey 2008
+Date: Sat, 26 Jul 2008 12:51:21 -0500
+Message-ID: <20080726175121.GA15015@spearce.org>
+References: <200807230325.04184.jnareb@gmail.com> <20080725172313.GE21117@spearce.org> <7vr69hsss1.fsf@gitster.siamese.dyndns.org> <200807252352.09751.jnareb@gmail.com> <20080725215707.GC23202@spearce.org> <20080726155138.GB20695@jabba.hq.digizenstudio.com> <m38wvovbh2.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 26 19:42:35 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Jing Xue <jingxue@digizenstudio.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marek Zawirski <marek.zawirski@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 26 19:52:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMnms-0000ve-1J
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 19:42:34 +0200
+	id 1KMnwN-0003jf-4g
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 19:52:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753742AbYGZRle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 13:41:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753797AbYGZRle
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 13:41:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49323 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753732AbYGZRld (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 13:41:33 -0400
-Received: (qmail invoked by alias); 26 Jul 2008 17:41:31 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp037) with SMTP; 26 Jul 2008 19:41:31 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+ARWkSZmCAjdAwVRYp+TkfDTHa7hYRiGrPOr3xC0
-	tXUTAVd94fc+P2
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7vod4kft7d.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1753445AbYGZRvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 13:51:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbYGZRvX
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 13:51:23 -0400
+Received: from george.spearce.org ([209.20.77.23]:36436 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751946AbYGZRvW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 13:51:22 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id C70E8383A5; Sat, 26 Jul 2008 17:51:21 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <m38wvovbh2.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90266>
 
-Hi,
-
-On Sat, 26 Jul 2008, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Jing Xue <jingxue@digizenstudio.com> writes:
+> > 
+> > Just a thought - how about a question polling whether people would be
+> > interested in build tool wrappers around jgit - ant tasks, maven
+> > plugins, etc.?
 > 
-> > However, argv0_path needs the full path, so add a function to discover 
-> > the program by traversing the PATH manually.
-> 
-> I think unconditionally requiring argv0_path to be set is the root cause 
-> of the bug.  Unless we do not fix _that_, we will have to make a 
-> needless call to lookup_program_in_path() even when nobody needs that 
-> information, which is unacceptable.
+> True, there are a lot of tools written in Java, which have or could
+> have support for Git: Ant tasks, Maven plugins, Hudson rules
+> (continuous integration), JIRA (bug/issue tracker).  Some of them
+> perhaps could use jgit, although if I understand correctly jgit is not
+> yet full implementation of Git: it is enough for egit, for local clone
+> of repository.
 
-Fair enough.  How about having a function called from system_path() which 
-has a flag so it is run only once, and then calls lookup_program_in_path() 
-provided that argv0_path contains no slashes _and_ exec_path is relative?
+  What Java based build tools would you like to see Git support in?
+  (choose zero or more, multiple choice)
+  Ant, Maven, Hudson, JIRA, other
+ 
+> I wonder if similar tools like mentioned above, but for the Ruby camp,
+> like Capistrano, Merb, Gitosis, whatever use git directly, or do they
+> use Ruby interface (and which interface).  I don't think there is
+> implementation of Git in Ruby... hmmmm....
 
-Ciao,
-Dscho
+There is an implementation in Ruby, but I'm not sure what its
+state is.
+
+-- 
+Shawn.
