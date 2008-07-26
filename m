@@ -1,64 +1,214 @@
-From: Rene Herman <rene.herman@keyaccess.nl>
-Subject: Re: Official Git Homepage change? Re: git-scm.com
-Date: Sat, 26 Jul 2008 16:48:47 +0200
-Message-ID: <488B394F.9000300@keyaccess.nl>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>	 <20080726015314.GU32184@machine.or.cz>	 <20080726020951.GV32184@machine.or.cz>	 <7v4p6dnv5k.fsf@gitster.siamese.dyndns.org>	 <d411cc4a0807252343n2b9ade68veaebb68664f0a3d7@mail.gmail.com>	 <7vtzedktmi.fsf@gitster.siamese.dyndns.org> <d411cc4a0807260027t4b9c3b08x1f865ec75d976ef6@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/5] Add git-sequencer documentation
+Date: Sat, 26 Jul 2008 16:47:46 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807261623530.26810@eeepc-johanness>
+References: <1217049644-8874-1-git-send-email-s-beyer@gmx.net> <1217049644-8874-2-git-send-email-s-beyer@gmx.net> <1217049644-8874-3-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 26 16:47:28 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Sat Jul 26 16:47:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMl3O-0003oo-OB
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 16:47:27 +0200
+	id 1KMl3f-0003vD-TW
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 16:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752026AbYGZOq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 10:46:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751989AbYGZOq1
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 10:46:27 -0400
-Received: from smtpq2.groni1.gr.home.nl ([213.51.130.201]:55514 "EHLO
-	smtpq2.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751865AbYGZOq0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 10:46:26 -0400
-Received: from [213.51.130.190] (port=35541 helo=smtp1.groni1.gr.home.nl)
-	by smtpq2.groni1.gr.home.nl with esmtp (Exim 4.60)
-	(envelope-from <rene.herman@keyaccess.nl>)
-	id 1KMl2N-0007eS-N4; Sat, 26 Jul 2008 16:46:23 +0200
-Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:45634 helo=[192.168.0.3])
-	by smtp1.groni1.gr.home.nl with esmtp (Exim 4.60)
-	(envelope-from <rene.herman@keyaccess.nl>)
-	id 1KMl2N-0004jT-Dm; Sat, 26 Jul 2008 16:46:23 +0200
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <d411cc4a0807260027t4b9c3b08x1f865ec75d976ef6@mail.gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S1752095AbYGZOqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 10:46:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752087AbYGZOqo
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 10:46:44 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35103 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751989AbYGZOqn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 10:46:43 -0400
+Received: (qmail invoked by alias); 26 Jul 2008 14:46:42 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp031) with SMTP; 26 Jul 2008 16:46:42 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+3ITgwWYy37VrHIsNfo15aZw3V1uekv7yKI2w8iy
+	Ec+gGSF8IQJk8Q
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <1217049644-8874-3-git-send-email-s-beyer@gmx.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90230>
 
-On 26-07-08 09:27, Scott Chacon wrote:
+Hi,
 
-> Perhaps it would be useful to split the mailing list into
-> core/contrib and support lists?  I would be happy to help out
-> answering questions - a lot of them come directly to me anyhow
-> because of the gitcasts site and such.
+On Sat, 26 Jul 2008, Stephan Beyer wrote:
 
-A git-user list would be welcomed at least by me. It remains to be seen 
-how useful it would be (and stay) as often the user lists for a project 
-dwinddle a bit but I've subcribed and unsubscribed to this list a number 
-of times now since unless I've a specific question to ask, the list is 
-too busy too just sit around on; I end up deleting all list mail unread 
-every night anyway, so I just unsubcribe again.
+> +-B::
+> +--batch::
+> +	Run in batch mode. If unexpected user intervention is needed
+> +	(e.g. a conflict or the need to run an editor), 'git-sequencer' fails.
 
-Maybe a less busy and less implementation focussed list could help "me 
-and mine" gradually pick up new tips and tricks. Depends ofcourse on 
-willingness of some of the more proficient to be involved in that list 
-as well...
+Does it abort, or leave a dirty tree?
 
-Rene.
+> +--onto=<base>::
+> +	Checkout given commit or branch before sequencing.
+> +	If you provide a branch, sequencer will make the provided
+> +	changes on the branch, i.e. the branch will be changed.
+
+Whoa, does that mean that
+
+	$ git checkout my-private-branch
+	$ git sequencer --onto=master
+
+will change _master_?
+
+> +--continue::
+> +	Restart the sequencing process after having resolved a merge conflict.
+
+What about 'edit'?  Does it restart the sequencing process after editing a 
+file or commit message, too?
+
+> +--skip::
+> +	Restart the sequencing process by skipping the current instruction.
+
+s/ by/,/
+
+> +--status::
+> +	Show the current status of 'git-sequencer' and what
+> +	operations can be done to change that status.
+
+Nice.
+
+> +--edit::
+> +	Invoke editor to edit the unprocessed part of the TODO file.
+
+Nice!
+
+> +If you nonetheless noticed that you made a mistake, you can
+> +overwrite `.git/sequencer/todo` with `.git/sequencer/todo.old` and
+> +rerun `git sequencer --edit`.
+
+Speaking of "todo": there was an explicit request to change that to 
+"git-rebase-todo" for rebase -i, so that syntax highlighting could be 
+switched on.
+
+> +-q::
+> +--quiet::
+> +	Suppress output. Implies `--no-advice`.
+> +	(Not yet implemented.)
+
+So this is not meant for application yet.  Okay.
+
+> +-v::
+> +--verbose::
+> +	Be more verbose.
+
+More?
+
+> +NOTES
+> +-----
+> +
+> +When sequencing, it is possible, that you are changing the history of
+
+s/possible,/possible/  I know that mistake, being a German myself.
+
+> +a branch in a way that can cause problems for anyone who already has
+> +a copy of the branch in their repository and tries to pull updates from
+> +you.  You should understand the implications of using 'git-sequencer' on
+> +a repository that you share.
+
+How about this instead?
+
+	Note that sequencing will rewrite the history of the branch.  
+	This will cause problems if you published the branch prior to
+	rewriting the history, as the former tip is no longer an 
+	ancestor of the new tip.
+
+	In other words, if you rewrite an already published branch, users 
+	that pull from you _will_ get a bogus merge.
+	
+> +'git-sequencer' will usually be called by another git porcelain, like
+
+s/another git procelain/other git programs/
+
+> +TODO FILE FORMAT
+> +----------------
+> +
+> +The TODO file contains basically one instruction per line.
+
+s/basically //
+
+> +edit <commit>::
+> +	Pick a commit and pause the sequencer process to let you
+> +	make changes.
+> ++
+> +This is a short form for `pick <commit> and `pause` on separate lines.
+
+It might make sense to explain 'pick' before 'edit', then.
+
+> +mark <mark>::
+> +	Set a symbolic mark for the last commit.
+> +	`<mark>` is an unsigned integer starting at 1 and
+> +	prefixed with a colon, e.g. `:1`.
+> ++
+> +The marks can help if you want to refer to commits that you
+> +created during the sequencer process, e.g. if you want to
+> +merge such a commit.
+
+It might make sense to explain 'merge' before that, then.
+
+> +	--mainline=<n>;;
+> +		Allow you to pick merge commits by specifying the
+> +		parent number (beginning from 1) to let sequencer
+> +		replay the changes relative to the specified parent.
+
+Why is this called "mainline", and not "parent"?
+
+> [... talking about 'patch']
+>
+> +	--exclude=<path-pattern>;;
+> +		Do not apply changes to files matching the given path pattern.
+> +		This can be useful when importing patchsets, where you want to
+> +		exclude certain files or directories.
+
+You might just as well support the new "--directory" option of git-apply, 
+too, and/or --recount.
+
+> [talking about 'squash']
+>
+> +	--collect-signoffs;;
+> +		Collect the Signed-off-by: lines of each commit and
+> +		add them to the squashed commit message.
+> +		(Not yet implemented.)
+
+I really have to wonder how useful that is.  Or how correct, for that 
+matter.
+
+> +
+> +	--include-merges;;
+> +		Sanity check does not fail if you have merges
+> +		between HEAD and <mark>.
+
+It may be a commit, too, right?  And why does it make sense to check that 
+there are no merges?  I mean, it is just as if I did two cherry-picks, the 
+second with -n, and then commit --amend it.  Can make tons of sense...
+
+> +Here are some examples that shall ease the start with the TODO
+> +file format.
+> +Make sure you have understood the `pick` and perhaps the `patch` command.
+> +Those will not be explained further.
+
+This sentence is insulting.  Strike it.
+
+> +------------
+> +$ git rev-list --no-merges --reverse A^..E | sed -e 's/^/pick /'`
+> +------------
+
+Don't.
+
+$ git log --pretty=format:'pick %h' --no-merges --reverse A^..E
+
+Ciao,
+Dscho
