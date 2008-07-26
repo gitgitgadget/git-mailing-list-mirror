@@ -1,125 +1,263 @@
-From: "Scott Chacon" <schacon@gmail.com>
-Subject: Re: git-scm.com
-Date: Fri, 25 Jul 2008 22:30:29 -0700
-Message-ID: <d411cc4a0807252230v76670d3cp2205e40826acc6e2@mail.gmail.com>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
-	 <6b6419750807251838h12ea4f19gdff107694e3797c4@mail.gmail.com>
-	 <d411cc4a0807251928g75744b78vac2ce77bf07fbd81@mail.gmail.com>
-	 <20080726023707.GX32184@machine.or.cz>
-	 <alpine.DEB.1.10.0807251943280.11335@asgard.lang.hm>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: teach dcommit about svn auto-props
+Date: Fri, 25 Jul 2008 22:45:47 -0700
+Message-ID: <20080726054547.GA20494@untitled>
+References: <20080725060037.GB14756@untitled> <4889F215.9020804@kitware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Petr Baudis" <pasky@suse.cz>,
-	"Patrick Aljord" <patcito@gmail.com>,
-	"git list" <git@vger.kernel.org>
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Sat Jul 26 07:31:37 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Brad King <brad.king@kitware.com>
+X-From: git-owner@vger.kernel.org Sat Jul 26 07:47:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMcNT-0001QL-Gs
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 07:31:35 +0200
+	id 1KMccN-0004fr-So
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 07:47:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752100AbYGZFab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 01:30:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752096AbYGZFab
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 01:30:31 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:24878 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751945AbYGZFaa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 01:30:30 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so2287740waf.23
-        for <git@vger.kernel.org>; Fri, 25 Jul 2008 22:30:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=cC0UIvSZSoY43dGLW2V7mbJNBrrKHW+/9oVni0oTDyo=;
-        b=NFvy+TaIqXalGpE78pE5G3CCMNeeY25CWDiPBsMD1rK/gx/j3uINBPt06d+r1PC8Rg
-         jPi1nS3QdszL2ZH7h7iaWd3TvLlU/BzO6FEsvs5Q2qLMFSbakjvvfjPkaddVeuAAPgI8
-         f5X12AND7Boq83Q+t69RDHarDfmwE8aeXy8yY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=M+RQv3vhTk77BQojdB6moKESNphtjR3Q6yMrpnqwzkHfhk68v9bR/sKibkxpRixEX7
-         h8qyNYF8tyzRIjK3XdGn5g2yW6Oy6YZ/KgrvRe5xBIFALm9UwvCOlw0jJ9A9vW7OfFD0
-         oJMYl5h36equklbynaVm3yiGKKtWciHDQIUeM=
-Received: by 10.114.168.15 with SMTP id q15mr2883794wae.167.1217050229664;
-        Fri, 25 Jul 2008 22:30:29 -0700 (PDT)
-Received: by 10.115.22.20 with HTTP; Fri, 25 Jul 2008 22:30:29 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.10.0807251943280.11335@asgard.lang.hm>
+	id S1751066AbYGZFpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 01:45:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751163AbYGZFpu
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 01:45:50 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:36079 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751038AbYGZFpt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 01:45:49 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id CFCFA2DC095;
+	Fri, 25 Jul 2008 22:45:47 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <4889F215.9020804@kitware.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90182>
 
-On Fri, Jul 25, 2008 at 7:47 PM,  <david@lang.hm> wrote:
-> On Sat, 26 Jul 2008, Petr Baudis wrote:
->
->>  Hi,
->>
->> On Fri, Jul 25, 2008 at 07:28:32PM -0700, Scott Chacon wrote:
->>>
->>> I am more concerned about the logo at the bottom, and Petr and I are
->>> discussing this - I can remove the logo, but then I'd have to pay for
->>> this out of my pocket instead of having a small logo on the page.
->>
->>  I actually think that this is *one* reference to GitHub that is
->> perfectly and 100% okay; if it is sponsoring the hosting, it deserves
->> the logo, and it is fairly non-intrusive. I _am_ watching out warily
->> for excessive GitHub references within the rest of the site - if only
->> because I have kind of personal interest in a competitor of GitHub and
->> thus don't want GitHub to get unwarranted free advertising. :-)
->>
->>                                Petr "Pasky" Baudis
->
-> since this is a Ruby on Rails site, could the 'five links' that have been
-> bothering people be randomly selected? if every time you go to the site you
-> get a different list of projects it show how broadly git is used. it's not
-> as 'in your face' as managing to select five that cause people to say "wow,
-> they're using this", but different people will react to different sites.
->
-> if this table gets populated by GitHub, kernel.org, and a couple other
-> sources it should be vendor independant enough (and we need a table like
-> this anyway for the 'list of projects that use git', so it serves two
-> purposes)
->
-> David Lang
->
+Brad King <brad.king@kitware.com> wrote:
+> 
+> Subversion repositories often require files to have properties such as
+> svn:mime-type and svn:eol-style set when they are added.  Users
+> typically set these properties automatically using the SVN auto-props
+> feature with 'svn add'.  This commit teaches dcommit to look at the user
+> SVN configuration and apply matching auto-props entries for files added
+> by a diff as it is applied to the SVN remote.
+> 
+> Signed-off-by: Brad King <brad.king@kitware.com>
 
-I would really like to have the big ones there all the time ('Linux',
-'Ruby on Rails', 'WINE', 'X.org', etc)  Prototype and MooTools are
-pretty big in the web dev world, which a lot of people are starting to
-come from - at least Prototype should be there all the time.  For the
-rest, if we want to pool a bunch of other projects from different
-places, that would be cool, but they should be active - I don't want
-people clicking on something above the fold and getting a dead
-project.  If someone wants to help me vet a list, I'd be happy to do
-that.
+Thanks Brad,
 
-However, that being said, it's going to be difficult to have Github
-projects not dominate the list a bit.  The fact is that it hosts far,
-far more projects than any other single hosting service.  Just in
-fully public projects, the current stats (from the website pages) are
-something like this:
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
-kernel.org : 475
-repo.or.cz : 1,553
-gitorious   : 780
-github       : 10,560
+> ---
+> Eric Wong wrote:
+> > I like this patch.
+> 
+> Thanks.
+> 
+> > Can we get an automated test of this functionality?
+> 
+> This patch adds a test.  I also fixed the property name/value parsing
+> to remove leading and trailing whitespace.
+> 
+> > We can (and probably should) set $HOME for the test and ignore the
+> > existing ~/.subversion/config of the user.
+> 
+> I used the --config-dir option.
+> 
+> > Also, some minor nitpicks on whitespace/formatting inline below.
+> 
+> Addressed.  I missed the wrong indentation before because my second patch
+> removed it.
+> 
+> > I haven't had the chance to look at this.   Can anybody else shed more
+> > light on that bug?  It's really strange that the tests won't run because
+> > of it.  Are you unable to run some git-svn tests or all of them?
+> 
+> Just that one fails.  All others (including the one in the patch below) pass.
 
-It hosts far more than that if you include private projects, too.  So,
-if we want to choose totally randomly, it's going to be at least a 5:1
-ratio between github projects and all other public hosting providers.
-If anything, statistically, the current list is conservative in it's
-links to github projects.  For me to avoid using them is artificially
-punishing them for having paid plans, which is silly.
+Exactly which test fails for you?  Perhaps it's some setting in your
+~/.subversion/config that's causing it to fail.  Maybe we should set
+$HOME and use a clean ~/.subversion/config for git-svn tests regardless
+if that turns out to be the case...
 
-Scott
+> Thanks for reviewing,
+> -Brad
+> 
+>  git-svn.perl                          |   52 ++++++++++++++++++++
+>  t/t9124-git-svn-dcommit-auto-props.sh |   84 +++++++++++++++++++++++++++++++++
+>  2 files changed, 136 insertions(+), 0 deletions(-)
+>  create mode 100755 t/t9124-git-svn-dcommit-auto-props.sh
+> 
+
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 2e0e552..0a8e907 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -3340,6 +3340,7 @@ sub new {
+>  	$self->{rm} = { };
+>  	$self->{path_prefix} = length $self->{svn_path} ?
+>  	                       "$self->{svn_path}/" : '';
+> +	$self->{config} = $opts->{config};
+>  	return $self;
+>  }
+>  
+> @@ -3528,6 +3529,56 @@ sub ensure_path {
+>  	return $bat->{$c};
+>  }
+>  
+> +# Subroutine to convert a globbing pattern to a regular expression.
+> +# From perl cookbook.
+> +sub glob2pat {
+> +	my $globstr = shift;
+> +	my %patmap = ('*' => '.*', '?' => '.', '[' => '[', ']' => ']');
+> +	$globstr =~ s{(.)} { $patmap{$1} || "\Q$1" }ge;
+> +	return '^' . $globstr . '$';
+> +}
+> +
+> +sub check_autoprop {
+> +	my ($self, $pattern, $properties, $file, $fbat) = @_;
+> +	# Convert the globbing pattern to a regular expression.
+> +	my $regex = glob2pat($pattern);
+> +	# Check if the pattern matches the file name.
+> +	if($file =~ m/($regex)/) {
+> +		# Parse the list of properties to set.
+> +		my @props = split(/;/, $properties);
+> +		foreach my $prop (@props) {
+> +			# Parse 'name=value' syntax and set the property.
+> +			if ($prop =~ /([^=]+)=(.*)/) {
+> +				my ($n,$v) = ($1,$2);
+> +				$n =~ s/^\s+//; $n =~ s/\s+$//;
+> +				$v =~ s/^\s+//; $v =~ s/\s+$//;
+> +				$self->change_file_prop($fbat, $n, $v);
+> +			}
+> +		}
+> +	}
+> +}
+> +
+> +sub apply_autoprops {
+> +	my ($self, $file, $fbat) = @_;
+> +	my $conf_t = ${$self->{config}}{'config'};
+> +	no warnings 'once';
+> +	# Check [miscellany]/enable-auto-props in svn configuration.
+> +	if (SVN::_Core::svn_config_get_bool(
+> +		$conf_t,
+> +		$SVN::_Core::SVN_CONFIG_SECTION_MISCELLANY,
+> +		$SVN::_Core::SVN_CONFIG_OPTION_ENABLE_AUTO_PROPS,
+> +		0)) {
+> +		# Auto-props are enabled.  Enumerate them to look for matches.
+> +		my $callback = sub {
+> +			$self->check_autoprop($_[0], $_[1], $file, $fbat);
+> +		};
+> +		SVN::_Core::svn_config_enumerate(
+> +			$conf_t,
+> +			$SVN::_Core::SVN_CONFIG_SECTION_AUTO_PROPS,
+> +			$callback);
+> +	}
+> +}
+> +
+>  sub A {
+>  	my ($self, $m) = @_;
+>  	my ($dir, $file) = split_path($m->{file_b});
+> @@ -3535,6 +3586,7 @@ sub A {
+>  	my $fbat = $self->add_file($self->repo_path($m->{file_b}), $pbat,
+>  					undef, -1);
+>  	print "\tA\t$m->{file_b}\n" unless $::_q;
+> +	$self->apply_autoprops($file, $fbat);
+>  	$self->chg_file($fbat, $m);
+>  	$self->close_file($fbat,undef,$self->{pool});
+>  }
+> diff --git a/t/t9124-git-svn-dcommit-auto-props.sh b/t/t9124-git-svn-dcommit-auto-props.sh
+> new file mode 100755
+> index 0000000..beefbcc
+> --- /dev/null
+> +++ b/t/t9124-git-svn-dcommit-auto-props.sh
+> @@ -0,0 +1,84 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2008 Brad King
+> +
+> +test_description='git-svn dcommit honors auto-props'
+> +
+> +. ./lib-git-svn.sh
+> +
+> +generate_auto_props() {
+> +cat << EOF
+> +[miscellany]
+> +enable-auto-props=$1
+> +[auto-props]
+> +*.sh  = svn:mime-type=application/x-shellscript; svn:eol-style=LF
+> +*.txt = svn:mime-type=text/plain; svn:eol-style = native
+> +EOF
+> +}
+> +
+> +test_expect_success 'initialize git-svn' '
+> +	mkdir import &&
+> +	cd import &&
+> +	echo foo > foo &&
+> +	svn import -m "import for git-svn" . "$svnrepo" >/dev/null &&
+> +	cd .. &&
+> +	rm -rf import &&
+> +	git-svn init "$svnrepo"
+> +	git-svn fetch'
+> +
+> +test_expect_success 'enable auto-props config' '
+> +	cd "$gittestrepo" &&
+> +	mkdir user &&
+> +	generate_auto_props yes > user/config
+> +	'
+> +
+> +test_expect_success 'add files matching auto-props' '
+> +	cd "$gittestrepo" &&
+> +	echo "#!/bin/sh" > exec1.sh &&
+> +	chmod +x exec1.sh &&
+> +	echo "hello" > hello.txt &&
+> +	echo bar > bar &&
+> +	git add exec1.sh hello.txt bar &&
+> +	git commit -m "files for enabled auto-props" &&
+> +	git svn dcommit --config-dir=user
+> +	'
+> +
+> +test_expect_success 'disable auto-props config' '
+> +	cd "$gittestrepo" &&
+> +	generate_auto_props no > user/config
+> +	'
+> +
+> +test_expect_success 'add files matching disabled auto-props' '
+> +	cd "$gittestrepo" &&
+> +	echo "#!/bin/sh" > exec2.sh &&
+> +	chmod +x exec2.sh &&
+> +	echo "world" > world.txt &&
+> +	echo zot > zot &&
+> +	git add exec2.sh world.txt zot &&
+> +	git commit -m "files for disabled auto-props" &&
+> +	git svn dcommit --config-dir=user
+> +	'
+> +
+> +test_expect_success 'check resulting svn repository' '
+> +	mkdir work &&
+> +	cd work &&
+> +	svn co "$svnrepo" &&
+> +	cd svnrepo &&
+> +
+> +	# Check properties from first commit.
+> +	test "x$(svn propget svn:executable exec1.sh)" = "x*" &&
+> +	test "x$(svn propget svn:mime-type exec1.sh)" = \
+> +	     "xapplication/x-shellscript" &&
+> +	test "x$(svn propget svn:mime-type hello.txt)" = "xtext/plain" &&
+> +	test "x$(svn propget svn:eol-style hello.txt)" = "xnative" &&
+> +	test "x$(svn propget svn:mime-type bar)" = "x" &&
+> +
+> +	# Check properties from second commit.
+> +	test "x$(svn propget svn:executable exec2.sh)" = "x*" &&
+> +	test "x$(svn propget svn:mime-type exec2.sh)" = "x" &&
+> +	test "x$(svn propget svn:mime-type world.txt)" = "x" &&
+> +	test "x$(svn propget svn:eol-style world.txt)" = "x" &&
+> +	test "x$(svn propget svn:mime-type zot)" = "x"
+> +	'
+> +
+> +test_done
+
+-- 
+Eric Wong
