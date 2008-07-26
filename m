@@ -1,2145 +1,812 @@
 From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH 1/5] Add git-sequencer shell prototype
-Date: Sat, 26 Jul 2008 07:20:40 +0200
-Message-ID: <1217049644-8874-2-git-send-email-s-beyer@gmx.net>
+Subject: [PATCH 4/5] Migrate git-am to use git-sequencer
+Date: Sat, 26 Jul 2008 07:20:43 +0200
+Message-ID: <1217049644-8874-5-git-send-email-s-beyer@gmx.net>
 References: <1217049644-8874-1-git-send-email-s-beyer@gmx.net>
+ <1217049644-8874-2-git-send-email-s-beyer@gmx.net>
+ <1217049644-8874-3-git-send-email-s-beyer@gmx.net>
+ <1217049644-8874-4-git-send-email-s-beyer@gmx.net>
 Cc: Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Stephan Beyer <s-beyer@gmx.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 26 07:22:11 2008
+X-From: git-owner@vger.kernel.org Sat Jul 26 07:22:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMcEI-0007zr-7A
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 07:22:07 +0200
+	id 1KMcEr-00086m-Dt
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 07:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751656AbYGZFVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 01:21:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752022AbYGZFVE
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 01:21:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49675 "HELO mail.gmx.net"
+	id S1752083AbYGZFVN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 01:21:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751945AbYGZFVM
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 01:21:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34077 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751656AbYGZFU4 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751893AbYGZFU4 (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 26 Jul 2008 01:20:56 -0400
 Received: (qmail invoked by alias); 26 Jul 2008 05:20:54 -0000
 Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp061) with SMTP; 26 Jul 2008 07:20:54 +0200
+  by mail.gmx.net (mp057) with SMTP; 26 Jul 2008 07:20:54 +0200
 X-Authenticated: #1499303
 X-Provags-ID: V01U2FsdGVkX1/LU71bDTrLy75oM7HJvHLqX2ls4Y7GZQU2ayu+Zh
 	QqM3UDdrqZspKI
 Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
 	(envelope-from <s-beyer@gmx.net>)
-	id 1KMcCy-0002JX-Bx; Sat, 26 Jul 2008 07:20:44 +0200
+	id 1KMcCy-0002Jg-Ea; Sat, 26 Jul 2008 07:20:44 +0200
 X-Mailer: git-send-email 1.6.0.rc0.49.gd39f
-In-Reply-To: <1217049644-8874-1-git-send-email-s-beyer@gmx.net>
+In-Reply-To: <1217049644-8874-4-git-send-email-s-beyer@gmx.net>
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.41
+X-FuHaFi: 0.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90179>
 
-git-sequencer is planned as a backend for user scripts
-that execute a sequence of git instructions and perhaps
-need manual intervention, for example git-rebase or git-am.
+In principle a migration to git-sequencer is straightforward:
+Put all the mail from the mbox or Maildir into .git/rebase-apply
+and let the "patch" instruction of sequencer do the rest of the
+work.
+
+The git am --interactive part is a little more tricky.
+To get this working, "pause" instructions are put after every
+"patch" instruction and then be_interactive() swoops in,
+that allows the user to input his choice.
+
+Also a slight behavior change, that can be seen in the diff of
+the test cases, should be mentioned: If git-am has nothing to
+do, the user does not have to remove .git/rebase-apply or run
+git-am --skip manually. It automatically aborts instead, which
+seems to be an improvement.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
 Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 ---
- .gitignore       |    1 +
- Makefile         |    1 +
- command-list.txt |    1 +
- git-sequencer.sh | 2042 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 2045 insertions(+), 0 deletions(-)
- create mode 100755 git-sequencer.sh
+ git-am.sh     |  632 ++++++++++++++++++++-------------------------------------
+ git-rebase.sh |    7 +-
+ t/t4150-am.sh |    4 +-
+ 3 files changed, 220 insertions(+), 423 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index a213e8e..a617039 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -110,6 +110,7 @@ git-revert
- git-rm
- git-send-email
- git-send-pack
-+git-sequencer
- git-sh-setup
- git-shell
- git-shortlog
-diff --git a/Makefile b/Makefile
-index b01cf1c..08facb1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -248,6 +248,7 @@ SCRIPT_SH += git-rebase--interactive.sh
- SCRIPT_SH += git-rebase.sh
- SCRIPT_SH += git-repack.sh
- SCRIPT_SH += git-request-pull.sh
-+SCRIPT_SH += git-sequencer.sh
- SCRIPT_SH += git-sh-setup.sh
- SCRIPT_SH += git-stash.sh
- SCRIPT_SH += git-submodule.sh
-diff --git a/command-list.txt b/command-list.txt
-index 3583a33..44bb5b0 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -101,6 +101,7 @@ git-rev-parse                           ancillaryinterrogators
- git-rm                                  mainporcelain common
- git-send-email                          foreignscminterface
- git-send-pack                           synchingrepositories
-+git-sequencer                           plumbingmanipulators
- git-shell                               synchelpers
- git-shortlog                            mainporcelain
- git-show                                mainporcelain common
-diff --git a/git-sequencer.sh b/git-sequencer.sh
-new file mode 100755
-index 0000000..2c14af9
---- /dev/null
-+++ b/git-sequencer.sh
-@@ -0,0 +1,2042 @@
-+#!/bin/sh
-+# A git sequencer prototype.
-+
-+SUBDIRECTORY_OK=Yes
-+OPTIONS_KEEPDASHDASH=
-+OPTIONS_SPEC="\
-+git sequencer [options] [--] [<file>]
-+git sequencer (--continue | --abort | --skip | --edit | --status)
-+--
-+ Options to start a sequencing process
-+allow-dirty    run even if working tree is dirty
-+B,batch        run in batch-mode
-+onto=          checkout the given commit or branch first
-+no-advice      suppress advice when pausing (conflicts, etc)
-+q,quiet        suppress output
-+v,verbose      be more verbose
-+ Options to restart/change a sequencing process or show information
-+continue       continue paused sequencer process
-+abort          restore original branch and abort
-+skip           skip current patch and continue
-+status         show the status of the sequencing process
-+edit           invoke editor to let user edit the remaining insns
-+ Options to be used by user scripts
-+caller=        provide information string: name|abort|cont|skip
-+"
-+
-+. git-sh-setup
-+require_work_tree
-+
-+git var GIT_COMMITTER_IDENT >/dev/null ||
-+	die 'You need to set your committer info first'
-+
-+SEQ_DIR="$GIT_DIR/sequencer"
-+TODO="$SEQ_DIR/todo"
-+DONE="$SEQ_DIR/done"
-+MSG="$SEQ_DIR/message"
-+PATCH="$SEQ_DIR/patch"
-+AUTHOR_SCRIPT="$SEQ_DIR/author-script"
-+ORIG_AUTHOR_SCRIPT="$SEQ_DIR/author-script.orig"
-+CALLER_SCRIPT="$SEQ_DIR/caller-script"
-+WHY_FILE="$SEQ_DIR/why"
-+MARK_PREFIX='refs/sequencer-marks'
-+
-+warn () {
-+	printf "%s\n" "$*" >&2
-+}
-+
+diff --git a/git-am.sh b/git-am.sh
+index f4abd9d..ba93f02 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -34,103 +34,148 @@ cd_to_toplevel
+ git var GIT_COMMITTER_IDENT >/dev/null ||
+ 	die "You need to set your committer info first"
+ 
+-stop_here () {
+-    echo "$1" >"$dotest/next"
+-    exit 1
 +cleanup () {
-+	for ref in $(git for-each-ref --format='%(refname)' "$MARK_PREFIX")
-+	do
-+		git update-ref -d "$ref" "$ref" || return
-+	done
-+	test -z "$ORIG_HEAD" || git update-ref ORIG_HEAD "$ORIG_HEAD"
-+	rm -rf "$SEQ_DIR"
-+}
-+
-+print_advice () {
-+	case "$ADVICE,$WHY" in
-+	t,conflict)
-+		echo "
-+After resolving the conflicts, mark the corrected paths with
-+
-+	git add <paths>
-+
-+and run
-+
-+	$(print_caller --continue)
-+
-+Note, that your working tree must match the index."
-+		;;
-+	t,pause)
-+		echo "
-+You can now edit files and add them to the index.
-+Once you are satisfied with your changes, run
-+
-+	$(print_caller --continue)
-+
-+If you only want to change the commit message, run
-+git commit --amend before."
-+		;;
-+	t,run)
-+		echo "
-+Running failed:
-+	$@
-+
-+You can now fix the problem.  When manual runs pass,
-+add the changes to the index and invoke
-+
-+	$(print_caller --continue)"
-+		;;
-+	t,todo)
-+		echo "
-+Fix with git sequencer --edit or abort with $(print_caller --abort)."
-+		;;
-+	esac
-+}
-+
-+# Die if there has been a conflict
-+die_to_continue () {
-+	warn "$*"
-+	test -z "$BATCHMODE" ||
-+		die_abort 'Aborting, because of batch mode.'
-+	test -n "$WHY" || WHY=conflict
-+	echo "$WHY" >"$WHY_FILE"
-+	print_advice
-+	test -z "$ORIG_HEAD" || git update-ref ORIG_HEAD "$ORIG_HEAD"
-+	exit 3
-+}
-+
++	git gc --auto
++	rm -fr "$dotest"
+ }
+ 
+-stop_here_user_resolve () {
+-    if [ -n "$resolvemsg" ]; then
+-	    printf '%s\n' "$resolvemsg"
+-	    stop_here $1
+-    fi
+-    cmdline="git am"
+-    if test '' != "$interactive"
+-    then
+-        cmdline="$cmdline -i"
+-    fi
+-    if test '' != "$threeway"
+-    then
+-        cmdline="$cmdline -3"
+-    fi
+-    echo "When you have resolved this problem run \"$cmdline --resolved\"."
+-    echo "If you would prefer to skip this patch, instead run \"$cmdline --skip\"."
+-    echo "To restore the original branch and stop patching run \"$cmdline --abort\"."
+-
+-    stop_here $1
 +die_abort () {
-+	restore
 +	cleanup
 +	die "$1"
-+}
+ }
+ 
+-go_next () {
+-	rm -f "$dotest/$msgnum" "$dotest/msg" "$dotest/msg-clean" \
+-		"$dotest/patch" "$dotest/info"
+-	echo "$next" >"$dotest/next"
+-	this=$next
+-}
++be_interactive () {
++	msg="$GIT_DIR/sequencer/message"
++	patch="$GIT_DIR/sequencer/patch"
++	# we rely on sequencer here
 +
-+perform () {
-+	case "$VERBOSE" in
-+	0)
-+		"$@" >/dev/null
-+		;;
-+	1)
-+		output=$("$@" 2>&1 )
-+		status=$?
-+		test $status -ne 0 && printf '%s\n' "$output"
-+		return $status
-+		;;
-+	2)
-+		"$@"
-+		;;
-+	esac
-+}
-+
-+# test if working tree is dirty
-+require_clean_work_tree () {
-+	if test -z "$ALLOW_DIRTY"
-+	then
-+		git rev-parse --verify HEAD >/dev/null &&
-+		git update-index --ignore-submodules --refresh &&
-+		git diff-files --quiet --ignore-submodules ||
-+			die 'Working tree is dirty.'
-+	fi
-+	git diff-index --cached --quiet HEAD --ignore-submodules -- ||
-+		die 'Index is dirty'
-+}
-+
-+ORIG_REFLOG_ACTION="$GIT_REFLOG_ACTION"
-+
-+comment_for_reflog () {
-+	if test -z "$ORIG_REFLOG_ACTION"
-+	then
-+		GIT_REFLOG_ACTION='sequencer'
-+		test -z "$CALLER" ||
-+			GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION ($CALLER)"
-+		export GIT_REFLOG_ACTION
-+	fi
-+}
-+
-+# Get commit message from commit $1
-+commit_message () {
-+	git cat-file commit "$1" | sed -e '1,/^$/d'
-+}
-+
-+LAST_COUNT=
-+remove_from_todo () {
-+	sed -e 1q <"$TODO" >>"$DONE"
-+	sed -e 1d <"$TODO" >"$TODO.new"
-+	mv -f "$TODO.new" "$TODO"
-+	todo_ack "$TODO"
-+	if test "$VERBOSE" -gt 0
-+	then
-+		count=$(grep -c '^[^#]' <"$DONE")
-+		total=$(expr "$count" + "$(grep -c '^[^#]' <"$TODO")")
-+		if test "$LAST_COUNT" != "$count"
-+		then
-+			LAST_COUNT="$count"
-+			test "$VERBOSE" -eq 1 -a -t 1 -o "$VERBOSE" -gt 1 &&
-+				printf 'Sequencing (%d/%d)\r' "$count" "$total"
-+			test "$VERBOSE" -lt 2 || echo
-+		fi
-+	fi
-+}
-+
-+# Generate message and author script files
-+save_commit_data () {
-+	test -f "$MSG" ||
-+		commit_message "$1" >"$MSG"
-+	test -f "$AUTHOR_SCRIPT" ||
-+		get_author_ident_from_commit "$1" >"$AUTHOR_SCRIPT"
-+}
-+
-+# Generate a patch and die with "conflict" status code
-+die_with_patch () {
-+	save_commit_data "$1"
-+	perform git rerere
-+	die_to_continue "$2"
-+}
-+
-+reset_almost_hard () {
-+	perform git read-tree --reset -u $ALLOW_DIRTY "$1" &&
-+	perform git reset "$1"
-+}
-+
-+restore () {
-+	# XXX: We should undo all "ref" invocations, but that's left to be
-+	# done in the builtin-sequencer.
-+	read HEADNAME <"$SEQ_DIR/head-name"
-+	case $HEADNAME in
-+	refs/*)
-+		git symbolic-ref HEAD "$HEADNAME"
-+		;;
-+	esac &&
-+	reset_almost_hard "$ORIG_HEAD"
-+}
-+
-+has_action () {
-+	grep '^[^#]' "$1" >/dev/null
-+}
-+
-+# Check if text file $1 contains a commit message
-+has_message () {
-+	test -n "$(sed -n -e '/^Signed-off-by:/d;/^[^#]/p' <"$1")"
-+}
-+
-+# Count parents of commit $1
-+count_parents() {
-+	git cat-file commit "$1" | sed -n -e '1,/^$/p' | grep -c '^parent'
-+}
-+
-+# Evaluate the author script to get author information to
-+# apply it with "with_author git foo" then.
-+get_current_author () {
-+	if test -f "$AUTHOR_SCRIPT"
-+	then
-+		. "$AUTHOR_SCRIPT"
-+	else
-+		. "$ORIG_AUTHOR_SCRIPT"
-+	fi || die_abort 'Author script is damaged. This must not happen!'
-+}
-+
-+# Run command with author information
-+with_author () {
-+	GIT_AUTHOR_NAME="$GIT_AUTHOR_NAME" \
-+	GIT_AUTHOR_EMAIL="$GIT_AUTHOR_EMAIL" \
-+	GIT_AUTHOR_DATE="$GIT_AUTHOR_DATE" \
-+		"$@"
-+}
-+
-+# clean WHY_FILE and reset WHY
-+clean_why () {
-+	rm -f "$WHY_FILE"
-+	WHY=
-+}
-+
-+# Usage: pick_one (cherry-pick|revert) [-*|--edit] sha1
-+pick_one () {
-+	what="$1"
-+	shift
-+
-+	case "$what,$1" in
-+	revert,*)
-+		test "$1" != '--edit' &&
-+			what='revert --no-edit'
-+		;;
-+	cherry-pick,-*)
-+		;;
-+	cherry-pick,*)
-+		# fast forward
-+		if test "$(git rev-parse --verify "$1^" 2>/dev/null)" = \
-+			"$(git rev-parse --verify HEAD)"
-+		then
-+			reset_almost_hard "$1"
-+			return
-+		fi
-+		;;
-+	esac
-+	$use_perform git $what "$@"
-+}
-+
-+nth_string () {
-+	case "$1" in
-+	*1[0-9]|*[04-9])
-+		echo "$1th"
-+		;;
-+	*1)
-+		echo "$1st"
-+		;;
-+	*2)
-+		echo "$1nd"
-+		;;
-+	*3)
-+		echo "$1rd"
-+		;;
-+	esac
-+}
-+
-+make_squash_message () {
-+	if test -f "$squash_msg"
-+	then
-+		count=$(($(sed -n -e 's/^# This is [^0-9]*\([1-9][0-9]*\).*/\1/p' \
-+			<"$squash_msg" | sed -n -e '$p')+1))
-+		echo "# This is a combination of $count commits."
-+		sed -e '1d' -e '2,/^./{
-+			/^$/d
-+		}' <"$squash_msg"
-+	else
-+		count=2
-+		echo '# This is a combination of 2 commits.'
-+		echo '# The first commit message is:'
++	test -t 0 ||
++		die "cannot be interactive without stdin connected to a terminal."
++	action=$(cat "$dotest/interactive")
++	while test "$action" = again
++	do
 +		echo
-+		commit_message HEAD
-+	fi
-+	echo
-+	echo "# This is the $(nth_string "$count") commit message:"
-+	echo
-+	commit_message "$1"
-+}
-+
-+make_squash_message_multiple () {
-+	revlist=$(git rev-list --reverse "$sha1..HEAD")
-+	count=$(echo "$revlist" | wc -l)
-+	squash_i=0
-+	echo "# This is a combination of $count commits."
-+	for cur_sha1 in $revlist
-+	do
-+		squash_i=$(($squash_i+1))
-+		if test -f "$squash_msg"
++		echo "Commit Body is:"
++		echo "--------------------------"
++		cat "$msg"
++		echo "--------------------------"
++		if test -z "$1"
 +		then
-+			count=$(($count + $(sed -n -e \
-+				's/^# This is [^0-9]*\([1-9][0-9]*\).*/\1/p' \
-+				<"$squash_msg" | sed -n -e '$p')+1))
-+			sed -e '1d' -e '2,/^./{
-+				/^$/d
-+			}' <"$squash_msg"
++			printf "Apply? [y]es/[n]o/[e]dit/[v]iew patch/[a]ccept all "
++		else
++			echo 'Patch does not apply cleanly!'
++			printf "Apply+fix? [y]es/[n]o/[e]dit/[v]iew patch/[a]ccept all "
 +		fi
-+		echo
-+		echo "# This is the $(nth_string "$squash_i") commit message:"
-+		echo
-+		commit_message "$cur_sha1"
-+	done
-+}
-+
-+peek_next_command () {
-+	sed -n -e '/^#/d' -e '1s/ .*$//p' <"$TODO"
-+}
-+
-+# If $1 is a mark, make a ref from it; otherwise keep it.
-+# Note on marks:
-+#  * :0 is allowed
-+#  * :01 is the same as :1
-+mark_to_ref () {
-+	arg="$1"
-+	ref=$(expr "x$arg" : 'x:0*\([0-9][0-9]*\)$')
-+	test -n "$ref" &&
-+		arg="$MARK_PREFIX/$ref"
-+	printf '%s\n' "$arg"
-+}
-+
-+mark_to_commit () {
-+	git rev-parse --verify "$(mark_to_ref "$1")"
-+}
-+
-+
-+fallback_3way () {
-+	# Cleanup if not done before.
-+	rm -fr "$PATCH-merge-"*
-+
-+	# First see if the patch records the index info that we can use.
-+	perform git apply --build-fake-ancestor "$PATCH-merge-index" "$PATCH" &&
-+	GIT_INDEX_FILE="$PATCH-merge-index" git write-tree >"$PATCH-merge-base" ||
-+		die_to_continue 'Repository lacks necessary blobs to fall back on 3-way merge. Please hand-edit.'
-+
-+	test "$VERBOSE" -eq 0 ||
-+		echo 'Using index info to reconstruct a base tree...'
-+	GIT_INDEX_FILE="$PATCH-merge-index" git apply --cached "$PATCH" ||
-+		die_to_continue 'Patch does not apply to blobs recorded in its index.'
-+
-+	his_tree=$(GIT_INDEX_FILE="$PATCH-merge-index" git write-tree) &&
-+	orig_tree=$(cat "$PATCH-merge-base") &&
-+	rm -fr "$PATCH-merge-"* ||
-+		die_to_continue 'Writing new tree failed.'
-+
-+	test "$VERBOSE" -eq 0 ||
-+		echo 'Falling back to patching base and 3-way merge...'
-+
-+	# This is not so wrong.  Depending on which base we picked,
-+	# orig_tree may be wildly different from ours, but his_tree
-+	# has the same set of wildly different changes in parts the
-+	# patch did not touch, so recursive ends up canceling them,
-+	# saying that we reverted all those changes.
-+
-+	eval GITHEAD_$his_tree='"$firstline"'
-+	export GITHEAD_$his_tree
-+	perform git merge-recursive "$orig_tree" -- HEAD "$his_tree" || {
-+		perform git rerere
-+		die_to_continue 'Failed to merge in the changes.'
-+	}
-+}
-+
-+# Run hook "$@" (with arguments) if executable
-+run_hook () {
-+	test -z "$1" || return
-+	hookname="$1"
-+	hook="$GIT_DIR/hooks/$hookname"
-+	shift
-+	if test -x "$hook"
-+	then
-+		"$hook" "$@" ||
-+			die_to_continue "Hook $hookname failed."
-+	fi
-+}
-+
-+# Add Signed-off-by: line if general option --signoff is given
-+dashdash_signoff () {
-+	add_signoff=
-+	if test -n "$SIGNOFF"
-+	then
-+		last_signed_off_by=$(
-+			sed -n -e '/^Signed-off-by: /p' <"$MSG" | sed -n -e '$p'
-+		)
-+		test "$last_signed_off_by" = "$SIGNOFF" ||
-+			add_signoff=$(
-+				test '' = "$last_signed_off_by" && echo
-+				echo "$SIGNOFF"
-+			)
-+	fi
-+	{
-+		test -s "$MSG" && cat "$MSG"
-+		test -n "$add_signoff" && echo "$add_signoff"
-+	} >"$MSG.new"
-+	mv "$MSG.new" "$MSG"
-+}
-+
-+
-+### --caller-related functions
-+
-+# Show string for caller invocation for --abort/--continue/--skip
-+print_caller_info () {
-+	case "$1" in
-+	--abort)
-+		echo "$CALLER_ABRT"
-+		;;
-+	--continue)
-+		echo "$CALLER_CONT"
-+		;;
-+	--skip)
-+		echo "$CALLER_SKIP"
-+		;;
-+	*)
-+		warn 'Internal error: Unknown print_caller argument!'
-+		;;
-+	esac
-+}
-+
-+# Print the program to invoke to (--)abort/continue/skip
-+print_caller() {
-+	caller_info=$(print_caller_info "$1")
-+	if test -n "$CALLERCOMPARE" -a -n "$caller_info"
-+	then
-+		test -n "$CALLER" && printf "$CALLER "
-+		echo "$caller_info"
-+	else
-+		echo "git sequencer $1"
-+	fi
-+}
-+
-+# Test if --caller was set correctly
-+# $1 must be abort/continue/skip
-+test_caller () {
-+	caller_info=$(print_caller_info "--$1")
-+	test -n "$CALLERCOMPARE" -a \
-+		"$CALLERCOMPARE" != "$CALLERSTRING" -a \
-+		-n "$caller_info" &&
-+		die "You must use '$CALLER $caller_info' to $1!"
-+}
-+
-+# Generate $CALLER_SCRIPT file from "git foo|--abort|--continue|--skip"
-+# string $1
-+generate_caller_script () {
-+	echo "$1" | sed -e 's/^\(.*\)|\(.*\)|\(.*\)|\(.*\)$/\
-+CALLERCOMPARE="\0"\
-+CALLER="\1"\
-+CALLER_ABRT="\2"\
-+CALLER_CONT="\3"\
-+CALLER_SKIP="\4"/' >"$CALLER_SCRIPT"
-+}
-+
-+# Run caller script and set GIT_CHERRY_PICK_HELP
-+assure_caller () {
-+	test -r "$CALLER_SCRIPT" &&
-+		. "$CALLER_SCRIPT"
-+
-+	# we do not want cherry-pick to print *any* help
-+	GIT_CHERRY_PICK_HELP=""
-+	export GIT_CHERRY_PICK_HELP
-+}
-+
-+
-+### Helpers for check_* functions:
-+
-+# Print a warning on todo checking
-+todo_warn () {
-+	printf 'Warning at line %d, %s: %s\n' "$line" "$command" "$*"
-+}
-+
-+# Raise an error on todo checking
-+todo_error () {
-+	printf 'Error at line %d, %s: %s\n' "$line" "$command" "$*"
-+	retval=1
-+}
-+
-+# Test if $1 is a commit on todo checking
-+commit_check () {
-+	test "$(git cat-file -t "$1" 2>/dev/null)" = commit ||
-+		todo_error "'$1' is not a commit."
-+}
-+
-+# A helper function to check if $1 is a an available mark during check_*
-+arg_is_mark_check () {
-+	for cur_mark in $available_marks
-+	do
-+		test "$cur_mark" -eq "${1#:}" && return
-+	done
-+	todo_error "Mark $1 is not yet defined."
-+}
-+
-+# A helper function for check_* and mark usage:
-+# check if "$1" is a commit or a defined mark
-+arg_is_mark_or_commit_check () {
-+	if expr "x$1" : 'x:[0-9][0-9]*$' >/dev/null
-+	then
-+		arg_is_mark_check "$1"
-+	else
-+		commit_check "$1"
-+	fi
-+}
-+
-+
-+### Author script functions
-+
-+# Take "Name <e-mail>" in stdin and outputs author script
-+make_author_script_from_string () {
-+	sed -e "s/'/'"'\\'"''/g" \
-+	    -e 's/^\(.*\) <\(.*\)>.*$/GIT_AUTHOR_NAME='\''\1'\''\
-+GIT_AUTHOR_EMAIL='\''\2'\''\
-+GIT_AUTHOR_DATE=/'
-+}
-+
-+
-+### General option functions (and options spec)
-+
-+OPTIONS_GENERAL=' General options
-+author= override author
-+C,reuse-commit= reuse message and authorship data from commit
-+F,file= take commit message from given file
-+m,message= specify commit message
-+M,reuse-message= reuse message from commit
-+signoff add signoff
-+e,edit invoke editor to edit commit message'
-+
-+# Check if option is a general option
-+check_general_option () {
-+	general_shift=1
-+	case "$1" in
-+	--signoff)
-+		return 0
-+		;;
-+	--author)
-+		general_shift=2
-+		author_opt="t$author_opt"
-+		expr "x$2" : 'x.* <.*>' >/dev/null ||
-+			todo_error "Author \"$2\" not in the correct format \"Name <e-mail>\"."
-+		;;
-+	-m)
-+		general_shift=2
-+		msg_opt="t$msg_opt"
-+		;;
-+	-C)
-+		general_shift=2
-+		msg_opt="t$msg_opt"
-+		author_opt="t$author_opt"
-+		commit_check "$2"
-+		;;
-+	-M)
-+		general_shift=2
-+		msg_opt="t$msg_opt"
-+		commit_check "$2"
-+		;;
-+	-F)
-+		general_shift=2
-+		msg_opt="t$msg_opt"
-+		test -r "$2" ||
-+			todo_error "Cannot read file '$2'."
-+		;;
-+	-e)
-+		test -z "$BATCHMODE" ||
-+			todo_error '--batch and --edit options do not make sense together.'
-+		;;
-+	*)
-+		return 1
-+		;;
-+	esac
-+}
-+
-+# Set a general option variable or return 1
-+handle_general_option () {
-+	general_shift=1
-+	case "$1" in
-+	--signoff)
-+		SIGNOFF=$(git var GIT_COMMITTER_IDENT | sed -e '
-+				s/>.*/>/
-+				s/^/Signed-off-by: /')
-+		;;
-+	--author)
-+		general_shift=2
-+		AUTHOR=t
-+		echo "$2" |
-+			make_author_script_from_string >"$AUTHOR_SCRIPT"
-+		;;
-+	-m)
-+		general_shift=2
-+		MESSAGE="$2"
-+		;;
-+	-C)
-+		general_shift=2
-+		AUTHOR=t
-+		get_author_ident_from_commit "$2" >"$AUTHOR_SCRIPT"
-+		MESSAGE=$(commit_message "$2")
-+		;;
-+	-M)
-+		general_shift=2
-+		MESSAGE=$(commit_message "$2")
-+		;;
-+	-F)
-+		general_shift=2
-+		MESSAGE=$(cat "$2")
-+		;;
-+	-e)
-+		EDIT=--edit
-+		;;
-+	*)
-+		return 1
-+		;;
-+	esac
-+}
-+
-+
-+### Functions for checking and realizing TODO instructions
-+# Note that options_*, check_* and insn_* function names are reserved.
-+
-+options_pause="\
-+pause
-+--
-+"
-+
-+# Check the "pause" instruction
-+check_pause () {
-+	shift
-+	test -z "$BATCHMODE" ||
-+		todo_error '"pause" instruction and --batch do not make sense together.'
-+	test $# -eq 0 ||
-+		todo_error 'The pause instruction takes no arguments.'
-+	return 0
-+}
-+
-+# Realize the "pause" instruction
-+insn_pause () {
-+	save_commit_data HEAD
-+	echo 'pause' >"$WHY_FILE"
-+	WHY=pause print_advice
-+	test -z "$ORIG_HEAD" || git update-ref ORIG_HEAD "$ORIG_HEAD"
-+	exit 2
-+}
-+
-+
-+options_run="\
-+run [--dir=<path>] [--] <cmd> <args>...
-+--
-+dir= change directory before running command
-+"
-+
-+# Check the "run" instruction
-+check_run () {
-+	while test $# -gt 0
-+	do
-+		case "$1" in
-+		--dir)
-+			test -e "$2" ||
-+				todo_error "Path $2 does not exist."
-+			test -d "$2" ||
-+				todo_error "Path $2 is not a directory."
-+			shift 2
+ 
+-cannot_fallback () {
+-	echo "$1"
+-	echo "Cannot fall back to three-way merge."
+-	exit 1
++		read reply
++		case "$reply" in
++		[yY]*)
++			return 0
 +			;;
-+		--)
-+			shift
-+			break
++		[nN]*)
++			# pretend we never tried to apply
++			to=HEAD
++			test conflict = "$1" ||
++				to=HEAD^
++			git read-tree -m -u HEAD $to
++			git reset -q $to >/dev/null
++			return 1
 +			;;
-+		-*)
-+			todo_error "Unknown option $1"
++		[eE]*)
++			git_editor "$msg"
++			git commit --amend --file="$msg" --no-verify >/dev/null
 +			;;
-+		esac
-+	done
-+	# we don't check if cmd exists
-+	return 0
-+}
-+
-+# Realize the "run" instruction
-+insn_run () {
-+	runpath=./
-+	while test $# -gt 0
-+	do
-+		case "$1" in
-+		--dir)
-+			runpath="$2"
-+			shift 2
++		[vV]*)
++			LESS=-S ${PAGER:-less} "$patch"
 +			;;
-+		--)
-+			shift
-+			break
++		[aA]*)
++			echo 'accept' >"$dotest/interactive"
++			return 0
 +			;;
-+		esac
-+	done
-+
-+	savepath="$PWD"
-+	cd "$runpath"
-+	"$@"
-+	success="$?"
-+	cd "$savepath"
-+
-+	if test "$success" -ne 0
-+	then
-+		test -z "$BATCHMODE" ||
-+			die_abort "Running $1 failed. Aborting because of batch mode."
-+		save_commit_data HEAD
-+		echo 'run' >"$WHY_FILE"
-+		WHY=run print_advice "$@"
-+		test -z "$ORIG_HEAD" || git update-ref ORIG_HEAD "$ORIG_HEAD"
-+		exit 3
-+	fi
-+}
-+
-+
-+options_patch="\
-+patch [options] <file>
-+--
-+3,3way fall back to 3-way merge
-+k pass to git-mailinfo (keep subject)
-+n pass to git-mailinfo (no utf8)
-+$OPTIONS_GENERAL
-+ Options passed to git-apply
-+R,reverse reverse changes
-+context= ensure context of ... lines
-+p= remove ... leading slashes
-+unidiff-zero bypass unidiff checks
-+exclude= do not apply changes to given files
-+no-add ignore additions of patch
-+whitespace= set whitespace error behavior
-+inaccurate-eof support inaccurate EOFs
-+u no-op (backward compatibility)
-+binary no-op (backward compatibility)
-+"
-+
-+# Check the "patch" instruction
-+check_patch () {
-+	while test $# -gt 1
-+	do
-+		case "$1" in
-+		-3|-k|-n|-u|--binary|-R|--reverse|--unidiff-zero|--no-add|--inaccurate-eof)
++		*)
 +			:
 +			;;
-+		-p|--whitespace|--exclude|--context)
-+			shift
-+			;;
-+		--)
-+			shift
-+			break
-+			;;
-+		-*)
-+			check_general_option "$@" ||
-+				todo_warn "Unknown option $1"
-+			;;
-+		*)
-+			todo_error "Wrong number of arguments. ($# given, 1 wanted)"
-+			break
-+			;;
 +		esac
-+		shift $general_shift
 +	done
-+
-+	if test -f "$1" -a -r "$1"
-+	then
-+		grep -e '^diff' "$1" >/dev/null ||
-+			todo_error "File '$1' contains no patch."
-+	else
-+		todo_error "Cannot open file '$1'."
-+	fi
++	test "$action" = accept &&
++		sed -n -e '1s/^/Applying &/p' <"$msg"
 +	return 0
+ }
+ 
+-fall_back_3way () {
+-    O_OBJECT=`cd "$GIT_OBJECT_DIRECTORY" && pwd`
+-
+-    rm -fr "$dotest"/patch-merge-*
+-    mkdir "$dotest/patch-merge-tmp-dir"
+-
+-    # First see if the patch records the index info that we can use.
+-    git apply --build-fake-ancestor "$dotest/patch-merge-tmp-index" \
+-	"$dotest/patch" &&
+-    GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
+-    git write-tree >"$dotest/patch-merge-base+" ||
+-    cannot_fallback "Repository lacks necessary blobs to fall back on 3-way merge."
+-
+-    echo Using index info to reconstruct a base tree...
+-    if GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
+-	git apply $binary --cached <"$dotest/patch"
+-    then
+-	mv "$dotest/patch-merge-base+" "$dotest/patch-merge-base"
+-	mv "$dotest/patch-merge-tmp-index" "$dotest/patch-merge-index"
+-    else
+-        cannot_fallback "Did you hand edit your patch?
+-It does not apply to blobs recorded in its index."
+-    fi
+-
+-    test -f "$dotest/patch-merge-index" &&
+-    his_tree=$(GIT_INDEX_FILE="$dotest/patch-merge-index" git write-tree) &&
+-    orig_tree=$(cat "$dotest/patch-merge-base") &&
+-    rm -fr "$dotest"/patch-merge-* || exit 1
+-
+-    echo Falling back to patching base and 3-way merge...
++print_continue_info () {
++	echo 'When you have resolved this problem run "git am --resolved".'
++	echo 'If you would prefer to skip this patch, instead run "git am --skip".'
++	echo 'To restore the original branch and stop patching run "git am --abort".'
 +}
-+
-+# Realize the "patch" instruction
-+insn_patch () {
-+	apply_opts=
-+	mailinfo_opts=
-+	threeway=
-+
-+	# temporary files
-+	infofile="$SEQ_DIR/patch-info"
-+	msgfile="$SEQ_DIR/patch-msg"
-+
-+	while test "$#" -gt 1
+ 
+-    # This is not so wrong.  Depending on which base we picked,
+-    # orig_tree may be wildly different from ours, but his_tree
+-    # has the same set of wildly different changes in parts the
+-    # patch did not touch, so recursive ends up canceling them,
+-    # saying that we reverted all those changes.
++run_sequencer () {
++	git sequencer $seqopts --caller='git am|--abort|--resolved|--skip' "$@"
++	case "$?" in
++	0)
++		cleanup
++		exit 0
++		;;
++	2|3)
++		ret=$?
++		print_continue_info
++		exit $(($ret-2))
++		;;
++	*)
++		die_abort 'git-sequencer died unexpected. Aborting.'
++		;;
++	esac
++}
+ 
+-    eval GITHEAD_$his_tree='"$FIRSTLINE"'
+-    export GITHEAD_$his_tree
+-    git-merge-recursive $orig_tree -- HEAD $his_tree || {
+-	    git rerere
+-	    echo Failed to merge in the changes.
+-	    exit 1
+-    }
+-    unset GITHEAD_$his_tree
++run_sequencer_i () {
++	command="$1"
++	while true
 +	do
-+		case "$1" in
-+		-3)
-+			threeway=t
++		output=$(git sequencer $seqopts \
++			--caller='git am -i|--abort|--resolved|--skip' \
++			$command 2>&1)
++		case "$?" in
++		0)
++			cleanup
++			exit 0
 +			;;
-+		-k|-n)
-+			mailinfo_opts="$mailinfo_opts $1"
++		2)
++			if test -f "$dotest/conflict"
++			then
++				rm "$dotest/conflict"
++			else
++				be_interactive
++			fi
 +			;;
-+		-u|--binary)
-+			: Do nothing. It is there due to b/c only.
-+			;;
-+		-R|--reverse|--unidiff-zero|--no-add|--inaccurate-eof)
-+			apply_opts="$apply_opts $1"
-+			;;
-+		-p)
-+			shift
-+			apply_opts="$apply_opts -p$1"
-+			;;
-+		--whitespace|--exclude)
-+			apply_opts="$apply_opts $1=$2"
-+			shift
-+			;;
-+		--context)
-+			shift
-+			apply_opts="$apply_opts -C$1"
-+			;;
-+		--)
-+			shift
-+			break
++		3)
++			: >"$dotest/conflict"
++			be_interactive conflict
++			if test $? -eq 0
++			then
++				printf '%s\n' "$output" 1>&2
++				print_continue_info
++				exit 1
++			fi
 +			;;
 +		*)
-+			handle_general_option "$@"
++			die_abort "$output"
 +			;;
 +		esac
-+		shift $general_shift
++		seqopts=
++		command=--continue
 +	done
+ }
+ 
+ prec=4
+ dotest="$GIT_DIR/rebase-apply"
++todofile="$dotest/todo"
+ sign= utf8=t keep= skip= interactive= resolved= binary= rebasing= abort=
+-resolvemsg= resume=
+-git_apply_opt=
++opts=
+ 
+ while test $# != 0
+ do
+ 	case "$1" in
+ 	-i|--interactive)
+-		interactive=t ;;
++		interactive=_i ;;
+ 	-b|--binary)
+ 		binary=t ;;
+ 	-3|--3way)
+@@ -157,9 +202,9 @@ do
+ 	--resolvemsg)
+ 		shift; resolvemsg=$1 ;;
+ 	--whitespace)
+-		git_apply_opt="$git_apply_opt $1=$2"; shift ;;
++		opts="$opts $1=$2"; shift ;;
+ 	-C|-p)
+-		git_apply_opt="$git_apply_opt $1$2"; shift ;;
++		opts="$opts $1$2"; shift ;;
+ 	--)
+ 		shift; break ;;
+ 	*)
+@@ -168,363 +213,118 @@ do
+ 	shift
+ done
+ 
+-# If the dotest directory exists, but we have finished applying all the
+-# patches in them, clear it out.
+-if test -d "$dotest" &&
+-   last=$(cat "$dotest/last") &&
+-   next=$(cat "$dotest/next") &&
+-   test $# != 0 &&
+-   test "$next" -gt "$last"
+-then
+-   rm -fr "$dotest"
+-fi
+-
+ if test -d "$dotest"
+ then
+-	case "$#,$skip$resolved$abort" in
+-	0,*t*)
+-		# Explicit resume command and we do not have file, so
+-		# we are happy.
+-		: ;;
+-	0,)
+-		# No file input but without resume parameters; catch
+-		# user error to feed us a patch from standard input
+-		# when there is already $dotest.  This is somewhat
+-		# unreliable -- stdin could be /dev/null for example
+-		# and the caller did not intend to feed us a patch but
+-		# wanted to continue unattended.
+-		tty -s
+-		;;
+-	*)
+-		false
+-		;;
+-	esac ||
+-	die "previous rebase directory $dotest still exists but mbox given."
+-	resume=yes
++	test "$#" != 0 &&
++		die "previous rebase directory $dotest still exists but mbox given."
+ 
+-	case "$skip,$abort" in
+-	t,)
+-		git rerere clear
+-		git read-tree --reset -u HEAD HEAD
+-		orig_head=$(cat "$GIT_DIR/ORIG_HEAD")
+-		git reset HEAD
+-		git update-ref ORIG_HEAD $orig_head
+-		;;
+-	,t)
+-		git rerere clear
+-		git read-tree --reset -u HEAD ORIG_HEAD
+-		git reset ORIG_HEAD
+-		rm -fr "$dotest"
+-		exit ;;
+-	esac
+-else
+-	# Make sure we are not given --skip, --resolved, nor --abort
+-	test "$skip$resolved$abort" = "" ||
+-		die "Resolve operation not in progress, we are not resuming."
++	test -f "$dotest/interactive" &&
++		interactive=_i action=$(cat "$dotest/interactive")
+ 
+-	# Start afresh.
+-	mkdir -p "$dotest" || exit
++	# No file input but without resume parameters; catch
++	# user error to feed us a patch from standard input
++	# when there is already $dotest.  This is somewhat
++	# unreliable -- stdin could be /dev/null for example
++	# and the caller did not intend to feed us a patch but
++	# wanted to continue unattended.
++	test -z "$abort$resolved$skip" && tty -s
+ 
+-	if test -n "$prefix" && test $# != 0
+-	then
+-		first=t
+-		for arg
+-		do
+-			test -n "$first" && {
+-				set x
+-				first=
+-			}
+-			case "$arg" in
+-			/*)
+-				set "$@" "$arg" ;;
+-			*)
+-				set "$@" "$prefix$arg" ;;
+-			esac
+-		done
+-		shift
+-	fi
+-	git mailsplit -d"$prec" -o"$dotest" -b -- "$@" > "$dotest/last" ||  {
+-		rm -fr "$dotest"
+-		exit 1
+-	}
++	test -n "$abort" && run_sequencer$interactive --abort
++	test -n "$resolved" && run_sequencer$interactive --continue
++	test -n "$skip" && run_sequencer$interactive --skip
+ 
+-	# -b, -s, -u, -k and --whitespace flags are kept for the
+-	# resuming session after a patch failure.
+-	# -3 and -i can and must be given when resuming.
+-	echo "$binary" >"$dotest/binary"
+-	echo " $ws" >"$dotest/whitespace"
+-	echo "$sign" >"$dotest/sign"
+-	echo "$utf8" >"$dotest/utf8"
+-	echo "$keep" >"$dotest/keep"
+-	echo 1 >"$dotest/next"
+-	if test -n "$rebasing"
+-	then
+-		: >"$dotest/rebasing"
+-	else
+-		: >"$dotest/applying"
+-		git update-ref ORIG_HEAD HEAD
+-	fi
++	die "$dotest still exists. Use git am --abort/--skip/--resolved."
+ fi
+ 
+-case "$resolved" in
+-'')
+-	files=$(git diff-index --cached --name-only HEAD --) || exit
+-	if [ "$files" ]; then
+-	   echo "Dirty index: cannot apply patches (dirty: $files)" >&2
+-	   exit 1
+-	fi
+-esac
++# Make sure we are not given --skip, --resolved, nor --abort
++test -z "$abort$resolved$skip" ||
++	die 'git-am is not in progress. You cannot use --abort/--skip/--resolved then.'
+ 
+-if test "$(cat "$dotest/binary")" = t
+-then
+-	binary=--allow-binary-replacement
+-fi
+-if test "$(cat "$dotest/utf8")" = t
+-then
+-	utf8=-u
+-else
+-	utf8=-n
+-fi
+-if test "$(cat "$dotest/keep")" = t
+-then
+-	keep=-k
+-fi
+-ws=`cat "$dotest/whitespace"`
+-if test "$(cat "$dotest/sign")" = t
++# sequencer running?
++git sequencer --status >/dev/null 2>&1 &&
++	die "Sequencer already started. Cannot run git-am."
 +
-+	filename="$1"
++# Start afresh.
++mkdir -p "$dotest" ||
++	die "Could not create $dotest directory."
 +
-+	git mailinfo $mailinfo_opts "$msgfile" "$PATCH" \
-+		<"$filename" >"$infofile" ||
-+		die_abort 'Could not read or parse mail'
-+
-+	# if author not set by option, read author information of patch
-+	if test -z "$AUTHOR"
-+	then
-+		cp "$ORIG_AUTHOR_SCRIPT" "$AUTHOR_SCRIPT"
-+		sed -e "s/'/'"'\\'"''/g" -n -e '
-+			s/^Author: \(.*\)$/GIT_AUTHOR_NAME='\''\1'\''/p;
-+			s/^Email: \(.*\)$/GIT_AUTHOR_EMAIL='\''\1'\''/p;
-+			s/^Date: \(.*\)$/GIT_AUTHOR_DATE='\''\1'\''/p
-+		' <"$infofile" >>"$AUTHOR_SCRIPT"
-+		# If sed's result is empty, we keep the original
-+		# author script by appending.
-+	fi
-+
-+	# Ignore every mail that's not containing a patch
-+	test -s "$PATCH" || {
-+		warn 'Does not contain patch!'
-+		return 0
-+	}
-+
-+	edit_msg=
-+	if grep -e '^Subject:' "$infofile" >/dev/null
-+	then
-+		# add subject to commit message
-+		sed -n -e '/^Subject:/ s/Subject: //p' <"$infofile"
-+		echo
-+		echo
-+		cat "$msgfile"
-+	else
-+		cat "$msgfile"
-+		edit_msg=t
-+	fi | git stripspace >"$MSG"
-+	rm -f "$infofile" "$msgfile"
-+
-+	firstline=$(sed -e '1q' <"$MSG")
-+
-+	get_current_author
-+
-+	test -n "$MESSAGE" && printf '%s\n' "$MESSAGE" >"$MSG"
-+	test -z "$firstline" && firstline=$(sed -e '1q' <"$MSG")
-+
-+	dashdash_signoff
-+
-+	with_author run_hook applypatch-msg "$MSG"
-+	failed=
-+	git apply $apply_opts --index "$PATCH" || failed=t
-+
-+	if test -n "$failed" -a -n "$threeway" && (with_author fallback_3way)
-+	then
-+		# Applying the patch to an earlier tree and merging the
-+		# result may have produced the same tree as ours.
-+		git diff-index --quiet --cached HEAD -- && {
-+			echo 'No changes -- Patch already applied.'
-+			return 0
-+			# XXX: do we want that?
++if test -n "$prefix" && test $# != 0
+ then
+-	SIGNOFF=`git-var GIT_COMMITTER_IDENT | sed -e '
+-			s/>.*/>/
+-			s/^/Signed-off-by: /'
+-		`
+-else
+-	SIGNOFF=
++	first=t
++	for arg
++	do
++		test -n "$first" && {
++			set x
++			first=
 +		}
-+		# clear apply_status -- we have successfully merged.
-+		failed=
-+	fi
-+
-+	if test -n "$failed"
-+	then
-+		die_to_continue "Patch failed: $firstline"
-+		# XXX: We actually needed a git-apply flag that creates
-+		# conflict markers and sets the DIFF_STATUS_UNMERGED flag.
-+	fi
-+
-+	with_author run_hook pre-applypatch
-+
-+	test -n "$EDIT" && edit_msg=t
-+	if ! has_message "$MSG" || test -n "$edit_msg"
-+	then
-+		echo "
-+# Please enter the commit message for the applied patch.
-+# (Comment lines starting with '#' will not be included)" >>"$MSG"
-+
-+		git_editor "$MSG" ||
-+			die_with_patch HEAD 'Editor returned error.'
-+		has_message "$MSG" ||
-+			die_with_patch HEAD 'No commit message given.'
-+	fi
-+
-+	tree=$(git write-tree) &&
-+	parent=$(git rev-parse --verify HEAD) &&
-+	commit=$(with_author git commit-tree "$tree" -p "$parent" <"$MSG") &&
-+	git update-ref -m "$GIT_REFLOG_ACTION: $firstline" HEAD "$commit" "$parent" ||
-+		die_to_continue 'Could not commit tree.'
-+
-+	test -x "$GIT_DIR/hooks/post-applypatch" &&
-+		with_author "$GIT_DIR/hooks/post-applypatch"
-+
-+	return 0
-+}
-+
-+
-+options_pick="\
-+pick [options] <commit>
-+--
-+R,reverse revert introduced changes
-+mainline= specify parent number to use for merge commits
-+$OPTIONS_GENERAL
-+"
-+
-+# Check the "pick" instruction
-+check_pick () {
-+	mainline=
-+	while test $# -gt 1
-+	do
-+		case "$1" in
-+		-R)
-+			;;
-+		--mainline)
-+			shift
-+			mainline="$1"
-+			test "$mainline" -gt 0 || {
-+				todo_error '--mainline needs an integer beginning from 1.'
-+				mainline=
-+			}
-+			;;
-+		--)
-+			shift
-+			break
-+			;;
-+		-*)
-+			check_general_option "$@" ||
-+				todo_warn "Unknown option $1"
-+			;;
++		case "$arg" in
++		/*)
++			set "$@" "$arg" ;;
 +		*)
-+			todo_error "Wrong number of arguments. ($# given, 1 wanted)"
-+			break
-+			;;
++			set "$@" "$prefix$arg" ;;
 +		esac
-+		shift $general_shift
 +	done
-+
-+	if test -n "$mainline"
-+	then
-+		parents=$(count_parents "$1")
-+		test "$parents" -lt "$mainline" &&
-+			todo_error "Commit has only $parents (less than $mainline) parents."
-+		test "$parents" -eq 1 &&
-+			todo_warn 'Commit is not a merge at all.'
-+	fi
-+
-+	commit_check "$1"
-+
-+	return 0
-+}
-+
-+# Realize the "pick" instruction
-+insn_pick () {
-+	op=cherry-pick
-+	mainline=
-+	while test $# -gt 1
-+	do
-+		case "$1" in
-+		-R)
-+			op=revert
-+			;;
-+		--mainline)
-+			mainline="$1 $2"
-+			shift
-+			;;
-+		--)
-+			shift
-+			break
-+			;;
-+		-*)
-+			handle_general_option "$@"
-+			;;
-+		esac
-+		shift $general_shift
-+	done
-+
-+	sha1=$(git rev-parse --verify "$1")
-+
-+	edit_msg="$EDIT"
-+
-+	# Don't edit on pick, but later, if author or message given.
-+	test -n "$AUTHOR" -o -n "$MESSAGE" && edit_msg=
-+
-+	# Be kind to users and ignore --mainline=1 on non-merge commits
-+	test -n "$mainline" -a 2 -gt $(count_parents "$sha1") && mainline=
-+
-+	use_perform=
-+	test -n "$edit_msg" ||
-+		use_perform=perform
-+
-+	pick_one "$op" $edit_msg $mainline $sha1 ||
-+		die_with_patch $sha1 "Could not apply $sha1."
-+
-+	test -n "$EDIT" ||
-+		use_perform=perform
-+
-+	get_current_author
-+	signoff=
-+	test -n "$SIGNOFF" && signoff=-s
-+	if test -n "$AUTHOR" -a -n "$MESSAGE"
-+	then
-+		# this is just because we only want to do ONE amending commit
-+		$use_perform git commit --amend $EDIT $signoff --no-verify \
-+			--author "$GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>" \
-+			--message="$MESSAGE"
-+	elif test -n "$AUTHOR"
-+	then
-+		# correct author if AUTHOR is set
-+		$use_perform git commit --amend $EDIT --no-verify -C HEAD \
-+			--author "$GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>"
-+	elif test -n "$MESSAGE"
-+	then
-+		# correct commit message if MESSAGE is set
-+		$use_perform git commit --amend $EDIT $signoff --no-verify \
-+			-C HEAD --message="$MESSAGE"
-+	elif test -n "$SIGNOFF"
-+	then
-+		# only add signoff
-+		$use_perform git commit --amend $EDIT $signoff --no-verify \
-+			-C HEAD
-+	fi
-+
-+	return 0
-+}
-+
-+options_edit="\
-+edit <commit>
-+--
-+"
-+
-+# Check the "edit" instruction
-+check_edit () {
 +	shift
-+	test -z "$BATCHMODE" ||
-+		todo_error '"edit" instruction and --batch do not make sense together.'
-+	test $# -eq 1 ||
-+		todo_error "Wrong number of arguments. ($# given, 1 wanted)"
-+	return 0
-+}
-+
-+# Realize the "edit" instruction
-+insn_edit () {
-+	shift
-+	insn_pick "$1"
-+	echo '# pausing' >>"$DONE"
-+	insn_pause
-+}
-+
-+
-+options_squash="\
-+squash <commit>
-+squash [options] --from <mark>
-+--
-+from squash all commits from <mark>
-+collect-signoffs collect Signed-off-by: lines
-+include-merges do not fail on merge commits
-+$OPTIONS_GENERAL
-+"
-+
-+# Check the "squash" instruction
-+check_squash () {
-+	from=
-+	collect=
-+	merges=
-+	while test $# -gt 1
-+	do
-+		case "$1" in
-+		--from)
-+			from=t
-+			;;
-+		--collect-signoffs)
-+			collect=t
-+			todo_warn 'Not yet implemented.'
-+			;;
-+		--include-merges)
-+			merges=t
-+			;;
-+		--)
-+			shift
-+			break
-+			;;
-+		*)
-+			check_general_option "$@" ||
-+				todo_error "Unknown option $1"
-+			;;
-+		esac
-+		shift $general_shift
-+	done
-+
-+	# in --from mode?
-+	if test -n "$from"
-+	then
-+		test -z "$merges" &&
-+			cat "$DONE" "$TODO" |
-+			sed -n -e '/^[ \t]*mark[ \t]*:\{0,1\}'"${1#:}"'\($\|[^0-9]\)/,'"$line"'p' |
-+			grep '^[ \t]*merge' >/dev/null &&
-+			todo_error "$1..HEAD contains a merge commit. You may try --include-merges."
-+
-+		arg_is_mark_check "$1"
-+	else
-+		test -n "$merges" &&
-+			todo_error '--include-merges only makes sense with --from <mark>.'
-+		test -n "$collect" &&
-+			todo_error '--collect-signoffs only makes sense with --from <mark>.'
-+
-+		commit_check "$1"
-+	fi
-+
-+	return 0
-+}
-+
-+# Realize the "squash" instruction
-+insn_squash () {
-+	squash_msg="$MSG-squash"
-+	from=
-+	while test $# -gt 1
-+	do
-+		case "$1" in
-+		--from)
-+			from=t
-+			;;
-+		--collect-signoffs)
-+			warn '--collect-signoffs is not implemented.'
-+			# XXX
-+			;;
-+		--include-merges)
-+			: # This has to be done during check_squash
-+			;;
-+		--)
-+			shift
-+			break
-+			;;
-+		*)
-+			handle_general_option "$@"
-+			;;
-+		esac
-+		shift $general_shift
-+	done
-+
-+	if test -n "$from"
-+	then
-+		sha1=$(mark_to_commit ":${1#:}")
-+	else
-+		sha1=$(git rev-parse --verify "$1")
-+	fi
-+
-+	# Hm, somehow I don't think --skip on a conflicting squash
-+	# may be useful, but if someone wants to do it, it should
-+	# do the obvious: skip what squash would do.
-+	echo "$(git rev-parse HEAD)" >"$SEQ_DIR/skiphead"
-+
-+	if test -n "$MESSAGE"
-+	then
-+		printf '%s\n' "$MESSAGE" >"$MSG"
-+	else
-+		if test -n "$from"
-+		then
-+			make_squash_message_multiple "$sha1" >"$MSG"
-+		else
-+			make_squash_message "$sha1" >"$MSG"
-+		fi
-+	fi
-+
-+	case "$(peek_next_command)" in
-+	squash)
-+		edit_commit=
-+		use_perform=perform
-+		cp "$MSG" "$squash_msg"
-+		;;
-+	*)
-+		edit_commit=-e
-+		use_perform=
-+		rm -f "$squash_msg"
-+		;;
-+	esac
-+
-+	test -n "$MESSAGE" && edit_commit=
-+	test -n "$EDIT" && edit_commit=-e
-+
-+	# is --author (or equivalent) set?
-+	if test -n "$AUTHOR"
-+	then
-+		# evaluate author script
-+		get_current_author
-+	else
-+		# if --author is not given, we get the authorship
-+		# information from the commit before.
-+		eval "$(get_author_ident_from_commit HEAD)"
-+		# but we do not write an author script
-+	fi
-+
-+	# --from or not
-+	failed=
-+	if test -n "$from"
-+	then
-+		perform git reset --soft "$sha1"
-+	else
-+		perform git reset --soft HEAD^
-+
-+		pick_one cherry-pick -n "$sha1" || failed=t
-+	fi
-+
-+	dashdash_signoff
-+
-+	if test -z "$failed"
-+	then
-+		# This is like --amend, but with a different message
-+		with_author $use_perform git commit --no-verify \
-+			-F "$MSG" $edit_commit || failed=t
-+	else
-+		cp "$MSG" "$GIT_DIR/SQUASH_MSG"
-+		warn
-+		die_with_patch $sha1 "Could not apply $sha1."
-+	fi
-+
-+	return 0
-+}
-+
-+
-+options_mark="\
-+mark <mark>
-+--
-+"
-+
-+# Check the "mark" instruction
-+check_mark () {
-+	shift
-+	test $# -eq 1 ||
-+		todo_error "Wrong number of arguments. ($# given, 1 wanted)"
-+	my_mark=$(expr "x${1#:}" : 'x0*\([0-9][0-9]*\)$')
-+	test -n "$my_mark" ||
-+		todo_error "Mark $1 not an integer."
-+	expr "x$available_marks " : " $my_mark " >/dev/null &&
-+		todo_error "Mark :$my_mark already defined. Choose another integer."
-+	available_marks="$available_marks $my_mark"
-+
-+	return 0
-+}
-+
-+# Realize the "mark" instruction
-+insn_mark () {
-+	shift
-+	given="$1"
-+
-+	mark=$(mark_to_ref ":${given#:}")
-+	git update-ref "$mark" HEAD
-+	return 0
-+}
-+
-+
-+options_merge="\
-+merge [options] <commit-ish> ...
-+--
-+standard generate default commit message
-+s,strategy= use merge strategy ...
-+$OPTIONS_GENERAL
-+"
-+
-+# Check the "merge" instruction
-+check_merge () {
-+	while test $# -gt 1
-+	do
-+		case "$1" in
-+		--standard)
-+			msg_opt="t$msg_opt"
-+			;;
-+		-s)
-+			shift
-+			;;
-+		--)
-+			shift
-+			break
-+			;;
-+		-*)
-+			check_general_option "$@" ||
-+				todo_error "Unknown option $1"
-+			;;
-+		esac
-+		shift $general_shift
-+	done
-+
-+	test $# -gt 0 ||
-+		todo_error 'What are my parents? Need new parents!'
-+
-+	while test $# -gt 0
-+	do
-+		arg_is_mark_or_commit_check "$1"
-+		shift
-+	done
-+	return 0
-+}
-+
-+# Realize the "merge" instruction
-+insn_merge () {
-+	standard=
-+
-+	while test $# -gt 1
-+	do
-+		case "$1" in
-+		--standard)
-+			standard=t
-+			;;
-+		-s)
-+			shift
-+			strategy="-s $1"
-+			;;
-+		--)
-+			shift
-+			break
-+			;;
-+		-*)
-+			handle_general_option "$@"
-+			;;
-+		esac
-+		shift $general_shift
-+	done
-+
-+	new_parents=
-+	for p in "$@"
-+	do
-+		new_parents="$new_parents $(mark_to_ref $p)"
-+	done
-+	new_parents="${new_parents# }"
-+
-+	get_current_author
-+
-+	if test -n "$standard"
-+	then
-+		for cur_parent in $new_parents
-+		do
-+			printf '%s\t\t%s' \
-+				"$(git rev-parse "$cur_parent")" "$cur_parent"
-+		done | git fmt-merge-msg >"$MSG"
-+	fi
-+
-+	test -n "$MESSAGE" &&
-+		printf '%s\n' "$MESSAGE" >"$MSG"
-+
-+	dashdash_signoff
-+	if ! has_message "$MSG" || test -n "$EDIT"
-+	then
-+		echo "
-+# Please enter the merge commit message.
-+# (Comment lines starting with '#' will not be included)" >>"$MSG"
-+
-+		git_editor "$MSG" ||
-+			die_with_patch HEAD 'Editor returned error.'
-+		has_message "$MSG" ||
-+			die_with_patch HEAD 'No commit message given.'
-+	fi
-+
-+	if ! perform git merge --no-commit $strategy $new_parents
-+	then
-+		perform git rerere
-+		cp "$MSG" "$GIT_DIR/MERGE_MSG"
-+		die_to_continue "Error merging $new_parents."
-+	fi
-+	with_author perform git commit -F "$MSG" --no-verify
-+	return 0
-+}
-+
-+
-+options_reset="\
-+reset <commit-ish>
-+--
-+"
-+
-+# Check the "reset" instruction
-+check_reset () {
-+	shift
-+	test $# -eq 1 ||
-+		todo_error "Wrong number of arguments. ($# given, 1 wanted)"
-+	arg_is_mark_or_commit_check "$1"
-+
-+	return 0
-+}
-+
-+# Realize the "reset" instruction
-+insn_reset () {
-+	shift
-+	reset_almost_hard "$(mark_to_commit "$1")"
-+}
-+
-+
-+options_ref="\
-+ref <ref>
-+--
-+"
-+
-+# Check the "ref" instruction
-+check_ref () {
-+	shift
-+	test $# -eq 1 ||
-+		todo_error "Wrong number of arguments. ($# given, 1 wanted)"
-+	return 0
-+}
-+
-+# Realize the "ref" instruction
-+insn_ref () {
-+	shift
-+	perform git update-ref "$1" HEAD
-+}
-+
-+
-+### Instruction main loop
-+
-+# Run check_* or insn_* with massaged options
-+# Usage: run_insn (check|do) <insn> <insn options>
-+run_insn () {
-+	c_or_i="$1"
-+	insn="$2"
-+	shift
-+	shift
-+	eval "option_spec=\"\$options_$insn\""
-+	eval "$(printf "%s" "$option_spec" |
-+		git rev-parse --parseopt -- "$@" ||
-+		echo return 1)"
-+	case "$c_or_i" in
-+	check)
-+		check_$insn "$@"
-+		;;
-+	do)
-+		insn_$insn "$@"
-+		;;
-+	esac
-+}
-+
-+# Execute the first line of the current TODO file
-+execute_next () {
-+	read -r command rol <"$TODO"
-+	test "$VERBOSE" -gt 1 &&
-+		printf 'Next line: %s\n' "$command $rol"
-+
-+	remove_from_todo
-+	case "$command" in
-+	'#'*|'')
-+		;;
-+	*)
-+		comment_for_reflog $command
-+		# reset general options
-+		rm -f "$AUTHOR_SCRIPT" "$MSG"
-+		echo 'HEAD' >"$SEQ_DIR/skiphead"
-+		general_shift=1
-+		AUTHOR=
-+		EDIT=
-+		MESSAGE=
-+		SIGNOFF=
-+		# XXX: eval is evil!
-+		eval "run_insn do $command $rol" ||
-+			die_to_continue 'An unexpected error occured.'
-+		;;
-+	esac
-+}
-+
-+# Execute the rest of the TODO file and finish
-+execute_rest () {
-+	while has_action "$TODO"
-+	do
-+		execute_next
-+	done
-+
-+	comment_for_reflog finish
-+	if test -n "$ONTO"
-+	then
-+		git update-ref -m "$GIT_REFLOG_ACTION: $ONTO" "$ONTO" HEAD &&
-+		git symbolic-ref HEAD "$ONTO"
-+	fi &&
+ fi
++last=$(git mailsplit -d"$prec" -o"$dotest" -b -- "$@") ||  {
 +	cleanup
-+	exit
++	exit 1
 +}
++this=1
+ 
+-last=`cat "$dotest/last"`
+-this=`cat "$dotest/next"`
+-if test "$skip" = t
+-then
+-	this=`expr "$this" + 1`
+-	resume=
++files=$(git diff-index --cached --name-only HEAD --) || exit
++if [ "$files" ]; then
++	echo "Dirty index: cannot apply patches (dirty: $files)" >&2
++	exit 1
+ fi
+ 
+-if test "$this" -gt "$last"
++test -n "$interactive" && echo 'again' >"$dotest/interactive"
 +
-+# We don't need to check a todo file if it has not changed
-+# since it has last been acknowledged to be sane.
-+todo_has_changed () {
-+	test -f "$1.sum" || return 0
-+	test "$(git hash-object "$1")" != "$(cat "$1.sum")"
-+}
++# converting our options to git-sequencer file insn options
++test -n "$binary" && opts="$opts --binary"
++test -n "$utf8" || opts="$opts -n"
++test -n "$keep" && opts="$opts -k"
++test -n "$sign" && opts="$opts --signoff"
++test -n "$threeway" && opts="$opts -3"
 +
-+# acknowledge todo file to be sane
-+todo_ack () {
-+	git hash-object "$1" >"$1.sum"
-+}
++# these files are created for tab completion scripts
++if test -n "$rebasing"
+ then
+-	echo Nothing to do.
+-	rm -fr "$dotest"
+-	exit
++	: >"$dotest/rebasing"
++else
++	: >"$dotest/applying"
++	git update-ref ORIG_HEAD HEAD
+ fi
+ 
++# create todofile
++: > "$todofile" ||
++	die_abort "Cannot create $todofile"
+ while test "$this" -le "$last"
+ do
+-	msgnum=`printf "%0${prec}d" $this`
+-	next=`expr "$this" + 1`
+-	test -f "$dotest/$msgnum" || {
+-		resume=
+-		go_next
+-		continue
+-	}
+-
+-	# If we are not resuming, parse and extract the patch information
+-	# into separate files:
+-	#  - info records the authorship and title
+-	#  - msg is the rest of commit log message
+-	#  - patch is the patch body.
+-	#
+-	# When we are resuming, these files are either already prepared
+-	# by the user, or the user can tell us to do so by --resolved flag.
+-	case "$resume" in
+-	'')
+-		git mailinfo $keep $utf8 "$dotest/msg" "$dotest/patch" \
+-			<"$dotest/$msgnum" >"$dotest/info" ||
+-			stop_here $this
+-
+-		# skip pine's internal folder data
+-		grep '^Author: Mail System Internal Data$' \
+-			<"$dotest"/info >/dev/null &&
+-			go_next && continue
+-
+-		test -s "$dotest/patch" || {
+-			echo "Patch is empty.  Was it split wrong?"
+-			stop_here $this
+-		}
+-		if test -f "$dotest/rebasing" &&
+-			commit=$(sed -e 's/^From \([0-9a-f]*\) .*/\1/' \
+-				-e q "$dotest/$msgnum") &&
+-			test "$(git cat-file -t "$commit")" = commit
+-		then
+-			git cat-file commit "$commit" |
+-			sed -e '1,/^$/d' >"$dotest/msg-clean"
+-		else
+-			SUBJECT="$(sed -n '/^Subject/ s/Subject: //p' "$dotest/info")"
+-			case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
+-
+-			(printf '%s\n\n' "$SUBJECT"; cat "$dotest/msg") |
+-				git stripspace > "$dotest/msg-clean"
+-		fi
+-		;;
+-	esac
+-
+-	GIT_AUTHOR_NAME="$(sed -n '/^Author/ s/Author: //p' "$dotest/info")"
+-	GIT_AUTHOR_EMAIL="$(sed -n '/^Email/ s/Email: //p' "$dotest/info")"
+-	GIT_AUTHOR_DATE="$(sed -n '/^Date/ s/Date: //p' "$dotest/info")"
+-
+-	if test -z "$GIT_AUTHOR_EMAIL"
+-	then
+-		echo "Patch does not have a valid e-mail address."
+-		stop_here $this
+-	fi
+-
+-	export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE
+-
+-	case "$resume" in
+-	'')
+-	    if test '' != "$SIGNOFF"
+-	    then
+-		LAST_SIGNED_OFF_BY=`
+-		    sed -ne '/^Signed-off-by: /p' \
+-		    "$dotest/msg-clean" |
+-		    sed -ne '$p'
+-		`
+-		ADD_SIGNOFF=`
+-		    test "$LAST_SIGNED_OFF_BY" = "$SIGNOFF" || {
+-		    test '' = "$LAST_SIGNED_OFF_BY" && echo
+-		    echo "$SIGNOFF"
+-		}`
+-	    else
+-		ADD_SIGNOFF=
+-	    fi
+-	    {
+-		if test -s "$dotest/msg-clean"
+-		then
+-			cat "$dotest/msg-clean"
+-		fi
+-		if test '' != "$ADD_SIGNOFF"
+-		then
+-			echo "$ADD_SIGNOFF"
+-		fi
+-	    } >"$dotest/final-commit"
+-	    ;;
+-	*)
+-		case "$resolved$interactive" in
+-		tt)
+-			# This is used only for interactive view option.
+-			git diff-index -p --cached HEAD -- >"$dotest/patch"
+-			;;
+-		esac
+-	esac
+-
+-	resume=
+-	if test "$interactive" = t
+-	then
+-	    test -t 0 ||
+-	    die "cannot be interactive without stdin connected to a terminal."
+-	    action=again
+-	    while test "$action" = again
+-	    do
+-		echo "Commit Body is:"
+-		echo "--------------------------"
+-		cat "$dotest/final-commit"
+-		echo "--------------------------"
+-		printf "Apply? [y]es/[n]o/[e]dit/[v]iew patch/[a]ccept all "
+-		read reply
+-		case "$reply" in
+-		[yY]*) action=yes ;;
+-		[aA]*) action=yes interactive= ;;
+-		[nN]*) action=skip ;;
+-		[eE]*) git_editor "$dotest/final-commit"
+-		       action=again ;;
+-		[vV]*) action=again
+-		       LESS=-S ${PAGER:-less} "$dotest/patch" ;;
+-		*)     action=again ;;
+-		esac
+-	    done
+-	else
+-	    action=yes
+-	fi
+-	FIRSTLINE=$(sed 1q "$dotest/final-commit")
++	msgnum=$(printf "%0${prec}d" $this)
++	this=$(($this+1))
+ 
+-	if test $action = skip
+-	then
+-		go_next
++	# This ignores every mail that does not contain a patch.
++	grep '^diff' "$dotest/$msgnum" >/dev/null ||
+ 		continue
+-	fi
+-
+-	if test -x "$GIT_DIR"/hooks/applypatch-msg
+-	then
+-		"$GIT_DIR"/hooks/applypatch-msg "$dotest/final-commit" ||
+-		stop_here $this
+-	fi
+-
+-	printf 'Applying: %s\n' "$FIRSTLINE"
+ 
+-	case "$resolved" in
+-	'')
+-		git apply $git_apply_opt $binary --index "$dotest/patch"
+-		apply_status=$?
+-		;;
+-	t)
+-		# Resolved means the user did all the hard work, and
+-		# we do not have to do any patch application.  Just
+-		# trust what the user has in the index file and the
+-		# working tree.
+-		resolved=
+-		git diff-index --quiet --cached HEAD -- && {
+-			echo "No changes - did you forget to use 'git add'?"
+-			stop_here_user_resolve $this
+-		}
+-		unmerged=$(git ls-files -u)
+-		if test -n "$unmerged"
+-		then
+-			echo "You still have unmerged paths in your index"
+-			echo "did you forget to use 'git add'?"
+-			stop_here_user_resolve $this
+-		fi
+-		apply_status=0
+-		git rerere
+-		;;
+-	esac
+-
+-	if test $apply_status = 1 && test "$threeway" = t
+-	then
+-		if (fall_back_3way)
+-		then
+-		    # Applying the patch to an earlier tree and merging the
+-		    # result may have produced the same tree as ours.
+-		    git diff-index --quiet --cached HEAD -- && {
+-			echo No changes -- Patch already applied.
+-			go_next
+-			continue
+-		    }
+-		    # clear apply_status -- we have successfully merged.
+-		    apply_status=0
+-		fi
+-	fi
+-	if test $apply_status != 0
+-	then
+-		echo Patch failed at $msgnum.
+-		stop_here_user_resolve $this
+-	fi
+-
+-	if test -x "$GIT_DIR"/hooks/pre-applypatch
+-	then
+-		"$GIT_DIR"/hooks/pre-applypatch || stop_here $this
+-	fi
+-
+-	tree=$(git write-tree) &&
+-	parent=$(git rev-parse --verify HEAD) &&
+-	commit=$(git commit-tree $tree -p $parent <"$dotest/final-commit") &&
+-	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
+-	stop_here $this
+-
+-	if test -x "$GIT_DIR"/hooks/post-applypatch
+-	then
+-		"$GIT_DIR"/hooks/post-applypatch
+-	fi
+-
+-	go_next
++	extra=
++	test -n "$rebasing" &&
++		commit=$(sed -e 's/^From \([0-9a-f]*\) .*/\1/' \
++			-e q "$dotest/$msgnum") &&
++		test "$(git cat-file -t "$commit")" = commit &&
++		extra=" -C $commit"
 +
-+# Main loop to check instructions
-+todo_check () {
-+	todo="$TODO"
-+	test -n "$1" && todo="$1"
-+	todo_has_changed "$todo" || return 0
-+
-+	test "$VERBOSE" -eq 1 -a -t 1 -o "$VERBOSE" -gt 1 &&
-+		printf 'Checking...\r'
-+	test "$VERBOSE" -lt 2 || echo
-+	available_marks=' '
-+	for cur_mark in $(git for-each-ref --format='%(refname)' "$MARK_PREFIX")
-+	do
-+		available_marks="$available_marks ${cur_mark##*/}"
-+	done
-+
-+	retval=0
-+	line=1
-+	while read -r command rol
-+	do
-+		case "$command" in
-+		'#'*|'')
-+			;;
-+		*)
-+			eval 'test -n "$options_'"$command"'"' || {
-+				retval=1
-+				todo_error "Unknown $command instruction"
-+				continue
-+			}
-+
-+			general_shift=1
-+			msg_opt=
-+			author_opt=
-+			eval "run_insn check $command $rol" ||
-+				todo_error "Unknown option used"
-+			expr "$msg_opt" : 'ttt*' >/dev/null &&
-+				todo_error 'You can only provide one commit message option.'
-+			expr "$author_opt" : 'ttt*' >/dev/null &&
-+				todo_error 'You can only provide one author option.'
-+			;;
-+		esac
-+		line=$(expr "$line" + 1)
-+	done <"$todo"
-+	test $retval -ne 0 || todo_ack "$todo"
-+	return $retval
-+}
-+
-+prepare_editable_todo () {
-+	echo '# ALREADY DONE:'
-+	sed -e 's/^/#  /' <"$DONE"
-+	echo '# '
-+	echo "$markline"
-+	cat "$TODO"
-+}
-+
-+# expand shortcuts in TODO file $1
-+expand_shortcuts () {
-+	sed -e '
-+		s/^[ \t]*p\>/pick/;
-+		s/^[ \t]*e\>/edit/;
-+		s/^[ \t]*s\>/squash/;
-+	' <"$1" >"$TODO.cut"
-+	mv "$TODO.cut" "$1"
-+}
-+
-+get_saved_options () {
-+	read ALLOW_DIRTY <"$SEQ_DIR/allow-dirty"
-+	read VERBOSE <"$SEQ_DIR/verbose"
-+	read ADVICE <"$SEQ_DIR/advice"
-+	read ONTO <"$SEQ_DIR/onto"
-+	read ORIG_HEAD <"$SEQ_DIR/head"
-+	test -f "$WHY_FILE" &&
-+		read WHY <"$WHY_FILE"
-+	return 0
-+}
-+
-+# Realize sequencer invocation
-+do_startup () {
-+	test -d "$SEQ_DIR" &&
-+		die 'sequencer already started'
-+
-+	require_clean_work_tree
-+
-+	ORIG_HEAD=$(git rev-parse --verify HEAD) ||
-+		die 'No HEAD?'
-+
-+	mkdir "$SEQ_DIR" ||
-+		die "Could not create temporary $SEQ_DIR"
-+
-+	# save options
-+	echo "$ALLOW_DIRTY" >"$SEQ_DIR/allow-dirty"
-+	echo "$VERBOSE" >"$SEQ_DIR/verbose"
-+	echo "$ADVICE" >"$SEQ_DIR/advice"
-+	test -n "$CALLERSTRING" &&
-+		generate_caller_script "$CALLERSTRING"
-+	# generate empty DONE and "onto" file
-+	: >"$DONE"
-+	: >"$SEQ_DIR/onto"
-+
-+	if test -n "$BATCHMODE"
-+	then
-+		GIT_CHERRY_PICK_HELP='  Aborting (batch mode)'
-+		export GIT_CHERRY_PICK_HELP
-+	else
-+		assure_caller
-+	fi
-+
-+	comment_for_reflog start
-+
-+	# save old head before checking out the given <branch>
-+	git symbolic-ref HEAD >"$SEQ_DIR/head-name" 2>/dev/null ||
-+		echo 'detached HEAD' >"$SEQ_DIR/head-name"
-+	echo $ORIG_HEAD >"$SEQ_DIR/head"
-+	# do it here so that die_abort can work ;)
-+
-+	if test -n "$ONTO"
-+	then
-+		# if ONTO is a branch name, then keep it, otherwise
-+		# we don't care anymore and erase ONTO.
-+		if git-show-ref --quiet --verify -- "refs/heads/${ONTO##*/}"
-+		then
-+			ONTO="refs/heads/${ONTO##*/}"
-+			echo "$ONTO" >"$SEQ_DIR/onto"
-+			perform git checkout "$(git rev-parse "$ONTO")" ||
-+				die_abort "Could not checkout branch $ONTO"
-+		else
-+			perform git checkout "$ONTO" ||
-+				die_abort "Could not checkout commit $ONTO"
-+			ONTO=
-+		fi
-+	fi
-+
-+	(git var GIT_AUTHOR_IDENT || git var COMMITTER_IDENT) |
-+		make_author_script_from_string >"$ORIG_AUTHOR_SCRIPT"
-+
-+	# read from file or from stdin?
-+	if test -z "$1"
-+	then
-+		: >"$TODO" ||
-+			die_abort "Could not generate TODO file $TODO"
-+		while read -r line
-+		do
-+			printf '%s\n' "$line" >>"$TODO" ||
-+				die_abort "Could not append to TODO file $TODO"
-+		done
-+	else
-+		cp "$1" "$TODO" ||
-+			die_abort "Could not find TODO file $1."
-+	fi
-+	expand_shortcuts "$TODO"
-+
-+	has_action "$TODO" || die_abort 'Nothing to do'
-+	todo_check || WHY=todo die_to_continue "TODO file contains errors."
-+
-+	execute_rest
-+	exit
-+}
-+
-+# Realize --continue.
-+do_continue () {
-+	test -d "$SEQ_DIR" || die 'No sequencer running'
-+	test_caller 'continue'
-+
-+	expand_shortcuts "$TODO"
-+	todo_check || WHY=todo die_to_continue "TODO file contains errors."
-+
-+	comment_for_reflog continue
-+
-+	git rev-parse --verify HEAD >/dev/null ||
-+		die_to_continue 'Cannot read HEAD'
-+
-+	get_saved_options
-+	if test -z "$ALLOW_DIRTY"
-+	then
-+		git update-index --ignore-submodules --refresh &&
-+			git diff-files --quiet --ignore-submodules ||
-+			die_to_continue 'Working tree is dirty. (Use git add or git stash first?)'
-+	fi
-+
-+	# do we have anything to commit? (staged changes)
-+	if ! git diff-index --cached --quiet --ignore-submodules HEAD --
-+	then
-+		get_current_author
-+
-+		# After "pause", we should amend (merge-safe!).
-+		# On conflict, we do not have a commit to amend, so we
-+		# should just commit.
-+		case "$WHY" in
-+		pause|run)
-+			with_author git commit --amend --no-verify -F "$MSG" -e ||
-+				die_to_continue 'Could not commit staged changes.'
-+			;;
-+		conflict)
-+			with_author git commit --no-verify -F "$MSG" -e ||
-+				die_to_continue 'Could not commit staged changes.'
-+			echo '# resolved CONFLICTS of the last instruction' >>"$DONE"
-+			;;
-+		*)
-+			die_to_continue 'There are staged changes. Do not know what to do with them.'
-+		esac
-+	fi
-+
-+	require_clean_work_tree
-+	clean_why
-+	execute_rest
-+	exit
-+}
-+
-+# Realize --abort.
-+do_abort () {
-+	test -d "$SEQ_DIR" || die 'No sequencer running'
-+	test_caller 'abort'
-+	get_saved_options
-+
-+	comment_for_reflog abort
-+	perform git rerere clear
-+	restore
-+	cleanup
-+	exit
-+}
-+
-+# Realize --skip.
-+do_skip () {
-+	test -d "$SEQ_DIR" || die 'No sequencer running'
-+	test_caller 'skip'
-+
-+	expand_shortcuts "$TODO"
-+	todo_check || WHY=todo die_to_continue "TODO file contains errors."
-+	get_saved_options
-+
-+	comment_for_reflog skip
-+	perform git rerere clear
-+	clean_why
-+
-+	reset_almost_hard "$(cat "$SEQ_DIR/skiphead")" &&
-+	echo '# SKIPPED the last instruction' >>"$DONE" &&
-+		execute_rest
-+	exit
-+}
-+
-+# Realize --edit.
-+do_edit () {
-+	test -d "$SEQ_DIR" || die 'No sequencer running'
-+
-+	markline='### BEGIN EDITING BELOW THIS LINE ###'
-+	prepare_editable_todo >"$TODO.new"
-+	if todo_has_changed "$TODO"
-+	then
-+		sane=
-+	else
-+		sane=t
-+		todo_ack "$TODO.new"
-+	fi
-+
-+	# XXX: does not make sense
-+	#      when input does not come from a terminal
-+	git_editor "$TODO.new" ||
-+		die 'Editor returned an error.'
-+
-+	if test -t 0 -a -t 1
-+	then
-+		sane=t
-+		echo
-+		# interactive:
-+		until has_action "$TODO.new" && todo_check "$TODO.new"
-+		do
-+			has_action "$TODO.new" || echo 'TODO file empty.'
-+			printf 'What to do with the file? [c]orrect/[e]dit again/[r]ewind/[s]ave/[?] '
-+			read reply
-+			case "$reply" in
-+			[cC]*)
-+				git_editor "$TODO.new"
-+				expand_shortcuts "$TODO.new"
-+				;;
-+			[eE]*)
-+				prepare_editable_todo >"$TODO.new"
-+				git_editor "$TODO.new"
-+				expand_shortcuts "$TODO.new"
-+				;;
-+			[rRxXqQ]*)
-+				rm -f "$TODO.new" "$TODO.new.sum"
-+				exit 0
-+				;;
-+			[sS]*)
-+				test "$WHY" != 'pause' ||
-+					echo 'todo' >"$WHY_FILE"
-+				sane=
-+				break
-+				;;
-+			[?hH]*)
-+				cat <<EOF
-+
-+Help:
-+s - save TODO file and exit
-+c - respawn editor to correct TODO file
-+e - drop changes and respawn editor on original TODO file
-+r - drop changes and exit as if nothing happened
-+? - print this help
-+EOF
-+				;;
-+			esac
-+			echo
-+		done
-+	else
-+		# defaults:
-+		has_action "$TODO.new" || {
-+			echo "Nothing to do"
-+			exit
-+		}
-+		todo_check "$TODO.new" ||
-+			die 'TODO file contains errors. Aborting.'
-+	fi
-+	cp "$TODO" "$TODO.old"
-+	if grep "^$markline" "$TODO.new" >/dev/null
-+	then
-+		sed -e "1,/^$markline/d" <"$TODO.new" >"$TODO"
-+	else
-+		cp "$TODO.new" "$TODO"
-+	fi
-+	rm -f "$TODO.new" "$TODO.new.sum"
-+	test -z "$sane" || todo_ack "$TODO"
-+	echo
-+	echo 'TODO file contains:'
-+	echo
-+	cat "$TODO"
-+	exit 0
-+}
-+
-+# Realize --status.
-+do_status () {
-+	test -d "$SEQ_DIR" || die 'No sequencer running.'
-+	get_saved_options
-+
-+	if has_action "$DONE"
-+	then
-+		echo 'Already done (or tried):'
-+		sed -e 's/^/  /' <"$DONE"
-+		echo
-+	fi
-+	case "$WHY" in
-+	pause)
-+		echo 'Intentionally paused.'
-+		;;
-+	run)
-+		echo 'Interrupted because running failed.'
-+		;;
-+	conflict)
-+		echo 'Interrupted by conflict at'
-+		sed -n -e 's/^/  /;$p' <"$DONE"
-+		;;
-+	todo)
-+		echo 'Interrupted because of errors in the TODO file.'
-+		;;
-+	*)
-+		echo 'Current state is broken.'
-+	esac
-+	test "$VERBOSE" -gt 1 && echo 'Running verbosely.'
-+	test "$VERBOSE" -lt 1 && echo 'Running quietly.'
-+	test -n "$ONTO" &&
-+		echo "Sequencing on branch ${ONTO##*/}."
-+	if has_action "$TODO"
-+	then
-+		echo
-+
-+		echo 'Still to do:'
-+		sed -e 's/^/  /' <"$TODO"
-+	fi
-+	if test "$WHY" = todo
-+	then
-+		echo
-+		echo 'But there are errors. To edit, run:'
-+		echo '    git sequencer --edit'
-+	else
-+		echo
-+		echo 'To abort & restore, invoke:'
-+		echo "    $(print_caller --abort)"
-+		echo 'To continue, invoke:'
-+		echo "    $(print_caller --continue)"
-+		test "$WHY" = 'pause' -o "$WHY" = 'run' || {
-+			echo 'To skip the current instruction, invoke:'
-+			echo "    $(print_caller --skip)"
-+		}
-+	fi
-+	exit 0
-+}
-+
-+is_standalone () {
-+	test $# -eq 2 &&
-+	test "$2" = '--' &&
-+	test -z "$ALLOW_DIRTY" &&
-+	test -z "$BATCHMODE" &&
-+	test "$ADVICE" = t &&
-+	test -z "$onto" &&
-+	test "$VERBOSE" -eq 1
-+}
-+
-+
-+### Option handling and startup
-+
-+onto=
-+BATCHMODE=
-+ALLOW_DIRTY=
-+CALLERSTRING=
-+VERBOSE=1
-+ADVICE=t
-+CALLER=
-+CALLER_ABRT=
-+CALLER_CONT=
-+CALLER_SKIP=
-+while test $# -gt 0
-+do
-+	case "$1" in
-+	--continue)
-+		is_standalone "$@" || usage
-+		assure_caller
-+		do_continue
-+		;;
-+	--abort)
-+		is_standalone "$@" || usage
-+		assure_caller
-+		do_abort
-+		;;
-+	--skip)
-+		is_standalone "$@" || usage
-+		assure_caller
-+		do_skip
-+		;;
-+	--status)
-+		is_standalone "$@" || usage
-+		assure_caller
-+		do_status
-+		;;
-+	--edit)
-+		is_standalone "$@" || usage
-+		do_edit
-+		;;
-+	--caller)
-+		###############################################################
-+		# This feature is for user scripts only. (Hence undocumented.)
-+		# User scripts should pass an argument like:
-+		# --caller="git foo|abrt|go|next"
-+		# on every git sequencer call. (It is only ignored on
-+		# --edit and --status.)
-+		# So git sequencer knows that
-+		# "git foo abrt" will abort,
-+		# "git foo go" will continue and
-+		# "git foo next" will skip the sequencing process.
-+		# This is useful if your user script does some extra
-+		# preparations or cleanup before/after calling
-+		#   git sequencer --caller="..." --abort|--continue|--skip
-+		#
-+		# Running git-sequencer without the same --caller string
-+		# fails then, until the sequencing process has finished or
-+		# aborted.
-+		#
-+		# Btw, --caller="my_tiny_script.sh|-a||" will be
-+		# interpreted, that users must invoke "my_tiny_script.sh -a"
-+		# to abort, but can invoke "git sequencer --continue" and
-+		# "git sequencer --skip" to continue or skip.
-+		# And it is also possible to provide three different scripts
-+		# by --caller="|script 1|tool 2|util 3".
-+		#
-+		# If your user script does not need any special
-+		# abort/continue/skip behavior, then just do NOT pass
-+		# the --caller option.
-+		###############################################################
-+		shift
-+		expr "x$1" : 'x.*|.*|.*|.*$' >/dev/null ||
-+			die 'Wrong --caller format.'
-+		CALLERSTRING="$1"
-+		;;
-+	--allow-dirty)
-+		ALLOW_DIRTY='HEAD'
-+		# this means: true
-+		;;
-+	-B)
-+		BATCHMODE=t
-+		# XXX: we still have abort on editor invokations
-+		;;
-+	--no-advice)
-+		ADVICE=f
-+		;;
-+	--onto)
-+		shift
-+		ONTO="$1"
-+		test $(git cat-file -t "$ONTO") = 'commit' ||
-+			die "$ONTO is no commit or branch."
-+		;;
-+	-q)
-+		VERBOSE=0
-+		ADVICE=f
-+		# XXX: If there were no editors,
-+		# we could just do exec >/dev/null
-+		;;
-+	-v)
-+		VERBOSE=2
-+		# or increment it if we have several verbosity steps
-+		;;
-+	--)
-+		shift
-+		break
-+		;;
-+	*)
-+		die "$1 currently not implemented."
-+		;;
-+	esac
-+	shift
-+done
-+test $# -gt 1 && usage
-+
-+do_startup "$1"
++	subject=$(sed -n '1,/^Subject:/s/Subject: *\(\[.*\]\)\{0,1\} *//p' \
++		<"$dotest/$msgnum")
++	test -n "$interactive" ||
++		printf 'run -- printf '\''Applying: %%s\\n'\'' '\''%s'\''\n' \
++			"$(printf '%s\n' "$subject" |
++				sed "s/'/'\\\\''/g")" >>"$todofile"
++	printf 'patch%s%s "%s" # %s\n' "$opts" "$extra" "$dotest/$msgnum" \
++		"$subject" >>"$todofile"
++	test -z "$interactive" || echo 'pause' >>"$todofile"
+ done
+ 
+-git gc --auto
+-
+-rm -fr "$dotest"
++seqopts="--no-advice --allow-dirty"
++run_sequencer$interactive "$todofile"
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 412e135..67c1868 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -216,12 +216,11 @@ do
+ 		if test -d "$dotest"
+ 		then
+ 			move_to_original_branch
++			git reset --hard $(cat "$dotest/orig-head")
++			rm -r "$dotest"
+ 		else
+-			dotest="$GIT_DIR"/rebase-apply
+-			move_to_original_branch
++			git am --abort
+ 		fi
+-		git reset --hard $(cat "$dotest/orig-head")
+-		rm -r "$dotest"
+ 		exit
+ 		;;
+ 	--onto)
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index 6e6aaf5..d49c69d 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -212,14 +212,12 @@ test_expect_success 'am takes patches from a Pine mailbox' '
+ '
+ 
+ test_expect_success 'am fails on mail without patch' '
+-	test_must_fail git am <failmail &&
+-	rm -r .git/rebase-apply/
++	test_must_fail git am <failmail
+ '
+ 
+ test_expect_success 'am fails on empty patch' '
+ 	echo "---" >>failmail &&
+ 	test_must_fail git am <failmail &&
+-	git am --skip &&
+ 	! test -d .git/rebase-apply
+ '
+ 
 -- 
 1.6.0.rc0.49.gd39f
