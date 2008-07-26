@@ -1,60 +1,94 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git sequencer prototype
-Date: Sat, 26 Jul 2008 16:19:17 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807261617010.26810@eeepc-johanness>
-References: <1217049644-8874-1-git-send-email-s-beyer@gmx.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Official Git Homepage change? Re: git-scm.com
+Date: Sat, 26 Jul 2008 16:40:40 +0200
+Message-ID: <20080726144040.GZ32184@machine.or.cz>
+References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com> <20080726015314.GU32184@machine.or.cz> <20080726020951.GV32184@machine.or.cz> <7v4p6dnv5k.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807260627480.26810@eeepc-johanness> <7vtzedmeqh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Sat Jul 26 16:19:16 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 26 16:41:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMkc7-0002i6-Rk
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 16:19:16 +0200
+	id 1KMkxr-0001d0-C6
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 16:41:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751958AbYGZOSP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 10:18:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751954AbYGZOSP
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 10:18:15 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57299 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751907AbYGZOSO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 10:18:14 -0400
-Received: (qmail invoked by alias); 26 Jul 2008 14:18:13 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp025) with SMTP; 26 Jul 2008 16:18:13 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19SHpoiCMhSJnWz91zgvlDLVVFbwBlQw8hve8aTDA
-	4bd0UmQOdJDwZH
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <1217049644-8874-1-git-send-email-s-beyer@gmx.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.76
+	id S1751946AbYGZOkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2008 10:40:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbYGZOkn
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 10:40:43 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:53296 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751896AbYGZOkm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2008 10:40:42 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 2DCBA393B321; Sat, 26 Jul 2008 16:40:40 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vtzedmeqh.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90228>
 
-Hi,
+On Fri, Jul 25, 2008 at 09:49:42PM -0700, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Fri, 25 Jul 2008, Junio C Hamano wrote:
+> >
+> >> It's also somewhat interesting to observe that several people I have 
+> >> never heard of in the git circle are simultaneously doing new git books, 
+> >> apparently never asking for much technical advice from core git people, 
+> >> by the way.
 
-On Sat, 26 Jul 2008, Stephan Beyer wrote:
+  I would say we actually worked hard to make itpossible to understand
+Git without being a Git contributor and knowing the code inside-out,
+didn't we? So in a sense, having books about Git written by people
+outside of the developer community could be considered a certain
+milestone for Git usability. At least provided the books are good, and
+reading the excerpts from
 
-> In the last patchset I mentioned the issue, that the prototype is slow
-> as hell.  I know some bottlenecks, but I have not even tried to change
-> that, because this is no issue for the builtin.
+	http://www.pragprog.com/titles/tsgit/pragmatic-version-control-using-git
 
-Why is it no issue for the builtin?  Is it so much different from the 
-prototype?
+has been a little disturbing experience at times. Then again, it is an
+early alpha probably far before technical editing, so it is too early
+to draw conclusions. (And after doing technical editing for a very thick
+Czech book on low-level Linux programming, my standards for this phase
+of book development had to be... somewhat lowered. ;-)
 
-Personally, I think if the prototype is so much slower, there is no sense 
-applying it into git.git, but I'd rather see you work on the builtin and 
-finalize it.
+> Oh, mine was not a criticism but was just an observation.
+> 
+> Maybe the folks we consider as "git community members" are either too
+> narrow, or too detached from the "real user community", and it could be
+> that git books are better written without us.
 
-Ciao,
-Dscho
+  The numbers in another part of the thread show something important -
+GitHub is more than SIX TIMES BIGGER than repo.or.cz! How many of you
+have GitHub accounts, and how many of you are actively using repo.or.cz?
+:-) And GitHub is not "just" Ruby on Rails *at all*:
+
+	http://github.com/blog/99-popular-languages
+
+Overally, it seems that Git is getting huge traction in the web
+developers community while this is something I would presume the core
+Git community of kernel hackers and such is mostly unaware of (and it is
+somewhat amusing contrast). Now, these are people who we will probably
+never see on the mailing list, not just because they frequently don't
+even know C, and don't care to, but they might have actually never used
+a mailing list before! These are the people who frequently could not
+care about their VCS' internals less and finding out that Git works well
+enough for them is something rather satisfying for me personally.
+
+  I don't know if this should have any immediate effect on how we
+develop Git etc., but I think it is good to be aware of the fact that
+silently, huge amount of "dark mass" Git projects is accumulating and
+that Git is making headways in areas many of us were little aware of.
+
+-- 
+				Petr "Pasky" Baudis
+As in certain cults it is possible to kill a process if you know
+its true name.  -- Ken Thompson and Dennis M. Ritchie
