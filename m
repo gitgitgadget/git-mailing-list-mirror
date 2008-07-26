@@ -1,78 +1,93 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH 1/2] Move launch_editor() from builtin-tag.c to editor.c
-Date: Sat, 26 Jul 2008 05:14:51 +0200
-Message-ID: <20080726031451.GG13539@leksak.fem-net>
-References: <alpine.DEB.1.00.0807251636140.11976@eeepc-johanness> <1217003322-10291-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0807260456360.26810@eeepc-johanness>
+From: Roman Zippel <zippel@linux-m68k.org>
+Subject: Re: Bizarre missing changes (git bug?)
+Date: Sat, 26 Jul 2008 05:12:38 +0200
+Message-ID: <200807260512.40088.zippel@linux-m68k.org>
+References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com> <alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 26 05:16:09 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Jul 26 05:21:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMaGN-0000SQ-Ay
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 05:16:07 +0200
+	id 1KMaLw-0001Vi-JS
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 05:21:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752752AbYGZDPE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2008 23:15:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752726AbYGZDPE
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 23:15:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55201 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752718AbYGZDPD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2008 23:15:03 -0400
-Received: (qmail invoked by alias); 26 Jul 2008 03:15:01 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp062) with SMTP; 26 Jul 2008 05:15:01 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX18Omr8e2KEOzgAYQ7gVXnkKZJRynIO1I9xOFPCzmV
-	vUdxafJYUsGa+x
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KMaFA-0001oL-08; Sat, 26 Jul 2008 05:14:52 +0200
+	id S1752816AbYGZDUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2008 23:20:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752777AbYGZDUw
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jul 2008 23:20:52 -0400
+Received: from smtp-vbr9.xs4all.nl ([194.109.24.29]:3710 "EHLO
+	smtp-vbr9.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752801AbYGZDUv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2008 23:20:51 -0400
+X-Greylist: delayed 475 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 Jul 2008 23:20:51 EDT
+Received: from squid.home (linux-m68k.xs4all.nl [82.95.193.92])
+	(authenticated bits=0)
+	by smtp-vbr9.xs4all.nl (8.13.8/8.13.8) with ESMTP id m6Q3Cinx058668
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 26 Jul 2008 05:12:50 +0200 (CEST)
+	(envelope-from zippel@linux-m68k.org)
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807260456360.26810@eeepc-johanness>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90164>
 
 Hi,
 
-Johannes Schindelin wrote:
-> On Fri, 25 Jul 2008, Stephan Beyer wrote:
-> 
-> > To be kind to the maintainer, I've also run the test suite again, all 
-> > tests passed except t4116*.sh, but this is not my fault. It's the fault 
-> > of 9a885fac.
-> 
-> You do understand that you cost everybody, who actually cared to take a 
-> look for herself, a few minutes?
+On Monday 21. July 2008, Linus Torvalds wrote:
 
-Yes, now I see that I forgot to mention the subject.
+> Read up on '--full-history'.
+>
+> By default, git simplifies the history for logs that have path
+> simplification: only walking down the side of a merge that all the data
+> came from (ie the unchanged side). So it only leaves merges around if
+> there was changes from _all_ parents.
+>
+> So without --full-history, if any parent matches the state, it just
+> removes the merge and picks that parent that contained all the state.
+> Obviously, any changes to that file can be sufficiently explained by
+> walking just that limited history, because they must have changed in
+> _that_ history too!
 
-I'm sorry.
+Is that really a good default behaviour? Is there a way to change that 
+default?
 
-> Dscho "who thinks that so many mails would be better if the posters would 
-> read the mails themselves and try to imagine how readers would perceive 
-> them"
+I'm currently looking into converting the m68k CVS repository and I'd like to 
+properly regenerate it as two separate lines of development. The problem is 
+if I look at the file history, I often only see one side of the changes when 
+things got merged because of this default.
+What makes this worse is that graphical front ends may inherit this behaviour. 
+I tested this with qgit and it only shows half of the history. giggle 
+retrieves the history like --full-history, but it lacks empty merges, so it 
+makes it harder to see what got merged when.
+For example a history that actually looks this:
 
-You're right.
+linux -+-----import----+-----------import----+------...
+m68k   \-commit-commit-\-merge-commit-commit-\-merge...
 
-In my case I perhaps should've *first* looked if I could fix the TAR issue
-and then first send the fix for the TAR stuff and then remove the text from
-here. But I noticed the failure, wrote about it here, sent this mail, looked
-for the reason of the error, ... the wrong order, as it seems.
+Without the merges it looks like this:
 
-I try to improve.
+linux -+-----import----------------import--------------+...
+m68k   \-commit-commit---------commit-commit           \...
 
-Regards,
-  Stephan
+And without --full-history these "loose ends" aren't visible as in qgit.
 
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+When researching historical changes one wants to know when something was 
+introduced and when it was merged, but this simplification makes it harder 
+than it really has to be.
+IMO the default should be to show the complete history, so one doesn't miss 
+something by accident that might be important or as the original example 
+shows it might be confusing if one sees a change with "git log --stat id.." 
+and the change disappears when one looks at "git log path".
+
+bye, Roman
