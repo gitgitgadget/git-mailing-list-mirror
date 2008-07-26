@@ -1,89 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Official Git Homepage change? Re: git-scm.com
-Date: Sat, 26 Jul 2008 17:39:29 +0200
-Message-ID: <200807261739.30261.jnareb@gmail.com>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com> <m3d4l0vfgk.fsf@localhost.localdomain> <d411cc4a0807260832g21fc9a66yd5ccc370699993fd@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: git-scm.com
+Date: Sat, 26 Jul 2008 17:48:42 +0200
+Message-ID: <F3D70DCD-E9A9-42C3-8870-ABB7EECF83CC@wincent.com>
+References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com> <6b6419750807251838h12ea4f19gdff107694e3797c4@mail.gmail.com> <d411cc4a0807251928g75744b78vac2ce77bf07fbd81@mail.gmail.com> <20080726023707.GX32184@machine.or.cz> <alpine.DEB.1.10.0807251943280.11335@asgard.lang.hm> <d411cc4a0807252230v76670d3cp2205e40826acc6e2@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: david@lang.hm, "Petr Baudis" <pasky@suse.cz>,
+	"Patrick Aljord" <patcito@gmail.com>,
+	"git list" <git@vger.kernel.org>
 To: "Scott Chacon" <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 26 17:41:05 2008
+X-From: git-owner@vger.kernel.org Sat Jul 26 17:50:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMlt8-0003rD-0M
-	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 17:40:54 +0200
+	id 1KMm1v-0006xh-SL
+	for gcvg-git-2@gmane.org; Sat, 26 Jul 2008 17:50:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752693AbYGZPjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2008 11:39:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752449AbYGZPjo
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 11:39:44 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:44084 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752683AbYGZPjm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2008 11:39:42 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so67053ugf.16
-        for <git@vger.kernel.org>; Sat, 26 Jul 2008 08:39:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=5AJNXk6q4wzqDB4UgFZO1Xnq1FqXsVht/MnGpmamyaA=;
-        b=XT8x5CyXmNo1IcoctJJknzuWtWC7xlu6yoLAFPn6f3YOxF3RlxZkEBurzWN0/zfHwP
-         FUvueu9/5Tt/fXC57+JJrUD4ezojXsmRZh1SZvg5bhdB6W84I7lkkXTjgYcy/kUSZcrj
-         BkDbAlZgqBqgq3SMvoKpop5ZBuUMv/sLuzomc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=gUsPnXB8r5ScQUi0xNpSjj7cUfbDjBx8b+jwtdD3zqTwUmmlbcwa642/EeZisclRyP
-         MHEeBQDcdPO6ynPSjtCGNOb8cfwrYcuWfcSEQYbQJ/WS9oF2W6FK3udZf1TOxK70zZ+E
-         1DCH1YHR8r9iBdIBRSc5qEe3zShkkytKJSdk0=
-Received: by 10.66.222.6 with SMTP id u6mr852401ugg.21.1217086780106;
-        Sat, 26 Jul 2008 08:39:40 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.225.191])
-        by mx.google.com with ESMTPS id 31sm3439722ugg.36.2008.07.26.08.39.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 26 Jul 2008 08:39:39 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <d411cc4a0807260832g21fc9a66yd5ccc370699993fd@mail.gmail.com>
-Content-Disposition: inline
+	id S1751989AbYGZPs7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Jul 2008 11:48:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751925AbYGZPs6
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jul 2008 11:48:58 -0400
+Received: from wincent1.inetu.net ([209.235.192.161]:42348 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751866AbYGZPs6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Jul 2008 11:48:58 -0400
+Received: from cuzco.lan (120.pool85-48-138.dynamic.orange.es [85.48.138.120])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m6QFmhY8017157
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sat, 26 Jul 2008 11:48:45 -0400
+In-Reply-To: <d411cc4a0807252230v76670d3cp2205e40826acc6e2@mail.gmail.com>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90248>
 
-On Sat, 26 July 2008, Scott Chacon wrote:
-> On Sat, Jul 26, 2008 at 8:21 AM, Jakub Narebski <jnareb@gmail.com> wrote:
->> Rene Herman <rene.herman@keyaccess.nl> writes:
->>> On 26-07-08 09:27, Scott Chacon wrote:
->>>
->>>> Perhaps it would be useful to split the mailing list into
->>>> core/contrib and support lists? [...]
->>>
->>> A git-user list would be welcomed at least by me. [...]
->>
->> Well, there _is_ separate Git Users Group at Google Groups
->>  http://groups.google.com/group/git-users
->>  nntp://news.gmane.org/gmane.comp.version-control.git.user
+El 26/7/2008, a las 7:30, Scott Chacon escribi=F3:
 
-It is mentioned at http://git.or.cz/gitwiki/GitCommunity at the end
-of the wiki page.
+> However, that being said, it's going to be difficult to have Github
+> projects not dominate the list a bit.  The fact is that it hosts far,
+> far more projects than any other single hosting service.  Just in
+> fully public projects, the current stats (from the website pages) are
+> something like this:
+>
+> kernel.org : 475
+> repo.or.cz : 1,553
+> gitorious   : 780
+> github       : 10,560
+>
+> It hosts far more than that if you include private projects, too.  So=
+,
+> if we want to choose totally randomly, it's going to be at least a 5:=
+1
+> ratio between github projects and all other public hosting providers.
 
-> Perhaps I should link to that on git-scm as well / instead?
 
-"As well" I can agree with.  "Instead" I'm against that.
+I think those numbers are pretty meaningless seeing as GitHub =20
+encourages people to publish "forks" of other projects. Rails, for =20
+example, has about 270 forks at the time of writing. If I scan the =20
+list of popular projects I see fork counts like 129, 105, 78 and 78 =20
+(again). Are all the forks counted in that figure of 10,560 that you =20
+count? How many "real" projects are hosted there?
 
-Git mailing list doesn't require subscription, and allow sending
-emails using Usenet/news reader from GMane NNTP interface/gateway.
-Not so with Google Group.
+I'd like to see the "official" Git homepage as distanced as possible =20
+from GitHub. They've taken Git (free as in speech, free as in beer) =20
+and built a closed-source commercial product on top of it -- curiously =
+=20
+for something which you can do for free yourself anyway -- and as far =20
+as I can tell from observing this mailing list and watching the =20
+commits going into git.git, haven't ever contributed _anything_ back =20
+to the community. At least within the niche that is the Ruby/Rails =20
+community, GitHub has basically done a hijack job and managed to =20
+become synonymous with Git, supplanting it, and it's a trend that I =20
+wouldn't like to see continue.
 
--- 
-Jakub Narebski
-Poland
+Just my personal opinion, but GitHub doesn't provoke any warm fuzzy =20
+feelings here. Quite the contrary. I actively dislike it.
+
+Cheers,
+Wincent
