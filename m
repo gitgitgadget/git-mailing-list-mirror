@@ -1,77 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-scm.com
-Date: Sun, 27 Jul 2008 15:01:54 -0700
-Message-ID: <7vd4kzyoj1.fsf@gitster.siamese.dyndns.org>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
- <7v3alxr0fd.fsf@gitster.siamese.dyndns.org>
- <d411cc4a0807251759m1d83d7c4w4724806b19f7c02a@mail.gmail.com>
- <7vsktwfu5z.fsf@gitster.siamese.dyndns.org>
- <20080727113707.GC32184@machine.or.cz>
- <7v3alv2n46.fsf@gitster.siamese.dyndns.org>
+From: Roman Zippel <zippel@linux-m68k.org>
+Subject: Re: Bizarre missing changes (git bug?)
+Date: Mon, 28 Jul 2008 01:14:09 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain>
+References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com>
+ <alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org>
+ <200807260512.40088.zippel@linux-m68k.org>
+ <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Jul 28 00:03:38 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jul 28 01:16:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNEL0-0004zH-Pa
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 00:03:35 +0200
+	id 1KNFTT-00065c-I0
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 01:16:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758297AbYG0WCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 18:02:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758170AbYG0WCD
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 18:02:03 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40438 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757727AbYG0WCD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 18:02:03 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id BFAA43FEA3;
-	Sun, 27 Jul 2008 18:02:00 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id BDEC23FEA2; Sun, 27 Jul 2008 18:01:56 -0400 (EDT)
-In-Reply-To: <7v3alv2n46.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 27 Jul 2008 11:33:29 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A383526A-5C27-11DD-BF35-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753565AbYG0XO5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 19:14:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752947AbYG0XO5
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 19:14:57 -0400
+Received: from smtp-vbr16.xs4all.nl ([194.109.24.36]:1959 "EHLO
+	smtp-vbr16.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757745AbYG0XO4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 19:14:56 -0400
+Received: from squid.home (linux-m68k.xs4all.nl [82.95.193.92])
+	(authenticated bits=0)
+	by smtp-vbr16.xs4all.nl (8.13.8/8.13.8) with ESMTP id m6RNE9Rt081061
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 28 Jul 2008 01:14:14 +0200 (CEST)
+	(envelope-from zippel@linux-m68k.org)
+X-X-Sender: roman@localhost.localdomain
+In-Reply-To: <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90373>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Petr Baudis <pasky@suse.cz> writes:
-> ...
->> The point here is that the list is awfully long and also can contain
->> a lot of duplicates or people with broken unicode, etc. - it gets hard
->> to maintain, and it makes the about page too long. I would be of course
->> fine with a tiny link at the bottom "(show all contributors)".
->
-> Your "incentive to move up" argument suggests otherwise.  Even if it takes
-> efforts to maintain on somebody's part, it is worth to be inclusive, *IF*
-> the purpose of that bottom list is to give credits to people.
->
-> The list on the site originally was not utilizing .mailmap and I asked
-> Scott to use it to merge duplicate entries, which he did.  People whose
-> names are misspelled and/or split will now have incentive to tell Scott
-> about the problem so that they can clean up *their* own names, and Scott
-> can help maintaining .mailmap and feed the changes to me.
->
-> This is my ulterior motive behind this suggestion; I can outsource the
-> maintenance of .mailmap to people who care about it more than myself.
+On Sun, 27 Jul 2008, Linus Torvalds wrote:
 
-By the way, earlier Scott gave as explanation why he and others around
-GitHub, people who are not very visible on this list, are not interacting
-with us very much --- because they are not "C coders".
+> > > > Is there a way to change that default?
+> > > 
+> > > Use an alias or something.
+> > 
+> > This doesn't help with the graphical front ends and they only use what git 
+> > gives them.
+> 
+> And the graphical front-ends is exactly why --full-history cannot be the 
+> default.
 
-But maintenance of .mailmap (and Documentation/ area, too, of course) is a
-good example of how involvement from non "C coders" would be a helpful and
-healthy thing to have in the development process, and why we do not want
-to fracture the user community in two.
+If you mean current gitk style --full-history I agree, the problem is 
+still that git is hiding too much history with the simplified history...
+
+> > Let's take a different example.
+> 
+> No, let's not.
+> 
+> Unless you can solve that _one_ example efficiently, nothing else matters. 
+> 
+> The above example is all you ever need. Make that one work right (and 
+> efficiently), and everything is fine.
+> 
+> And no, some random ruby code doesn't make any difference what-so-ever. 
+> There are efficiency constraints here that make any ruby solution be 
+> unrealistic to begin with.
+
+Why are you dismissing what I wrote without even giving it a second 
+thought? I didn't bother with the initial example, because it's so 
+simple, that it's no real challenge.
+Did I say anywhere it had to be done in ruby? All I tried was to 
+demonstrate a possible algorithm to solve the problem. I did time the 
+execution and compared to the time it took to extract the history it 
+wasn't significant for such a simple script.
+What did I do wrong that you rebuff me based on this secondary problem 
+(which I'm quite aware of, because it was me who mentioned in first place) 
+and giving the primary problem (which is the missing history) no 
+attention?
+
+If you had any questions, I'd be happy to answer them. If you think that 
+the demonstrated algorithm doesn't work, I'd be glad to know why. If the 
+algorithm might work, any hint what could be do done to try it for real, 
+would be great. But I don't get any of this. Why?
+
+bye, Roman
