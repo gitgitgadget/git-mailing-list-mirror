@@ -1,76 +1,86 @@
-From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: [PATCH v2] t6030 (bisect): work around Mac OS X "ls"
-Date: Sat, 26 Jul 2008 23:53:30 -0500 (CDT)
-Message-ID: <Pine.GSO.4.62.0807262343510.426@harper.uchicago.edu>
-References: <Pine.GSO.4.62.0807232014030.14945@harper.uchicago.edu>
- <Pine.GSO.4.62.0807240233310.27074@harper.uchicago.edu>
- <200807270519.41441.chriscool@tuxfamily.org> <200807270604.16581.chriscool@tuxfamily.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2] t6030 (bisect): work around Mac OS X "ls"
+Date: Sun, 27 Jul 2008 07:10:19 +0200
+Message-ID: <200807270710.19974.chriscool@tuxfamily.org>
+References: <Pine.GSO.4.62.0807232014030.14945@harper.uchicago.edu> <200807270604.16581.chriscool@tuxfamily.org> <Pine.GSO.4.62.0807262343510.426@harper.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Jul 27 06:54:38 2008
+To: Jonathan Nieder <jrnieder@uchicago.edu>
+X-From: git-owner@vger.kernel.org Sun Jul 27 07:15:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMyHD-0005bU-Ec
-	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 06:54:35 +0200
+	id 1KMybH-0000eC-Ci
+	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 07:15:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753158AbYG0Exf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 00:53:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753053AbYG0Exf
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 00:53:35 -0400
-Received: from smtp01.uchicago.edu ([128.135.12.77]:59760 "EHLO
-	smtp01.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752993AbYG0Exe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 00:53:34 -0400
-Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
-	by smtp01.uchicago.edu (8.13.8/8.13.8) with ESMTP id m6R4rVob024592;
-	Sat, 26 Jul 2008 23:53:31 -0500
-Received: from localhost (jrnieder@localhost)
-	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m6R4rVoC000720;
-	Sat, 26 Jul 2008 23:53:31 -0500 (CDT)
-X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
-In-Reply-To: <200807270604.16581.chriscool@tuxfamily.org>
+	id S1753188AbYG0FHg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Jul 2008 01:07:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753037AbYG0FHg
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 01:07:36 -0400
+Received: from postfix2-g20.free.fr ([212.27.60.43]:45432 "EHLO
+	postfix2-g20.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752749AbYG0FHg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Jul 2008 01:07:36 -0400
+Received: from smtp7-g19.free.fr (smtp7-g19.free.fr [212.27.42.64])
+	by postfix2-g20.free.fr (Postfix) with ESMTP id 871B228645CF
+	for <git@vger.kernel.org>; Sun, 27 Jul 2008 05:07:16 +0200 (CEST)
+Received: from smtp7-g19.free.fr (localhost [127.0.0.1])
+	by smtp7-g19.free.fr (Postfix) with ESMTP id 04004B00E2;
+	Sun, 27 Jul 2008 07:06:31 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp7-g19.free.fr (Postfix) with ESMTP id D47F5B0076;
+	Sun, 27 Jul 2008 07:06:30 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <Pine.GSO.4.62.0807262343510.426@harper.uchicago.edu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90311>
 
-t6030-bisect-porcelain.sh relies on "ls" exiting with nonzero
-status when asked to list nonexistent files.  Unfortunately,
-/bin/ls on Mac OS X 10.3 exits with exit code 0.  So look at
-its output instead.
+Le dimanche 27 juillet 2008, Jonathan Nieder a =E9crit :
+> t6030-bisect-porcelain.sh relies on "ls" exiting with nonzero
+> status when asked to list nonexistent files.  Unfortunately,
+> /bin/ls on Mac OS X 10.3 exits with exit code 0.  So look at
+> its output instead.
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
+> Acked-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>
+> On Sun, 27 Jul 2008, Christian Couder wrote:
+> > It seems that there is a problem with the message itself though. Wh=
+en I
+> > "git am" it, I get:
+> >
+> > fatal: cannot convert from x-unknown to utf-8
+>
+> Hmm, not sure what happened.  Maybe resending it will work...
 
-Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
-Acked-by: Christian Couder <chriscool@tuxfamily.org>
----
-On Sun, 27 Jul 2008, Christian Couder wrote:
+Yes, this one works fine.
 
-> It seems that there is a problem with the message itself though. When I "git 
-> am" it, I get:
-> 
-> fatal: cannot convert from x-unknown to utf-8
+Thanks,
+Christian.
 
-Hmm, not sure what happened.  Maybe resending it will work...
-
- t/t6030-bisect-porcelain.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 0626544..244fda6 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -76,7 +76,7 @@ test_expect_success 'bisect fails if given any junk instead of revs' '
- 	test_must_fail git bisect start foo $HASH1 -- &&
- 	test_must_fail git bisect start $HASH4 $HASH1 bar -- &&
- 	test -z "$(git for-each-ref "refs/bisect/*")" &&
--	test_must_fail ls .git/BISECT_* &&
-+	test -z "$(ls .git/BISECT_* 2>/dev/null)" &&
- 	git bisect start &&
- 	test_must_fail git bisect good foo $HASH1 &&
- 	test_must_fail git bisect good $HASH1 bar &&
--- 
-1.5.5.1.328.gbfcc6
+>
+>  t/t6030-bisect-porcelain.sh |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.s=
+h
+> index 0626544..244fda6 100755
+> --- a/t/t6030-bisect-porcelain.sh
+> +++ b/t/t6030-bisect-porcelain.sh
+> @@ -76,7 +76,7 @@ test_expect_success 'bisect fails if given any junk
+> instead of revs' ' test_must_fail git bisect start foo $HASH1 -- &&
+>  	test_must_fail git bisect start $HASH4 $HASH1 bar -- &&
+>  	test -z "$(git for-each-ref "refs/bisect/*")" &&
+> -	test_must_fail ls .git/BISECT_* &&
+> +	test -z "$(ls .git/BISECT_* 2>/dev/null)" &&
+>  	git bisect start &&
+>  	test_must_fail git bisect good foo $HASH1 &&
+>  	test_must_fail git bisect good $HASH1 bar &&
