@@ -1,133 +1,72 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [PATCH (GITK) 1/6] gitk: Kill back-end processes on window close.
-Date: Sun, 27 Jul 2008 10:18:22 +0400
-Organization: TEPKOM
-Message-ID: <200807271018.22969.angavrilov@gmail.com>
-References: <200807271017.23272.angavrilov@gmail.com>
+From: =?ISO-8859-1?Q?=22Peter_Valdemar_M=F8rch_=28Lists=29=22?= 
+	<4ux6as402@sneakemail.com>
+Subject: Re: git-scm.com
+Date: Sun, 27 Jul 2008 08:19:14 +0200
+Message-ID: <488C1362.4010608@sneakemail.com>
+References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com> <7v3alxr0fd.fsf@gitster.siamese.dyndns.org> <d411cc4a0807251759m1d83d7c4w4724806b19f7c02a@mail.gmail.com> <7vsktwfu5z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 27 08:19:33 2008
+X-From: git-owner@vger.kernel.org Sun Jul 27 08:20:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMzbR-0002yF-A7
-	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 08:19:33 +0200
+	id 1KMzcB-00036q-LD
+	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 08:20:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752775AbYG0GSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 02:18:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752479AbYG0GSd
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 02:18:33 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:56071 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752170AbYG0GSc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 02:18:32 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1893168fgg.17
-        for <git@vger.kernel.org>; Sat, 26 Jul 2008 23:18:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=5N4YjDiMZ59DC5Q0h6vm2osi2uifT2ZM60bK162SmuI=;
-        b=BxTHPDk7Ze7unJOYn3CvvQgS8lRE7zPNHtP5j9/vxpAWBwsJUnC23/MTs4OxQpJ5h9
-         bh3BpceFPycC1AlVdmuxWcDDsOnE5HKDYKDd5F8e8Ovk7h2Vr1bWMsB4sZTDWl1OOq/f
-         m/x6GTDMO5x2qKrBtJf4M2lPWIxi/a0lWu3kI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=mxFjczAxozUEvjrBv3SU9L8DHlLOrDkvpfuxwOswrhTj7W3PztE8z2h8y9EWSY1Nio
-         tRzXljVYwOLPhIAxlJHAMgEwWggAK/XM5mh6HfH1wiiajx4poSEHxyQYNikQWKsek1Al
-         6cTqobOG5mUSxoEoM54UKBvmmtTt1ROxCunjE=
-Received: by 10.86.87.5 with SMTP id k5mr1393218fgb.59.1217139511190;
-        Sat, 26 Jul 2008 23:18:31 -0700 (PDT)
-Received: from desktop2 ( [92.255.84.130])
-        by mx.google.com with ESMTPS id 12sm1889499fgg.0.2008.07.26.23.18.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 26 Jul 2008 23:18:30 -0700 (PDT)
-User-Agent: KMail/1.9.9
-In-Reply-To: <200807271017.23272.angavrilov@gmail.com>
-Content-Disposition: inline
+	id S1753053AbYG0GTU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Jul 2008 02:19:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752938AbYG0GTT
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 02:19:19 -0400
+Received: from morch.com ([193.58.255.207]:51964 "EHLO morch.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752479AbYG0GTT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 02:19:19 -0400
+Received: from [192.168.1.214] (ANice-157-1-60-153.w90-36.abo.wanadoo.fr [90.36.75.153])
+	by morch.com (Postfix) with ESMTP id BB5842765
+	for <git@vger.kernel.org>; Sun, 27 Jul 2008 08:21:14 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <7vsktwfu5z.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90315>
 
-Date: Sat, 12 Jul 2008 16:09:28 +0400
+As a contributer with a single commit I was happy to see myself appear=20
+shortly on the list (yeah!). Ok, so I realize it is vanity and a little=
+=20
+silly... :-)
 
-When collecting commits for a rarely changed, or recently
-created file or directory, rev-list may work for a noticeable
-period of time without producing any output. Such processes
-don't receive SIGPIPE for a while after gitk is closed, thus
-becoming runaway CPU hogs.
+Junio C Hamano gitster-at-pobox.com |Lists| wrote:
+> I have a mild suspicion that sorting that list in alphabetical order =
+may
+> actually make it much better.  It all depends on the purpose of that =
+list,
+> though.
 
-Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
----
- gitk |   35 +++++++++++++++++++++++++----------
- 1 files changed, 25 insertions(+), 10 deletions(-)
+To me it makes sense to sort the entire list according to commits. Its=20
+still easy to find anybody with search, and I find it appropriate that =
+I=20
+be towards the end. The commit sorting encourages me to move up the=20
+list! :-D
 
-diff --git a/gitk b/gitk
-index fddcb45..29d79d6 100755
---- a/gitk
-+++ b/gitk
-@@ -375,19 +375,33 @@ proc start_rev_list {view} {
-     return 1
- }
- 
-+proc stop_instance {inst} {
-+    global commfd leftover
-+
-+    set fd $commfd($inst)
-+    catch {
-+	set pid [pid $fd]
-+	exec kill $pid
-+    }
-+    catch {close $fd}
-+    nukefile $fd
-+    unset commfd($inst)
-+    unset leftover($inst)
-+}
-+
-+proc stop_backends {} {
-+    global commfd
-+
-+    foreach inst [array names commfd] {
-+	stop_instance $inst
-+    }
-+}
-+
- proc stop_rev_list {view} {
--    global commfd viewinstances leftover
-+    global viewinstances
- 
-     foreach inst $viewinstances($view) {
--	set fd $commfd($inst)
--	catch {
--	    set pid [pid $fd]
--	    exec kill $pid
--	}
--	catch {close $fd}
--	nukefile $fd
--	unset commfd($inst)
--	unset leftover($inst)
-+	stop_instance $inst
-     }
-     set viewinstances($view) {}
- }
-@@ -2103,6 +2117,7 @@ proc makewindow {} {
-     bind . <$M1B-minus> {incrfont -1}
-     bind . <$M1B-KP_Subtract> {incrfont -1}
-     wm protocol . WM_DELETE_WINDOW doquit
-+    bind . <Destroy> {stop_backends}
-     bind . <Button-1> "click %W"
-     bind $fstring <Key-Return> {dofind 1 1}
-     bind $sha1entry <Key-Return> gotocommit
--- 
-1.5.6.3.18.gfe82
+> And for the "giving credit" purpose, I do not think truncating the li=
+st at
+> 5 commits or less threshold, as suggested earlier and already done, m=
+akes
+> much sense, either.
+
+And why truncate the list? I'd personally like to be back on the list=20
+(vanity! - but true), bandwidth is relatively cheap, and there is=20
+nothing below the list. I also think it makes the community look healty=
+=20
+and encourages contribution to see how many others contribute.
+
+Peter
+--=20
+Peter Valdemar M=F8rch
+http://www.morch.com
