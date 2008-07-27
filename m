@@ -1,73 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Cleaning up log messages
-Date: Sun, 27 Jul 2008 20:01:37 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807272000270.5526@eeepc-johanness>
-References: <9e4733910807271050y7fb5f77coec05bd68421baaab@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH v2] merge-base: teach "git merge-base" to accept more
+ than 2 arguments
+Date: Sun, 27 Jul 2008 11:11:22 -0700
+Message-ID: <7vljzn2o51.fsf@gitster.siamese.dyndns.org>
+References: <20080727053324.b54fe48e.chriscool@tuxfamily.org>
+ <alpine.DEB.1.00.0807271631470.5526@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 27 20:01:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	Miklos Vajna <vmiklos@frugalware.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 27 20:12:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNAYo-0005S9-OX
-	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 20:01:35 +0200
+	id 1KNAjV-00012h-3m
+	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 20:12:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757586AbYG0SAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 14:00:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757580AbYG0SAe
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 14:00:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34907 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757576AbYG0SAe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 14:00:34 -0400
-Received: (qmail invoked by alias); 27 Jul 2008 18:00:32 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp005) with SMTP; 27 Jul 2008 20:00:32 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18zcm4mnxIzAgokSfiNHPj1KA51AZIziALPWBMbPj
-	rk2y+Z/uOuln29
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <9e4733910807271050y7fb5f77coec05bd68421baaab@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1758054AbYG0SLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 14:11:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757626AbYG0SLb
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 14:11:31 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48089 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750819AbYG0SLb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 14:11:31 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A68563F1B1;
+	Sun, 27 Jul 2008 14:11:29 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 9C2A33F1AF; Sun, 27 Jul 2008 14:11:24 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0807271631470.5526@eeepc-johanness> (Johannes
+ Schindelin's message of "Sun, 27 Jul 2008 16:38:05 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6F8876E0-5C07-11DD-9A64-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90351>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Sun, 27 Jul 2008, Jon Smirl wrote:
+> BTW I seem to recall that get_merge_bases_many() was _not_ the same as 
+> get_merge_octopus().  Could you please remind me what _many() does?
 
-> I was playing around with git log for the kernel and observed that there 
-> is a lot of noise when trying to do statistics on the number of commits.
-> 
-> For example:
-> 
-> Author: Greg K-H <gregkh@suse.de>
-> Author: Greg KH <gregkh@suse.de>
-> Author: Greg KH <greg@kroah.com>
-> Author: Greg KH <greg@press.(none)>
-> Author: gregkh@suse.de <gregkh@suse.de>
-> Author: Greg Kroah-Hartman <gregkh@suse>
-> Author: Greg Kroah-Hartman <gregkh@suse.de>
-> Author: Greg Kroah-Hartman <greg@kroah.com>
-> 
-> I don't see an obvious way to do this with git, but it would be neat
-> to have a 'clean' option on git log that would take each email address
-> (author, signed-off, acked, etc) and map it through a table which
-> would convert old email addresses in to the current one and also
-> standardize the formatting of the names.
+I explained what merge-bases-many gives in a separate message last night
+with pictures.
 
-Something like .mailmap?
+get_merge_octopus() is a more or less useless function.  It is there only
+because the protocol between "merge" and strategies requires that the
+former have to pass _some_ bases to the latter.  In fact, the octopus
+strategy implementation completely ignores the heads given by "merge";
+a single set of merge base given from outside is not even useful when you
+build octopus by repeatedly running pairwise three-way merges.
 
-And to show the mapped author name instead of the committed one, you would 
-use "--pretty=format:%aN"?  (Needs 1.6.0-rc0 at least, IIRC)
-
-Ciao,
-Dscho
+With Christian's git-merge-base enhancement, the big comment at the end of
+git-merge-octopus's main loop can go with a much improved "next" merge
+base computation.
