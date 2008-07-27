@@ -1,99 +1,102 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Bizarre missing changes (git bug?)
-Date: Sun, 27 Jul 2008 11:47:18 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org>
-References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com> <alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org> <200807260512.40088.zippel@linux-m68k.org> <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org>
- <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Cleaning up log messages
+Date: Sun, 27 Jul 2008 15:07:24 -0400
+Message-ID: <9e4733910807271207o2e18cef1h869c659bd0ae31ba@mail.gmail.com>
+References: <9e4733910807271050y7fb5f77coec05bd68421baaab@mail.gmail.com>
+	 <alpine.DEB.1.00.0807272000270.5526@eeepc-johanness>
+	 <9e4733910807271116q29323664l8d44fdded1de8c8e@mail.gmail.com>
+	 <20080727183309.GD32184@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Roman Zippel <zippel@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Jul 27 20:51:58 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sun Jul 27 21:08:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNBLZ-0004Xr-4I
-	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 20:51:57 +0200
+	id 1KNBbY-0000up-FB
+	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 21:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752685AbYG0Su5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 14:50:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752595AbYG0Su4
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 14:50:56 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:33850 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751388AbYG0Su4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Jul 2008 14:50:56 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6RIoHHi004749
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 27 Jul 2008 11:50:18 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6RIoHiq032343;
-	Sun, 27 Jul 2008 11:50:17 -0700
-In-Reply-To: <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.405 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1757994AbYG0TH0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Jul 2008 15:07:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757925AbYG0TH0
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 15:07:26 -0400
+Received: from wr-out-0506.google.com ([64.233.184.235]:21982 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757742AbYG0THZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Jul 2008 15:07:25 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so3398446wri.5
+        for <git@vger.kernel.org>; Sun, 27 Jul 2008 12:07:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=e0vEgknSlAH4V5UW+NT0sS3iNqkHGlFXOI620V4TunA=;
+        b=kMb/w9L5pwmWbxG1npRiNafDHuvuSi7lUmUfYFsCVacHk4nd30tRehll1UBiPVIJpa
+         fAa/ZgSHccJYrKYt30ukN6GPELd8kTBOf2CYMBjJCsVssWW8myZPjnwruhj2IZ0fBlB6
+         QZGKaMk3zcp53flfAqRueW5bfDNPpgkWXEC64=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=fz0/WhcUx6AO0aI2BUrAm/IBgBs4wQpRO9uxbIc911aKjVyaerRi31XMo7Yr69zoo6
+         oHPGUzmrzeqXmrZTKIXKybBpYcL45Q2TgTXBYf3+ij+Ef5Nc7JFDFgBunSHvoVzx99Xr
+         80imoRHeOelCsUUoEPoDcJRzfA3yLP/Sdo0fo=
+Received: by 10.90.29.17 with SMTP id c17mr3200708agc.25.1217185644814;
+        Sun, 27 Jul 2008 12:07:24 -0700 (PDT)
+Received: by 10.150.205.1 with HTTP; Sun, 27 Jul 2008 12:07:24 -0700 (PDT)
+In-Reply-To: <20080727183309.GD32184@machine.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90357>
 
+On 7/27/08, Petr Baudis <pasky@suse.cz> wrote:
+> On Sun, Jul 27, 2008 at 02:16:30PM -0400, Jon Smirl wrote:
+>  > On 7/27/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote=
+:
+>
+> > > Something like .mailmap?
+>  > >
+>  > >  And to show the mapped author name instead of the committed one=
+, you would
+>  > >  use "--pretty=3Dformat:%aN"?  (Needs 1.6.0-rc0 at least, IIRC)
+>  >
+>  > So we can already do this? Where is a .mailmap for the kernel tree=
+?
+>
+>
+>         http://repo.or.cz/w/linux-2.6.git?a=3Dblob;f=3D.mailmap
+>
+>  ...right there. :-)
 
+I updated to 1.6.0-rc0 and this is working. mailmap needs some
+cleanup. Errors are still in the list, but this is a lot better than
+it was. That made about 800 'contributors' disappear.
 
-On Sun, 27 Jul 2008, Roman Zippel wrote:
+Is there a way to do short log and have it map the names? What about
+replacing the emails with their current email address?
 
-> Hi,
-> 
-> On Sat, 26 Jul 2008, Linus Torvalds wrote:
-> 
-> > > Is there a way to change that default?
-> > 
-> > Use an alias or something.
-> 
-> This doesn't help with the graphical front ends and they only use what git 
-> gives them.
+Random missing entries....
+Greg KH
+Greg Kroah-Hartman
 
-And the graphical front-ends is exactly why --full-history cannot be the 
-default.
+Hans J Koch
+Hans J. Koch
 
-We _could_ make it the default for non-graphical ones, if we also say 
-"--no-merges". But then:
+Jean-Christophe Dubois
+Jean-Christophe DUBOIS
 
-> > To see why it's the default, do a few tests. In particular, try it with 
-> > gitk on the kernel. Try it on some fairly simple file that doesn't get a 
-> > lot of churn. Example:
-> > 
-> > 	gitk lib/vsprintf.c
-> > 
-> > vs
-> > 
-> > 	gitk --full-history lib/vsprintf.c
-> > 
-> > and if you don't _immediately_ see why --full-history isn't the default, 
-> > there's likely something wrong with you. One is useful. The other is not.
-> > 
-> > So we absolutely _have_ to simplify merges. There is no question about it.
-> 
-> Well, I don't want that much history.
+Miguel Boton
+Miguel Bot=F3n
 
-Right. Nobody does.
-
-> Let's take a different example.
-
-No, let's not.
-
-Unless you can solve that _one_ example efficiently, nothing else matters. 
-
-The above example is all you ever need. Make that one work right (and 
-efficiently), and everything is fine.
-
-And no, some random ruby code doesn't make any difference what-so-ever. 
-There are efficiency constraints here that make any ruby solution be 
-unrealistic to begin with.
-
-			Linus
+--=20
+Jon Smirl
+jonsmirl@gmail.com
