@@ -1,130 +1,199 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] make sure parsed wildcard refspec ends with slash
-Date: Sun, 27 Jul 2008 13:20:34 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0807271257400.19665@iabervon.org>
-References: <1216854795-51155-1-git-send-email-lee.marlow@gmail.com> <1216858043-53646-1-git-send-email-lee.marlow@gmail.com> <20080725204051.GB23202@spearce.org> <7v1w1hsmnc.fsf@gitster.siamese.dyndns.org> <20080726082405.GA10104@sigill.intra.peff.net>
- <7vvdysb2na.fsf@gitster.siamese.dyndns.org> <7vsktv3l9k.fsf_-_@gitster.siamese.dyndns.org>
+From: Roman Zippel <zippel@linux-m68k.org>
+Subject: Re: Bizarre missing changes (git bug?)
+Date: Sun, 27 Jul 2008 19:50:55 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain>
+References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com>
+ <alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org>
+ <200807260512.40088.zippel@linux-m68k.org>
+ <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 27 19:21:39 2008
+Cc: Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Jul 27 19:52:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KN9w9-00038y-86
-	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 19:21:37 +0200
+	id 1KNAPo-0002vY-TI
+	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 19:52:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756755AbYG0RUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 13:20:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752993AbYG0RUg
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 13:20:36 -0400
-Received: from iabervon.org ([66.92.72.58]:51338 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752479AbYG0RUf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 13:20:35 -0400
-Received: (qmail 19293 invoked by uid 1000); 27 Jul 2008 17:20:34 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 27 Jul 2008 17:20:34 -0000
-In-Reply-To: <7vsktv3l9k.fsf_-_@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751032AbYG0RvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 13:51:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751006AbYG0RvP
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 13:51:15 -0400
+Received: from smtp-vbr7.xs4all.nl ([194.109.24.27]:2417 "EHLO
+	smtp-vbr7.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750889AbYG0RvO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 13:51:14 -0400
+Received: from squid.home (linux-m68k.xs4all.nl [82.95.193.92])
+	(authenticated bits=0)
+	by smtp-vbr7.xs4all.nl (8.13.8/8.13.8) with ESMTP id m6RHoutR031201
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 27 Jul 2008 19:51:03 +0200 (CEST)
+	(envelope-from zippel@linux-m68k.org)
+X-X-Sender: roman@localhost.localdomain
+In-Reply-To: <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90348>
 
-On Sat, 26 Jul 2008, Junio C Hamano wrote:
+Hi,
 
-> A wildcard refspec is internally parsed into a refspec structure with src
-> and dst strings.  Many parts of the code assumed that these do not include
-> the trailing "/*" when matching the wildcard pattern with an actual ref we
-> see at the remote.  What this meant was that we needed to make sure not
-> just that the prefix matched, and also that a slash followed the part that
-> matched.
-> 
-> But a codepath that scans the result from ls-remote and finds matching
-> refs forgot to check the "matching part must be followed by a slash" rule.
-> This resulted in "refs/heads/b1" from the remote side to mistakenly match
-> the source side of "refs/heads/b/*:refs/remotes/b/*" refspec.
-> 
-> Worse, the refspec crafted internally by "git-clone", and a hardcoded
-> preparsed refspec that is used to implement "git-fetch --tags", violated
-> this "parsed widcard refspec does not end with slash" rule; simply adding
-> the "matching part must be followed by a slash" rule then would have
-> broken codepaths that use these refspecs.
-> 
-> This commit changes the rule to require a trailing slash to parsed
-> wildcard refspecs.  IOW, "refs/heads/b/*:refs/remotes/b/*" is parsed as
-> src = "refs/heads/b/" and dst = "refs/remotes/b/".  This allows us to
-> simplify the matching logic because we only need to do a prefixcmp() to
-> notice "refs/heads/b/one" matches and "refs/heads/b1" does not.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > I have a nagging suspicion that it might be a simpler and cleaner change
-> > to change parse_refspec_internal() to keep the trailing slash, instead of
-> > dropping it.  Then the check you added is not needed (the trailing slash
-> > guarantees that the pattern matches at the hierarchy boundary), neither
-> > any of the change in this patch.
-> 
-> This is the other variant, and it turns out that I was right.  Among the
-> 64-18 = 46 new lines, 30 are from the new test file.  Two existing
-> "matching part is followed by '/'" tests are removed.
+On Sat, 26 Jul 2008, Linus Torvalds wrote:
 
-Yeah, the first version of this code included the '/', by virtue of having 
-the '/' not be required in the refspec (i.e., you could have 
-"refs/heads/b*"); when you told me that refspecs needed to have a '/' 
-before the '*', I thought that it would be easiest to not include the '/', 
-since it was redundant, but, in retrospect, I'm not too surprised that it 
-simplifies things to include it.
-
-Acked-by: Daniel Barkalow <barkalow@iabervon.org>
-
->  remote.c               |   52 +++++++++++++++++++++++++++++++----------------
->  t/t5513-fetch-track.sh |   30 +++++++++++++++++++++++++++
->  2 files changed, 64 insertions(+), 18 deletions(-)
+> > Is there a way to change that default?
 > 
-> diff --git a/remote.c b/remote.c
-> index 0d6020b..f61a3ab 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -427,6 +427,28 @@ static void read_config(void)
->  	alias_all_urls();
->  }
->  
-> +/*
-> + * We need to make sure the tracking branches are well formed, but a
-> + * wildcard refspec in "struct refspec" must have a trailing slash. We
-> + * temporarily drop the trailing '/' while calling check_ref_format(),
-> + * and put it back.  The caller knows that a CHECK_REF_FORMAT_ONELEVEL
-> + * error return is Ok for a wildcard refspec.
-> + */
-> +static int verify_refname(char *name, int is_glob)
-> +{
-> +	int result, len = -1;
-> +
-> +	if (is_glob) {
-> +		len = strlen(name);
-> +		assert(name[len - 1] == '/');
-> +		name[len - 1] = '\0';
-> +	}
-> +	result = check_ref_format(name);
-> +	if (is_glob)
-> +		name[len - 1] = '/';
-> +	return result;
-> +}
-> +
+> Use an alias or something.
 
-Maybe check_ref_format() ought to have a return for "this is valid as a 
-directory rather than a single ref", and that would be allowed with globs? 
-I'm not too fond of temporarily changing strings for testing. Also, this 
-design (while it matches the current code), means that check_ref_format() 
-sees one fewer level than the refs that match will actually have, which is 
-a little confusing.
+This doesn't help with the graphical front ends and they only use what git 
+gives them.
 
-	-Daniel
-*This .sig left intentionally blank*
+> To see why it's the default, do a few tests. In particular, try it with 
+> gitk on the kernel. Try it on some fairly simple file that doesn't get a 
+> lot of churn. Example:
+> 
+> 	gitk lib/vsprintf.c
+> 
+> vs
+> 
+> 	gitk --full-history lib/vsprintf.c
+> 
+> and if you don't _immediately_ see why --full-history isn't the default, 
+> there's likely something wrong with you. One is useful. The other is not.
+> 
+> So we absolutely _have_ to simplify merges. There is no question about it.
+
+Well, I don't want that much history.
+Let's take a different example. Look at kernel/sched_rt.c with git-log, 
+--full-history shows an extra commit of a patch which was committed and 
+merged twice, but there is no information how this other patch was merged. 
+If you have giggle installed, you'll see that commit as a loose end.
+
+(I have git version 1.5.6.2 installed in case it matters.)
+
+> That said, we currently simplify merges the simple and stupid way, and 
+> I've hinted several times on this mailing list that there is a better way 
+> to do it (last time it was the discussion about "filter-branch".
+> 
+> In fact, if you google for 
+> 
+> 	filter-branch full-history
+> 
+> you'll find some of the discussion. In order to make --full-history useful 
+> as a default, we'd need to do an after-the-fact merge cleanup (ie remove 
+> lines of development that are later found to really be totally 
+> uninteresting), but that is *hard*.
+
+I played a little with it in the ruby script below, which produces a 
+complete connected graph of all content nodes and which have been merged 
+into the head, e.g. for sched_rt.c it produces that extra commit merge. 
+The script basically eliminates all empty merges. As input to the script I 
+used "git log --parents --name-only --full-history kernel/sched_rt.c | 
+grep -e ^commit -e ^kernel", which seems to produce the same amount of 
+commits as "gitk --full-history ...".
+
+The main function is to check, whether one parent of a commit is an 
+ancestor of another parent, so that this path can be eliminated. I tried 
+it with other paths and too simple implementations quickly lead to 
+exponential behaviour. :) It probably also shouldn't be recursive, I had 
+to increase the stack limit, otherwise I got stack exceptions.
+Otherwise it seems to work fine, it wasn't that hard :-)
+
+The ruby syntax shouldn't be too hard too read, the nonobvious thing is 
+maybe that '$' marks global variables.
+
+bye, Roman
+
+
+#! /usr/bin/ruby
+
+$parent = Hash.new
+$content = Hash.new
+$result = Hash.new
+
+commit = nil
+head = nil
+while l = $stdin.gets
+	a = l.split(" ")
+	if a[0] == "commit"
+		commit = a[1]
+		head = commit unless head
+		$parent[commit] = a[2..-1]
+	else
+		$content[commit] = true
+	end
+end
+
+$parent_check = Hash.new
+$parent_cache = Hash.new
+
+def commit_has_parent?(commit, commit2)
+	if $parent_check[commit]
+		print "parent loop for #{commit} (#{commit2})?\n"
+		p $parent_check
+		return false
+	end
+	return $parent_cache[commit] if $parent_cache.has_key?(commit)
+	$parent_check[commit] = true
+	res = false
+	if $content[commit] > $content[commit2]
+		$parent[commit].each do |parent|
+			if parent == commit2 || commit_has_parent?(parent, commit2)
+				res = true
+				break;
+			end
+		end
+	end
+	$parent_cache[commit] = res
+	$parent_check.delete(commit)
+	$parent_cache.clear if $parent_check.empty?
+	return res
+end
+
+def check_commit(commit)
+	return $result[commit] if $result.has_key? commit
+	a = Array.new
+	$parent[commit].each do |parent|
+		parent = check_commit(parent)
+		if parent
+			a.each_index do |i|
+				if a[i] == parent || commit_has_parent?(a[i], parent)
+					parent = nil
+					break
+				elsif commit_has_parent?(parent, a[i])
+					a[i] = parent
+					parent = nil
+					break
+				end
+			end
+		end
+		a.push(parent) if parent
+	end
+	$parent[commit] = a
+	$content[commit] = true if a.size > 1
+	if $content[commit]
+		$result[commit] = commit
+		max = 1
+		a.each do |parent|
+			max = $content[parent] + 1 if max <= $content[parent]
+		end
+		$content[commit] = max
+	else
+		$result[commit] = a[0]
+	end
+	return $result[commit]
+end
+
+check_commit(head)
+#p $result
+#p $parent
+
+p $content.keys.size
+$content.each_key do |commit|
+	p [ commit, $parent[commit] ]
+	commit = $parent[commit][0]
+end
