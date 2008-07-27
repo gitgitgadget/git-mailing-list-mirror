@@ -1,85 +1,73 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Cleaning up log messages
-Date: Sun, 27 Jul 2008 13:50:58 -0400
-Message-ID: <9e4733910807271050y7fb5f77coec05bd68421baaab@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Cleaning up log messages
+Date: Sun, 27 Jul 2008 20:01:37 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807272000270.5526@eeepc-johanness>
+References: <9e4733910807271050y7fb5f77coec05bd68421baaab@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 27 19:52:19 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 27 20:01:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNAPo-0002vY-8A
-	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 19:52:16 +0200
+	id 1KNAYo-0005S9-OX
+	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 20:01:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750843AbYG0Ru7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 13:50:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750851AbYG0Ru7
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 13:50:59 -0400
-Received: from an-out-0708.google.com ([209.85.132.244]:3797 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750840AbYG0Ru6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 13:50:58 -0400
-Received: by an-out-0708.google.com with SMTP id d40so849788and.103
-        for <git@vger.kernel.org>; Sun, 27 Jul 2008 10:50:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=oZqKN1PyxTBcVta4E90hz/7+iNNM61G6updx1/j0YDg=;
-        b=DsyWL3BJ1yX1ki8F62O0VuqBkdfim3/h1b+0FUdGZ7RRYx4O4KtgNhOuobbcAocYFF
-         oSGPuhZSTMc9riBKpw7UafBo8i7ihmwseNYoZ+4tbjPvN5YuGwFrKryLfzzjtEONNaFP
-         ociUDBYJNFWgeNh4BddtWW4VrKleWTORqulPQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=Z9zkCq0iKNcCThkrtHvDZ3DyawCr/yUcYMC97CsXRzFzzXmj072QWqGPdWGS554kWG
-         4aNDiHUWQduWewr23aXa0ZRi+Az7NMTRqpf/IfQ6pe/RF1CD4mTCFwQ1TgPKmH2+j/Lf
-         TtCuBnDRWaL7vjevYdGZEYddjrj1/DmMLdeq0=
-Received: by 10.100.124.6 with SMTP id w6mr4440090anc.92.1217181058053;
-        Sun, 27 Jul 2008 10:50:58 -0700 (PDT)
-Received: by 10.150.205.1 with HTTP; Sun, 27 Jul 2008 10:50:58 -0700 (PDT)
-Content-Disposition: inline
+	id S1757586AbYG0SAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 14:00:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757580AbYG0SAe
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 14:00:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34907 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757576AbYG0SAe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 14:00:34 -0400
+Received: (qmail invoked by alias); 27 Jul 2008 18:00:32 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp005) with SMTP; 27 Jul 2008 20:00:32 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18zcm4mnxIzAgokSfiNHPj1KA51AZIziALPWBMbPj
+	rk2y+Z/uOuln29
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <9e4733910807271050y7fb5f77coec05bd68421baaab@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90350>
 
-I was playing around with git log for the kernel and observed that
-there is a lot of noise when trying to do statistics on the number of
-commits.
+Hi,
 
-For example:
+On Sun, 27 Jul 2008, Jon Smirl wrote:
 
-Author: Greg K-H <gregkh@suse.de>
-Author: Greg KH <gregkh@suse.de>
-Author: Greg KH <greg@kroah.com>
-Author: Greg KH <greg@press.(none)>
-Author: gregkh@suse.de <gregkh@suse.de>
-Author: Greg Kroah-Hartman <gregkh@suse>
-Author: Greg Kroah-Hartman <gregkh@suse.de>
-Author: Greg Kroah-Hartman <greg@kroah.com>
+> I was playing around with git log for the kernel and observed that there 
+> is a lot of noise when trying to do statistics on the number of commits.
+> 
+> For example:
+> 
+> Author: Greg K-H <gregkh@suse.de>
+> Author: Greg KH <gregkh@suse.de>
+> Author: Greg KH <greg@kroah.com>
+> Author: Greg KH <greg@press.(none)>
+> Author: gregkh@suse.de <gregkh@suse.de>
+> Author: Greg Kroah-Hartman <gregkh@suse>
+> Author: Greg Kroah-Hartman <gregkh@suse.de>
+> Author: Greg Kroah-Hartman <greg@kroah.com>
+> 
+> I don't see an obvious way to do this with git, but it would be neat
+> to have a 'clean' option on git log that would take each email address
+> (author, signed-off, acked, etc) and map it through a table which
+> would convert old email addresses in to the current one and also
+> standardize the formatting of the names.
 
-I don't see an obvious way to do this with git, but it would be neat
-to have a 'clean' option on git log that would take each email address
-(author, signed-off, acked, etc) and map it through a table which
-would convert old email addresses in to the current one and also
-standardize the formatting of the names. A cleaned log would be
-altered on display, but just don't clean it if you want the original.
+Something like .mailmap?
 
-Of course this initial map would need to be built by hand. New commits
-could be checked against the map and the mapped updated if the person
-really has a new email address. Checking new commits against the map
-would help clean things up going forward. checkpatch.pl could also
-validate against the mapping file.
+And to show the mapped author name instead of the committed one, you would 
+use "--pretty=format:%aN"?  (Needs 1.6.0-rc0 at least, IIRC)
 
-No pressing need to for this, it would just be a nice toy.
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+Ciao,
+Dscho
