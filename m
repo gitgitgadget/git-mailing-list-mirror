@@ -1,99 +1,78 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Avoid chdir() in list_commands_in_dir()
-Date: Sun, 27 Jul 2008 22:34:14 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807272233160.5526@eeepc-johanness>
-References: <cover.1217037178.git.vmiklos@frugalware.org> <f311372167c02868ccf5aa4dc03c97b7f956d855.1217037178.git.vmiklos@frugalware.org> <1217073292-27945-1-git-send-email-vmiklos@frugalware.org> <4f2b03391e3f85cf2224f97a2a7765d08707bd73.1217037178.git.vmiklos@frugalware.org>
- <7vwsj7yu1q.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807272219350.5526@eeepc-johanness>
+Subject: Re: [RFC/PATCH v2] merge-base: teach "git merge-base" to accept more
+ than 2 arguments
+Date: Sun, 27 Jul 2008 22:44:02 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807272241220.5526@eeepc-johanness>
+References: <20080727053324.b54fe48e.chriscool@tuxfamily.org> <alpine.DEB.1.00.0807271631470.5526@eeepc-johanness> <7vljzn2o51.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	Miklos Vajna <vmiklos@frugalware.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 27 22:34:14 2008
+X-From: git-owner@vger.kernel.org Sun Jul 27 22:44:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNCwX-0000Qp-H3
-	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 22:34:13 +0200
+	id 1KND64-0003AL-0M
+	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 22:44:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757809AbYG0UdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 16:33:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757972AbYG0UdN
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 16:33:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50833 "HELO mail.gmx.net"
+	id S1757739AbYG0UnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 16:43:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758162AbYG0UnA
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 16:43:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60407 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757724AbYG0UdM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 16:33:12 -0400
-Received: (qmail invoked by alias); 27 Jul 2008 20:33:10 -0000
+	id S1757739AbYG0Um7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 16:42:59 -0400
+Received: (qmail invoked by alias); 27 Jul 2008 20:42:58 -0000
 Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp068) with SMTP; 27 Jul 2008 22:33:10 +0200
+  by mail.gmx.net (mp004) with SMTP; 27 Jul 2008 22:42:58 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18/8AFoncU/lOfp8oWLV+Bhx+j0g/A09H2FKpaZCM
-	2WKgJ2mzJKUVng
+X-Provags-ID: V01U2FsdGVkX18N3ccfWTUNtcR31CEyqxGPJcw5KntNGpDNwQ9KdB
+	DWv2fLjC8q9QQT
 X-X-Sender: user@eeepc-johanness
-In-Reply-To: <alpine.DEB.1.00.0807272219350.5526@eeepc-johanness>
+In-Reply-To: <7vljzn2o51.fsf@gitster.siamese.dyndns.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90368>
 
+Hi,
 
-The function list_commands_in_dir() tried to be lazy and just chdir()
-to the directory which entries it listed, so that the check if the
-file is executable could be done on dir->d_name.
+On Sun, 27 Jul 2008, Junio C Hamano wrote:
 
-However, there is no good reason to jump around wildly just to find
-all Git commands.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > BTW I seem to recall that get_merge_bases_many() was _not_ the same as 
+> > get_merge_octopus().  Could you please remind me what _many() does?
+> 
+> I explained what merge-bases-many gives in a separate message last night 
+> with pictures.
 
-Instead, have a strbuf and construct the full path dynamically.
+I missed that, alright.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- help.c |   12 ++++++++++--
- 1 files changed, 10 insertions(+), 2 deletions(-)
+> get_merge_octopus() is a more or less useless function.  It is there 
+> only because the protocol between "merge" and strategies requires that 
+> the former have to pass _some_ bases to the latter.
 
-diff --git a/help.c b/help.c
-index 480befe..7af6582 100644
---- a/help.c
-+++ b/help.c
-@@ -426,17 +426,24 @@ static unsigned int list_commands_in_dir(struct cmdnames *cmds,
- 	int prefix_len = strlen(prefix);
- 	DIR *dir = opendir(path);
- 	struct dirent *de;
-+	struct strbuf buf = STRBUF_INIT;
-+	int len;
- 
--	if (!dir || chdir(path))
-+	if (!dir)
- 		return 0;
- 
-+	strbuf_addf(&buf, "%s/", path);
-+	len = buf.len;
-+
- 	while ((de = readdir(dir)) != NULL) {
- 		int entlen;
- 
- 		if (prefixcmp(de->d_name, prefix))
- 			continue;
- 
--		if (!is_executable(de->d_name))
-+		strbuf_setlen(&buf, len);
-+		strbuf_addstr(&buf, de->d_name);
-+		if (!is_executable(buf.buf))
- 			continue;
- 
- 		entlen = strlen(de->d_name) - prefix_len;
-@@ -449,6 +456,7 @@ static unsigned int list_commands_in_dir(struct cmdnames *cmds,
- 		add_cmdname(cmds, de->d_name + prefix_len, entlen);
- 	}
- 	closedir(dir);
-+	strbuf_release(&buf);
- 
- 	return longest;
- }
--- 
-1.6.0.rc0.97.ge2309
+Does it?  I thought that e.g. merge-recursive accepts an empty set of 
+merge bases?  AFAIR that was the reason why gitk could be merged so well.
+
+> In fact, the octopus strategy implementation completely ignores the 
+> heads given by "merge"; a single set of merge base given from outside is 
+> not even useful when you build octopus by repeatedly running pairwise 
+> three-way merges.
+> 
+> With Christian's git-merge-base enhancement, the big comment at the end 
+> of git-merge-octopus's main loop can go with a much improved "next" 
+> merge base computation.
+
+Okay.
+
+Ciao,
+Dscho
