@@ -1,73 +1,91 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: StGit: kha/{stable,safe,experimental} updated
-Date: Sun, 27 Jul 2008 09:44:31 +0100
-Message-ID: <b0943d9e0807270144n359e5bd3ye3e91c52b8fa7beb@mail.gmail.com>
-References: <20080725013936.GA20959@diana.vm.bytemark.co.uk>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Optional grouping of projects by category.
+Date: Sun, 27 Jul 2008 01:53:43 -0700 (PDT)
+Message-ID: <m3zlo3u2r2.fsf@localhost.localdomain>
+References: <8763qsi2mt.wl%seb@cine7.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Samuel Tardieu" <sam@rfc1149.net>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sun Jul 27 10:48:14 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sebastien Cevey <seb@cine7.net>
+X-From: git-owner@vger.kernel.org Sun Jul 27 10:54:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KN1vH-0004zH-Uz
-	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 10:48:12 +0200
+	id 1KN21f-0006Xx-7W
+	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 10:54:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751088AbYG0Iod convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Jul 2008 04:44:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751086AbYG0Iod
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 04:44:33 -0400
-Received: from wa-out-1112.google.com ([209.85.146.183]:56821 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751081AbYG0Ioc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Jul 2008 04:44:32 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so2620799waf.23
-        for <git@vger.kernel.org>; Sun, 27 Jul 2008 01:44:32 -0700 (PDT)
+	id S1751158AbYG0Ixr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 04:53:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbYG0Ixr
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 04:53:47 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:23652 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751081AbYG0Ixq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 04:53:46 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so101414ugf.16
+        for <git@vger.kernel.org>; Sun, 27 Jul 2008 01:53:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=kIoYrYUSC8mUwrbWJEu+Z3ahrMwlLEm0oKy9FZM/gwI=;
-        b=rhCRjTh45lyGrqmPVu02OAkCJDDITXuhIvf7GgXLzmnIWgGSRYMGDkivOSV94YAiB5
-         foYKmTEmcG8iplmEEQ2Zxoyt/heMnq/C01+Vl0WaVxD5vHsdS+/qi9C2LrhQ0b74Erj9
-         RB7GxLC99GRzC8caqbOoXdRbShAZNXIlAHWQg=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=y0dReBnq3lPbuVS/aeNbbHOyjbe4RC3j4QAQQnV2Cac=;
+        b=aVbXkJ0IG8gl6IEadrDWBi+a4tOEoigCaNIm4vO2rfZ+UjC4GunDbbq8v+qToBbOwC
+         /k0aONhcsV5fOY94Kxai7Tyes8aw8/NWRbUXVJKLaKlvE74h5A73kraZW42ZK4LVg4DF
+         cm5nj9E0dU206TaMriJg7rf4OzB8GnS+hi+MY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=AKVwruvKYvYyWlU4vCFGIK7s46DF+rhuUSKMPHhJi37jkaIYAQKWTP4NwnZNNsEXXE
-         qTOKykYNVfcG3k8ZBwjOj9jyRlZzlPkL3y2SLOk1mD3IIXtUyHfb5a2TgplP8QR2CUPp
-         Do7BO/y7UaeZrn5n373jP7OAsbsfnSPezxD3c=
-Received: by 10.114.157.3 with SMTP id f3mr3803962wae.40.1217148272017;
-        Sun, 27 Jul 2008 01:44:32 -0700 (PDT)
-Received: by 10.114.193.12 with HTTP; Sun, 27 Jul 2008 01:44:31 -0700 (PDT)
-In-Reply-To: <20080725013936.GA20959@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=e+2yiNWGX28931vjY0dHDp0WTTAegdOnZyYGqSemqye//XN9IyRzJaH0SJYVRxisBv
+         BCv5HQygzulFYkGl41EKhhMhGixTBBBgGAalTTpMffGErMfcsBflPV6ToT6zJbTxhE6M
+         qVou9WO9+4WBhh0qU7JL1hdSvBljvcipqD7hk=
+Received: by 10.67.115.18 with SMTP id s18mr1262094ugm.52.1217148824092;
+        Sun, 27 Jul 2008 01:53:44 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.240.214])
+        by mx.google.com with ESMTPS id k1sm5128979ugf.21.2008.07.27.01.53.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 27 Jul 2008 01:53:43 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m6R8rdxh025609;
+	Sun, 27 Jul 2008 10:53:39 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m6R8rbJN025606;
+	Sun, 27 Jul 2008 10:53:37 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <8763qsi2mt.wl%seb@cine7.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90327>
 
-2008/7/25 Karl Hasselstr=F6m <kha@treskal.com>:
-> The big update since last time is support (in kha/experimental) for
-> hidden patches in the new-infrastructure commands and stack log.
->
-> Unless more problems are uncovered, I'll soon move all patches in
-> experimental to safe (which means I'll be recommending that Catalin
-> merge them).
+Sebastien Cevey <seb@cine7.net> writes:
 
-I'll have a look at the new stack log format (my main worry) this week
-but the other patches look OK.
+> This adds the GITWEB_GROUP_CATEGORIES option which, if enabled, will
+> result in grouping projects by category on the project list page.  The
+> category is specified for each project by the $GIT_DIR/category file
+> or the 'category' variable in its configuration file.
+> 
+> The feature is inspired from Sham Chukoury's patch for the XMMS2
+> gitweb, but has been rewritten for the current gitweb development
+> HEAD.
+> 
+> Thanks to Florian Ragwitz for Perl tips.
 
-I merged the safe and stable branches.
+Thanks a lot.  I don't know if it is a good time, with git being in
+feature freeze, and GSoC project about adding caching to gitweb in the
+works, but I'll take this patch and resend it if needed.  I'll try to
+comment on it soon.
 
-Thanks.
+That said, I think that the subject (oneline commit summary) should
+include 'gitweb', e.g.
 
---=20
-Catalin
+  "gitweb: Optional grouping of projects by category"
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
