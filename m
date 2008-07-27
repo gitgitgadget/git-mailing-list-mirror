@@ -1,55 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fsck: Don't require tmp_obj_ file names are 14 bytes in
- length
-Date: Sat, 26 Jul 2008 21:15:23 -0700
-Message-ID: <7vwsj83quc.fsf@gitster.siamese.dyndns.org>
-References: <6ruv3Y98_kSSVnJFTkV0PNdiNcQ3g-a3M4BhGoT7S1PorElp5tJAkw@cipher.nrlssc.navy.mil> <20080727023300.GB17425@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Brandon Casey <casey@nrlssc.navy.mil>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Jul 27 06:16:32 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 1/2] Fix missing packed-refs entries during ref lookup/enumeration
+Date: Sat, 26 Jul 2008 21:33:40 -0700
+Message-ID: <1217133221-15513-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Marek Zawirski <marek.zawirski@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 27 06:35:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KMxgN-0007mJ-95
-	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 06:16:31 +0200
+	id 1KMxyW-0002cb-NQ
+	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 06:35:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752388AbYG0EPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 00:15:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752432AbYG0EPb
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 00:15:31 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61948 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752358AbYG0EPb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 00:15:31 -0400
+	id S1752586AbYG0Edo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 00:33:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751166AbYG0Edn
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 00:33:43 -0400
+Received: from george.spearce.org ([209.20.77.23]:51349 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750822AbYG0Edn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 00:33:43 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id E24A73841A; Sun, 27 Jul 2008 04:33:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8C4C433776;
-	Sun, 27 Jul 2008 00:15:29 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id BD3B833772; Sun, 27 Jul 2008 00:15:25 -0400 (EDT)
-In-Reply-To: <20080727023300.GB17425@spearce.org> (Shawn O. Pearce's message
- of "Sat, 26 Jul 2008 21:33:00 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A5C71100-5B92-11DD-A0A6-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	by george.spearce.org (Postfix) with ESMTP id 20FC1383A3;
+	Sun, 27 Jul 2008 04:33:42 +0000 (UTC)
+X-Mailer: git-send-email 1.6.0.rc0.182.gb96c7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90307>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Some codepaths in RefDatabase allowed the caller to lookup a ref
+without making sure the packed-refs file was loaded into memory.
+This caused refs which were only packed to appear to not exist,
+which meant fetch would still try to fetch something we already
+have had for quite some time.
 
->   Brandon Casey <casey@nrlssc.navy.mil> wrote:
->   > Since 5723fe7e, temporary objects are now created in their final destination
->   > directories, rather than in .git/objects/. Teach fsck to recognize and
->   > ignore the temporary objects it encounters, and teach prune to remove them.
->
->   jgit can't exactly follow the 14 character naming rule.
->   This should be a safe way around it.
+This resolves the issue I was seeing where `jgit fetch` was always
+downloading the stable branch of egit.git, even though it has not
+changed in many weeks.
 
-More importantly, we might want to change the temporary filename to ensure
-that it is 38 bytes in length in the future (cf. $gmane/85106).
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../src/org/spearce/jgit/lib/RefDatabase.java      |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+index 82b995e..98c365e 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+@@ -115,6 +115,7 @@ class RefDatabase {
+ 	}
+ 
+ 	ObjectId idOf(final String name) throws IOException {
++		refreshPackedRefs();
+ 		final Ref r = readRefBasic(name, 0);
+ 		return r != null ? r.getObjectId() : null;
+ 	}
+@@ -132,6 +133,7 @@ class RefDatabase {
+ 	 *             to the base ref, as the symbolic ref could not be read.
+ 	 */
+ 	RefUpdate newUpdate(final String name) throws IOException {
++		refreshPackedRefs();
+ 		Ref r = readRefBasic(name, 0);
+ 		if (r == null)
+ 			r = new Ref(Ref.Storage.NEW, name, null);
+-- 
+1.6.0.rc0.182.gb96c7
