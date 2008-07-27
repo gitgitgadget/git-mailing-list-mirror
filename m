@@ -1,103 +1,107 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2008
-Date: Sun, 27 Jul 2008 18:24:49 +0700
-Message-ID: <fcaeb9bf0807270424j314c321cw18d40b9781ea5946@mail.gmail.com>
-References: <200807230325.04184.jnareb@gmail.com>
-	 <20080723235359.GB12754@leksak.fem-net>
-	 <200807241152.29465.jnareb@gmail.com>
-	 <200807261734.35239.jnareb@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: git-scm.com
+Date: Sun, 27 Jul 2008 13:37:07 +0200
+Message-ID: <20080727113707.GC32184@machine.or.cz>
+References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com> <7v3alxr0fd.fsf@gitster.siamese.dyndns.org> <d411cc4a0807251759m1d83d7c4w4724806b19f7c02a@mail.gmail.com> <7vsktwfu5z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: "Stephan Beyer" <s-beyer@gmx.net>,
-	"Robin Rosenberg" <robin.rosenberg.lists@dewire.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 27 13:25:54 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 27 13:38:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KN4Ns-0001a6-UT
-	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 13:25:53 +0200
+	id 1KN4Zo-0004Fo-0G
+	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 13:38:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751375AbYG0LYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 07:24:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751307AbYG0LYw
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 07:24:52 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:10592 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751194AbYG0LYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 07:24:51 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1909427fgg.17
-        for <git@vger.kernel.org>; Sun, 27 Jul 2008 04:24:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=G7wmTzkrXsJq3KUZvojsqjZTIAU6cn+oo5cbEHxLGiU=;
-        b=rIqR7QzkYoE38LSMfKUtPczXihUI5o0kMEgi84U2qPLAivCOXbVx9Di0ShVNx4FBmb
-         +9Or58I18T+jNuBkMM75KozB2YzG0sKE8sjH469FeLmogCHiDRU/2lYLG/v6HWRoZQPl
-         dRwVNgvveViYIfJE9ZSs6zB4C6SjQpamGDllw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=lY7N+E2yzZQgufEpdJ+aXD98NklCkvTvG9YMUL3/7wOnbpTtBqQVZpH77UbDEyiKkC
-         rVau9Hm13EJvlIwmTOvOF27Bju8/wQlGJo7qPRFXwiqMdQycKEp9G2mpD76vJm5QHtZ7
-         cuoXzKe8JO37DSqBRZchEYlDm32U7uWOW9LQc=
-Received: by 10.86.1.1 with SMTP id 1mr1551129fga.61.1217157889238;
-        Sun, 27 Jul 2008 04:24:49 -0700 (PDT)
-Received: by 10.86.91.2 with HTTP; Sun, 27 Jul 2008 04:24:49 -0700 (PDT)
-In-Reply-To: <200807261734.35239.jnareb@gmail.com>
+	id S1751527AbYG0LhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 07:37:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbYG0LhM
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 07:37:12 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:59079 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751088AbYG0LhK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 07:37:10 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 4A98B393B321; Sun, 27 Jul 2008 13:37:07 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <7vsktwfu5z.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90331>
 
-T24gNy8yNi8wOCwgSmFrdWIgTmFyZWJza2kgPGpuYXJlYkBnbWFpbC5jb20+IHdyb3RlOgo+IE9u
-IFRodSwgMjQgSnVseSAyMDA4LCBKYWt1YiBOYXLEmWJza2kgd3JvdGU6Cj4KPiA+IE9uIFRodSwg
-MjQgSnVseSAyMDA4LCBTdGVwaGFuIEJleWVyIHdyb3RlOgo+ICA+PiBKYWt1YiBOYXJlYnNraSB3
-cm90ZToKPiAgPj4+IERuaWEgxZtyb2RhIDIzLiBsaXBjYSAyMDA4IDE2OjU0LCBSb2JpbiBSb3Nl
-bmJlcmcgbmFwaXNhxYIKPiAgPj4+PiBvbnNkYWdlbiBkZW4gMjMganVsaSAyMDA4IDE1LjE4LjQw
-IHNrcmV2IEpvaGFubmVzIFNjaGluZGVsaW46Cj4gID4+Pj4+IE9uIFdlZCwgMjMgSnVsIDIwMDgs
-IEpha3ViIE5hcmVic2tpIHdyb3RlOgo+ICA+Pj4+Pj4gT24gV2VkLCAyMyBKdWwgMjAwOCwgSm9o
-YW5uZXMgU2NoaW5kZWxpbiB3cm90ZToKPiAgPj4+Pj4+PiBPbiBXZWQsIDIzIEp1bCAyMDA4LCBK
-YWt1YiBOYXJlYnNraSB3cm90ZToKPiAgPj4+Pj4+Pgo+ICA+Pj4+Pj4+PiAgICAwNC4gV2hpY2gg
-cHJvZ3JhbW1pbmcgbGFuZ3VhZ2VzIHlvdSBhcmUgcHJvZmljaWVudCB3aXRoPwo+ICA+Pj4+Pj4+
-PiAgICAgICAgKFRoZSBjaG9pY2VzIGluY2x1ZGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2VzIHVzZWQg
-YnkgZ2l0KQo+ICA+Pj4+Pj4+PiAgICAgICAgKHplcm8gb3IgbW9yZTogbXVsdGlwbGUgY2hvaWNl
-KQo+ICA+Pj4+Pj4+PiAgICAgIC0gQywgc2hlbGwsIFBlcmwsIFB5dGhvbiwgVGNsL1RrCj4gID4+
-Pj4+Pj4+ICAgICAgKyAoc2hvdWxkIHdlIGluY2x1ZGUgb3RoZXIgbGFuZ3VhZ2VzLCBsaWtlIEMr
-KywgSmF2YSwgUEhQLAo+ICA+Pj4+Pj4+PiAgICAgICAgIFJ1YnksLi4uPykKPiAgPj4gWy4uLl0K
-PiAgPgo+Cj4gPiBJZiB3ZSB3YW50IHRvIHByb3ZpZGUgbGFyZ2VyIG51bWJlciBvZiBwcm9ncmFt
-bWluZyBsYW5ndWFnZXMgdG8KPiAgPiBjaG9zZSBmcm9tICh3aXRoICJvdGhlciIgYXMgZmFsbGJh
-Y2spLCB3ZSBjb3VsZCB0YWtlIGZvciBleGFtcGxlCj4gID4gdG9wIDEwIGZyb20gdGhlIFRJT0JF
-IGluZGV4LCBvciBzaW1pbGFyIHNpdGVzOgo+ICA+ICAgaHR0cDovL3d3dy50aW9iZS5jb20vaW5k
-ZXgucGhwL2NvbnRlbnQvcGFwZXJpbmZvL3RwY2kvaW5kZXguaHRtbCAoZm9yIEp1bHkgMjAwOCkK
-PiAgPiAgIGh0dHA6Ly9sdWkuYXJiaW5nZXJzeXMuY29tL2luZGV4Lmh0bWwgKExhbmd1YWdlIFVz
-YWdlIEluZGljYXRvcnMsIEp1bCAxMCwgMjAwOCkKPiAgPgo+ICA+IFRoaXMgd291bGQgYnJpbmcg
-J1Zpc3VhbCBCYXNpYycsIGFuZCBwZXJoYXBzICdBc3NlbWJseScgYW5kICdMaXNwJwo+ICA+IHRv
-IHRoZSBsaXN0IG9mIGNob2ljZXMuCj4KPgo+IFBlcmhhcHMgYWxzbyBjb25zaWRlciBHaXRIdWIn
-cyBsaXN0IG9mIG1vc3QgcG9wdWxhciBsYW5ndWFnZXMKPiAgIGh0dHA6Ly9naXRodWIuY29tL2Js
-b2cvOTktcG9wdWxhci1sYW5ndWFnZXMKPiAgKGFzIG1lbnRpb25lZCBpbiBQZXRyICdQYXNreScg
-QmF1ZGlzIHNvbWV3aGVyZSBpbiBnaXQtc2NtLmNvbSB0aHJlYWQpCj4gIHRvIHRha2UgaW50byBh
-Y2NvdW50IGdpdCBwb3B1bGFyaXR5IGFtb25nIHdlYiBkZXZlbG9wZXJzLgo+Cj4gIFRoaXMgd291
-bGQgYWRkICdFUkInIChvciBpcyBpdCBqdXN0IHN1YnNldCBvZiAnUnVieScgYXMgZVJ1YnkKPiAg
-aW1wbGVtZW50YXRpb24/KSwgYW5kICdDb21tb24gTGlzcCcgKGlmICdDb21tb24gTGlzcCcsIHRo
-ZW4KPiAgcHJvYmFibHkgYWxzbyAnU2NoZW1lJy8nR3VpbGUnKS4KCkkgaGF2ZSBhbiBpbXByZXNz
-aW9uIHRoYXQgdGhpcyAnZXJiJyBpcyBhIGZpbGUgZXh0ZW5zaW9uIGZvciBodG1sIGZpbGUKd2l0
-aCBlbWJlZGRpbmcgcnVieSwgdXNlZCBpbiBydWJ5IG9uIHJhaWxzLiBJZiBzbyBpdCdzIG5vdCB3
-b3J0aAphZGRpbmcuIElmIHlvdSBhcmUgZ29pbmcgdG8gYWRkIFNjaGVtZSwgcGxlYXNlIHJlbW92
-ZSBHdWlsZSBvciB5b3UKaGF2ZSB0byBsaXN0IG90aGVyIFNjaGVtZSBpbXBsZW1lbnRhdGlvbnMg
-dG9vLgoKPiAgVGhlcmUgaXMgYWx3YXlzIGZyZWUtZm9ybSAnb3RoZXInLi4uCj4KPiAtLQo+ICBK
-YWt1YiBOYXJlYnNraQo+ICBQb2xhbmQKPiAgLS0KPiAgVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlz
-IGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGdpdCIgaW4KPiAgdGhlIGJvZHkgb2Yg
-YSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcKPiAgTW9yZSBtYWpvcmRvbW8g
-aW5mbyBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sCj4KCgot
-LSAKRHV5Cg==
+On Sat, Jul 26, 2008 at 10:10:32AM -0700, Junio C Hamano wrote:
+> "Scott Chacon" <schacon@gmail.com> writes:
+> 
+> > On Fri, Jul 25, 2008 at 4:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> >> ...
+> >> I find a tabular list like this list easier to read if it were sorted like
+> >> this:
+> >>
+> >>        A       D       G
+> >>        B       E       H
+> >>        C       F
+> >> ...
+> >
+> > I fixed the things you mentioned here, except for the list ordering,
+> > only because I kinda think you big contributors should be at the top
+> > there,...
+> 
+> If you are going to list 30 or so top contributors in 8 rows times 4
+> columns, because visually the columns are much more distinct than the
+> rows, it makes the result look more sorted.  This is the same reasoning
+> hwo "git help --all" was fixed with 112d0ba (Make "git help" sort git
+> commands in columns, 2005-12-18).
+
+Actually, this is strange for me: I would never think about reading git
+help --all by rows, and I would never think about reading the authors
+list by columns! It's difficult for me to point out why, possibly
+because the authors list has less items per row and the items are longer
+(and multi-word), but that's just a speculation. Maybe cultural
+background (Japanese books are written in columns, right?) plays some
+role too, I don't know.
+
+> The purpose of the list would most likely not to find somebody with high
+> activity to contact for help (you would use the top list that is sorted by
+> the commit count for that kind of thing).  It would primarily be to give
+> credit to everybody, and perhaps so that people on the contributor list
+> can point at their own name and say "I helped them", or find somebody else
+> they happen to know in the list.
+> 
+> When a contributor used to have 8 commits and then adds 2 commits, that
+> would move the name in the list by a dozen places or so with the current
+> set of contributors.  It would be much easier to locate one's own name
+> among a huge list if the names are alphabetically sorted, not by commit
+> count.  When more people start to contribute, your name does not move so
+> drastically.  If you are Adam, you are likely to find yourself near the
+> beginning of the list, if you are Scott, you are likely to find yourself
+> near one fourth from the end of the list.
+
+I don't think locating is any issue; the find function of browser is
+very easy to use nowadays. I guess the purpose of the list would be
+to show "I helped them this much" (i.e. "I'm high on the list"). I think
+this would actually motivate contributors to move up in the ladder -
+people are competitive; you might get wary about this kind of
+motivation, but I believe that it is no bad thing, inherently. Heck, I
+admit it does motivate even me a little, safely in the "Primary Authors"
+section. :-) (These guys with their tools merged into git have unfair
+advantage! You should add up also, uh, git-homepage, cogito and, um...
+repo.git! *baby cry*</vanity>)
+
+> And for the "giving credit" purpose, I do not think truncating the list at
+> 5 commits or less threshold, as suggested earlier and already done, makes
+> much sense, either.
+
+The point here is that the list is awfully long and also can contain
+a lot of duplicates or people with broken unicode, etc. - it gets hard
+to maintain, and it makes the about page too long. I would be of course
+fine with a tiny link at the bottom "(show all contributors)".
+
+-- 
+				Petr "Pasky" Baudis
+As in certain cults it is possible to kill a process if you know
+its true name.  -- Ken Thompson and Dennis M. Ritchie
