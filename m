@@ -1,87 +1,102 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Cleaning up log messages
-Date: Sun, 27 Jul 2008 16:52:07 -0400
-Message-ID: <9e4733910807271352h67044045y7576a719d4cc80cd@mail.gmail.com>
-References: <9e4733910807271050y7fb5f77coec05bd68421baaab@mail.gmail.com>
-	 <7vsktv17wc.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 1/3] git-gui: Adapt discovery of oguilib to execdir
+	'libexec/git-core'
+Date: Sun, 27 Jul 2008 14:24:05 -0700
+Message-ID: <20080727212405.GA10075@spearce.org>
+References: <1217177383-25272-1-git-send-email-prohaska@zib.de> <1217177383-25272-2-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 27 22:53:14 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Jul 27 23:30:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNDEs-0005YE-RL
-	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 22:53:11 +0200
+	id 1KNDpK-0005qH-3Q
+	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 23:30:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758034AbYG0UwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 16:52:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757804AbYG0UwJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 16:52:09 -0400
-Received: from wr-out-0506.google.com ([64.233.184.227]:38261 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752595AbYG0UwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 16:52:08 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so3435188wri.5
-        for <git@vger.kernel.org>; Sun, 27 Jul 2008 13:52:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=TtnvRvoRkPb0a7IMNo/l+lX49Z2ARfJPnee6oHyGcis=;
-        b=Akk40rfMJa//x8bBFRZiGH/0WJH9TpclD21U6AienkYcK3Q+u7ynT73cJ5xrBBkb7q
-         d31K1f/Ed4Zvj6JML7oJa0CXfw1hYW0KotzSfN6o/zRIgFsv5uk7+TnGSqCEWJp85krZ
-         0RvQ5qXr/ObgrN5ptrSwBrQ0m1TqlhzQy3Zcw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=jFyIqsrns+5sX6e1PYmld0Smx6C12KHRrUE/0U4WDmQSIBGBs/wfK3eL4qwG1l1Zvp
-         dq29F7gjg7sERKAahhqSucd0yJ/oQ2SWLZvBtkjSJgq/dNJQQwITR4SSBshsSNYBw/1N
-         B4W9adh8hT/Du3X3be2RP5VDK/tHM74sqAlus=
-Received: by 10.90.71.16 with SMTP id t16mr1330719aga.47.1217191927378;
-        Sun, 27 Jul 2008 13:52:07 -0700 (PDT)
-Received: by 10.150.205.1 with HTTP; Sun, 27 Jul 2008 13:52:07 -0700 (PDT)
-In-Reply-To: <7vsktv17wc.fsf@gitster.siamese.dyndns.org>
+	id S1758053AbYG0VYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 17:24:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757727AbYG0VYI
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 17:24:08 -0400
+Received: from george.spearce.org ([209.20.77.23]:40590 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757614AbYG0VYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 17:24:08 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id CCBE5383A5; Sun, 27 Jul 2008 21:24:05 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <1217177383-25272-2-git-send-email-prohaska@zib.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90371>
 
-On 7/27/08, Junio C Hamano <gitster@pobox.com> wrote:
-> "Jon Smirl" <jonsmirl@gmail.com> writes:
->
->  > I was playing around with git log for the kernel and observed that
->  > there is a lot of noise when trying to do statistics on the number of
->  > commits.
->  >
->  > For example:
->  >
->  > Author: Greg K-H <gregkh@suse.de>
->  > Author: Greg KH <gregkh@suse.de>
->  > ...
->
-> > Author: Greg Kroah-Hartman <greg@kroah.com>
->
->
-> We have had .mailmap since a24e658 (git-shortlog: make the mailmap
->  configurable., 2005-10-06); maybe the kernel tree wants a maintainer for
->  the .mailmap file?
+Steffen Prohaska <prohaska@zib.de> wrote:
+> The new execdir has is two levels below the root directory, while
+> the old execdir 'bin' was only one level below.  This commit
+> adapts the discovery of oguilib that uses relative paths
+> accordingly.
+...
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index 940677c..baccd57 100755
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
+> @@ -52,7 +52,9 @@ catch {rename send {}} ; # What an evil concept...
+>  set oguilib {@@GITGUI_LIBDIR@@}
+>  set oguirel {@@GITGUI_RELATIVE@@}
+>  if {$oguirel eq {1}} {
+> -	set oguilib [file dirname [file dirname [file normalize $argv0]]]
+> +	set oguilib [file dirname \
+> +	             [file dirname \
+> +	              [file dirname [file normalize $argv0]]]]
+>  	set oguilib [file join $oguilib share git-gui lib]
 
-This seems to be the main problem. There are so many missing entries
-from the .mailmap file that I didn't think this feature was
-implemented. I'd guestimate that 300-400 needed entries are missing.
+Hmmph.  This actually comes up incorrectly on my system.  The issue
+appears to be `git --exec-path` gives me $prefix/libexec/git-core,
+and git-gui installs its library into $prefix/libexec/share, which
+is wrong.  It should have gone to $prefix/share.
 
-I've made a few attempts at writing a script to fix the easy ones but
-I don't have a good solution yet.
+I wonder if this is better.  Your other two patches seem fine.
+
+--8<--
+[PATCH] git-gui: Correct installation of library to be $prefix/share
+
+We always wanted the library for git-gui to install into the
+$prefix/share directory, not $prefix/libexec/share.  All of
+the files in our library are platform independent and may
+be reused across systems, like any other content stored in
+the share directory.
+
+Our computation of where our library should install to was broken
+when git itself started installing to $prefix/libexec/git-core,
+which was one level down from where we expected it to be.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Makefile |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index b19fb2d..f72ab6c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -32,6 +32,9 @@ endif
+ ifndef gitexecdir
+ 	gitexecdir := $(shell git --exec-path)
+ endif
++ifeq (git-core,$(notdir $(gitexecdir)))
++	gitexecdir := $(patsubst %/,%,$(dir $(gitexecdir)))
++endif
+ 
+ ifndef sharedir
+ 	sharedir := $(dir $(gitexecdir))share
+-- 
+1.6.0.rc0.182.gb96c7
+
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+Shawn.
