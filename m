@@ -1,105 +1,94 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git-scm.com
-Date: Sun, 27 Jul 2008 13:37:07 +0200
-Message-ID: <20080727113707.GC32184@machine.or.cz>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com> <7v3alxr0fd.fsf@gitster.siamese.dyndns.org> <d411cc4a0807251759m1d83d7c4w4724806b19f7c02a@mail.gmail.com> <7vsktwfu5z.fsf@gitster.siamese.dyndns.org>
+Subject: Re: Official Git Homepage change? Re: git-scm.com
+Date: Sun, 27 Jul 2008 14:22:36 +0200
+Message-ID: <20080727122236.GY10151@machine.or.cz>
+References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com> <20080726015314.GU32184@machine.or.cz> <20080726020951.GV32184@machine.or.cz> <7v4p6dnv5k.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807260627480.26810@eeepc-johanness> <7vtzedmeqh.fsf@gitster.siamese.dyndns.org> <20080726144040.GZ32184@machine.or.cz> <7v8wvok3f6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 27 13:38:15 2008
+X-From: git-owner@vger.kernel.org Sun Jul 27 14:26:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KN4Zo-0004Fo-0G
-	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 13:38:12 +0200
+	id 1KN5Kx-00080i-3x
+	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 14:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751527AbYG0LhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 07:37:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbYG0LhM
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 07:37:12 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:59079 "EHLO machine.or.cz"
+	id S1751307AbYG0MWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 08:22:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751064AbYG0MWj
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 08:22:39 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:50249 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751088AbYG0LhK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 07:37:10 -0400
+	id S1750800AbYG0MWi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 08:22:38 -0400
 Received: by machine.or.cz (Postfix, from userid 2001)
-	id 4A98B393B321; Sun, 27 Jul 2008 13:37:07 +0200 (CEST)
+	id B8B21393B320; Sun, 27 Jul 2008 14:22:36 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vsktwfu5z.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7v8wvok3f6.fsf@gitster.siamese.dyndns.org>
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90332>
 
-On Sat, Jul 26, 2008 at 10:10:32AM -0700, Junio C Hamano wrote:
-> "Scott Chacon" <schacon@gmail.com> writes:
+On Sat, Jul 26, 2008 at 09:37:01AM -0700, Junio C Hamano wrote:
+> Petr Baudis <pasky@suse.cz> writes:
 > 
-> > On Fri, Jul 25, 2008 at 4:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> >> ...
-> >> I find a tabular list like this list easier to read if it were sorted like
-> >> this:
-> >>
-> >>        A       D       G
-> >>        B       E       H
-> >>        C       F
-> >> ...
-> >
-> > I fixed the things you mentioned here, except for the list ordering,
-> > only because I kinda think you big contributors should be at the top
-> > there,...
+> >   I don't know if this should have any immediate effect on how we
+> > develop Git etc., but I think it is good to be aware of the fact that
+> > silently, huge amount of "dark mass" Git projects is accumulating and
+> > that Git is making headways in areas many of us were little aware of.
 > 
-> If you are going to list 30 or so top contributors in 8 rows times 4
-> columns, because visually the columns are much more distinct than the
-> rows, it makes the result look more sorted.  This is the same reasoning
-> hwo "git help --all" was fixed with 112d0ba (Make "git help" sort git
-> commands in columns, 2005-12-18).
+> The developer community and "dark matter" community are totally separate
+> entities that do not interact with each other very much, and they will go
+> their separate ways?  I think it is inevitable for any project once it
+> becomes popular enough.
 
-Actually, this is strange for me: I would never think about reading git
-help --all by rows, and I would never think about reading the authors
-list by columns! It's difficult for me to point out why, possibly
-because the authors list has less items per row and the items are longer
-(and multi-word), but that's just a speculation. Maybe cultural
-background (Japanese books are written in columns, right?) plays some
-role too, I don't know.
+  I don't think this is inevitable. I think we are getting into this
+position two few simple reasons:
 
-> The purpose of the list would most likely not to find somebody with high
-> activity to contact for help (you would use the top list that is sorted by
-> the commit count for that kind of thing).  It would primarily be to give
-> credit to everybody, and perhaps so that people on the contributor list
-> can point at their own name and say "I helped them", or find somebody else
-> they happen to know in the list.
-> 
-> When a contributor used to have 8 commits and then adds 2 commits, that
-> would move the name in the list by a dozen places or so with the current
-> set of contributors.  It would be much easier to locate one's own name
-> among a huge list if the names are alphabetically sorted, not by commit
-> count.  When more people start to contribute, your name does not move so
-> drastically.  If you are Adam, you are likely to find yourself near the
-> beginning of the list, if you are Scott, you are likely to find yourself
-> near one fourth from the end of the list.
+  (i) The traffic on the main list is simply too high for regular users
+to keep up with. If we care to get more in touch with our users,
+the solution might be to spread the word about the Git Users Google
+Group more, and monitor it more actively.
 
-I don't think locating is any issue; the find function of browser is
-very easy to use nowadays. I guess the purpose of the list would be
-to show "I helped them this much" (i.e. "I'm high on the list"). I think
-this would actually motivate contributors to move up in the ladder -
-people are competitive; you might get wary about this kind of
-motivation, but I believe that it is no bad thing, inherently. Heck, I
-admit it does motivate even me a little, safely in the "Primary Authors"
-section. :-) (These guys with their tools merged into git have unfair
-advantage! You should add up also, uh, git-homepage, cogito and, um...
-repo.git! *baby cry*</vanity>)
+  (ii) The tone on the mailing list seems frequently unnecessarily
+harsh. This was mentioned by some of the "dark matter" people (not Scott
+himself) as the reason why didn't they announce their work on the
+mailing list; fear of being flamed. Especially at the beginning of
+summer when I "returned" after quite a while of inactivity, I perceived
+this rather unfriendly tone rather strongly as well (not at me
+personally, but reading replies to other people's contributions), though
+I got kind of used to it quickly again. If we care to encourage postings
+by "external" developers to the mailing list, we should keep the usual
+strength of our criticism, but try to make the tone more encouraging.
 
-> And for the "giving credit" purpose, I do not think truncating the list at
-> 5 commits or less threshold, as suggested earlier and already done, makes
-> much sense, either.
+> Where does this observation lead us in this "Official" git homepage
+> discussion?  Perhaps the conclusion would be that there does not have to
+> be any _single_ official home?  I dunno.
 
-The point here is that the list is awfully long and also can contain
-a lot of duplicates or people with broken unicode, etc. - it gets hard
-to maintain, and it makes the about page too long. I would be of course
-fine with a tiny link at the bottom "(show all contributors)".
+  That is not good idea; this would only split the community further,
+*and* create confusion as some people would be directed to homepage A,
+others to homepage B, each would have its resources kept up-to-date
+in different manner, ...
+
+  Also, we need someplace to link at from git itself:
+
+	README:Many Git online resources are accessible from http://git.or.cz/
+	gitweb/gitweb.perl:our $logo_url = "http://git.or.cz/";
+
+In case of README, we could add another link easily, in case of gitweb,
+much less so.
+
+  This ultimately comes down to what address would *you* write on
+a piece of paper if someone walked to you on say, some conference
+and asked you "I like Git, where can I learn more?" Or you could start
+explaining how Git does not have a single homepage and start writing
+multiple URLs noting the differences. Would that make good impression?
 
 -- 
 				Petr "Pasky" Baudis
