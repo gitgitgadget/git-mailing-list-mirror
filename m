@@ -1,69 +1,90 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCHv2] git-mv: Keep moved index entries inact
-Date: Sun, 27 Jul 2008 15:41:42 +0200
-Message-ID: <20080727134142.GA10151@machine.or.cz>
-References: <20080721002354.GK10151@machine.or.cz> <20080721002508.26773.92277.stgit@localhost> <7v8wvpm9cl.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH] t/t7001-mv.sh: Propose ability to use git-mv on conflicting
+	entries
+Date: Sun, 27 Jul 2008 15:47:48 +0200
+Message-ID: <20080727134704.27534.86520.stgit@localhost>
+References: <20080727134142.GA10151@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 27 15:42:56 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 27 15:49:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KN6WN-0003LI-J4
-	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 15:42:48 +0200
+	id 1KN6cT-0005Ek-LN
+	for gcvg-git-2@gmane.org; Sun, 27 Jul 2008 15:49:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751887AbYG0Nlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 09:41:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751493AbYG0Nlq
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 09:41:46 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:60859 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751863AbYG0Nlp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 09:41:45 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 06489393BAB4; Sun, 27 Jul 2008 15:41:43 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7v8wvpm9cl.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751518AbYG0NsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 09:48:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751493AbYG0NsF
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 09:48:05 -0400
+Received: from 159-162.104-92.cust.bluewin.ch ([92.104.162.159]:57802 "EHLO
+	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751355AbYG0NsE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 09:48:04 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by pixie.suse.cz (Postfix) with ESMTP id D7B52883E6;
+	Sun, 27 Jul 2008 15:47:48 +0200 (CEST)
+In-Reply-To: <20080727134142.GA10151@machine.or.cz>
+User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90335>
 
-On Fri, Jul 25, 2008 at 11:46:02PM -0700, Junio C Hamano wrote:
-> Thanks.  I think I've managed to fix the rename_index_entry_at() in a
-> satisfactory way, and also made builtin-mv to allow "mv -f symlink file"
-> and "mv -f file symlink".
+Currently, git-mv will declare "not under source control" on an attempt
+to move a conflicted index entry. This patch adds an expect_failure
+testcase for this case, since this is an artificial restriction. (However,
+the scenario is not critical enough for the author to fix right now.)
 
-Oh, sorry, I didn't realize there were still problems with the original
-one, I would try it on my own in that case.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-> So my take on the above test piece is that after:
-> 
-> 	>moved
-> 	mkdir dir
->         >dir/file
->         ln -s dir symlink
-> 	git add moved dir symlink
-> 
-> This should fail, as it is an overwrite:
-> 
-> 	git mv moved symlink
-> 
-> and with "-f", the command should simply remove symlink and replace it
-> with a regular file whose contents come from the original "moved".
-> 
-> IOW, what a symlink points at should not matter.
+I don't really know if it is ok to make "feature requests" like this by
+adding failing testcases...
 
-You convinced me, yes. (Especially since I started actually using
-symlinks in some of my projects very recently and this would be the
-exact semantic I would eventually expect as well.)
+ t/t7001-mv.sh |   27 +++++++++++++++++++++++++++
+ 1 files changed, 27 insertions(+), 0 deletions(-)
 
--- 
-				Petr "Pasky" Baudis
-As in certain cults it is possible to kill a process if you know
-its true name.  -- Ken Thompson and Dennis M. Ritchie
+diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+index 7e47931..241e9a2 100755
+--- a/t/t7001-mv.sh
++++ b/t/t7001-mv.sh
+@@ -173,6 +173,33 @@ test_expect_success 'git mv should not change sha1 of moved cache entry' '
+ 
+ rm -f dirty dirty2
+ 
++cat >multistage <<EOT
++100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 1	staged
++100755 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 2	staged
++100755 d00491fd7e5bb6fa28c517a0bb32b8b506539d4d 3	staged
++EOT
++
++# Rationale: I cannot git mv around a conflicted file. This is unnecessary
++# restriction in case another part of conflict resolution requires me to
++# move the file around.
++test_expect_failure 'git mv should move all stages of cache entry' '
++
++	rm -fr .git &&
++	git init &&
++	# git mv requires object to exist in working tree (bug?)
++	touch staged &&
++	git update-index --index-info <multistage &&
++	git ls-files --stage >lsf_output &&
++	test_cmp multistage lsf_output &&
++	git mv staged staged-mv &&
++	sed "s/staged/staged-mv/" <multistage >multistage-mv &&
++	git ls-files --stage >lsf_output &&
++	test_cmp multistage-mv lsf_output
++
++'
++
++rm -f multistage multistage-mv lsf_output staged
++
+ test_expect_failure 'git mv should overwrite symlink to a file' '
+ 
+ 	rm -fr .git &&
