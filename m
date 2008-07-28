@@ -1,101 +1,143 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git submodules
-Date: Mon, 28 Jul 2008 15:26:33 -0700 (PDT)
-Message-ID: <m3r69dtzm9.fsf@localhost.localdomain>
-References: <20080728162003.GA4584@artemis.madism.org>
-	<320075ff0807281323l51bb6478j30e3e4c490974a70@mail.gmail.com>
-	<20080728205545.GB10409@artemis.madism.org>
-	<20080728205923.GC10409@artemis.madism.org>
-	<32541b130807281440v64f3cb9ci50cf6d16be4f2f82@mail.gmail.com>
-	<20080728220308.GF10409@artemis.madism.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GTP/0.1 terminology 101: commit reels and references
+Date: Tue, 29 Jul 2008 00:30:49 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807290014110.2725@eeepc-johanness>
+References: <488D42B6.4030701@gmail.com> <1217228570.6750.24.camel@maia.lan>  <7vk5f6tqsj.fsf@gitster.siamese.dyndns.org>  <1217239419.6750.73.camel@maia.lan>  <alpine.DEB.1.00.0807281350590.2725@eeepc-johanness> <1217273166.25690.20.camel@maia.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Nigel Magnay <nigel.magnay@gmail.com>,
-	Git ML <git@vger.kernel.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Tue Jul 29 00:27:39 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Joshua Roys <roysjosh@gmail.com>, gittorrent@lists.utsl.gen.nz,
+	git@vger.kernel.org, Jonas Fonseca <fonseca@diku.dk>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Tue Jul 29 00:30:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNbBp-0002Lb-To
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 00:27:38 +0200
+	id 1KNbEs-00038p-0N
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 00:30:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751858AbYG1W0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 18:26:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751477AbYG1W0h
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 18:26:37 -0400
-Received: from ik-out-1112.google.com ([66.249.90.176]:14232 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751247AbYG1W0g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 18:26:36 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so4369696ika.5
-        for <git@vger.kernel.org>; Mon, 28 Jul 2008 15:26:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=q5IcbWN/U23BSVJkRRvBZOt09CfZsdug/woNYdrVYQA=;
-        b=Pg54LPXBa9DOsB4kIvXHFaqA1gNtC8/RHrDjqYh3ld0c+LHQvb6VsY7zlkpk22feW/
-         GkvePkXX78rCeRKi68EZ7lSCK8kl4IpDfP4pv9EsB6E+iBY5cWG60Lo6MGdZJmCmyNcY
-         ViX9UMKoWZmK0hcSZePRaqVWorhRFC6ulaUMk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=HctbGlBGn4SZOlWpw04WlJ3gH02e+oehVLRKvbbFqYDIqYwuNVAWYFxnGzdSun/Wjq
-         oMtpxydBZj6Ii0vmZwhojT6VDz8m/ey3bjo4TBsVAdQ7yF2rZxYkdEsM+Lt4YcsOWs7F
-         ZH3ZaRyQcXpbQYJvuNnGvA+BK8sci5RawUdwA=
-Received: by 10.210.30.1 with SMTP id d1mr6623848ebd.41.1217283994914;
-        Mon, 28 Jul 2008 15:26:34 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.244.7])
-        by mx.google.com with ESMTPS id k9sm27514428nfh.23.2008.07.28.15.26.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 28 Jul 2008 15:26:33 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m6SMQ74N005490;
-	Tue, 29 Jul 2008 00:26:12 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m6SMPphf005483;
-	Tue, 29 Jul 2008 00:25:51 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080728220308.GF10409@artemis.madism.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752739AbYG1W3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 18:29:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752526AbYG1W3p
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 18:29:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44804 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752144AbYG1W3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 18:29:44 -0400
+Received: (qmail invoked by alias); 28 Jul 2008 22:29:42 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp055) with SMTP; 29 Jul 2008 00:29:42 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+6njByrXS6wgfwfowuNFJGH7fKLYhOdqMoVWPGvv
+	cfe4OFpZqqXdIL
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <1217273166.25690.20.camel@maia.lan>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90514>
 
-Pierre Habouzit <madcoder@debian.org> writes:
-> On Mon, Jul 28, 2008 at 09:40:22PM +0000, Avery Pennarun wrote:
+Hi,
 
-> > Further, if you don't have a separate .git directory for each
-> > submodule, you can't *switch* branches on the submodule independently
-> > of the supermodule in any obvious way.
+On Tue, 29 Jul 2008, Sam Vilain wrote:
+
+> On Mon, 2008-07-28 at 14:01 +0200, Johannes Schindelin wrote:
+> > >   - the reel has a defined object order (which as I hoped to 
+> > >     demonstrate in the test cases, is just a refinement of rev-list 
+> > >     --date-order)
+> > 
+> > Do you mean that the commit reel is a list pointing to bundles that 
+> > can be sorted topologically by their contained commits?
 > 
-> Yes you can, in what I propose you have a dummy .git in each submodule,
-> with probably an index, a HEAD and a config file (maybe some other
-> things along) to allow that especially.
+> Yes, but it is more defined than that.  There are still ambiguities with 
+> topological sort, so the gittorrent spec specified exactly how all ties 
+> are broken.  They happen to be a further refinement of --date-order, 
+> with respect to the ordering of commits.
 
-What you are (re)inventing here is something called gitlink (.git which
-is a file, or .gitlink file); not to be confused with 'sumbodule'/'commit'
-entry in a tree which is sometimes called gitlink.  Alternate idea was
-'unionfs' like "shadowing" .git, with 'core.gitdir' in .git/config
-(which would contain .git/HEAD and .git/index, and all missing files
-and config would be taken from `core.gitdir').
+But does that not mean that any new ref branching off of an ancient commit 
+changes all the pack boundaries?
 
-There was even some preliminary implementation IIRC, but AFAIR it
-was abandoned because of no "real usage".
+I'd rather have an intelligent incremental updater, and keep most of the 
+existing bundles immutable.  That way, a new ref, or a changed one, can be 
+mostly served from peers, not exclusively from the seeders.
 
-See
-  http://permalink.gmane.org/gmane.comp.version-control.msysgit/1868
-  http://permalink.gmane.org/gmane.comp.version-control.git/72449
-  http://permalink.gmane.org/gmane.comp.version-control.git/72457
-  http://permalink.gmane.org/gmane.comp.version-control.git/72296
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+> > >   - deltas always point in one direction, to objects "earlier" on 
+> > >     the reel, so that slices of the reel sent on the network can be 
+> > >     made thin without resulting in unresolvable deltas (which should 
+> > >     be possible to do on commit boundaries using rev-list 
+> > >     --objects-edge)
+> >
+> > That is exactly what bundles do.  They are thin, as they assume that a 
+> > few "preconditions", i.e. refs, are present.
+> 
+> Ok.  I think there are also some other trivial differences such as 
+> bundles containing refs (which in the context of gittorrent will be 
+> useless).
+
+Yeah, I think that bundles themselves are pretty useless in gitorrent.  
+But what they _contain_ is pretty much what you need as blocks.
+
+> > >   - the behaviour at the beginning of the reel is precisely defined 
+> > >     (although as I said, I think that the decision might be worth 
+> > >     revisiting - perhaps getting just the latest reel is a useful 
+> > >     'shallow clone')
+> > 
+> > If you want to allow shallow clones, you must make the bundles 
+> > non-thin.  That would be a major bandwidth penalty.
+> > 
+> > I'd rather not allow shallow clones with Gitorrent.
+> 
+> By "Shallow" I think I mean a different thing to you.  I mean something 
+> akin to just the last pack's worth of commits.
+
+That _is_ a shallow clone.  And that is exactly what I meant.  If you want 
+to have all objects of the commits in the same pack, then you are 
+basically making fat packs.  Which come with a hefty bandwidth penalty.
+
+That is why I would suggest not allowing shallow clones; if you want to 
+allow them, I have to ask myself why bother with a torrent at all...  It 
+is not like the shallow clones are large, or that the people fetching them 
+will stay around long to seed anything, and the packs would change 
+frequently, making the whole torrent business pretty inefficient.
+
+> > > It's the lack of guarantees which is the issue, really.
+> > 
+> > It should not be too difficult to provide a rev-list option (which is 
+> > inherited by git-bundle, then) to pay an extra time to make sure that 
+> > the bundle is minimal.
+> 
+> Ok.  But from the current implementation's perspective, this is not yet 
+> needed, we are just using the existing API.
+
+Why make it hard?  We have a lively community with brilliant people, and 
+they frequently have fun solving puzzles like this: what is the best 
+strategy to make equally sized, rarely (or maybe never?) changing packs 
+from a set of given refs.
+
+> Actually what would be useful would be for the thin pack generation to 
+> also allow any object to be specified as its input list, not just 
+> commits... then we wouldn't have to break blocks on commit boundaries 
+> (see http://gittorrent.utsl.gen.nz/rfc.html#org-blocks).
+
+That should be easy, but I think that it would be _even better_ if we ask 
+pack-objects to generate several packs from the needed objects.  Ooops.  
+That already exists: 
+
+	$ git pack-objects --max-pack-size=<n>
+
+Storing the packs in a second GIT_OBJECT_DIRECTORY that has the 
+original as an alternate, together with the --local flag, should help even 
+further: You can mark the last pack (which does not reach max-pack-size, 
+most likely), remove it and just rerun the packing.
+
+Of course, this needs some thought when large chunks of the object 
+database become stale when a long branch was just deleted.  Not a major 
+obstacle, though.
+
+Ciao,
+Dscho
