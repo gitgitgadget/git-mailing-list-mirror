@@ -1,85 +1,55 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: theirs/ours was Re: [PATCH 6/6] Add a new test for using a custom merge strategy
-Date: Mon, 28 Jul 2008 21:52:38 +0200
-Message-ID: <bd6139dc0807281252y650b9347md1d4ac788151d19f@mail.gmail.com>
-References: <bd6139dc0807280754x76b6ffedg6bf756dfce23f1e3@mail.gmail.com>
-	 <20080728185604.GA26322@sigill.intra.peff.net>
-	 <alpine.DEB.1.00.0807282008470.8986@racer>
-Reply-To: sverre@rabbelier.nl
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH] Allow installing in the traditional way
+Date: Mon, 28 Jul 2008 22:00:44 +0200
+Message-ID: <1217275244.488e256c06da0@webmail.nextra.at>
+References: <7vod4itrgg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>,
-	"Git Mailinglist" <git@vger.kernel.org>,
-	"Miklos Vajna" <vmiklos@frugalware.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 28 21:53:46 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 28 22:01:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNYmq-0000z2-RT
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 21:53:41 +0200
+	id 1KNYuh-0004H3-Ud
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 22:01:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752465AbYG1Twk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 15:52:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752602AbYG1Twk
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 15:52:40 -0400
-Received: from wf-out-1314.google.com ([209.85.200.174]:16864 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752400AbYG1Twj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 15:52:39 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so5933965wfd.4
-        for <git@vger.kernel.org>; Mon, 28 Jul 2008 12:52:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=MHQw+DcdZzyY8KAaSKgiVGVNA/li92lcf6sYQ3NusEw=;
-        b=mVf8D6+EDrxW4/pn7+GDg4WkPGsreauWBLQLGoi0sAWhwW1sAQPL+QQ+a69l6/UlSp
-         hk52WoPiBDE7UCpc/Nr4ezgcu/ubSwZDQS4yPuPlefKYroH2tu8Z0pP64sAo5N6eJH7I
-         1KEMjJvXAwbk9Gasc9SmrXGyrdHfQ6fkvsHog=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=cm5Gm6MpE6YpnW0dkh0u/kKuLxk/4EXzQ9QWQs8LdfcmwB87k54I+fLtwUQmTN6MUV
-         Ev2fQvvw0bQdLHBBk7Mjd7VH+RpLPOgaMogB94KKxYkIJUkPETi4Sc93Q1sK/hrmvVr3
-         aiVi9OxfTA7S6/bfYdBVJWRUPCECy1Q+ajCeM=
-Received: by 10.142.232.20 with SMTP id e20mr1743201wfh.85.1217274758840;
-        Mon, 28 Jul 2008 12:52:38 -0700 (PDT)
-Received: by 10.142.104.10 with HTTP; Mon, 28 Jul 2008 12:52:38 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0807282008470.8986@racer>
-Content-Disposition: inline
+	id S1754230AbYG1UAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 16:00:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754083AbYG1UAt
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 16:00:49 -0400
+Received: from smtp2.srv.eunet.at ([193.154.160.116]:56216 "EHLO
+	smtp2.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753902AbYG1UAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 16:00:48 -0400
+Received: from webmail01.si.eunet.at (webmail01.srv.eunet.at [193.154.180.195])
+	by smtp2.srv.eunet.at (Postfix) with ESMTPS id 3D0E0BEF20;
+	Mon, 28 Jul 2008 22:00:46 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by webmail01.si.eunet.at (8.13.1/8.13.1) with ESMTP id m6SK0iQ3014571;
+	Mon, 28 Jul 2008 22:00:45 +0200
+Received: from 77.117.178.94 ([77.117.178.94]) 
+	by webmail.nextra.at (IMP) with HTTP 
+	for <johsixt@mbox.eunet.at>; Mon, 28 Jul 2008 22:00:44 +0200
+In-Reply-To: <7vod4itrgg.fsf@gitster.siamese.dyndns.org>
+User-Agent: Internet Messaging Program (IMP) 3.2.8
+X-Originating-IP: 77.117.178.94
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90495>
 
-On Mon, Jul 28, 2008 at 21:09, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Well, I have to say that the workflow is a bit backwards if the person who
-> _publishes_ the thing is the one saying "Ooops, my version no goodie,
-> other version please, but so that pull still works".
+Zitat von Junio C Hamano <gitster@pobox.com>:
 
-Why so? In this case the other branch was also owned by the publishing
-person. I don't quite follow how this is any stranger than ours?
-(Which is stranger to me, why would you want to merge in a branch if
-you're not going to do anything with it anyway? I'm sure there are
-valid workflows for it, which is why we have it, just saying that I
-think 'theirs' makes more sense to me than 'ours')
+> In an earlier commit c70a8d9 (Makefile: Do not install a copy of 'git' in
+> $(gitexecdir), 2008-07-21), we tried to avoid installing two git, one in
+> /usr/bin/git and the other in /usr/libexec/git-core/git.  It mistakenly
+> removed the only copy of git when gitexecdir and bindir are set to the
+> same directory, i.e. the traditional layout.
 
-> I would have expected the one who has the good version to make the choice.
+The patch looks fine. Thanks for fixing up my mistakes.
 
-Why have the person with the good version merge with... a bad version?
-Isn't it usually "I will merge with you, because I know your branch
-makes things go twice as fast" (paraphrasing Linus from his git talk
-at google).
-
--- 
-Cheers,
-
-Sverre Rabbelier
+-- Hannes
