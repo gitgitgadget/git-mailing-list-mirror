@@ -1,122 +1,63 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: git submodules
-Date: Mon, 28 Jul 2008 18:20:03 +0200
-Message-ID: <20080728162003.GA4584@artemis.madism.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Make use of stat.ctime configurable
+Date: Mon, 28 Jul 2008 18:20:43 +0200
+Message-ID: <20080728162043.GG32184@machine.or.cz>
+References: <7vr69lihkt.fsf@gitster.siamese.dyndns.org> <20080723164614.GB5283@blimp.local> <alpine.DEB.1.00.0807231757550.8986@racer> <20080723191647.GF5283@blimp.local> <alpine.LFD.1.10.0807241854580.5249@nehalem.linux-foundation.org> <20080725055547.GA3699@blimp.local> <alpine.DEB.1.00.0807260256030.11976@eeepc-johanness> <20080726153802.GA16868@blimp.local> <7v1w1f155p.fsf@gitster.siamese.dyndns.org> <20080728063128.GA4234@blimp.local>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="pf9I7BMVVzbSWLtt";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 28 18:21:30 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 28 18:22:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNVTE-0001gI-F2
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 18:21:12 +0200
+	id 1KNVUH-0002AE-Po
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 18:22:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756093AbYG1QUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 12:20:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755980AbYG1QUL
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 12:20:11 -0400
-Received: from pan.madism.org ([88.191.52.104]:46629 "EHLO hermes.madism.org"
+	id S1759149AbYG1QUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 12:20:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759113AbYG1QUq
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 12:20:46 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:44467 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755941AbYG1QUK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 12:20:10 -0400
-Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 9FFDA3BCC6
-	for <git@vger.kernel.org>; Mon, 28 Jul 2008 18:20:06 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id A15B18DBF; Mon, 28 Jul 2008 18:20:03 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Git ML <git@vger.kernel.org>
+	id S1759018AbYG1QUp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 12:20:45 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 1980C393BABF; Mon, 28 Jul 2008 18:20:43 +0200 (CEST)
 Content-Disposition: inline
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <20080728063128.GA4234@blimp.local>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90471>
 
+On Mon, Jul 28, 2008 at 08:31:28AM +0200, Alex Riesen wrote:
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 1a13abc..552c134 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -149,6 +149,13 @@ core.safecrlf::
+>  	`core.autocrlf`, git will reject the file.  The variable can
+>  	be set to "warn", in which case git will only warn about an
+>  	irreversible conversion but continue the operation.
+> +
+> +core.trustctime::
+> +	If false, the ctime differences between the index and the
+> +	working copy are ignored; useful when the inode change time
+> +	is regularly modified by something outside Git (file system
+> +	crawlers and some backup systems).
+> +	See linkgit:git-update-index[1]. True by default.
+>  +
+>  CRLF conversion bears a slight chance of corrupting data.
+>  autocrlf=true will convert CRLF to LF during commit and LF to
 
---pf9I7BMVVzbSWLtt
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Somehow, this particular position of the new hunk does not feel like the
+best choice. ;-)
 
-
-While trying to sum up some things I'd like submodules to do, and things
-like that, I came to ask myself why the heck we were doing things the
-way we currently do wrt submodules.
-
-This question is related to the `.git` directories of submodules. I
-wonder why we didn't chose to use a new reference namespace
-(refs/submodules/$path/$remote/$branch).
-
-This would have the net benefit that most of the plumbing tasks would be
-easier if they have to deal with submodules, because they aren't in this
-uncomfortable situation where they have to recurse into another git
-directory to know what to do.
-
-It also has the absolutely nice property to share objects, so that
-projects that replaced a subdirectory with a submodule don't see their
-checkouts grow too large.
-
-We probably still want submodules to act like plain independant git
-repositories, but one can still *fake* that this way: submodules have
-only a .git/config file (also probably an index and a couple of things
-like that, but that's almost a different issue for what I'm considering
-now) that has the setting:
-
-    [core]
-        submodule =3D true
-
-This could make all the builtins look for the real $GIT_DIR up, which in
-turn gives the submodule "name". Then, for this submodule, every
-reference, remote name, ... would be virtualized using the
-"remote/$submodule_name" prefix. IOW, in a submodule "some/sub/module"
-the branch "origin/my/topic/branch" is under:
-  refs/submodules/some/sub/module/origin/my/topic/branch
-  <-- submod. --><-- submod.  --><-- --><--  branch  -->
-     namespace 	     path/name   remote
-Note that this doesn't mean that we must rip out .gitmodules, because
-it's needed to help splitting the previous reference name properly, and
-for bootstrapping purposes.
-
-
-Having that, one can probably extend most of the porcelains in _very_
-straightforward ways. For example, a local topic branch `topic` would be
-the union of the supermodule `topic` branch, and all the
-`refs/submodules/$names/topic` ones.
-
-Most importantly, it would help implementing that tries to make your
-submodules stay _on branch_. One irritating problem with submodules, is
-that when someone else commited, and that you git submodule update,
-you're on a detached head. Absolutely horrible. If you see your current
-branch (assume it's master), then when you do that, you would update
-your `refs/submodules/$name/master` references instead and keep the
-submodule HEADs `on branch`. Of course we can _probably_ hack something
-together along those lines with the current setup, but it would be _so_
-much more convenient this way...
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---pf9I7BMVVzbSWLtt
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkiN8bMACgkQvGr7W6HudhyBewCcC+rR0uaSmEimcciFgy2fhTYR
-4oIAn2aRhBCaM+6G72BX9CC5UKjRxr9L
-=1uu/
------END PGP SIGNATURE-----
-
---pf9I7BMVVzbSWLtt--
+				Petr "Pasky" Baudis
