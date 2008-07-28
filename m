@@ -1,108 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCHv2] git-mv: Keep moved index entries inact
-Date: Mon, 28 Jul 2008 19:24:06 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807281919400.8986@racer>
-References: <20080721002354.GK10151@machine.or.cz> <20080721002508.26773.92277.stgit@localhost> <7v8wvpm9cl.fsf@gitster.siamese.dyndns.org> <20080728142023.GC6701@neumann> <alpine.DEB.1.00.0807281605330.8986@racer>
- <alpine.DEB.1.00.0807281610270.8986@racer>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: short log and email address
+Date: Mon, 28 Jul 2008 14:25:23 -0400
+Message-ID: <9e4733910807281125m7e555377l89cb57dff0f57ee2@mail.gmail.com>
+References: <9e4733910807281106y56f8b67ao86f78822c4b4ad58@mail.gmail.com>
+	 <20080728181101.GA9148@sirena.org.uk>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1955511276-1217269448=:8986"
-Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org
-To: =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Jul 28 20:25:19 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Mark Brown" <broonie@sirena.org.uk>
+X-From: git-owner@vger.kernel.org Mon Jul 28 20:26:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNXPF-0008Vt-Bo
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 20:25:13 +0200
+	id 1KNXQV-0000Xa-S2
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 20:26:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758554AbYG1SYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 14:24:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758420AbYG1SYL
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 14:24:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41504 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757898AbYG1SYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 14:24:09 -0400
-Received: (qmail invoked by alias); 28 Jul 2008 18:24:07 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp047) with SMTP; 28 Jul 2008 20:24:07 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX195xXsekr55/bYrZyPwYFqZD4QJP8Ur5lHLs7TESs
-	pPmgxWUCweezeB
-X-X-Sender: gene099@racer
-In-Reply-To: <alpine.DEB.1.00.0807281610270.8986@racer>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1756054AbYG1SZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 14:25:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755797AbYG1SZZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 14:25:25 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:60419 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755657AbYG1SZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 14:25:24 -0400
+Received: by qw-out-2122.google.com with SMTP id 3so272208qwe.37
+        for <git@vger.kernel.org>; Mon, 28 Jul 2008 11:25:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=+E0GlLi+V6IJu2ohN6FGJo37Ua/+N8WHf/ca2AytXeg=;
+        b=lNJHVtKAsOcIipz2uM/B6FdA8uVViFJEeanFfHjwa2fZ3Dc3n1/deN1WP+XWIBnwe0
+         gKAoPpbYUi1w1j2aTjP5hcwfIvtlckCcSOaFF6XjLaV5zcwNc1zYOpFEiktiTxrlz0OL
+         i5Fs/+qSew3aE2LE47euytWnaM9BXohwQ1EzE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=SHI/7PUk6YvKsMAkDYxbXg26tLM353O7JsuYtHQ/jJxBBAlbsml/5XQnruekQlxllm
+         WL0eOqrBrJ1MJMwZxa001g3xrYkXt0CfAclJThh9DPrOYahm1u6oP3OlZtYIyQa2Z7N+
+         HcPpgRj91FJUIr3onojNiM9A9qOTnyGik2EoA=
+Received: by 10.215.14.10 with SMTP id r10mr166573qai.48.1217269523297;
+        Mon, 28 Jul 2008 11:25:23 -0700 (PDT)
+Received: by 10.150.205.1 with HTTP; Mon, 28 Jul 2008 11:25:23 -0700 (PDT)
+In-Reply-To: <20080728181101.GA9148@sirena.org.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90483>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 7/28/08, Mark Brown <broonie@sirena.org.uk> wrote:
+> On Mon, Jul 28, 2008 at 02:06:06PM -0400, Jon Smirl wrote:
+>  > Using the -e option in shortlog changes the results by spitting things
+>  > out by email address instead of leaving them combined  by name. That's
+>  > probably not what you want. Instead you want everything combined by
+>  > name and then display the most recent email address used.
+>
+> Apart from anything else you're assuming that people's names are
+>  globally unique - they aren't.  I'm aware of several Mark Browns active
+>  in the free software world, for example.
 
---8323329-1955511276-1217269448=:8986
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+There is a conflicting problem, multiple people with the same name and
+people using multiple email addresses. The only solution I can see is
+for the Mark Brown developers to get together and come up with a way
+to differentiate their signatures (initial, nickname, etc), otherwise
+I can't tell them apart from someone using multiple email addresses.
 
-Hi,
+Mark Brown <broonie@opensource.wolfsonmicro.com>
+Mark Brown <broonie@sirena.org.uk>
 
-On Mon, 28 Jul 2008, Johannes Schindelin wrote:
+Same or two different people? These two names have committed to the kernel.
 
-> On Mon, 28 Jul 2008, Johannes Schindelin wrote:
-> 
-> > On Mon, 28 Jul 2008, SZEDER Gábor wrote:
-> > 
-> > > there is a race somewhere in these 'git-mv: Keep moved index entries 
-> > > inact' changes.
-> > > 
-> > > The test cases 'git mv should overwrite symlink to a file' or 'git 
-> > > mv should overwrite file with a symlink' fail occasionaly.  It's 
-> > > quite non-deterministic:  I have run t7001-mv.sh in a loop (see 
-> > > below) and one or the other usually fails around 50 runs (but 
-> > > sometimes only after 150).  Adding some tracing echos to the tests 
-> > > shows that both tests fail when running 'git diff-files' at the end.
-> > 
-> > To make it more convenient to test: with this patch it fails all the 
-> > time:
-> 
-> Ooops.  Seems like I changed the test 23 to fail, instead of test 24.  
-> However, I think it is the same bug: the index is newer by one second, 
-> so it seems that the patch for builtin-mv.c did not really keep the data 
-> "intact".
-> 
-> Note that a test case should use test-chmtime to force this scenario, 
-> not sleep a second.
-> 
-> Unfortunately, I already spent my Git time budget for today, so the ball 
-> is out of my half for now.
-
-Hah!  I had a few minutes, and this is my analysis:
-
-Just try to "mv" a file, and look at the _ctime_ before and after.  Yes, 
-that is right, at least on my system (ext3) it _changes_.
-
-So the test 23 and 24 in t7001-mv.sh are totally bogus.  They purport to 
-test that git-mv retains the whole meta-information in the cache and 
-therefore the index does not need to be updated.
-
-However, it _does_ need to be updated, exactly because ctime changed.
-
-Only that the test failed to test what it tried to test, instead 
-succeeding erroneously, just because the index was racy most of the time 
-and got silently updated.
-
-So, this is the analysis.  The fixes will have to be done by somebody 
-else, because /me goes running now.
-
-(Possible fixes I envisage: update ctime via stat() after rename(), or 
-just give up and scrap the whole "leave cache_entry inact" thing.)
-
-Ciao,
-Dscho
-
---8323329-1955511276-1217269448=:8986--
+-- 
+Jon Smirl
+jonsmirl@gmail.com
