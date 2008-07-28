@@ -1,91 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH v3] merge-base: teach "git merge-base" to accept more
- than 2 arguments
-Date: Sun, 27 Jul 2008 22:37:24 -0700
-Message-ID: <7vabg2wovf.fsf@gitster.siamese.dyndns.org>
-References: <20080728065023.743930d6.chriscool@tuxfamily.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] make sure parsed wildcard refspec ends with slash
+Date: Mon, 28 Jul 2008 01:41:51 -0400
+Message-ID: <20080728054151.GB7294@sigill.intra.peff.net>
+References: <1216854795-51155-1-git-send-email-lee.marlow@gmail.com> <1216858043-53646-1-git-send-email-lee.marlow@gmail.com> <20080725204051.GB23202@spearce.org> <7v1w1hsmnc.fsf@gitster.siamese.dyndns.org> <20080726082405.GA10104@sigill.intra.peff.net> <7vvdysb2na.fsf@gitster.siamese.dyndns.org> <7vsktv3l9k.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Jul 28 07:38:35 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 28 07:42:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNLRK-0007DX-3n
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 07:38:34 +0200
+	id 1KNLVV-00086d-PJ
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 07:42:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751146AbYG1Fhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 01:37:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751319AbYG1Fhe
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 01:37:34 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59827 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751021AbYG1Fhd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 01:37:33 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6B4533F03E;
-	Mon, 28 Jul 2008 01:37:32 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 2F3FE3F03D; Mon, 28 Jul 2008 01:37:25 -0400 (EDT)
-In-Reply-To: <20080728065023.743930d6.chriscool@tuxfamily.org> (Christian
- Couder's message of "Mon, 28 Jul 2008 06:50:23 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4672B3C8-5C67-11DD-AFAA-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1750894AbYG1Fly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 01:41:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750823AbYG1Fly
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 01:41:54 -0400
+Received: from peff.net ([208.65.91.99]:2512 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750726AbYG1Flx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 01:41:53 -0400
+Received: (qmail 29396 invoked by uid 111); 28 Jul 2008 05:41:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 28 Jul 2008 01:41:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Jul 2008 01:41:51 -0400
+Content-Disposition: inline
+In-Reply-To: <7vsktv3l9k.fsf_-_@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90406>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Sat, Jul 26, 2008 at 11:15:51PM -0700, Junio C Hamano wrote:
 
-> Before this patch "git merge-base" accepted only 2 arguments, so
-> only merge bases between 2 references could be computed.
->
-> The purpose of this patch is to make "git merge-base" accept more
-> than 2 arguments, so that the merge bases between the first given
-> reference and all the other references can be computed.
+> > I have a nagging suspicion that it might be a simpler and cleaner change
+> > to change parse_refspec_internal() to keep the trailing slash, instead of
+> > dropping it.  Then the check you added is not needed (the trailing slash
+> > guarantees that the pattern matches at the hierarchy boundary), neither
+> > any of the change in this patch.
+> 
+> This is the other variant, and it turns out that I was right.  Among the
+> 64-18 = 46 new lines, 30 are from the new test file.  Two existing
+> "matching part is followed by '/'" tests are removed.
 
-I have trouble with this wording, but I'll comment on the documentation
-part in a separate message.
+Looks like you have already applied it, but I will chime in that of the
+two, I think this is the more sensible change. Stripping the '/' felt
+like a loss of information to me. IIRC, when "support only /*" was
+discussed, the thinking was "let's keep it tight now, and we can loosen
+it later." Keeping the '/' means that the code is much more sane if
+other globbing rules come in the future.
 
-> +static struct commit *get_commit_reference(const char *arg)
-> +{
-> +	unsigned char revkey[20];
-> +	if (get_sha1(arg, revkey))
-> +		die("Not a valid object name %s", arg);
-> +	return lookup_commit_reference(revkey);
-> +}
-
-This returns a NULL when you feed a tree to the command, and...
-
->  int cmd_merge_base(int argc, const char **argv, const char *prefix)
->  {
-> +	struct commit **rev;
->  	int show_all = 0;
-> +	int rev_nr = 0;
->  
->  	git_config(git_default_config, NULL);
->  
-> @@ -38,15 +48,18 @@ int cmd_merge_base(int argc, const char **argv, const char *prefix)
->  			usage(merge_base_usage);
->  		argc--; argv++;
->  	}
-> +	if (argc < 3)
->  		usage(merge_base_usage);
-> +
-> +	rev = xmalloc((argc - 1) * sizeof(*rev));
-> +
-> +	do {
-> +		struct commit *r = get_commit_reference(argv[1]);
-> +		if (!r)
-> +			return 1;
-
-... the command silently exits with 1.
+-Peff
