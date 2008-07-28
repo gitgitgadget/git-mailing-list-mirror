@@ -1,65 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GTP/0.1 terminology 101: commit reels and references
-Date: Mon, 28 Jul 2008 00:24:12 -0700
-Message-ID: <7vk5f6tqsj.fsf@gitster.siamese.dyndns.org>
-References: <488D42B6.4030701@gmail.com> <1217228570.6750.24.camel@maia.lan>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git's config core.pager doesn't respect color.pager
+Date: Mon, 28 Jul 2008 03:25:02 -0400
+Message-ID: <20080728072502.GA13040@sigill.intra.peff.net>
+References: <d129c0140807221910j37f40e72se9f411d6424077de@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Joshua Roys <roysjosh@gmail.com>, gittorrent@lists.utsl.gen.nz,
-	git@vger.kernel.org, Jonas Fonseca <fonseca@diku.dk>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Mon Jul 28 09:25:27 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Benjamin Kudria <ben@kudria.net>
+X-From: git-owner@vger.kernel.org Mon Jul 28 09:26:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNN6j-0006g1-TW
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 09:25:26 +0200
+	id 1KNN7O-0006wl-AP
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 09:26:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754762AbYG1HYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 03:24:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754760AbYG1HYZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 03:24:25 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34286 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754762AbYG1HYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 03:24:24 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8817246E20;
-	Mon, 28 Jul 2008 03:24:20 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id E8CB546E1D; Mon, 28 Jul 2008 03:24:14 -0400 (EDT)
-In-Reply-To: <1217228570.6750.24.camel@maia.lan> (Sam Vilain's message of
- "Mon, 28 Jul 2008 19:02:50 +1200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 31FB8E74-5C76-11DD-BFD3-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752762AbYG1HZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 03:25:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752760AbYG1HZG
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 03:25:06 -0400
+Received: from peff.net ([208.65.91.99]:4039 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752755AbYG1HZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 03:25:04 -0400
+Received: (qmail 30066 invoked by uid 111); 28 Jul 2008 07:25:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 28 Jul 2008 03:25:03 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Jul 2008 03:25:02 -0400
+Content-Disposition: inline
+In-Reply-To: <d129c0140807221910j37f40e72se9f411d6424077de@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90427>
 
-Sam Vilain <sam@vilain.net> writes:
+On Tue, Jul 22, 2008 at 10:10:17PM -0400, Benjamin Kudria wrote:
 
->>   Commit reels can also, and generally do, include the objects required
->>  for a specific commit.
->
-> Yes.  The only times where they wouldn't contain all the objects
-> required for the commits within the reel, is when those objects happened
-> to be contained by a previous reel.
+> [core]
+> 	pager = tig
+> 
+> [color]
+> 	diff = auto
+> 	pager = false
+[...]
+> So, with the above config, when I do:
+> 
+> git diff | tig
+> 
+> Everything works correctly - git sends no color codes, because of
+> color.pager = false.
 
-What do you mean by "previous" reel?  It is not quite defined in your
-message but perhaps defined elsewhere?
+Actually, it works because of color.diff = auto. Stdout is not a tty,
+therefore color does not kick in. The point of color.pager is to say
+"since git started a pager on behalf of the user, the tty test is
+pointless. What we really want to know is whether the pager can handle
+colors."
 
-How is this different from a bundle?  Does a reel, unlike a bundle,
-contain the full tree for the bottom commits? 
+> However, if I do just:
+> 
+> git diff
+> 
+> git uses core.pager to display the output, but still sends color
+> codes, which is OK for, say, less, bit not so good for tig, which does
+> it's own colorizing, and displays the color codes git sends as-is.
 
-> This is one of the design decisions which I think may be a mistake; a
-> less expensive to calculate definition of a reel would be *all* objects
-> between the starting and ending Reference objects.
+And this is a bug, but one that only affects "diff". It's an ordering
+problem in looking at the config and starting the pager (diff is unlike
+most other commands in that we cannot decide immediately if we want the
+pager, in the case that --exit-code is used). So we make the color
+decision before we have started the pager.
 
-Do you mean all such objects and nothing else?  That would imply that a
-reel is quite similar to a bundle (but neither rev-list --objects-edge
-nor bundle guarantees that the result is minimal).
+Unfortunately, it is not quite as simple as just flipping the order.
+Starting the pager depends on knowing that we are using --exit-code,
+which depends on doing the diff options parsing and setup, which depends
+on reading the config, which then depends on the pager setup.
+
+The patch below should fix it, but it really leaves a bad taste in my
+mouth. However, breaking the dependency chain would require some pretty
+major surgery, I think. It is a little worrisome to me that
+git_config_colorbool depends on the value of pager_use_color, another
+config variable, at all; that means that ordering in the config file
+could change the outcome. It happens to work because we read the config
+several times, and we pick up pager.color on a previous read. I think
+the "right" solution would be refactoring the color stuff to make the
+decision closer to the point of use. But that is definitely not -rc
+material, so perhaps this should go in, ugly as it is.
+
+---
+ builtin-diff.c |   15 +++++++++++++++
+ 1 files changed, 15 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-diff.c b/builtin-diff.c
+index 7ffea97..564984e 100644
+--- a/builtin-diff.c
++++ b/builtin-diff.c
+@@ -301,6 +301,21 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 		setup_pager();
+ 
+ 	/*
++	 * Special case: we have already examined the config for
++	 * color, but we didn't know at that point whether we were
++	 * going to start a pager. The only case that we care about is
++	 * when we turned on color, but shouldn't have (we will never
++	 * "should have but didn't" because of the pager, since
++	 * a lack of a pager implies either the tty is stdout, in
++	 * which case we do turn on color, or it is not, in which
++	 * case we don't start a pager).
++	 */
++	if (DIFF_OPT_TST(&rev.diffopt, COLOR_DIFF) &&
++	    pager_in_use() &&
++	    !pager_use_color)
++		DIFF_OPT_CLR(&rev.diffopt, COLOR_DIFF);
++
++	/*
+ 	 * Do we have --cached and not have a pending object, then
+ 	 * default to HEAD by hand.  Eek.
+ 	 */
+-- 
+1.6.0.rc1.155.gd3310.dirty
