@@ -1,89 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git submodules
-Date: Mon, 28 Jul 2008 15:41:17 -0700
-Message-ID: <7vfxptpr76.fsf@gitster.siamese.dyndns.org>
-References: <20080728162003.GA4584@artemis.madism.org>
- <320075ff0807281323l51bb6478j30e3e4c490974a70@mail.gmail.com>
- <20080728205545.GB10409@artemis.madism.org>
- <20080728205923.GC10409@artemis.madism.org>
- <32541b130807281440v64f3cb9ci50cf6d16be4f2f82@mail.gmail.com>
- <20080728220308.GF10409@artemis.madism.org>
- <m3r69dtzm9.fsf@localhost.localdomain>
+From: "Lee Marlow" <lee.marlow@gmail.com>
+Subject: Showing changes about to be commited via git svn dcommit
+Date: Mon, 28 Jul 2008 16:54:19 -0600
+Message-ID: <7968d7490807281554u3954cf51qe2cd87b94284c77f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Nigel Magnay <nigel.magnay@gmail.com>,
-	Git ML <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 00:42:29 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 29 00:55:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNbQC-0006mm-5u
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 00:42:28 +0200
+	id 1KNbch-00029S-0M
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 00:55:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753547AbYG1Wl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 18:41:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752270AbYG1Wl1
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 18:41:27 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56330 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751270AbYG1Wl1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 18:41:27 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C532440ADA;
-	Mon, 28 Jul 2008 18:41:25 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 43A4340AD9; Mon, 28 Jul 2008 18:41:19 -0400 (EDT)
-In-Reply-To: <m3r69dtzm9.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Mon, 28 Jul 2008 15:26:33 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4F96D30A-5CF6-11DD-BA70-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752214AbYG1WyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 18:54:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752033AbYG1WyU
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 18:54:20 -0400
+Received: from rv-out-0506.google.com ([209.85.198.232]:64858 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751991AbYG1WyU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 18:54:20 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so4715782rvb.1
+        for <git@vger.kernel.org>; Mon, 28 Jul 2008 15:54:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=uGLlo9daet7yQC5sFctu8tO3z4SPkPHq8FRXHgQAB3c=;
+        b=nBpKD8GvOeuWTbKmbQ9OlOThQXohXNLvX6aHMXqfPsHgVBee03HiJOmXWK38anV2hL
+         QCiADcAl4dPkd8X6UsRwMZNES+JhFTeD459CcT/9Jd+ub8McrJ/OQ62leuxM+mtRZSjd
+         4+lwDY29/i61aFAE3CD6haFe6j2js+B3iNsFk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=s4RdPtrHGOnxzJD4O0FCUcBnTq4P6uX6zkbbm53ySdU85pBe80jezJh+Kkxi5leiNR
+         5NDyBosXvRrrqvXor0AXuuDi8sdbjN06oNpiIM+DY/mRfTdiOUqEd9EZkNt0hki0hHUa
+         vNTUR+vMUO8Lp2nq5LPbVP3IAJYolEDe2CaTc=
+Received: by 10.141.156.11 with SMTP id i11mr2639531rvo.1.1217285659740;
+        Mon, 28 Jul 2008 15:54:19 -0700 (PDT)
+Received: by 10.141.69.4 with HTTP; Mon, 28 Jul 2008 15:54:19 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90518>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+git-svners,
 
-> Pierre Habouzit <madcoder@debian.org> writes:
->> On Mon, Jul 28, 2008 at 09:40:22PM +0000, Avery Pennarun wrote:
->
->> > Further, if you don't have a separate .git directory for each
->> > submodule, you can't *switch* branches on the submodule independently
->> > of the supermodule in any obvious way.
->> 
->> Yes you can, in what I propose you have a dummy .git in each submodule,
->> with probably an index, a HEAD and a config file (maybe some other
->> things along) to allow that especially.
->
-> What you are (re)inventing here is something called gitlink (.git which
-> is a file, or .gitlink file); not to be confused with 'sumbodule'/'commit'
-> entry in a tree which is sometimes called gitlink....
-> ...
-> There was even some preliminary implementation IIRC, but AFAIR it
-> was abandoned because of no "real usage".
+I often like to look at the diff of what I'm about to commit before
+taking the plunge.  I'd really like an easy way to see a 'git log -p'
+output of what would be committed to the central svn repository with a
+dcommit.  I found --dry-run and finally made a "one-liner" that
+outputs what I want, but it seems like a lot of work for something I
+do quite often.  The one-liner I used is:
 
-I am afraid you are confused.  I think you are talking about "gitfile",
-not "gitlink".
+$> git svn dcommit --dry-run | grep -E '^diff-tree ' | cut -b 11- |
+git diff-tree --stdin -p -v
 
-It is not abandoned; see e.g. read_gitfile_gently() in setup.c.
+Is this the real way to do it?  Do others do something similar?
 
-I suspect the use of it may help the use case Pierre proposes, but its
-main attractiveness as I understood it back when we discussed the facility
-was that you could switch branches between 'maint' that did not have a
-submodule at "path" back then, and 'master' that does have one now,
-without losing the submodule repository.  When checking out 'master' (and
-that would probably mean you would update 'git-submodule init' and
-'git-submodule update' implementation), you would instanciate subdirectory
-"path", create "path/.git" that is such a regular file that that points at
-somewhere inside the $GIT_DIR of superproject (say ".git/submodules/foo").
-By storing refs and object store are all safely away in the superproject
-$GIT_DIR, you can now safely switch back to 'maint', which would involve
-making sure there is no local change that will be lost and then removing
-the "path" and everything underneath it.
+Curious and looking for a better way.
+
+-Lee
