@@ -1,78 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/git-ls-tree.txt: Add a caveat about
- prefixing pathspec
-Date: Mon, 28 Jul 2008 02:23:46 -0700
-Message-ID: <7vabg2s6ot.fsf@gitster.siamese.dyndns.org>
-References: <20080720233956.GH10151@machine.or.cz>
- <20080721075618.14163.45309.stgit@localhost>
- <7v1w1nvf7q.fsf@gitster.siamese.dyndns.org>
- <20080721210452.GP10151@machine.or.cz>
- <7vd4l6sqqz.fsf@gitster.siamese.dyndns.org>
- <20080722224759.GJ32184@machine.or.cz> <20080728004604.GF32184@machine.or.cz>
- <7vvdyqx0i0.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/6] builtin-help: make it possible to exclude some
+ commands in list_commands()
+Date: Mon, 28 Jul 2008 11:58:52 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807281157220.2725@eeepc-johanness>
+References: <cover.1217207602.git.vmiklos@frugalware.org> <fd19583955e9cea5b78a465d23bc127a51940048.1217207602.git.vmiklos@frugalware.org> <5a003a0e20d0942c946680e4eade8e9d19f0036b.1217207602.git.vmiklos@frugalware.org>
+ <9cc2813166c8b20ffb411c3a28ad86665e60033b.1217207602.git.vmiklos@frugalware.org> <7vr69ex00x.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0807280442330.5526@eeepc-johanness> <7vljzmwvww.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Jul 28 11:24:54 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 28 11:58:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNOyL-0008Vt-Mq
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 11:24:54 +0200
+	id 1KNPV9-0002Pz-Ra
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 11:58:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751863AbYG1JXx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 05:23:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbYG1JXx
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 05:23:53 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48083 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751355AbYG1JXx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 05:23:53 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D229A3FF8E;
-	Mon, 28 Jul 2008 05:23:51 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 18A203FF8D; Mon, 28 Jul 2008 05:23:48 -0400 (EDT)
-In-Reply-To: <7vvdyqx0i0.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 27 Jul 2008 18:26:15 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E469FC66-5C86-11DD-B5B0-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753070AbYG1J5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 05:57:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752490AbYG1J5r
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 05:57:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50226 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752053AbYG1J5r (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 05:57:47 -0400
+Received: (qmail invoked by alias); 28 Jul 2008 09:57:44 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp016) with SMTP; 28 Jul 2008 11:57:44 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+Kdhoz11CKMknuahs+lQaWPOZO6+d7nLp++7TfK+
+	VrACOStNJBGV0T
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <7vljzmwvww.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90431>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Petr Baudis <pasky@suse.cz> writes:
->
->>> We may throw a dice or go with your version, I don't care *that* much
->>> about this change, I just wouldn't make it personally.
->>
->> What is the status of this patch? :-) Dropped altogether?
->
-> Left behind on the far side of oblivion; I do not offhand recall what this
-> was about, sorry.
+On Sun, 27 Jul 2008, Junio C Hamano wrote:
 
-Ok, I now recall this bit:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> > +struct cmdnames {
+> >> > +	int alloc;
+> >> > +	int cnt;
+> >> > +	struct cmdname {
+> >> > +		size_t len;
+> >> > +		char name[1];
+> >> > +	} **names;
+> >> > +};
+> >> 
+> >> I thought we do this kind of thing using FLEX_ARRAY macro.  Is there any
+> >> reason its use is not appropriate here?
+> >
+> > I think that came up in the previous review round: the "name" member _is_ 
+> > NUL-terminated, but could have a ".exe" suffix.  The "len" member has the 
+> > length excluding ".exe".
+> 
+> Sorry, but I do understand what you are trying to explain.
+> 
+> Marking the flexible member at the end as "last_member[FLEX_ARRAY]" is
+> about a tiny bit of abstracting out how the exact decl syntax should look
+> like depending on the compiler.
 
-        You are right, now that I understand the issue better, there's no good
-        fix for this except perhaps introducing --no-prefix, which is not my
-        itch to scratch. Here's my original wording improvement:
+Ah, sorry, I misunderstood.  I thought your complaint was about something 
+else.
 
-                Note that if you are within a subdirectory of your working copy,
-                'git ls-tree' will automatically prepend the subdirectory prefix
-                to the specified paths, and assume the prefix specified in case
-                no paths were given - no matter what the tree object is! Thus,
-                within a subdirectory, 'git ls-tree' behaves as expected only
-                when run on a root tree object.
-
-Eventually somebody may write a Porcelain that benefits from --no-prefix,
-but it is safe to defer the implementation until the need becomes real.
-
-I'll add some explanatory message to the documentation.
+Ciao,
+Dscho
