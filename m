@@ -1,82 +1,86 @@
-From: "Eric Raible" <raible@gmail.com>
-Subject: Re: gitk crashes when quitting gitk while it is is reading commits (was Re: gitk crashing on Windows.)
-Date: Mon, 28 Jul 2008 13:31:22 -0700
-Message-ID: <279b37b20807281331t46866e92s72b0c5a6311cf2db@mail.gmail.com>
-References: <g6kmqf$q9p$1@ger.gmane.org>
-	 <loom.20080728T162025-946@post.gmane.org>
-	 <E7C7B8BA-6050-40DE-917C-200EAE9CA6E8@zib.de>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [Fundamental problem with relative system paths] [PATCH 2/2] run-command (Windows): Run dashless "git <cmd>"
+Date: Mon, 28 Jul 2008 22:37:33 +0200
+Message-ID: <1217277453.488e2e0db0f41@webmail.nextra.at>
+References: <1217224228-31303-1-git-send-email-prohaska@zib.de> <1217224228-31303-2-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, paulus@samba.org
-To: "Steffen Prohaska" <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Jul 28 22:32:31 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Jul 28 22:38:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNZOK-0006wJ-Qr
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 22:32:25 +0200
+	id 1KNZUN-0000O2-Rw
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 22:38:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751839AbYG1UbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 16:31:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751752AbYG1UbY
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 16:31:24 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:12991 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751496AbYG1UbX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 16:31:23 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1479290ywe.1
-        for <git@vger.kernel.org>; Mon, 28 Jul 2008 13:31:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=pUA/4Qmz70/0/6gS0vruepxbHPHuqTCVDalqw+2BftA=;
-        b=LQaEd6lyyPM3sWohF1OVuR4CziCqu+XHGOZAifS4R2Imba881elQdu+U5bJ336kUP2
-         ZBFDQ0UdzIzJZyGen0P+9OGeP4EdpOBj05euVV56hOpocM11tABWHt0SQkdeC32GfSAS
-         k80NBIem2BKq3GloHPhb1IzTb861B9YBNy6sE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=M+WNehj2n5oUSLAR4eeEXmT3U9v0k41aKM57GqnsfvymbKj4Z3aTl9+rvhASKUKmHY
-         FbwSt4yI/ugSOcEmgCbw5Bbwh/PC06fgvJbVwiMXbnxElj17LdAW/yGJ8Wpasr5z/Gt+
-         KMI2wVH4hTK0mYjFv3avbTRJDBTkSSvg/QE2Y=
-Received: by 10.142.139.19 with SMTP id m19mr1753506wfd.154.1217277082062;
-        Mon, 28 Jul 2008 13:31:22 -0700 (PDT)
-Received: by 10.142.14.12 with HTTP; Mon, 28 Jul 2008 13:31:22 -0700 (PDT)
-In-Reply-To: <E7C7B8BA-6050-40DE-917C-200EAE9CA6E8@zib.de>
-Content-Disposition: inline
+	id S1751933AbYG1Uhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 16:37:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbYG1Uhj
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 16:37:39 -0400
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:35992 "EHLO
+	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751323AbYG1Uhi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 16:37:38 -0400
+Received: from webmail01.si.eunet.at (webmail01.srv.eunet.at [193.154.180.195])
+	by smtp5.srv.eunet.at (Postfix) with ESMTPS id 9ED3613A28C;
+	Mon, 28 Jul 2008 22:37:36 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by webmail01.si.eunet.at (8.13.1/8.13.1) with ESMTP id m6SKbXea019819;
+	Mon, 28 Jul 2008 22:37:34 +0200
+Received: from 77.117.178.94 ([77.117.178.94]) 
+	by webmail.nextra.at (IMP) with HTTP 
+	for <johsixt@mbox.eunet.at>; Mon, 28 Jul 2008 22:37:33 +0200
+In-Reply-To: <1217224228-31303-2-git-send-email-prohaska@zib.de>
+User-Agent: Internet Messaging Program (IMP) 3.2.8
+X-Originating-IP: 77.117.178.94
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90503>
 
-On Mon, Jul 28, 2008 at 12:18 PM, Steffen Prohaska <prohaska@zib.de> wrote:
+Zitat von Steffen Prohaska <prohaska@zib.de>:
 
-> I don't think so.  The error Jurko reported might be the same error
-> that was reported earlier and filed as issue 125:
+> This might solve a fundamental problem we have with the
+> computation of system directories based on relative paths
+> in combination with the new gitexecpath 'libexec/git-core'.
+> The problem is that the program 'git' is hardlinked to
+> directories with different depth.  It is either used as
+> 'bin/git' (1 directory) or as 'libexec/git-core/git-*'
+> (2 directories).  Thus, using the same relative path
+> in system_path() yields different results when starting from the
+> two locations.  I recognized the problem because /etc/gitconfig
+> is no longer be read.
 >
-> http://code.google.com/p/msysgit/issues/detail?id=125
+> The patch below might fix the problem by always calling 'bin/git'
+> for builtin commands.  The computation in system_path() would
+> always start from 'bin' and thus yields predictable results.  I
+> am not sure however if it fully solves the problem because other
+> code paths might run the dashed forms directly.
 
-I agree - sounds the same.
+This paragraph should go into the commit message.
 
-> I don't think the problem is Windows-specific.  At least on Mac I am
-> seeing similar problems.  When I hit CTRL-q while gitk is still reading
-> the commits, it crashes with as segfault.
+> I think the only way to verify correctness would be to stop
+> installing the dashed forms for builtins.  If they were not
+> installed they could not be called.  The only entry point for all
+> builtins would be 'bin/git'.  I don't think we want to stop
+> installing the dashed forms right away.
 >
->        Steffen
+> So what shall we do?
 
-I also agree that it easily could be a generic problem.
-But the fact remains that it used to reliably crash on me,
-and no longer does with more recent source.
+Your patches make a lot of sense.
 
-But I still can't find a relevant commit, which makes me
-feel like I'm a) still a complete git newbie, or b) imagining
-the whole thing.
+> -- 8< --
+> We prefer running the dashless form, so we should use it in
+> MinGW's start_command(), too.
+>
+> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 
-- Eric
+Acked-by: Johannes Sixt <johannes.sixt@telecom.at>
+
+-- Hannes
