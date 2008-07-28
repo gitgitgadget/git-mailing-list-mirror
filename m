@@ -1,84 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Branch renaming not updating the configuration correctly.
-Date: Mon, 28 Jul 2008 14:49:28 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807281445340.8986@racer>
-References: <g6ki09$81c$1@ger.gmane.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Allow building without any git installed
+Date: Mon, 28 Jul 2008 06:50:00 -0700
+Message-ID: <20080728135000.GA3996@spearce.org>
+References: <7vsktutrh5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-159937321-1217252969=:8986"
-Cc: git@vger.kernel.org
-To: =?ISO-8859-2?Q?Jurko_Gospodneti=E6?= <jurko.gospodnetic@docte.hr>
-X-From: git-owner@vger.kernel.org Mon Jul 28 15:50:40 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 28 15:51:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNT7P-0001Hk-Tb
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 15:50:32 +0200
+	id 1KNT7v-0001Sl-Hf
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 15:51:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751318AbYG1Ntb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 09:49:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750982AbYG1Ntb
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 09:49:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41596 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750823AbYG1Nta (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 09:49:30 -0400
-Received: (qmail invoked by alias); 28 Jul 2008 13:49:29 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp032) with SMTP; 28 Jul 2008 15:49:29 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18hiLJ3HDQhYCLTuANJsYnlvL8oICz588anV0+ZaO
-	6RdywTQrIfOAUM
-X-X-Sender: gene099@racer
-In-Reply-To: <g6ki09$81c$1@ger.gmane.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.72
+	id S1751287AbYG1NuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 09:50:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750982AbYG1NuB
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 09:50:01 -0400
+Received: from george.spearce.org ([209.20.77.23]:40163 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750851AbYG1NuB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 09:50:01 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 6B919383A5; Mon, 28 Jul 2008 13:50:00 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <7vsktutrh5.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90460>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Junio C Hamano <gitster@pobox.com> wrote:
+> This is a follow-up patch to 49fa65a (Allow the built-in exec path to be
+> relative to the command invocation path, 2008-07-23).  Without specific
+> gitexecdir passed from the command line, git-gui's build procedure would
+> try to figure out the value for it by running an installed git.
 
---8323329-159937321-1217252969=:8986
-Content-Type: TEXT/PLAIN; charset=windows-1250
-Content-Transfer-Encoding: 8BIT
+Ack.  I noticed this yesterday while looking at the git Makefile but
+forgot to send a patch for it myself.  Thanks Junio.
 
-Hi,
+ 
+> diff --git a/Makefile b/Makefile
+> index 798a2f2..7e30b30 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1067,7 +1067,7 @@ endif
+>  
+>  all::
+>  ifndef NO_TCLTK
+> -	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) all
+> +	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) gitexecdir='$(gitexec_instdir_SQ)' all
+>  	$(QUIET_SUBDIR0)gitk-git $(QUIET_SUBDIR1) all
+>  endif
+>  	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' all
 
-On Mon, 28 Jul 2008, Jurko Gospodnetiæ wrote:
-
-> -- .git/config: --
-> [branch "aaa"]
-> 	remote = .
-> 	merge = bbb
-> ------------------
-> 
->   > git branch -m aaa patched
->   > git branch -m bbb original
-> 
-> -- .git/config: --
-> [branch "patched"]
-> 	remote = .
-> 	merge = bbb
-> ------------------
-> 
-> And as you can see above, the branch.patched.merge configuration setting 
-> did not get updated and still holds the old branch name 'bbb'.
-
-I deem this not an "important" bug.
-
-We usually do not set up tracking information for local branches, and I 
-still do not know valid common scenarios for that workflow.
-
-But hey, if it really bothers you, and you can come up with a 
-non-intrusive patch (i.e. a patch that does not punish all users that do 
-_not_ set up locally-tracking branches), I am sure it will be welcomed.
-
-Ciao,
-Dscho
-
---8323329-159937321-1217252969=:8986--
+-- 
+Shawn.
