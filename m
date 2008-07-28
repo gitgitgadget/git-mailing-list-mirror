@@ -1,60 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: theirs/ours was Re: [PATCH 6/6] Add a new test for using a
- custom merge strategy
-Date: Mon, 28 Jul 2008 13:07:33 -0700
-Message-ID: <7vproxrcvu.fsf@gitster.siamese.dyndns.org>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: theirs/ours was Re: [PATCH 6/6] Add a new test for using a custom merge strategy
+Date: Mon, 28 Jul 2008 22:10:50 +0200
+Message-ID: <bd6139dc0807281310j16b4ef5alf9738ec0f3270ba0@mail.gmail.com>
 References: <bd6139dc0807280754x76b6ffedg6bf756dfce23f1e3@mail.gmail.com>
- <20080728185604.GA26322@sigill.intra.peff.net>
- <alpine.DEB.1.00.0807282008470.8986@racer>
+	 <20080728185604.GA26322@sigill.intra.peff.net>
+	 <alpine.DEB.1.00.0807282008470.8986@racer>
+	 <7vproxrcvu.fsf@gitster.siamese.dyndns.org>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, sverre@rabbelier.nl,
-	Git Mailinglist <git@vger.kernel.org>,
-	Miklos Vajna <vmiklos@frugalware.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 28 22:08:46 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Jeff King" <peff@peff.net>,
+	"Git Mailinglist" <git@vger.kernel.org>,
+	"Miklos Vajna" <vmiklos@frugalware.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 28 22:12:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNZ1P-0006oa-5e
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 22:08:43 +0200
+	id 1KNZ4W-0008Eg-GJ
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 22:11:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752538AbYG1UHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 16:07:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752217AbYG1UHn
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 16:07:43 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33531 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752169AbYG1UHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 16:07:42 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5F8C3482A5;
-	Mon, 28 Jul 2008 16:07:41 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A1B9A482A4; Mon, 28 Jul 2008 16:07:35 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0807282008470.8986@racer> (Johannes
- Schindelin's message of "Mon, 28 Jul 2008 20:09:55 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D5682346-5CE0-11DD-8913-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753384AbYG1UKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 16:10:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752486AbYG1UKv
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 16:10:51 -0400
+Received: from wf-out-1314.google.com ([209.85.200.174]:19713 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752136AbYG1UKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 16:10:51 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so5943284wfd.4
+        for <git@vger.kernel.org>; Mon, 28 Jul 2008 13:10:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=mlxLgpi0vcpIm9dCmYC/YSeSvNQbWgGLZE0hiVN1XIE=;
+        b=q8EAhn9hFoE+SCVyoZwJ8qOM8kRlL7uBUmK1Cgyzk2UFCd+SI1W8miHoHmovpVwDNh
+         5q1EQMTZY2B5AFWAT7slruthLhQWoqGCd6fiMCoSq0jp5Nb/QlNZSIewFa8XQkRcQd6D
+         5/7VKEpvWwo5Rrqk/HUSDeES9b3X17h3LoEa4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=aI3hLXMokeLw+8gDRWeRJZ6i3+DsiDNmqdQgXPoKhgdp/4O8wg0U5lB3m7CSWU0wPz
+         NLKA7RVXkJmuve6gzaKkneOGhtzoJ/Qh6pL7u7YWd300LIu6tm76IA5mB68JdxVh/emS
+         3DykyYJvHN+EglnbSPd+pPWQclI/GUikYWVEk=
+Received: by 10.142.177.7 with SMTP id z7mr1752449wfe.15.1217275850089;
+        Mon, 28 Jul 2008 13:10:50 -0700 (PDT)
+Received: by 10.142.104.10 with HTTP; Mon, 28 Jul 2008 13:10:50 -0700 (PDT)
+In-Reply-To: <7vproxrcvu.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90498>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Well, I have to say that the workflow is a bit backwards if the person who 
-> _publishes_ the thing is the one saying "Ooops, my version no goodie, 
-> other version please, but so that pull still works".
+On Mon, Jul 28, 2008 at 22:07, Junio C Hamano <gitster@pobox.com> wrote:
+> That reminds me of:
 >
-> I would have expected the one who has the good version to make the choice.
+>    http://thread.gmane.org/gmane.comp.version-control.git/89178
+>
+> to one of whose messages I sent a response today.
 
-That reminds me of:
+Mhhh, but the proposed strategy there was in response to the 'insane'
+git-merge-theirs version, not to the 'exact opposite of
+git-merge-ours' that I refer to now, yes? Do you have any particular
+feelings wrt to that?
 
-    http://thread.gmane.org/gmane.comp.version-control.git/89178
+-- 
+Cheers,
 
-to one of whose messages I sent a response today.
+Sverre Rabbelier
