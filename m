@@ -1,120 +1,67 @@
-From: =?windows-1250?Q?Jurko_Gospodneti=E6?= <jurko.gospodnetic@docte.hr>
-Subject: Re: Branch renaming not updating the configuration correctly.
-Date: Mon, 28 Jul 2008 16:06:27 +0200
-Message-ID: <488DD263.8020100@docte.hr>
-References: <g6ki09$81c$1@ger.gmane.org> <alpine.DEB.1.00.0807281445340.8986@racer>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCHv2] git-mv: Keep moved index entries inact
+Date: Mon, 28 Jul 2008 16:20:24 +0200
+Message-ID: <20080728142023.GC6701@neumann>
+References: <20080721002354.GK10151@machine.or.cz>
+	<20080721002508.26773.92277.stgit@localhost>
+	<7v8wvpm9cl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1250;
-	format=flowed
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 28 16:08:03 2008
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 28 16:22:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNTO5-0007RS-Jf
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 16:07:46 +0200
+	id 1KNTbM-00046U-Ss
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 16:21:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751012AbYG1OGp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2008 10:06:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751070AbYG1OGp
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 10:06:45 -0400
-Received: from main.gmane.org ([80.91.229.2]:41017 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751012AbYG1OGo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 10:06:44 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KNTN1-0004h4-CA
-	for git@vger.kernel.org; Mon, 28 Jul 2008 14:06:39 +0000
-Received: from 87.252.133.29 ([87.252.133.29])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 28 Jul 2008 14:06:39 +0000
-Received: from jurko.gospodnetic by 87.252.133.29 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 28 Jul 2008 14:06:39 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 87.252.133.29
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <alpine.DEB.1.00.0807281445340.8986@racer>
+	id S1751834AbYG1OU1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2008 10:20:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751497AbYG1OU0
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 10:20:26 -0400
+Received: from francis.fzi.de ([141.21.7.5]:50933 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751375AbYG1OU0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 10:20:26 -0400
+Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 28 Jul 2008 16:20:23 +0200
+Content-Disposition: inline
+In-Reply-To: <7v8wvpm9cl.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-OriginalArrivalTime: 28 Jul 2008 14:20:23.0712 (UTC) FILETIME=[12EDD200:01C8F0BD]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90462>
 
-   Hi Johannes.
+Hi,
 
->> -- .git/config: --
->> [branch "aaa"]
->> 	remote =3D .
->> 	merge =3D bbb
->> ------------------
->>
->>   > git branch -m aaa patched
->>   > git branch -m bbb original
->>
->> -- .git/config: --
->> [branch "patched"]
->> 	remote =3D .
->> 	merge =3D bbb
->> ------------------
->>
->> And as you can see above, the branch.patched.merge configuration set=
-ting=20
->> did not get updated and still holds the old branch name 'bbb'.
->=20
-> I deem this not an "important" bug.
+there is a race somewhere in these 'git-mv: Keep moved index entries
+inact' changes.
 
-   Just wanted to chip in and report... not comfortable enough yet with=
-=20
-git from the user side to contribute with much else...
+The test cases 'git mv should overwrite symlink to a file' or 'git mv
+should overwrite file with a symlink' fail occasionaly.  It's quite
+non-deterministic:  I have run t7001-mv.sh in a loop (see below) and
+one or the other usually fails around 50 runs (but sometimes only
+after 150).  Adding some tracing echos to the tests shows that both
+tests fail when running 'git diff-files' at the end.
+
+Regards,
+G=E1bor
 
 
-> We usually do not set up tracking information for local branches, and=
- I=20
-> still do not know valid common scenarios for that workflow.
+---
+#!/bin/bash
 
-   I was playing around with setting up a local branch containing Boost=
-=20
-library sources as there is no official git repository for that project=
-=2E=20
-  They hold their main repository under subversion and have currently=20
-closed down their main development branch for changes while a new=20
-release is being prepared. As I do _hate_ svn branching/merging I=20
-thought git should be perfect for the task of tracking my own changes t=
-o=20
-the project and this whole 'project' would give me a chance to get=20
-better acquainted with the tool :-).
-
-   Crossing the SVN/Git boundary however is causing a problem since I=20
-use Windows and 'git svn' does not seem to be supported here. My initia=
-l=20
-idea was to manually update my own personal 'origin/master' branch (svn=
-=20
-checkout & then manually commit to the my git branch) and then update=20
-other branches containing my patches from there. Locally-tracking=20
-branches seemed like a perfect fit for that.
-
-   Any other suggested patterns/organizations/solutions I should try ou=
-t=20
-in this case?
-
-
-> But hey, if it really bothers you, and you can come up with a=20
-> non-intrusive patch (i.e. a patch that does not punish all users that=
- do=20
-> _not_ set up locally-tracking branches), I am sure it will be welcome=
-d.
-
-   Heh... it'll take a little more time for me to get comfortable enoug=
-h=20
-with git to attempt something like that. :-) Still an infant user here,=
-=20
-happy with reporting what I find and hoping I don't miss something too=20
-obvious or find & report something already reported. :-)
-
-   Best regards,
-     Jurko Gospodneti=E6
+ret=3D0
+i=3D0
+while test $ret =3D 0 ; do
+        GIT_TEST_OPTS=3D'--verbose --debug' make t7001-mv.sh
+        ret=3D$?
+        i=3D$((i+1))
+done
+echo "Failed at ${i}th run"
