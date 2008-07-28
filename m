@@ -1,60 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] builtin-merge: allow using a custom strategy
-Date: Tue, 29 Jul 2008 01:59:12 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807290158470.2725@eeepc-johanness>
-References: <1217288908-21124-1-git-send-email-vmiklos@frugalware.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 6/6] Add a new test for using a custom merge strategy
+Date: Tue, 29 Jul 2008 01:58:47 +0200
+Message-ID: <20080728235847.GR32057@genesis.frugalware.org>
+References: <cover.1217288180.git.vmiklos@frugalware.org> <f3af7df2dda2dcb7801314cc993470264259f970.1217288180.git.vmiklos@frugalware.org> <alpine.DEB.1.00.0807290153300.2725@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="a44Z7v/T0/yhdW//"
 Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Jul 29 01:59:11 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 29 01:59:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNccQ-0000g2-1I
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 01:59:10 +0200
+	id 1KNcd8-0000pP-PH
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 01:59:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752140AbYG1X6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 19:58:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752062AbYG1X6H
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 19:58:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60624 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751847AbYG1X6G (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 19:58:06 -0400
-Received: (qmail invoked by alias); 28 Jul 2008 23:58:04 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp038) with SMTP; 29 Jul 2008 01:58:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/cRv8DW8Hc7rH0uea1oTDarLlJotTutNqwQmZq0i
-	JM59RanWGsN+dn
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <1217288908-21124-1-git-send-email-vmiklos@frugalware.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1752073AbYG1X6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 19:58:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752069AbYG1X6t
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 19:58:49 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:58857 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751847AbYG1X6s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 19:58:48 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 950DD1B2526;
+	Tue, 29 Jul 2008 01:58:47 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 24D954465E;
+	Tue, 29 Jul 2008 01:14:25 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 75F461190A0A; Tue, 29 Jul 2008 01:58:47 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807290153300.2725@eeepc-johanness>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90530>
 
-Hi,
 
-On Tue, 29 Jul 2008, Miklos Vajna wrote:
+--a44Z7v/T0/yhdW//
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Mon, Jul 28, 2008 at 03:06:09PM +0200, Johannes Schindelin 
-> <Johannes.Schindelin@gmx.de> wrote:
->
-> > The change in the signature of list_commands() is not part of this 
-> > patch.  So at least one of your commits should result in an 
-> > uncompileable revision...
-> 
-> Right. I just squashed patch 4 and 5, and this solves the problem: patch 
-> 3 changes the signature and fixes all usage (in help.c, it's not used 
-> outside help.c), then the squashed patch introduces the usage of the new 
-> list_commands() in builtin-merge.c.
+On Tue, Jul 29, 2008 at 01:54:17AM +0200, Johannes Schindelin <Johannes.Sch=
+indelin@gmx.de> wrote:
+> Actually, this _is_ the opposite of -s ours, no?  -s ours just takes our=
+=20
+> tree, your -s theirs just takes their tree.
+>=20
+> Sorry for the confusion I caused,
 
-Thanks,
-Dscho
+Aah. :-)
+
+I did not read the source of git-merge-ours and based on your
+description I thought my knowledge / the doc about -s ours was not
+correct.
+
+So I guess my original patch was right, then.
+
+Note to self: "take 2" gets messy, time to send a "take 3" soon. ;-)
+
+--a44Z7v/T0/yhdW//
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkiOXTcACgkQe81tAgORUJYqKwCdE+rPTFUqgS3US3yk0JmntsLx
+R3EAn2c9+9GBKA3I6oYVxoXSlRrFDUhM
+=0D47
+-----END PGP SIGNATURE-----
+
+--a44Z7v/T0/yhdW//--
