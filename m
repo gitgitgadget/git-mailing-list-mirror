@@ -1,72 +1,64 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: New mailmap file for the kernel
-Date: Mon, 28 Jul 2008 13:23:57 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807281321540.2725@eeepc-johanness>
-References: <9e4733910807272145y5b67112er4b90cc36141663c1@mail.gmail.com>  <alpine.DEB.1.00.0807281251000.2725@eeepc-johanness> <bd6139dc0807280411k3a283c5dr4b874342aab167dc@mail.gmail.com>
+Subject: Re: Adding custom hooks to a bare repository.
+Date: Mon, 28 Jul 2008 13:26:10 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807281324350.2725@eeepc-johanness>
+References: <18071eea0807280404w3365748cjcd11f536bf5d27eb@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Mon Jul 28 13:23:59 2008
+Cc: git mailing list <git@vger.kernel.org>
+To: Thomas Adam <thomas.adam22@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 28 13:26:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNQpU-0003pR-JJ
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 13:23:53 +0200
+	id 1KNQrc-0004Rq-IS
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 13:26:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586AbYG1LWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 07:22:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751530AbYG1LWw
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 07:22:52 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38950 "HELO mail.gmx.net"
+	id S1751070AbYG1LZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 07:25:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750870AbYG1LZE
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 07:25:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38940 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750720AbYG1LWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 07:22:51 -0400
-Received: (qmail invoked by alias); 28 Jul 2008 11:22:49 -0000
+	id S1751070AbYG1LZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 07:25:03 -0400
+Received: (qmail invoked by alias); 28 Jul 2008 11:25:01 -0000
 Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp023) with SMTP; 28 Jul 2008 13:22:49 +0200
+  by mail.gmx.net (mp050) with SMTP; 28 Jul 2008 13:25:01 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/qnTxrPGbqfdvXodny4j3NkoOQoBOSHd9LEIug/A
-	zuU8Sr5hyt8TAb
+X-Provags-ID: V01U2FsdGVkX1+/+jsPkLO/vre5C3Ks8F3kc2NCWvD2Pvqplukqhb
+	JuN2eMaeotYJJ+
 X-X-Sender: user@eeepc-johanness
-In-Reply-To: <bd6139dc0807280411k3a283c5dr4b874342aab167dc@mail.gmail.com>
+In-Reply-To: <18071eea0807280404w3365748cjcd11f536bf5d27eb@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+X-FuHaFi: 0.74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90443>
 
 Hi,
 
-On Mon, 28 Jul 2008, Sverre Rabbelier wrote:
+On Mon, 28 Jul 2008, Thomas Adam wrote:
 
-> On Mon, Jul 28, 2008 at 12:53, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > Unless somebody forgets, right?
+> I'm trying to add in "post-merge" as a valid hook file to an already 
+> created --bare repository.  In adding it to the correct place and 
+> setting the correct permissions on it (the repository is a shared one), 
+> it doesn't seem to be pulled down with the other hook files already 
+> present when doing a "git clone".
 > 
-> Unless there is a pre-commit hook that prevents you from committing
-> when you are not in the mailmap.
+> Any ideas why?
 
-And how exactly do you plan to make sure everybody has that hook 
-installed?
+Yes.  Hooks, just as the config and reflogs, are supposed to be local 
+things.  Rationale being: it is rude, and also insecure, to install 
+something that potentially calls other programs without the user saying 
+so.
 
-Also, it would be a major hassle, just for the benefits of statistics 
-(which, funnily enough, not everybody cares about).
+All you can do is checking in a copy of the hook, and ask your users/check 
+in your build system that it is installed.
 
-> > Also note that in a distributed world, you cannot properly speak of a 
-> > "new developer".
-> 
-> Yet we do it all the time on git.git ;).
-
-But we are not truly distributed.  Our community is small enough, and our 
-maintainer good enough, that we do have a single upstream essentially.  We 
-do not even have lieutenants through which new developers could come (and 
-therefore would be old developers once they hit master).
-
-Ciao,
+Hth,
 Dscho
