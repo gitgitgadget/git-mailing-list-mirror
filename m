@@ -1,119 +1,175 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC/PATCH v2] merge-base: teach "git merge-base" to accept more than 2 arguments
-Date: Mon, 28 Jul 2008 07:49:35 +0200
-Message-ID: <200807280749.35278.chriscool@tuxfamily.org>
-References: <20080727053324.b54fe48e.chriscool@tuxfamily.org> <alpine.DEB.1.00.0807271631470.5526@eeepc-johanness>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH v3] merge-base: teach "git merge-base" to accept more
+ than 2 arguments
+Date: Sun, 27 Jul 2008 22:46:43 -0700
+Message-ID: <7vzlo2v9vg.fsf@gitster.siamese.dyndns.org>
+References: <20080728065023.743930d6.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Miklos Vajna <vmiklos@frugalware.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 28 07:46:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Jul 28 07:47:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNLZM-0000V0-02
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 07:46:52 +0200
+	id 1KNLaK-0000h8-9N
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 07:47:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751312AbYG1Fpv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2008 01:45:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751062AbYG1Fpv
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 01:45:51 -0400
-Received: from smtp8-g19.free.fr ([212.27.42.65]:43576 "EHLO smtp8-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750726AbYG1Fpu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jul 2008 01:45:50 -0400
-Received: from smtp8-g19.free.fr (localhost [127.0.0.1])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id 7242A32A7DC;
-	Mon, 28 Jul 2008 07:45:47 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id 34A6F32A7CC;
-	Mon, 28 Jul 2008 07:45:47 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0807271631470.5526@eeepc-johanness>
-Content-Disposition: inline
+	id S1751038AbYG1Fqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 01:46:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750920AbYG1Fqw
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 01:46:52 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60938 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750819AbYG1Fqw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 01:46:52 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6818F3F16D;
+	Mon, 28 Jul 2008 01:46:51 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 0915F3F16C; Mon, 28 Jul 2008 01:46:44 -0400 (EDT)
+In-Reply-To: <20080728065023.743930d6.chriscool@tuxfamily.org> (Christian
+ Couder's message of "Mon, 28 Jul 2008 06:50:23 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 93A10D9C-5C68-11DD-95D3-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90408>
 
-Le dimanche 27 juillet 2008, Johannes Schindelin a =E9crit :
-> Hi,
+Christian Couder <chriscool@tuxfamily.org> writes:
+
+> Before this patch "git merge-base" accepted only 2 arguments, so
+> only merge bases between 2 references could be computed.
 >
-> On Sun, 27 Jul 2008, Christian Couder wrote:
-> > diff --git a/builtin-merge-base.c b/builtin-merge-base.c
-> > index 1cb2925..f2c9756 100644
-> > --- a/builtin-merge-base.c
-> > +++ b/builtin-merge-base.c
-> > @@ -38,15 +48,22 @@ int cmd_merge_base(int argc, const char **argv,
-> > const char *prefix) usage(merge_base_usage);
-> >  		argc--; argv++;
-> >  	}
-> > -	if (argc !=3D 3)
-> > +	if (argc < 3)
-> >  		usage(merge_base_usage);
-> > -	if (get_sha1(argv[1], rev1key))
-> > -		die("Not a valid object name %s", argv[1]);
-> > -	if (get_sha1(argv[2], rev2key))
-> > -		die("Not a valid object name %s", argv[2]);
-> > -	rev1 =3D lookup_commit_reference(rev1key);
-> > -	rev2 =3D lookup_commit_reference(rev2key);
-> > -	if (!rev1 || !rev2)
-> > +
-> > +	rev1 =3D get_commit_reference(argv[1]);
-> > +	if (!rev1)
-> >  		return 1;
->
-> Why do you special case rev1?  Is it so special?  Just handle it toge=
-ther
-> with all of the other arguments!
->
-> IOW have one commit array, and do not call it "prev".
+> The purpose of this patch is to make "git merge-base" accept more
+> than 2 arguments, so that the merge bases between the first given
+> reference and all the other references can be computed.
 
-Ok, I have done that in v3.
+After thinking about this a bit more, I think that saying "we now allow
+computing merge base between more than 2" is misleading.
 
-> > -	return show_merge_base(rev1, rev2, show_all);
-> > +	argc--; argv++;
-> > +
-> > +	do {
-> > +		struct commit *rev2 =3D get_commit_reference(argv[1]);
-> > +		if (!rev2)
-> > +			return 1;
-> > +		ALLOC_GROW(prev2, prev2_nr + 1, prev2_alloc);
-> > +		prev2[prev2_nr++] =3D rev2;
-> > +		argc--; argv++;
-> > +	} while (argc > 1);
->
-> Now, this is ugly.  You know beforehand the _exact_ number of argumen=
-ts,
-> and yet you dynamically grow the array?
+I ended up rewriting almost all the lines.  The points are:
 
-You are right. I guess I dealt too much with complex parsing of argumen=
-ts=20
-where you can have options everywhere, and perhaps I also felt somewhat=
-=20
-guilty for not having used ALLOC_GROW before, or something.
+ * The command is still about computing merge-bases between two commits,
+   and one of these two commits is the first command line argument as
+   before.  With more than one remaining commits on the command line, you
+   can specify a hypothetical commit that is a merge between all of them.
 
-> Also, why do you use a do { }=20
-> while(), when a for () would be much, much clearer?
+ * We did not formally define what a merge-base is.  Define it.
 
-Well, we already know that there are at least 2 commits to parse, so it=
-=20
-feels a little bit wastefull to check first again. Also the code to par=
-se=20
-the [--all|-a] option before use a while loop with "argc--; argv++;" at=
- the=20
-end, so I think it is more coherent like that.
+ * With a proper definition of merge-base as "best common ancestors", with
+   the definition of "good/better/best" between common ancestors, we do
+   not have to say anything redundant about --all.  It outputs all merge
+   bases, as opposed to one chosen at random.
 
-Thanks,
-Christian.
+ * Have definition and give illustrations in a new Discussion section.
 
-> BTW I seem to recall that get_merge_bases_many() was _not_ the same a=
-s
-> get_merge_octopus().  Could you please remind me what _many() does?
->
-> Ciao,
-> Dscho
+---
+ Documentation/git-merge-base.txt |   77 ++++++++++++++++++++++++++++++++-----
+ 1 files changed, 66 insertions(+), 11 deletions(-)
+
+diff --git a/Documentation/git-merge-base.txt b/Documentation/git-merge-base.txt
+index 1a7ecbf..fd4b5c9 100644
+--- a/Documentation/git-merge-base.txt
++++ b/Documentation/git-merge-base.txt
+@@ -8,26 +8,81 @@ git-merge-base - Find as good common ancestors as possible for a merge
+ 
+ SYNOPSIS
+ --------
+-'git merge-base' [--all] <commit> <commit>
++'git merge-base' [--all] <commit> <commit>...
+ 
+ DESCRIPTION
+ -----------
+ 
+-'git-merge-base' finds as good a common ancestor as possible between
+-the two commits. That is, given two commits A and B, `git merge-base A
+-B` will output a commit which is reachable from both A and B through
+-the parent relationship.
++'git-merge-base' finds best common ancestor(s) between two commits to use
++in a three-way merge.  One common ancestor is 'better' than another common
++ancestor if the latter is an ancestor of the former.  A common ancestor
++that does not have any better common ancestor than it is a 'best common
++ancestor', i.e. a 'merge base'.  Note that there can be more than one
++merge bases between two commits.
+ 
+-Given a selection of equally good common ancestors it should not be
+-relied on to decide in any particular way.
+-
+-The 'git-merge-base' algorithm is still in flux - use the source...
++Among the two commits to compute their merge bases, one is specified by
++the first commit argument on the command line; the other commit is a
++(possibly hypothetical) commit that is a merge across all the remaining
++commits on the command line.  As the most common special case, giving only
++two commits from the command line means computing the merge base between
++the given two commits.
+ 
+ OPTIONS
+ -------
+ --all::
+-	Output all common ancestors for the two commits instead of
+-	just one.
++	Output all merge bases for the commits, instead of just one.
++
++DISCUSSION
++----------
++
++Given two commits 'A' and 'B', `git merge-base A B` will output a commit
++which is reachable from both 'A' and 'B' through the parent relationship.
++
++For example, with this topology:
++
++                 o---o---o---B
++                /
++        ---o---1---o---o---o---A
++
++the merge base between 'A' and 'B' is '1'.
++
++Given three commits 'A', 'B' and 'C', `git merge-base A B C` will compute the
++merge base between 'A' and an hypothetical commit 'M', which is a merge
++between 'B' and 'C'.  For example, with this topology:
++
++               o---o---o---o---C
++              /
++             /   o---o---o---B
++            /   /
++        ---2---1---o---o---o---A
++
++the result of `git merge-base A B C` is '1'.  This is because the
++equivalent topology with a merge commit 'M' between 'B' and 'C' is:
++
++
++               o---o---o---o---o
++              /                 \
++             /   o---o---o---o---M
++            /   /
++        ---2---1---o---o---o---A
++
++and the result of `git merge-base A M` is '1'.  Commit '2' is also a
++common ancestor between 'A' and 'M', but '1' is a better common ancestor,
++because '2' is an ancestor of '1'.  Hence, '2' is not a merge base.
++
++When the history involves criss-cross merges, there can be more than one
++'best' common ancestors between two commits.  For example, with this
++topology:
++
++       ---1---o---A
++	   \ /
++	    X
++	   / \
++       ---2---o---o---B
++
++both '1' and '2' are merge-base of A and B.  Neither one is better than
++the other (both are 'best' merge base).  When `--all` option is not given,
++it is unspecified which best one is output.
+ 
+ Author
+ ------
