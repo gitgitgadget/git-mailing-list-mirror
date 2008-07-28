@@ -1,116 +1,53 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [Fundamental problem with relative system paths] [PATCH 2/2] run-command (Windows): Run dashless "git <cmd>"
-Date: Mon, 28 Jul 2008 07:50:28 +0200
-Message-ID: <1217224228-31303-2-git-send-email-prohaska@zib.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Fundamental problem with relative system paths] [PATCH 2/2]
+ run-command (Windows): Run dashless "git <cmd>"
+Date: Sun, 27 Jul 2008 22:58:44 -0700
+Message-ID: <7vvdyqv9bf.fsf@gitster.siamese.dyndns.org>
 References: <1217224228-31303-1-git-send-email-prohaska@zib.de>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ <1217224228-31303-2-git-send-email-prohaska@zib.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Steffen Prohaska <prohaska@zib.de>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Mon Jul 28 07:52:38 2008
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Jul 28 07:59:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNLev-0001U3-L2
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 07:52:38 +0200
+	id 1KNLm0-0002nO-4q
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 07:59:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751438AbYG1FvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 01:51:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751003AbYG1FvQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 01:51:16 -0400
-Received: from mailer.zib.de ([130.73.108.11]:33610 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750819AbYG1FvQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 01:51:16 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m6S5oT5s017480;
-	Mon, 28 Jul 2008 07:50:34 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m6S5oSL3009748;
-	Mon, 28 Jul 2008 07:50:28 +0200 (MEST)
-X-Mailer: git-send-email 1.5.4.4
-In-Reply-To: <1217224228-31303-1-git-send-email-prohaska@zib.de>
+	id S1751062AbYG1F6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 01:58:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750934AbYG1F6z
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 01:58:55 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61660 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750726AbYG1F6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 01:58:55 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 188E03F297;
+	Mon, 28 Jul 2008 01:58:53 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id D42923F296; Mon, 28 Jul 2008 01:58:46 -0400 (EDT)
+In-Reply-To: <1217224228-31303-2-git-send-email-prohaska@zib.de> (Steffen
+ Prohaska's message of "Mon, 28 Jul 2008 07:50:28 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 41C4E604-5C6A-11DD-9AC5-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90411>
 
-This might solve a fundamental problem we have with the
-computation of system directories based on relative paths
-in combination with the new gitexecpath 'libexec/git-core'.
-The problem is that the program 'git' is hardlinked to
-directories with different depth.  It is either used as
-'bin/git' (1 directory) or as 'libexec/git-core/git-*'
-(2 directories).  Thus, using the same relative path
-in system_path() yields different results when starting from the
-two locations.  I recognized the problem because /etc/gitconfig
-is no longer be read.
+Steffen Prohaska <prohaska@zib.de> writes:
 
-The patch below might fix the problem by always calling 'bin/git'
-for builtin commands.  The computation in system_path() would
-always start from 'bin' and thus yields predictable results.  I
-am not sure however if it fully solves the problem because other
-code paths might run the dashed forms directly.
+> ...  It is either used as
+> 'bin/git' (1 directory) or as 'libexec/git-core/git-*'
+> (2 directories).
 
-I think the only way to verify correctness would be to stop
-installing the dashed forms for builtins.  If they were not
-installed they could not be called.  The only entry point for all
-builtins would be 'bin/git'.  I don't think we want to stop
-installing the dashed forms right away.
-
-So what shall we do?
-
-	Steffen
-
--- 8< --
-We prefer running the dashless form, so we should use it in
-MinGW's start_command(), too.
-
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- run-command.c |   11 ++++-------
- 1 files changed, 4 insertions(+), 7 deletions(-)
-
-diff --git a/run-command.c b/run-command.c
-index 6e29fdf..a3b28a6 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -119,9 +119,8 @@ int start_command(struct child_process *cmd)
- 	}
- #else
- 	int s0 = -1, s1 = -1, s2 = -1;	/* backups of stdin, stdout, stderr */
--	const char *sargv0 = cmd->argv[0];
-+	const char **sargv = cmd->argv;
- 	char **env = environ;
--	struct strbuf git_cmd;
- 
- 	if (cmd->no_stdin) {
- 		s0 = dup(0);
-@@ -165,9 +164,7 @@ int start_command(struct child_process *cmd)
- 	}
- 
- 	if (cmd->git_cmd) {
--		strbuf_init(&git_cmd, 0);
--		strbuf_addf(&git_cmd, "git-%s", cmd->argv[0]);
--		cmd->argv[0] = git_cmd.buf;
-+		cmd->argv = prepare_git_cmd(cmd->argv);
- 	}
- 
- 	cmd->pid = mingw_spawnvpe(cmd->argv[0], cmd->argv, env);
-@@ -175,9 +172,9 @@ int start_command(struct child_process *cmd)
- 	if (cmd->env)
- 		free_environ(env);
- 	if (cmd->git_cmd)
--		strbuf_release(&git_cmd);
-+		free(cmd->argv);
- 
--	cmd->argv[0] = sargv0;
-+	cmd->argv = sargv;
- 	if (s0 >= 0)
- 		dup2(s0, 0), close(s0);
- 	if (s1 >= 0)
--- 
-1.6.0.rc0.79.gb0320
+I thought Hannes already fixed that one; we shouldn't have the latter. 
