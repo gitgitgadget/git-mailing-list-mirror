@@ -1,115 +1,91 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Bizarre missing changes (git bug?)
-Date: Sun, 27 Jul 2008 22:30:59 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0807272206480.3486@nehalem.linux-foundation.org>
-References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com> <alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org> <200807260512.40088.zippel@linux-m68k.org> <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org>
- <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain> <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain> <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org>
- <Pine.LNX.4.64.0807280141140.6791@localhost.localdomain> <alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH v3] merge-base: teach "git merge-base" to accept more
+ than 2 arguments
+Date: Sun, 27 Jul 2008 22:37:24 -0700
+Message-ID: <7vabg2wovf.fsf@gitster.siamese.dyndns.org>
+References: <20080728065023.743930d6.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Roman Zippel <zippel@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Mon Jul 28 07:36:34 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Jul 28 07:38:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNLPF-0006l1-1h
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 07:36:25 +0200
+	id 1KNLRK-0007DX-3n
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 07:38:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751834AbYG1FeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 01:34:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751849AbYG1FeK
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 01:34:10 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:57810 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750920AbYG1FeJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jul 2008 01:34:09 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6S5XwEs006293
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 27 Jul 2008 22:33:59 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6S5Xwsu022157;
-	Sun, 27 Jul 2008 22:33:58 -0700
-In-Reply-To: <alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.404 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751146AbYG1Fhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 01:37:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751319AbYG1Fhe
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 01:37:34 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59827 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751021AbYG1Fhd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 01:37:33 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6B4533F03E;
+	Mon, 28 Jul 2008 01:37:32 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 2F3FE3F03D; Mon, 28 Jul 2008 01:37:25 -0400 (EDT)
+In-Reply-To: <20080728065023.743930d6.chriscool@tuxfamily.org> (Christian
+ Couder's message of "Mon, 28 Jul 2008 06:50:23 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 4672B3C8-5C67-11DD-AFAA-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90405>
 
+Christian Couder <chriscool@tuxfamily.org> writes:
 
+> Before this patch "git merge-base" accepted only 2 arguments, so
+> only merge bases between 2 references could be computed.
+>
+> The purpose of this patch is to make "git merge-base" accept more
+> than 2 arguments, so that the merge bases between the first given
+> reference and all the other references can be computed.
 
-On Sun, 27 Jul 2008, Linus Torvalds wrote:
-> 
-> And it's why gitk can start printing out the history _before_ three 
-> seconds has passed. And that's really really important.
+I have trouble with this wording, but I'll comment on the documentation
+part in a separate message.
 
-Btw, the reason it's really really important is that "three seconds" can 
-actually easily be "three minutes" - if the project is big, or if you 
-simply don't have everything in the cache, so you actually need to do tons 
-of IO to generate the whole history.
+> +static struct commit *get_commit_reference(const char *arg)
+> +{
+> +	unsigned char revkey[20];
+> +	if (get_sha1(arg, revkey))
+> +		die("Not a valid object name %s", arg);
+> +	return lookup_commit_reference(revkey);
+> +}
 
-So every normal operation absolutely _must_ be incremental and not rely on 
-any calculation of the whole history in order to then simplify it.
+This returns a NULL when you feed a tree to the command, and...
 
-Of course, post-processing is fine for some things. For example, in the 
-thread I pointed you to originally (see filter-branch + full-history in 
-google, or look in some git archive) I suggested a post-processing of the 
-merge history for filter-branch. I suspect it's very acceptable for _that_ 
-kind of use to "batch" things up and not do them with partial knowledge.
+>  int cmd_merge_base(int argc, const char **argv, const char *prefix)
+>  {
+> +	struct commit **rev;
+>  	int show_all = 0;
+> +	int rev_nr = 0;
+>  
+>  	git_config(git_default_config, NULL);
+>  
+> @@ -38,15 +48,18 @@ int cmd_merge_base(int argc, const char **argv, const char *prefix)
+>  			usage(merge_base_usage);
+>  		argc--; argv++;
+>  	}
+> +	if (argc < 3)
+>  		usage(merge_base_usage);
+> +
+> +	rev = xmalloc((argc - 1) * sizeof(*rev));
+> +
+> +	do {
+> +		struct commit *r = get_commit_reference(argv[1]);
+> +		if (!r)
+> +			return 1;
 
-But this incremental thing is why I for example suggest people should use 
-"git gui blame" instead of "git blame" when looking for problems - because 
-the latter cannot be done incrementally, and as a result can cause really 
-irritating delays (exactly because it basically needs to synchronously 
-walk back to the beginning of history).
-
-The kernel repo, btw, is pretty small in this regard. The cases that 
-caused much more pain were the insane KDE ones that were something like 
-ten times the size. We've optimized things pretty aggressively, but...
-
-Btw, if I sound irritated, it's because we had all these discussions about 
-three _years_ ago when git got started. This is not a new issue. It's 
-hard.
-
-I've been pushing on people to do things incrementally very hard over the 
-last few years because it's such a _huge_ usability issue.
-
-For example, I've pointed you to the incremental nature of "gitk" as an 
-example of how things should work, but that's actually fairly recent: it 
-wasn't that long ago that "gitk" used to pass in "--topo-order" or 
-"--date-order" to the core git revision machinery, and that actually is 
-another of those "global" operations that you need the whole history for.
-
-So gitk actually used to pause for three seconds (or ten. or thirty) 
-before it would show the results. I'm really happy to report that Paul 
-finally did the (trivial) topo-sort in gitk, meaning that he could re-sort 
-it as necessary and keep things incremental. It was one of my biggest UI 
-gripes for the longest time (and I wasted time adding a special "partial 
-output mode" that gitk didn't even then end up using because Paul did 
-things the right way).
-
-Btw, from a git log viewer standpoint, the "merge history simplification" 
-is all the exact same problem as the "--topo-order" flag is: you could 
-use the (incremental and very verbose)
-
-	git log --full-history --parents
-
-output as the base-line, and then you could do the commit simplification 
-of things interactively.
-
-But "git log" itself cannot do it by default, since that would mean that 
-git log itself would have to wait for the whole history to be generated. 
-
-That's because output to a pipe is fundamentally linear (ie it cannot 
-"re-write" the things it has already shown as it finds a simplification: 
-there is no incremental way to rewrite things "after the fact").
-
-			Linus
+... the command silently exits with 1.
