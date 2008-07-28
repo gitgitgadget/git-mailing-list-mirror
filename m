@@ -1,82 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH v3] merge-base: teach "git merge-base" to accept more
- than 2 arguments
-Date: Mon, 28 Jul 2008 13:33:45 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807281328520.2725@eeepc-johanness>
-References: <20080728065023.743930d6.chriscool@tuxfamily.org>
+From: Olivier Marin <dkr+ml.git@free.fr>
+Subject: Re: [PATCH] builtin-verify-tag: fix -v option parsing
+Date: Mon, 28 Jul 2008 13:42:53 +0200
+Message-ID: <488DB0BD.2060406@free.fr>
+References: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com> <1216849332-26813-2-git-send-email-barra_cuda@katamail.com> <4888B4E3.9000504@free.fr> <alpine.DEB.1.00.0807241807550.8986@racer> <4889EF22.6020604@free.fr> <488DA40C.8020400@free.fr> <alpine.DEB.1.00.0807281306090.2725@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Jul 28 13:33:41 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michele Ballabio <barra_cuda@katamail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 28 13:44:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNQyy-0006mA-BM
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 13:33:40 +0200
+	id 1KNR8z-0001DC-6O
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 13:44:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750894AbYG1Lck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 07:32:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbYG1Lck
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 07:32:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46097 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750720AbYG1Lcj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 07:32:39 -0400
-Received: (qmail invoked by alias); 28 Jul 2008 11:32:37 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp015) with SMTP; 28 Jul 2008 13:32:37 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+3hvIi+NW3nu+O9RMsSxLaqT5cz/Aey4X1bpsxAW
-	Bbb/ykCDgAHRTu
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20080728065023.743930d6.chriscool@tuxfamily.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1750934AbYG1Lm4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2008 07:42:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750823AbYG1Lm4
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 07:42:56 -0400
+Received: from smtp8-g19.free.fr ([212.27.42.65]:33432 "EHLO smtp8-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750740AbYG1Lm4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 07:42:56 -0400
+Received: from smtp8-g19.free.fr (localhost [127.0.0.1])
+	by smtp8-g19.free.fr (Postfix) with ESMTP id 85C0632A7FE;
+	Mon, 28 Jul 2008 13:42:54 +0200 (CEST)
+Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
+	by smtp8-g19.free.fr (Postfix) with ESMTP id 2526532A81B;
+	Mon, 28 Jul 2008 13:42:54 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <alpine.DEB.1.00.0807281306090.2725@eeepc-johanness>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90445>
 
-Hi,
+Johannes Schindelin a =E9crit :
+>>
+>> Since the C rewrite, "git verify-tag -v" just does nothing instead o=
+f=20
+>> printing the usage message with an error. This patch fix the regress=
+ion.
+>=20
+> Maybe a better solution would be to convert (trivially) to=20
+> parse-options...
 
-On Mon, 28 Jul 2008, Christian Couder wrote:
+I am very puzzled.
 
-> +	rev = xmalloc((argc - 1) * sizeof(*rev));
-> +
-> +	do {
-> +		struct commit *r = get_commit_reference(argv[1]);
-> +		if (!r)
-> +			return 1;
-> +		rev[rev_nr++] = r;
-> +		argc--; argv++;
-> +	} while (argc > 1);
-> +
-> +	return show_merge_base(rev, rev_nr, show_all);
+You first asked me to do a separate commit with just the fix and now
+you seem to want the fix with the conversion...
 
-	rev = xmalloc((argc - 1) * sizeof(*rev));
+What do you mean by "trivially"?
 
-	for (rev_nr = 0; rev_nr + 1 < argc; rev_nr++) {
-		rev[rev_nr] = get_commit_reference(argv[rev_nr + 1]);
-		if (!rev[rev_nr])
-			return !!error("Does not refer to a commit: '%s'",
-				argv[rev_nr + 1]);
-	}
-
-	return show_merge_base(rev, rev_nr, show_all);
-
-I do not know about you, but I think this is not only shorter (in spite of 
-adding a helpful error message), but also simpler to understand (not using 
-convoluted do { } while logic), and therefore superior.
-
-Your performance argument is weak IMHO, as this is not a big performance 
-hit, and command line parameter parsing is definitely not performance 
-critical.
-
-Ciao,
-Dscho
+Olivier.
