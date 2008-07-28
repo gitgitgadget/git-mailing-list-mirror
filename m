@@ -1,77 +1,174 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: Re: git-scm.com
-Date: Tue, 29 Jul 2008 00:39:22 +0200
-Message-ID: <A46A65A0-1B36-4C2A-8E1B-6E7313286AAF@ai.rug.nl>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com> <7v3alxr0fd.fsf@gitster.siamese.dyndns.org> <d411cc4a0807251759m1d83d7c4w4724806b19f7c02a@mail.gmail.com> <7vsktwfu5z.fsf@gitster.siamese.dyndns.org> <20080727113707.GC32184@machine.or.cz> <7v3alv2n46.fsf@gitster.siamese.dyndns.org> <7vd4kzyoj1.fsf@gitster.siamese.dyndns.org> <46a038f90807271619l69c085a7o58f50b7d64b7222d@mail.gmail.com> <530345950807272011o7c92fdaaw3116cc257dcbab7a@mail.gmail.com> <alpine.DEB.1.00.0807281201350.2725@eeepc-johanness> <7vk5f5ptwu.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Tom Werner <pubsub@rubyisawesome.com>, git@vger.kernel.org
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH 3/6] builtin-help: make it possible to exclude some commands in list_commands()
+Date: Tue, 29 Jul 2008 01:24:52 +0200
+Message-ID: <5ad105819efb1c905bd01db3d08eb3422d283b3b.1217287269.git.vmiklos@frugalware.org>
+References: <cover.1217287269.git.vmiklos@frugalware.org>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 01:18:16 2008
+X-From: git-owner@vger.kernel.org Tue Jul 29 01:25:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNbyp-0007pX-0h
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 01:18:15 +0200
+	id 1KNc5o-000134-04
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 01:25:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752863AbYG1XRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 19:17:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752493AbYG1XRH
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 19:17:07 -0400
-Received: from frim.nl ([87.230.85.232]:51345 "EHLO
-	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751808AbYG1XRG (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jul 2008 19:17:06 -0400
-X-Greylist: delayed 2248 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Jul 2008 19:17:06 EDT
-Received: from s5591931c.adsl.wanadoo.nl ([85.145.147.28] helo=[192.168.1.11])
-	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <pdebie@ai.rug.nl>)
-	id 1KNbNL-00040b-Og; Tue, 29 Jul 2008 00:39:31 +0200
-In-Reply-To: <7vk5f5ptwu.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.926)
+	id S1752493AbYG1XY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 19:24:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbYG1XY1
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 19:24:27 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:35321 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752486AbYG1XY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 19:24:27 -0400
+Received: from vmobile.example.net (catv-5062e651.catv.broadband.hu [80.98.230.81])
+	by yugo.frugalware.org (Postfix) with ESMTP id 5BDC81DDC5B;
+	Tue, 29 Jul 2008 01:24:24 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 743EE1AA738; Tue, 29 Jul 2008 01:24:52 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.rc0.14.g95f8.dirty
+In-Reply-To: <7vr69ex00x.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90521>
 
+The supposed method is to build a list of commands to be excluded using
+add_cmdname(), then pass the list as the new exclude parameter. If no
+exclude is needed, NULL should be used.
 
-On 28 jul 2008, at 23:42, Junio C Hamano wrote:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Sun, Jul 27, 2008 at 06:36:30PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> > +   struct cmdname {
+> > +           size_t len;
+> > +           char name[1];
+> > +   } **names;
+> > +};
 >
->> On Sun, 27 Jul 2008, Tom Werner wrote:
->>
->>> I find it a bit confusing that some here seem to have a strong  
->>> dislike
->>> for GitHub. It's true that we haven't been active on the developer  
->>> list
->>> or in the #git channel on freenode, but we are constantly in  
->>> #github and
->>> have answered a *great* many questions from developers that are  
->>> new to
->>> git.
->>
->> Speaking for myself, I will probably direct some users from #git to
->> #github, then.
->
-> I saw more than several times that people asked github specific  
-> questions
-> on #git; when they were lucky, there was somebody who knew github  
-> and they
-> got necessary help.  Otherwise the answer was "eh, sorry, that's a  
-> closed
-> service and we cannot help diagnosing the problem you are having".  It
-> would have been the right way to help them to refer to the #github  
-> support
-> channel.
+> I thought we do this kind of thing using FLEX_ARRAY macro.  Is there
+> any
+> reason its use is not appropriate here?
 
-For what it's worth, I regularly redirect people from #git to #github,  
-so at
-least they aren't always left in the dark ;)
+Now I'm using it. :-)
 
-- Pieter
+Note that FLEX_ARRAY would be a drop-in replacement only in case it
+would be name[0], so I needed
+
+-       struct cmdname *ent = xmalloc(sizeof(*ent) + len);
++       struct cmdname *ent = xmalloc(sizeof(*ent) + len + 1);
+
+later in add_cmdname().
+
+ help.c |   26 +++++++++++---------------
+ help.h |   14 +++++++++++++-
+ 2 files changed, 24 insertions(+), 16 deletions(-)
+
+diff --git a/help.c b/help.c
+index 7a42517..858f76a 100644
+--- a/help.c
++++ b/help.c
+@@ -9,6 +9,7 @@
+ #include "common-cmds.h"
+ #include "parse-options.h"
+ #include "run-command.h"
++#include "help.h"
+ 
+ static struct man_viewer_list {
+ 	struct man_viewer_list *next;
+@@ -300,18 +301,11 @@ static inline void mput_char(char c, unsigned int num)
+ 		putchar(c);
+ }
+ 
+-static struct cmdnames {
+-	int alloc;
+-	int cnt;
+-	struct cmdname {
+-		size_t len;
+-		char name[1];
+-	} **names;
+-} main_cmds, other_cmds;
++struct cmdnames main_cmds, other_cmds;
+ 
+-static void add_cmdname(struct cmdnames *cmds, const char *name, int len)
++void add_cmdname(struct cmdnames *cmds, const char *name, int len)
+ {
+-	struct cmdname *ent = xmalloc(sizeof(*ent) + len);
++	struct cmdname *ent = xmalloc(sizeof(*ent) + len + 1);
+ 
+ 	ent->len = len;
+ 	memcpy(ent->name, name, len);
+@@ -463,7 +457,7 @@ static unsigned int list_commands_in_dir(struct cmdnames *cmds,
+ 	return longest;
+ }
+ 
+-static unsigned int load_command_list(const char *prefix)
++static unsigned int load_command_list(const char *prefix, struct cmdnames *exclude)
+ {
+ 	unsigned int longest = 0;
+ 	unsigned int len;
+@@ -502,13 +496,15 @@ static unsigned int load_command_list(const char *prefix)
+ 	      sizeof(*other_cmds.names), cmdname_compare);
+ 	uniq(&other_cmds);
+ 	exclude_cmds(&other_cmds, &main_cmds);
++	if (exclude)
++		exclude_cmds(&main_cmds, exclude);
+ 
+ 	return longest;
+ }
+ 
+-void list_commands(const char *prefix, const char *title)
++void list_commands(const char *prefix, const char *title, struct cmdnames *exclude)
+ {
+-	unsigned int longest = load_command_list(prefix);
++	unsigned int longest = load_command_list(prefix, exclude);
+ 	const char *exec_path = git_exec_path();
+ 
+ 	if (main_cmds.cnt) {
+@@ -558,7 +554,7 @@ static int is_in_cmdlist(struct cmdnames *c, const char *s)
+ 
+ int is_git_command(const char *s, const char *prefix)
+ {
+-	load_command_list(prefix);
++	load_command_list(prefix, NULL);
+ 	return is_in_cmdlist(&main_cmds, s) ||
+ 		is_in_cmdlist(&other_cmds, s);
+ }
+@@ -704,7 +700,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 
+ 	if (show_all) {
+ 		printf("usage: %s\n\n", git_usage_string);
+-		list_commands("git-", "git commands");
++		list_commands("git-", "git commands", NULL);
+ 		printf("%s\n", git_more_info_string);
+ 		return 0;
+ 	}
+diff --git a/help.h b/help.h
+index 0741662..3eb8cfb 100644
+--- a/help.h
++++ b/help.h
+@@ -1,7 +1,19 @@
+ #ifndef HELP_H
+ #define HELP_H
+ 
++struct cmdnames {
++	int alloc;
++	int cnt;
++	struct cmdname {
++		size_t len;
++		char name[FLEX_ARRAY];
++	} **names;
++};
++
+ int is_git_command(const char *s, const char *prefix);
+-void list_commands(const char *prefix, const char *title);
++void list_commands(const char *prefix, const char *title, struct cmdnames *exclude);
++void add_cmdname(struct cmdnames *cmds, const char *name, int len);
++
++extern struct cmdnames main_cmds, other_cmds;
+ 
+ #endif /* HELP_H */
+-- 
+1.6.0.rc0.14.g95f8.dirty
