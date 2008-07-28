@@ -1,65 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH v2] merge-base: teach "git merge-base" to accept more
- than 2 arguments
-Date: Sun, 27 Jul 2008 23:18:51 -0700
-Message-ID: <7vej5ev8dw.fsf@gitster.siamese.dyndns.org>
-References: <20080727053324.b54fe48e.chriscool@tuxfamily.org>
- <7vabg43pcp.fsf@gitster.siamese.dyndns.org>
- <200807280810.20922.chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/9] Makefile: Do not install a copy of 'git' in
+ $(gitexecdir)
+Date: Sun, 27 Jul 2008 23:24:59 -0700
+Message-ID: <7vabg2v83o.fsf@gitster.siamese.dyndns.org>
+References: <1216667998-8879-1-git-send-email-johannes.sixt@telecom.at>
+ <1216667998-8879-2-git-send-email-johannes.sixt@telecom.at>
+ <488D104F.8080005@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Miklos Vajna <vmiklos@frugalware.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Jul 28 08:20:06 2008
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: gitzilla@gmail.com
+X-From: git-owner@vger.kernel.org Mon Jul 28 08:26:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNM5S-0007ZA-Hu
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 08:20:02 +0200
+	id 1KNMBU-0000f7-Ul
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 08:26:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751477AbYG1GTB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 02:19:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751237AbYG1GTB
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 02:19:01 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56023 "EHLO
+	id S1751485AbYG1GZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 02:25:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751003AbYG1GZH
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 02:25:07 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56933 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750726AbYG1GTB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 02:19:01 -0400
+	with ESMTP id S1750726AbYG1GZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 02:25:06 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1C093469B5;
-	Mon, 28 Jul 2008 02:18:58 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D2A0046A3E;
+	Mon, 28 Jul 2008 02:25:04 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 68DE9469B4; Mon, 28 Jul 2008 02:18:53 -0400 (EDT)
-In-Reply-To: <200807280810.20922.chriscool@tuxfamily.org> (Christian Couder's
- message of "Mon, 28 Jul 2008 08:10:20 +0200")
+ ESMTPSA id 3D15446A3D; Mon, 28 Jul 2008 02:25:01 -0400 (EDT)
+In-Reply-To: <488D104F.8080005@gmail.com> (A. Large Angry's message of "Sun,
+ 27 Jul 2008 20:18:23 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 10064ABA-5C6D-11DD-9A7A-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: EA9F938E-5C6D-11DD-8F4F-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90417>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+A Large Angry SCM <gitzilla@gmail.com> writes:
 
-> Yeah, but what is quite confusing I think is that a merge base seems to be 
-> defined as "an as good as possible _common_ ancestor" but in this case, the 
-> result of "git merge-base A B C" is not an ancestor of C (even with --all 
-> option). So perhaps we need a better definition.
+> Johannes Sixt wrote:
+> [...]
+>>
+>> diff --git a/Makefile b/Makefile
+>> index 551bde9..cbab4f9 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -1335,6 +1335,7 @@ endif
+>>  			'$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X'; \
+>>  	fi
+>>  	$(foreach p,$(BUILT_INS), $(RM) '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' && ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X' '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' ;)
+>> +	$(RM) '$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X'
+>>  ifneq (,$X)
+>>  	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), $(RM) '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p';)
+>>  endif
+>
+> This new action needs to be in a conditional to keep it from removing
+> the ONLY git executable when bindir and execdir are the same dir.
 
-See my other message.  "git merge-base A B C" is not the best common
-ancestors across A B and C.  It is the best common ancestors between A and
-a commit that is a merge between B and C.
-
-By defining/explaining it that way, you can avoid the "Huh, are you
-talking about OR or AND" question you would inevitably get when you say
-"Common ancestor of A and B or A and C".  Also in "git merge-base A B C",
-A is fundamentally different from any other commit; a commit being (or not
-being) common between A and B (or A and C) is what we care about a lot,
-but a commit being (or not being) common between B and C does not matter
-in this computation.
+Heh, I love bug reports that come immediately after I tag the tip of
+'master' as -rc1.
