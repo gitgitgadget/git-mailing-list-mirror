@@ -1,83 +1,84 @@
-From: =?windows-1250?Q?Jurko_Gospodneti=E6?= <jurko.gospodnetic@docte.hr>
-Subject: Branch renaming not updating the configuration correctly.
-Date: Mon, 28 Jul 2008 15:36:09 +0200
-Message-ID: <g6ki09$81c$1@ger.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Branch renaming not updating the configuration correctly.
+Date: Mon, 28 Jul 2008 14:49:28 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807281445340.8986@racer>
+References: <g6ki09$81c$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1250;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 28 15:37:22 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-159937321-1217252969=:8986"
+Cc: git@vger.kernel.org
+To: =?ISO-8859-2?Q?Jurko_Gospodneti=E6?= <jurko.gospodnetic@docte.hr>
+X-From: git-owner@vger.kernel.org Mon Jul 28 15:50:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNSug-0004Vn-4H
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 15:37:22 +0200
+	id 1KNT7P-0001Hk-Tb
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 15:50:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751039AbYG1NgV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2008 09:36:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751003AbYG1NgV
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 09:36:21 -0400
-Received: from main.gmane.org ([80.91.229.2]:45797 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750867AbYG1NgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 09:36:20 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KNSte-0003AQ-JA
-	for git@vger.kernel.org; Mon, 28 Jul 2008 13:36:18 +0000
-Received: from 87.252.133.29 ([87.252.133.29])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 28 Jul 2008 13:36:18 +0000
-Received: from jurko.gospodnetic by 87.252.133.29 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 28 Jul 2008 13:36:18 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 87.252.133.29
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+	id S1751318AbYG1Ntb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 09:49:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750982AbYG1Ntb
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 09:49:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41596 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750823AbYG1Nta (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 09:49:30 -0400
+Received: (qmail invoked by alias); 28 Jul 2008 13:49:29 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp032) with SMTP; 28 Jul 2008 15:49:29 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18hiLJ3HDQhYCLTuANJsYnlvL8oICz588anV0+ZaO
+	6RdywTQrIfOAUM
+X-X-Sender: gene099@racer
+In-Reply-To: <g6ki09$81c$1@ger.gmane.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90459>
 
-   Hi.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-   I noticed that the .git/config file is not updated completely in cas=
-e=20
-you create two branches aaa and bbb, set the repository up so it=20
-automatically merges changes from bbb into aaa and then rename the bran=
-ches:
+--8323329-159937321-1217252969=:8986
+Content-Type: TEXT/PLAIN; charset=windows-1250
+Content-Transfer-Encoding: 8BIT
 
-   Here is an exact list of commands and config file contents=20
-illustrating the problem:
+Hi,
 
-   > git branch aaa
-   > git branch bbb
-   > git config --add branch.aaa.remote .
-   > git config --add branch.aaa.merge bbb
+On Mon, 28 Jul 2008, Jurko Gospodnetiæ wrote:
 
--- .git/config: --
-[branch "aaa"]
-	remote =3D .
-	merge =3D bbb
-------------------
+> -- .git/config: --
+> [branch "aaa"]
+> 	remote = .
+> 	merge = bbb
+> ------------------
+> 
+>   > git branch -m aaa patched
+>   > git branch -m bbb original
+> 
+> -- .git/config: --
+> [branch "patched"]
+> 	remote = .
+> 	merge = bbb
+> ------------------
+> 
+> And as you can see above, the branch.patched.merge configuration setting 
+> did not get updated and still holds the old branch name 'bbb'.
 
-   > git branch -m aaa patched
-   > git branch -m bbb original
+I deem this not an "important" bug.
 
--- .git/config: --
-[branch "patched"]
-	remote =3D .
-	merge =3D bbb
-------------------
+We usually do not set up tracking information for local branches, and I 
+still do not know valid common scenarios for that workflow.
 
-   And as you can see above, the branch.patched.merge configuration=20
-setting did not get updated and still holds the old branch name 'bbb'.
+But hey, if it really bothers you, and you can come up with a 
+non-intrusive patch (i.e. a patch that does not punish all users that do 
+_not_ set up locally-tracking branches), I am sure it will be welcomed.
 
-   Hope this helps.
+Ciao,
+Dscho
 
-   Best regards,
-     Jurko Gospodneti=E6
+--8323329-159937321-1217252969=:8986--
