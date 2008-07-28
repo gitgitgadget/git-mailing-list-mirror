@@ -1,58 +1,119 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] make sure parsed wildcard refspec ends with slash
-Date: Mon, 28 Jul 2008 01:41:51 -0400
-Message-ID: <20080728054151.GB7294@sigill.intra.peff.net>
-References: <1216854795-51155-1-git-send-email-lee.marlow@gmail.com> <1216858043-53646-1-git-send-email-lee.marlow@gmail.com> <20080725204051.GB23202@spearce.org> <7v1w1hsmnc.fsf@gitster.siamese.dyndns.org> <20080726082405.GA10104@sigill.intra.peff.net> <7vvdysb2na.fsf@gitster.siamese.dyndns.org> <7vsktv3l9k.fsf_-_@gitster.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [RFC/PATCH v2] merge-base: teach "git merge-base" to accept more than 2 arguments
+Date: Mon, 28 Jul 2008 07:49:35 +0200
+Message-ID: <200807280749.35278.chriscool@tuxfamily.org>
+References: <20080727053324.b54fe48e.chriscool@tuxfamily.org> <alpine.DEB.1.00.0807271631470.5526@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 28 07:42:58 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Miklos Vajna <vmiklos@frugalware.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 28 07:46:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNLVV-00086d-PJ
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 07:42:54 +0200
+	id 1KNLZM-0000V0-02
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 07:46:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750894AbYG1Fly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 01:41:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750823AbYG1Fly
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 01:41:54 -0400
-Received: from peff.net ([208.65.91.99]:2512 "EHLO peff.net"
+	id S1751312AbYG1Fpv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2008 01:45:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751062AbYG1Fpv
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 01:45:51 -0400
+Received: from smtp8-g19.free.fr ([212.27.42.65]:43576 "EHLO smtp8-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750726AbYG1Flx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 01:41:53 -0400
-Received: (qmail 29396 invoked by uid 111); 28 Jul 2008 05:41:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 28 Jul 2008 01:41:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Jul 2008 01:41:51 -0400
+	id S1750726AbYG1Fpu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jul 2008 01:45:50 -0400
+Received: from smtp8-g19.free.fr (localhost [127.0.0.1])
+	by smtp8-g19.free.fr (Postfix) with ESMTP id 7242A32A7DC;
+	Mon, 28 Jul 2008 07:45:47 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp8-g19.free.fr (Postfix) with ESMTP id 34A6F32A7CC;
+	Mon, 28 Jul 2008 07:45:47 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0807271631470.5526@eeepc-johanness>
 Content-Disposition: inline
-In-Reply-To: <7vsktv3l9k.fsf_-_@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90407>
 
-On Sat, Jul 26, 2008 at 11:15:51PM -0700, Junio C Hamano wrote:
+Le dimanche 27 juillet 2008, Johannes Schindelin a =E9crit :
+> Hi,
+>
+> On Sun, 27 Jul 2008, Christian Couder wrote:
+> > diff --git a/builtin-merge-base.c b/builtin-merge-base.c
+> > index 1cb2925..f2c9756 100644
+> > --- a/builtin-merge-base.c
+> > +++ b/builtin-merge-base.c
+> > @@ -38,15 +48,22 @@ int cmd_merge_base(int argc, const char **argv,
+> > const char *prefix) usage(merge_base_usage);
+> >  		argc--; argv++;
+> >  	}
+> > -	if (argc !=3D 3)
+> > +	if (argc < 3)
+> >  		usage(merge_base_usage);
+> > -	if (get_sha1(argv[1], rev1key))
+> > -		die("Not a valid object name %s", argv[1]);
+> > -	if (get_sha1(argv[2], rev2key))
+> > -		die("Not a valid object name %s", argv[2]);
+> > -	rev1 =3D lookup_commit_reference(rev1key);
+> > -	rev2 =3D lookup_commit_reference(rev2key);
+> > -	if (!rev1 || !rev2)
+> > +
+> > +	rev1 =3D get_commit_reference(argv[1]);
+> > +	if (!rev1)
+> >  		return 1;
+>
+> Why do you special case rev1?  Is it so special?  Just handle it toge=
+ther
+> with all of the other arguments!
+>
+> IOW have one commit array, and do not call it "prev".
 
-> > I have a nagging suspicion that it might be a simpler and cleaner change
-> > to change parse_refspec_internal() to keep the trailing slash, instead of
-> > dropping it.  Then the check you added is not needed (the trailing slash
-> > guarantees that the pattern matches at the hierarchy boundary), neither
-> > any of the change in this patch.
-> 
-> This is the other variant, and it turns out that I was right.  Among the
-> 64-18 = 46 new lines, 30 are from the new test file.  Two existing
-> "matching part is followed by '/'" tests are removed.
+Ok, I have done that in v3.
 
-Looks like you have already applied it, but I will chime in that of the
-two, I think this is the more sensible change. Stripping the '/' felt
-like a loss of information to me. IIRC, when "support only /*" was
-discussed, the thinking was "let's keep it tight now, and we can loosen
-it later." Keeping the '/' means that the code is much more sane if
-other globbing rules come in the future.
+> > -	return show_merge_base(rev1, rev2, show_all);
+> > +	argc--; argv++;
+> > +
+> > +	do {
+> > +		struct commit *rev2 =3D get_commit_reference(argv[1]);
+> > +		if (!rev2)
+> > +			return 1;
+> > +		ALLOC_GROW(prev2, prev2_nr + 1, prev2_alloc);
+> > +		prev2[prev2_nr++] =3D rev2;
+> > +		argc--; argv++;
+> > +	} while (argc > 1);
+>
+> Now, this is ugly.  You know beforehand the _exact_ number of argumen=
+ts,
+> and yet you dynamically grow the array?
 
--Peff
+You are right. I guess I dealt too much with complex parsing of argumen=
+ts=20
+where you can have options everywhere, and perhaps I also felt somewhat=
+=20
+guilty for not having used ALLOC_GROW before, or something.
+
+> Also, why do you use a do { }=20
+> while(), when a for () would be much, much clearer?
+
+Well, we already know that there are at least 2 commits to parse, so it=
+=20
+feels a little bit wastefull to check first again. Also the code to par=
+se=20
+the [--all|-a] option before use a while loop with "argc--; argv++;" at=
+ the=20
+end, so I think it is more coherent like that.
+
+Thanks,
+Christian.
+
+> BTW I seem to recall that get_merge_bases_many() was _not_ the same a=
+s
+> get_merge_octopus().  Could you please remind me what _many() does?
+>
+> Ciao,
+> Dscho
