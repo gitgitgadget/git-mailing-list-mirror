@@ -1,74 +1,71 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: theirs/ours was Re: [PATCH 6/6] Add a new test for using a custom
- merge strategy
-Date: Mon, 28 Jul 2008 20:09:55 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807282008470.8986@racer>
-References: <bd6139dc0807280754x76b6ffedg6bf756dfce23f1e3@mail.gmail.com> <20080728185604.GA26322@sigill.intra.peff.net>
+Subject: Re: short log and email address
+Date: Mon, 28 Jul 2008 20:11:40 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0807282010190.8986@racer>
+References: <9e4733910807281106y56f8b67ao86f78822c4b4ad58@mail.gmail.com>  <alpine.DEB.1.00.0807281928400.8986@racer> <9e4733910807281157u44c08a59ld3bdc0416e8a1d03@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: sverre@rabbelier.nl, Git Mailinglist <git@vger.kernel.org>,
-	Miklos Vajna <vmiklos@frugalware.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 28 21:11:11 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 28 21:12:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNY7Y-0000tS-0O
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 21:11:00 +0200
+	id 1KNY9C-0001YE-Si
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 21:12:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751863AbYG1TJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 15:09:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751858AbYG1TJ5
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 15:09:57 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45494 "HELO mail.gmx.net"
+	id S1751987AbYG1TLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 15:11:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751897AbYG1TLm
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 15:11:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35285 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751158AbYG1TJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 15:09:56 -0400
-Received: (qmail invoked by alias); 28 Jul 2008 19:09:55 -0000
+	id S1751893AbYG1TLl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 15:11:41 -0400
+Received: (qmail invoked by alias); 28 Jul 2008 19:11:40 -0000
 Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp054) with SMTP; 28 Jul 2008 21:09:55 +0200
+  by mail.gmx.net (mp067) with SMTP; 28 Jul 2008 21:11:40 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18vj4FpfmUvQ4dxl0/CRtp2CtHW/CRFN6Ap4uJ/5k
-	GwUkoIRM8mr2Mh
+X-Provags-ID: V01U2FsdGVkX1/BUvQOu8vB9g9hNvLaJVEasofkm6n089TAEqJMho
+	VYa39hBsSPMBax
 X-X-Sender: gene099@racer
-In-Reply-To: <20080728185604.GA26322@sigill.intra.peff.net>
+In-Reply-To: <9e4733910807281157u44c08a59ld3bdc0416e8a1d03@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90488>
 
 Hi,
 
-On Mon, 28 Jul 2008, Jeff King wrote:
+On Mon, 28 Jul 2008, Jon Smirl wrote:
 
-> On Mon, Jul 28, 2008 at 04:54:17PM +0200, Sverre Rabbelier wrote:
+> On 7/28/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> >  On Mon, 28 Jul 2008, Jon Smirl wrote:
+> >
+> >  > Using the -e option in shortlog changes the results by spitting 
+> >  > things out by email address instead of leaving them combined by 
+> >  > name. That's probably not what you want. Instead you want 
+> >  > everything combined by name and then display the most recent email 
+> >  > address used.
+> >
+> > What is so wrong with _not_ using -e (since you do not want to see the 
+> > email address stored in the commit message, and -e would be asking for 
+> > that _exactly_)?
 > 
-> > Thus resulting in a 'wrong way around' merge as part of master? It
-> > would say "Merge branch 'master' into otherbranch", while what
-> > happened was "Merge branch 'otherbranch' into master".
-> > 
-> > So, in short: what does the list think about adding
-> > "git-merge-theirs", that does (although possibly less 'hackish'):
-> > 
-> > cat > git-merge-theirs << EOF
-> > #!/bin/sh
-> > eval git read-tree --reset -u \\\$\$#
-> > EOF
-> 
-> I ran into this exact situation while showing somebody how awesome git
-> was, and it was a little embarrasing to say "oops, now we have to do
-> this backwards."
+> I wanted -e to give me the most recent email so that I would know how
+> to sort the mailmap alias list.
 
-Well, I have to say that the workflow is a bit backwards if the person who 
-_publishes_ the thing is the one saying "Ooops, my version no goodie, 
-other version please, but so that pull still works".
+As I explained, that is not what -e is _supposed_ to do.  In Git, content 
+is king, and as such -e should look at the content.  Unsurprisingly, that 
+is exactly what it does.
 
-I would have expected the one who has the good version to make the choice.
+Nothing prohibits you from post-processing the output, though.
 
 Ciao,
 Dscho
