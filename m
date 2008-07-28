@@ -1,83 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCHv2] git-mv: Keep moved index entries inact
-Date: Mon, 28 Jul 2008 16:14:15 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0807281610270.8986@racer>
-References: <20080721002354.GK10151@machine.or.cz> <20080721002508.26773.92277.stgit@localhost> <7v8wvpm9cl.fsf@gitster.siamese.dyndns.org> <20080728142023.GC6701@neumann> <alpine.DEB.1.00.0807281605330.8986@racer>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: q: git-fetch a tad slow?
+Date: Mon, 28 Jul 2008 18:01:38 +0200
+Message-ID: <20080728160138.GA12777@elte.hu>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-237692477-1217258056=:8986"
-Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org
-To: =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Jul 28 17:15:35 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 28 18:03:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNURa-0000k2-6y
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 17:15:26 +0200
+	id 1KNVBX-0002Wd-4M
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 18:02:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753407AbYG1POT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 11:14:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752160AbYG1POT
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 11:14:19 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45477 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752722AbYG1POR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 11:14:17 -0400
-Received: (qmail invoked by alias); 28 Jul 2008 15:14:16 -0000
-Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
-  by mail.gmx.net (mp016) with SMTP; 28 Jul 2008 17:14:16 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+q9rYwxwSqot/14J9swkNrn0iPay32oEDyMXQEb3
-	2Q6IOy4j/lg83R
-X-X-Sender: gene099@racer
-In-Reply-To: <alpine.DEB.1.00.0807281605330.8986@racer>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1755442AbYG1QBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 12:01:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755446AbYG1QBy
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 12:01:54 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:53805 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752722AbYG1QBx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 12:01:53 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1KNVAJ-0000Yt-T0
+	from <mingo@elte.hu>
+	for <git@vger.kernel.org>; Mon, 28 Jul 2008 18:01:50 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id A2CD23E21B0; Mon, 28 Jul 2008 18:01:39 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0001]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90467>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-237692477-1217258056=:8986
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+here's another possibly stupid question.
 
-Hi,
+Setup/background: distributed kernel testing cluster, there's a central 
+box with a git repo of the kernel, and lots of of testboxes that track 
+that repo over ssh transport. In each "iteration" a random kernel config 
+is generated, built and booted, and the booted up kernel is checked. 
+Performance of each iteration matters to total testing throughput, so i 
+try to optimize the critical path.
 
-On Mon, 28 Jul 2008, Johannes Schindelin wrote:
+Problem: i noticed that git-fetch is a tad slow:
 
-> On Mon, 28 Jul 2008, SZEDER Gábor wrote:
-> 
-> > there is a race somewhere in these 'git-mv: Keep moved index entries
-> > inact' changes.
-> > 
-> > The test cases 'git mv should overwrite symlink to a file' or 'git mv
-> > should overwrite file with a symlink' fail occasionaly.  It's quite
-> > non-deterministic:  I have run t7001-mv.sh in a loop (see below) and
-> > one or the other usually fails around 50 runs (but sometimes only
-> > after 150).  Adding some tracing echos to the tests shows that both
-> > tests fail when running 'git diff-files' at the end.
-> 
-> To make it more convenient to test: with this patch it fails all the time:
+  titan:~/tip> time git-fetch
+ 
+  real    0m2.372s
+  user    0m0.814s
+  sys     0m0.951s
 
-Ooops.  Seems like I changed the test 23 to fail, instead of test 24.  
-However, I think it is the same bug: the index is newer by one second, so 
-it seems that the patch for builtin-mv.c did not really keep the data 
-"intact".
+There are hundreds of branches, so i thought fetching a single branch 
+alone would improve things:
 
-Note that a test case should use test-chmtime to force this scenario, not 
-sleep a second.
+  titan:~/tip> time git-fetch origin master
 
-Unfortunately, I already spent my Git time budget for today, so the ball 
-is out of my half for now.
+  real    0m0.942s
+  user    0m0.285s
+  sys     0m0.109s
 
-Ciao,
-Dscho
+But that's still slow - so i use a (lame) ad-hoc script instead:
 
---8323329-237692477-1217258056=:8986--
+  titan:~/tip> time tip-fetch
+
+  real    0m0.246s
+  user    0m0.024s
+  sys     0m0.019s
+
+... which ssh's to the repo to check tip/master by hand:
+
+  HEAD=$(git-log -1 --pretty=format:"%H" HEAD)
+  RHEAD=$(ssh server "cd tip; git-log master -1 --pretty=format:'%H'")
+  [ "$RHEAD" != "$HEAD" ] && {
+    [...]
+  }
+
+... which script is lame/expensive on multiple levels but still is much 
+faster.
+
+I'm wondering, am i missing something obvious? It seems most of the 
+overhead is local CPU overhead, so it's something in Git's domain and 
+not the expense of the ssh protocol. (which expense should be about 200 
+msecs)
+
+	Ingo
