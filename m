@@ -1,132 +1,157 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] init: handle empty "template" parameter, was Re: fetch
-	refspec foo/* matches foo*
-Date: Mon, 28 Jul 2008 02:02:04 -0400
-Message-ID: <20080728060204.GC7294@sigill.intra.peff.net>
-References: <1216854795-51155-1-git-send-email-lee.marlow@gmail.com> <1216858043-53646-1-git-send-email-lee.marlow@gmail.com> <20080725204051.GB23202@spearce.org> <7v1w1hsmnc.fsf@gitster.siamese.dyndns.org> <20080726082405.GA10104@sigill.intra.peff.net> <20080726083356.GB10104@sigill.intra.peff.net> <alpine.DEB.1.00.0807261511490.26810@eeepc-johanness>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [RFC/PATCH v2] merge-base: teach "git merge-base" to accept more than 2 arguments
+Date: Mon, 28 Jul 2008 08:10:20 +0200
+Message-ID: <200807280810.20922.chriscool@tuxfamily.org>
+References: <20080727053324.b54fe48e.chriscool@tuxfamily.org> <7vabg43pcp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 28 08:03:25 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Miklos Vajna <vmiklos@frugalware.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 28 08:07:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNLpL-0003as-Tz
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 08:03:24 +0200
+	id 1KNLtR-0004TW-EL
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 08:07:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072AbYG1GCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 02:02:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751933AbYG1GCJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 02:02:09 -0400
-Received: from peff.net ([208.65.91.99]:3191 "EHLO peff.net"
+	id S1751440AbYG1GGh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2008 02:06:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751247AbYG1GGh
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 02:06:37 -0400
+Received: from smtp7-g19.free.fr ([212.27.42.64]:44916 "EHLO smtp7-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751857AbYG1GCI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 02:02:08 -0400
-Received: (qmail 29540 invoked by uid 111); 28 Jul 2008 06:02:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 28 Jul 2008 02:02:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Jul 2008 02:02:04 -0400
+	id S1750726AbYG1GGg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jul 2008 02:06:36 -0400
+X-Greylist: delayed 90004 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Jul 2008 02:06:36 EDT
+Received: from smtp7-g19.free.fr (localhost [127.0.0.1])
+	by smtp7-g19.free.fr (Postfix) with ESMTP id CED0EB0194;
+	Mon, 28 Jul 2008 08:06:32 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp7-g19.free.fr (Postfix) with ESMTP id 993EFB0159;
+	Mon, 28 Jul 2008 08:06:32 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vabg43pcp.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807261511490.26810@eeepc-johanness>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90413>
 
-On Sat, Jul 26, 2008 at 03:13:26PM +0200, Johannes Schindelin wrote:
+Le dimanche 27 juillet 2008, Junio C Hamano a =E9crit :
+>
+> The point of merge_bases_many() is that it allows you to compute a me=
+rge
+> base between a commit and another commit that does not yet exist whic=
+h is
+> a merge across all others.
+>
+>                o---o---o---o---C
+>               /                 :
+>              /   o---o---o---B..(M)
+>             /   /                 :
+> 	---o---*---o---o---o---A..(X)
+>
+> Suppose you have commits A, B and C, and you would want to come up wi=
+th
+> an Octopus merge X across these three commits.  Because our low-level
+> merge machinery works always on two trees with one common ancestor tr=
+ee,
+> we would first create a tree that is a merge between B and C (which i=
+s
+> marked as (M) in the picture), and then merge the tree of (M) and A u=
+sing
+> common ancestor between (M) and A.
+>
+> If we did not have merge_bases_many(), we would actually create (M) a=
+s a
+> real commit, and compute merge base between A and (M), which is marke=
+d as
+> "*" in the picture.  The use of merge_bases_many() allows us to run t=
+he
+> same merge base computation without actually creating commit (M).=20
+> Instead of computing merge-base between A and (M), you can ask for th=
+e
+> merge base between A ("the first commit") and B, C ("the other commit=
+s")
+> to obtain the same answer "*".
 
-> > Also, while I have your attention, Junio, here is another bug fix
-> > that should go into 1.6.0. I posted the patch as a "how about this" deep
-> > in a thread and got no response (which means no complaints, right?).
-> 
-> Again it is in a thread...
+Yeah, but what is quite confusing I think is that a merge base seems to=
+ be=20
+defined as "an as good as possible _common_ ancestor" but in this case,=
+ the=20
+result of "git merge-base A B C" is not an ancestor of C (even with --a=
+ll=20
+option). So perhaps we need a better definition.
 
-Heh. Point taken.
+> Base between A and B is that "*", and you are correct to say that it =
+is
+> an ancestor of the "*" that is output from the command; base between =
+A
+> and C is the parent of "*", and again you are correct to say it is
+> ancestor of the "*" that is output from the command.
+>
+> But if we output any other commit between "*" and A from the command,=
+ it
+> still satisifies your condition.  "The merge base between A and each =
+of
+> B, C,... should be an ancestor of what is output".  In order to satis=
+ify
+> your condition, in the extreme case, we could even output A.  Both th=
+e
+> merge base between A and B, and the merge base between A and C, would=
+ be
+> an ancestor of A.
+>
+> So your description may not be incorrect, but I think it completely
+> misses the point of what is being computed.
+>
+> >  Author
+> >  ------
+> > diff --git a/builtin-merge-base.c b/builtin-merge-base.c
+> > index 1cb2925..f2c9756 100644
+> > --- a/builtin-merge-base.c
+> > +++ b/builtin-merge-base.c
+> > @@ -2,9 +2,11 @@
+> >  #include "cache.h"
+> >  #include "commit.h"
+> >
+> > -static int show_merge_base(struct commit *rev1, struct commit *rev=
+2,
+> > int show_all) +static int show_merge_base(struct commit *rev1, int
+> > prev2_nr, +			   struct commit **prev2, int show_all)
+> >  {
+> > -	struct commit_list *result =3D get_merge_bases(rev1, rev2, 0);
+> > +	struct commit_list *result =3D get_merge_bases_many(rev1, prev2_n=
+r,
+> > +							  prev2, 0);
+>
+> This is just style, but if you must break lines somewhere, I'd prefer=
+ to
+> have prev2_nr and prev2 on the same line, like this:
+>
+> 	struct commit_list *result =3D get_merge_bases_many(rev1,
+> 							  prev2_nr, prev2, 0);
+>
+> because they logically belong to each other.  Further, I think this
+> 84-column single-line statement is perfectly fine as well in this cas=
+e:
+>
+> 	struct commit_list *result =3D get_merge_bases_many(rev1, prev2_nr, =
+prev2,
+> 0);
+>
+> I would probably do this myself in this case, though:
+>
+> 	struct commit_list *result;
+>
+> 	result  =3D get_merge_bases_many(rev1, prev2_nr, prev2, 0);
 
-My meaning was "you, Junio, did not see this because it was in another
-thread, so I am pointing it out to you" but the irony of the rest of the
-statement was lost on me during the original writing.
+I used that in v3.
 
-> I deem this patch obviously correct, and your reasoning as to what an 
-> empty parameter should mean makes sense.
-
-Thank you for reviewing, anyway. ;)
-
-Here is a re-post with a test for the new behavior added in (and an
-extra test just to make sure --template works at all. It does get used
-by test-lib, so we were implicitly checking it to some degree, but it's
-entirely possible that it could fail and the tests wouldn't necessarily
-notice (e.g., if it accidentally used an installed set of templates
-instead)).
-
--- >8 --
-init: handle empty "template" parameter
-
-If a user passes "--template=", then our template parameter
-is blank. Unfortunately, copy_templates() assumes it has at
-least one character, and does all sorts of bad things like
-reading from template[-1] and then proceeding to link all of
-'/' into the .git directory.
-
-This patch just checks for that condition in copy_templates
-and aborts. As a side effect, this means that --template=
-now has the meaning "don't copy any templates."
----
- builtin-init-db.c |    2 ++
- t/t0001-init.sh   |   26 ++++++++++++++++++++++++++
- 2 files changed, 28 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index 38b4fcb..baf0d09 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -117,6 +117,8 @@ static void copy_templates(const char *template_dir)
- 		template_dir = getenv(TEMPLATE_DIR_ENVIRONMENT);
- 	if (!template_dir)
- 		template_dir = system_path(DEFAULT_GIT_TEMPLATE_DIR);
-+	if (!template_dir[0])
-+		return;
- 	strcpy(template_path, template_dir);
- 	template_len = strlen(template_path);
- 	if (template_path[template_len-1] != '/') {
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 2a38d98..620da5b 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -141,4 +141,30 @@ test_expect_success 'reinit' '
- 	test_cmp again/empty again/err2
- '
- 
-+test_expect_success 'init with --template' '
-+	mkdir template-source &&
-+	echo content >template-source/file &&
-+	(
-+		mkdir template-custom &&
-+		cd template-custom &&
-+		git init --template=../template-source
-+	) &&
-+	test_cmp template-source/file template-custom/.git/file
-+'
-+
-+test_expect_success 'init with --template (blank)' '
-+	(
-+		mkdir template-plain &&
-+		cd template-plain &&
-+		git init
-+	) &&
-+	test -f template-plain/.git/info/exclude &&
-+	(
-+		mkdir template-blank &&
-+		cd template-blank &&
-+		git init --template=
-+	) &&
-+	! test -f template-blank/.git/info/exclude
-+'
-+
- test_done
--- 
-1.6.0.rc1.155.gd3310
+Thanks,
+Christian.
