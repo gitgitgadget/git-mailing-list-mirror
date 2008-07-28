@@ -1,68 +1,77 @@
-From: Steve Haslam <shaslam@lastminute.com>
-Subject: Re: [PATCH] Remove references to git-fetch-pack from "git clone"
-    documentation.
-Date: Mon, 28 Jul 2008 13:32:50 +0100
-Message-ID: <488DBC72.8040204@lastminute.com>
-References: <1217011068-1675-1-git-send-email-shaslam@lastminute.com> <alpine.DEB.1.00.0807260523520.26810@eeepc-johanness>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Adding custom hooks to a bare repository.
+Date: Mon, 28 Jul 2008 14:40:19 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807281438220.2725@eeepc-johanness>
+References: <18071eea0807280404w3365748cjcd11f536bf5d27eb@mail.gmail.com>  <alpine.DEB.1.00.0807281324350.2725@eeepc-johanness> <18071eea0807280532l69d12e3ehb8377da9d24e035@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 28 14:34:05 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git mailing list <git@vger.kernel.org>
+To: Thomas Adam <thomas.adam22@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 28 14:40:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNRvO-00083V-Gb
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 14:34:02 +0200
+	id 1KNS1O-0001hG-V5
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 14:40:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751224AbYG1MdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 08:33:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbYG1MdB
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 08:33:01 -0400
-Received: from sglonmg02-out.sabre.com ([151.193.120.24]:21539 "EHLO
-	sglonmg02-out.sabre.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751224AbYG1MdB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 08:33:01 -0400
-X-ExtLoop1: From 10.136.85.54
-X-IronPort-AV: E=Sophos;i="4.31,265,1215385200"; 
-   d="scan'208";a="1124800056"
-Received: from unknown (HELO sglonbh01.Global.ad.sabre.com) ([10.136.85.54])
-  by sglonmg02-out.sabre.com with ESMTP; 28 Jul 2008 13:33:00 +0100
-Received: from sglonms02.Global.ad.sabre.com ([10.136.85.20]) by sglonbh01.Global.ad.sabre.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 28 Jul 2008 13:32:59 +0100
-Received: from [10.104.41.28] ([10.104.41.28]) by sglonms02.Global.ad.sabre.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 28 Jul 2008 13:32:58 +0100
-User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <alpine.DEB.1.00.0807260523520.26810@eeepc-johanness>
-X-OriginalArrivalTime: 28 Jul 2008 12:32:58.0374 (UTC) FILETIME=[11354A60:01C8F0AE]
+	id S1752654AbYG1MjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 08:39:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752284AbYG1MjO
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 08:39:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52431 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751816AbYG1MjN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 08:39:13 -0400
+Received: (qmail invoked by alias); 28 Jul 2008 12:39:11 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp057) with SMTP; 28 Jul 2008 14:39:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19p+CUh2vVpSJXsbcFVlfU1S687I0MkZpb4L+JZCI
+	+280zDPlxCUXeZ
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <18071eea0807280532l69d12e3ehb8377da9d24e035@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90452>
 
-Johannes Schindelin wrote:
-> Hi,
+Hi,
+
+On Mon, 28 Jul 2008, Thomas Adam wrote:
+
+> 2008/7/28 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
 >
-> On Fri, 25 Jul 2008, Steve Haslam wrote
->> "git clone" no longer calls "git-fetch-pack",
->>     
->
-> So it calls it internally, avoiding fork() and exec().  But the code is 
-> still git-fetch-pack's.  The difference should be lost on the regular Git 
-> user.
->   
-Well, I would say that the git-clone command uses code that is also used 
-by the git-fetch-pack command; but as you indicate, this is a minor 
-implementation detail.
+> > Yes.  Hooks, just as the config and reflogs, are supposed to be local 
+> > things.  Rationale being: it is rude, and also insecure, to install 
+> > something that potentially calls other programs without the user 
+> > saying so.
+> 
+> Oh absolutely, I agree with that.
+> 
+> > All you can do is checking in a copy of the hook, and ask your 
+> > users/check in your build system that it is installed.
+> 
+> Hmm -- perhaps I am being unintentionally dense, but I am assuming
+> that when you say "checking in a copy" you mean anywhere other than
+> .git/hooks/ since that isn't tracked by git.  I have no problem with
+> the rationale you've just described -- but it would be handy to add
+> this post-merge hook script into hooks/ (exec bit removed) such that
+> on a clone, all one would need to do is chmod +x it.   If that's
+> possible, I'm clearly missing the steps to enable this.
 
-I think that the documentation was perhaps too explicit and as a result 
-stale: git-clone certainly does not work any more by creating a 
-"--exec=..." argument to pass to the git-fetch-pack command even 
-internally, it calls code in transport.c. As you say, the difference is 
-immaterial to most users, and a simplified version of the documentation 
-should be adequate (and possibly clearer).
+No, as you said, anything in .git/ is not meant to be tracked.  Besides, 
+if a user would change the executable bit (as advised), Git would always 
+show this file as modified, making the tree permanently dirty (or worse, 
+it could be accidentally be committed as executable).
 
-SRH
+For all those reasons, it is better to just commit an executable script in 
+your <toplevel>/githooks/post-merge and ask your users to copy it to 
+.git/hooks/.
+
+Hth,
+Dscho
