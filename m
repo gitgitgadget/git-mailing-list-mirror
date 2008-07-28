@@ -1,75 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] builtin-verify-tag: fix -v option parsing
-Date: Mon, 28 Jul 2008 14:10:22 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807281408270.2725@eeepc-johanness>
-References: <1216849332-26813-1-git-send-email-barra_cuda@katamail.com> <1216849332-26813-2-git-send-email-barra_cuda@katamail.com> <4888B4E3.9000504@free.fr> <alpine.DEB.1.00.0807241807550.8986@racer> <4889EF22.6020604@free.fr> <488DA40C.8020400@free.fr>
- <alpine.DEB.1.00.0807281306090.2725@eeepc-johanness> <488DB0BD.2060406@free.fr>
+From: "Thomas Adam" <thomas.adam22@gmail.com>
+Subject: Re: Adding custom hooks to a bare repository.
+Date: Mon, 28 Jul 2008 13:32:19 +0100
+Message-ID: <18071eea0807280532l69d12e3ehb8377da9d24e035@mail.gmail.com>
+References: <18071eea0807280404w3365748cjcd11f536bf5d27eb@mail.gmail.com>
+	 <alpine.DEB.1.00.0807281324350.2725@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="658432-302588541-1217247023=:2725"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michele Ballabio <barra_cuda@katamail.com>, git@vger.kernel.org
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Mon Jul 28 14:10:20 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "git mailing list" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 28 14:33:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNRYP-0000W2-RK
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 14:10:18 +0200
+	id 1KNRui-0007qz-Q3
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 14:33:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751860AbYG1MJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 08:09:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751839AbYG1MJQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 08:09:16 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54732 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751496AbYG1MJQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 08:09:16 -0400
-Received: (qmail invoked by alias); 28 Jul 2008 12:09:14 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp047) with SMTP; 28 Jul 2008 14:09:14 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/MYehQUVPMVYgi3xjh0D2iE1U6mmoqcDO33vPZy4
-	RdvAIEJ7CKXAR0
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <488DB0BD.2060406@free.fr>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1751032AbYG1McU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 08:32:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751012AbYG1McU
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 08:32:20 -0400
+Received: from wf-out-1314.google.com ([209.85.200.174]:11132 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750838AbYG1McT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 08:32:19 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so5707408wfd.4
+        for <git@vger.kernel.org>; Mon, 28 Jul 2008 05:32:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Zj/F8XEZ6ZNVlxztgXegB6ME78upZvV/2j1VFZvUseo=;
+        b=xCnz+0sPFwHqAaCvS2XEgNkJZnyVV2VpZqn7jH/OY2W6vjhnMw1RuFTYoKpZImHOMX
+         1d0v3vibpcPy3mRbewvPu3Inyq9y3bsv7H1chxh54Kgz6GVGKAF15fqfAjabq11N+sqN
+         T3fvmbzdk/z3gxivF4armMMqilJUufv1d8XbA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=AZzLOPfpO9c9KruUhx7xfmffA9AGkbtUvxI5WdJ5GaQXCgJ0rKIU6dTxBwS9viDoGJ
+         ehspiH89Bo+QKv69mjF9Qz/HWVY5oVWg3er3AvLkM4yRi5Z2wkkZuuNq3VRT8E6D6+LZ
+         0lKbxHAEEoaFMnCXGNPvxaxkDLZQyKWVOkwq8=
+Received: by 10.142.78.10 with SMTP id a10mr1584253wfb.37.1217248339172;
+        Mon, 28 Jul 2008 05:32:19 -0700 (PDT)
+Received: by 10.142.104.15 with HTTP; Mon, 28 Jul 2008 05:32:19 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0807281324350.2725@eeepc-johanness>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90450>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+2008/7/28 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Yes.  Hooks, just as the config and reflogs, are supposed to be local
+> things.  Rationale being: it is rude, and also insecure, to install
+> something that potentially calls other programs without the user saying
+> so.
 
---658432-302588541-1217247023=:2725
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+Oh absolutely, I agree with that.
 
-Hi,
+> All you can do is checking in a copy of the hook, and ask your users/check
+> in your build system that it is installed.
 
-On Mon, 28 Jul 2008, Olivier Marin wrote:
+Hmm -- perhaps I am being unintentionally dense, but I am assuming
+that when you say "checking in a copy" you mean anywhere other than
+.git/hooks/ since that isn't tracked by git.  I have no problem with
+the rationale you've just described -- but it would be handy to add
+this post-merge hook script into hooks/ (exec bit removed) such that
+on a clone, all one would need to do is chmod +x it.   If that's
+possible, I'm clearly missing the steps to enable this.
 
-> Johannes Schindelin a écrit :
-> >>
-> >> Since the C rewrite, "git verify-tag -v" just does nothing instead of 
-> >> printing the usage message with an error. This patch fix the 
-> >> regression.
-> > 
-> > Maybe a better solution would be to convert (trivially) to 
-> > parse-options...
-> 
-> I am very puzzled.
-> 
-> You first asked me to do a separate commit with just the fix and now you 
-> seem to want the fix with the conversion...
+Thanks,
 
-Sorry.  It was not obvious to myself when I asked for a separate patch 
-that the fix would fall out of the conversion to parse-options.
-
-My fault,
-Dscho
---658432-302588541-1217247023=:2725--
+-- Thomas Adam
