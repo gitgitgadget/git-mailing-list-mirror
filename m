@@ -1,76 +1,64 @@
-From: Roman Zippel <zippel@linux-m68k.org>
-Subject: Re: Bizarre missing changes (git bug?)
-Date: Mon, 28 Jul 2008 03:29:39 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0807280308120.6791@localhost.localdomain>
-References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com> 
- <alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org> 
- <200807260512.40088.zippel@linux-m68k.org> 
- <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org> 
- <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain> 
- <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org> 
- <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain>
- <46a038f90807271625x35c561fdv6dc6b2c312f45fa1@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] builtin-help: make it possible to exclude some
+ commands in list_commands()
+Date: Sun, 27 Jul 2008 18:36:30 -0700
+Message-ID: <7vr69ex00x.fsf@gitster.siamese.dyndns.org>
+References: <cover.1217207602.git.vmiklos@frugalware.org>
+ <fd19583955e9cea5b78a465d23bc127a51940048.1217207602.git.vmiklos@frugalware.org> <5a003a0e20d0942c946680e4eade8e9d19f0036b.1217207602.git.vmiklos@frugalware.org> <9cc2813166c8b20ffb411c3a28ad86665e60033b.1217207602.git.vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 28 03:30:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Mon Jul 28 03:38:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNHZY-0000mP-Qd
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 03:30:49 +0200
+	id 1KNHgy-0002Ru-5S
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 03:38:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750966AbYG1B3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 21:29:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750838AbYG1B3s
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 21:29:48 -0400
-Received: from smtp-vbr12.xs4all.nl ([194.109.24.32]:4151 "EHLO
-	smtp-vbr12.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750736AbYG1B3r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 21:29:47 -0400
-Received: from squid.home (linux-m68k.xs4all.nl [82.95.193.92])
-	(authenticated bits=0)
-	by smtp-vbr12.xs4all.nl (8.13.8/8.13.8) with ESMTP id m6S1TdvV000241
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 28 Jul 2008 03:29:39 +0200 (CEST)
-	(envelope-from zippel@linux-m68k.org)
-X-X-Sender: roman@localhost.localdomain
-In-Reply-To: <46a038f90807271625x35c561fdv6dc6b2c312f45fa1@mail.gmail.com>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1750883AbYG1Bgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 21:36:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750736AbYG1Bgg
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 21:36:36 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42770 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750728AbYG1Bgf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 21:36:35 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D22AD3A8F7;
+	Sun, 27 Jul 2008 21:36:34 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 0C5A23A8F4; Sun, 27 Jul 2008 21:36:31 -0400 (EDT)
+In-Reply-To: <9cc2813166c8b20ffb411c3a28ad86665e60033b.1217207602.git.vmiklos@frugalware.org> (Miklos Vajna's message of "Mon, 28 Jul 2008 03:21:07 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9D0E533A-5C45-11DD-ACD7-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90395>
 
-Hi,
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-On Mon, 28 Jul 2008, Martin Langhoff wrote:
+> diff --git a/help.h b/help.h
+> index 0741662..85d3b74 100644
+> --- a/help.h
+> +++ b/help.h
+> @@ -1,7 +1,19 @@
+>  #ifndef HELP_H
+>  #define HELP_H
+>  
+> +struct cmdnames {
+> +	int alloc;
+> +	int cnt;
+> +	struct cmdname {
+> +		size_t len;
+> +		char name[1];
+> +	} **names;
+> +};
 
-> On Mon, Jul 28, 2008 at 11:14 AM, Roman Zippel <zippel@linux-m68k.org> wrote:
-> > Why are you dismissing what I wrote without even giving it a second
-> > thought? I didn't bother with the initial example, because it's so
-> > simple, that it's no real challenge.
-> 
-> I can't speak for anyone else, but you do have to keep in mind that a
-> solution to this has to be rather fast - and I mean fast in git terms,
-> not in scripting-language-fast terms.
-
-You also have to keep in mind, that I haven't really hacked git before, so 
-I'm just trying to do something with the data I can somehow extract from 
-it. I seriously didn't thought that anyone wouldn't understand that the 
-code example was just a proof of concept.
-
-> That you can do it Ruby - and I may be able to do it Perl - has little
-> bearing on what can be done inside the git log machinery with a small
-> performance penalty.
-
-It also has to do with correctness, is performance more important than 
-correctness? 
-Part of the problem is, what is the correct history, as which it should be 
-displayed via the various interfaces by default.
-
-bye, Roman
+I thought we do this kind of thing using FLEX_ARRAY macro.  Is there any
+reason its use is not appropriate here?
