@@ -1,105 +1,126 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCHv2] git-mv: Keep moved index entries inact
-Date: Tue, 29 Jul 2008 01:41:00 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807290137370.2725@eeepc-johanness>
-References: <20080721002354.GK10151@machine.or.cz> <20080721002508.26773.92277.stgit@localhost> <7v8wvpm9cl.fsf@gitster.siamese.dyndns.org> <20080728142023.GC6701@neumann> <alpine.DEB.1.00.0807281605330.8986@racer>
- <7vwsj5rf48.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="658432-1870608718-1217288462=:2725"
-Cc: =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 01:40:56 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] builtin-merge: allow using a custom strategy
+Date: Tue, 29 Jul 2008 01:48:28 +0200
+Message-ID: <1217288908-21124-1-git-send-email-vmiklos@frugalware.org>
+References: <alpine.DEB.1.00.0807281505010.2725@eeepc-johanness>
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 29 01:49:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNcKk-0004bI-Ie
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 01:40:55 +0200
+	id 1KNcSe-0006dq-6x
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 01:49:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752399AbYG1Xjz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 19:39:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752334AbYG1Xjy
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 19:39:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42429 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752113AbYG1Xjx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 19:39:53 -0400
-Received: (qmail invoked by alias); 28 Jul 2008 23:39:51 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp045) with SMTP; 29 Jul 2008 01:39:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18GUi5JkhAGVmK66AeE6pavSeNEL0On4IWGTrdkrN
-	x4BWuAxu8sHj1k
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7vwsj5rf48.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.46
+	id S1751732AbYG1XsE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 19:48:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751716AbYG1XsD
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 19:48:03 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:51705 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751691AbYG1XsB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 19:48:01 -0400
+Received: from vmobile.example.net (catv-5062e651.catv.broadband.hu [80.98.230.81])
+	by yugo.frugalware.org (Postfix) with ESMTP id 726311DDC5B;
+	Tue, 29 Jul 2008 01:47:59 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id A90031AA738; Tue, 29 Jul 2008 01:48:28 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.rc0.14.g95f8.dirty
+In-Reply-To: <alpine.DEB.1.00.0807281505010.2725@eeepc-johanness>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90525>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Allow using a custom strategy, as long as it's named git-merge-foo. The
+error handling is now done using is_git_command(). The list of available
+strategies is now shown by list_commands().
 
---658432-1870608718-1217288462=:2725
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+If an invalid strategy is supplied, like -s foobar, then git-merge would
+list all git-merge-* commands. This is not perfect, since for example
+git-merge-index is not a valid strategy.
 
-Hi,
+These are removed from the output by scanning the list of main commands;
+if the git-merge-foo command is listed in the all_strategy list, then
+it's shown, otherwise excluded. This does not exclude commands somewhere
+else in the PATH, where custom strategies are expected.
 
-On Mon, 28 Jul 2008, Junio C Hamano wrote:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Mon, 28 Jul 2008, SZEDER Gábor wrote:
-> >
-> >> there is a race somewhere in these 'git-mv: Keep moved index entries
-> >> inact' changes.
-> >> 
-> >> The test cases 'git mv should overwrite symlink to a file' or 'git mv
-> >> should overwrite file with a symlink' fail occasionaly.  It's quite
-> >> non-deterministic:  I have run t7001-mv.sh in a loop (see below) and
-> >> one or the other usually fails around 50 runs (but sometimes only
-> >> after 150).  Adding some tracing echos to the tests shows that both
-> >> tests fail when running 'git diff-files' at the end.
-> >
-> > To make it more convenient to test: with this patch it fails all the time:
-> 
-> It's because we rename(2) but do not read back ctime, and reuse the cached
-> data from the old path that was renamed.  After the failed test that moves
-> a regular file "move" to "symlink":
-> 
-> $ stat symlink
->   File: `symlink'
->   Size: 2               Blocks: 8          IO Block: 4096   regular file
-> Device: 30ah/778d       Inode: 18104337    Links: 1
-> Access: (0664/-rw-rw-r--)  Uid: ( 1012/   junio)   Gid: (   40/     src)
-> Access: 2008-07-28 11:49:55.000000000 -0700
-> Modify: 2008-07-28 11:48:41.000000000 -0700
-> Change: 2008-07-28 11:48:42.000000000 -0700
-> 
-> But the cached stat information looks like this:
-> 
-> $ ../../git-ls-files --stat
-> ctime=1217270921, mtime=1217270921, ino=18104337, mode=100644, uid=1012, gid=40symlink
-> 
-> We need to refresh the entry to pick up potential ctime changes.
+On Mon, Jul 28, 2008 at 03:06:09PM +0200, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> The change in the signature of list_commands() is not part of this
+> patch.  So at least one of your commits should result in an
+> uncompileable revision...
 
-Yep.
+Right. I just squashed patch 4 and 5, and this solves the problem: patch
+3 changes the signature and fixes all usage (in help.c, it's not used
+outside help.c), then the squashed patch introduces the usage of the new
+list_commands() in builtin-merge.c.
 
-Tested-by: me
+(Also in the 'merge-custom' branch of vmiklos.git on repo.or.cz.)
 
-BTW I have no idea how we could test for this, short of introducing the 
-"sleep 1" I did earlier.  Maybe guard it with a TEST_EXPENSIVE_CTIME 
-variable or something similar.  Dunno.
+ builtin-merge.c |   32 +++++++++++++++++++++++++-------
+ 1 files changed, 25 insertions(+), 7 deletions(-)
 
-And my suggestion to use test-chmtime: please just forget about it, and 
-just assume that I had some very good wiid(1) in my pipe(2).
-
-Ciao,
-Dscho
---658432-1870608718-1217288462=:2725--
+diff --git a/builtin-merge.c b/builtin-merge.c
+index e78fa18..29826b1 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -22,6 +22,7 @@
+ #include "log-tree.h"
+ #include "color.h"
+ #include "rerere.h"
++#include "help.h"
+ 
+ #define DEFAULT_TWOHEAD (1<<0)
+ #define DEFAULT_OCTOPUS (1<<1)
+@@ -77,7 +78,7 @@ static int option_parse_message(const struct option *opt,
+ static struct strategy *get_strategy(const char *name)
+ {
+ 	int i;
+-	struct strbuf err;
++	struct strategy *ret;
+ 
+ 	if (!name)
+ 		return NULL;
+@@ -86,12 +87,29 @@ static struct strategy *get_strategy(const char *name)
+ 		if (!strcmp(name, all_strategy[i].name))
+ 			return &all_strategy[i];
+ 
+-	strbuf_init(&err, 0);
+-	for (i = 0; i < ARRAY_SIZE(all_strategy); i++)
+-		strbuf_addf(&err, " %s", all_strategy[i].name);
+-	fprintf(stderr, "Could not find merge strategy '%s'.\n", name);
+-	fprintf(stderr, "Available strategies are:%s.\n", err.buf);
+-	exit(1);
++	if (!is_git_command(name, "git-merge-")) {
++		struct cmdnames not_strategies;
++
++		memset(&not_strategies, 0, sizeof(struct cmdnames));
++		for (i = 0; i < main_cmds.cnt; i++) {
++			int j, found = 0;
++			struct cmdname *ent = main_cmds.names[i];
++			for (j = 0; j < ARRAY_SIZE(all_strategy); j++)
++				if (!strncmp(ent->name, all_strategy[j].name, ent->len)
++						&& !all_strategy[j].name[ent->len])
++					found = 1;
++			if (!found)
++				add_cmdname(&not_strategies, ent->name, ent->len);
++		}
++		fprintf(stderr, "Could not find merge strategy '%s'.\n\n", name);
++		list_commands("git-merge-", "strategies", &not_strategies);
++		exit(1);
++	}
++
++	ret = xmalloc(sizeof(struct strategy));
++	memset(ret, 0, sizeof(struct strategy));
++	ret->name = xstrdup(name);
++	return ret;
+ }
+ 
+ static void append_strategy(struct strategy *s)
+-- 
+1.6.0.rc0.14.g95f8.dirty
