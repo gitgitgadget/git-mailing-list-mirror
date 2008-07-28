@@ -1,125 +1,226 @@
-From: Roman Zippel <zippel@linux-m68k.org>
-Subject: Re: Bizarre missing changes (git bug?)
-Date: Mon, 28 Jul 2008 02:00:41 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0807280141140.6791@localhost.localdomain>
-References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com>
- <alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org>
- <200807260512.40088.zippel@linux-m68k.org>
- <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org>
- <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain>
- <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org>
- <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain>
- <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org>
+From: Junio C Hamano <junio@pobox.com>
+Subject: GIT 1.6.0-rc1
+Date: Sun, 27 Jul 2008 17:09:38 -0700
+Message-ID: <7vy73myim5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Jul 28 02:02:01 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 28 02:10:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNGBb-0007Rh-56
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 02:01:59 +0200
+	id 1KNGK7-000146-MJ
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 02:10:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756697AbYG1AA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 20:00:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756696AbYG1AA5
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 20:00:57 -0400
-Received: from smtp-vbr2.xs4all.nl ([194.109.24.22]:4700 "EHLO
-	smtp-vbr2.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753196AbYG1AA4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 20:00:56 -0400
-Received: from squid.home (linux-m68k.xs4all.nl [82.95.193.92])
-	(authenticated bits=0)
-	by smtp-vbr2.xs4all.nl (8.13.8/8.13.8) with ESMTP id m6S00hVx016291
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 28 Jul 2008 02:00:47 +0200 (CEST)
-	(envelope-from zippel@linux-m68k.org)
-X-X-Sender: roman@localhost.localdomain
-In-Reply-To: <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1756696AbYG1AJr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Jul 2008 20:09:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756727AbYG1AJq
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 20:09:46 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60830 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755730AbYG1AJp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Jul 2008 20:09:45 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8864B421FC;
+	Sun, 27 Jul 2008 20:09:44 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 78ABD421FB; Sun, 27 Jul 2008 20:09:42 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 7B79F816-5C39-11DD-959C-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90378>
 
-Hi,
+Ok, so I tagged and pushed it out.  There still is the "git mv" bugfix
+from Pasky that is parked in 'next' but other than that I think this is
+pretty much "it" for 1.6.0 feature-wise.
 
-On Sun, 27 Jul 2008, Linus Torvalds wrote:
+Major parts of the changes since 1.6.0-rc0 consists of documentation an=
+d
+tests portability; there is nothing surprising nor scary.
 
-> > Why are you dismissing what I wrote without even giving it a second 
-> > thought? I didn't bother with the initial example, because it's so 
-> > simple, that it's no real challenge.
-> 
-> Did you try it? It really shouldn't be any simpler than anything else. And 
+Test tarballs and RPMs are also there.  Please give it a good beating.
 
-Of course I did:
+----------------------------------------------------------------
 
-$ git log --parents --name-only --full-history lib/vsprintf.c | grep -e ^commit | wc -l
-5929
+Changes since v1.6.0-rc0 are as follows:
 
-This is same amount of commits as for gitk.
+Abhijit Menon-Sen (2):
+      git-gui: Look for gitk in $PATH, not $LIBEXEC/git-core
+      Clarify that "git log x.c y.h" lists commits that touch either fi=
+le
 
-$ /usr/bin/time git log --parents --name-only --full-history lib/vsprintf.c | grep -e ^commit -e ^lib | /usr/bin/time ruby ../filter.rb
-3.08user 0.14system 0:03.54elapsed 91%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+48230minor)pagefaults 0swaps
-20
-["72fd4a35a824331d7a0f4168d7576502d95d34b3", ["0a6047eef1c465c38aacfbdab193161b3f0cd144"]]
-["06b2a76d25d3cfbd14680021c1d356c91be6904e", ["96e3e18eed3b48f6d4377dee0326a106e8a04569"]]
-["1da177e4c3f41524e886b7f1b8a0c1fc7321cac2", []]
-["e905914f96e11862b130dd229f73045dad9a34e8", ["f796937a062c7aeb44cd0e75e1586c8543634a7d"]]
-["4e57b6817880946a3a78d5d8cad1ace363f7e449", ["8032230694ec56c168a1404c67a54d281536cbed"]]
-["4f9d5f4a353440f2265781bfa641587964901861", ["9b706aee7d92d6ac3002547aea12e3eaa0a750ae"]]
-["0a6047eef1c465c38aacfbdab193161b3f0cd144", ["e905914f96e11862b130dd229f73045dad9a34e8"]]
-["c6b40d16d1cfa1a01158049bb887a9bbe48ef7ba", ["11443ec7d9286dd25663516436a14edfb5f43857"]]
-["ea6f3281a145d16ed53e88b0627f78d5cde6068f", ["72fd4a35a824331d7a0f4168d7576502d95d34b3"]]
-["11443ec7d9286dd25663516436a14edfb5f43857", ["ea6f3281a145d16ed53e88b0627f78d5cde6068f"]]
-["b39a734097d5095d63eb9c709a6aaf965633bb01", ["c6b40d16d1cfa1a01158049bb887a9bbe48ef7ba"]]
-["78a8bf69b32980879975f7e31d30386c50bfe851", ["0f9bfa569d46f2346a53a940b2b9e49a38635732"]]
-["4d8a743cdd2690c0bc8d1b8cbd02cffb1ead849f", ["78a8bf69b32980879975f7e31d30386c50bfe851"]]
-["0fe1ef24f7bd0020f29ffe287dfdb9ead33ca0b2", ["4d8a743cdd2690c0bc8d1b8cbd02cffb1ead849f"]]
-["9b706aee7d92d6ac3002547aea12e3eaa0a750ae", ["06b2a76d25d3cfbd14680021c1d356c91be6904e"]]
-["0f9bfa569d46f2346a53a940b2b9e49a38635732", ["4f9d5f4a353440f2265781bfa641587964901861"]]
-["4277eedd7908a0ca8b66fad46ee76b0ad96e6ef2", ["b39a734097d5095d63eb9c709a6aaf965633bb01"]]
-["8032230694ec56c168a1404c67a54d281536cbed", ["1da177e4c3f41524e886b7f1b8a0c1fc7321cac2"]]
-["f796937a062c7aeb44cd0e75e1586c8543634a7d", ["4e57b6817880946a3a78d5d8cad1ace363f7e449"]]
-["96e3e18eed3b48f6d4377dee0326a106e8a04569", ["4277eedd7908a0ca8b66fad46ee76b0ad96e6ef2"]]
-0.12user 0.02system 0:03.64elapsed 3%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+7252minor)pagefaults 0swaps
+Alex Riesen (1):
+      Allow pager of diff command be enabled/disabled
 
-These are the same 20 commits (with parents) from a simple git-log.
+Alexander Gavrilov (4):
+      Fix pre-commit hooks under MinGW/MSYS
+      Add options to control the search for copies in blame.
+      Kill the blame back-end on window close.
+      Add a menu item to invoke full copy detection in blame.
 
-> I dismissed what you wrote because the example you _did_ state was about 
-> something else entirely (ie apparently some giggle bug that simplifies 
-> things incorrectly).
+Anders Melchiorsen (1):
+      Documentation: fix diff.external example
 
-I'm trying to get back things to the topic and it's not just giggle, every 
-tool presents a different version of the history.
+Bj=C3=B6rn Steinbrink (2):
+      index-pack.c: correctly initialize appended objects
+      rev-parse: Add support for the ^! and ^@ syntax
 
-> > What did I do wrong that you rebuff me based on this secondary problem 
-> > (which I'm quite aware of, because it was me who mentioned in first place) 
-> > and giving the primary problem (which is the missing history) no 
-> > attention?
-> 
-> It's not missing history. It's all there in --full-history. The default is 
-> to give a reasonable simplification, and I told you what the 
-> simplification was, and it's perfectly conceptually fine - AND IT IS MUCH 
-> MORE EFFICIENT than the alternatives.
-> 
-> So I'm not seeing your point what-so-ever. 
+Brad King (1):
+      git-svn: teach dcommit about svn auto-props
 
-That's why I gave you an alternative example, where history is missing.
+Brandon Casey (7):
+      t/: Replace diff [-u|-U0] with test_cmp to allow compilation with=
+ old diff
+      t4116-apply-reverse.sh: use $TAR rather than tar
+      t3200,t7201: replace '!' with test_must_fail
+      t7502-commit.sh: rearrange test to make more portable
+      t/t4202-log.sh: add newline at end of file
+      Teach fsck and prune about the new location of temporary objects
+      perl/Makefile: update NO_PERL_MAKEMAKER section
 
->  - with full-history, you have it all, but it's useless in practice
+Cesar Eduardo Barros (1):
+      Documentation/git-submodule.txt: fix doubled word
 
-Could you please specify which full-history you mean, gitk --full-history 
-or git-log --full-history?
+Daniel Barkalow (1):
+      In perforce, RCS keywords are case-sensitive
 
->  - without full-history, it's useful in practice
+Jakub Narebski (1):
+      gitweb: More about how gitweb gets 'owner' of repository
 
->From a VCS I would still expect nevertheless to present a correct 
-history not some approximation.
+Johannes Schindelin (9):
+      Rename .git/rebase to .git/rebase-apply
+      Rename path_list to string_list
+      Fix two leftovers from path_list->string_list
+      Ignore dirty submodule states in "git pull --rebase"
+      Add test to show that show-branch misses out the 8th column
+      sort_in_topological_order(): avoid setting a commit flag
+      builtin-commit: Two trivial style-cleanups
+      git daemon: avoid waking up too often
+      Avoid chdir() in list_commands_in_dir()
 
-bye, Roman
+Johannes Sixt (12):
+      rebase -i: When an 'edit' stops, mention the commit
+      Makefile: Do not install a copy of 'git' in $(gitexecdir)
+      Makefile: Normalize $(bindir) and $(gitexecdir) before comparing
+      Record the command invocation path early
+      Fix relative built-in paths to be relative to the command invocat=
+ion
+      Allow the built-in exec path to be relative to the command invoca=
+tion path
+      Allow add_path() to add non-existent directories to the path
+      Windows: Make $(gitexecdir) relative
+      Windows: Make sure argv[0] has a path
+      Windows: Do not compile git-shell
+      git-gui: Fix "Stage/Unstage Line" with one line of context.
+      git-gui: "Stage Line": Treat independent changes in adjacent line=
+s better
+
+Jonathan Nieder (3):
+      git-diff(1): "--c" -> "--cc" typo fix
+      document that git-tag can tag more than heads
+      t6030 (bisect): work around Mac OS X "ls"
+
+Junio C Hamano (13):
+      Update my e-mail address
+      Revert "make git-status use a pager"
+      tests: do not rely on external "patch"
+      stash save: fix parameter handling
+      builtin-branch.c: remove unused code in append_ref() callback fun=
+ction
+      builtin-branch.c: optimize --merged and --no-merged
+      Documentation: clarify diff --cc
+      ignore non-existent refs in dwim_log()
+      tests: propagate $(TAR) down from the toplevel Makefile
+      Makefile: fix shell quoting
+      Documentation: clarify how to disable elements in core.whitespace
+      make sure parsed wildcard refspec ends with slash
+      GIT 1.6.0-rc1
+
+Lars Hjemli (3):
+      builtin-branch: remove duplicated code
+      builtin-branch: factor out merge_filter matching
+      builtin-branch: fix -v for --[no-]merged
+
+Lee Marlow (2):
+      bash completion: Add long options for 'git rm'
+      bash completion: Add completion for 'git help'
+
+Miklos Vajna (2):
+      builtin-merge: give a proper error message for invalid strategies=
+ in config
+      t7601: extend the 'merge picks up the best result' test
+
+Nikolaj Schumacher (1):
+      Don't cut off last character of commit descriptions.
+
+Olivier Marin (4):
+      git-am: remove dash from help message
+      parse-options: fix segmentation fault when a required value is mi=
+ssing
+      git am --skip: clean the index while preserving local changes
+      update test case to protect am --skip behaviour
+
+P. Christeas (1):
+      svnimport: newer libsvn wants us to ask for the root with "", not=
+ "/"
+
+Peter Valdemar M=C3=B8rch (1):
+      send-email: find body-encoding correctly
+
+Petr Baudis (4):
+      git-filter-branch.sh: Allow running in bare repositories
+      Documentation/git-filter-branch: teach "rm" instead of "update-in=
+dex --remove"
+      git-mv: Remove dead code branch
+      git-mv: Keep moved index entries inact
+
+Philippe Bruhat (1):
+      mailinfo: better parse email adresses containg parentheses
+
+Pierre Habouzit (4):
+      builtin-merge: add missing structure initialization
+      git-submodule: move ill placed shift.
+      git-checkout: fix command line parsing.
+      git-checkout: improve error messages, detect ambiguities.
+
+Ren=C3=A9 Scharfe (5):
+      archive: add write_archive()
+      archive: move parameter parsing code to archive.c
+      archive: define MAX_ARGS where it's needed
+      archive: declare struct archiver where it's needed
+      archive: allow --exec and --remote without equal sign
+
+SZEDER G=C3=A1bor (2):
+      checkout: mention '--' in the docs
+      bash: offer only paths after '--' for 'git checkout'
+
+Shawn O. Pearce (2):
+      git-gui: Correct 'Visualize Branches' on Mac OS X to start gitk
+      fsck: Don't require tmp_obj_ file names are 14 bytes in length
+
+Stephan Beyer (7):
+      git-am: Add colon before the subject that is printed out as being=
+ applied
+      am --abort: Add to bash-completion and mention in git-rerere docu=
+mentation
+      Make non-static functions, that may be static, static
+      Move launch_editor() from builtin-tag.c to editor.c
+      editor.c: Libify launch_editor()
+      git-am: Mention --abort in usage string part of OPTIONS_SPEC
+      git-reset: Let -q hush "locally modified" messages
+
+Steve Haslam (2):
+      Propagate -u/--upload-pack option of "git clone" to transport.
+      Remove references to git-fetch-pack from "git clone" documentatio=
+n.
+
+Thomas Rast (2):
+      git-completion.bash: provide completion for 'show-branch'
+      bash completion: Add long options for 'git describe'
