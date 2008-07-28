@@ -1,195 +1,145 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] git-mv: Keep moved index entries inact
-Date: Mon, 28 Jul 2008 12:19:19 -0700
-Message-ID: <7vwsj5rf48.fsf@gitster.siamese.dyndns.org>
-References: <20080721002354.GK10151@machine.or.cz>
- <20080721002508.26773.92277.stgit@localhost>
- <7v8wvpm9cl.fsf@gitster.siamese.dyndns.org> <20080728142023.GC6701@neumann>
- <alpine.DEB.1.00.0807281605330.8986@racer>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: GTP/0.1 terminology 101: commit reels and references
+Date: Tue, 29 Jul 2008 07:26:06 +1200
+Message-ID: <1217273166.25690.20.camel@maia.lan>
+References: <488D42B6.4030701@gmail.com> <1217228570.6750.24.camel@maia.lan>
+	 <7vk5f6tqsj.fsf@gitster.siamese.dyndns.org>
+	 <1217239419.6750.73.camel@maia.lan>
+	 <alpine.DEB.1.00.0807281350590.2725@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Joshua Roys <roysjosh@gmail.com>, gittorrent@lists.utsl.gen.nz,
+	git@vger.kernel.org, Jonas Fonseca <fonseca@diku.dk>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 28 21:20:42 2008
+X-From: git-owner@vger.kernel.org Mon Jul 28 21:27:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNYGp-0004Tt-43
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 21:20:35 +0200
+	id 1KNYNS-0007O0-LI
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 21:27:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752490AbYG1TTc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2008 15:19:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752686AbYG1TTb
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 15:19:31 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53346 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752479AbYG1TTa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jul 2008 15:19:30 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 52FC040CF7;
-	Mon, 28 Jul 2008 15:19:29 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 3D13D40CF3; Mon, 28 Jul 2008 15:19:24 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0807281605330.8986@racer> (Johannes
- Schindelin's message of "Mon, 28 Jul 2008 16:06:05 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 199C29A6-5CDA-11DD-A86F-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1751718AbYG1T00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 15:26:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751727AbYG1T00
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 15:26:26 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:36726 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751610AbYG1T0Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 15:26:25 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id A18D621C977; Tue, 29 Jul 2008 07:26:23 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00,RDNS_DYNAMIC
+	autolearn=no version=3.2.3
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id 4A18F21C973;
+	Tue, 29 Jul 2008 07:26:08 +1200 (NZST)
+In-Reply-To: <alpine.DEB.1.00.0807281350590.2725@eeepc-johanness>
+X-Mailer: Evolution 2.22.3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90491>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Mon, 2008-07-28 at 14:01 +0200, Johannes Schindelin wrote:
+> >   - the reel has a defined object order (which as I hoped to demonstrate
+> >     in the test cases, is just a refinement of rev-list --date-order)
+> 
+> Do you mean that the commit reel is a list pointing to bundles that can be 
+> sorted topologically by their contained commits?
 
-> On Mon, 28 Jul 2008, SZEDER G=C3=A1bor wrote:
->
->> there is a race somewhere in these 'git-mv: Keep moved index entries
->> inact' changes.
->>=20
->> The test cases 'git mv should overwrite symlink to a file' or 'git m=
-v
->> should overwrite file with a symlink' fail occasionaly.  It's quite
->> non-deterministic:  I have run t7001-mv.sh in a loop (see below) and
->> one or the other usually fails around 50 runs (but sometimes only
->> after 150).  Adding some tracing echos to the tests shows that both
->> tests fail when running 'git diff-files' at the end.
->
-> To make it more convenient to test: with this patch it fails all the =
-time:
+Yes, but it is more defined than that.  There are still ambiguities with
+topological sort, so the gittorrent spec specified exactly how all ties
+are broken.  They happen to be a further refinement of --date-order,
+with respect to the ordering of commits.
 
-It's because we rename(2) but do not read back ctime, and reuse the cac=
-hed
-data from the old path that was renamed.  After the failed test that mo=
-ves
-a regular file "move" to "symlink":
+> >   - deltas always point in one direction, to objects "earlier" on
+> >     the reel, so that slices of the reel sent on the network can be made
+> >     thin without resulting in unresolvable deltas (which should be
+> >     possible to do on commit boundaries using rev-list --objects-edge)
+> That is exactly what bundles do.  They are thin, as they assume that a few 
+> "preconditions", i.e. refs, are present.
 
-$ stat symlink
-  File: `symlink'
-  Size: 2               Blocks: 8          IO Block: 4096   regular fil=
-e
-Device: 30ah/778d       Inode: 18104337    Links: 1
-Access: (0664/-rw-rw-r--)  Uid: ( 1012/   junio)   Gid: (   40/     src=
-)
-Access: 2008-07-28 11:49:55.000000000 -0700
-Modify: 2008-07-28 11:48:41.000000000 -0700
-Change: 2008-07-28 11:48:42.000000000 -0700
+Ok.  I think there are also some other trivial differences such as
+bundles containing refs (which in the context of gittorrent will be
+useless).
 
-But the cached stat information looks like this:
+> >   - the behaviour at the beginning of the reel is precisely defined
+> >     (although as I said, I think that the decision might be worth
+> >     revisiting - perhaps getting just the latest reel is a useful
+> >     'shallow clone')
+> 
+> If you want to allow shallow clones, you must make the bundles non-thin.  
+> That would be a major bandwidth penalty.
+> 
+> I'd rather not allow shallow clones with Gitorrent.
 
-$ ../../git-ls-files --stat
-ctime=3D1217270921, mtime=3D1217270921, ino=3D18104337, mode=3D100644, =
-uid=3D1012, gid=3D40symlink
+By "Shallow" I think I mean a different thing to you.  I mean something
+akin to just the last pack's worth of commits.
 
-We need to refresh the entry to pick up potential ctime changes.
+> > It's the lack of guarantees which is the issue, really.
+> 
+> It should not be too difficult to provide a rev-list option (which is 
+> inherited by git-bundle, then) to pay an extra time to make sure that the 
+> bundle is minimal.
 
+Ok.  But from the current implementation's perspective, this is not yet
+needed, we are just using the existing API.
 
- read-cache.c       |    7 ++++++-
- builtin-ls-files.c |   21 +++++++++++++++------
- 2 files changed, 21 insertions(+), 7 deletions(-)
+Actually what would be useful would be for the thin pack generation to
+also allow any object to be specified as its input list, not just
+commits... then we wouldn't have to break blocks on commit boundaries
+(see http://gittorrent.utsl.gen.nz/rfc.html#org-blocks).
 
-diff --git a/read-cache.c b/read-cache.c
-index 1cae361..834096f 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -40,7 +40,7 @@ static void replace_index_entry(struct index_state *i=
-state, int nr, struct cache
-=20
- void rename_index_entry_at(struct index_state *istate, int nr, const c=
-har *new_name)
- {
--	struct cache_entry *old =3D istate->cache[nr], *new;
-+	struct cache_entry *old =3D istate->cache[nr], *new, *refreshed;
- 	int namelen =3D strlen(new_name);
-=20
- 	new =3D xmalloc(cache_entry_size(namelen));
-@@ -51,6 +51,11 @@ void rename_index_entry_at(struct index_state *istat=
-e, int nr, const char *new_n
-=20
- 	cache_tree_invalidate_path(istate->cache_tree, old->name);
- 	remove_index_entry_at(istate, nr);
-+
-+	/* the renaming could have smudged the ctime */
-+	refreshed =3D refresh_cache_entry(new, 0);
-+	if (refreshed && refreshed !=3D new)
-+		new =3D refreshed;
- 	add_index_entry(istate, new, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPL=
-ACE);
- }
-=20
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index e8d568e..a6b30c8 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -16,6 +16,7 @@ static int show_deleted;
- static int show_cached;
- static int show_others;
- static int show_stage;
-+static int show_stat;
- static int show_unmerged;
- static int show_modified;
- static int show_killed;
-@@ -205,16 +206,20 @@ static void show_ce_entry(const char *tag, struct=
- cache_entry *ce)
- 		tag =3D alttag;
- 	}
-=20
--	if (!show_stage) {
--		fputs(tag, stdout);
--	} else {
-+	if (show_stage)
- 		printf("%s%06o %s %d\t",
- 		       tag,
- 		       ce->ce_mode,
- 		       abbrev ? find_unique_abbrev(ce->sha1,abbrev)
- 				: sha1_to_hex(ce->sha1),
- 		       ce_stage(ce));
--	}
-+	else if (show_stat)
-+		printf("ctime=3D%u, mtime=3D%u, ino=3D%u, mode=3D%o, uid=3D%u, gid=3D=
-%u\t",
-+		       ce->ce_ctime, ce->ce_mtime, ce->ce_ino,
-+		       ce->ce_mode, ce->ce_uid, ce->ce_gid);
-+
-+	else
-+		fputs(tag, stdout);
- 	write_name_quoted(ce->name + offset, stdout, line_terminator);
- }
-=20
-@@ -235,7 +240,7 @@ static void show_files(struct dir_struct *dir, cons=
-t char *prefix)
- 		if (show_killed)
- 			show_killed_files(dir);
- 	}
--	if (show_cached | show_stage) {
-+	if (show_cached | show_stage | show_stat) {
- 		for (i =3D 0; i < active_nr; i++) {
- 			struct cache_entry *ce =3D active_cache[i];
- 			int dtype =3D ce_to_dtype(ce);
-@@ -488,6 +493,10 @@ int cmd_ls_files(int argc, const char **argv, cons=
-t char *prefix)
- 			show_stage =3D 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "-S") || !strcmp(arg, "--stat")) {
-+			show_stat =3D 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "-k") || !strcmp(arg, "--killed")) {
- 			show_killed =3D 1;
- 			require_work_tree =3D 1;
-@@ -593,7 +602,7 @@ int cmd_ls_files(int argc, const char **argv, const=
- char *prefix)
-=20
- 	/* With no flags, we default to showing the cached files */
- 	if (!(show_stage | show_deleted | show_others | show_unmerged |
--	      show_killed | show_modified))
-+	      show_killed | show_modified | show_stat))
- 		show_cached =3D 1;
-=20
- 	read_cache();
+> > In order to take the download work of the entire pack and distribute it 
+> > over multiple peers, you need a way to carve the bundle up.  This has to 
+> > happen in such a way that the fragments that you get back will actually 
+> > fit together at the end, and also in such a way that you don't lose the 
+> > benefits of delta compression.
+> 
+> That should be relatively easy.
+> 
+> > The way I thought would be best to do that would be to line up all the 
+> > objects in an exactly defined way - hence, the "reel" concept - and then 
+> > chop that up.
+> 
+> What exactly is that exact definition?
+
+http://gittorrent.utsl.gen.nz/rfc.html#org-reels
+
+> Is it the output of "rev-list --all --objects", chopped into equal chunks 
+> at commit boundaries?  If so, it should probably be equal in terms of 
+> size, right?
+
+No.  It's chopped by uncompressed size.
+
+http://gittorrent.utsl.gen.nz/rfc.html#org-blocks
+
+> The tricky thing, of course, is to make that thing incremental, i.e. 
+> replace only a minimal amount of items in the "commit reel" (if I 
+> understood correctly, and the commit reel refers to a list of sets of 
+> commits with their objects) when a branch was modified.
+
+You would make a new reel to cover a new bunch of updates.  It's
+important that the reels don't change too often for reasons I describe
+in the RFC.
+
+> Hmm.  Maybe it would be time for you to draw a tiny diagram for all the 
+> people too lazy like me, which shows roughly how the communication between 
+> the peers should look like, and how the reel fits in.
+
+As I said in my recent message to the list, I wrote another top level
+overview here:
+
+http://gittorrent.utsl.gen.nz/rfc.html#org-blocks
+
+Cheers,
+Sam.
