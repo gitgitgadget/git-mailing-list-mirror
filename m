@@ -1,155 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/t7001-mv.sh: Propose ability to use git-mv on
- conflicting entries
-Date: Sun, 27 Jul 2008 18:13:59 -0700
-Message-ID: <7v4p6ayfmw.fsf@gitster.siamese.dyndns.org>
-References: <20080727134142.GA10151@machine.or.cz>
- <20080727134704.27534.86520.stgit@localhost>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 1/7] Make is_git_command() usable outside builtin-help
+Date: Mon, 28 Jul 2008 03:18:28 +0200
+Message-ID: <20080728011828.GI32057@genesis.frugalware.org>
+References: <cover.1217037178.git.vmiklos@frugalware.org> <f311372167c02868ccf5aa4dc03c97b7f956d855.1217037178.git.vmiklos@frugalware.org> <Pine.GSO.4.62.0807261301300.15728@harper.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Jul 28 03:15:12 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="rNH9aVqBNQhZXx6Q"
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@uchicago.edu>
+X-From: git-owner@vger.kernel.org Mon Jul 28 03:19:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNHKR-0005qg-Pq
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 03:15:12 +0200
+	id 1KNHOg-0006eH-8G
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 03:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757450AbYG1BOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 21:14:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757447AbYG1BOK
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 21:14:10 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35673 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752594AbYG1BOJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 21:14:09 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 76FB93EDAB;
-	Sun, 27 Jul 2008 21:14:06 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id E82053EDA9; Sun, 27 Jul 2008 21:14:01 -0400 (EDT)
-In-Reply-To: <20080727134704.27534.86520.stgit@localhost> (Petr Baudis's
- message of "Sun, 27 Jul 2008 15:47:48 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 795DBF00-5C42-11DD-819E-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1750720AbYG1BSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 21:18:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbYG1BSb
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 21:18:31 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:54350 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750711AbYG1BSa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 21:18:30 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 63A4D1B250C;
+	Mon, 28 Jul 2008 03:18:29 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id A565D4465E;
+	Mon, 28 Jul 2008 02:34:38 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id F2BAA1190A0A; Mon, 28 Jul 2008 03:18:28 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.GSO.4.62.0807261301300.15728@harper.uchicago.edu>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90384>
 
-Petr Baudis <pasky@suse.cz> writes:
 
-> I don't really know if it is ok to make "feature requests" like this by
-> adding failing testcases...
+--rNH9aVqBNQhZXx6Q
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Of course it depends on who you are.  It's not Ok for somebody like you,
-who is known to be competent, and certainly it is not Ok to do it on a
-command that you know you care more about than I do.
+On Sat, Jul 26, 2008 at 01:12:36PM -0500, Jonathan Nieder <jrnieder@uchicag=
+o.edu> wrote:
+> On Sat, 26 Jul 2008, Miklos Vajna wrote:
+>=20
+> > +	if (!prefix)
+> > +		prefix =3D "git-";
+> > +       	prefix_len =3D strlen(prefix);
+>=20
+> The whitespace gave me a start: the diff markup moved the prefix_len
+> line to the next tab stop, so at first glance it seems there are missing
+> braces here.  But it is an illusion.  (I mention this so others might
+> avoid wasting time worrying about it.)
 
-I've neglected builtin-mv.c since its introduction, mostly because I never
-say "git mv" myself (in other words, I haven't cared very much how broken
-it was.  For one thing, its indentation style is peculiar and is hard to
-read and maintain).
+In fact it was a whitespace problem: somehow I used spaces there instead
+of a tab. I fixed it locally. (Will send an updated series soon.)
 
-> +# Rationale: I cannot git mv around a conflicted file. This is unnecessary
-> +# restriction in case another part of conflict resolution requires me to
-> +# move the file around.
+> I like the patch so far.  Thanks for the pleasant reading.
 
-Yes, I would agree this is a reasonable thing to support.  Something like
-this patch, perhaps.
+:-)
 
----
- builtin-mv.c  |   21 ++++++++++++++-------
- t/t7001-mv.sh |   21 +++++++++++++++++++++
- 2 files changed, 35 insertions(+), 7 deletions(-)
+--rNH9aVqBNQhZXx6Q
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-diff --git a/builtin-mv.c b/builtin-mv.c
-index 4f65b5a..cc9e505 100644
---- a/builtin-mv.c
-+++ b/builtin-mv.c
-@@ -96,7 +96,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 	/* Checking */
- 	for (i = 0; i < argc; i++) {
- 		const char *src = source[i], *dst = destination[i];
--		int length, src_is_dir;
-+		int length, src_is_dir, pos;
- 		const char *bad = NULL;
- 
- 		if (show_only)
-@@ -177,7 +177,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 				} else
- 					bad = "Cannot overwrite";
- 			}
--		} else if (cache_name_pos(src, length) < 0)
-+		} else if (((pos = cache_name_pos(src, length)) < 0) &&
-+			   strcmp(active_cache[-1 - pos]->name, src))
- 			bad = "not under version control";
- 		else if (string_list_has_string(&src_for_dst, dst))
- 			bad = "multiple sources for the same target";
-@@ -202,7 +203,6 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 	for (i = 0; i < argc; i++) {
- 		const char *src = source[i], *dst = destination[i];
- 		enum update_mode mode = modes[i];
--		int pos;
- 		if (show_only || verbose)
- 			printf("Renaming %s to %s\n", src, dst);
- 		if (!show_only && mode != INDEX &&
-@@ -212,10 +212,17 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		if (mode == WORKING_DIRECTORY)
- 			continue;
- 
--		pos = cache_name_pos(src, strlen(src));
--		assert(pos >= 0);
--		if (!show_only)
--			rename_cache_entry_at(pos, dst);
-+		if (!show_only) {
-+			while (1) {
-+				int pos = cache_name_pos(src, strlen(src));
-+				if (pos < 0)
-+					pos = -1 - pos;
-+				if ((active_nr <= pos) ||
-+				    strcmp(active_cache[pos]->name, src))
-+					break;
-+				rename_cache_entry_at(pos, dst);
-+			}
-+		}
- 	}
- 
- 	if (active_cache_changed) {
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index b0fa407..d538f88 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -173,6 +173,27 @@ test_expect_success 'git mv should not change sha1 of moved cache entry' '
- 
- rm -f dirty dirty2
- 
-+cat >expect <<\EOT
-+100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 1	staged
-+100755 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 2	staged
-+100755 d00491fd7e5bb6fa28c517a0bb32b8b506539d4d 3	staged
-+EOT
-+
-+test_expect_success 'git mv should move all stages of cache entry' '
-+	rm -fr .git &&
-+	git init &&
-+	>staged &&
-+	git update-index --index-info <expect &&
-+	git ls-files --stage >actual &&
-+	test_cmp expect actual &&
-+	git mv staged staged-mv &&
-+	sed "s/staged/staged-mv/" <expect >expect-2 &&
-+	git ls-files --stage >actual &&
-+	test_cmp expect-2 actual
-+'
-+
-+rm -f expect expect-2 staged actual staged-mv
-+
- test_expect_success 'git mv should overwrite symlink to a file' '
- 
- 	rm -fr .git &&
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkiNHmQACgkQe81tAgORUJYblwCeLHqPbhsUquO3q5FAq/aK/Hn5
+QJwAn1cpTCj+LF/3Tre6PUkQ7orlM5p/
+=A1Je
+-----END PGP SIGNATURE-----
+
+--rNH9aVqBNQhZXx6Q--
