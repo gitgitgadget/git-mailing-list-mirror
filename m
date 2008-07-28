@@ -1,118 +1,93 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: git submodules
-Date: Mon, 28 Jul 2008 17:40:22 -0400
-Message-ID: <32541b130807281440v64f3cb9ci50cf6d16be4f2f82@mail.gmail.com>
-References: <20080728162003.GA4584@artemis.madism.org>
-	 <320075ff0807281323l51bb6478j30e3e4c490974a70@mail.gmail.com>
-	 <20080728205545.GB10409@artemis.madism.org>
-	 <20080728205923.GC10409@artemis.madism.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-scm.com
+Date: Mon, 28 Jul 2008 14:42:41 -0700
+Message-ID: <7vk5f5ptwu.fsf@gitster.siamese.dyndns.org>
+References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
+ <7v3alxr0fd.fsf@gitster.siamese.dyndns.org>
+ <d411cc4a0807251759m1d83d7c4w4724806b19f7c02a@mail.gmail.com>
+ <7vsktwfu5z.fsf@gitster.siamese.dyndns.org>
+ <20080727113707.GC32184@machine.or.cz>
+ <7v3alv2n46.fsf@gitster.siamese.dyndns.org>
+ <7vd4kzyoj1.fsf@gitster.siamese.dyndns.org>
+ <46a038f90807271619l69c085a7o58f50b7d64b7222d@mail.gmail.com>
+ <530345950807272011o7c92fdaaw3116cc257dcbab7a@mail.gmail.com>
+ <alpine.DEB.1.00.0807281201350.2725@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Pierre Habouzit" <madcoder@debian.org>,
-	"Nigel Magnay" <nigel.magnay@gmail.com>,
-	"Git ML" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 28 23:41:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Tom Werner <pubsub@rubyisawesome.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 28 23:44:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNaT7-0005Yp-AF
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 23:41:25 +0200
+	id 1KNaVT-0006Nx-RV
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 23:43:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755993AbYG1VkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 17:40:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754676AbYG1VkY
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 17:40:24 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:14033 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755993AbYG1VkX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 17:40:23 -0400
-Received: by qw-out-2122.google.com with SMTP id 3so329063qwe.37
-        for <git@vger.kernel.org>; Mon, 28 Jul 2008 14:40:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=3boT7OeRTHhVx6NcdxrggmhoAqi/YDBW16Bndfr52c8=;
-        b=rSk19ycuJeazDsjkH3j4vC0xjgf/MEiTgppAnBdTUGsyGOomJjJrGC/VjGIquSwDoZ
-         2M461On1Lwy731rdyWIyjyZsyvRBYW1YQbEToyTtkAhW2yAKnl1j60eAtRxAsFJYe9kF
-         IMK6hgho4MwKagSOuNhPHywj7ALIJxQEHWoxA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=xsyRR4VivnzVdR6rBN2m70CEnYhtw31R1HcCUdX0bI9dtUC9MNl7/2WQRnIKY0Onkd
-         obgg521wtkbL3DDa9c792MbELjkj4iMS/DK7eurLRey2n13fkLzlizr4RUr+NHL7x4uS
-         z2RZtec0/iy3L1ogvMkQmMz1PSaxbr1vV2chY=
-Received: by 10.214.114.16 with SMTP id m16mr523583qac.75.1217281222193;
-        Mon, 28 Jul 2008 14:40:22 -0700 (PDT)
-Received: by 10.150.96.5 with HTTP; Mon, 28 Jul 2008 14:40:21 -0700 (PDT)
-In-Reply-To: <20080728205923.GC10409@artemis.madism.org>
-Content-Disposition: inline
+	id S1756268AbYG1Vmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 17:42:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755292AbYG1Vmu
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 17:42:50 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37949 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752059AbYG1Vmt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 17:42:49 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 79D6E404C6;
+	Mon, 28 Jul 2008 17:42:48 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id D62DE4049F; Mon, 28 Jul 2008 17:42:43 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1F1211E8-5CEE-11DD-B86B-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90511>
 
-On 7/28/08, Pierre Habouzit <madcoder@debian.org> wrote:
-> On Mon, Jul 28, 2008 at 08:55:45PM +0000, Pierre Habouzit wrote:
-> >   That too indeed (the "easier to clone" bit). OTOH, I don't like the
->  > .git/submodules idea a lot, if you mean to put a usual $GIT_DIR layout
->  > inside of it. With what I propose, you find objects for all your
->  > super/sub-modules in the usual store, which eases many things.
->  > Especially, I believe that when you replace a subdirectory of a project
->  > with a submodule, git-blame could benefit quite a lot from this to be
->  > able to glue history back through the submodule limits, without having
->  > to refactor a _lot_ of code: it would merely have to dereference so
->  > called "gitlinks" to the commit then tree, hence twice, and just do its
->  > usual work, with your proposal, we still rely on having to recurse in
->  > subdirectories which requires more boilerplate code.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> On Sun, 27 Jul 2008, Tom Werner wrote:
 >
->   And of _course_ this is also true for git-log, which is like 10x as
->  important for me (like I don't remember if I used git-blame this year,
->  whereas I used git-log in the last 10 minutes ;p)
+>> I find it a bit confusing that some here seem to have a strong dislike 
+>> for GitHub. It's true that we haven't been active on the developer list 
+>> or in the #git channel on freenode, but we are constantly in #github and 
+>> have answered a *great* many questions from developers that are new to 
+>> git.
+>
+> Speaking for myself, I will probably direct some users from #git to 
+> #github, then.
 
-I don't think you're going to get away with *not* having a separate
-.git directory for each submodule.  You'll just plain lose almost all
-the features of submodules if you try to do that.
+I saw more than several times that people asked github specific questions
+on #git; when they were lucky, there was somebody who knew github and they
+got necessary help.  Otherwise the answer was "eh, sorry, that's a closed
+service and we cannot help diagnosing the problem you are having".  It
+would have been the right way to help them to refer to the #github support
+channel.
 
-Most importantly in my case, my submodules (libraries shared between
-apps) have a very different branching structure than my supermodules.
-It wouldn't be particularly meaningful to force them to use the same
-branch names.
+If a company can fund somebody to help new users with git problems on #git
+while helping people with github problems on #github, that would be a good
+gesture towards the git community, I'd suppose.
 
-Further, if you don't have a separate .git directory for each
-submodule, you can't *switch* branches on the submodule independently
-of the supermodule in any obvious way.  This is also useful; I might
-want to test updating to the latest master of my submodule, see if it
-still works with my supermodule, and if so, commit the new gitlink in
-the supermodule.  This is a very common workflow for me.
+> Also note that one of the major gripe with you making money off of Git 
+> could be the following: we have over 500 contributors, and most of them -- 
+> first and foremost of all, the two major contributors, Junio and Shawn -- 
+> cannot make money from Git.  Envy is wrong, but it is real.
 
-On the other hand, your thought about combining the "git log" messages
-is quite interesting.  That *is* something I'd benefit from, along
-with being able to git-bisect across submodules.  If I'm in the
-supermodule, I want to see *all* the commits that might have changed
-in my application, not just the ones in the supermodule itself.  I
-suspect this isn't simple at all to implement, however, as you'd have
-to look inside the file tree of a given commit in order to find
-whether any submodule links have changed in that commit.  It's
-unfortunate that submodules involve a commit->tree->commit link
-structure.
+I do not talk for Shawn, but I think that comment misses the mark by a
+large margin, at least for me.
 
-> One irritating problem with submodules, is
-> that when someone else commited, and that you git submodule update,
-> you're on a detached head. Absolutely horrible.
+I haven't been in this for money.  The original motivation of my
+involvement was to help sending Linus back to the kernel as quickly as
+possible, but now I primarily do this for fun.  Doing it for money would
+risk removing the fun factor.
 
-I think that roughly everyone agrees with the above statement by now.
-It would also be trivial to fix it, if only we knew what "fix" means.
-So far, I haven't seen any good suggestions for what branch name to
-use automatically in a submodule, and believe me, I've been looking
-for one :)
+What I personally lack right now is time and mental bandwidth.
 
-Have fun,
-
-Avery
+Active contributers of all kinds, ranging from "C coders", "scripters", to
+"Documentation people" and "dropped patch naggers", have been helping me
+quite a lot.  Corporate sponsors that can pay back in money but not in
+patches may be able to find other ways to help us, but I do not offhand
+know what's the most effective way for them to do so if they wanted to.
