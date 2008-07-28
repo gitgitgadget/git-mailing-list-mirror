@@ -1,57 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/git-ls-tree.txt: Add a caveat about
- prefixing pathspec
-Date: Sun, 27 Jul 2008 18:26:15 -0700
-Message-ID: <7vvdyqx0i0.fsf@gitster.siamese.dyndns.org>
-References: <20080720233956.GH10151@machine.or.cz>
- <20080721075618.14163.45309.stgit@localhost>
- <7v1w1nvf7q.fsf@gitster.siamese.dyndns.org>
- <20080721210452.GP10151@machine.or.cz>
- <7vd4l6sqqz.fsf@gitster.siamese.dyndns.org>
- <20080722224759.GJ32184@machine.or.cz> <20080728004604.GF32184@machine.or.cz>
+From: Roman Zippel <zippel@linux-m68k.org>
+Subject: Re: Bizarre missing changes (git bug?)
+Date: Mon, 28 Jul 2008 03:29:39 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0807280308120.6791@localhost.localdomain>
+References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com> 
+ <alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org> 
+ <200807260512.40088.zippel@linux-m68k.org> 
+ <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org> 
+ <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain> 
+ <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org> 
+ <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain>
+ <46a038f90807271625x35c561fdv6dc6b2c312f45fa1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Jul 28 03:27:28 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 28 03:30:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNHWJ-0008RD-C5
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 03:27:27 +0200
+	id 1KNHZY-0000mP-Qd
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 03:30:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750851AbYG1B01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jul 2008 21:26:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750793AbYG1B01
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 21:26:27 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41518 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750736AbYG1B00 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jul 2008 21:26:26 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 57D9B3A132;
-	Sun, 27 Jul 2008 21:26:25 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D7DE73A130; Sun, 27 Jul 2008 21:26:22 -0400 (EDT)
-In-Reply-To: <20080728004604.GF32184@machine.or.cz> (Petr Baudis's message of
- "Mon, 28 Jul 2008 02:46:04 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 31C46B60-5C44-11DD-8DCC-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1750966AbYG1B3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jul 2008 21:29:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750838AbYG1B3s
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jul 2008 21:29:48 -0400
+Received: from smtp-vbr12.xs4all.nl ([194.109.24.32]:4151 "EHLO
+	smtp-vbr12.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750736AbYG1B3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jul 2008 21:29:47 -0400
+Received: from squid.home (linux-m68k.xs4all.nl [82.95.193.92])
+	(authenticated bits=0)
+	by smtp-vbr12.xs4all.nl (8.13.8/8.13.8) with ESMTP id m6S1TdvV000241
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 28 Jul 2008 03:29:39 +0200 (CEST)
+	(envelope-from zippel@linux-m68k.org)
+X-X-Sender: roman@localhost.localdomain
+In-Reply-To: <46a038f90807271625x35c561fdv6dc6b2c312f45fa1@mail.gmail.com>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90394>
 
-Petr Baudis <pasky@suse.cz> writes:
+Hi,
 
->> We may throw a dice or go with your version, I don't care *that* much
->> about this change, I just wouldn't make it personally.
->
-> What is the status of this patch? :-) Dropped altogether?
+On Mon, 28 Jul 2008, Martin Langhoff wrote:
 
-Left behind on the far side of oblivion; I do not offhand recall what this
-was about, sorry.
+> On Mon, Jul 28, 2008 at 11:14 AM, Roman Zippel <zippel@linux-m68k.org> wrote:
+> > Why are you dismissing what I wrote without even giving it a second
+> > thought? I didn't bother with the initial example, because it's so
+> > simple, that it's no real challenge.
+> 
+> I can't speak for anyone else, but you do have to keep in mind that a
+> solution to this has to be rather fast - and I mean fast in git terms,
+> not in scripting-language-fast terms.
+
+You also have to keep in mind, that I haven't really hacked git before, so 
+I'm just trying to do something with the data I can somehow extract from 
+it. I seriously didn't thought that anyone wouldn't understand that the 
+code example was just a proof of concept.
+
+> That you can do it Ruby - and I may be able to do it Perl - has little
+> bearing on what can be done inside the git log machinery with a small
+> performance penalty.
+
+It also has to do with correctness, is performance more important than 
+correctness? 
+Part of the problem is, what is the correct history, as which it should be 
+displayed via the various interfaces by default.
+
+bye, Roman
