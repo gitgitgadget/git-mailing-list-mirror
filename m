@@ -1,143 +1,115 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: GTP/0.1 terminology 101: commit reels and references
-Date: Tue, 29 Jul 2008 00:30:49 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807290014110.2725@eeepc-johanness>
-References: <488D42B6.4030701@gmail.com> <1217228570.6750.24.camel@maia.lan>  <7vk5f6tqsj.fsf@gitster.siamese.dyndns.org>  <1217239419.6750.73.camel@maia.lan>  <alpine.DEB.1.00.0807281350590.2725@eeepc-johanness> <1217273166.25690.20.camel@maia.lan>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: git submodules
+Date: Mon, 28 Jul 2008 18:32:54 -0400
+Message-ID: <32541b130807281532v3eed94ebv8037247618e9bd55@mail.gmail.com>
+References: <20080728162003.GA4584@artemis.madism.org>
+	 <320075ff0807281323l51bb6478j30e3e4c490974a70@mail.gmail.com>
+	 <20080728205545.GB10409@artemis.madism.org>
+	 <20080728205923.GC10409@artemis.madism.org>
+	 <32541b130807281440v64f3cb9ci50cf6d16be4f2f82@mail.gmail.com>
+	 <20080728220308.GF10409@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Joshua Roys <roysjosh@gmail.com>, gittorrent@lists.utsl.gen.nz,
-	git@vger.kernel.org, Jonas Fonseca <fonseca@diku.dk>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Tue Jul 29 00:30:51 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Pierre Habouzit" <madcoder@debian.org>,
+	"Avery Pennarun" <apenwarr@gmail.com>,
+	"Nigel Magnay" <nigel.magnay@gmail.com>,
+	"Git ML" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 29 00:34:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNbEs-00038p-0N
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 00:30:46 +0200
+	id 1KNbHw-000463-DN
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 00:33:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752739AbYG1W3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 18:29:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752526AbYG1W3p
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 18:29:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44804 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752144AbYG1W3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 18:29:44 -0400
-Received: (qmail invoked by alias); 28 Jul 2008 22:29:42 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp055) with SMTP; 29 Jul 2008 00:29:42 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+6njByrXS6wgfwfowuNFJGH7fKLYhOdqMoVWPGvv
-	cfe4OFpZqqXdIL
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <1217273166.25690.20.camel@maia.lan>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+	id S1752760AbYG1Wc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 18:32:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752494AbYG1Wc4
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 18:32:56 -0400
+Received: from qw-out-2122.google.com ([74.125.92.26]:34373 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752144AbYG1Wcz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 18:32:55 -0400
+Received: by qw-out-2122.google.com with SMTP id 3so342352qwe.37
+        for <git@vger.kernel.org>; Mon, 28 Jul 2008 15:32:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=XZG3xGNGw7WYMRDVMkd++SMr3axrFIGt9RLn5FFnr+E=;
+        b=dldj3/w4614VeuhjEDZgeHWxBmzsrmR6/2GLTBX7q6LxMa30q13r0T6FK2sHTsbnnl
+         ypKsmv5xuCGbQx/LHqS44Jnie6EHG5AN7D8qTXitD7y6VyasT6/2iID/ncxAEp8ZCPDb
+         BzMZOf2DByDElqWJXCLg+VETDJfFe6cH+2148=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=K5uDqK54sBZQRpT9fxDtYIo+aPBXRnBcyjakFSPVzsH6y9x2gK+O5xDsRO3AOmvQw5
+         RPFPS1GyjUaLPFQhUYELPSA9ux7CKJk5936wOxwRtr4CFBZ3t1HPgoE1xc2CPKFQHdvg
+         4iUneZX3hcVRHLCq+8zUOAVINPihFhHXRWuoo=
+Received: by 10.214.26.20 with SMTP id 20mr619503qaz.9.1217284374513;
+        Mon, 28 Jul 2008 15:32:54 -0700 (PDT)
+Received: by 10.150.96.5 with HTTP; Mon, 28 Jul 2008 15:32:54 -0700 (PDT)
+In-Reply-To: <20080728220308.GF10409@artemis.madism.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90515>
 
-Hi,
+On 7/28/08, Pierre Habouzit <madcoder@debian.org> wrote:
+>  > It's unfortunate that submodules involve a commit->tree->commit link
+>  > structure.
+>
+> Actually it's not a big problem, you just have to "dereference" twice
+>  instead of one, and be prepared to the fact that the second dereference
+>  may fail (because you miss some objects). I instead believe that
+>  gitlinks are a good idea.
 
-On Tue, 29 Jul 2008, Sam Vilain wrote:
+It's actually complicated to generate the log, however.  To be 100%
+accurate in creating a combined log of the supermodule and submodule,
+you'd have to check *for each supermodule commit* whether there were
+any changes in gitlinks.  And gitlinks might move around between
+revisions, so you can't just look up a particular path in each
+revision; you have to traverse the entire tree.  And you can't just
+look at the start and end supermodule commits to see if the gitlinks
+changed; they might have changed and then changed back, which is quite
+relevant to log messages.
 
-> On Mon, 2008-07-28 at 14:01 +0200, Johannes Schindelin wrote:
-> > >   - the reel has a defined object order (which as I hoped to 
-> > >     demonstrate in the test cases, is just a refinement of rev-list 
-> > >     --date-order)
-> > 
-> > Do you mean that the commit reel is a list pointing to bundles that 
-> > can be sorted topologically by their contained commits?
-> 
-> Yes, but it is more defined than that.  There are still ambiguities with 
-> topological sort, so the gittorrent spec specified exactly how all ties 
-> are broken.  They happen to be a further refinement of --date-order, 
-> with respect to the ordering of commits.
+Probably it's more useful to just commit the git-shortlog of the
+submodule whenever you update the gitlink.  It won't work with bisect,
+exactly, but that's less important than generally having an idea of
+what happened by reading the log.  ISTR somenoe submitted a
+git-submodule patch for that already somewhere, but I've been known to
+imagine things.
 
-But does that not mean that any new ref branching off of an ancient commit 
-changes all the pack boundaries?
+> Well, using the same [branch] as the supermodule is probably the less confusing
+>  way. Of course, not being in the "same" branch as the supermodule would
+>  clearly be a case of your tree being "dirty", and it would prevent a
+>  "git checkout" to work in the very same way that git checkout doesn't
+>  work if you have locally modified files.
+>
+>  If your submodule branching layout uses the same names as the
+>  supermodule branches then yes, it's going to hurt, but I believe it to
+>  be unlikely (else you would become insane just trying to remember what
+>  you are doing ;p).
 
-I'd rather have an intelligent incremental updater, and keep most of the 
-existing bundles immutable.  That way, a new ref, or a changed one, can be 
-mostly served from peers, not exclusively from the seeders.
+I think this is much more common than you think.  An easy example is
+that I'm developing a new version of my application in the
+supermodule's "master", but it relies on a released version of my
+submodule, definitely not the experimental "master" version.  Using
+your logic, the local branch of the submodule would be called master,
+but wouldn't correspond at all to the remote submodule's master.
 
-> > >   - deltas always point in one direction, to objects "earlier" on 
-> > >     the reel, so that slices of the reel sent on the network can be 
-> > >     made thin without resulting in unresolvable deltas (which should 
-> > >     be possible to do on commit boundaries using rev-list 
-> > >     --objects-edge)
-> >
-> > That is exactly what bundles do.  They are thin, as they assume that a 
-> > few "preconditions", i.e. refs, are present.
-> 
-> Ok.  I think there are also some other trivial differences such as 
-> bundles containing refs (which in the context of gittorrent will be 
-> useless).
+I believe such a situation would be even worse than no branch at all.
+It could lead to people pushing/pulling all sorts of bad things from
+the wrong places.  At least right now, people become confused and ask
+for help instead of becoming confused and making a mess.
 
-Yeah, I think that bundles themselves are pretty useless in gitorrent.  
-But what they _contain_ is pretty much what you need as blocks.
+Have fun,
 
-> > >   - the behaviour at the beginning of the reel is precisely defined 
-> > >     (although as I said, I think that the decision might be worth 
-> > >     revisiting - perhaps getting just the latest reel is a useful 
-> > >     'shallow clone')
-> > 
-> > If you want to allow shallow clones, you must make the bundles 
-> > non-thin.  That would be a major bandwidth penalty.
-> > 
-> > I'd rather not allow shallow clones with Gitorrent.
-> 
-> By "Shallow" I think I mean a different thing to you.  I mean something 
-> akin to just the last pack's worth of commits.
-
-That _is_ a shallow clone.  And that is exactly what I meant.  If you want 
-to have all objects of the commits in the same pack, then you are 
-basically making fat packs.  Which come with a hefty bandwidth penalty.
-
-That is why I would suggest not allowing shallow clones; if you want to 
-allow them, I have to ask myself why bother with a torrent at all...  It 
-is not like the shallow clones are large, or that the people fetching them 
-will stay around long to seed anything, and the packs would change 
-frequently, making the whole torrent business pretty inefficient.
-
-> > > It's the lack of guarantees which is the issue, really.
-> > 
-> > It should not be too difficult to provide a rev-list option (which is 
-> > inherited by git-bundle, then) to pay an extra time to make sure that 
-> > the bundle is minimal.
-> 
-> Ok.  But from the current implementation's perspective, this is not yet 
-> needed, we are just using the existing API.
-
-Why make it hard?  We have a lively community with brilliant people, and 
-they frequently have fun solving puzzles like this: what is the best 
-strategy to make equally sized, rarely (or maybe never?) changing packs 
-from a set of given refs.
-
-> Actually what would be useful would be for the thin pack generation to 
-> also allow any object to be specified as its input list, not just 
-> commits... then we wouldn't have to break blocks on commit boundaries 
-> (see http://gittorrent.utsl.gen.nz/rfc.html#org-blocks).
-
-That should be easy, but I think that it would be _even better_ if we ask 
-pack-objects to generate several packs from the needed objects.  Ooops.  
-That already exists: 
-
-	$ git pack-objects --max-pack-size=<n>
-
-Storing the packs in a second GIT_OBJECT_DIRECTORY that has the 
-original as an alternate, together with the --local flag, should help even 
-further: You can mark the last pack (which does not reach max-pack-size, 
-most likely), remove it and just rerun the packing.
-
-Of course, this needs some thought when large chunks of the object 
-database become stale when a long branch was just deleted.  Not a major 
-obstacle, though.
-
-Ciao,
-Dscho
+Avery
