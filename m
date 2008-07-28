@@ -1,58 +1,75 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: GIT 1.6.0-rc1
-Date: Mon, 28 Jul 2008 08:38:38 +0200
-Message-ID: <20080728063838.GB4234@blimp.local>
-References: <7vy73myim5.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/9] Makefile: Do not install a copy of 'git' in
+ $(gitexecdir)
+Date: Sun, 27 Jul 2008 23:39:50 -0700
+Message-ID: <7v63qqv7ex.fsf@gitster.siamese.dyndns.org>
+References: <1216667998-8879-1-git-send-email-johannes.sixt@telecom.at>
+ <1216667998-8879-2-git-send-email-johannes.sixt@telecom.at>
+ <488D104F.8080005@gmail.com> <7vabg2v83o.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 28 08:40:01 2008
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: gitzilla@gmail.com
+X-From: git-owner@vger.kernel.org Mon Jul 28 08:41:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNMOT-0003EX-EK
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 08:39:41 +0200
+	id 1KNMPo-0003kf-Bk
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 08:41:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751708AbYG1Gil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 02:38:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751567AbYG1Gik
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 02:38:40 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.180]:40958 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751237AbYG1Gik (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 02:38:40 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg2r44guxV
-Received: from tigra.home (Fa949.f.strato-dslnet.de [195.4.169.73])
-	by post.webmailer.de (klopstock mo26) (RZmta 16.47)
-	with ESMTP id t0239dk6S1P0SP ; Mon, 28 Jul 2008 08:38:38 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 4587C277BD;
-	Mon, 28 Jul 2008 08:38:38 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id 2282A36D18; Mon, 28 Jul 2008 08:38:38 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vy73myim5.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751860AbYG1GkD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 02:40:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbYG1GkD
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 02:40:03 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65243 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751833AbYG1GkB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 02:40:01 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D14683F547;
+	Mon, 28 Jul 2008 02:39:57 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id B0C253F546; Mon, 28 Jul 2008 02:39:52 -0400 (EDT)
+In-Reply-To: <7vabg2v83o.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 27 Jul 2008 23:24:59 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FEE41E30-5C6F-11DD-9E1C-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90420>
 
-Junio C Hamano, Mon, Jul 28, 2008 02:09:38 +0200:
-> Ok, so I tagged and pushed it out.  There still is the "git mv" bugfix
-> from Pasky that is parked in 'next' but other than that I think this is
-> pretty much "it" for 1.6.0 feature-wise.
-> 
-> Major parts of the changes since 1.6.0-rc0 consists of documentation and
-> tests portability; there is nothing surprising nor scary.
+Junio C Hamano <gitster@pobox.com> writes:
 
-t2103-update-index-ignore-missing.sh still broken on Windows because
-of stat.st_size being 0 for directories there.
+>> This new action needs to be in a conditional to keep it from removing
+>> the ONLY git executable when bindir and execdir are the same dir.
+>
+> Heh, I love bug reports that come immediately after I tag the tip of
+> 'master' as -rc1.
 
-    http://thread.gmane.org/gmane.comp.version-control.git/89370
+This should do, but to be very honest, I really hate the output from the
+foreach that precedes this section.
+
+ Makefile |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 798a2f2..92df61c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1362,7 +1362,10 @@ endif
+ 		cp "$$bindir/git$X" "$$execdir/git$X"; \
+ 	fi && \
+ 	{ $(foreach p,$(BUILT_INS), $(RM) "$$execdir/$p" && ln "$$execdir/git$X" "$$execdir/$p" ;) } && \
+-	$(RM) "$$execdir/git$X" && \
++	if test "z$$bindir" != "z$$execdir"; \
++	then \
++		$(RM) "$$execdir/git$X"; \
++	fi && \
+ 	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
+ 
+ install-doc:
