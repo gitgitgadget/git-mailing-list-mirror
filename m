@@ -1,79 +1,68 @@
-From: "Thomas Adam" <thomas.adam22@gmail.com>
-Subject: Re: Adding custom hooks to a bare repository.
-Date: Mon, 28 Jul 2008 13:32:19 +0100
-Message-ID: <18071eea0807280532l69d12e3ehb8377da9d24e035@mail.gmail.com>
-References: <18071eea0807280404w3365748cjcd11f536bf5d27eb@mail.gmail.com>
-	 <alpine.DEB.1.00.0807281324350.2725@eeepc-johanness>
+From: Steve Haslam <shaslam@lastminute.com>
+Subject: Re: [PATCH] Remove references to git-fetch-pack from "git clone"
+    documentation.
+Date: Mon, 28 Jul 2008 13:32:50 +0100
+Message-ID: <488DBC72.8040204@lastminute.com>
+References: <1217011068-1675-1-git-send-email-shaslam@lastminute.com> <alpine.DEB.1.00.0807260523520.26810@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "git mailing list" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 28 14:33:25 2008
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 28 14:34:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNRui-0007qz-Q3
-	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 14:33:21 +0200
+	id 1KNRvO-00083V-Gb
+	for gcvg-git-2@gmane.org; Mon, 28 Jul 2008 14:34:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751032AbYG1McU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 08:32:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751012AbYG1McU
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 08:32:20 -0400
-Received: from wf-out-1314.google.com ([209.85.200.174]:11132 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750838AbYG1McT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 08:32:19 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so5707408wfd.4
-        for <git@vger.kernel.org>; Mon, 28 Jul 2008 05:32:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Zj/F8XEZ6ZNVlxztgXegB6ME78upZvV/2j1VFZvUseo=;
-        b=xCnz+0sPFwHqAaCvS2XEgNkJZnyVV2VpZqn7jH/OY2W6vjhnMw1RuFTYoKpZImHOMX
-         1d0v3vibpcPy3mRbewvPu3Inyq9y3bsv7H1chxh54Kgz6GVGKAF15fqfAjabq11N+sqN
-         T3fvmbzdk/z3gxivF4armMMqilJUufv1d8XbA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=AZzLOPfpO9c9KruUhx7xfmffA9AGkbtUvxI5WdJ5GaQXCgJ0rKIU6dTxBwS9viDoGJ
-         ehspiH89Bo+QKv69mjF9Qz/HWVY5oVWg3er3AvLkM4yRi5Z2wkkZuuNq3VRT8E6D6+LZ
-         0lKbxHAEEoaFMnCXGNPvxaxkDLZQyKWVOkwq8=
-Received: by 10.142.78.10 with SMTP id a10mr1584253wfb.37.1217248339172;
-        Mon, 28 Jul 2008 05:32:19 -0700 (PDT)
-Received: by 10.142.104.15 with HTTP; Mon, 28 Jul 2008 05:32:19 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0807281324350.2725@eeepc-johanness>
-Content-Disposition: inline
+	id S1751224AbYG1MdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 08:33:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbYG1MdB
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 08:33:01 -0400
+Received: from sglonmg02-out.sabre.com ([151.193.120.24]:21539 "EHLO
+	sglonmg02-out.sabre.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751224AbYG1MdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 08:33:01 -0400
+X-ExtLoop1: From 10.136.85.54
+X-IronPort-AV: E=Sophos;i="4.31,265,1215385200"; 
+   d="scan'208";a="1124800056"
+Received: from unknown (HELO sglonbh01.Global.ad.sabre.com) ([10.136.85.54])
+  by sglonmg02-out.sabre.com with ESMTP; 28 Jul 2008 13:33:00 +0100
+Received: from sglonms02.Global.ad.sabre.com ([10.136.85.20]) by sglonbh01.Global.ad.sabre.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 28 Jul 2008 13:32:59 +0100
+Received: from [10.104.41.28] ([10.104.41.28]) by sglonms02.Global.ad.sabre.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 28 Jul 2008 13:32:58 +0100
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <alpine.DEB.1.00.0807260523520.26810@eeepc-johanness>
+X-OriginalArrivalTime: 28 Jul 2008 12:32:58.0374 (UTC) FILETIME=[11354A60:01C8F0AE]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90451>
 
-2008/7/28 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Yes.  Hooks, just as the config and reflogs, are supposed to be local
-> things.  Rationale being: it is rude, and also insecure, to install
-> something that potentially calls other programs without the user saying
-> so.
+Johannes Schindelin wrote:
+> Hi,
+>
+> On Fri, 25 Jul 2008, Steve Haslam wrote
+>> "git clone" no longer calls "git-fetch-pack",
+>>     
+>
+> So it calls it internally, avoiding fork() and exec().  But the code is 
+> still git-fetch-pack's.  The difference should be lost on the regular Git 
+> user.
+>   
+Well, I would say that the git-clone command uses code that is also used 
+by the git-fetch-pack command; but as you indicate, this is a minor 
+implementation detail.
 
-Oh absolutely, I agree with that.
+I think that the documentation was perhaps too explicit and as a result 
+stale: git-clone certainly does not work any more by creating a 
+"--exec=..." argument to pass to the git-fetch-pack command even 
+internally, it calls code in transport.c. As you say, the difference is 
+immaterial to most users, and a simplified version of the documentation 
+should be adequate (and possibly clearer).
 
-> All you can do is checking in a copy of the hook, and ask your users/check
-> in your build system that it is installed.
-
-Hmm -- perhaps I am being unintentionally dense, but I am assuming
-that when you say "checking in a copy" you mean anywhere other than
-.git/hooks/ since that isn't tracked by git.  I have no problem with
-the rationale you've just described -- but it would be handy to add
-this post-merge hook script into hooks/ (exec bit removed) such that
-on a clone, all one would need to do is chmod +x it.   If that's
-possible, I'm clearly missing the steps to enable this.
-
-Thanks,
-
--- Thomas Adam
+SRH
