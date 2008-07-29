@@ -1,87 +1,167 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: git-svn and svn:externals, was Re: Hackontest ideas?
-Date: Tue, 29 Jul 2008 12:08:55 -0400
-Message-ID: <32541b130807290908l13e753d8t1357db452a04f491@mail.gmail.com>
-References: <20080729000103.GH32184@machine.or.cz>
-	 <m3myk1t54c.fsf@localhost.localdomain>
-	 <alpine.DEB.1.00.0807291354130.4631@eeepc-johanness>
-	 <200807291428.32072.jnareb@gmail.com>
-	 <alpine.DEB.1.00.0807291502450.4631@eeepc-johanness>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Support copy and rename detection in fast-export.
+Date: Tue, 29 Jul 2008 09:11:57 -0700
+Message-ID: <7v7ib4hdpu.fsf@gitster.siamese.dyndns.org>
+References: <200807211216.01694.angavrilov@gmail.com>
+ <200807262249.18005.angavrilov@gmail.com>
+ <20080726202103.GA15769@spearce.org>
+ <200807270052.55370.angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, "Petr Baudis" <pasky@ucw.cz>,
-	"Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 29 18:09:57 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 18:13:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNrls-0003Fe-PO
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 18:09:57 +0200
+	id 1KNrp3-0004lD-LR
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 18:13:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757598AbYG2QI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 12:08:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754729AbYG2QI6
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 12:08:58 -0400
-Received: from rv-out-0506.google.com ([209.85.198.224]:11592 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753291AbYG2QI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 12:08:57 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so5109993rvb.1
-        for <git@vger.kernel.org>; Tue, 29 Jul 2008 09:08:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=d/gFCuz30oZjQVpDUN+Kv0hJLEMxyj0W5Xq6reXzDpk=;
-        b=uArYQNs31iWVyviz3fBbNlWmxVBpNoDUfF7b6teqpwpQ/Mh1h4k2XGVyMcl3BRBv+V
-         GGqmN4F8Y4wo3jtuyZtA7UK5czNiHU7UYjMLSAhyBrBaAwAN4DQ8iZ9C6a9oBiG5unBV
-         CJ+A8MxuW3eT1Qt1OtXSabWmnDrZcZf+3FbB8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=x0XcAxzJD+55VgUZgz/4JE/hDB036FzykFliGJzxa0zUFCs7YP5IqCUczLLB8J0sqr
-         fwq9Nyo10A4WwAzUr+zSSiEp1LTCSIt9tjBRMLZBpCvAq7Ir7yhdCkVhHidqB4Vqa+BL
-         u8IvSd8o6UzYjVNsrIZ75lUjO+IXEQvfpAZPo=
-Received: by 10.140.170.12 with SMTP id s12mr3311068rve.83.1217347735722;
-        Tue, 29 Jul 2008 09:08:55 -0700 (PDT)
-Received: by 10.150.98.19 with HTTP; Tue, 29 Jul 2008 09:08:55 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0807291502450.4631@eeepc-johanness>
-Content-Disposition: inline
+	id S1755458AbYG2QML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 12:12:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755364AbYG2QML
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 12:12:11 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41270 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754182AbYG2QMJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 12:12:09 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4D68B41246;
+	Tue, 29 Jul 2008 12:12:07 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id DE9B141241; Tue, 29 Jul 2008 12:12:01 -0400 (EDT)
+In-Reply-To: <200807270052.55370.angavrilov@gmail.com> (Alexander Gavrilov's
+ message of "Sun, 27 Jul 2008 00:52:54 +0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1741300C-5D89-11DD-85FD-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90652>
 
-On 7/29/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->  On Tue, 29 Jul 2008, Jakub Narebski wrote:
->  > If I understand correctly with version 1.5 svn:externals can be
->  > specified using "peg revisions", so they could refer to some specific
->  > revision of 'external', like git submodules.
+Alexander Gavrilov <angavrilov@gmail.com> writes:
+
+> Although it does not matter for Git itself, tools that
+> export to systems that explicitly track copies and
+> renames can benefit from such information.
 >
-> ... which only means that if they had done that from the beginning, it
->  the git-svn enhancement would be easy.
+> This patch makes fast-export output correct action
+> logs when -M or -C are enabled.
 >
->  But as they did not have it from the beginning, anybody tackling git-svn
->  and svn:externals will have to come up with sensible semantics for the
->  hard case.
+> Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+> ---
+>
+> 	On Sunday 27 July 2008 00:21:03 Shawn O. Pearce wrote:
+> 	> Do you mean to say git-fast-export in the end of the first line of
+> 	> that last paragraph?
+>
+> 	Yes, of course. Thank you.
 
-One option would be to simply attach the submodule to the "latest
-commit of the svn:external at the time the supermodule svn commit was
-made".  Basically, enforce git-submodule's precise revision feature
-retroactively onto svn:externals.
+Alexander, Shawn, what is the status of this patch?  Has it been reviewed
+sufficiently and is ready for application?
 
-I think this would be perfectly fine in my own projects, for example:
-it's what I wanted in the first place, but svn didn't have this
-feature, so I faked it by branching/tagging the external repo whenever
-I wanted to link to a particular revision.
+>  Documentation/git-fast-export.txt |    9 +++++++
+>  builtin-fast-export.c             |   28 +++++++++++++++++++++-
+>  t/t9301-fast-export.sh            |   46 +++++++++++++++++++++++++++++++++++++
+>  3 files changed, 81 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
+> index 332346c..bb2f9a8 100644
+> --- a/Documentation/git-fast-export.txt
+> +++ b/Documentation/git-fast-export.txt
+> @@ -36,6 +36,15 @@ when encountering a signed tag.  With 'strip', the tags will be made
+>  unsigned, with 'verbatim', they will be silently exported
+>  and with 'warn', they will be exported, but you will see a warning.
+>  
+> +-M, -C::
+> +	Perform move and/or copy detection, as described in the
+> +	linkgit:git-diff[1] manual page, and use it to generate
+> +	rename and copy commands in the output dump.
 
-Have fun,
+I think it is more fashionable to do what 3240240 (Docs: Use
+"-l::\n--long\n" format in OPTIONS sections, 2008-06-08) did these days,
+i.e.:
 
-Avery
+	-M::
+        -C::
+        	Description...
+
+> ++
+> +Note that these options were always accepted by git-fast-export,
+> +but before a certain version it silently produced wrong results.
+> +You should always check the git version before using them.
+> +
+
+I do not quite follow the mention of "before a certain version", but I
+think it is talking about the earlier "fast-export" that took any diff
+options but did not act differently upon renamed/copied entries.  If that
+is the case, I think we can say something like this instead:
+
+	Note that earlier versions of this command did not complain and
+	produced incorrect results if you gave these options.
+
+because docs always talk about the current version.  My reading of Dscho's
+original 'show_filemodify' suggests me that "wrong results" does not just
+mean missing rename/copy information but a renamed old entity did not get
+removed correctly, resulting in an incorrect tree in the commit, right?
+Maybe we would want to be a bit more explicit about what kind of breakage
+you are talking about here.
+
+> diff --git a/builtin-fast-export.c b/builtin-fast-export.c
+> index 8bea269..3225e8f 100644
+> --- a/builtin-fast-export.c
+> +++ b/builtin-fast-export.c
+> @@ -118,10 +118,27 @@ static void show_filemodify(struct diff_queue_struct *q,
+>  {
+>  	int i;
+>  	for (i = 0; i < q->nr; i++) {
+> +		struct diff_filespec *ospec = q->queue[i]->one;
+>  		struct diff_filespec *spec = q->queue[i]->two;
+> -		if (is_null_sha1(spec->sha1))
+> +
+> +		switch (q->queue[i]->status) {
+> +		case DIFF_STATUS_DELETED:
+>  			printf("D %s\n", spec->path);
+> -		else {
+> +			break;
+> +
+> +		case DIFF_STATUS_COPIED:
+> +		case DIFF_STATUS_RENAMED:
+> +			printf("%c \"%s\" \"%s\"\n", q->queue[i]->status,
+> +			       ospec->path, spec->path);
+> +
+> +			if (!hashcmp(ospec->sha1, spec->sha1) &&
+> +			    ospec->mode == spec->mode)
+> +				break;
+> +			/* fallthrough */
+
+If you see a copied or renamed entry, you emit "this old path to that old
+path" first, and then say that same path got modified.  It appears from my
+quick glance of fast-import that touching the same path more than once in
+a same commit like this sequence does would work fine (it will involve two
+calls to tree_content_set() for the same path but that is not something it
+has to forbid, and the function doesn't).
+
+> diff --git a/t/t9301-fast-export.sh b/t/t9301-fast-export.sh
+> index f18eec9..bb595b7 100755
+> --- a/t/t9301-fast-export.sh
+> +++ b/t/t9301-fast-export.sh
+> @@ -162,4 +162,50 @@ test_expect_success 'submodule fast-export | fast-import' '
+>  
+>  '
+>  
+> +export GIT_AUTHOR_NAME='A U Thor'
+> +export GIT_COMMITTER_NAME='C O Mitter'
+> +
+> +test_expect_success 'setup copies' '
+> +
+> +	git config --unset i18n.commitencoding &&
+
+These are somewhat unusual.  Was there any reason for these exports and
+config?
