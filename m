@@ -1,172 +1,156 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 1/5] builtin-help: make is_git_command() usable outside builtin-help
-Date: Tue, 29 Jul 2008 17:24:59 +0200
-Message-ID: <fd19583955e9cea5b78a465d23bc127a51940048.1217344803.git.vmiklos@frugalware.org>
+Subject: [PATCH 3/5] builtin-help: make it possible to exclude some commands in list_commands()
+Date: Tue, 29 Jul 2008 17:25:01 +0200
+Message-ID: <5ad105819efb1c905bd01db3d08eb3422d283b3b.1217344803.git.vmiklos@frugalware.org>
 References: <cover.1217344802.git.vmiklos@frugalware.org>
+ <fd19583955e9cea5b78a465d23bc127a51940048.1217344803.git.vmiklos@frugalware.org>
+ <5a003a0e20d0942c946680e4eade8e9d19f0036b.1217344803.git.vmiklos@frugalware.org>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 17:26:15 2008
+X-From: git-owner@vger.kernel.org Tue Jul 29 17:26:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNr5K-0001WP-MJ
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 17:25:59 +0200
+	id 1KNr5J-0001WP-DK
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 17:25:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753691AbYG2PYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 11:24:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753902AbYG2PYm
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 11:24:42 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:46524 "EHLO
+	id S1754005AbYG2PYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 11:24:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753596AbYG2PYk
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 11:24:40 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:46521 "EHLO
 	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753616AbYG2PYh (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1753519AbYG2PYh (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 29 Jul 2008 11:24:37 -0400
 Received: from vmobile.example.net (dsl5400FA31.pool.t-online.hu [84.0.250.49])
-	by yugo.frugalware.org (Postfix) with ESMTP id BE89D1DDC5B;
+	by yugo.frugalware.org (Postfix) with ESMTP id D32A11DDC5E;
 	Tue, 29 Jul 2008 17:24:34 +0200 (CEST)
 Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 5C51B1AA739; Tue, 29 Jul 2008 17:25:04 +0200 (CEST)
+	id 968CE1AB591; Tue, 29 Jul 2008 17:25:04 +0200 (CEST)
 X-Mailer: git-send-email 1.6.0.rc0.14.g95f8.dirty
-In-Reply-To: <cover.1217344802.git.vmiklos@frugalware.org>
+In-Reply-To: <5a003a0e20d0942c946680e4eade8e9d19f0036b.1217344803.git.vmiklos@frugalware.org>
 In-Reply-To: <cover.1217344802.git.vmiklos@frugalware.org>
 References: <cover.1217344802.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90646>
 
-Other builtins may want to check if a given command is a valid git
-command or not as well. Additionally add a new parameter that specifies
-a custom prefix, so that the "git-" prefix is no longer hardwired.
-Useful for example to limit the search for "git-merge-*".
+The supposed method is to build a list of commands to be excluded using
+add_cmdname(), then pass the list as the new exclude parameter. If no
+exclude is needed, NULL should be used.
 
 Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 ---
- Makefile |    1 +
- help.c   |   25 ++++++++++++++-----------
- help.h   |    6 ++++++
- 3 files changed, 21 insertions(+), 11 deletions(-)
- create mode 100644 help.h
+ help.c |   26 +++++++++++---------------
+ help.h |   14 +++++++++++++-
+ 2 files changed, 24 insertions(+), 16 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 798a2f2..351afd7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -355,6 +355,7 @@ LIB_H += git-compat-util.h
- LIB_H += graph.h
- LIB_H += grep.h
- LIB_H += hash.h
-+LIB_H += help.h
- LIB_H += list-objects.h
- LIB_H += ll-merge.h
- LIB_H += log-tree.h
 diff --git a/help.c b/help.c
-index 3cb1962..08188f5 100644
+index 7a42517..858f76a 100644
 --- a/help.c
 +++ b/help.c
-@@ -418,11 +418,11 @@ static int is_executable(const char *name)
+@@ -9,6 +9,7 @@
+ #include "common-cmds.h"
+ #include "parse-options.h"
+ #include "run-command.h"
++#include "help.h"
+ 
+ static struct man_viewer_list {
+ 	struct man_viewer_list *next;
+@@ -300,18 +301,11 @@ static inline void mput_char(char c, unsigned int num)
+ 		putchar(c);
  }
  
- static unsigned int list_commands_in_dir(struct cmdnames *cmds,
--					 const char *path)
-+					 const char *path,
-+					 const char *prefix)
+-static struct cmdnames {
+-	int alloc;
+-	int cnt;
+-	struct cmdname {
+-		size_t len;
+-		char name[1];
+-	} **names;
+-} main_cmds, other_cmds;
++struct cmdnames main_cmds, other_cmds;
+ 
+-static void add_cmdname(struct cmdnames *cmds, const char *name, int len)
++void add_cmdname(struct cmdnames *cmds, const char *name, int len)
  {
- 	unsigned int longest = 0;
--	const char *prefix = "git-";
--	int prefix_len = strlen(prefix);
-+	int prefix_len;
- 	DIR *dir = opendir(path);
- 	struct dirent *de;
- 	struct strbuf buf = STRBUF_INIT;
-@@ -430,6 +430,9 @@ static unsigned int list_commands_in_dir(struct cmdnames *cmds,
+-	struct cmdname *ent = xmalloc(sizeof(*ent) + len);
++	struct cmdname *ent = xmalloc(sizeof(*ent) + len + 1);
  
- 	if (!dir)
- 		return 0;
-+	if (!prefix)
-+		prefix = "git-";
-+	prefix_len = strlen(prefix);
- 
- 	strbuf_addf(&buf, "%s/", path);
- 	len = buf.len;
-@@ -460,7 +463,7 @@ static unsigned int list_commands_in_dir(struct cmdnames *cmds,
+ 	ent->len = len;
+ 	memcpy(ent->name, name, len);
+@@ -463,7 +457,7 @@ static unsigned int list_commands_in_dir(struct cmdnames *cmds,
  	return longest;
  }
  
--static unsigned int load_command_list(void)
-+static unsigned int load_command_list(const char *prefix)
+-static unsigned int load_command_list(const char *prefix)
++static unsigned int load_command_list(const char *prefix, struct cmdnames *exclude)
  {
  	unsigned int longest = 0;
  	unsigned int len;
-@@ -469,7 +472,7 @@ static unsigned int load_command_list(void)
- 	const char *exec_path = git_exec_path();
+@@ -502,13 +496,15 @@ static unsigned int load_command_list(const char *prefix)
+ 	      sizeof(*other_cmds.names), cmdname_compare);
+ 	uniq(&other_cmds);
+ 	exclude_cmds(&other_cmds, &main_cmds);
++	if (exclude)
++		exclude_cmds(&main_cmds, exclude);
  
- 	if (exec_path)
--		longest = list_commands_in_dir(&main_cmds, exec_path);
-+		longest = list_commands_in_dir(&main_cmds, exec_path, prefix);
+ 	return longest;
+ }
  
- 	if (!env_path) {
- 		fprintf(stderr, "PATH not set\n");
-@@ -481,7 +484,7 @@ static unsigned int load_command_list(void)
- 		if ((colon = strchr(path, PATH_SEP)))
- 			*colon = 0;
- 
--		len = list_commands_in_dir(&other_cmds, path);
-+		len = list_commands_in_dir(&other_cmds, path, prefix);
- 		if (len > longest)
- 			longest = len;
- 
-@@ -505,7 +508,7 @@ static unsigned int load_command_list(void)
- 
- static void list_commands(void)
+-void list_commands(const char *prefix, const char *title)
++void list_commands(const char *prefix, const char *title, struct cmdnames *exclude)
  {
--	unsigned int longest = load_command_list();
-+	unsigned int longest = load_command_list(NULL);
+-	unsigned int longest = load_command_list(prefix);
++	unsigned int longest = load_command_list(prefix, exclude);
  	const char *exec_path = git_exec_path();
  
  	if (main_cmds.cnt) {
-@@ -551,9 +554,9 @@ static int is_in_cmdlist(struct cmdnames *c, const char *s)
- 	return 0;
- }
+@@ -558,7 +554,7 @@ static int is_in_cmdlist(struct cmdnames *c, const char *s)
  
--static int is_git_command(const char *s)
-+int is_git_command(const char *s, const char *prefix)
+ int is_git_command(const char *s, const char *prefix)
  {
--	load_command_list();
-+	load_command_list(prefix);
+-	load_command_list(prefix);
++	load_command_list(prefix, NULL);
  	return is_in_cmdlist(&main_cmds, s) ||
  		is_in_cmdlist(&other_cmds, s);
  }
-@@ -574,7 +577,7 @@ static const char *cmd_to_page(const char *git_cmd)
- 		return "git";
- 	else if (!prefixcmp(git_cmd, "git"))
- 		return git_cmd;
--	else if (is_git_command(git_cmd))
-+	else if (is_git_command(git_cmd, NULL))
- 		return prepend("git-", git_cmd);
- 	else
- 		return prepend("git", git_cmd);
-@@ -712,7 +715,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 	}
+@@ -704,7 +700,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
  
- 	alias = alias_lookup(argv[0]);
--	if (alias && !is_git_command(argv[0])) {
-+	if (alias && !is_git_command(argv[0], NULL)) {
- 		printf("`git %s' is aliased to `%s'\n", argv[0], alias);
+ 	if (show_all) {
+ 		printf("usage: %s\n\n", git_usage_string);
+-		list_commands("git-", "git commands");
++		list_commands("git-", "git commands", NULL);
+ 		printf("%s\n", git_more_info_string);
  		return 0;
  	}
 diff --git a/help.h b/help.h
-new file mode 100644
-index 0000000..73da8d6
---- /dev/null
+index 0741662..3eb8cfb 100644
+--- a/help.h
 +++ b/help.h
-@@ -0,0 +1,6 @@
-+#ifndef HELP_H
-+#define HELP_H
+@@ -1,7 +1,19 @@
+ #ifndef HELP_H
+ #define HELP_H
+ 
++struct cmdnames {
++	int alloc;
++	int cnt;
++	struct cmdname {
++		size_t len;
++		char name[FLEX_ARRAY];
++	} **names;
++};
 +
-+int is_git_command(const char *s, const char *prefix);
+ int is_git_command(const char *s, const char *prefix);
+-void list_commands(const char *prefix, const char *title);
++void list_commands(const char *prefix, const char *title, struct cmdnames *exclude);
++void add_cmdname(struct cmdnames *cmds, const char *name, int len);
 +
-+#endif /* HELP_H */
++extern struct cmdnames main_cmds, other_cmds;
+ 
+ #endif /* HELP_H */
 -- 
 1.6.0.rc0.14.g95f8.dirty
