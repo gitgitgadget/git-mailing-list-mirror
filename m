@@ -1,71 +1,97 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-svn and svn:externals, was Re: Hackontest ideas?
-Date: Tue, 29 Jul 2008 15:04:14 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0807291502450.4631@eeepc-johanness>
-References: <20080729000103.GH32184@machine.or.cz> <m3myk1t54c.fsf@localhost.localdomain> <alpine.DEB.1.00.0807291354130.4631@eeepc-johanness> <200807291428.32072.jnareb@gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: git submodules
+Date: Tue, 29 Jul 2008 15:07:14 +0200
+Message-ID: <20080729130713.GF32312@artemis.madism.org>
+References: <20080728162003.GA4584@artemis.madism.org> <320075ff0807281323l51bb6478j30e3e4c490974a70@mail.gmail.com> <20080728205545.GB10409@artemis.madism.org> <20080728205923.GC10409@artemis.madism.org> <32541b130807281440v64f3cb9ci50cf6d16be4f2f82@mail.gmail.com> <b3889dff0807282251t7096a8c9wf477cf4495749d34@mail.gmail.com> <20080729082135.GB32312@artemis.madism.org> <20080729083755.GC32312@artemis.madism.org> <20080729085125.GJ32184@machine.or.cz> <alpine.DEB.1.00.0807291413460.4631@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@ucw.cz>, Eric Wong <normalperson@yhbt.net>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 15:04:20 2008
+Content-Type: multipart/signed; boundary="VuQYccsttdhdIfIP";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Petr Baudis <pasky@suse.cz>, Benjamin Collins <aggieben@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Nigel Magnay <nigel.magnay@gmail.com>,
+	Git ML <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 29 15:08:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNos5-0003I1-Qk
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 15:04:10 +0200
+	id 1KNow8-0004n3-4a
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 15:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752969AbYG2NDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 09:03:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752876AbYG2NDI
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 09:03:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33519 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752188AbYG2NDG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 09:03:06 -0400
-Received: (qmail invoked by alias); 29 Jul 2008 13:03:04 -0000
-Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
-  by mail.gmx.net (mp042) with SMTP; 29 Jul 2008 15:03:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+HCEEYh+aHTDK5Y+XHum1GNHGEyBwnaNiq6hcMVJ
-	fffk816oScax9z
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <200807291428.32072.jnareb@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1753309AbYG2NHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 09:07:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753265AbYG2NHS
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 09:07:18 -0400
+Received: from pan.madism.org ([88.191.52.104]:33331 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753160AbYG2NHR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 09:07:17 -0400
+Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 802313C011;
+	Tue, 29 Jul 2008 15:07:15 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 5155A5577; Tue, 29 Jul 2008 15:07:14 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Baudis <pasky@suse.cz>, Benjamin Collins <aggieben@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Nigel Magnay <nigel.magnay@gmail.com>,
+	Git ML <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807291413460.4631@eeepc-johanness>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90633>
 
-Hi,
 
-On Tue, 29 Jul 2008, Jakub Narebski wrote:
+--VuQYccsttdhdIfIP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Johannes Schindelin wrote:
-> 
-> > On Tue, 29 Jul 2008, Jakub Narebski wrote:
-> > 
-> > >  * handling of svn:externals using submodules
-> > 
-> > The main concern I have is to get the semantics right: AFAICT 
-> > svn:externals has _no notion_ of "what is current".  It just _always_ 
-> > fetches the HEAD.  Even if you check out an ancient revision in the 
-> > "superproject".
-> 
-> If I understand correctly with version 1.5 svn:externals can be 
-> specified using "peg revisions", so they could refer to some specific 
-> revision of 'external', like git submodules.
+On Tue, Jul 29, 2008 at 12:15:05PM +0000, Johannes Schindelin wrote:
+> On Tue, 29 Jul 2008, Petr Baudis wrote:
+> > On Tue, Jul 29, 2008 at 10:37:55AM +0200, Pierre Habouzit wrote:
+> >=20
+> > > 	path =3D "$path"
+> > > 	url =3D git://somewhere/
+> > > 	tracks =3D master
+[...]
+> But then, how does the relation to the currently _committed_ state get=20
+> displayed?
 
-... which only means that if they had done that from the beginning, it 
-the git-svn enhancement would be easy.
+Hmm _that's_ why you need a name for it. Or you need the submodule to be
+aware he's one, and then one would have some kind of "magic" word to
+name this sha1. And tools would find out in the supermodule what it
+translates into. I don't have any briliant idea for a proposal
+(COMMITED_HEAD is clearly too long ;p, BASE is not very explicit, ...)
+but someone will have one.
 
-But as they did not have it from the beginning, anybody tackling git-svn 
-and svn:externals will have to come up with sensible semantics for the 
-hard case.
+Ideally gitk would show some litle tag for this state too.
 
-Ciao,
-Dscho
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--VuQYccsttdhdIfIP
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkiPFf8ACgkQvGr7W6HudhzTbQCfaj+qMGY5MoV25RqkB6sdfQy8
+/vcAn3us6mC/j98BrEVNZ6kki/EmKgl4
+=tdPt
+-----END PGP SIGNATURE-----
+
+--VuQYccsttdhdIfIP--
