@@ -1,57 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git merge --squash isn't "marked as a merge"??
-Date: Tue, 29 Jul 2008 01:53:55 -0700
-Message-ID: <7vbq0hhxzw.fsf@gitster.siamese.dyndns.org>
-References: <488ECB89.5060801@sneakemail.com>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: q: git-fetch a tad slow?
+Date: Tue, 29 Jul 2008 11:08:02 +0200
+Message-ID: <20080729090802.GA11373@elte.hu>
+References: <20080728160138.GA12777@elte.hu> <20080729055014.GE11947@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 29 10:55:08 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jul 29 11:09:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNkz4-0004A4-Cc
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 10:55:06 +0200
+	id 1KNlCl-0001JM-7a
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 11:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754106AbYG2IyG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jul 2008 04:54:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754064AbYG2IyE
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 04:54:04 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46574 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754035AbYG2IyE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Jul 2008 04:54:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 84BA740D64;
-	Tue, 29 Jul 2008 04:54:00 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7CFFB40D62; Tue, 29 Jul 2008 04:53:58 -0400 (EDT)
-In-Reply-To: <488ECB89.5060801@sneakemail.com> (Peter Valdemar =?utf-8?Q?M?=
- =?utf-8?Q?=C3=B8rch's?= message of "Tue, 29 Jul 2008 09:49:29 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E31B5F6A-5D4B-11DD-B899-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753089AbYG2JIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 05:08:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbYG2JIO
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 05:08:14 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:52748 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752964AbYG2JIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 05:08:14 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1KNlBb-0001ul-Qz
+	from <mingo@elte.hu>; Tue, 29 Jul 2008 11:08:12 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 226BF3E21AB; Tue, 29 Jul 2008 11:07:59 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080729055014.GE11947@spearce.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90607>
 
-"Peter Valdemar M=C3=B8rch (Lists)"  <4ux6as402@sneakemail.com> writes:
 
-> Newbie alert:
->
-> I have a feature branch where I have N tiny commits with sloppy/priva=
-te
-> commit messages....
+* Shawn O. Pearce <spearce@spearce.org> wrote:
 
-Probably you would want to step back and _think_ why you want to squash=
- in
-the first place.  I suspect the answer would lead to a better use of th=
-e
-available set of tools, such as "use 'rebase -i' to clean up the origin=
-al
-history and then 'merge' (without squash) it or 'rebase' it".
+> Ingo Molnar <mingo@elte.hu> wrote:
+> > 
+> > Setup/background: distributed kernel testing cluster, [...]
+> > 
+> > Problem: i noticed that git-fetch is a tad slow:
+> > 
+> >   titan:~/tip> time git-fetch
+> >   real    0m2.372s
+
+> Also, I wonder if you really need to fetch over SSH.  Doing a fetch 
+> over git:// is much quicker, as there is no SSH session setup 
+> overheads.
+
+note that titan is a very beefy box, almost 3 GHz Core2Duo:
+
+   model name      : Intel(R) Core(TM)2 CPU         E6800  @ 2.93GHz
+   stepping        : 5
+   cpu MHz         : 2933.331
+
+server is 3 GHz. So if we have a quadratic overhead on number of 
+branches, that's going to be quite a PITA.
+
+> I wonder if git-pack-refs + fetching only a single branch will get you 
+> closer to the tip-fetch time.
+
+should i pack on both repos? I dont explicitly pack anything, but on the 
+server it goes into regular gc runs. (which will pack most stuff, 
+right?)
+
+	Ingo
