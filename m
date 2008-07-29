@@ -1,76 +1,106 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Git Community Book
-Date: Tue, 29 Jul 2008 18:34:31 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0807291716460.19665@iabervon.org>
-References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What is 'git BRANCH'?
+Date: Tue, 29 Jul 2008 15:39:36 -0700
+Message-ID: <7v63qob9hz.fsf@gitster.siamese.dyndns.org>
+References: <g6o4vi$rap$1@ger.gmane.org>
+ <7vej5cba6z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 30 00:36:04 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jurko =?utf-8?Q?Gospodneti=C4=87?= <jurko.gospodnetic@docte.hr>
+X-From: git-owner@vger.kernel.org Wed Jul 30 00:40:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNxnW-0004XJ-1a
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 00:36:02 +0200
+	id 1KNxs8-000696-ND
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 00:40:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760241AbYG2Wee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 18:34:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760227AbYG2Wed
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 18:34:33 -0400
-Received: from iabervon.org ([66.92.72.58]:38354 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760208AbYG2Wec (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 18:34:32 -0400
-Received: (qmail 25548 invoked by uid 1000); 29 Jul 2008 22:34:31 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 29 Jul 2008 22:34:31 -0000
-In-Reply-To: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1756727AbYG2Wjp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jul 2008 18:39:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754344AbYG2Wjp
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 18:39:45 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42099 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755992AbYG2Wjn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Jul 2008 18:39:43 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6322044666;
+	Tue, 29 Jul 2008 18:39:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id A31AD44660; Tue, 29 Jul 2008 18:39:39 -0400 (EDT)
+In-Reply-To: <7vej5cba6z.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 29 Jul 2008 15:24:36 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3C5E5460-5DBF-11DD-822A-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90697>
 
-On Tue, 29 Jul 2008, Scott Chacon wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> So I wanted to develop a really nice, easy to follow book for Git
-> newcomers to learn git quickly and easily.  One of the issues I
-> remember having when learning Git is that there is a lot of great
-> material in the User Guide, Tutorial, Tutorial 2, Everyday Git, etc -
-> but they're all huge long documents that are sometimes difficult to
-> come back to and remember where you were, and I didn't know which one
-> to start with or where to find what I was looking for, etc.
+> Jurko Gospodneti=C4=87 <jurko.gospodnetic@docte.hr> writes:
+>
+>>   Hi.
+>>
+>>   I typed in "git BRANCH" by accident and got the error message:
+>> "fatal: cannot handle BRANCH internally".
+>>
+>>   What does that mean?
+>>
+>>   It is different from the usual "git: 'yada-yada' is not a
+>> git-command. See 'git --help'." message you get when you type in an
+>> incorrect command name.
+>
+> Just a guess; your git is installed on a case-challenged filesystem?
 
-It would be good to include stuff from 
-http://eagain.net/articles/git-for-computer-scientists/
+Yeah, that must be it.  This can happen on MacOS and Windows, I would
+imagine.
 
-Maybe only in inspiration, since it doesn't have an obvious license and 
-it's stylisticly more technical. But it would be nice to have diagrams of 
-"this is what git thinks of as history", possibly even arranging them like 
-gitk shows things (older downward, refs pointing in from the side).
+-- >8 --
+[PATCH] Fail on unknown command sensibly on case-challenged filesystems
 
-In particular, I think it's really useful to show a commit graph with 
-branching and merging, and introduce refs as movable pointers to commits 
-in the graph, and local branches as refs that you move and tracking refs 
-as refs that copy values in other repositories.
+The callchain on a case-challenged filesystem when the user runs "git
+BRANCH" looks like this:
 
-I think you can even gloss of details of blobs and trees because they 
-pretty much work just like files and directories in a filesystem (except 
-that they take up much less storage in large quantities than you'd think). 
-The only potentially interesting things are (1) a blob names the inode, 
-not the dentry, so it's the file contents, not the name, mode, etc; and 
-(2) the permission bits are just 'x', we've got symlinks, there are no 
-owner/group or other attributes and "see also Submodules".
+  - main(): git BRANCH
+   - execv_dashed_external("BRANCH")
+    - execvp("git-BRANCH")
 
-But I think that the section:
-  http://eagain.net/articles/git-for-computer-scientists/#history
-should have an equivalent in any git documentation that can have diagrams, 
-and introducing a history diagram style early means that you can do a 
-bunch of simple pictures to explain operations like "git checkout -b foo" 
-or "git reset --hard HEAD^^" or "git checkout origin/master".
+     - main(): git-BRANCH
+      - prefixcmp("git-BRANCH", "git-")
+       - handle_internal_command()
+         struct cmd_struct commands[] does not have "BRANCH"
+         so it returns, instead of exiting.
 
-	-Daniel
-*This .sig left intentionally blank*
+When the "git wrapper" execs "git-BRANCH", if your filesystem knows
+"branch" and "BRANCH" are different, execvp() would fail and we will se=
+e
+the familiar error message from the git.c::main().
+
+However, if execvp() succeeds, we feed an unknown command name to
+handle_internal_command() and it triggers a different error message.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git.c b/git.c
+index 37b1d76..c99e769 100644
+--- a/git.c
++++ b/git.c
+@@ -448,7 +448,7 @@ int main(int argc, const char **argv)
+ 		cmd +=3D 4;
+ 		argv[0] =3D cmd;
+ 		handle_internal_command(argc, argv);
+-		die("cannot handle %s internally", cmd);
++		help_unknown_cmd(cmd);
+ 	}
+=20
+ 	/* Look for flags.. */
