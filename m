@@ -1,83 +1,82 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: theirs/ours was Re: [PATCH 6/6] Add a new test for using a custom merge strategy
-Date: Tue, 29 Jul 2008 02:09:18 +0200
-Message-ID: <bd6139dc0807281709u43218e97p8ba239f3e520e10@mail.gmail.com>
-References: <bd6139dc0807280754x76b6ffedg6bf756dfce23f1e3@mail.gmail.com>
-	 <20080728185604.GA26322@sigill.intra.peff.net>
-	 <alpine.DEB.1.00.0807282008470.8986@racer>
-	 <20080728192651.GA26677@sigill.intra.peff.net>
-	 <alpine.DEB.1.00.0807290123300.2725@eeepc-johanness>
-Reply-To: sverre@rabbelier.nl
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Hackontest ideas?
+Date: Tue, 29 Jul 2008 02:10:16 +0200
+Message-ID: <20080729001016.GT32057@genesis.frugalware.org>
+References: <20080729000103.GH32184@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>,
-	"Git Mailinglist" <git@vger.kernel.org>,
-	"Miklos Vajna" <vmiklos@frugalware.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 29 02:10:28 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="bsqDiNZ/rQOH/Lpr"
+Cc: git@vger.kernel.org
+To: Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Tue Jul 29 02:11:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNcnH-0003cv-My
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 02:10:24 +0200
+	id 1KNcoC-0003yG-OB
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 02:11:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752816AbYG2AJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 20:09:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752939AbYG2AJT
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 20:09:19 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:56462 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752821AbYG2AJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 20:09:18 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so6060282wfd.4
-        for <git@vger.kernel.org>; Mon, 28 Jul 2008 17:09:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=J2eF92qTHvgYpYFPBzaViA6F8+me+Qr9xYH/GoGya/0=;
-        b=fGXKreHL9r/510Q3E2mS61EplOGTElRdGMmPUC2H6fTMkvVbeUGi4qZK2Nu+6Za5aV
-         +Ot3B2su5Aqw2m5kjJ+CX9rCmP4WipWqif+rDZcOAdHqjPaC/rWB3GHOu+RFOyaWxqLM
-         4qNS0xc9dUnHoeUrEN3s1DgNsB1InIsPWvois=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=i8JTQjf/f3QFh8BcZkbBBhoj3iK7bJ7FUryptpdNr1DfaguCJBdbZnfhJmutYVjRBS
-         Sj/k1qC/QUEREJ6eW/f8dWrM48Pxku8DDPSTf0m2tAoFg3yi4TXz10tJkcz7n3qOxkCX
-         2TKwZBPwY0p7ol/Eos+CZJKnz3TB625w4Q/C8=
-Received: by 10.142.84.5 with SMTP id h5mr1806576wfb.339.1217290158307;
-        Mon, 28 Jul 2008 17:09:18 -0700 (PDT)
-Received: by 10.142.104.10 with HTTP; Mon, 28 Jul 2008 17:09:18 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0807290123300.2725@eeepc-johanness>
+	id S1752564AbYG2AKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 20:10:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752052AbYG2AKT
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 20:10:19 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:58904 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751423AbYG2AKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 20:10:18 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id AC98C1B2526;
+	Tue, 29 Jul 2008 02:10:16 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id E1DFC4465E;
+	Tue, 29 Jul 2008 01:25:53 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 75BCD1190A0A; Tue, 29 Jul 2008 02:10:16 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20080729000103.GH32184@machine.or.cz>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90534>
 
-On Tue, Jul 29, 2008 at 01:27, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> To me, this suggests that they were too married to 'production' being the
-> "dominant" branch.
 
-<snip>
+--bsqDiNZ/rQOH/Lpr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> If the result should become the state of 'x', too, I would then just
-> 'git push origin y:x'.
+On Tue, Jul 29, 2008 at 02:01:03AM +0200, Petr Baudis <pasky@ucw.cz> wrote:
+>   participating in this might be fun, even if there is not much time
+> left to sign up:
+>=20
+> 	http://www.hackontest.org/index.php?action=3DRoot-projectDetail(120)
+>=20
+> (What feature in Git or a Git-related tool would you implement, given 24
+> hours staight and unlimited pizza supply?)
+>=20
+>   P.S.: Disclaimer - yes, if someone suggests something cool enough to
+> do with Git, I might apply. ;-)
 
-But this means that everybody doing a 'git pull' on that repo will get
-complaints when pulling, right? Should they just send out a message to
-all their users that they'll need to rebase all their changes now?
-(Not being sarcastic, am trying to work out what the recommended
-workflow is here.)
+Restartable git-clone? :-)
 
--- 
-Cheers,
+It was a GSoC idea this year, but in the end nobody started working on
+it.
 
-Sverre Rabbelier
+(I was about to work on it, but finally my 'builtin-merge' application
+was accepted.)
+
+--bsqDiNZ/rQOH/Lpr
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkiOX+gACgkQe81tAgORUJaTJgCfef5YbeEjkqC2fjXvFxvI4XHJ
+VPcAnioEthsgAHcU27JnCOGtNUAGyxE3
+=WSWE
+-----END PGP SIGNATURE-----
+
+--bsqDiNZ/rQOH/Lpr--
