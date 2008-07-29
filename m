@@ -1,126 +1,280 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 2/4] builtin-merge: allow using a custom strategy
-Date: Wed, 30 Jul 2008 01:16:59 +0200
-Message-ID: <18a8b4aaf4cc4bc720bd673166d4a7722ed79556.1217372486.git.vmiklos@frugalware.org>
+Subject: [PATCH 1/4] builtin-help: make some internal functions available to other builtins
+Date: Wed, 30 Jul 2008 01:16:58 +0200
+Message-ID: <a2d2bc675801bb03e3035ec0102eb27f08f27f1b.1217372486.git.vmiklos@frugalware.org>
 References: <cover.1217372486.git.vmiklos@frugalware.org>
- <a2d2bc675801bb03e3035ec0102eb27f08f27f1b.1217372486.git.vmiklos@frugalware.org>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 30 01:17:46 2008
+X-From: git-owner@vger.kernel.org Wed Jul 30 01:17:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNyRs-0007ys-0S
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 01:17:44 +0200
+	id 1KNyRu-0007ys-0t
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 01:17:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753344AbYG2XQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 19:16:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752686AbYG2XQm
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 19:16:42 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:55572 "EHLO
+	id S1753254AbYG2XQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 19:16:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752686AbYG2XQo
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 19:16:44 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:55577 "EHLO
 	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753292AbYG2XQg (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1753254AbYG2XQg (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 29 Jul 2008 19:16:36 -0400
 Received: from vmobile.example.net (catv-5062e651.catv.broadband.hu [80.98.230.81])
-	by yugo.frugalware.org (Postfix) with ESMTP id 9879E1DDC5C;
+	by yugo.frugalware.org (Postfix) with ESMTP id 985E61DDC5B;
 	Wed, 30 Jul 2008 01:16:33 +0200 (CEST)
 Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 5BEAB1AB590; Wed, 30 Jul 2008 01:17:02 +0200 (CEST)
+	id 25F021AA739; Wed, 30 Jul 2008 01:17:01 +0200 (CEST)
 X-Mailer: git-send-email 1.6.0.rc0.14.g95f8.dirty
-In-Reply-To: <a2d2bc675801bb03e3035ec0102eb27f08f27f1b.1217372486.git.vmiklos@frugalware.org>
+In-Reply-To: <cover.1217372486.git.vmiklos@frugalware.org>
 In-Reply-To: <cover.1217372486.git.vmiklos@frugalware.org>
 References: <cover.1217372486.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90706>
 
-Allow using a custom strategy, as long as it's named git-merge-foo. The
-error handling is now done using is_git_command(). The list of available
-strategies is now shown by list_commands().
+Make load_command_list() capable of filtering for a given prefix and
+loading into a pair of "struct cmdnames" supplied by the caller.
 
-If an invalid strategy is supplied, like -s foobar, then git-merge would
-list all git-merge-* commands. This is not perfect, since for example
-git-merge-index is not a valid strategy.
+Make the static add_cmdname(), exclude_cmds() and is_in_cmdlist()
+functions non-static.
 
-These are removed from the output by scanning the list of main commands;
-if the git-merge-foo command is listed in the all_strategy list, then
-it's shown, otherwise excluded. This does not exclude commands somewhere
-else in the PATH, where custom strategies are expected.
+Make list_commands() accept a custom title, and work from a pair of
+"struct cmdnames" supplied by the caller.
 
 Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 ---
- builtin-merge.c |   42 +++++++++++++++++++++++++++++++++++-------
- 1 files changed, 35 insertions(+), 7 deletions(-)
+ Makefile |    1 +
+ help.c   |   77 +++++++++++++++++++++++++++++++------------------------------
+ help.h   |   23 ++++++++++++++++++
+ 3 files changed, 63 insertions(+), 38 deletions(-)
+ create mode 100644 help.h
 
-diff --git a/builtin-merge.c b/builtin-merge.c
-index e78fa18..99b307a 100644
---- a/builtin-merge.c
-+++ b/builtin-merge.c
-@@ -22,6 +22,7 @@
- #include "log-tree.h"
- #include "color.h"
- #include "rerere.h"
+diff --git a/Makefile b/Makefile
+index 52c67c1..83d79af 100644
+--- a/Makefile
++++ b/Makefile
+@@ -355,6 +355,7 @@ LIB_H += git-compat-util.h
+ LIB_H += graph.h
+ LIB_H += grep.h
+ LIB_H += hash.h
++LIB_H += help.h
+ LIB_H += list-objects.h
+ LIB_H += ll-merge.h
+ LIB_H += log-tree.h
+diff --git a/help.c b/help.c
+index 3cb1962..88c0d5b 100644
+--- a/help.c
++++ b/help.c
+@@ -9,6 +9,7 @@
+ #include "common-cmds.h"
+ #include "parse-options.h"
+ #include "run-command.h"
 +#include "help.h"
  
- #define DEFAULT_TWOHEAD (1<<0)
- #define DEFAULT_OCTOPUS (1<<1)
-@@ -77,7 +78,9 @@ static int option_parse_message(const struct option *opt,
- static struct strategy *get_strategy(const char *name)
- {
- 	int i;
--	struct strbuf err;
-+	struct strategy *ret;
-+	static struct cmdnames main_cmds, other_cmds;
-+	static int longest = 0;
- 
- 	if (!name)
- 		return NULL;
-@@ -86,12 +89,37 @@ static struct strategy *get_strategy(const char *name)
- 		if (!strcmp(name, all_strategy[i].name))
- 			return &all_strategy[i];
- 
--	strbuf_init(&err, 0);
--	for (i = 0; i < ARRAY_SIZE(all_strategy); i++)
--		strbuf_addf(&err, " %s", all_strategy[i].name);
--	fprintf(stderr, "Could not find merge strategy '%s'.\n", name);
--	fprintf(stderr, "Available strategies are:%s.\n", err.buf);
--	exit(1);
-+	if (!longest) {
-+		struct cmdnames not_strategies;
-+
-+		memset(&main_cmds, 0, sizeof(struct cmdnames));
-+		memset(&other_cmds, 0, sizeof(struct cmdnames));
-+		memset(&not_strategies, 0, sizeof(struct cmdnames));
-+		longest = load_command_list("git-merge-", &main_cmds,
-+				&other_cmds);
-+		for (i = 0; i < main_cmds.cnt; i++) {
-+			int j, found = 0;
-+			struct cmdname *ent = main_cmds.names[i];
-+			for (j = 0; j < ARRAY_SIZE(all_strategy); j++)
-+				if (!strncmp(ent->name, all_strategy[j].name, ent->len)
-+						&& !all_strategy[j].name[ent->len])
-+					found = 1;
-+			if (!found)
-+				add_cmdname(&not_strategies, ent->name, ent->len);
-+			exclude_cmds(&main_cmds, &not_strategies);
-+		}
-+	}
-+	if (!is_in_cmdlist(&main_cmds, name) && !is_in_cmdlist(&other_cmds, name)) {
-+
-+		fprintf(stderr, "Could not find merge strategy '%s'.\n\n", name);
-+		list_commands("strategies", longest, &main_cmds, &other_cmds);
-+		exit(1);
-+	}
-+
-+	ret = xmalloc(sizeof(struct strategy));
-+	memset(ret, 0, sizeof(struct strategy));
-+	ret->name = xstrdup(name);
-+	return ret;
+ static struct man_viewer_list {
+ 	struct man_viewer_list *next;
+@@ -300,18 +301,11 @@ static inline void mput_char(char c, unsigned int num)
+ 		putchar(c);
  }
  
- static void append_strategy(struct strategy *s)
+-static struct cmdnames {
+-	int alloc;
+-	int cnt;
+-	struct cmdname {
+-		size_t len;
+-		char name[1];
+-	} **names;
+-} main_cmds, other_cmds;
++struct cmdnames main_cmds, other_cmds;
+ 
+-static void add_cmdname(struct cmdnames *cmds, const char *name, int len)
++void add_cmdname(struct cmdnames *cmds, const char *name, int len)
+ {
+-	struct cmdname *ent = xmalloc(sizeof(*ent) + len);
++	struct cmdname *ent = xmalloc(sizeof(*ent) + len + 1);
+ 
+ 	ent->len = len;
+ 	memcpy(ent->name, name, len);
+@@ -342,7 +336,7 @@ static void uniq(struct cmdnames *cmds)
+ 	cmds->cnt = j;
+ }
+ 
+-static void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes)
++void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes)
+ {
+ 	int ci, cj, ei;
+ 	int cmp;
+@@ -418,11 +412,11 @@ static int is_executable(const char *name)
+ }
+ 
+ static unsigned int list_commands_in_dir(struct cmdnames *cmds,
+-					 const char *path)
++					 const char *path,
++					 const char *prefix)
+ {
+ 	unsigned int longest = 0;
+-	const char *prefix = "git-";
+-	int prefix_len = strlen(prefix);
++	int prefix_len;
+ 	DIR *dir = opendir(path);
+ 	struct dirent *de;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -430,6 +424,9 @@ static unsigned int list_commands_in_dir(struct cmdnames *cmds,
+ 
+ 	if (!dir)
+ 		return 0;
++	if (!prefix)
++		prefix = "git-";
++	prefix_len = strlen(prefix);
+ 
+ 	strbuf_addf(&buf, "%s/", path);
+ 	len = buf.len;
+@@ -460,7 +457,9 @@ static unsigned int list_commands_in_dir(struct cmdnames *cmds,
+ 	return longest;
+ }
+ 
+-static unsigned int load_command_list(void)
++unsigned int load_command_list(const char *prefix,
++		struct cmdnames *main_cmds,
++		struct cmdnames *other_cmds)
+ {
+ 	unsigned int longest = 0;
+ 	unsigned int len;
+@@ -469,7 +468,7 @@ static unsigned int load_command_list(void)
+ 	const char *exec_path = git_exec_path();
+ 
+ 	if (exec_path)
+-		longest = list_commands_in_dir(&main_cmds, exec_path);
++		longest = list_commands_in_dir(main_cmds, exec_path, prefix);
+ 
+ 	if (!env_path) {
+ 		fprintf(stderr, "PATH not set\n");
+@@ -481,7 +480,7 @@ static unsigned int load_command_list(void)
+ 		if ((colon = strchr(path, PATH_SEP)))
+ 			*colon = 0;
+ 
+-		len = list_commands_in_dir(&other_cmds, path);
++		len = list_commands_in_dir(other_cmds, path, prefix);
+ 		if (len > longest)
+ 			longest = len;
+ 
+@@ -491,36 +490,38 @@ static unsigned int load_command_list(void)
+ 	}
+ 	free(paths);
+ 
+-	qsort(main_cmds.names, main_cmds.cnt,
+-	      sizeof(*main_cmds.names), cmdname_compare);
+-	uniq(&main_cmds);
++	qsort(main_cmds->names, main_cmds->cnt,
++	      sizeof(*main_cmds->names), cmdname_compare);
++	uniq(main_cmds);
+ 
+-	qsort(other_cmds.names, other_cmds.cnt,
+-	      sizeof(*other_cmds.names), cmdname_compare);
+-	uniq(&other_cmds);
+-	exclude_cmds(&other_cmds, &main_cmds);
++	qsort(other_cmds->names, other_cmds->cnt,
++	      sizeof(*other_cmds->names), cmdname_compare);
++	uniq(other_cmds);
++	exclude_cmds(other_cmds, main_cmds);
+ 
+ 	return longest;
+ }
+ 
+-static void list_commands(void)
++void list_commands(const char *title, unsigned int longest,
++		struct cmdnames *main_cmds, struct cmdnames *other_cmds)
+ {
+-	unsigned int longest = load_command_list();
+ 	const char *exec_path = git_exec_path();
+ 
+-	if (main_cmds.cnt) {
+-		printf("available git commands in '%s'\n", exec_path);
+-		printf("----------------------------");
+-		mput_char('-', strlen(exec_path));
++	if (main_cmds->cnt) {
++		printf("available %s in '%s'\n", title, exec_path);
++		printf("----------------");
++		mput_char('-', strlen(title) + strlen(exec_path));
+ 		putchar('\n');
+-		pretty_print_string_list(&main_cmds, longest);
++		pretty_print_string_list(main_cmds, longest);
+ 		putchar('\n');
+ 	}
+ 
+-	if (other_cmds.cnt) {
+-		printf("git commands available from elsewhere on your $PATH\n");
+-		printf("---------------------------------------------------\n");
+-		pretty_print_string_list(&other_cmds, longest);
++	if (other_cmds->cnt) {
++		printf("%s available from elsewhere on your $PATH\n", title);
++		printf("---------------------------------------");
++		mput_char('-', strlen(title));
++		putchar('\n');
++		pretty_print_string_list(other_cmds, longest);
+ 		putchar('\n');
+ 	}
+ }
+@@ -542,7 +543,7 @@ void list_common_cmds_help(void)
+ 	}
+ }
+ 
+-static int is_in_cmdlist(struct cmdnames *c, const char *s)
++int is_in_cmdlist(struct cmdnames *c, const char *s)
+ {
+ 	int i;
+ 	for (i = 0; i < c->cnt; i++)
+@@ -553,7 +554,6 @@ static int is_in_cmdlist(struct cmdnames *c, const char *s)
+ 
+ static int is_git_command(const char *s)
+ {
+-	load_command_list();
+ 	return is_in_cmdlist(&main_cmds, s) ||
+ 		is_in_cmdlist(&other_cmds, s);
+ }
+@@ -698,8 +698,9 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 			builtin_help_usage, 0);
+ 
+ 	if (show_all) {
++		unsigned int longest = load_command_list("git-", &main_cmds, &other_cmds);
+ 		printf("usage: %s\n\n", git_usage_string);
+-		list_commands();
++		list_commands("git commands", longest, &main_cmds, &other_cmds);
+ 		printf("%s\n", git_more_info_string);
+ 		return 0;
+ 	}
+diff --git a/help.h b/help.h
+new file mode 100644
+index 0000000..d614e54
+--- /dev/null
++++ b/help.h
+@@ -0,0 +1,23 @@
++#ifndef HELP_H
++#define HELP_H
++
++struct cmdnames {
++	int alloc;
++	int cnt;
++	struct cmdname {
++		size_t len;
++		char name[FLEX_ARRAY];
++	} **names;
++};
++
++unsigned int load_command_list(const char *prefix,
++		struct cmdnames *main_cmds,
++		struct cmdnames *other_cmds);
++void add_cmdname(struct cmdnames *cmds, const char *name, int len);
++/* Here we require that excludes is a sorted list. */
++void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes);
++int is_in_cmdlist(struct cmdnames *c, const char *s);
++void list_commands(const char *title, unsigned int longest,
++		struct cmdnames *main_cmds, struct cmdnames *other_cmds);
++
++#endif /* HELP_H */
 -- 
 1.6.0.rc0.14.g95f8.dirty
