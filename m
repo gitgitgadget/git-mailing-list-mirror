@@ -1,167 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Support copy and rename detection in fast-export.
-Date: Tue, 29 Jul 2008 09:11:57 -0700
-Message-ID: <7v7ib4hdpu.fsf@gitster.siamese.dyndns.org>
-References: <200807211216.01694.angavrilov@gmail.com>
- <200807262249.18005.angavrilov@gmail.com>
- <20080726202103.GA15769@spearce.org>
- <200807270052.55370.angavrilov@gmail.com>
+From: "Scott Chacon" <schacon@gmail.com>
+Subject: Git Community Book
+Date: Tue, 29 Jul 2008 09:20:20 -0700
+Message-ID: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Alexander Gavrilov <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 18:13:23 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "git list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 29 18:21:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNrp3-0004lD-LR
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 18:13:14 +0200
+	id 1KNrwz-0007xz-Gh
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 18:21:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755458AbYG2QML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 12:12:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755364AbYG2QML
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 12:12:11 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41270 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754182AbYG2QMJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 12:12:09 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4D68B41246;
-	Tue, 29 Jul 2008 12:12:07 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id DE9B141241; Tue, 29 Jul 2008 12:12:01 -0400 (EDT)
-In-Reply-To: <200807270052.55370.angavrilov@gmail.com> (Alexander Gavrilov's
- message of "Sun, 27 Jul 2008 00:52:54 +0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1741300C-5D89-11DD-85FD-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751746AbYG2QUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 12:20:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751851AbYG2QUX
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 12:20:23 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:13761 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750885AbYG2QUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 12:20:22 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so1551505ywe.1
+        for <git@vger.kernel.org>; Tue, 29 Jul 2008 09:20:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=PlL1uPxe588NHtm6pbe9Q/4uW4JGQAwKLfjBFYPYLBI=;
+        b=CEsfjnX/pPAshliazpaE+Wb5xcai3jS2LyQC1C3si73W3sEYfpl6jTLVZGGLQ8J2Os
+         dybN2bsbu88FgBXZTL+/ul3wphfZH0LvDX3Ev0P5j8jaHZ0vahKoId99TTSmvJjzmMCf
+         vv2kXN1GlaZOXQK44ccyp2B7sSibbuMtfZIXM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=e9mF5cFI1w3ZiyhSbawLwdcCWtXM/65vQu9FD5tE3dhP57hfuz1mV4evMeGU5XoVqt
+         S9RG098gfcVnFFhIY3mbuCSh8lmsYfR0PJFVWOZO490C1HklU1YNcs0fb9n0lrHwtxPZ
+         xfXSrEEcO+LF8Pk2Fzj5xG+DFFvtBCY4eg1CA=
+Received: by 10.114.125.2 with SMTP id x2mr6869672wac.59.1217348420590;
+        Tue, 29 Jul 2008 09:20:20 -0700 (PDT)
+Received: by 10.115.22.20 with HTTP; Tue, 29 Jul 2008 09:20:20 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90653>
 
-Alexander Gavrilov <angavrilov@gmail.com> writes:
+So I wanted to develop a really nice, easy to follow book for Git
+newcomers to learn git quickly and easily.  One of the issues I
+remember having when learning Git is that there is a lot of great
+material in the User Guide, Tutorial, Tutorial 2, Everyday Git, etc -
+but they're all huge long documents that are sometimes difficult to
+come back to and remember where you were, and I didn't know which one
+to start with or where to find what I was looking for, etc.
 
-> Although it does not matter for Git itself, tools that
-> export to systems that explicitly track copies and
-> renames can benefit from such information.
->
-> This patch makes fast-export output correct action
-> logs when -M or -C are enabled.
->
-> Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
-> ---
->
-> 	On Sunday 27 July 2008 00:21:03 Shawn O. Pearce wrote:
-> 	> Do you mean to say git-fast-export in the end of the first line of
-> 	> that last paragraph?
->
-> 	Yes, of course. Thank you.
+So, what I've started to do is pull material from all of them into a
+single book which will be available in online HTML (one page per
+chapter) and downloadable PDF form.  I'm trying to give it a very
+organized flow that will hopefully be a bit easier to follow and
+digest than the current formats, and including a number of diagrams,
+illustrations and screencasts to supplement the text.  Where possible,
+I am also trying to simplify the explanations a bit to be a tad more
+digestible for beginning users, at least in the first couple dozen
+chapters. I have put the current html output of this book here:
 
-Alexander, Shawn, what is the status of this patch?  Has it been reviewed
-sufficiently and is ready for application?
+http://book.git-scm.com
 
->  Documentation/git-fast-export.txt |    9 +++++++
->  builtin-fast-export.c             |   28 +++++++++++++++++++++-
->  t/t9301-fast-export.sh            |   46 +++++++++++++++++++++++++++++++++++++
->  3 files changed, 81 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
-> index 332346c..bb2f9a8 100644
-> --- a/Documentation/git-fast-export.txt
-> +++ b/Documentation/git-fast-export.txt
-> @@ -36,6 +36,15 @@ when encountering a signed tag.  With 'strip', the tags will be made
->  unsigned, with 'verbatim', they will be silently exported
->  and with 'warn', they will be exported, but you will see a warning.
->  
-> +-M, -C::
-> +	Perform move and/or copy detection, as described in the
-> +	linkgit:git-diff[1] manual page, and use it to generate
-> +	rename and copy commands in the output dump.
+It is not complete - the grey links are chapters that are very short
+or completely empty - but it is a start.  Please let me know what you
+think, and if anyone is interested in helping with the project, give
+me a shout.
 
-I think it is more fashionable to do what 3240240 (Docs: Use
-"-l::\n--long\n" format in OPTIONS sections, 2008-06-08) did these days,
-i.e.:
+Also, for credit, I have generated an Authors page I will be linking
+to the site soon that lists everyone that contributed a patch to any
+of the Git User Guide, Git Tutorials, etc.  It is in the PDF right
+now, but not in the HTML version yet (and the PDF is not yet linked to
+the site).
 
-	-M::
-        -C::
-        	Description...
-
-> ++
-> +Note that these options were always accepted by git-fast-export,
-> +but before a certain version it silently produced wrong results.
-> +You should always check the git version before using them.
-> +
-
-I do not quite follow the mention of "before a certain version", but I
-think it is talking about the earlier "fast-export" that took any diff
-options but did not act differently upon renamed/copied entries.  If that
-is the case, I think we can say something like this instead:
-
-	Note that earlier versions of this command did not complain and
-	produced incorrect results if you gave these options.
-
-because docs always talk about the current version.  My reading of Dscho's
-original 'show_filemodify' suggests me that "wrong results" does not just
-mean missing rename/copy information but a renamed old entity did not get
-removed correctly, resulting in an incorrect tree in the commit, right?
-Maybe we would want to be a bit more explicit about what kind of breakage
-you are talking about here.
-
-> diff --git a/builtin-fast-export.c b/builtin-fast-export.c
-> index 8bea269..3225e8f 100644
-> --- a/builtin-fast-export.c
-> +++ b/builtin-fast-export.c
-> @@ -118,10 +118,27 @@ static void show_filemodify(struct diff_queue_struct *q,
->  {
->  	int i;
->  	for (i = 0; i < q->nr; i++) {
-> +		struct diff_filespec *ospec = q->queue[i]->one;
->  		struct diff_filespec *spec = q->queue[i]->two;
-> -		if (is_null_sha1(spec->sha1))
-> +
-> +		switch (q->queue[i]->status) {
-> +		case DIFF_STATUS_DELETED:
->  			printf("D %s\n", spec->path);
-> -		else {
-> +			break;
-> +
-> +		case DIFF_STATUS_COPIED:
-> +		case DIFF_STATUS_RENAMED:
-> +			printf("%c \"%s\" \"%s\"\n", q->queue[i]->status,
-> +			       ospec->path, spec->path);
-> +
-> +			if (!hashcmp(ospec->sha1, spec->sha1) &&
-> +			    ospec->mode == spec->mode)
-> +				break;
-> +			/* fallthrough */
-
-If you see a copied or renamed entry, you emit "this old path to that old
-path" first, and then say that same path got modified.  It appears from my
-quick glance of fast-import that touching the same path more than once in
-a same commit like this sequence does would work fine (it will involve two
-calls to tree_content_set() for the same path but that is not something it
-has to forbid, and the function doesn't).
-
-> diff --git a/t/t9301-fast-export.sh b/t/t9301-fast-export.sh
-> index f18eec9..bb595b7 100755
-> --- a/t/t9301-fast-export.sh
-> +++ b/t/t9301-fast-export.sh
-> @@ -162,4 +162,50 @@ test_expect_success 'submodule fast-export | fast-import' '
->  
->  '
->  
-> +export GIT_AUTHOR_NAME='A U Thor'
-> +export GIT_COMMITTER_NAME='C O Mitter'
-> +
-> +test_expect_success 'setup copies' '
-> +
-> +	git config --unset i18n.commitencoding &&
-
-These are somewhat unusual.  Was there any reason for these exports and
-config?
+Thanks,
+Scott
