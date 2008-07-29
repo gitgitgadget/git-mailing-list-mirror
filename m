@@ -1,80 +1,93 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] Modify mingw_main() workaround to avoid link errors
-Date: Tue, 29 Jul 2008 06:46:59 +0200
-Message-ID: <B6158330-640B-4CA3-8589-310FA8EA6CC9@zib.de>
-References: <1217065304-27815-1-git-send-email-prohaska@zib.de> <1217104655.488b8b0f5ca48@webmail.nextra.at> <4CCD1862-48FB-412B-80B6-E1B822BF3A87@zib.de> <1217186640.488ccb50a934a@webmail.nextra.at>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Nick Andrew <nick@nick-andrew.net>
+Subject: [trivial fast-export PATCH] Fix typo in documentation
+Date: Tue, 29 Jul 2008 14:50:27 +1000
+Message-ID: <20080729045026.27648.54610.stgit@marcab.local.tull.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Tue Jul 29 06:48:10 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 29 06:53:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNh84-00063A-BT
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 06:48:08 +0200
+	id 1KNhDT-00074F-Bn
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 06:53:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751574AbYG2ErH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 00:47:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751504AbYG2ErH
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 00:47:07 -0400
-Received: from mailer.zib.de ([130.73.108.11]:32793 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751442AbYG2ErG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 00:47:06 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m6T4kf02023784;
-	Tue, 29 Jul 2008 06:46:46 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db9068d.pool.einsundeins.de [77.185.6.141])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m6T4kahr018889
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 29 Jul 2008 06:46:37 +0200 (MEST)
-In-Reply-To: <1217186640.488ccb50a934a@webmail.nextra.at>
-X-Mailer: Apple Mail (2.926)
+	id S1751719AbYG2Ewn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 00:52:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751740AbYG2Ewm
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 00:52:42 -0400
+Received: from vps1.tull.net ([66.180.172.116]:34017 "HELO vps1.tull.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751612AbYG2Ewm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 00:52:42 -0400
+Received: (qmail 7900 invoked by uid 1015); 29 Jul 2008 14:52:41 +1000
+Received: from [10.0.0.67] (HELO tull.net) (10.0.0.67) by vps1.tull.net (qpsmtpd/0.26) with SMTP; Tue, 29 Jul 2008 14:52:41 +1000
+Received: (qmail 23376 invoked by uid 1015); 29 Jul 2008 14:52:37 +1000
+X-Spam-Status: No, hits=-4.4 required=5.0	tests=ALL_TRUSTED,BAYES_00
+X-Spam-Check-By: tull.net
+Received: from [10.0.0.1] (HELO marcab.local.tull.net) (10.0.0.1)    by tull.net (qpsmtpd/0.40) with SMTP; Tue, 29 Jul 2008 14:52:31 +1000
+Received: by marcab.local.tull.net (sSMTP sendmail emulation); Tue, 29 Jul 2008 14:52:30 +1000
+Mail-From: nobody Tue Jul 29 14:50:27 2008
+User-Agent: StGIT/0.14.2
+X-SMTPD: qpsmtpd/0.26, http://develooper.com/code/qpsmtpd/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90564>
+
+Fix typo in documentation
+
+"hg-fast-import" should be "hg-fast-export" everywhere it is used.
+
+Signed-off-by: Nick Andrew <nick@nick-andrew.net>
+---
+
+ hg-fast-export.txt |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
 
 
-On Jul 27, 2008, at 9:24 PM, Johannes Sixt wrote:
-
-> Zitat von Steffen Prohaska <prohaska@zib.de>:
->
->>
->> On Jul 26, 2008, at 10:37 PM, Johannes Sixt wrote:
->>
->>> Zitat von Steffen Prohaska <prohaska@zib.de>:
->>>> With MinGW's
->>>>
->>>>  gcc.exe (GCC) 3.4.5 (mingw special)
->>>>  GNU ld version 2.17.50 20060824
->>>>
->>>> the old define caused link errors:
->>>>
->>>>  git.o: In function `main':
->>>>  C:/msysgit/git/git.c:500: undefined reference to `mingw_main'
->>>>  collect2: ld returned 1 exit status
->>>>
->>>> The modified define works.
->>>
->>> I have the same tools, but not this error. ???
->>
->> I cleaned my work tree and built several times but did not
->> find out what exactly is causing the error.  So I came up
->> with the modified define, which declares the static
->> mingw_main in global scope.  I have no clue why I see the
->> error that you don't have.
->
-> Neither do I. But a strange line number you have there. In 01d9b2d  
-> (from
-> mingw.git) I have 'exit(1)' in line 500 of git.c.
-
-I have the same in line 500.  I am still wondering what this could
-mean.  But I do not yet now :-(
-
-	Steffen
+diff --git a/hg-fast-export.txt b/hg-fast-export.txt
+index 1b8bb1c..ede56a9 100644
+--- a/hg-fast-export.txt
++++ b/hg-fast-export.txt
+@@ -1,4 +1,4 @@
+-hg-fast-import.(sh|py) - mercurial to git converter using git-fast-import
++hg-fast-export.(sh|py) - mercurial to git converter using git-fast-import
+ 
+ Legal
+ =====
+@@ -16,7 +16,7 @@ Using hg-fast-export is quite simple for a mercurial repository <repo>:
+   mkdir repo-git # or whatever
+   cd repo-git
+   git init
+-  hg-fast-import.sh -r <repo>
++  hg-fast-export.sh -r <repo>
+ 
+ Incremental imports to track hg repos is supported, too.
+ 
+@@ -31,7 +31,7 @@ again.
+ Notes/Limitations
+ =================
+ 
+-hg-fast-import supports multiple branches but only named branches with exaclty
++hg-fast-export supports multiple branches but only named branches with exactly
+ one head each. Otherwise commits to the tip of these heads within branch
+ will get flattened into merge commits.
+ 
+@@ -42,11 +42,11 @@ when importing a small number of changesets per incremental import).
+ Design
+ ======
+ 
+-hg-fast-import.py was designed in a way that doesn't require a 2-pass mechanism
++hg-fast-export.py was designed in a way that doesn't require a 2-pass mechanism
+ or any prior repository analysis: if just feeds what it finds into
+ git-fast-import. This also implies that it heavily relies on strictly
+ linear ordering of changesets from hg, i.e. its append-only storage
+-model so that changesets hg-fast-import already saw never get modified.
++model so that changesets hg-fast-export already saw never get modified.
+ 
+ Todo
+ ====
