@@ -1,128 +1,81 @@
-From: Paul Gideon Dann <pdgiddie@googlemail.com>
-Subject: git-attic
-Date: Tue, 29 Jul 2008 12:57:38 +0100
-Message-ID: <488F05B2.6060209@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Bizarre missing changes (git bug?)
+Date: Tue, 29 Jul 2008 14:00:58 +0200
+Message-ID: <86fxps7vd1.fsf@lola.quinscape.zz>
+References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com>
+	<alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org>
+	<200807260512.40088.zippel@linux-m68k.org>
+	<alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org>
+	<Pine.LNX.4.64.0807270049290.6791@localhost.localdomain>
+	<alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org>
+	<Pine.LNX.4.64.0807272101470.6791@localhost.localdomain>
+	<alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org>
+	<Pine.LNX.4.64.0807280141140.6791@localhost.localdomain>
+	<alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org>
+	<Pine.LNX.4.64.0807281241180.6791@localhost.localdomain>
+	<alpine.LFD.1.10.0807282023290.3334@nehalem.linux-foundation.org>
+	<Pine.LNX.4.64.0807291235350.6791@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 29 13:58:51 2008
+X-From: git-owner@vger.kernel.org Tue Jul 29 14:02:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNnql-0006Hl-Sv
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 13:58:44 +0200
+	id 1KNnu7-0007Wz-24
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 14:02:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756358AbYG2L5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 07:57:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756186AbYG2L5o
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 07:57:44 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:28714 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755920AbYG2L5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 07:57:42 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so1655400nfc.21
-        for <git@vger.kernel.org>; Tue, 29 Jul 2008 04:57:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:subject:content-type:content-transfer-encoding:from;
-        bh=E19M8cFRmHaIQBgDWa2E7FEoYJnsRF1GJnr0KNzm5g4=;
-        b=AarXTa3izegtpZ5oq8+G0XO5B/niKs2n5L4+CUnU+3QtSYmAksprWRT4GgQWekx4/8
-         slETP6Pkiujd9cXMza+azKoop4j4Z7dDR5tnpsI/1pODNSc4ztIxbgZYRAGy2uyWaHo+
-         0YfhUuLgCeoNvJsUphvC9bzweoJ8mjFWVrkBk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding:from;
-        b=At73tCRmf139Fl/HUm6ZZURyA3+vN2mMhwkA7d+SVbDEwULefOJJy6LAIxXOSKxlIP
-         n9MjdC2eKvZEmeg1RPpafAM0yqHQYEHqJuwt35oK3Zjz+dO/uu7177yX8F+CPavf9sb4
-         IT4ul6+lp0Xs8j9FKtZMIPUARaYUzslV70iCQ=
-Received: by 10.210.49.19 with SMTP id w19mr7522824ebw.11.1217332660575;
-        Tue, 29 Jul 2008 04:57:40 -0700 (PDT)
-Received: from Lemmie.local ( [82.46.201.97])
-        by mx.google.com with ESMTPS id g9sm2194448gvc.0.2008.07.29.04.57.39
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 29 Jul 2008 04:57:40 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
+	id S1755739AbYG2MBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 08:01:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756186AbYG2MBJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 08:01:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:33833 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755002AbYG2MBI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 08:01:08 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KNnt5-0001M5-0X
+	for git@vger.kernel.org; Tue, 29 Jul 2008 12:01:07 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 29 Jul 2008 12:01:06 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 29 Jul 2008 12:01:06 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+Cancel-Lock: sha1:JZCv7Vm32lIxDLK/dPcLwXHsZ9w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90621>
 
-Hello all,
+Roman Zippel <zippel@linux-m68k.org> writes:
 
-I looked around everywhere for a script that could make it easy for me 
-to store stale branches in refs/attic for possible later retrieval.  I 
-don't like such branches lying around in refs/heads and used to tag them 
-to clear them out of the way, but then that makes "git push origin 
---tags" unusable, since I don't want to push my stale branches out...
+> On Mon, 28 Jul 2008, Linus Torvalds wrote:
+>
+>> So go away. Write the code. Come back with patches.
+>
+> If you knew me that well, you also knew that such threats don't work
+> with me.
 
-Anyway, I wrote my own little script in the end and thought it might be 
-useful to others.
+I'd like to add to Linus' suggested course of action the task "look up
+threat in a dictionary".
 
-Please Cc pdgiddie@gmail.com in replies,
-Paul Gideon Dann
+> In this case you know perfectly well, that I don't know the code as
+> well as you, so without any help it would require a huge waste of time
+> with the risk of rejection.
 
+If _you_ need the functionality, you can easily keep it around in _your_
+copy.  That's what I do with a few patches that were not accepted here.
+So the "risk of rejection" has no real cost for you (apart from an
+occasional rebase on origin, which is cheap).  Just for others.  And of
+no-one else argues your case, then they probably don't mind.
 
-Usage: git-attic
-       git-attic store <ref> [<commit>]
-       git-attic remove <ref>
-
-
-#!/bin/bash
-###
-# Original Author: Paul Gideon Dann <pdgiddie@gmail.com>
-###
-
-showUsage() {
-  echo "Usage: git-attic"
-  echo "       git-attic store <ref> [<commit>]"
-  echo "       git-attic remove <ref>"
-}
-
-case $1 in
-  "store")
-    if [[ ! $2 ]]; then
-      showUsage
-      exit 1
-    fi
-    if [[ $3 ]]; then
-      OBJECT_SHA1=`git-rev-parse --revs-only $3`
-      if [[ ! $OBJECT_SHA1 ]]; then
-        echo "$3 is not a recognisable commit object."
-        exit 1
-      fi
-    else
-      OBJECT_SHA1=`git show-ref -h HEAD | awk '{print $1}'`
-    fi
-    git update-ref refs/attic/$2 $OBJECT_SHA1
-    echo "$2 stored in attic."
-    ;;
-
-  "remove")
-    if [[ ! $2 ]]; then
-      showUsage
-      exit 1
-    fi
-    OBJECT_SHA1=`git show-ref attic/$2 | awk '{print $1}'`
-    if [[ ! $OBJECT_SHA1 ]]; then
-      echo "$2 does not exist in the attic!"
-      exit 1
-    fi
-    git update-ref -d refs/attic/$2 $OBJECT_SHA1
-    echo "$2 removed from attic."
-    ;;
-
-  *)
-    if [[ $1 ]]; then
-      showUsage
-    else
-      # display contents of attic
-      git for-each-ref --format="%(refname)" refs/attic | awk -F / 
-'{print $3}'
-    fi
-    ;;
-esac
+-- 
+David Kastrup
