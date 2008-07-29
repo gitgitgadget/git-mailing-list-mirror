@@ -1,108 +1,99 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 2/2 v2] run-command (Windows): Run dashless "git <cmd>" (solves part of problem with system_path)
-Date: Tue, 29 Jul 2008 07:17:26 +0200
-Message-ID: <1217308647-23673-1-git-send-email-prohaska@zib.de>
-References: <BF5B7CBE-ACA8-4D81-8FC0-8A7901205854@zib.de>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [RFC/PATCH v3] merge-base: teach "git merge-base" to accept more than 2 arguments
+Date: Tue, 29 Jul 2008 07:24:15 +0200
+Message-ID: <200807290724.16157.chriscool@tuxfamily.org>
+References: <20080728065023.743930d6.chriscool@tuxfamily.org> <7vabg2wovf.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Steffen Prohaska <prohaska@zib.de>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Tue Jul 29 07:19:12 2008
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 07:21:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNhc6-0003zG-MH
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 07:19:11 +0200
+	id 1KNheP-0004YP-04
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 07:21:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752066AbYG2FSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 01:18:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752022AbYG2FSI
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 01:18:08 -0400
-Received: from mailer.zib.de ([130.73.108.11]:37353 "EHLO mailer.zib.de"
+	id S1752195AbYG2FUd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jul 2008 01:20:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752022AbYG2FUd
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 01:20:33 -0400
+Received: from smtp6-g19.free.fr ([212.27.42.36]:51340 "EHLO smtp6-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751821AbYG2FSH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 01:18:07 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m6T5HS2A027288;
-	Tue, 29 Jul 2008 07:17:33 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m6T5HShZ025345;
-	Tue, 29 Jul 2008 07:17:28 +0200 (MEST)
-X-Mailer: git-send-email 1.5.4.4
-In-Reply-To: <BF5B7CBE-ACA8-4D81-8FC0-8A7901205854@zib.de>
+	id S1751875AbYG2FUc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Jul 2008 01:20:32 -0400
+Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id 2C5D55FD5B;
+	Tue, 29 Jul 2008 07:20:28 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id 026105FD45;
+	Tue, 29 Jul 2008 07:20:27 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vabg2wovf.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90571>
 
-We prefer running the dashless form, so we should use it in MinGW's
-start_command(), too.
+Le lundi 28 juillet 2008, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+>
+> > +static struct commit *get_commit_reference(const char *arg)
+> > +{
+> > +	unsigned char revkey[20];
+> > +	if (get_sha1(arg, revkey))
+> > +		die("Not a valid object name %s", arg);
+> > +	return lookup_commit_reference(revkey);
+> > +}
+>
+> This returns a NULL when you feed a tree to the command, and...
+>
+> >  int cmd_merge_base(int argc, const char **argv, const char *prefix=
+)
+> >  {
+> > +	struct commit **rev;
+> >  	int show_all =3D 0;
+> > +	int rev_nr =3D 0;
+> >
+> >  	git_config(git_default_config, NULL);
+> >
+> > @@ -38,15 +48,18 @@ int cmd_merge_base(int argc, const char **argv,
+> > const char *prefix) usage(merge_base_usage);
+> >  		argc--; argv++;
+> >  	}
+> > +	if (argc < 3)
+> >  		usage(merge_base_usage);
+> > +
+> > +	rev =3D xmalloc((argc - 1) * sizeof(*rev));
+> > +
+> > +	do {
+> > +		struct commit *r =3D get_commit_reference(argv[1]);
+> > +		if (!r)
+> > +			return 1;
+>
+> ... the command silently exits with 1.
 
-This solves a fundamental problem we have with the computation of system
-directories based on relative paths in combination with the new
-gitexecpath 'libexec/git-core'.  The problem is that the program 'git'
-is hardlinked to directories with different depth.  It is either used as
-'bin/git' (1 directory) or as 'libexec/git-core/git-*' (2 directories).
-Thus, using the same relative path in system_path() yields different
-results when starting from the two locations.  I recognized the problem
-because /etc/gitconfig is no longer read.
+In "master" there is:
 
-This commit fixes the problem by always calling 'bin/git' for builtin
-commands.  The computation in system_path() thus always starts from
-'bin' and yields predictable results.  This is however only part of a
-full solution to the problem outlined above.  Remaining problems are:
+	rev1 =3D lookup_commit_reference(rev1key);
+	rev2 =3D lookup_commit_reference(rev2key);
+	if (!rev1 || !rev2)
+		return 1;
+	return show_merge_base(rev1, rev2, show_all);
 
- - Other code paths might run the dashed forms directly.
+so I think you found a bug in the current code.
+I will post a patch to fix it soon.
 
- - We have non-builtins that are implemented in C, e.g. fast-import.c.
-   These non-builtins will still compute wrong paths.
+It will "die" (with an error =F9message) in case "lookup_commit_referen=
+ce"=20
+returns NULL. I hope it's ok.
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-Acked-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- run-command.c |   11 ++++-------
- 1 files changed, 4 insertions(+), 7 deletions(-)
-
-diff --git a/run-command.c b/run-command.c
-index 6e29fdf..a3b28a6 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -119,9 +119,8 @@ int start_command(struct child_process *cmd)
- 	}
- #else
- 	int s0 = -1, s1 = -1, s2 = -1;	/* backups of stdin, stdout, stderr */
--	const char *sargv0 = cmd->argv[0];
-+	const char **sargv = cmd->argv;
- 	char **env = environ;
--	struct strbuf git_cmd;
- 
- 	if (cmd->no_stdin) {
- 		s0 = dup(0);
-@@ -165,9 +164,7 @@ int start_command(struct child_process *cmd)
- 	}
- 
- 	if (cmd->git_cmd) {
--		strbuf_init(&git_cmd, 0);
--		strbuf_addf(&git_cmd, "git-%s", cmd->argv[0]);
--		cmd->argv[0] = git_cmd.buf;
-+		cmd->argv = prepare_git_cmd(cmd->argv);
- 	}
- 
- 	cmd->pid = mingw_spawnvpe(cmd->argv[0], cmd->argv, env);
-@@ -175,9 +172,9 @@ int start_command(struct child_process *cmd)
- 	if (cmd->env)
- 		free_environ(env);
- 	if (cmd->git_cmd)
--		strbuf_release(&git_cmd);
-+		free(cmd->argv);
- 
--	cmd->argv[0] = sargv0;
-+	cmd->argv = sargv;
- 	if (s0 >= 0)
- 		dup2(s0, 0), close(s0);
- 	if (s1 >= 0)
--- 
-1.6.0.rc0.79.gb0320
+Thanks,
+Christian.
