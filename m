@@ -1,95 +1,167 @@
-From: =?ISO-8859-1?Q?=22Peter_Valdemar_M=F8rch_=28Lists=29=22?= 
-	<4ux6as402@sneakemail.com>
-Subject: git merge --squash isn't "marked as a merge"??
-Date: Tue, 29 Jul 2008 09:49:29 +0200
-Message-ID: <488ECB89.5060801@sneakemail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: GIT 1.6.0-rc1
+Date: Tue, 29 Jul 2008 01:13:44 -0700
+Message-ID: <7v4p69jefb.fsf@gitster.siamese.dyndns.org>
+References: <7vy73myim5.fsf@gitster.siamese.dyndns.org>
+ <20080728063838.GB4234@blimp.local>
+ <7vwsj6tsm3.fsf@gitster.siamese.dyndns.org>
+ <20080728213727.GA3721@blimp.local>
+ <7vr69dky93.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 29 09:50:43 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 10:15:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNjyi-00030G-Il
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 09:50:41 +0200
+	id 1KNkME-0001U1-J0
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 10:14:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753287AbYG2Hti convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jul 2008 03:49:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753277AbYG2Hti
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 03:49:38 -0400
-Received: from morch.com ([193.58.255.207]:36129 "EHLO morch.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753245AbYG2Hth (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 03:49:37 -0400
-Received: from [192.168.1.214] (ANice-157-1-60-153.w90-36.abo.wanadoo.fr [90.36.75.153])
-	by morch.com (Postfix) with ESMTP id AF2B5277D
-	for <git@vger.kernel.org>; Tue, 29 Jul 2008 09:51:36 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
+	id S1754008AbYG2IN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 04:13:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753886AbYG2IN4
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 04:13:56 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60579 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753388AbYG2INy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 04:13:54 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 019A743E10;
+	Tue, 29 Jul 2008 04:13:50 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id E198A43E0F; Tue, 29 Jul 2008 04:13:46 -0400 (EDT)
+In-Reply-To: <7vr69dky93.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 28 Jul 2008 23:20:08 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 4652CCFE-5D46-11DD-94E5-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90596>
 
-Newbie alert:
+Junio C Hamano <gitster@pobox.com> writes:
 
-I have a feature branch where I have N tiny commits with sloppy/private
-commit messages. Being able to have private commits was the main reason=
-=20
-I'm using git (as a frontend to svn).
+> Alex Riesen <raa.lkml@gmail.com> writes:
+>
+>> Junio C Hamano, Mon, Jul 28, 2008 08:44:52 +0200:
+>>> Alex Riesen <raa.lkml@gmail.com> writes:
+>>> 
+>>> > t2103-update-index-ignore-missing.sh still broken on Windows because
+>>> > of stat.st_size being 0 for directories there.
+>>> 
+>>> I recall we did not reach a useful conclusion of that discussion.
+>>
+>> Why isn't the proposed patch useful? (and would it be possible to make
+>> the answer out of plain, small and short words?)
+>
+> Can you answer out of plain, small and short words why the proposed patch
+> is correct without unwanted side effects, not just "this seems to solve
+> the particular issue for me but I don't know if it has unintended side
+> effects"?
 
-Today the feature is in a "good" state, and I want to merge it into a=20
-main branch, showing a single commit with a well phrased message for al=
-l=20
-the world to see. So I:
+Ok, I took a deeper look at the codepaths involved.  Although it does work
+around the issue, I do not think your patch alone is the "correct" one in
+the longer term.
 
-$ git checkout master
-$ git merge --squash feature
-$ git commit -F wellphrased.msg
+It needs a bit of explanation, and the explanation won't be exactly
+"plain, small and short", unfortunately.
 
-Now I was expecting that:
-$ git merge feature
-would do nothing (I already did a merge!). But it pulls in all the
-sloppy commits and messages from "feature"!
+-- >8 --
+[PATCH] Teach gitlinks to ie_modified() and ce_modified_check_fs()
 
-Of course now I could continue with a new branch made like this:
-$ git checkout -b feature2 master
-and continue working privately on feature2 again. Then I'll end up with
-feature..feature47 before I'm done. Each with its own segment of my=20
-private history. A real mess.
+The ie_modified() function is the workhorse for refresh_cache_entry(),
+i.e. checking if an index entry that is stat-dirty actually has changes.
 
-Can I continue on feature somehow so I privately can "git log" and
-see all my messy commits (both before and after the "git merge
---squash") and then regularly "git merge" and/or "git merge --squash"
-back and forth between "feature" and "master" as I deem appropriate?
+After running quicker check to compare cached stat information with
+results from the latest lstat(2) to answer "has modification" early, the
+code goes on to check if there really is a change by comparing the staged
+data with what is on the filesystem by asking ce_modified_check_fs().
+However, this function always said "no change" for any gitlinks that has a
+directory at the corresponding path.  This made ie_modified() to miss
+actual changes in the subproject.
 
-I'm guessing that if the --squash *did* put in a "merge arrow" (setting
-a "parent" of the commit to the head of feature) thereby allowing merge
-to not do anything, then git log would also follow feature's sloppy
-history too. They go together as a pair. Is that right? Testing this:
+The patch fixes this first by modifying an existing short-circuit logic
+before calling the ce_modified_check_fs() function.  It knows that for any
+filesystem entity to which ie_match_stat() says its data has changed, if
+its cached size is nonzero then the contents cannot match, which is a
+correct optimization only for blob objects.  We teach gitlink objects to
+this special case, as we already know that any gitlink that
+ie_match_stat() says is modified is indeed modified at this point in the
+codepath.
 
-git help merge says about --squash:
-> Produce the working tree and index state as if a real merge happened,
-> but do not actually make a commit or move the HEAD, nor record
-> $GIT_DIR/MERGE_HEAD to cause the next git commit command to create a
-> merge commit.
+With the above change, we could leave ce_modified_check_fs() broken, but
+it also futureproofs the code by teaching it to use ce_compare_gitlink(),
+instead of assuming (incorrectly) that any directory is unchanged.
 
-So I tried "git merge --squash feature", then set up .git/MERGE_HEAD to=
-=20
-the same contents as .git/refs/heads/feature and then "git commit". Thi=
-s=20
-produced the same result as "git merge" without --squash including all=20
-the sloppy messages.
+Originally noticed by Alex Riesen on Cygwin.
 
-SO: It seems to me I cannot continuously merge "feature" to "master" in=
-=20
-chunks with "--squash" as I would like. Is that right? Is my desire=20
-fundamentally misguided, and is there A Better Way?
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ read-cache.c |   27 ++++++++++++++++++++++-----
+ 1 files changed, 22 insertions(+), 5 deletions(-)
 
-Peter
---=20
-Peter Valdemar M=F8rch
-http://www.morch.com
+diff --git a/read-cache.c b/read-cache.c
+index b5916b0..a940f8d 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -152,7 +152,7 @@ static int ce_modified_check_fs(struct cache_entry *ce, struct stat *st)
+ 		break;
+ 	case S_IFDIR:
+ 		if (S_ISGITLINK(ce->ce_mode))
+-			return 0;
++			return ce_compare_gitlink(ce) ? DATA_CHANGED : 0;
+ 	default:
+ 		return TYPE_CHANGED;
+ 	}
+@@ -192,6 +192,7 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
+ 			changed |= TYPE_CHANGED;
+ 		break;
+ 	case S_IFGITLINK:
++		/* We ignore most of the st_xxx fields for gitlinks */
+ 		if (!S_ISDIR(st->st_mode))
+ 			changed |= TYPE_CHANGED;
+ 		else if (ce_compare_gitlink(ce))
+@@ -298,11 +299,22 @@ int ie_modified(const struct index_state *istate,
+ 	if (changed & (MODE_CHANGED | TYPE_CHANGED))
+ 		return changed;
+ 
+-	/* Immediately after read-tree or update-index --cacheinfo,
+-	 * the length field is zero.  For other cases the ce_size
+-	 * should match the SHA1 recorded in the index entry.
++	/*
++	 * Immediately after read-tree or update-index --cacheinfo,
++	 * the length field is zero, as we have never even read the
++	 * lstat(2) information once, and we cannot trust DATA_CHANGED
++	 * returned by ie_match_stat() which in turn was returned by
++	 * ce_match_stat_basic() to signal that the filesize of the
++	 * blob changed.  We have to actually go to the filesystem to
++	 * see if the contents match, and if so, should answer "unchanged".
++	 *
++	 * The logic does not apply to gitlinks, as ce_match_stat_basic()
++	 * already has checked the actual HEAD from the filesystem in the
++	 * subproject.  If ie_match_stat() already said it is different,
++	 * then we know it is.
+ 	 */
+-	if ((changed & DATA_CHANGED) && ce->ce_size != 0)
++	if ((changed & DATA_CHANGED) &&
++	    (S_ISGITLINK(ce->ce_mode) || ce->ce_size != 0))
+ 		return changed;
+ 
+ 	changed_fs = ce_modified_check_fs(ce, st);
+@@ -1331,6 +1343,11 @@ static void ce_smudge_racily_clean_entry(struct cache_entry *ce)
+ 	 * falsely clean entry due to touch-update-touch race, so we leave
+ 	 * everything else as they are.  We are called for entries whose
+ 	 * ce_mtime match the index file mtime.
++	 *
++	 * Note that this actually does not do much for gitlinks, for
++	 * which ce_match_stat_basic() always goes to the actual
++	 * contents.  The caller checks with is_racy_timestamp() which
++	 * always says "no" for gitlinks, so we are not called for them ;-)
+ 	 */
+ 	struct stat st;
+ 
