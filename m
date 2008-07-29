@@ -1,74 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git Community Book
-Date: Tue, 29 Jul 2008 12:57:13 -0700
-Message-ID: <7vzlo0cvl2.fsf@gitster.siamese.dyndns.org>
-References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
- <20080729170955.GK32184@machine.or.cz>
- <d411cc4a0807291130p228f77d5r1f390090ec29aef4@mail.gmail.com>
- <7vwsj4edm1.fsf@gitster.siamese.dyndns.org>
- <d411cc4a0807291234q794344e0oee09f6164286ffd1@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Petr Baudis" <pasky@suse.cz>, "git list" <git@vger.kernel.org>
-To: "Scott Chacon" <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 21:58:25 2008
+From: Abhijit Menon-Sen <ams@toroid.org>
+Subject: [PATCH] Make it clear that push can take multiple refspecs
+Date: Wed, 30 Jul 2008 01:39:19 +0530
+Message-ID: <1217362159-25440-1-git-send-email-ams@toroid.org>
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 29 22:10:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNvKx-0000jV-7O
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 21:58:23 +0200
+	id 1KNvWc-0005B4-Nv
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 22:10:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752144AbYG2T5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 15:57:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752134AbYG2T5V
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 15:57:21 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35153 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752044AbYG2T5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 15:57:20 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 96B8C428E5;
-	Tue, 29 Jul 2008 15:57:19 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 9711C428E3; Tue, 29 Jul 2008 15:57:15 -0400 (EDT)
-In-Reply-To: <d411cc4a0807291234q794344e0oee09f6164286ffd1@mail.gmail.com>
- (Scott Chacon's message of "Tue, 29 Jul 2008 12:34:43 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8D3736A2-5DA8-11DD-9354-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1759614AbYG2UJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 16:09:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759591AbYG2UJW
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 16:09:22 -0400
+Received: from fugue.toroid.org ([85.10.196.113]:55039 "EHLO fugue.toroid.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759510AbYG2UJV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 16:09:21 -0400
+Received: from penne.toroid.org (penne-vpn [10.8.0.6])
+	by fugue.toroid.org (Postfix) with ESMTP id 5D61F5580DD;
+	Tue, 29 Jul 2008 22:09:20 +0200 (CEST)
+Received: by penne.toroid.org (Postfix, from userid 1000)
+	id 80282ADC369; Wed, 30 Jul 2008 01:39:19 +0530 (IST)
+X-Mailer: git-send-email 1.6.0.rc0.43.g2aa74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90679>
 
-"Scott Chacon" <schacon@gmail.com> writes:
+Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
+---
+ Documentation/git-push.txt |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
 
-> The book is basically a fork of all three of the guides I mentioned
-> (User Manual and both Tutorials), and with the scope and goals I
-> currently have in mind, will not be kept in sync - it's just not going
-> to be possible.  I think in the end, the goals of the texts are so
-> very different that sections it will simply not make sense to try to
-> keep them in sync in some sort of automated fashion.  That's one of
-> the reasons why I choose Markdown - I saw no need to use asciidoc, as
-> the book will not be shipped around with Git or built using the same
-> processes, and I had no need for the advantages of asciidoc in my
-> project.  I don't think it makes much sense to have the book be a man
-> page at all.
->
-> However, I will watch the manual and guides and try to incorporate
-> changes to them as appropriate, and I will likely have some updates to
-> them myself as I've been more closely scrutinizing them.
-
-If that is the approach you decided for your book, I am Ok with that.
-
-Not that you need my blessing to do your own book.  It was unclear what
-your goals were, and if one of the goals were to keep the hassle of
-maintaining shared materials in both manuals up-to-date, choice of
-markdown seemed suboptimal to me, hence my comments.
-
-Thanks.
-
-... /me goes back to work after lunch break ...
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 94d07ab..b8c55dd 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -10,7 +10,8 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git push' [--all] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
+-           [--repo=all] [-f | --force] [-v | --verbose] [<repository> <refspec>...]
++           [--repo=all] [-f | --force] [-v | --verbose]
++           [<repository> <refspec>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -33,7 +34,8 @@ OPTIONS
+ 	The canonical format of a <refspec> parameter is
+ 	`+?<src>:<dst>`; that is, an optional plus `+`, followed
+ 	by the source ref, followed by a colon `:`, followed by
+-	the destination ref.
++	the destination ref. Any number of <refspec> parameters
++	may be specified.
+ +
+ The <src> side represents the source branch (or arbitrary
+ "SHA1 expression", such as `master~4` (four parents before the
+@@ -180,6 +182,10 @@ git push origin :experimental::
+ 	Find a ref that matches `experimental` in the `origin` repository
+ 	(e.g. `refs/heads/experimental`), and delete it.
+ 
++git push origin master master:other::
++	Find a ref that matches `master` in the source repository and in
++	the `origin` repository update refs `master` and `other` to it.
++
+ git push origin master:satellite/master::
+ 	Find a ref that matches `master` in the source repository
+ 	(most likely, it would find `refs/heads/master`), and update
+-- 
+1.6.0.rc0.43.g2aa74
