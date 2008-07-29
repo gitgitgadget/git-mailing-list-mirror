@@ -1,62 +1,57 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git submodules
-Date: Tue, 29 Jul 2008 10:51:26 +0200
-Message-ID: <20080729085125.GJ32184@machine.or.cz>
-References: <20080728162003.GA4584@artemis.madism.org> <320075ff0807281323l51bb6478j30e3e4c490974a70@mail.gmail.com> <20080728205545.GB10409@artemis.madism.org> <20080728205923.GC10409@artemis.madism.org> <32541b130807281440v64f3cb9ci50cf6d16be4f2f82@mail.gmail.com> <b3889dff0807282251t7096a8c9wf477cf4495749d34@mail.gmail.com> <20080729082135.GB32312@artemis.madism.org> <20080729083755.GC32312@artemis.madism.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git merge --squash isn't "marked as a merge"??
+Date: Tue, 29 Jul 2008 01:53:55 -0700
+Message-ID: <7vbq0hhxzw.fsf@gitster.siamese.dyndns.org>
+References: <488ECB89.5060801@sneakemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Pierre Habouzit <madcoder@debian.org>,
-	Benjamin Collins <aggieben@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Nigel Magnay <nigel.magnay@gmail.com>,
-	Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 29 10:52:31 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 29 10:55:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNkwW-0003J3-8B
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 10:52:28 +0200
+	id 1KNkz4-0004A4-Cc
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 10:55:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753109AbYG2Iv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 04:51:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752934AbYG2Iv2
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 04:51:28 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:60419 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752800AbYG2Iv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 04:51:27 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 12C46393B928; Tue, 29 Jul 2008 10:51:26 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080729083755.GC32312@artemis.madism.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1754106AbYG2IyG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jul 2008 04:54:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754064AbYG2IyE
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 04:54:04 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46574 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754035AbYG2IyE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Jul 2008 04:54:04 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 84BA740D64;
+	Tue, 29 Jul 2008 04:54:00 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 7CFFB40D62; Tue, 29 Jul 2008 04:53:58 -0400 (EDT)
+In-Reply-To: <488ECB89.5060801@sneakemail.com> (Peter Valdemar =?utf-8?Q?M?=
+ =?utf-8?Q?=C3=B8rch's?= message of "Tue, 29 Jul 2008 09:49:29 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E31B5F6A-5D4B-11DD-B899-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90606>
 
-On Tue, Jul 29, 2008 at 10:37:55AM +0200, Pierre Habouzit wrote:
-> So okay, let's scratch this "automatic reference" thing, I see its
-> limits now, so what about having a .gitmodule entry look like:
-> 
->     [submodule "$path"]
+"Peter Valdemar M=C3=B8rch (Lists)"  <4ux6as402@sneakemail.com> writes:
 
-This is not a "$path" but arbitrary string. Please keep that in mind.
+> Newbie alert:
+>
+> I have a feature branch where I have N tiny commits with sloppy/priva=
+te
+> commit messages....
 
-> 	path = "$path"
-> 	url = git://somewhere/
-> 	tracks = master
-
-I do like this (well, I'd just name it "branch" instead of "tracks").
-I use submodules very "traditionally" just to bind external projects of
-certain version to my project, but I have been already thinking about
-implementing this merely as a hint for others to know what branch should
-the other developers follow when updating the submodule to a newer
-version.
-
--- 
-				Petr "Pasky" Baudis
-As in certain cults it is possible to kill a process if you know
-its true name.  -- Ken Thompson and Dennis M. Ritchie
+Probably you would want to step back and _think_ why you want to squash=
+ in
+the first place.  I suspect the answer would lead to a better use of th=
+e
+available set of tools, such as "use 'rebase -i' to clean up the origin=
+al
+history and then 'merge' (without squash) it or 'rebase' it".
