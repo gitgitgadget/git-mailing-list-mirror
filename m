@@ -1,81 +1,55 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Bizarre missing changes (git bug?)
-Date: Tue, 29 Jul 2008 14:00:58 +0200
-Message-ID: <86fxps7vd1.fsf@lola.quinscape.zz>
-References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com>
-	<alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org>
-	<200807260512.40088.zippel@linux-m68k.org>
-	<alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org>
-	<Pine.LNX.4.64.0807270049290.6791@localhost.localdomain>
-	<alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org>
-	<Pine.LNX.4.64.0807272101470.6791@localhost.localdomain>
-	<alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org>
-	<Pine.LNX.4.64.0807280141140.6791@localhost.localdomain>
-	<alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org>
-	<Pine.LNX.4.64.0807281241180.6791@localhost.localdomain>
-	<alpine.LFD.1.10.0807282023290.3334@nehalem.linux-foundation.org>
-	<Pine.LNX.4.64.0807291235350.6791@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [trivial fast-export PATCH] Fix typo in documentation
+Date: Tue, 29 Jul 2008 14:06:13 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807291404390.4631@eeepc-johanness>
+References: <20080729045026.27648.54610.stgit@marcab.local.tull.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 29 14:02:55 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Nick Andrew <nick@nick-andrew.net>
+X-From: git-owner@vger.kernel.org Tue Jul 29 14:06:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNnu7-0007Wz-24
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 14:02:11 +0200
+	id 1KNnxw-0000Lg-QQ
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 14:06:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755739AbYG2MBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 08:01:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756186AbYG2MBJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 08:01:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:33833 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755002AbYG2MBI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 08:01:08 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KNnt5-0001M5-0X
-	for git@vger.kernel.org; Tue, 29 Jul 2008 12:01:07 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 29 Jul 2008 12:01:06 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 29 Jul 2008 12:01:06 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-Cancel-Lock: sha1:JZCv7Vm32lIxDLK/dPcLwXHsZ9w=
+	id S1756354AbYG2MFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 08:05:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756226AbYG2MFH
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 08:05:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44067 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756031AbYG2MFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 08:05:06 -0400
+Received: (qmail invoked by alias); 29 Jul 2008 12:05:04 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp008) with SMTP; 29 Jul 2008 14:05:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Kf6ccD6pKn/kZB0pBdzyRq8wAXIg4NwfULV5eZC
+	UkPO5pyXdmk/Zp
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <20080729045026.27648.54610.stgit@marcab.local.tull.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90622>
 
-Roman Zippel <zippel@linux-m68k.org> writes:
+Hi,
 
-> On Mon, 28 Jul 2008, Linus Torvalds wrote:
->
->> So go away. Write the code. Come back with patches.
->
-> If you knew me that well, you also knew that such threats don't work
-> with me.
+On Tue, 29 Jul 2008, Nick Andrew wrote:
 
-I'd like to add to Linus' suggested course of action the task "look up
-threat in a dictionary".
+>  hg-fast-export.txt |   10 +++++-----
 
-> In this case you know perfectly well, that I don't know the code as
-> well as you, so without any help it would require a huge waste of time
-> with the risk of rejection.
+I do not see this in git.git.  Maybe you meant to Cc: Simon Hausmann, 
+Rocco Rutte or Han-Wen?
 
-If _you_ need the functionality, you can easily keep it around in _your_
-copy.  That's what I do with a few patches that were not accepted here.
-So the "risk of rejection" has no real cost for you (apart from an
-occasional rebase on origin, which is cheap).  Just for others.  And of
-no-one else argues your case, then they probably don't mind.
+Or Chris Lee, who seems to be the owner of fast-export.git.
 
--- 
-David Kastrup
+Ciao,
+Dscho
