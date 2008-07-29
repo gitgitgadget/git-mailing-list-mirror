@@ -1,81 +1,76 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: What is 'git BRANCH'?
-Date: Tue, 29 Jul 2008 15:32:51 -0700
-Message-ID: <DEBF93FC-BA8D-4513-B4EE-A8648DA1D591@sb.org>
-References: <g6o4vi$rap$1@ger.gmane.org> <7vej5cba6z.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v928.1)
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Jurko_Gospodneti=C4=87?= <jurko.gospodnetic@docte.hr>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 30 00:34:29 2008
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Git Community Book
+Date: Tue, 29 Jul 2008 18:34:31 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0807291716460.19665@iabervon.org>
+References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 30 00:36:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNxlw-00045H-1l
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 00:34:24 +0200
+	id 1KNxnW-0004XJ-1a
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 00:36:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755411AbYG2WdX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jul 2008 18:33:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755459AbYG2WdX
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 18:33:23 -0400
-Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:54184 "EHLO
-	randymail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1755337AbYG2WdW convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 18:33:22 -0400
-Received: from [192.168.1.80] (adsl-76-199-69-6.dsl.pltn13.sbcglobal.net [76.199.69.6])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a11.g.dreamhost.com (Postfix) with ESMTP id F21E5109E8B;
-	Tue, 29 Jul 2008 15:33:21 -0700 (PDT)
-In-Reply-To: <7vej5cba6z.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.928.1)
+	id S1760241AbYG2Wee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 18:34:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760227AbYG2Wed
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 18:34:33 -0400
+Received: from iabervon.org ([66.92.72.58]:38354 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760208AbYG2Wec (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 18:34:32 -0400
+Received: (qmail 25548 invoked by uid 1000); 29 Jul 2008 22:34:31 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 29 Jul 2008 22:34:31 -0000
+In-Reply-To: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90696>
 
-On Jul 29, 2008, at 3:24 PM, Junio C Hamano wrote:
+On Tue, 29 Jul 2008, Scott Chacon wrote:
 
-> Jurko Gospodneti=C4=87 <jurko.gospodnetic@docte.hr> writes:
->
->>  Hi.
->>
->>  I typed in "git BRANCH" by accident and got the error message:
->> "fatal: cannot handle BRANCH internally".
->>
->>  What does that mean?
->>
->>  It is different from the usual "git: 'yada-yada' is not a
->> git-command. See 'git --help'." message you get when you type in an
->> incorrect command name.
->
-> Just a guess; your git is installed on a case-challenged filesystem?
+> So I wanted to develop a really nice, easy to follow book for Git
+> newcomers to learn git quickly and easily.  One of the issues I
+> remember having when learning Git is that there is a lot of great
+> material in the User Guide, Tutorial, Tutorial 2, Everyday Git, etc -
+> but they're all huge long documents that are sometimes difficult to
+> come back to and remember where you were, and I didn't know which one
+> to start with or where to find what I was looking for, etc.
 
- From what I can tell, this happens when you execute one of the git-* =20
-builtin binaries using a name that doesn't actually match the binary, =20
-case-sensitively. When you type `git BRANCH` on OS X, git matches that =
-=20
-against the git-branch binary and executes it, but argv[0] contains =20
-"git-BRANCH". When this is compared by the git-branch binary to the =20
-list of internal commands, it comes up empty, and the fallback code =20
-(to die with "fatal: cannot handle BRANCH internally") gets executed =20
-instead.
+It would be good to include stuff from 
+http://eagain.net/articles/git-for-computer-scientists/
 
-In other words, this is identical to running `/usr/local/libexec/git-=20
-core/git-BRANCH` or to doing something like `exec -a git-BRANCH /usr/=20
-local/libexec/git-core/git-branch` (this example should work on any =20
-filesystem).
+Maybe only in inspiration, since it doesn't have an obvious license and 
+it's stylisticly more technical. But it would be nice to have diagrams of 
+"this is what git thinks of as history", possibly even arranging them like 
+gitk shows things (older downward, refs pointing in from the side).
 
--Kevin Ballard
+In particular, I think it's really useful to show a commit graph with 
+branching and merging, and introduce refs as movable pointers to commits 
+in the graph, and local branches as refs that you move and tracking refs 
+as refs that copy values in other repositories.
 
---=20
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+I think you can even gloss of details of blobs and trees because they 
+pretty much work just like files and directories in a filesystem (except 
+that they take up much less storage in large quantities than you'd think). 
+The only potentially interesting things are (1) a blob names the inode, 
+not the dentry, so it's the file contents, not the name, mode, etc; and 
+(2) the permission bits are just 'x', we've got symlinks, there are no 
+owner/group or other attributes and "see also Submodules".
+
+But I think that the section:
+  http://eagain.net/articles/git-for-computer-scientists/#history
+should have an equivalent in any git documentation that can have diagrams, 
+and introducing a history diagram style early means that you can do a 
+bunch of simple pictures to explain operations like "git checkout -b foo" 
+or "git reset --hard HEAD^^" or "git checkout origin/master".
+
+	-Daniel
+*This .sig left intentionally blank*
