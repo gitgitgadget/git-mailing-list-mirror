@@ -1,66 +1,74 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: GIT 1.6.0-rc1
-Date: Tue, 29 Jul 2008 23:17:45 +0200
-Message-ID: <20080729211745.GA3879@blimp.local>
-References: <7vy73myim5.fsf@gitster.siamese.dyndns.org> <20080728063838.GB4234@blimp.local> <7vwsj6tsm3.fsf@gitster.siamese.dyndns.org> <20080728213727.GA3721@blimp.local> <7vr69dky93.fsf@gitster.siamese.dyndns.org> <7v4p69jefb.fsf@gitster.siamese.dyndns.org> <7vljzlhyt8.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Anders Melchiorsen" <mail@cup.kalibalik.dk>
+Subject: Re: [PATCH v2] Advertise the ability to abort a commit
+Date: Tue, 29 Jul 2008 23:19:07 +0200 (CEST)
+Message-ID: <38467.N1gUGH5fRhE=.1217366347.squirrel@webmail.hotelhot.dk>
+References: <1217359925-30130-1-git-send-email-mail@cup.kalibalik.dk>
+    <1217362342-30370-1-git-send-email-mail@cup.kalibalik.dk>
+    <7vfxpsct3f.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 23:18:51 2008
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 23:20:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNwao-0004pX-0T
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 23:18:50 +0200
+	id 1KNwc8-0005FL-5B
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 23:20:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754386AbYG2VRs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 17:17:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753064AbYG2VRs
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 17:17:48 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.180]:52549 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752765AbYG2VRs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 17:17:48 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20pf4C8=
-Received: from tigra.home (Fac01.f.strato-dslnet.de [195.4.172.1])
-	by post.webmailer.de (fruni mo41) (RZmta 16.47)
-	with ESMTP id i02d4bk6TFlnvE ; Tue, 29 Jul 2008 23:17:45 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 5197D277BD;
-	Tue, 29 Jul 2008 23:17:45 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id 22F5736D18; Tue, 29 Jul 2008 23:17:45 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vljzlhyt8.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753162AbYG2VTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 17:19:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752721AbYG2VTK
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 17:19:10 -0400
+Received: from mail.hotelhot.dk ([77.75.163.100]:47649 "EHLO mail.hotelhot.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753281AbYG2VTK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 17:19:10 -0400
+Received: from mail.hotelhot.dk (localhost [127.0.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 564EA14062;
+	Tue, 29 Jul 2008 23:19:07 +0200 (CEST)
+Received: from webmail.hotelhot.dk (mail.hotelhot.dk [192.168.0.190])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 37FCB1405A;
+	Tue, 29 Jul 2008 23:19:07 +0200 (CEST)
+X-Squirrel-UserHash: NQYRRTwcNktTVUlTWFZaWRRVWg==
+X-Squirrel-FromHash: N1gUGH5fRhE=
+In-Reply-To: <7vfxpsct3f.fsf@gitster.siamese.dyndns.org>
+User-Agent: SquirrelMail/1.4.13
+X-Priority: 3 (Normal)
+Importance: Normal
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90686>
 
-Junio C Hamano, Tue, Jul 29, 2008 10:36:19 +0200:
-> Junio C Hamano <gitster@pobox.com> writes:
-> >
-> > Ok, I took a deeper look at the codepaths involved.  Although it does work
-> > around the issue, I do not think your patch alone is the "correct" one in
-> > the longer term.
+Junio C Hamano wrote:
+> Anders Melchiorsen <mail@cup.kalibalik.dk> writes:
+>
+>> -		die("no commit message?  aborting commit.");
+>> +		die("no commit message.  aborting commit.");
 
-Thought so. I just didn't know the code around
+> [...]
 
-> > It needs a bit of explanation, and the explanation won't be exactly
-> > "plain, small and short", unfortunately.
-> 
-> Alex, I ran the full test with this, but only on Linux boxes; obviously
-> not on any flavor of Windows.  I think it is correct, and the "first line
-> of defence" fix is the same as your patch, so I'd assume it would work for
-> you as well.  But extra eyeballs are always appreciated.
+> If the change _were_ to reword the message to more neutral sounding
+> "aborting commit due to missing log message.", and change die() to a
+> normal exit, that would be making this not an error.  As I already said, I
+> am mildly negative, but at least such a change would be internally
+> consistent.
+>
+> I sense that the change from question mark to full stop might be showing
+> the desire to go in that direction, but in that case your change from the
+> question mark to full stop does not go far enough.
 
-Well, it works on Cygwin too. And I had my eyeballs on the code
-(wondered first if it will cause more fs accesses than before: it
-will, in the racy check. Which is correct, AFAICT)
+I took the question mark to mean that Git was confused about an empty
+message. That does not seem right when Git itself proposes it.
+
+I would be happy to also change it to a normal exit. However, since you do
+not like the change, let us just forget about that hunk.
+
+
+Cheers,
+Anders.
