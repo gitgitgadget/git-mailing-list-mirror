@@ -1,86 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-svn and svn:externals, was Re: Hackontest ideas?
-Date: Tue, 29 Jul 2008 14:28:31 +0200
-Message-ID: <200807291428.32072.jnareb@gmail.com>
-References: <20080729000103.GH32184@machine.or.cz> <m3myk1t54c.fsf@localhost.localdomain> <alpine.DEB.1.00.0807291354130.4631@eeepc-johanness>
+From: Roman Zippel <zippel@linux-m68k.org>
+Subject: Re: Bizarre missing changes (git bug?)
+Date: Tue, 29 Jul 2008 14:32:14 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0807291339580.6791@localhost.localdomain>
+References: <alpine.LFD.1.10.0807211331390.31863@woody.linux-foundation.org>
+ <200807260512.40088.zippel@linux-m68k.org>
+ <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807280141140.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807281241180.6791@localhost.localdomain>
+ <20080729053108.GH26997@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@ucw.cz>, Eric Wong <normalperson@yhbt.net>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 29 14:29:57 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 29 14:34:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNoKp-0007sN-W2
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 14:29:48 +0200
+	id 1KNoP3-0000pA-9w
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 14:34:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756589AbYG2M2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 08:28:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756534AbYG2M2r
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 08:28:47 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:32706 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756491AbYG2M2q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 08:28:46 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so1660926nfc.21
-        for <git@vger.kernel.org>; Tue, 29 Jul 2008 05:28:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=2asgKqvyEsIqw62vQw08njNnjQgvB9uBm0UDFxzvOeE=;
-        b=fp+NnZRdfWtLUvE/5n6uhdjLl7W3QCeBgQy8Xr2YWYf0M2Jn4L5+edUAj9HR/gauk9
-         C23EBZg7lxLIbejzl/fJVE1NBehUTANDgQobsIhNL6yYOVIDjTKKrPjwIOv1GzlTSUAw
-         3YvlOwX5y3L6uUhKSBGNVGT9QIgHHde0qo61w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=qL6SCFgjwmmwjARtm4HiNvraf3xiP70l0zpWjA5T63jLKQh0/bCdi7saxz8OKa4ghL
-         okMQ5tWhCcDwrh77jtXa1qEuLpLsAGlDOB69jmSQNAuj58ga5J8NZNxU+A3o49ToTflq
-         hIlPyoOay0ox2fhYBWIUu+8PAeR1y+kSjPvo0=
-Received: by 10.210.87.14 with SMTP id k14mr7540419ebb.60.1217334525206;
-        Tue, 29 Jul 2008 05:28:45 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.244.7])
-        by mx.google.com with ESMTPS id y34sm21788825iky.10.2008.07.29.05.28.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 29 Jul 2008 05:28:42 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.DEB.1.00.0807291354130.4631@eeepc-johanness>
-Content-Disposition: inline
+	id S1751236AbYG2MdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 08:33:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751372AbYG2MdI
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 08:33:08 -0400
+Received: from smtp-vbr4.xs4all.nl ([194.109.24.24]:4615 "EHLO
+	smtp-vbr4.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751070AbYG2MdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 08:33:06 -0400
+Received: from squid.home (linux-m68k.xs4all.nl [82.95.193.92])
+	(authenticated bits=0)
+	by smtp-vbr4.xs4all.nl (8.13.8/8.13.8) with ESMTP id m6TCWElA002805
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 29 Jul 2008 14:32:15 +0200 (CEST)
+	(envelope-from zippel@linux-m68k.org)
+X-X-Sender: roman@localhost.localdomain
+In-Reply-To: <20080729053108.GH26997@sigill.intra.peff.net>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90625>
 
-Johannes Schindelin wrote:
-> Hi,
+Hi,
+
+On Tue, 29 Jul 2008, Jeff King wrote:
+
+> > Can we please get past this and look at what is required to produce the 
+> > correct history?
 > 
-> On Tue, 29 Jul 2008, Jakub Narebski wrote:
+> You seem to be indicating here (and elsewhere in the thread) that there
+> exists some history graph for which neither "git log" nor "git log
+> --full-history" produces the output you want, but that there is some
+> better output (even if it might take more time to compute).
 > 
-> >  * handling of svn:externals using submodules
-> 
-> I doubt that this is easy.  Otherwise, Eric would have done it a long time 
-> ago.
+> Perhaps I am just slow, but I haven't been able to figure out what that
+> history is, or what the "correct" output should be. Can you try to state
+> more clearly what it is you are looking for?
 
-Yeah, I guess is too large a project for Hackontest.
- 
-> The main concern I have is to get the semantics right: AFAICT 
-> svn:externals has _no notion_ of "what is current".  It just _always_ 
-> fetches the HEAD.  Even if you check out an ancient revision in the 
-> "superproject".
+Most frequently this involves changes where the same change is merged 
+twice. Another interesting example is kernel/printk.c where a change is 
+added and later removed again before it's merged.
+With "git-log --full-history" you see these changes, but it lacks the 
+necessary merges to produce a full graph. As consequence none of the 
+graphical front ends produce a useful history graph.
 
-If I understand correctly with version 1.5 svn:externals can be
-specified using "peg revisions", so they could refer to some specific
-revision of 'external', like git submodules.
+This problem now hits me now more seriously in a repository conversion, 
+where it frequently happened, that changes were applied both locally and 
+upstream, so that I have relatively many of these empty merges and the 
+default git-log output is useless. --full-history is more of a workaround 
+than a real solution and again the history graph in _all_ graphical front 
+ends is useless.
 
--- 
-Jakub Narebski
-Poland
+More generally this means in any kind of situation where you maintain your 
+own repository and it takes a while until upstream accepts your changes, 
+so that you frequently have duplicated changes (because upstream doesn't 
+use git or doesn't pull directly), you have to be careful to get the right 
+history out of git.
+
+The point is now that I think the problem is solvable even within Linus' 
+constraints, so that git-log produces the right output by default and a 
+workaround like --full-history isn't needed anymore.
+
+bye, Roman
