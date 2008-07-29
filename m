@@ -1,83 +1,81 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: short log and email address
-Date: Wed, 30 Jul 2008 00:30:01 +0200
-Message-ID: <488F99E9.2010806@lsrfire.ath.cx>
-References: <9e4733910807281106y56f8b67ao86f78822c4b4ad58@mail.gmail.com>	 <alpine.DEB.1.00.0807281928400.8986@racer> <9e4733910807281157u44c08a59ld3bdc0416e8a1d03@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: What is 'git BRANCH'?
+Date: Tue, 29 Jul 2008 15:32:51 -0700
+Message-ID: <DEBF93FC-BA8D-4513-B4EE-A8648DA1D591@sb.org>
+References: <g6o4vi$rap$1@ger.gmane.org> <7vej5cba6z.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v928.1)
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 30 00:31:17 2008
+Cc: =?UTF-8?Q?Jurko_Gospodneti=C4=87?= <jurko.gospodnetic@docte.hr>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 30 00:34:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNxiu-0003GT-JP
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 00:31:17 +0200
+	id 1KNxlw-00045H-1l
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 00:34:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755021AbYG2WaO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jul 2008 18:30:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754905AbYG2WaO
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 18:30:14 -0400
-Received: from india601.server4you.de ([85.25.151.105]:60235 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754079AbYG2WaN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 18:30:13 -0400
-Received: from [10.0.1.200] (p57B7EFDE.dip.t-dialin.net [87.183.239.222])
-	by india601.server4you.de (Postfix) with ESMTPSA id A01B62F8068;
-	Wed, 30 Jul 2008 00:30:10 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <9e4733910807281157u44c08a59ld3bdc0416e8a1d03@mail.gmail.com>
+	id S1755411AbYG2WdX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jul 2008 18:33:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755459AbYG2WdX
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 18:33:23 -0400
+Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:54184 "EHLO
+	randymail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755337AbYG2WdW convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 18:33:22 -0400
+Received: from [192.168.1.80] (adsl-76-199-69-6.dsl.pltn13.sbcglobal.net [76.199.69.6])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by randymail-a11.g.dreamhost.com (Postfix) with ESMTP id F21E5109E8B;
+	Tue, 29 Jul 2008 15:33:21 -0700 (PDT)
+In-Reply-To: <7vej5cba6z.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.928.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90695>
 
-Jon Smirl schrieb:
-> On 7/28/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> Hi,
+On Jul 29, 2008, at 3:24 PM, Junio C Hamano wrote:
+
+> Jurko Gospodneti=C4=87 <jurko.gospodnetic@docte.hr> writes:
+>
+>>  Hi.
 >>
+>>  I typed in "git BRANCH" by accident and got the error message:
+>> "fatal: cannot handle BRANCH internally".
 >>
->>  On Mon, 28 Jul 2008, Jon Smirl wrote:
+>>  What does that mean?
 >>
->>  > Using the -e option in shortlog changes the results by spitting t=
-hings
->>  > out by email address instead of leaving them combined by name. Th=
-at's
->>  > probably not what you want. Instead you want everything combined =
-by name
->>  > and then display the most recent email address used.
->>
->>
->> What is so wrong with _not_ using -e (since you do not want to see t=
-he
->>  email address stored in the commit message, and -e would be asking =
-for
->>  that _exactly_)?
->=20
-> I wanted -e to give me the most recent email so that I would know how
-> to sort the mailmap alias list.
+>>  It is different from the usual "git: 'yada-yada' is not a
+>> git-command. See 'git --help'." message you get when you type in an
+>> incorrect command name.
+>
+> Just a guess; your git is installed on a case-challenged filesystem?
 
-<snip>
+ From what I can tell, this happens when you execute one of the git-* =20
+builtin binaries using a name that doesn't actually match the binary, =20
+case-sensitively. When you type `git BRANCH` on OS X, git matches that =
+=20
+against the git-branch binary and executes it, but argv[0] contains =20
+"git-BRANCH". When this is compared by the git-branch binary to the =20
+list of internal commands, it comes up empty, and the fallback code =20
+(to die with "fatal: cannot handle BRANCH internally") gets executed =20
+instead.
 
-> If the name isn't in mailmap, tell them to make a patch adding their
-> name or to change their name.
+In other words, this is identical to running `/usr/local/libexec/git-=20
+core/git-BRANCH` or to doing something like `exec -a git-BRANCH /usr/=20
+local/libexec/git-core/git-branch` (this example should work on any =20
+filesystem).
 
-That makes sense if you want to list all contributors in .mailmap...
+-Kevin Ballard
 
-> If the name is there but the email is not the last one in the list,
-> tell them to make a patch rearranging mailmap to reflect their curren=
-t
-> name/email.
-
-=2E.. but why would you want to check if they used their respective ema=
-il
-entry that is sorted last in the file?  A person might have multiple
-current email addresses, e.g. someone could send patches for one
-subsystem from work and patches for something else from home, as a hobb=
-y.
-
-Ren=E9
+--=20
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
