@@ -1,133 +1,57 @@
-From: Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
-Subject: [PATCH 1/2 v2] gitweb: sort projects by path.
-Date: Tue, 29 Jul 2008 00:59:02 -0300
-Message-ID: <1217303942-18526-1-git-send-email-barbieri@profusion.mobi>
-References: <1217298868-16513-2-git-send-email-barbieri@profusion.mobi>
-Cc: gitster@pobox.com,
-	Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 29 06:00:23 2008
+From: Jeff King <peff@peff.net>
+Subject: Re: theirs/ours was Re: [PATCH 6/6] Add a new test for using a
+	custom merge strategy
+Date: Tue, 29 Jul 2008 00:31:17 -0400
+Message-ID: <20080729043117.GB26997@sigill.intra.peff.net>
+References: <bd6139dc0807280754x76b6ffedg6bf756dfce23f1e3@mail.gmail.com> <20080728185604.GA26322@sigill.intra.peff.net> <alpine.DEB.1.00.0807282008470.8986@racer> <20080728192651.GA26677@sigill.intra.peff.net> <alpine.DEB.1.00.0807290123300.2725@eeepc-johanness> <bd6139dc0807281709u43218e97p8ba239f3e520e10@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailinglist <git@vger.kernel.org>,
+	Miklos Vajna <vmiklos@frugalware.org>
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Tue Jul 29 06:32:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNgNp-0005Eh-GR
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 06:00:21 +0200
+	id 1KNgsm-00036g-JT
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 06:32:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753226AbYG2D7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 23:59:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753081AbYG2D7U
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 23:59:20 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:10163 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753176AbYG2D7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 23:59:19 -0400
-Received: by qw-out-2122.google.com with SMTP id 3so409439qwe.37
-        for <git@vger.kernel.org>; Mon, 28 Jul 2008 20:59:18 -0700 (PDT)
-Received: by 10.214.184.3 with SMTP id h3mr1192084qaf.50.1217303953795;
-        Mon, 28 Jul 2008 20:59:13 -0700 (PDT)
-Received: from solid.profusion.mobi ( [201.82.39.16])
-        by mx.google.com with ESMTPS id 5sm9944926ywl.4.2008.07.28.20.59.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 28 Jul 2008 20:59:12 -0700 (PDT)
-X-Mailer: git-send-email 1.5.5.2
-In-Reply-To: <1217298868-16513-2-git-send-email-barbieri@profusion.mobi>
+	id S1751413AbYG2EbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 00:31:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751337AbYG2EbU
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 00:31:20 -0400
+Received: from peff.net ([208.65.91.99]:1384 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751238AbYG2EbT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 00:31:19 -0400
+Received: (qmail 5646 invoked by uid 111); 29 Jul 2008 04:31:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 29 Jul 2008 00:31:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jul 2008 00:31:17 -0400
+Content-Disposition: inline
+In-Reply-To: <bd6139dc0807281709u43218e97p8ba239f3e520e10@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90561>
 
-Projects are paths, so they should be sorted in pieces, not as a
-whole, so a/x will be come before a-b/x.
+On Tue, Jul 29, 2008 at 02:09:18AM +0200, Sverre Rabbelier wrote:
 
-Signed-off-by: Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
----
+> > If the result should become the state of 'x', too, I would then just
+> > 'git push origin y:x'.
+> 
+> But this means that everybody doing a 'git pull' on that repo will get
+> complaints when pulling, right? Should they just send out a message to
+> all their users that they'll need to rebase all their changes now?
+> (Not being sarcastic, am trying to work out what the recommended
+> workflow is here.)
 
-New version that fix cmp_paths. Unlike I though initially, $#list
-reports the last element index, not the list length. Nonetheless the
-last component must be compared only if the list lengths are the same,
-otherwise we'll get $root/a/a.git before $root/b.git and sections will
-look ugly (group elements of the same level together).
+I think you are missing the fact that he is doing this push _after_
+having merged the history into master via "-s ours". So it is a
+fast-forward to push at that point.
 
-
- gitweb/gitweb.perl |   42 +++++++++++++++++++++++++++++++++++++-----
- 1 files changed, 37 insertions(+), 5 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 90cd99b..06c9901 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3574,17 +3574,45 @@ sub fill_project_list_info {
- 	return @projects;
- }
- 
-+sub cmp_paths {
-+	my ($a, $b) = @_;
-+	my @la = split('/', $a);
-+	my @lb = split('/', $b);
-+	my $last;
-+
-+	if ($#la < $#lb) {
-+		$last = $#la;
-+	} else {
-+		$last = $#lb;
-+	}
-+
-+	for (my $i = 0; $i < $last; $i++) {
-+		my $r = $la[$i] cmp $lb[$i];
-+		if ($r != 0) {
-+			return $r;
-+		}
-+	}
-+
-+	if ($#la == $#lb) {
-+		return $la[$last] cmp $lb[$last];
-+	} else {
-+		return $#la <=> $#lb;
-+	}
-+}
-+
- # print 'sort by' <th> element, either sorting by $key if $name eq $order
- # (changing $list), or generating 'sort by $name' replay link otherwise
- sub print_sort_th {
--	my ($str_sort, $name, $order, $key, $header, $list) = @_;
-+	my ($sort_mode, $name, $order, $key, $header, $list) = @_;
- 	$key    ||= $name;
- 	$header ||= ucfirst($name);
- 
- 	if ($order eq $name) {
--		if ($str_sort) {
-+		if ($sort_mode == 2) {
-+			@$list = sort {cmp_paths($a->{$key}, $b->{$key})} @$list;
-+		} elsif ($sort_mode == 1) {
- 			@$list = sort {$a->{$key} cmp $b->{$key}} @$list;
--		} else {
-+		} elsif ($sort_mode == 0) {
- 			@$list = sort {$a->{$key} <=> $b->{$key}} @$list;
- 		}
- 		print "<th>$header</th>\n";
-@@ -3596,6 +3624,10 @@ sub print_sort_th {
- 	}
- }
- 
-+sub print_sort_th_path {
-+	print_sort_th(2, @_);
-+}
-+
- sub print_sort_th_str {
- 	print_sort_th(1, @_);
- }
-@@ -3620,8 +3652,8 @@ sub git_project_list_body {
- 		if ($check_forks) {
- 			print "<th></th>\n";
- 		}
--		print_sort_th_str('project', $order, 'path',
--		                  'Project', \@projects);
-+		print_sort_th_path('project', $order, 'path',
-+		                   'Project', \@projects);
- 		print_sort_th_str('descr', $order, 'descr_long',
- 		                  'Description', \@projects);
- 		print_sort_th_str('owner', $order, 'owner',
--- 
-1.5.5.2
+-Peff
