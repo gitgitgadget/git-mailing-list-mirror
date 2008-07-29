@@ -1,91 +1,59 @@
-From: "Chris Hart" <chris@christopherhart.ca>
-Subject: SSL + mod_dav + Git
-Date: Tue, 29 Jul 2008 07:53:08 -0400
-Message-ID: <a7b96a640807290453l582c3f11w6a0f0c841063f07@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: git-svn and svn:externals, was Re: Hackontest ideas?
+Date: Tue, 29 Jul 2008 13:56:37 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807291354130.4631@eeepc-johanness>
+References: <20080729000103.GH32184@machine.or.cz> <m3myk1t54c.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 29 13:54:15 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>, Eric Wong <normalperson@yhbt.net>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 13:56:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNnmO-0004gu-T1
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 13:54:13 +0200
+	id 1KNnoc-0005Ud-DM
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 13:56:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756343AbYG2LxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 07:53:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756213AbYG2LxL
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 07:53:11 -0400
-Received: from qb-out-0506.google.com ([72.14.204.237]:20961 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756186AbYG2LxK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 07:53:10 -0400
-Received: by qb-out-0506.google.com with SMTP id a16so673399qbd.17
-        for <git@vger.kernel.org>; Tue, 29 Jul 2008 04:53:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition:x-google-sender-auth;
-        bh=04RfT4hALhUG11AFldb0oDlY5+hlA2tpBoqMjtm4t3k=;
-        b=JbClcb/LohAS4xu7hWtMXvuOBo6Hk+ap/GSFQTkOONBNG3NowWpl4eR/ISnqaK1j5d
-         rYGW8spqChI7TDthJOg/Cy+IictpIwrjf/gBiIDfsqG36edsniSQ94vBNfMYJgEmp+sm
-         pky17djodRZMjsbOmeFt/IYml2CnUpHtQkBEo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=HgEJqfD2yx0UN44kPg1vv6w7e3jMwHoyYQfHx02XvAHBnoq/Y2zDIH9JiFvv+sx8om
-         oyVoI09S2DXOhaIL27hqzhgL27Ai6fOXrPweBValUFhtRzeaKlc+GyNbHiv3DSq6s8aS
-         LA5JeOz1yPULiPvlHU77hPu1DH40mOe7xui6M=
-Received: by 10.114.170.2 with SMTP id s2mr6375856wae.170.1217332388671;
-        Tue, 29 Jul 2008 04:53:08 -0700 (PDT)
-Received: by 10.114.176.3 with HTTP; Tue, 29 Jul 2008 04:53:08 -0700 (PDT)
-Content-Disposition: inline
-X-Google-Sender-Auth: 3c770b2e9377b3ac
+	id S1755686AbYG2Lza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 07:55:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755796AbYG2Lza
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 07:55:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45356 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755635AbYG2Lz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 07:55:29 -0400
+Received: (qmail invoked by alias); 29 Jul 2008 11:55:27 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp060) with SMTP; 29 Jul 2008 13:55:27 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/khzUdGlbkA0Z4B7FpDl7XNDcunvxvtKspDy1MhT
+	7TTqorFCmNkfT/
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <m3myk1t54c.fsf@localhost.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90619>
 
-Hi guys, I've been up all night on this one and after exhaustive
-Googling and checking the sleepy #git, decided to check with the
-mailing list! Here's the current problem:
+Hi,
 
-Git is working perfectly over SSH. The server is Ubuntu, and doing
-cadaver https://serveraddress/.git successfully authenticates using
-the passwd file I provided to Apache. Basically I've done everything
-from Rutger's guide
-(http://www.kernel.org/pub/software/scm/git/docs/v1.4.4.4/howto/setup-git-server-over-http.txt)
-except for the ~/.netrc stuff.
+On Tue, 29 Jul 2008, Jakub Narebski wrote:
 
-However, once authenticated to the .git folder (cadaver through
-https), basic commands give strange errors or 404s. Ls throws "Listing
-collection `/.git/': failed:
-Could not read status line: Secure connection truncated" and cd
-/to/some/legitimate/directory throws "Could not access /.git/dir/ (not
-WebDAV-enabled?):
-404 Not Found." Oddly tab-completion for cd suggests the contents of
-the directory (although I'm cadaver-ing from localhost). Same results
-remotely in a browser: authenticates successfully and gives 404s.
+>  * handling of svn:externals using submodules
 
-Trying git clone https://server/.git throws:
+I doubt that this is easy.  Otherwise, Eric would have done it a long time 
+ago.
 
-"warning: remote HEAD refers to nonexistent ref, unable to checkout"
+The main concern I have is to get the semantics right: AFAICT 
+svn:externals has _no notion_ of "what is current".  It just _always_ 
+fetches the HEAD.  Even if you check out an ancient revision in the 
+"superproject".
 
-...despite the working certificate and authorization. Any ideas?
-Thanks infinity and one to anybody with attention for this!
-
-Chris
-
-
-Note: Apache owns all the files here so I really hope it's not a
-permissions thing.
-
------------------- Git version info --------------------
-server> git version 1.5.4.3
-remote-laptop> git version 1.5.6.4
-------------------------------------------------------------
+Ciao,
+Dscho
