@@ -1,84 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bizarre missing changes (git bug?)
-Date: Tue, 29 Jul 2008 08:52:47 -0400
-Message-ID: <20080729125247.GC12069@sigill.intra.peff.net>
-References: <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain> <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain> <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807280141140.6791@localhost.localdomain> <alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807281241180.6791@localhost.localdomain> <20080729053108.GH26997@sigill.intra.peff.net> <Pine.LNX.4.64.0807291339580.6791@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-svn and svn:externals, was Re: Hackontest ideas?
+Date: Tue, 29 Jul 2008 15:04:14 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0807291502450.4631@eeepc-johanness>
+References: <20080729000103.GH32184@machine.or.cz> <m3myk1t54c.fsf@localhost.localdomain> <alpine.DEB.1.00.0807291354130.4631@eeepc-johanness> <200807291428.32072.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Roman Zippel <zippel@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Tue Jul 29 14:53:55 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>, Eric Wong <normalperson@yhbt.net>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 15:04:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNoi6-0007vM-Hx
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 14:53:50 +0200
+	id 1KNos5-0003I1-Qk
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 15:04:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752573AbYG2Mwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 08:52:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752579AbYG2Mwu
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 08:52:50 -0400
-Received: from peff.net ([208.65.91.99]:4743 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751717AbYG2Mwu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 08:52:50 -0400
-Received: (qmail 8945 invoked by uid 111); 29 Jul 2008 12:52:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 29 Jul 2008 08:52:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jul 2008 08:52:47 -0400
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0807291339580.6791@localhost.localdomain>
+	id S1752969AbYG2NDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 09:03:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752876AbYG2NDI
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 09:03:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33519 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752188AbYG2NDG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 09:03:06 -0400
+Received: (qmail invoked by alias); 29 Jul 2008 13:03:04 -0000
+Received: from 88-107-142-10.dynamic.dsl.as9105.com (EHLO eeepc-johanness.st-andrews.ac.uk) [88.107.142.10]
+  by mail.gmx.net (mp042) with SMTP; 29 Jul 2008 15:03:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+HCEEYh+aHTDK5Y+XHum1GNHGEyBwnaNiq6hcMVJ
+	fffk816oScax9z
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <200807291428.32072.jnareb@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90632>
 
-On Tue, Jul 29, 2008 at 02:32:14PM +0200, Roman Zippel wrote:
+Hi,
 
-> > Perhaps I am just slow, but I haven't been able to figure out what that
-> > history is, or what the "correct" output should be. Can you try to state
-> > more clearly what it is you are looking for?
+On Tue, 29 Jul 2008, Jakub Narebski wrote:
+
+> Johannes Schindelin wrote:
 > 
-> Most frequently this involves changes where the same change is merged 
-> twice. Another interesting example is kernel/printk.c where a change is 
-> added and later removed again before it's merged.
+> > On Tue, 29 Jul 2008, Jakub Narebski wrote:
+> > 
+> > >  * handling of svn:externals using submodules
+> > 
+> > The main concern I have is to get the semantics right: AFAICT 
+> > svn:externals has _no notion_ of "what is current".  It just _always_ 
+> > fetches the HEAD.  Even if you check out an ancient revision in the 
+> > "superproject".
+> 
+> If I understand correctly with version 1.5 svn:externals can be 
+> specified using "peg revisions", so they could refer to some specific 
+> revision of 'external', like git submodules.
 
-I glanced briefly over "gitk kernel/printk.c" and it looks pretty sane.
-I was really hoping for you to make your case as something like:
+... which only means that if they had done that from the beginning, it 
+the git-svn enhancement would be easy.
 
-  1. here is an ascii diagram of an actual history graph (or a recipe of
-     git commands for making one)
-  2. here is what git-log (or gitk) produces for this history by
-     default; and here is why it is not optimal (presumably some
-     information it fails to convey)
-  3. here is what git-log (or gitk) with --full-history produces; and
-     here is why it is not optimal (presumably because it is too messy)
-  4. here is what output I would like to see. Bonus points for "and here
-     is an algorithm that accomplishes it."
+But as they did not have it from the beginning, anybody tackling git-svn 
+and svn:externals will have to come up with sensible semantics for the 
+hard case.
 
-> The point is now that I think the problem is solvable even within Linus' 
-> constraints, so that git-log produces the right output by default and a 
-> workaround like --full-history isn't needed anymore.
-
-I think this is a separate issue. Even if you came up with some great
-new history simplification, it likely wouldn't become the _default_
-right away anyway. So you need to:
-
-  1. produce a new simplification algorithm that is at least useful in
-     _some_ contexts. Then this can be used when desired for those
-     contexts. It almost doesn't matter how efficient it is, if it is
-     providing results that are otherwise unavailable. A user can choose
-     to take the performance hit to get those results.
-
-  2. If that algorithm doesn't provide worse output in any other
-     contexts _and_ it has similar performance to the current default,
-     then it can be considered for the default.
-
-But I haven't seen convincing evidence leading to step '1', so arguing
-about step '2' seems pointless.
-
--Peff
+Ciao,
+Dscho
