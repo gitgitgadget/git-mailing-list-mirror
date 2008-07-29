@@ -1,93 +1,120 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: Hackontest ideas?
-Date: Tue, 29 Jul 2008 09:12:04 +0700
-Message-ID: <fcaeb9bf0807281912t4df1b5cap8f1ff33138fda25e@mail.gmail.com>
-References: <20080729000103.GH32184@machine.or.cz>
-	 <7vk5f5o6em.fsf@gitster.siamese.dyndns.org>
-	 <20080729011404.GI32184@machine.or.cz>
-	 <fcaeb9bf0807281855w3b06f624q18f5ac76a3bb405c@mail.gmail.com>
-	 <20080729020212.GI10151@machine.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Jul 29 04:13:11 2008
+From: Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
+Subject: [PATCH 1/2] gitweb: sort projects by path.
+Date: Mon, 28 Jul 2008 23:34:27 -0300
+Message-ID: <1217298868-16513-2-git-send-email-barbieri@profusion.mobi>
+References: <1217298868-16513-1-git-send-email-barbieri@profusion.mobi>
+Cc: gitster@pobox.com,
+	Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 29 04:35:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNei7-0007GI-5n
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 04:13:11 +0200
+	id 1KNf3t-0004by-6f
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 04:35:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753020AbYG2CMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 22:12:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752326AbYG2CMI
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 22:12:08 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:22351 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752072AbYG2CMG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 22:12:06 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2225469fgg.17
-        for <git@vger.kernel.org>; Mon, 28 Jul 2008 19:12:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Or9J/M84a4aUv/wTsr8vt0PtIw57VqOwqiyjrNhL+eE=;
-        b=Bh5gmkQSP9P0v2T2GXrMFvxSU2mHZXa89mxhm4/ktynsjDR9yHt78337liII2kAzE1
-         Iy8Vwji8gmsxEQ4m3NuzA4ARPRKyIIiShTLq6FS+atNTnSk+g9Dq1lfZ5y/lH5LfipIt
-         6oYVIAXAUOsKtlU67wGvm3XCrPZeK8amDYSoA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=dQevTsbhWtWf5txMQcItVbveLuX+wq4CGin7sAk/b2a/ug/jxr6SCKGFxZGVdVoeYb
-         8vid0nFIeDRJQTrxZVp27gNBgXSLw/8skIqW3bYeQYHJIgxPyXOQqAJL+e+rxbsGbE6S
-         K+ITg1AVNmJDwtgsMvgq1C1nahUpjEeBISiTg=
-Received: by 10.86.63.19 with SMTP id l19mr3191191fga.60.1217297524527;
-        Mon, 28 Jul 2008 19:12:04 -0700 (PDT)
-Received: by 10.86.91.2 with HTTP; Mon, 28 Jul 2008 19:12:04 -0700 (PDT)
-In-Reply-To: <20080729020212.GI10151@machine.or.cz>
-Content-Disposition: inline
+	id S1752326AbYG2Cen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 22:34:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752234AbYG2Cen
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 22:34:43 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:52360 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751564AbYG2Cem (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 22:34:42 -0400
+Received: by qw-out-2122.google.com with SMTP id 3so394563qwe.37
+        for <git@vger.kernel.org>; Mon, 28 Jul 2008 19:34:42 -0700 (PDT)
+Received: by 10.214.79.7 with SMTP id c7mr1059076qab.89.1217298882419;
+        Mon, 28 Jul 2008 19:34:42 -0700 (PDT)
+Received: from solid.profusion.mobi ( [201.82.39.16])
+        by mx.google.com with ESMTPS id 6sm12944261ywp.3.2008.07.28.19.34.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 28 Jul 2008 19:34:41 -0700 (PDT)
+X-Mailer: git-send-email 1.5.5.2
+In-Reply-To: <1217298868-16513-1-git-send-email-barbieri@profusion.mobi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90552>
 
-On 7/29/08, Petr Baudis <pasky@suse.cz> wrote:
-> On Tue, Jul 29, 2008 at 08:55:32AM +0700, Nguyen Thai Ngoc Duy wrote:
->  > On 7/29/08, Petr Baudis <pasky@suse.cz> wrote:
->  > > On Mon, Jul 28, 2008 at 05:55:45PM -0700, Junio C Hamano wrote:
->  > >  > Petr Baudis <pasky@ucw.cz> writes:
->  > >  >
->  > >  > > (What feature in Git or a Git-related tool would you implement, given 24
->  > >  > > hours staight and unlimited pizza supply?)
->  > >  >
->  > >  > "Use 'assume unchanged' bit to implement narrow checkout".
->  > >
->  > >
->  > > I think Nguyen Thai Ngoc Duy is already working on this? (Though I think
->  > >  he does not use the assume unchanged bit; but this will be likely done
->  > >  before the end of September.)
->  >
->  > You are welcome to do ;) I got to narrow checkout from subtree
->  > checkout where 'assume unchanged' bit was unapplicable so my approach
->  > is a bit different, but probably 'assume unchanged' bit is the right
->  > way to go.
->
->
-> But I rather liked the elegancy of just narrowing this down to a
->  particular subtree. Is there really a good reason to generalize this
->  further?
+Projects are paths, so they should be sorted in pieces, not as a
+whole, so a/x will be come before a-b/x.
 
-I think because it's doable and people do need to narrow to more than
-one subtree sometimes. Also it would solve ".git* in parent
-directories" problem that is really hard if you strictly do "narrow
-down to a particular subtree".
+Signed-off-by: Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
+---
+ gitweb/gitweb.perl |   37 ++++++++++++++++++++++++++++++++-----
+ 1 files changed, 32 insertions(+), 5 deletions(-)
 
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 90cd99b..c5675cf 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3574,17 +3574,40 @@ sub fill_project_list_info {
+ 	return @projects;
+ }
+ 
++sub cmp_paths {
++	my ($a, $b) = @_;
++	my @la = split('/', $a);
++	my @lb = split('/', $b);
++	my $last;
++
++	if ($#la < $#lb) {
++		$last = $#la;
++	} else {
++		$last = $#lb;
++	}
++
++	for (my $i = 0; $i < $last; $i++) {
++		if ($la[$i] gt $lb[$i]) {
++			return 1;
++		}
++	}
++
++	return $#la <=> $#lb;
++}
++
+ # print 'sort by' <th> element, either sorting by $key if $name eq $order
+ # (changing $list), or generating 'sort by $name' replay link otherwise
+ sub print_sort_th {
+-	my ($str_sort, $name, $order, $key, $header, $list) = @_;
++	my ($sort_mode, $name, $order, $key, $header, $list) = @_;
+ 	$key    ||= $name;
+ 	$header ||= ucfirst($name);
+ 
+ 	if ($order eq $name) {
+-		if ($str_sort) {
++		if ($sort_mode == 2) {
++			@$list = sort {cmp_paths($a->{$key}, $b->{$key})} @$list;
++		} elsif ($sort_mode == 1) {
+ 			@$list = sort {$a->{$key} cmp $b->{$key}} @$list;
+-		} else {
++		} elsif ($sort_mode == 0) {
+ 			@$list = sort {$a->{$key} <=> $b->{$key}} @$list;
+ 		}
+ 		print "<th>$header</th>\n";
+@@ -3596,6 +3619,10 @@ sub print_sort_th {
+ 	}
+ }
+ 
++sub print_sort_th_path {
++	print_sort_th(2, @_);
++}
++
+ sub print_sort_th_str {
+ 	print_sort_th(1, @_);
+ }
+@@ -3620,8 +3647,8 @@ sub git_project_list_body {
+ 		if ($check_forks) {
+ 			print "<th></th>\n";
+ 		}
+-		print_sort_th_str('project', $order, 'path',
+-		                  'Project', \@projects);
++		print_sort_th_path('project', $order, 'path',
++		                   'Project', \@projects);
+ 		print_sort_th_str('descr', $order, 'descr_long',
+ 		                  'Description', \@projects);
+ 		print_sort_th_str('owner', $order, 'owner',
 -- 
-Duy
+1.5.5.2
