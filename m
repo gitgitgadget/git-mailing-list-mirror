@@ -1,86 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git submodules
-Date: Tue, 29 Jul 2008 07:53:08 -0700
-Message-ID: <7v7ib4ivxn.fsf@gitster.siamese.dyndns.org>
-References: <20080728162003.GA4584@artemis.madism.org>
- <20080728205923.GC10409@artemis.madism.org>
- <32541b130807281440v64f3cb9ci50cf6d16be4f2f82@mail.gmail.com>
- <b3889dff0807282251t7096a8c9wf477cf4495749d34@mail.gmail.com>
- <20080729082135.GB32312@artemis.madism.org>
- <20080729083755.GC32312@artemis.madism.org>
- <20080729085125.GJ32184@machine.or.cz>
- <alpine.DEB.1.00.0807291413460.4631@eeepc-johanness>
- <20080729130713.GF32312@artemis.madism.org>
- <alpine.DEB.1.00.0807291511400.4631@eeepc-johanness>
- <320075ff0807290631l1f9a1e70jcb73bde7e2c86000@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Pierre Habouzit" <madcoder@debian.org>,
-	"Petr Baudis" <pasky@suse.cz>,
-	"Benjamin Collins" <aggieben@gmail.com>,
-	"Avery Pennarun" <apenwarr@gmail.com>,
-	"Git ML" <git@vger.kernel.org>
-To: "Nigel Magnay" <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 16:54:25 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH 5/5] Add a new test for using a custom merge strategy
+Date: Tue, 29 Jul 2008 17:25:03 +0200
+Message-ID: <3c77f8dd8b229bb08b5bc0b6a8efd7359df5ecc9.1217344803.git.vmiklos@frugalware.org>
+References: <cover.1217344802.git.vmiklos@frugalware.org>
+ <fd19583955e9cea5b78a465d23bc127a51940048.1217344803.git.vmiklos@frugalware.org>
+ <5a003a0e20d0942c946680e4eade8e9d19f0036b.1217344803.git.vmiklos@frugalware.org>
+ <5ad105819efb1c905bd01db3d08eb3422d283b3b.1217344803.git.vmiklos@frugalware.org>
+ <722d66a5a897b694f374aa96bd58aff01a2a5932.1217344803.git.vmiklos@frugalware.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 17:26:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNqak-0005NI-9J
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 16:54:22 +0200
+	id 1KNr5M-0001WP-0D
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 17:26:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751914AbYG2OxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 10:53:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751612AbYG2OxV
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 10:53:21 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41216 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751502AbYG2OxU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 10:53:20 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6A5613DB05;
-	Tue, 29 Jul 2008 10:53:18 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 6F73F3DB01; Tue, 29 Jul 2008 10:53:10 -0400 (EDT)
-In-Reply-To: <320075ff0807290631l1f9a1e70jcb73bde7e2c86000@mail.gmail.com>
- (Nigel Magnay's message of "Tue, 29 Jul 2008 14:31:23 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 149F36D8-5D7E-11DD-A1CA-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753807AbYG2PYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 11:24:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753902AbYG2PYq
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 11:24:46 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:46530 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753883AbYG2PYi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 11:24:38 -0400
+Received: from vmobile.example.net (dsl5400FA31.pool.t-online.hu [84.0.250.49])
+	by yugo.frugalware.org (Postfix) with ESMTP id 623F21DDC60;
+	Tue, 29 Jul 2008 17:24:35 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 9A01C1AB593; Tue, 29 Jul 2008 17:25:04 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.rc0.14.g95f8.dirty
+In-Reply-To: <722d66a5a897b694f374aa96bd58aff01a2a5932.1217344803.git.vmiklos@frugalware.org>
+In-Reply-To: <cover.1217344802.git.vmiklos@frugalware.org>
+References: <cover.1217344802.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90644>
 
-"Nigel Magnay" <nigel.magnay@gmail.com> writes:
+Testing is done by creating a simple git-merge-theirs strategy which is
+the opposite of ours. Using this in real merges is not recommended but
+it's perfect for our testing needs.
 
->> I do not understand.  We are talking about three different things here:
->>
->> 1) the committed state of the submodule
->> 2) the local state of the submodule
->> 3) the state of the "tracks" branch
->>
->> We always have 1) and we have 2) _iff_ the submodule was checked out.  We
->> only will have 3) if "tracks" is set in .git/config (for consistency's
->> sake, we should not read that information directly from the .gitmodules
->> file, but let the user override it in .git/config after "submodule init".
->
-> I think the implication is that .gitconfig states "I'm expecting that
-> submodule X will always be tracking branch name 'Y'" and that you
-> wouldn't ever override it in .git/config. If you then switched
-> submodule X to branch Z, then committed the superproject, that commit
-> would contain a change to .gitconfig also (to say I'm expecting to
-> track Z rather than X') ?
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+ t/t7606-merge-custom.sh |   46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 46 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7606-merge-custom.sh
 
-You are right.  I think letting the user override with .git/config is a
-good idea, but it shouldn't be ".gitmodules may say X or whatever, but I
-want to use Y".
-
-Instead, it should be more like "On branches where .gitmodules says X, I
-want to use Y."
-
-This comment actually applies to the existing override of .gitmodules item
-with .git/config (I think I've been saying it since the design phase).
+diff --git a/t/t7606-merge-custom.sh b/t/t7606-merge-custom.sh
+new file mode 100755
+index 0000000..13e8ff5
+--- /dev/null
++++ b/t/t7606-merge-custom.sh
+@@ -0,0 +1,46 @@
++#!/bin/sh
++
++test_description='git-merge
++
++Testing a custom strategy.'
++
++. ./test-lib.sh
++
++cat > git-merge-theirs << EOF
++#!/bin/sh
++eval git read-tree --reset -u \\\$\$#
++EOF
++chmod +x git-merge-theirs
++PATH=.:$PATH
++export PATH
++
++test_expect_success 'setup' '
++	echo c0 > c0.c &&
++	git add c0.c &&
++	git commit -m c0 &&
++	git tag c0 &&
++	echo c1 > c1.c &&
++	git add c1.c &&
++	git commit -m c1 &&
++	git tag c1 &&
++	git reset --hard c0 &&
++	echo c2 > c2.c &&
++	git add c2.c &&
++	git commit -m c2 &&
++	git tag c2
++'
++
++test_expect_success 'merge c2 with a custom strategy' '
++	git reset --hard c1 &&
++	git merge -s theirs c2 &&
++	test "$(git rev-parse c1)" != "$(git rev-parse HEAD)" &&
++	test "$(git rev-parse c1)" = "$(git rev-parse HEAD^1)" &&
++	test "$(git rev-parse c2)" = "$(git rev-parse HEAD^2)" &&
++	test "$(git rev-parse c2^{tree})" = "$(git rev-parse HEAD^{tree})" &&
++	git diff --exit-code &&
++	test -f c0.c &&
++	test ! -f c1.c &&
++	test -f c2.c
++'
++
++test_done
+-- 
+1.6.0.rc0.14.g95f8.dirty
