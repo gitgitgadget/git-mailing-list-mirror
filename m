@@ -1,87 +1,64 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GIT 1.6.0-rc1
-Date: Tue, 29 Jul 2008 15:03:44 -0700
-Message-ID: <7vmyk0bb5r.fsf@gitster.siamese.dyndns.org>
-References: <7vy73myim5.fsf@gitster.siamese.dyndns.org>
- <20080728063838.GB4234@blimp.local>
- <7vwsj6tsm3.fsf@gitster.siamese.dyndns.org>
- <20080728213727.GA3721@blimp.local>
- <7vr69dky93.fsf@gitster.siamese.dyndns.org>
- <7v4p69jefb.fsf@gitster.siamese.dyndns.org>
- <7vljzlhyt8.fsf@gitster.siamese.dyndns.org>
- <20080729211745.GA3879@blimp.local>
+Subject: Re: [PATCH] Make it clear that push can take multiple refspecs
+Date: Tue, 29 Jul 2008 15:06:57 -0700
+Message-ID: <7viquobb0e.fsf@gitster.siamese.dyndns.org>
+References: <1217362159-25440-1-git-send-email-ams@toroid.org>
+ <7vbq0gcsxg.fsf@gitster.siamese.dyndns.org>
+ <20080729212808.GA27076@toroid.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 30 00:05:09 2008
+To: Abhijit Menon-Sen <ams@toroid.org>
+X-From: git-owner@vger.kernel.org Wed Jul 30 00:08:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNxJO-0002nl-Cu
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 00:04:54 +0200
+	id 1KNxMi-00040A-Mb
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 00:08:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753960AbYG2WDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 18:03:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753637AbYG2WDx
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 18:03:53 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40320 "EHLO
+	id S1759290AbYG2WHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 18:07:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758762AbYG2WHG
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 18:07:06 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40886 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753332AbYG2WDx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 18:03:53 -0400
+	with ESMTP id S1759290AbYG2WHE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 18:07:04 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D1CE1414A5;
-	Tue, 29 Jul 2008 18:03:51 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C08B3414F7;
+	Tue, 29 Jul 2008 18:07:03 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D8BDD414A4; Tue, 29 Jul 2008 18:03:48 -0400 (EDT)
-In-Reply-To: <20080729211745.GA3879@blimp.local> (Alex Riesen's message of
- "Tue, 29 Jul 2008 23:17:45 +0200")
+ ESMTPSA id 21B93414F5; Tue, 29 Jul 2008 18:07:00 -0400 (EDT)
+In-Reply-To: <20080729212808.GA27076@toroid.org> (Abhijit Menon-Sen's message
+ of "Wed, 30 Jul 2008 02:58:08 +0530")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3A8B63C6-5DBA-11DD-A212-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: ACF18530-5DBA-11DD-9526-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90690>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Abhijit Menon-Sen <ams@toroid.org> writes:
 
-> Junio C Hamano, Tue, Jul 29, 2008 10:36:19 +0200:
->> Junio C Hamano <gitster@pobox.com> writes:
->> >
->> > Ok, I took a deeper look at the codepaths involved.  Although it does work
->> > around the issue, I do not think your patch alone is the "correct" one in
->> > the longer term.
+> At 2008-07-29 13:54:35 -0700, gitster@pobox.com wrote:
+>>
+>> Doesn't this already say you can have zero or more refspecs?
 >
-> Thought so. I just didn't know the code around
->
->> > It needs a bit of explanation, and the explanation won't be exactly
->> > "plain, small and short", unfortunately.
->> 
->> Alex, I ran the full test with this, but only on Linux boxes; obviously
->> not on any flavor of Windows.  I think it is correct, and the "first line
->> of defence" fix is the same as your patch, so I'd assume it would work for
->> you as well.  But extra eyeballs are always appreciated.
->
-> Well, it works on Cygwin too. And I had my eyeballs on the code
-> (wondered first if it will cause more fs accesses than before: it
-> will, in the racy check. Which is correct, AFAICT)
+> It does, of course, but I've seen more than one question about how to do
+> it now, even from people who looked at the manpage, and it seemed to me
+> that adding an example wouldn't hurt.
 
-I thought racy check won't even trigger for gitlinks, no?
+Adding an example would help to certain point, but beyond that certain
+point it becomes unnecessary noise that talks the obvious.  If you saw the
+question asked many times in the real world, that would be a good
+indication that this patch falls into the "helpful" category, not "noise".
+Will queue.
 
-ce_modified_check_fs() has 3 call sites:
+I wonder if there are other manual pages with <thing>... notation that
+benefits from similar changes, though.
 
- - the call site in ie_match_stat() is protected with is_racy_timestamp()
-   that is always false for gitlinks;
-
- - the call site in ie_modified() we just took care of in the current
-   thread;
-
- - the other call site is in ce_smudge_racily_clean_entry(), which is
-   called from write_index() but it also is protected with
-   is_racy_timestamp() that is always false for gitlinks.
-
- 
+Thanks.
