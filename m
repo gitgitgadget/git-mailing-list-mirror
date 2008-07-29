@@ -1,114 +1,97 @@
-From: Anders Melchiorsen <mail@cup.kalibalik.dk>
-Subject: [PATCH v2] Advertise the ability to abort a commit
-Date: Tue, 29 Jul 2008 22:12:22 +0200
-Message-ID: <1217362342-30370-1-git-send-email-mail@cup.kalibalik.dk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Advertise the ability to abort a commit
+Date: Tue, 29 Jul 2008 13:51:00 -0700
+Message-ID: <7vfxpsct3f.fsf@gitster.siamese.dyndns.org>
 References: <1217359925-30130-1-git-send-email-mail@cup.kalibalik.dk>
-Cc: Anders Melchiorsen <mail@cup.kalibalik.dk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 29 22:13:29 2008
+ <1217362342-30370-1-git-send-email-mail@cup.kalibalik.dk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Anders Melchiorsen <mail@cup.kalibalik.dk>
+X-From: git-owner@vger.kernel.org Tue Jul 29 22:52:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNvZW-0006GZ-Uk
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 22:13:27 +0200
+	id 1KNwB2-0004RV-Fc
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 22:52:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751388AbYG2UM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 16:12:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbYG2UM0
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 16:12:26 -0400
-Received: from mail.hotelhot.dk ([77.75.163.100]:44529 "EHLO mail.hotelhot.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750897AbYG2UMZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 16:12:25 -0400
-Received: from mail.hotelhot.dk (localhost [127.0.0.1])
-	by mail.hotelhot.dk (Postfix) with ESMTP id ABCE314062;
-	Tue, 29 Jul 2008 22:12:22 +0200 (CEST)
-Received: from localhost.localdomain (router.kalibalik.dk [192.168.0.1])
-	by mail.hotelhot.dk (Postfix) with ESMTP id 8142A1405A;
-	Tue, 29 Jul 2008 22:12:22 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6.4
-In-Reply-To: <1217359925-30130-1-git-send-email-mail@cup.kalibalik.dk>
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1754096AbYG2UvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 16:51:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753308AbYG2UvK
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 16:51:10 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50461 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753268AbYG2UvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 16:51:09 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B2243B279;
+	Tue, 29 Jul 2008 16:51:06 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id B65363B278; Tue, 29 Jul 2008 16:51:02 -0400 (EDT)
+In-Reply-To: <1217362342-30370-1-git-send-email-mail@cup.kalibalik.dk>
+ (Anders Melchiorsen's message of "Tue, 29 Jul 2008 22:12:22 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 105A96F8-5DB0-11DD-8C35-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90681>
 
-This treats aborting a commit more like a feature.
+Anders Melchiorsen <mail@cup.kalibalik.dk> writes:
 
-Signed-off-by: Anders Melchiorsen <mail@cup.kalibalik.dk>
----
+> diff --git a/builtin-commit.c b/builtin-commit.c
+> index 9a11ca0..75eeb4b 100644
+> --- a/builtin-commit.c
+> +++ b/builtin-commit.c
+> @@ -555,6 +555,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
+>  		fprintf(fp,
+>  			"\n"
+>  			"# Please enter the commit message for your changes.\n"
+> +			"# To abort the commit, use an empty commit message.\n"
+>  			"# (Comment lines starting with '#' will ");
+>  		if (cleanup_mode == CLEANUP_ALL)
+>  			fprintf(fp, "not be included)\n");
 
-Now includes updates to test file.
+Thanks.  This sounds like a helpful message.
 
-Incidentally, this change was proposed by pasky in #git.
+> @@ -1003,7 +1004,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>  		stripspace(&sb, cleanup_mode == CLEANUP_ALL);
+>  	if (sb.len < header_len || message_is_empty(&sb, header_len)) {
+>  		rollback_index_files();
+> -		die("no commit message?  aborting commit.");
+> +		die("no commit message.  aborting commit.");
+>  	}
+>  	strbuf_addch(&sb, '\0');
+>  	if (is_encoding_utf8(git_commit_encoding) && !is_utf8(sb.buf))
 
 
- builtin-commit.c  |    3 ++-
- t/t7502-commit.sh |    7 ++++---
- 2 files changed, 6 insertions(+), 4 deletions(-)
+Sorry but I do not see a point in this hunk.
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 9a11ca0..75eeb4b 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -555,6 +555,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
- 		fprintf(fp,
- 			"\n"
- 			"# Please enter the commit message for your changes.\n"
-+			"# To abort the commit, use an empty commit message.\n"
- 			"# (Comment lines starting with '#' will ");
- 		if (cleanup_mode == CLEANUP_ALL)
- 			fprintf(fp, "not be included)\n");
-@@ -1003,7 +1004,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		stripspace(&sb, cleanup_mode == CLEANUP_ALL);
- 	if (sb.len < header_len || message_is_empty(&sb, header_len)) {
- 		rollback_index_files();
--		die("no commit message?  aborting commit.");
-+		die("no commit message.  aborting commit.");
- 	}
- 	strbuf_addch(&sb, '\0');
- 	if (is_encoding_utf8(git_commit_encoding) && !is_utf8(sb.buf))
-diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-index 4f2682e..f111263 100755
---- a/t/t7502-commit.sh
-+++ b/t/t7502-commit.sh
-@@ -142,6 +142,7 @@ test_expect_success 'cleanup commit messages (strip,-F)' '
- echo "sample
- 
- # Please enter the commit message for your changes.
-+# To abort the commit, use an empty commit message.
- # (Comment lines starting with '#' will not be included)" >expect
- 
- test_expect_success 'cleanup commit messages (strip,-F,-e)' '
-@@ -149,7 +150,7 @@ test_expect_success 'cleanup commit messages (strip,-F,-e)' '
- 	echo >>negative &&
- 	{ echo;echo sample;echo; } >text &&
- 	git commit -e -F text -a &&
--	head -n 4 .git/COMMIT_EDITMSG >actual &&
-+	head -n 5 .git/COMMIT_EDITMSG >actual &&
- 	test_cmp expect actual
- 
- '
-@@ -162,7 +163,7 @@ test_expect_success 'author different from committer' '
- 
- 	echo >>negative &&
- 	git commit -e -m "sample"
--	head -n 7 .git/COMMIT_EDITMSG >actual &&
-+	head -n 8 .git/COMMIT_EDITMSG >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -181,7 +182,7 @@ test_expect_success 'committer is automatic' '
- 		# must fail because there is no change
- 		test_must_fail git commit -e -m "sample"
- 	) &&
--	head -n 8 .git/COMMIT_EDITMSG |	\
-+	head -n 9 .git/COMMIT_EDITMSG |	\
- 	sed "s/^# Committer: .*/# Committer:/" >actual &&
- 	test_cmp expect actual
- '
--- 
-1.5.6.4
+I am somewhere between neutral to mildly negative about changing "Abort
+with error and do not create a commit if there is no message" to "Do not
+create a commit if there is no message, and this condition is not an
+error".  I further think the new message at the top is very helpful to the
+end users, with the understanding that users who changed their mind after
+running "git commit" _can_ deliberately trigger this _error condition_ to
+prevent commit from happening.  I also agree this ability to trigger an
+error can be called a feature.
+
+This still calls die(), which means this is still an error condition.  I
+do not see a point in changing that question mark (which hints "perhaps
+you made a mistake, and that is the reason we are aborting") to a full
+stop.  I think the current question mark is more helpful to people who did
+not pay close attention to the new message at the top.
+
+If the change _were_ to reword the message to more neutral sounding
+"aborting commit due to missing log message.", and change die() to a
+normal exit, that would be making this not an error.  As I already said, I
+am mildly negative, but at least such a change would be internally
+consistent.
+
+I sense that the change from question mark to full stop might be showing
+the desire to go in that direction, but in that case your change from the
+question mark to full stop does not go far enough.
