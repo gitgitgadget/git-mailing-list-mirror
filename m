@@ -1,80 +1,62 @@
-From: =?UTF-8?B?SnVya28gR29zcG9kbmV0acSH?= <jurko.gospodnetic@docte.hr>
-Subject: Re: What is 'git BRANCH'?
-Date: Wed, 30 Jul 2008 00:43:35 +0200
-Message-ID: <488F9D17.8020703@docte.hr>
-References: <g6o4vi$rap$1@ger.gmane.org> <7vej5cba6z.fsf@gitster.siamese.dyndns.org> <DEBF93FC-BA8D-4513-B4EE-A8648DA1D591@sb.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git Community Book
+Date: Tue, 29 Jul 2008 15:47:59 -0700
+Message-ID: <7v1w1cb940.fsf@gitster.siamese.dyndns.org>
+References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
+ <alpine.LNX.1.00.0807291716460.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 30 00:44:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Scott Chacon <schacon@gmail.com>, git list <git@vger.kernel.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Jul 30 00:49:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNxvw-0007Mw-KY
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 00:44:45 +0200
+	id 1KNy0G-0000Cc-DD
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 00:49:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756838AbYG2Wno convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jul 2008 18:43:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755723AbYG2Wnn
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 18:43:43 -0400
-Received: from main.gmane.org ([80.91.229.2]:32902 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755291AbYG2Wnn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 18:43:43 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KNxuu-0004ut-SA
-	for git@vger.kernel.org; Tue, 29 Jul 2008 22:43:40 +0000
-Received: from 87.252.137.70 ([87.252.137.70])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 29 Jul 2008 22:43:40 +0000
-Received: from jurko.gospodnetic by 87.252.137.70 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 29 Jul 2008 22:43:40 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 87.252.137.70
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <DEBF93FC-BA8D-4513-B4EE-A8648DA1D591@sb.org>
+	id S1754039AbYG2WsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 18:48:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755291AbYG2WsI
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 18:48:08 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43837 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754039AbYG2WsH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 18:48:07 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F010E4A1F2;
+	Tue, 29 Jul 2008 18:48:04 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 40D5F4A1F1; Tue, 29 Jul 2008 18:48:01 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.00.0807291716460.19665@iabervon.org> (Daniel
+ Barkalow's message of "Tue, 29 Jul 2008 18:34:31 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 67ED7632-5DC0-11DD-983C-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90699>
 
-   Hi all.
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> On Jul 29, 2008, at 3:24 PM, Junio C Hamano wrote:
->=20
->> Jurko Gospodneti=C4=87 <jurko.gospodnetic@docte.hr> writes:
->>
->>>  Hi.
->>>
->>>  I typed in "git BRANCH" by accident and got the error message:
->>> "fatal: cannot handle BRANCH internally".
->>>
->>>  What does that mean?
->>>
->>>  It is different from the usual "git: 'yada-yada' is not a
->>> git-command. See 'git --help'." message you get when you type in an
->>> incorrect command name.
->>
->> Just a guess; your git is installed on a case-challenged filesystem?
+> In particular, I think it's really useful to show a commit graph with 
+> branching and merging, and introduce refs as movable pointers to commits 
+> in the graph, and local branches as refs that you move and tracking refs 
+> as refs that copy values in other repositories.
 
-   Thank you all for explaining this, and yes - this was detected on=20
-Windows with a NTFS drive set to case-insensitive.
+I'd very strongly second this.  If somebody is really into screencasts
+(and especially from the Ruby circle, I would guess), this may be worth
+a look:
 
-   But, if something is running git-branch here... why does this=20
-script/executable/whatever try to check the name it got called with? Wh=
-y=20
-does it not simply do its work no matter the name it got called with?
+    http://excess.org/article/2008/07/ogre-git-tutorial/
 
-   If I'm asking something to obvious here - feel free to send me back=20
-to read the code... :-)
-
-   Best regards,
-     Jurko Gospodneti=C4=87
+I saw a couple of technical inaccuracies in the presentation (I do not
+expect any presentation or screencast to be perfect; I've never seen one
+without any technical error anyway, perhaps other than my own at OLS a few
+years ago), but otherwise it was very well done.  Espcially the part that
+builds the commit ancestry chains I was very happy to see it taught like
+so.
