@@ -1,76 +1,114 @@
-From: Abhijit Menon-Sen <ams@toroid.org>
-Subject: [PATCH] Make it clear that push can take multiple refspecs
-Date: Wed, 30 Jul 2008 01:39:19 +0530
-Message-ID: <1217362159-25440-1-git-send-email-ams@toroid.org>
-Cc: gitster@pobox.com
+From: Anders Melchiorsen <mail@cup.kalibalik.dk>
+Subject: [PATCH v2] Advertise the ability to abort a commit
+Date: Tue, 29 Jul 2008 22:12:22 +0200
+Message-ID: <1217362342-30370-1-git-send-email-mail@cup.kalibalik.dk>
+References: <1217359925-30130-1-git-send-email-mail@cup.kalibalik.dk>
+Cc: Anders Melchiorsen <mail@cup.kalibalik.dk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 29 22:10:27 2008
+X-From: git-owner@vger.kernel.org Tue Jul 29 22:13:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNvWc-0005B4-Nv
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 22:10:27 +0200
+	id 1KNvZW-0006GZ-Uk
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 22:13:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759614AbYG2UJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 16:09:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759591AbYG2UJW
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 16:09:22 -0400
-Received: from fugue.toroid.org ([85.10.196.113]:55039 "EHLO fugue.toroid.org"
+	id S1751388AbYG2UM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 16:12:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbYG2UM0
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 16:12:26 -0400
+Received: from mail.hotelhot.dk ([77.75.163.100]:44529 "EHLO mail.hotelhot.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759510AbYG2UJV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 16:09:21 -0400
-Received: from penne.toroid.org (penne-vpn [10.8.0.6])
-	by fugue.toroid.org (Postfix) with ESMTP id 5D61F5580DD;
-	Tue, 29 Jul 2008 22:09:20 +0200 (CEST)
-Received: by penne.toroid.org (Postfix, from userid 1000)
-	id 80282ADC369; Wed, 30 Jul 2008 01:39:19 +0530 (IST)
-X-Mailer: git-send-email 1.6.0.rc0.43.g2aa74
+	id S1750897AbYG2UMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 16:12:25 -0400
+Received: from mail.hotelhot.dk (localhost [127.0.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id ABCE314062;
+	Tue, 29 Jul 2008 22:12:22 +0200 (CEST)
+Received: from localhost.localdomain (router.kalibalik.dk [192.168.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 8142A1405A;
+	Tue, 29 Jul 2008 22:12:22 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.4
+In-Reply-To: <1217359925-30130-1-git-send-email-mail@cup.kalibalik.dk>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90680>
 
-Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
+This treats aborting a commit more like a feature.
+
+Signed-off-by: Anders Melchiorsen <mail@cup.kalibalik.dk>
 ---
- Documentation/git-push.txt |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 94d07ab..b8c55dd 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -10,7 +10,8 @@ SYNOPSIS
- --------
- [verse]
- 'git push' [--all] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
--           [--repo=all] [-f | --force] [-v | --verbose] [<repository> <refspec>...]
-+           [--repo=all] [-f | --force] [-v | --verbose]
-+           [<repository> <refspec>...]
+Now includes updates to test file.
+
+Incidentally, this change was proposed by pasky in #git.
+
+
+ builtin-commit.c  |    3 ++-
+ t/t7502-commit.sh |    7 ++++---
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 9a11ca0..75eeb4b 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -555,6 +555,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
+ 		fprintf(fp,
+ 			"\n"
+ 			"# Please enter the commit message for your changes.\n"
++			"# To abort the commit, use an empty commit message.\n"
+ 			"# (Comment lines starting with '#' will ");
+ 		if (cleanup_mode == CLEANUP_ALL)
+ 			fprintf(fp, "not be included)\n");
+@@ -1003,7 +1004,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		stripspace(&sb, cleanup_mode == CLEANUP_ALL);
+ 	if (sb.len < header_len || message_is_empty(&sb, header_len)) {
+ 		rollback_index_files();
+-		die("no commit message?  aborting commit.");
++		die("no commit message.  aborting commit.");
+ 	}
+ 	strbuf_addch(&sb, '\0');
+ 	if (is_encoding_utf8(git_commit_encoding) && !is_utf8(sb.buf))
+diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+index 4f2682e..f111263 100755
+--- a/t/t7502-commit.sh
++++ b/t/t7502-commit.sh
+@@ -142,6 +142,7 @@ test_expect_success 'cleanup commit messages (strip,-F)' '
+ echo "sample
  
- DESCRIPTION
- -----------
-@@ -33,7 +34,8 @@ OPTIONS
- 	The canonical format of a <refspec> parameter is
- 	`+?<src>:<dst>`; that is, an optional plus `+`, followed
- 	by the source ref, followed by a colon `:`, followed by
--	the destination ref.
-+	the destination ref. Any number of <refspec> parameters
-+	may be specified.
- +
- The <src> side represents the source branch (or arbitrary
- "SHA1 expression", such as `master~4` (four parents before the
-@@ -180,6 +182,10 @@ git push origin :experimental::
- 	Find a ref that matches `experimental` in the `origin` repository
- 	(e.g. `refs/heads/experimental`), and delete it.
+ # Please enter the commit message for your changes.
++# To abort the commit, use an empty commit message.
+ # (Comment lines starting with '#' will not be included)" >expect
  
-+git push origin master master:other::
-+	Find a ref that matches `master` in the source repository and in
-+	the `origin` repository update refs `master` and `other` to it.
-+
- git push origin master:satellite/master::
- 	Find a ref that matches `master` in the source repository
- 	(most likely, it would find `refs/heads/master`), and update
+ test_expect_success 'cleanup commit messages (strip,-F,-e)' '
+@@ -149,7 +150,7 @@ test_expect_success 'cleanup commit messages (strip,-F,-e)' '
+ 	echo >>negative &&
+ 	{ echo;echo sample;echo; } >text &&
+ 	git commit -e -F text -a &&
+-	head -n 4 .git/COMMIT_EDITMSG >actual &&
++	head -n 5 .git/COMMIT_EDITMSG >actual &&
+ 	test_cmp expect actual
+ 
+ '
+@@ -162,7 +163,7 @@ test_expect_success 'author different from committer' '
+ 
+ 	echo >>negative &&
+ 	git commit -e -m "sample"
+-	head -n 7 .git/COMMIT_EDITMSG >actual &&
++	head -n 8 .git/COMMIT_EDITMSG >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -181,7 +182,7 @@ test_expect_success 'committer is automatic' '
+ 		# must fail because there is no change
+ 		test_must_fail git commit -e -m "sample"
+ 	) &&
+-	head -n 8 .git/COMMIT_EDITMSG |	\
++	head -n 9 .git/COMMIT_EDITMSG |	\
+ 	sed "s/^# Committer: .*/# Committer:/" >actual &&
+ 	test_cmp expect actual
+ '
 -- 
-1.6.0.rc0.43.g2aa74
+1.5.6.4
