@@ -1,69 +1,74 @@
-From: Abhijit Menon-Sen <ams@toroid.org>
-Subject: [PATCH] `git submodule add` now requires a <path>
-Date: Wed, 30 Jul 2008 01:23:16 +0530
-Message-ID: <1217361196-25143-1-git-send-email-ams@toroid.org>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 29 21:54:25 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git Community Book
+Date: Tue, 29 Jul 2008 12:57:13 -0700
+Message-ID: <7vzlo0cvl2.fsf@gitster.siamese.dyndns.org>
+References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
+ <20080729170955.GK32184@machine.or.cz>
+ <d411cc4a0807291130p228f77d5r1f390090ec29aef4@mail.gmail.com>
+ <7vwsj4edm1.fsf@gitster.siamese.dyndns.org>
+ <d411cc4a0807291234q794344e0oee09f6164286ffd1@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Petr Baudis" <pasky@suse.cz>, "git list" <git@vger.kernel.org>
+To: "Scott Chacon" <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 21:58:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNvH1-0007oD-Me
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 21:54:20 +0200
+	id 1KNvKx-0000jV-7O
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 21:58:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751851AbYG2TxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 15:53:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751955AbYG2TxT
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 15:53:19 -0400
-Received: from fugue.toroid.org ([85.10.196.113]:49467 "EHLO fugue.toroid.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750897AbYG2TxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 15:53:18 -0400
-Received: from penne.toroid.org (penne-vpn [10.8.0.6])
-	by fugue.toroid.org (Postfix) with ESMTP id 787255583D8;
-	Tue, 29 Jul 2008 21:53:17 +0200 (CEST)
-Received: by penne.toroid.org (Postfix, from userid 1000)
-	id 7D931ADC369; Wed, 30 Jul 2008 01:23:16 +0530 (IST)
-X-Mailer: git-send-email 1.6.0.rc0.43.g2aa74
+	id S1752144AbYG2T5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 15:57:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752134AbYG2T5V
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 15:57:21 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35153 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752044AbYG2T5U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 15:57:20 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 96B8C428E5;
+	Tue, 29 Jul 2008 15:57:19 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 9711C428E3; Tue, 29 Jul 2008 15:57:15 -0400 (EDT)
+In-Reply-To: <d411cc4a0807291234q794344e0oee09f6164286ffd1@mail.gmail.com>
+ (Scott Chacon's message of "Tue, 29 Jul 2008 12:34:43 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8D3736A2-5DA8-11DD-9354-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90678>
 
+"Scott Chacon" <schacon@gmail.com> writes:
 
-Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
----
- Documentation/user-manual.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+> The book is basically a fork of all three of the guides I mentioned
+> (User Manual and both Tutorials), and with the scope and goals I
+> currently have in mind, will not be kept in sync - it's just not going
+> to be possible.  I think in the end, the goals of the texts are so
+> very different that sections it will simply not make sense to try to
+> keep them in sync in some sort of automated fashion.  That's one of
+> the reasons why I choose Markdown - I saw no need to use asciidoc, as
+> the book will not be shipped around with Git or built using the same
+> processes, and I had no need for the advantages of asciidoc in my
+> project.  I don't think it makes much sense to have the book be a man
+> page at all.
+>
+> However, I will watch the manual and guides and try to incorporate
+> changes to them as appropriate, and I will likely have some updates to
+> them myself as I've been more closely scrutinizing them.
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index c5641af..00256ca 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -3458,7 +3458,7 @@ $ cd super
- $ git init
- $ for i in a b c d
- do
--	git submodule add ~/git/$i
-+	git submodule add ~/git/$i $i
- done
- -------------------------------------------------
- 
-@@ -3471,10 +3471,10 @@ $ ls -a
- .  ..  .git  .gitmodules  a  b  c  d
- -------------------------------------------------
- 
--The `git-submodule add` command does a couple of things:
-+The `git-submodule add <repo> <path>` command does a couple of things:
- 
--- It clones the submodule under the current directory and by default checks out
--  the master branch.
-+- It clones the submodule from <repo> to the given <path> under the
-+  current directory and by default checks out the master branch.
- - It adds the submodule's clone path to the linkgit:gitmodules[5] file and
-   adds this file to the index, ready to be committed.
- - It adds the submodule's current commit ID to the index, ready to be
--- 
-1.6.0.rc0.43.g2aa74
+If that is the approach you decided for your book, I am Ok with that.
+
+Not that you need my blessing to do your own book.  It was unclear what
+your goals were, and if one of the goals were to keep the hassle of
+maintaining shared materials in both manuals up-to-date, choice of
+markdown seemed suboptimal to me, hence my comments.
+
+Thanks.
+
+... /me goes back to work after lunch break ...
