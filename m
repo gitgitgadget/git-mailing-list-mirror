@@ -1,179 +1,91 @@
-From: Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
-Subject: [PATCH 2/2] gitweb: add section support to gitweb project listing.
-Date: Mon, 28 Jul 2008 23:34:28 -0300
-Message-ID: <1217298868-16513-3-git-send-email-barbieri@profusion.mobi>
-References: <1217298868-16513-1-git-send-email-barbieri@profusion.mobi>
- <1217298868-16513-2-git-send-email-barbieri@profusion.mobi>
-Cc: gitster@pobox.com,
-	Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 29 04:36:00 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make use of stat.ctime configurable
+Date: Mon, 28 Jul 2008 19:49:45 -0700
+Message-ID: <7vy73lmmk6.fsf@gitster.siamese.dyndns.org>
+References: <20080725055547.GA3699@blimp.local>
+ <alpine.DEB.1.00.0807260256030.11976@eeepc-johanness>
+ <20080726153802.GA16868@blimp.local>
+ <7v1w1f155p.fsf@gitster.siamese.dyndns.org>
+ <20080728063128.GA4234@blimp.local> <20080728160446.GA16351@old.davidb.org>
+ <alpine.LFD.1.10.0807280906530.3486@nehalem.linux-foundation.org>
+ <7vbq0ho5g7.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.10.0807281817230.3486@nehalem.linux-foundation.org>
+ <7v3alto4r7.fsf@gitster.siamese.dyndns.org>
+ <20080729014120.GA26807@old.davidb.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: David Brown <git@davidb.org>
+X-From: git-owner@vger.kernel.org Tue Jul 29 04:50:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNf4B-0004gq-Kq
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 04:36:00 +0200
+	id 1KNfIe-0007Qs-US
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 04:50:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752403AbYG2Ces (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2008 22:34:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752437AbYG2Ces
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 22:34:48 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:52360 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752340AbYG2Cer (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2008 22:34:47 -0400
-Received: by qw-out-2122.google.com with SMTP id 3so394563qwe.37
-        for <git@vger.kernel.org>; Mon, 28 Jul 2008 19:34:47 -0700 (PDT)
-Received: by 10.214.183.3 with SMTP id g3mr1060661qaf.94.1217298887093;
-        Mon, 28 Jul 2008 19:34:47 -0700 (PDT)
-Received: from solid.profusion.mobi ( [201.82.39.16])
-        by mx.google.com with ESMTPS id 5sm877493ywd.8.2008.07.28.19.34.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 28 Jul 2008 19:34:46 -0700 (PDT)
-X-Mailer: git-send-email 1.5.5.2
-In-Reply-To: <1217298868-16513-2-git-send-email-barbieri@profusion.mobi>
+	id S1751783AbYG2Ct4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2008 22:49:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752003AbYG2Ct4
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jul 2008 22:49:56 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36306 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751752AbYG2Ct4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2008 22:49:56 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B430B4151E;
+	Mon, 28 Jul 2008 22:49:54 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 29F1A4151A; Mon, 28 Jul 2008 22:49:46 -0400 (EDT)
+In-Reply-To: <20080729014120.GA26807@old.davidb.org> (David Brown's message
+ of "Mon, 28 Jul 2008 18:41:20 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0601056C-5D19-11DD-BCFA-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90555>
 
-Section headers will be optionally displayed when projects dirnames or
-owner names changes (depending on sort order), making it easier to
-find projects in large setups.
+David Brown <git@davidb.org> writes:
 
-Signed-off-by: Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
----
- gitweb/gitweb.css  |    7 +++++
- gitweb/gitweb.perl |   73 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 79 insertions(+), 1 deletions(-)
+> On Mon, Jul 28, 2008 at 06:31:24PM -0700, Junio C Hamano wrote:
+>>Linus Torvalds <torvalds@linux-foundation.org> writes:
+>>
+>>> The kernel does caching really well, and the kernel is fast as
+>>> hell, so _of_course_ when you benchmark, using kernel data
+>>> structures looks good, especially if you benchmark against code
+>>> that isn't well written for the particular usage case.
+>>
+>>Ok.  While I have your attention on st_ctime, let me ask you a stupid
+>>question.  Why does "rename(old, new)" change st_ctime when you move a
+>>regular file?
+>
+> A simple answer might be that posix requires it.
 
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index aa0eeca..44abc4c 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -235,6 +235,13 @@ tr.dark:hover {
- 	background-color: #edece6;
- }
- 
-+tr.section td {
-+	background-color: #d9d8d1;
-+	border-top: 1px solid #000000;
-+	border-left: 1px solid #000000;
-+	font-weight: bold;
-+}
-+
- td {
- 	padding: 2px 5px;
- 	font-size: 100%;
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c5675cf..c99cea3 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -15,7 +15,7 @@ use CGI::Carp qw(fatalsToBrowser);
- use Encode;
- use Fcntl ':mode';
- use File::Find qw();
--use File::Basename qw(basename);
-+use File::Basename qw(basename dirname);
- binmode STDOUT, ':utf8';
- 
- BEGIN {
-@@ -82,6 +82,9 @@ our $projects_list_description_width = 25;
- # valid values are none, project, descr, owner, and age
- our $default_projects_order = "project";
- 
-+# use sections to separate projects by dirname, helps usability
-+our $use_sections = 1;
-+
- # show repository only if this file exists
- # (only effective if this variable evaluates to true)
- our $export_ok = "++GITWEB_EXPORT_OK++";
-@@ -3631,6 +3634,66 @@ sub print_sort_th_num {
- 	print_sort_th(0, @_);
- }
- 
-+sub print_section_tr {
-+	my ($n_cols, $section) = @_;
-+	print "<tr class=\"section\"><td colspan=\"$n_cols\">$section</td></tr>\n";
-+}
-+
-+sub print_section_internal {
-+	my ($order, $n_cols, $current, $getter) = @_;
-+	my $current_value = $getter->($current);
-+
-+	if (!$current_value) {
-+		return 0;
-+	}
-+
-+	my $last_value = '';
-+	if ($current > 0) {
-+		$last_value = $getter->($current - 1);
-+	}
-+
-+	if ($current_value ne $last_value) {
-+		print_section_tr($n_cols, $current_value);
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+sub print_section_project {
-+	my ($order, $n_cols, $current, $projects) = @_;
-+
-+	sub get_section_project {
-+		my ($index) = @_;
-+		return dirname(@$projects[$index]->{'path'});
-+	}
-+
-+	return print_section_internal($order, $n_cols, $current, \&get_section_project);
-+}
-+
-+sub print_section_owner {
-+	my ($order, $n_cols, $current, $projects) = @_;
-+
-+	sub get_section_owner {
-+		my ($index) = @_;
-+		return @$projects[$index]->{'owner'};
-+	}
-+
-+	return print_section_internal($order, $n_cols, $current, \&get_section_owner);
-+}
-+
-+sub print_section {
-+	my ($order, $n_cols, $current, $projects) = @_;
-+
-+	if ($order eq 'project') {
-+		return print_section_project($order, $n_cols, $current, $projects);
-+	} elsif ($order eq 'owner') {
-+		return print_section_owner($order, $n_cols, $current, $projects);
-+	}
-+
-+	return 0;
-+}
-+
- sub git_project_list_body {
- 	my ($projlist, $order, $from, $to, $extra, $no_header) = @_;
- 
-@@ -3658,9 +3721,17 @@ sub git_project_list_body {
- 		print "<th></th>\n" . # for links
- 		      "</tr>\n";
- 	}
-+	my $n_cols = $check_forks ? 6 : 5;
- 	my $alternate = 1;
- 	for (my $i = $from; $i <= $to; $i++) {
- 		my $pr = $projects[$i];
-+
-+                if ($use_sections) {
-+			if (print_section($order, $n_cols, $i, \@projects)) {
-+				$alternate = 1;
-+			}
-+                }
-+
- 		if ($alternate) {
- 			print "<tr class=\"dark\">\n";
- 		} else {
--- 
-1.5.5.2
+I would understand that an obvious implementation would be to link to new
+and then unlink the old, and the link count of the moved entity needs to
+change (although in the end, the increment and decrement would cancel out)
+in each step, so it would be convenient for the implementation to update
+ctime in both steps; however my reading of POSIX does not seem to require
+it.
+
+The only mention of ctime I find is about updating the parent directories
+of old and new, as contents of both change so do their mtime and ctime
+obviously need to change.  But it does not talk about ctime of the entity
+being moved.
+
+Additionally, the only way rename(2) is described to fail with EMLINK is
+when renaming an directory and the parent of the new location cannot have
+any more links; which implies that it does not have to fail if the first
+step of link+unlink overflows the link count of old.
+
+Ah, I found in the informative Application Usage section that this is
+implementation dependent.
+
+Sorry for the noise.
