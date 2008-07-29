@@ -1,124 +1,149 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Git Community Book
-Date: Tue, 29 Jul 2008 19:09:55 +0200
-Message-ID: <20080729170955.GK32184@machine.or.cz>
-References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Bizarre missing changes (git bug?)
+Date: Tue, 29 Jul 2008 10:25:35 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0807291006070.3334@nehalem.linux-foundation.org>
+References: <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain> <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807280141140.6791@localhost.localdomain> <alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807281241180.6791@localhost.localdomain>
+ <20080729053108.GH26997@sigill.intra.peff.net> <Pine.LNX.4.64.0807291339580.6791@localhost.localdomain> <20080729125247.GC12069@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 19:11:00 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Roman Zippel <zippel@linux-m68k.org>,
+	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 29 19:30:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNsiy-0004Ky-3H
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 19:11:00 +0200
+	id 1KNt1N-00032v-Gq
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 19:30:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751505AbYG2RJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 13:09:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751632AbYG2RJ6
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 13:09:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:58933 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750933AbYG2RJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 13:09:57 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 4543C2C4C027; Tue, 29 Jul 2008 19:09:55 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752630AbYG2R3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 13:29:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752703AbYG2R3A
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 13:29:00 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:47158 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752495AbYG2R27 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Jul 2008 13:28:59 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6THSZ6t004202
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 29 Jul 2008 10:28:36 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6THSYNN012223;
+	Tue, 29 Jul 2008 10:28:34 -0700
+In-Reply-To: <20080729125247.GC12069@sigill.intra.peff.net>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.408 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90659>
 
-On Tue, Jul 29, 2008 at 09:20:20AM -0700, Scott Chacon wrote:
-> So, what I've started to do is pull material from all of them into a
-> single book which will be available in online HTML (one page per
-> chapter) and downloadable PDF form.  I'm trying to give it a very
-> organized flow that will hopefully be a bit easier to follow and
-> digest than the current formats, and including a number of diagrams,
-> illustrations and screencasts to supplement the text.  Where possible,
-> I am also trying to simplify the explanations a bit to be a tad more
-> digestible for beginning users, at least in the first couple dozen
-> chapters. I have put the current html output of this book here:
+
+
+On Tue, 29 Jul 2008, Jeff King wrote:
 > 
-> http://book.git-scm.com
+> I glanced briefly over "gitk kernel/printk.c" and it looks pretty sane.
 
-I think what most of the people here would be also interested in is
+Jeff, it _is_ sane. When Roman says it's "incorrect", he is just wrong.
 
-	http://github.com/schacon/learn-github/wikis/how-to-contribute
+But it's true that "gitk kernel/printk.c" does simplify the history, and 
+does so very aggressively. It does so very much by design, and has done it 
+since pretty much day one. And it's a good thing - and it is "correct" - 
+but it does mean that you may literally be missing things that are part of 
+"history" but that didn't matter much.
 
-There is no license in the source code - what are the copying terms?
+The most trivial way to show this is actually by making such a simple case 
+that it's obvious what is going on. Do this:
 
-It is maybe somewhat unfortunate that this is in a different format that
-the standard git choice asciidoc, but the formats do look rather similar
-so I assume it should not be hard to even convert from one to another if
-needed.
+	mkdir test-simplification
+	cd test-simplification
+	git init
+	echo "Hi there" > file
+	git add file
+	git commit -m"Initial file"
 
-Unfortunately, I probably won't have enough time to review the content
-in details anytime soon, so I can only say that that the site looks
-pretty. :-) I have skimmed through the Introduction part only, but
-frankly, my feelings are somewhat mixed; I think the "direct dive-in"
-you take in the Database and Index section is controversial at best, and
-I personally much prefer the gentle approach of user manual, which does
-not hurl details on git's objects model on the user right away. To me,
-it would make sense to move this all somewhere between chapter four and
-five. (Incidentally, only after writing this, I have looked at the
-actual structure of the User Manual and I think it makes more sense than
-your approach.)
+	git branch other-branch
 
-So my confusion still is - where does this stand wrt. the user manual?
-Why didn't you just start with the manual and work on that? I thought
-you were planning to do that, but apparently we misunderstood each other
-in the last mails.
+	echo "Hello" > file
+	git add file
+	git commit -m"Modified file"
 
-Which goals are different between the Git Community Book and the User
-Manual? It seems to me that the intent is the same in both cases, and if
-the User Manual is not sufficiently digestible and easy to understand
-for a newcomer, wouldn't it make more sense to make it so?
+	git checkout other-branch
 
-The thought of yet another Git resource _in addition_ to the existing
-ones just makes me nervous. This isn't only about your time that I feel
-is being spent unnecessarily ineffectively by not building upon the
-existing text, but also about the _community_ resources - the user
-manual has a great benefit that it was actually reviewed by the mailing
-list so it will probably have quite smaller error rate than anything
-you or me would write on our own, no matter how big Git expert you are.
+	echo "Hello" > file
+	git add file
+	git commit -m"Another person modified the file identically"
 
-I'm not saying you don't have good reasons to make the choice you did,
-I just don't understand them yet - please help me here.
+	echo "This is a stupid example" > another-file
+	git add another-file
+	git commit -m"Add another file"
 
-> So I wanted to develop a really nice, easy to follow book for Git
-> newcomers to learn git quickly and easily.  One of the issues I
-> remember having when learning Git is that there is a lot of great
-> material in the User Guide, Tutorial, Tutorial 2, Everyday Git, etc -
-> but they're all huge long documents that are sometimes difficult to
-> come back to and remember where you were, and I didn't know which one
-> to start with or where to find what I was looking for, etc.
+	git merge master
 
-So, one of your arguments is that the current material are huge long
-documents that are difficult to come back to and remember where you
-were. But if I'd split the User Manaul TOC to the same layout you use
-for the Community Book, what is the difference here? It seems to me that
-both would appear pretty much the same. Should I do a proof of concept?
-;-)
+Now, do these three things
 
-> Also, for credit, I have generated an Authors page I will be linking
-> to the site soon that lists everyone that contributed a patch to any
-> of the Git User Guide, Git Tutorials, etc.  It is in the PDF right
-> now, but not in the HTML version yet (and the PDF is not yet linked to
-> the site).
+	gitk
+	gitk file
+	gitk --full-history file
 
-So, right now you are basically taking existing material and rearranging
-it? By what rules? What is the underlying idea of your approach, and why
-is it better than the current structure of the user manual? Have you
-considered how to perform this all so that you can easily get further
-updates and corrections to the user manual?
+and compare them. They all show _different_ histories.
 
--- 
-				Petr "Pasky" Baudis
-As in certain cults it is possible to kill a process if you know
-its true name.  -- Ken Thompson and Dennis M. Ritchie
+Which one is "correct"? They all are. It just depends on what you want to 
+see.
+
+The "gitk file" history is the simplest one BY FAR, because it has very 
+aggressively simplified history to the point where it tried to find the 
+_simplest_ history that explains the current contents of 'file'[*]
+
+>From a practical standpoint, and from having used this a long time, I'd 
+argue that the simple history is the one that you want 99.9% of all time. 
+But not _always_. Sometimes, the things that got simplified away actually 
+matter. It's rare, but it happens.
+
+For example, maybe you had a bug-fix that you _know_ you did, and it it 
+doesn't show up in the simplified history. That really pisses you off, and 
+it apparently really pisses Roman off that it can happen. But the fact is, 
+that still doesn't mean that the simple history is "wrong" or even 
+"incomplete".
+
+No, it's actually meaningful data in itself. If the bug-fix doesn't show 
+in the simplified history, then that simply means that the bug-fix was not 
+on a branch that could _possibly_ have mattered for the current contents. 
+
+So once you are _aware_ of history simplification and are mentally able to 
+accept it, the fact that history got simplified is actually just another 
+tool.
+
+And that's why "-full-history" and "git whatchanged" exist. They are ways 
+to start delving deeper - they shouldn't be the _default_ mode, but they 
+are ways to show more information when the initial default simple mode 
+turns out to show that something didn't even matter for the end result.
+
+And yes, there is a mid-way point between "aggressive simplification" 
+(default) and "no simplification at all" (--full-history). It's more 
+complex than either, and I do think it would be useful to have. It's what 
+Roman wants, but as long as he thinks it's the _only_ correct answer, and 
+refuses to face the performance issues, the discussion with Roman is kind 
+of pointless.
+
+			Linus
+
+[*] when I say "_simplest_ history", I do want to point out that the 
+history simplification is always a "local optimization", and it doesn't 
+try to check all possible paths: there can be other histories that are 
+even simpler on a global scale.
+
+But in practice it is _one_ history of the file, and it's a history that 
+is not "unnecessarily complicated" considering the simple heurstics for 
+finding it.
+
+So think "local minima" instead of "global minima", and in practice the 
+local one is pretty close to the global one, although there are obviously 
+always extreme cases where the two can differ by a whole lot.
