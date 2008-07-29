@@ -1,106 +1,172 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 5/5] Add a new test for using a custom merge strategy
-Date: Tue, 29 Jul 2008 17:25:03 +0200
-Message-ID: <3c77f8dd8b229bb08b5bc0b6a8efd7359df5ecc9.1217344803.git.vmiklos@frugalware.org>
+Subject: [PATCH 1/5] builtin-help: make is_git_command() usable outside builtin-help
+Date: Tue, 29 Jul 2008 17:24:59 +0200
+Message-ID: <fd19583955e9cea5b78a465d23bc127a51940048.1217344803.git.vmiklos@frugalware.org>
 References: <cover.1217344802.git.vmiklos@frugalware.org>
- <fd19583955e9cea5b78a465d23bc127a51940048.1217344803.git.vmiklos@frugalware.org>
- <5a003a0e20d0942c946680e4eade8e9d19f0036b.1217344803.git.vmiklos@frugalware.org>
- <5ad105819efb1c905bd01db3d08eb3422d283b3b.1217344803.git.vmiklos@frugalware.org>
- <722d66a5a897b694f374aa96bd58aff01a2a5932.1217344803.git.vmiklos@frugalware.org>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 17:26:14 2008
+X-From: git-owner@vger.kernel.org Tue Jul 29 17:26:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNr5M-0001WP-0D
-	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 17:26:00 +0200
+	id 1KNr5K-0001WP-MJ
+	for gcvg-git-2@gmane.org; Tue, 29 Jul 2008 17:25:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753807AbYG2PYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 11:24:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753902AbYG2PYq
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 11:24:46 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:46530 "EHLO
+	id S1753691AbYG2PYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 11:24:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753902AbYG2PYm
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 11:24:42 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:46524 "EHLO
 	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753883AbYG2PYi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 11:24:38 -0400
+	with ESMTP id S1753616AbYG2PYh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 11:24:37 -0400
 Received: from vmobile.example.net (dsl5400FA31.pool.t-online.hu [84.0.250.49])
-	by yugo.frugalware.org (Postfix) with ESMTP id 623F21DDC60;
-	Tue, 29 Jul 2008 17:24:35 +0200 (CEST)
+	by yugo.frugalware.org (Postfix) with ESMTP id BE89D1DDC5B;
+	Tue, 29 Jul 2008 17:24:34 +0200 (CEST)
 Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 9A01C1AB593; Tue, 29 Jul 2008 17:25:04 +0200 (CEST)
+	id 5C51B1AA739; Tue, 29 Jul 2008 17:25:04 +0200 (CEST)
 X-Mailer: git-send-email 1.6.0.rc0.14.g95f8.dirty
-In-Reply-To: <722d66a5a897b694f374aa96bd58aff01a2a5932.1217344803.git.vmiklos@frugalware.org>
+In-Reply-To: <cover.1217344802.git.vmiklos@frugalware.org>
 In-Reply-To: <cover.1217344802.git.vmiklos@frugalware.org>
 References: <cover.1217344802.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90645>
 
-Testing is done by creating a simple git-merge-theirs strategy which is
-the opposite of ours. Using this in real merges is not recommended but
-it's perfect for our testing needs.
+Other builtins may want to check if a given command is a valid git
+command or not as well. Additionally add a new parameter that specifies
+a custom prefix, so that the "git-" prefix is no longer hardwired.
+Useful for example to limit the search for "git-merge-*".
 
 Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 ---
- t/t7606-merge-custom.sh |   46 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 46 insertions(+), 0 deletions(-)
- create mode 100755 t/t7606-merge-custom.sh
+ Makefile |    1 +
+ help.c   |   25 ++++++++++++++-----------
+ help.h   |    6 ++++++
+ 3 files changed, 21 insertions(+), 11 deletions(-)
+ create mode 100644 help.h
 
-diff --git a/t/t7606-merge-custom.sh b/t/t7606-merge-custom.sh
-new file mode 100755
-index 0000000..13e8ff5
+diff --git a/Makefile b/Makefile
+index 798a2f2..351afd7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -355,6 +355,7 @@ LIB_H += git-compat-util.h
+ LIB_H += graph.h
+ LIB_H += grep.h
+ LIB_H += hash.h
++LIB_H += help.h
+ LIB_H += list-objects.h
+ LIB_H += ll-merge.h
+ LIB_H += log-tree.h
+diff --git a/help.c b/help.c
+index 3cb1962..08188f5 100644
+--- a/help.c
++++ b/help.c
+@@ -418,11 +418,11 @@ static int is_executable(const char *name)
+ }
+ 
+ static unsigned int list_commands_in_dir(struct cmdnames *cmds,
+-					 const char *path)
++					 const char *path,
++					 const char *prefix)
+ {
+ 	unsigned int longest = 0;
+-	const char *prefix = "git-";
+-	int prefix_len = strlen(prefix);
++	int prefix_len;
+ 	DIR *dir = opendir(path);
+ 	struct dirent *de;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -430,6 +430,9 @@ static unsigned int list_commands_in_dir(struct cmdnames *cmds,
+ 
+ 	if (!dir)
+ 		return 0;
++	if (!prefix)
++		prefix = "git-";
++	prefix_len = strlen(prefix);
+ 
+ 	strbuf_addf(&buf, "%s/", path);
+ 	len = buf.len;
+@@ -460,7 +463,7 @@ static unsigned int list_commands_in_dir(struct cmdnames *cmds,
+ 	return longest;
+ }
+ 
+-static unsigned int load_command_list(void)
++static unsigned int load_command_list(const char *prefix)
+ {
+ 	unsigned int longest = 0;
+ 	unsigned int len;
+@@ -469,7 +472,7 @@ static unsigned int load_command_list(void)
+ 	const char *exec_path = git_exec_path();
+ 
+ 	if (exec_path)
+-		longest = list_commands_in_dir(&main_cmds, exec_path);
++		longest = list_commands_in_dir(&main_cmds, exec_path, prefix);
+ 
+ 	if (!env_path) {
+ 		fprintf(stderr, "PATH not set\n");
+@@ -481,7 +484,7 @@ static unsigned int load_command_list(void)
+ 		if ((colon = strchr(path, PATH_SEP)))
+ 			*colon = 0;
+ 
+-		len = list_commands_in_dir(&other_cmds, path);
++		len = list_commands_in_dir(&other_cmds, path, prefix);
+ 		if (len > longest)
+ 			longest = len;
+ 
+@@ -505,7 +508,7 @@ static unsigned int load_command_list(void)
+ 
+ static void list_commands(void)
+ {
+-	unsigned int longest = load_command_list();
++	unsigned int longest = load_command_list(NULL);
+ 	const char *exec_path = git_exec_path();
+ 
+ 	if (main_cmds.cnt) {
+@@ -551,9 +554,9 @@ static int is_in_cmdlist(struct cmdnames *c, const char *s)
+ 	return 0;
+ }
+ 
+-static int is_git_command(const char *s)
++int is_git_command(const char *s, const char *prefix)
+ {
+-	load_command_list();
++	load_command_list(prefix);
+ 	return is_in_cmdlist(&main_cmds, s) ||
+ 		is_in_cmdlist(&other_cmds, s);
+ }
+@@ -574,7 +577,7 @@ static const char *cmd_to_page(const char *git_cmd)
+ 		return "git";
+ 	else if (!prefixcmp(git_cmd, "git"))
+ 		return git_cmd;
+-	else if (is_git_command(git_cmd))
++	else if (is_git_command(git_cmd, NULL))
+ 		return prepend("git-", git_cmd);
+ 	else
+ 		return prepend("git", git_cmd);
+@@ -712,7 +715,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	alias = alias_lookup(argv[0]);
+-	if (alias && !is_git_command(argv[0])) {
++	if (alias && !is_git_command(argv[0], NULL)) {
+ 		printf("`git %s' is aliased to `%s'\n", argv[0], alias);
+ 		return 0;
+ 	}
+diff --git a/help.h b/help.h
+new file mode 100644
+index 0000000..73da8d6
 --- /dev/null
-+++ b/t/t7606-merge-custom.sh
-@@ -0,0 +1,46 @@
-+#!/bin/sh
++++ b/help.h
+@@ -0,0 +1,6 @@
++#ifndef HELP_H
++#define HELP_H
 +
-+test_description='git-merge
++int is_git_command(const char *s, const char *prefix);
 +
-+Testing a custom strategy.'
-+
-+. ./test-lib.sh
-+
-+cat > git-merge-theirs << EOF
-+#!/bin/sh
-+eval git read-tree --reset -u \\\$\$#
-+EOF
-+chmod +x git-merge-theirs
-+PATH=.:$PATH
-+export PATH
-+
-+test_expect_success 'setup' '
-+	echo c0 > c0.c &&
-+	git add c0.c &&
-+	git commit -m c0 &&
-+	git tag c0 &&
-+	echo c1 > c1.c &&
-+	git add c1.c &&
-+	git commit -m c1 &&
-+	git tag c1 &&
-+	git reset --hard c0 &&
-+	echo c2 > c2.c &&
-+	git add c2.c &&
-+	git commit -m c2 &&
-+	git tag c2
-+'
-+
-+test_expect_success 'merge c2 with a custom strategy' '
-+	git reset --hard c1 &&
-+	git merge -s theirs c2 &&
-+	test "$(git rev-parse c1)" != "$(git rev-parse HEAD)" &&
-+	test "$(git rev-parse c1)" = "$(git rev-parse HEAD^1)" &&
-+	test "$(git rev-parse c2)" = "$(git rev-parse HEAD^2)" &&
-+	test "$(git rev-parse c2^{tree})" = "$(git rev-parse HEAD^{tree})" &&
-+	git diff --exit-code &&
-+	test -f c0.c &&
-+	test ! -f c1.c &&
-+	test -f c2.c
-+'
-+
-+test_done
++#endif /* HELP_H */
 -- 
 1.6.0.rc0.14.g95f8.dirty
