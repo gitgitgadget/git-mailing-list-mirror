@@ -1,77 +1,99 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Feature suggestion: git-hist
-Date: Wed, 30 Jul 2008 16:55:34 +0200
-Message-ID: <20080730145534.GD32057@genesis.frugalware.org>
-References: <20080730133859.368bbd92@pc09.procura.nl> <20080730133334.GB31192@lars.home.noschinski.de> <20080730155835.71289eee@pc09.procura.nl>
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: Gitweb: Provide Git links in project list?
+Date: Wed, 30 Jul 2008 16:55:40 +0200
+Message-ID: <36ca99e90807300755r1b1bc53bmdbaa1811370cd1f@mail.gmail.com>
+References: <20080730125743.GY15356@erda.amd.com>
+	 <20080730130257.GB28566@frsk.net>
+	 <20080730131357.GZ15356@erda.amd.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="5Dq4f+xZ7+xHwkrO"
-Cc: Lars Noschinski <lars-2008-1@usenet.noschinski.de>,
-	git@vger.kernel.org
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Wed Jul 30 16:56:55 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Fredrik Skolmli" <fredrik@frsk.net>, git@vger.kernel.org
+To: "Robert Richter" <robert.richter@amd.com>
+X-From: git-owner@vger.kernel.org Wed Jul 30 16:56:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOD6V-0007Dy-UM
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 16:56:40 +0200
+	id 1KOD6X-0007Dy-9d
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 16:56:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762233AbYG3Ozg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 10:55:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762214AbYG3Ozg
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 10:55:36 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:37036 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762169AbYG3Ozf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 10:55:35 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 5DE481B24FD;
-	Wed, 30 Jul 2008 16:55:34 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 075274465E;
-	Wed, 30 Jul 2008 16:10:16 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 1C05B1190A16; Wed, 30 Jul 2008 16:55:34 +0200 (CEST)
+	id S1752387AbYG3Ozm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 10:55:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752415AbYG3Ozm
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 10:55:42 -0400
+Received: from rv-out-0506.google.com ([209.85.198.237]:51862 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762310AbYG3Ozl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 10:55:41 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so52699rvb.1
+        for <git@vger.kernel.org>; Wed, 30 Jul 2008 07:55:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=QoiMxq9A/IvYlhgS6LHEXX/0oWm8Ya+LzN0Y4Rrrl/k=;
+        b=rf1KCyLddMOPRKSngnPNbo7L/JQ9KaHChgeR4ZkLLIWeMi99TDQrZZqa4mT01sSzUw
+         cMXx0+Sz70CZN9eGLMwctSay2NTcktv6+hMaTEBEW+oI9uKZoMT713BnhOKx0U03TxCP
+         zqyhjwcd5hsLa0tSZshT4RSirgOLo8g5yWvnY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=vGG5KRavnmNLEg37IPqLl7FNKnf36WV96skhzkwZndmdi+IWkFJdXZcVga6czP8Xh9
+         3O/S14Odo28hwrv7TvZySPKhOOIN6swb3z0ifTycif3XlPpKadQIzUMz+MVVo0MSOyhP
+         ev/VtqN6uwhwm/HopyTrsYEKOBKEVtbgn81Q0=
+Received: by 10.141.211.13 with SMTP id n13mr4366213rvq.184.1217429740522;
+        Wed, 30 Jul 2008 07:55:40 -0700 (PDT)
+Received: by 10.70.20.12 with HTTP; Wed, 30 Jul 2008 07:55:40 -0700 (PDT)
+In-Reply-To: <20080730131357.GZ15356@erda.amd.com>
 Content-Disposition: inline
-In-Reply-To: <20080730155835.71289eee@pc09.procura.nl>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90798>
 
+On Wed, Jul 30, 2008 at 15:13, Robert Richter <robert.richter@amd.com> wrote:
+> On 30.07.08 15:02:57, Fredrik Skolmli wrote:
+>> On Wed, Jul 30, 2008 at 02:57:43PM +0200, Robert Richter wrote:
+>>
+>> > The Gitweb on git.kernel.org povides links to the Git repository for
+>> > each project (git <git://...>). However, I did not find this feature
+>> > in the current implementation of git_project_list_body(). Does
+>> > somebody know if there is a patch available for this and if this could
+>> > be added to gitweb?
+>>
+>> Is putting the address in .git/cloneurl giving the behaviour you're looking for?
+>
+> Yes, I did change this and in the project summary I get "URL git://...".
+>
+> That I mean is the main page, that lists the projects. I only have:
+>
+> ... summary | shortlog | log | tree
+>
+> At git.kernel.org there is additional '... | git' with a link to the
+> Git repository.
+>
+> The current source of gitweb seems not to provide this.
 
---5Dq4f+xZ7+xHwkrO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Look here for all notible forks of gitweb:
 
-On Wed, Jul 30, 2008 at 03:58:35PM +0200, "H.Merijn Brand" <h.m.brand@xs4all.nl> wrote:
-> We are not used to working with $SHA's, and IMHO from the end-user pov,
-> a $SHA is less user friendly than a release number or a file version. I
-> can remember a version, but I cannot remember a SHA.
+  http://git.or.cz/gitwiki/Gitweb
 
-But a version is never unique in a distributed environment. So a version
-is useless without at least an abbreviated hash.
-
-If pure hashes are not friendly enough, you can use something like:
-
-git describe $(git rev-list -1 HEAD -- <file>)
-
-to get the _hash_ of the _commit_ (ie. not the version of a file) that
-touched the file last time.
-
---5Dq4f+xZ7+xHwkrO
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkiQgOYACgkQe81tAgORUJYVaQCfbWetMrpKxYr1rzNqxJneRTsR
-5goAn1w+8qrJzmc/lNPDaeS11vn24YQQ
-=p1bi
------END PGP SIGNATURE-----
-
---5Dq4f+xZ7+xHwkrO--
+Bert
+>
+> -Robert
+>
+> --
+> Advanced Micro Devices, Inc.
+> Operating System Research Center
+> email: robert.richter@amd.com
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
