@@ -1,90 +1,166 @@
-From: Mark Struberg <struberg@yahoo.de>
-Subject: Re: German translation of git man pages
-Date: Wed, 30 Jul 2008 11:21:12 +0000 (GMT)
-Message-ID: <969890.11742.qm@web27801.mail.ukl.yahoo.com>
-References: <20080730110602.GB20957@cuci.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Fabio Scotoni <fabio@esse.ch>,
-	"Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Wed Jul 30 13:29:31 2008
+From: Steve Haslam <shaslam@lastminute.com>
+Subject: [PATCH] Glean libexec path from argv[0] for git-upload-pack and git-receive-pack.
+Date: Wed, 30 Jul 2008 12:27:18 +0100
+Message-ID: <1217417238-26731-1-git-send-email-shaslam@lastminute.com>
+Cc: Steve Haslam <shaslam@lastminute.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 30 13:29:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KO9rU-0004s1-6O
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 13:28:56 +0200
+	id 1KO9rT-0004s1-HN
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 13:28:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755474AbYG3L14 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Jul 2008 07:27:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754897AbYG3L14
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 07:27:56 -0400
-Received: from web27801.mail.ukl.yahoo.com ([217.146.182.6]:36864 "HELO
-	web27801.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753601AbYG3L1z convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 07:27:55 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Jul 2008 07:27:55 EDT
-Received: (qmail 12249 invoked by uid 60001); 30 Jul 2008 11:21:13 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.de;
-  h=Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=nLexw+kC6TPkjeEgk/EHF5PO8+1+3mcS4reZAmoKArBKZrcOIAIUuCI1bCRKSwXNh9fbg0Z/Q9XEL41gx0yrquT9zYyiZFdswekWR2/BnM9tgLU7IyNbz07Hz9bfCHCz36uG+R7rm95bxs+51RnvXctQPDayCeT5q5vlBvPvWkA=;
-Received: from [81.19.198.7] by web27801.mail.ukl.yahoo.com via HTTP; Wed, 30 Jul 2008 11:21:12 GMT
-X-Mailer: YahooMailWebService/0.7.218
-In-Reply-To: <20080730110602.GB20957@cuci.nl>
+	id S1760931AbYG3L1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 07:27:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760825AbYG3L1o
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 07:27:44 -0400
+Received: from sglonmg02-out.sabre.com ([151.193.120.24]:59898 "EHLO
+	sglonmg02-out.sabre.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760318AbYG3L1m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 07:27:42 -0400
+X-ExtLoop1: From 10.136.85.54
+X-IronPort-AV: E=Sophos;i="4.31,278,1215385200"; 
+   d="scan'208";a="1125067125"
+Received: from unknown (HELO sglonbh01.Global.ad.sabre.com) ([10.136.85.54])
+  by sglonmg02-out.sabre.com with ESMTP; 30 Jul 2008 12:27:40 +0100
+Received: from sglonms02.Global.ad.sabre.com ([10.136.85.20]) by sglonbh01.Global.ad.sabre.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 30 Jul 2008 12:27:40 +0100
+Received: from localhost.localdomain ([10.104.41.28]) by sglonms02.Global.ad.sabre.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 30 Jul 2008 12:27:39 +0100
+X-Mailer: git-send-email 1.6.0.rc1
+X-OriginalArrivalTime: 30 Jul 2008 11:27:39.0689 (UTC) FILETIME=[4650E990:01C8F237]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90765>
 
+If the user specified the full path to git-upload-pack as the -u option to
+"git clone" when cloning a remote repository, and git was not on the default
+PATH on the remote machine, git-upload-pack was failing to exec
+git-pack-objects.
 
-My personal opinion:
-don't translate termini technici in technical documentations, but add a=
- translated explanation of each in the preamble.
+By making the argv[0] path (if any) available to setup_path(), this will
+allow finding the "git" executable in the same directory as
+"git-upload-pack". The default built in to exec_cmd.c is to look for "git"
+in the ".../libexec/git-core" directory, but it is not installed there (any
+longer).
 
-I've never read any german book or comment where e.g. 'a commit' has be=
-en translated to 'das Uebergebene'...=20
-(Reminds me of some old Siemens BS2000 mainfraims back in the 80s. They=
- translated really ALL terms to german, which was frankly completely un=
-readable)
+Much the same applies to invoking git-receive-pack from a non-PATH location
+using the "--exec" argument to "git push". Since both commands require the
+same treatment, a single function has been added in exec_cmd.c to serve both.
 
-LieGr=FC,
-strub
+Signed-off-by: Steve Haslam <shaslam@lastminute.com>
+---
+ exec_cmd.c     |   15 +++++++++++++--
+ exec_cmd.h     |    2 +-
+ git.c          |   20 +++++---------------
+ receive-pack.c |    3 +++
+ upload-pack.c  |    3 +++
+ 5 files changed, 25 insertions(+), 18 deletions(-)
 
---- Stephen R. van den Berg <srb@cuci.nl> schrieb am Mi, 30.7.2008:
-
-> Von: Stephen R. van den Berg <srb@cuci.nl>
-> Betreff: Re: German translation of git man pages
-> An: "Fabio Scotoni" <fabio@esse.ch>
-> CC: git@vger.kernel.org
-> Datum: Mittwoch, 30. Juli 2008, 13:06
-> Fabio Scotoni wrote:
-> >Our native language is german and they don't like
-> to read english
-> >documentation. I already started translating but have
-> some problems:
-> >Should i translate "branch" with the
-> appropriate german word or keep it
-> >english? This is a Problem for "pull"
-> "push" and the other actions as
-> >well. Basically it's possible to copy words, but
-> that isn't very
-> >esthetical.
->=20
-> A good translation will translate those words.  However,
-> since the
-> commandline interface uses the English words, you'll be
-> forced to
-> re-explain that relationship a lot of times (using
-> parenthesis, most
-> likely).
-
-
-      __________________________________________________________
-Gesendet von Yahoo! Mail.
-Dem pfiffigeren Posteingang.
-http://de.overview.mail.yahoo.com
+diff --git a/exec_cmd.c b/exec_cmd.c
+index ce6741e..a2a6a0d 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -17,9 +17,20 @@ const char *system_path(const char *path)
+ 	return path;
+ }
+ 
+-void git_set_argv0_path(const char *path)
++const char *git_extract_argv0_path(const char *argv0)
+ {
+-	argv0_path = path;
++	const char *slash = argv0 + strlen(argv0);
++
++	do
++		--slash;
++	while (slash >= argv0 && !is_dir_sep(*slash));
++
++	if (slash >= argv0) {
++		argv0_path = xstrndup(argv0, slash - argv0);
++		return slash + 1;
++	}
++
++	return argv0;
+ }
+ 
+ void git_set_argv_exec_path(const char *exec_path)
+diff --git a/exec_cmd.h b/exec_cmd.h
+index 594f961..392e903 100644
+--- a/exec_cmd.h
++++ b/exec_cmd.h
+@@ -2,7 +2,7 @@
+ #define GIT_EXEC_CMD_H
+ 
+ extern void git_set_argv_exec_path(const char *exec_path);
+-extern void git_set_argv0_path(const char *path);
++extern const char* git_extract_argv0_path(const char *path);
+ extern const char* git_exec_path(void);
+ extern void setup_path(void);
+ extern const char **prepare_git_cmd(const char **argv);
+diff --git a/git.c b/git.c
+index 37b1d76..b1eff4a 100644
+--- a/git.c
++++ b/git.c
+@@ -416,23 +416,13 @@ static void execv_dashed_external(const char **argv)
+ 
+ int main(int argc, const char **argv)
+ {
+-	const char *cmd = argv[0] && *argv[0] ? argv[0] : "git-help";
+-	char *slash = (char *)cmd + strlen(cmd);
++	const char *cmd;
+ 	int done_alias = 0;
+ 
+-	/*
+-	 * Take the basename of argv[0] as the command
+-	 * name, and the dirname as the default exec_path
+-	 * if we don't have anything better.
+-	 */
+-	do
+-		--slash;
+-	while (cmd <= slash && !is_dir_sep(*slash));
+-	if (cmd <= slash) {
+-		*slash++ = 0;
+-		git_set_argv0_path(cmd);
+-		cmd = slash;
+-	}
++	if (argv[0] && *argv[0])
++		cmd = git_extract_argv0_path(argv[0]);
++	else
++		cmd = "git-help";
+ 
+ 	/*
+ 	 * "git-xxxx" is the same as "git xxxx", but we obviously:
+diff --git a/receive-pack.c b/receive-pack.c
+index d44c19e..3699b16 100644
+--- a/receive-pack.c
++++ b/receive-pack.c
+@@ -467,6 +467,9 @@ int main(int argc, char **argv)
+ 	int i;
+ 	char *dir = NULL;
+ 
++	if (argv[0] && *argv[0])
++		git_extract_argv0_path(argv[0]);
++
+ 	argv++;
+ 	for (i = 1; i < argc; i++) {
+ 		char *arg = *argv++;
+diff --git a/upload-pack.c b/upload-pack.c
+index c911e70..086eff6 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -616,6 +616,9 @@ int main(int argc, char **argv)
+ 	int i;
+ 	int strict = 0;
+ 
++	if (argv[0] && *argv[0])
++		git_extract_argv0_path(argv[0]);
++
+ 	for (i = 1; i < argc; i++) {
+ 		char *arg = argv[i];
+ 
+-- 
+1.5.6.3
