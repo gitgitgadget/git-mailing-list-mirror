@@ -1,107 +1,70 @@
 From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: [ANNOUNCE] GitStats development finished (WRT GSoC)
-Date: Wed, 30 Jul 2008 17:41:56 +0200
-Message-ID: <bd6139dc0807300841n3e1670cdie2cd3fec47ab0db4@mail.gmail.com>
-References: <bd6139dc0807291511v2d70d549r3682291eb10a745d@mail.gmail.com>
-	 <7vabfz97fl.fsf@gitster.siamese.dyndns.org>
-	 <bd6139dc0807300212r67ccb849i542e490c8cd00953@mail.gmail.com>
-	 <alpine.LSU.1.00.0807301621570.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+Subject: Re: git blame not respecting --find-copies-harder ?
+Date: Wed, 30 Jul 2008 17:43:52 +0200
+Message-ID: <bd6139dc0807300843l1d42d6fep95f6c99fe6e0ea0@mail.gmail.com>
+References: <20080730093903.GA14330@cuci.nl>
+	 <20080730150123.GB9758@atjola.homenet>
 Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailinglist" <git@vger.kernel.org>,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"David Symonds" <dsymonds@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Sam Vilain" <sam@vilain.net>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 30 17:43:48 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Stephen R. van den Berg" <srb@cuci.nl>,
+	"Git Mailinglist" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?=" <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 30 17:45:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KODpz-0003tp-Mg
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 17:43:40 +0200
+	id 1KODrE-0004Qb-QS
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 17:44:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758701AbYG3Pl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 11:41:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758663AbYG3Pl7
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 11:41:59 -0400
-Received: from wf-out-1314.google.com ([209.85.200.171]:37200 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758064AbYG3Pl5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 11:41:57 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so117159wfd.4
-        for <git@vger.kernel.org>; Wed, 30 Jul 2008 08:41:56 -0700 (PDT)
+	id S1752086AbYG3Pnz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Jul 2008 11:43:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752304AbYG3Pny
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 11:43:54 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:64675 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750962AbYG3Pnx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Jul 2008 11:43:53 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so24937yxm.1
+        for <git@vger.kernel.org>; Wed, 30 Jul 2008 08:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:reply-to
          :to:subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=BmYHBLkrNjg5engXMMIRrZsIb03JqqIo+1AK5VddPR4=;
-        b=mkoGjdw4t3loXkofanabXnzh0z7GgQdxbn9RdYdF7oHkwdCNg3QMGSXJ768w99CUMR
-         3L5zmuqW2XyxPUtVtgJprgB+etNneeEOJcWvpFzdBSy/WKZDmjQCRhPb9/muzYHuiQEV
-         pWNnZCbHHzxMHNhrCgIyjgTlcF7er8ikeGLvM=
+        bh=2L86a5oVOeLPSuR0V7lul9v13rWmQZqCRwANk8/L5BM=;
+        b=pxh0kxj49AGO16BxbJQf38vxZf35IKCz5f3WBtBurHxANezyelNZ297HpLlkwa3bUA
+         YMVJP115UM8/cV0EMKXqbea5sQLh71EZpWdpOPLm3PjKSu8IfjhzqaK2nUVVSj0E3M1o
+         nB4m9ainiZvwM9eJugwaDvxxGhTBuH3o/Nc+0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:references;
-        b=NzWyM1lQxLyiY3eLe6H/63eUly2ZlzHfeQan8oQrVBAupZPgZICTrajUhFBxeWi+lS
-         7P9tO5g6yvbcW5DO47+6sKrESM+rb353+kk2V3VdD3dCdZiftwflWKmg3zOJbFyyr2FP
-         O/D6FdcOmt7ytUvioQ8Vo9sW0k1Ynr0dCms5w=
-Received: by 10.142.230.11 with SMTP id c11mr2771490wfh.302.1217432516624;
-        Wed, 30 Jul 2008 08:41:56 -0700 (PDT)
-Received: by 10.142.104.10 with HTTP; Wed, 30 Jul 2008 08:41:56 -0700 (PDT)
-In-Reply-To: <alpine.LSU.1.00.0807301621570.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+        b=B4LfFSAts8laHEck45QAK0T38bC6X6lGZ/k4rUIY04KYEN9Xj8Fp9z5uNwYi30L2Ow
+         QSXqzj/2bUtNyW/Uu849aoIp8YIzdwzF3/eI90/fSSQfFblEcb0C4RU2HwyQk7PJ1VIK
+         zPKwnTOQoWpFqQStNO7s7IB5Q500o1VQivfxY=
+Received: by 10.142.204.18 with SMTP id b18mr2769893wfg.126.1217432632379;
+        Wed, 30 Jul 2008 08:43:52 -0700 (PDT)
+Received: by 10.142.104.10 with HTTP; Wed, 30 Jul 2008 08:43:52 -0700 (PDT)
+In-Reply-To: <20080730150123.GB9758@atjola.homenet>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90808>
 
-On Wed, Jul 30, 2008 at 16:22, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Wed, 30 Jul 2008, Sverre Rabbelier wrote:
->> Hehe, don't expect too much of it yet though (the 'bug' module that is),
->> there won't be any "99% of the bugs come from Dscho" yet :P.
->
-> So what should I expect?  What does it show?
+On Wed, Jul 30, 2008 at 17:01, Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>=
+ wrote:
+> git blame doesn't know --find-copies-harder, it's -C -C for blame.
 
-Atm I have 4 'metrics' (4 out of the 5 suggested ones), namely:
+Shouldn't it have died with "don't know option --find-copies-harder" th=
+en?
 
-* Does a commit belong to a specific branch. This can be used, for
-example, to mark commits on 'maint' as bugfixes with 99% reliability
-(you need to make sure your regexp catches all branches you are
-interested in, when Junio splits of '1.5.6.4' of maint, it might list
-'1.5.6.4' instead of 'maint', as they both point at the same ref).
-* Does a commit fully revert another one (e.g., make commit A, do 'git
-revert A', it will detect that commit as reverting A).
-* Does the commit message match a certain regexp (e.g., if it contains
-the word "fixes", it is likely a fix).
-* Does the commit diff match a regexp (e.g., a change from
-"test_expect_failure" -> "test_expect_success")
-- (not tweaked yet) Does a commit partially revert another one, this
-needs some tweaking, otherwise small changes are quickly seen as
-similar. (If you have two unrelated one-lines, and you set it to
-ignore one difference...)
-
-You have to configure a few things to get it running (for example, you
-need to tell it what branch is your maintenance branch, if any). You
-can also configure how valued each metric is (you can say "if it's in
-'maint', add 5 points, but if it's a revert, add 10, and add only 1
-point if it matches this regexp). Configuration is trivially done with
-'git config GitStats.key value".
-
-(Will add the above to the bug module's documentation)
-
-If anyone comes up with any more metrics to determine whether
-something is a bug it can be easily hooked in.
-
--- 
+--=20
 Cheers,
 
 Sverre Rabbelier
