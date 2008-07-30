@@ -1,268 +1,106 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: [PATCH] format-patch: Produce better output with --inline or --attach
-Date: Tue, 29 Jul 2008 16:49:16 -0700
-Message-ID: <1217375356-80287-1-git-send-email-kevin@sb.org>
-Cc: Kevin Ballard <kevin@sb.org>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 30 01:50:27 2008
+From: Roman Zippel <zippel@linux-m68k.org>
+Subject: Re: Bizarre missing changes (git bug?)
+Date: Wed, 30 Jul 2008 02:16:41 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0807291433430.6791@localhost.localdomain>
+References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com> 
+ <200807260512.40088.zippel@linux-m68k.org> 
+ <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org> 
+ <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain> 
+ <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org> 
+ <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain> 
+ <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org> 
+ <Pine.LNX.4.64.0807280141140.6791@localhost.localdomain> 
+ <alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org> 
+ <Pine.LNX.4.64.0807281241180.6791@localhost.localdomain>
+ <46a038f90807282015m7ce3da10h71dfee221c960332@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 30 02:18:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KNyxR-0007zl-Cu
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 01:50:21 +0200
+	id 1KNzO9-0008FC-7q
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 02:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753700AbYG2XtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2008 19:49:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753591AbYG2XtU
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 19:49:20 -0400
-Received: from mailbigip.dreamhost.com ([208.97.132.5]:60964 "EHLO
-	randymail-a12.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753397AbYG2XtT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Jul 2008 19:49:19 -0400
-Received: from localhost.localdomain (dsl092-049-214.sfo4.dsl.speakeasy.net [66.92.49.214])
-	by randymail-a12.g.dreamhost.com (Postfix) with ESMTP id BA67BA8C86;
-	Tue, 29 Jul 2008 16:49:16 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.rc1.166.gbbfa8.dirty
+	id S1752976AbYG3AQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 20:16:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753173AbYG3AQ4
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 20:16:56 -0400
+Received: from smtp-vbr13.xs4all.nl ([194.109.24.33]:3732 "EHLO
+	smtp-vbr13.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752918AbYG3AQz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 20:16:55 -0400
+Received: from squid.home (linux-m68k.xs4all.nl [82.95.193.92])
+	(authenticated bits=0)
+	by smtp-vbr13.xs4all.nl (8.13.8/8.13.8) with ESMTP id m6U0GgOt058238
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 30 Jul 2008 02:16:42 +0200 (CEST)
+	(envelope-from zippel@linux-m68k.org)
+X-X-Sender: roman@localhost.localdomain
+In-Reply-To: <46a038f90807282015m7ce3da10h71dfee221c960332@mail.gmail.com>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90713>
 
-This patch makes two small changes to improve the output of --inline and --attach.
+Hi,
 
-The first is to write a newline preceding the boundary. This is needed because
-MIME defines the encapsulation boundary as including the preceding CRLF (or in
-this case, just LF), so we should be writing one. Without this, the last newline
-in the pre-diff content is consumed instead.
+On Tue, 29 Jul 2008, Martin Langhoff wrote:
 
-The second change is to always write the line termination character (default: newline)
-even when using --inline or --attach. This is simply to improve the aesthetics of
-the resulting message. When using --inline an email client should render the
-resulting message identically to the non-inline version. And when using --attach
-this adds a blank line preceding the attachment in the email, which is visually
-attractive.
+> On Tue, Jul 29, 2008 at 2:59 PM, Roman Zippel <zippel@linux-m68k.org> wrote:
+> > Can we please get past this and look at what is required to produce the
+> > correct history?
+> 
+> Roman - correct is --full-history -- any simplification that makes it
+> easy on your eyes *is* a simplification. And consumers that want to do
+> nice user-friendly simplification like gitk does can hang off the data
+> stream.
 
-Signed-off-by: Kevin Ballard <kevin@sb.org>
----
- diff.c                                             |    3 +--
- log-tree.c                                         |    2 +-
- ....format-patch_--attach_--stdout_initial..master |    6 ++++++
- ...format-patch_--attach_--stdout_initial..master^ |    4 ++++
- ...ff.format-patch_--attach_--stdout_initial..side |    2 ++
- ...tdout_--subject-prefix=TESTCASE_initial..master |    6 ++++++
- ....format-patch_--inline_--stdout_initial..master |    6 ++++++
- ...format-patch_--inline_--stdout_initial..master^ |    4 ++++
- ...ormat-patch_--inline_--stdout_initial..master^^ |    2 ++
- ...ff.format-patch_--inline_--stdout_initial..side |    2 ++
- 10 files changed, 34 insertions(+), 3 deletions(-)
+I don't quite understand what you're trying to say.
+To avoid further confusion it maybe helps to specify a few of the terms:
 
-diff --git a/diff.c b/diff.c
-index a07812c..cbf2547 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3223,11 +3223,10 @@ void diff_flush(struct diff_options *options)
- 
- 	if (output_format & DIFF_FORMAT_PATCH) {
- 		if (separator) {
-+			putc(options->line_termination, options->file);
- 			if (options->stat_sep) {
- 				/* attach patch instead of inline */
- 				fputs(options->stat_sep, options->file);
--			} else {
--				putc(options->line_termination, options->file);
- 			}
- 		}
- 
-diff --git a/log-tree.c b/log-tree.c
-index 5505606..bd8b9e4 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -198,7 +198,7 @@ void log_write_email_headers(struct rev_info *opt, const char *name,
- 		extra_headers = subject_buffer;
- 
- 		snprintf(buffer, sizeof(buffer) - 1,
--			 "--%s%s\n"
-+			 "\n--%s%s\n"
- 			 "Content-Type: text/x-patch;"
- 			 " name=\"%s.diff\"\n"
- 			 "Content-Transfer-Encoding: 8bit\n"
-diff --git a/t/t4013/diff.format-patch_--attach_--stdout_initial..master b/t/t4013/diff.format-patch_--attach_--stdout_initial..master
-index cf6891f..43346b9 100644
---- a/t/t4013/diff.format-patch_--attach_--stdout_initial..master
-+++ b/t/t4013/diff.format-patch_--attach_--stdout_initial..master
-@@ -19,6 +19,8 @@ This is the second commit.
-  file2   |    3 ---
-  3 files changed, 5 insertions(+), 3 deletions(-)
-  delete mode 100644 file2
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- Content-Transfer-Encoding: 8bit
-@@ -75,6 +77,8 @@ Content-Transfer-Encoding: 8bit
-  file1   |    3 +++
-  2 files changed, 5 insertions(+), 0 deletions(-)
-  create mode 100644 file1
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
- Content-Transfer-Encoding: 8bit
-@@ -122,6 +126,8 @@ Content-Transfer-Encoding: 8bit
-  file3   |    4 ++++
-  3 files changed, 9 insertions(+), 0 deletions(-)
-  create mode 100644 file3
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
- Content-Transfer-Encoding: 8bit
-diff --git a/t/t4013/diff.format-patch_--attach_--stdout_initial..master^ b/t/t4013/diff.format-patch_--attach_--stdout_initial..master^
-index fe02587..d7490a9 100644
---- a/t/t4013/diff.format-patch_--attach_--stdout_initial..master^
-+++ b/t/t4013/diff.format-patch_--attach_--stdout_initial..master^
-@@ -19,6 +19,8 @@ This is the second commit.
-  file2   |    3 ---
-  3 files changed, 5 insertions(+), 3 deletions(-)
-  delete mode 100644 file2
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- Content-Transfer-Encoding: 8bit
-@@ -75,6 +77,8 @@ Content-Transfer-Encoding: 8bit
-  file1   |    3 +++
-  2 files changed, 5 insertions(+), 0 deletions(-)
-  create mode 100644 file1
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
- Content-Transfer-Encoding: 8bit
-diff --git a/t/t4013/diff.format-patch_--attach_--stdout_initial..side b/t/t4013/diff.format-patch_--attach_--stdout_initial..side
-index 9ff828e..38f7902 100644
---- a/t/t4013/diff.format-patch_--attach_--stdout_initial..side
-+++ b/t/t4013/diff.format-patch_--attach_--stdout_initial..side
-@@ -17,6 +17,8 @@ Content-Transfer-Encoding: 8bit
-  file3   |    4 ++++
-  3 files changed, 9 insertions(+), 0 deletions(-)
-  create mode 100644 file3
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
- Content-Transfer-Encoding: 8bit
-diff --git a/t/t4013/diff.format-patch_--inline_--stdout_--subject-prefix=TESTCASE_initial..master b/t/t4013/diff.format-patch_--inline_--stdout_--subject-prefix=TESTCASE_initial..master
-index a8093be..fca5cce 100644
---- a/t/t4013/diff.format-patch_--inline_--stdout_--subject-prefix=TESTCASE_initial..master
-+++ b/t/t4013/diff.format-patch_--inline_--stdout_--subject-prefix=TESTCASE_initial..master
-@@ -19,6 +19,8 @@ This is the second commit.
-  file2   |    3 ---
-  3 files changed, 5 insertions(+), 3 deletions(-)
-  delete mode 100644 file2
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- Content-Transfer-Encoding: 8bit
-@@ -75,6 +77,8 @@ Content-Transfer-Encoding: 8bit
-  file1   |    3 +++
-  2 files changed, 5 insertions(+), 0 deletions(-)
-  create mode 100644 file1
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
- Content-Transfer-Encoding: 8bit
-@@ -122,6 +126,8 @@ Content-Transfer-Encoding: 8bit
-  file3   |    4 ++++
-  3 files changed, 9 insertions(+), 0 deletions(-)
-  create mode 100644 file3
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
- Content-Transfer-Encoding: 8bit
-diff --git a/t/t4013/diff.format-patch_--inline_--stdout_initial..master b/t/t4013/diff.format-patch_--inline_--stdout_initial..master
-index aa110c0..6d6fac3 100644
---- a/t/t4013/diff.format-patch_--inline_--stdout_initial..master
-+++ b/t/t4013/diff.format-patch_--inline_--stdout_initial..master
-@@ -19,6 +19,8 @@ This is the second commit.
-  file2   |    3 ---
-  3 files changed, 5 insertions(+), 3 deletions(-)
-  delete mode 100644 file2
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- Content-Transfer-Encoding: 8bit
-@@ -75,6 +77,8 @@ Content-Transfer-Encoding: 8bit
-  file1   |    3 +++
-  2 files changed, 5 insertions(+), 0 deletions(-)
-  create mode 100644 file1
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
- Content-Transfer-Encoding: 8bit
-@@ -122,6 +126,8 @@ Content-Transfer-Encoding: 8bit
-  file3   |    4 ++++
-  3 files changed, 9 insertions(+), 0 deletions(-)
-  create mode 100644 file3
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
- Content-Transfer-Encoding: 8bit
-diff --git a/t/t4013/diff.format-patch_--inline_--stdout_initial..master^ b/t/t4013/diff.format-patch_--inline_--stdout_initial..master^
-index 95e9ea4..18a1110 100644
---- a/t/t4013/diff.format-patch_--inline_--stdout_initial..master^
-+++ b/t/t4013/diff.format-patch_--inline_--stdout_initial..master^
-@@ -19,6 +19,8 @@ This is the second commit.
-  file2   |    3 ---
-  3 files changed, 5 insertions(+), 3 deletions(-)
-  delete mode 100644 file2
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- Content-Transfer-Encoding: 8bit
-@@ -75,6 +77,8 @@ Content-Transfer-Encoding: 8bit
-  file1   |    3 +++
-  2 files changed, 5 insertions(+), 0 deletions(-)
-  create mode 100644 file1
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
- Content-Transfer-Encoding: 8bit
-diff --git a/t/t4013/diff.format-patch_--inline_--stdout_initial..master^^ b/t/t4013/diff.format-patch_--inline_--stdout_initial..master^^
-index b8e81e1..4f258b8 100644
---- a/t/t4013/diff.format-patch_--inline_--stdout_initial..master^^
-+++ b/t/t4013/diff.format-patch_--inline_--stdout_initial..master^^
-@@ -19,6 +19,8 @@ This is the second commit.
-  file2   |    3 ---
-  3 files changed, 5 insertions(+), 3 deletions(-)
-  delete mode 100644 file2
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- Content-Transfer-Encoding: 8bit
-diff --git a/t/t4013/diff.format-patch_--inline_--stdout_initial..side b/t/t4013/diff.format-patch_--inline_--stdout_initial..side
-index 86ae923..e86dce6 100644
---- a/t/t4013/diff.format-patch_--inline_--stdout_initial..side
-+++ b/t/t4013/diff.format-patch_--inline_--stdout_initial..side
-@@ -17,6 +17,8 @@ Content-Transfer-Encoding: 8bit
-  file3   |    4 ++++
-  3 files changed, 9 insertions(+), 0 deletions(-)
-  create mode 100644 file3
-+
-+
- --------------g-i-t--v-e-r-s-i-o-n
- Content-Type: text/x-patch; name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
- Content-Transfer-Encoding: 8bit
--- 
-1.6.0.rc1.166.gbbfa8.dirty
+- full history graph: produced by "git-log --full-history --parents"
+- compact history graph: the full history graph without without any 
+  repeated merges, this is what my example script produces.
+- full simplified history: output of "git-log --full-history"
+- short simplified history: standard output of "git-log"
+
+The important part about the history graphs is that all commits are 
+properly connected in it (i.e. all except the head commit have a child), 
+This is needed to know if you don't just what want to know what happened, 
+but also how it got merged, also any graphical interface needs it to 
+produce a useful history graph.
+
+What the short simplified history is more pure laziness, it's fast and 
+gets the most common cases right, but in order to do this it has to ignore 
+part of the history. The full simplified history at least produces 
+produces the full change history, but it lacks part of the merge history 
+and it stills takes longer to generate.
+
+The point I'm trying to make is that the compact history graph has the 
+potential to completely replace the simplified history. The only problem 
+is that it needs a bit of cached extra information, then it can be as fast 
+the short simplified history for the common case and it still can produce 
+as much information as the full simplified history, thus you can still 
+apply as much simplification as you want on top of it.
+
+Keep in mind that e.g. git-web is using the full simplified history, so 
+what I'm offering also has the potential to improve git-web performance...
+
+> > it's also possible to update it when merging/pulling new data.
+> 
+> If that's what you want to do, you can prototype it with a hook on
+> fetch and commit. That is definitely an area that hasn't been explored
+> - what nicer (but expensive) views on the history we have can be
+> afforded by pre-computing things on fetch and commit hooks.
+
+I already did the prototype, I know how to generate that information, the 
+problem is to get that information to the various graphical interfaces.
+
+bye, Roman
