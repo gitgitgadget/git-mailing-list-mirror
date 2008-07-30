@@ -1,53 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bizarre missing changes (git bug?)
-Date: Wed, 30 Jul 2008 00:26:09 -0400
-Message-ID: <20080730042609.GB3350@sigill.intra.peff.net>
-References: <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain> <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807280141140.6791@localhost.localdomain> <alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807281241180.6791@localhost.localdomain> <20080729053108.GH26997@sigill.intra.peff.net> <Pine.LNX.4.64.0807291339580.6791@localhost.localdomain> <20080729125247.GC12069@sigill.intra.peff.net> <alpine.LFD.1.10.0807291006070.3334@nehalem.linux-foundation.org>
+From: Alexander Litvinov <litvinov2004@gmail.com>
+Subject: Re: git-svn does not seems to work with crlf convertion enabled.
+Date: Wed, 30 Jul 2008 11:37:04 +0700
+Organization: AcademSoft Ltd.
+Message-ID: <200807301137.04669.litvinov2004@gmail.com>
+References: <200807231544.23472.litvinov2004@gmail.com> <alpine.DEB.1.00.0807231117290.2830@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Roman Zippel <zippel@linux-m68k.org>,
-	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jul 30 06:27:15 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 30 06:38:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KO3HO-0005uk-Db
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 06:27:14 +0200
+	id 1KO3SC-0008Ah-Te
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 06:38:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751022AbYG3E0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 00:26:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751031AbYG3E0O
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 00:26:14 -0400
-Received: from peff.net ([208.65.91.99]:3719 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750962AbYG3E0N (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 00:26:13 -0400
-Received: (qmail 4799 invoked by uid 111); 30 Jul 2008 04:26:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 30 Jul 2008 00:26:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Jul 2008 00:26:09 -0400
+	id S1751073AbYG3EhY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 00:37:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751075AbYG3EhY
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 00:37:24 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:53711 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751050AbYG3EhX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 00:37:23 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so218999ugf.16
+        for <git@vger.kernel.org>; Tue, 29 Jul 2008 21:37:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:organization:to:subject
+         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=HwRRdeWUFL9xfT58EIIhc+oj2eDtG0mdT3n2vMdc4Xk=;
+        b=g85BRj5/W8bc9d7ToFoq6yzmbGRGxiVyih4a8CePmssnzSniHDADA7eF3886KtfFWd
+         ADxozP67LtxisJ2P7TDytmkBdwkNpCrYMcf49v/BXXtZwXRiIxop+0E5EjqxWH0TviWW
+         jZd0ykhPbzdzn97IjXlxLdARyGBw/Gi5K1Zxk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:organization:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=M6M+yAepZr+nKsQEbGU+82l7QehTE+uPtvllcbVcU0f0wP4W+cj2fNoXpEmcSjuCv7
+         A5OE3hzJyBw5ldE+Am92+C7+An5iihsg0uByY57g6Ox4IGZiuKLwIfu+CIuldDd/Iqqo
+         au6/gsWmi09InocgaofkByrYjwlP8ipau323o=
+Received: by 10.66.250.17 with SMTP id x17mr783462ugh.0.1217392641362;
+        Tue, 29 Jul 2008 21:37:21 -0700 (PDT)
+Received: from lan.ac-sw.lcl ( [91.201.74.194])
+        by mx.google.com with ESMTPS id 34sm1461466ugh.76.2008.07.29.21.37.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 29 Jul 2008 21:37:19 -0700 (PDT)
+User-Agent: KMail/1.9.5
+In-Reply-To: <alpine.DEB.1.00.0807231117290.2830@eeepc-johanness>
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0807291006070.3334@nehalem.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90734>
 
-On Tue, Jul 29, 2008 at 10:25:35AM -0700, Linus Torvalds wrote:
+> This is a known issue, but since nobody with that itch seems to care
+> enough to fix it, I doubt it will ever be fixed.
 
-> On Tue, 29 Jul 2008, Jeff King wrote:
-> > 
-> > I glanced briefly over "gitk kernel/printk.c" and it looks pretty sane.
-> 
-> Jeff, it _is_ sane. When Roman says it's "incorrect", he is just wrong.
+Hello again.
 
-I agree with you, btw. It is definitely correct and useful; however, I
-am curious if there is some "in between" level of simplification that
-might produce an alternate graph that has interesting features. And that
-is why I am trying to get Roman to lay out exactly what it is he wants.
+I have investigated this problem. Short result: git-svn and ANY file 
+convertion will not work now.
 
--Peff
+In my case I have found the problem is the 
+SVN::Git::Fetcher::apply_textdelta() function. To be more precicly call to 
+SVN::TxDelta::apply(). We fetch previous version of file from git and then 
+apply to it svn's delta. As far as we modify src file SVN fails to apply its 
+delta. If I modify last commit and put original version of file everything 
+works.
+
+So it seems to me there are two solutions: 
+1. Store original file somehow and use it to construct new file version;
+2. In case of this error we could fetch full blob with new (or old) version of 
+the file.
+
+I did not find the way to gather full file conntent nor feel myself ready to 
+rewrite git-svn to store original file somewhere.
+
+Does anybody can help or comment on this ?
