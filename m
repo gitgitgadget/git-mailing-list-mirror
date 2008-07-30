@@ -1,66 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] format-patch: Produce better output with --inline or
- --attach
-Date: Wed, 30 Jul 2008 16:29:39 +0200 (CEST)
-Message-ID: <alpine.LSU.1.00.0807301624410.3486@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <20080730052401.GC4034@sigill.intra.peff.net> <1217396973-82246-1-git-send-email-kevin@sb.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Feature suggestion: git-hist
+Date: Wed, 30 Jul 2008 16:55:34 +0200
+Message-ID: <20080730145534.GD32057@genesis.frugalware.org>
+References: <20080730133859.368bbd92@pc09.procura.nl> <20080730133334.GB31192@lars.home.noschinski.de> <20080730155835.71289eee@pc09.procura.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, peff@peff.net,
-	Junio C Hamano <gitster@pobox.com>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Wed Jul 30 16:31:21 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="5Dq4f+xZ7+xHwkrO"
+Cc: Lars Noschinski <lars-2008-1@usenet.noschinski.de>,
+	git@vger.kernel.org
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Wed Jul 30 16:56:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOChV-0003fm-Gi
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 16:30:49 +0200
+	id 1KOD6V-0007Dy-UM
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 16:56:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756618AbYG3O3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 10:29:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757049AbYG3O3n
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 10:29:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51295 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753621AbYG3O3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 10:29:43 -0400
-Received: (qmail invoked by alias); 30 Jul 2008 14:29:41 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp048) with SMTP; 30 Jul 2008 16:29:41 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19gMfcKeGxgifkFSFuW/0eB23wYcxmwOEk3A3fuP7
-	0ujtzQSxxCzBjC
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <1217396973-82246-1-git-send-email-kevin@sb.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1762233AbYG3Ozg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 10:55:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762214AbYG3Ozg
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 10:55:36 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:37036 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762169AbYG3Ozf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 10:55:35 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 5DE481B24FD;
+	Wed, 30 Jul 2008 16:55:34 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 075274465E;
+	Wed, 30 Jul 2008 16:10:16 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 1C05B1190A16; Wed, 30 Jul 2008 16:55:34 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080730155835.71289eee@pc09.procura.nl>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90797>
 
-Hi,
 
-On Tue, 29 Jul 2008, Kevin Ballard wrote:
+--5Dq4f+xZ7+xHwkrO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> MIME defines the encapsulation boundary as including the preceding CRLF (or in
+On Wed, Jul 30, 2008 at 03:58:35PM +0200, "H.Merijn Brand" <h.m.brand@xs4all.nl> wrote:
+> We are not used to working with $SHA's, and IMHO from the end-user pov,
+> a $SHA is less user friendly than a release number or a file version. I
+> can remember a version, but I cannot remember a SHA.
 
-This line will still be too long in git log's output, as well as in git 
-shortlog's output.  I thought we had a suggestion to use at most 76 
-characters per line in SubmittingPatches, but apparently we don't.
+But a version is never unique in a distributed environment. So a version
+is useless without at least an abbreviated hash.
 
-> The second change is to always write the line termination character 
-> (default: newline) even when using --inline or --attach. This is simply 
-> to improve the aesthetics of the resulting message. When using --inline 
-> an email client should render the resulting message identically to the 
-> non-inline version. And when using --attach this adds a blank line 
-> preceding the attachment in the email, which is visually attractive.
+If pure hashes are not friendly enough, you can use something like:
 
-It appears that your patch has one uncontroversial and one controversial 
-part, then.
+git describe $(git rev-list -1 HEAD -- <file>)
 
-Ciao,
-Dscho
+to get the _hash_ of the _commit_ (ie. not the version of a file) that
+touched the file last time.
+
+--5Dq4f+xZ7+xHwkrO
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkiQgOYACgkQe81tAgORUJYVaQCfbWetMrpKxYr1rzNqxJneRTsR
+5goAn1w+8qrJzmc/lNPDaeS11vn24YQQ
+=p1bi
+-----END PGP SIGNATURE-----
+
+--5Dq4f+xZ7+xHwkrO--
