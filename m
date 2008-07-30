@@ -1,124 +1,71 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: Git Community Book
-Date: Wed, 30 Jul 2008 17:39:18 -0400
-Message-ID: <20080730213918.GD19117@fieldses.org>
-References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com> <20080729170955.GK32184@machine.or.cz> <d411cc4a0807291130p228f77d5r1f390090ec29aef4@mail.gmail.com>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: [PATCH] Add NO_RSYNC to allow building without rsync
+Date: Wed, 30 Jul 2008 15:42:09 -0600
+Message-ID: <alpine.LNX.1.10.0807301539160.13032@xenau.zenez.com>
+References: <20080730185225.GG10399@yugib.highrise.ca> <7vod4f3zfu.fsf@gitster.siamese.dyndns.org> <20080730204948.GK10399@yugib.highrise.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 30 23:40:24 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Aidan Van Dyk <aidan@highrise.ca>
+X-From: git-owner@vger.kernel.org Wed Jul 30 23:44:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOJPE-0000UZ-Dm
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 23:40:24 +0200
+	id 1KOJS5-0001mj-46
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 23:43:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753680AbYG3VjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 17:39:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753401AbYG3VjW
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 17:39:22 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:52506 "EHLO fieldses.org"
+	id S1751292AbYG3VmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 17:42:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751367AbYG3VmM
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 17:42:12 -0400
+Received: from zenez.com ([166.70.62.2]:15883 "EHLO xenau.zenez.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752808AbYG3VjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 17:39:21 -0400
-Received: from bfields by fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1KOJOA-0005LG-Fo; Wed, 30 Jul 2008 17:39:18 -0400
-Content-Disposition: inline
-In-Reply-To: <d411cc4a0807291130p228f77d5r1f390090ec29aef4@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751125AbYG3VmK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 17:42:10 -0400
+Received: by xenau.zenez.com (Postfix, from userid 1000)
+	id 07E333F973; Wed, 30 Jul 2008 15:42:09 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by xenau.zenez.com (Postfix) with ESMTP id E87373F972;
+	Wed, 30 Jul 2008 15:42:09 -0600 (MDT)
+In-Reply-To: <20080730204948.GK10399@yugib.highrise.ca>
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90861>
 
-> > So my confusion still is - where does this stand wrt. the user manual?
-> > Why didn't you just start with the manual and work on that? I thought
-> > you were planning to do that, but apparently we misunderstood each other
-> > in the last mails.
-> >
-On Tue, Jul 29, 2008 at 11:30:55AM -0700, Scott Chacon wrote:
+On Wed, 30 Jul 2008, Aidan Van Dyk wrote:
+> * Junio C Hamano <gitster@pobox.com> [080730 16:11]:
+> > > I came about this because SCO OpenServer doesnt' have mkdtemp.  But I never use
+> > > rsync, so making it optional was an easy fix.
+> > 
+> > Perhaps "make NO_MKDTEMP=YesPlease" is a much better fix for your
+> > particular environment?
 > 
-> I was originally planning on doing that, but the problem is the
-> graphics, diagrams and screencasts.  Unless I am mistaken, there is
-> not a single outside media reference in any of these guides - the
-> diagrams that are there are all ascii drawings.  I'm assuming there is
-> a reason for that. If I wanted to add images and screencast embeds
-> into the guide, how would that work?
+> Yes, I found that out after...
 > 
-
-Yeah, some possible obstacles:
-
-	- Size: People probably won't want large binary blobs added to
-	  the git repository.
-	- Editability: We want to be able to keep the materials up to
-	  date and accurate.
-	- Source readability: the current documentation can all be read
-	  in place without doing a build.
-	- Build requirements: I seem to recall complaints about the
-	  toolchain required to build the existing documentation.
-
-At least for simple diagrams it might be possible to solve most of those
-problems with an appropriate diagram-description-language that could be
-compiled into image files.  Screencasts are probably totally out,
-though.
-
-In cases where you do find you're working with the same material, any
-improvements you could contribute back to the in-tree documentation
-would of course be appreciated.
-
-> Well, that's what the point of this is - to ask everyone to help me
-> review it, and possibly help me add to it.  The user manual is great,
-> but even I don't reference it very often because I find it difficult
-> to find content in it I need quickly.
-
-If you had notes on any particular examples (I looked for X in place Y,
-then place Z, and finally found it where I least expected it in place
-Q...), they'd be appreciated.
-
-> The specific order I choose is very different from the User Guide and
-> is likely to bother a number of people, which you mentioned (and I'm
-> sure Dscho will _hate_) because I introduce the object model at the
-> beginning.  (I'm still working on that section, trying to simplify it
-> and add in some other diagrams and a short screencast I have that I
-> think will be helpful)  This is because I have had a lot of positive
-> feedback that primary frustration from people comes from them thinking
-> of Git as a super-better Subversion.
->
-> I would venture to say that
-> _most_ of the users coming to Git now are currently fluent in
-> Subversion.  Even if they are from Perforce or CVS (the other two ones
-> I will occasionally run into), their mental model of what an SCM does
-> is the same - delta storage.  I've found that by ridding them of that
-> notion off the bat, they have _far_ fewer problems and frustrations
-> with Git than when I just try to show them the first 10 commands in
-> sort of a cookbook style.  It's not a complicated model, it doesn't
-> take long to teach, and in _my personal_ experience (which is not to
-> say it's necessarily correct), it helps people the most in picking it
-> up and really loving the tool.
-
-I've considered doing the same for the user manual, actually, for some
-of the same reasons--my main concern would be that it be done very
-quickly, so as not to make people feel like it was a big obstacle on
-their way to actually doing what they need to do.
-
-So, anyway, that's to say that suggestions for reorganization of the
-in-tree documentation (as opposed to just smaller-scale fixes) would
-also be welcomed....
-
---b.
-
+> > The patch is seriously whitespace damaged, in any case.
 > 
-> The book is built so that it is just as easy to start in the 'Basic
-> Usage' section and go back later, but if you're going to sit down and
-> just start reading, I think it would be better to explain why Git is
-> different at a fundamental level right off the bat.
-> 
-> Scott
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Ooops... copy-n-paste from git-format-patch|more on some crappy sco terminal
+> through a screen session...  I guess someone in there translated tabs to
+> spaces...
+
+I do have rsync.  I use it all the time on OpenServer 6.  I have automated 
+rsync backups of certain Openserver 6 machines.
+
+tech0 > rsync --version
+rsync  version 3.0.2  protocol version 30
+Copyright (C) 1996-2008 by Andrew Tridgell, Wayne Davison, and others.
+Web site: http://rsync.samba.org/
+Capabilities:
+    64-bit files, 64-bit inums, 32-bit timestamps, 64-bit long ints,
+    socketpairs, hardlinks, symlinks, no IPv6, batchfiles, inplace,
+    append, ACLs, no xattrs, iconv, no symtimes
+
+tech0.zenez.com and osr600.zenez.com are OpenServer 6 machines.
+
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
