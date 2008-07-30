@@ -1,108 +1,174 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: q: git-fetch a tad slow?
-Date: Wed, 30 Jul 2008 21:06:57 +0200
-Message-ID: <20080730190657.GC26389@elte.hu>
-References: <20080728160138.GA12777@elte.hu> <20080729055014.GE11947@spearce.org> <20080729090802.GA11373@elte.hu> <20080730044855.GA7225@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] 64bit issue in test-parse-options.c
+Date: Wed, 30 Jul 2008 12:11:35 -0700
+Message-ID: <7vej5b5grc.fsf@gitster.siamese.dyndns.org>
+References: <20080730141656.41ce02ec@pc09.procura.nl>
+ <20080730123713.GA31392@artemis.madism.org>
+ <20080730144452.797d8686@pc09.procura.nl>
+ <20080730140523.GC31392@artemis.madism.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jul 30 21:09:12 2008
+Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Wed Jul 30 21:12:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOH28-0007Le-2x
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 21:08:24 +0200
+	id 1KOH6N-00012v-2g
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 21:12:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756581AbYG3THQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 15:07:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756429AbYG3THQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 15:07:16 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:49167 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756544AbYG3THO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 15:07:14 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1KOH0l-00061g-Q0
-	from <mingo@elte.hu>; Wed, 30 Jul 2008 21:07:13 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id E41CB3E2191; Wed, 30 Jul 2008 21:06:54 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080730044855.GA7225@spearce.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1751752AbYG3TLq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 15:11:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbYG3TLq
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 15:11:46 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38561 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751557AbYG3TLp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 15:11:45 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1BADA4063F;
+	Wed, 30 Jul 2008 15:11:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 165F54063E; Wed, 30 Jul 2008 15:11:37 -0400 (EDT)
+In-Reply-To: <20080730140523.GC31392@artemis.madism.org> (Pierre Habouzit's
+ message of "Wed, 30 Jul 2008 16:05:23 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 57F28B4A-5E6B-11DD-9F9A-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90836>
+
+Pierre Habouzit <madcoder@debian.org> writes:
+
+> The proper fix is to let integer be an *INT* (long integer is bogus
+> anyways) and to put the date in a long using static unsigned long date,
+> and make OPT_DATE use this long.
+
+I am still puzzled by the original report of the breakage, as H. Merijn
+cannot be the first person to ever ran test-parse-options on 64-bit
+machine.  Maybe there is a bytesex issue involved as well?
+
+In any case, this should work.
+
+ test-parse-options.c     |    8 +++++---
+ t/t0040-parse-options.sh |   11 ++++++++++-
+ 2 files changed, 15 insertions(+), 4 deletions(-)
+
+diff --git a/test-parse-options.c b/test-parse-options.c
+index 2a79e72..6e18083 100644
+--- a/test-parse-options.c
++++ b/test-parse-options.c
+@@ -2,7 +2,8 @@
+ #include "parse-options.h"
+ 
+ static int boolean = 0;
+-static unsigned long integer = 0;
++static int integer = 0;
++static unsigned long timestamp;
+ static int abbrev = 7;
+ static int verbose = 0, dry_run = 0, quiet = 0;
+ static char *string = NULL;
+@@ -32,7 +33,7 @@ int main(int argc, const char **argv)
+ 		OPT_INTEGER('i', "integer", &integer, "get a integer"),
+ 		OPT_INTEGER('j', NULL, &integer, "get a integer, too"),
+ 		OPT_SET_INT(0, "set23", &integer, "set integer to 23", 23),
+-		OPT_DATE('t', NULL, &integer, "get timestamp of <time>"),
++		OPT_DATE('t', NULL, &timestamp, "get timestamp of <time>"),
+ 		OPT_CALLBACK('L', "length", &integer, "str",
+ 			"get length of <str>", length_callback),
+ 		OPT_GROUP("String options"),
+@@ -56,7 +57,8 @@ int main(int argc, const char **argv)
+ 	argc = parse_options(argc, argv, options, usage, 0);
+ 
+ 	printf("boolean: %d\n", boolean);
+-	printf("integer: %lu\n", integer);
++	printf("integer: %u\n", integer);
++	printf("timestamp: %lu\n", timestamp);
+ 	printf("string: %s\n", string ? string : "(not set)");
+ 	printf("abbrev: %d\n", abbrev);
+ 	printf("verbose: %d\n", verbose);
 
 
-* Shawn O. Pearce <spearce@spearce.org> wrote:
-
-> > should i pack on both repos? I dont explicitly pack anything, but on 
-> > the server it goes into regular gc runs. (which will pack most 
-> > stuff, right?)
-> 
-> git-gc automatically runs `git pack-refs --all --prune` like I 
-> recommended, unless you disabled it with config gc.packrefs = false. 
-> So its probably already packed.
-> 
-> What does `find .git/refs -type f | wc -l` give for the repository on 
-> the central server?  If its more than a handful (~20) I would suggest 
-> running git-gc before testing again.
-
-ah, you are right, it gave 275, then git-gc brought it down to two:
-
-  earth4:~/tip> find .git/refs -type f | wc -l
-  275
-  earth4:~/tip> git gc
-  earth4:~/tip> find .git/refs -type f | wc -l
-  2
-
-i turned off auto-gc recently (two weeks ago) because it was 
-auto-triggering _way_ too frequently. (like on every fifth merge i was 
-doing or so)
-
-alas, fetching still seems to be slow:
-
-  titan:~/tip> time git-fetch origin
-
-  real    0m5.112s
-  user    0m0.972s
-  sys     0m3.380s
-
-(but the gc run has not finished yet on the central repo so this isnt 
-fully valid.)
-
-> But I'm really suspecting that this is just our quadratic matching 
-> algorithm running up against a large number of branches, causing it to 
-> suck.
-> 
-> jgit at least uses an O(N) algorithm here, but since it is written in 
-> Java its of course slow compared to C Git.  Takes a while to get that 
-> JVM running.
-> 
-> I'll try to find some time to reproduce the issue and look at the 
-> bottleneck here.  I'm two days into a new job so my git time has been 
-> really quite short this week.  :-|
-
-fetching the -tip repo:
-
-   http://people.redhat.com/mingo/tip.git/README
-
-and then running 'git remote update' will i think already show this 
-problem for you too. People have been complaining about how slow the 
-update is.
-
-	Ingo
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index 03dbe00..e38241c 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -47,6 +47,7 @@ test_expect_success 'test help' '
+ cat > expect << EOF
+ boolean: 2
+ integer: 1729
++timestamp: 0
+ string: 123
+ abbrev: 7
+ verbose: 2
+@@ -63,6 +64,7 @@ test_expect_success 'short options' '
+ cat > expect << EOF
+ boolean: 2
+ integer: 1729
++timestamp: 0
+ string: 321
+ abbrev: 10
+ verbose: 2
+@@ -88,6 +90,7 @@ test_expect_success 'missing required value' '
+ cat > expect << EOF
+ boolean: 1
+ integer: 13
++timestamp: 0
+ string: 123
+ abbrev: 7
+ verbose: 0
+@@ -108,6 +111,7 @@ test_expect_success 'intermingled arguments' '
+ cat > expect << EOF
+ boolean: 0
+ integer: 2
++timestamp: 0
+ string: (not set)
+ abbrev: 7
+ verbose: 0
+@@ -135,6 +139,7 @@ test_expect_success 'ambiguously abbreviated option' '
+ cat > expect << EOF
+ boolean: 0
+ integer: 0
++timestamp: 0
+ string: 123
+ abbrev: 7
+ verbose: 0
+@@ -161,6 +166,7 @@ test_expect_success 'detect possible typos' '
+ cat > expect <<EOF
+ boolean: 0
+ integer: 0
++timestamp: 0
+ string: (not set)
+ abbrev: 7
+ verbose: 0
+@@ -177,7 +183,8 @@ test_expect_success 'keep some options as arguments' '
+ 
+ cat > expect <<EOF
+ boolean: 0
+-integer: 1
++integer: 0
++timestamp: 1
+ string: default
+ abbrev: 7
+ verbose: 0
+@@ -197,6 +204,7 @@ cat > expect <<EOF
+ Callback: "four", 0
+ boolean: 5
+ integer: 4
++timestamp: 0
+ string: (not set)
+ abbrev: 7
+ verbose: 0
+@@ -223,6 +231,7 @@ test_expect_success 'OPT_CALLBACK() and callback errors work' '
+ cat > expect <<EOF
+ boolean: 1
+ integer: 23
++timestamp: 0
+ string: (not set)
+ abbrev: 7
+ verbose: 0
