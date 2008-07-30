@@ -1,98 +1,79 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not been set
-Date: Wed, 30 Jul 2008 18:14:38 -0400
-Message-ID: <32541b130807301514j43e98003gf1da1b61dbee499@mail.gmail.com>
-References: <alpine.DEB.1.00.0807250159420.4140@eeepc-johanness>
-	 <20080725140142.GB2925@dpotapov.dyndns.org>
-	 <42C252B2-85B9-4D05-B3A2-2A0250D7F5D6@orakel.ntnu.no>
-	 <20080729134619.GB7008@dpotapov.dyndns.org>
-	 <A8BF9951-AB9D-4391-A6CB-E9778064F4A8@orakel.ntnu.no>
-	 <80518F08-A9A9-4190-9AC4-D24DD6A1188B@zib.de>
-	 <32541b130807301133w4bfc8288oa2d15911b2317dca@mail.gmail.com>
-	 <56C07978-D6C9-4219-8B92-6217BD33F6D4@zib.de>
-	 <32541b130807301407m59eef936m5e07dd33a4eb5b04@mail.gmail.com>
-	 <20080730220236.GD7008@dpotapov.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Steffen Prohaska" <prohaska@zib.de>,
-	"Eyvind Bernhardsen" <eyvind-git@orakel.ntnu.no>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Joshua Jensen" <jjensen@workspacewhiz.com>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Dmitry Potapov" <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 31 00:15:48 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] builtin-help: always load_command_list() in cmd_help()
+Date: Thu, 31 Jul 2008 00:38:07 +0200
+Message-ID: <1217457487-6509-1-git-send-email-vmiklos@frugalware.org>
+References: <C0DB03B0-8AF5-4B6A-A9DB-16608128EB31@sb.org>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Thu Jul 31 00:39:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOJxM-0006rh-Fz
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 00:15:40 +0200
+	id 1KOKK1-0005DK-8T
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 00:39:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758126AbYG3WOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 18:14:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758100AbYG3WOk
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 18:14:40 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:40719 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757867AbYG3WOj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 18:14:39 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so146334ywe.1
-        for <git@vger.kernel.org>; Wed, 30 Jul 2008 15:14:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=OPMqGkCNIUjhKyNwvD8n4b+4o2EFDaGjn1wVErYXmqY=;
-        b=HCKujd7NaszOFNO3W9+ETlXJQqX86/9fH7MjrGHW6DeiPsgnvKUzgtISGuUmmECqV+
-         uL9os8eFVCorW027qUuKzs6lXvJc2fgnHhFy42te3b59DmV8VAojSt6qAkhKhJrMrVHY
-         7InAwLx71XcupRYTRDQ3vOoMu30XUtHZGocTQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=WThMn/sEbcPSfa8bkPzHxJwJ58bwUe83duHjDsKK8ewHS5hh0x+8wg7VKIWSU4fdPY
-         9MSkXdUH/8Gt+mOiDFudeqx5iJcCnb4xDNhWHTZJVroG5wuQA8ZbU70/FIdKA3jd97re
-         t3Kj2xEKvl4YJxYda54DqY1SZhEVJm1XdkeCQ=
-Received: by 10.150.58.17 with SMTP id g17mr79241yba.175.1217456078301;
-        Wed, 30 Jul 2008 15:14:38 -0700 (PDT)
-Received: by 10.150.98.19 with HTTP; Wed, 30 Jul 2008 15:14:38 -0700 (PDT)
-In-Reply-To: <20080730220236.GD7008@dpotapov.dyndns.org>
-Content-Disposition: inline
+	id S1751920AbYG3Whl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 18:37:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752853AbYG3Whl
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 18:37:41 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:37156 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751920AbYG3Whj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 18:37:39 -0400
+Received: from vmobile.example.net (dsl5401CE3D.pool.t-online.hu [84.1.206.61])
+	by yugo.frugalware.org (Postfix) with ESMTP id 4DD121DDC5B;
+	Thu, 31 Jul 2008 00:37:37 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 73FCD1AA738; Thu, 31 Jul 2008 00:38:08 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.rc0.14.g95f8.dirty
+In-Reply-To: <C0DB03B0-8AF5-4B6A-A9DB-16608128EB31@sb.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90866>
 
-On 7/30/08, Dmitry Potapov <dpotapov@gmail.com> wrote:
-> On Wed, Jul 30, 2008 at 05:07:49PM -0400, Avery Pennarun wrote:
->  > FWIW, this problem would apply to any system that incrementally
->  > imports into git from another system using binary deltas.
->
-> Not necessary. It depends on how import is done. You should not apply
->  this binary deltas to your working tree, but to files in the repo. And
->  obviously those files that are imported should be stored as is without
->  any conversion. In the same way as if you clone some git repo, you do
->  not apply any commit conversion to any existing commit. This conversion
->  should be done for *new* commits that you create locally.
->
->  So, the problem with git-svn is mostly due to how the import is done. Of
->  course, the other part of that problem is that conversion setting in Git
->  and SVN for text files specified very differently.
+When cmd_help() is called, we always need the list of main and other
+commands, not just when the list of all commands is shown. Before this
+patch 'git help diff' invoked 'man gitdiff' because cmd_to_page()
+thought 'diff' is not a git command.
 
-Hmm, if your first paragraphis true (do not apply any commit
-conversion to any existing commit), then in fact SVN's method for
-specifying text files doesn't really matter, right?  It's just a bug
-in git-svn.
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-Is it possible to have git-svn override core.autocrlf temporarily?  If
-someone can give me a hint how to do that, I don't mind working up a
-patch for that. I can't see any situation where *not* doing so would
-even work (unless core.autocrlf=false already, of course).
+On Wed, Jul 30, 2008 at 01:52:26PM -0700, Kevin Ballard <kevin@sb.org> wrote:
+> `git help diff` no longer finds the git-diff manpage (as of tip of
+> next branch). I haven't tested, but I suspect
+> 940208a771066229bc6a486f6a058e332b71cfe4 is responsible.
 
-Have fun,
+This fixed the issue for me.
 
-Avery
+Thanks!
+
+ help.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/help.c b/help.c
+index 88c0d5b..968f368 100644
+--- a/help.c
++++ b/help.c
+@@ -690,6 +690,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ {
+ 	int nongit;
+ 	const char *alias;
++	unsigned int longest = load_command_list("git-", &main_cmds, &other_cmds);
+ 
+ 	setup_git_directory_gently(&nongit);
+ 	git_config(git_help_config, NULL);
+@@ -698,7 +699,6 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 			builtin_help_usage, 0);
+ 
+ 	if (show_all) {
+-		unsigned int longest = load_command_list("git-", &main_cmds, &other_cmds);
+ 		printf("usage: %s\n\n", git_usage_string);
+ 		list_commands("git commands", longest, &main_cmds, &other_cmds);
+ 		printf("%s\n", git_more_info_string);
+-- 
+1.6.0.rc0.14.g95f8.dirty
