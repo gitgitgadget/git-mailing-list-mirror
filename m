@@ -1,111 +1,86 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] Respect crlf attribute even if core.autocrlf has not been set
-Date: Wed, 30 Jul 2008 21:25:58 +0200
-Message-ID: <56C07978-D6C9-4219-8B92-6217BD33F6D4@zib.de>
-References: <488772BC.80207@workspacewhiz.com> <alpine.DEB.1.00.0807232041570.8986@racer> <3B9933A6-9637-41AE-9133-9B6EA9204E6B@orakel.ntnu.no> <alpine.DEB.1.00.0807250159420.4140@eeepc-johanness> <E0666371-5C5E-4AA9-B67A-16C42477865B@orakel.ntnu.no> <20080725140142.GB2925@dpotapov.dyndns.org> <42C252B2-85B9-4D05-B3A2-2A0250D7F5D6@orakel.ntnu.no> <20080729134619.GB7008@dpotapov.dyndns.org> <A8BF9951-AB9D-4391-A6CB-E9778064F4A8@orakel.ntnu.no> <80518F08-A9A9-4190-9AC4-D24DD6A1188B@zib.de> <32541b130807301133w4bfc8288oa2d15911b2317dca@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Eyvind Bernhardsen" <eyvind-git@orakel.ntnu.no>,
-	"Dmitry Potapov" <dpotapov@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Joshua Jensen" <jjensen@workspacewhiz.com>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 30 21:27:13 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: markdown 2 man, was Re: Git Community Book
+Date: Wed, 30 Jul 2008 12:32:02 -0700
+Message-ID: <7vy73j418t.fsf@gitster.siamese.dyndns.org>
+References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
+ <20080729170955.GK32184@machine.or.cz>
+ <d411cc4a0807291130p228f77d5r1f390090ec29aef4@mail.gmail.com>
+ <7vwsj4edm1.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0807291957410.1779@reaper.quantumfyre.co.uk>
+ <alpine.LSU.1.00.0807301514280.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Scott Chacon <schacon@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	git list <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 30 21:33:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOHKE-0007Ku-Pt
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 21:27:07 +0200
+	id 1KOHQC-0001It-D0
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 21:33:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755156AbYG3T0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 15:26:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755117AbYG3T0E
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 15:26:04 -0400
-Received: from mailer.zib.de ([130.73.108.11]:39921 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754877AbYG3T0B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 15:26:01 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m6UJPYhq015304;
-	Wed, 30 Jul 2008 21:25:39 +0200 (CEST)
-Received: from cougar.zib.de (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m6UJPWqe008000
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 30 Jul 2008 21:25:33 +0200 (MEST)
-In-Reply-To: <32541b130807301133w4bfc8288oa2d15911b2317dca@mail.gmail.com>
-X-Mailer: Apple Mail (2.926)
+	id S1754145AbYG3TcO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 15:32:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754010AbYG3TcN
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 15:32:13 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44453 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754233AbYG3TcM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 15:32:12 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EBCA140D37;
+	Wed, 30 Jul 2008 15:32:09 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 170A240D32; Wed, 30 Jul 2008 15:32:03 -0400 (EDT)
+In-Reply-To: <alpine.LSU.1.00.0807301514280.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+ (Johannes Schindelin's message of "Wed, 30 Jul 2008 15:27:38 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 33CDD76C-5E6E-11DD-8655-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90840>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Jul 30, 2008, at 8:33 PM, Avery Pennarun wrote:
+> Note also that Markdown cannot create TOCs automatically, AFAICT.  So 
+> probably it would be not all that easy to convert the User Manual to that 
+> format.
 
-> On 7/30/08, Steffen Prohaska <prohaska@zib.de> wrote:
->
->> What matters is that git gives you exactly back what you  
->> committed.  It
->> does so with core.autocrlf=true, unless you check out with a  
->> different
->> setting for autocrlf.
->
-> You can tell that this statement isn't quite true because if you have
-> a file with mixed LF and CRLF line endings, which I do (thanks,
-> Windows!) then CRLF->LF conversion is not a reversible operation.
-> Interestingly LF->CRLF still is (because an LF->CRLF'd file will never
-> have a bare LF, and on such a subset of files, CRLF->LF is
-> reversible).
->
-> Also note that core.autocrlf=input is *definitely* not a perfectly
-> reversible operation.
+The use of markdown may mean updates to the User Manual won't be merged
+back to his book without effort and manual porting on his side, and the
+side porting in the other direction has the same issue as well, but the
+contents and the way materials are presented will be vastly different in
+future versions anyway; not being able to side-port new material verbatim
+may not be an issue.  Discussion with Scott seems to suggest that the
+overall philosophy of his book is "this is a different book targetted for
+different audiences; its initial text happens to heavily borrow from the
+existing documents but expected to become vastly improved", in other
+words, fork-and-never-return.
 
-You are absolutely right.  The files your describe are modified by git,
-because they are "invalid" text files, as git defines them.  For git's
-autocrlf mechanism to work, a text file is only allowed to have a
-*single* type of line endings.  Otherwise it is broken and git tries to
-help you fixing it.
+That's one valid approach.  I or you might have taken a different avenue,
+but after all, it's his book, not mine, not yours, nor git list's book.
 
+As I am not in "graphics and screencast" camp, I may probably not be able
+to offer much help improving his book, and I suspect some people on this
+list might feel the same way.  But that's is Ok --- we are not dumping the
+User Manual.
 
-> And so here's the problem: svn hands you a file.  It may or may not
-> have CRLFs in it, and the line endings may actually be a random mix of
-> LF and CRLF, as I am actually experiencing at the moment in a
-> particular repository at work.  If core.autocrlf is anything other
-> than "false", git will modify the file, and git-svn won't be apply the
-> diff on the next revision.
+We originally hoped (well, at least I did) that Scott's effort on his book
+might help us in improving the User Manual as well, but the approach seems
+to make it unlikely.  But that is nothing to hold against him --- he is
+doing his own thing in a way he feels is the best, and that's perfectly
+fine.  We lost nothing, perhaps except for a chance to cooperate a bit
+better and to widen the community.
 
-This sound like a specific problem with svn, not a general problem
-of git's autocrlf concept.  I work with a git-only workflow and I
-never see the problems you describe.
+> If at all, I would have preferred a format switch to Wiki syntax so that 
+> we can use the same source on the Git wiki as in our Documentation/ 
+> directory.
 
-
-> It's conceivable that core.autocrlf=true will work if your svn
-> repository is pure and svn hands you files only with CRLF endings.
-> It's somewhat unlikely that most svn repositories are in that state
-> (remember: it has to be perfect in *every revision* for git-svn to
-> work).
->
-> So anyway, I can't see how git-svn can possibly work in the general
-> case if core.autocrlf is anything other than false *at git-svn fetch
-> time*.
-
-That might be the case.  Note though that I cannot contribute
-much to this discussion because I never use git-svn.
-
-
-> And that's what I do, and it works great, modulo a bunch of
-> stupid CRLFs that sneak into the repo via svn, but those can be fixed.
-> Someday we'll stop using svn, and git-filter-branch can fix them all
-> retroactively so that "blame" will work right.
->
-> Perhaps git-svn needs to actually ignore the core.autocrlf setting?
-
- From what you describe, I get the impression that git-svn's handling
-of line endings could certainly be improved.
-
-	Steffen
+Yeah, that's also true.  I seem to recall markdown was used in ikiwiki?
