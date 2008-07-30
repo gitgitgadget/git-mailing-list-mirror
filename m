@@ -1,60 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Glean libexec path from argv[0] for git-upload-pack and
-    git-receive-pack.
-Date: Wed, 30 Jul 2008 20:21:47 +0200 (CEST)
-Message-ID: <alpine.LSU.1.00.0807302020300.3486@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <1217417238-26731-1-git-send-email-shaslam@lastminute.com> <alpine.LSU.1.00.0807301650060.3486@wbgn129.biozentrum.uni-wuerzburg.de> <48909396.3080500@lastminute.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git Community Book
+Date: Wed, 30 Jul 2008 11:27:01 -0700
+Message-ID: <7v3alr6xe2.fsf@gitster.siamese.dyndns.org>
+References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
+ <alpine.LNX.1.00.0807291716460.19665@iabervon.org>
+ <7v1w1cb940.fsf@gitster.siamese.dyndns.org>
+ <20080730132044.GF17649@jukie.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
-To: Steve Haslam <shaslam@lastminute.com>
-X-From: git-owner@vger.kernel.org Wed Jul 30 20:23:08 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Bart Trojanowski <bart@jukie.net>
+X-From: git-owner@vger.kernel.org Wed Jul 30 20:29:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOGK5-0003vI-Me
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 20:22:54 +0200
+	id 1KOGQD-0006R6-Iq
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 20:29:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753705AbYG3SVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 14:21:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753737AbYG3SVv
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 14:21:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55519 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753610AbYG3SVu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 14:21:50 -0400
-Received: (qmail invoked by alias); 30 Jul 2008 18:21:48 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp055) with SMTP; 30 Jul 2008 20:21:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/FKTdAS4fFwTDhsCH1U0lF8zA8cZMnq3drxaqE14
-	TikWGbLgdrl1wk
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <48909396.3080500@lastminute.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68
+	id S1753575AbYG3S1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 14:27:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753478AbYG3S1L
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 14:27:11 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40539 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750969AbYG3S1K (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 14:27:10 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C106443984;
+	Wed, 30 Jul 2008 14:27:08 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id EEE7E43982; Wed, 30 Jul 2008 14:27:03 -0400 (EDT)
+In-Reply-To: <20080730132044.GF17649@jukie.net> (Bart Trojanowski's message
+ of "Wed, 30 Jul 2008 09:20:45 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1E85744A-5E65-11DD-BC89-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90826>
 
-Hi,
+Bart Trojanowski <bart@jukie.net> writes:
 
-On Wed, 30 Jul 2008, Steve Haslam wrote:
+> Could you let me know what the biggest inaccuracies were?  I would like
+> to correct my mistakes and update the slides.
 
-> I think that once git-upload-pack.c et al get the argv[0] path over to 
-> setup_path() then there's nothing more to do; setup_path() already uses 
-> argv0_path in its list of paths to try. I'm confused to the reference to 
-> PATH, though: we're avoiding the PATH environment variable completely.
-
-There is an issue in setting up the argv0_path when Git is called as "git" 
-and resolved via the PATH: argv[0] then is literally "git".
-
-And we need argv0_path for other things than just calling programs: 
-relative etc/gitconfig and libexecdir.
-
-Ciao,
-Dscho
+The one I offhand can recall was in your spoken part not on slides ("git
+add -u" does not notice new files but does notice removed ones).  Nothing
+major, really.
