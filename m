@@ -1,65 +1,88 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Aidan Van Dyk <aidan@highrise.ca>
 Subject: Re: [PATCH] Add NO_RSYNC to allow building without rsync
-Date: Wed, 30 Jul 2008 12:33:17 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0807301231050.3334@nehalem.linux-foundation.org>
-References: <20080730185225.GG10399@yugib.highrise.ca>
+Date: Wed, 30 Jul 2008 15:49:05 -0400
+Message-ID: <20080730194905.GI10399@yugib.highrise.ca>
+References: <20080730185225.GG10399@yugib.highrise.ca> <alpine.LFD.1.10.0807301231050.3334@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="APlYHCtpeOhspHkB"
 Cc: git@vger.kernel.org
-To: Aidan Van Dyk <aidan@highrise.ca>
-X-From: git-owner@vger.kernel.org Wed Jul 30 21:37:57 2008
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jul 30 21:50:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOHUa-0003Fo-2T
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 21:37:48 +0200
+	id 1KOHgd-0007sT-Ft
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 21:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753359AbYG3Tgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 15:36:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751996AbYG3Tgt
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 15:36:49 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:42550 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753078AbYG3Tgs (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Jul 2008 15:36:48 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6UJaFAZ024281
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 30 Jul 2008 12:36:16 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6UJaFUL012371;
-	Wed, 30 Jul 2008 12:36:15 -0700
-In-Reply-To: <20080730185225.GG10399@yugib.highrise.ca>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-5.409 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753390AbYG3TtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 15:49:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753148AbYG3TtI
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 15:49:08 -0400
+Received: from yugib.highrise.ca ([205.150.199.213]:40335 "EHLO
+	yugib.highrise.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752097AbYG3TtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 15:49:07 -0400
+Received: from localhost (yugib.highrise.ca [205.150.199.213])
+	by yugib.highrise.ca (Postfix) with ESMTP id A26CF111E39;
+	Wed, 30 Jul 2008 15:49:05 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0807301231050.3334@nehalem.linux-foundation.org>
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90843>
 
 
+--APlYHCtpeOhspHkB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Wed, 30 Jul 2008, Aidan Van Dyk wrote:
+* Linus Torvalds <torvalds@linux-foundation.org> [080730 15:42]:
+ 
+> Hmm. Without mkdtemp(), maybe you could just do a trivial compat function 
+> somethin glike
 > 
-> I came about this because SCO OpenServer doesnt' have mkdtemp.  But I never use
-> rsync, so making it optional was an easy fix.
+> 	char *git_mkdtemp(char *template)
+> 	{
+> 		char *n = mktemp(template);
+> 		if (mkdir(n))
+> 			n = NULL;
+> 		return n;
+> 	}
+> 
+> instead?
 
-Hmm. Without mkdtemp(), maybe you could just do a trivial compat function 
-somethin glike
 
-	char *git_mkdtemp(char *template)
-	{
-		char *n = mktemp(template);
-		if (mkdir(n))
-			n = NULL;
-		return n;
-	}
+And as I go to whip that up (ya, I'm lazy and just needed a prod), I see
+it's already done:
 
-instead?
+# Define NO_MKDTEMP if you don't have mkdtemp in the C library.
 
-		Linus
+But since rsync isn't available on this compile anyways, I still think
+NO_RSYNC is worth having on it's own, just like NO_CURL or NO_TCLTK
+
+a.
+
+-- 
+Aidan Van Dyk                                             Create like a god,
+aidan@highrise.ca                                       command like a king,
+http://www.highrise.ca/                                   work like a slave.
+
+--APlYHCtpeOhspHkB
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFIkMWxuVxNPsxNPScRArRAAKCX20S1yX72U/WAvPivFUQGUrlragCfVQm9
+6xZ20/5uLiU1BVVWMnJLy4s=
+=VyKa
+-----END PGP SIGNATURE-----
+
+--APlYHCtpeOhspHkB--
