@@ -1,93 +1,105 @@
-From: Robert Richter <robert.richter@amd.com>
-Subject: Re: Gitweb: Provide Git links in project list?
-Date: Wed, 30 Jul 2008 18:11:27 +0200
-Message-ID: <20080730161126.GE31295@erda.amd.com>
-References: <20080730125743.GY15356@erda.amd.com> <1217432970.2884.8.camel@localhost.localdomain>
+From: Steve Haslam <shaslam@lastminute.com>
+Subject: Re: [PATCH] Glean libexec path from argv[0] for git-upload-pack and
+    git-receive-pack.
+Date: Wed, 30 Jul 2008 17:15:18 +0100
+Message-ID: <48909396.3080500@lastminute.com>
+References: <1217417238-26731-1-git-send-email-shaslam@lastminute.com> <alpine.LSU.1.00.0807301650060.3486@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: git@vger.kernel.org
-To: "J.H." <warthog19@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Wed Jul 30 18:13:40 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 30 18:16:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOEJ1-0008FA-5j
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 18:13:39 +0200
+	id 1KOELo-0001B1-VO
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 18:16:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758053AbYG3QMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 12:12:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758027AbYG3QMf
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 12:12:35 -0400
-Received: from outbound-va3.frontbridge.com ([216.32.180.16]:22452 "EHLO
-	VA3EHSOBE001.bigfish.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757979AbYG3QMe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 12:12:34 -0400
-Received: from mail21-va3-R.bigfish.com (10.7.14.253) by
- VA3EHSOBE001.bigfish.com (10.7.40.21) with Microsoft SMTP Server id
- 8.1.240.5; Wed, 30 Jul 2008 16:12:33 +0000
-Received: from mail21-va3 (localhost.localdomain [127.0.0.1])	by
- mail21-va3-R.bigfish.com (Postfix) with ESMTP id CA8F11380512;	Wed, 30 Jul
- 2008 16:12:33 +0000 (UTC)
-X-BigFish: VPS-21(zz1432R98dR936eQ4015M62a3L1805Mzz10d3izzz32i6bh87il61h)
-X-Spam-TCS-SCL: 0:0
-X-FB-DOMAIN-IP-MATCH: fail
-Received: by mail21-va3 (MessageSwitch) id 1217434352265354_8162; Wed, 30 Jul
- 2008 16:12:32 +0000 (UCT)
-Received: from ausb3extmailp02.amd.com (ausb3extmailp02.amd.com
- [163.181.251.22])	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)	by mail21-va3.bigfish.com (Postfix) with
- ESMTP id 11A7B172806C;	Wed, 30 Jul 2008 16:12:31 +0000 (UTC)
-Received: from ausb3twp01.amd.com ([163.181.250.37])	by
- ausb3extmailp02.amd.com (Switch-3.2.7/Switch-3.2.7) with ESMTP id
- m6UGCQ1e013981;	Wed, 30 Jul 2008 11:12:30 -0500
-X-WSS-ID: 0K4TUCM-01-J3Z-01
-Received: from sausexbh2.amd.com (SAUSEXBH2.amd.com [163.181.22.102])	by
- ausb3twp01.amd.com (Tumbleweed MailGate 3.5.1) with ESMTP id 2896A19472E;
-	Wed, 30 Jul 2008 11:12:21 -0500 (CDT)
-Received: from SAUSEXMB3.amd.com ([163.181.22.202]) by sausexbh2.amd.com with
- Microsoft SMTPSVC(6.0.3790.3959);	 Wed, 30 Jul 2008 11:12:29 -0500
-Received: from SDRSEXMB1.amd.com ([172.20.3.116]) by SAUSEXMB3.amd.com with
- Microsoft SMTPSVC(6.0.3790.3959);	 Wed, 30 Jul 2008 11:11:40 -0500
-Received: from erda.amd.com ([165.204.85.17]) by SDRSEXMB1.amd.com with
- Microsoft SMTPSVC(6.0.3790.3959);	 Wed, 30 Jul 2008 18:11:38 +0200
-Received: by erda.amd.com (Postfix, from userid 35569)	id 7471A8403; Wed, 30
- Jul 2008 18:11:27 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1217432970.2884.8.camel@localhost.localdomain>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-OriginalArrivalTime: 30 Jul 2008 16:11:38.0290 (UTC) FILETIME=[F21D1920:01C8F25E]
+	id S1751826AbYG3QPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 12:15:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752011AbYG3QPc
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 12:15:32 -0400
+Received: from sglonmg02-out.sabre.com ([151.193.120.24]:36901 "EHLO
+	sglonmg02-out.sabre.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751550AbYG3QPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 12:15:32 -0400
+X-ExtLoop1: From 10.136.85.54
+X-IronPort-AV: E=Sophos;i="4.31,279,1215385200"; 
+   d="scan'208";a="1125111817"
+Received: from unknown (HELO sglonbh01.Global.ad.sabre.com) ([10.136.85.54])
+  by sglonmg02-out.sabre.com with ESMTP; 30 Jul 2008 17:15:18 +0100
+Received: from sglonms02.Global.ad.sabre.com ([10.136.85.20]) by sglonbh01.Global.ad.sabre.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 30 Jul 2008 17:15:18 +0100
+Received: from [10.104.41.28] ([10.104.41.28]) by sglonms02.Global.ad.sabre.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 30 Jul 2008 17:15:18 +0100
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <alpine.LSU.1.00.0807301650060.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+X-OriginalArrivalTime: 30 Jul 2008 16:15:18.0208 (UTC) FILETIME=[7531EC00:01C8F25F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90814>
 
-On 30.07.08 08:49:30, J.H. wrote:
-> That is a kernel.org specific change - if the community at large wants
-> it I can dig the patch out (I likely didn't do it as it's own patch when
-> I did it, being young, naive and stupid at the time - I'm now slightly
-> older and slightly less naive now ;-)
-> 
-> But yeah - if people feel that's interesting I'm happy to rip it out
-> later today and submit it to the mailing list.
+[sorry, was intended to cc Johannes Sixt when I mailed the patch to the 
+list... not doing well with the recipient etiquette]
 
-John, I would like the patch.
+[and then Icedove decided it was going to send mail as HTML. This is so embarassing.]
 
-Yes, I have seen the commit as well and it is not the only change in
-this commit. Also, if I got it right, the repository is not taken from
-.git/cloneurl. So, with the current implementation the git url in the
-summary page may be different to cloneurl. But this is not a major
-issue.
+Johannes Schindelin wrote:
+>> diff --git a/upload-pack.c b/upload-pack.c
+>> index c911e70..086eff6 100644
+>> --- a/upload-pack.c
+>> +++ b/upload-pack.c
+>> @@ -616,6 +616,9 @@ int main(int argc, char **argv)
+>>  	int i;
+>>  	int strict = 0;
+>>  
+>> +	if (argv[0] && *argv[0])
+>> +		git_extract_argv0_path(argv[0]);
+>> +
+>>     
+>
+> This is ugly.  The called function should already do it itself.
+>   
 
-It would be great if you could provide a patch with your changes for
-gitweb.
+Fair enough.
 
-Thanks,
+> Further, why not go the full nine yards and avoid the calculation 
+> altogether, until it is necessary?  Then the change to add 
+> lookup_program_in_path() would be nice and non-intrusive.
 
--Robert
+git.c will always need to do the calculation, to determine which command 
+it is being invoked as, so is there much value in delaying until necessary?
 
--- 
-Advanced Micro Devices, Inc.
-Operating System Research Center
-email: robert.richter@amd.com
+If the code in git.c is left alone, then it needs to be eventually 
+duplicated in upload-pack.c and receive-pack.c, or in exec_cmd.c. [I 
+botched when sending out the patch originally and only sent it to 
+Johannes and not the list, so it's my fault that the history of how this 
+has evolved is unclear I'm afraid]
+
+> IOW why not leave the function name as-is, and just enhance system_path() 
+> to have a static variable "initialized", which does the whole calculation? 
+> I.e. move the calculation from git.c to exec_cmd.c, but at the same time 
+> do it only when needed.
+
+Hmm, system_path and setup_path both use argv0_path; git.c would need to 
+call an additional function in exec_cmd.c to get the "leafname" result 
+of the calculation, though.
+
+> And your change to set argv0_path from receive-pack and upload-pack would 
+> be a second patch.
+
+OK.
+
+> And then the patch to add support to "glean" (did not know that word) the 
+> path from the PATH (lookup_program_in_path()) could come as a third patch.
+
+I think that once git-upload-pack.c et al get the argv[0] path over to 
+setup_path() then there's nothing more to do; setup_path() already uses 
+argv0_path in its list of paths to try. I'm confused to the reference to 
+PATH, though: we're avoiding the PATH environment variable completely.
+
+SRH
