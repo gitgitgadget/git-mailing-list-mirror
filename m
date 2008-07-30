@@ -1,138 +1,136 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Bizarre missing changes (git bug?)
-Date: Wed, 30 Jul 2008 01:36:11 -0700 (PDT)
-Message-ID: <m3iqunu5u3.fsf@localhost.localdomain>
-References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com>
-	<200807260512.40088.zippel@linux-m68k.org>
-	<alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org>
-	<Pine.LNX.4.64.0807270049290.6791@localhost.localdomain>
-	<alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org>
-	<Pine.LNX.4.64.0807272101470.6791@localhost.localdomain>
-	<alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org>
-	<Pine.LNX.4.64.0807280141140.6791@localhost.localdomain>
-	<alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org>
-	<Pine.LNX.4.64.0807281241180.6791@localhost.localdomain>
-	<46a038f90807282015m7ce3da10h71dfee221c960332@mail.gmail.com>
-	<Pine.LNX.4.64.0807291433430.6791@localhost.localdomain>
+From: "Alexander Gavrilov" <angavrilov@gmail.com>
+Subject: Re: [PATCH v2] Support copy and rename detection in fast-export.
+Date: Wed, 30 Jul 2008 13:10:07 +0400
+Message-ID: <bb6f213e0807300210r205846b4qffa9fc71d4aa6533@mail.gmail.com>
+References: <200807211216.01694.angavrilov@gmail.com>
+	 <200807262249.18005.angavrilov@gmail.com>
+	 <20080726202103.GA15769@spearce.org>
+	 <200807270052.55370.angavrilov@gmail.com>
+	 <7v7ib4hdpu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Roman Zippel <zippel@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Wed Jul 30 10:37:25 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 30 11:11:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KO7BN-00037g-Ig
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 10:37:18 +0200
+	id 1KO7iC-0007CA-BJ
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 11:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752439AbYG3IgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 04:36:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752478AbYG3IgQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 04:36:16 -0400
-Received: from ik-out-1112.google.com ([66.249.90.177]:2286 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752395AbYG3IgP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 04:36:15 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so315532ika.5
-        for <git@vger.kernel.org>; Wed, 30 Jul 2008 01:36:14 -0700 (PDT)
+	id S1752773AbYG3JKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 05:10:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752755AbYG3JKK
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 05:10:10 -0400
+Received: from mu-out-0910.google.com ([209.85.134.185]:53433 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752753AbYG3JKJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 05:10:09 -0400
+Received: by mu-out-0910.google.com with SMTP id w8so481154mue.1
+        for <git@vger.kernel.org>; Wed, 30 Jul 2008 02:10:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=lRoBj/KwWF1JRVu54KDswKgTZ7YnCc+E1Z2KkMrJssM=;
-        b=s84NLef5U3SqcRKCYceruNIhujHG2qpEGthmJMnwsxc+J5DpPFML4/7AdlNIptkYno
-         RD7WdtkNrysQtXaILQtlZiy/i3ocnRbelEPIiM5frtBcchrO+I1/xvZ89gjOQ1LkFNox
-         n+6KeygCUrzTU2PpESOQXVjUWUNd0rumtcxq0=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=nPa0xAGp+dpbNgiutn/Tb3++42Xs+JPufGe0/XsrqRE=;
+        b=UncbQrFlai4LaAsJpiG7CyiPAuolo9NdSnm6ufBqTAIPB5IIYFqMf7lqzdYmMDa8SF
+         DP6BlNdrliA9f2TQ/UkJ2WanVG2JCn4hjqZWvoXtdw6Xts0CvzQB32hkWjmH1lKJQm3M
+         rTMdZKK2uAdrA6dOfTaSJrJiNyjKLfcnrSU6g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=om9QeAUgvVGu6I1JE/oVhD/veCSf4JEul3AGT4wYzdv64NN6nR1dOBFeBS5XFiYJWU
-         2nHdaTMXMMXUAM0C11rnl2FdJgX5WFlyqJRwK2dfjYxbwTUM1J2TsneoiCR8skOdR88p
-         lRiS6PCTuRs+PiORjh0Qk5cU5cFCUMSeSU4rk=
-Received: by 10.210.51.18 with SMTP id y18mr8834737eby.160.1217406974023;
-        Wed, 30 Jul 2008 01:36:14 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.207.231])
-        by mx.google.com with ESMTPS id z40sm1588481ikz.7.2008.07.30.01.36.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 30 Jul 2008 01:36:11 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m6U8a7O1016699;
-	Wed, 30 Jul 2008 10:36:08 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m6U8a5nh016696;
-	Wed, 30 Jul 2008 10:36:05 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <Pine.LNX.4.64.0807291433430.6791@localhost.localdomain>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Hvqq3MzxlXYp3fjQIBIwxdQApc99WsZevbv84nIqtcw7yLmqc3x9k49wlqo9jA7V0Q
+         KxltAMrg9yuDftgiXPV1orZPIaRIe1sXJWB4R9UPB34FubDToJTEbys2aqZXk2pEuGtz
+         ERUxgG+NK/dx0LgcIq/KGqFuRLjgD0U4uzdIU=
+Received: by 10.103.247.5 with SMTP id z5mr3562405mur.31.1217409007475;
+        Wed, 30 Jul 2008 02:10:07 -0700 (PDT)
+Received: by 10.103.251.10 with HTTP; Wed, 30 Jul 2008 02:10:07 -0700 (PDT)
+In-Reply-To: <7v7ib4hdpu.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90759>
 
-Roman Zippel <zippel@linux-m68k.org> writes:
+On Tue, Jul 29, 2008 at 8:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Alexander Gavrilov <angavrilov@gmail.com> writes:
+>> ++
+>> +Note that these options were always accepted by git-fast-export,
+>> +but before a certain version it silently produced wrong results.
+>> +You should always check the git version before using them.
+>> +
+>
+> I do not quite follow the mention of "before a certain version", but I
+> think it is talking about the earlier "fast-export" that took any diff
+> options but did not act differently upon renamed/copied entries.  If that
+> is the case, I think we can say something like this instead:
+>
+>        Note that earlier versions of this command did not complain and
+>        produced incorrect results if you gave these options.
+>
+> because docs always talk about the current version.  My reading of Dscho's
+> original 'show_filemodify' suggests me that "wrong results" does not just
+> mean missing rename/copy information but a renamed old entity did not get
+> removed correctly, resulting in an incorrect tree in the commit, right?
+> Maybe we would want to be a bit more explicit about what kind of breakage
+> you are talking about here.
 
-> I don't quite understand what you're trying to say.
-> To avoid further confusion it maybe helps to specify a few of the terms:
-> 
-> - full history graph: produced by "git-log --full-history --parents"
-> - compact history graph: the full history graph without without any 
->   repeated merges, this is what my example script produces.
-> - full simplified history: output of "git-log --full-history"
-> - short simplified history: standard output of "git-log"
-[...]
+Yes, broken renames is what I've been thinking of when I wrote that.
 
-> Keep in mind that e.g. git-web is using the full simplified history, so 
-> what I'm offering also has the potential to improve git-web performance...
+As fast-export is mainly meant to be used by third-party conversion
+scripts, which are not bundled together with git, unsuspecting users
+might try to run them using an old git version. The main point of my
+note is that scripts should always check the version if they want to
+use these options. It probably should also specify the exact value to
+compare to, e.g:
 
-The fact that gitweb is using --full-history for a 'history' view
-is a historical reason, backwards compatibility with the view that
-was shown before gitweb used "git rev-list [flags] -- <path>", see
-commit cdd4037d
-
-    gitweb: optimize per-file history generation
-    
-    The rev-list command that is recent enough can filter commits
-    based on paths they touch, so use it instead of generating the
-    full list and limiting it by passing it with diff-tree --stdin.
-    
-    [jc: The patch originally came from Luben Tuikov but the it was
-     corrupt, but it was short enough to be applied by hand.  I
-     added the --full-history to make the output compatible with the
-     original while doing so.]
-    
-    Signed-off-by: Junio C Hamano <junkio@cox.net>
-
-Removing '--parents' was put later, to remove unnecessary merges
-from a view (there was long discussion on git mailing list about
---full-history with and without --parents), in 208b2dff
-
-    gitweb: We do longer need the --parents flag in rev-list.
-    
-    We only want to know the direct parents of a given commit object,
-    these parents are available in the --header output of rev-list.  If
-    --parents is supplied with --full-history the output includes merge
-    commits that aren't relevant.
-    
-    Signed-off-by: Robert Fitzsimons <robfitz@273k.net>
-    Signed-off-by: Junio C Hamano <junkio@cox.net>
-
-Besides gitweb currently does not generate graphical history view,
-so '--parents' are unnecessary.
-
-But if it was done from the scratch, gitweb should definitely
-use simplified history, instead of what you call "full simplified
-history", perhaps with an option to use '--full-history' (there
-is infractructure in gitweb for adding extra options).
+        Note that before git 1.6 this command did not complain and produced
+        incorrect results if you gave these options. Your scripts should always
+        check the version before using them.
 
 
-(Nitpick: it is 'gitweb', not 'git-web'.)
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+> If you see a copied or renamed entry, you emit "this old path to that old
+> path" first, and then say that same path got modified.  It appears from my
+> quick glance of fast-import that touching the same path more than once in
+> a same commit like this sequence does would work fine (it will involve two
+> calls to tree_content_set() for the same path but that is not something it
+> has to forbid, and the function doesn't).
+
+I'm sorry, but I don't quite understand what are you suggesting by
+this paragraph. Yes, fast-import understands double modification, and
+my test includes a check for this case. Of course, conversion scripts
+for dumber targets might need to do one-line lookahead to eliminate
+non-100% copies.
+
+
+>> diff --git a/t/t9301-fast-export.sh b/t/t9301-fast-export.sh
+>> index f18eec9..bb595b7 100755
+>> --- a/t/t9301-fast-export.sh
+>> +++ b/t/t9301-fast-export.sh
+>> @@ -162,4 +162,50 @@ test_expect_success 'submodule fast-export | fast-import' '
+>>
+>>  '
+>>
+>> +export GIT_AUTHOR_NAME='A U Thor'
+>> +export GIT_COMMITTER_NAME='C O Mitter'
+>> +
+>> +test_expect_success 'setup copies' '
+>> +
+>> +     git config --unset i18n.commitencoding &&
+>
+> These are somewhat unusual.  Was there any reason for these exports and
+> config?
+>
+
+t9301-fast-export.sh earlier changes these parameters to test
+automatic conversion to utf8. I reset them back before my test, in
+order to be able to test the import by comparing SHA-1 (encoding
+conversion changes it). There may be a better way to do it, though.
