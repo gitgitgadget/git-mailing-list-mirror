@@ -1,67 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] GitStats development finished (WRT GSoC)
-Date: Wed, 30 Jul 2008 00:07:10 -0700
-Message-ID: <7vabfz97fl.fsf@gitster.siamese.dyndns.org>
-References: <bd6139dc0807291511v2d70d549r3682291eb10a745d@mail.gmail.com>
+Subject: [PATCH] Fix merge name generation in "merge in C"
+Date: Wed, 30 Jul 2008 01:12:19 -0700
+Message-ID: <7vabfz7puk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailinglist" <git@vger.kernel.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"David Symonds" <dsymonds@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Sam Vilain" <sam@vilain.net>
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Wed Jul 30 09:08:46 2008
+Cc: Miklos Vajna <vmiklos@frugalware.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 30 10:13:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KO5nh-0002Wd-1m
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 09:08:45 +0200
+	id 1KO6oM-0004ea-Dx
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 10:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757521AbYG3HH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 03:07:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757507AbYG3HHZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 03:07:25 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51141 "EHLO
+	id S1752430AbYG3IM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 04:12:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752312AbYG3IM2
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 04:12:28 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38718 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757499AbYG3HHX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 03:07:23 -0400
+	with ESMTP id S1752152AbYG3IM1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 04:12:27 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 71C4A4CEBA;
-	Wed, 30 Jul 2008 03:07:21 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C36843A52D;
+	Wed, 30 Jul 2008 04:12:24 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 768174CEB9; Wed, 30 Jul 2008 03:07:12 -0400 (EDT)
-In-Reply-To: <bd6139dc0807291511v2d70d549r3682291eb10a745d@mail.gmail.com>
- (Sverre Rabbelier's message of "Wed, 30 Jul 2008 00:11:48 +0200")
+ ESMTPSA id 106EC3A529; Wed, 30 Jul 2008 04:12:21 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2761EFEE-5E06-11DD-A6EC-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 3DF3A1F4-5E0F-11DD-BA81-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90756>
 
-"Sverre Rabbelier" <alturin@gmail.com> writes:
+When merging an early part of a branch, e.g. "git merge xyzzy~20", we were
+supposed to say "branch 'xyzzy' (early part)", but it incorrectly said
+"branch 'refs/heads/xy' (early part)" instead.
 
-> ...  As a
-> result it is quite clear what GitStats will look like at the end of my
-> GSoC. I am going to continue working on it though, I am especially
-> interested in getting the '--follow' part of 'git log' working in such
-> a way that it can be incorporated into GitStats. As such, here is a
-> summary of what GitStat is at the moment. From the documentation:
+The logic was supposed to first strip away "~20" part to make sure that
+what follows "~" is a non-zero posint, prefix it with "refs/heads/" and
+ask resolve_ref() if it is a ref.  If it is, then we know xyzzy was a
+branch, and we can give the correct message.
 
-Wonderful.
+However, there were a few bugs.  First of all, the logic to build this
+"true branch refname" did not count the characters correctly.  At this
+point of the code, "len" is the number of trailing, non-name part of the
+given extended SHA-1 expression given by the user, i.e. number of bytes in
+"~20" in the above example.
 
-> syntax: stats.py bug <options>
->
-> The purpose of the bug module is to gather statistics on
-> bugfixes within the content, and to aggregate this
-> information to provide with a report of the last N commits.
+In addition, the message forgot to skip "refs/heads/" it prefixed from the
+output.
 
-Can't wait running this, especially in conjunction with the "author" stuff
-;-)
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * It is a bit surprising that after beating merge-in-C to death, we
+   still find a minor breakage like this.
+
+ builtin-merge.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-merge.c b/builtin-merge.c
+index e78fa18..dde0c7e 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -396,12 +396,12 @@ static void merge_name(const char *remote, struct strbuf *msg)
+ 		struct strbuf truname = STRBUF_INIT;
+ 		strbuf_addstr(&truname, "refs/heads/");
+ 		strbuf_addstr(&truname, remote);
+-		strbuf_setlen(&truname, len+11);
++		strbuf_setlen(&truname, truname.len - len);
+ 		if (resolve_ref(truname.buf, buf_sha, 0, 0)) {
+ 			strbuf_addf(msg,
+ 				    "%s\t\tbranch '%s'%s of .\n",
+ 				    sha1_to_hex(remote_head->sha1),
+-				    truname.buf,
++				    truname.buf + 11,
+ 				    (early ? " (early part)" : ""));
+ 			return;
+ 		}
