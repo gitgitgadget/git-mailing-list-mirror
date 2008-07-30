@@ -1,67 +1,58 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH] format-patch: Produce better output with --inline or --attach
-Date: Wed, 30 Jul 2008 11:37:27 -0700
-Message-ID: <17D98C67-D876-455A-AA81-2118A8554A50@sb.org>
-References: <20080730052401.GC4034@sigill.intra.peff.net> <1217396973-82246-1-git-send-email-kevin@sb.org> <alpine.LSU.1.00.0807301624410.3486@wbgn129.biozentrum.uni-wuerzburg.de> <B805BDA1-6C22-4488-B5F5-6DA8CC729C06@sb.org>
-Mime-Version: 1.0 (Apple Message framework v928.1)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, peff@peff.net,
-	Junio C Hamano <gitster@pobox.com>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Wed Jul 30 20:39:27 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] format-patch: Produce better output with --inline or
+ --attach
+Date: Wed, 30 Jul 2008 11:52:59 -0700
+Message-ID: <7vmyjz5hmc.fsf@gitster.siamese.dyndns.org>
+References: <20080730052401.GC4034@sigill.intra.peff.net>
+ <1217396973-82246-1-git-send-email-kevin@sb.org>
+ <alpine.LSU.1.00.0807301624410.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Kevin Ballard <kevin@sb.org>, git@vger.kernel.org, peff@peff.net
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 30 20:54:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOGZB-0001dA-Jx
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 20:38:30 +0200
+	id 1KOGoO-0000Wu-Hp
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 20:54:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752482AbYG3Sh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 14:37:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751688AbYG3Sh3
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 14:37:29 -0400
-Received: from mail.rapleaf.com ([208.96.16.213]:39193 "EHLO mail.rapleaf.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752060AbYG3Sh2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 14:37:28 -0400
-Received: from mail.rapleaf.com (localhost.localdomain [127.0.0.1])
-	by mail.rapleaf.com (Postfix) with ESMTP id 323DD1250313;
-	Wed, 30 Jul 2008 11:37:28 -0700 (PDT)
-Received: from [10.100.18.156] (unknown [10.100.18.156])
-	by mail.rapleaf.com (Postfix) with ESMTP id 11FF012500B6;
-	Wed, 30 Jul 2008 11:37:28 -0700 (PDT)
-In-Reply-To: <B805BDA1-6C22-4488-B5F5-6DA8CC729C06@sb.org>
-X-Mailer: Apple Mail (2.928.1)
+	id S1759489AbYG3SxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 14:53:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759182AbYG3SxK
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 14:53:10 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53967 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757697AbYG3SxJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 14:53:09 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 79C1343BC2;
+	Wed, 30 Jul 2008 14:53:07 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 07DF543BC1; Wed, 30 Jul 2008 14:53:01 -0400 (EDT)
+In-Reply-To: <alpine.LSU.1.00.0807301624410.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+ (Johannes Schindelin's message of "Wed, 30 Jul 2008 16:29:39 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: BF74B4DA-5E68-11DD-90BA-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90831>
 
-On Jul 30, 2008, at 11:30 AM, Kevin Ballard wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> Hi,
->>
->> On Tue, 29 Jul 2008, Kevin Ballard wrote:
->>
->>> MIME defines the encapsulation boundary as including the preceding  
->>> CRLF (or in
->>
->> This line will still be too long in git log's output, as well as in  
->> git
->> shortlog's output.  I thought we had a suggestion to use at most 76
->> characters per line in SubmittingPatches, but apparently we don't.
+>> The second change is to always write the line termination character 
+>> (default: newline) even when using --inline or --attach. This is simply 
+>> to improve the aesthetics of the resulting message. When using --inline 
+>> an email client should render the resulting message identically to the 
+>> non-inline version. And when using --attach this adds a blank line 
+>> preceding the attachment in the email, which is visually attractive.
 >
-> Good point. I'll send another re-wrapped patch.
+> It appears that your patch has one uncontroversial and one controversial 
+> part, then.
 
-Nevermind, looks like the previous one was already applied.
-
--Kevin Ballard
-
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+Could you elaborate what's controversial about this?
