@@ -1,56 +1,58 @@
-From: Lars Noschinski <lars-2008-1@usenet.noschinski.de>
-Subject: Re: Feature suggestion: git-hist
-Date: Wed, 30 Jul 2008 15:33:34 +0200
-Message-ID: <20080730133334.GB31192@lars.home.noschinski.de>
-References: <20080730133859.368bbd92@pc09.procura.nl>
+From: Fredrik Skolmli <fredrik@frsk.net>
+Subject: Re: Gitweb: Provide Git links in project list?
+Date: Wed, 30 Jul 2008 15:02:57 +0200
+Message-ID: <20080730130257.GB28566@frsk.net>
+References: <20080730125743.GY15356@erda.amd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Wed Jul 30 15:41:28 2008
+To: Robert Richter <robert.richter@amd.com>
+X-From: git-owner@vger.kernel.org Wed Jul 30 15:43:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOBvb-00075B-9q
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 15:41:19 +0200
+	id 1KOBxm-000881-PM
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 15:43:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755014AbYG3NkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 09:40:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755024AbYG3NkS
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 09:40:18 -0400
-Received: from smtprelay11.ispgateway.de ([80.67.29.28]:41417 "EHLO
-	smtprelay11.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753771AbYG3NkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 09:40:17 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Jul 2008 09:40:17 EDT
-Received: from [87.78.68.8] (helo=vertikal.home.noschinski.de)
-	by smtprelay11.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <lars-2008-1@usenet.noschinski.de>)
-	id 1KOBo7-00022Z-K6; Wed, 30 Jul 2008 15:33:35 +0200
-Received: from lars by vertikal.home.noschinski.de with local (Exim 4.69)
-	(envelope-from <lars-2008-1@usenet.noschinski.de>)
-	id 1KOBo6-0000DK-Il; Wed, 30 Jul 2008 15:33:34 +0200
+	id S1753971AbYG3Nme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 09:42:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753308AbYG3Nme
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 09:42:34 -0400
+Received: from cassarossa.samfundet.no ([129.241.93.19]:44240 "EHLO
+	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751171AbYG3Nme (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 09:42:34 -0400
+Received: from asterix.samfundet.no
+	([2001:700:300:1800::f] helo=asterix.frsk.net ident=Debian-exim)
+	by cassarossa.samfundet.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <fredrik@frsk.net>)
+	id 1KOBKU-0001U2-8U; Wed, 30 Jul 2008 15:02:58 +0200
+Received: from fredrik by asterix.frsk.net with local (Exim 4.63)
+	(envelope-from <fredrik@frsk.net>)
+	id 1KOBKT-0003R7-UC; Wed, 30 Jul 2008 15:02:57 +0200
 Content-Disposition: inline
-In-Reply-To: <20080730133859.368bbd92@pc09.procura.nl>
-User-Agent: mutt-ng/devel-r804 (Linux)
-X-Df-Sender: 336680
+In-Reply-To: <20080730125743.GY15356@erda.amd.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90785>
 
-* H.Merijn Brand <h.m.brand@xs4all.nl> [08-07-30 13:38]:
+On Wed, Jul 30, 2008 at 02:57:43PM +0200, Robert Richter wrote:
 
->	I can ask them what version they have, and I can then check if
->	the complaint was already addressed in an update that was
->	already released. In SCCS this was easy: they tell me the output
->	of the what command, I check if the bug was fixed in a newer
->	version and the answer is present. No such luck in git, as the
->	stamps are (non-sequitive) SHA id's. As we moved to git, we now
->	have to update those id's by hand, as the customers are used to
->	it. (At least we can now use readable date formats)
+> The Gitweb on git.kernel.org povides links to the Git repository for
+> each project (git <git://...>). However, I did not find this feature
+> in the current implementation of git_project_list_body(). Does
+> somebody know if there is a patch available for this and if this could
+> be added to gitweb?
 
-Hm, what about "git-describe --contains $SHA_OF_BUGFIX"?
+Is putting the address in .git/cloneurl giving the behaviour you're looking for?
+
+- F
+
+-- 
+Regards,
+Fredrik Skolmli
