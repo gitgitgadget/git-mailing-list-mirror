@@ -1,120 +1,115 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: [PATCH v2] Documentation: Remove mentions of git-svnimport.
-Date: Tue, 29 Jul 2008 21:16:01 -0400
-Message-ID: <20080730011601.GA944@Hermes>
+From: Roman Zippel <zippel@linux-m68k.org>
+Subject: Re: Bizarre missing changes (git bug?)
+Date: Wed, 30 Jul 2008 03:50:01 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0807300315280.6791@localhost.localdomain>
+References: <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807280141140.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807281241180.6791@localhost.localdomain>
+ <20080729053108.GH26997@sigill.intra.peff.net>
+ <Pine.LNX.4.64.0807291339580.6791@localhost.localdomain>
+ <20080729125247.GC12069@sigill.intra.peff.net>
+ <alpine.LFD.1.10.0807291006070.3334@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jurko =?utf-8?Q?Gospodneti=C4=87?= <jurko.gospodnetic@docte.hr>
-To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Wed Jul 30 03:17:34 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Tim Harper <timcharper@gmail.com>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jul 30 03:51:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KO0JZ-0005Ws-1i
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 03:17:17 +0200
+	id 1KO0r3-0005DA-QP
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 03:51:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754127AbYG3BQK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jul 2008 21:16:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754174AbYG3BQI
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 21:16:08 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:50869 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753862AbYG3BQH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2008 21:16:07 -0400
-Received: from localhost.localdomain (cpe-69-205-127-75.rochester.res.rr.com [69.205.127.75])
-	by silverinsanity.com (Postfix) with ESMTP id DC7461FFC02E;
-	Wed, 30 Jul 2008 01:15:54 +0000 (UTC)
-Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1752173AbYG3Bux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2008 21:50:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751860AbYG3Bux
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jul 2008 21:50:53 -0400
+Received: from smtp-vbr4.xs4all.nl ([194.109.24.24]:2183 "EHLO
+	smtp-vbr4.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751792AbYG3Buw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2008 21:50:52 -0400
+Received: from squid.home (linux-m68k.xs4all.nl [82.95.193.92])
+	(authenticated bits=0)
+	by smtp-vbr4.xs4all.nl (8.13.8/8.13.8) with ESMTP id m6U1o1bA044558
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 30 Jul 2008 03:50:02 +0200 (CEST)
+	(envelope-from zippel@linux-m68k.org)
+X-X-Sender: roman@localhost.localdomain
+In-Reply-To: <alpine.LFD.1.10.0807291006070.3334@nehalem.linux-foundation.org>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90724>
 
-git-svnimport is no longer supported, so don't mention it in the
-documentation.  This also updates the description, removing the
-historical discussion, since it mostly dealt with how it differed from
-svnimport.  The new description gives some starting points into the
-rest of the documentation.
+Hi,
 
-Noticed by Jurko Gospodneti=C4=87 <jurko.gospodnetic@docte.hr>
+On Tue, 29 Jul 2008, Linus Torvalds wrote:
 
-Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
----
+> Now, do these three things
+> 
+> 	gitk
+> 	gitk file
+> 	gitk --full-history file
+> 
+> and compare them. They all show _different_ histories.
+> 
+> Which one is "correct"? They all are. It just depends on what you want to 
+> see.
+> 
+> The "gitk file" history is the simplest one BY FAR, because it has very 
+> aggressively simplified history to the point where it tried to find the 
+> _simplest_ history that explains the current contents of 'file'[*]
 
- Replaces the remaining comparison to git-svnimport with pointers
- to the rest of the documentation.
+It's "aggressively simplified" by not even bothering to look for more.
+"simplified" implies there is something more complex beforehand, but all 
+it does is simple scan through the history as fast possible without 
+bothering looking left or right.
+"simplified" implies to me it's something intentional, but this is more of 
+an accidental optimization which happens to work in most situations and in 
+the special cases it just picks a random change and hopes for the best.
 
- Documentation/git-svn.txt |   26 ++++++++++++--------------
- 1 files changed, 12 insertions(+), 14 deletions(-)
+"git-log --full-history file" at least produces the full change history, 
+but it has an performance impact and it doesn't produce a complete graph 
+usable for graphical front ends.
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index e7c0f1c..f230125 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -12,18 +12,18 @@ SYNOPSIS
- DESCRIPTION
- -----------
- 'git-svn' is a simple conduit for changesets between Subversion and gi=
-t.
--It is not to be confused with linkgit:git-svnimport[1], which is
--read-only.
-+It provides a bidirectional flow of changes between a Subversion and a=
- git
-+respository.
-=20
--'git-svn' was originally designed for an individual developer who want=
-s a
--bidirectional flow of changesets between a single branch in Subversion
--and an arbitrary number of branches in git.  Since its inception,
--'git-svn' has gained the ability to track multiple branches in a manne=
-r
--similar to 'git-svnimport'.
-+'git-svn' can track a single Subversion branch simply by using a
-+URL to the branch, follow branches laid out in the Subversion recommen=
-ded
-+method (trunk, branches, tags directories) with the --stdlayout option=
-, or
-+follow branches in any layout with the -T/-t/-b options (see options t=
-o
-+'init' below, and also the 'clone' command).
-=20
--'git-svn' is especially useful when it comes to tracking repositories
--not organized in the way Subversion developers recommend (trunk,
--branches, tags directories).
-+Once tracking a Subversion branch (with any of the above methods), the=
- git
-+repository can be updated from Subversion by the 'fetch' command and
-+Subversion updated from git by the 'dcommit' command.
-=20
- COMMANDS
- --------
-@@ -218,8 +218,7 @@ Any other arguments are passed directly to 'git-log=
-'
-=20
- 'commit-diff'::
- 	Commits the diff of two tree-ish arguments from the
--	command-line.  This command is intended for interoperability with
--	'git-svnimport' and does not rely on being inside an `git-svn
-+	command-line.  This command does not rely on being inside an `git-svn
- 	init`-ed repository.  This command takes three arguments, (a) the
- 	original tree to diff against, (b) the new tree result, (c) the
- 	URL of the target Subversion repository.  The final argument
-@@ -317,8 +316,7 @@ config key: svn.findcopiesharder
- -A<filename>::
- --authors-file=3D<filename>::
-=20
--Syntax is compatible with the files used by 'git-svnimport' and
--'git-cvsimport':
-+Syntax is compatible with the file used by 'git-cvsimport':
-=20
- ----------------------------------------------------------------------=
---
- 	loginname =3D Joe User <user@example.com>
---=20
-1.6.0.rc1.154.ge3fc
+> >From a practical standpoint, and from having used this a long time, I'd 
+> argue that the simple history is the one that you want 99.9% of all time. 
+> But not _always_. Sometimes, the things that got simplified away actually 
+> matter. It's rare, but it happens.
+> 
+> For example, maybe you had a bug-fix that you _know_ you did, and it it 
+> doesn't show up in the simplified history. That really pisses you off, and 
+> it apparently really pisses Roman off that it can happen. But the fact is, 
+> that still doesn't mean that the simple history is "wrong" or even 
+> "incomplete".
+
+I gave more general examples. Tracking upstream source can produce this 
+problem frequently. Another example are stable/unstable branches where the 
+stable branch is occasionally merged into the unstable branch can produce 
+this problem.
+
+> No, it's actually meaningful data in itself. If the bug-fix doesn't show 
+> in the simplified history, then that simply means that the bug-fix was not 
+> on a branch that could _possibly_ have mattered for the current contents. 
+> 
+> So once you are _aware_ of history simplification and are mentally able to 
+> accept it, the fact that history got simplified is actually just another 
+> tool.
+
+This is your _subjective_ interpretion of this problem, because it's not a 
+problem for you, nobody else can possibly have this problem (or they just 
+crazy).
+Even if I know about this limitation it still doesn't solve the problem, 
+that _none_ of the graphical interfaces can show me a useful history graph 
+of these situations.
+
+bye, Roman
