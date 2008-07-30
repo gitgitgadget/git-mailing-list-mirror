@@ -1,168 +1,116 @@
-From: Todd Zullinger <tmz@pobox.com>
-Subject: [PATCH] Replace uses of "git-var" with "git var"
-Date: Wed, 30 Jul 2008 13:48:33 -0400
-Message-ID: <20080730174833.GZ5655@inocybe.teonanacatl.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com
+From: Anders Melchiorsen <mail@cup.kalibalik.dk>
+Subject: [PATCH v3] Advertise the ability to abort a commit
+Date: Wed, 30 Jul 2008 19:53:11 +0200
+Message-ID: <1217440391-13259-1-git-send-email-mail@cup.kalibalik.dk>
+References: <20080730051059.GA4497@sigill.intra.peff.net>
+Cc: gitster@pobox.com, peff@peff.net,
+	Anders Melchiorsen <mail@cup.kalibalik.dk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 30 19:49:44 2008
+X-From: git-owner@vger.kernel.org Wed Jul 30 19:54:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOFnz-0005VK-Im
-	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 19:49:44 +0200
+	id 1KOFsQ-0007p9-0j
+	for gcvg-git-2@gmane.org; Wed, 30 Jul 2008 19:54:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753410AbYG3Rsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 13:48:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753794AbYG3Rsk
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 13:48:40 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35227 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753410AbYG3Rsi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 13:48:38 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 976643C08B;
-	Wed, 30 Jul 2008 13:48:36 -0400 (EDT)
-Received: from inocybe.teonanacatl.org (c-69-248-23-23.hsd1.pa.comcast.net
- [69.248.23.23]) (using TLSv1 with cipher AES128-SHA (128/128 bits)) (No
- client certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix)
- with ESMTPSA id 11E343C089; Wed, 30 Jul 2008 13:48:34 -0400 (EDT)
-Mail-Followup-To: git@vger.kernel.org, gitster@pobox.com
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Pobox-Relay-ID: BC5C3AC4-5E5F-11DD-BE1D-CE28B26B55AE-09356542!a-sasl-fastnet.pobox.com
+	id S1753711AbYG3RxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 13:53:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753405AbYG3RxQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 13:53:16 -0400
+Received: from mail.hotelhot.dk ([77.75.163.100]:38466 "EHLO mail.hotelhot.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753434AbYG3RxP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 13:53:15 -0400
+Received: from mail.hotelhot.dk (localhost [127.0.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 3DE0014062;
+	Wed, 30 Jul 2008 19:53:10 +0200 (CEST)
+Received: from localhost.localdomain (router.kalibalik.dk [192.168.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 1C3EC1405A;
+	Wed, 30 Jul 2008 19:53:10 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.4
+In-Reply-To: <20080730051059.GA4497@sigill.intra.peff.net>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90823>
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
+An empty commit message is now treated as a normal situation, not an error.
+
+Signed-off-by: Anders Melchiorsen <mail@cup.kalibalik.dk>
 ---
 
-I noticed while reading the git send-email documentation that it mentioned
-git-var -l.  I have hopefully fixed up all the places where git-var is used and
-not broken anything.
+So, I decided that I find it wrong to promote functionality
+that results in an error. The error is now changed into a
+normal exit (with status code 1.)
 
- Documentation/git-send-email.txt |    2 +-
- contrib/examples/git-commit.sh   |    6 +++---
- contrib/examples/git-tag.sh      |    2 +-
- git-am.sh                        |    2 +-
- ident.c                          |    2 +-
- perl/Git.pm                      |    2 +-
- var.c                            |    2 +-
- 7 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index afbb294..e2437f3 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -56,7 +56,7 @@ The --cc option must be repeated for each user you want on the cc list.
+ builtin-commit.c  |    4 +++-
+ t/t7502-commit.sh |    7 ++++---
+ 2 files changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 9a11ca0..bc59718 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -555,6 +555,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
+ 		fprintf(fp,
+ 			"\n"
+ 			"# Please enter the commit message for your changes.\n"
++			"# To abort the commit, use an empty commit message.\n"
+ 			"# (Comment lines starting with '#' will ");
+ 		if (cleanup_mode == CLEANUP_ALL)
+ 			fprintf(fp, "not be included)\n");
+@@ -1003,7 +1004,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		stripspace(&sb, cleanup_mode == CLEANUP_ALL);
+ 	if (sb.len < header_len || message_is_empty(&sb, header_len)) {
+ 		rollback_index_files();
+-		die("no commit message?  aborting commit.");
++		fprintf(stderr, "Aborting commit due to empty commit message.\n");
++		exit(1);
+ 	}
+ 	strbuf_addch(&sb, '\0');
+ 	if (is_encoding_utf8(git_commit_encoding) && !is_utf8(sb.buf))
+diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+index 4f2682e..f111263 100755
+--- a/t/t7502-commit.sh
++++ b/t/t7502-commit.sh
+@@ -142,6 +142,7 @@ test_expect_success 'cleanup commit messages (strip,-F)' '
+ echo "sample
  
- --from::
- 	Specify the sender of the emails.  This will default to
--	the value GIT_COMMITTER_IDENT, as returned by "git-var -l".
-+	the value GIT_COMMITTER_IDENT, as returned by "git var -l".
- 	The user will still be prompted to confirm this entry.
+ # Please enter the commit message for your changes.
++# To abort the commit, use an empty commit message.
+ # (Comment lines starting with '#' will not be included)" >expect
  
- --in-reply-to::
-diff --git a/contrib/examples/git-commit.sh b/contrib/examples/git-commit.sh
-index 2c4a406..5c72f65 100755
---- a/contrib/examples/git-commit.sh
-+++ b/contrib/examples/git-commit.sh
-@@ -443,7 +443,7 @@ fi | git stripspace >"$GIT_DIR"/COMMIT_EDITMSG
+ test_expect_success 'cleanup commit messages (strip,-F,-e)' '
+@@ -149,7 +150,7 @@ test_expect_success 'cleanup commit messages (strip,-F,-e)' '
+ 	echo >>negative &&
+ 	{ echo;echo sample;echo; } >text &&
+ 	git commit -e -F text -a &&
+-	head -n 4 .git/COMMIT_EDITMSG >actual &&
++	head -n 5 .git/COMMIT_EDITMSG >actual &&
+ 	test_cmp expect actual
  
- case "$signoff" in
- t)
--	sign=$(git-var GIT_COMMITTER_IDENT | sed -e '
-+	sign=$(git var GIT_COMMITTER_IDENT | sed -e '
- 		s/>.*/>/
- 		s/^/Signed-off-by: /
- 		')
-@@ -535,8 +535,8 @@ esac
+ '
+@@ -162,7 +163,7 @@ test_expect_success 'author different from committer' '
  
- case "$no_edit" in
- '')
--	git-var GIT_AUTHOR_IDENT > /dev/null  || die
--	git-var GIT_COMMITTER_IDENT > /dev/null  || die
-+	git var GIT_AUTHOR_IDENT > /dev/null  || die
-+	git var GIT_COMMITTER_IDENT > /dev/null  || die
- 	git_editor "$GIT_DIR/COMMIT_EDITMSG"
- 	;;
- esac
-diff --git a/contrib/examples/git-tag.sh b/contrib/examples/git-tag.sh
-index e9f3a22..2c15bc9 100755
---- a/contrib/examples/git-tag.sh
-+++ b/contrib/examples/git-tag.sh
-@@ -164,7 +164,7 @@ git check-ref-format "tags/$name" ||
+ 	echo >>negative &&
+ 	git commit -e -m "sample"
+-	head -n 7 .git/COMMIT_EDITMSG >actual &&
++	head -n 8 .git/COMMIT_EDITMSG >actual &&
+ 	test_cmp expect actual
+ '
  
- object=$(git rev-parse --verify --default HEAD "$@") || exit 1
- type=$(git cat-file -t $object) || exit 1
--tagger=$(git-var GIT_COMMITTER_IDENT) || exit 1
-+tagger=$(git var GIT_COMMITTER_IDENT) || exit 1
- 
- test -n "$username" ||
- 	username=$(git config user.signingkey) ||
-diff --git a/git-am.sh b/git-am.sh
-index 6aa8192..8f91a97 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -291,7 +291,7 @@ fi
- ws=`cat "$dotest/whitespace"`
- if test "$(cat "$dotest/sign")" = t
- then
--	SIGNOFF=`git-var GIT_COMMITTER_IDENT | sed -e '
-+	SIGNOFF=`git var GIT_COMMITTER_IDENT | sed -e '
- 			s/>.*/>/
- 			s/^/Signed-off-by: /'
- 		`
-diff --git a/ident.c b/ident.c
-index b35504a..09cf0c9 100644
---- a/ident.c
-+++ b/ident.c
-@@ -204,7 +204,7 @@ const char *fmt_ident(const char *name, const char *email,
- 		if ((warn_on_no_name || error_on_no_name) &&
- 		    name == git_default_name && env_hint) {
- 			fprintf(stderr, env_hint, au_env, co_env);
--			env_hint = NULL; /* warn only once, for "git-var -l" */
-+			env_hint = NULL; /* warn only once, for "git var -l" */
- 		}
- 		if (error_on_no_name)
- 			die("empty ident %s <%s> not allowed", name, email);
-diff --git a/perl/Git.pm b/perl/Git.pm
-index d99e778..087d3d0 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -730,7 +730,7 @@ This suite of functions retrieves and parses ident information, as stored
- in the commit and tag objects or produced by C<var GIT_type_IDENT> (thus
- C<TYPE> can be either I<author> or I<committer>; case is insignificant).
- 
--The C<ident> method retrieves the ident information from C<git-var>
-+The C<ident> method retrieves the ident information from C<git var>
- and either returns it as a scalar string or as an array with the fields parsed.
- Alternatively, it can take a prepared ident string (e.g. from the commit
- object) and just parse it.
-diff --git a/var.c b/var.c
-index 724ba87..f1eb314 100644
---- a/var.c
-+++ b/var.c
-@@ -5,7 +5,7 @@
-  */
- #include "cache.h"
- 
--static const char var_usage[] = "git-var [-l | <variable>]";
-+static const char var_usage[] = "git var [-l | <variable>]";
- 
- struct git_var {
- 	const char *name;
+@@ -181,7 +182,7 @@ test_expect_success 'committer is automatic' '
+ 		# must fail because there is no change
+ 		test_must_fail git commit -e -m "sample"
+ 	) &&
+-	head -n 8 .git/COMMIT_EDITMSG |	\
++	head -n 9 .git/COMMIT_EDITMSG |	\
+ 	sed "s/^# Committer: .*/# Committer:/" >actual &&
+ 	test_cmp expect actual
+ '
 -- 
-1.6.0.rc1
-
-
--- 
-Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-I am not young enough to know everything.
-    -- Oscar Wilde (1854-1900)
+1.5.6.4
