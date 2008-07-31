@@ -1,80 +1,89 @@
-From: Sean Estabrooks <seanlkml@sympatico.ca>
-Subject: Re: Monotone workflow compared to Git workflow ( was RE: Git vs
- Monotone)
-Date: Thu, 31 Jul 2008 16:57:24 -0400
-Message-ID: <BLU0-SMTP273E4683B41DB7E44122F0AE7C0@phx.gbl>
-References: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com>
-	<alpine.LFD.1.10.0807311211260.3277@nehalem.linux-foundation.org>
-	<63BEA5E623E09F4D92233FB12A9F79430238A5EE@emailmn.mqsoftware.com>
+From: "Jan =?UTF-8?B?S3LDvGdlcg==?=" <jk@jk.gs>
+Subject: Re: markdown 2 man, was Re: Git Community Book
+Date: Thu, 31 Jul 2008 22:57:03 +0200
+Message-ID: <20080731225703.7be6f76e@neuron>
+References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
+	<20080729170955.GK32184@machine.or.cz>
+	<d411cc4a0807291130p228f77d5r1f390090ec29aef4@mail.gmail.com>
+	<7vwsj4edm1.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0807291957410.1779@reaper.quantumfyre.co.uk>
+	<alpine.LSU.1.00.0807301514280.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+	<7vy73j418t.fsf@gitster.siamese.dyndns.org>
+	<4891A0D0.6060503@lyx.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	<sverre@rabbelier.nl>, "Git Mailinglist" <git@vger.kernel.org>
-To: "Craig L. Ching" <cching@mqsoftware.com>
-X-From: git-owner@vger.kernel.org Thu Jul 31 23:00:08 2008
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Scott Chacon <schacon@gmail.com>, Petr Baudis <pasky@suse.cz>
+To: Abdelrazak Younes <younes@lyx.org>
+X-From: git-owner@vger.kernel.org Thu Jul 31 23:03:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOfFe-0001Dz-RJ
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 22:59:59 +0200
+	id 1KOfIu-0002V2-If
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 23:03:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753686AbYGaU6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 16:58:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753573AbYGaU6v
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 16:58:51 -0400
-Received: from blu0-omc3-s36.blu0.hotmail.com ([65.55.116.111]:22913 "EHLO
-	blu0-omc3-s36.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753513AbYGaU6u (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Jul 2008 16:58:50 -0400
-Received: from BLU0-SMTP27 ([65.55.116.72]) by blu0-omc3-s36.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 31 Jul 2008 13:58:49 -0700
-X-Originating-IP: [74.14.67.222]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([74.14.67.222]) by BLU0-SMTP27.blu0.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Thu, 31 Jul 2008 13:58:48 -0700
-Received: from bud.attic.local ([10.10.10.20])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1KOgA8-00079h-H2; Thu, 31 Jul 2008 17:58:20 -0400
-In-Reply-To: <63BEA5E623E09F4D92233FB12A9F79430238A5EE@emailmn.mqsoftware.com>
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; x86_64-pc-linux-gnu)
-X-OriginalArrivalTime: 31 Jul 2008 20:58:49.0024 (UTC) FILETIME=[3AD83400:01C8F350]
+	id S1753680AbYGaVCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 17:02:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753380AbYGaVCT
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 17:02:19 -0400
+Received: from zoidberg.org ([213.133.99.5]:43542 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752087AbYGaVCS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 17:02:18 -0400
+X-Greylist: delayed 310 seconds by postgrey-1.27 at vger.kernel.org; Thu, 31 Jul 2008 17:02:18 EDT
+Received: from neuron (xdsl-87-78-233-158.netcologne.de [::ffff:87.78.233.158])
+  (IDENT: unknown, AUTH: LOGIN jast, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
+  by cthulhu.zoidberg.org with esmtp; Thu, 31 Jul 2008 22:57:04 +0200
+  id 00185BEC.48922721.00000B98
+In-Reply-To: <4891A0D0.6060503@lyx.org>
+X-Mailer: Claws Mail 3.3.1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90990>
 
-On Thu, 31 Jul 2008 14:48:21 -0500
-"Craig L. Ching" <cching@mqsoftware.com> wrote:
+Hi,
 
-> I have a question about this.  I asked this awhile back and didn't
-> really get any satisfactory answers except to use git-new-workdir, which
-> makes git behave a lot like monotone.  In our workflow, we do create
-> branches for nearly everything, but we do find that we have a need to
-> keep the build artifacts of those branches isolated from each other
-> because rebuilding is expensive.  IOW, we have this sort of workflow:
+> Disclaimer: I am involved in LyX development, so anything I said will
+> be biased :-)
 
-Is there a problem using git-new-workdir?  It sounds like it does
-exactly what you want.
+I think that's fine since I consider LaTeX (and therefore LyX as the
+best graphical editor for it that I know) a choice always worth
+considering when it comes to projects that have the size of a book.
 
-> We find ourselves constantly having to shift gears and work on other
-> things in the middle of whatever it is we're currently working on.  For
-> instance, in the scenario above, A might be branch that contains a
-> feature going into our next release.  B might be a bugfix and takes
-> priority over A, so you have to leave A as-is and start work on B.  When
-> I come back to work on A, I have to rebuild A to continue working, and
-> that's just too expensive for us.  So we use the monotone-like
-> new-workdir which allows us to save those build artifacts.
-> 
-> So, that said, I ask again, am I missing something?  Is there a better
-> way to do this?  How do the kernel developers do this, surely they're
-> switching branches back and forth having to build in-between?
+> Now, about my shameless plug: LyX is ideally suited for structured 
+> documentation writing :-)
 
-A decent build system will only compile the source files that actually
-changed when switching branches.  Couple that with a compiler cache
-(such as ccache) and switching between branches in the kernel or git
-project usually isn't prohibitively time consuming.
+That may well be, but it gets really complicated once you want to
+get your document into other markup-based formats while preserving all
+the important aspects of formatting. I know this because I started
+using LaTeX for a project that was supposed to be available in HTML
+form along with, say, PDF. I've found that the only converter that
+comes close to being useful for somewhat more ambitious sources
+(including, perhaps, custom environments and stuff like that) without
+spending a ridiculous amount of time trying to understand it is hevea.
+Of course, hevea only translates to HTML, so, for example, generating
+manpages or plain text is an entirely different matter of considerable
+difficulty.
 
-Sean
+In addition to that, I suspect that LyX files might be difficult to
+deal with in forky Git situations. For example, what if two
+separately contributed patches need merging into a LyX source file?
+This will only work automatically if the LyX source, treated as plain
+text, has a really low chance of randomly changing in other places than
+what the patch is supposed to touch. Also, if a merge does cause a
+conflict, I imagine it would be difficult to resolve that.
+
+Finally, it's pretty much a given that Git's manpages continue to use
+AsciiDoc because there are few other things that can generate actual
+manpages. I'm not sure it would be a good idea to keep half of Git's
+documentation in one format and the rest in another. And AsciiDoc is --
+by far! -- not the worst choice. I'm tempted to say it's the best that
+I know.
+
+-Jan
