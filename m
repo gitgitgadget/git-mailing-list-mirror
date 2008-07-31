@@ -1,131 +1,74 @@
-From: "Scott Chacon" <schacon@gmail.com>
-Subject: Re: markdown 2 man, was Re: Git Community Book
-Date: Wed, 30 Jul 2008 17:13:43 -0700
-Message-ID: <d411cc4a0807301713o6b1fd2e8lde0636352f8f1c5b@mail.gmail.com>
-References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
-	 <20080729170955.GK32184@machine.or.cz>
-	 <d411cc4a0807291130p228f77d5r1f390090ec29aef4@mail.gmail.com>
-	 <7vwsj4edm1.fsf@gitster.siamese.dyndns.org>
-	 <Pine.LNX.4.64.0807291957410.1779@reaper.quantumfyre.co.uk>
-	 <alpine.LSU.1.00.0807301514280.3486@wbgn129.biozentrum.uni-wuerzburg.de>
-	 <7vy73j418t.fsf@gitster.siamese.dyndns.org>
-	 <B7697630-DF9C-4EF0-9D63-9E362CEE125B@wincent.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bizarre missing changes (git bug?)
+Date: Wed, 30 Jul 2008 17:15:23 -0700
+Message-ID: <7vabfy52p0.fsf@gitster.siamese.dyndns.org>
+References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com>
+ <200807260512.40088.zippel@linux-m68k.org>
+ <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807280141140.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807281241180.6791@localhost.localdomain>
+ <46a038f90807282015m7ce3da10h71dfee221c960332@mail.gmail.com>
+ <Pine.LNX.4.64.0807291433430.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807291716060.3334@nehalem.linux-foundation.org>
+ <alpine.LFD.1.10.0807291738280.3334@nehalem.linux-foundation.org>
+ <7vej5b3ozz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git list" <git@vger.kernel.org>
-To: "Wincent Colaiuta" <win@wincent.com>
-X-From: git-owner@vger.kernel.org Thu Jul 31 02:14:58 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Roman Zippel <zippel@linux-m68k.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 31 02:17:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOLoj-0006ch-Lm
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 02:14:54 +0200
+	id 1KOLqq-0007CD-2L
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 02:17:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756155AbYGaANr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Jul 2008 20:13:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758345AbYGaANq
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 20:13:46 -0400
-Received: from rv-out-0506.google.com ([209.85.198.232]:30662 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762854AbYGaANo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Jul 2008 20:13:44 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so285494rvb.1
-        for <git@vger.kernel.org>; Wed, 30 Jul 2008 17:13:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=O58sgTZnlFFWLy9QynOBJDFszY0kcTGQxWz44ZjajYQ=;
-        b=eoiTPI7WDuI6hsFpotroH8fOlLJMNsowa3BOwcsZb+GUDSqV0d0qBYLmgFRTM+c0Wb
-         xGOI2qju8hsWTTSgDL383nuq9rtbq0ZlsvD09B0Qc38qCcZaTtFC6vBH7ukO1NbvySRL
-         /nn2rKQfrOTPaphKIgArviF1oVaKJ1BULNf70=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=LNii6MtwiBZpqLWlrxvpDcpRwuRbC0o6nb1yhv51EjsbmOyafpSuutzD2Yx/7H0ysm
-         AIpgCeQRe3PAO/52qckk1B/l9YtZYQh06pEAMVucqPIBaqa207NTV+P/81yNmvBbHQwW
-         sgDeMVoOpiTpRGoRaut9zDmyKrK585TV3xDDM=
-Received: by 10.114.53.18 with SMTP id b18mr6058057waa.141.1217463223958;
-        Wed, 30 Jul 2008 17:13:43 -0700 (PDT)
-Received: by 10.115.22.20 with HTTP; Wed, 30 Jul 2008 17:13:43 -0700 (PDT)
-In-Reply-To: <B7697630-DF9C-4EF0-9D63-9E362CEE125B@wincent.com>
-Content-Disposition: inline
+	id S1762885AbYGaAPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 20:15:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762879AbYGaAPf
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 20:15:35 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40555 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762739AbYGaAPd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 20:15:33 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D473D438B2;
+	Wed, 30 Jul 2008 20:15:31 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6F26B438B1; Wed, 30 Jul 2008 20:15:25 -0400 (EDT)
+In-Reply-To: <7vej5b3ozz.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 30 Jul 2008 16:56:32 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C9BB1D8A-5E95-11DD-B1B0-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90884>
 
-On Wed, Jul 30, 2008 at 4:48 PM, Wincent Colaiuta <win@wincent.com> wro=
-te:
-> El 30/7/2008, a las 21:32, Junio C Hamano escribi=F3:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> The idea is to compute, for each commit in the "full history" result set,
+> the commit that should replace it in the simplified history.  This
+> replacement commit is defined as follows:
 >
->> That's one valid approach.  I or you might have taken a different av=
-enue,
->> but after all, it's his book, not mine, not yours, nor git list's bo=
-ok.
+>  * In any case, we first figure out the replacement commits of parents of
+>    the commit we are looking at.  The commit we are looking at is
+>    rewritten as if its parents are replacement commits of its original
+>    parents.
 >
-> Funnily enough, he chose to title it the "Git Community Book". Hard t=
-o match
-> Scott's enthusiasm; this is the second major initiative we've seen fr=
-om him
-> in the last few days (the other being git-scm.com itself) which to th=
-e
-> casual onlooker might look like the "official" Git homepage and
-> documentation, but in both cases development occurred behind the scen=
-es and
-> the list was only notified after the fact. Better late than never I s=
-uppose.
+>  * If the commit is marked as TREESAME (i.e. it modifies the paths we are
+>    interested in), then the replacement commit is itself.  IOW, the commit
+>    is not dropped from the final result.
 
-Not sure what else I could have done - I announced that I was starting
-a documentation project like this about a week ago on this list, then
-I started the book 3 days ago
-(http://github.com/schacon/gitscm/commits/book) and announced it here
-for initial review yesterday.  I haven't told very many people about
-it yet and I haven't linked to it from git-scm.com yet either.  It's
-been open source from the first minute on GitHub, and the link to the
-source was on the website I posted here.
-
-Same for the git-scm site - I started it on the 23rd and emailed Pasky
-about it the next day, and the day after that he began submitting
-patches to me for it and I announced it on this list.  Am I missing
-something here?  Do you think I've been working on these secretly for
-months, or something?  If there is a better communication workflow, I
-would be happy to do so.
-
-I appreciate that you notice my enthusiasm, though. :)
-
-Scott
-
-
-
->> We originally hoped (well, at least I did) that Scott's effort on hi=
-s book
->> might help us in improving the User Manual as well, but the approach=
- seems
->> to make it unlikely.  But that is nothing to hold against him --- he=
- is
->> doing his own thing in a way he feels is the best, and that's perfec=
-tly
->> fine.  We lost nothing, perhaps except for a chance to cooperate a b=
-it
->> better and to widen the community.
->
-> Even though there might not be an automated way to get changes back f=
-rom the
-> fork, if there are clear improvements made then there is at least no =
-legal
-> obstacle to incorporating them back in, the only obstacle would be ti=
-me and
-> willingness to do so manually.
->
->>
-> Cheers,
-> Wincent
->
->
+A typo here.  This comment should have said !TREESAME (the code is correct).
