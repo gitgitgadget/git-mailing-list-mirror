@@ -1,85 +1,67 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: markdown 2 man, was Re: Git Community Book
-Date: Thu, 31 Jul 2008 21:00:34 +0200
-Message-ID: <20080731190034.GP32057@genesis.frugalware.org>
-References: <d411cc4a0807291130p228f77d5r1f390090ec29aef4@mail.gmail.com> <7vwsj4edm1.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0807291957410.1779@reaper.quantumfyre.co.uk> <alpine.LSU.1.00.0807301514280.3486@wbgn129.biozentrum.uni-wuerzburg.de> <7vy73j418t.fsf@gitster.siamese.dyndns.org> <4891A0D0.6060503@lyx.org> <20080731130101.GC18106@leksak.fem-net> <4891CD34.1070308@lyx.org> <20080731150958.GO32057@genesis.frugalware.org> <4891DA49.2070407@lyx.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git vs Monotone
+Date: Thu, 31 Jul 2008 15:02:09 -0400
+Message-ID: <20080731190209.GA8372@sigill.intra.peff.net>
+References: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="NV4Z+ojtEI2A8+w7"
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	Scott Chacon <schacon@gmail.com>, Petr Baudis <pasky@suse.cz>
-To: Abdelrazak Younes <younes@lyx.org>
-X-From: git-owner@vger.kernel.org Thu Jul 31 21:01:47 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailinglist <git@vger.kernel.org>
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Thu Jul 31 21:03:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOdP8-0003jW-Dj
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 21:01:38 +0200
+	id 1KOdQe-0004FB-NF
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 21:03:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753119AbYGaTAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 15:00:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753946AbYGaTAg
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 15:00:36 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:41537 "EHLO virgo.iok.hu"
+	id S1754552AbYGaTCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 15:02:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754433AbYGaTCM
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 15:02:12 -0400
+Received: from peff.net ([208.65.91.99]:1566 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753096AbYGaTAg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 15:00:36 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id EA3091B24EF;
-	Thu, 31 Jul 2008 21:00:34 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id B02414465E;
-	Thu, 31 Jul 2008 20:14:37 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 6CBF31190540; Thu, 31 Jul 2008 21:00:34 +0200 (CEST)
+	id S1753610AbYGaTCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 15:02:11 -0400
+Received: (qmail 28847 invoked by uid 111); 31 Jul 2008 19:02:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 31 Jul 2008 15:02:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Jul 2008 15:02:09 -0400
 Content-Disposition: inline
-In-Reply-To: <4891DA49.2070407@lyx.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90965>
 
+On Thu, Jul 31, 2008 at 08:13:59PM +0200, Sverre Rabbelier wrote:
 
---NV4Z+ojtEI2A8+w7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> If I clone the git mirror of our monotone repository, I find a
+> checkout size of 148 MB after git-repack--running git-gc also
+> increased the size by 2 MB, but I'll stick with the initial checkout
+> size for fairness. If I multiply this by my 11 checkouts, I will have
+> 1628 MB. This is even more compelling for me, as I now save 728 MB of
+> disk space with monotone."
 
-On Thu, Jul 31, 2008 at 05:29:13PM +0200, Abdelrazak Younes <younes@lyx.org=
-> wrote:
-> I understand that but my point is that writing a book or a manual is too=
-=20
-> big a task for a wiki.
+Yikes. This is not even remotely a fair comparison to monotone, which is
+keeping a central db.
 
-That's probably subjective. There is http://wikibooks.org/, after all.
-;-)
+> I'm in the process of cloning the repo myself, and will check if doing
+> a more aggressive (high --window and --depth values) repack will get
+> us below that 148, but I'm thinking it's just that big a repo. Anyway,
 
-> Anyway, if there is an interest to switch to LyX for the user manual, jus=
-t=20
-> let me know. Ascii has a LateX backend* and LyX can import LateX so the=
-=20
-> task should be easy.
->=20
-> * http://www.methods.co.nz/asciidoc/latex-backend.html
+It's much better than that. I just cloned
 
-Last time I checked it was actually broken, but dblatex can transform
-asciidoc's docbook output to latex, if that's really wished.
+  git://github.com/felipec/pidgin-clone.git
 
---NV4Z+ojtEI2A8+w7
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+and the _whole thing_ is 148M, including the working tree. His object db
+is only 88M. So he can do his 11 trees in 61 * 11 + 88 = 759M, saving
+141M over monotone.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+And I am repacking with insane depth and window right now to see if we
+can get it smaller (though really, it is not that big a deal, since the
+size is dominated by his 11 working trees).
 
-iEYEARECAAYFAkiSC9IACgkQe81tAgORUJYzgQCfT2MlAVwWEfTKNLPoUoDzYBN+
-JwMAnRVEmK9a621HtqrgWUTjyeiK2S6K
-=VDxK
------END PGP SIGNATURE-----
-
---NV4Z+ojtEI2A8+w7--
+-Peff
