@@ -1,82 +1,74 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: markdown 2 man, was Re: Git Community Book
-Date: Thu, 31 Jul 2008 15:01:01 +0200
-Message-ID: <20080731130101.GC18106@leksak.fem-net>
-References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com> <20080729170955.GK32184@machine.or.cz> <d411cc4a0807291130p228f77d5r1f390090ec29aef4@mail.gmail.com> <7vwsj4edm1.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0807291957410.1779@reaper.quantumfyre.co.uk> <alpine.LSU.1.00.0807301514280.3486@wbgn129.biozentrum.uni-wuerzburg.de> <7vy73j418t.fsf@gitster.siamese.dyndns.org> <4891A0D0.6060503@lyx.org>
+From: Boaz Harrosh <bharrosh@panasas.com>
+Subject: Re: linking libgit.a in C++ projects
+Date: Thu, 31 Jul 2008 16:04:50 +0300
+Message-ID: <4891B872.3040707@panasas.com>
+References: <ac9f0f090807310253v1d97e2a1n4ddf34aa4fdc79f0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	Scott Chacon <schacon@gmail.com>, Petr Baudis <pasky@suse.cz>
-To: Abdelrazak Younes <younes@lyx.org>
-X-From: git-owner@vger.kernel.org Thu Jul 31 15:02:22 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: cte <cestreich@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 31 15:06:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOXnE-0000KW-Na
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 15:02:09 +0200
+	id 1KOXrg-0001r4-4p
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 15:06:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752755AbYGaNBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 09:01:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752751AbYGaNBF
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 09:01:05 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43064 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752741AbYGaNBD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 09:01:03 -0400
-Received: (qmail invoked by alias); 31 Jul 2008 13:01:02 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp036) with SMTP; 31 Jul 2008 15:01:02 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX18tnc8cRTctmZzB4u1jawediIC3viRj4KNrimPVIF
-	pzmzf/Q+FuquOG
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KOXm9-0004oe-6D; Thu, 31 Jul 2008 15:01:01 +0200
-Content-Disposition: inline
-In-Reply-To: <4891A0D0.6060503@lyx.org>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1753032AbYGaNFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 09:05:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752751AbYGaNFL
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 09:05:11 -0400
+Received: from gw-colo-pa.panasas.com ([66.238.117.130]:30639 "EHLO
+	natasha.panasas.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751791AbYGaNFK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 09:05:10 -0400
+Received: from daytona.int.panasas.com (daytona.int.panasas.com [172.17.28.41])
+	by natasha.panasas.com (8.13.1/8.13.1) with ESMTP id m6VD5774015318;
+	Thu, 31 Jul 2008 09:05:08 -0400
+Received: from bh-buildlin2.bhalevy.com ([172.17.28.146]) by daytona.int.panasas.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 31 Jul 2008 09:04:13 -0400
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <ac9f0f090807310253v1d97e2a1n4ddf34aa4fdc79f0@mail.gmail.com>
+X-OriginalArrivalTime: 31 Jul 2008 13:04:13.0981 (UTC) FILETIME=[EE6574D0:01C8F30D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90944>
 
-Hi,
+cte wrote:
+> I'm writing a git gui for OS X using cocoa/Objective-C++, and rather
+> than being lame and parsing the output the various git commands, I'm
+> using libgit.a to provide all of the needed functionality for my app.
+> However, the git source uses a few reserved C++ keywords; namely
+> 'typename', and 'new'. So, I was wondering if it is worth submitting a
+> patch to fix these issues... I'm asking because I'm new to the whole
+> open source thing, and I don't want to get yelled at by the git
+> maintainers for submitting stupid patches that no one in their right
+> mind would accept :)
+> 
+> Thanks!
+> --
 
-Abdelrazak Younes wrote:
-> Please ignore if this is not appropriate.
+The practice of avoiding C++ keywords from public C headers is
+very welcome. You should send a patch and try to push it.
 
-Well, so I should've ignored, but I think this is worth some correction.
+That said the problem can be easily avoided.
 
-> Asciidoc or Markdown are tools that accommodate the _developer_, not the  
-> user. I understand that these markup language are ideally suited for in  
-> source documentation (thought I personally much prefer Doxygen).
+Produce a C file and header that defines some stable API to your
+GUI application, that does not expose any git internal headers.
+Then compile that, say git_api.c, with C compiler in Makefile
+and extern "C" link that file to your C++ application. This will
+completely insulate you from any git code.
 
-http://www.methods.co.nz/asciidoc/ says
- ``AsciiDoc is a text document format for writing short documents,
-   articles, books and UNIX man pages. AsciiDoc files can be translated to
-   HTML and DocBook markups using the asciidoc(1) command.''
+This could also solve the other problem of API changing, only
+the git_api.c need change, your outer GUI code stays the same.
 
-http://daringfireball.net/projects/markdown/ says
- ``Markdown is a text-to-HTML conversion tool for web writers. Markdown
-   allows you to write using an easy-to-read, easy-to-write plain text
-   format, then convert it to structurally valid XHTML (or HTML).''
+And if you do all that maybe you can submit it for inclusion
+as a: somewhat stable high-level library, for developers.
+Ala git-dev
 
-So those are not suited for in-source documentation.
-
-They're "lightweight" markup for documentation, very easy to read and somehow
-easy to write for non-developers.
-The user manual can give you an impression:
-	http://repo.or.cz/w/git.git?a=blob;f=Documentation/user-manual.txt
-
-I think, this is easier than LyX for users and developers..
-
-Regards,
-  Stephan
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+Cheers
+Boaz
