@@ -1,89 +1,65 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: linking libgit.a in C++ projects
-Date: Thu, 31 Jul 2008 20:27:55 +0200
-Message-ID: <bd6139dc0807311127j57d9ab5ckd6acf16d17621614@mail.gmail.com>
-References: <ac9f0f090807310253v1d97e2a1n4ddf34aa4fdc79f0@mail.gmail.com>
-	 <20080731105727.GF7008@dpotapov.dyndns.org>
-	 <ac9f0f090807310410u461f5584ved74769d8452c539@mail.gmail.com>
-Reply-To: sverre@rabbelier.nl
+From: "Blum, Robert" <rblum@pandemicstudios.com>
+Subject: git-p4, msysgit, and strange behavior
+Date: Thu, 31 Jul 2008 11:14:59 -0700
+Message-ID: <8778C923356C6541B263428246AE9C2A4FE2966A64@NA-MAIL-2-2.rws.ad.ea.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Dmitry Potapov" <dpotapov@gmail.com>, git@vger.kernel.org
-To: cte <cestreich@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 31 20:29:11 2008
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 31 20:29:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOctb-0000Cq-R7
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 20:29:04 +0200
+	id 1KOcuE-0000Qk-RR
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 20:29:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757431AbYGaS16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 14:27:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757407AbYGaS15
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 14:27:57 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:24037 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757380AbYGaS14 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 14:27:56 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so900016wfd.4
-        for <git@vger.kernel.org>; Thu, 31 Jul 2008 11:27:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=AAxjGM41MwHqsVek71WU80R3lhG5KPO1aWUQXR2yHTw=;
-        b=o1l1HncLDCz1wAwgI2+9/B3wZylrPvIasuJPW6OgkWtNI9qpXJF+On+pMC5kMJPBKb
-         DgI7jwF/tpLHC3TVlXgC9qKUxj1zoK/FSfXW6o39CPWGcCDKUd3YURA7oIwWPd0ZTFwC
-         /+pos6S+5t4LrBjz1H3dU2kjBw5l1tlKlGZ+4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=UtqfMHGMw6+MeHGVvZgpMY3qnIoTHHYgB2B6v96OXPM2BlPfhIKbN0qA3zSN9qShaN
-         BKGMCJN9TjnrokzrU4FrW+y2DA/Z//qI1iXIPAh7cPnWFqC0jICE79kZUD2SEo0DPldm
-         rWk1iteGI9K81Z+eAOGH/OF29wfcY4RBUlfFA=
-Received: by 10.142.218.6 with SMTP id q6mr3389029wfg.164.1217528875782;
-        Thu, 31 Jul 2008 11:27:55 -0700 (PDT)
-Received: by 10.142.104.10 with HTTP; Thu, 31 Jul 2008 11:27:55 -0700 (PDT)
-In-Reply-To: <ac9f0f090807310410u461f5584ved74769d8452c539@mail.gmail.com>
-Content-Disposition: inline
+	id S1753572AbYGaS21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 14:28:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753644AbYGaS21
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 14:28:27 -0400
+Received: from smtp-na3.ea.com ([159.153.6.7]:33740 "EHLO smtp-na3.ea.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753562AbYGaS20 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Jul 2008 14:28:26 -0400
+X-Greylist: delayed 803 seconds by postgrey-1.27 at vger.kernel.org; Thu, 31 Jul 2008 14:28:26 EDT
+Received: from EAHQ-BH5.rws.ad.ea.com (eahq-bh5.rws.ad.ea.com [10.30.204.14])
+	by smtp-na3.ea.com (Switch-3.3.0/Switch-3.3.0) with ESMTP id m6VIF0Oh007502
+	for <git@vger.kernel.org>; Thu, 31 Jul 2008 11:15:00 -0700
+Received: from na-casht4.rws.ad.ea.com ([10.30.204.161]) by EAHQ-BH5.rws.ad.ea.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 31 Jul 2008 11:14:59 -0700
+Received: from NA-MAIL-2-2.rws.ad.ea.com ([10.30.204.156]) by
+ na-casht4.rws.ad.ea.com ([192.168.37.22]) with mapi; Thu, 31 Jul 2008
+ 11:14:59 -0700
+Thread-Topic: git-p4, msysgit, and strange behavior
+Thread-Index: AcjzOVe5JU6fuF5ITpWKUNkx64bpQA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+X-OriginalArrivalTime: 31 Jul 2008 18:14:59.0989 (UTC) FILETIME=[58487C50:01C8F339]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90958>
 
-On Thu, Jul 31, 2008 at 13:10, cte <cestreich@gmail.com> wrote:
-> I'm not worried about the interfaces changing; the gui is tied to a
-> particular version of git, and I will update the code that calls into
-> libgit I pull new changes from the mainline into my local clone.
+Hi guys!
 
-You should be ;). Unless you are planning to learn a lot of C very
-fast, you should be worried about the interfaces changing. That is, if
-you want your GUI to be able to stay up to date with the current git
-version.
 
-> who's to say that the output of the various commands won't change
-> formats with future releases of git?
+I've recently been evaluating DVCS's for work. (Actually, who am I kidding - I love working w/ DVCS and want to convince my bosses to move forward ;)
 
-Junio is to say. Plumbing output format is git's API.
+Since we're a Perforce & Windows shop, git-p4 and msysgit are mandatory. However, I've run into a strange bug. Running git-p4 submit, I always get the message '... - file(s) not in client view'. Yes, I've checked - the files are in the client view, the view is set up properly, talking to the correct server. This only occurs if I'm in any of the directories of the git repository. If I switch to the directories where the P4 data is synced to and use --git-origin, the submit works just fine.
 
-> There is no correct solution if
-> you are worried about forward compatibility, unless a well defined API
-> is created (which would be sweet btw, but is probably not a priority).
+After a bit of digging on the ML, I found http://marc.info/?l=git&m=120437559322494&w=3 and the thread related to it. And yes, indeed, changing all p4 calls like this:
 
-There is, use the plumbing, forward compatibility is 95% assured. With
-the exception of major releases, for which any plumbing
-output/behavior changes will be announced in the changelog, usually
-including an explanation on how to change your code to match.
+        system("p4 sync ...") --> system("p4 sync %s..." % self.clientPath)
 
-In short, use the forc-... errr, plumbing ;).
+makes the problem go away. I've spent some time debugging the issue, and as far as I can tell, the working dir is set correctly during system(), the p4 environment is set correctly - and yet p4 complains.
 
--- 
-Cheers,
+As far as I know, I've grabbed the latest git & git-p4 from repo.or.cz. Is this a known problem? Should I clean up & submit the patch, or has anybody investigated a bit more why this is failing? (I don't like the patch because I don't understand *why* p4 fails to behave properly)
 
-Sverre Rabbelier
+
+Help appreciated,
+ - Robert
