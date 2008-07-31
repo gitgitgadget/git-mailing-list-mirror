@@ -1,65 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Git vs Monotone
-Date: Thu, 31 Jul 2008 13:24:41 -0700
-Message-ID: <7vmyjxyf7a.fsf@gitster.siamese.dyndns.org>
-References: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com>
- <alpine.LFD.1.10.0807311211260.3277@nehalem.linux-foundation.org>
- <63BEA5E623E09F4D92233FB12A9F79430238A5EC@emailmn.mqsoftware.com>
- <alpine.LFD.1.10.0807311244240.3277@nehalem.linux-foundation.org>
+Date: Thu, 31 Jul 2008 16:32:06 -0400
+Message-ID: <20080731203206.GA8668@sigill.intra.peff.net>
+References: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com> <20080731190209.GA8372@sigill.intra.peff.net> <bd6139dc0807311219h670f782cm8bed74bed2b4558@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Craig L. Ching" <cching@mqsoftware.com>, sverre@rabbelier.nl,
+Content-Type: text/plain; charset=utf-8
+Cc: "Craig L. Ching" <cching@mqsoftware.com>,
+	Petr Baudis <pasky@suse.cz>,
+	"Stephen R. van den Berg" <srb@cuci.nl>,
 	Git Mailinglist <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 31 22:26:00 2008
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Thu Jul 31 22:33:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOeid-0004aH-W4
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 22:25:52 +0200
+	id 1KOeph-0007li-QW
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 22:33:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751658AbYGaUYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 16:24:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751610AbYGaUYu
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 16:24:50 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52366 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751032AbYGaUYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 16:24:49 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2F13243B63;
-	Thu, 31 Jul 2008 16:24:48 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 5C06A43B60; Thu, 31 Jul 2008 16:24:43 -0400 (EDT)
-In-Reply-To: <alpine.LFD.1.10.0807311244240.3277@nehalem.linux-foundation.org> (Linus
- Torvalds's message of "Thu, 31 Jul 2008 12:52:43 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B8AAC94C-5F3E-11DD-B0F8-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753390AbYGaUcL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 16:32:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753813AbYGaUcJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 16:32:09 -0400
+Received: from peff.net ([208.65.91.99]:3490 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752296AbYGaUcI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 16:32:08 -0400
+Received: (qmail 29509 invoked by uid 111); 31 Jul 2008 20:32:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 31 Jul 2008 16:32:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Jul 2008 16:32:06 -0400
+Content-Disposition: inline
+In-Reply-To: <bd6139dc0807311219h670f782cm8bed74bed2b4558@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90981>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Thu, Jul 31, 2008 at 09:19:41PM +0200, Sverre Rabbelier wrote:
 
-> ... And since the original pack-file is marked as a 'keep' file,
-> that original pack-file won't even be broken apart.
+> I repacked with --depth=100 and --window=100, I tried out 500 at first
+> but it was just insanely slow (on a VM with one 2.4Ghz Core
+> available). This resulted in a .git dir of 76MB. With that dir I did
+> the following:
 
-Oops, isn't that something we fixed recently as a "bug"?
+I tried 200/200 and got a 74M packfile. So I think we're getting into
+diminishing returns.
 
-> So completely ignoring the fact that you could do a single database with 
-> git, and completely ignoring the fact that with git you'd probably use 
-> branches for at least some of those 11 repos anyway, he'd _still_ have had 
-> less disk space used by git unless he would do something intentionally odd 
-> (like clone all the repositories over the network separately).
+> $ du -sh .
+> 742M    .
+> 
+> So... monotone, eat your heart out ;).
 
-Well, people are not perfect and they are free to express their opinions
-based on faulty understanding of reality on their blogs.  The right things
-to do are (1) ignore them on the list and not waste many people's time,
-and/or (2) educate them, but in private or in a circle where many other
-similar ignorants benefit from such education.  That is not here but
-perhaps on #monotone channel?
+:)
+
+-Peff
