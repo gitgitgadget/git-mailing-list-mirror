@@ -1,75 +1,81 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Monotone workflow compared to Git workflow ( was RE: Git vs
-	Monotone)
-Date: Thu, 31 Jul 2008 17:22:15 -0400
-Message-ID: <20080731212215.GI20819@mit.edu>
-References: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com> <alpine.LFD.1.10.0807311211260.3277@nehalem.linux-foundation.org> <63BEA5E623E09F4D92233FB12A9F79430238A5EE@emailmn.mqsoftware.com> <BLU0-SMTP273E4683B41DB7E44122F0AE7C0@phx.gbl>
+From: cte <cestreich@gmail.com>
+Subject: Re: linking libgit.a in C++ projects
+Date: Thu, 31 Jul 2008 14:31:44 -0700
+Message-ID: <ac9f0f090807311431p3e943441xce8f2ac03ba1700@mail.gmail.com>
+References: <ac9f0f090807310253v1d97e2a1n4ddf34aa4fdc79f0@mail.gmail.com>
+	 <4891B872.3040707@panasas.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Craig L. Ching" <cching@mqsoftware.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	sverre@rabbelier.nl, Git Mailinglist <git@vger.kernel.org>
-To: Sean Estabrooks <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Thu Jul 31 23:23:57 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Boaz Harrosh" <bharrosh@panasas.com>
+X-From: git-owner@vger.kernel.org Thu Jul 31 23:32:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOfck-0002So-AH
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 23:23:50 +0200
+	id 1KOflP-0005fy-2S
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 23:32:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753683AbYGaVWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 17:22:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753529AbYGaVWs
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 17:22:48 -0400
-Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:52315 "EHLO
-	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752773AbYGaVWs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 17:22:48 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1KOfbE-0001wH-9u; Thu, 31 Jul 2008 17:22:16 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1KOfbD-0006Ud-Mm; Thu, 31 Jul 2008 17:22:15 -0400
+	id S1754760AbYGaVbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 17:31:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753861AbYGaVbq
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 17:31:46 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:19037 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752760AbYGaVbp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 17:31:45 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so457933ywe.1
+        for <git@vger.kernel.org>; Thu, 31 Jul 2008 14:31:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=x0MP4ZkGjfQaABXgTessTxEyaQihi09atND1bXQgWbU=;
+        b=lAE504ZBAi8772eUz5CXJ22i7pLAzdGsc4Dc57+dRPzsqL2+4jRnU1CBzFHLoWQi1w
+         T3KVNBNf4AM9TRs55xDeP+eYJbO4B34jW6Oqorl11EWrIcCZLOyxMFBkxTdYJNBUEt8c
+         ZN06fUzCZgf5Zwm6rMOqdQ87Ydx3/JM2KpMrI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Wt3+csCUq5DulI6cLo26Yhk9wSnIiJkxU8abxtHaa9vZukE0Lk2Y++3PNCbqsf6NGp
+         TfwjlBXfm6zlEgSWmtd0YtUAm2jhPr5lHWuLeYkTcgLtUvUTHcc53cb+zMtELgTic/5y
+         NmdM7cxLy/X2Yg6TRudfmzSPUu1eZUBz39OYQ=
+Received: by 10.151.109.11 with SMTP id l11mr1955421ybm.204.1217539904437;
+        Thu, 31 Jul 2008 14:31:44 -0700 (PDT)
+Received: by 10.151.78.17 with HTTP; Thu, 31 Jul 2008 14:31:44 -0700 (PDT)
+In-Reply-To: <4891B872.3040707@panasas.com>
 Content-Disposition: inline
-In-Reply-To: <BLU0-SMTP273E4683B41DB7E44122F0AE7C0@phx.gbl>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90997>
 
-On Thu, Jul 31, 2008 at 04:57:24PM -0400, Sean Estabrooks wrote:
-> > We find ourselves constantly having to shift gears and work on other
-> > things in the middle of whatever it is we're currently working on.  For
-> > instance, in the scenario above, A might be branch that contains a
-> > feature going into our next release.  B might be a bugfix and takes
-> > priority over A, so you have to leave A as-is and start work on B.  When
-> > I come back to work on A, I have to rebuild A to continue working, and
-> > that's just too expensive for us.  So we use the monotone-like
-> > new-workdir which allows us to save those build artifacts.
+Excellent idea; thank you!
+
+> The practice of avoiding C++ keywords from public C headers is
+> very welcome. You should send a patch and try to push it.
 >
-> A decent build system will only compile the source files that actually
-> changed when switching branches.  Couple that with a compiler cache
-> (such as ccache) and switching between branches in the kernel or git
-> project usually isn't prohibitively time consuming.
-
-That being said, if the bugfix is on a "maint" branch, and one of the
-things that has changed is a header file that forces most of the
-project to be recompiled, a separate work directory may be more
-convenient.  Of course, a separate work directory (whether created
-using "git clone -s" or "git-new-workdir" means more disk space and it
-means greater use of the page cache or a slowdown while the different
-sets of sources get paged in and out.  Of course, you could hack
-git-work-dir to use cp -rl to initially copy the working directory
-using hard links, and then when the new branch is checked out, if most
-of the files haven't changed, the files in the working directory could
-be shared too.  A lot depends on how much you want to squeeze the last
-bit of hard drive and speed optimization, and how big your project is.
-
-       	    	      	    		      - Ted
+> That said the problem can be easily avoided.
+>
+> Produce a C file and header that defines some stable API to your
+> GUI application, that does not expose any git internal headers.
+> Then compile that, say git_api.c, with C compiler in Makefile
+> and extern "C" link that file to your C++ application. This will
+> completely insulate you from any git code.
+>
+> This could also solve the other problem of API changing, only
+> the git_api.c need change, your outer GUI code stays the same.
+>
+> And if you do all that maybe you can submit it for inclusion
+> as a: somewhat stable high-level library, for developers.
+> Ala git-dev
+>
+> Cheers
+> Boaz
+>
+>
