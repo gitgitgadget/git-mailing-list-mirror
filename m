@@ -1,103 +1,106 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: Merging submodules
-Date: Thu, 31 Jul 2008 22:44:18 +0200
-Message-ID: <20080731224418.42849974@pc09.procura.nl>
-References: <20080730230336.GA6481@Hermes>
-	<20080731092104.1a6ce8bd@pc09.procura.nl>
-	<20080731143955.034f0577@pc09.procura.nl>
-	<20080731130626.GQ32184@machine.or.cz>
-	<20080731170123.79e0d3e9@pc09.procura.nl>
-	<8aa486160807310824h25c9630dxc25b156e80fcdb29@mail.gmail.com>
-	<20080731201530.067be667@pc09.procura.nl>
-	<8aa486160807311203o3fb4deb8u4a5ae57818c76fab@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Monotone workflow compared to Git workflow ( was RE: Git vs
+	Monotone)
+Date: Thu, 31 Jul 2008 22:54:00 +0200
+Message-ID: <20080731205400.GA7911@atjola.homenet>
+References: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com> <alpine.LFD.1.10.0807311211260.3277@nehalem.linux-foundation.org> <63BEA5E623E09F4D92233FB12A9F79430238A5EE@emailmn.mqsoftware.com> <alpine.LFD.1.10.0807311253140.3277@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Petr Baudis" <pasky@suse.cz>,
-	"Brian Gernhardt" <benji@silverinsanity.com>,
-	"Git List" <git@vger.kernel.org>,
-	"Lars Noschinski" <lars-2008-1@usenet.noschinski.de>
-To: "Santi =?UTF-8?B?QsOpamFy?=" <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 31 22:45:36 2008
+Cc: "Craig L. Ching" <cching@mqsoftware.com>, sverre@rabbelier.nl,
+	Git Mailinglist <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 31 22:55:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOf1d-0004LA-4F
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 22:45:29 +0200
+	id 1KOfAz-0007wZ-1J
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 22:55:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754763AbYGaUo0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Jul 2008 16:44:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754098AbYGaUoZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 16:44:25 -0400
-Received: from smtp-vbr11.xs4all.nl ([194.109.24.31]:1400 "EHLO
-	smtp-vbr11.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753052AbYGaUoY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Jul 2008 16:44:24 -0400
-Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
-	(authenticated bits=0)
-	by smtp-vbr11.xs4all.nl (8.13.8/8.13.8) with ESMTP id m6VKiJpT083624
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 31 Jul 2008 22:44:19 +0200 (CEST)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <8aa486160807311203o3fb4deb8u4a5ae57818c76fab@mail.gmail.com>
-X-Mailer: Claws Mail 3.5.0cvs35 (GTK+ 2.12.0; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1752890AbYGaUyH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Jul 2008 16:54:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752201AbYGaUyH
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 16:54:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40626 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751712AbYGaUyG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 16:54:06 -0400
+Received: (qmail invoked by alias); 31 Jul 2008 20:54:02 -0000
+Received: from i577BBE0C.versanet.de (EHLO atjola.local) [87.123.190.12]
+  by mail.gmx.net (mp025) with SMTP; 31 Jul 2008 22:54:02 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19R9Kde0ShRDDQO8wQUQ0ogJFY/3BN7ycOhKB6Dy/
+	o0Q8act6b2psjo
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0807311253140.3277@nehalem.linux-foundation.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90987>
 
-On Thu, 31 Jul 2008 21:03:26 +0200, "Santi B=C3=A9jar" <sbejar@gmail.co=
-m>
-wrote:
-
-> On Thu, Jul 31, 2008 at 20:15, H.Merijn Brand <h.m.brand@xs4all.nl> w=
-rote:
-> > On Thu, 31 Jul 2008 17:24:40 +0200, "Santi B=C3=A9jar" <sbejar@gmai=
-l.com>
-> > wrote:
-> >
-> >> I see all OK. Can you provide a self consistent simple testcase th=
-at
-> >> shows what is wrong?
-> >
-> > Yes. was rather easy.
-> > http://www.xs4all.nl/~hmbrand/testcase.tgz
-> >
+On 2008.07.31 13:09:09 -0700, Linus Torvalds wrote:
 >=20
-> It is because you cannot merge a branch with an empty branch.
-
-Super. So I start with a .gitignore and continue this process. It
-worked!
-
-> So, or you create an initial commit in the "superproject" or you
-> create a commit just moving the files of the first module as in:
 >=20
-> http://article.gmane.org/gmane.comp.version-control.git/79887
+> On Thu, 31 Jul 2008, Craig L. Ching wrote:
+> >=20
+> > We find ourselves constantly having to shift gears and work on othe=
+r
+> > things in the middle of whatever it is we're currently working on. =
+ For
+> > instance, in the scenario above, A might be branch that contains a
+> > feature going into our next release.  B might be a bugfix and takes
+> > priority over A, so you have to leave A as-is and start work on B. =
+ When
+> > I come back to work on A, I have to rebuild A to continue working, =
+and
+> > that's just too expensive for us.  So we use the monotone-like
+> > new-workdir which allows us to save those build artifacts.
+> >=20
+> > So, that said, I ask again, am I missing something?  Is there a bet=
+ter
+> > way to do this?  How do the kernel developers do this, surely they'=
+re
+> > switching branches back and forth having to build in-between?
+>=20
+> Sure, if you want to keep the build tree around, you would probably n=
+ot=20
+> use branches.=20
+>=20
+> But yes, then you'd likely do "git clone -s" with some single "common=
+=20
+> point" or use "git worktree". And even if you don't use "-s", you sho=
+uld=20
+> _still_ effectively share at least all the old history (which tends t=
+o be=20
+> the bulk) thanks to even a default "git clone" will just hardlink the=
+=20
+> pack-files.
+>=20
+> So literally, if you do
+>=20
+> 	git clone <cntral-repo-over-network> <local>
 
-Thanks again!
+Hum, I guess I'm just missing something and prepare to get flamed, but
+wouldn't you want that one to be bare? Otherwise, the other clones won'=
+t
+see all of the original repo's branches, right?
 
---=20
-H.Merijn Brand          Amsterdam Perl Mongers  http://amsterdam.pm.org=
-/
-using & porting perl 5.6.2, 5.8.x, 5.10.x, 5.11.x on HP-UX 10.20, 11.00=
-,
-11.11, 11.23, and 11.31, SuSE 10.1, 10.2, and 10.3, AIX 5.2, and Cygwin=
-=2E
-http://mirrors.develooper.com/hpux/           http://www.test-smoke.org=
-/
-http://qa.perl.org      http://www.goldmark.org/jeff/stupid-disclaimers=
-/
+Maybe even better:
+
+mkdir local-mirror
+cd local-mirror
+git --bare init
+git remote add -f --mirror origin <central-repo-over-network>
+
+A cronjob (or whatever) could keep the local mirror up-to-date and the
+other repos can fetch from there. Pushing would need to go to a
+different remote then though.. Humm... Maybe not worth the trouble for =
+a
+bit of additional object sharing.
+
+Bj=F6rn
