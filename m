@@ -1,106 +1,79 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Monotone workflow compared to Git workflow ( was RE: Git vs
-	Monotone)
-Date: Thu, 31 Jul 2008 22:54:00 +0200
-Message-ID: <20080731205400.GA7911@atjola.homenet>
-References: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com> <alpine.LFD.1.10.0807311211260.3277@nehalem.linux-foundation.org> <63BEA5E623E09F4D92233FB12A9F79430238A5EE@emailmn.mqsoftware.com> <alpine.LFD.1.10.0807311253140.3277@nehalem.linux-foundation.org>
+From: "Gustavo Sverzut Barbieri" <barbieri@profusion.mobi>
+Subject: Re: [PATCH 0/2] gitweb use sections
+Date: Thu, 31 Jul 2008 17:58:45 -0300
+Message-ID: <b1f2b8c40807311358k4132ba8bw931279d7a6a7bcb5@mail.gmail.com>
+References: <1217298868-16513-1-git-send-email-barbieri@profusion.mobi>
+	 <b1f2b8c40807311243i5689683avcc3c3c91e4e6a900@mail.gmail.com>
+	 <20080731203250.GO10151@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Craig L. Ching" <cching@mqsoftware.com>, sverre@rabbelier.nl,
-	Git Mailinglist <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 31 22:55:19 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Jakub Narebski" <jnareb@gmail.com>
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Jul 31 23:00:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOfAz-0007wZ-1J
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 22:55:09 +0200
+	id 1KOfFe-0001Dz-6C
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 22:59:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752890AbYGaUyH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Jul 2008 16:54:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752201AbYGaUyH
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 16:54:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40626 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751712AbYGaUyG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 16:54:06 -0400
-Received: (qmail invoked by alias); 31 Jul 2008 20:54:02 -0000
-Received: from i577BBE0C.versanet.de (EHLO atjola.local) [87.123.190.12]
-  by mail.gmx.net (mp025) with SMTP; 31 Jul 2008 22:54:02 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19R9Kde0ShRDDQO8wQUQ0ogJFY/3BN7ycOhKB6Dy/
-	o0Q8act6b2psjo
+	id S1752899AbYGaU6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 16:58:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753003AbYGaU6s
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 16:58:48 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:27145 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751712AbYGaU6r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 16:58:47 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so376098fgg.17
+        for <git@vger.kernel.org>; Thu, 31 Jul 2008 13:58:45 -0700 (PDT)
+Received: by 10.86.57.9 with SMTP id f9mr6519385fga.66.1217537925646;
+        Thu, 31 Jul 2008 13:58:45 -0700 (PDT)
+Received: by 10.86.90.15 with HTTP; Thu, 31 Jul 2008 13:58:45 -0700 (PDT)
+In-Reply-To: <20080731203250.GO10151@machine.or.cz>
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0807311253140.3277@nehalem.linux-foundation.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90988>
 
-On 2008.07.31 13:09:09 -0700, Linus Torvalds wrote:
->=20
->=20
-> On Thu, 31 Jul 2008, Craig L. Ching wrote:
-> >=20
-> > We find ourselves constantly having to shift gears and work on othe=
-r
-> > things in the middle of whatever it is we're currently working on. =
- For
-> > instance, in the scenario above, A might be branch that contains a
-> > feature going into our next release.  B might be a bugfix and takes
-> > priority over A, so you have to leave A as-is and start work on B. =
- When
-> > I come back to work on A, I have to rebuild A to continue working, =
-and
-> > that's just too expensive for us.  So we use the monotone-like
-> > new-workdir which allows us to save those build artifacts.
-> >=20
-> > So, that said, I ask again, am I missing something?  Is there a bet=
-ter
-> > way to do this?  How do the kernel developers do this, surely they'=
-re
-> > switching branches back and forth having to build in-between?
->=20
-> Sure, if you want to keep the build tree around, you would probably n=
-ot=20
-> use branches.=20
->=20
-> But yes, then you'd likely do "git clone -s" with some single "common=
-=20
-> point" or use "git worktree". And even if you don't use "-s", you sho=
-uld=20
-> _still_ effectively share at least all the old history (which tends t=
-o be=20
-> the bulk) thanks to even a default "git clone" will just hardlink the=
-=20
-> pack-files.
->=20
-> So literally, if you do
->=20
-> 	git clone <cntral-repo-over-network> <local>
+On Thu, Jul 31, 2008 at 5:32 PM, Petr Baudis <pasky@suse.cz> wrote:
+>  Hi,
+>
+> On Thu, Jul 31, 2008 at 04:43:35PM -0300, Gustavo Sverzut Barbieri wrote:
+>> Since nobody replied and I missed some gitweb guys in CC, I'm adding
+>> Petr and Jakub, as some guys said on IRC.
+>>
+>> Have anyone tried this patch, any problems?
+>
+>  sorry, I have it in my review queue. At first pass it was looking
+> good, but I wanted to look at it better before commenting.
 
-Hum, I guess I'm just missing something and prepare to get flamed, but
-wouldn't you want that one to be bare? Otherwise, the other clones won'=
-t
-see all of the original repo's branches, right?
+no problem, just to see it was noticed or not :-)
 
-Maybe even better:
 
-mkdir local-mirror
-cd local-mirror
-git --bare init
-git remote add -f --mirror origin <central-repo-over-network>
+>  One thing I'm wondering about is how to make this stuff configurable,
+> since I'm not very comfortable with adding more "unbound" configuration
+> variables and would rather prefer stuff to be added to the $features
+> array... I'm not at all sure about my own sentiment here, however.
 
-A cronjob (or whatever) could keep the local mirror up-to-date and the
-other repos can fetch from there. Pushing would need to go to a
-different remote then though.. Humm... Maybe not worth the trouble for =
-a
-bit of additional object sharing.
+Path comparison (first patch), Sections (second), both?
 
-Bj=F6rn
+I know path comparison can be a performance hit on large listings on
+sites with heavy traffic. However, I don't see many people accessing
+the projects page at the same time for long periods, it's not like
+slashdot... people mostly use it to know about repositories and then
+use git to track it.
+    The slowness is due O(n^2) worst case of sort and each step is not
+a bit heavier since it need to split path into components and walk
+these. Maybe cache the split?
+
+-- 
+Gustavo Sverzut Barbieri
+http://profusion.mobi embedded systems
+--------------------------------------
+MSN: barbieri@gmail.com
+Skype: gsbarbieri
+Mobile: +55 (19) 9225-2202
