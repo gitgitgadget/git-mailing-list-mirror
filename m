@@ -1,69 +1,84 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Theodore Tso <tytso@mit.edu>
 Subject: Re: Git vs Monotone
-Date: Thu, 31 Jul 2008 12:17:32 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0807311211260.3277@nehalem.linux-foundation.org>
+Date: Thu, 31 Jul 2008 15:24:05 -0400
+Message-ID: <20080731192405.GC20819@mit.edu>
 References: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailinglist <git@vger.kernel.org>
 To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Thu Jul 31 21:22:52 2008
+X-From: git-owner@vger.kernel.org Thu Jul 31 21:25:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOdir-0004T8-9g
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 21:22:01 +0200
+	id 1KOdlx-0006Fm-At
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 21:25:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755862AbYGaTU7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 15:20:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755548AbYGaTU6
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 15:20:58 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:52118 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755390AbYGaTU6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Jul 2008 15:20:58 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6VJKW1Q016409
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 31 Jul 2008 12:20:33 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6VJKVtJ007346;
-	Thu, 31 Jul 2008 12:20:31 -0700
+	id S1751777AbYGaTYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 15:24:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751875AbYGaTYL
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 15:24:11 -0400
+Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:37242 "EHLO
+	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751146AbYGaTYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 15:24:10 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1KOdks-0001ej-79; Thu, 31 Jul 2008 15:24:06 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1KOdkr-0005o7-KW; Thu, 31 Jul 2008 15:24:05 -0400
+Content-Disposition: inline
 In-Reply-To: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.407 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90972>
 
-
-
-On Thu, 31 Jul 2008, Sverre Rabbelier wrote:
+On Thu, Jul 31, 2008 at 08:13:59PM +0200, Sverre Rabbelier wrote:
 > 
 > I just read this blog post [0] in which one of the Pidgin devs sheds
 > his light on their 'tool choice'. In the post he mentions the
 > following figures:
 
-Don't even bother. The guy is apparently not even trying to work with his 
-tools, he just has an agenda to push.
+The main thing this proves was that the Pidgin devs were most familiar
+with Monotone, and weren't sufficiently familiar with git; hence, they
+didn't know how to do a fair comparison.  First of all, sure, if they
+are willing to use a single working directory and want to switch
+between branches using "git checkout", that works well.  But suppose
+they really want separate working directories.  The simplist and
+easist way is to use "git clone -s".
 
-Quite frankly, anybody who wants to stay with monotone, we should 
-_encourage_ them. They add nothing to any possible project, because they 
-are clearly not very intelligent.
+So if they do:
 
-The guy is apparently happy using a single database for monotone (which 
-apparently has a database that is two times the size of the git one), but 
-then doesn't want to use a single database for git, but wants to force a 
-full clone for each. Not to mention that in git, you'd normally not do 11 
-clones to begin with, you'd just do 11 branches in one repo.
+git clone git://github.com/felipec/pidgin-clone.git pidgin
+git clone -s pidgin clone-1
+git clone -s pidgin clone-2
+git clone -s pidgin clone-3
+git clone -s pidgin clone-4
+git clone -s pidgin clone-5
+git clone -s pidgin clone-6
+git clone -s pidgin clone-7
+git clone -s pidgin clone-8
+git clone -s pidgin clone-9
+git clone -s pidgin clone-10
 
-So there is no point discussing things with people like that. If he wants 
-to skew things in monotone's favor, he can do it. Let him. 
+The net disk usage is 746 megabytes, as compared to the 900 megabytes
+claimed in the blog post.  The main difference is the git database is
+only takes 87 megabytes, compared to the 229 megabytes for the
+Monotone database.  The main issue is the pidgin developers simply
+didn't know how to use the -s flag so they didn't need to duplicate
+the git database for every single clone.
 
-			Linus
+Shrug; whatever, I've always said the biggest issue for any tool is
+what the developers are familiar with.  It may be that monotone was
+the right choice for the pidgin core developers, if they weren't
+familiar enough with git.
+
+						- Ted
