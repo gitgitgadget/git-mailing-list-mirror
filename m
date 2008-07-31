@@ -1,70 +1,104 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Bizarre missing changes (git bug?)
-Date: Wed, 30 Jul 2008 17:30:57 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0807301720170.3277@nehalem.linux-foundation.org>
-References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com> <200807260512.40088.zippel@linux-m68k.org> <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain>
- <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain> <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807280141140.6791@localhost.localdomain>
- <alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807281241180.6791@localhost.localdomain> <46a038f90807282015m7ce3da10h71dfee221c960332@mail.gmail.com> <Pine.LNX.4.64.0807291433430.6791@localhost.localdomain>
- <alpine.LFD.1.10.0807291716060.3334@nehalem.linux-foundation.org> <alpine.LFD.1.10.0807291738280.3334@nehalem.linux-foundation.org> <7vej5b3ozz.fsf@gitster.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] documentation: user-manual: update "using-bisect" section
+Date: Thu, 31 Jul 2008 05:22:40 +0200
+Message-ID: <20080731052240.23455ddb.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Roman Zippel <zippel@linux-m68k.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Tim Harper <timcharper@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <johannes.sixt@telecom.at>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 31 02:36:11 2008
+X-From: git-owner@vger.kernel.org Thu Jul 31 05:20:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOM9H-0003Rd-Ff
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 02:36:07 +0200
+	id 1KOOhp-0005gz-88
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 05:19:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755950AbYGaAfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 20:35:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755549AbYGaAfF
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 20:35:05 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:51548 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753861AbYGaAfE (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Jul 2008 20:35:04 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6V0Xw4m019348
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 30 Jul 2008 17:33:59 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m6V0XuA5027013;
-	Wed, 30 Jul 2008 17:33:57 -0700
-In-Reply-To: <7vej5b3ozz.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.407 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1757286AbYGaDSz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2008 23:18:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756937AbYGaDSz
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 23:18:55 -0400
+Received: from smtp5-g19.free.fr ([212.27.42.35]:52169 "EHLO smtp5-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755231AbYGaDSz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2008 23:18:55 -0400
+Received: from smtp5-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id C4B8F3F6164;
+	Thu, 31 Jul 2008 05:18:52 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp5-g19.free.fr (Postfix) with SMTP id 8B1A73F6167;
+	Thu, 31 Jul 2008 05:18:52 +0200 (CEST)
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.10; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90888>
 
+Since version 1.5.6 "git bisect" doesn't use a "bisect" branch any
+more, but the user manual had not been updated to reflect this.
 
+So this patch does that and while at it also adds a few words about
+"git bisect skip" and points user to the "git bisect" man page for
+more information.
 
-On Wed, 30 Jul 2008, Junio C Hamano wrote:
-> 
-> I am not Roman, but so I do not know if I did what Roman wanted to, but
-> here is a quick hack.  "gitk --post-simplify -- kernel/printk.c" is
-> slightly more readable than --full-history with this patch.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/user-manual.txt |   27 +++++++++++++++++++++------
+ 1 files changed, 21 insertions(+), 6 deletions(-)
 
-.. and if by "slightly", you mean "a lot", then yes.
-
-Patch looks fine to me. I didn't look at the code logic very closely, but 
-I suspect that it's actually hard to get the right answer with broken 
-code, and the logic doesn't look broken. So Ack.
-
-The filter-branch thing should probably be taught about this at least as 
-an option. I think it was Johannes Sixt that worried about that one. Added 
-to cc.
-
-		Linus
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index c5641af..50bf85f 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -479,10 +479,10 @@ Bisecting: 3537 revisions left to test after this
+ -------------------------------------------------
+ 
+ If you run "git branch" at this point, you'll see that git has
+-temporarily moved you to a new branch named "bisect".  This branch
+-points to a commit (with commit id 65934...) that is reachable from
+-"master" but not from v2.6.18.  Compile and test it, and see whether
+-it crashes.  Assume it does crash.  Then:
++temporarily moved you in "(no branch)". HEAD is now detached from any
++branch and points directly to a commit (with commit id 65934...) that
++is reachable from "master" but not from v2.6.18. Compile and test it,
++and see whether it crashes. Assume it does crash. Then:
+ 
+ -------------------------------------------------
+ $ git bisect bad
+@@ -504,8 +504,7 @@ report with the commit id.  Finally, run
+ $ git bisect reset
+ -------------------------------------------------
+ 
+-to return you to the branch you were on before and delete the
+-temporary "bisect" branch.
++to return you to the branch you were on before.
+ 
+ Note that the version which git-bisect checks out for you at each
+ point is just a suggestion, and you're free to try a different
+@@ -528,6 +527,22 @@ $ git reset --hard fb47ddb2db...
+ then test, run "bisect good" or "bisect bad" as appropriate, and
+ continue.
+ 
++Instead of "git bisect visualize" and then "git reset --hard
++fb47ddb2db...", you might just want to tell git that you want to skip
++the current commit:
++
++-------------------------------------------------
++$ git bisect skip
++-------------------------------------------------
++
++In this case, though, git may not eventually be able to tell the first
++bad one between some first skipped commits and a latter bad commit.
++
++There are also ways to automate the bisecting process if you have a
++test script that can tell a good from a bad commit. See
++linkgit:git-bisect[1] for more information about this and other "git
++bisect" features.
++
+ [[naming-commits]]
+ Naming commits
+ --------------
+-- 
+1.6.0.rc0.42.g186458.dirty
