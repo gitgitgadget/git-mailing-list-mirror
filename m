@@ -1,89 +1,89 @@
-From: "Jan =?UTF-8?B?S3LDvGdlcg==?=" <jk@jk.gs>
-Subject: Re: markdown 2 man, was Re: Git Community Book
-Date: Thu, 31 Jul 2008 22:57:03 +0200
-Message-ID: <20080731225703.7be6f76e@neuron>
-References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
-	<20080729170955.GK32184@machine.or.cz>
-	<d411cc4a0807291130p228f77d5r1f390090ec29aef4@mail.gmail.com>
-	<7vwsj4edm1.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0807291957410.1779@reaper.quantumfyre.co.uk>
-	<alpine.LSU.1.00.0807301514280.3486@wbgn129.biozentrum.uni-wuerzburg.de>
-	<7vy73j418t.fsf@gitster.siamese.dyndns.org>
-	<4891A0D0.6060503@lyx.org>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: q: git-fetch a tad slow?
+Date: Thu, 31 Jul 2008 23:03:07 +0200
+Message-ID: <20080731210307.GF25138@elte.hu>
+References: <20080728160138.GA12777@elte.hu> <20080729055014.GE11947@spearce.org> <20080729090802.GA11373@elte.hu> <20080730044855.GA7225@spearce.org> <20080730190657.GC26389@elte.hu> <20080731044531.GB1860@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	Scott Chacon <schacon@gmail.com>, Petr Baudis <pasky@suse.cz>
-To: Abdelrazak Younes <younes@lyx.org>
-X-From: git-owner@vger.kernel.org Thu Jul 31 23:03:28 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jul 31 23:04:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOfIu-0002V2-If
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 23:03:21 +0200
+	id 1KOfJr-0002wO-Aq
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 23:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753680AbYGaVCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 17:02:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753380AbYGaVCT
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 17:02:19 -0400
-Received: from zoidberg.org ([213.133.99.5]:43542 "EHLO cthulhu.zoidberg.org"
+	id S1753915AbYGaVDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 17:03:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753888AbYGaVDR
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 17:03:17 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:49832 "EHLO mx3.mail.elte.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752087AbYGaVCS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 17:02:18 -0400
-X-Greylist: delayed 310 seconds by postgrey-1.27 at vger.kernel.org; Thu, 31 Jul 2008 17:02:18 EDT
-Received: from neuron (xdsl-87-78-233-158.netcologne.de [::ffff:87.78.233.158])
-  (IDENT: unknown, AUTH: LOGIN jast, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
-  by cthulhu.zoidberg.org with esmtp; Thu, 31 Jul 2008 22:57:04 +0200
-  id 00185BEC.48922721.00000B98
-In-Reply-To: <4891A0D0.6060503@lyx.org>
-X-Mailer: Claws Mail 3.3.1 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1753823AbYGaVDR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 17:03:17 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1KOfIi-0002km-0Y
+	from <mingo@elte.hu>; Thu, 31 Jul 2008 23:03:14 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 294DF3E2191; Thu, 31 Jul 2008 23:03:07 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080731044531.GB1860@spearce.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90991>
 
-Hi,
 
-> Disclaimer: I am involved in LyX development, so anything I said will
-> be biased :-)
+* Shawn O. Pearce <spearce@spearce.org> wrote:
 
-I think that's fine since I consider LaTeX (and therefore LyX as the
-best graphical editor for it that I know) a choice always worth
-considering when it comes to projects that have the size of a book.
+> Ingo Molnar <mingo@elte.hu> wrote:
+> > alas, fetching still seems to be slow:
+> > 
+> >   titan:~/tip> time git-fetch origin
+> > 
+> >   real    0m5.112s
+> >   user    0m0.972s
+> >   sys     0m3.380s
+> 
+> What version of git are dealing with on the client side?
 
-> Now, about my shameless plug: LyX is ideally suited for structured 
-> documentation writing :-)
+the client side on titan has:
 
-That may well be, but it gets really complicated once you want to
-get your document into other markup-based formats while preserving all
-the important aspects of formatting. I know this because I started
-using LaTeX for a project that was supposed to be available in HTML
-form along with, say, PDF. I've found that the only converter that
-comes close to being useful for somewhat more ambitious sources
-(including, perhaps, custom environments and stuff like that) without
-spending a ridiculous amount of time trying to understand it is hevea.
-Of course, hevea only translates to HTML, so, for example, generating
-manpages or plain text is an entirely different matter of considerable
-difficulty.
+ titan:~> git version
+ git version 1.5.2.2
 
-In addition to that, I suspect that LyX files might be difficult to
-deal with in forky Git situations. For example, what if two
-separately contributed patches need merging into a LyX source file?
-This will only work automatically if the LyX source, treated as plain
-text, has a really low chance of randomly changing in other places than
-what the patch is supposed to touch. Also, if a merge does cause a
-conflict, I imagine it would be difficult to resolve that.
+oldish but not outrageously old, right?
 
-Finally, it's pretty much a given that Git's manpages continue to use
-AsciiDoc because there are few other things that can generate actual
-manpages. I'm not sure it would be a good idea to keep half of Git's
-documentation in one format and the rest in another. And AsciiDoc is --
-by far! -- not the worst choice. I'm tempted to say it's the best that
-I know.
+ server side has:
 
--Jan
+ earth4:~> git version
+ git version 1.5.6.1.108.g660379
+
+> 
+> fetch times of ~472 ms over git:// to your -tip.git tree and ~128 ms 
+> for strictly local fetch.  If your SSH overhead is ~300 ms this is 
+> only a ~700 ms real time for `git fetch origin`, not 5100 ms.
+> 
+> Is your git-fetch a shell script?  Or a compiled binary?  The port 
+> into C made it go _much_ faster, even though it is still a naive 
+> O(N^2) matching algorithm.  Yea, we still should fix that, but I think 
+> an upgrade to 1.5.4 or later would make the client side improve 
+> consideribly.
+
+ah, it is a shell script indeed! I'll upgrade to latest.
+
+	Ingo
