@@ -1,85 +1,72 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: Merging submodules
-Date: Thu, 31 Jul 2008 21:03:26 +0200
-Message-ID: <8aa486160807311203o3fb4deb8u4a5ae57818c76fab@mail.gmail.com>
-References: <20080730230336.GA6481@Hermes>
-	 <20080731092104.1a6ce8bd@pc09.procura.nl>
-	 <20080731143955.034f0577@pc09.procura.nl>
-	 <20080731130626.GQ32184@machine.or.cz>
-	 <20080731170123.79e0d3e9@pc09.procura.nl>
-	 <8aa486160807310824h25c9630dxc25b156e80fcdb29@mail.gmail.com>
-	 <20080731201530.067be667@pc09.procura.nl>
+From: "Blum, Robert" <rblum@pandemicstudios.com>
+Subject: RE: git-p4, msysgit, and strange behavior
+Date: Thu, 31 Jul 2008 12:03:53 -0700
+Message-ID: <8778C923356C6541B263428246AE9C2A4FE2966AB2@NA-MAIL-2-2.rws.ad.ea.com>
+References: <20080731183641.GB31085@cuci.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Petr Baudis" <pasky@suse.cz>,
-	"Brian Gernhardt" <benji@silverinsanity.com>,
-	"Git List" <git@vger.kernel.org>,
-	"Lars Noschinski" <lars-2008-1@usenet.noschinski.de>
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Thu Jul 31 21:04:59 2008
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Thu Jul 31 21:07:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOdSD-0004kj-SF
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 21:04:50 +0200
+	id 1KOdUV-0005m5-8i
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 21:07:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756060AbYGaTD3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Jul 2008 15:03:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757300AbYGaTD3
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 15:03:29 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:47441 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753696AbYGaTD1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Jul 2008 15:03:27 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so422758ywe.1
-        for <git@vger.kernel.org>; Thu, 31 Jul 2008 12:03:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=vhy7rEeTE0rnXG6pRzKx7JVKBROSmzt06HwVwiZL/R8=;
-        b=Av8MDpeXDey9AV8Z25BsJBm1V0aEV7x3i7f6K7UdBJ8/OWFXyngwIlA4kHIV2+o5Ss
-         I5DPQ2XWkeM4vu8whmI3gVuOqlgiYlHhPlNQVSnYomrfRpA302iug5aVkU6kbD/Seshf
-         da4LmvI5ylKpsrhPMp8oVoErsqGze71tYij2w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=oYFRomdva1gQ2Oaw+yeDM6A6FM1BsflYcft/mKBX5mfd3EDAe9x87q2U1HyJWTjU7x
-         WA+kQjkNT/Ge9274vkis6cXfzXDygnzHmsIziPD9CSBPri62IGyfNt8fPDYe68XlBWF0
-         HJCw6VkvQF8PRHS9RzGnORk+UXzroPFlHdoRk=
-Received: by 10.150.186.12 with SMTP id j12mr1731178ybf.187.1217531006677;
-        Thu, 31 Jul 2008 12:03:26 -0700 (PDT)
-Received: by 10.150.95.21 with HTTP; Thu, 31 Jul 2008 12:03:26 -0700 (PDT)
-In-Reply-To: <20080731201530.067be667@pc09.procura.nl>
-Content-Disposition: inline
+	id S1757772AbYGaTFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 15:05:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755500AbYGaTFt
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 15:05:49 -0400
+Received: from smtp-na3.ea.com ([159.153.6.7]:56913 "EHLO smtp-na3.ea.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753747AbYGaTFs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Jul 2008 15:05:48 -0400
+Received: from EAHQ-BH5.rws.ad.ea.com (eahq-bh5.rws.ad.ea.com [10.30.204.14])
+	by smtp-na3.ea.com (Switch-3.3.0/Switch-3.3.0) with ESMTP id m6VJ3x1u008428;
+	Thu, 31 Jul 2008 12:04:00 -0700
+Received: from na-casht3.rws.ad.ea.com ([10.30.128.50]) by EAHQ-BH5.rws.ad.ea.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 31 Jul 2008 12:03:55 -0700
+Received: from NA-MAIL-2-2.rws.ad.ea.com ([10.30.204.156]) by
+ na-casht3.rws.ad.ea.com ([192.168.37.21]) with mapi; Thu, 31 Jul 2008
+ 12:03:55 -0700
+Thread-Topic: git-p4, msysgit, and strange behavior
+Thread-Index: AcjzPGnjrfM048EcQJm1YaRBa7bBjQAADYkg
+In-Reply-To: <20080731183641.GB31085@cuci.nl>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+X-OriginalArrivalTime: 31 Jul 2008 19:03:55.0392 (UTC) FILETIME=[2DEB7000:01C8F340]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90967>
 
-On Thu, Jul 31, 2008 at 20:15, H.Merijn Brand <h.m.brand@xs4all.nl> wro=
-te:
-> On Thu, 31 Jul 2008 17:24:40 +0200, "Santi B=E9jar" <sbejar@gmail.com=
->
-> wrote:
->
->> I see all OK. Can you provide a self consistent simple testcase that
->> shows what is wrong?
->
-> Yes. was rather easy.
-> http://www.xs4all.nl/~hmbrand/testcase.tgz
->
+Hi Stephen!
 
-It is because you cannot merge a branch with an empty branch. So, or
-you create an initial commit in the "superproject"  or you create a
-commit just moving the files of the first module as in:
+> greetings from RWTH-Aachen ;-).
 
-http://article.gmane.org/gmane.comp.version-control.git/79887
+Heh - wonder who else from back then is lingering on those lists ;)
 
-Santi
+>Checked the environment?  I vaguely recall that p4 has some "magical
+dependencies" there.
+
+Yes, did that - 'p4 set' prints all relevant environment vars, and they seem to be set correctly.
+
+You set me off on a slightly longer search, though. And indeed, here's the answer to the mystery (for the benefit of google/later readers).
+
+Git-bash sets $PWD to your current working directory, and that variable is not affected by python's os.chdir(). (Neither in 2.5 nor 2.4, at least)
+
+P4, for strange reasons, decides that that takes precedence over the actual working directory.
+
+Well, actually not that strange. If p4 is using libiberty, they're using a version of getpwd that assumes that PWD is always up to date and no chdirs occur between calls to getpwd. I'm sure there was a good reason for that, but I really can't think why anybody would want to implement getpwd that way...
+
+
+I'll create a patch for git-p4, but it's really up to P4 to actually *fix* that mess...
+
+ - Robert
