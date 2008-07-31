@@ -1,97 +1,134 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: Merging submodules
-Date: Thu, 31 Jul 2008 14:39:55 +0200
-Message-ID: <20080731143955.034f0577@pc09.procura.nl>
-References: <20080730230336.GA6481@Hermes>
-	<20080731092104.1a6ce8bd@pc09.procura.nl>
+From: "Alexander Gavrilov" <angavrilov@gmail.com>
+Subject: Re: [PATCH (GITK) 5/6] gitk: Fixed automatic row selection during load.
+Date: Thu, 31 Jul 2008 16:41:20 +0400
+Message-ID: <bb6f213e0807310541s383c2938q91543a1c57a4d71f@mail.gmail.com>
+References: <200807271017.23272.angavrilov@gmail.com>
+	 <200807271020.02415.angavrilov@gmail.com>
+	 <200807271020.53171.angavrilov@gmail.com>
+	 <200807271021.46661.angavrilov@gmail.com>
+	 <18577.41259.758690.635991@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	Lars Noschinski <lars-2008-1@usenet.noschinski.de>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Thu Jul 31 14:42:15 2008
+Cc: git@vger.kernel.org
+To: "Paul Mackerras" <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Thu Jul 31 14:43:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOXTb-000173-2q
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 14:41:51 +0200
+	id 1KOXVP-0001va-U9
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 14:43:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753127AbYGaMkD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 08:40:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754286AbYGaMkC
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 08:40:02 -0400
-Received: from smtp-vbr8.xs4all.nl ([194.109.24.28]:2130 "EHLO
-	smtp-vbr8.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754185AbYGaMj7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 08:39:59 -0400
-Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
-	(authenticated bits=0)
-	by smtp-vbr8.xs4all.nl (8.13.8/8.13.8) with ESMTP id m6VCdt67058051
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 31 Jul 2008 14:39:56 +0200 (CEST)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <20080731092104.1a6ce8bd@pc09.procura.nl>
-X-Mailer: Claws Mail 3.5.0cvs35 (GTK+ 2.12.0; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1752163AbYGaMlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 08:41:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754442AbYGaMlY
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 08:41:24 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:7005 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753951AbYGaMlW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 08:41:22 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so216184nfc.21
+        for <git@vger.kernel.org>; Thu, 31 Jul 2008 05:41:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=AJNQefKM0sEOrdwnv3FQvo5uzMUr8sKRi2SSHFdYJ7k=;
+        b=Lp8pNgmIc7P0KBpKIIT+2q4DP+2lt7lFPKzAaRT/TlEV2YRygR+QPE4SZLR8ONRDDB
+         scwtO0hz6l3IyhBzyO3liVNac2xYKobnCDh4reiKBscAUqSDTvJK/P7duvNQIsxXWYJf
+         Q+XyVUrWpyPteUaGXITY9pY9A6DJBLuAWQHW0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=vG9RricwJn7KbIA7EMMqcw2SyNWXQo17zEDMCqTQtbP6YV1X80AXYDj4l89XdDdpmQ
+         GHhIp50PI0067q6dzmrUPpDKWBd83BKqobq6eaWH0xmyNxtMtDnr4nPbdSzKLeDnj4eV
+         XdC+zPfZrPppnUxLwajkyQfE/RzWfrO8GtSmY=
+Received: by 10.103.24.11 with SMTP id b11mr3972021muj.77.1217508080468;
+        Thu, 31 Jul 2008 05:41:20 -0700 (PDT)
+Received: by 10.103.251.10 with HTTP; Thu, 31 Jul 2008 05:41:20 -0700 (PDT)
+In-Reply-To: <18577.41259.758690.635991@cargo.ozlabs.ibm.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90938>
 
-On Thu, 31 Jul 2008 09:21:04 +0200, "H.Merijn Brand"
-<h.m.brand@xs4all.nl> wrote:
+On Thu, Jul 31, 2008 at 3:25 PM, Paul Mackerras <paulus@samba.org> wrote:
+> Alexander Gavrilov writes:
+>
+>> - Switching views now actually preserves the selected commit.
+>> - Reloading (also Edit View) preserves the currently selected commit.
+>> - Initial selection does not produce weird scrolling.
+>>
+>> Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+>
+> I need a more detailed explanation of the rationale for the specific
+> changes you have made in the changelog.
 
-> I will now be playing with the results a bit. I have attached the
-> script, in case you might want to use it in documentation or examples.
-> For now, all the mods are hardcoded. No arguments and so on.
-> 
-> Again, Thanks!
+The rationale is that preserving the currently selected commit is more
+intelligent behavior than always resetting to a preset position, and
+it makes the UI feel more smooth. Also, although it is possible to
+restore selection by clicking the 'back' button, it is not immediately
+obvious; in fact I realized it only after reading the code.
 
-There is a slight problem with this merging approach. The path names
-are as they are/were in the submodules. In module_a, foo.pl was without
-a leading module_a/ path, and now after integration, it still is. Is it
-possible to rethink this whole process that integrates/merges the
-several git repo's in subfolders into the current folder, as-if they
-would have been in this folder in the first place?
+Gitk already tried to preserve the commit in many cases, but failed
+because of a conflicting change that made it select the head. Such
+behavior is clearly a bug.
 
-Short summary: History made me have the current situation
+The Reload case is arguable, but I think that Edit View should
+preserve the selection, and it uses Reload internally. It can be
+resolved by adding a parameter to the function implementing Reload.
 
-	4gl
-	4gl/fnc
-	4gl/fnc/.git
-	4gl/foo
-	4gl/foo/.git
-	:
-	:
-	4gl/zlork
-	4gl/zlork/.git
+> As for the patch, it mostly looks good, but I have a few comments
+> below.
+>
+>> +proc getcommits {selid} {
+>>      global canv curview need_redisplay viewactive
+>>
+>>      initlayout
+>>      if {[start_rev_list $curview]} {
+>> +     reset_pending_select $selid
+>
+> Is there any significance to having the call to reset_pending_select
+> after the start_rev_list call (other than not setting pending_select
+> if start_rev_list fails)?  I couldn't see any.  If there is then it
+> should be noted in a comment and/or the patch description.
 
-Where I want
+It simply tries to preserve the original behavior.
 
-	4gl
-	4gl/.git
-	4gl/fnc
-	4gl/foo
-	:
-	4gl/zlork
+>> @@ -503,7 +511,7 @@ proc updatecommits {} {
+>>      filerun $fd [list getcommitlines $fd $i $view 1]
+>>      incr viewactive($view)
+>>      set viewcomplete($view) 0
+>> -    set pending_select $mainheadid
+>> +    reset_pending_select {}
+>
+> This doesn't actually change anything, right?  If so then I'd prefer
+> the simple, direct assignment to calling a procedure that does the
+> assignment.
 
--- 
-H.Merijn Brand          Amsterdam Perl Mongers  http://amsterdam.pm.org/
-using & porting perl 5.6.2, 5.8.x, 5.10.x, 5.11.x on HP-UX 10.20, 11.00,
-11.11, 11.23, and 11.31, SuSE 10.1, 10.2, and 10.3, AIX 5.2, and Cygwin.
-http://mirrors.develooper.com/hpux/           http://www.test-smoke.org/
-http://qa.perl.org      http://www.goldmark.org/jeff/stupid-disclaimers/
+I have a patch WIP that allows specifying a commit on the command line
+to select instead of the head (I need it to enhance the git gui blame
+UI). It makes the function somewhat more intelligent. I'll submit it
+as soon as this series is sorted out.
+
+>> @@ -4036,6 +4042,7 @@ proc layoutmore {} {
+>>      }
+>>      if {[info exists pending_select] &&
+>>       [commitinview $pending_select $curview]} {
+>> +     update
+>>       selectline [rowofcommit $pending_select] 1
+>
+> What does that update do?  Would update idletasks be better?
+
+That update forces Tk to recompute the widget dimensions. Otherwise
+selectline sometimes gets all zeroes from yview, which makes it
+compute really weird scrolling settings. Git-gui always does an update
+before scrolling computations.
+
+Alexander
