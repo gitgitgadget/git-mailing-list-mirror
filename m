@@ -1,56 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] format-patch: Produce better output with --inline or
-	--attach
-Date: Thu, 31 Jul 2008 01:52:29 -0400
-Message-ID: <20080731055229.GB17652@sigill.intra.peff.net>
-References: <20080730052401.GC4034@sigill.intra.peff.net> <1217396973-82246-1-git-send-email-kevin@sb.org> <alpine.LSU.1.00.0807301624410.3486@wbgn129.biozentrum.uni-wuerzburg.de> <B805BDA1-6C22-4488-B5F5-6DA8CC729C06@sb.org>
+From: Alexander Litvinov <litvinov2004@gmail.com>
+Subject: Re: [PATCH] git-svn now work with crlf convertion enabled.
+Date: Thu, 31 Jul 2008 12:57:48 +0700
+Organization: AcademSoft Ltd.
+Message-ID: <200807311257.49108.litvinov2004@gmail.com>
+References: <200807231544.23472.litvinov2004@gmail.com> <alpine.DEB.1.00.0807231117290.2830@eeepc-johanness> <200807311243.35219.litvinov2004@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Thu Jul 31 07:53:33 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <normalperson@yhbt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 31 07:59:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOR6R-0001jy-Mj
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 07:53:32 +0200
+	id 1KORBk-0002wA-PM
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 07:59:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752388AbYGaFwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 01:52:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752367AbYGaFwb
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 01:52:31 -0400
-Received: from peff.net ([208.65.91.99]:1625 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751035AbYGaFwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 01:52:30 -0400
-Received: (qmail 17464 invoked by uid 111); 31 Jul 2008 05:52:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 31 Jul 2008 01:52:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Jul 2008 01:52:29 -0400
+	id S1752317AbYGaF57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 01:57:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752319AbYGaF56
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 01:57:58 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:50268 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752306AbYGaF56 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 01:57:58 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so334652ugf.16
+        for <git@vger.kernel.org>; Wed, 30 Jul 2008 22:57:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:organization:to:subject
+         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=BwLlITmR5nY+1zl9HuJwC5Mfw4ajiXmYRTNxuSvrKJs=;
+        b=rSQ9CdyZs9Sk+cAVRLUS5zezs6dvwbCjPQ+gO7Q1e6AERguKTr/N/71CwUCEbeMtjA
+         zy+peSaMIaVCM/688g/LV9Dqi/DH/l4XQS6u6GCjmDsguFHLqsrufnCOs6sVlN+QvYhp
+         ZNsVYIvYel6gUhs1Gd196od5aWgot/7XqLFEc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:organization:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=VoGQ2fbikwsXsg9nBL484HW/7cnWgNUxUpekXs6nHz54gwH/W0sQC1lE4irGpXJKlW
+         cjbgj5OQ0rklFGR2oqpeqbhh17pQBl971QelrPFcT2fqbVaO4FIoVxWdMLI/6+RDOeKJ
+         A1uu119iADga9AjwrzMkevdq54EevgSBhZGgU=
+Received: by 10.67.23.5 with SMTP id a5mr2074515ugj.89.1217483876160;
+        Wed, 30 Jul 2008 22:57:56 -0700 (PDT)
+Received: from lan.ac-sw.lcl ( [91.201.74.194])
+        by mx.google.com with ESMTPS id w28sm2549622uge.4.2008.07.30.22.57.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 30 Jul 2008 22:57:55 -0700 (PDT)
+User-Agent: KMail/1.9.5
+In-Reply-To: <200807311243.35219.litvinov2004@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <B805BDA1-6C22-4488-B5F5-6DA8CC729C06@sb.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90894>
 
-On Wed, Jul 30, 2008 at 11:30:32AM -0700, Kevin Ballard wrote:
+> Make git-svn works with crlf (or any other) file content convertion
+> enabled.
+>
+> When we modify file content SVN cant apply its delta to it. To fix this
+> situation I take full file content from SVN as next revision. This is
+> dump and slow but it works.
 
->>> The second change is to always write the line termination character
->>> (default: newline) even when using --inline or --attach. This is  
->> It appears that your patch has one uncontroversial and one  
->> controversial
->> part, then.
-> Is this controversial? Nobody's objected so far. My goal with this change 
-> is to make the --inline output render exactly the same as the default 
-> output in a mail client. I can't think of any downside.
+Sorry for the noise. 
 
-No. I didn't comment on it in my earlier response because I don't really
-care. But I certainly have no problem with it, and it is probably an
-improvement.
+git-svn fetch files with this patch but I have found that git-svn use 
+git-hash-object and provide file name to store into stdin. As far as file is 
+a temp file git-hash-object can't correctly apply crlf convertion for the 
+file.
 
--Peff
+As a conclusion: git-svn does not apply crlf convertion on files being stored 
+into git repo. This make my patch useless.
