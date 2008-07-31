@@ -1,61 +1,54 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: Git vs Monotone
-Date: Thu, 31 Jul 2008 20:33:17 +0200
-Message-ID: <20080731183317.GA31085@cuci.nl>
-References: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: linking libgit.a in C++ projects
+Date: Thu, 31 Jul 2008 20:37:32 +0200
+Message-ID: <20080731183732.GA7598@steel.home>
+References: <ac9f0f090807310253v1d97e2a1n4ddf34aa4fdc79f0@mail.gmail.com> <4891B872.3040707@panasas.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailinglist <git@vger.kernel.org>
-To: Sverre Rabbelier <alturin@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 31 20:34:24 2008
+Cc: cte <cestreich@gmail.com>, git@vger.kernel.org
+To: Boaz Harrosh <bharrosh@panasas.com>
+X-From: git-owner@vger.kernel.org Thu Jul 31 20:38:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOcyh-00024a-Ma
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 20:34:20 +0200
+	id 1KOd2r-0003go-B2
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 20:38:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752980AbYGaSdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 14:33:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753281AbYGaSdT
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 14:33:19 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:42120 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752308AbYGaSdS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 14:33:18 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 4C7E75466; Thu, 31 Jul 2008 20:33:17 +0200 (CEST)
+	id S1753291AbYGaShg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 14:37:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753211AbYGaShg
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 14:37:36 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.181]:35156 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753201AbYGaShf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 14:37:35 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg2r44h+w6yw==
+Received: from tigra.home (Fa9e8.f.strato-dslnet.de [195.4.169.232])
+	by post.webmailer.de (fruni mo3) (RZmta 16.47)
+	with ESMTP id g02554k6VHSZs3 ; Thu, 31 Jul 2008 20:37:32 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 97D9F277BD;
+	Thu, 31 Jul 2008 20:37:32 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 6546156D2A; Thu, 31 Jul 2008 20:37:32 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <4891B872.3040707@panasas.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90960>
 
-Sverre Rabbelier wrote:
->If I clone the git mirror of our monotone repository, I find a
->checkout size of 148 MB after git-repack--running git-gc also
->increased the size by 2 MB, but I'll stick with the initial checkout
->size for fairness. If I multiply this by my 11 checkouts, I will have
->1628 MB. This is even more compelling for me, as I now save 728 MB of
->disk space with monotone."
+Boaz Harrosh, Thu, Jul 31, 2008 15:04:50 +0200:
+> Produce a C file and header that defines some stable API to your
+> GUI application, that does not expose any git internal headers.
+> Then compile that, say git_api.c, with C compiler in Makefile
+> and extern "C" link that file to your C++ application. This will
+> completely insulate you from any git code.
 
-You have at least two options to reduce diskspace:
-a. Clone once from remote, then clone from that clone, it should
-   hardlink the larger packfiles to the initial clone and therefore not
-   cost you a lot.
-b. Clone once from remote, and create 11 branches inside the new cloned
-   repo.  Switch branches while doing development.
-
-Most git users pick b.  It's easier to work with.  Having 11 unpacked
-repos means that all the object files in those trees are almost up to
-date, but it adds to the complexity of comparing changes and merging
-changes between branches.  The compilation speed can be increased with
-ccache if need be.
--- 
-Sincerely,
-           Stephen R. van den Berg.
-"There are three types of people in this world: those who make things happen,
- those who watch things happen and those who wonder what happened."
+no, it wont. He still have to resolve name conflicts at the link time.
