@@ -1,96 +1,93 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: Monotone workflow compared to Git workflow ( was RE: Git vs Monotone)
-Date: Thu, 31 Jul 2008 17:10:50 -0400
-Message-ID: <32541b130807311410w6884c303i9f89fea3887f934b@mail.gmail.com>
-References: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com>
-	 <alpine.LFD.1.10.0807311211260.3277@nehalem.linux-foundation.org>
-	 <63BEA5E623E09F4D92233FB12A9F79430238A5EE@emailmn.mqsoftware.com>
-	 <alpine.LFD.1.10.0807311253140.3277@nehalem.linux-foundation.org>
-	 <20080731205400.GA7911@atjola.homenet>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: q: git-fetch a tad slow?
+Date: Thu, 31 Jul 2008 23:11:41 +0200
+Message-ID: <20080731211141.GA1159@elte.hu>
+References: <20080728160138.GA12777@elte.hu> <20080729055014.GE11947@spearce.org> <20080729090802.GA11373@elte.hu> <20080730044855.GA7225@spearce.org> <20080730190657.GC26389@elte.hu> <20080731044531.GB1860@spearce.org> <20080731210307.GF25138@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Craig L. Ching" <cching@mqsoftware.com>, sverre@rabbelier.nl,
-	"Git Mailinglist" <git@vger.kernel.org>
-To: "=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?=" <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 31 23:11:59 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jul 31 23:13:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOfRC-0005fl-AW
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 23:11:54 +0200
+	id 1KOfSB-00063Y-84
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 23:12:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753730AbYGaVKx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Jul 2008 17:10:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753659AbYGaVKx
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 17:10:53 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:13618 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752693AbYGaVKw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Jul 2008 17:10:52 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so453571ywe.1
-        for <git@vger.kernel.org>; Thu, 31 Jul 2008 14:10:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=IwkZnnwEEu4mfmCFA9V3VyQBaYZH09LXIUWuG3RG9Os=;
-        b=xd1keqZuJi0oFY26MWqcbICnXyullPXdwsGB/lhsrFTwNp+IJzq+mQVxmPNuIA1Ind
-         LsDBc1DqrGTfa2QrD/Hx9wvy7IcS6bVL49H6FfWL1LqyhNAKxDv+RN1t/N8YZFrmakkp
-         WUdV3wguDL+s0ak0d81e3YzFFGSComn5Tsicc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=BWdREvAwc73zgAd6OvuYRCuIM/+a7T64OoN597a9G2uGu/fvoTQbVFrt15G/KsdNKu
-         gTG/cJoj5ulK31Eesf3krnOujvTwuB+ObJJEdVlROD2Fz4cDzRUQGP58MwIvh97bChOQ
-         6wZE+ra8N3WwIvPaH4EYPGhGmbzbykchChHpg=
-Received: by 10.151.147.17 with SMTP id z17mr1923784ybn.74.1217538650631;
-        Thu, 31 Jul 2008 14:10:50 -0700 (PDT)
-Received: by 10.150.98.19 with HTTP; Thu, 31 Jul 2008 14:10:50 -0700 (PDT)
-In-Reply-To: <20080731205400.GA7911@atjola.homenet>
+	id S1753042AbYGaVLz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 17:11:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbYGaVLy
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 17:11:54 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:50918 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751752AbYGaVLy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 17:11:54 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1KOfR1-0003P8-Hc
+	from <mingo@elte.hu>; Thu, 31 Jul 2008 23:11:52 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 91F293E2191; Thu, 31 Jul 2008 23:11:42 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20080731210307.GF25138@elte.hu>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90993>
 
-On 7/31/08, Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> wrote:
->  Maybe even better:
->
->  mkdir local-mirror
->  cd local-mirror
->  git --bare init
->  git remote add -f --mirror origin <central-repo-over-network>
->
->  A cronjob (or whatever) could keep the local mirror up-to-date and t=
-he
->  other repos can fetch from there. Pushing would need to go to a
->  different remote then though.. Humm... Maybe not worth the trouble f=
-or a
->  bit of additional object sharing.
 
-What would be *really* great is if we could find a way for multiple
-local clones to share the same objects, refs, and configuration - ie.
-without pushing and pulling between them at all.  Then they could
-*all* point at the remote upstream repo through "origin", and
-pushing/pulling with that repo would update the objects and refs for
-all the local repos.
+* Ingo Molnar <mingo@elte.hu> wrote:
 
-I'm not sure of the best way to do this, though.  In particular, it
-seems like having multiple work trees checked out on the same ref
-could be problematic.
+> > for strictly local fetch.  If your SSH overhead is ~300 ms this is 
+> > only a ~700 ms real time for `git fetch origin`, not 5100 ms.
+> > 
+> > Is your git-fetch a shell script?  Or a compiled binary?  The port 
+> > into C made it go _much_ faster, even though it is still a naive 
+> > O(N^2) matching algorithm.  Yea, we still should fix that, but I 
+> > think an upgrade to 1.5.4 or later would make the client side 
+> > improve consideribly.
+> 
+> ah, it is a shell script indeed! I'll upgrade to latest.
 
-Is that just what git-new-workdir is for?  (It seems to be
-undocumented so it's hard to tell.)  And what about this
-=2Egitlink/.gitfile stuff I've heard about?  Could I use that to have
-multiple work trees share the same .git folder?
+on another box, with 1.5.4, i have:
 
-Thanks,
+ dione:~/tip> time git fetch origin
 
-Avery
+ real    0m0.481s
+ user    0m0.136s
+ sys     0m0.060s
+
+ dione:~/tip> time ./tip-fetch
+ b714d1a257cca93ba6422ca3276ac80a2cde2b59
+ b714d1a257cca93ba6422ca3276ac80a2cde2b59
+
+ real    0m0.273s
+ user    0m0.012s
+ sys     0m0.020s
+
+that's a 2.66 GHz core2 quad, i.e. a pretty fast box too. As you can see 
+most time spent in the tip-fetch case was waiting for the network. So 
+there's about 200 msecs of extra CPU cost on the local side. On a CPU 
+1-2 generations older that could be up to 1000 msecs or more.
+
+In any case, performance has improved significantly with the C version! 
+(I'll still use tip-fetch to squeeze out the last bit of performance, 
+but it's quite comparable now.)
+
+Sorry that i didnt notice that titan had 1.5.2 - i almost never notice 
+it when i switch between stable git versions. (you guys are doing a 
+really good job on compatibility)
+
+	Ingo
