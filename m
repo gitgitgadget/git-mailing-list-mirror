@@ -1,79 +1,52 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: linking libgit.a in C++ projects
-Date: Thu, 31 Jul 2008 14:57:27 +0400
-Message-ID: <20080731105727.GF7008@dpotapov.dyndns.org>
-References: <ac9f0f090807310253v1d97e2a1n4ddf34aa4fdc79f0@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] 64bit issue in test-parse-options.c
+Date: Thu, 31 Jul 2008 13:07:08 +0200
+Message-ID: <20080731110708.GN32184@machine.or.cz>
+References: <20080730141656.41ce02ec@pc09.procura.nl> <20080730123713.GA31392@artemis.madism.org> <20080730144452.797d8686@pc09.procura.nl> <20080730140523.GC31392@artemis.madism.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: cte <cestreich@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 31 12:59:12 2008
+To: Pierre Habouzit <madcoder@debian.org>,
+	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 31 13:08:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOVs8-0006XC-Db
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 12:59:04 +0200
+	id 1KOW0z-0001WR-UO
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 13:08:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586AbYGaK5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 06:57:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751718AbYGaK5g
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 06:57:36 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:35705 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751586AbYGaK5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 06:57:35 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so240794fgg.17
-        for <git@vger.kernel.org>; Thu, 31 Jul 2008 03:57:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=RkI+C/iQM7LiYqb/UYoDLApjOD32fqbBPb+R/gaQYKc=;
-        b=NIHxyqHILyx/JkApVDtAFmWbu5dfjvveg9I5CRGE5PJfArF1isyUjxQV+fQWvfNayw
-         P76tHV+HzIUFV4wL+KD9U1ino0pzylM0qEIYRbjJowmH6y5S/ault6cFlgDj06spcrrn
-         t6SJD5wzdkub6jzGM8ss3FLfyq0qxtoCx/zJM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=tahhcxO3KAQlZx4ZxbBTgBvLhRYHsuatb+r9s5v7JOqzlb84yR3tZNXuagEkqi5n63
-         lVJdIsiK5SLrpdMsM2WFJY435RK5HvqMdETvSycq+CDwU14X1zUvhJrpd9vAGLwU4JVh
-         I68/qtVY/3WOPhC/QL+e5xF19JQbX4KP7cziE=
-Received: by 10.86.82.16 with SMTP id f16mr5956571fgb.9.1217501852452;
-        Thu, 31 Jul 2008 03:57:32 -0700 (PDT)
-Received: from localhost ( [85.141.148.53])
-        by mx.google.com with ESMTPS id 12sm2641091fgg.0.2008.07.31.03.57.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 31 Jul 2008 03:57:30 -0700 (PDT)
+	id S1751746AbYGaLHM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 07:07:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751727AbYGaLHM
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 07:07:12 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:37688 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751209AbYGaLHL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 07:07:11 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 4AC20393B282; Thu, 31 Jul 2008 13:07:08 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <ac9f0f090807310253v1d97e2a1n4ddf34aa4fdc79f0@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20080730140523.GC31392@artemis.madism.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90925>
 
-On Thu, Jul 31, 2008 at 02:53:37AM -0700, cte wrote:
-> I'm writing a git gui for OS X using cocoa/Objective-C++, and rather
-> than being lame and parsing the output the various git commands, I'm
-> using libgit.a to provide all of the needed functionality for my app.
+On Wed, Jul 30, 2008 at 04:05:23PM +0200, Pierre Habouzit wrote:
+> On Wed, Jul 30, 2008 at 12:44:52PM +0000, H.Merijn Brand wrote:
+> > On Wed, 30 Jul 2008 14:37:13 +0200, Pierre Habouzit
+> > <madcoder@debian.org> wrote:
+> > >   long is wrong in the first place, parse-opt only uses ints.
+> > 
+> > If I change it to int, the date parsing goes bogus.
+> 
+> That is because OPT_DATE indeed expect a long (why not a time_t I don't
+> know btw... but time_t is a long on linux so it doesn't change things a
+> lot).
 
-Don't do that! libgit.a is an internal library used solely to build
-git binaries. It means that its interface can be cahnged at any time.
-Though, there is an idea of creating the real git library that other
-applications can use, but AFAIK no one is working on it. So parsing
-output is the only correct solution right now. In fact, it is not
-difficult to do, because most plumbing commands are rather flexibly
-in what they output and how.
+Still, I think converting to time_t for timestamps would be a good
+cleanup; I have added it to http://git.or.cz/gitwiki/Janitor.
 
-> However, the git source uses a few reserved C++ keywords; namely
-> 'typename', and 'new'.
-
-Because this source code are meant to be compiled by C and not by C++!
-Even if we will have real git library for other applications to use,
-it still be compiled only by C. Thus, C++ keywords are not issue.
-
-Dmitry
+				Petr "Pasky" Baudis
