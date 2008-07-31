@@ -1,80 +1,75 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: q: git-fetch a tad slow?
-Date: Thu, 31 Jul 2008 14:19:19 -0700
-Message-ID: <20080731211919.GC24631@spearce.org>
-References: <20080728160138.GA12777@elte.hu> <20080729055014.GE11947@spearce.org> <20080729090802.GA11373@elte.hu> <20080730044855.GA7225@spearce.org> <20080730190657.GC26389@elte.hu> <20080731044531.GB1860@spearce.org> <20080731210307.GF25138@elte.hu> <20080731211141.GA1159@elte.hu>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Monotone workflow compared to Git workflow ( was RE: Git vs
+	Monotone)
+Date: Thu, 31 Jul 2008 17:22:15 -0400
+Message-ID: <20080731212215.GI20819@mit.edu>
+References: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com> <alpine.LFD.1.10.0807311211260.3277@nehalem.linux-foundation.org> <63BEA5E623E09F4D92233FB12A9F79430238A5EE@emailmn.mqsoftware.com> <BLU0-SMTP273E4683B41DB7E44122F0AE7C0@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Thu Jul 31 23:20:44 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Craig L. Ching" <cching@mqsoftware.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	sverre@rabbelier.nl, Git Mailinglist <git@vger.kernel.org>
+To: Sean Estabrooks <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Thu Jul 31 23:23:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOfZO-0001A5-1L
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 23:20:22 +0200
+	id 1KOfck-0002So-AH
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 23:23:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752693AbYGaVTV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 17:19:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753987AbYGaVTV
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 17:19:21 -0400
-Received: from george.spearce.org ([209.20.77.23]:48807 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752693AbYGaVTU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 17:19:20 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id E72CE38419; Thu, 31 Jul 2008 21:19:19 +0000 (UTC)
+	id S1753683AbYGaVWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 17:22:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753529AbYGaVWs
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 17:22:48 -0400
+Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:52315 "EHLO
+	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752773AbYGaVWs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 17:22:48 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1KOfbE-0001wH-9u; Thu, 31 Jul 2008 17:22:16 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1KOfbD-0006Ud-Mm; Thu, 31 Jul 2008 17:22:15 -0400
 Content-Disposition: inline
-In-Reply-To: <20080731211141.GA1159@elte.hu>
+In-Reply-To: <BLU0-SMTP273E4683B41DB7E44122F0AE7C0@phx.gbl>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90996>
 
-Ingo Molnar <mingo@elte.hu> wrote:
-> 
-> on another box, with 1.5.4, i have:
-> 
->  dione:~/tip> time git fetch origin
-> 
->  real    0m0.481s
->  user    0m0.136s
->  sys     0m0.060s
-> 
->  dione:~/tip> time ./tip-fetch
->  b714d1a257cca93ba6422ca3276ac80a2cde2b59
->  b714d1a257cca93ba6422ca3276ac80a2cde2b59
-> 
->  real    0m0.273s
->  user    0m0.012s
->  sys     0m0.020s
-> 
-> that's a 2.66 GHz core2 quad, i.e. a pretty fast box too. As you can see 
-> most time spent in the tip-fetch case was waiting for the network. So 
-> there's about 200 msecs of extra CPU cost on the local side.
+On Thu, Jul 31, 2008 at 04:57:24PM -0400, Sean Estabrooks wrote:
+> > We find ourselves constantly having to shift gears and work on other
+> > things in the middle of whatever it is we're currently working on.  For
+> > instance, in the scenario above, A might be branch that contains a
+> > feature going into our next release.  B might be a bugfix and takes
+> > priority over A, so you have to leave A as-is and start work on B.  When
+> > I come back to work on A, I have to rebuild A to continue working, and
+> > that's just too expensive for us.  So we use the monotone-like
+> > new-workdir which allows us to save those build artifacts.
+>
+> A decent build system will only compile the source files that actually
+> changed when switching branches.  Couple that with a compiler cache
+> (such as ccache) and switching between branches in the kernel or git
+> project usually isn't prohibitively time consuming.
 
-Yea.  My testing last night was suggesting about 1/2 of that 200
-ms is on the client, and the other 200 ms is on the server side
-of the connection.  That matches up somewhat with your test above,
-where git-fetch used about 100 ms more user time on the client side
-than your tip-fetch shell script.
+That being said, if the bugfix is on a "maint" branch, and one of the
+things that has changed is a header file that forces most of the
+project to be recompiled, a separate work directory may be more
+convenient.  Of course, a separate work directory (whether created
+using "git clone -s" or "git-new-workdir" means more disk space and it
+means greater use of the page cache or a slowdown while the different
+sets of sources get paged in and out.  Of course, you could hack
+git-work-dir to use cp -rl to initially copy the working directory
+using hard links, and then when the new branch is checked out, if most
+of the files haven't changed, the files in the working directory could
+be shared too.  A lot depends on how much you want to squeeze the last
+bit of hard drive and speed optimization, and how big your project is.
 
-I have no clue where the bottleneck is, I didn't get that far before
-I realized you must have been running a shell script based git-fetch
-to be seeing the performance you were.
-
-Maybe 1.6.1 or .2 we can try to squeeze fetch to run faster.
-Its far too late for 1.6.0.
-
-> Sorry that i didnt notice that titan had 1.5.2 - i almost never notice 
-> it when i switch between stable git versions. (you guys are doing a 
-> really good job on compatibility)
-
-Yea, its easy to not realize your git isn't giving you the latest
-and greatest toys.  ;-)
-
--- 
-Shawn.
+       	    	      	    		      - Ted
