@@ -1,84 +1,131 @@
-From: Aidan Van Dyk <aidan@highrise.ca>
-Subject: Re: Compile fix for SCO OPenServer
-Date: Wed, 30 Jul 2008 20:11:12 -0400
-Message-ID: <20080731001112.GP10399@yugib.highrise.ca>
-References: <20071205172125.GF12636@yugib.highrise.ca> <20080730184956.GF10399@yugib.highrise.ca> <7vtze73zwg.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0807301403360.13032@xenau.zenez.com> <20080730204339.GJ10399@yugib.highrise.ca> <alpine.LNX.1.10.0807301522140.13032@xenau.zenez.com> <20080730225635.GM10399@yugib.highrise.ca> <alpine.LNX.1.10.0807301700500.13032@xenau.zenez.com> <20080730234455.GN10399@yugib.highrise.ca> <alpine.LNX.1.10.0807301747160.13032@xenau.zenez.com>
+From: "Scott Chacon" <schacon@gmail.com>
+Subject: Re: markdown 2 man, was Re: Git Community Book
+Date: Wed, 30 Jul 2008 17:13:43 -0700
+Message-ID: <d411cc4a0807301713o6b1fd2e8lde0636352f8f1c5b@mail.gmail.com>
+References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>
+	 <20080729170955.GK32184@machine.or.cz>
+	 <d411cc4a0807291130p228f77d5r1f390090ec29aef4@mail.gmail.com>
+	 <7vwsj4edm1.fsf@gitster.siamese.dyndns.org>
+	 <Pine.LNX.4.64.0807291957410.1779@reaper.quantumfyre.co.uk>
+	 <alpine.LSU.1.00.0807301514280.3486@wbgn129.biozentrum.uni-wuerzburg.de>
+	 <7vy73j418t.fsf@gitster.siamese.dyndns.org>
+	 <B7697630-DF9C-4EF0-9D63-9E362CEE125B@wincent.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="KCXyoJ//PRyfzsc9"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Boyd Lynn Gerber <gerberb@zenez.com>
-X-From: git-owner@vger.kernel.org Thu Jul 31 02:12:20 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git list" <git@vger.kernel.org>
+To: "Wincent Colaiuta" <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Jul 31 02:14:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOLmG-00061c-3d
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 02:12:20 +0200
+	id 1KOLoj-0006ch-Lm
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 02:14:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760988AbYGaALO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2008 20:11:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762093AbYGaALO
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 20:11:14 -0400
-Received: from yugib.highrise.ca ([205.150.199.213]:43232 "EHLO
-	yugib.highrise.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762053AbYGaALN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2008 20:11:13 -0400
-Received: from localhost (yugib.highrise.ca [205.150.199.213])
-	by yugib.highrise.ca (Postfix) with ESMTP id 1EC18111E39;
-	Wed, 30 Jul 2008 20:11:12 -0400 (EDT)
+	id S1756155AbYGaANr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Jul 2008 20:13:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758345AbYGaANq
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jul 2008 20:13:46 -0400
+Received: from rv-out-0506.google.com ([209.85.198.232]:30662 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762854AbYGaANo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Jul 2008 20:13:44 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so285494rvb.1
+        for <git@vger.kernel.org>; Wed, 30 Jul 2008 17:13:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=O58sgTZnlFFWLy9QynOBJDFszY0kcTGQxWz44ZjajYQ=;
+        b=eoiTPI7WDuI6hsFpotroH8fOlLJMNsowa3BOwcsZb+GUDSqV0d0qBYLmgFRTM+c0Wb
+         xGOI2qju8hsWTTSgDL383nuq9rtbq0ZlsvD09B0Qc38qCcZaTtFC6vBH7ukO1NbvySRL
+         /nn2rKQfrOTPaphKIgArviF1oVaKJ1BULNf70=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=LNii6MtwiBZpqLWlrxvpDcpRwuRbC0o6nb1yhv51EjsbmOyafpSuutzD2Yx/7H0ysm
+         AIpgCeQRe3PAO/52qckk1B/l9YtZYQh06pEAMVucqPIBaqa207NTV+P/81yNmvBbHQwW
+         sgDeMVoOpiTpRGoRaut9zDmyKrK585TV3xDDM=
+Received: by 10.114.53.18 with SMTP id b18mr6058057waa.141.1217463223958;
+        Wed, 30 Jul 2008 17:13:43 -0700 (PDT)
+Received: by 10.115.22.20 with HTTP; Wed, 30 Jul 2008 17:13:43 -0700 (PDT)
+In-Reply-To: <B7697630-DF9C-4EF0-9D63-9E362CEE125B@wincent.com>
 Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.10.0807301747160.13032@xenau.zenez.com>
-User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90883>
+
+On Wed, Jul 30, 2008 at 4:48 PM, Wincent Colaiuta <win@wincent.com> wro=
+te:
+> El 30/7/2008, a las 21:32, Junio C Hamano escribi=F3:
+>
+>> That's one valid approach.  I or you might have taken a different av=
+enue,
+>> but after all, it's his book, not mine, not yours, nor git list's bo=
+ok.
+>
+> Funnily enough, he chose to title it the "Git Community Book". Hard t=
+o match
+> Scott's enthusiasm; this is the second major initiative we've seen fr=
+om him
+> in the last few days (the other being git-scm.com itself) which to th=
+e
+> casual onlooker might look like the "official" Git homepage and
+> documentation, but in both cases development occurred behind the scen=
+es and
+> the list was only notified after the fact. Better late than never I s=
+uppose.
+
+Not sure what else I could have done - I announced that I was starting
+a documentation project like this about a week ago on this list, then
+I started the book 3 days ago
+(http://github.com/schacon/gitscm/commits/book) and announced it here
+for initial review yesterday.  I haven't told very many people about
+it yet and I haven't linked to it from git-scm.com yet either.  It's
+been open source from the first minute on GitHub, and the link to the
+source was on the website I posted here.
+
+Same for the git-scm site - I started it on the 23rd and emailed Pasky
+about it the next day, and the day after that he began submitting
+patches to me for it and I announced it on this list.  Am I missing
+something here?  Do you think I've been working on these secretly for
+months, or something?  If there is a better communication workflow, I
+would be happy to do so.
+
+I appreciate that you notice my enthusiasm, though. :)
+
+Scott
 
 
---KCXyoJ//PRyfzsc9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-* Boyd Lynn Gerber <gerberb@zenez.com> [080730 20:00]:
- 
-> So what do you think we need to have.  I really do not see the need for 
-> __OPENSERVER__.  Do you?
-
-No, I think I saw that long ago, when I said:
-> Sorry, a bit premature on my end...    
-
-With SNPRINTF_RETURNS_BOGUS and NO_MKDTEMP and CFLAGS set for make, I
-don't need any source code changes to compile on SCO.
-
-And as long as I have GNU bash and diff available, the test suite passes
-as well.  Well, all except for t9500-gitweb-standalone-no-errors.sh:
-	[Thu Jul 31 00:08:46 2008] gitweb.perl: -T and -B not implemented on filehandles at /u/aidan/git/t/trash directory/../../gitweb/gitweb.perl line 2444.
-
-Perl claims:
-	This is perl, v5.8.8 built for i586-pc-sysv5
-
-But again, I don't plan on running gitweb on this SCO box either...
-
-
-a.
--- 
-Aidan Van Dyk                                             Create like a god,
-aidan@highrise.ca                                       command like a king,
-http://www.highrise.ca/                                   work like a slave.
-
---KCXyoJ//PRyfzsc9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFIkQMfuVxNPsxNPScRAlZiAKCZRN0ovGPN/L79EKTT8ASTr2m2JwCfYEu3
-h/Po6Oa8tAZjnMRzgBm4isA=
-=ZhDn
------END PGP SIGNATURE-----
-
---KCXyoJ//PRyfzsc9--
+>> We originally hoped (well, at least I did) that Scott's effort on hi=
+s book
+>> might help us in improving the User Manual as well, but the approach=
+ seems
+>> to make it unlikely.  But that is nothing to hold against him --- he=
+ is
+>> doing his own thing in a way he feels is the best, and that's perfec=
+tly
+>> fine.  We lost nothing, perhaps except for a chance to cooperate a b=
+it
+>> better and to widen the community.
+>
+> Even though there might not be an automated way to get changes back f=
+rom the
+> fork, if there are clear improvements made then there is at least no =
+legal
+> obstacle to incorporating them back in, the only obstacle would be ti=
+me and
+> willingness to do so manually.
+>
+>>
+> Cheers,
+> Wincent
+>
+>
