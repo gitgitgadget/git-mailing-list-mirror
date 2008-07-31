@@ -1,86 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] revision traversal: show full history with merge
- simplification
-Date: Thu, 31 Jul 2008 01:18:58 -0700
-Message-ID: <7vd4kuzcst.fsf@gitster.siamese.dyndns.org>
-References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com>
- <200807260512.40088.zippel@linux-m68k.org>
- <alpine.LFD.1.10.0807261249430.4188@nehalem.linux-foundation.org>
- <Pine.LNX.4.64.0807270049290.6791@localhost.localdomain>
- <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org>
- <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain>
- <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org>
- <Pine.LNX.4.64.0807280141140.6791@localhost.localdomain>
- <alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org>
- <Pine.LNX.4.64.0807281241180.6791@localhost.localdomain>
- <46a038f90807282015m7ce3da10h71dfee221c960332@mail.gmail.com>
- <Pine.LNX.4.64.0807291433430.6791@localhost.localdomain>
- <alpine.LFD.1.10.0807291716060.3334@nehalem.linux-foundation.org>
- <alpine.LFD.1.10.0807291738280.3334@nehalem.linux-foundation.org>
- <7vej5b3ozz.fsf@gitster.siamese.dyndns.org>
- <7vhca6zcuy.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git blame not respecting --find-copies-harder ?
+Date: Thu, 31 Jul 2008 04:25:54 -0400
+Message-ID: <20080731082553.GA19522@sigill.intra.peff.net>
+References: <20080730093903.GA14330@cuci.nl> <20080730150123.GB9758@atjola.homenet> <bd6139dc0807300843l1d42d6fep95f6c99fe6e0ea0@mail.gmail.com> <20080731064814.GA32431@sigill.intra.peff.net> <7vfxpq3559.fsf@gitster.siamese.dyndns.org> <20080731072149.GA2304@sigill.intra.peff.net> <7v8wvi33ok.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Roman Zippel <zippel@linux-m68k.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 31 10:20:17 2008
+Content-Type: text/plain; charset=utf-8
+Cc: sverre@rabbelier.nl,
+	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	"Stephen R. van den Berg" <srb@cuci.nl>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 31 10:27:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOTOO-0002nj-3F
-	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 10:20:12 +0200
+	id 1KOTVA-0004wa-2G
+	for gcvg-git-2@gmane.org; Thu, 31 Jul 2008 10:27:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750969AbYGaITL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 04:19:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750972AbYGaITL
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 04:19:11 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38779 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750841AbYGaITK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 04:19:10 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id AFE2244BF6;
-	Thu, 31 Jul 2008 04:19:07 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id F38B744BF5; Thu, 31 Jul 2008 04:19:00 -0400 (EDT)
-In-Reply-To: <7vhca6zcuy.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 31 Jul 2008 01:17:41 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 58812FF8-5ED9-11DD-8DE1-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751701AbYGaIZ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 04:25:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbYGaIZ5
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 04:25:57 -0400
+Received: from peff.net ([208.65.91.99]:3125 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751122AbYGaIZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 04:25:55 -0400
+Received: (qmail 22061 invoked by uid 111); 31 Jul 2008 08:25:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 31 Jul 2008 04:25:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Jul 2008 04:25:54 -0400
+Content-Disposition: inline
+In-Reply-To: <7v8wvi33ok.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/90911>
 
-If you look at the output from the "kernel/printk.c" with this patch, you
-would notice that there still are somewhat meaningless merges shown in the
-history (e.g. scroll down to 185a257f2f73bcd89050ad02da5bedbc28fc43fa).
+On Thu, Jul 31, 2008 at 12:36:59AM -0700, Junio C Hamano wrote:
 
-The mainline side keeps making steady changes to the path, but the side
-branch that made tty_write_message available to others with b346671
-([PATCH] Export tty_write_message() for GFS2 quota code, 2006-01-16) keeps
-many "Merge from master" until it is merged back to the mainline, even
-after the earlier change is reverted by 02630a1 ([GFS2] Remove dependance
-on tty_write_message(), 2006-07-03).
+> Alas, shortlog does not take --all.  Yes, I know
+> 
+> 	git log --since=3.day --all | git shortlog | sort | uniq -c
+> 
+> is an obvious workaround, but it is mildly irritating.
 
-I wonder if we can do something clever to reduce these pointless (from the
-point of view of explaining kernel/printk.c's evolution, at least) merges
-from the output.  This might be another example of the reason why it is a
-good thing that you keep teaching people: "On your xyzzy topic, you are
-doing xyzzy development, not xyzzy development plus random changes ---
-don't merge my tree into yours!", and we could dismiss these extra merges
-we see in the output as artifacts from a bad practice, but as long as we
-are spending extra cycles, it would be better if we could reduce such
-clutter.
+Hmm. Could it be as simple as:
 
-I am still undecided about the option name.
+diff --git a/revision.c b/revision.c
+index a843c42..eaa5572 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1002,7 +1002,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	    !strcmp(arg, "--no-walk") || !strcmp(arg, "--do-walk"))
+ 	{
+ 		unkv[(*unkc)++] = arg;
+-		return 0;
++		return 1;
+ 	}
+ 
+ 	if (!prefixcmp(arg, "--max-count=")) {
 
-The existing --full-history is "show history fully without simplifying the
-merge at all".  This is "show history fully with merge simplification".
-Perhaps --simplify-merges?
+That is, handle_revision_opt says "yes we parsed this, and it should be
+gone" even though it still gets stuck in the "unknown" section to be
+parsed by setup_revisions later.
+
+-Peff
