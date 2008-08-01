@@ -1,77 +1,62 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Git vs Monotone
-Date: Fri, 01 Aug 2008 11:57:53 +0200
-Message-ID: <86abfxawgu.fsf@lola.quinscape.zz>
-References: <bd6139dc0807311113n50dda9f0t1aab46b724510de2@mail.gmail.com>
-	<alpine.LFD.1.10.0807311211260.3277@nehalem.linux-foundation.org>
-	<63BEA5E623E09F4D92233FB12A9F79430238A5EC@emailmn.mqsoftware.com>
-	<alpine.LFD.1.10.0807311244240.3277@nehalem.linux-foundation.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: StGit: kha/{stable,safe,experimental} updated
+Date: Fri, 1 Aug 2008 12:22:08 +0200
+Message-ID: <20080801102208.GA29413@diana.vm.bytemark.co.uk>
+References: <20080725013936.GA20959@diana.vm.bytemark.co.uk> <b0943d9e0807270144n359e5bd3ye3e91c52b8fa7beb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 01 11:59:23 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Samuel Tardieu <sam@rfc1149.net>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 01 12:01:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOrPm-0003R5-My
-	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 11:59:15 +0200
+	id 1KOrRw-00047w-WD
+	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 12:01:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753163AbYHAJ6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2008 05:58:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753190AbYHAJ6L
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 05:58:11 -0400
-Received: from main.gmane.org ([80.91.229.2]:45264 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751746AbYHAJ6K (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2008 05:58:10 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KOrOf-0006VK-6R
-	for git@vger.kernel.org; Fri, 01 Aug 2008 09:58:05 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Aug 2008 09:58:05 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Aug 2008 09:58:05 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-Cancel-Lock: sha1:YDDd135qXwLKE9zY+9XUV8wDRWg=
+	id S1753189AbYHAKA0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Aug 2008 06:00:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753104AbYHAKA0
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 06:00:26 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2057 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752913AbYHAKAX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2008 06:00:23 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KOrlw-0007hN-00; Fri, 01 Aug 2008 11:22:08 +0100
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0807270144n359e5bd3ye3e91c52b8fa7beb@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91050>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On 2008-07-27 09:44:31 +0100, Catalin Marinas wrote:
 
-> On Thu, 31 Jul 2008, Craig L. Ching wrote:
->> 
->> It's possible he's doing that, but it's also possible he just isn't that
->> familiar with git.
+> 2008/7/25 Karl Hasselstr=F6m <kha@treskal.com>:
 >
-> Possible. But it really sounded like he didn't even try. Because quite 
-> frankly, if he had even bothered to _try_, he wouldn't have gotten the 
-> numbers he got.
->
-> The fact is, even without "-s", a local clone will do hardlinks for the 
-> database.
+> > The big update since last time is support (in kha/experimental) for
+> > hidden patches in the new-infrastructure commands and stack log.
+>=20
+> I'll have a look at the new stack log format (my main worry) this
+> week but the other patches look OK.
 
-That means that git takes up less disk space.  It does not mean that it
-looks like it.
+Heh. It's _always_ your main worry. But rightly so, since mistakes
+could be costly. Thanks for spending time on this with me.
 
-If you do a df before and afterwards, you'll notice (but that does not
-seem reliable as other changed might happen in the file system).  If you
-do "du" into the individual clones, you won't notice it.
+I made one change apart from adding the hidden patches: use the same
+tree for both the full and simplified logs. It's no more costly to
+write, and made the parsing substantially simpler.
 
-It is quite plausible that he might have tried it, but misinterpreted
-the results.
+> I merged the safe and stable branches.
 
-It is a similar situation with size estimates when sparse files are
-involved: they may take up less space than what it looks like.
+Thanks.
 
--- 
-David Kastrup
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
