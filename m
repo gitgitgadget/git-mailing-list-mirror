@@ -1,62 +1,74 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: StGit: kha/{stable,safe,experimental} updated
-Date: Fri, 1 Aug 2008 12:22:08 +0200
-Message-ID: <20080801102208.GA29413@diana.vm.bytemark.co.uk>
-References: <20080725013936.GA20959@diana.vm.bytemark.co.uk> <b0943d9e0807270144n359e5bd3ye3e91c52b8fa7beb@mail.gmail.com>
+From: Abdelrazak Younes <younes@lyx.org>
+Subject: Re: markdown 2 man, was Re: Git Community Book
+Date: Fri, 01 Aug 2008 12:19:30 +0200
+Message-ID: <4892E332.5060804@lyx.org>
+References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com> <7vvdylv9zq.fsf@gitster.siamese.dyndns.org> <4892B714.8010401@lyx.org> <200808011146.29883.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Samuel Tardieu <sam@rfc1149.net>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 01 12:01:31 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Scott Chacon <schacon@gmail.com>, Petr Baudis <pasky@suse.cz>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Aug 01 12:20:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOrRw-00047w-WD
-	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 12:01:29 +0200
+	id 1KOrkW-0001Tr-6n
+	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 12:20:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753189AbYHAKA0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Aug 2008 06:00:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753104AbYHAKA0
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 06:00:26 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2057 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752913AbYHAKAX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2008 06:00:23 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KOrlw-0007hN-00; Fri, 01 Aug 2008 11:22:08 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0807270144n359e5bd3ye3e91c52b8fa7beb@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753193AbYHAKTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2008 06:19:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753367AbYHAKTi
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 06:19:38 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:59166 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752945AbYHAKTi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2008 06:19:38 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id CA42212B6F7;
+	Fri,  1 Aug 2008 12:19:36 +0200 (CEST)
+Received: from [192.168.0.10] (gre92-10-88-181-30-42.fbx.proxad.net [88.181.30.42])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 3F2AC12B6E3;
+	Fri,  1 Aug 2008 12:19:36 +0200 (CEST)
+User-Agent: Thunderbird/3.0a2pre (Windows; 2008072800)
+In-Reply-To: <200808011146.29883.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91051>
 
-On 2008-07-27 09:44:31 +0100, Catalin Marinas wrote:
-
-> 2008/7/25 Karl Hasselstr=F6m <kha@treskal.com>:
+Thomas Rast wrote:
+> You wrote:
+>    
+>> Junio C Hamano wrote:
+>>      
+>>> How greppable and "log -p"-able is the documentation written in LyX?
+>>>        
+>> LyX format is plain text, loosely based on LateX. Here's attached a
+>> sample .lyx file FYI. We have one tag per line and a maximum of 80 char
+>> per line so that the format is easily parsable. Advanced users often use
+>> unix tools (grep, sed, etc) to modify the .lyx file manually.
+>>      
 >
-> > The big update since last time is support (in kha/experimental) for
-> > hidden patches in the new-infrastructure commands and stack log.
->=20
-> I'll have a look at the new stack log format (my main worry) this
-> week but the other patches look OK.
+> Is it just me or is the format very hard to read?  For example, line
+> 492ff spells a list of quoted items as
+>    
 
-Heh. It's _always_ your main worry. But rightly so, since mistakes
-could be costly. Thanks for spending time on this with me.
+Right, quote is a special case in lyx format because we have to take 
+care of locale differences. So, as you guessed, quotes are not really 
+written with the ascii quote character. But the format is not that hard 
+in general. If needed, I could modify this special case so that it's 
+easier to read though.
+Don't get me wrong, I don't pretend that LyX is easy to read for the 
+untrained eyes, it is not. But simple modifications like Junio's example 
+is definitely possible. For non simple text insertion, it is better to 
+launch LyX and to type the modification within LyX. But maybe this is a 
+showstopper for you, and so is maybe our treatment of quotes. In which 
+case I'll stop arguying :-)
 
-I made one change apart from adding the hidden patches: use the same
-tree for both the full and simplified logs. It's no more costly to
-write, and made the parsing substantially simpler.
-
-> I merged the safe and stable branches.
-
-Thanks.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Abdel.
