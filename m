@@ -1,139 +1,106 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/2] clone: Add an option to set up a mirror
-Date: Fri, 1 Aug 2008 16:00:45 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808011600170.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+Subject: [PATCH 2/2] clone --bare: Add ".git" suffix to the directory name
+ to clone into
+Date: Fri, 1 Aug 2008 16:01:36 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808011601200.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <alpine.DEB.1.00.0808011600170.9611@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Aug 01 15:57:29 2008
+X-From: git-owner@vger.kernel.org Fri Aug 01 15:58:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOv8L-0008KY-0N
-	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 15:57:29 +0200
+	id 1KOv96-0000EX-MI
+	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 15:58:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751976AbYHAN41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2008 09:56:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752214AbYHAN40
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 09:56:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41511 "HELO mail.gmx.net"
+	id S1753098AbYHAN5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2008 09:57:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752987AbYHAN5Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 09:57:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39869 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751612AbYHAN4Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2008 09:56:25 -0400
-Received: (qmail invoked by alias); 01 Aug 2008 13:56:23 -0000
+	id S1752657AbYHAN5P (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2008 09:57:15 -0400
+Received: (qmail invoked by alias); 01 Aug 2008 13:57:13 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp013) with SMTP; 01 Aug 2008 15:56:23 +0200
+  by mail.gmx.net (mp002) with SMTP; 01 Aug 2008 15:57:13 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+aeAd80t6aPKtU9IR6uguBcaRY4KFIXdL4pMhjAR
-	9AmLY6Th+KrrEj
+X-Provags-ID: V01U2FsdGVkX18pgcYHLLopVfluTkyTLo/7LVqFBBrga03l11kjs3
+	oUMEMP8NwWx1Vw
 X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <alpine.DEB.1.00.0808011600170.9611@pacific.mpi-cbg.de.mpi-cbg.de>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.45
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91067>
 
 
-The command line
-
-	$ git clone --mirror $URL
-
-is now a short-hand for
-
-	$ git clone --bare $URL
-	$ (cd $(basename $URL) && git remote add --mirror origin $URL)
+We have a tradition that bare repositories live in directories ending
+in ".git".  To make this more a convention than just a tradition, teach
+"git clone --bare" to add a ".git" suffix to the directory name.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-clone.txt |    5 ++++-
- builtin-clone.c             |    9 ++++++++-
- t/t5601-clone.sh            |   10 ++++++++++
- 3 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 26fd1b1..0e14e73 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git clone' [--template=<template_directory>]
--	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare]
-+	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
- 	  [-o <name>] [-u <upload-pack>] [--reference <repository>]
- 	  [--depth <depth>] [--] <repository> [<directory>]
- 
-@@ -106,6 +106,9 @@ then the cloned repository will become corrupt.
- 	used, neither remote-tracking branches nor the related
- 	configuration variables are created.
- 
-+--mirror::
-+	Set up a mirror of the remote repository.  This implies --bare.
-+
- --origin <name>::
- -o <name>::
- 	Instead of using the remote name 'origin' to keep track
+	This patch is only conceptionally dependent on patch 1/2.
+
+ builtin-clone.c  |   10 ++++++++--
+ t/t5601-clone.sh |    7 +++++++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
+
 diff --git a/builtin-clone.c b/builtin-clone.c
-index e086a40..a45179c 100644
+index a45179c..82f5b67 100644
 --- a/builtin-clone.c
 +++ b/builtin-clone.c
-@@ -33,7 +33,7 @@ static const char * const builtin_clone_usage[] = {
- 	NULL
- };
+@@ -95,7 +95,7 @@ static char *get_repo_path(const char *repo, int *is_bundle)
+ 	return NULL;
+ }
  
--static int option_quiet, option_no_checkout, option_bare;
-+static int option_quiet, option_no_checkout, option_bare, option_mirror;
- static int option_local, option_no_hardlinks, option_shared;
- static char *option_template, *option_reference, *option_depth;
- static char *option_origin = NULL;
-@@ -45,6 +45,8 @@ static struct option builtin_clone_options[] = {
- 		    "don't create a checkout"),
- 	OPT_BOOLEAN(0, "bare", &option_bare, "create a bare repository"),
- 	OPT_BOOLEAN(0, "naked", &option_bare, "create a bare repository"),
-+	OPT_BOOLEAN(0, "mirror", &option_mirror,
-+		    "create a mirror repository (implies bare)"),
- 	OPT_BOOLEAN('l', "local", &option_local,
- 		    "to clone from a local repository"),
- 	OPT_BOOLEAN(0, "no-hardlinks", &option_no_hardlinks,
-@@ -359,6 +361,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	if (option_no_hardlinks)
- 		use_local_hardlinks = 0;
+-static char *guess_dir_name(const char *repo, int is_bundle)
++static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
+ {
+ 	const char *end = repo + strlen(repo), *start;
  
-+	if (option_mirror)
-+		option_bare = 1;
-+
- 	if (option_bare) {
- 		if (option_origin)
- 			die("--bare and --origin %s options are incompatible.",
-@@ -446,7 +451,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	} else {
- 		snprintf(branch_top, sizeof(branch_top),
- 			 "refs/remotes/%s/", option_origin);
+@@ -131,6 +131,12 @@ static char *guess_dir_name(const char *repo, int is_bundle)
+ 			end -= 4;
+ 	}
+ 
++	if (is_bare) {
++		char *result = xmalloc(end - start + 5);
++		sprintf(result, "%.*s.git", (int)(end - start), start);
++		return result;
 +	}
++
+ 	return xstrndup(start, end - start);
+ }
  
-+	if (option_mirror || !option_bare) {
- 		/* Configure the remote */
- 		snprintf(key, sizeof(key), "remote.%s.url", option_origin);
- 		git_config_set(key, repo);
+@@ -388,7 +394,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	if (argc == 2)
+ 		dir = xstrdup(argv[1]);
+ 	else
+-		dir = guess_dir_name(repo_name, is_bundle);
++		dir = guess_dir_name(repo_name, is_bundle, option_bare);
+ 
+ 	if (!stat(dir, &buf))
+ 		die("destination directory '%s' already exists.", dir);
 diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index d785b3d..4b2533f 100755
+index 4b2533f..e0a68ab 100755
 --- a/t/t5601-clone.sh
 +++ b/t/t5601-clone.sh
-@@ -70,4 +70,14 @@ test_expect_success 'clone creates intermediate directories for bare repo' '
+@@ -80,4 +80,11 @@ test_expect_success 'clone --mirror' '
  
  '
  
-+test_expect_success 'clone --mirror' '
++test_expect_success 'clone --bare names the local repository <name>.git' '
 +
-+	git clone --mirror src mirror &&
-+	test -f mirror/HEAD &&
-+	test ! -f mirror/file &&
-+	FETCH="$(cd mirror && git config remote.origin.fetch)" &&
-+	test "+refs/heads/*:refs/heads/*" = "$FETCH"
++	git clone --bare src &&
++	test -d src.git
 +
 +'
 +
