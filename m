@@ -1,81 +1,68 @@
-From: Alexander Litvinov <litvinov2004@gmail.com>
-Subject: Re: [PATCH] git-svn now work with crlf convertion enabled.
-Date: Fri, 1 Aug 2008 10:23:31 +0700
-Organization: AcademSoft Ltd.
-Message-ID: <200808011023.32139.litvinov2004@gmail.com>
-References: <200807231544.23472.litvinov2004@gmail.com> <200807311257.49108.litvinov2004@gmail.com> <20080731104529.GE7008@dpotapov.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH v3-wip] revision traversal: show full history with merge
+ simplification
+Date: Thu, 31 Jul 2008 20:48:18 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0807312044240.3277@nehalem.linux-foundation.org>
+References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com> <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain> <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807280141140.6791@localhost.localdomain> <alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org> <Pine.LNX.4.64.0807281241180.6791@localhost.localdomain> <46a038f90807282015m7ce3da10h71dfee221c960332@mail.gmail.com>
+ <Pine.LNX.4.64.0807291433430.6791@localhost.localdomain> <alpine.LFD.1.10.0807291716060.3334@nehalem.linux-foundation.org> <alpine.LFD.1.10.0807291738280.3334@nehalem.linux-foundation.org> <7vej5b3ozz.fsf@gitster.siamese.dyndns.org> <7vhca6zcuy.fsf@gitster.siamese.dyndns.org>
+ <7vabfxyacx.fsf_-_@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0807311513020.3277@nehalem.linux-foundation.org> <7vabfxv3px.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 01 05:24:46 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Roman Zippel <zippel@linux-m68k.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 01 05:49:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOlG1-0007i8-G3
-	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 05:24:45 +0200
+	id 1KOle4-0003z4-EG
+	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 05:49:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753094AbYHADXn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 23:23:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753112AbYHADXn
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 23:23:43 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:27054 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752932AbYHADXn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 23:23:43 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so449897ugf.16
-        for <git@vger.kernel.org>; Thu, 31 Jul 2008 20:23:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=HGeITIMsAn1PEmzVif2PQYCbzl+x2ULU7ql2k9MT/o8=;
-        b=TLaDCkP9wdhzjWdWM/nEuR/vYDlj1Pp0cJ2xKDyLhIcduOzdZTMaLPG3yNivBwcv5s
-         nE4SSjZ/LxlRqDiLC8WqOk470UjG0szFvcdSLLjuwKgT11c8dzjt1lDQxeL971qPD2Al
-         BV9a98WajsVHUXVYijfya/TKHsi1ZA8+W7Mrg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=CDLmMH+Jy6O/S9MZBDQ2SY2Ieuydgu3HN3thaqcHgnTnObj5qxKLSPe9/8LA1j2lEM
-         865Pv2c5t4GZgSYXr6y3sg4qNkkkTahlWQ/AupvciZfCVT67vuzJPPMhXooU7ZnDsR+G
-         MBl4iXKl34K2+2efxwl0v+Fn0tK2eMuGD9dJ8=
-Received: by 10.67.115.2 with SMTP id s2mr3267347ugm.49.1217561020393;
-        Thu, 31 Jul 2008 20:23:40 -0700 (PDT)
-Received: from lan.ac-sw.lcl ( [91.201.74.194])
-        by mx.google.com with ESMTPS id e34sm13098777ugd.71.2008.07.31.20.23.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 31 Jul 2008 20:23:39 -0700 (PDT)
-User-Agent: KMail/1.9.5
-In-Reply-To: <20080731104529.GE7008@dpotapov.dyndns.org>
-Content-Disposition: inline
+	id S1753265AbYHADse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 23:48:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753133AbYHADse
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 23:48:34 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:43510 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753265AbYHADsd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Jul 2008 23:48:33 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m713mJgX025216
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 31 Jul 2008 20:48:20 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m713mIuZ027363;
+	Thu, 31 Jul 2008 20:48:19 -0700
+In-Reply-To: <7vabfxv3px.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.905 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91025>
 
-> It does not look to be true. I did the following test:
-...
-> which means that the autocrlf conversion is done for temporary
-> files created by perl. (I tested it on Linux and Windows/Cygwin).
+
+
+On Thu, 31 Jul 2008, Junio C Hamano wrote:
 >
-> In any case, I believe the right solution should be adding a
-> new option to git-hash-object to disable any conversion.
+> It was even worse than that.
+> 
+> The output from v3 is incorrect
 
-My bad, I did not append full thoughts. git-hash-object DOES autocrlf 
-convertion but  it cant do it correctly. All it can do - is to autodetect 
-text files. My setup has .git/info/attributes file where all files but .cpp 
-and .h are binary. While .cpp and .h are text files. In this case 
-git-hash-object do not know the real file name as far as git-svn use 
-temporary files.
+Ok. I'm really not surprised. Incrementally is really hard. I'm reminded 
+of all the problems we had with just the "trivial" issue of just knowing 
+when to consider something uninteresting or not, that ended up depending 
+on commit timestamps etc, and had problems with people having their clocks 
+set incorrectly.
 
-I dont think that disabling convertion is a good way. I really want to convert 
-my files. Possible solution is to pass two file names to git-hash-object: the 
-real file with content and the proposed file name in the working directory. 
-In this case git-hash-object will be able to make correct convertion.
+Doing the ops once you have the full DAG is usually _trivial_ by 
+comparison. 
+
+		Linus
