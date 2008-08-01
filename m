@@ -1,127 +1,82 @@
-From: Abdelrazak Younes <younes@lyx.org>
-Subject: Re: markdown 2 man, was Re: Git Community Book
-Date: Fri, 01 Aug 2008 09:50:26 +0200
-Message-ID: <4892C042.20302@lyx.org>
-References: <d411cc4a0807290920p62f5d7e1r727a62ef2b4611fc@mail.gmail.com>	<20080729170955.GK32184@machine.or.cz>	<d411cc4a0807291130p228f77d5r1f390090ec29aef4@mail.gmail.com>	<7vwsj4edm1.fsf@gitster.siamese.dyndns.org>	<Pine.LNX.4.64.0807291957410.1779@reaper.quantumfyre.co.uk>	<alpine.LSU.1.00.0807301514280.3486@wbgn129.biozentrum.uni-wuerzburg.de>	<7vy73j418t.fsf@gitster.siamese.dyndns.org>	<4891A0D0.6060503@lyx.org> <20080731225703.7be6f76e@neuron>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3-wip] revision traversal: show full history with merge
+ simplification
+Date: Fri, 01 Aug 2008 00:50:28 -0700
+Message-ID: <7vhca5tbqz.fsf@gitster.siamese.dyndns.org>
+References: <8502DF7C-5303-49E8-8C67-F837343E2F0C@gmail.com>
+ <alpine.LFD.1.10.0807271144520.3486@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807272101470.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807271613440.3486@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807280141140.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807272148030.3486@nehalem.linux-foundation.org>
+ <Pine.LNX.4.64.0807281241180.6791@localhost.localdomain>
+ <46a038f90807282015m7ce3da10h71dfee221c960332@mail.gmail.com>
+ <Pine.LNX.4.64.0807291433430.6791@localhost.localdomain>
+ <alpine.LFD.1.10.0807291716060.3334@nehalem.linux-foundation.org>
+ <alpine.LFD.1.10.0807291738280.3334@nehalem.linux-foundation.org>
+ <7vej5b3ozz.fsf@gitster.siamese.dyndns.org>
+ <7vhca6zcuy.fsf@gitster.siamese.dyndns.org>
+ <7vabfxyacx.fsf_-_@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.10.0807311513020.3277@nehalem.linux-foundation.org>
+ <7vabfxv3px.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.10.0807312044240.3277@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	Scott Chacon <schacon@gmail.com>, Petr Baudis <pasky@suse.cz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 01 09:51:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Roman Zippel <zippel@linux-m68k.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Aug 01 09:51:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOpQU-0007C4-9G
+	id 1KOpQT-0007C4-K3
 	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 09:51:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753618AbYHAHuu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Aug 2008 03:50:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753616AbYHAHuu
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 03:50:50 -0400
-Received: from main.gmane.org ([80.91.229.2]:37566 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753586AbYHAHus (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753909AbYHAHus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Fri, 1 Aug 2008 03:50:48 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KOpPO-0001EL-8E
-	for git@vger.kernel.org; Fri, 01 Aug 2008 07:50:42 +0000
-Received: from gre92-10-88-181-30-42.fbx.proxad.net ([88.181.30.42])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Aug 2008 07:50:42 +0000
-Received: from younes by gre92-10-88-181-30-42.fbx.proxad.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Aug 2008 07:50:42 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: gre92-10-88-181-30-42.fbx.proxad.net
-User-Agent: Thunderbird/3.0a2pre (Windows; 2008072800)
-In-Reply-To: <20080731225703.7be6f76e@neuron>
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753596AbYHAHus
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 03:50:48 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46913 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753822AbYHAHur (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2008 03:50:47 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 54A7E4464B;
+	Fri,  1 Aug 2008 03:50:46 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 867454464A; Fri,  1 Aug 2008 03:50:40 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.10.0807312044240.3277@nehalem.linux-foundation.org> (Linus
+ Torvalds's message of "Thu, 31 Jul 2008 20:48:18 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8CD6BCC6-5F9E-11DD-A997-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91040>
 
-Hi Jan,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Jan Kr=FCger wrote:
->> Now, about my shameless plug: LyX is ideally suited for structured
->> documentation writing :-)
+> On Thu, 31 Jul 2008, Junio C Hamano wrote:
+>>
+>> It was even worse than that.
+>> 
+>> The output from v3 is incorrect
 >
-> That may well be, but it gets really complicated once you want to
-> get your document into other markup-based formats while preserving al=
-l
-> the important aspects of formatting. I know this because I started
-> using LaTeX for a project that was supposed to be available in HTML
-> form along with, say, PDF. I've found that the only converter that
-> comes close to being useful for somewhat more ambitious sources
-> (including, perhaps, custom environments and stuff like that) without
-> spending a ridiculous amount of time trying to understand it is hevea=
-=2E
+> Ok. I'm really not surprised. Incrementally is really hard. I'm reminded 
+> of all the problems we had with just the "trivial" issue of just knowing 
+> when to consider something uninteresting or not, that ended up depending 
+> on commit timestamps etc, and had problems with people having their clocks 
+> set incorrectly.
+>
+> Doing the ops once you have the full DAG is usually _trivial_ by 
+> comparison. 
 
-I had good success with htlatex (the default converter within LyX). I=20
-just modified the css and was done with it. All cross-references etc=20
-were correctly handled.
-
-> Of course, hevea only translates to HTML, so, for example, generating
-> manpages or plain text is an entirely different matter of considerabl=
-e
-> difficulty.
-
-LyX has an excellent plain text export. You can use the export method o=
-f=20
-LyX at the command line without launching it graphically by the way. Yo=
-u=20
-don't even need an X server, just use 'lyx -e text mydocument.lyx'
-
-=46or man page, LyX does not support it natively I'm afraid, but I gues=
-s=20
-there are LateX to man converter, aren't there?
-
-> In addition to that, I suspect that LyX files might be difficult to
-> deal with in forky Git situations. For example, what if two
-> separately contributed patches need merging into a LyX source file?
-> This will only work automatically if the LyX source, treated as plain
-> text, has a really low chance of randomly changing in other places th=
-an
-> what the patch is supposed to touch. Also, if a merge does cause a
-> conflict, I imagine it would be difficult to resolve that.
-
-Not really. As I said to Junio, .lyx files are using a plain text utf8=20
-format. They are easily mergeable as LyX preserves the structure of the=
-=20
-file: if the two collaborators modify two different parts of the=20
-document there is basically zero chance to have a conflict. On the rare=
-=20
-occasion where I had  a conflict with svn, it was very easy to solve=20
-manually by removing the conflict tags inserted by svn. With git, I=20
-never had a single conflict ;-)
-
-> Finally, it's pretty much a given that Git's manpages continue to use
-> AsciiDoc because there are few other things that can generate actual
-> manpages. I'm not sure it would be a good idea to keep half of Git's
-> documentation in one format and the rest in another.
-
-That's a good argument. My personal opinion is that users prefer to use=
-=20
-'-help' for short help and to read the tutorial or the user guide for=20
-more in-depth information. I never use man personally... OK, that's=20
-probably because I use Windows :-)
-
-> And AsciiDoc is --
-> by far! -- not the worst choice. I'm tempted to say it's the best tha=
-t
-> I know.
-
-AsciiDoc is indeed excellent if you want to write in a plain text=20
-editor. But LyX is easier to use and more porwerful :-)
-
-Thanks,
-Abdel
+Surely.  I wasn't productive tonight anyway, and I'll give up for now and
+keep the post-processing version in 'pu', perhaps queued in 'next' during
+the 1.6.0-rc period.  Perhaps somebody cleverer than me will feel itchy
+enough to make an incremental version someday ;-)
