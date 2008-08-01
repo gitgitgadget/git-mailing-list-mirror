@@ -1,147 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Jul 2008, #11; Thu, 31)
-Date: Thu, 31 Jul 2008 18:03:02 -0700
-Message-ID: <7vfxppv96h.fsf@gitster.siamese.dyndns.org>
+From: cte <cestreich@gmail.com>
+Subject: Re: linking libgit.a in C++ projects
+Date: Thu, 31 Jul 2008 18:17:45 -0700
+Message-ID: <ac9f0f090807311817n551f53a5mb1270e6f4b2a058e@mail.gmail.com>
+References: <ac9f0f090807310253v1d97e2a1n4ddf34aa4fdc79f0@mail.gmail.com>
+	 <20080731105727.GF7008@dpotapov.dyndns.org>
+	 <ac9f0f090807310410u461f5584ved74769d8452c539@mail.gmail.com>
+	 <bd6139dc0807311127j57d9ab5ckd6acf16d17621614@mail.gmail.com>
+	 <ac9f0f090807311444lb2f02e6ud76463b359184fbd@mail.gmail.com>
+	 <bd6139dc0807311451t763aa07bsf9474fce4073babd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 01 03:04:20 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Dmitry Potapov" <dpotapov@gmail.com>, git@vger.kernel.org
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Fri Aug 01 03:18:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KOj41-0002f5-PF
-	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 03:04:14 +0200
+	id 1KOjI8-0005O8-9P
+	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 03:18:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753049AbYHABDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2008 21:03:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752951AbYHABDJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 21:03:09 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55348 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752686AbYHABDH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2008 21:03:07 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 467D4481ED;
-	Thu, 31 Jul 2008 21:03:06 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 62A03481EC; Thu, 31 Jul 2008 21:03:04 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 99824640-5F65-11DD-8483-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753008AbYHABRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2008 21:17:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbYHABRr
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jul 2008 21:17:47 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:65180 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751829AbYHABRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2008 21:17:46 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so495948ywe.1
+        for <git@vger.kernel.org>; Thu, 31 Jul 2008 18:17:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=8LRy7ixtg6OXs/uficdr+0tN9k7Rmti/q9Y2LsQRUnM=;
+        b=v48lx+7dGMNfdektoLVu9S7DKYa02OiY5rdO4fkA2hLUrbVYzdkq8p1nBfViVyNitS
+         88VGTmPnniJTUryAadY0RXAlSxzn55STSdhABtxDofs8wmaUQ2/wZxwFH6kJ5lMBAlry
+         urzjBG1QYWVTGaleZQLTeir+o/GQKxZOgTVZY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=JWvSgeujDZRx1TWQC2d/wS4BJKo1GOsfs9/Hed6jmTfVFia8LtEMhM65hJQuSPN3lw
+         Pqngz7DdaWT9YO6ckbtXYCdQDMrI28E1BzJlco6IIqjjKQ5ct28FDV1+c1jFBBduF1XI
+         QhH9Lg1oq05hADrkfkbRx1nKWcRM5AvFnoyZI=
+Received: by 10.150.91.17 with SMTP id o17mr2237040ybb.222.1217553465339;
+        Thu, 31 Jul 2008 18:17:45 -0700 (PDT)
+Received: by 10.151.78.17 with HTTP; Thu, 31 Jul 2008 18:17:45 -0700 (PDT)
+In-Reply-To: <bd6139dc0807311451t763aa07bsf9474fce4073babd@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91016>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.
+> On Thu, Jul 31, 2008 at 23:44, cte <cestreich@gmail.com> wrote:
+>> Using output from the command line utilities as an API has its own set
+>> of problems. For instance, check out some of the difficulties that
+>> gitk and qgit have had to deal with:
+>> http://kerneltrap.org/mailarchive/git/2007/11/2/379067.
+>
+> I beg to differ. If I skimmed the topic correctly, the problems there
+> were not related to having to parse git's output, but due to the fact
+> that '--topo-order' is a post-processing operation, which takes long.
+> Do read the recent discussion between Linus and Roman about that.
 
-The topics list the commits in reverse chronological order.  The topics
-meant to be merged to the maintenance series have "maint-" in their names.
+Didn't mean to imply that somehow it is no longer a post-processing op if you
+aren't using git plumbing. The discussion shows, however, that if gitk
+was actually
+doing the revision traversals, then it would be able to trigger events
+that update the
+gui whenever it wanted, which would have allowed it to implement the
+early output
+feature without changing any of the git source. Instead, git-log had
+to be altered to
+address gitk's needs, and an option was added that users don't
+typically use. This is
+not exactly what I would consider spartan programming
+(http://www.codinghorror.com/blog/archives/001148.html),
+plus there are already too many options to remember! Anyways, I
+suppose it is pointless
+to argue about which approach is better, because both have trade-offs,
+and the correct
+path depends on your use case.
 
-Due to increased activity level from people including GSoC students, I
-expect 'next' to stay somewhat more active than previous rounds during the
-1.6.0-rc cycle.  The request for people who usually follow 'next' is the
-same as usual, though.  After -rc1 is tagged, please run 'master' for your
-daily git use instead, in order to make sure 'master' does what it claims
-to do without regression.
+>>> There is, use the plumbing, forward compatibility is 95% assured. With
+>>> the exception of major releases, for which any plumbing
+>>> output/behavior changes will be announced in the changelog, usually
+>>> including an explanation on how to change your code to match.
+>>
+>> 95% assured != correct, IMO :)
+>
+> Why not? Junio has a very good reputation of keeping git backwards
+> compatible. The 95% is of course not an actual figure but an
+> expression meant to indicate "statement is true, minus a few rare case
+> exceptions".
 
-Tentative schedule, my wishful thinking:
-
- - 1.6.0-rc2 (Aug  3)
- - 1.6.0-rc3 (Aug 10)
-
-----------------------------------------------------------------
-[New Topics]
-
-* rs/archive-parse-options (Fri Jul 25 12:41:26 2008 +0200) 1 commit
- + archive: allow --exec and --remote without equal sign
-
-None of the following is for 1.6.0.
-
-* mv/merge-custom (Thu Jul 31 00:38:07 2008 +0200) 5 commits
- + builtin-help: always load_command_list() in cmd_help()
- + Add a second testcase for handling invalid strategies in git-merge
- + Add a new test for using a custom merge strategy
- + builtin-merge: allow using a custom strategy
- + builtin-help: make some internal functions available to other
-   builtins
-
-* cc/merge-base-many (Sun Jul 27 13:47:22 2008 -0700) 4 commits
- - git-merge-octopus: use (merge-base A (merge B C D E...)) for
-   stepwise merge
- + merge-base-many: add trivial tests based on the documentation
- + documentation: merge-base: explain "git merge-base" with more than
-   2 args
- + merge-base: teach "git merge-base" to drive underlying
-   merge_bases_many()
-
-* jc/simplify-merges (Thu Jul 31 01:17:41 2008 -0700) 1 commit
- . revision traversal: show full history with merge simplification
-
-"log --full-history" is with too much clutter, "log" itself is too cleverer
-than some people, and here is the middle level of merge simplification.
-
-----------------------------------------------------------------
-[On Hold and/or Cooking]
-
-None of the following is for 1.6.0.
-
-* rs/imap (Wed Jul 9 22:29:02 2008 +0100) 5 commits
- + Documentation: Improve documentation for git-imap-send(1)
- + imap-send.c: more style fixes
- + imap-send.c: style fixes
- + git-imap-send: Support SSL
- + git-imap-send: Allow the program to be run from subdirectories of
-   a git tree
-
-Some people seem to prefer having this feature available also with gnutls.
-Such an enhancement can be done in-tree on top of this series if they are
-so inclined.
-
-* cc/bisect (Fri Jul 25 05:36:37 2008 +0200) 2 commits
- - bisect: only check merge bases when needed
- - bisect: test merge base if good rev is not an ancestor of bad rev
-
-* jc/add-addremove (Tue Jul 22 22:30:40 2008 -0700) 2 commits
- + builtin-add.c: optimize -A option and "git add ."
- + builtin-add.c: restructure the code for maintainability
-
-* jk/pager-swap (Tue Jul 22 03:14:12 2008 -0400) 2 commits
- + spawn pager via run_command interface
- + run-command: add pre-exec callback
-
-This changes the parent-child relationship between the pager and the git
-process.  We used to make pager the parent which meant that the exit
-status from git is lost from the caller.
-
-* ph/enable-threaded (Mon Jul 21 11:23:43 2008 +0200) 1 commit
- + Enable threaded delta search on *BSD and Linux.
-
-* sg/merge-options (Sun Apr 6 03:23:47 2008 +0200) 1 commit
- + merge: remove deprecated summary and diffstat options and config
-   variables
-
-This was previously in "will be in master soon" category, but it turns out
-that the synonyms to the ones this one deletes are fairly new invention
-that happend in 1.5.6 timeframe, and we cannot do this just yet.  Perhaps
-in 1.7.0.
-
-* jc/dashless (Thu Jun 26 16:43:34 2008 -0700) 2 commits
- + Revert "Make clients ask for "git program" over ssh and local
-   transport"
- + Make clients ask for "git program" over ssh and local transport
-
-This is the "botched" one.  Will be resurrected during 1.7.0 or 1.8.0
-timeframe.
-
-* jk/renamelimit (Sat May 3 13:58:42 2008 -0700) 1 commit
- . diff: enable "too large a rename" warning when -M/-C is explicitly
-   asked for
-
-This would be the right thing to do for command line use, but gitk will be
-hit due to tcl/tk's limitation, so I am holding this back for now.
+Definitely not questioning his ability to maintain backwards
+compatibility; it was
+merely an observation about your strange definition of correct. In school, when
+I completed 95% of a proof, it was never marked as "correct", and I
+was told that I hadn't actually proven anything. Those damn teachers :)
