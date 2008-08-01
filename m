@@ -1,86 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: email address handling
-Date: Fri, 1 Aug 2008 23:16:01 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808012314580.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+Date: Fri, 1 Aug 2008 14:12:04 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0808011356560.3277@nehalem.linux-foundation.org>
 References: <20080731194042.a1534b4d.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011229400.3277@nehalem.linux-foundation.org> <20080801124550.26b9efc0.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011253580.3277@nehalem.linux-foundation.org>
  <20080801131127.20b3acfd.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011316050.3277@nehalem.linux-foundation.org> <20080801132415.0b0314e4.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011335230.3277@nehalem.linux-foundation.org>
  <20080801135421.5ca0f6af.akpm@linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Andrew Morton <akpm@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Aug 01 23:13:21 2008
+X-From: git-owner@vger.kernel.org Fri Aug 01 23:14:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KP1w0-0001c3-4B
-	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 23:13:12 +0200
+	id 1KP1x8-00022F-JI
+	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 23:14:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761242AbYHAVLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2008 17:11:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761232AbYHAVLn
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 17:11:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59795 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761234AbYHAVLm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2008 17:11:42 -0400
-Received: (qmail invoked by alias); 01 Aug 2008 21:11:39 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp062) with SMTP; 01 Aug 2008 23:11:39 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Bu5chpu/BV8wr6Vt67LnE5+GmB6wdpG6hVY/BbP
-	xDTaVz7ZohS18j
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+	id S1761369AbYHAVMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2008 17:12:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760549AbYHAVMd
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 17:12:33 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:55788 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761364AbYHAVMc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2008 17:12:32 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m71LC5W6005039
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Fri, 1 Aug 2008 14:12:06 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m71LC4ZW003394;
+	Fri, 1 Aug 2008 14:12:04 -0700
 In-Reply-To: <20080801135421.5ca0f6af.akpm@linux-foundation.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.412 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91101>
 
-Hi,
+
 
 On Fri, 1 Aug 2008, Andrew Morton wrote:
+> 
+> Well, what I'm saying is that it was an incorrect design decision.
 
-> I very very frequently copy and paste name+email address out of git 
-> output and into an MUA.  Have done it thousands and thousands of times, 
-> and it has always worked.  I'm sure that many others do the same thing.
+And I'm saying that I disagree. 
 
-$ git log --pretty=email
+> Yesterday, I copied and pasted what _looked_ like a usable
+> name+email-address from some git output and into an MUA.  Unlike the
+> thousands of preceding times, it did not work.
+> 
+> I think it was reasonable of me to assume that it would work.  Blaming
+> the surprised and misled user for not understanding some earlier
+> internal design decision didn't satisfy him!
+> 
+> True story!  From a user.
 
-after this patch:
+Hey, there are tons of surprises in life. Users make mistakes and 
+assumptions that turn out to not be true. If you think you can avoid all 
+such issues, I think you aren't living in the real world.
 
--- snipsnap --
+You'll be shocked to hear that even the so-called _email_ address isn't 
+necessarily valid at all at times. Look closer, and you'll find email 
+addresses that don't work at all. It turns out that if you don't set it 
+explicitly, git will guess, and sometimes the end result won't actually 
+work as an email address.
 
- pretty.c |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+Beign surprised and then saying "I was surprised, so the whole design is 
+broken" - that's a very silly standpoint to make. I suggest you 
+reconsider. How many times have you had people "surprised" by correct 
+kernel behaviour? Happens all the time.
 
-diff --git a/pretty.c b/pretty.c
-index 33ef34a..ba50b54 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -140,14 +140,20 @@ void pp_user_info(const char *what, enum cmit_fmt fmt, struct strbuf *sb,
- 	if (fmt == CMIT_FMT_EMAIL) {
- 		char *name_tail = strchr(line, '<');
- 		int display_name_length;
-+		int need_quotes;
- 		if (!name_tail)
- 			return;
- 		while (line < name_tail && isspace(name_tail[-1]))
- 			name_tail--;
- 		display_name_length = name_tail - line;
-+		need_quotes = !!memchr(line, ',', display_name_length);
- 		filler = "";
- 		strbuf_addstr(sb, "From: ");
-+		if (need_quotes)
-+			strbuf_addch(sb, '"');
- 		add_rfc2047(sb, line, display_name_length, encoding);
-+		if (need_quotes)
-+			strbuf_addch(sb, '"');
- 		strbuf_add(sb, name_tail, namelen - display_name_length);
- 		strbuf_addch(sb, '\n');
- 	} else {
+Do you think they are all indicative of bad design, or maybe just "welcome 
+to the real world - your preconceived notions didn't turn out to be 
+accurate after all"?
+
+It's a design decision to show the name as readably as possible. One that 
+I think was correct.
+
+			Linus
