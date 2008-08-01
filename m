@@ -1,98 +1,220 @@
-From: Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: email address handling
-Date: Fri, 1 Aug 2008 14:58:04 -0700
-Message-ID: <20080801145804.85041bbd.akpm@linux-foundation.org>
-References: <20080731194042.a1534b4d.akpm@linux-foundation.org>
-	<alpine.LFD.1.10.0808011229400.3277@nehalem.linux-foundation.org>
-	<20080801124550.26b9efc0.akpm@linux-foundation.org>
-	<alpine.LFD.1.10.0808011253580.3277@nehalem.linux-foundation.org>
-	<20080801131127.20b3acfd.akpm@linux-foundation.org>
-	<alpine.LFD.1.10.0808011316050.3277@nehalem.linux-foundation.org>
-	<20080801132415.0b0314e4.akpm@linux-foundation.org>
-	<alpine.LFD.1.10.0808011335230.3277@nehalem.linux-foundation.org>
-	<20080801135421.5ca0f6af.akpm@linux-foundation.org>
-	<7vvdykqub6.fsf@gitster.siamese.dyndns.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] git-svn now work with crlf convertion enabled.
+Date: Sat, 2 Aug 2008 02:09:32 +0400
+Message-ID: <20080801220932.GK7008@dpotapov.dyndns.org>
+References: <200807231544.23472.litvinov2004@gmail.com> <200807311257.49108.litvinov2004@gmail.com> <20080731104529.GE7008@dpotapov.dyndns.org> <200808011023.32139.litvinov2004@gmail.com> <37fcd2780808010047t4ae20168y65103e90897dd3f8@mail.gmail.com> <7vbq0dtawp.fsf@gitster.siamese.dyndns.org> <37fcd2780808010224l68c2c717y5334a34d9de1de8d@mail.gmail.com> <7vmyjwserv.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: torvalds@linux-foundation.org, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Alexander Litvinov <litvinov2004@gmail.com>, git@vger.kernel.org,
+	Eric Wong <normalperson@yhbt.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 02 00:00:17 2008
+X-From: git-owner@vger.kernel.org Sat Aug 02 00:10:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KP2fY-0000Jy-Hp
-	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 00:00:16 +0200
+	id 1KP2pd-000375-E8
+	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 00:10:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756358AbYHAV7K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2008 17:59:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752238AbYHAV7K
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 17:59:10 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:56567 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756497AbYHAV7J (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2008 17:59:09 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m71Lw4sT009303
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 1 Aug 2008 14:58:05 -0700
-Received: from akpm.corp.google.com (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id m71Lw4wg005737;
-	Fri, 1 Aug 2008 14:58:04 -0700
-In-Reply-To: <7vvdykqub6.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.8.20; i486-pc-linux-gnu)
-X-Spam-Status: No, hits=-2.824 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753126AbYHAWJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2008 18:09:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752565AbYHAWJk
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 18:09:40 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:38667 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752533AbYHAWJi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2008 18:09:38 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so511829nfc.21
+        for <git@vger.kernel.org>; Fri, 01 Aug 2008 15:09:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=gz4uNdJoFMg/zhAX1Z6wxh5NlliwanZmteNgVGpEZcQ=;
+        b=unDA2YJipDb2ljEJjkIn4dMJi0EvJ1p2DVaQI1GE4a6AKrKdEW7ZCdBKpJelUInpzT
+         ZOBK/D8ld555A9RZnA0K7bBuNogc8F5cQiHSQlye/L/hcrQ9QB4Vp7gRJRWYVaJ/3/eK
+         KQEEVUF6l3P8wRaH+CfOTAgtlGogTUvwDwuC4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=n7SnkpXLFCB0jLowkWkZ+xBGw9EQb/MgOL57YI6bA2jKvqtgCk7D4AhiD0W8EPzOlg
+         9oHLrw6v6qwNHPkRtwywsJzF65P/MzUvxMeMuOH46HVM0xB+u0sQMXT5mXwvupitU0um
+         q2YmdbQGOxyvoxBHZy/I+yYJMy/ebUFWYvkK0=
+Received: by 10.210.51.10 with SMTP id y10mr3422136eby.34.1217628577209;
+        Fri, 01 Aug 2008 15:09:37 -0700 (PDT)
+Received: from localhost ( [85.141.191.26])
+        by mx.google.com with ESMTPS id y34sm4999153iky.10.2008.08.01.15.09.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 01 Aug 2008 15:09:36 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vmyjwserv.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91106>
 
-On Fri, 01 Aug 2008 14:50:05 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
-
-> Andrew Morton <akpm@linux-foundation.org> writes:
+On Fri, Aug 01, 2008 at 12:42:44PM -0700, Junio C Hamano wrote:
 > 
-> >> The part _you_ don't seem to understand is that my point is
-> >> 
-> >>  - git changed that "From:" line to an "Author:" line
-> >> 
-> >>  - "git log" isn't an email system. It's a human-readable (and 
-> >>    machine-parseable, for that matter) log.
-> >
-> > What you're describing here is some explicit or implicit git design
-> > decision and then telling me how it's implemented.
-> >
-> > Well, what I'm saying is that it was an incorrect design decision.
-> 
-> What is the objective of your statement in this discussion?  Further add
-> fuel to flame, or to seek avenues that lead to some improvement in a
-> constructive way?
+> Ok, earlier I was confused who was proposing what for what purpose, but
+> that one was not just "a bit hackish" but an unacceptable hack ;-)
 
-Well initially it was to work out why the heck my git-log output had
-stripped the quotes from that person's name, making it unusable for
-email purposes.  I'd actually assumed that it was a bug.
+Thanks for correct my wording ;-)
 
-> The thing is, I do not think reverting that design decision is an option
-> at this point.  People's repositories record <Name, Email> pair already in
-> "human readable" form, and people's scripts are assuming that.
 > 
-> I misspoke about git-send-email earlier; it already has sanitize_address()
-> that massages the addresses on From: To: and Cc: lines.  In fact, it even
-> seems to have logic to avoid double-quoting, so it would be Ok if you
-> changed the design decision this late in the game for that particular
-> script, but that does not mean it is a good change --- other scripts
-> people may have built around git would need to change.
-> 
-> So the earlier patch from Dscho (Johannes) may be a step in the right
-> direction, but if we are going to rewrite the author information, (1) it
-> has to be an option, and (2) when rewriting, it should not be just From:;
-> but Signed-off-by:, Cc: and other <Name, Email> pairs at the end of the
-> log message would need similar treatment, so that you can cut and paste
-> any of them to your MUA.
+> Perhaps you would want to do the s/write_object/flags/ conversion, like
+> this?
 
-I preserve the quotes (when present) in signoffs for this exact reason.
+Yes, it was my prefered choice to change these index_xx functions.
+
+I have applied your patch and then corrected mine to use flags.
+See below.
+
+I wonder if something should be done about other places where index_xx
+functions are called. I have looked at them and all they use either 0 or
+1 (boolean expression which will be evaluated to 0 or 1), so they should
+work as is, but I can correct them to use HASH_OBJECT_DO_CREATE instead
+of 1 if it helps with readability.
+
+-- 8< --
+
+From: Dmitry Potapov <dpotapov@gmail.com>
+Date: Thu, 31 Jul 2008 21:10:26 +0400
+Subject: [PATCH] hash-object --no-filters
+
+The --no-filters option makes git hash-object to work as there were no
+input filters. This option is useful for importers such as git-svn to
+put new version of files as is even if autocrlf is set.
+
+Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+---
+ Documentation/git-hash-object.txt |    6 ++++++
+ hash-object.c                     |   28 +++++++++++++++-------------
+ 2 files changed, 21 insertions(+), 13 deletions(-)
+
+diff --git a/Documentation/git-hash-object.txt b/Documentation/git-hash-object.txt
+index ac928e1..69a17c7 100644
+--- a/Documentation/git-hash-object.txt
++++ b/Documentation/git-hash-object.txt
+@@ -35,6 +35,12 @@ OPTIONS
+ --stdin-paths::
+ 	Read file names from stdin instead of from the command-line.
+ 
++--no-filters::
++	If this option is given then the file is hashed as is ignoring
++	all filters specified in the configuration, including crlf
++	conversion. If the file is read from standard input then no
++	filters is always implied.
++
+ Author
+ ------
+ Written by Junio C Hamano <gitster@pobox.com>
+diff --git a/hash-object.c b/hash-object.c
+index 46c06a9..2dd7283 100644
+--- a/hash-object.c
++++ b/hash-object.c
+@@ -8,7 +8,7 @@
+ #include "blob.h"
+ #include "quote.h"
+ 
+-static void hash_object(const char *path, enum object_type type, int write_object)
++static void hash_object(const char *path, enum object_type type, int flags)
+ {
+ 	int fd;
+ 	struct stat st;
+@@ -16,23 +16,23 @@ static void hash_object(const char *path, enum object_type type, int write_objec
+ 	fd = open(path, O_RDONLY);
+ 	if (fd < 0 ||
+ 	    fstat(fd, &st) < 0 ||
+-	    index_fd(sha1, fd, &st, write_object, type, path))
+-		die(write_object
++	    index_fd(sha1, fd, &st, flags, type, path))
++		die((flags & HASH_OBJECT_DO_CREATE)
+ 		    ? "Unable to add %s to database"
+ 		    : "Unable to hash %s", path);
+ 	printf("%s\n", sha1_to_hex(sha1));
+ 	maybe_flush_or_die(stdout, "hash to stdout");
+ }
+ 
+-static void hash_stdin(const char *type, int write_object)
++static void hash_stdin(const char *type, int flags)
+ {
+ 	unsigned char sha1[20];
+-	if (index_pipe(sha1, 0, type, write_object))
++	if (index_pipe(sha1, 0, type, flags))
+ 		die("Unable to add stdin to database");
+ 	printf("%s\n", sha1_to_hex(sha1));
+ }
+ 
+-static void hash_stdin_paths(const char *type, int write_objects)
++static void hash_stdin_paths(const char *type, int flags)
+ {
+ 	struct strbuf buf, nbuf;
+ 
+@@ -45,7 +45,7 @@ static void hash_stdin_paths(const char *type, int write_objects)
+ 				die("line is badly quoted");
+ 			strbuf_swap(&buf, &nbuf);
+ 		}
+-		hash_object(buf.buf, type_from_string(type), write_objects);
++		hash_object(buf.buf, type_from_string(type), flags);
+ 	}
+ 	strbuf_release(&buf);
+ 	strbuf_release(&nbuf);
+@@ -58,7 +58,7 @@ int main(int argc, char **argv)
+ {
+ 	int i;
+ 	const char *type = blob_type;
+-	int write_object = 0;
++	int flags = 0;
+ 	const char *prefix = NULL;
+ 	int prefix_length = -1;
+ 	int no_more_flags = 0;
+@@ -80,7 +80,7 @@ int main(int argc, char **argv)
+ 					prefix_length =
+ 						prefix ? strlen(prefix) : 0;
+ 				}
+-				write_object = 1;
++				flags |= HASH_OBJECT_DO_CREATE;
+ 			}
+ 			else if (!strcmp(argv[i], "--")) {
+ 				no_more_flags = 1;
+@@ -104,6 +104,8 @@ int main(int argc, char **argv)
+ 					die("Multiple --stdin arguments are not supported");
+ 				hashstdin = 1;
+ 			}
++			else if (!strcmp(argv[i], "--no-filters"))
++				flags |= HASH_OBJECT_LITERALLY;
+ 			else
+ 				usage(hash_object_usage);
+ 		}
+@@ -116,21 +118,21 @@ int main(int argc, char **argv)
+ 			}
+ 
+ 			if (hashstdin) {
+-				hash_stdin(type, write_object);
++				hash_stdin(type, flags);
+ 				hashstdin = 0;
+ 			}
+ 			if (0 <= prefix_length)
+ 				arg = prefix_filename(prefix, prefix_length,
+ 						      arg);
+-			hash_object(arg, type_from_string(type), write_object);
++			hash_object(arg, type_from_string(type), flags);
+ 			no_more_flags = 1;
+ 		}
+ 	}
+ 
+ 	if (stdin_paths)
+-		hash_stdin_paths(type, write_object);
++		hash_stdin_paths(type, flags);
+ 
+ 	if (hashstdin)
+-		hash_stdin(type, write_object);
++		hash_stdin(type, flags);
+ 	return 0;
+ }
+-- 
+1.6.0.rc1.33.gb756f
