@@ -1,109 +1,80 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH 2/2] gitweb: use_pathinfo creates parent..current paths
-Date: Sat,  2 Aug 2008 00:17:11 +0200
-Message-ID: <1217629031-14894-2-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1217622913-9747-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1217629031-14894-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@ucw.cz>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 02 00:18:18 2008
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: email address handling
+Date: Fri, 1 Aug 2008 15:23:23 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0808011507430.6819@nehalem.linux-foundation.org>
+References: <20080731194042.a1534b4d.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011229400.3277@nehalem.linux-foundation.org> <20080801124550.26b9efc0.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011253580.3277@nehalem.linux-foundation.org>
+ <20080801131127.20b3acfd.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011316050.3277@nehalem.linux-foundation.org> <20080801132415.0b0314e4.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011335230.3277@nehalem.linux-foundation.org>
+ <20080801135421.5ca0f6af.akpm@linux-foundation.org> <7vvdykqub6.fsf@gitster.siamese.dyndns.org> <20080801145804.85041bbd.akpm@linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Andrew Morton <akpm@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Aug 02 00:24:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KP2wx-0005An-SN
-	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 00:18:16 +0200
+	id 1KP33I-0006um-2X
+	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 00:24:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754936AbYHAWRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2008 18:17:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754751AbYHAWRG
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 18:17:06 -0400
-Received: from fk-out-0910.google.com ([209.85.128.187]:9966 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754167AbYHAWRE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2008 18:17:04 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so1044349fkq.5
-        for <git@vger.kernel.org>; Fri, 01 Aug 2008 15:17:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=L++epfHKUebSZJEUv/fMYemC0uVjZVZ6+kY2cWJIScM=;
-        b=EjIGV1CuMMsdB7xkpBtDW2WALI/KdNwLiEV8i+hZad0oNfe1m9VpSVr81QxB/uVN25
-         Tj70Z9guLa83lYUujt0AvkdmE3VRFEEH77qSg0LxdvCsoSnD6ND/6o6ApxJM3fTsYW9b
-         +dM0koPt3CJnlPjBbIzTFNPHzTsecrBQUiKJg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=RE5XL3vF+35G3KSrWmDPgab288IaIaGNBHLytghOTE+jir3enLZVGXG6MHJ/+vPX9x
-         QTu08zYaC30fjLX2CcTQbyvmh7jq9RN2qAelErAEEdxOthIUOC43J8zmbRFbw/3Q7KYe
-         iUb/egG9lyFHZFmA/Q/5OCCmENlGVWJHr68PY=
-Received: by 10.181.25.18 with SMTP id c18mr4251465bkj.8.1217629022166;
-        Fri, 01 Aug 2008 15:17:02 -0700 (PDT)
-Received: from localhost ( [94.37.6.145])
-        by mx.google.com with ESMTPS id 35sm1512998fkt.12.2008.08.01.15.16.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 01 Aug 2008 15:17:01 -0700 (PDT)
-X-Mailer: git-send-email 1.5.6.3
-In-Reply-To: <1217629031-14894-1-git-send-email-giuseppe.bilotta@gmail.com>
+	id S1756099AbYHAWXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2008 18:23:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755937AbYHAWXs
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 18:23:48 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:54914 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753109AbYHAWXr (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2008 18:23:47 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m71MNOE4011948
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 1 Aug 2008 15:23:25 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m71MNNPb006831;
+	Fri, 1 Aug 2008 15:23:23 -0700
+In-Reply-To: <20080801145804.85041bbd.akpm@linux-foundation.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.411 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91111>
 
-If use_pathinfo is enabled, href now creates links that contain paths in
-the form $project/$action/oldhash:/oldname..newhash:/newname for actions
-that use hash_parent etc.
----
- gitweb/gitweb.perl |   26 +++++++++++++++++++++++---
- 1 files changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 8364b71..e89e1a1 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -703,9 +703,29 @@ sub href (%) {
- 			delete $params{'action'};
- 		}
- 
--		# next, we put either hash_base:file_name or hash
-+		# next, we put hash_parent_base:/file_parent..hash_base:/file_name, stripping nonexistent or useless pieces
-+		$href .= "/" if ($params{'hash_base'} || $params{'hash_parent_base'} || $params{'hash_parent'} || $params{'hash'});
- 		if (defined $params{'hash_base'}) {
--			$href .= "/".esc_url($params{'hash_base'});
-+			if (defined $params{'hash_parent_base'}) {
-+				$href .= esc_url($params{'hash_parent_base'});
-+				if (defined $params{'file_parent'}) {
-+					$href .= ":/".esc_url($params{'file_parent'}) unless $params{'file_parent'} eq $params{'file_name'};
-+					delete $params{'hash_parent'} if $params{'hash_parent'} eq git_get_hash_by_path($params{'hash_parent_base'},$params{'file_parent'});
-+					delete $params{'file_parent'};
-+				} else {
-+					delete $params{'hash_parent'} if $params{'hash_parent'} eq $params{'hash_parent_base'};
-+					if ($params{'file_name'}) {
-+						delete $params{'hash_parent'} if $params{'hash_parent'} eq git_get_hash_by_path($params{'hash_parent_base'},$params{'file_name'});
-+					}
-+				}
-+				$href .= "..";
-+				delete $params{'hash_parent_base'};
-+			} elsif (defined $params{'hash_parent'}) {
-+				$href .= esc_url($params{'hash_parent'}). "..";
-+				delete $params{'hash_parent'};
-+			}
-+
-+			$href .= esc_url($params{'hash_base'});
- 			if (defined $params{'file_name'}) {
- 				$href .= ":/".esc_url($params{'file_name'});
- 				delete $params{'hash'} if $params{'hash'} eq git_get_hash_by_path($params{'hash_base'},$params{'file_name'});
-@@ -715,7 +735,7 @@ sub href (%) {
- 			}
- 			delete $params{'hash_base'};
- 		} elsif (defined $params{'hash'}) {
--			$href .= "/".esc_url($params{'hash'});
-+			$href .= esc_url($params{'hash'});
- 			delete $params{'hash'};
- 		}
- 	}
--- 
-1.5.6.3
+
+On Fri, 1 Aug 2008, Andrew Morton wrote:
+> 
+> I preserve the quotes (when present) in signoffs for this exact reason.
+
+You must be one of the few ones. According to the RFC's, you should quote 
+pretty much any punctuation mark, including "." itself. Which means that 
+things like 
+
+	Signed-off-by: David S. Miller <davem@davemloft.net>
+
+should be quoted if they were email addresses.
+
+That would be very irritating. 
+
+It's even _more_ irritating for things like D'Souza (or Giuseppe D'Eliseo 
+to take a real example from the kernel).  For David, we could just not use 
+the "S." - for others, the special characters are very much part of the 
+name. It would also be very irritating for important messages like
+
+	Signed-off-by: Linus "I'm a moron" Torvalds <torvalds@osdl.org>
+
+etc, where it sure as heck isn't a rfc2822-compliant email address.
+
+So the thing is, "strict email format" is just very annoying. Git does 
+know how to do (well, it _should_) it for "git send-email", but making the 
+human-readable output ugly just because somebody might want to 
+cut-and-paste it sounds really sad.
+
+You could cut-and-paste just the stuff inside the angle branckets, though. 
+That should work.
+
+		Linus
