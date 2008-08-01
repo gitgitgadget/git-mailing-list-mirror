@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: email address handling
-Date: Fri, 01 Aug 2008 14:25:44 -0700
-Message-ID: <7v4p64sa07.fsf@gitster.siamese.dyndns.org>
+Date: Fri, 01 Aug 2008 14:50:05 -0700
+Message-ID: <7vvdykqub6.fsf@gitster.siamese.dyndns.org>
 References: <20080731194042.a1534b4d.akpm@linux-foundation.org>
  <alpine.LFD.1.10.0808011229400.3277@nehalem.linux-foundation.org>
  <20080801124550.26b9efc0.akpm@linux-foundation.org>
@@ -11,62 +11,75 @@ References: <20080731194042.a1534b4d.akpm@linux-foundation.org>
  <20080801132415.0b0314e4.akpm@linux-foundation.org>
  <alpine.LFD.1.10.0808011335230.3277@nehalem.linux-foundation.org>
  <20080801135421.5ca0f6af.akpm@linux-foundation.org>
- <alpine.DEB.1.00.0808012314580.9611@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 01 23:27:24 2008
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Andrew Morton <akpm@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Aug 01 23:51:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KP29j-0006T8-GM
-	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 23:27:23 +0200
+	id 1KP2Ws-0004xd-1q
+	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 23:51:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762873AbYHAVZx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2008 17:25:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760189AbYHAVZx
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 17:25:53 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38388 "EHLO
+	id S1754082AbYHAVuO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2008 17:50:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754348AbYHAVuO
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 17:50:14 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59951 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764083AbYHAVZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2008 17:25:51 -0400
+	with ESMTP id S1753671AbYHAVuM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2008 17:50:12 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 95BA7422D1;
-	Fri,  1 Aug 2008 17:25:50 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 347D846B11;
+	Fri,  1 Aug 2008 17:50:11 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D93D9422CD; Fri,  1 Aug 2008 17:25:45 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0808012314580.9611@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
- Schindelin's message of "Fri, 1 Aug 2008 23:16:01 +0200 (CEST)")
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 2F4A246B0E; Fri,  1 Aug 2008 17:50:06 -0400 (EDT)
+In-Reply-To: <20080801135421.5ca0f6af.akpm@linux-foundation.org> (Andrew
+ Morton's message of "Fri, 1 Aug 2008 13:54:21 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6A0D9396-6010-11DD-BFF7-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: D0A3D932-6013-11DD-BE0B-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91103>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Andrew Morton <akpm@linux-foundation.org> writes:
 
-> On Fri, 1 Aug 2008, Andrew Morton wrote:
+>> The part _you_ don't seem to understand is that my point is
+>> 
+>>  - git changed that "From:" line to an "Author:" line
+>> 
+>>  - "git log" isn't an email system. It's a human-readable (and 
+>>    machine-parseable, for that matter) log.
 >
->> I very very frequently copy and paste name+email address out of git 
->> output and into an MUA.  Have done it thousands and thousands of times, 
->> and it has always worked.  I'm sure that many others do the same thing.
-
+> What you're describing here is some explicit or implicit git design
+> decision and then telling me how it's implemented.
 >
-> $ git log --pretty=email
->
-> after this patch:
+> Well, what I'm saying is that it was an incorrect design decision.
 
-You are quoting only Author: and not Signed-off-by: and Cc: that are used
-for e-mail purposes.  I already said send-email is the right place to do
-this kind of thing, didn't I?  Your patch makes things worse by making
-some <name, mail> pair already quoted and some others don't.
+What is the objective of your statement in this discussion?  Further add
+fuel to flame, or to seek avenues that lead to some improvement in a
+constructive way?
 
-Please don't do this.
+The thing is, I do not think reverting that design decision is an option
+at this point.  People's repositories record <Name, Email> pair already in
+"human readable" form, and people's scripts are assuming that.
+
+I misspoke about git-send-email earlier; it already has sanitize_address()
+that massages the addresses on From: To: and Cc: lines.  In fact, it even
+seems to have logic to avoid double-quoting, so it would be Ok if you
+changed the design decision this late in the game for that particular
+script, but that does not mean it is a good change --- other scripts
+people may have built around git would need to change.
+
+So the earlier patch from Dscho (Johannes) may be a step in the right
+direction, but if we are going to rewrite the author information, (1) it
+has to be an option, and (2) when rewriting, it should not be just From:;
+but Signed-off-by:, Cc: and other <Name, Email> pairs at the end of the
+log message would need similar treatment, so that you can cut and paste
+any of them to your MUA.
