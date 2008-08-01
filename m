@@ -1,73 +1,72 @@
-From: Bjorn Helgaas <bjorn.helgaas@hp.com>
-Subject: extracting to/cc addresses for stg mail
-Date: Fri, 1 Aug 2008 16:50:45 -0600
-Message-ID: <200808011650.45915.bjorn.helgaas@hp.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: email address handling
+Date: Fri, 1 Aug 2008 15:52:36 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0808011550450.6819@nehalem.linux-foundation.org>
+References: <alpine.LFD.1.10.0808011229400.3277@nehalem.linux-foundation.org> <20080801124550.26b9efc0.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011253580.3277@nehalem.linux-foundation.org> <20080801131127.20b3acfd.akpm@linux-foundation.org>
+ <alpine.LFD.1.10.0808011316050.3277@nehalem.linux-foundation.org> <20080801132415.0b0314e4.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011335230.3277@nehalem.linux-foundation.org> <20080801135421.5ca0f6af.akpm@linux-foundation.org>
+ <7vvdykqub6.fsf@gitster.siamese.dyndns.org> <20080801145804.85041bbd.akpm@linux-foundation.org> <20080801221539.GA8617@mit.edu> <20080801152720.56dbff09.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011531290.6819@nehalem.linux-foundation.org>
+ <20080801154453.921bb50f.akpm@linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 02 00:52:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Andrew Morton <akpm@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Aug 02 00:55:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KP3Tk-0005PT-5T
-	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 00:52:08 +0200
+	id 1KP3Ws-0006Cy-7m
+	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 00:55:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754742AbYHAWvF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2008 18:51:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754605AbYHAWvE
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 18:51:04 -0400
-Received: from g5t0007.atlanta.hp.com ([15.192.0.44]:38945 "EHLO
-	g5t0007.atlanta.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754079AbYHAWvD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2008 18:51:03 -0400
-Received: from g5t0030.atlanta.hp.com (g5t0030.atlanta.hp.com [16.228.8.142])
-	by g5t0007.atlanta.hp.com (Postfix) with ESMTP id D72F1142C1
-	for <git@vger.kernel.org>; Fri,  1 Aug 2008 22:51:02 +0000 (UTC)
-Received: from ldl.fc.hp.com (ldl.fc.hp.com [15.11.146.30])
-	by g5t0030.atlanta.hp.com (Postfix) with ESMTP id 9EC0F24044;
-	Fri,  1 Aug 2008 22:51:02 +0000 (UTC)
-Received: from localhost (ldl.fc.hp.com [127.0.0.1])
-	by ldl.fc.hp.com (Postfix) with ESMTP id 54E5F134021;
-	Fri,  1 Aug 2008 16:51:02 -0600 (MDT)
-X-Virus-Scanned: Debian amavisd-new at ldl.fc.hp.com
-Received: from ldl.fc.hp.com ([127.0.0.1])
-	by localhost (ldl.fc.hp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8ihpakFvBKz3; Fri,  1 Aug 2008 16:51:01 -0600 (MDT)
-Received: from tigger.helgaas (lart.fc.hp.com [15.11.146.31])
-	by ldl.fc.hp.com (Postfix) with ESMTP id 108A713401C;
-	Fri,  1 Aug 2008 16:51:00 -0600 (MDT)
-User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
-Content-Disposition: inline
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
+	id S1761233AbYHAWxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2008 18:53:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753534AbYHAWxy
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 18:53:54 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:50069 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752450AbYHAWxx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2008 18:53:53 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m71Mqbs0014260
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 1 Aug 2008 15:52:38 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m71Mqate008095;
+	Fri, 1 Aug 2008 15:52:37 -0700
+In-Reply-To: <20080801154453.921bb50f.akpm@linux-foundation.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.411 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91120>
 
-I'm new to stg, so maybe I'm missing the easy way to do this.
-That said, I'd like to maintain "To:" fields in the patch
-description, like this:
 
-  Signed-off-by: Bjorn Helgaas <bjorn.helgaas@hp.com>
-  To: Andi Kleen <andi@firstfloor.org>
-  Cc: Andrew Morton <akpm@linux-foundation.org>
 
-"stg mail --auto" takes care of adding Andrew to the Cc list,
-but I have to manually deal with Andi.
+On Fri, 1 Aug 2008, Andrew Morton wrote:
+> > 	S.__a__lar Onur <caglar@pardus.org.tr>
+> 
+> oh.  So .mailmap isn't usable either.  Argh.
 
-I've been doing that by using "stg mail --auto -E" and manually
-moving the To: line to the top, but that's a hassle.  I don't
-really want to use "stg mail --to=", because then I have to dig
-out the To: line contents first.  I don't really want to use
-different template files, because I often have one-off self-
-contained patches that go different places.
+Btw, your mailer really is broken. It seems to have turned my correct 
+utf-8 email into US-ASCII. 
 
-Is there a way to make stg pay attention to my "To:" lines in
-the patch description?  Or another way to accomplish this?
+Or at least it was correct when it came back to me. I don't see the 
+corruption. But your mailer seems to be unable to handle any complex 
+character sets and did
 
-Bjorn
+	X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; x86_64-redhat-linux-gnu)
+	Mime-Version: 1.0
+	Content-Type: text/plain; charset=US-ASCII
+
+and I wonder why?
+
+Yeah, I feel superior, because alpine actually gets things right these 
+days. I too used to be character-set-confused.
+
+			Linus
