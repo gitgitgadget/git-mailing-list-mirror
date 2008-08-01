@@ -1,69 +1,134 @@
-From: Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: email address handling
-Date: Fri, 1 Aug 2008 13:24:15 -0700
-Message-ID: <20080801132415.0b0314e4.akpm@linux-foundation.org>
-References: <20080731194042.a1534b4d.akpm@linux-foundation.org>
-	<alpine.LFD.1.10.0808011229400.3277@nehalem.linux-foundation.org>
-	<20080801124550.26b9efc0.akpm@linux-foundation.org>
-	<alpine.LFD.1.10.0808011253580.3277@nehalem.linux-foundation.org>
-	<20080801131127.20b3acfd.akpm@linux-foundation.org>
-	<alpine.LFD.1.10.0808011316050.3277@nehalem.linux-foundation.org>
+From: Tim Olsen <tim@brooklynpenguin.com>
+Subject: git-submodule add -b
+Date: Fri, 01 Aug 2008 16:27:05 -0400
+Message-ID: <g6vrip$2pu$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Aug 01 22:25:54 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 01 22:31:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KP1CA-0001Ti-IC
-	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 22:25:50 +0200
+	id 1KP1HH-00038Z-U1
+	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 22:31:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752704AbYHAUYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2008 16:24:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752560AbYHAUYt
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 16:24:49 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:51016 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752089AbYHAUYt (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2008 16:24:49 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m71KOGHi000360
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Fri, 1 Aug 2008 13:24:17 -0700
-Received: from akpm.corp.google.com (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id m71KOFSf001248;
-	Fri, 1 Aug 2008 13:24:16 -0700
-In-Reply-To: <alpine.LFD.1.10.0808011316050.3277@nehalem.linux-foundation.org>
-X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.8.20; i486-pc-linux-gnu)
-X-Spam-Status: No, hits=-2.824 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754805AbYHAUaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2008 16:30:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755884AbYHAUaG
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 16:30:06 -0400
+Received: from main.gmane.org ([80.91.229.2]:35401 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755755AbYHAUaE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2008 16:30:04 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1KP1GE-0001D2-PQ
+	for git@vger.kernel.org; Fri, 01 Aug 2008 20:30:02 +0000
+Received: from cyrus.limewire.com ([76.8.67.2])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Aug 2008 20:30:02 +0000
+Received: from tim by cyrus.limewire.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Aug 2008 20:30:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: cyrus.limewire.com
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91092>
 
-On Fri, 1 Aug 2008 13:17:11 -0700 (PDT)
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
+The git-submodule man page says that the -b option to "git-submodule
+add" is the "Branch of repository to add as submodule."
 
-> 
-> 
-> On Fri, 1 Aug 2008, Andrew Morton wrote:
-> > 
-> > This was the Author: line.
-> 
-> So?
+I get the error "fatal: A branch named '1.x' already exists." when I try
+to use "git submodule add -b".  A sample session is below.  What am I
+doing wrong?
 
-So all the other things I said.
+tolsen@neurofunk:~/git$ mkdir submodule-branch
+tolsen@neurofunk:~/git$ cd submodule-branch
+tolsen@neurofunk:~/git/submodule-branch$ mkdir sub
+tolsen@neurofunk:~/git/submodule-branch$ cd sub
+tolsen@neurofunk:~/git/submodule-branch/sub$ git init
+Initialized empty Git repository in
+/home/tolsen/git/submodule-branch/sub/.git/
+tolsen@neurofunk:~/git/submodule-branch/sub$ echo 1 > file
+tolsen@neurofunk:~/git/submodule-branch/sub$ git add file
+tolsen@neurofunk:~/git/submodule-branch/sub$ git commit -m v1
+Created initial commit d5c185a: v1
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 file
+tolsen@neurofunk:~/git/submodule-branch/sub$ echo 2 > file
+tolsen@neurofunk:~/git/submodule-branch/sub$ git add file
+tolsen@neurofunk:~/git/submodule-branch/sub$ git commit -m v2
+Created commit fb864b2: v2
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+tolsen@neurofunk:~/git/submodule-branch/sub$ git log
+commit fb864b2d4d9dacd87e55d0be970baa5fc6a0972c
+Author: Tim Olsen <tolsen@limespot.com>
+Date:   Fri Aug 1 16:21:09 2008 -0400
 
-> I mean, it's not sending email, is it? It says "Author:".
-> 
-> You could have just inserted the actual email address. Or something.
-> 
+    v2
 
-pls read earlier email.
+commit d5c185a7ea91b66b5df524b21bbe0daf40a456f4
+Author: Tim Olsen <tolsen@limespot.com>
+Date:   Fri Aug 1 16:21:03 2008 -0400
+
+    v1
+tolsen@neurofunk:~/git/submodule-branch/sub$ git checkout -b 1.x d5c185a7
+Switched to a new branch "1.x"
+tolsen@neurofunk:~/git/submodule-branch/sub$ echo 1.1 > file
+tolsen@neurofunk:~/git/submodule-branch/sub$ git add file
+tolsen@neurofunk:~/git/submodule-branch/sub$ git commit -m v1.1
+Created commit d9868c5: v1.1
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+tolsen@neurofunk:~/git/submodule-branch/sub$ git log
+commit d9868c5dc837404834b44eca6d21930c4f352127
+Author: Tim Olsen <tolsen@limespot.com>
+Date:   Fri Aug 1 16:21:58 2008 -0400
+
+    v1.1
+
+commit d5c185a7ea91b66b5df524b21bbe0daf40a456f4
+Author: Tim Olsen <tolsen@limespot.com>
+Date:   Fri Aug 1 16:21:03 2008 -0400
+
+    v1
+tolsen@neurofunk:~/git/submodule-branch/sub$ cd ..
+tolsen@neurofunk:~/git/submodule-branch$ mkdir super
+tolsen@neurofunk:~/git/submodule-branch$ cd super
+tolsen@neurofunk:~/git/submodule-branch/super$ git init
+Initialized empty Git repository in
+/home/tolsen/git/submodule-branch/super/.git/
+tolsen@neurofunk:~/git/submodule-branch/super$ echo dummy > dummy
+tolsen@neurofunk:~/git/submodule-branch/super$ git add dummy
+tolsen@neurofunk:~/git/submodule-branch/super$ git commit -m dummy
+Created initial commit f1c41b6: dummy
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 dummy
+tolsen@neurofunk:~/git/submodule-branch/super$ cd ..
+tolsen@neurofunk:~/git/submodule-branch$ git clone super super2
+Initialized empty Git repository in
+/home/tolsen/git/submodule-branch/super2/.git/
+tolsen@neurofunk:~/git/submodule-branch$ cd super2
+tolsen@neurofunk:~/git/submodule-branch/super2$ git submodule add -b 1.x
+~/git/submodule-branch/sub
+Initialized empty Git repository in
+/home/tolsen/git/submodule-branch/super2/sub/.git/
+fatal: A branch named '1.x' already exists.
+Unable to checkout submodule 'sub'
+tolsen@neurofunk:~/git/submodule-branch/super2$ git status
+# On branch master
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       sub/
+nothing added to commit but untracked files present (use "git add" to track)
+tolsen@neurofunk:~/git/submodule-branch/super2$
+
+Thanks,
+Tim
