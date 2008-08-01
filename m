@@ -1,81 +1,71 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH] gitweb: use_pathinfo filenames start with /
-Date: Fri,  1 Aug 2008 22:35:13 +0200
-Message-ID: <1217622913-9747-1-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1217593425-28314-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@ucw.cz>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 01 22:36:12 2008
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: [PATCH] Add Pascal/Delphi (.pas file) funcname pattern.
+Date: Fri, 1 Aug 2008 16:38:43 -0400
+Message-ID: <32541b130808011338t17a45e51sd0df245dc456b087@mail.gmail.com>
+References: <1217619915-9331-1-git-send-email-apenwarr@gmail.com>
+	 <7v8wvgsd6s.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 01 22:39:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KP1M4-0004ta-Vb
-	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 22:36:05 +0200
+	id 1KP1Pd-00063j-Q3
+	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 22:39:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753878AbYHAUfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2008 16:35:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753501AbYHAUfA
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 16:35:00 -0400
-Received: from qb-out-0506.google.com ([72.14.204.236]:32596 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753499AbYHAUe7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2008 16:34:59 -0400
-Received: by qb-out-0506.google.com with SMTP id a16so1169506qbd.17
-        for <git@vger.kernel.org>; Fri, 01 Aug 2008 13:34:59 -0700 (PDT)
+	id S1753935AbYHAUio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2008 16:38:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753862AbYHAUio
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 16:38:44 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:6453 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753418AbYHAUio (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2008 16:38:44 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so732644ywe.1
+        for <git@vger.kernel.org>; Fri, 01 Aug 2008 13:38:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=nZcFXBfQYKnh0IfNNlUJZq0OAhWGrBn0WkoijRs4QVQ=;
-        b=S7JJhBPCQ6O9b3C8AzfP+h784ctibErz8VcTr36ZqVpduJkec4qDbzloEX+WrGY6Yx
-         RLmSPm8X/0hUcLcnJWQftDqSch6vwPIR6XDSHeodULqdbv6s+f/Z9GspZKES8FOvj++3
-         NrMmNFyQLRrbH/mBXiXbtIkGLhAHMwVZQi2Ss=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=T02VPq/59VctXXmXJsk6jtrA8TYzoWU6Lh0GjkUDCvU=;
+        b=j1xuUGgd1rBOrhaqSl6ew+Vqs4xryTvEeJnjZ56Pz9DkZ58jYGB3wJj0pT8DYo+IcG
+         vEXX1B4b035onH3r+BlfEGQN+NU+mWKvl4MxcfpAcnX6rqQz/MIqSYpsjJcQIQb2JmGB
+         R9QLLkIuqHe2/TpobboVEIGmoCE7zfAxxoz9w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Ca2uKWGDrZbbEWtP6NWeMmbyVwOWedqfIwYoCo7acouYMXlTMM1melns3lwjYnddP1
-         y0ADblD4H3+9LhsCJ0hSHDr+oMCZ4ZxiDy4bdbvsfntg/75VinoMmhzUWFS6d1GTmTdn
-         4VQGtSz4I+nZyxIBYBIwo7nd6YObQ00eFuzvI=
-Received: by 10.181.27.7 with SMTP id e7mr4218875bkj.2.1217622898511;
-        Fri, 01 Aug 2008 13:34:58 -0700 (PDT)
-Received: from localhost ( [94.37.6.145])
-        by mx.google.com with ESMTPS id f31sm1711278fkf.0.2008.08.01.13.34.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 01 Aug 2008 13:34:57 -0700 (PDT)
-X-Mailer: git-send-email 1.5.6.3
-In-Reply-To: <1217593425-28314-1-git-send-email-giuseppe.bilotta@gmail.com>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=J1IS1yVdxKW1LnZSU2hP0Nept8QojbbveHHIFPpIDdu5JHBwB8pQD04Sc+C2TTq3HJ
+         c3Ll73IErAaOCJ0u1wPvQCmsozCtWAs4mGAjiBLh3ZMdofhPWdzNouussEUWnbyRGoBw
+         VfKHxRcKcDH6DWzAd6f6EOYjmAt0duw/DGtRw=
+Received: by 10.151.84.12 with SMTP id m12mr3882116ybl.11.1217623123102;
+        Fri, 01 Aug 2008 13:38:43 -0700 (PDT)
+Received: by 10.150.98.19 with HTTP; Fri, 1 Aug 2008 13:38:43 -0700 (PDT)
+In-Reply-To: <7v8wvgsd6s.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91094>
 
-When using path info, make filenames start with a / (right after the :
-that separates them from the hash base). This minimal change allows
-relative navigation to work properly when viewing HTML files.
----
+On 8/1/08, Junio C Hamano <gitster@pobox.com> wrote:
+> Is Delphi the only surviving Pascal?  Why is the name "pas", not "pascal"
+>  or even "delphi-pascal"?
 
-This patch is based on top of my previous patch
-  gitweb: action in path with use_pathinfo
-(which I sent with the wrong CC: lines)
+No, but all surviving Pascals pretty much support the same syntax, so
+when I say Pascal/Delphi, I mean either one.  And Delphi does use the
+.pas extension.
 
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+>  The keys are not file extensions ("ruby" example did the right thing by
+>  not saying "rb").
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 56fbdab..a8c0887 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -664,7 +664,7 @@ sub href (%) {
- 		if (defined $params{'hash_base'}) {
- 			$href .= "/".esc_url($params{'hash_base'});
- 			if (defined $params{'file_name'}) {
--				$href .= ":".esc_url($params{'file_name'});
-+				$href .= ":/".esc_url($params{'file_name'});
- 				delete $params{'hash'} if $params{'hash'} eq git_get_hash_by_path($params{'hash_base'},$params{'file_name'});
- 				delete $params{'file_name'};
- 			} else {
--- 
-1.5.6.3
+Will fix.
+
+Avery
