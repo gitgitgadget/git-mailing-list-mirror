@@ -1,91 +1,98 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: More on git over HTTP POST
-Date: Fri, 01 Aug 2008 14:50:49 -0700
-Message-ID: <48938539.9060003@zytor.com>
+From: Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: email address handling
+Date: Fri, 1 Aug 2008 14:58:04 -0700
+Message-ID: <20080801145804.85041bbd.akpm@linux-foundation.org>
+References: <20080731194042.a1534b4d.akpm@linux-foundation.org>
+	<alpine.LFD.1.10.0808011229400.3277@nehalem.linux-foundation.org>
+	<20080801124550.26b9efc0.akpm@linux-foundation.org>
+	<alpine.LFD.1.10.0808011253580.3277@nehalem.linux-foundation.org>
+	<20080801131127.20b3acfd.akpm@linux-foundation.org>
+	<alpine.LFD.1.10.0808011316050.3277@nehalem.linux-foundation.org>
+	<20080801132415.0b0314e4.akpm@linux-foundation.org>
+	<alpine.LFD.1.10.0808011335230.3277@nehalem.linux-foundation.org>
+	<20080801135421.5ca0f6af.akpm@linux-foundation.org>
+	<7vvdykqub6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 01 23:51:55 2008
+Cc: torvalds@linux-foundation.org, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 02 00:00:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KP2XS-00059B-43
-	for gcvg-git-2@gmane.org; Fri, 01 Aug 2008 23:51:54 +0200
+	id 1KP2fY-0000Jy-Hp
+	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 00:00:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754559AbYHAVuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2008 17:50:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754700AbYHAVuv
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 17:50:51 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:36667 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754448AbYHAVuu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2008 17:50:50 -0400
-Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m71LonAV001966
+	id S1756358AbYHAV7K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2008 17:59:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752238AbYHAV7K
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 17:59:10 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:56567 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756497AbYHAV7J (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2008 17:59:09 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m71Lw4sT009303
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 1 Aug 2008 14:50:49 -0700
-Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
-	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m71Lon7x004053;
-	Fri, 1 Aug 2008 14:50:49 -0700
-Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
-	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m71Lonp6017680;
-	Fri, 1 Aug 2008 14:50:49 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-X-Virus-Scanned: ClamAV 0.93.3/7912/Fri Aug  1 13:16:14 2008 on terminus.zytor.com
-X-Virus-Status: Clean
+	Fri, 1 Aug 2008 14:58:05 -0700
+Received: from akpm.corp.google.com (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id m71Lw4wg005737;
+	Fri, 1 Aug 2008 14:58:04 -0700
+In-Reply-To: <7vvdykqub6.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.8.20; i486-pc-linux-gnu)
+X-Spam-Status: No, hits=-2.824 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91105>
 
-Hi all,
+On Fri, 01 Aug 2008 14:50:05 -0700
+Junio C Hamano <gitster@pobox.com> wrote:
 
-I have investigated a bit what it would take to support git protocol 
-(smart transport) over HTTP POST transactions.
+> Andrew Morton <akpm@linux-foundation.org> writes:
+> 
+> >> The part _you_ don't seem to understand is that my point is
+> >> 
+> >>  - git changed that "From:" line to an "Author:" line
+> >> 
+> >>  - "git log" isn't an email system. It's a human-readable (and 
+> >>    machine-parseable, for that matter) log.
+> >
+> > What you're describing here is some explicit or implicit git design
+> > decision and then telling me how it's implemented.
+> >
+> > Well, what I'm saying is that it was an incorrect design decision.
+> 
+> What is the objective of your statement in this discussion?  Further add
+> fuel to flame, or to seek avenues that lead to some improvement in a
+> constructive way?
 
-The current proxy system is broken, for a very simple reason: it doesn't 
-convey information about when the channel should be turned around.
+Well initially it was to work out why the heck my git-log output had
+stripped the quotes from that person's name, making it unusable for
+email purposes.  I'd actually assumed that it was a bug.
 
-HTTP POST -- or, for that matter, any RPC-style transport, is a half 
-duplex transport: only one direction can be active at a time, after 
-which the channel has to be explicitly turned around.  The "turning 
-around" consists of posting the queued transaction and listening for the 
-reply.
+> The thing is, I do not think reverting that design decision is an option
+> at this point.  People's repositories record <Name, Email> pair already in
+> "human readable" form, and people's scripts are assuming that.
+> 
+> I misspoke about git-send-email earlier; it already has sanitize_address()
+> that massages the addresses on From: To: and Cc: lines.  In fact, it even
+> seems to have logic to avoid double-quoting, so it would be Ok if you
+> changed the design decision this late in the game for that particular
+> script, but that does not mean it is a good change --- other scripts
+> people may have built around git would need to change.
+> 
+> So the earlier patch from Dscho (Johannes) may be a step in the right
+> direction, but if we are going to rewrite the author information, (1) it
+> has to be an option, and (2) when rewriting, it should not be just From:;
+> but Signed-off-by:, Cc: and other <Name, Email> pairs at the end of the
+> log message would need similar treatment, so that you can cut and paste
+> any of them to your MUA.
 
-Ultimately, it comes down to the following: the transactor needs to be 
-given explicit information when the git protocol goes from writing to 
-reading (the opposite direction information is obvious.)  I was hoping 
-that it would be possible to get this information from snooping the 
-protocol, but it doesn't seem to be so lucky.
-
-I started to hack on a variant which would embed a VFS-style interface 
-in git itself, looking something like:
-
-struct transactor;
-
-struct transact_ops {
-	ssize_t (*read)(struct transactor *, void *, size_t);
-	ssize_t (*write)(struct transactor *, const void *, size_t);
-	int (*close)(struct transactor *);
-};
-
-struct transactor {
-	union {
-		void *p;
-		intptr_t i;
-	} u;
-	const struct transact_ops *ops;
-};
-
-Replacing the usual fd operations with this interface would allow a 
-different transactor to see the phase changes explicitly; the 
-replacement to use xread() and xwrite() is obvious.
-
-Of course, I started hacking on it and found myself with zero time to 
-continue, but I thought I'd post what I had come up with.
-
-	-hpa
+I preserve the quotes (when present) in signoffs for this exact reason.
