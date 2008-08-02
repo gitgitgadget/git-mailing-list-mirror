@@ -1,63 +1,47 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] clone: Add an option to set up a mirror
-Date: Sat, 02 Aug 2008 11:55:04 -0700
-Message-ID: <7vr697l01j.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0808011600170.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+Subject: Missing pieces for 1.6.0 on MinGW?
+Date: Sat, 02 Aug 2008 12:05:04 -0700
+Message-ID: <7vljzfkzkv.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Aug 02 20:56:36 2008
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sat Aug 02 21:06:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPMHG-00011t-Gu
-	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 20:56:30 +0200
+	id 1KPMQh-0003cg-DL
+	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 21:06:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755653AbYHBSzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Aug 2008 14:55:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754648AbYHBSzT
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 14:55:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54517 "EHLO
+	id S1753435AbYHBTFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Aug 2008 15:05:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753417AbYHBTFN
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 15:05:13 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56375 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754129AbYHBSzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Aug 2008 14:55:17 -0400
+	with ESMTP id S1753251AbYHBTFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Aug 2008 15:05:12 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 417DA45522;
-	Sat,  2 Aug 2008 14:55:12 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C148245660;
+	Sat,  2 Aug 2008 15:05:10 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B82594551B; Sat,  2 Aug 2008 14:55:06 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0808011600170.9611@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
- Schindelin's message of "Fri, 1 Aug 2008 16:00:45 +0200 (CEST)")
+ ESMTPSA id 37A184565F; Sat,  2 Aug 2008 15:05:06 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8930EF3E-60C4-11DD-B0AE-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: EDF0D780-60C5-11DD-BBF5-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91169>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Just a quick question before the weekend ends and -rc2 gets tagged.  (I
+lost track of that argv0 vs bin/git vs libexec/git-core/git-foo
+discussion).
 
-> The command line
->
-> 	$ git clone --mirror $URL
->
-> is now a short-hand for
->
-> 	$ git clone --bare $URL
-> 	$ (cd $(basename $URL) && git remote add --mirror origin $URL)
-
-I think this would be a useful behaviour and I am very tempted to violate
-the general policy of not taking any new options nor features after -rc1.
-
-I however notice that there are differences bewteen the above sequence and
-what your code actually does:
-
- - The "remote add --mirror" sequence tells it to mirror everything, but
-   the patch still mirrors only heads;
-
- - You are not setting up "remote.*.mirror = yes" in the configuration;
+Are there any missing but necessary patches we need before 1.6.0 for
+MinGW?
