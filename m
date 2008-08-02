@@ -1,74 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff: chapter and part in funcname for tex
-Date: Sat, 02 Aug 2008 10:59:05 -0700
-Message-ID: <7vprormh7a.fsf@gitster.siamese.dyndns.org>
-References: <1217658945-29908-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1217678145-2630-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: git svn and the post-receive hook
+Date: Sat, 2 Aug 2008 20:03:19 +0200
+Message-ID: <20080802180319.GZ32057@genesis.frugalware.org>
+References: <489485BC.1020607@obry.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 02 20:00:20 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ZukBEUNXiWwEFff2"
+Cc: git list <git@vger.kernel.org>
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Sat Aug 02 20:04:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPLOn-0002c7-NK
-	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 20:00:14 +0200
+	id 1KPLSp-0003mS-Dn
+	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 20:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752700AbYHBR7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Aug 2008 13:59:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752811AbYHBR7N
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 13:59:13 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59398 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752090AbYHBR7M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Aug 2008 13:59:12 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EC48F4CFEA;
-	Sat,  2 Aug 2008 13:59:09 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id E8EC94CFE9; Sat,  2 Aug 2008 13:59:06 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B51B1FC8-60BC-11DD-9415-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753357AbYHBSDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Aug 2008 14:03:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753202AbYHBSDW
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 14:03:22 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:48316 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752811AbYHBSDV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Aug 2008 14:03:21 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 25B051B250D;
+	Sat,  2 Aug 2008 20:03:20 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 3A16B4465E;
+	Sat,  2 Aug 2008 19:16:16 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 7BF651770071; Sat,  2 Aug 2008 20:03:19 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <489485BC.1020607@obry.net>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91162>
 
-Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-> This patch enhances the tex funcname by adding support for
-> chapter and part sectioning commands. It also matches
-> the starred version of the sectioning commands.
->
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
->
-> ---
->
-> Resend, with Signed-off-by: line
->
->  diff.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/diff.c b/diff.c
-> index c253015..776bce1 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -1380,7 +1380,7 @@ static struct builtin_funcname_pattern {
->  			"^[ 	]*\\(\\([ 	]*"
->  			"[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}"
->  			"[ 	]*([^;]*\\)$" },
-> -	{ "tex", "^\\(\\\\\\(sub\\)*section{.*\\)$" },
-> +	{ "tex", "^\\(\\\\\\(\\(sub\\)*section\\|chapter\\|part\\)\\*\\?{.*\\)$" },
+--ZukBEUNXiWwEFff2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Ok on idea, but NAK on implementation.
+On Sat, Aug 02, 2008 at 06:05:16PM +0200, Pascal Obry <pascal@obry.net> wro=
+te:
+> At the moment it seems to me that the post-receive hook is not called whe=
+n=20
+> tracking a remove Subversion repository.
 
-"A\?" to mean 0 or one "A" in BRE is GNU extention and we try to avoid it.
-"A\{0,1\}" is equivalent and we already use the bound notation in "java"
-section, so perhaps this is an Ok replacement?
+Sure. From the "post-receive" hook documentation:
 
-	{ "tex", "^\\(\\\\\\(\\(sub\\)*section\\|chapter\\|part\\)\\*\\{0,1\\}{.*\\)$" },
+"This hook is invoked by 'git-receive-pack' on the remote repository,
+which happens when a 'git-push' is done on a local repository."
+
+And git svn will never invoke git receive-pack.
+
+> I think it would be nice to call the post-receive hook at the end of:
+>=20
+>    $ git svn rebase
+
+What about a post-rebase hook, like there is a post-merge one?
+
+> I have zero experience with Perl so I do not feel like hacking this mysel=
+f.
+
+git rebase is shell. ;-)
+
+--ZukBEUNXiWwEFff2
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkiUoWcACgkQe81tAgORUJb0FQCgqiJHZCGnJVf1Af5vR8A2kON3
+5C0AnRuiW3FBTGijwQTqAP8FYtDs9d98
+=2jbr
+-----END PGP SIGNATURE-----
+
+--ZukBEUNXiWwEFff2--
