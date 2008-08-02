@@ -1,81 +1,80 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH] diff: add ruby funcname pattern
-Date: Sat, 2 Aug 2008 08:06:45 +0200
-Message-ID: <cb7bb73a0808012306y5672dad9nd0a21f861f181e5b@mail.gmail.com>
-References: <1217488908-19692-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <7vmyjxtco3.fsf@gitster.siamese.dyndns.org>
-	 <cb7bb73a0808010111j29e2085etd58150037b55063c@mail.gmail.com>
-	 <7v4p65tadh.fsf@gitster.siamese.dyndns.org>
-	 <0C57339C-50EF-4199-A14B-AFF04C92EF87@sb.org>
-	 <cb7bb73a0808012241s80a06fq1ac54a3350169f6c@mail.gmail.com>
-	 <C871A30D-F2AF-4385-ABD4-C57F474D7F01@sb.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Kevin Ballard" <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Sat Aug 02 08:14:23 2008
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCH] diff: chapter and part in funcname for tex
+Date: Sat,  2 Aug 2008 08:35:45 +0200
+Message-ID: <1217658945-29908-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 02 08:36:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPANi-0004v7-Rv
-	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 08:14:23 +0200
+	id 1KPAjD-00010t-SQ
+	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 08:36:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751847AbYHBGGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Aug 2008 02:06:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751839AbYHBGGr
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 02:06:47 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:45795 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751785AbYHBGGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Aug 2008 02:06:46 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so803263ywe.1
-        for <git@vger.kernel.org>; Fri, 01 Aug 2008 23:06:45 -0700 (PDT)
+	id S1751913AbYHBGf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Aug 2008 02:35:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751912AbYHBGf3
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 02:35:29 -0400
+Received: from mu-out-0910.google.com ([209.85.134.191]:10024 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751863AbYHBGf2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Aug 2008 02:35:28 -0400
+Received: by mu-out-0910.google.com with SMTP id w8so1919977mue.1
+        for <git@vger.kernel.org>; Fri, 01 Aug 2008 23:35:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=2Qtu7Trry2RY3cCIpEATPy6n70mcd294KNUKhdMJzio=;
-        b=VPcp93R4s1YyMMulOWjcZy2zaM3gHe4Mpo7lt5tjc5any/+t7KzNh+s1W/JHWUzZb7
-         u061OLBFuxkEN7EQSQkJqzYoy+Gg4P8S4AdYpa2xXYGnwkXegQv98UqyhxZIAzsuWN39
-         gKiE/I9vMz217bO5HUtnrP2d6yiksxZuN6YdY=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=xXemyGd0F60T/7SopebUnecs5ZsH6I2arrgpy1aGv4A=;
+        b=RTvqJ5Rh9ULjkj+HJ+o/R1BroF96ZA/Uoa8vppuldanwJcubZk18UledjTP8aLj9T+
+         6L9YEwliaB/nfJ+TifQrw0XzmslYl9Nx6dXSV3/VZ0dbCvaCjikjX+/ePzoTCTPKLQa+
+         qnmp31nXDz0BxrzRXaZ+QxsVKUb0kqgfjDYEI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Fl8dktogzX9EDLnHPg+kfDL9FI23lVoSGaXgwYcZ4cT00dx1B5XBM3cDqmuU/R7nML
-         2OnGyGDdKAz6xu0MSA8tbPkhq7ZoO4oczTB5tShQT/XusgpGSYmneb7Hr9ESUbxW1N/6
-         oQjirsOf7hA20Oe0Ru9QAL/Hr89u5QKHONcy8=
-Received: by 10.150.217.14 with SMTP id p14mr4509578ybg.83.1217657205452;
-        Fri, 01 Aug 2008 23:06:45 -0700 (PDT)
-Received: by 10.150.155.12 with HTTP; Fri, 1 Aug 2008 23:06:45 -0700 (PDT)
-In-Reply-To: <C871A30D-F2AF-4385-ABD4-C57F474D7F01@sb.org>
-Content-Disposition: inline
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ms2otn4i9Qfhcl16l3TRT/fB8I/eiTSYgLl3PTDp2xRd0SMnb5rX/y527q6EwtjaMr
+         /rcMTtwiILBrGdPSUL1ffWjiJTitN78gvXaKK4YElvVBH4iZ5ew+30hfPlAtCGnKGO4/
+         DPGY5vqVFX2OFZLjJqDPt61btETi680oHelPE=
+Received: by 10.181.24.14 with SMTP id b14mr4350587bkj.22.1217658926059;
+        Fri, 01 Aug 2008 23:35:26 -0700 (PDT)
+Received: from localhost ( [94.37.6.145])
+        by mx.google.com with ESMTPS id 13sm2093646fks.6.2008.08.01.23.35.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 01 Aug 2008 23:35:25 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91135>
 
-On Sat, Aug 2, 2008 at 7:47 AM, Kevin Ballard <kevin@sb.org> wrote:
->
-> If you're going to get into anonymous code blocks, you're going to have a
-> really tough time deciding which blocks are interesting and which aren't.
-> And as you stated before, without a stack-based approach, this could really
-> fall apart, as anonymous blocks are (almost) always going to be inside a
-> method.
+This patch enhances the tex funcname by adding support for
+chapter and part sectioning commands. It also matches
+the starred version of the sectioning commands.
+---
 
-I was just looking for a libxdiff issue tracker but I couldn't find
-one, so I guess I'll ask the author directly about the possibility to
-implement such a thing. The matchit plugin for vim seems to manage
-(even user-defined) code blocks very well, even for multi-state blocks
-(if ... else ... end), using regexps; so maybe a reimplementation in C
-for libxdiff could be a solution. Of course, one wonders how much
-slower such an approach would be as opposed to the current "look back
-until the first matching line" solution ...
+I know that technically speaking this should have been two
+separate patches because they are two logically separate
+changes, but they are really rather braindead so please
+accept them as one :)
 
+ diff.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index c253015..776bce1 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1380,7 +1380,7 @@ static struct builtin_funcname_pattern {
+ 			"^[ 	]*\\(\\([ 	]*"
+ 			"[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}"
+ 			"[ 	]*([^;]*\\)$" },
+-	{ "tex", "^\\(\\\\\\(sub\\)*section{.*\\)$" },
++	{ "tex", "^\\(\\\\\\(\\(sub\\)*section\\|chapter\\|part\\)\\*\\?{.*\\)$" },
+ 	{ "ruby", "^\\s*\\(\\(class\\|module\\|def\\)\\s.*\\)$" },
+ };
+ 
 -- 
-Giuseppe "Oblomov" Bilotta
+1.5.6.3
