@@ -1,76 +1,70 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: git svn and the post-receive hook
-Date: Sat, 02 Aug 2008 18:05:16 +0200
-Organization: Home - http://www.obry.net
-Message-ID: <489485BC.1020607@obry.net>
-Reply-To: pascal@obry.net
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: email address handling
+Date: Sat, 2 Aug 2008 09:20:17 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0808020916370.3318@nehalem.linux-foundation.org>
+References: <alpine.LFD.1.10.0808011229400.3277@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808011253580.3277@nehalem.linux-foundation.org> <20080801131127.20b3acfd.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011316050.3277@nehalem.linux-foundation.org>
+ <20080801132415.0b0314e4.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011335230.3277@nehalem.linux-foundation.org> <20080801135421.5ca0f6af.akpm@linux-foundation.org> <7vvdykqub6.fsf@gitster.siamese.dyndns.org> <20080801145804.85041bbd.akpm@linux-foundation.org>
+ <20080801221539.GA8617@mit.edu> <20080801152720.56dbff09.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011534260.6819@nehalem.linux-foundation.org> <20080801154902.c60717e5.akpm@linux-foundation.org> <alpine.LFD.1.10.0808011554350.6819@nehalem.linux-foundation.org>
+ <alpine.LFD.1.10.0808011608150.6819@nehalem.linux-foundation.org> <alpine.DEB.1.00.0808021321500.9611@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 02 18:06:50 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Theodore Tso <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Aug 02 18:23:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPJck-0002Ak-LH
-	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 18:06:31 +0200
+	id 1KPJtG-0007V1-KG
+	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 18:23:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752476AbYHBQF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Aug 2008 12:05:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753450AbYHBQF2
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 12:05:28 -0400
-Received: from fk-out-0910.google.com ([209.85.128.185]:65000 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751057AbYHBQF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Aug 2008 12:05:28 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so1254253fkq.5
-        for <git@vger.kernel.org>; Sat, 02 Aug 2008 09:05:26 -0700 (PDT)
-Received: by 10.180.234.10 with SMTP id g10mr4472688bkh.16.1217693126523;
-        Sat, 02 Aug 2008 09:05:26 -0700 (PDT)
-Received: from ?192.168.0.100? ( [82.124.74.244])
-        by mx.google.com with ESMTPS id d13sm2519783fka.3.2008.08.02.09.05.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 02 Aug 2008 09:05:25 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.8.1.16) Gecko/20080708 Thunderbird/2.0.0.16 Mnenhy/0.7.5.0
-X-Enigmail-Version: 0.95.6
+	id S1753540AbYHBQUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Aug 2008 12:20:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752927AbYHBQUp
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 12:20:45 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:35540 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752783AbYHBQUp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 Aug 2008 12:20:45 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m72GKINM009608
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 2 Aug 2008 09:20:19 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m72GKHGp012020;
+	Sat, 2 Aug 2008 09:20:17 -0700
+In-Reply-To: <alpine.DEB.1.00.0808021321500.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.413 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91151>
 
 
-At the moment it seems to me that the post-receive hook is not called 
-when tracking a remove Subversion repository.
 
-I think it would be nice to call the post-receive hook at the end of:
+On Sat, 2 Aug 2008, Johannes Schindelin wrote:
+> 
+> Ah, there lies the rub (you forgot that the original complaint was about 
+> a comma, and pretty=email does not handle those):
 
-    $ git svn rebase
+Indeed.
 
-Why I need this?
+I wonder where that is_rfc2047_special() function came from.  The list of 
+"special" characters is totally bogus.
 
-I'd like to check for example that if a file has been added to the 
-remote Subversion repository then it is properly added into a MANIFEST 
-file. I'd also like to check some style rules. This would help to detect 
-some problems when one has no way to add hooks on the Subversion repository.
+The real RFC has comma, but it has a lot of other characters too:
 
-I have zero experience with Perl so I do not feel like hacking this myself.
+  especials = "(" / ")" / "<" / ">" / "@" / "," / ";" / ":" /
+              "<" / "> / "/" / "[" / "]" / "?" / "." / "="
 
-What do you think?
+because basically the rfc2047 encoding has to be a superset of the 822 
+(and later 2822) encodings.
 
-Is this already possible (I may have missed something)?
-
-Thanks,
-Pascal.
-
--- 
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+		Linus
