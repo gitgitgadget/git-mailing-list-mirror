@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: email address handling
-Date: Sat, 02 Aug 2008 09:36:33 -0700
-Message-ID: <7vej57pe5q.fsf@gitster.siamese.dyndns.org>
+Date: Sat, 02 Aug 2008 09:40:51 -0700
+Message-ID: <7vabfvpdyk.fsf@gitster.siamese.dyndns.org>
 References: <alpine.LFD.1.10.0808011229400.3277@nehalem.linux-foundation.org>
  <alpine.LFD.1.10.0808011253580.3277@nehalem.linux-foundation.org>
  <20080801131127.20b3acfd.akpm@linux-foundation.org>
@@ -25,38 +25,38 @@ Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Aug 02 18:37:46 2008
+X-From: git-owner@vger.kernel.org Sat Aug 02 18:42:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPK6z-0003QR-9X
-	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 18:37:45 +0200
+	id 1KPKBB-0004br-U3
+	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 18:42:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754156AbYHBQgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Aug 2008 12:36:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753553AbYHBQgo
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 12:36:44 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64238 "EHLO
+	id S1755453AbYHBQlD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Aug 2008 12:41:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755406AbYHBQlC
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 12:41:02 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65116 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753352AbYHBQgn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Aug 2008 12:36:43 -0400
+	with ESMTP id S1754740AbYHBQlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Aug 2008 12:41:00 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EC0164C877;
-	Sat,  2 Aug 2008 12:36:41 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A63214C902;
+	Sat,  2 Aug 2008 12:40:59 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 102534C874; Sat,  2 Aug 2008 12:36:35 -0400 (EDT)
+ ESMTPSA id ECF4E4C901; Sat,  2 Aug 2008 12:40:53 -0400 (EDT)
 In-Reply-To: <alpine.LFD.1.10.0808020916370.3318@nehalem.linux-foundation.org> (Linus
  Torvalds's message of "Sat, 2 Aug 2008 09:20:17 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2FDD7CE4-60B1-11DD-A991-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: C97A3022-60B1-11DD-9142-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91153>
 
 Linus Torvalds <torvalds@linux-foundation.org> writes:
 
@@ -67,6 +67,12 @@ Linus Torvalds <torvalds@linux-foundation.org> writes:
 >
 > Indeed.
 >
-> I wonder where that is_rfc2047_special() function came from.
+> I wonder where that is_rfc2047_special() function came from.  The list of 
+> "special" characters is totally bogus.
 
-It came from the earlier patch from Dscho I rejected yesterday ;-)
+This function is about quoting inside dq pair, so the function does not
+look at the set you listed.  It is about quoting non-ascii chars using the
+?charset?Q? or ?charset?B? notation.
+
+If we want to use double quotes that should be done elsewhere, not in that
+function.
