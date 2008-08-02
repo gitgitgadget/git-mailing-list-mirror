@@ -1,61 +1,75 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH] builtin-revert.c: typofix
-Date: Sat,  2 Aug 2008 03:51:21 +0200
-Message-ID: <1217641881-17611-1-git-send-email-s-beyer@gmx.net>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	gitster@pobox.com, Stephan Beyer <s-beyer@gmx.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 02 03:52:34 2008
+From: "=?BIG5?B?s6+kzaSk?=" <bjy6l0v5dp@gmail.com>
+Subject: =?BIG5?B?UEhQwcqqq6iuuOquxq53uvSvuLFNrtc=?=
+Date: Sat, 2 Aug 2008 11:00:16 +0800
+Message-ID: <1ffb88e50808012000x6612af3dr3e852b0f999fd24e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=BIG5
+Content-Transfer-Encoding: base64
+To: gitmonth@news1.tca.org.tw
+X-From: git-owner@vger.kernel.org Sat Aug 02 05:01:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KP6II-0006Js-CO
-	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 03:52:30 +0200
+	id 1KP7Mv-0002Zh-HW
+	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 05:01:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752152AbYHBBv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2008 21:51:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752096AbYHBBv2
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 21:51:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40364 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752090AbYHBBv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2008 21:51:27 -0400
-Received: (qmail invoked by alias); 02 Aug 2008 01:51:25 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp064) with SMTP; 02 Aug 2008 03:51:25 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX19hfL9x4INhjDPmv/8M4YAn/wP44LBhpZ31zVbL7N
-	QIe2kNegvaKlaB
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KP6HB-0004aR-8G; Sat, 02 Aug 2008 03:51:21 +0200
-X-Mailer: git-send-email 1.6.0.rc0.49.gd39f
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1752646AbYHBDAT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2008 23:00:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752092AbYHBDAS
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Aug 2008 23:00:18 -0400
+Received: from po-out-1718.google.com ([72.14.252.157]:49450 "EHLO
+	po-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752639AbYHBDAR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2008 23:00:17 -0400
+Received: by po-out-1718.google.com with SMTP id c31so1952619poi.1
+        for <git@vger.kernel.org>; Fri, 01 Aug 2008 20:00:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=mPW8mE8wnyDqLm03cSPYMX8lBdCgPa+vcaWtrdi4jT4=;
+        b=omEC6jtSv0FHRPT5wm4d5j8xVqNq38zO97RA+azY9Yg1TPW2oZlSkJvm0ttGO8sciO
+         WrPTU3rVHU67TXcqKfWc/QHqLFirOhJi4pIpeKqYh1AyDC2DpKtKxKn+Aa2mhc6IPHCn
+         /54J1RyrP2Okv425ICi+jyB4Mq+KjGGWd875E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=btvc1ZuJcVrDXIqymNYODy/ORHNazDK6I8IHesvBVZ0Ap9/slZajOw5pAR37X5EEQC
+         xFv00YAyNocXyhdtrsZ0DNEBxeUtuDcDesofT0uOAjJX9zpjM69NVhInPrGfllU4ewrk
+         9mI19WHGDcpD4RQ1FBMm6Un/7bk9H6tSNrsR0=
+Received: by 10.141.179.5 with SMTP id g5mr6325226rvp.30.1217646016383;
+        Fri, 01 Aug 2008 20:00:16 -0700 (PDT)
+Received: by 10.140.186.11 with HTTP; Fri, 1 Aug 2008 20:00:16 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91128>
+X-Spam-Report: 5.4 points;
+ *  0.3 FROM_HAS_MIXED_NUMS From: contains numbers mixed in with letters
+ *  1.1 FROM_HAS_MIXED_NUMS3 From: contains numbers mixed in with letters
+ *  0.0 RCVD_BY_IP Received by mail server with no name
+ *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
+ *      [cf:  95]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91129>
 
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
----
- builtin-revert.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-revert.c b/builtin-revert.c
-index e9da870..27881e9 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -180,7 +180,7 @@ static void set_author_ident_env(const char *message)
- 			email++;
- 			timestamp = strchr(email, '>');
- 			if (!timestamp)
--				die ("Could not extract author email from %s",
-+				die ("Could not extract author time from %s",
- 					sha1_to_hex(commit->object.sha1));
- 			*timestamp = '\0';
- 			for (timestamp++; *timestamp && isspace(*timestamp);
--- 
-1.6.0.rc0.49.gd39f
+pHPgvqzsp9669K22s12tcAoKp9qtzKq6qXamrqFHq8ik4aq6qEOjuKXzpHCoxrGhoUGzo6xPpHPg
+vqq6pGqoxrGhCgqn2q3MpmKxwKVYpfi3fqfOtki69K+4pV2ndKtlpXi69K22rPykdSur4aV4ut6y
+erV7pqEKCq2trsmtrbZxsU2u17v5IKV1rW4kMjksOTAwCgoopmKwZaO4pn4xMDBNQqSjra2sebZx
+uvSvuKrFtqEpCgqn2q3MsLWquqSjpXWsT7r0r7ihQabTrE+xeqX4t36quqRKpGYKCqO4rdOmbqq6
+pfi3frr0r7i46q7Gp1muyafzt3OqurN0q9esT6vcrautbqq6Cgql+Ld+ou2kxqq6sKqrfr3ouc62
+pKFBpbSzebF6qrq69Lj0qvmtsQoKv+++3KRz4L6mqLROsXqqurnat1EKCqHjoeOh46HjoeOh46Hj
+oeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeMKUFM6IL11pFfByqqruvSvuKfa
+rczB2aVptKOo0ajqpWS+96juoUEKoUChQLtQvXWkV6ZDpkyxYrPmpf6s2bZXsNMrtmynvcO6tk8u
+Li4uLi61par3rHmqQbDIvveo7gqh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh
+46HjoeOh46HjoeOh46HjCgrFd6rvqNO5cayiuN+2wLFNrfuhXVNhbaFeoUcwOTgwMTE5ODEyIC8g
+MDkzODc2NDM5NQoKpFe69LdqtE2heaFApHPgvqzsp96kvaVxuvSvuKFAoXqnWaVpp+So7KfarcwK
+CqHjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeMKpbuk
+vaVxpXSlfrSjqNHD9sHkpnJTRU+xxqfHqkGwyAqrT8PSsU6xeqq6uvSvuKZiWXggLyBHeCAuLi6x
+xqZissSkQK22CqFAoUChQKFAoUChQKFAoUChQKFAoUChQKFAoUChQKFAoUChQCDFd6rvqNO5cbjf
+sN0hISEKoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh
+4wo=
