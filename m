@@ -1,62 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-svn.perl: Strip ChangeLog bits.
-Date: Sat, 02 Aug 2008 10:36:38 -0700
-Message-ID: <7vfxpnnwt5.fsf@gitster.siamese.dyndns.org>
-References: <1217684549.8296.10.camel@heerbeest>
- <20080802172742.GT32184@machine.or.cz>
+Subject: Re: email address handling
+Date: Sat, 02 Aug 2008 10:50:48 -0700
+Message-ID: <7vabfvnw5j.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.10.0808011229400.3277@nehalem.linux-foundation.org>
+ <alpine.LFD.1.10.0808011253580.3277@nehalem.linux-foundation.org>
+ <20080801131127.20b3acfd.akpm@linux-foundation.org>
+ <alpine.LFD.1.10.0808011316050.3277@nehalem.linux-foundation.org>
+ <20080801132415.0b0314e4.akpm@linux-foundation.org>
+ <alpine.LFD.1.10.0808011335230.3277@nehalem.linux-foundation.org>
+ <20080801135421.5ca0f6af.akpm@linux-foundation.org>
+ <7vvdykqub6.fsf@gitster.siamese.dyndns.org>
+ <20080801145804.85041bbd.akpm@linux-foundation.org>
+ <20080801221539.GA8617@mit.edu>
+ <20080801152720.56dbff09.akpm@linux-foundation.org>
+ <alpine.LFD.1.10.0808011534260.6819@nehalem.linux-foundation.org>
+ <20080801154902.c60717e5.akpm@linux-foundation.org>
+ <alpine.LFD.1.10.0808011554350.6819@nehalem.linux-foundation.org>
+ <alpine.LFD.1.10.0808011608150.6819@nehalem.linux-foundation.org>
+ <alpine.DEB.1.00.0808021321500.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+ <alpine.LFD.1.10.0808020916370.3318@nehalem.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jan Nieuwenhuizen <janneke-list@xs4all.nl>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Aug 02 19:38:55 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Aug 02 19:52:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPL49-0004u1-M6
-	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 19:38:54 +0200
+	id 1KPLGr-0000HJ-5Z
+	for gcvg-git-2@gmane.org; Sat, 02 Aug 2008 19:52:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555AbYHBRgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Aug 2008 13:36:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751388AbYHBRgq
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 13:36:46 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48941 "EHLO
+	id S1758590AbYHBRu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Aug 2008 13:50:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757774AbYHBRu6
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 13:50:58 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56767 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751246AbYHBRgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Aug 2008 13:36:45 -0400
+	with ESMTP id S1758567AbYHBRu5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Aug 2008 13:50:57 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C4202481CF;
-	Sat,  2 Aug 2008 13:36:44 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CE3B04CF2C;
+	Sat,  2 Aug 2008 13:50:55 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id CBEA1481CE; Sat,  2 Aug 2008 13:36:40 -0400 (EDT)
-In-Reply-To: <20080802172742.GT32184@machine.or.cz> (Petr Baudis's message of
- "Sat, 2 Aug 2008 19:27:42 +0200")
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id F2D494CF2B; Sat,  2 Aug 2008 13:50:49 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.10.0808020916370.3318@nehalem.linux-foundation.org> (Linus
+ Torvalds's message of "Sat, 2 Aug 2008 09:20:17 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9353BF1A-60B9-11DD-8523-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8E957174-60BB-11DD-9415-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91160>
 
-Petr Baudis <pasky@suse.cz> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
->   Hi!
+> On Sat, 2 Aug 2008, Johannes Schindelin wrote:
+>> 
+>> Ah, there lies the rub (you forgot that the original complaint was about 
+>> a comma, and pretty=email does not handle those):
 >
-> On Sat, Aug 02, 2008 at 03:42:29PM +0200, Jan Nieuwenhuizen wrote:
->> Signed-off-by: Jan Nieuwenhuizen <Jan Nieuwenhuizen janneke@gnu.org>
+> Indeed.
 >
->   Just your email should be within the <> brackets.
+> I wonder where that is_rfc2047_special() function came from.  The list of 
+> "special" characters is totally bogus.
 >
->> ---
->>  git-svn.perl |   11 ++++++++++-
->>  1 files changed, 10 insertions(+), 1 deletions(-)
+> The real RFC has comma, but it has a lot of other characters too:
 >
->   You forgot to document your option. (And possibly write a testcase.)
+>   especials = "(" / ")" / "<" / ">" / "@" / "," / ";" / ":" /
+>               "<" / "> / "/" / "[" / "]" / "?" / "." / "="
+>
+> because basically the rfc2047 encoding has to be a superset of the 822 
+> (and later 2822) encodings.
 
-I am not sure if this is generic enough to be in git-svn.perl itself, or
-perhaps there should be a hook make_log_entry() would call in the form of
-some Perl scriptlet given by the user to munge $log_entry{log}, which
-would be very specific to each project.
+Hmm, you're right.  This has to be trickier than I originally thought it
+would be ... ;-)
