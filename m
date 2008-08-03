@@ -1,118 +1,260 @@
-From: Russell Steicke <russellsteicke@gmail.com>
-Subject: [PATCH] [TopGit] Check for pre-commit hook existence.
-Date: Sun, 3 Aug 2008 22:14:01 +0800
-Message-ID: <20080803141030.GC11179@maggie.localnet>
-References: <20080803031424.GV32184@machine.or.cz>
-Reply-To: Russell Steicke <russellsteicke@gmail.com>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: Re: [PATCH] Update to it.po
+Date: Sun, 3 Aug 2008 16:24:36 +0200
+Message-ID: <200808031624.36328.barra_cuda@katamail.com>
+References: <20080803121131.589e672b@paolo-desktop> <200808031349.03170.barra_cuda@katamail.com> <4d8e3fd30808030516g64f5cdb7r884632ac109063cb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_k+blIzIeKuMcxoK"
 Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sun Aug 03 16:15:23 2008
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
+	spearce@spearce.org
+X-From: git-owner@vger.kernel.org Sun Aug 03 16:18:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPeMj-0002An-07
-	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 16:15:21 +0200
+	id 1KPeQ1-0003B3-Uc
+	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 16:18:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755820AbYHCOOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 10:14:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755711AbYHCOOK
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 10:14:10 -0400
-Received: from rv-out-0506.google.com ([209.85.198.226]:46551 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755630AbYHCOOJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 10:14:09 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1747348rvb.1
-        for <git@vger.kernel.org>; Sun, 03 Aug 2008 07:14:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:reply-to:references:mime-version:content-type
-         :content-disposition:in-reply-to:x-boo:x-message-flag:x-disclaimer
-         :x-system:x-uptime:user-agent;
-        bh=a2GCDJLW1KTpNALM8knBXKgsUfn3X245X9xcvhKLpDs=;
-        b=KkF1J9kZewWJ0mDeKLmk9dWUd0TYL7FAmtnHjXORda4NwHhm3YADzJUk/qGBqh8STZ
-         4L7Oyn82zyDGj3UC7GJomK6JEvs3vW9Ixqltj8cX5vrE8b+AiO/pic8Ji6w9+F84tWaL
-         eRu2NLyNE9BmffUWXvOgblLHIHWfHDXrZ8T54=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-type:content-disposition:in-reply-to:x-boo:x-message-flag
-         :x-disclaimer:x-system:x-uptime:user-agent;
-        b=Tkl080DGhAvUOTm1eSsntSwpOOXpdD064LpLaBuWYJcNo6AH7A98A0QuhOztwEzeLt
-         HdP6L2XIOCFlm/KrzrMP4eoXrKPMCfOK+HfwLLJX7FtvwS8KxrNiSHkOuYbcFl4umOIG
-         bIOOxn0XSAiHYGLcjigHd7U930DByuQom/zQY=
-Received: by 10.141.97.5 with SMTP id z5mr7019018rvl.197.1217772848136;
-        Sun, 03 Aug 2008 07:14:08 -0700 (PDT)
-Received: from localhost ( [203.33.247.40])
-        by mx.google.com with ESMTPS id g22sm5145460rvb.7.2008.08.03.07.14.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 03 Aug 2008 07:14:07 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20080803031424.GV32184@machine.or.cz>
-X-Boo: Boo!
-X-message-flag: I see that you run Outlook...
-X-Disclaimer: This message represents the official view of the voices in my head.
-X-System: Linux maggie 2.6.18-6-powerpc64 
-X-Uptime: 08:58:05 up 4 days, 15:17, 16 users,  load average: 4.74, 4.35, 3.89
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755424AbYHCORo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 10:17:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755399AbYHCORo
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 10:17:44 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:33530 "HELO
+	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1755390AbYHCORn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 10:17:43 -0400
+Received: (qmail 17678 invoked by uid 89); 3 Aug 2008 14:17:37 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
+X-Spam-Level: *
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_50,RDNS_NONE
+	autolearn=no version=3.2.3
+Received: from unknown (HELO host146-57-dynamic.104-80-r.retail.telecomitalia.it) (barra?cuda@katamail.com@80.104.57.146)
+  by smtp2-pc with SMTP; 3 Aug 2008 14:17:33 -0000
+User-Agent: KMail/1.9.9
+In-Reply-To: <4d8e3fd30808030516g64f5cdb7r884632ac109063cb@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91241>
 
-Running tg in a repo without an active pre-commit hook fails
-saying
+--Boundary-00=_k+blIzIeKuMcxoK
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-  grep: .git/hooks/pre-commit: No such file or directory
-  cat: .git/hooks/pre-commit: No such file or directory
+On Sunday 03 August 2008, Paolo Ciarrocchi wrote:
+> > Here is a patch against current master (attached to prevent encoding issues).
+> >
+> > The strings missing translation now is "Buckets". I know what
+> > it means but I can't came up with a translation that I like.
+> 
+> Confused. Even in the repo i used buckets was the only missing translation.
+> If you look at my patch:
+> 
+>  #: lib/choose_repository.tcl:628
+>  msgid "buckets"
+> -msgstr ""
+> +msgstr "buckets"
+> 
+> you'll notice that we agree on not translating that word :)
 
-Even "tg help" does this!  So add extra checks for existence
-of the pre-commit hook.
+Ok, but translating it with "buckets" has no real sense since it is not
+commonly used in Italian, IMO. I'd leave it empty (the default English
+word - "buckets" - will show up anyway) and hope that someone will come up
+with an idea :)
 
----
- tg.sh |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
+> That said, I'd like too see the following hunk be part of your patch as well:
+>  #: lib/spellcheck.tcl:80
+> -#, fuzzy
+>  msgid "Unrecognized spell checker"
+> -msgstr "Correttore ortografico sconosciuto"
+> +msgstr "Correttore ortografico non riconosciuto"
 
-diff --git a/tg.sh b/tg.sh
-index 56c5709..15005db 100644
---- a/tg.sh
-+++ b/tg.sh
-@@ -21,9 +21,11 @@ die()
- setup_hook()
- {
- 	hook_call="\"\$(tg --hooks-path)\"/$1 \"\$@\""
--	if fgrep -q "$hook_call" "$git_dir/hooks/$1"; then
--		# Another job well done!
--		return
-+	if [ -x "$git_dir/hooks/$1" ]; then
-+		if fgrep -q "$hook_call" "$git_dir/hooks/$1"; then
-+			# Another job well done!
-+			return
-+		fi
- 	fi
- 	# Prepare incanation
- 	if [ -x "$git_dir/hooks/$1" ]; then
-@@ -35,7 +37,7 @@ setup_hook()
- 	{
- 		echo "#!/bin/sh"
- 		echo "$hook_call"
--		cat "$git_dir/hooks/$1"
-+		[ -x "$git_dir/hooks/$1" ] && cat "$git_dir/hooks/$1"
- 	} >"$git_dir/hooks/$1+"
- 	chmod a+x "$git_dir/hooks/$1+"
- 	mv "$git_dir/hooks/$1+" "$git_dir/hooks/$1"
--- 
-1.6.0.rc1
+Ok, done in this version (attached).
 
+> Can you please clarify how you are working on the po file?
+> I was used to use gtransalator and I'm a bit confused by hunks like
+> the following:
+> -#: lib/option.tcl:192
+> +#: lib/option.tcl:194
 
--- 
-Russell Steicke
+Some explanation is in po/README. The workflow is/should be:
+  * normal development in git-gui.git happens
+  * nearing a release, Shawn updates po/git-gui.pot
+  * all translators update their po/*.po files with
 
--- Fortune says:
-I got the bill for my surgery.  Now I know what those doctors were
-wearing masks for.
-		-- James Boren
+	$ msgmerge -U po/it.po po/git-gui.pot
+
+    where "it" is an example. This command updates strings and line numbers
+    in the .po file (as in the two lines you quoted), and adds "fuzzy"
+    to old/machine-guessed translations.
+  * now the translator can use his tool of choice (but nearly any editor
+    should do) to search for fuzzy or new strings and update it all.
+
+--Boundary-00=_k+blIzIeKuMcxoK
+Content-Type: application/x-gzip;
+  name="0001-git-gui-update-po-it.po.patch.gz"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+	filename="0001-git-gui-update-po-it.po.patch.gz"
+
+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
+
+--Boundary-00=_k+blIzIeKuMcxoK--
