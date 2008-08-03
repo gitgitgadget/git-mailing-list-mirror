@@ -1,59 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Official Git Homepage change? Re: git-scm.com
-Date: Sun, 03 Aug 2008 15:00:08 -0700
-Message-ID: <7v4p6192tz.fsf@gitster.siamese.dyndns.org>
-References: <d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@mail.gmail.com>
- <20080726015314.GU32184@machine.or.cz> <20080726020951.GV32184@machine.or.cz>
- <7v4p6dnv5k.fsf@gitster.siamese.dyndns.org>
- <d411cc4a0807252343n2b9ade68veaebb68664f0a3d7@mail.gmail.com>
- <20080726201751.GU10151@machine.or.cz> <m34p6cv1gl.fsf@localhost.localdomain>
- <20080726203216.GV10151@machine.or.cz>
- <2c6b72b30808030750w383ff4e9y8f9dbbc3b254722f@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [RFH] - git-svn auth bug (possibly SVN 1.5.0-related)
+Date: Sun, 3 Aug 2008 15:02:51 -0700
+Message-ID: <20080803220251.GB3006@untitled>
+References: <20080725060037.GB14756@untitled> <4889F215.9020804@kitware.com> <20080726054547.GA20494@untitled> <488B2FC5.4080801@kitware.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Petr Baudis" <pasky@suse.cz>, "Jakub Narebski" <jnareb@gmail.com>,
-	"Scott Chacon" <schacon@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Jonas Fonseca" <jonas.fonseca@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 04 00:01:21 2008
+Cc: git@vger.kernel.org
+To: Brad King <brad.king@kitware.com>
+X-From: git-owner@vger.kernel.org Mon Aug 04 00:03:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPldh-00041Q-91
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 00:01:21 +0200
+	id 1KPlgA-0004cc-Jp
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 00:03:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757209AbYHCWAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 18:00:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756682AbYHCWAT
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 18:00:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55306 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756079AbYHCWAT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 18:00:19 -0400
+	id S1757377AbYHCWCx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 18:02:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757363AbYHCWCx
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 18:02:53 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:49969 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757315AbYHCWCw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 18:02:52 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 52C9449819;
-	Sun,  3 Aug 2008 18:00:17 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A8A5E49813; Sun,  3 Aug 2008 18:00:10 -0400 (EDT)
-In-Reply-To: <2c6b72b30808030750w383ff4e9y8f9dbbc3b254722f@mail.gmail.com>
- (Jonas Fonseca's message of "Sun, 3 Aug 2008 16:50:39 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8EBE6CAE-61A7-11DD-9F3B-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	by hand.yhbt.net (Postfix) with ESMTP id 39E7D2DC01B;
+	Sun,  3 Aug 2008 15:02:52 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <488B2FC5.4080801@kitware.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91280>
 
-"Jonas Fonseca" <jonas.fonseca@gmail.com> writes:
+Brad King <brad.king@kitware.com> wrote:
+> Eric Wong wrote:
+> > Brad King <brad.king@kitware.com> wrote:
+> >> Eric Wong wrote:
+> >>> I haven't had the chance to look at this.   Can anybody else shed more
+> >>> light on that bug?  It's really strange that the tests won't run because
+> >>> of it.  Are you unable to run some git-svn tests or all of them?
+> >> Just that one fails.  All others (including the one in the patch below) pass.
+> > 
+> > Exactly which test fails for you?  Perhaps it's some setting in your
+> > ~/.subversion/config that's causing it to fail.  Maybe we should set
+> > $HOME and use a clean ~/.subversion/config for git-svn tests regardless
+> > if that turns out to be the case...
+> 
+> $ cd $gitsrc/t
+> $ export SVNSERVE_PORT=5432
+> $ ./t9113-git-svn-dcommit-new-file.sh
+> *   ok 1: start tracking an empty repo
+> * FAIL 2: create files in new directory with dcommit
+> 
+>                 mkdir git-new-dir &&
+>                 echo hello > git-new-dir/world &&
+>                 git update-index --add git-new-dir/world &&
+>                 git commit -m hello &&
+>                 start_svnserve &&
+>                 git svn dcommit
+> 
+> * failed 1 among 2 test(s)
+> 
+> I hacked the test script to log the dcommit output to a file, and I see
+> this:
+> 
+> Committing to svn://127.0.0.1:5432 ...
+> Use of uninitialized value in concatenation (.) or string at
+> /usr/lib/perl5/SVN/Core.pm line 584.
+> Authorization failed:  at $gitsrc/t/../git-svn line 3329
+> 
+> (I replaced my git source dir full path with $gitsrc).
+> 
+> The version of libsvn-perl is:  1.5.0dfsg1-4
 
-> .... I
-> am aware that the my current lack of involvement in git development
-> (which is mostly limited to documentation improvements) and the
-> resulting possible lack of trust from the community has limited its
-> use....
+It could be another incompatibility introduced in SVN 1.5.0.
 
-Huh?  Lack of trust?   Don't be ridiculous to forget "tig".
+I'll try to dist-upgrade a machine to Lenny sometime in the next two
+weeks so I can test; I'm pretty busy these days but if anybody else
+wants to figure this out in the meantime, please do :)
+
+> Please let me know if you need more info.
+> 
+> I tried moving my ~/.subversion/config out of the way but it makes no
+> difference.  However, I agree we should block the user's home svn config
+> when running other dcommit tests now that we have auto-props.  Perhaps
+> just using the --config-dir option with an empty directory would be enough.
+
+Thanks for the additional info!
+
+-- 
+Eric Wong
