@@ -1,137 +1,71 @@
-From: Anders Melchiorsen <mail@cup.kalibalik.dk>
-Subject: Re: [PATCH] Use line buffering for standard output
-Date: Mon, 04 Aug 2008 00:48:51 +0200
-Message-ID: <87hca1ogto.fsf@cup.kalibalik.dk>
-References: <1217798768-18021-1-git-send-email-mail@cup.kalibalik.dk>
-	<alpine.LFD.1.10.0808031444270.3668@nehalem.linux-foundation.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn and svn:externals, was Re: Hackontest ideas?
+Date: Sun, 3 Aug 2008 15:48:52 -0700
+Message-ID: <20080803224852.GC3006@untitled>
+References: <20080729000103.GH32184@machine.or.cz> <m3myk1t54c.fsf@localhost.localdomain> <alpine.DEB.1.00.0807291354130.4631@eeepc-johanness>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Aug 04 00:49:59 2008
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 04 00:50:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPmOl-0006yj-2k
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 00:49:59 +0200
+	id 1KPmOl-0006yj-Nz
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 00:50:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757591AbYHCWsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 18:48:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757485AbYHCWsy
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 18:48:54 -0400
-Received: from mail.hotelhot.dk ([77.75.163.100]:38559 "EHLO mail.hotelhot.dk"
+	id S1757793AbYHCWs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 18:48:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757662AbYHCWs4
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 18:48:56 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:50021 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754486AbYHCWsy (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756128AbYHCWsy (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 3 Aug 2008 18:48:54 -0400
-Received: from mail.hotelhot.dk (localhost [127.0.0.1])
-	by mail.hotelhot.dk (Postfix) with ESMTP id C25A114062;
-	Mon,  4 Aug 2008 00:48:49 +0200 (CEST)
-Received: from dylle (router.kalibalik.dk [192.168.0.1])
-	by mail.hotelhot.dk (Postfix) with ESMTP id 834251405A;
-	Mon,  4 Aug 2008 00:48:49 +0200 (CEST)
-In-Reply-To: <alpine.LFD.1.10.0808031444270.3668@nehalem.linux-foundation.org> (Linus Torvalds's message of "Sun\, 3 Aug 2008 14\:46\:18 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: ClamAV using ClamSMTP
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 7ABAD2DC01B;
+	Sun,  3 Aug 2008 15:48:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807291354130.4631@eeepc-johanness>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91283>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+> 
+> On Tue, 29 Jul 2008, Jakub Narebski wrote:
+> 
+> >  * handling of svn:externals using submodules
+> 
+> I doubt that this is easy.  Otherwise, Eric would have done it a long time 
+> ago.
 
-> On Sun, 3 Aug 2008, Anders Melchiorsen wrote:
->>
->> By always setting stdout to line buffering, we make the output work
->> identically for all output devices.
->
-> Please don't.
->
-> This is a huge peformance issue for things like
->
-> 	git log -p > file
->
-> where we really want it to be fully buffered.
->
-> So please just find the place where we do a fork() without flushing
-> pending output...
+I started working on externals support a long time ago, but got hung up
+on corner-cases (with .gitmodules and .gitignore being in the tree) and
+backward-compatibility issues with commiting back to SVN.
 
-Sure. The sledgehammer approach was partly to get some advice on the
-proper solution. I now realize that you have generally been careful
-about this, and so a single flush should be enough.
+The more I think about it, the more I think the worse-is-better approach
+I used for "git svn show-ignore" is the way to go (using the unversioned
+.git/info/exclude).  That would mean ignoring submodules as implemented
+by git and just shotgunning another git-svn-created subdirectory into
+where the external would've been...
 
-Below are two alternative proposals, one local and one global. Both of
-them fix the problem for me, but maybe you were even thinking about a
-third place?
+> The main concern I have is to get the semantics right: AFAICT 
+> svn:externals has _no notion_ of "what is current".  It just _always_ 
+> fetches the HEAD.  Even if you check out an ancient revision in the 
+> "superproject".
 
-For the run-command.c one, I was not sure whether to put it inside or
-outside the ifdef, and I also was not sure whether to add it for
-start_command(). Not having other testcases, and not knowing Windows,
-this is the way it ended up.
+Based on my limited understanding, peg revisions are only needed in SVN
+because of the cost of traversing history to DTRT.  git-svn should be
+able to just use the -r<rev> syntax that has always been supported
+without needing peg revisions.  On the other hand, implicit rename/copy
+detection in git may not pick up drastic changes...
 
-
-Cheers,
-Anders.
-
-
-
-From: Anders Melchiorsen <mail@cup.kalibalik.dk>
-Date: Mon, 4 Aug 2008 00:21:49 +0200
-Subject: [PATCH] Flush stdout in init-db
-
-Before this change, clone outputs "Initialized empty ..." twice
-if output is piped.
-
-Signed-off-by: Anders Melchiorsen <mail@cup.kalibalik.dk>
----
- builtin-init-db.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index baf0d09..954c7e9 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -315,11 +315,13 @@ int init_db(const char *template_dir, unsigned int flags)
- 		git_config_set("receive.denyNonFastforwards", "true");
- 	}
- 
--	if (!(flags & INIT_DB_QUIET))
-+	if (!(flags & INIT_DB_QUIET)) {
- 		printf("%s%s Git repository in %s/\n",
- 		       reinit ? "Reinitialized existing" : "Initialized empty",
- 		       shared_repository ? " shared" : "",
- 		       get_git_dir());
-+		fflush(stdout);
-+	}
- 
- 	return 0;
- }
-
-
-
-From: Anders Melchiorsen <mail@cup.kalibalik.dk>
-Date: Mon, 4 Aug 2008 00:35:40 +0200
-Subject: [PATCH] Flush standard output in start_async
-
-This prevents double output in case stdout is redirected.
-
-Signed-off-by: Anders Melchiorsen <mail@cup.kalibalik.dk>
----
- run-command.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/run-command.c b/run-command.c
-index a3b28a6..67be079 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -304,6 +304,9 @@ int start_async(struct async *async)
- 	async->out = pipe_out[0];
- 
- #ifndef __MINGW32__
-+	/* Flush output before fork() to avoid cloning the buffer */
-+	fflush(stdout);
-+
- 	async->pid = fork();
- 	if (async->pid < 0) {
- 		error("fork (async) failed: %s", strerror(errno));
+-- 
+Eric Wong
