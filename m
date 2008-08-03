@@ -1,78 +1,78 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [ANNOUNCE] TopGit - A different patch queue manager
-Date: Sun, 3 Aug 2008 09:27:26 +0200
-Message-ID: <20080803072726.GB32057@genesis.frugalware.org>
-References: <20080803031424.GV32184@machine.or.cz>
+From: "Lee Marlow" <lee.marlow@gmail.com>
+Subject: Re: [PATCH] bash completion: Add completion for 'git grep'
+Date: Sun, 3 Aug 2008 01:31:13 -0600
+Message-ID: <7968d7490808030031v39726af6r9f88feb28df02de7@mail.gmail.com>
+References: <1217638593-57321-1-git-send-email-lee.marlow@gmail.com>
+	 <20080802210525.GD24723@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="qmZeNP3jAKWqBt+w"
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sun Aug 03 09:28:34 2008
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Aug 03 09:32:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPY0y-0007Pw-PL
-	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 09:28:29 +0200
+	id 1KPY4e-00086N-7X
+	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 09:32:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752392AbYHCH12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 03:27:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752460AbYHCH12
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 03:27:28 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:50205 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752375AbYHCH11 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 03:27:27 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 7073A1B24FC;
-	Sun,  3 Aug 2008 09:27:26 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id BE5244465E;
-	Sun,  3 Aug 2008 08:40:03 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 411801770071; Sun,  3 Aug 2008 09:27:26 +0200 (CEST)
+	id S1752484AbYHCHbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 03:31:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752493AbYHCHbP
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 03:31:15 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:25269 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752407AbYHCHbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 03:31:14 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1674906rvb.1
+        for <git@vger.kernel.org>; Sun, 03 Aug 2008 00:31:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=XFueezNf0qd0FpgAHnhRs6wfWAQQ703j1WcDJsOjVxQ=;
+        b=dOaloFsgIg8O95nTib7B6wZig4lJRgdc/0pbRpJu1JuAnQY0C/35JQhvm3azGojwcR
+         Tnto7FKA5q7Lgjg4QdOqfZNDeFQGWHweigDFRgMiTu7DzFzSGIkLYH2JfL1FNebzuDER
+         15wws2v98nGHx15GqP6Mrbj+XTrdVy4NeJVhM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=V1sGZWzdxxUddNrP4PE43DigOGRBGRiEqu/p3f/1xjwtPnBApJJsnaFSP2egkGpJLo
+         mOPsV4qo45skN7WNDXHQF/3UCKccpKr3pSrS7QSGpYDHjYymHbRigc3aa2cIm15Y/PDH
+         PsLX4KfwhUHEGexgKrT+IfNg81IJArxYpkmhs=
+Received: by 10.141.161.6 with SMTP id n6mr6903875rvo.41.1217748673990;
+        Sun, 03 Aug 2008 00:31:13 -0700 (PDT)
+Received: by 10.141.69.4 with HTTP; Sun, 3 Aug 2008 00:31:13 -0700 (PDT)
+In-Reply-To: <20080802210525.GD24723@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <20080803031424.GV32184@machine.or.cz>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91213>
 
+On Sat, Aug 2, 2008 at 3:05 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+>
+> Hmm.  The has_doubledash test seems redundant since we don't do
+> anything with args that aren't --foo.  Even though git-grep will
+> accept a tree-ish and thus completion of __git_refs here may
+> make sense.
+>
+> But that is very much a user question.  Do users mostly search a
+> file in the current working directory, or do they mostly search
+> a tree-ish?
 
---qmZeNP3jAKWqBt+w
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I haven't found myself using grep to search anything but the current
+working directory.  I wonder whether __git_complete_file would be
+better than __git_refs.  My issue with __git_complete_file in this
+case and also doing completion for 'git mv' is that it falls back to
+just __git_refs.  Would it be better if it fell back to __git_refs and
+ls-tree for HEAD?  That way when using completion to get to
+Documentation/git-grep.txt,  it doesn't also show completions for
+Documentation/git-grep.{1,html,xml}.
 
-On Sun, Aug 03, 2008 at 05:14:24AM +0200, Petr Baudis <pasky@suse.cz> wrote:
-> 	(iii) Actually _WORK_ in the distributed environment;
-> 	you can have several repositories and develop your patches
-> 	in all of them
-
-As we discussed on IRC, this means that unlike git rebase -i and others,
-the history of such rebases is not stored in reflogs (which are not
-transfered) but stored with this "one branch, one patch" logic.
-
->   P.P.S.: Can I get trademark on the (ironically) /[^p]g/ porcelains
-> now? ;-)
-
-Heh, no please. I have a porcelain called 'dg'[0] after 'darcs-git', which
-imitates some of the darcs UI, but operating on a git repo. ;-)
-
-[0] http://tinyurl.com/5lfs5g, http://tinyurl.com/6pb772
-
---qmZeNP3jAKWqBt+w
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkiVXd4ACgkQe81tAgORUJYovACfVpCoqCo2IsNp6SSCFzYtAJ28
-CSQAn1KQiudLuDGYrY8VpuyII/pE+BJR
-=F9Hl
------END PGP SIGNATURE-----
-
---qmZeNP3jAKWqBt+w--
+-Lee
