@@ -1,67 +1,62 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-p4: chdir now properly sets PWD environment variable
- in msysGit
-Date: Sun, 03 Aug 2008 14:13:42 -0700
-Message-ID: <7v7iaxu7i1.fsf@gitster.siamese.dyndns.org>
-References: <bad7471c0808011250v569ffaaby9e20a5ba1f971927@mail.gmail.com>
+Subject: Re: [PATCH] Modify mingw_main() workaround to avoid link errors
+Date: Sun, 03 Aug 2008 14:21:20 -0700
+Message-ID: <7v3allu75b.fsf@gitster.siamese.dyndns.org>
+References: <1217065304-27815-1-git-send-email-prohaska@zib.de>
+ <1217793328.48960d306d2b7@webmail.nextra.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: simon@lst.de, shausman@trolltech.com, marius@trolltech.com,
-	hanwen@google.com, gitster@pobox.com, git@vger.kernel.org
-To: "Robert Blum" <rob.blum@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 03 23:15:07 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
+	=?utf-8?Q?B?= =?utf-8?Q?j=C3=B6rn?= Steinbrink 
+	<B.Steinbrink@gmx.de>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sun Aug 03 23:23:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPkut-0001BA-CE
-	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 23:15:03 +0200
+	id 1KPl3P-0003Fs-1d
+	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 23:23:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756927AbYHCVNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 17:13:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756728AbYHCVNz
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 17:13:55 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45259 "EHLO
+	id S1756521AbYHCVVa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Aug 2008 17:21:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756512AbYHCVVa
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 17:21:30 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46979 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756682AbYHCVNy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 17:13:54 -0400
+	with ESMTP id S1756079AbYHCVV3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Aug 2008 17:21:29 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2229E48BF7;
-	Sun,  3 Aug 2008 17:13:52 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 652B448DA5;
+	Sun,  3 Aug 2008 17:21:27 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 416D548BF5; Sun,  3 Aug 2008 17:13:44 -0400 (EDT)
-In-Reply-To: <bad7471c0808011250v569ffaaby9e20a5ba1f971927@mail.gmail.com>
- (Robert Blum's message of "Fri, 1 Aug 2008 12:50:03 -0700")
+ ESMTPSA id C40BD48DA4; Sun,  3 Aug 2008 17:21:22 -0400 (EDT)
+In-Reply-To: <1217793328.48960d306d2b7@webmail.nextra.at> (Johannes Sixt's
+ message of "Sun, 3 Aug 2008 21:55:28 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 12A2A064-61A1-11DD-9101-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 22003548-61A2-11DD-92CA-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91273>
 
-"Robert Blum" <rob.blum@gmail.com> writes:
+Johannes Sixt <johannes.sixt@telecom.at> writes:
 
-> P4 on Windows expects the PWD environment variable to be set to the
-> current working dir, but os.chdir in python doesn't do that by default
-
-Missing full stop at the end of sentence aside, this comment makes me
-wonder if there is an optional way to have it set it, as opposed to the
-inconvenient way it behaves "by defualt".  If there is none, I think your
-patch, even though it looks ugly, is the least evil approach.  Another way
-might be to wrap callsites of system() by introducing a "run_p4" function,
-like:
-
-	def run_p4(arg):
-        	os.environ['PWD'] = os.getcwd() if os.name == 'nt'
-		return system(arg)
-
-> ---
+> Zitat von Steffen Prohaska <prohaska@zib.de>:
+> ...
+>> The modified define works.
+>>
+>> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 >
-> Pushing it out to the list since I'm not entirely sure who the git-p4 owner
-> even is. CC'ed likely suspects for ownership ;)
+> Acked-by: Johannes Sixt <johannes.sixt@telecom.at>
+>
+> I was not aware that my version (block-scoped static function forward
+> declaration) is not valid C. Thanks, Bj=C3=B6rn, for pointing out the=
+ gcc bugzilla
+> entries.
 
-Thanks.  I've been waiting for an Ack from somewhere or success reports
-from p4 users on Windows.
+Thanks all.  Applied.
