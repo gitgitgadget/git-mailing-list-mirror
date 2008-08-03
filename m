@@ -1,197 +1,75 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [PATCH 5/5] add --no-filters option to git hash-object
-Date: Sun,  3 Aug 2008 18:36:22 +0400
-Message-ID: <1217774182-28566-5-git-send-email-dpotapov@gmail.com>
-References: <20080803055602.GN7008@dpotapov.dyndns.org>
- <1217774182-28566-1-git-send-email-dpotapov@gmail.com>
- <1217774182-28566-2-git-send-email-dpotapov@gmail.com>
- <1217774182-28566-3-git-send-email-dpotapov@gmail.com>
- <1217774182-28566-4-git-send-email-dpotapov@gmail.com>
-Cc: Alexander Litvinov <litvinov2004@gmail.com>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>,
-	Dmitry Potapov <dpotapov@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 03 16:38:04 2008
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: [ANNOUNCE] TopGit - A different patch queue manager
+Date: Sun, 3 Aug 2008 10:45:06 -0400
+Message-ID: <9e4733910808030745j275eaffdib8a412fa95911bb3@mail.gmail.com>
+References: <20080803031424.GV32184@machine.or.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sun Aug 03 16:46:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPeib-0007zq-DM
-	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 16:37:57 +0200
+	id 1KPeqb-00035M-Tu
+	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 16:46:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756009AbYHCOgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 10:36:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755979AbYHCOgp
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 10:36:45 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:5157 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755915AbYHCOgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 10:36:44 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so606841nfc.21
-        for <git@vger.kernel.org>; Sun, 03 Aug 2008 07:36:44 -0700 (PDT)
+	id S1756114AbYHCOpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 10:45:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755852AbYHCOpJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 10:45:09 -0400
+Received: from py-out-1112.google.com ([64.233.166.178]:4899 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755711AbYHCOpH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 10:45:07 -0400
+Received: by py-out-1112.google.com with SMTP id p76so904254pyb.10
+        for <git@vger.kernel.org>; Sun, 03 Aug 2008 07:45:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=OxJhCpaQVayTjcIVZ8tIro95sRCurTvVrZeZSuSBcqM=;
-        b=FQjoO/SoFD4Cne/OuH8RUAz/Dyp3hIDOmzMcHQkZ7dO3JNy48X4UyTFqI/cbEMIY9r
-         wBIURT/b8M7powu9c960HL3T/3vf3TQF2a3dSWlhdo558pDJaVkXQWykEcQn1hbBpx4/
-         W9uG9oTl27G21xkMjVKX7YkAXaVmBTmOVXeDo=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=hheS4O/c+oOSdFN5LdCdOAhJX8g9lO+YNUD+2S6zqoc=;
+        b=LFvTCeBuz0CjPghcTDDQ+BkHE0+P7JviM0jDkSA24f4Ja3Jtlw5GpgdETi4W4Te3sV
+         koJJSM1Q8kNqjc4HJsJmooe/4znrOTKhSfAwt0RY7mmYsjXi/k2lZR2g1semQWtk2l7e
+         083p/sGMsEWNsd43hZwIMriynV5Xq0I1YBUyI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=AXbXB4giavRb0ZKoiEZCbdzNI0TYfJx9gjDl8HD7q5K9tVCmpepe7wQ6FcAXXIMLX/
-         eaRwld39C/tuh81wWN94s+Zj2nL7O4aMapJDWaNqsGMnVx3LmJ3soj3JwIE9xsQ78wgv
-         xCx+kIcLSWTkmRWWoUgr8nFvSPe7+z8bbFpzg=
-Received: by 10.210.54.19 with SMTP id c19mr13714900eba.107.1217774203932;
-        Sun, 03 Aug 2008 07:36:43 -0700 (PDT)
-Received: from localhost ( [85.141.191.110])
-        by mx.google.com with ESMTPS id h1sm4605407nfh.19.2008.08.03.07.36.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 03 Aug 2008 07:36:42 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.rc1.58.gacdf
-In-Reply-To: <1217774182-28566-4-git-send-email-dpotapov@gmail.com>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=UYto1LAJ1+jf3rkN8Fc8eTGtI+WCDHi2eDBDZaRjhuaK3FH0l583Uv/Bli4pBg90aA
+         OpJeqlcOxf/ZQJaw7AJxER8I+IfnB4YCvo6BDro2O0ZXvKd7xqZnPWW61EYpUgYMQ0by
+         AKF3xp+TMsBldKwlxwxvSQgqTJ5t6YQgGYQ3c=
+Received: by 10.64.253.11 with SMTP id a11mr514135qbi.37.1217774706358;
+        Sun, 03 Aug 2008 07:45:06 -0700 (PDT)
+Received: by 10.65.214.7 with HTTP; Sun, 3 Aug 2008 07:45:06 -0700 (PDT)
+In-Reply-To: <20080803031424.GV32184@machine.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91248>
 
-If this option is given then the file is hashed as is ignoring all filters
-specified in the configuration. This option is incompatible with --path
-and --stdin-paths options.
+On 8/2/08, Petr Baudis <pasky@suse.cz> wrote:
+>   TopGit is meant as a fresh start in the steps of StGIT, quilt-in-git
+>  and others, of course in an attempt to Get It Right this time around.
+>  TopGit is absolutely minimal porcelain layer that will manage your
+>  patch queue for you using topic branches, one patch per branch.
+>  And do _ONLY_ that. Unlike with StGIT, you can actually use the index.
 
-Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
----
- Documentation/git-hash-object.txt |    8 +++++++-
- hash-object.c                     |   17 +++++++++++++----
- t/t1007-hash-object.sh            |   24 ++++++++++++++++++++++++
- 3 files changed, 44 insertions(+), 5 deletions(-)
+It is very helpful to block git commands that will mess up the state
+of topgit. For example 'git rebase' is a good way to mess up stgit.
+Instead you need to do 'stg rebase'. It is quite easy to type the
+wrong command when switching between trees and some are under stgit
+and others aren't.
 
-diff --git a/Documentation/git-hash-object.txt b/Documentation/git-hash-object.txt
-index fececbf..340e49c 100644
---- a/Documentation/git-hash-object.txt
-+++ b/Documentation/git-hash-object.txt
-@@ -9,7 +9,7 @@ git-hash-object - Compute object ID and optionally creates a blob from a file
- SYNOPSIS
- --------
- [verse]
--'git hash-object' [-t <type>] [-w] [--path=<file>] [--stdin] [--] <file>...
-+'git hash-object' [-t <type>] [-w] [--path=<file>|--no-filters] [--stdin] [--] <file>...
- 'git hash-object' [-t <type>] [-w] --stdin-paths < <list-of-paths>
- 
- DESCRIPTION
-@@ -47,6 +47,12 @@ OPTIONS
- 	temporary files located outside of the working directory or files
- 	read from stdin.
- 
-+--no-filters::
-+	If this option is given then the file is hashed as is ignoring
-+	all filters specified in the configuration, including crlf
-+	conversion. If the file is read from standard input then no
-+	filters is always implied unless the --path option is given.
-+
- Author
- ------
- Written by Junio C Hamano <gitster@pobox.com>
-diff --git a/hash-object.c b/hash-object.c
-index b11f459..3070a3e 100644
---- a/hash-object.c
-+++ b/hash-object.c
-@@ -51,7 +51,7 @@ static void hash_stdin_paths(const char *type, int write_objects)
- }
- 
- static const char * const hash_object_usage[] = {
--	"git hash-object [-t <type>] [-w] [--path=<file>] [--stdin] [--] <file>...",
-+	"git hash-object [-t <type>] [-w] [--path=<file>|--no-filters] [--stdin] [--] <file>...",
- 	"git hash-object  --stdin-paths < <list-of-paths>",
- 	NULL
- };
-@@ -60,6 +60,7 @@ static const char *type;
- static int write_object;
- static int hashstdin;
- static int stdin_paths;
-+static int no_filters;
- static const char *vpath;
- 
- static const struct option hash_object_options[] = {
-@@ -67,6 +68,7 @@ static const struct option hash_object_options[] = {
- 	OPT_BOOLEAN('w', NULL, &write_object, "write the object into the object database"),
- 	OPT_BOOLEAN( 0 , "stdin", &hashstdin, "read the object from stdin"),
- 	OPT_BOOLEAN( 0 , "stdin-paths", &stdin_paths, "read file names from stdin"),
-+	OPT_BOOLEAN( 0 , "no-filters", &no_filters, "store file as is without filters"),
- 	OPT_STRING( 0 , "path", &vpath, "file", "process file as it were from this path"),
- 	OPT_END()
- };
-@@ -98,9 +100,15 @@ int main(int argc, const char **argv)
- 			errstr = "Can't specify files with --stdin-paths";
- 		else if (vpath)
- 			errstr = "Can't use --stdin-paths with --path";
-+		else if (no_filters)
-+			errstr = "Can't use --stdin-paths with --no-filters";
-+	}
-+	else {
-+		if (hashstdin > 1)
-+			errstr = "Multiple --stdin arguments are not supported";
-+		if (vpath && no_filters)
-+			errstr = "Can't use --path with --no-filters";
- 	}
--	else if (hashstdin > 1)
--		errstr = "Multiple --stdin arguments are not supported";
- 
- 	if (errstr) {
- 		error (errstr);
-@@ -115,7 +123,8 @@ int main(int argc, const char **argv)
- 
- 		if (0 <= prefix_length)
- 			arg = prefix_filename(prefix, prefix_length, arg);
--		hash_object(arg, type, write_object, vpath ? vpath : arg);
-+		hash_object(arg, type, write_object,
-+			    no_filters ? NULL : vpath ? vpath : arg);
- 	}
- 
- 	if (stdin_paths)
-diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-index dbe1f04..12195a5 100755
---- a/t/t1007-hash-object.sh
-+++ b/t/t1007-hash-object.sh
-@@ -65,6 +65,14 @@ test_expect_success "Can't use --path with --stdin-paths" '
- 	echo example | test_must_fail git hash-object --stdin-paths --path=foo
- '
- 
-+test_expect_success "Can't use --stdin-paths with --no-filters" '
-+	echo example | test_must_fail git hash-object --stdin-paths --no-filters
-+'
-+
-+test_expect_success "Can't use --path with --no-filters" '
-+	test_must_fail git hash-object --no-filters --path=foo
-+'
-+
- # Behavior
- 
- push_repo
-@@ -117,6 +125,22 @@ test_expect_success 'check that approperiate filter is invoke when --path is use
- 	git config --unset core.autocrlf
- '
- 
-+test_expect_success 'check that --no-filters option works' '
-+	echo fooQ | tr Q "\\015" > file0 &&
-+	cp file0 file1 &&
-+	echo "file0 -crlf" > .gitattributes &&
-+	echo "file1 crlf" >> .gitattributes &&
-+	git config core.autocrlf true &&
-+	file0_sha=$(git hash-object file0) &&
-+	file1_sha=$(git hash-object file1) &&
-+	test "$file0_sha" != "$file1_sha" &&
-+	nofilters_file1=$(git hash-object --no-filters file1) &&
-+	test "$file0_sha" = "$nofilters_file1" &&
-+	nofilters_file1=$(cat file1 | git hash-object --stdin) &&
-+	test "$file0_sha" = "$nofilters_file1" &&
-+	git config --unset core.autocrlf
-+'
-+
- pop_repo
- 
- for args in "-w --stdin" "--stdin -w"; do
+I believe there is a stgit rewrite due any day now that completely
+changes how it deals with the index.
+
 -- 
-1.6.0.rc1.58.gacdf
+Jon Smirl
+jonsmirl@gmail.com
