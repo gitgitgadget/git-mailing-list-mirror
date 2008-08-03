@@ -1,70 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: More on git over HTTP POST
-Date: Sat, 2 Aug 2008 21:12:58 -0700
-Message-ID: <20080803041258.GE27465@spearce.org>
-References: <48938539.9060003@zytor.com> <20080802205702.GA24723@spearce.org> <20080803025602.GB27465@spearce.org> <48952B2E.3030209@zytor.com>
+From: "Bruce Korb" <bruce.korb@gmail.com>
+Subject: I've tried to read the manuals, but "git pull" just won't work
+Date: Sat, 2 Aug 2008 21:58:19 -0700
+Message-ID: <668c430c0808022158s56e22c56t3bbd61eef59d7b32@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Sun Aug 03 06:14:02 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 03 06:59:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPUyn-0003I7-5J
-	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 06:14:01 +0200
+	id 1KPVgg-0001Ua-FD
+	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 06:59:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751472AbYHCEM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 00:12:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751470AbYHCEM7
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 00:12:59 -0400
-Received: from george.spearce.org ([209.20.77.23]:58628 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751254AbYHCEM7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 00:12:59 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id ABE8E38419; Sun,  3 Aug 2008 04:12:58 +0000 (UTC)
+	id S1751595AbYHCE6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 00:58:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbYHCE6V
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 00:58:21 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:16595 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751470AbYHCE6U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 00:58:20 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so932785ywe.1
+        for <git@vger.kernel.org>; Sat, 02 Aug 2008 21:58:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=N1ZS5njt9Uio5cINB/r6J7OvrpduRItLaEE8n4H5bZ0=;
+        b=c+ppA7ba9/zItJsoBe0QoVR7nhJOgGI1S8EWK2bAD0j5aaue1PmhbqZfd/MnDsQixU
+         kuhfkQZe5HjzZzYCdfhwk/bUcH7wYzaBy26b/7666HAUFlcg83eqy2XG1zi6URmFQKAi
+         s6gUG4gbDGFDYzqHBLJ/aVjyctc3GBaERwiSw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=BQ9BLDgOQ/aglMwtBGkh9VRKONdzXBoVXG4KNnSSEW3wwORA+GGCDooHTv4eFygL+X
+         qSkE+brmGUWyeGmLZtVpCEktuFwHjO1ejrg0ShdSHRDT6w6AOJ4WK+8w9ymcjoZdkjs3
+         y8+Ta4jh8zuqGJukvDro4NIFXySIy3aAas0hU=
+Received: by 10.151.12.4 with SMTP id p4mr5998580ybi.132.1217739499510;
+        Sat, 02 Aug 2008 21:58:19 -0700 (PDT)
+Received: by 10.150.57.4 with HTTP; Sat, 2 Aug 2008 21:58:19 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <48952B2E.3030209@zytor.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91205>
 
-"H. Peter Anvin" <hpa@zytor.com> wrote:
-> Shawn O. Pearce wrote:
->> Chunked Transfer Encoding
->> -------------------------
->>
->> For performance reasons the HTTP/1.1 chunked transfer encoding is
->> used frequently to transfer variable length objects.  This avoids
->> needing to produce large results in memory to compute the proper
->> content-length.
->
-> Note: you cannot rely on HTTP/1.1 being supported by an intermediate  
-> proxy; you might have to handle HTTP/1.0, where the data is terminated  
-> by connection close.
-
-Well, that proxy is going to be crying when we upload a 120M pack
-during a push to it, and it buffers the damn thing to figure out
-the proper Content-Length so it can convert an HTTP/1.1 client
-request into an HTTP/1.0 request to forward to the server.  That's
-just _stupid_.
-
-But from the client side perspective the chunked transfer encoding
-is used only to avoid generating in advance and producing the
-content-length header.  I fully expect the encoding to disappear
-(e.g. in a proxy, or in the HTTP client library) before any sort
-of Git code gets its fingers on the data.
-
-Hence to your other remark, I _do not_ rely upon the encoding
-boundaries to remain intact.  That is why there is Git pkt-line
-encodings inside of the HTTP data stream.  We can rely on the
-pkt-line encoding being present, even if the HTTP chunks were
-moved around (or removed entirely) by a proxy.
-
--- 
-Shawn.
+Sorry, I don't know where else to turn.
+I've modified my local copy of ChangeLog and my "git pull" says, "Oh, oh!
+You'd overwrite your changes" and refuses to pull.  I tried
+"git reset HEAD  ChangeLog", but it says all sorts of crazy things
+that make no sense and I'm still stuck.  I know I can fix this:
+pull my edits into a patch, throw away my repository, clone a fresh
+copy.  There has to be a better way.  The better  way is just too
+obtuse to figure out.....Help, please?  Thank you.
