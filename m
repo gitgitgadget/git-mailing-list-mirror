@@ -1,63 +1,51 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: More on git over HTTP POST
-Date: Sun, 03 Aug 2008 04:42:54 -0700
-Message-ID: <489599BE.3050000@zytor.com>
-References: <48938539.9060003@zytor.com> <20080802205702.GA24723@spearce.org> <20080803025602.GB27465@spearce.org> <7v63qiydzg.fsf@gitster.siamese.dyndns.org> <48952A62.6050709@zytor.com> <20080803041014.GD27465@spearce.org> <alpine.DEB.1.10.0808030105510.22058@asgard.lang.hm>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: gitweb status for 1.6.0?
+Date: Sun, 3 Aug 2008 14:00:41 +0200
+Message-ID: <20080803120041.GV10151@machine.or.cz>
+References: <20080802211714.GG24723@spearce.org> <7vvdyjcdj8.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Sun Aug 03 13:44:08 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 03 14:01:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPc0N-0004u6-Rt
-	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 13:44:08 +0200
+	id 1KPcHS-0000fs-GL
+	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 14:01:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753802AbYHCLnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 07:43:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753772AbYHCLnG
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 07:43:06 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:40592 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753531AbYHCLnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 07:43:04 -0400
-Received: from [10.71.1.72] ([12.197.88.10])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m73BgaVG022761
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 3 Aug 2008 04:42:36 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <alpine.DEB.1.10.0808030105510.22058@asgard.lang.hm>
-X-Virus-Scanned: ClamAV 0.93.3/7920/Sun Aug  3 01:44:32 2008 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1753942AbYHCMAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 08:00:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753585AbYHCMAo
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 08:00:44 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:34853 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753141AbYHCMAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 08:00:44 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 3AB72393A2DD; Sun,  3 Aug 2008 14:00:41 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vvdyjcdj8.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91232>
 
-david@lang.hm wrote:
-> 
-> actually, it's not just a matter of not getting 'past this dark age of 
-> the Internet', it's an issue that so many people are tunneling 
-> _everyting_ over http (including the bad guys tunneling malware) that 
-> proxies are getting more aggressive then they have ever been before in 
-> pulling apart the payload and analysing it before letting it get through 
-> to the far side.
-> 
+On Sat, Aug 02, 2008 at 02:28:27PM -0700, Junio C Hamano wrote:
+> There have been a handful gitweb patches on the list recently (I think
+> they were all post -rc0 feature enhancements, but I may be mistaken).  I'm
+> wondering what their status are.  Does any of them matter in the current
+> cycle?
 
-... which is of course because of said proxies that this is happening, too.
+I think these are all feature enhancements and I'd rather wait with them
+for 1.6.1 (and I'm preparing to dump quite a few my gitweb patches afer
+1.6.0 is out as well ;).
 
-There are too many idiots out there building "security software" and 
-running IT departments, that's really the bottom line.
-
-By the way, I want to say *thank you* to Shawn for tackling this 
-project: this has been a major issue for kernel.org, and getting 
-something like this deployed would be incredibly helpful.
-
-	-hpa
+-- 
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
