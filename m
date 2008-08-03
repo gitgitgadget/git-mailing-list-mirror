@@ -1,67 +1,72 @@
-From: Steffen Prohaska <prohaska@zib.de>
+From: Johannes Sixt <johannes.sixt@telecom.at>
 Subject: Re: Missing pieces for 1.6.0 on MinGW?
-Date: Sun, 3 Aug 2008 10:52:15 +0200
-Message-ID: <E7278ED4-5423-4D53-B4B8-9AC620FDF769@zib.de>
+Date: Sun,  3 Aug 2008 11:16:25 +0200
+Message-ID: <1217754985.4895776973fda@webmail.nextra.at>
 References: <7vljzfkzkv.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <johannes.sixt@telecom.at>,
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Steffen Prohaska <prohaska@zib.de>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 03 10:53:17 2008
+X-From: git-owner@vger.kernel.org Sun Aug 03 11:19:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPZL2-0006kQ-12
-	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 10:53:16 +0200
+	id 1KPZkH-0004B7-4L
+	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 11:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751997AbYHCIwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 04:52:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751682AbYHCIwN
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 04:52:13 -0400
-Received: from mailer.zib.de ([130.73.108.11]:57254 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751196AbYHCIwM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 04:52:12 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m738pvLl008905;
-	Sun, 3 Aug 2008 10:52:02 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db831ac.pool.einsundeins.de [77.184.49.172])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m738pudG002739
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 3 Aug 2008 10:51:57 +0200 (MEST)
+	id S1752265AbYHCJQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 05:16:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752401AbYHCJQb
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 05:16:31 -0400
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:52951 "EHLO
+	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752215AbYHCJQb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 05:16:31 -0400
+Received: from webmail01.si.eunet.at (webmail01.srv.eunet.at [193.154.180.195])
+	by smtp4.srv.eunet.at (Postfix) with ESMTPS id CF5D397209;
+	Sun,  3 Aug 2008 11:16:28 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by webmail01.si.eunet.at (8.13.1/8.13.1) with ESMTP id m739GPCo005257;
+	Sun, 3 Aug 2008 11:16:27 +0200
+Received: from 77.117.130.90 ([77.117.130.90]) 
+	by webmail.nextra.at (IMP) with HTTP 
+	for <johsixt@mbox.eunet.at>; Sun,  3 Aug 2008 11:16:25 +0200
 In-Reply-To: <7vljzfkzkv.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.926)
+User-Agent: Internet Messaging Program (IMP) 3.2.8
+X-Originating-IP: 77.117.130.90
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91219>
 
-
-On Aug 2, 2008, at 9:05 PM, Junio C Hamano wrote:
-
-> Just a quick question before the weekend ends and -rc2 gets tagged.   
-> (I
+Zitat von Junio C Hamano <gitster@pobox.com>:
+> Just a quick question before the weekend ends and -rc2 gets tagged.  (I
 > lost track of that argv0 vs bin/git vs libexec/git-core/git-foo
 > discussion).
-
-I haven't found time to work on this and I also haven't observed
-any progress made by others.
-
-
+>
 > Are there any missing but necessary patches we need before 1.6.0 for
 > MinGW?
 
-So we don't have patches, although we still have the problem
-discussed last weekend.
+Yes, there are some open issues:
 
-Unfortunately, I cannot promise that I'll find time the next couple
-of days to work on the issue.  I propose you just continue the
-release cycle without waiting for MinGW.
+(1) git-gui was fixed for the msysgit installer, but it broke for me; but I
+think I know where to fix it.
 
-	Steffen
+(2) the non-builtins in $(bindir) don't set argv0_path, and consequently don't
+find ETC_GITCONFIG.
+
+(3) the 'mingw_main undefined' error is still a mystery. I'm about to send a
+preprocessed file to Steffen (it's a bit large, even compressed, so I'll do
+that in a private mail).
+
+Item (1) I expect to work on later today, but needs some investigation by
+Steffen and perhaps Shawn. (2) is probably a minor issue. (3) is, well, a
+mystery, although Steffen's patch works for me, too. Nevertheless, I'd like to
+know why my original approach does not always work.
+
+-- Hannes
