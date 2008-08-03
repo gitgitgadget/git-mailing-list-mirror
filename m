@@ -1,104 +1,157 @@
-From: "Matt Pearson" <404emailnotfound@gmail.com>
-Subject: Re: git-pull sets write bit, git-push does not
-Date: Sat, 2 Aug 2008 21:15:53 -0400
-Message-ID: <706b4240808021815h68db2179y7ceb35501f7f4f66@mail.gmail.com>
-References: <ee521d6f0808021532k66bc5b24ma2eeb51021fb5f36@mail.gmail.com>
-	 <706b4240808021618y5604b7c9h915237c30d87dace@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: More on git over HTTP POST
+Date: Sat, 2 Aug 2008 19:56:02 -0700
+Message-ID: <20080803025602.GB27465@spearce.org>
+References: <48938539.9060003@zytor.com> <20080802205702.GA24723@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Alexander E Genaud" <alex@genaud.net>
-X-From: git-owner@vger.kernel.org Sun Aug 03 03:17:04 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Sun Aug 03 04:59:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPSDW-0001XB-V7
-	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 03:17:03 +0200
+	id 1KPToT-0001WG-UG
+	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 04:59:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751431AbYHCBPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Aug 2008 21:15:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751372AbYHCBPz
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 21:15:55 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:47352 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751180AbYHCBPy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Aug 2008 21:15:54 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so914914ywe.1
-        for <git@vger.kernel.org>; Sat, 02 Aug 2008 18:15:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=v7N7FG2BuNBllQI32psMAA3an6GGyeimV1y8AZx5rVA=;
-        b=BSgfZ5Kk8EiZ0Lw5TUSohQ5P4sYDXkrLdydNOXhATM1D4/kDDjNm12WT91Mya1ztoF
-         pL2EnuBRcS+qQy55nAIqoF5Tzh60k7r98U16TuIK1O6cjiUNbzl0BpYN3VTPQ5cavSbw
-         0M7jo6jDPOjTV4OePY0MWWK1Zhs0RO2m9yjD8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=gKGQixLYjZOOqiHm+l4vHBwl/OyDJ70NzxiJ5DJsO4d8XULZLTmYsoB+ERi2ewWaRP
-         WP+4ifRX6lbz5VCeq2ndX28SkawGfWAAGBVrZBkU675bZ8/VMkpCmivYNz+DeAhM02U8
-         1gXfGqxcgrw/qvbdeEAG3SjJqcB9Tir9X2XI4=
-Received: by 10.151.46.17 with SMTP id y17mr5814981ybj.120.1217726153428;
-        Sat, 02 Aug 2008 18:15:53 -0700 (PDT)
-Received: by 10.151.99.15 with HTTP; Sat, 2 Aug 2008 18:15:53 -0700 (PDT)
-In-Reply-To: <706b4240808021618y5604b7c9h915237c30d87dace@mail.gmail.com>
+	id S1751787AbYHCC4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Aug 2008 22:56:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbYHCC4F
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Aug 2008 22:56:05 -0400
+Received: from george.spearce.org ([209.20.77.23]:60290 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751022AbYHCC4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Aug 2008 22:56:04 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 4010938419; Sun,  3 Aug 2008 02:56:02 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <20080802205702.GA24723@spearce.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91196>
 
-On Sat, Aug 2, 2008 at 7:18 PM, Matt Pearson <404emailnotfound@gmail.com> wrote:
-> The working copy in r2 was not updated with the changes you pushed to
-> it (both the content and the mode change).
+"Shawn O. Pearce" <spearce@spearce.org> wrote:
+> "H. Peter Anvin" <hpa@zytor.com> wrote:
+> > I have investigated a bit what it would take to support git protocol  
+> > (smart transport) over HTTP POST transactions.
+> 
+> I have started to think about this more myself, not just for POST
+> put also for some form of GET that can return an efficient pack,
+> rather than making the client walk the object chains itself.
+...
+> HTTP POST is actually trivial if you don't want to support the new
+> tell-me-more extension that was added to git-push.  Hell, I could
+> write the CGI in a few minutes I think.  Its really just a small
+> wrapper around git-receive-pack.
 
-Hm, your test case is more complicated than I originally thought. I
-get that result with the git from Ubuntu Hardy, but current master
-dies on the pull complaining B is not uptodate (has local changes). I
-guess this was a bug that was fixed, but there's no way I'm going to
-bisect or look at release notes over half a year (or more) of changes
-:)
+So I have this draft of how smart push might work.  Its slated
+for the Documentation/technical directory.  Thus far I have only
+written about push support, but Ilari on #git has some ideas about
+how to do a smart fetch protocol.
 
-What it mainly comes down to is that git has only two possible file
-modes: 644 and 755. These are the only ones that will ever be stored
-in the object database. It seems like older git would ignore
-permission changes to the working copy, and reset the permissions to
-the "normalized" version when updating a file that was modified by the
-pull.
+Implementation wise in C git I think this is just a new C
+program (git-http-backend?) that turns around and proxies
+into git-receive-pack, at least for the push support.
 
-Here's a blow-by-blow explanation. I'll use numbers to refer to the
-commits, where 1 is the initial commit, 2 is the commit you pushed,
-and 3 is the one you pulled. After the cp -r, both repos have a clean
-working tree; the chmod dirties the working tree of r2.
+What I don't know is how we could configure URI translation from
+/path/to/repository.git received out of the $PATH_INFO in the
+CGI environment to a physical directory.  Should we rely on the
+server's $PATH_TRANSLATED?
 
-The push causes both repos to have 2 be the HEAD commit, but r2 keeps
-the dirty working tree changes, including (what now appears to be,
-from git's POV) a change in the content of A from 'AA' to the 'A' in
-the initial commit. (The content change will appear as a staged change
-when running status in r2, because the index isn't updated either)
 
-When pulling 3, git thinks that these changes were made on top of 2,
-and you want to keep them. So it doesn't modify the contents of A
-because A was not changed in commit 3---if it was, you'd get a "not
-uptodate" message.
+Smart HTTP transfer protocols
+=============================
 
-B, however, *was* changed in 3, so it tries to apply those changes.
-With the older version, it seems to ignore the permissions change and
-simply fast-forward to the state B was in after commit 3 (content
-'BB', mode 644). With the newer version, it does see that the mode has
-been changed, and aborts due to a conflict. In fact, it doesn't seem
-to like any mode change---it still dies with a conflict if I change
-the chmod to 'a+x'.
+Git supports two HTTP based transfer protocols.  A "dumb" protocol
+which requires only a standard HTTP server on the server end of the
+connection, and a "smart" protocol which requires a Git aware CGI
+(or server module).  This document describes the "smart" protocol.
 
-Hope that clears it up better---figuring this out helped me learn some
-stuff about git. Now I'll wait for someone more knowledgeable than I
-to tell me I'm wrong. :)
+Authentication
+--------------
 
-Matt
+Standard HTTP authentication is used, and must be configured and
+enforced by the HTTP server software.
+
+Chunked Transfer Encoding
+-------------------------
+
+For performance reasons the HTTP/1.1 chunked transfer encoding is
+used frequently to transfer variable length objects.  This avoids
+needing to produce large results in memory to compute the proper
+content-length.
+
+Detecting Smart Servers
+-----------------------
+
+HTTP clients can detect a smart Git-aware server by sending the
+show-ref request (below) to the server.  If the response has a
+status of 200 and the magic x-application/git-refs content type
+then the server can be assumed to be a smart Git-aware server.
+
+If any other response is received the client must assume dumb
+protocol support, as the server did not correctly response to
+the request.
+
+
+Show Refs
+---------
+
+Obtains the available refs from the remote repository.  The response
+is a sequence of git "packet lines", one per ref, and a final flush
+packet line to indicate the end of stream.
+
+	C: GET /path/to/repository.git?show-ref HTTP/1.0
+
+	S: HTTP/1.1 200 OK
+	S: Content-Type: x-application/git-refs
+	S: Transfer-Encoding: chunked
+	S:
+	S: 62
+	S: 003e95dcfa3633004da0049d3d0fa03f80589cbcaf31 refs/heads/maint
+	S: 
+	S: 63
+	S: 003fd049f6c27a2244e12041955e262a404c7faba355 refs/heads/master
+	S: 
+	S: 59
+	S: 003b2cb58b79488a98d2721cea644875a8dd0026b115 refs/heads/pu
+	S: 
+	S: 4
+	S: 0000
+	S: 0
+
+Push Pack
+---------
+
+Uploads a pack and updates refs.  The start of the stream is the
+commands to update the refs and the remainder of the stream is the
+pack file itself.  See git-receive-pack and its network protocol
+in pack-protocol.txt, as this is essentially the same.
+
+	C: POST /path/to/repository.git?receive-pack HTTP/1.0
+	C: Content-Type: x-application/git-receive-pack
+	C: Transfer-Encoding: chunked
+	C:
+	C: 103
+	C: 006395dcfa3633004da0049d3d0fa03f80589cbcaf31 d049f6c27a2244e12041955e262a404c7faba355 refs/heads/maint
+	C: 4
+	C: 0000
+	C: 12
+	C: PACK
+	...
+	C: 0
+
+	S: HTTP/1.0 200 OK
+	S: Content-type: x-application/git-status
+	S: Transfer-Encoding: chunked
+	S:
+	S: ...<output of receive-pack>...
+
+
+
+-- 
+Shawn.
