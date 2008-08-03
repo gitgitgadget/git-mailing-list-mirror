@@ -1,57 +1,54 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-name-rev: don't use printf without format
-Date: Sun, 03 Aug 2008 13:44:10 -0700
-Message-ID: <7vvdyhu8v9.fsf@gitster.siamese.dyndns.org>
-References: <1217510434-94979-1-git-send-email-pdebie@ai.rug.nl>
- <7vfxpnmgkc.fsf@gitster.siamese.dyndns.org> <4895B641.1050500@lsrfire.ath.cx>
+Subject: Re: [PATCH] hash-object --no-filters
+Date: Sun, 03 Aug 2008 13:44:27 -0700
+Message-ID: <7vod49u8us.fsf@gitster.siamese.dyndns.org>
+References: <200807311257.49108.litvinov2004@gmail.com>
+ <20080731104529.GE7008@dpotapov.dyndns.org>
+ <200808011023.32139.litvinov2004@gmail.com>
+ <37fcd2780808010047t4ae20168y65103e90897dd3f8@mail.gmail.com>
+ <7vbq0dtawp.fsf@gitster.siamese.dyndns.org>
+ <37fcd2780808010224l68c2c717y5334a34d9de1de8d@mail.gmail.com>
+ <7vmyjwserv.fsf@gitster.siamese.dyndns.org>
+ <20080801220932.GK7008@dpotapov.dyndns.org>
+ <7vmyjvnx76.fsf_-_@gitster.siamese.dyndns.org>
+ <20080803054218.GM7008@dpotapov.dyndns.org>
+ <20080803055602.GN7008@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pieter de Bie <pdebie@ai.rug.nl>,
-	Git Mailinglist <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Aug 03 22:45:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Alexander Litvinov <litvinov2004@gmail.com>, git@vger.kernel.org,
+	Eric Wong <normalperson@yhbt.net>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 03 22:45:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPkSC-00017m-3x
-	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 22:45:24 +0200
+	id 1KPkSS-0001As-4w
+	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 22:45:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756082AbYHCUoW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Aug 2008 16:44:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756079AbYHCUoW
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 16:44:22 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64710 "EHLO
+	id S1754914AbYHCUoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 16:44:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755345AbYHCUoi
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 16:44:38 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37296 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756008AbYHCUoV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Aug 2008 16:44:21 -0400
+	with ESMTP id S1754381AbYHCUoh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 16:44:37 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A718749BF9;
-	Sun,  3 Aug 2008 16:44:18 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B49154861A;
+	Sun,  3 Aug 2008 16:44:34 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0F82F49BF7; Sun,  3 Aug 2008 16:44:12 -0400 (EDT)
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 26BBD48600; Sun,  3 Aug 2008 16:44:30 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F1936254-619C-11DD-9ACC-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FB24CCE0-619C-11DD-B942-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91268>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
-
-> printf() without an explicit format string is not a good coding pract=
-ise,
-> unless the printed string is guaranteed to not contain percent signs.=
-  While
-> fixing this, we might as well combine the calls to fwrite() and print=
-f().
-
-Good catch; I should have caught it when I applied the "split overlong
-function" patch, but I apparently was blind.
+Very nicely done; will queue along with the 5 patch series.
 
 Thanks.
