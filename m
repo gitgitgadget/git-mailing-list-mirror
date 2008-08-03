@@ -1,78 +1,107 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH] gitweb: remove PATH_INFO from $my_url and $my_uri
-Date: Sun,  3 Aug 2008 20:02:25 +0200
-Message-ID: <1217786545-30685-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@ucw.cz>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 03 20:03:12 2008
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [RFC PATCH 00/12] Sparse checkout
+Date: Sun, 3 Aug 2008 20:37:49 +0200
+Message-ID: <20080803183749.GA3482@efreet.light.src>
+References: <20080723145518.GA29035@laptop> <alpine.DEB.1.00.0807231713280.8986@racer> <fcaeb9bf0807230921m114f5ae0ybfec4917432d6dc7@mail.gmail.com> <alpine.DEB.1.00.0807231753240.8986@racer>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Aug 03 20:39:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPhvD-0007yl-OU
-	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 20:03:12 +0200
+	id 1KPiTt-00009g-Nm
+	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 20:39:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752201AbYHCSCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 14:02:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752097AbYHCSCJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 14:02:09 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:6447 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751861AbYHCSCI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 14:02:08 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so849090fgg.17
-        for <git@vger.kernel.org>; Sun, 03 Aug 2008 11:02:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=zME0I8IGZFqE1AkmHw4kOdcC1g81ZXf6Wa0NjJ0fHXc=;
-        b=NPOSLH5mra66M8ZYyHbpmt7IWHMnVrs+jxaXBJoXKdV/Wn32RExg7l16Hm1ZowApCw
-         Qc4s/MnMEVtJgihwN0M/+b/N5dwAnaPHsQlolqkUKtw+LnZ3m/U5+x5NrwyvniLc30Vy
-         w+iKHuyDnnBA9jE1HaqgUQj+1lPLhjjrKe+PE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=HFKXV9GNTGr3wW+CZc7kRLlyw5jWZNZBQ5OEIwS/Bcs03J59Mbb/TiSXm31ieDHA9T
-         OiMrd+vE4BfnpJhiUeIKYx2TzFXX1oyMKRJOspUAGZfHYYQMBDWyIF9As0csR/+Nuujc
-         2Q6V0m96BmE3F7+BjqtxH8/YkMHboW7ae+4oY=
-Received: by 10.86.99.9 with SMTP id w9mr9582293fgb.70.1217786526426;
-        Sun, 03 Aug 2008 11:02:06 -0700 (PDT)
-Received: from localhost ( [94.37.6.145])
-        by mx.google.com with ESMTPS id d4sm4522790fga.8.2008.08.03.11.02.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 03 Aug 2008 11:02:05 -0700 (PDT)
-X-Mailer: git-send-email 1.5.6.3
+	id S1752476AbYHCSh7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Aug 2008 14:37:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752575AbYHCSh7
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 14:37:59 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:39192 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752249AbYHCSh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 14:37:58 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 2382C57315;
+	Sun,  3 Aug 2008 20:37:57 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id 1wn9nG8vKtxS; Sun,  3 Aug 2008 20:37:54 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id B5D86572D0;
+	Sun,  3 Aug 2008 20:37:53 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.69)
+	(envelope-from <bulb@ucw.cz>)
+	id 1KPiSj-0001SZ-N7; Sun, 03 Aug 2008 20:37:49 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0807231753240.8986@racer>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91258>
 
-This patch (combined with appropriate server configuration) allows usage
-of the gitweb CGI script as DirectoryIndex for the server root even when
-the pathinfo feature is enabled.
+Hello,
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- gitweb/gitweb.perl |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+sorry for replying to an old thread, but I am a bit puzzled here,
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index ba1f71b..9c8bcab 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -26,6 +26,10 @@ our $cgi = new CGI;
- our $version = "++GIT_VERSION++";
- our $my_url = $cgi->url();
- our $my_uri = $cgi->url(-absolute => 1);
-+if (my $path_info = $ENV{"PATH_INFO"}) {
-+	$my_url =~ s,$path_info$,,;
-+	$my_uri =~ s,$path_info$,,;
-+}
- 
- # core git executable to use
- # this can just be "git" if your webserver has a sensible PATH
--- 
-1.5.6.3
+On Wed, Jul 23, 2008 at 17:55:14 +0100, Johannes Schindelin wrote:
+> On Wed, 23 Jul 2008, Nguyen Thai Ngoc Duy wrote:
+> > On 7/23/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > >  On Wed, 23 Jul 2008, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy w=
+rote:
+> > >
+> > >  > So in short, sparse prefix will be stored in config,=20
+> > >  > core.sparsecheckout.
+> > >
+> > > Do you really think the prefix should be stored anywhere else tha=
+n the=20
+> > > index?
+> > >
+> > > With core.sparseCheckout you have to introduce a _sh*tload_ of co=
+nfig=20
+> > > loaders.
+> > >
+> > > And with core.sparseCheckout you are at the whim of the user, sin=
+ce=20
+> > > .git/config is _supposed_ to be user-editable.
+> > >
+> > > From a logical point of view, I'd say that the sparse prefix has=20
+> > > nothing to do with the "configuration" of the local repository.
+> >=20
+> > Well, whatever place. I chose .git/config because I did not want to=
+=20
+> > introduce a new config place. But then how about .git/sparsecheckou=
+t?
+>=20
+> No, I did mean the index.  This is an attribute of the index: either =
+it is=20
+> sparsely checked out or not.  You can even have multiple indices=20
+> (switching between them by setting GIT_INDEX_FILE) which have differe=
+nt=20
+> prefixes.
+
+Um, but does the prefix we want to use depend on what files are physica=
+lly
+present in the tree? That would however imply that it's /not/ an attrib=
+ute of
+the index, but the tree and therefore should be stored in a separate ob=
+ject.
+
+The question whether it goes in the .git/config or .git/sparsecheckout =
+is
+than that of semantics -- if it's in .git/config, than user changes tha=
+t by
+editing the file or git config and no other way, while if it's in
+=2Egit/sparsecheckout, user changes it by running checkout with appropr=
+iate
+arguments.
+
+By the way, why is it *prefix*? Wouldn't a *path limit* be better?
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
