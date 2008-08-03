@@ -1,66 +1,73 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: linking libgit.a in C++ projects
-Date: Sun, 3 Aug 2008 22:12:11 +0200
-Message-ID: <20080803201211.GA11121@steel.home>
-References: <ac9f0f090807310253v1d97e2a1n4ddf34aa4fdc79f0@mail.gmail.com> <4891B872.3040707@panasas.com> <20080731183732.GA7598@steel.home> <32541b130807311155v50ee6ddaha1bba2f56e9bd61d@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [PATCH] Set up argv0_path correctly, even when argv[0] is just
+	the basename
+Date: Sun, 3 Aug 2008 22:25:13 +0200
+Message-ID: <20080803202513.GC3482@efreet.light.src>
+References: <1217065304-27815-1-git-send-email-prohaska@zib.de> <alpine.DEB.1.00.0807261613120.26810@eeepc-johanness>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Boaz Harrosh <bharrosh@panasas.com>, cte <cestreich@gmail.com>,
-	git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 03 22:13:34 2008
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Aug 03 22:26:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPjxJ-0001iO-T0
-	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 22:13:30 +0200
+	id 1KPk9r-0005GK-H2
+	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 22:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755449AbYHCUMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 16:12:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755831AbYHCUMV
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 16:12:21 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.180]:50461 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755070AbYHCUMU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 16:12:20 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20lf4ErWSQ==
-Received: from tigra.home (Fabb4.f.strato-dslnet.de [195.4.171.180])
-	by post.webmailer.de (mrclete mo13) (RZmta 16.47)
-	with ESMTP id y064edk73FInN8 ; Sun, 3 Aug 2008 22:12:15 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 0AF89277BD;
-	Sun,  3 Aug 2008 22:12:11 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id DA39856D2A; Sun,  3 Aug 2008 22:12:11 +0200 (CEST)
+	id S1755533AbYHCUZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 16:25:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755351AbYHCUZ0
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 16:25:26 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:41953 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755345AbYHCUZZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 16:25:25 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 7B5CB57354;
+	Sun,  3 Aug 2008 22:25:24 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id CTMT5ggR-KgF; Sun,  3 Aug 2008 22:25:21 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id B912D57278;
+	Sun,  3 Aug 2008 22:25:20 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.69)
+	(envelope-from <bulb@ucw.cz>)
+	id 1KPk8f-0001ht-UM; Sun, 03 Aug 2008 22:25:13 +0200
 Content-Disposition: inline
-In-Reply-To: <32541b130807311155v50ee6ddaha1bba2f56e9bd61d@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <alpine.DEB.1.00.0807261613120.26810@eeepc-johanness>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91264>
 
-Avery Pennarun, Thu, Jul 31, 2008 20:55:26 +0200:
-> On 7/31/08, Alex Riesen <raa.lkml@gmail.com> wrote:
-> > Boaz Harrosh, Thu, Jul 31, 2008 15:04:50 +0200:
-> > > Produce a C file and header that defines some stable API to your
-> >  > GUI application, that does not expose any git internal headers.
-> >  > Then compile that, say git_api.c, with C compiler in Makefile
-> >  > and extern "C" link that file to your C++ application. This will
-> >  > completely insulate you from any git code.
-> >
-> > no, it wont. He still have to resolve name conflicts at the link time.
+On Sat, Jul 26, 2008 at 16:14:33 +0200, Johannes Schindelin wrote:
+> When the program 'git' is in the PATH, the argv[0] is set to the basename.
+> However, argv0_path needs the full path, so add a function to discover the
+> program by traversing the PATH manually.
 > 
-> Language keywords (as opposed to function names) like 'new' and
-> 'typename' are definitely not exported to the object files.  Moreover,
-> function parameter names aren't either.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
 > 
+> 	So it is not easily possible to reuse this function in 
+> 	compat/mingw.c, as Junio said that compat/ should not depend
+> 	(at least too much) on libgit.a.
+> 
+> 	Of course, we could try to follow a symlinked git, too, but I 
+> 	think this is overkill until someone proves me wrong.
 
-Didn't mean them. Meant the globally visible names. libgit does not
-use a prefix for its exported symbols. They will clash with the
-symbols of the programs it is linked to.
+On UNIX, not only that argv[0] can contain the program without path -- it can
+contain anything the user thinks of. However most systems provide some way to
+get the path of the executable. On Linux (and some other unices, but not all
+of them) a reliable way is to readlink("/proc/self/exe", ...). Maybe since
+it's only needed for resolving a relative exec dir, relative exec dir could
+be supported only on systems that have such method (which is most of them).
+
+-- 
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
