@@ -1,71 +1,89 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn and svn:externals, was Re: Hackontest ideas?
-Date: Sun, 3 Aug 2008 15:48:52 -0700
-Message-ID: <20080803224852.GC3006@untitled>
-References: <20080729000103.GH32184@machine.or.cz> <m3myk1t54c.fsf@localhost.localdomain> <alpine.DEB.1.00.0807291354130.4631@eeepc-johanness>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH 0/5] Fix 'url.*.insteadOf' for submodule URLs
+Date: Mon, 04 Aug 2008 00:57:00 +0200
+Message-ID: <200808040057.00221.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@ucw.cz>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 04 00:50:01 2008
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 04 01:00:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPmOl-0006yj-Nz
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 00:50:00 +0200
+	id 1KPmYV-0000ea-J4
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 01:00:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757793AbYHCWs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 18:48:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757662AbYHCWs4
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 18:48:56 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:50021 "EHLO hand.yhbt.net"
+	id S1757662AbYHCW5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 18:57:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756128AbYHCW5v
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 18:57:51 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:44311 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756128AbYHCWsy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 18:48:54 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 7ABAD2DC01B;
-	Sun,  3 Aug 2008 15:48:53 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807291354130.4631@eeepc-johanness>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754486AbYHCW5v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 18:57:51 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0K5100L21RS3VR00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 04 Aug 2008 00:57:39 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K5100HPGRR0Z340@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 04 Aug 2008 00:57:00 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K5100CGPRR0UYWM@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Mon, 04 Aug 2008 00:57:00 +0200 (CEST)
+Content-disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91284>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
-> 
-> On Tue, 29 Jul 2008, Jakub Narebski wrote:
-> 
-> >  * handling of svn:externals using submodules
-> 
-> I doubt that this is easy.  Otherwise, Eric would have done it a long time 
-> ago.
+As suggested in a thread some time ago, one could redefine the URL used to 
+fetch submodules by adding a 'url.*.insteadOf' rule prior to the first 
+invocation of 'git submodule update'.
 
-I started working on externals support a long time ago, but got hung up
-on corner-cases (with .gitmodules and .gitignore being in the tree) and
-backward-compatibility issues with commiting back to SVN.
+However, this does not work with current Git, because the super-repo config 
+(which is home to the 'url.*.insteadOf' rule) is not consulted by the 'git 
+clone' that is invoked by 'git submodule update'.
 
-The more I think about it, the more I think the worse-is-better approach
-I used for "git svn show-ignore" is the way to go (using the unversioned
-.git/info/exclude).  That would mean ignoring submodules as implemented
-by git and just shotgunning another git-svn-created subdirectory into
-where the external would've been...
+These patches fix this issue by making 'git submodule' explicitly rewrite 
+the submodule URL according to the super-repo config, prior to calling 'git 
+clone'.
 
-> The main concern I have is to get the semantics right: AFAICT 
-> svn:externals has _no notion_ of "what is current".  It just _always_ 
-> fetches the HEAD.  Even if you check out an ancient revision in the 
-> "superproject".
+In order for the 'git submodule' shell script to properly rewrite URLs, it 
+must gain access to the URL rewriting functionality in remote.c. To expose 
+the URL rewriting functionality to 'git submodule' (and others, if needed), 
+a new option ('rewrite-url') has been added to 'git config'.
 
-Based on my limited understanding, peg revisions are only needed in SVN
-because of the cost of traversing history to DTRT.  git-svn should be
-able to just use the -r<rev> syntax that has always been supported
-without needing peg revisions.  On the other hand, implicit rename/copy
-detection in git may not pick up drastic changes...
+The patch series is based on master. Whether or not this should be 
+considered for v1.6.0 is to be decided by Junio. (My personal opinion is 
+that although we're late in the release cycle, the patches are fairly 
+straightforward, and should not pose a great risk of regressions.)
 
--- 
-Eric Wong
+Johan Herland (5):
+  Add testcase for 'git submodule' with url.*.insteadOf set in the
+    super-repo
+  Teach 'git config' to rewrite URLs according to current
+    url.*.insteadOf rules
+  Add selftest for new option '--rewrite-url' to 'git config'
+  Add documentation on the new --rewrite-url option to 'git config'
+  Teach 'git submodule' to rewrite submodule URLs according to
+    super-repo's rules
+
+ Documentation/git-config.txt |   10 ++++++++++
+ builtin-config.c             |   23 ++++++++++++++++++++++-
+ git-submodule.sh             |    6 ++++++
+ t/t1300-repo-config.sh       |   14 ++++++++++++++
+ t/t7400-submodule-basic.sh   |   11 +++++++++++
+ 5 files changed, 63 insertions(+), 1 deletions(-)
+
+
+Have fun!
+
+...Johan
