@@ -1,87 +1,69 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: More on git over HTTP POST
-Date: Sat, 02 Aug 2008 21:01:11 -0700
-Message-ID: <48952D87.2070707@zytor.com>
-References: <48938539.9060003@zytor.com> <20080802205702.GA24723@spearce.org> <20080803025602.GB27465@spearce.org>
+Date: Sat, 2 Aug 2008 21:10:14 -0700
+Message-ID: <20080803041014.GD27465@spearce.org>
+References: <48938539.9060003@zytor.com> <20080802205702.GA24723@spearce.org> <20080803025602.GB27465@spearce.org> <7v63qiydzg.fsf@gitster.siamese.dyndns.org> <48952A62.6050709@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Aug 03 06:01:57 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Sun Aug 03 06:11:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPUn6-0001RR-Ns
-	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 06:01:57 +0200
+	id 1KPUwA-0002sQ-Ki
+	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 06:11:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751094AbYHCEAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 00:00:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751008AbYHCEAz
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 00:00:55 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:51355 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750896AbYHCEAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 00:00:54 -0400
-Received: from [10.71.1.72] ([12.197.88.10])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m7340rZl032545
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 2 Aug 2008 21:00:53 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <20080803025602.GB27465@spearce.org>
-X-Virus-Scanned: ClamAV 0.93.3/7918/Sat Aug  2 19:45:57 2008 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1751118AbYHCEKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 00:10:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147AbYHCEKQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 00:10:16 -0400
+Received: from george.spearce.org ([209.20.77.23]:33873 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751008AbYHCEKP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 00:10:15 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 8C07C38419; Sun,  3 Aug 2008 04:10:14 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <48952A62.6050709@zytor.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91203>
 
-Shawn O. Pearce wrote:
-> Chunked Transfer Encoding
-> -------------------------
-> 
-> For performance reasons the HTTP/1.1 chunked transfer encoding is
-> used frequently to transfer variable length objects.  This avoids
-> needing to produce large results in memory to compute the proper
-> content-length.
+"H. Peter Anvin" <hpa@zytor.com> wrote:
+> Junio C Hamano wrote:
+>>  For example, putting them [capabilities] on extra HTTP headers is probably Ok.
+>
+> I think that would be a mistake, just because it's one more thing for  
+> proxies to screw up on.
 
-One more thing about chunked transfer encodings: you cannot assume that 
-a proxy will maintain chunk boundaries, any more than you can assume 
-that a firewall will maintain TCP packet boundaries.
+I didn't realize we were in an era of proxies that are that
+brain-damaged that they cannot relay the other headers.  The Amazon
+S3 service relies heavily upon their own extended headers to make
+their REST API work.  If proxies stripped that stuff out then the
+client wouldn't work at all.
 
-> Detecting Smart Servers
-> -----------------------
-> 
-> HTTP clients can detect a smart Git-aware server by sending the
-> show-ref request (below) to the server.  If the response has a
-> status of 200 and the magic x-application/git-refs content type
-> then the server can be assumed to be a smart Git-aware server.
-> 
-> If any other response is received the client must assume dumb
-> protocol support, as the server did not correctly response to
-> the request.
+IOW I had thought we were past this dark age of the Internet.
 
-I think it should be application/x-git-refs, but that's splitting hairs.
+> It's better to have negotiation information in  
+> the payload, before the "real" data.
 
-> Obtains the available refs from the remote repository.  The response
-> is a sequence of git "packet lines", one per ref, and a final flush
-> packet line to indicate the end of stream.
-> 
-> 	C: GET /path/to/repository.git?show-ref HTTP/1.0
-> 
+I guess I could do that.  At least for the really complex stuff.
 
-I really think it would make more sense to use POST requests for 
-everything, and have the command part of the POSTed payload.  Putting 
-stuff in the URL just complicates the namespace to the detriment of the 
-admin.
+> Obviously one thing that needs to be included in each transaction is a  
+> transaction ID that will be reported back on the next transaction, since  
+> you can't rely on a persistent connection.
 
-> 	S: HTTP/1.1 200 OK
-> 	S: Content-Type: x-application/git-refs
-> 	S: Transfer-Encoding: chunked
+No.  That requires the server to maintain state.  We don't want to
+do that if we can avoid it.  I would much rather have the clients
+handle the state management as it simplifies the server side,
+especially when you start talking about reverse proxies and/or
+load-balancers running in front of the server farm.
 
-Transfer-encoding: chunked is illegal with a HTTP/1.0 client.
-
-	-hpa
+-- 
+Shawn.
