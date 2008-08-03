@@ -1,107 +1,84 @@
 From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [RFC PATCH 00/12] Sparse checkout
-Date: Sun, 3 Aug 2008 20:37:49 +0200
-Message-ID: <20080803183749.GA3482@efreet.light.src>
-References: <20080723145518.GA29035@laptop> <alpine.DEB.1.00.0807231713280.8986@racer> <fcaeb9bf0807230921m114f5ae0ybfec4917432d6dc7@mail.gmail.com> <alpine.DEB.1.00.0807231753240.8986@racer>
+Subject: Re: Moving .git around
+Date: Sun, 3 Aug 2008 20:51:29 +0200
+Message-ID: <20080803185129.GB3482@efreet.light.src>
+References: <93c3eada0807231832o6b7689c4j2913253d7ced62ba@mail.gmail.com> <fcaeb9bf0807231912t6f20d508va1381f324a8981aa@mail.gmail.com> <93c3eada0807231936ib103824u9204f1109119e1c2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Aug 03 20:39:02 2008
+To: Geoff Russell <geoffrey.russell@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 03 20:52:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPiTt-00009g-Nm
-	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 20:39:02 +0200
+	id 1KPih3-0003SL-7D
+	for gcvg-git-2@gmane.org; Sun, 03 Aug 2008 20:52:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752476AbYHCSh7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Aug 2008 14:37:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752575AbYHCSh7
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 14:37:59 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:39192 "EHLO ns1.bluetone.cz"
+	id S1752734AbYHCSvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 14:51:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752719AbYHCSvf
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 14:51:35 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:41951 "EHLO ns1.bluetone.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752249AbYHCSh6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 14:37:58 -0400
+	id S1752639AbYHCSve (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 14:51:34 -0400
 Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 2382C57315;
-	Sun,  3 Aug 2008 20:37:57 +0200 (CEST)
+	by ns1.bluetone.cz (Postfix) with ESMTP id C48B05735C;
+	Sun,  3 Aug 2008 20:51:33 +0200 (CEST)
 Received: from ns1.bluetone.cz ([192.168.13.1])
 	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id 1wn9nG8vKtxS; Sun,  3 Aug 2008 20:37:54 +0200 (CEST)
+	with ESMTP id bA54Aoo9wV3l; Sun,  3 Aug 2008 20:51:31 +0200 (CEST)
 Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id B5D86572D0;
-	Sun,  3 Aug 2008 20:37:53 +0200 (CEST)
+	by ns1.bluetone.cz (Postfix) with ESMTP id 7AE52572B3;
+	Sun,  3 Aug 2008 20:51:30 +0200 (CEST)
 Received: from bulb by efreet.light.src with local (Exim 4.69)
 	(envelope-from <bulb@ucw.cz>)
-	id 1KPiSj-0001SZ-N7; Sun, 03 Aug 2008 20:37:49 +0200
+	id 1KPifx-0001U2-QJ; Sun, 03 Aug 2008 20:51:29 +0200
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0807231753240.8986@racer>
+In-Reply-To: <93c3eada0807231936ib103824u9204f1109119e1c2@mail.gmail.com>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91259>
 
-Hello,
+On Thu, Jul 24, 2008 at 12:06:28 +0930, Geoff Russell wrote:
+> On Thu, Jul 24, 2008 at 11:42 AM, Nguyen Thai Ngoc Duy
+> <pclouds@gmail.com> wrote:
+> > On 7/24/08, Geoff Russell <geoffrey.russell@gmail.com> wrote:
+> >> For reasons which would take a while to explain, I'm building a repository
+> >>  in a directory  using "--git-dir=xxxx/.git --work-tree=." and
+> >>  then doing an "mv  xxxx/.git ./.git"  and then trying to work with
+> >>  that repository  --- but can't
+> >>
+> >>  Below is a sample script. The last line (git add) fails with
+> >>
+> >>  fatal: unable to create
+> >>  '/usr/local/AusTop/AuPrograms/AuServer/testgit/aaa/bbb/.git/index.lock':
+> >>  No such file or directory
+> >>
+> >>  git doesn't seem to realise that there is a .git back up the tree.
+> >
+> > It's because when you did git --work-tree=. init, worktree is stored
+> > in .git/config. The code that chdir() in setup_git_directory()
+> > probably forgot to chdir() back to toplevel worktree. Workaround could
+> > be just remove core.worktree in .git/config.
+> 
+> Many thanks, the work-around works. I'm not sure if this is a bug or
+> a feature, but I'm happy either way.
 
-sorry for replying to an old thread, but I am a bit puzzled here,
+That depends on what the value of core.worktree is:
+ - If it is '.', than I think it should be considered a bug in git init,
+   because that value is just plain nonsense.
+ - If it is '..', than it's a user error and the right thing is to just
+   remove it when you relocate the .git directory.
+ - If it was '/usr/local/AusTop/AuPrograms/AuServer/testgit/' than it would
+   have worked, so it's not that.
 
-On Wed, Jul 23, 2008 at 17:55:14 +0100, Johannes Schindelin wrote:
-> On Wed, 23 Jul 2008, Nguyen Thai Ngoc Duy wrote:
-> > On 7/23/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > >  On Wed, 23 Jul 2008, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy w=
-rote:
-> > >
-> > >  > So in short, sparse prefix will be stored in config,=20
-> > >  > core.sparsecheckout.
-> > >
-> > > Do you really think the prefix should be stored anywhere else tha=
-n the=20
-> > > index?
-> > >
-> > > With core.sparseCheckout you have to introduce a _sh*tload_ of co=
-nfig=20
-> > > loaders.
-> > >
-> > > And with core.sparseCheckout you are at the whim of the user, sin=
-ce=20
-> > > .git/config is _supposed_ to be user-editable.
-> > >
-> > > From a logical point of view, I'd say that the sparse prefix has=20
-> > > nothing to do with the "configuration" of the local repository.
-> >=20
-> > Well, whatever place. I chose .git/config because I did not want to=
-=20
-> > introduce a new config place. But then how about .git/sparsecheckou=
-t?
->=20
-> No, I did mean the index.  This is an attribute of the index: either =
-it is=20
-> sparsely checked out or not.  You can even have multiple indices=20
-> (switching between them by setting GIT_INDEX_FILE) which have differe=
-nt=20
-> prefixes.
+Best regards,
+Jan
 
-Um, but does the prefix we want to use depend on what files are physica=
-lly
-present in the tree? That would however imply that it's /not/ an attrib=
-ute of
-the index, but the tree and therefore should be stored in a separate ob=
-ject.
-
-The question whether it goes in the .git/config or .git/sparsecheckout =
-is
-than that of semantics -- if it's in .git/config, than user changes tha=
-t by
-editing the file or git config and no other way, while if it's in
-=2Egit/sparsecheckout, user changes it by running checkout with appropr=
-iate
-arguments.
-
-By the way, why is it *prefix*? Wouldn't a *path limit* be better?
-
---=20
+-- 
 						 Jan 'Bulb' Hudec <bulb@ucw.cz>
