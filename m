@@ -1,50 +1,60 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGIT PATCH] Do not insert an empty line before the diffstat info
-Date: Mon, 4 Aug 2008 16:20:00 +0200
-Message-ID: <20080804142000.GC12232@diana.vm.bytemark.co.uk>
-References: <20080731125010.894.84022.stgit@dawn.rfc1149.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Merging submodules
+Date: Mon, 4 Aug 2008 16:06:39 +0200
+Message-ID: <20080804140639.GL10151@machine.or.cz>
+References: <8aa486160807310824h25c9630dxc25b156e80fcdb29@mail.gmail.com> <20080731201530.067be667@pc09.procura.nl> <8aa486160807311203o3fb4deb8u4a5ae57818c76fab@mail.gmail.com> <20080801090422.55c6a45f@pc09.procura.nl> <8aa486160808010252j540a28cdw6e48027396da5248@mail.gmail.com> <20080801123523.33c37e08@pc09.procura.nl> <8aa486160808010434g7f3c187arc107b994e737cd74@mail.gmail.com> <20080804152443.4418b3e0@pc09.procura.nl> <20080804134053.GK10151@machine.or.cz> <20080804155733.46fd3982@pc09.procura.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
-To: Samuel Tardieu <sam@rfc1149.net>
-X-From: git-owner@vger.kernel.org Mon Aug 04 15:59:04 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Santi =?iso-8859-2?Q?B=E9jar?= <sbejar@gmail.com>,
+	Brian Gernhardt <benji@silverinsanity.com>,
+	Git List <git@vger.kernel.org>,
+	Lars Noschinski <lars-2008-1@usenet.noschinski.de>
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Mon Aug 04 16:07:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQ0aU-0004gj-6w
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 15:59:02 +0200
+	id 1KQ0iv-0007ka-7A
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 16:07:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753678AbYHDN5v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Aug 2008 09:57:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753448AbYHDN5v
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 09:57:51 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4978 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753382AbYHDN5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 09:57:51 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KQ0um-0003Zf-00; Mon, 04 Aug 2008 15:20:00 +0100
+	id S1753467AbYHDOGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 10:06:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753407AbYHDOGm
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 10:06:42 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:54908 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753382AbYHDOGl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 10:06:41 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 064A5393B489; Mon,  4 Aug 2008 16:06:40 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080731125010.894.84022.stgit@dawn.rfc1149.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20080804155733.46fd3982@pc09.procura.nl>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91355>
 
-On 2008-07-31 14:50:10 +0200, Samuel Tardieu wrote:
+On Mon, Aug 04, 2008 at 03:57:33PM +0200, H.Merijn Brand wrote:
+> We already changed the approach for converting projects from SCCS to
+> create a recursive repo from all SCCS repo's. And that *is* perfect.
 
-> To make the format of stg output closer to the plain git one, do not
-> insert an empty line between the "---" separator and the diffstat
-> information.
+Yes, but that's orthogonal to whether to separate the imported history
+from the pure history? (Not that I'd want to force it upon you. If you
+have a lot of nested repositories, the grafting can get a bit obnoxious
+if you don't automate it well, I suppose.)
 
-Thanks, will apply. (IMO it's slightly uglier, but it's better to be
-consistent. And it does save some space.)
+> Problem with the current join/merge is that there already have been
+> commits to the git repo after the SCCS convert that I do not want to
+> loose.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+You could rebase these to the new initial commit. But if you already use
+Git intensively and rewriting history would create big headache for you
+at this point already, it's too late, I guess.
+
+-- 
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
