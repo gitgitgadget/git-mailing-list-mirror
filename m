@@ -1,55 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] Fix 'url.*.insteadOf' for submodule URLs
-Date: Sun, 03 Aug 2008 16:57:28 -0700
-Message-ID: <7vsktl7itz.fsf@gitster.siamese.dyndns.org>
-References: <200808040057.00221.johan@herland.net>
- <alpine.DEB.1.00.0808040126170.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: Abort with an error if 'fetch' parameter is invalid.
+Date: Sun, 3 Aug 2008 17:01:40 -0700
+Message-ID: <20080804000140.GA13019@untitled>
+References: <1217451235-9609-1-git-send-email-apenwarr@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 04 01:58:41 2008
+Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 04 02:02:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPnTD-0005tO-QD
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 01:58:40 +0200
+	id 1KPnX9-0006jl-F5
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 02:02:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752647AbYHCX5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 19:57:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752688AbYHCX5g
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 19:57:36 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38989 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752270AbYHCX5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 19:57:35 -0400
+	id S1753095AbYHDABl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 20:01:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752950AbYHDABl
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 20:01:41 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:50113 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752906AbYHDABl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 20:01:41 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1456149D21;
-	Sun,  3 Aug 2008 19:57:34 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 4703249D1E; Sun,  3 Aug 2008 19:57:30 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0808040126170.9611@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
- Schindelin's message of "Mon, 4 Aug 2008 01:27:53 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F0F82DFA-61B7-11DD-94BC-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	by hand.yhbt.net (Postfix) with ESMTP id AC4322DC01B;
+	Sun,  3 Aug 2008 17:01:40 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1217451235-9609-1-git-send-email-apenwarr@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91296>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Avery Pennarun <apenwarr@stasis.open.versabanq.com> wrote:
+> Previously, if a config entry looked like this:
+> 
+>          svn-remote.svn.fetch=:refs/heads/whatever
+> 
+> git-svn would silently do nothing if you asked it to "git svn fetch", and
+> give a strange error if asked to "git svn dcommit".  What it really wants is
+> a line that looks like this:
+> 
+> 	svn-remote.svn.fetch=:refs/remotes/whatever
+> 
+> So we should simply abort if we get the wrong thing.
+> 
+> On the other hand, there's actually no good reason for git-svn to enforce
+> using the refs/remotes namespace, but the code seems to have hardcoded this
+> in several places and I'm not brave enough to try to fix it all right now.
 
-> On Mon, 4 Aug 2008, Johan Herland wrote:
->
->> As suggested in a thread some time ago, one could redefine the URL used 
->> to fetch submodules by adding a 'url.*.insteadOf' rule prior to the 
->> first invocation of 'git submodule update'.
->
-> If I suggested it, but forgot the "--global" flag to "git config", I 
-> apologize.
+Fully agreed (as I've stated in the past, too).  I just haven't had
+time to fix it.
 
-That's a nice way to say that the patchset is unnecessary ;-).
+> Signed-off-by: Avery Pennarun <apenwarr@gmail.com>
+
+Thanks Avery,
+Acked-by: Eric Wong <normalperson@yhbt.net>
+
+> ---
+> 
+> I just spent altogether too much time tracking down this problem when
+> migrating my git-svn settings from one repo to another.
+> 
+>  git-svn.perl |    8 ++++++--
+>  1 files changed, 6 insertions(+), 2 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index cf6dbbc..cc35f50 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -1420,8 +1420,12 @@ sub read_all_remotes {
+>  	    svn.useSvmProps/) };
+>  	$use_svm_props = $use_svm_props eq 'true' if $use_svm_props;
+>  	foreach (grep { s/^svn-remote\.// } command(qw/config -l/)) {
+> -		if (m!^(.+)\.fetch=\s*(.*)\s*:\s*refs/remotes/(.+)\s*$!) {
+> -			my ($remote, $local_ref, $remote_ref) = ($1, $2, $3);
+> +		if (m!^(.+)\.fetch=\s*(.*)\s*:\s*(.+)\s*$!) {
+> +			my ($remote, $local_ref, $_remote_ref) = ($1, $2, $3);
+> +			die("svn-remote.$remote: remote ref '$_remote_ref' "
+> +			    . "must start with 'refs/remotes/'\n")
+> +				unless $_remote_ref =~ m{^refs/remotes/(.+)};
+> +			my $remote_ref = $1;
+>  			$local_ref =~ s{^/}{};
+>  			$r->{$remote}->{fetch}->{$local_ref} = $remote_ref;
+>  			$r->{$remote}->{svm} = {} if $use_svm_props;
+> -- 
+> 1.6.0.rc0.42.g186458.dirty
+> 
+> 
