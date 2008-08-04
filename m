@@ -1,68 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC 2/2] Add Git-aware CGI for Git-aware smart HTTP transport
-Date: Mon, 4 Aug 2008 12:26:01 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808041225050.9611@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <20080803025602.GB27465@spearce.org> <1217748317-70096-1-git-send-email-spearce@spearce.org> <1217748317-70096-2-git-send-email-spearce@spearce.org> <7vwsix7nhw.fsf@gitster.siamese.dyndns.org> <20080804035921.GB2963@spearce.org>
- <4896D19C.6040704@dawes.za.net> <alpine.DEB.1.00.0808041208060.9611@pacific.mpi-cbg.de.mpi-cbg.de> <4896D669.30402@dawes.za.net>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: git-gui translators - please update translations if necessary
+Date: Mon, 4 Aug 2008 12:17:37 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0808041215140.4744@ds9.cixit.se>
+References: <20080802211714.GG24723@spearce.org> <7vod4bccx8.fsf@gitster.siamese.dyndns.org>
+ <20080802214930.GA25311@spearce.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>
-To: Rogan Dawes <lists@dawes.za.net>
-X-From: git-owner@vger.kernel.org Mon Aug 04 12:22:42 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Aug 04 13:19:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPxD7-0004Bh-BM
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 12:22:41 +0200
+	id 1KPy5d-0003Be-Br
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 13:19:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753063AbYHDKVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 06:21:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752985AbYHDKVg
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 06:21:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44909 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753020AbYHDKVf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 06:21:35 -0400
-Received: (qmail invoked by alias); 04 Aug 2008 10:21:34 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp005) with SMTP; 04 Aug 2008 12:21:34 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/iisN6ZcjiTnaPy5ZVn/Xo67+CLd8r4GYbBCofjP
-	Pkorc0pU/E9n1N
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <4896D669.30402@dawes.za.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1753028AbYHDLRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 07:17:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753096AbYHDLRw
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 07:17:52 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:51645 "EHLO ds9.cixit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752970AbYHDLRw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 07:17:52 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m74BHc5e017951
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 4 Aug 2008 13:17:38 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m74BHbxc017946;
+	Mon, 4 Aug 2008 13:17:37 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <20080802214930.GA25311@spearce.org>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Mon, 04 Aug 2008 13:17:38 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91341>
 
-Hi,
+Shawn O. Pearce:
 
-On Mon, 4 Aug 2008, Rogan Dawes wrote:
+> > Perhaps you wanted to update git-gui.pot first before sending this request
+> > out?
 
-> Johannes Schindelin wrote:
-> 
-> > On Mon, 4 Aug 2008, Rogan Dawes wrote:
-> > 
-> > > I don't understand why you would want to keep the commands in the 
-> > > URL when you are doing a POST?
-> > 
-> > Caching.
-> 
-> If you are expecting something to be cacheable, then should you not be 
-> using a GET anyway?
+> Oh.  Its updated now, but msgmerge on my system is busted and won't
+> update the po files themselves.  *sigh*
 
-Yes.
+In that case I would recommend submitting the translation to
+translationsproject.org, which helps both you and us translators in
+handling all the uninteresting tool-bashing itself. Submit an updated
+POT file when strings are frozen, and download all the updated
+translations before releasing.
 
-And I think the wget thing is not an issue: we should not try to prevent 
-every single idiocy.
-
-Ciao,
-Dscho
+-- 
+\\// Peter - http://www.softwolves.pp.se/
