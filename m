@@ -1,85 +1,71 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC 2/2] Add Git-aware CGI for Git-aware smart HTTP transport
-Date: Sun, 3 Aug 2008 20:59:21 -0700
-Message-ID: <20080804035921.GB2963@spearce.org>
-References: <20080803025602.GB27465@spearce.org> <1217748317-70096-1-git-send-email-spearce@spearce.org> <1217748317-70096-2-git-send-email-spearce@spearce.org> <7vwsix7nhw.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] bash completion: Add completion for 'git grep'
+Date: Sun, 3 Aug 2008 21:06:34 -0700
+Message-ID: <20080804040634.GC2963@spearce.org>
+References: <1217638593-57321-1-git-send-email-lee.marlow@gmail.com> <20080802210525.GD24723@spearce.org> <7968d7490808030031v39726af6r9f88feb28df02de7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 04 06:01:23 2008
+Cc: git@vger.kernel.org
+To: Lee Marlow <lee.marlow@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 04 06:07:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPrG4-0000ni-1e
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 06:01:20 +0200
+	id 1KPrM8-0001yH-2h
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 06:07:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753086AbYHDD7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 23:59:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753352AbYHDD7W
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 23:59:22 -0400
-Received: from george.spearce.org ([209.20.77.23]:39031 "EHLO
+	id S1750901AbYHDEGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 00:06:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750809AbYHDEGf
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 00:06:35 -0400
+Received: from george.spearce.org ([209.20.77.23]:49714 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752913AbYHDD7W (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 23:59:22 -0400
+	with ESMTP id S1750754AbYHDEGe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 00:06:34 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id 895FF38419; Mon,  4 Aug 2008 03:59:21 +0000 (UTC)
+	id 11F9338419; Mon,  4 Aug 2008 04:06:34 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <7vwsix7nhw.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7968d7490808030031v39726af6r9f88feb28df02de7@mail.gmail.com>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91313>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> But could you be a bit more explicit than application/x-git-refs magic?  I
-> suspect very strongly that clueless server operators would advertise the
-> type on repositories statically hosted there, and would defeat the point
-> of your patch.
+Lee Marlow <lee.marlow@gmail.com> wrote:
+> On Sat, Aug 2, 2008 at 3:05 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> >
+> > Hmm.  The has_doubledash test seems redundant since we don't do
+> > anything with args that aren't --foo.  Even though git-grep will
+> > accept a tree-ish and thus completion of __git_refs here may
+> 
+> I haven't found myself using grep to search anything but the current
+> working directory.  I wonder whether __git_complete_file would be
+> better than __git_refs.  My issue with __git_complete_file in this
+> case and also doing completion for 'git mv' is that it falls back to
+> just __git_refs.  Would it be better if it fell back to __git_refs and
+> ls-tree for HEAD?  That way when using completion to get to
+> Documentation/git-grep.txt,  it doesn't also show completions for
+> Documentation/git-grep.{1,html,xml}.
 
-This is a very valid concern.  I started to worry about it myself
-last night, but decided it was late enough and just wanted to start
-the discussion on the list, extending JH's thread even further.
- 
-> Perhaps "#" comment line in info/refs that is ignored on the reading side
-> but update-server-info never generates on its own?
+Hmm.  __git_complete_file is about completing something in a tree-ish,
+which is really most likely not what we want for grep.  Its useful for
+git-show and git-cat-file, and that's about it.  Most git tools prefer
+a calling format of "tree-ish -- paths ..." and not "tree-ish:path".
 
-This is a good idea.  I think anyone who consumes info/refs does
-so with the understanding that "#" comment lines exist, and should
-be skipped, but this is not something that has been heavily tested
-in the wild yet.
+Though I think you have an excellent point about completing paths
+by ls-tree for HEAD rather than the working directory itself,
+as then you can avoid produced files.  But in practice how often
+do you pass a single file or a couple of files to the grep utility
+and are having problems bypassing the build products?  Compared to
+just running grep on the entire source tree to find hits?  I never
+use grep to search in a single file, but I call it several times
+a day to look for where a function is defined or called.
 
-My concern here goes back to the remark you made above. What if a
-server owner mirrors a smart server by a non-Git aware device like
-wget?  They will now have a copy of the info/refs content which will
-suggest we have Git smarts on the backend, but really it isn't there.
-
-Perhaps the smart server detection is something like:
-
-	Smart Server Detection
-	----------------------
-
-	To detect a smart (Git-aware) server a client sends an
-	empty POST request to info/refs; if a 200 OK response is
-	received with the proper content type then the server can
-	be assumed to be Git-aware, and the result contains the
-	current info/refs data for that repository.
-
-		C: POST /repository.git/info/refs HTTP/1.0
-		C: Content-Length: 0
-
-		S: HTTP/1.0 200 OK
-		S: Content-Type: application/x-git-refs
-		S:
-		S: 95dcfa3633004da0049d3d0fa03f80589cbcaf31	refs/heads/maint
-
-Then clients should just attempt this POST first before issuing
-a GET info/refs.  Non Git-aware servers will issue an error code,
-and the client can retry with a standard GET request, and assume
-the server isn't a newer style.
+After having thought about it your original patch makes the most
+sense, but without the has_doubledash test.
 
 -- 
 Shawn.
