@@ -1,67 +1,157 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Merging submodules
-Date: Mon, 4 Aug 2008 15:40:53 +0200
-Message-ID: <20080804134053.GK10151@machine.or.cz>
-References: <20080731130626.GQ32184@machine.or.cz> <20080731170123.79e0d3e9@pc09.procura.nl> <8aa486160807310824h25c9630dxc25b156e80fcdb29@mail.gmail.com> <20080731201530.067be667@pc09.procura.nl> <8aa486160807311203o3fb4deb8u4a5ae57818c76fab@mail.gmail.com> <20080801090422.55c6a45f@pc09.procura.nl> <8aa486160808010252j540a28cdw6e48027396da5248@mail.gmail.com> <20080801123523.33c37e08@pc09.procura.nl> <8aa486160808010434g7f3c187arc107b994e737cd74@mail.gmail.com> <20080804152443.4418b3e0@pc09.procura.nl>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH] Add some tests of refreshing removed files
+Date: Mon, 04 Aug 2008 15:41:48 +0200
+Message-ID: <20080804134050.19457.96613.stgit@yoghurt>
+References: <9e4733910807311902nd3a02bep68c8a26a7e6303cd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Santi =?iso-8859-2?Q?B=E9jar?= <sbejar@gmail.com>,
-	Brian Gernhardt <benji@silverinsanity.com>,
-	Git List <git@vger.kernel.org>,
-	Lars Noschinski <lars-2008-1@usenet.noschinski.de>
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Mon Aug 04 15:42:16 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 04 15:42:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQ0K0-0007Xv-JM
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 15:42:01 +0200
+	id 1KQ0Ku-0007vG-1G
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 15:42:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752597AbYHDNk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 09:40:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752090AbYHDNk4
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 09:40:56 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:58710 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751810AbYHDNkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 09:40:55 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 34036393B489; Mon,  4 Aug 2008 15:40:53 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080804152443.4418b3e0@pc09.procura.nl>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752712AbYHDNly convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Aug 2008 09:41:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752627AbYHDNly
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 09:41:54 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4236 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752090AbYHDNlx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 09:41:53 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1KQ0fM-0003VW-00; Mon, 04 Aug 2008 15:04:04 +0100
+In-Reply-To: <9e4733910807311902nd3a02bep68c8a26a7e6303cd@mail.gmail.com>
+User-Agent: StGIT/0.14.3.211.g7374
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91351>
 
-On Mon, Aug 04, 2008 at 03:24:43PM +0200, H.Merijn Brand wrote:
-> I do have to work with the repo, and that is more important than having
-> a perfect repo.
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-You might consider adopting a (relatively?) common strategy when
-importing historical projects: Actually start the history from scratch
-(git init && git add . && git commit -m"Initial commit") and fine-tune
-your historical import in a separate repository. Then, provide a script
-that people interested in the old history can run and it will graft the
-imported history to your pure-git history.
+---
 
-Conceptually, it should be pretty simple:
+These four tests all pass on Catalin's current master. Do they fail
+for you, or did I miss something in your problem description?
 
-	git fetch git://perl-company.nl/sccs-import.git
-	echo initial_git_commit_sha1 last_imported_commit_sha1 \
-		>>$(git rev-parse --git-dir)/info/grafts
+ t/t2702-refresh-rm.sh |  101 +++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 1 files changed, 101 insertions(+), 0 deletions(-)
+ create mode 100755 t/t2702-refresh-rm.sh
 
-Example of a fine-tuned script:
 
-	http://repo.or.cz/w/elinks.git?a=blob;f=contrib/grafthistory.sh
-
-If you find out that the import is not perfect later on, you can just
-redo it, refetch and rewrite the info/grafts line.
-
--- 
-				Petr "Pasky" Baudis
-The next generation of interesting software will be done
-on the Macintosh, not the IBM PC.  -- Bill Gates
+diff --git a/t/t2702-refresh-rm.sh b/t/t2702-refresh-rm.sh
+new file mode 100755
+index 0000000..896ebf3
+--- /dev/null
++++ b/t/t2702-refresh-rm.sh
+@@ -0,0 +1,101 @@
++#!/bin/sh
++
++test_description=3D'"stg refresh" with removed files'
++
++. ./test-lib.sh
++
++# Ignore our own temp files.
++cat >> .git/info/exclude <<EOF
++expected*.txt
++files*.txt
++status*.txt
++EOF
++
++reset () {
++    stg pop -a > /dev/null
++    git reset --hard > /dev/null
++}
++
++test_expect_success 'Initialize StGit stack' '
++    stg init &&
++    echo x > x.txt &&
++    echo y > y.txt &&
++    git add x.txt y.txt &&
++    git commit -m "Add some files"
++'
++
++cat > expected0.txt <<EOF
++D y.txt
++EOF
++printf '' > expected1.txt
++test_expect_success 'git-rm a file' '
++    stg new -m p0 &&
++    git rm y.txt &&
++    stg status > status0.txt &&
++    test_cmp expected0.txt status0.txt &&
++    stg refresh &&
++    stg status > status1.txt &&
++    test_cmp expected1.txt status1.txt &&
++    stg files | sort > files.txt &&
++    test_cmp expected0.txt files.txt
++'
++
++reset
++
++cat > expected0.txt <<EOF
++D y.txt
++M x.txt
++EOF
++printf '' > expected1.txt
++test_expect_success 'git-rm a file together with other changes' '
++    stg new -m p1 &&
++    echo x2 >> x.txt &&
++    git rm y.txt &&
++    stg status > status0.txt &&
++    test_cmp expected0.txt status0.txt &&
++    stg refresh &&
++    stg status > status1.txt &&
++    test_cmp expected1.txt status1.txt &&
++    stg files | sort > files.txt &&
++    test_cmp expected0.txt files.txt
++'
++
++reset
++
++cat > expected0.txt <<EOF
++D y.txt
++EOF
++printf '' > expected1.txt
++test_expect_success 'rm a file' '
++    stg new -m p2 &&
++    rm y.txt &&
++    stg status > status0.txt &&
++    test_cmp expected0.txt status0.txt &&
++    stg refresh &&
++    stg status > status1.txt &&
++    test_cmp expected1.txt status1.txt &&
++    stg files | sort > files.txt &&
++    test_cmp expected0.txt files.txt
++'
++
++reset
++
++cat > expected0.txt <<EOF
++D y.txt
++M x.txt
++EOF
++printf '' > expected1.txt
++test_expect_success 'rm a file together with other changes' '
++    stg new -m p3 &&
++    echo x2 >> x.txt &&
++    rm y.txt &&
++    stg status > status0.txt &&
++    test_cmp expected0.txt status0.txt &&
++    stg refresh &&
++    stg status > status1.txt &&
++    test_cmp expected1.txt status1.txt &&
++    stg files | sort > files.txt &&
++    test_cmp expected0.txt files.txt
++'
++
++test_done
