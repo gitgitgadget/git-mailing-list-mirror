@@ -1,68 +1,73 @@
-From: Boaz Harrosh <bharrosh@panasas.com>
-Subject: Re: linking libgit.a in C++ projects
-Date: Mon, 04 Aug 2008 11:57:22 +0300
-Message-ID: <4896C472.9070002@panasas.com>
-References: <ac9f0f090807310253v1d97e2a1n4ddf34aa4fdc79f0@mail.gmail.com> <4891B872.3040707@panasas.com> <20080731183732.GA7598@steel.home> <32541b130807311155v50ee6ddaha1bba2f56e9bd61d@mail.gmail.com> <20080803201211.GA11121@steel.home>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn.perl: Strip ChangeLog bits.
+Date: Mon, 4 Aug 2008 02:03:09 -0700
+Message-ID: <20080804090309.GD5435@hand.yhbt.net>
+References: <1217684549.8296.10.camel@heerbeest> <20080802172742.GT32184@machine.or.cz> <7vfxpnnwt5.fsf@gitster.siamese.dyndns.org> <1217701021.8296.35.camel@heerbeest> <20080804020931.GA4109@untitled> <1217836189.7649.7.camel@heerbeest>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Avery Pennarun <apenwarr@gmail.com>, cte <cestreich@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
 	git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 04 10:59:03 2008
+To: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
+X-From: git-owner@vger.kernel.org Mon Aug 04 11:04:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPvuA-0004rd-Sb
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 10:59:03 +0200
+	id 1KPvzJ-0006QX-Ha
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 11:04:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752684AbYHDI5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 04:57:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752537AbYHDI5n
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 04:57:43 -0400
-Received: from gw-colo-pa.panasas.com ([66.238.117.130]:13318 "EHLO
-	natasha.panasas.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752635AbYHDI5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 04:57:42 -0400
-Received: from daytona.int.panasas.com (daytona.int.panasas.com [172.17.28.41])
-	by natasha.panasas.com (8.13.1/8.13.1) with ESMTP id m748veMF006464;
-	Mon, 4 Aug 2008 04:57:40 -0400
-Received: from bh-buildlin2.bhalevy.com ([172.17.28.106]) by daytona.int.panasas.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 4 Aug 2008 04:56:43 -0400
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <20080803201211.GA11121@steel.home>
-X-OriginalArrivalTime: 04 Aug 2008 08:56:44.0210 (UTC) FILETIME=[04E53920:01C8F610]
+	id S1753344AbYHDJDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 05:03:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753206AbYHDJDL
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 05:03:11 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:50758 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753320AbYHDJDK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 05:03:10 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 9E6862DC01B;
+	Mon,  4 Aug 2008 02:03:09 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1217836189.7649.7.camel@heerbeest>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91332>
 
-Alex Riesen wrote:
-> Avery Pennarun, Thu, Jul 31, 2008 20:55:26 +0200:
->> On 7/31/08, Alex Riesen <raa.lkml@gmail.com> wrote:
->>> Boaz Harrosh, Thu, Jul 31, 2008 15:04:50 +0200:
->>>> Produce a C file and header that defines some stable API to your
->>>  > GUI application, that does not expose any git internal headers.
->>>  > Then compile that, say git_api.c, with C compiler in Makefile
->>>  > and extern "C" link that file to your C++ application. This will
->>>  > completely insulate you from any git code.
->>>
->>> no, it wont. He still have to resolve name conflicts at the link time.
->> Language keywords (as opposed to function names) like 'new' and
->> 'typename' are definitely not exported to the object files.  Moreover,
->> function parameter names aren't either.
->>
+Jan Nieuwenhuizen <janneke-list@xs4all.nl> wrote:
+> On zo, 2008-08-03 at 19:09 -0700, Eric Wong wrote:
 > 
-> Didn't mean them. Meant the globally visible names. libgit does not
-> use a prefix for its exported symbols. They will clash with the
-> symbols of the programs it is linked to.
+> > Jan Nieuwenhuizen <janneke-list@xs4all.nl> wrote:
+> > > I could imagine that leaving git-svn alone and adding a hook to git-log
+> > > would be more useful, though.
+> > 
+> > NACK on modifying git-svn to support more changelog formats.
+> > 
+> > A better idea would be to write a generic script that takes "git log",
+> > "git svn log" or even plain "svn log" output and filters it
+> > independently.
 > 
+> > This filter should be reusable for both plain svn and git-svn:
+> 
+> >     The possibilities are endless :)
+> 
+> Yes, but we'll most probably drop SVN rsn, possibly after a short period
+> of supporting both; and not stripping the cruft in the conversion means
+> we carry this with us until eternity.  Besides, who is going to
+> distribute the script, inform users about its availability?
+> 
+> What we have now suffices for our ooo-build conversion.  If you do not
+> find it useful, more power/less code to you.  Let others search the
+> archives and/or patch git-svn themselves, if indeed there are any.
 
-But that's a problem for C programs, C++ programs will not have that 
-problem, right? ;-)
+In the one-shot case, a git filter-branch script would probably be ideal
+and reusable for other projects.
 
-With C programs these git symbols can be avoided.
+Anyways, I strongly believe changelog modification/reformatting should
+be done in a more generic way that can benefit users of other tools
+(archimport/cvsimport etc...), too.
 
-Boaz
+-- 
+Eric Wong
