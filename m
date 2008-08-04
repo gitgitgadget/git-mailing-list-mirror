@@ -1,157 +1,65 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH] Add some tests of refreshing removed files
-Date: Mon, 04 Aug 2008 15:41:48 +0200
-Message-ID: <20080804134050.19457.96613.stgit@yoghurt>
-References: <9e4733910807311902nd3a02bep68c8a26a7e6303cd@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT PATCH] Do not mess-up with commit message formatting when sending email
+Date: Mon, 4 Aug 2008 16:16:40 +0200
+Message-ID: <20080804141640.GB12232@diana.vm.bytemark.co.uk>
+References: <20080731125005.894.10592.stgit@dawn.rfc1149.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 04 15:42:57 2008
+To: Samuel Tardieu <sam@rfc1149.net>
+X-From: git-owner@vger.kernel.org Mon Aug 04 15:55:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQ0Ku-0007vG-1G
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 15:42:56 +0200
+	id 1KQ0XM-0003Zx-NO
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 15:55:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752712AbYHDNly convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Aug 2008 09:41:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752627AbYHDNly
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 09:41:54 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4236 "EHLO
+	id S1753565AbYHDNyp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Aug 2008 09:54:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753545AbYHDNyp
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 09:54:45 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2537 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752090AbYHDNlx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 09:41:53 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1KQ0fM-0003VW-00; Mon, 04 Aug 2008 15:04:04 +0100
-In-Reply-To: <9e4733910807311902nd3a02bep68c8a26a7e6303cd@mail.gmail.com>
-User-Agent: StGIT/0.14.3.211.g7374
+	with ESMTP id S1752750AbYHDNyp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 09:54:45 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KQ0rY-0003Yx-00; Mon, 04 Aug 2008 15:16:40 +0100
+Content-Disposition: inline
+In-Reply-To: <20080731125005.894.10592.stgit@dawn.rfc1149.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91352>
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+On 2008-07-31 14:50:05 +0200, Samuel Tardieu wrote:
 
----
+> The short description, which will be used as the email subject, gets
+> its leading and trailing whitespaces removed.
 
-These four tests all pass on Catalin's current master. Do they fail
-for you, or did I miss something in your problem description?
+OK, good.
 
- t/t2702-refresh-rm.sh |  101 +++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 101 insertions(+), 0 deletions(-)
- create mode 100755 t/t2702-refresh-rm.sh
+> The long description only gets its trailing whitespaces removed to
+> preserve commit message formatting, e.g. in the case of a
+> ChangeLog-style commit message, as well as empty leading lines.
 
+I'd like a better description of this change, please. If I'm not
+mistaken, we used to do _only_ left stripping of the body. You change
+that to left stripping of only newlines, but also add right stripping
+for each line. I'm all for these changes, but the commit message
+confused me a lot.
 
-diff --git a/t/t2702-refresh-rm.sh b/t/t2702-refresh-rm.sh
-new file mode 100755
-index 0000000..896ebf3
---- /dev/null
-+++ b/t/t2702-refresh-rm.sh
-@@ -0,0 +1,101 @@
-+#!/bin/sh
-+
-+test_description=3D'"stg refresh" with removed files'
-+
-+. ./test-lib.sh
-+
-+# Ignore our own temp files.
-+cat >> .git/info/exclude <<EOF
-+expected*.txt
-+files*.txt
-+status*.txt
-+EOF
-+
-+reset () {
-+    stg pop -a > /dev/null
-+    git reset --hard > /dev/null
-+}
-+
-+test_expect_success 'Initialize StGit stack' '
-+    stg init &&
-+    echo x > x.txt &&
-+    echo y > y.txt &&
-+    git add x.txt y.txt &&
-+    git commit -m "Add some files"
-+'
-+
-+cat > expected0.txt <<EOF
-+D y.txt
-+EOF
-+printf '' > expected1.txt
-+test_expect_success 'git-rm a file' '
-+    stg new -m p0 &&
-+    git rm y.txt &&
-+    stg status > status0.txt &&
-+    test_cmp expected0.txt status0.txt &&
-+    stg refresh &&
-+    stg status > status1.txt &&
-+    test_cmp expected1.txt status1.txt &&
-+    stg files | sort > files.txt &&
-+    test_cmp expected0.txt files.txt
-+'
-+
-+reset
-+
-+cat > expected0.txt <<EOF
-+D y.txt
-+M x.txt
-+EOF
-+printf '' > expected1.txt
-+test_expect_success 'git-rm a file together with other changes' '
-+    stg new -m p1 &&
-+    echo x2 >> x.txt &&
-+    git rm y.txt &&
-+    stg status > status0.txt &&
-+    test_cmp expected0.txt status0.txt &&
-+    stg refresh &&
-+    stg status > status1.txt &&
-+    test_cmp expected1.txt status1.txt &&
-+    stg files | sort > files.txt &&
-+    test_cmp expected0.txt files.txt
-+'
-+
-+reset
-+
-+cat > expected0.txt <<EOF
-+D y.txt
-+EOF
-+printf '' > expected1.txt
-+test_expect_success 'rm a file' '
-+    stg new -m p2 &&
-+    rm y.txt &&
-+    stg status > status0.txt &&
-+    test_cmp expected0.txt status0.txt &&
-+    stg refresh &&
-+    stg status > status1.txt &&
-+    test_cmp expected1.txt status1.txt &&
-+    stg files | sort > files.txt &&
-+    test_cmp expected0.txt files.txt
-+'
-+
-+reset
-+
-+cat > expected0.txt <<EOF
-+D y.txt
-+M x.txt
-+EOF
-+printf '' > expected1.txt
-+test_expect_success 'rm a file together with other changes' '
-+    stg new -m p3 &&
-+    echo x2 >> x.txt &&
-+    rm y.txt &&
-+    stg status > status0.txt &&
-+    test_cmp expected0.txt status0.txt &&
-+    stg refresh &&
-+    stg status > status1.txt &&
-+    test_cmp expected1.txt status1.txt &&
-+    stg files | sort > files.txt &&
-+    test_cmp expected0.txt files.txt
-+'
-+
-+test_done
+> -    long_descr =3D '\n'.join(descr_lines[1:]).lstrip()
+> +    long_descr =3D '\n'.join([l.rstrip() for l in descr_lines[1:]]).=
+lstrip('\n')
+
+We require Python 2.4 or later, so you can skip the square brackets
+here.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
