@@ -1,86 +1,78 @@
-From: Robert Richter <robert.richter@amd.com>
-Subject: Re: Gitweb: Provide Git links in project list?
-Date: Mon, 4 Aug 2008 12:12:01 +0200
-Message-ID: <20080804101200.GC811@erda.amd.com>
-References: <20080730125743.GY15356@erda.amd.com> <1217432970.2884.8.camel@localhost.localdomain> <20080730161126.GE31295@erda.amd.com> <1217796793.32240.36.camel@localhost.localdomain>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: [RFC 2/2] Add Git-aware CGI for Git-aware smart HTTP transport
+Date: Mon, 04 Aug 2008 12:14:01 +0200
+Message-ID: <4896D669.30402@dawes.za.net>
+References: <20080803025602.GB27465@spearce.org> <1217748317-70096-1-git-send-email-spearce@spearce.org> <1217748317-70096-2-git-send-email-spearce@spearce.org> <7vwsix7nhw.fsf@gitster.siamese.dyndns.org> <20080804035921.GB2963@spearce.org> <4896D19C.6040704@dawes.za.net> <alpine.DEB.1.00.0808041208060.9611@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: git@vger.kernel.org
-To: "J.H." <warthog19@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Mon Aug 04 12:13:42 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 04 12:16:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPx4K-0001TO-0F
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 12:13:36 +0200
+	id 1KPx6f-0002KY-J5
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 12:16:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755409AbYHDKM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 06:12:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755392AbYHDKM0
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 06:12:26 -0400
-Received: from outbound-wa4.frontbridge.com ([216.32.181.16]:60517 "EHLO
-	WA4EHSOBE002.bigfish.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753234AbYHDKMY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 06:12:24 -0400
-Received: from mail74-wa4-R.bigfish.com (10.8.14.251) by
- WA4EHSOBE002.bigfish.com (10.8.40.22) with Microsoft SMTP Server id
- 8.1.240.5; Mon, 4 Aug 2008 10:12:23 +0000
-Received: from mail74-wa4 (localhost.localdomain [127.0.0.1])	by
- mail74-wa4-R.bigfish.com (Postfix) with ESMTP id B99921C60322;	Mon,  4 Aug
- 2008 10:12:23 +0000 (UTC)
-X-BigFish: VPS1(zz98dR936eQ62a3Lzz10d3izzz32i6bh87il43j)
-X-FB-DOMAIN-IP-MATCH: fail
-Received: by mail74-wa4 (MessageSwitch) id 1217844741454918_16836; Mon,  4 Aug
- 2008 10:12:21 +0000 (UCT)
-Received: from ausb3extmailp01.amd.com (unknown [163.181.251.8])	(using TLSv1
- with cipher DHE-RSA-AES256-SHA (256/256 bits))	(No client certificate
- requested)	by mail74-wa4.bigfish.com (Postfix) with ESMTP id 4CC95570069;
-	Mon,  4 Aug 2008 10:12:21 +0000 (UTC)
-Received: from ausb3twp01.amd.com ([163.181.250.37])	by
- ausb3extmailp01.amd.com (Switch-3.2.7/Switch-3.2.7) with ESMTP id
- m74ACFRa017127;	Mon, 4 Aug 2008 05:12:19 -0500
-X-WSS-ID: 0K52N0D-01-ZZS-01
-Received: from sausexbh1.amd.com (sausexbh1.amd.com [163.181.22.101])	by
- ausb3twp01.amd.com (Tumbleweed MailGate 3.5.1) with ESMTP id 204BB194403;
-	Mon,  4 Aug 2008 05:12:12 -0500 (CDT)
-Received: from SAUSEXMB3.amd.com ([163.181.22.202]) by sausexbh1.amd.com with
- Microsoft SMTPSVC(6.0.3790.3959);	 Mon, 4 Aug 2008 05:12:16 -0500
-Received: from SDRSEXMB1.amd.com ([172.20.3.116]) by SAUSEXMB3.amd.com with
- Microsoft SMTPSVC(6.0.3790.3959);	 Mon, 4 Aug 2008 05:12:16 -0500
-Received: from erda.amd.com ([165.204.85.17]) by SDRSEXMB1.amd.com with
- Microsoft SMTPSVC(6.0.3790.3959);	 Mon, 4 Aug 2008 12:12:14 +0200
-Received: by erda.amd.com (Postfix, from userid 35569)	id 2CC5F8A21; Mon,  4
- Aug 2008 12:12:01 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1217796793.32240.36.camel@localhost.localdomain>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-OriginalArrivalTime: 04 Aug 2008 10:12:14.0091 (UTC) FILETIME=[90EA35B0:01C8F61A]
+	id S1752919AbYHDKO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 06:14:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbYHDKO4
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 06:14:56 -0400
+Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:35473 "EHLO
+	spunkymail-a18.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752648AbYHDKOz (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Aug 2008 06:14:55 -0400
+Received: from [192.168.201.100] (unknown [41.247.123.10])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by spunkymail-a18.g.dreamhost.com (Postfix) with ESMTP id 765415B4E3;
+	Mon,  4 Aug 2008 03:14:52 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <alpine.DEB.1.00.0808041208060.9611@pacific.mpi-cbg.de.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91338>
 
-On 03.08.08 13:53:13, J.H. wrote:
-> Working on refactoring the patch so that it can go upstream, one of the
-> things I'm definitely making an assumption about (in my original code)
-> is that the base url will be uniform for the entire project_list (as it
-> is on kernel.org).  If that's acceptable I will probably be able to
-> submit something today, if not I will need to muck about and read out
-> the url from .git/cloneurl (which would be a rather hefty performance
-> hit - needing to read that from each repository)
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 4 Aug 2008, Rogan Dawes wrote:
+> 
+>> I don't understand why you would want to keep the commands in the URL 
+>> when you are doing a POST?
+> 
+> Caching.
+> 
+> Hth,
+> Dscho
+> 
 
-John,
+If you are expecting something to be cacheable, then should you not be 
+using a GET anyway?
 
-I just sent out a patch that implements this using cloneurl. It seemed
-small and easy to implement and so I just made the change myself.
+Anyway, from RFC 2616:
 
-Thank you anyway.
+> 13.10 Invalidation After Updates or Deletions
+> 
+> ...
+> 
+> Some HTTP methods MUST cause a cache to invalidate an entity. This is
+> either the entity referred to by the Request-URI, or by the Location
+ > or Content-Location headers (if present). These methods are:
+> 
+>       - PUT
+>       - DELETE
+>       - POST
 
--Robert
+This doesn't seem negotiable to me.
 
--- 
-Advanced Micro Devices, Inc.
-Operating System Research Center
-email: robert.richter@amd.com
+Unless I am misunderstanding your "Caching" comment to mean "To enable 
+caching", as opposed to "To prevent caching"?
+
+Rogan
