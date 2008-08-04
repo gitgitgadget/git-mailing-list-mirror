@@ -1,100 +1,79 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: Abort with an error if 'fetch' parameter is invalid.
-Date: Sun, 3 Aug 2008 17:46:18 -0700
-Message-ID: <20080804004618.GA3182@untitled>
-References: <1217451235-9609-1-git-send-email-apenwarr@gmail.com> <20080804000140.GA13019@untitled> <7viquh7hpq.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] git-svn now work with crlf convertion enabled.
+Date: Sun, 3 Aug 2008 17:48:26 -0700
+Message-ID: <20080804004826.GB13019@untitled>
+References: <200807231544.23472.litvinov2004@gmail.com> <alpine.DEB.1.00.0807231117290.2830@eeepc-johanness> <200807311243.35219.litvinov2004@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 04 02:47:53 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Alexander Litvinov <litvinov2004@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 04 02:49:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPoEo-00079W-Fb
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 02:47:50 +0200
+	id 1KPoGP-0007S9-Nr
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 02:49:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752227AbYHDAqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 20:46:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752113AbYHDAqU
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 20:46:20 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:50158 "EHLO hand.yhbt.net"
+	id S1752387AbYHDAs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 20:48:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752779AbYHDAs2
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 20:48:28 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:50165 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751904AbYHDAqU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 20:46:20 -0400
+	id S1752326AbYHDAs1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 20:48:27 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 545392DC01B;
-	Sun,  3 Aug 2008 17:46:19 -0700 (PDT)
+	by hand.yhbt.net (Postfix) with ESMTP id 250A62DC01B;
+	Sun,  3 Aug 2008 17:48:27 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7viquh7hpq.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <200807311243.35219.litvinov2004@gmail.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91301>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
+Alexander Litvinov <litvinov2004@gmail.com> wrote:
+> Make git-svn works with crlf (or any other) file content convertion enabled.
 > 
-> >> Signed-off-by: Avery Pennarun <apenwarr@gmail.com>
-> >
-> > Thanks Avery,
-> > Acked-by: Eric Wong <normalperson@yhbt.net>
-> 
-> I do not seem to find the original message in mbox nor list archive, by
-> the way...
+> When we modify file content SVN cant apply its delta to it. To fix this
+> situation I take full file content from SVN as next revision. This is
+> dump and slow but it works.
 
-Could've been Avery's original From: line not being spam filter
-friendly.
+> +	my $ctx = SVN::Client->new();
+> +	$ctx->cat($fh, $url, $rev);
+>  }
 
-Here you go (with From: line fixed)
+I know you've already (at least for now) pulled this patch but I won't
+accept anything that opens a second connection to the server.
 
->From 574c237f4561cf0293e7f44ab604bb701d1931f3 Mon Sep 17 00:00:00 2001
-From: Avery Pennarun <apenwarr@gmail.com>
-Date: Wed, 30 Jul 2008 16:53:55 -0400
-Subject: [PATCH] git-svn: Abort with an error if 'fetch' parameter is invalid.
+I've seen this in some svn:// servers intermittently, but I've seen
+git-svn get its connection terminated whenever it opens a second
+connection (it happens with parent-following).  git-svn used to do
+this more frequently, but most of those cases got fixed (but
+one remains with parent-following).
 
-Previously, if a config entry looked like this:
+Additionally, git-svnimport and older versions of git-svn used the
+equivalent of $ctx->cat without deltas from the SVN::Ra object, so you
+should be able todo something functionally equivalent w/o opening a new
+socket.
 
-         svn-remote.svn.fetch=:refs/heads/whatever
 
-git-svn would silently do nothing if you asked it to "git svn fetch", and
-give a strange error if asked to "git svn dcommit".  What it really wants is
-a line that looks like this:
 
-	svn-remote.svn.fetch=:refs/remotes/whatever
+As far as crlf issues with git-svn go, I'm blissfully ignorant of the
+complexities behind what git (or svn for that matter) does with crlf
+conversions[1].
 
-So we should simply abort if we get the wrong thing.
+I'll be alright with any changes to git-svn that don't modify existing
+behavior for crlf-ignorant users such as myself.  I'll trust Junio and
+other folks on the list to know and do what makes the most sense here.
 
-On the other hand, there's actually no good reason for git-svn to enforce
-using the refs/remotes namespace, but the code seems to have hardcoded this
-in several places and I'm not brave enough to try to fix it all right now.
 
-Signed-off-by: Avery Pennarun <apenwarr@gmail.com>
----
- git-svn.perl |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 0a346f8..1c39f45 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1423,8 +1423,12 @@ sub read_all_remotes {
- 	    svn.useSvmProps/) };
- 	$use_svm_props = $use_svm_props eq 'true' if $use_svm_props;
- 	foreach (grep { s/^svn-remote\.// } command(qw/config -l/)) {
--		if (m!^(.+)\.fetch=\s*(.*)\s*:\s*refs/remotes/(.+)\s*$!) {
--			my ($remote, $local_ref, $remote_ref) = ($1, $2, $3);
-+		if (m!^(.+)\.fetch=\s*(.*)\s*:\s*(.+)\s*$!) {
-+			my ($remote, $local_ref, $_remote_ref) = ($1, $2, $3);
-+			die("svn-remote.$remote: remote ref '$_remote_ref' "
-+			    . "must start with 'refs/remotes/'\n")
-+				unless $_remote_ref =~ m{^refs/remotes/(.+)};
-+			my $remote_ref = $1;
- 			$local_ref =~ s{^/}{};
- 			$r->{$remote}->{fetch}->{$local_ref} = $remote_ref;
- 			$r->{$remote}->{svm} = {} if $use_svm_props;
+[1] I would have much rather preferred git didn't implement or care
+    about crlf filters at all, but maybe I'm just in a small minority.
+
 -- 
 Eric Wong
