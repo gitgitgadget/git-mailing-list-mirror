@@ -1,85 +1,98 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGIT] Not working on Windows with msysgit.
-Date: Mon, 4 Aug 2008 11:25:51 +0200
-Message-ID: <20080804092551.GC9425@diana.vm.bytemark.co.uk>
-References: <g6kvmc$sqr$1@ger.gmane.org>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: [RFC 2/2] Add Git-aware CGI for Git-aware smart HTTP transport
+Date: Mon, 04 Aug 2008 11:53:32 +0200
+Message-ID: <4896D19C.6040704@dawes.za.net>
+References: <20080803025602.GB27465@spearce.org> <1217748317-70096-1-git-send-email-spearce@spearce.org> <1217748317-70096-2-git-send-email-spearce@spearce.org> <7vwsix7nhw.fsf@gitster.siamese.dyndns.org> <20080804035921.GB2963@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
-To: Jurko Gospodneti? <jurko.gospodnetic@docte.hr>
-X-From: git-owner@vger.kernel.org Mon Aug 04 11:04:58 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Aug 04 11:55:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPvzo-0006ZX-U5
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 11:04:53 +0200
+	id 1KPwmw-0003qH-Uj
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 11:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753466AbYHDJDx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Aug 2008 05:03:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753969AbYHDJDx
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 05:03:53 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2643 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753206AbYHDJDw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 05:03:52 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KPwK7-0002cZ-00; Mon, 04 Aug 2008 10:25:51 +0100
-Content-Disposition: inline
-In-Reply-To: <g6kvmc$sqr$1@ger.gmane.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1751946AbYHDJy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 05:54:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751959AbYHDJy0
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 05:54:26 -0400
+Received: from balanced.mail.policyd.dreamhost.com ([208.97.132.119]:43029
+	"EHLO spunkymail-a13.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751519AbYHDJy0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Aug 2008 05:54:26 -0400
+Received: from [192.168.201.100] (unknown [41.247.123.10])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by spunkymail-a13.g.dreamhost.com (Postfix) with ESMTP id 4041F129B3A;
+	Mon,  4 Aug 2008 02:54:22 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <20080804035921.GB2963@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91334>
 
-On 2008-07-28 19:29:49 +0200, Jurko Gospodneti? wrote:
+Shawn O. Pearce wrote:
 
-> I believe StGIT fails to work on Windows with msysgit installed
-> because of the way it runs its external executables. It assumes that
-> the executable is available on the path and is named exactly 'git'.
+> Perhaps the smart server detection is something like:
+> 
+> 	Smart Server Detection
+> 	----------------------
+> 
+> 	To detect a smart (Git-aware) server a client sends an
+> 	empty POST request to info/refs; if a 200 OK response is
+> 	received with the proper content type then the server can
+> 	be assumed to be Git-aware, and the result contains the
+> 	current info/refs data for that repository.
+> 
+> 		C: POST /repository.git/info/refs HTTP/1.0
+> 		C: Content-Length: 0
+> 
+> 		S: HTTP/1.0 200 OK
+> 		S: Content-Type: application/x-git-refs
+> 		S:
+> 		S: 95dcfa3633004da0049d3d0fa03f80589cbcaf31	refs/heads/maint
+> 
+> Then clients should just attempt this POST first before issuing
+> a GET info/refs.  Non Git-aware servers will issue an error code,
+> and the client can retry with a standard GET request, and assume
+> the server isn't a newer style.
+> 
 
-Yes, that's correct.
+I don't understand why you would want to keep the commands in the URL 
+when you are doing a POST?
 
-> This however is not the case on Windows with msysgit installed.
-> There the 'git executable' is a batch script named git.cmd and stgit
-> fails to find it causing all git calls to return an error code.
->
-> Popen() calls in StGIT's run.py module seem to run their executables
-> (git & gitk only as far as I saw from the sources) directly instead
-> of running them through the shell in order to have the shell try all
-> the default extensions (configured on Windows using the PATHEXT
-> environment variable).
->
-> One 'fix' that corrects this in all the use cases on Windows that I
-> tried is to add the shell=3DTrue parameter to all Popen() calls in
-> StGIT's run.py module (one in __run_io() and one in __run_noio()).
-> This would however require more testing
+How about something like:
 
-Don't do that, please.
+	C: POST /repository.git/ HTTP/1.0
+	C: Content-Length: <calculated>
+         C:
+         C: <whatever command you want>
 
-The reason to not go via the shell is that that way, we don't have to
-worry about quoting. That's a big pile of bugs that we never have to
-see again.
+A dumb server will respond with:
 
-Plus, it's also slightly faster (especially on Windows, I guess) not
-to have to spawn a shell.
+	S: HTTP/1.1 405 Method not allowed
 
-It'd be _much_ better to just be a little more flexible about which
-git command to use. Maybe look at PATHEXT if we're on Windows, or
-maybe let the user configure the location of git at stg install time.
-(RFC) patches welcome: :-)
+(expected according to the RFC)
 
-> I do recall Python having some serious problems with these quoting
-> in executed commands... something about external quotes getting
-> stripped in some cases... I might be able to dig up a workaround
-> from somewhere if needed...
+Or
 
-That's the shell doing a level of unquoting. Nothing Python specific.
+	S: HTTP/1.1 404 Not Found
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+(resulting from testing against my own repo :-) )
+
+While a smart server will respond with a "200 Ok" and the results of the 
+command.
+
+Also, if everything is done via POST, you don't have to worry about a 
+wget-cloned server appearing to be "smart", since no "smarts" will ever 
+be returned in response to a GET request (and to the best of my 
+knowledge, wget can't mirror using POST).
+
+Rogan
