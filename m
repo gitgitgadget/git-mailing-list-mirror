@@ -1,100 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] Fix 'url.*.insteadOf' for submodule URLs
-Date: Sun, 03 Aug 2008 19:06:51 -0700
-Message-ID: <7vwsix5y9w.fsf@gitster.siamese.dyndns.org>
-References: <200808040057.00221.johan@herland.net>
- <alpine.DEB.1.00.0808040126170.9611@pacific.mpi-cbg.de.mpi-cbg.de>
- <200808040147.16797.johan@herland.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn.perl: Strip ChangeLog bits.
+Date: Sun, 3 Aug 2008 19:09:31 -0700
+Message-ID: <20080804020931.GA4109@untitled>
+References: <1217684549.8296.10.camel@heerbeest> <20080802172742.GT32184@machine.or.cz> <7vfxpnnwt5.fsf@gitster.siamese.dyndns.org> <1217701021.8296.35.camel@heerbeest>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
 	git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Aug 04 04:08:08 2008
+To: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
+X-From: git-owner@vger.kernel.org Mon Aug 04 04:10:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPpUV-0005dn-Hh
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 04:08:07 +0200
+	id 1KPpWt-0006Rd-US
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 04:10:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752909AbYHDCHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2008 22:07:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752817AbYHDCHA
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 22:07:00 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33413 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752030AbYHDCG7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2008 22:06:59 -0400
+	id S1753567AbYHDCJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2008 22:09:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753537AbYHDCJd
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Aug 2008 22:09:33 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:50241 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753349AbYHDCJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2008 22:09:32 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C01A64D77A;
-	Sun,  3 Aug 2008 22:06:56 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0A5824D779; Sun,  3 Aug 2008 22:06:52 -0400 (EDT)
-In-Reply-To: <200808040147.16797.johan@herland.net> (Johan Herland's message
- of "Mon, 04 Aug 2008 01:47:16 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 03E6FE16-61CA-11DD-9A9F-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	by hand.yhbt.net (Postfix) with ESMTP id 2D4512DC01B;
+	Sun,  3 Aug 2008 19:09:32 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1217701021.8296.35.camel@heerbeest>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91303>
 
-Johan Herland <johan@herland.net> writes:
+Jan Nieuwenhuizen <janneke-list@xs4all.nl> wrote:
+> On za, 2008-08-02 at 10:36 -0700, Junio C Hamano wrote:
+> 
+> > >   You forgot to document your option. (And possibly write a testcase.)
+> > 
+> > I am not sure if this is generic enough to be in git-svn.perl itself, or
+> > perhaps there should be a hook make_log_entry() would call in the form of
+> > some Perl scriptlet given by the user to munge $log_entry{log}, which
+> > would be very specific to each project.
+> 
+> If you're not sure, please make up your mind.  I agree it's quite a hack
+> but now it's in the archives for others to find.  Doing this in a single
+> regexp is a bit tricky and asking a user to write a perl snippet is even
+> worse, imho.  Especially if would turn out that stripping changelog bits
+> is the only thing that the hook is getting used for, in the end.  I have
+> gotten more careful to provide generic solutions to specific problems in
+> anticipation of possible future desires.
+> 
+> I could imagine that leaving git-svn alone and adding a hook to git-log
+> would be more useful, though.
 
-> 1. Consistency: Other git commands in the supermodule does _not_ require the 
-> URL rewriting rule to reside in the global config. Why should 'git 
-> submodule' be different.
+NACK on modifying git-svn to support more changelog formats.
 
-When it comes to "submodules", I do not think such consistency argument
-makes much sense.  "git submodule" command crosses module boundary, normal
-commands don't.  They are naturally different and they should be.
+A better idea would be to write a generic script that takes "git log",
+"git svn log" or even plain "svn log" output and filters it
+independently.
 
-Your kind of consistency means breaking the separation between module
-boundary, doesn't it?
+This way existing projects don't have to be re-imported (a bad idea to
+modify things SVN feeds us anyways), and plain svn users can benefit,
+too.
 
-Having said that...
+This filter should be reusable for both plain svn and git-svn:
 
-> 2. I believe there are valid use cases for adding URL rewriting rules to the 
-> repo config instead of the global config. You may want to check out Fred's 
-> version of project X (including submodules), without making your other 
-> clones of project X start cloning/fetching from Fred.
+    svn log | changelog-filter --input=svn --style=gnu
+    git svn log | changelog-filter --input=svn --style=gnu
+    git log --pretty=raw | changelog-filter --input=git-raw --style=gnu
 
-I think you are referring to the example given in an earlier thread to
-peek what your neighbor did between you two, without affecting other
-people.
 
-Personally I think it is partly showing the shortcoming of the current
-"git submodule" that minimally supports the workflow to follow what the
-canonical repository does, and partly showing that it is an abuse of that
-interface to rewrite config file to temporarily switch to peek somewhere
-else in such a workflow.
+However, I would support a generic --log-filter parameter in git-svn
+that would have git-svn filter its output through any given command
+before piping it to less.
 
-Let's step back and think what we would do if there is no submodule
-involved.  That is, you usually follow origin, but you temporarily want to
-peek at what Fred did.  How would you do this?
+    git config svn.logFilter "changelog-filter --input=svn --style=gnu"
+    git svn log
+      or...
+    git svn log --log-filter="changelog-filter --input=svn --style=yak"
+    git svn log --log-filter="svn-log-to-LaTeX"
+    git svn log --log-filter="svn-log-to-HTML"
+    git svn log --log-filter="svn-log-to-XML"
+    git svn log --log-filter="svn-log-to-JSON"
+    git svn log --log-filter="svn-log-to-PNG" > log.png
+    git svn log --log-filter="svn-log-to-theora" > log.ogg
 
-	$ git fetch $fred $branch_fred_wants_you_to_review
-        $ git checkout FETCH_HEAD ;# this detaches HEAD.
+    The possibilities are endless :)
 
-And you take a look around.  Perhaps you like the change and decide to
-merge that to your branch.  Perhaps you create your own branch on top of
-that state, build a few fix-up commits, and give the result back to Fred.
-
-Shouldn't peeking what Fred did in the whole submodule hierarchy be
-essentially the same thing?  That is,
-
-	$ git submodule for-each-submodule sh -c '
-                git fetch "$fred/$1" $branch_fred_wants_you_to_review &&
-                git checkout FETCH_HEAD
-	' -
-
-where "for-each-submodule" would iterate over the submodules in the
-current superproject that you are interested in (that is, you actually
-have corresponding repositories there), and runs any given command with
-the path to the submodule in that directory.
-
-Hmm?
+-- 
+Eric Wong
