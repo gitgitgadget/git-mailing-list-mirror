@@ -1,62 +1,58 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: git-gui translators - please update translations if necessary
-Date: Mon, 4 Aug 2008 12:17:37 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0808041215140.4744@ds9.cixit.se>
-References: <20080802211714.GG24723@spearce.org> <7vod4bccx8.fsf@gitster.siamese.dyndns.org>
- <20080802214930.GA25311@spearce.org>
+From: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
+Subject: Re: [PATCH] git-svn.perl: Strip ChangeLog bits.
+Date: Mon, 04 Aug 2008 13:30:05 +0200
+Organization: lilypond-design.org
+Message-ID: <1217849405.7649.27.camel@heerbeest>
+References: <1217684549.8296.10.camel@heerbeest>
+	 <20080802172742.GT32184@machine.or.cz>
+	 <7vfxpnnwt5.fsf@gitster.siamese.dyndns.org>
+	 <1217701021.8296.35.camel@heerbeest> <20080804020931.GA4109@untitled>
+	 <1217836189.7649.7.camel@heerbeest>  <20080804090309.GD5435@hand.yhbt.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Aug 04 13:19:01 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
+	git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Aug 04 13:31:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPy5d-0003Be-Br
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 13:19:01 +0200
+	id 1KPyHP-00075A-W2
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 13:31:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753028AbYHDLRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 07:17:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753096AbYHDLRw
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 07:17:52 -0400
-Received: from ds9.cixit.se ([193.15.169.228]:51645 "EHLO ds9.cixit.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752970AbYHDLRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 07:17:52 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m74BHc5e017951
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 4 Aug 2008 13:17:38 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m74BHbxc017946;
-	Mon, 4 Aug 2008 13:17:37 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <20080802214930.GA25311@spearce.org>
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Mon, 04 Aug 2008 13:17:38 +0200 (CEST)
+	id S1753069AbYHDLaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 07:30:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753007AbYHDLaJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 07:30:09 -0400
+Received: from edu-smtp-01.edutel.nl ([88.159.1.221]:37151 "EHLO
+	edu-smtp-01.edutel.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752570AbYHDLaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 07:30:08 -0400
+Received: from heerbeest (unknown [88.159.206.46])
+	by edu-smtp-01.edutel.nl (Postfix) with ESMTP id 8EBAC6775A;
+	Mon,  4 Aug 2008 13:30:06 +0200 (CEST)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by heerbeest (Postfix) with ESMTP id EF885DC168;
+	Mon,  4 Aug 2008 13:30:05 +0200 (CEST)
+In-Reply-To: <20080804090309.GD5435@hand.yhbt.net>
+X-Mailer: Evolution 2.23.4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91342>
 
-Shawn O. Pearce:
+On ma, 2008-08-04 at 02:03 -0700, Eric Wong wrote:
 
-> > Perhaps you wanted to update git-gui.pot first before sending this request
-> > out?
+> In the one-shot case, a git filter-branch script would probably be ideal
+> and reusable for other projects.
 
-> Oh.  Its updated now, but msgmerge on my system is busted and won't
-> update the po files themselves.  *sigh*
+That's a nice idea!
 
-In that case I would recommend submitting the translation to
-translationsproject.org, which helps both you and us translators in
-handling all the uninteresting tool-bashing itself. Submit an updated
-POT file when strings are frozen, and download all the updated
-translations before releasing.
+Jan.
 
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+Jan Nieuwenhuizen <janneke@gnu.org> | GNU LilyPond - The music typesetter
+http://www.xs4all.nl/~jantien       | http://www.lilypond.org
