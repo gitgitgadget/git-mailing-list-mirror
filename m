@@ -1,89 +1,88 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH v2] git-gui: Adapt discovery of oguilib to execdir 'libexec/git-core'
-Date: Mon,  4 Aug 2008 22:09:46 +0200
-Message-ID: <1217880586.4897620ad4e6a@webmail.nextra.at>
-References: <1217177383-25272-1-git-send-email-prohaska@zib.de> <1217177383-25272-2-git-send-email-prohaska@zib.de> <20080727212405.GA10075@spearce.org> <AF6C526A-57ED-4386-A4CF-5260D82026B7@zib.de> <1217756103.48957bc76eda2@webmail.nextra.at> <58FBF585-377C-40A7-818E-6B47F8FD2EB8@zib.de> <1217879912.48975f6809e10@webmail.nextra.at> <20080804200049.GA29485@spearce.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Gitweb: Provide Git links in project list?
+Date: Mon, 4 Aug 2008 22:10:20 +0200
+Message-ID: <20080804201020.GB32184@machine.or.cz>
+References: <20080730125743.GY15356@erda.amd.com> <1217432970.2884.8.camel@localhost.localdomain> <20080730161126.GE31295@erda.amd.com> <1217796793.32240.36.camel@localhost.localdomain> <20080804101200.GC811@erda.amd.com> <1217867214.32240.61.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Aug 04 22:12:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Robert Richter <robert.richter@amd.com>, git@vger.kernel.org
+To: "J.H." <warthog19@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Mon Aug 04 22:12:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQ6OM-0005Ol-3S
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 22:10:54 +0200
+	id 1KQ6Ov-0005kI-5W
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 22:11:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758157AbYHDUJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 16:09:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755000AbYHDUJv
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 16:09:51 -0400
-Received: from smtp3.srv.eunet.at ([193.154.160.89]:52516 "EHLO
-	smtp3.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753273AbYHDUJu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 16:09:50 -0400
-Received: from webmail01.si.eunet.at (webmail01.srv.eunet.at [193.154.180.195])
-	by smtp3.srv.eunet.at (Postfix) with ESMTPS id 1D24C10A716;
-	Mon,  4 Aug 2008 22:09:48 +0200 (CEST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by webmail01.si.eunet.at (8.13.1/8.13.1) with ESMTP id m74K9kwo022244;
-	Mon, 4 Aug 2008 22:09:47 +0200
-Received: from 77.118.59.205 ([77.118.59.205]) 
-	by webmail.nextra.at (IMP) with HTTP 
-	for <johsixt@mbox.eunet.at>; Mon,  4 Aug 2008 22:09:46 +0200
-In-Reply-To: <20080804200049.GA29485@spearce.org>
-User-Agent: Internet Messaging Program (IMP) 3.2.8
-X-Originating-IP: 77.118.59.205
+	id S1761145AbYHDUK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 16:10:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760089AbYHDUK0
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 16:10:26 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:42504 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759760AbYHDUKW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 16:10:22 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id AE025393B5FA; Mon,  4 Aug 2008 22:10:20 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1217867214.32240.61.camel@localhost.localdomain>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91391>
 
-The new execdir has is two levels below the root directory, while
-the old execdir 'bin' was only one level below.  This commit
-adapts the discovery of oguilib that uses relative paths
-accordingly. We determine whether we have the extra level in the same
-way in which the Makefile defines sharedir, i.e. whether the last
-directory part is 'git-core'.
+  Hi,
 
-Inspired-by: Steffen Prohaska <prohaska@zib.de>
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
+On Mon, Aug 04, 2008 at 09:26:54AM -0700, J.H. wrote:
+> The git link was always meant / intended to be a link to acquire the git
+> repository directly, and be independent of what is actually present in
+> the cloneurl file, specifically I wanted it to be a (1) git url
+> (git://<hostname>/<path>) so that it took advantage of git specifically
+> vs. accidentally giving you something with ssh or http.
 
-Zitat von "Shawn O. Pearce" <spearce@spearce.org>:
-> Johannes Sixt <johannes.sixt@telecom.at> wrote:
-> > +	if {[lindex [file split $oguilib] end] eq {git-core}} {
->
-> Isn't that what [file tail] does?
+  we could grep the cloneurl.
 
-Yes, it is. I missed it in the myriad of file's options. Here's the updated
-version of the patch.
+  The thing is, some sites like repo.or.cz don't use per-project
+cloneurl but do specify pull URLs by @git_base_url_list and this is
+introducing unnecessary redundancy.
 
--- Hannes
+> and (2) was
+> uniform and did *not* depend on something in the repository as with
+> large set of repositories, kernel.org, there is no way we can police
+> this and we explicitly do not want to have a script that automatically
+> adds this or what not.
 
- git-gui/git-gui.sh |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+  Then why do you allow cloneurl in the repositories at all, if you
+think the links won't be trustworthy? What is the fundamental difference
+between what you show on the project list page and the URLs in the
+project summary page?
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index fd3875a..60f376d 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -52,7 +52,11 @@ catch {rename send {}} ; # What an evil concept...
- set oguilib {@@GITGUI_LIBDIR@@}
- set oguirel {@@GITGUI_RELATIVE@@}
- if {$oguirel eq {1}} {
--	set oguilib [file dirname [file dirname [file normalize $argv0]]]
-+	set oguilib [file dirname [file normalize $argv0]]
-+	if {[file tail $oguilib] eq {git-core}} {
-+		set oguilib [file dirname $oguilib]
-+	}
-+	set oguilib [file dirname $oguilib]
- 	set oguilib [file join $oguilib share git-gui lib]
- 	set oguimsg [file join $oguilib msgs]
- } elseif {[string match @@* $oguirel]} {
+> I have two other concerns with the patch your proposing
+> 
+> (1) it's on by default, and it seems that there are a number of sites
+> that don't actually want this functionality, making it a configurable
+> option would seem prudent in that case
+
+  I actually plan to remove the 'log' link from the project list; I
+really wonder about the practicality of the 'git' link... but if there
+were any widely used browser integrations (like firing up git-gui when
+clicking on a git:// link), I *would* definitely see it more useful than
+the 'log' link and add it to repo.or.cz. But I have never heard about
+anyone actually doing this (but I think it might make a lot of sense;
+thinking about it, I might try to patch msysgit to do this on Windows,
+this would be nifty for my current dayjob project :).
+
+> That said, it's probably worth merging the two patches (since I'm
+> already there with the configuration options, etc) that way people can
+> get either functionality should they choose.
+
+  Configuration options are expensive on human users. Please let's not
+add more too carelessly.
+
 -- 
-1.6.0.rc1.958.gb3893
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
