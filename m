@@ -1,115 +1,99 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: [RFC 2/2] Add Git-aware CGI for Git-aware smart HTTP transport
-Date: Mon, 04 Aug 2008 18:18:52 +0200
-Message-ID: <48972BEC.1060105@dawes.za.net>
-References: <20080803025602.GB27465@spearce.org> <1217748317-70096-1-git-send-email-spearce@spearce.org> <1217748317-70096-2-git-send-email-spearce@spearce.org> <7vwsix7nhw.fsf@gitster.siamese.dyndns.org> <20080804035921.GB2963@spearce.org> <4896D19C.6040704@dawes.za.net> <20080804144824.GB27666@spearce.org> <48972437.5050008@dawes.za.net> <20080804155956.GF27666@spearce.org>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: Gitweb: Provide Git links in project list?
+Date: Mon, 04 Aug 2008 09:26:54 -0700
+Message-ID: <1217867214.32240.61.camel@localhost.localdomain>
+References: <20080730125743.GY15356@erda.amd.com>
+	 <1217432970.2884.8.camel@localhost.localdomain>
+	 <20080730161126.GE31295@erda.amd.com>
+	 <1217796793.32240.36.camel@localhost.localdomain>
+	 <20080804101200.GC811@erda.amd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Aug 04 18:20:22 2008
+Cc: git@vger.kernel.org
+To: Robert Richter <robert.richter@amd.com>
+X-From: git-owner@vger.kernel.org Mon Aug 04 18:28:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQ2nB-0004Ei-CE
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 18:20:17 +0200
+	id 1KQ2vQ-0006mP-Os
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 18:28:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754169AbYHDQTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 12:19:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754117AbYHDQTP
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 12:19:15 -0400
-Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:53406 "EHLO
-	spunkymail-a12.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753936AbYHDQTO (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Aug 2008 12:19:14 -0400
-Received: from [192.168.201.100] (unknown [41.247.123.10])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by spunkymail-a12.g.dreamhost.com (Postfix) with ESMTP id A9FC37FA8;
-	Mon,  4 Aug 2008 09:19:01 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <20080804155956.GF27666@spearce.org>
+	id S1753862AbYHDQ1s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 12:27:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753720AbYHDQ1r
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 12:27:47 -0400
+Received: from shards.monkeyblade.net ([198.137.202.13]:51024 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753238AbYHDQ1q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 12:27:46 -0400
+Received: from [172.19.0.93] (c-67-188-226-86.hsd1.ca.comcast.net [67.188.226.86])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id m74GRc5S015728
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 4 Aug 2008 09:27:39 -0700
+In-Reply-To: <20080804101200.GC811@erda.amd.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-5.fc8) 
+X-Virus-Scanned: ClamAV 0.88.7/7935/Mon Aug  4 05:58:49 2008 on shards.monkeyblade.net
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Mon, 04 Aug 2008 09:27:39 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91380>
 
-Shawn O. Pearce wrote:
-> Rogan Dawes <lists@dawes.za.net> wrote:
->> Shawn O. Pearce wrote:
->>> Currently git-http-backend requests no caching for info/refs [...]
->> Fair enough, but what about the quote from RFC2616 that I posted in  
->> rebuttal to Dscho?
->>
->>> 13.10 Invalidation After Updates or Deletions
->>>
->>> ...
->>>
->>> Some HTTP methods MUST cause a cache to invalidate an entity. This is
->>> either the entity referred to by the Request-URI, or by the Location
->>> or Content-Location headers (if present). These methods are:
->>>
->>>       - PUT
->>>       - DELETE
->>>       - POST
->> This doesn't seem negotiable to me.
+Robert,
+
+Noticed, but while I agree cloneurl is good - I think it kind of defeats
+the purpose of what I was originally intending with the 'git' link.
+I've gone back in to understand cloneurl better and I genuinely think
+this is the wrong approach (or at least not what was originally intended
+with the 'git' link as I envisioned it).
+
+The git link was always meant / intended to be a link to acquire the git
+repository directly, and be independent of what is actually present in
+the cloneurl file, specifically I wanted it to be a (1) git url
+(git://<hostname>/<path>) so that it took advantage of git specifically
+vs. accidentally giving you something with ssh or http. and (2) was
+uniform and did *not* depend on something in the repository as with
+large set of repositories, kernel.org, there is no way we can police
+this and we explicitly do not want to have a script that automatically
+adds this or what not.
+
+I have two other concerns with the patch your proposing
+
+(1) it's on by default, and it seems that there are a number of sites
+that don't actually want this functionality, making it a configurable
+option would seem prudent in that case
+
+(2) ignoring my comments on why I think using cloneurl for a large site
+is bad (after I looked into it), blindly on taking the first option in
+the file may lead to the display of unexpected or unintended URLs.
+
+That said, it's probably worth merging the two patches (since I'm
+already there with the configuration options, etc) that way people can
+get either functionality should they choose.
+
+- John 'Warthog9' Hawley
+
+On Mon, 2008-08-04 at 12:12 +0200, Robert Richter wrote:
+> On 03.08.08 13:53:13, J.H. wrote:
+> > Working on refactoring the patch so that it can go upstream, one of the
+> > things I'm definitely making an assumption about (in my original code)
+> > is that the base url will be uniform for the entire project_list (as it
+> > is on kernel.org).  If that's acceptable I will probably be able to
+> > submit something today, if not I will need to muck about and read out
+> > the url from .git/cloneurl (which would be a rather hefty performance
+> > hit - needing to read that from each repository)
 > 
-> Its not negotiable.  POST requires no caching.  End of discussion.
-
-Aha. So now I see the objective. I had misunderstood the intention to be 
-to *allow* caching of POST'ed resources.
-
->> For those resources that are expected to be cacheable, the request  
->> should be made using a GET.
+> John,
 > 
-> That's exactly what we are doing.  Where caching is reasonable we are
-> using a GET request.  Where caching cannot be performed as the server
-> state is changing (e.g. actually updating refs) we are using POST.
-> That is entirely within the guidelines of the RFC.
+> I just sent out a patch that implements this using cloneurl. It seemed
+> small and easy to implement and so I just made the change myself.
 > 
-> However we are "abusing" POST for "POST /info/refs" to detect a
-> Git-aware HTTP server.  Sending POST to a static resource should
-> always fail.
-
-Right. Either with a "405 Method not supported", or a "404 Not found". 
-as I discovered.
-
->>> Because git-http-backend emulates a dumb server there is a command
->>> dispatch table based upon the URL submitted.  Thus we already have
->>> the command dispatch behavior implemented in the URL and doing it
->>> in the POST body would only complicate the code further.
->> Not by a huge amount, surely?
->>
->> if (method == "GET") command = ...
->> else if (method == "POST") command = ...
->> dispatch(command);
+> Thank you anyway.
 > 
-> Well, true, we could do that.  But then we have to break the
-> command name out of the input stream.  In some cases we may just be
-> exec'ing another Git process and letting it handle the input stream.
-> Shoving the command name into the start of it just makes it that
-> much harder to parse out.
-
-Fair enough. I had not thought about other uses for the input stream.
-
-> One of the problems with these RPC-in-HTTP systems is always the
-> fact that the true nature of the action isn't visible in the method
-> and URL, causing servers and proxies to have to parse the stream to
-> implement firewall rules.  Or to provide access control.  I'm trying
-> to reuse as much of the access control support as possible from the
-> HTTP server and put as little of it as possible into the backend CGI.
+> -Robert
 > 
-> Since the backend CGI is based upon git-receive-pack itself admins
-> can use the standard pre-receive/update hook pair to manage branch
-> level security in a repository, while gross-level read/write can
-> be done in the server.
-
-Works for me!
-
-Thanks for doing all the hard thinking for this feature :-)
-
-Rogan
