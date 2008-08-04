@@ -1,108 +1,84 @@
-From: "Ray Chuan" <rctay89@gmail.com>
-Subject: [git/perl/cygwin] Permission denied at /usr/bin/git-svn line 2339
-Date: Mon, 4 Aug 2008 13:16:16 +0800
-Message-ID: <be6fef0d0808032216r3d965562u447d435ca99c18c7@mail.gmail.com>
+From: Abhijit Menon-Sen <ams@toroid.org>
+Subject: [PATCH] Fix hash slice syntax error
+Date: Mon, 4 Aug 2008 10:32:47 +0530
+Message-ID: <20080804050247.GA13539@toroid.org>
+References: <be6fef0d0808032149p651309a8o773dca5f16923ee1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 04 07:17:38 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 04 07:26:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPsRs-0006gV-Us
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 07:17:37 +0200
+	id 1KPsZy-00008s-3A
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 07:25:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752257AbYHDFQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 01:16:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751919AbYHDFQT
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 01:16:19 -0400
-Received: from ti-out-0910.google.com ([209.85.142.184]:10379 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751756AbYHDFQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 01:16:19 -0400
-Received: by ti-out-0910.google.com with SMTP id b6so468365tic.23
-        for <git@vger.kernel.org>; Sun, 03 Aug 2008 22:16:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=p856FuhL9x5eJ4FwVIyYSeURZffWltW/GLiPSF6PMlM=;
-        b=X6/DOH5hHVlUaf3lDe72Pb+jLuSNiiFR0oSPcYUcE0wjJwtryNsZQ7EfXLWxVwXAD2
-         d9UdKnYqYtKskYnfFlzDOK3apjQqflPc2L/RsWVgI+sWUpUhcXnXjnTPGkBy8ypGyXXE
-         zJQItOZYUBOIEqHORBYW8V4r6ie27BrNMGZa4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=bNTDd7RJ5LMk+PgtCuImhaKxDzAM4Ibb+pr9xLlQ+H+OlCplIpsMW/Q+/89h5FnBgx
-         Y5H3ncFXNlHQ8t/BOjLrjBDHjNtvzL3IuVO1YOhMcXGLuKRdkB5A/OF9sSV0GxXOaKpF
-         jENCWzVz8d1eM1ZsgdqEem6soTd2Ae9Zm8Wio=
-Received: by 10.110.11.1 with SMTP id 1mr9101038tik.2.1217826976906;
-        Sun, 03 Aug 2008 22:16:16 -0700 (PDT)
-Received: by 10.110.37.4 with HTTP; Sun, 3 Aug 2008 22:16:16 -0700 (PDT)
+	id S1752508AbYHDFY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 01:24:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752441AbYHDFY4
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 01:24:56 -0400
+Received: from fugue.toroid.org ([85.10.196.113]:54194 "EHLO fugue.toroid.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751959AbYHDFYz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 01:24:55 -0400
+Received: from penne.toroid.org (penne-vpn [10.8.0.6])
+	by fugue.toroid.org (Postfix) with ESMTP id DB93B558383;
+	Mon,  4 Aug 2008 07:02:49 +0200 (CEST)
+Received: by penne.toroid.org (Postfix, from userid 1000)
+	id 1CF4CADC36D; Mon,  4 Aug 2008 10:32:48 +0530 (IST)
 Content-Disposition: inline
+In-Reply-To: <be6fef0d0808032149p651309a8o773dca5f16923ee1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91315>
-
-Hi,
-
-i'm encountering an issue with git-svn running on cygwin (not sure if
-this is exclusive to cygwin) when migrating data from svn to git.
-
-$ git-svn clone file:///F:/test/svn-native-repo/
-Initialized empty Git repository in /cygdrive/F/test/git/svn-native-repo/.git/
-       A       sitemap.html
-       A       funcs.js
-       A       index.html
-       A       styles.css
-r1 = d112a5b470fd4387c7bbb7199d0d7a065754b127 (git-svn)
-Permission denied: Can't open
-'/cygdrive/c/DOCUME~1/myself/LOCALS~1/Temp/report.tmp': Permission
-denied at /usr/bin/git-svn line 2339
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91316>
 
 
-the repo used was a dummy subversion repo with 2 revisions: an add,
-and a modification commit. (dump file here [1])
+Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
+---
 
-i suspect this is caused by locks over files. using perl -d:
+At 2008-08-04 12:49:27 +0800, rctay89@gmail.com wrote:
+>
+> $self->{@vars} evaluates to undef. i can't find any mention of using
+> arrays to dereference objects in the manual and elsewhere; is this a
+> mistake?
 
-$ perl -d /usr/bin/git-svn clone file:///F:/test/svn-native-repo/
-c 3995
-c 3995
-c 3838
-s
-c 85
+Yes, @vars would be interpreted in scalar context, which certainly isn't
+the intended effect.
 
-SVN::Ra::AUTOLOAD(/usr/lib/perl5/vendor_perl/5.10/i686-cygwin/SVN/Ra.pm:85):
-85:         my @ret = $func->($self->{session}, @_);
+-- ams
 
-immediately after this line the error is generated.
+ perl/Git.pm |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-a fix would be to issue closes to the processes, as in
-Git::_close_hash_and_insert_object and Git::_close_cat_blob:
-
-767a768
->       $self->_close_hash_and_insert_object();
-856a858
->       $self->_close_cat_blob();
-
-(Note: currently this doesn't fix the issue too, cos the methods do
-not do their job properly (on my side, at least): see
-
-http://article.gmane.org/gmane.comp.version-control.git/91314
-)
-
-my environment is:
-- win xp home sp2
-- Cygwin: 1.5.25-15 (latest)
-- Git: 1.5.6.4-1 (latest)
-- subversion-perl: 1.4.6-3 (latest)
-- Perl: 5.10.0-5 (latest)
-
-[1] http://thelilaeanbellis.com/shared/svn-native-repo.dump
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 087d3d0..2ef437f 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -839,8 +839,8 @@ sub _close_hash_and_insert_object {
+ 
+ 	my @vars = map { 'hash_object_' . $_ } qw(pid in out ctx);
+ 
+-	command_close_bidi_pipe($self->{@vars});
+-	delete $self->{@vars};
++	command_close_bidi_pipe(@$self{@vars});
++	delete @$self{@vars};
+ }
+ 
+ =item cat_blob ( SHA1, FILEHANDLE )
+@@ -928,8 +928,8 @@ sub _close_cat_blob {
+ 
+ 	my @vars = map { 'cat_blob_' . $_ } qw(pid in out ctx);
+ 
+-	command_close_bidi_pipe($self->{@vars});
+-	delete $self->{@vars};
++	command_close_bidi_pipe(@$self{@vars});
++	delete @$self{@vars};
+ }
+ 
+ =back
+-- 
+1.6.0.rc0.43.g2aa74
