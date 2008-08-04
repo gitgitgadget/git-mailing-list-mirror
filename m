@@ -1,78 +1,96 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: [RFC 2/2] Add Git-aware CGI for Git-aware smart HTTP transport
-Date: Mon, 04 Aug 2008 12:14:01 +0200
-Message-ID: <4896D669.30402@dawes.za.net>
-References: <20080803025602.GB27465@spearce.org> <1217748317-70096-1-git-send-email-spearce@spearce.org> <1217748317-70096-2-git-send-email-spearce@spearce.org> <7vwsix7nhw.fsf@gitster.siamese.dyndns.org> <20080804035921.GB2963@spearce.org> <4896D19C.6040704@dawes.za.net> <alpine.DEB.1.00.0808041208060.9611@pacific.mpi-cbg.de.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 04 12:16:11 2008
+From: Anders Melchiorsen <mail@cup.kalibalik.dk>
+Subject: [PATCH] Add output flushing before fork()
+Date: Mon,  4 Aug 2008 12:18:40 +0200
+Message-ID: <1217845120-28134-1-git-send-email-mail@cup.kalibalik.dk>
+References: <alpine.LFD.1.10.0808032241260.3668@nehalem.linux-foundation.org>
+Cc: git@vger.kernel.org, Anders Melchiorsen <mail@cup.kalibalik.dk>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Aug 04 12:19:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPx6f-0002KY-J5
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 12:16:02 +0200
+	id 1KPxAH-0003Oe-9u
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 12:19:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752919AbYHDKO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 06:14:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbYHDKO4
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 06:14:56 -0400
-Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:35473 "EHLO
-	spunkymail-a18.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752648AbYHDKOz (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Aug 2008 06:14:55 -0400
-Received: from [192.168.201.100] (unknown [41.247.123.10])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by spunkymail-a18.g.dreamhost.com (Postfix) with ESMTP id 765415B4E3;
-	Mon,  4 Aug 2008 03:14:52 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <alpine.DEB.1.00.0808041208060.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+	id S1752744AbYHDKSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 06:18:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752700AbYHDKSo
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 06:18:44 -0400
+Received: from mail.hotelhot.dk ([77.75.163.100]:57896 "EHLO mail.hotelhot.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752190AbYHDKSn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 06:18:43 -0400
+Received: from mail.hotelhot.dk (localhost [127.0.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 9025014062;
+	Mon,  4 Aug 2008 12:18:40 +0200 (CEST)
+Received: from localhost.localdomain (router.kalibalik.dk [192.168.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 648941405A;
+	Mon,  4 Aug 2008 12:18:40 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.4
+In-Reply-To: <alpine.LFD.1.10.0808032241260.3668@nehalem.linux-foundation.org>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91339>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Mon, 4 Aug 2008, Rogan Dawes wrote:
-> 
->> I don't understand why you would want to keep the commands in the URL 
->> when you are doing a POST?
-> 
-> Caching.
-> 
-> Hth,
-> Dscho
-> 
+This adds fflush(NULL) before fork() in start_command(), to keep
+the generic interface safe.
 
-If you are expecting something to be cacheable, then should you not be 
-using a GET anyway?
+A remaining use of fork() with no flushing is in a comment in
+show_tree(). Rewrite that comment to use start_command().
 
-Anyway, from RFC 2616:
+Signed-off-by: Anders Melchiorsen <mail@cup.kalibalik.dk>
+---
 
-> 13.10 Invalidation After Updates or Deletions
-> 
-> ...
-> 
-> Some HTTP methods MUST cause a cache to invalidate an entity. This is
-> either the entity referred to by the Request-URI, or by the Location
- > or Content-Location headers (if present). These methods are:
-> 
->       - PUT
->       - DELETE
->       - POST
+This fixes up the remaining two spots that Linus suggested.
 
-This doesn't seem negotiable to me.
 
-Unless I am misunderstanding your "Caching" comment to mean "To enable 
-caching", as opposed to "To prevent caching"?
+ builtin-ls-tree.c |   13 ++++++-------
+ run-command.c     |    1 +
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-Rogan
+diff --git a/builtin-ls-tree.c b/builtin-ls-tree.c
+index d25767a..cb61717 100644
+--- a/builtin-ls-tree.c
++++ b/builtin-ls-tree.c
+@@ -66,17 +66,16 @@ static int show_tree(const unsigned char *sha1, const char *base, int baselen,
+ 		/*
+ 		 * Maybe we want to have some recursive version here?
+ 		 *
+-		 * Something like:
++		 * Something similar to this incomplete example:
+ 		 *
+ 		if (show_subprojects(base, baselen, pathname)) {
+-			if (fork()) {
+-				chdir(base);
+-				exec ls-tree;
+-			}
+-			waitpid();
++			struct child_process ls_tree;
++
++			ls_tree.dir = base;
++			ls_tree.argv = ls-tree;
++			start_command(&ls_tree);
+ 		}
+ 		 *
+-		 * ..or similar..
+ 		 */
+ 		type = commit_type;
+ 	} else if (S_ISDIR(mode)) {
+diff --git a/run-command.c b/run-command.c
+index 6af83c5..bbb9c77 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -68,6 +68,7 @@ int start_command(struct child_process *cmd)
+ 	trace_argv_printf(cmd->argv, "trace: run_command:");
+ 
+ #ifndef __MINGW32__
++	fflush(NULL);
+ 	cmd->pid = fork();
+ 	if (!cmd->pid) {
+ 		if (cmd->no_stdin)
+-- 
+1.5.6.4
