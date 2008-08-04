@@ -1,8 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] update-index: refuse to add working tree items beyond
- symlinks
-Date: Mon, 04 Aug 2008 00:51:42 -0700
-Message-ID: <7v7iax43qp.fsf_-_@gitster.siamese.dyndns.org>
+Subject: [PATCH 2/2] add: refuse to add working tree items beyond symlinks
+Date: Mon, 04 Aug 2008 00:52:37 -0700
+Message-ID: <7v1w1543p6.fsf_-_@gitster.siamese.dyndns.org>
 References: <20080721002354.GK10151@machine.or.cz>
  <20080721002508.26773.92277.stgit@localhost>
  <7v8wvpm9cl.fsf@gitster.siamese.dyndns.org>
@@ -14,103 +13,118 @@ Cc: Petr Baudis <pasky@suse.cz>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 04 09:53:01 2008
+X-From: git-owner@vger.kernel.org Mon Aug 04 09:54:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPusA-000217-AO
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 09:52:54 +0200
+	id 1KPut2-0002Li-IN
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 09:53:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751558AbYHDHvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 03:51:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751525AbYHDHvw
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 03:51:52 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33167 "EHLO
+	id S1751552AbYHDHwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 03:52:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751580AbYHDHwr
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 03:52:47 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41687 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751505AbYHDHvw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 03:51:52 -0400
+	with ESMTP id S1751552AbYHDHwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 03:52:46 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B55CE46E64;
-	Mon,  4 Aug 2008 03:51:50 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 07AF549627;
+	Mon,  4 Aug 2008 03:52:46 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id ED43B46E62; Mon,  4 Aug 2008 03:51:44 -0400 (EDT)
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 2827549625; Mon,  4 Aug 2008 03:52:38 -0400 (EDT)
 In-Reply-To: <7vej5543v5.fsf_-_@gitster.siamese.dyndns.org> (Junio C.
  Hamano's message of "Mon, 04 Aug 2008 00:49:02 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3276298E-61FA-11DD-95EB-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 5368339E-61FA-11DD-81C2-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91322>
 
-When "sym" is a symbolic link that is inside the working tree, and it
-points at a directory "dir" that has "path" in it, "update-index --add
-sym/path" used to mistakenly add "sym/path" as if "sym" were a normal
-directory.
-
-"git apply", "git diff" and "git merge" have been taught about this issue
-some time ago, but "update-index" and "add" have been left ignorant for
-too long.
+This is the same fix for the issue of adding "sym/path" when "sym" is a
+symblic link that points at a directory "dir" with "path" in it.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin-update-index.c     |    5 ++++-
- t/t0055-beyond-symlinks.sh |   20 ++++++++++++++++++++
- 2 files changed, 24 insertions(+), 1 deletions(-)
- create mode 100755 t/t0055-beyond-symlinks.sh
+ builtin-add.c              |   12 +++++++++++-
+ dir.c                      |    6 +++++-
+ t/t0055-beyond-symlinks.sh |    7 ++++++-
+ 3 files changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/builtin-update-index.c b/builtin-update-index.c
-index 38eb53c..434cb8e 100644
---- a/builtin-update-index.c
-+++ b/builtin-update-index.c
-@@ -194,6 +194,10 @@ static int process_path(const char *path)
- 	int len;
- 	struct stat st;
+diff --git a/builtin-add.c b/builtin-add.c
+index fc3f96e..81b64d7 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -153,6 +153,16 @@ static const char **validate_pathspec(int argc, const char **argv, const char *p
+ {
+ 	const char **pathspec = get_pathspec(prefix, argv);
  
-+	len = strlen(path);
-+	if (has_symlink_leading_path(len, path))
-+		return error("'%s' is beyond a symbolic link", path);
++	if (pathspec) {
++		const char **p;
++		for (p = pathspec; *p; p++) {
++			if (has_symlink_leading_path(strlen(*p), *p)) {
++				int len = prefix ? strlen(prefix) : 0;
++				die("'%s' is beyond a symbolic link", *p + len);
++			}
++		}
++	}
 +
+ 	return pathspec;
+ }
+ 
+@@ -278,7 +288,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		fprintf(stderr, "Maybe you wanted to say 'git add .'?\n");
+ 		return 0;
+ 	}
+-	pathspec = get_pathspec(prefix, argv);
++	pathspec = validate_pathspec(argc, argv, prefix);
+ 
  	/*
- 	 * First things first: get the stat information, to decide
- 	 * what to do about the pathname!
-@@ -201,7 +205,6 @@ static int process_path(const char *path)
- 	if (lstat(path, &st) < 0)
- 		return process_lstat_error(path, errno);
+ 	 * If we are adding new files, we need to scan the working
+diff --git a/dir.c b/dir.c
+index 29d1d5b..ae7046f 100644
+--- a/dir.c
++++ b/dir.c
+@@ -727,8 +727,12 @@ static void free_simplify(struct path_simplify *simplify)
  
--	len = strlen(path);
- 	if (S_ISDIR(st.st_mode))
- 		return process_directory(path, len, &st);
+ int read_directory(struct dir_struct *dir, const char *path, const char *base, int baselen, const char **pathspec)
+ {
+-	struct path_simplify *simplify = create_simplify(pathspec);
++	struct path_simplify *simplify;
  
++	if (has_symlink_leading_path(strlen(path), path))
++		return dir->nr;
++
++	simplify = create_simplify(pathspec);
+ 	read_directory_recursive(dir, path, base, baselen, 0, simplify);
+ 	free_simplify(simplify);
+ 	qsort(dir->entries, dir->nr, sizeof(struct dir_entry *), cmp_name);
 diff --git a/t/t0055-beyond-symlinks.sh b/t/t0055-beyond-symlinks.sh
-new file mode 100755
-index 0000000..eb11dd7
---- /dev/null
+index eb11dd7..b29c37a 100755
+--- a/t/t0055-beyond-symlinks.sh
 +++ b/t/t0055-beyond-symlinks.sh
-@@ -0,0 +1,20 @@
-+#!/bin/sh
-+
-+test_description='update-index refuses to add beyond symlinks'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	>a &&
-+	mkdir b &&
-+	ln -s b c &&
-+	>c/d &&
-+	git update-index --add a b/d
-+'
-+
-+test_expect_success 'update-index --add beyond symlinks' '
-+	test_must_fail git update-index --add c/d &&
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-test_description='update-index refuses to add beyond symlinks'
++test_description='update-index and add refuse to add beyond symlinks'
+ 
+ . ./test-lib.sh
+ 
+@@ -17,4 +17,9 @@ test_expect_success 'update-index --add beyond symlinks' '
+ 	! ( git ls-files | grep c/d )
+ '
+ 
++test_expect_success 'add beyond symlinks' '
++	test_must_fail git add c/d &&
 +	! ( git ls-files | grep c/d )
 +'
 +
-+test_done
+ test_done
 -- 
 1.6.0.rc1.64.g61192
