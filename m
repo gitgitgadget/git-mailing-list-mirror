@@ -1,83 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC 2/2] Add Git-aware CGI for Git-aware smart HTTP transport
-Date: Mon, 4 Aug 2008 12:08:29 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808041208060.9611@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <20080803025602.GB27465@spearce.org> <1217748317-70096-1-git-send-email-spearce@spearce.org> <1217748317-70096-2-git-send-email-spearce@spearce.org> <7vwsix7nhw.fsf@gitster.siamese.dyndns.org> <20080804035921.GB2963@spearce.org>
- <4896D19C.6040704@dawes.za.net>
+From: Robert Richter <robert.richter@amd.com>
+Subject: [PATCH] Gitweb: Provide Git links in project list
+Date: Mon, 4 Aug 2008 12:06:50 +0200
+Message-ID: <1217844410-24079-1-git-send-email-robert.richter@amd.com>
+References: <1217796793.32240.36.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>
-To: Rogan Dawes <lists@dawes.za.net>
-X-From: git-owner@vger.kernel.org Mon Aug 04 12:05:58 2008
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Robert Richter <robert.richter@amd.com>
+To: "J.H." <warthog19@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Mon Aug 04 12:09:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPww9-0007AZ-JV
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 12:05:31 +0200
+	id 1KPx0G-0008QJ-Jc
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 12:09:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754660AbYHDKEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 06:04:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754598AbYHDKEG
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 06:04:06 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34724 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754548AbYHDKEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 06:04:04 -0400
-Received: (qmail invoked by alias); 04 Aug 2008 10:04:03 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp035) with SMTP; 04 Aug 2008 12:04:03 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+tSo1oTg2tyqcgNnlgyf1xTUUsYh4SObHgzkCJ28
-	4JyXqdoBjVdCjt
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <4896D19C.6040704@dawes.za.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1753874AbYHDKIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 06:08:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752648AbYHDKIZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 06:08:25 -0400
+Received: from outbound-wa4.frontbridge.com ([216.32.181.16]:48822 "EHLO
+	WA4EHSOBE006.bigfish.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754811AbYHDKIX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Aug 2008 06:08:23 -0400
+Received: from mail25-wa4-R.bigfish.com (10.8.14.250) by
+ WA4EHSOBE006.bigfish.com (10.8.40.26) with Microsoft SMTP Server id
+ 8.1.240.5; Mon, 4 Aug 2008 10:08:23 +0000
+Received: from mail25-wa4 (localhost.localdomain [127.0.0.1])	by
+ mail25-wa4-R.bigfish.com (Postfix) with ESMTP id 1D00214384AC;	Mon,  4 Aug
+ 2008 10:08:23 +0000 (UTC)
+X-BigFish: VPS27(zzzz10d3izz92fbmz32i87il)
+X-FB-DOMAIN-IP-MATCH: fail
+Received: by mail25-wa4 (MessageSwitch) id 1217844500855607_18988; Mon,  4 Aug
+ 2008 10:08:20 +0000 (UCT)
+Received: from ausb3extmailp02.amd.com (ausb3extmailp02.amd.com
+ [163.181.251.22])	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)	by mail25-wa4.bigfish.com (Postfix) with
+ ESMTP id AE3BF848063;	Mon,  4 Aug 2008 10:08:20 +0000 (UTC)
+Received: from ausb3twp02.amd.com ([163.181.250.38])	by
+ ausb3extmailp02.amd.com (Switch-3.2.7/Switch-3.2.7) with ESMTP id
+ m74A8E3a018982;	Mon, 4 Aug 2008 05:08:17 -0500
+X-WSS-ID: 0K52MTK-02-KUV-01
+Received: from sausexbh2.amd.com (SAUSEXBH2.amd.com [163.181.22.102])	by
+ ausb3twp02.amd.com (Tumbleweed MailGate 3.5.1) with ESMTP id 2231016A040B;
+	Mon,  4 Aug 2008 05:08:08 -0500 (CDT)
+Received: from SAUSEXMB3.amd.com ([163.181.22.202]) by sausexbh2.amd.com with
+ Microsoft SMTPSVC(6.0.3790.3959);	 Mon, 4 Aug 2008 05:08:13 -0500
+Received: from SDRSEXMB1.amd.com ([172.20.3.116]) by SAUSEXMB3.amd.com with
+ Microsoft SMTPSVC(6.0.3790.3959);	 Mon, 4 Aug 2008 05:08:13 -0500
+Received: from erda.amd.com ([165.204.85.17]) by SDRSEXMB1.amd.com with
+ Microsoft SMTPSVC(6.0.3790.3959);	 Mon, 4 Aug 2008 12:08:10 +0200
+Received: by erda.amd.com (Postfix, from userid 35569)	id E06318A21; Mon,  4
+ Aug 2008 12:07:57 +0200 (CEST)
+X-Mailer: git-send-email 1.5.5.4
+In-Reply-To: <1217796793.32240.36.camel@localhost.localdomain>
+X-OriginalArrivalTime: 04 Aug 2008 10:08:10.0859 (UTC) FILETIME=[FFEFF3B0:01C8F619]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91336>
 
-Hi,
+Signed-off-by: Robert Richter <robert.richter@amd.com>
+---
+ gitweb/gitweb.perl |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-On Mon, 4 Aug 2008, Rogan Dawes wrote:
-
-> Shawn O. Pearce wrote:
-> 
-> > Perhaps the smart server detection is something like:
-> > 
-> >  Smart Server Detection
-> >  ----------------------
-> > 
-> >  To detect a smart (Git-aware) server a client sends an
-> >  empty POST request to info/refs; if a 200 OK response is
-> >  received with the proper content type then the server can
-> >  be assumed to be Git-aware, and the result contains the
-> >  current info/refs data for that repository.
-> > 
-> > C: POST /repository.git/info/refs HTTP/1.0
-> > C: Content-Length: 0
-> > 
-> > S: HTTP/1.0 200 OK
-> > S: Content-Type: application/x-git-refs
-> > S:
-> > S:95dcfa3633004da0049d3d0fa03f80589cbcaf31	refs/heads/maint
-> > 
-> > Then clients should just attempt this POST first before issuing
-> > a GET info/refs.  Non Git-aware servers will issue an error code,
-> > and the client can retry with a standard GET request, and assume
-> > the server isn't a newer style.
-> > 
-> 
-> I don't understand why you would want to keep the commands in the URL 
-> when you are doing a POST?
-
-Caching.
-
-Hth,
-Dscho
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 90cd99b..6d9b7aa 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3558,6 +3558,9 @@ sub fill_project_list_info {
+ 		if (!defined $pr->{'owner'}) {
+ 			$pr->{'owner'} = git_get_project_owner("$pr->{'path'}") || "";
+ 		}
++		if (!defined $pr->{'url_link'}) {
++			$pr->{'url_link'} = (git_get_project_url_list("$pr->{'path'}"))[0] || "";
++		}
+ 		if ($check_forks) {
+ 			my $pname = $pr->{'path'};
+ 			if (($pname =~ s/\.git$//) &&
+@@ -3661,6 +3664,7 @@ sub git_project_list_body {
+ 		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"shortlog")}, "shortlog") . " | " .
+ 		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"log")}, "log") . " | " .
+ 		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"tree")}, "tree") .
++		      ($pr->{'url_link'} ? " | " . $cgi->a({-href => $pr->{'url_link'}}, "git") : '') .
+ 		      ($pr->{'forks'} ? " | " . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"forks")}, "forks") : '') .
+ 		      "</td>\n" .
+ 		      "</tr>\n";
+-- 
+1.5.5.4
