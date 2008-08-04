@@ -1,73 +1,85 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn.perl: Strip ChangeLog bits.
-Date: Mon, 4 Aug 2008 02:03:09 -0700
-Message-ID: <20080804090309.GD5435@hand.yhbt.net>
-References: <1217684549.8296.10.camel@heerbeest> <20080802172742.GT32184@machine.or.cz> <7vfxpnnwt5.fsf@gitster.siamese.dyndns.org> <1217701021.8296.35.camel@heerbeest> <20080804020931.GA4109@untitled> <1217836189.7649.7.camel@heerbeest>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT] Not working on Windows with msysgit.
+Date: Mon, 4 Aug 2008 11:25:51 +0200
+Message-ID: <20080804092551.GC9425@diana.vm.bytemark.co.uk>
+References: <g6kvmc$sqr$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org
-To: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
-X-From: git-owner@vger.kernel.org Mon Aug 04 11:04:24 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
+To: Jurko Gospodneti? <jurko.gospodnetic@docte.hr>
+X-From: git-owner@vger.kernel.org Mon Aug 04 11:04:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KPvzJ-0006QX-Ha
-	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 11:04:21 +0200
+	id 1KPvzo-0006ZX-U5
+	for gcvg-git-2@gmane.org; Mon, 04 Aug 2008 11:04:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753344AbYHDJDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 05:03:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753206AbYHDJDL
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 05:03:11 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:50758 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753320AbYHDJDK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 05:03:10 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 9E6862DC01B;
-	Mon,  4 Aug 2008 02:03:09 -0700 (PDT)
+	id S1753466AbYHDJDx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Aug 2008 05:03:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753969AbYHDJDx
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 05:03:53 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2643 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753206AbYHDJDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 05:03:52 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KPwK7-0002cZ-00; Mon, 04 Aug 2008 10:25:51 +0100
 Content-Disposition: inline
-In-Reply-To: <1217836189.7649.7.camel@heerbeest>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <g6kvmc$sqr$1@ger.gmane.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91333>
 
-Jan Nieuwenhuizen <janneke-list@xs4all.nl> wrote:
-> On zo, 2008-08-03 at 19:09 -0700, Eric Wong wrote:
-> 
-> > Jan Nieuwenhuizen <janneke-list@xs4all.nl> wrote:
-> > > I could imagine that leaving git-svn alone and adding a hook to git-log
-> > > would be more useful, though.
-> > 
-> > NACK on modifying git-svn to support more changelog formats.
-> > 
-> > A better idea would be to write a generic script that takes "git log",
-> > "git svn log" or even plain "svn log" output and filters it
-> > independently.
-> 
-> > This filter should be reusable for both plain svn and git-svn:
-> 
-> >     The possibilities are endless :)
-> 
-> Yes, but we'll most probably drop SVN rsn, possibly after a short period
-> of supporting both; and not stripping the cruft in the conversion means
-> we carry this with us until eternity.  Besides, who is going to
-> distribute the script, inform users about its availability?
-> 
-> What we have now suffices for our ooo-build conversion.  If you do not
-> find it useful, more power/less code to you.  Let others search the
-> archives and/or patch git-svn themselves, if indeed there are any.
+On 2008-07-28 19:29:49 +0200, Jurko Gospodneti? wrote:
 
-In the one-shot case, a git filter-branch script would probably be ideal
-and reusable for other projects.
+> I believe StGIT fails to work on Windows with msysgit installed
+> because of the way it runs its external executables. It assumes that
+> the executable is available on the path and is named exactly 'git'.
 
-Anyways, I strongly believe changelog modification/reformatting should
-be done in a more generic way that can benefit users of other tools
-(archimport/cvsimport etc...), too.
+Yes, that's correct.
 
--- 
-Eric Wong
+> This however is not the case on Windows with msysgit installed.
+> There the 'git executable' is a batch script named git.cmd and stgit
+> fails to find it causing all git calls to return an error code.
+>
+> Popen() calls in StGIT's run.py module seem to run their executables
+> (git & gitk only as far as I saw from the sources) directly instead
+> of running them through the shell in order to have the shell try all
+> the default extensions (configured on Windows using the PATHEXT
+> environment variable).
+>
+> One 'fix' that corrects this in all the use cases on Windows that I
+> tried is to add the shell=3DTrue parameter to all Popen() calls in
+> StGIT's run.py module (one in __run_io() and one in __run_noio()).
+> This would however require more testing
+
+Don't do that, please.
+
+The reason to not go via the shell is that that way, we don't have to
+worry about quoting. That's a big pile of bugs that we never have to
+see again.
+
+Plus, it's also slightly faster (especially on Windows, I guess) not
+to have to spawn a shell.
+
+It'd be _much_ better to just be a little more flexible about which
+git command to use. Maybe look at PATHEXT if we're on Windows, or
+maybe let the user configure the location of git at stg install time.
+(RFC) patches welcome: :-)
+
+> I do recall Python having some serious problems with these quoting
+> in executed commands... something about external quotes getting
+> stripped in some cases... I might be able to dig up a workaround
+> from somewhere if needed...
+
+That's the shell doing a level of unquoting. Nothing Python specific.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
