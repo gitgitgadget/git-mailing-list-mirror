@@ -1,80 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Optimize sha1_object_info for loose objects, not
-	concurrent repacks
-Date: Tue, 5 Aug 2008 13:18:53 -0700
-Message-ID: <20080805201853.GG27207@spearce.org>
-References: <20080805200841.GA23121@midwinter.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGIT v2 PATCH] Do not mess-up with commit message formatting when sending email
+Date: Tue, 5 Aug 2008 21:48:27 +0100
+Message-ID: <b0943d9e0808051348x7130f26cy4a233ea35ee9a5d0@mail.gmail.com>
+References: <20080804141640.GB12232@diana.vm.bytemark.co.uk>
+	 <20080804151913.4269.74254.stgit@dawn.rfc1149.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Tue Aug 05 22:20:09 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: kha@treskal.com, git@vger.kernel.org
+To: "Samuel Tardieu" <sam@rfc1149.net>
+X-From: git-owner@vger.kernel.org Tue Aug 05 22:49:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQT0i-0005x3-4H
-	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 22:20:00 +0200
+	id 1KQTTH-0000rM-AS
+	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 22:49:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764176AbYHEUS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Aug 2008 16:18:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763810AbYHEUS4
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 16:18:56 -0400
-Received: from george.spearce.org ([209.20.77.23]:60942 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764091AbYHEUSy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2008 16:18:54 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id D9F9538419; Tue,  5 Aug 2008 20:18:53 +0000 (UTC)
+	id S1758834AbYHEUs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2008 16:48:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760774AbYHEUs3
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 16:48:29 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:32683 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752257AbYHEUs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2008 16:48:28 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so1893625waf.23
+        for <git@vger.kernel.org>; Tue, 05 Aug 2008 13:48:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=r3tQBu5FNmEGPnXjhn+/O3rtd8N9F/L3m684RCLxsgk=;
+        b=J8q8Td7fwUuP64rIhvP1ug8FPTnNAte5fcTePt2Y0SRGpjAnvSU6Jx+b9EJbAyAlCs
+         3By/cdND+JUZ+sVinT/q62LDgtYQDOf+ZBT+TaeMm+GD0XiKqi5m7+AD2vwJa3HyCZZU
+         pRpU7Z1XRSPzInRjuNILElrYNZ5AqLaoPxGBY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=fBSsS3SdWtosQ/TJfd/SvA1BR8/qgBw5dKPYuWzvy5XPo4qNKbQhthtmTP3wjE6fjE
+         SLPjrcXRRopH00WPbD25RrAp1aOmHe72qfGVRHBgZIuY7iYSEseC1dvBCUNLZKQJ7ijT
+         +KoPKPyKSLFX9ScJb5pdHP7L0pgWhd0drwLpc=
+Received: by 10.114.191.12 with SMTP id o12mr191795waf.224.1217969308015;
+        Tue, 05 Aug 2008 13:48:28 -0700 (PDT)
+Received: by 10.114.193.12 with HTTP; Tue, 5 Aug 2008 13:48:27 -0700 (PDT)
+In-Reply-To: <20080804151913.4269.74254.stgit@dawn.rfc1149.net>
 Content-Disposition: inline
-In-Reply-To: <20080805200841.GA23121@midwinter.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91461>
 
-Steven Grimm <koreth@midwinter.com> wrote:
-> When dealing with a repository with lots of loose objects, sha1_object_info
-> would rescan the packs directory every time an unpacked object was referenced
-> before finally giving up and looking for the loose object. This caused a lot
-> of extra unnecessary system calls during git pack-objects; the code was
-> rereading the entire pack directory once for each loose object file.
-> 
-> This patch looks for a loose object before falling back to rescanning the
-> pack directory, rather than the other way around.
-> 
-> Signed-off-by: Steven Grimm <koreth@midwinter.com>
+2008/8/4 Samuel Tardieu <sam@rfc1149.net>:
+> The short description, which will be used as the email subject,
+> gets its leading and trailing blanks removed.
+>
+> The long description gets its trailing blanks removed as well
+> as any leading empty lines. Leading blanks are left untouched
+> to preserve the formatting.
 
-Heh.  Cute bug.
-
-ACK.
-
-> diff --git a/sha1_file.c b/sha1_file.c
-> index e281c14..32e4664 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -1929,11 +1929,18 @@ static int sha1_loose_object_info(const unsigned char *sha1, unsigned long *size
->  int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
->  {
->  	struct pack_entry e;
-> +	int status;
->  
->  	if (!find_pack_entry(sha1, &e, NULL)) {
-> +		/* Most likely it's a loose object. */
-> +		status = sha1_loose_object_info(sha1, sizep);
-> +		if (status >= 0)
-> +			return status;
-> +
-> +		/* Not a loose object; someone else may have just packed it. */
->  		reprepare_packed_git();
->  		if (!find_pack_entry(sha1, &e, NULL))
-> -			return sha1_loose_object_info(sha1, sizep);
-> +			return status;
->  	}
->  	return packed_object_info(e.p, e.offset, sizep);
->  }
+Thanks.
 
 -- 
-Shawn.
+Catalin
