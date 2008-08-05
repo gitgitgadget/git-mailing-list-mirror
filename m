@@ -1,78 +1,74 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 1/3] git-svn: properly set path for "info" command
-Date: Tue,  5 Aug 2008 00:35:16 -0700
-Message-ID: <1217921718-25011-1-git-send-email-normalperson@yhbt.net>
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: [PATCH] git-p4: chdir now properly sets PWD environment variable in msysGit
+Date: Tue, 5 Aug 2008 10:24:22 +0200
+Message-ID: <200808051031.00121.simon@lst.de>
+References: <bad7471c0808011250v569ffaaby9e20a5ba1f971927@mail.gmail.com> <7v7iaxu7i1.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Robert Blum" <rob.blum@gmail.com>, shausman@trolltech.com,
+	marius@trolltech.com, hanwen@google.com, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 05 09:36:27 2008
+X-From: git-owner@vger.kernel.org Tue Aug 05 10:32:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQH5k-0001pq-QR
-	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 09:36:25 +0200
+	id 1KQHxk-0001jo-Mm
+	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 10:32:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753676AbYHEHfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Aug 2008 03:35:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753439AbYHEHfV
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 03:35:21 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:52146 "EHLO hand.yhbt.net"
+	id S1756251AbYHEIbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2008 04:31:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755767AbYHEIbJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 04:31:09 -0400
+Received: from hoat.troll.no ([62.70.27.150]:34002 "EHLO hoat.troll.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752764AbYHEHfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2008 03:35:20 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 58E542DC01B;
-	Tue,  5 Aug 2008 00:35:19 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.rc1.69.g797ea
+	id S1755456AbYHEIbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2008 04:31:07 -0400
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 9C63F209F9;
+	Tue,  5 Aug 2008 10:31:00 +0200 (CEST)
+Received: from rhea.localnet (rhea.troll.no [10.3.4.5])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 8F7EB209CA;
+	Tue,  5 Aug 2008 10:31:00 +0200 (CEST)
+User-Agent: KMail/1.10.0 (Linux/2.6.24-18-generic; KDE/4.1.0; x86_64; ; )
+In-Reply-To: <7v7iaxu7i1.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91433>
 
-canonicalize_path() was previously changed to better
-fit SVN 1.5, but it makes the "info" command not match
-svn(1) in two places:
+On Sunday 03 August 2008 23:13:42 Junio C Hamano wrote:
+> "Robert Blum" <rob.blum@gmail.com> writes:
+> > P4 on Windows expects the PWD environment variable to be set to the
+> > current working dir, but os.chdir in python doesn't do that by default
+>
+> Missing full stop at the end of sentence aside, this comment makes me
+> wonder if there is an optional way to have it set it, as opposed to the
+> inconvenient way it behaves "by defualt".  If there is none, I think your
+> patch, even though it looks ugly, is the least evil approach.  Another way
+> might be to wrap callsites of system() by introducing a "run_p4" function,
+> like:
+>
+> 	def run_p4(arg):
+>         	os.environ['PWD'] = os.getcwd() if os.name == 'nt'
+> 		return system(arg)
+>
+> > ---
+> >
+> > Pushing it out to the list since I'm not entirely sure who the git-p4
+> > owner even is. CC'ed likely suspects for ownership ;)
+>
+> Thanks.  I've been waiting for an Ack from somewhere or success reports
+> from p4 users on Windows.
 
-  1) URL ended up with a trailing slash when run without an
-     argument.
+Acked-by: Simon Hausmann <simon@lst.de>
 
-  2) "Path: " was displayed instead of "Path: ." when run
-     without an argument.
+It may not be the prettiest solution, but I agree it needs to be solved :)
 
-We will also handle odd cases where a user wants to
-get information on a file or directory named "0", too.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index cc35f50..df0ed90 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -796,8 +796,8 @@ sub cmd_commit_diff {
- }
- 
- sub cmd_info {
--	my $path = canonicalize_path(shift or ".");
--	unless (scalar(@_) == 0) {
-+	my $path = canonicalize_path(defined($_[0]) ? $_[0] : ".");
-+	if (exists $_[1]) {
- 		die "Too many arguments specified\n";
- 	}
- 
-@@ -813,6 +813,10 @@ sub cmd_info {
- 		die "Unable to determine upstream SVN information from ",
- 		    "working tree history\n";
- 	}
-+
-+	# canonicalize_path() will return "" to make libsvn 1.5.x happy,
-+	$path = "." if $path eq "";
-+
- 	my $full_url = $url . ($path eq "." ? "" : "/$path");
- 
- 	if ($_url) {
--- 
-1.6.0.rc1.69.g797ea
+Simon
