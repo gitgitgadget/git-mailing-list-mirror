@@ -1,78 +1,91 @@
-From: "Scott Chacon" <schacon@gmail.com>
-Subject: Re: Best of open source developer tools
-Date: Tue, 5 Aug 2008 10:58:31 -0700
-Message-ID: <d411cc4a0808051058w17fc2dfeo2d8d75e1d78682e0@mail.gmail.com>
-References: <alpine.DEB.1.00.0808051844550.26154@racer>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] Teach fsck and prune that tmp_obj_ file names may not be
+ 14 bytes long
+Date: Tue, 05 Aug 2008 13:01:50 -0500
+Message-ID: <I1vUBkF5DO9PiWvc0SRIfOHigaNX9d2kNHLqpAUceLenX-_BWPAliQ@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Aug 05 19:59:45 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 05 20:19:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQQos-0007Sr-4f
-	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 19:59:38 +0200
+	id 1KQR7t-0006Kh-GH
+	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 20:19:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761899AbYHER6e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Aug 2008 13:58:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761824AbYHER6e
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 13:58:34 -0400
-Received: from py-out-1112.google.com ([64.233.166.178]:6295 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761737AbYHER6d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2008 13:58:33 -0400
-Received: by py-out-1112.google.com with SMTP id p76so1389541pyb.10
-        for <git@vger.kernel.org>; Tue, 05 Aug 2008 10:58:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=XBfqzlkfsHAtWBMRcEbiyhllZuGWPvojvjRcorAlHnQ=;
-        b=MFz76Sio2VBTnAUZy9WfMHdFKbXyu9oAN9QQ2MKTv+e37hT5VJQ8hfHdqTXV33oi9Q
-         MuKLFlOEGaI6WyRBUNphX2hyq4L75Kfx/sdjK6Hyk97VY8qL3w5OTjQVyr7bhGi2zF07
-         +A8vs1n5/e+TID/RlKCYS5emqJ2NwJJNIH2DI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=q36ZUNOR7QZfWVFzeA4rvcfnZjb7ONq+T9YDm0ycdCFtG0AHKnC1h+1vqK5j5V2KqP
-         Pq5Ei5n4WiOBiaiktGXS6fyyz5BnEWULLvqLR4LFTJtVicwkxl/Ir/A3prt5/ryHRWFG
-         XJ412DcdRH5JNdfJmwFEnD2tApyTK12OAhCIQ=
-Received: by 10.114.184.7 with SMTP id h7mr87180waf.183.1217959111801;
-        Tue, 05 Aug 2008 10:58:31 -0700 (PDT)
-Received: by 10.114.170.3 with HTTP; Tue, 5 Aug 2008 10:58:31 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0808051844550.26154@racer>
-Content-Disposition: inline
+	id S1761509AbYHESSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2008 14:18:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757604AbYHESSL
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 14:18:11 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:35726 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760225AbYHESSJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2008 14:18:09 -0400
+X-Greylist: delayed 964 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Aug 2008 14:18:05 EDT
+Received: by mail.nrlssc.navy.mil id m75I1ojG004375; Tue, 5 Aug 2008 13:01:50 -0500
+X-OriginalArrivalTime: 05 Aug 2008 18:01:50.0580 (UTC) FILETIME=[55D2FB40:01C8F725]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91452>
 
-Also somewhat interesting, there was some discussion about having
-Prototype as a project on the git-scm.com frontpage.  It is also
-listed as one of the best open source dev tools:
+As Shawn pointed out, not all temporary file creation routines can
+ensure that the generated temporary file is of a certain length.
+e.g. Java's createTempFile(prefix, suffix). So just depend on the
+prefix 'tmp_obj_' for detection.
 
-http://www.infoworld.com/slideshow/2008/08/166-best_of_open_so-8.html
+Update prune, and fix the "fix" introduced by a08c53a1 :)
 
-Scott
+Signed-off-by: Brandon "appendixless" Casey <casey@nrlssc.navy.mil>
+---
+ builtin-fsck.c  |    2 +-
+ builtin-prune.c |    9 ++++-----
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
-On Tue, Aug 5, 2008 at 10:45 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> To those who haven't seen it yet,
->
-> http://www.infoworld.com/slideshow/2008/08/166-best_of_open_so-3.html
->
-> Ciao,
-> Dscho
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+diff --git a/builtin-fsck.c b/builtin-fsck.c
+index 6eb7da8..d3f3de9 100644
+--- a/builtin-fsck.c
++++ b/builtin-fsck.c
+@@ -385,7 +385,7 @@ static void fsck_dir(int i, char *path)
+ 			add_sha1_list(sha1, DIRENT_SORT_HINT(de));
+ 			continue;
+ 		}
+-		if (prefixcmp(de->d_name, "tmp_obj_"))
++		if (!prefixcmp(de->d_name, "tmp_obj_"))
+ 			continue;
+ 		fprintf(stderr, "bad sha1 file: %s/%s\n", path, de->d_name);
+ 	}
+diff --git a/builtin-prune.c b/builtin-prune.c
+index 947de8c..c767a0a 100644
+--- a/builtin-prune.c
++++ b/builtin-prune.c
+@@ -69,11 +69,6 @@ static int prune_dir(int i, char *path)
+ 			if (de->d_name[0] != '.')
+ 				break;
+ 			continue;
+-		case 14:
+-			if (prefixcmp(de->d_name, "tmp_obj_"))
+-				break;
+-			prune_tmp_object(path, de->d_name);
+-			continue;
+ 		case 38:
+ 			sprintf(name, "%02x", i);
+ 			memcpy(name+2, de->d_name, len+1);
+@@ -90,6 +85,10 @@ static int prune_dir(int i, char *path)
+ 			prune_object(path, de->d_name, sha1);
+ 			continue;
+ 		}
++		if (!prefixcmp(de->d_name, "tmp_obj_")) {
++			prune_tmp_object(path, de->d_name);
++			continue;
++		}
+ 		fprintf(stderr, "bad sha1 file: %s/%s\n", path, de->d_name);
+ 	}
+ 	if (!show_only)
+-- 
+1.5.6.2
