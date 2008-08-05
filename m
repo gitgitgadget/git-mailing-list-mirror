@@ -1,68 +1,73 @@
-From: =?UTF-8?B?SsO8cmdlbiBNYW5nbGVy?= <juergen.mangler@univie.ac.at>
-Subject: do without .netrc
-Date: Wed, 06 Aug 2008 01:00:54 +0200
-Message-ID: <4898DBA6.1060707@univie.ac.at>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] Makefile: use backticks rather than $() notation to support
+ ancient shells
+Date: Tue, 05 Aug 2008 18:22:09 -0500
+Message-ID: <K5bb057jTokXyOIU_aDE4vMr3jT4DOgSPRcIktfus6QMVq6dszrgGw@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 06 01:13:35 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 06 01:23:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQViX-0004AX-QX
-	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 01:13:26 +0200
+	id 1KQVs6-0006QH-Uq
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 01:23:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757283AbYHEXML convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Aug 2008 19:12:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762698AbYHEXMK
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 19:12:10 -0400
-Received: from grace.univie.ac.at ([131.130.3.115]:36751 "EHLO
-	grace.univie.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757283AbYHEXMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2008 19:12:08 -0400
-X-Greylist: delayed 672 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Aug 2008 19:12:08 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=univie.ac.at; s=rev1; h=Message-ID:Date:From:MIME-Version:To:
-	Subject:Content-Type:Content-Transfer-Encoding; bh=uFzU1uDDmgjDa
-	SQIZyEbVhe8QWWAEWFYcKvVbLXAO2c=; b=b3sY8yhumFpw0lzeGUS7kQ/DuZwVK
-	ayoRyqLCUnWIkygxMC8HCXAGLzKgwUKkIQER9rjWPvOM2Z/p0p7gZdXK6khtOMsr
-	Uhk/CSNwUWm5DWXDO/pSSCpTw8ID17TGiTlWZxzO5Lsx2W0gQt5gbHMzAaRafUtt
-	4u9znTnMo3y+eY=
-Received: from joan.univie.ac.at ([131.130.3.110] helo=joan.univie.ac.at)
-	by grace.univie.ac.at with esmtp (Exim 4.69)
-	(envelope-from <juergen.mangler@univie.ac.at>)
-	id 1KQVWQ-0004V3-Vs
-	for git@vger.kernel.org; Wed, 06 Aug 2008 01:00:54 +0200
-Received: from [131.130.37.200] (helo=[172.17.19.72])
-	by joan.univie.ac.at with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <juergen.mangler@univie.ac.at>)
-	id 1KQVWQ-0000kx-Ui
-	for git@vger.kernel.org; Wed, 06 Aug 2008 01:00:54 +0200
-User-Agent: Thunderbird 2.0.0.16 (X11/20080725)
+	id S1756031AbYHEXWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2008 19:22:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755187AbYHEXWR
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 19:22:17 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:35849 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753377AbYHEXWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2008 19:22:16 -0400
+Received: by mail.nrlssc.navy.mil id m75NM9xW028161; Tue, 5 Aug 2008 18:22:09 -0500
+X-OriginalArrivalTime: 05 Aug 2008 23:22:09.0800 (UTC) FILETIME=[155F3880:01C8F752]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91469>
 
-"git clone http://a:b@donatello.pri.univie.ac.at/repositories/0/Data/"=20
-is not working
+Since make is using /bin/sh to execute shell code, avoid the newish
+shell construct $() so older (ancient) shells can execute the shell
+code in the Makefile.
 
-also "git clone=20
-http://a@donatello.pri.univie.ac.at/repositories/0/Data/" is not asking=
-=20
-for password. is it supposed to?
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
 
-it is working without a:b@ part, but ~/.netrc instead
 
-:-(, is it possible without .netrc
+I know that $() is preferred in the main scripts, but the Makefile
+is using /bin/sh to execute shell code and there are already a few
+places in the Makefile using back-ticks, so it doesn't seem like
+going against the flow too much.
 
-git version 1.5.4.3
+Otherwise, should we set the SHELL variable to the configured SHELL_PATH
+at some point in the Makefile?
 
-thanks, regards
+-brandon
 
-J=C3=BCrgen
+
+ Makefile |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 608a185..421af24 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1366,8 +1366,8 @@ endif
+ ifneq (,$X)
+ 	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), $(RM) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p';)
+ endif
+-	bindir=$$(cd '$(DESTDIR_SQ)$(bindir_SQ)' && pwd) && \
+-	execdir=$$(cd '$(DESTDIR_SQ)$(gitexec_instdir_SQ)' && pwd) && \
++	bindir=`cd '$(DESTDIR_SQ)$(bindir_SQ)' && pwd` && \
++	execdir=`cd '$(DESTDIR_SQ)$(gitexec_instdir_SQ)' && pwd` && \
+ 	if test "z$$bindir" != "z$$execdir"; \
+ 	then \
+ 		ln -f "$$bindir/git$X" "$$execdir/git$X" || \
+-- 
+1.6.0.rc1.87.g56c9f.dirty
