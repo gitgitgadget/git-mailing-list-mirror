@@ -1,60 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: NYU Open Source Programming Class Releases JavaGit API 0.1.0
-	Alpha
-Date: Mon, 4 Aug 2008 18:46:47 -0700
-Message-ID: <20080805014647.GA383@spearce.org>
-References: <5dfc0b810808040948x6cd1f29fhaf2bf85a09cfd404@mail.gmail.com> <20080804175403.GG27666@spearce.org> <alpine.DEB.1.00.0808050127510.9611@pacific.mpi-cbg.de.mpi-cbg.de> <20080805011051.GC32184@machine.or.cz> <20080805012007.GB32543@spearce.org> <59095A70-09C1-4898-976F-18C0C157B7EF@ai.rug.nl>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Not going beyond symbolic links
+Date: Tue, 5 Aug 2008 03:59:59 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808050356480.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <20080721002354.GK10151@machine.or.cz> <20080721002508.26773.92277.stgit@localhost> <7v8wvpm9cl.fsf@gitster.siamese.dyndns.org> <7vej5543v5.fsf_-_@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0808041719380.3299@nehalem.linux-foundation.org>
+ <7v8wvc2seh.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0808041839130.3299@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Petr Baudis <pasky@suse.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	James Linder <james.h.linder@gmail.com>,
-	Git Mailinglist <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Tue Aug 05 03:47:51 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Petr Baudis <pasky@suse.cz>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Aug 05 03:56:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQBeQ-0002nO-Br
-	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 03:47:50 +0200
+	id 1KQBmz-0004UJ-DH
+	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 03:56:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757815AbYHEBqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 21:46:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756246AbYHEBqt
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 21:46:49 -0400
-Received: from george.spearce.org ([209.20.77.23]:42015 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755415AbYHEBqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 21:46:48 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id ECA5838419; Tue,  5 Aug 2008 01:46:47 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <59095A70-09C1-4898-976F-18C0C157B7EF@ai.rug.nl>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1757464AbYHEBzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 21:55:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752172AbYHEBzd
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 21:55:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59733 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751281AbYHEBzd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 21:55:33 -0400
+Received: (qmail invoked by alias); 05 Aug 2008 01:55:31 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp016) with SMTP; 05 Aug 2008 03:55:31 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18OTp9NTrgOUmxbj5Am/KS0Np1f7CC4Q9EraqgUa1
+	yJD6DMTJX0+g/T
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <alpine.LFD.1.10.0808041839130.3299@nehalem.linux-foundation.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91404>
 
-Pieter de Bie <pdebie@ai.rug.nl> wrote:
-> On 5 aug 2008, at 03:20, Shawn O. Pearce wrote:
->
->> Someone recently ported git-blame into JGit, and it looks like they
->> did a good job, but it was a straight C->Java port.  Since JGit
->> is licensed under the BSD and builtin-blame.c is under the GPL we
->> couldn't accept it as-is.  That side project produced a lot more
->> results than anything else of late, but the GPL virual clause kicked
->> in and prevented direct inclusion.
->
-> Have you asked the author of git-blame (Junio?) if he'd be willing to
-> relicence it to the JGit licences?
+Hi,
 
-We started talking about it off-list actually.  I haven't heard
-back from Junio yet but I think he was hinting that he is open to
-the idea.
+On Mon, 4 Aug 2008, Linus Torvalds wrote:
 
--- 
-Shawn.
+> On Mon, 4 Aug 2008, Junio C Hamano wrote:
+> > >
+> > > The rewritten 'has_symlink_leading_path()' should do ok, but it 
+> > > migth still be a huge performance downside to check all the paths 
+> > > for things like "git add -u".
+> > 
+> > Not yet.
+> > 
+> > I think this is a necessary "correctness" thing to do regardless of 
+> > the performance impact, and adding the logic to stop at submodule 
+> > boundary (aka gitlinks) should come before optimization.
+> 
+> Well, "performance" is a feature too, and it's not correct to say that 
+> "X should be fixed before optimization". If "X" slows things down, the 
+> question should be whether it really needs fixing..
+> 
+> Yes, we find symlinks when we do _new_ files, but is it really so bad to 
+> assume that existing directories that we have already added to the index 
+> are stable? It can easily be seen as a feature too that you can force git 
+> to ignore the symlink and see it as a real directory.
+
+Actually, whatever you want, it needs fixing.
+
+I vividly remember being quite pissed by Git replacing a symbolic link in 
+my working directory with a directory, and instead of updating the files 
+which were technically outside of the repository, Git populated that newly 
+created directory.
+
+However, please note that Junio's patch affects git-add, AFAIR, not 
+git-update-index.
+
+Ciao,
+Dscho
