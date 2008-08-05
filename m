@@ -1,82 +1,99 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: StGit: kha/{stable,safe,experimental} updated
-Date: Tue, 5 Aug 2008 22:33:57 +0100
-Message-ID: <b0943d9e0808051433i667f6a05iff1a5220e37602e7@mail.gmail.com>
-References: <20080725013936.GA20959@diana.vm.bytemark.co.uk>
-	 <b0943d9e0807270144n359e5bd3ye3e91c52b8fa7beb@mail.gmail.com>
-	 <20080801102208.GA29413@diana.vm.bytemark.co.uk>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [TopGit PATCH 2/2] tg-create.sh: Introduce
+	topgit.subjectprefix config option
+Date: Wed, 6 Aug 2008 00:18:37 +0200
+Message-ID: <20080805221837.GU10151@machine.or.cz>
+References: <1217963610-15195-1-git-send-email-bert.wesarg@googlemail.com> <1217963610-15195-2-git-send-email-bert.wesarg@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Samuel Tardieu" <sam@rfc1149.net>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Aug 05 23:35:03 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 06 00:20:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQUBK-000792-Io
-	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 23:35:03 +0200
+	id 1KQUsk-0006MI-TP
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 00:19:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755947AbYHEVd7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Aug 2008 17:33:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757209AbYHEVd7
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 17:33:59 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:39226 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755022AbYHEVd6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Aug 2008 17:33:58 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so1903463waf.23
-        for <git@vger.kernel.org>; Tue, 05 Aug 2008 14:33:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=91fyW6+JhJM9fTYh7PDuOyq1FEyb5Jl++ecah/qkONc=;
-        b=t3JM2uh6ghVOu0RD4DgNFeBE194JHp6x96pSOzbOV/RjawBv8vp53sfDWbfuUBUTg0
-         AkH2yfvFddwyu3Do25XdIFoEOsqitl1MIg+pcxYdiyvAN943rRJ3TkosfImf77yOsPs2
-         q4/ccbNwI5hcsb4TdY/g9pED4lynA2RBXY2AM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=gedHYKaFO68o9acTZcIS9wK4diizBzvHPh62BfBid8ZgzCCqAsBTTD3TEJkDsFxNHD
-         xiSCBzPB5sn43Qx1F/67AQ++ZDa38drvF7dajTsCqLYYe9iEvmazThMQGcTLbV2UF/Y7
-         gsBW3oWzcluY8qhb2EGStzIYj/ei7juj58I7c=
-Received: by 10.114.73.1 with SMTP id v1mr269454waa.16.1217972037983;
-        Tue, 05 Aug 2008 14:33:57 -0700 (PDT)
-Received: by 10.114.193.12 with HTTP; Tue, 5 Aug 2008 14:33:57 -0700 (PDT)
-In-Reply-To: <20080801102208.GA29413@diana.vm.bytemark.co.uk>
+	id S1756962AbYHEWSq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2008 18:18:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758905AbYHEWSp
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 18:18:45 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:43982 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752307AbYHEWSo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2008 18:18:44 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 169C6393A2DF; Wed,  6 Aug 2008 00:18:37 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <1217963610-15195-2-git-send-email-bert.wesarg@googlemail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91466>
 
-2008/8/1 Karl Hasselstr=F6m <kha@treskal.com>:
-> On 2008-07-27 09:44:31 +0100, Catalin Marinas wrote:
->
->> 2008/7/25 Karl Hasselstr=F6m <kha@treskal.com>:
->>
->> > The big update since last time is support (in kha/experimental) fo=
-r
->> > hidden patches in the new-infrastructure commands and stack log.
->>
->> I'll have a look at the new stack log format (my main worry) this
->> week but the other patches look OK.
->
-> Heh. It's _always_ your main worry. But rightly so, since mistakes
-> could be costly. Thanks for spending time on this with me.
+  Hi,
 
-I'm usually worried about performance but will give it a try with a
-Linux kernel and real patches. Have you done any tests to compare it
-with my master branch?
+On Tue, Aug 05, 2008 at 09:13:30PM +0200, Bert Wesarg wrote:
+> Set the topgit.subjectprefix config option to prepend the string to the [PATCH]
+> field in the Subject: line of the '.topmsg' file.
+> 
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
-Would we even need to prune the stack history? It might get pretty
-large after about 1-2 years of usage.
+  hmm, the patch does not apply as-is because $1 -> $name got changed in
+t/fix-subject-line-in-.topmsg which you didn't submit (I *instantly*
+knew adding the depends line to the patch will be good idea ;-).
 
---=20
-Catalin
+  Actually, the line was always meant to be just empty, but putting the
+patch name there does no harm. I will change that.
+
+> ---
+>  README       |    7 ++++---
+>  tg-create.sh |    3 ++-
+>  2 files changed, 6 insertions(+), 4 deletions(-)
+> 
+> diff --git a/README b/README
+> index bd4f17a..f821bab 100644
+> --- a/README
+> +++ b/README
+> @@ -204,9 +204,10 @@ tg create
+>  
+>  	After `tg create`, you should insert the patch description
+>  	to the '.topmsg' file, which will already contain some
+> -	pre-filled bits. You can set topgit.to, topgit.cc and topgit.bcc
+> -	configuration variables in order to have `tg create`
+> -	add these headers with given default values to '.topmsg'.
+> +	pre-filled bits. You can set topgit.subjectprefix, topgit.to,
+> +	topgit.cc and topgit.bcc configuration variables in order to
+> +	have `tg create` use this subject prefix and add these headers
+> +	with the given default values to '.topmsg', respectively.
+>  
+>  	The main task of `tg create` is to set up the topic branch
+>  	base from the dependencies. This may fail due to merge conflicts.
+> diff --git a/tg-create.sh b/tg-create.sh
+> index 0bf329c..c2b38bf 100644
+> --- a/tg-create.sh
+> +++ b/tg-create.sh
+> @@ -107,7 +107,8 @@ author_addr="${author%> *}>"
+>  	! header="$(git config topgit.to)" || echo "To: $header"
+>  	! header="$(git config topgit.cc)" || echo "Cc: $header"
+>  	! header="$(git config topgit.bcc)" || echo "Bcc: $header"
+> -	echo "Subject: [PATCH] $name"
+> +	subject_prefix="$(git config topgit.subjectprefix)" && subject_prefix="$subject_prefix "
+> +	echo "Subject: [${subject_prefix}PATCH] $name"
+>  	echo
+>  	cat <<EOT
+>  <patch description>
+
+  I have converted this to the ||-form since that's much clearer with
+set -e.
+
+  Thanks,
+
+-- 
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
