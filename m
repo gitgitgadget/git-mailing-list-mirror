@@ -1,63 +1,61 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: extracting to/cc addresses for stg mail
-Date: Tue, 5 Aug 2008 15:39:22 +0200
-Message-ID: <20080805133922.GB29499@diana.vm.bytemark.co.uk>
-References: <200808011650.45915.bjorn.helgaas@hp.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 0/8] bash completion: more porcelain completions
+Date: Tue, 5 Aug 2008 07:29:19 -0700
+Message-ID: <20080805142919.GA27295@spearce.org>
+References: <1217915438-6838-1-git-send-email-lee.marlow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Bjorn Helgaas <bjorn.helgaas@hp.com>
-X-From: git-owner@vger.kernel.org Tue Aug 05 15:19:17 2008
+To: Lee Marlow <lee.marlow@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 05 16:30:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQMRW-0001M4-9S
-	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 15:19:14 +0200
+	id 1KQNYM-0001yn-Lo
+	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 16:30:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756195AbYHENRs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Aug 2008 09:17:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753910AbYHENRr
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 09:17:47 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3012 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753185AbYHENRq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2008 09:17:46 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KQMl0-0000Ni-00; Tue, 05 Aug 2008 14:39:22 +0100
+	id S1755409AbYHEO3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2008 10:29:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755367AbYHEO3U
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 10:29:20 -0400
+Received: from george.spearce.org ([209.20.77.23]:51089 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754495AbYHEO3U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2008 10:29:20 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 6C75538419; Tue,  5 Aug 2008 14:29:19 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <200808011650.45915.bjorn.helgaas@hp.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <1217915438-6838-1-git-send-email-lee.marlow@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91441>
 
-On 2008-08-01 16:50:45 -0600, Bjorn Helgaas wrote:
+Lee Marlow <lee.marlow@gmail.com> wrote:
+> This adds basic long option completion for some common commands that I
+> use, as well as stash name completion.
 
-> Is there a way to make stg pay attention to my "To:" lines in the
-> patch description? Or another way to accomplish this?
+Entire series is good.
 
-It can't do it at the moment, but it should be easy to fix. In
-stgit/commands/mail.py, the following lines
+Acked-by: Shawn O. Pearce <spearce@spearce.org>
+ 
+> Lee Marlow (8):
+>   bash completion: Add completion for 'git clone'
+>   bash completion: Add completion for 'git clean'
+>   bash completion: Add completion for 'git init'
+>   bash completion: Add completion for 'git revert'
+>   bash completion: More completions for 'git stash'
+>   bash completion: Add completion for 'git archive'
+>   bash completion: Add completion for 'git ls-files'
+>   bash completion: Add completion for 'git mv'
+> 
+>  contrib/completion/git-completion.bash |  143 +++++++++++++++++++++++++++++++-
+>  git-stash.sh                           |    2 +-
+>  2 files changed, 143 insertions(+), 2 deletions(-)
+> 
 
-    if options.auto:
-        extra_cc =3D __get_signers_list(descr)
-    else:
-        extra_cc =3D []
-
-add the extra CC addresses. You could augment __get_signers_list to
-return a tuple of to and cc addresses instead of just cc addresses,
-pass those addesses to the same place extra_cc is fed now, and that's
-it.
-
-If you really hate Python, don't have time, etc., I can do it for you
-(as long as you agree to test it) -- just ask -- but I try to take
-every opportunity to get people to contribute patches. :-)
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+Shawn.
