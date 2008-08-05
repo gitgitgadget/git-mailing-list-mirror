@@ -1,80 +1,45 @@
-From: Bjorn Helgaas <bjorn.helgaas@hp.com>
-Subject: Re: extracting to/cc addresses for stg mail
-Date: Tue, 5 Aug 2008 11:43:19 -0600
-Message-ID: <200808051143.19683.bjorn.helgaas@hp.com>
-References: <200808011650.45915.bjorn.helgaas@hp.com> <20080805133922.GB29499@diana.vm.bytemark.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Best of open source developer tools
+Date: Tue, 5 Aug 2008 18:45:34 +0100 (BST)
+Message-ID: <alpine.DEB.1.00.0808051844550.26154@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Aug 05 19:45:44 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 05 19:46:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQQbP-0002tK-CU
-	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 19:45:43 +0200
+	id 1KQQcN-0003Gh-4Z
+	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 19:46:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753543AbYHERol convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Aug 2008 13:44:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752869AbYHERok
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 13:44:40 -0400
-Received: from g4t0014.houston.hp.com ([15.201.24.17]:38510 "EHLO
-	g4t0014.houston.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752166AbYHERok (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2008 13:44:40 -0400
-Received: from g5t0030.atlanta.hp.com (g5t0030.atlanta.hp.com [16.228.8.142])
-	by g4t0014.houston.hp.com (Postfix) with ESMTP id 9AE7224623;
-	Tue,  5 Aug 2008 17:44:39 +0000 (UTC)
-Received: from ldl.fc.hp.com (ldl.fc.hp.com [15.11.146.30])
-	by g5t0030.atlanta.hp.com (Postfix) with ESMTP id ECA6924006;
-	Tue,  5 Aug 2008 17:44:23 +0000 (UTC)
-Received: from localhost (ldl.fc.hp.com [127.0.0.1])
-	by ldl.fc.hp.com (Postfix) with ESMTP id 9AB1539C08A;
-	Tue,  5 Aug 2008 11:44:18 -0600 (MDT)
-X-Virus-Scanned: Debian amavisd-new at ldl.fc.hp.com
-Received: from ldl.fc.hp.com ([127.0.0.1])
-	by localhost (ldl.fc.hp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id k+94NpriZbhx; Tue,  5 Aug 2008 11:44:17 -0600 (MDT)
-Received: from tigger.helgaas (lart.fc.hp.com [15.11.146.31])
-	by ldl.fc.hp.com (Postfix) with ESMTP id 9185C39C05D;
-	Tue,  5 Aug 2008 11:44:17 -0600 (MDT)
-User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
-In-Reply-To: <20080805133922.GB29499@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
+	id S1761583AbYHERpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2008 13:45:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761351AbYHERpn
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 13:45:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39334 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1761440AbYHERpm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2008 13:45:42 -0400
+Received: (qmail invoked by alias); 05 Aug 2008 17:45:40 -0000
+Received: from grape.st-and.ac.uk (EHLO grape.st-and.ac.uk) [138.251.155.28]
+  by mail.gmx.net (mp062) with SMTP; 05 Aug 2008 19:45:40 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+jnnBvcyejMojv7r2rgzslGJXuvPpel7XJUnzbv5
+	s+FEKXmxi9v5Nb
+X-X-Sender: gene099@racer
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.79
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91450>
 
-On Tuesday 05 August 2008 07:39:22 am Karl Hasselstr=F6m wrote:
-> On 2008-08-01 16:50:45 -0600, Bjorn Helgaas wrote:
->=20
-> > Is there a way to make stg pay attention to my "To:" lines in the
-> > patch description? Or another way to accomplish this?
->=20
-> It can't do it at the moment, but it should be easy to fix. In
-> stgit/commands/mail.py, the following lines
->=20
->     if options.auto:
->         extra_cc =3D __get_signers_list(descr)
->     else:
->         extra_cc =3D []
->=20
-> add the extra CC addresses. You could augment __get_signers_list to
-> return a tuple of to and cc addresses instead of just cc addresses,
-> pass those addesses to the same place extra_cc is fed now, and that's
-> it.
->=20
-> If you really hate Python, don't have time, etc., I can do it for you
-> (as long as you agree to test it) -- just ask -- but I try to take
-> every opportunity to get people to contribute patches. :-)
+To those who haven't seen it yet,
 
-Thanks for the hints.  I'll take a look at it.  It'll take me a while,
-but it's a good excuse to try to learn a little Python.
+http://www.infoworld.com/slideshow/2008/08/166-best_of_open_so-3.html
 
-Bjorn
+Ciao,
+Dscho
