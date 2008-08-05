@@ -6,87 +6,74 @@ X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
-Received: (qmail 17971 invoked by uid 111); 4 Aug 2008 16:48:29 -0000
+Received: (qmail 23759 invoked by uid 111); 5 Aug 2008 15:07:55 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 04 Aug 2008 12:48:22 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 05 Aug 2008 11:07:48 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757505AbYHDQsG (ORCPT <rfc822;peff@peff.net>);
-	Mon, 4 Aug 2008 12:48:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757930AbYHDQsF
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 12:48:05 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:34005 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757959AbYHDQsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 12:48:04 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1213811ywe.1
-        for <git@vger.kernel.org>; Mon, 04 Aug 2008 09:48:04 -0700 (PDT)
+	id S1756139AbYHEPHp (ORCPT <rfc822;peff@peff.net>);
+	Tue, 5 Aug 2008 11:07:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756165AbYHEPHo
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 11:07:44 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:16640 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755808AbYHEPHo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2008 11:07:44 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1306562fgg.17
+        for <git@vger.kernel.org>; Tue, 05 Aug 2008 08:07:41 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=sp9VNT7km6wEVduwdXZKDtw66VAd9FYtUnF/sHaZ4oE=;
-        b=Uf/qfFeIdttSSAoSC9o374T+CsVrvKhtVG/t4sYWdPkxYeBjYZfwNz8cDvUndGiMtN
-         ZTm3FyrGdw6t20hgEMGQ4lBeB89pUx6ORZH6MkSlWJtD+8VMXxNpT7jllPz4zV6O1NaY
-         2KYiJxR6QuVJJ1NPtfugTvYx/rlfdLYLaw/mk=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:to;
+        bh=3wqvlrk9Dwa/7nCiNL7ihkFpW+RyqMKYlJRXvt+xC+M=;
+        b=ZASMrlU1xkIAVV+tMQZ1B752O+1fENjrxHvLK9dqSKCknPw85toJ5Fu2iedVU1ei4h
+         i5uYtFr1ZF65RYLb5xNOHPsDNFpv7TU2WPKHR9aH4A8md7pFmKTUfG1npo6gqfdx2Kj3
+         LCk18FitS9f/r6WapT4+u8pBne1wQbMZ1zspo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=SX2eMIS/OxrXyHNnCul4+uBk2Os3Ja4zGgVcYGE3TrR7voypnFjw5Cwsp7hQ7FJS7Z
-         Q6KZlk3krpJM8xNOIfyN4XIzUles2iGt604rldgDdXP1ZIBYGgnxYUy5uUShJO2X1oRt
-         JC0LjTx5dC/YH+D1PlEbEBK9uQZX+8ZOeeUXg=
-Received: by 10.103.242.7 with SMTP id u7mr5718879mur.125.1217868482731;
-        Mon, 04 Aug 2008 09:48:02 -0700 (PDT)
-Received: by 10.102.244.9 with HTTP; Mon, 4 Aug 2008 09:48:02 -0700 (PDT)
-Message-ID: <5dfc0b810808040948x6cd1f29fhaf2bf85a09cfd404@mail.gmail.com>
-Date:	Mon, 4 Aug 2008 12:48:02 -0400
-From:	"James Linder" <james.h.linder@gmail.com>
-To:	git@vger.kernel.org
-Subject: NYU Open Source Programming Class Releases JavaGit API 0.1.0 Alpha
-MIME-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=XZNP0OJKY/vduXvX6/33lhMsCso5CPQ/sXjKGN6vdWylu2ee7P2y2luvsWluMy7BNU
+         oNrdC+4+RHzTVKNbuM5NQNvTaTpWOpH4d1IHOwNzxck/x7RTRnLROibWIqv5YZF3m/cR
+         +qYzvb7JTruWUpN0YFwDUTa5R09h4uaIdpqAM=
+Received: by 10.86.98.10 with SMTP id v10mr11766549fgb.39.1217948861521;
+        Tue, 05 Aug 2008 08:07:41 -0700 (PDT)
+Received: from localhost ( [217.234.112.152])
+        by mx.google.com with ESMTPS id e20sm2052099fga.1.2008.08.05.08.07.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 05 Aug 2008 08:07:40 -0700 (PDT)
+From:	Bert Wesarg <bert.wesarg@googlemail.com>
+To:	Petr Baudis <pasky@suse.cz>
+Cc:	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+Subject: [TopGit PATCH] tg-create.sh: fix help string
+Date:	Tue,  5 Aug 2008 17:07:38 +0200
+Message-Id: <1217948858-17466-1-git-send-email-bert.wesarg@googlemail.com>
+X-Mailer: git-send-email 1.5.5.GIT
+To:	Petr Baudis <pasky@suse.cz>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hello Git Developers and Users,
+The help string of the tg-create command was not changed with the commit
+"Change usage (-d ->arguments) <ab712f2ed92a6e451bf2d482b03d2559697bf100>".
 
-This summer, New York University held a class called Open Source
-Programming.  One of the projects to come out of the class is JavaGit,
-an API providing access to git repositories for Java applications.
-Today the JavaGit team has released version 0.1.0 Alpha of the JavaGit
-API.  The announcement is listed below.
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
-We are looking forward to continuing the project and grow the project
-and welcome new volunteers.  So if the project sounds interesting,
-check it out and let us know what you think.
+---
+ tg-create.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Regards,
-
-The JavaGit Team
-
-------------------------------------------------------------
-JavaGit Releases Version 0.1.0 Alpha - August 4, 2008
-
-The JavaGit team is pleased to announce the release of JavaGit version
-0.1.0 alpha, an API providing access to git repositories from Java
-programs. The goal of JavaGit is to bring the power of git to the Java
-developer as an API that is intuitive for developers new to git and
-developers who are veteran git users.
-
-JavaGit is engineered to provide the developer with access to the raw
-git commands through a command API as well as an object API designed
-to represent the .git repository, the working tree and other, familiar
-git concepts. JavaGit uses the git binaries installed on the host
-machine to provide git functionality and has been designed to easily
-accommodate additional methods of access to git repositories.
-
-JavaGit is released as open source software under the GNU LGPL license.
-
-For additional information on the JavaGit project, please visit:
-
-   http://www.javagit.com
+diff --git a/tg-create.sh b/tg-create.sh
+index d196e4f..5438deb 100644
+--- a/tg-create.sh
++++ b/tg-create.sh
+@@ -15,7 +15,7 @@ while [ -n "$1" ]; do
+ 	arg="$1"; shift
+ 	case "$arg" in
+ 	-*)
+-		echo "Usage: tg create [-d DEPS...] NAME" >&2
++		echo "Usage: tg create NAME [DEPS...]" >&2
+ 		exit 1;;
+ 	*)
+ 		if [ -z "$name" ]; then
+-- 
+tg: (24367cc..) t/fix-tg-create-help-string (depends on: master)
