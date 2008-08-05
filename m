@@ -1,69 +1,69 @@
-From: david@lang.hm
-Subject: Re: Not going beyond symbolic links
-Date: Mon, 4 Aug 2008 20:04:31 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0808042003200.29250@asgard.lang.hm>
-References: <20080721002354.GK10151@machine.or.cz> <20080721002508.26773.92277.stgit@localhost> <7v8wvpm9cl.fsf@gitster.siamese.dyndns.org> <7vej5543v5.fsf_-_@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0808041719380.3299@nehalem.linux-foundation.org>
- <7v8wvc2seh.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0808041839130.3299@nehalem.linux-foundation.org> <7v3alk17yh.fsf@gitster.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] correct access right for git-svn-dcommit test
+Date: Mon, 4 Aug 2008 20:18:16 -0700
+Message-ID: <20080805031816.GA9505@yp-box.dyndns.org>
+References: <20080725060037.GB14756@untitled> <4889F215.9020804@kitware.com> <20080726054547.GA20494@untitled> <488B2FC5.4080801@kitware.com> <20080803220251.GB3006@untitled> <20080804141820.GT7008@dpotapov.dyndns.org> <20080804151424.GU7008@dpotapov.dyndns.org> <20080804153024.GV7008@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Brad King <brad.king@kitware.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 05 05:06:19 2008
+X-From: git-owner@vger.kernel.org Tue Aug 05 05:19:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQCrz-0001Xx-II
-	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 05:05:55 +0200
+	id 1KQD4y-00048c-Sa
+	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 05:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763179AbYHEDEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2008 23:04:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763022AbYHEDE3
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 23:04:29 -0400
-Received: from mail.lang.hm ([64.81.33.126]:53041 "EHLO bifrost.lang.hm"
+	id S1757542AbYHEDST (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2008 23:18:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756732AbYHEDST
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Aug 2008 23:18:19 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:51894 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762975AbYHEDE0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2008 23:04:26 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m7533dDw005948;
-	Mon, 4 Aug 2008 20:03:39 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <7v3alk17yh.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1756140AbYHEDSS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2008 23:18:18 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 2B1572DC01B;
+	Mon,  4 Aug 2008 20:18:17 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20080804153024.GV7008@dpotapov.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91418>
 
-On Mon, 4 Aug 2008, Junio C Hamano wrote:
+Dmitry Potapov <dpotapov@gmail.com> wrote:
+> The tests requires anonymous write access. Therefore, "anon-access =
+> write" is added to conf/svnserve.conf. But because it was added to
+> the end of the file, it is impossible to guarantee in what section
+> it will be located. It turned out that on SVN 1.5, it was placed in
+> the wrong section and as result the test failed.
+> 
+> Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
->
->> ... Because this is definitely not a black-and-white "one behavior is
->> wrong and one behavior is right".
->
-> I wish I could agree with you that this is a feature, but 16a4c61
-> (read-tree -m -u: avoid getting confused by intermediate symlinks.,
-> 2007-05-10) and 64cab59 (apply: do not get confused by symlinks in the
-> middle, 2007-05-11) came from real world breakage cases and the root cause
-> was that we were too lenient to allow such a "feature" that pretends the
-> symlink not to be there.
->
-> Right now, we are being careful only while branch switching and patch
-> application, but the codepaths that add directly to the index (add and
-> update-index) are not fixed (or "still has the feature").
->
-> I do not see a clean way to keep such a "feature" without hurting users
-> who suffered the bugs these two commits from May 2007 fixed.
+Brad and Dmitry: Thank you both very much.
 
-config option?
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
-I think a command line is too much work for too little value, but if the 
-check could be ignored based on a config option without costing too much 
-it may be reasonable.
-
-David Lang
+> ---
+>  t/t9113-git-svn-dcommit-new-file.sh |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> 
+> diff --git a/t/t9113-git-svn-dcommit-new-file.sh b/t/t9113-git-svn-dcommit-new-file.sh
+> index 8da8ce5..ae78e33 100755
+> --- a/t/t9113-git-svn-dcommit-new-file.sh
+> +++ b/t/t9113-git-svn-dcommit-new-file.sh
+> @@ -28,6 +28,7 @@ start_svnserve () {
+>  
+>  test_expect_success 'start tracking an empty repo' '
+>  	svn mkdir -m "empty dir" "$svnrepo"/empty-dir &&
+> +	echo "[general]" > "$rawsvnrepo"/conf/svnserve.conf &&
+>  	echo anon-access = write >> "$rawsvnrepo"/conf/svnserve.conf &&
+>  	start_svnserve &&
+>  	git svn init svn://127.0.0.1:$SVNSERVE_PORT &&
+> -- 
+> 1.6.0.rc1.74.g1e94
