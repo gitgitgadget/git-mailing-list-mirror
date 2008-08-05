@@ -1,62 +1,56 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] git-cvsimport.perl: Print "UNKNOWN LINE..." on stderr, not stdout.
-Date: Tue, 05 Aug 2008 16:54:42 +0200
-Message-ID: <87zlnro6kt.fsf@rho.meyering.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-cvsimport.perl: Print "UNKNOWN LINE..." on stderr,
+	not stdout.
+Date: Tue, 5 Aug 2008 11:28:36 -0400
+Message-ID: <20080805152836.GB21901@sigill.intra.peff.net>
+References: <87zlnro6kt.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 05 16:55:47 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git list <git@vger.kernel.org>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Tue Aug 05 17:29:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQNww-0003Fx-K1
-	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 16:55:47 +0200
+	id 1KQOTm-0007B0-Ej
+	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 17:29:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753714AbYHEOyo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Aug 2008 10:54:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754830AbYHEOyo
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 10:54:44 -0400
-Received: from smtp8-g19.free.fr ([212.27.42.65]:43800 "EHLO smtp8-g19.free.fr"
+	id S1759482AbYHEP2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2008 11:28:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759187AbYHEP2k
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 11:28:40 -0400
+Received: from peff.net ([208.65.91.99]:4615 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753714AbYHEOyn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2008 10:54:43 -0400
-Received: from smtp8-g19.free.fr (localhost [127.0.0.1])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id D10AE32A815
-	for <git@vger.kernel.org>; Tue,  5 Aug 2008 16:54:42 +0200 (CEST)
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id C025232A7AB
-	for <git@vger.kernel.org>; Tue,  5 Aug 2008 16:54:42 +0200 (CEST)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id A64C16A82B; Tue,  5 Aug 2008 16:54:42 +0200 (CEST)
+	id S1758642AbYHEP2j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2008 11:28:39 -0400
+Received: (qmail 23866 invoked by uid 111); 5 Aug 2008 15:28:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 05 Aug 2008 11:28:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Aug 2008 11:28:36 -0400
+Content-Disposition: inline
+In-Reply-To: <87zlnro6kt.fsf@rho.meyering.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91443>
 
+On Tue, Aug 05, 2008 at 04:54:42PM +0200, Jim Meyering wrote:
 
-Signed-off-by: Jim Meyering <meyering@redhat.com>
----
-I'm used to filtering git-cvsimport's noisy stderr, but this
-diagnostic appears on stdout.  Looks like an oversight.
-Now that I'm using cvsps-2.2b1, I see tons of these.
+> I'm used to filtering git-cvsimport's noisy stderr, but this
+> diagnostic appears on stdout.  Looks like an oversight.
+> Now that I'm using cvsps-2.2b1, I see tons of these.
 
- git-cvsimport.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+There are a ton of things that go to stdout:
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index e2664ef..e439202 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -952,7 +952,7 @@ while (<CVS>) {
- 	} elsif (/^-+$/) { # end of unknown-line processing
- 		$state = 1;
- 	} elsif ($state != 11) { # ignore stuff when skipping
--		print "* UNKNOWN LINE * $_\n";
-+		print STDERR "* UNKNOWN LINE * $_\n";
- 	}
- }
- commit() if $branch and $state != 11;
---
-1.6.0.rc1.36.g5ff70
+  $ perl -ne '/print (\S+)/ && print "$1\n" git-cvsimport.perl |
+    grep '^#' | wc -l
+  18
+
+though many are only activated via "-v". Maybe it is worth putting all
+of them to stderr? I really don't see why cvsimport should ever produce
+any output on stdout.
+
+-Peff
