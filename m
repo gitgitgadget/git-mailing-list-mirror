@@ -1,113 +1,133 @@
-From: Lee Marlow <lee.marlow@gmail.com>
-Subject: [PATCH 7/8] bash completion: Add completion for 'git ls-files'
-Date: Mon,  4 Aug 2008 23:50:37 -0600
-Message-ID: <1217915438-6838-8-git-send-email-lee.marlow@gmail.com>
-References: <1217915438-6838-1-git-send-email-lee.marlow@gmail.com>
- <1217915438-6838-2-git-send-email-lee.marlow@gmail.com>
- <1217915438-6838-3-git-send-email-lee.marlow@gmail.com>
- <1217915438-6838-4-git-send-email-lee.marlow@gmail.com>
- <1217915438-6838-5-git-send-email-lee.marlow@gmail.com>
- <1217915438-6838-6-git-send-email-lee.marlow@gmail.com>
- <1217915438-6838-7-git-send-email-lee.marlow@gmail.com>
-Cc: git@vger.kernel.org, Lee Marlow <lee.marlow@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Aug 05 07:56:46 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Not going beyond symbolic links
+Date: Mon, 04 Aug 2008 23:11:11 -0700
+Message-ID: <7vej54xa80.fsf@gitster.siamese.dyndns.org>
+References: <20080721002354.GK10151@machine.or.cz>
+ <20080721002508.26773.92277.stgit@localhost>
+ <7v8wvpm9cl.fsf@gitster.siamese.dyndns.org>
+ <7vej5543v5.fsf_-_@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.10.0808041719380.3299@nehalem.linux-foundation.org>
+ <7v8wvc2seh.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.10.0808041839130.3299@nehalem.linux-foundation.org>
+ <alpine.DEB.1.00.0808050356480.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+ <alpine.LFD.1.10.0808041921530.3299@nehalem.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Aug 05 08:12:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQFXH-0008V2-V7
-	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 07:56:44 +0200
+	id 1KQFmY-0004CP-AC
+	for gcvg-git-2@gmane.org; Tue, 05 Aug 2008 08:12:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755124AbYHEFzl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Aug 2008 01:55:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755099AbYHEFvE
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 01:51:04 -0400
-Received: from wf-out-1314.google.com ([209.85.200.175]:58782 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754777AbYHEFut (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2008 01:50:49 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so3753957wfd.4
-        for <git@vger.kernel.org>; Mon, 04 Aug 2008 22:50:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=IZHAgkrdCwTLlVBLymxfgph9DChclrhiJTgf7UnKBEc=;
-        b=xtQGEWKWOMNAf0mas2Xc6vSh7nP57fNyzr0TOAwQytCxV3DQdFvNHIU5hBf6YGAsZq
-         szlxs5h6VR5e1NTOIE0BYYxTl/YqJVdRXyrtsG1RfOjREj7DkAnTD0OcZ6qgU5uYsT8h
-         TZeldFEr6uXry5jPhjQ8+8W5lN+Usgah1N3P4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=cgCUGAUaD7ehBh4tOIlLQLqR5JngT8EL9vEkT4kArcZmD6KWSQJtkDkI0FxkHOZZ3n
-         wYedCJ6mS/lUrGvnUpWKIazxA0yx3O7dP2P7lzgt0PW7s5VRWsRiwD5Gu/FkdalZdC3n
-         EufokNrfssM45PYzn3dyyzVj8YVIzA4ByQHMQ=
-Received: by 10.142.84.5 with SMTP id h5mr5264582wfb.339.1217915449435;
-        Mon, 04 Aug 2008 22:50:49 -0700 (PDT)
-Received: from localhost.localdomain ( [75.71.41.234])
-        by mx.google.com with ESMTPS id 32sm10686014wfc.12.2008.08.04.22.50.48
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 04 Aug 2008 22:50:48 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.rc1.48.g2b6032
-In-Reply-To: <1217915438-6838-7-git-send-email-lee.marlow@gmail.com>
+	id S1752359AbYHEGL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2008 02:11:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752264AbYHEGLZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 02:11:25 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36467 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752105AbYHEGLX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2008 02:11:23 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 52B5E4BC0A;
+	Tue,  5 Aug 2008 02:11:20 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 686764BC08; Tue,  5 Aug 2008 02:11:13 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 52796622-62B5-11DD-B0A0-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91428>
 
-Added completions for all long options specified in the docs
-	--cached --deleted --modified --others --ignored
-	--stage --directory --no-empty-directory --unmerged
-	--killed --exclude= --exclude-from=
-	--exclude-per-directory= --exclude-standard
-	--error-unmatch --with-tree= --full-name
-	--abbrev --ignored --exclude-per-directory
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Signed-off-by: Lee Marlow <lee.marlow@gmail.com>
----
- contrib/completion/git-completion.bash |   21 +++++++++++++++++++++
- 1 files changed, 21 insertions(+), 0 deletions(-)
+> IOW, sometimes you may _want_ to use symlinks that way, even within one 
+> project - with a symlink allowing you to move parts of it around 
+> "transparently".
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 61ea6d9..936cd35 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -883,6 +883,26 @@ _git_init ()
- 	COMPREPLY=()
- }
- 
-+_git_ls_files ()
-+{
-+	__git_has_doubledash && return
-+
-+	local cur="${COMP_WORDS[COMP_CWORD]}"
-+	case "$cur" in
-+	--*)
-+		__gitcomp "--cached --deleted --modified --others --ignored
-+			--stage --directory --no-empty-directory --unmerged
-+			--killed --exclude= --exclude-from=
-+			--exclude-per-directory= --exclude-standard
-+			--error-unmatch --with-tree= --full-name
-+			--abbrev --ignored --exclude-per-directory
-+			"
-+		return
-+		;;
-+	esac
-+	COMPREPLY=()
-+}
-+
- _git_ls_remote ()
- {
- 	__gitcomp "$(__git_remotes)"
-@@ -1590,6 +1610,7 @@ _git ()
- 	help)        _git_help ;;
- 	init)        _git_init ;;
- 	log)         _git_log ;;
-+	ls-files)    _git_ls_files ;;
- 	ls-remote)   _git_ls_remote ;;
- 	ls-tree)     _git_ls_tree ;;
- 	merge)       _git_merge;;
--- 
-1.6.0.rc1.48.g2b6032
+While I admit that I have managed a large directory split across
+partitions grafted via symlinks in pre-git days myself, ever since you
+started "tracking" symbolic links with 8ae0a8c (git and symlinks as
+tracked content, 2005-05-05), you have pretty much been committed to
+"track" symbolic links.
+
+This goes even before that commit. The readdir() loop done in show-files.c
+with 8695c8b (Add "show-files" command to show the list of managed (or
+non-managed) files., 2005-04-11) does not dereference symbolic links
+pointing at a directory elsewhere, which we still have as read_directory()
+in dir.c without much change in the basic structure.
+
+I would give some leeway to other people who made comments in this thread,
+who may not be so familiar with the low-level git codebase, but I have to
+say that if you claim that dereferencing symbolic links in the middle is a
+feature, you are not being completely honest, you haven't thought through
+the issues, and/or you simply forgot the details.  I'd suspect most likely
+it is the last one ;-).
+
+The thing is, the "feature" is not very well supported, even without the
+fixes from last night.  If you have a symlink "sym" that points at "dir"
+that has "file" in it, and if neither "sym" nor "dir/file" are tracked,
+you can "git add sym/file" to add it (I called it a bug).
+
+However:
+
+ (1) starting from the same condition, "git add ." does _not_ add it (you
+     get the symbolic link "sym" added to your index instead, as well as
+     "dir/file");
+
+ (2) after you add "sym/file" through the bug, if you say "git add .", it
+     will be removed from the index and you will instead have "sym" and
+     "dir/file" (with an ancient git before 1.5.0, you will get "unable to
+     add sym" error instead).
+
+ (3) after you add "sym/file", "git diff" will immediately notice that you
+     have removed it (this is a fairly recent fix; 1.5.4.X doesn't notice
+     it).
+
+You cannot have it as a reliably usable feature without a major surgery,
+and this is fundamental. You simply cannot have it both ways without
+telling git which symlink is "tracked" and which are only there for
+storage sizing.
+
+If you seriously want to claim that we support such a feature, you would
+at least need to:
+
+ (0) have a way for the user to say, "the project tree may have a
+     directory D, but I do not want to check it out as a directory because
+     my partition is too small.  Whenever you need to create a directory
+     there and hang a tree underneath, instead create a symlink that
+     points at /export/large/D instead".  Most likely this information
+     would go to .git/config;
+
+ (1) whereever we run "create leading directories", we notice and honor
+     the above configuration (mostly entry.c::create_directories() called
+     from entry.c::checkout_entry());
+
+ (2) whenever we need to check out a file to path D, instead of
+     recursively remove everything under it, we remove the symlink and
+     deposit the file there (mostly entry.c::remove_subtree() and
+     unpack-trees.c::verify_absent());
+
+ (3) whenever we traverse working tree using readdir(), notice that the
+     symbolic link we are looking at is the funny "pointing elsewhere but
+     this is really a directory" specified in (0) and recurse into the
+     directory pointed by it (dir.c::read_directory_recursive() but there
+     may be others)
+
+ (4) and we teach has_symlink_leading_path() to special case such a path
+     you configured in (0).
+
+I personally do not think adding these to support such a "feature" is such
+a high priority, and I do not think it is honest to claim we support such
+a feature without doing any of the above.  The current reality is that our
+symlink support is still broken in corner cases, and being able to easily
+add "sym/path" via "git add" and "git update-index --add" is one of them.
