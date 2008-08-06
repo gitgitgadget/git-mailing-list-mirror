@@ -1,63 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git show doesn't respect config: diff.renames=copies
-Date: Wed, 6 Aug 2008 11:25:37 -0400
-Message-ID: <20080806152537.GB21233@sigill.intra.peff.net>
-References: <20080806114340.GA24552@cuci.nl> <20080806140602.GA20423@sigill.intra.peff.net> <20080806141559.GA25791@atjola.homenet>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] perl/Makefile: handle paths with spaces in the
+ NO_PERL_MAKEMAKER section
+Date: Wed, 06 Aug 2008 08:33:23 -0700
+Message-ID: <7v7iaurwe4.fsf@gitster.siamese.dyndns.org>
+References: <mLu74vNKfH1vFZlC7N_lRX3WekWReoVjWY42voUDUBUnAGVpDNYWndWqlaHoqVAkxOaCdYV6uDk@cipher.nrlssc.navy.mil> <osgPH47FO7h-zLUMqwCv-i9BWln2-_AK5T6TI-5mLGFjwAhJ4Bg_lw@cipher.nrlssc.navy.mil> <7v8wvbuit7.fsf@gitster.siamese.dyndns.org> <klGWkbWGpsUHZpuNwl9WvZs5UGGfYVAngWbiM3eippaejrXLNyLpRA@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Stephen R. van den Berg" <srb@cuci.nl>, git@vger.kernel.org
-To: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 06 17:26:58 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Aug 06 17:34:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQkuZ-0005ax-Up
-	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 17:26:52 +0200
+	id 1KQl2C-0000lR-Lv
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 17:34:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755366AbYHFPZl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Aug 2008 11:25:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755397AbYHFPZk
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 11:25:40 -0400
-Received: from peff.net ([208.65.91.99]:1353 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755161AbYHFPZj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2008 11:25:39 -0400
-Received: (qmail 32149 invoked by uid 111); 6 Aug 2008 15:25:39 -0000
-Received: from lawn-128-61-21-105.lawn.gatech.edu (HELO sigill.intra.peff.net) (128.61.21.105)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 06 Aug 2008 11:25:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Aug 2008 11:25:37 -0400
-Content-Disposition: inline
-In-Reply-To: <20080806141559.GA25791@atjola.homenet>
+	id S1756327AbYHFPdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2008 11:33:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758655AbYHFPde
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 11:33:34 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49607 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758659AbYHFPdb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2008 11:33:31 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E20764D9B6;
+	Wed,  6 Aug 2008 11:33:28 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id EC2634D9B3; Wed,  6 Aug 2008 11:33:25 -0400 (EDT)
+In-Reply-To: <klGWkbWGpsUHZpuNwl9WvZs5UGGfYVAngWbiM3eippaejrXLNyLpRA@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Wed, 06 Aug 2008 09:25:18 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 04B0FF86-63CD-11DD-8CF9-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91520>
 
-On Wed, Aug 06, 2008 at 04:15:59PM +0200, Bj=C3=B6rn Steinbrink wrote:
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-> > $ git grep -A3 diff.renames
-> > config.txt:diff.renames::
-> > config.txt-     Tells git to detect renames.  If set to any boolean=
- value, it
-> > config.txt-     will enable basic rename detection.  If set to "cop=
-ies" or
-> > config.txt-     "copy", it will detect copies, as well.
->=20
-> See subject line ;-)
+> Junio C Hamano wrote:
+>> Brandon Casey <casey@nrlssc.navy.mil> writes:
+>> 
+>>> Use double quotes to protect against paths which may contain spaces.
+>>> ...
+>>> +	echo '	mkdir -p "$(instdir_SQ)"' >> $@
+>> 
+>> Is this sufficient?  We seem to apply double-sq when writing shell
+>> scriptlet in GIT-BUILD-OPTIONS from the main Makefile, and I suspect you
+>> would need to do something similar.
+>
+> It seems to be sufficient. The double quotes survived into my perl.mak file
+> and the two perl modules were installed correctly when I supplied a prefix
+> with spaces. Is there something else to be concerned about?
 
-Heh. Yes, oops. His question makes a lot more sense now. ;)
-
-> Works for me though. Stephen, probably the source file didn't change =
-in
-> the same commit. In such a case you need --find-copies-harder, and th=
-at
-> seems not to be configurable as the default.
-
-I don't think it is configurable. Probably a "copiesharder" option for
-diff.renames would be a sane addition.
-
--Peff
+I think the generic way GIT-BUILD-OPTIONS writing is done covers cases
+where the installation directory has funnies other than whitespace, e.g. 
+double quotes.  Is your 'echo "$(instdir_SQ)"' sufficient?
