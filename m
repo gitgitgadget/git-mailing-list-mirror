@@ -1,59 +1,50 @@
-From: Olivier Marin <dkr+ml.git@free.fr>
-Subject: Re: [PATCH] files given on the command line are relative to $cwd
-Date: Wed, 06 Aug 2008 22:14:19 +0200
-Message-ID: <489A061B.7010508@free.fr>
-References: <48997D2E.9030708@obry.net> <20080806104432.GG7121@bit.office.eurotux.com> <4899848C.6030800@obry.net> <7v3alirw6b.fsf@gitster.siamese.dyndns.org> <4899D119.1080403@obry.net> <7vy73aqe9m.fsf@gitster.siamese.dyndns.org> <7vr692oufw.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] perl/Makefile: handle paths with spaces in the
+ NO_PERL_MAKEMAKER section
+Date: Wed, 06 Aug 2008 13:15:26 -0700
+Message-ID: <7vy739nbmp.fsf@gitster.siamese.dyndns.org>
+References: <mLu74vNKfH1vFZlC7N_lRX3WekWReoVjWY42voUDUBUnAGVpDNYWndWqlaHoqVAkxOaCdYV6uDk@cipher.nrlssc.navy.mil> <osgPH47FO7h-zLUMqwCv-i9BWln2-_AK5T6TI-5mLGFjwAhJ4Bg_lw@cipher.nrlssc.navy.mil> <7v8wvbuit7.fsf@gitster.siamese.dyndns.org> <klGWkbWGpsUHZpuNwl9WvZs5UGGfYVAngWbiM3eippaejrXLNyLpRA@cipher.nrlssc.navy.mil> <7v7iaurwe4.fsf@gitster.siamese.dyndns.org> <lh6XIUcjpbjj8G8Ot7RQFlDitUn1njsc350QhnNmQkcgxlfluBPGZw@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>,
-	Luciano Rocha <luciano@eurotux.com>, pascal@obry.net,
-	Pierre Habouzit <madcoder@debian.org>,
-	=?ISO-8859-1?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 06 22:15:36 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Aug 06 22:16:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQpPy-0008Fg-26
-	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 22:15:34 +0200
+	id 1KQpR5-0000Eb-7I
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 22:16:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761875AbYHFUOX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Aug 2008 16:14:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761841AbYHFUOW
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 16:14:22 -0400
-Received: from smtp8-g19.free.fr ([212.27.42.65]:34964 "EHLO smtp8-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761733AbYHFUOV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2008 16:14:21 -0400
-Received: from smtp8-g19.free.fr (localhost [127.0.0.1])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id F253E32A847;
-	Wed,  6 Aug 2008 22:14:19 +0200 (CEST)
-Received: from [10.253.21.40] (hhe95-1-82-225-56-14.fbx.proxad.net [82.225.56.14])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id 6B8A232A869;
-	Wed,  6 Aug 2008 22:14:19 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <7vr692oufw.fsf@gitster.siamese.dyndns.org>
+	id S1760533AbYHFUPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2008 16:15:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760229AbYHFUPg
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 16:15:36 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42259 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758236AbYHFUPf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2008 16:15:35 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 730504DF31;
+	Wed,  6 Aug 2008 16:15:32 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id B18BD4DF2F; Wed,  6 Aug 2008 16:15:29 -0400 (EDT)
+In-Reply-To: <lh6XIUcjpbjj8G8Ot7RQFlDitUn1njsc350QhnNmQkcgxlfluBPGZw@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Wed, 06 Aug 2008 14:31:49 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6BE949C0-63F4-11DD-9985-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91537>
 
-Junio C Hamano a =E9crit :
-> =20
->  static int parse_and_validate_options(int argc, const char *argv[],
-> -				      const char * const usage[])
-> +				      const char * const usage[],
-> +				      const char *prefix)
->  {
->  	int f =3D 0;
-> =20
->  	argc =3D parse_options(argc, argv, builtin_commit_options, usage, 0=
-);
-> +	logfile =3D parse_options_fix_filename(prefix, logfile);
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-It breaks the "git commit -F -" case, no?
+> There are problems here with spaces, single quotes, and double quotes.
+> I'll follow up in another email.
 
-Olivier.
+I guess we've opened up a large can of worms.  Let's have the minimum fix
+that says "We do support whitespace in these paths but no other funnies"
+and leave the more intrusive one for post 1.6.0, for now.
