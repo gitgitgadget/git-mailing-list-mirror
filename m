@@ -1,276 +1,170 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [EGIT PATCH 3/5] Fix RepositoryMapping.getRepoRelativePath to honor linked resources
-Date: Tue,  5 Aug 2008 20:09:38 -0700
-Message-ID: <1217992180-5697-4-git-send-email-spearce@spearce.org>
+Subject: [EGIT PATCH 4/5] Change GitProjectData.getRepositoryMapping to work on linked resources
+Date: Tue,  5 Aug 2008 20:09:39 -0700
+Message-ID: <1217992180-5697-5-git-send-email-spearce@spearce.org>
 References: <1217992180-5697-1-git-send-email-spearce@spearce.org>
  <1217992180-5697-2-git-send-email-spearce@spearce.org>
  <1217992180-5697-3-git-send-email-spearce@spearce.org>
+ <1217992180-5697-4-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>,
 	Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 06 05:10:58 2008
+X-From: git-owner@vger.kernel.org Wed Aug 06 05:11:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQZQJ-0005ZC-Th
-	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 05:10:52 +0200
+	id 1KQZQK-0005ZC-Lq
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 05:10:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762050AbYHFDJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Aug 2008 23:09:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758575AbYHFDJs
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 23:09:48 -0400
-Received: from george.spearce.org ([209.20.77.23]:47475 "EHLO
+	id S1762176AbYHFDJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2008 23:09:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761577AbYHFDJt
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 23:09:49 -0400
+Received: from george.spearce.org ([209.20.77.23]:47471 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752654AbYHFDJo (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1758505AbYHFDJo (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 5 Aug 2008 23:09:44 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 6B07638447; Wed,  6 Aug 2008 03:09:43 +0000 (UTC)
+	id 3571238438; Wed,  6 Aug 2008 03:09:44 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 7081C38419;
+	by george.spearce.org (Postfix) with ESMTP id 1274038420;
 	Wed,  6 Aug 2008 03:09:42 +0000 (UTC)
 X-Mailer: git-send-email 1.6.0.rc1.250.g9b5e2
-In-Reply-To: <1217992180-5697-3-git-send-email-spearce@spearce.org>
+In-Reply-To: <1217992180-5697-4-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91480>
 
-If a project resource is linked to a repository working directory we
-should be locating the path of the resource within the repository by
-the path it appears in the filesystem, not the path it appears at in
-the Eclipse project structure.  By using the filesystem location we
-can ensure the paths match what C Git would see when accessing the
-same resource.
+When we are looking up the mapping for a file contained within a linked
+directory the linked directory may be mapped to a Git repository that is
+not the same as the project itself, or the project doesn't even have a
+Git repository.
 
-By making this change we can now safely remove the subset concept
-from RepositoryMapping as it was a crude form of trying to come up
-with the same result when projects appeared within a repository.
+This may also be necessary for submodules.  For example a single project
+in Eclipse may actually contain several Git submodules below it and each
+must have its own RepositoryMapping.
+
+We now store the RepositoryMapping for a given IContainer directly on
+that container using a session property.  This way Eclipse manages the
+hash lookups for us, and we can efficiently walk up the tree to locate
+the nearest mapping for any resource.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../egit/core/op/ConnectProviderOperation.java     |   14 +----
- .../egit/core/project/RepositoryFinder.java        |   11 +--
- .../egit/core/project/RepositoryMapping.java       |   65 ++++++++-----------
- 3 files changed, 32 insertions(+), 58 deletions(-)
+ .../spearce/egit/core/project/GitProjectData.java  |   47 +++++++++++++-------
+ 1 files changed, 31 insertions(+), 16 deletions(-)
 
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/op/ConnectProviderOperation.java b/org.spearce.egit.core/src/org/spearce/egit/core/op/ConnectProviderOperation.java
-index 3ed3569..bf814f4 100644
---- a/org.spearce.egit.core/src/org/spearce/egit/core/op/ConnectProviderOperation.java
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/op/ConnectProviderOperation.java
-@@ -15,10 +15,8 @@ import org.eclipse.core.resources.IProject;
- import org.eclipse.core.resources.IResource;
- import org.eclipse.core.resources.IWorkspaceRunnable;
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/project/GitProjectData.java b/org.spearce.egit.core/src/org/spearce/egit/core/project/GitProjectData.java
+index 3d5424c..9998880 100644
+--- a/org.spearce.egit.core/src/org/spearce/egit/core/project/GitProjectData.java
++++ b/org.spearce.egit.core/src/org/spearce/egit/core/project/GitProjectData.java
+@@ -32,6 +32,7 @@ import org.eclipse.core.resources.IResourceChangeListener;
+ import org.eclipse.core.resources.ResourcesPlugin;
  import org.eclipse.core.runtime.CoreException;
--import org.eclipse.core.runtime.IPath;
- import org.eclipse.core.runtime.IProgressMonitor;
- import org.eclipse.core.runtime.NullProgressMonitor;
--import org.eclipse.core.runtime.Path;
- import org.eclipse.core.runtime.SubProgressMonitor;
+ import org.eclipse.core.runtime.Preferences;
++import org.eclipse.core.runtime.QualifiedName;
+ import org.eclipse.osgi.util.NLS;
  import org.eclipse.team.core.RepositoryProvider;
  import org.spearce.egit.core.Activator;
-@@ -70,17 +68,7 @@ public class ConnectProviderOperation implements IWorkspaceRunnable {
- 
- 					db = new Repository(newGitDir);
- 					db.create();
--					IPath gitDirParent = Path.fromOSString(
--							db.getDirectory().getAbsolutePath())
--							.removeLastSegments(1);
--					IPath cPath = project.getLocation();
--					String subset = null;
--					if (gitDirParent.isPrefixOf(cPath)) {
--						int n = cPath.matchingFirstSegments(gitDirParent);
--						subset = cPath.removeFirstSegments(n).toPortableString();
--					}
--					repos.add(new RepositoryMapping(project, db.getDirectory(),
--							subset));
-+					repos.add(new RepositoryMapping(project, db.getDirectory()));
- 					db.close();
- 
- 					// If we don't refresh the project directory right
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryFinder.java b/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryFinder.java
-index 68cf79c..116a7bf 100644
---- a/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryFinder.java
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryFinder.java
-@@ -92,17 +92,15 @@ public class RepositoryFinder {
- 				final IResource[] children;
- 
- 				if (ownCfg.isFile()) {
--					register(c, ownCfg.getParentFile(), null);
-+					register(c, ownCfg.getParentFile());
- 				} else if (c.isLinked() || c instanceof IProject) {
--					String s = fsLoc.getName();
- 					File p = fsLoc.getParentFile();
- 					while (p != null) {
- 						final File pCfg = configFor(p);
- 						if (pCfg.isFile()) {
--							register(c, pCfg.getParentFile(), s);
-+							register(c, pCfg.getParentFile());
- 							break;
- 						}
--						s = p.getName() + "/" + s;
- 						p = p.getParentFile();
- 					}
- 				}
-@@ -132,14 +130,13 @@ public class RepositoryFinder {
- 		return new File(new File(fsLoc, ".git"), "config");
- 	}
- 
--	private void register(final IContainer c, final File gitdir,
--			final String subset) {
-+	private void register(final IContainer c, final File gitdir) {
- 		File f;
- 		try {
- 			f = gitdir.getCanonicalFile();
- 		} catch (IOException ioe) {
- 			f = gitdir.getAbsoluteFile();
+@@ -71,6 +72,9 @@ public class GitProjectData {
  		}
--		results.add(new RepositoryMapping(c, f, subset));
-+		results.add(new RepositoryMapping(c, f));
  	}
- }
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java b/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
-index 6a0b56f..17e8142 100644
---- a/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
-@@ -41,10 +41,10 @@ public class RepositoryMapping {
  
- 	private final String gitdirPath;
- 
--	private final String subset;
--
- 	private Repository db;
- 
-+	private String workdirPrefix;
++	private static QualifiedName MAPPING_KEY = new QualifiedName(
++			GitProjectData.class.getName(), "RepositoryMapping");
 +
- 	private IContainer container;
- 
  	/**
-@@ -55,12 +55,9 @@ public class RepositoryMapping {
- 	 */
- 	public RepositoryMapping(final Properties p, final String initialKey) {
- 		final int dot = initialKey.lastIndexOf('.');
--		String s;
- 
- 		containerPath = initialKey.substring(0, dot);
- 		gitdirPath = p.getProperty(initialKey);
--		s = p.getProperty(containerPath + ".subset");
--		subset = "".equals(s) ? null : s;
- 	}
- 
- 	/**
-@@ -69,10 +66,8 @@ public class RepositoryMapping {
+ 	 * Start listening for resource changes.
  	 *
- 	 * @param mappedContainer
- 	 * @param gitDir
--	 * @param subsetRoot
- 	 */
--	public RepositoryMapping(final IContainer mappedContainer,
--			final File gitDir, final String subsetRoot) {
-+	public RepositoryMapping(final IContainer mappedContainer, final File gitDir) {
- 		final IPath cLoc = mappedContainer.getLocation()
- 				.removeTrailingSeparator();
- 		final IPath gLoc = Path.fromOSString(gitDir.getAbsolutePath())
-@@ -98,8 +93,6 @@ public class RepositoryMapping {
- 		} else {
- 			gitdirPath = gLoc.toPortableString();
- 		}
--
--		subset = "".equals(subsetRoot) ? null : subsetRoot;
- 	}
+@@ -226,8 +230,6 @@ public class GitProjectData {
  
- 	IPath getContainerPath() {
-@@ -111,17 +104,6 @@ public class RepositoryMapping {
- 	}
+ 	private final Collection mappings;
+ 
+-	private final Map c2mapping;
+-
+ 	private final Set protectedResources;
  
  	/**
--	 * Eclipse projects typically reside one or more levels
--	 * below the repository. This method return the relative
--	 * path to the project. Null is returned instead of "".
--	 *
--	 * @return relative path from repository to project, or null
--	 */
--	public String getSubset() {
--		return subset;
--	}
--
--	/**
- 	 * @return the workdir file, i.e. where the files are checked out
- 	 */
- 	public File getWorkDir() {
-@@ -130,6 +112,7 @@ public class RepositoryMapping {
- 
- 	synchronized void clear() {
- 		db = null;
-+		workdirPrefix = null;
- 		container = null;
+@@ -239,7 +241,6 @@ public class GitProjectData {
+ 	public GitProjectData(final IProject p) {
+ 		project = p;
+ 		mappings = new ArrayList();
+-		c2mapping = new HashMap();
+ 		protectedResources = new HashSet();
  	}
  
-@@ -142,6 +125,15 @@ public class RepositoryMapping {
- 
- 	synchronized void setRepository(final Repository r) {
- 		db = r;
+@@ -267,15 +268,16 @@ public class GitProjectData {
+ 	 * @throws CoreException
+ 	 */
+ 	public void markTeamPrivateResources() throws CoreException {
+-		final Iterator i = c2mapping.entrySet().iterator();
+-		while (i.hasNext()) {
+-			final Map.Entry e = (Map.Entry) i.next();
+-			final IContainer c = (IContainer) e.getKey();
++		for (final Object rmObj : mappings) {
++			final RepositoryMapping rm = (RepositoryMapping)rmObj;
++			final IContainer c = rm.getContainer();
++			if (c == null)
++				continue; // Not fully mapped yet?
 +
-+		try {
-+			workdirPrefix = getWorkDir().getCanonicalPath();
-+		} catch (IOException err) {
-+			workdirPrefix = getWorkDir().getAbsolutePath();
-+		}
-+		workdirPrefix = workdirPrefix.replace('\\', '/');
-+		if (!workdirPrefix.endsWith("/"))
-+			workdirPrefix += "/";
+ 			final IResource dotGit = c.findMember(".git");
+ 			if (dotGit != null) {
+ 				try {
+-					final Repository r = ((RepositoryMapping) e.getValue())
+-							.getRepository();
++					final Repository r = rm.getRepository();
+ 					final File dotGitDir = dotGit.getLocation().toFile()
+ 							.getCanonicalFile();
+ 					if (dotGitDir.equals(r.getDirectory())) {
+@@ -298,14 +300,23 @@ public class GitProjectData {
  	}
  
  	/**
-@@ -166,9 +158,6 @@ public class RepositoryMapping {
- 
- 	synchronized void store(final Properties p) {
- 		p.setProperty(containerPath + ".gitdir", gitdirPath);
--		if (subset != null && !"".equals(subset)) {
--			p.setProperty(containerPath + ".subset", subset);
--		}
- 	}
- 
- 	public String toString() {
-@@ -209,20 +198,20 @@ public class RepositoryMapping {
- 	 * @param rsrc
- 	 * @return the path relative to the Git repository, including base name.
+-	 * TODO: check usage, we should probably declare the parameter
+-	 * as IProject.
+-	 *
+-	 * @param r Eclipse project
++	 * @param r any workbench resource contained within this project.
+ 	 * @return the mapping for the specified project
  	 */
--	public String getRepoRelativePath(IResource rsrc) {
--		String prefix = getSubset();
--		String projectRelativePath = rsrc.getProjectRelativePath().toString();
--		String repoRelativePath;
--		if (prefix != null) {
--			if (projectRelativePath.length() == 0)
--				repoRelativePath = prefix;
--			else
--				repoRelativePath = prefix + "/" + projectRelativePath;
--		} else
--			repoRelativePath = projectRelativePath;
--
--		assert repoRelativePath != null;
--		return repoRelativePath;
-+	public String getRepoRelativePath(final IResource rsrc) {
-+		// We should only be called for resources that are actually
-+		// in this repository, so we can safely assume that their
-+		// path prefix matches workdirPrefix. Testing that here is
-+		// rather expensive so we don't bother.
-+		//
-+		final int pfxLen = workdirPrefix.length();
-+		final String p = rsrc.getLocation().toString();
-+		final int pLen = p.length();
-+		if (pLen > pfxLen)
-+			return p.substring(pfxLen);
-+		else if (p.length() == pfxLen - 1)
-+			return "";
+-	public RepositoryMapping getRepositoryMapping(final IResource r) {
+-		return (RepositoryMapping) c2mapping.get(r);
++	public RepositoryMapping getRepositoryMapping(IResource r) {
++		try {
++			while (r != null) {
++				final RepositoryMapping m;
++
++				m = (RepositoryMapping) r.getSessionProperty(MAPPING_KEY);
++				if (m != null)
++					return m;
++ 				r = r.getParent();
++			}
++		} catch (CoreException err) {
++			Activator.logError("Falied finding RepositoryMapping", err);
++		}
 +		return null;
  	}
  
- 	/**
+ 	private void delete() {
+@@ -445,7 +456,11 @@ public class GitProjectData {
+ 		m.fireRepositoryChanged();
+ 
+ 		trace("map " + c + " -> " + m.getRepository());
+-		c2mapping.put(c, m);
++		try {
++			c.setSessionProperty(MAPPING_KEY, m);
++		} catch (CoreException err) {
++			Activator.logError("Failed to cache RepositoryMapping", err);
++		}
+ 
+ 		dotGit = c.findMember(".git");
+ 		if (dotGit != null && dotGit.getLocation().toFile().equals(git)) {
 -- 
 1.6.0.rc1.250.g9b5e2
