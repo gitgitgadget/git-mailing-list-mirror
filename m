@@ -1,59 +1,52 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Makefile: use backticks rather than $() notation to
- support ancient shells
-Date: Wed, 6 Aug 2008 02:10:15 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808060208450.9611@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <K5bb057jTokXyOIU_aDE4vMr3jT4DOgSPRcIktfus6QMVq6dszrgGw@cipher.nrlssc.navy.mil>
+From: david@lang.hm
+Subject: discussion of git on lwn.net
+Date: Tue, 5 Aug 2008 19:18:55 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0808051914300.22058@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Aug 06 02:06:52 2008
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 06 04:19:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQWYC-0000vd-PM
-	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 02:06:49 +0200
+	id 1KQYcJ-0003qM-HS
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 04:19:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756208AbYHFAFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Aug 2008 20:05:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755852AbYHFAFr
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 20:05:47 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49928 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755817AbYHFAFq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2008 20:05:46 -0400
-Received: (qmail invoked by alias); 06 Aug 2008 00:05:44 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp056) with SMTP; 06 Aug 2008 02:05:44 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18QK5I7l9IQ8xkQsbmqujDcAtS0MBR9tTxFm7YI1G
-	U4ZJGxWQUKAId3
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <K5bb057jTokXyOIU_aDE4vMr3jT4DOgSPRcIktfus6QMVq6dszrgGw@cipher.nrlssc.navy.mil>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1755790AbYHFCSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2008 22:18:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754724AbYHFCSI
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Aug 2008 22:18:08 -0400
+Received: from mail.lang.hm ([64.81.33.126]:53884 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753004AbYHFCSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2008 22:18:07 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m762I4fG018086
+	for <git@vger.kernel.org>; Tue, 5 Aug 2008 19:18:04 -0700
+X-X-Sender: dlang@asgard.lang.hm
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91474>
 
-Hi,
+I suspect that many people will see this anyway, but for those who don't 
+read lwn there is an article osted today about git (initially pointing at 
+the git magic site) that is attracting quite a few comments (18 so far)
 
-On Tue, 5 Aug 2008, Brandon Casey wrote:
+David Lang
 
-> Otherwise, should we set the SHELL variable to the configured SHELL_PATH 
-> at some point in the Makefile?
+http://lwn.net/Articles/292726/
 
-I think that would make more sense, especially since it would catch 
-wrong SHELL_PATH early.
-
-Maybe we can even have some sanity check that tests if SHELL_PATH groks 
-$()?
-
-Ciao,
-Dscho
+Git Magic may not be exactly new, but some of us have stumbled across it 
+later than others. It is a highly readable introduction to git with lots 
+of examples of how to get things done. "As Arthur C. Clarke observed, any 
+sufficiently advanced technology is indistinguishable from magic. This is 
+a great way to approach Git: newbies can ignore its inner workings and 
+view Git as a gizmo that can amaze friends and infuriate enemies with its 
+wondrous abilities. Rather than go into details, we provide rough 
+instructions for particular effects. After repeated use, gradually you 
+will understand how each trick works, and how to tailor the recipes for 
+your needs."
