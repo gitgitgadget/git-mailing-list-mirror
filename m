@@ -1,180 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] files given on the command line are relative to $cwd
-Date: Wed, 06 Aug 2008 11:43:47 -0700
-Message-ID: <7vr692oufw.fsf@gitster.siamese.dyndns.org>
-References: <48997D2E.9030708@obry.net>
- <20080806104432.GG7121@bit.office.eurotux.com> <4899848C.6030800@obry.net>
- <7v3alirw6b.fsf@gitster.siamese.dyndns.org> <4899D119.1080403@obry.net>
- <7vy73aqe9m.fsf@gitster.siamese.dyndns.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] perl/Makefile: handle paths with spaces in the NO_PERL_MAKEMAKER
+ section
+Date: Wed, 06 Aug 2008 14:31:49 -0500
+Message-ID: <lh6XIUcjpbjj8G8Ot7RQFlDitUn1njsc350QhnNmQkcgxlfluBPGZw@cipher.nrlssc.navy.mil>
+References: <mLu74vNKfH1vFZlC7N_lRX3WekWReoVjWY42voUDUBUnAGVpDNYWndWqlaHoqVAkxOaCdYV6uDk@cipher.nrlssc.navy.mil> <osgPH47FO7h-zLUMqwCv-i9BWln2-_AK5T6TI-5mLGFjwAhJ4Bg_lw@cipher.nrlssc.navy.mil> <7v8wvbuit7.fsf@gitster.siamese.dyndns.org> <klGWkbWGpsUHZpuNwl9WvZs5UGGfYVAngWbiM3eippaejrXLNyLpRA@cipher.nrlssc.navy.mil> <7v7iaurwe4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Luciano Rocha <luciano@eurotux.com>, pascal@obry.net,
-	Pierre Habouzit <madcoder@debian.org>,
-	Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 06 20:45:04 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 06 21:33:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQo0N-0002PH-E5
-	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 20:45:03 +0200
+	id 1KQol5-0005oT-A2
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 21:33:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755597AbYHFSoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2008 14:44:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755543AbYHFSn7
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 14:43:59 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34024 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752692AbYHFSn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2008 14:43:58 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4FA5D4D183;
-	Wed,  6 Aug 2008 14:43:57 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 6893A4D17F; Wed,  6 Aug 2008 14:43:50 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A08CD8F2-63E7-11DD-A1AA-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1761595AbYHFTcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2008 15:32:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761587AbYHFTcP
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 15:32:15 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:58466 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761579AbYHFTcM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2008 15:32:12 -0400
+Received: by mail.nrlssc.navy.mil id m76JVoWT007928; Wed, 6 Aug 2008 14:31:52 -0500
+In-Reply-To: <7v7iaurwe4.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 06 Aug 2008 19:31:50.0062 (UTC) FILETIME=[12944CE0:01C8F7FB]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91533>
 
-When running "git commit -F file" and "git tag -F file" from a
-subdirectory, we should take it as relative to the directory we started
-from, not relative to the top-level directory.
+Junio C Hamano wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> writes:
+> 
+>> Junio C Hamano wrote:
+>>> Brandon Casey <casey@nrlssc.navy.mil> writes:
+>>>
+>>>> Use double quotes to protect against paths which may contain spaces.
+>>>> ...
+>>>> +	echo '	mkdir -p "$(instdir_SQ)"' >> $@
+>>> Is this sufficient?  We seem to apply double-sq when writing shell
+>>> scriptlet in GIT-BUILD-OPTIONS from the main Makefile, and I suspect you
+>>> would need to do something similar.
+>> It seems to be sufficient. The double quotes survived into my perl.mak file
+>> and the two perl modules were installed correctly when I supplied a prefix
+>> with spaces. Is there something else to be concerned about?
+> 
+> I think the generic way GIT-BUILD-OPTIONS writing is done covers cases
+> where the installation directory has funnies other than whitespace, e.g. 
+> double quotes.  Is your 'echo "$(instdir_SQ)"' sufficient?
 
-This adds a helper function "parse_options_fix_filename()" to make it more
-convenient to fix this class of issues.  Ideally, parse_options() should
-support a new type of option, "OPT_FILENAME", to do this uniformly, but
-this patch is meant to go to 'maint' to fix it minimally.
 
-One thing to note is that value for "commit template file" that comes from
-the command line is taken as relative to $cwd just like other parameters,
-but when it comes from the configuration varilable 'commit.template', it
-is taken as relative to the working tree root as before.  I think this
-difference actually is sensible (not that I particularly think
-commit.template itself is sensible).
+DOUBLE QUOTE ISSUE:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-commit.c  |   11 +++++++----
- builtin-tag.c     |    1 +
- parse-options.c   |   12 ++++++++++++
- parse-options.h   |    2 ++
- t/t7500-commit.sh |   11 +++++++++++
- 5 files changed, 33 insertions(+), 4 deletions(-)
+I added a double quote to my prefix, and the build fails at compiling config.c
+line 589. The failure is caused by the macro ETC_GITCONFIG which is set in the
+Makefile and contains the prefix string, which contains the single double quote.
+This of course causes a syntax error. So it looks like the cleansing done to
+ETC_GITCONFIG doesn't handle this.
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index bcbea38..0c6d1f4 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -45,7 +45,7 @@ static enum {
- 	COMMIT_PARTIAL,
- } commit_style;
+Doing this allows me to compile:
+
+    ETC_GITCONFIG_SQ = $(subst ",\",$(subst ','\'',$(ETC_GITCONFIG)))
+
+The patch at the end of this email applies the same treatment to the other
+variables I needed to get git to compile. If this is the correct fix, then
+the other variables used as macros in git source files would need to be
+hunted down... at least SHA1_HEADER_SQ, but maybe others?
+
+
+SPACE ISSUE:
+
+Also, the installation of the perl modules fails when I have a space in the
+path and NO_PERL_MAKEMAKER is _not_ set. IOW the perl makemaker install fails
+for me when there is a space in the path. This has nothing to do with the
+double quote I was talking about above, I think it would fail with double quote
+too.
+
+The line assigning PREFIX in my perl.mak looks like:
+
+    PREFIX = /home/casey/opt/test spaces/
+
+Shouldn't that argument have quotes around it?
+
+The errors look like:
+
+make -C perl prefix='/home/casey/opt/test spaces/' DESTDIR='' install
+make[1]: Entering directory `/home/casey/scratch/git/master/perl'
+make[2]: Entering directory `/home/casey/scratch/git/master/perl'
+Installing /home/casey/opt/test/private-Error.3pm
+Installing /home/casey/opt/test/Git.3pm
+Writing /home/casey/opt/test
+Can't open file /home/casey/opt/test: Is a directory at /usr/lib/perl5/5.8.5/ExtUtils/Install.pm line 209
+make[2]: *** [pure_site_install] Error 255
+make[2]: Leaving directory `/home/casey/scratch/git/master/perl'
+make[1]: *** [install] Error 2
+make[1]: Leaving directory `/home/casey/scratch/git/master/perl'
+make: *** [install] Error 2
+
+private-Error.3pm and Git.3pm showed up in /home/casey/opt/test/
+
+
+There are problems here with spaces, single quotes, and double quotes.
+I'll follow up in another email.
+
+MakeMaker version 6.17 (Revision: 1.133)
+perl v5.8.5
+
+-brandon
+
+
+diff --git a/Makefile b/Makefile
+index 0d373f7..affc288 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1031,15 +1031,15 @@ endif
+ # Shell quote (do not use $(call) to accommodate ancient setups);
  
--static char *logfile, *force_author;
-+static const char *logfile, *force_author;
- static const char *template_file;
- static char *edit_message, *use_message;
- static char *author_name, *author_email, *author_date;
-@@ -700,11 +700,14 @@ static int message_is_empty(struct strbuf *sb, int start)
- }
+ SHA1_HEADER_SQ = $(subst ','\'',$(SHA1_HEADER))
+-ETC_GITCONFIG_SQ = $(subst ','\'',$(ETC_GITCONFIG))
++ETC_GITCONFIG_SQ = $(subst ",\",$(subst ','\'',$(ETC_GITCONFIG)))
  
- static int parse_and_validate_options(int argc, const char *argv[],
--				      const char * const usage[])
-+				      const char * const usage[],
-+				      const char *prefix)
- {
- 	int f = 0;
+ DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
+ bindir_SQ = $(subst ','\'',$(bindir))
+-mandir_SQ = $(subst ','\'',$(mandir))
+-infodir_SQ = $(subst ','\'',$(infodir))
+-gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
+-template_dir_SQ = $(subst ','\'',$(template_dir))
+-htmldir_SQ = $(subst ','\'',$(htmldir))
++mandir_SQ = $(subst ",\",$(subst ','\'',$(mandir)))
++infodir_SQ = $(subst ",\",$(subst ','\'',$(infodir)))
++gitexecdir_SQ = $(subst ",\",$(subst ','\'',$(gitexecdir)))
++template_dir_SQ = $(subst ",\",$(subst ','\'',$(template_dir)))
++htmldir_SQ = $(subst ",\",$(subst ','\'',$(htmldir)))
+ prefix_SQ = $(subst ','\'',$(prefix))
  
- 	argc = parse_options(argc, argv, builtin_commit_options, usage, 0);
-+	logfile = parse_options_fix_filename(prefix, logfile);
-+	template_file = parse_options_fix_filename(prefix, template_file);
- 
- 	if (logfile || message.len || use_message)
- 		use_editor = 0;
-@@ -814,7 +817,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	if (wt_status_use_color == -1)
- 		wt_status_use_color = git_use_color_default;
- 
--	argc = parse_and_validate_options(argc, argv, builtin_status_usage);
-+	argc = parse_and_validate_options(argc, argv, builtin_status_usage, prefix);
- 
- 	index_file = prepare_index(argc, argv, prefix);
- 
-@@ -907,7 +910,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_commit_config, NULL);
- 
--	argc = parse_and_validate_options(argc, argv, builtin_commit_usage);
-+	argc = parse_and_validate_options(argc, argv, builtin_commit_usage, prefix);
- 
- 	index_file = prepare_index(argc, argv, prefix);
- 
-diff --git a/builtin-tag.c b/builtin-tag.c
-index 3c97c69..3f77ba9 100644
---- a/builtin-tag.c
-+++ b/builtin-tag.c
-@@ -411,6 +411,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	git_config(git_tag_config, NULL);
- 
- 	argc = parse_options(argc, argv, options, git_tag_usage, 0);
-+	msgfile = parse_options_fix_filename(prefix, msgfile);
- 
- 	if (keyid) {
- 		sign = 1;
-diff --git a/parse-options.c b/parse-options.c
-index f8d52e2..d771bf4 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -425,3 +425,15 @@ int parse_opt_approxidate_cb(const struct option *opt, const char *arg,
- 	*(unsigned long *)(opt->value) = approxidate(arg);
- 	return 0;
- }
-+
-+/*
-+ * This should really be OPTION_FILENAME type as a part of
-+ * parse_options that take prefix to do this while parsing.
-+ */
-+extern const char *parse_options_fix_filename(const char *prefix, const char *file)
-+{
-+	if (!file || !prefix || is_absolute_path(file))
-+		return file;
-+	return prefix_filename(prefix, strlen(prefix), file);
-+}
-+
-diff --git a/parse-options.h b/parse-options.h
-index 4ee443d..13ad158 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -123,4 +123,6 @@ extern int parse_opt_approxidate_cb(const struct option *, const char *, int);
- 	  "use <n> digits to display SHA-1s", \
- 	  PARSE_OPT_OPTARG, &parse_opt_abbrev_cb, 0 }
- 
-+extern const char *parse_options_fix_filename(const char *prefix, const char *file);
-+
- #endif
-diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
-index baed6ce..026d787 100755
---- a/t/t7500-commit.sh
-+++ b/t/t7500-commit.sh
-@@ -138,4 +138,15 @@ test_expect_success '--signoff' '
- 	diff expect output
- '
- 
-+test_expect_success 'commit message from file' '
-+	mkdir subdir &&
-+	echo "Log in top directory" >log &&
-+	echo "Log in sub directory" >subdir/log &&
-+	(
-+		cd subdir &&
-+		git commit --allow-empty -F log
-+	) &&
-+	commit_msg_is "Log in sub directory"
-+'
-+
- test_done
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
