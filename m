@@ -1,75 +1,59 @@
-From: "Pandita, Vikram" <vikram.pandita@ti.com>
-Subject: RE: Query: GIT bare repro
-Date: Wed, 6 Aug 2008 14:45:21 +0530
-Message-ID: <FCCFB4CDC6E5564B9182F639FC35608701C2C85AB4@dbde02.ent.ti.com>
-References: <7vfxpislpf.fsf@gitster.siamese.dyndns.org>
-	 <FCCFB4CDC6E5564B9182F639FC35608701C2C85A14@dbde02.ent.ti.com>
- <46d6db660808060129u754488d3jda27e3873154c533@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit] stg import documentation incorrect.
+Date: Wed, 6 Aug 2008 11:51:50 +0200
+Message-ID: <20080806095150.GA18336@diana.vm.bytemark.co.uk>
+References: <48907221.5030608@docte.hr> <20080804124823.GA12232@diana.vm.bytemark.co.uk> <b0943d9e0808051407k3ae902cbma9b5bef8b0219c05@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Christian MICHON <christian.michon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 06 11:20:16 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jurko Gospodneti? <jurko.gospodnetic@docte.hr>, git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 06 11:31:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQfBY-0003tb-Vg
-	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 11:20:01 +0200
+	id 1KQfMK-0007WP-Bi
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 11:31:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756630AbYHFJS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2008 05:18:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754133AbYHFJS5
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 05:18:57 -0400
-Received: from bear.ext.ti.com ([192.94.94.41]:57900 "EHLO bear.ext.ti.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751977AbYHFJS5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Aug 2008 05:18:57 -0400
-Received: from dlep95.itg.ti.com ([157.170.170.107])
-	by bear.ext.ti.com (8.13.7/8.13.7) with ESMTP id m769IojQ027397
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 6 Aug 2008 04:18:55 -0500
-Received: from dbde71.ent.ti.com (localhost [127.0.0.1])
-	by dlep95.itg.ti.com (8.13.8/8.13.8) with ESMTP id m769ICcm010063;
-	Wed, 6 Aug 2008 04:18:49 -0500 (CDT)
-Received: from dbde02.ent.ti.com ([172.24.170.145]) by dbde71.ent.ti.com
- ([172.24.170.149]) with mapi; Wed, 6 Aug 2008 14:45:25 +0530
-Thread-Topic: Query: GIT bare repro
-Thread-Index: Acj3noUCsJ4q567/Ryivk/i7VjBPxAABljCg
-In-Reply-To: <46d6db660808060129u754488d3jda27e3873154c533@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1757184AbYHFJaB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Aug 2008 05:30:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756992AbYHFJaB
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 05:30:01 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4445 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756732AbYHFJaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2008 05:30:00 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KQfgN-0004mC-00; Wed, 06 Aug 2008 10:51:51 +0100
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0808051407k3ae902cbma9b5bef8b0219c05@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91496>
 
-> From: Christian MICHON [mailto:christian.michon@gmail.com]
-> Sent: Wednesday, August 06, 2008 1:59 PM
->
-> On Wed, Aug 6, 2008 at 9:46 AM, Pandita, Vikram <vikram.pandita@ti.com> wrote:
-> > Hi GIT users
-> >
-> > I want to use GIT for my team for distributed development.
-> > The team members are working at different sites.
-> >
-> > Would appreciate help on following:
-> >
-> > 1) Could you point me to some document/example for doing so? This should be very common scenario I
-> assume.
->
-> Please read http://book.git-scm.com/3_distributed_workflows.html
+On 2008-08-05 22:07:01 +0100, Catalin Marinas wrote:
 
-Thanks Christian
-Sure this will help.
-
+> 2008/8/4 Karl Hasselstr=F6m <kha@treskal.com>:
 >
-> --
-> Christian
-> --
-> http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
+> > Yes, the tutorial is in sore need of a fresh coat of paint.
+>
+> Now that you mentioned it, should we just replace the wiki tutorial
+> by a static page generated from Documentation/tutorial.txt?
+
+Yes. That way it could get updated along with the rest of StGit.
+
+> If no-one feels like writing documentation, I'll have a go at
+> updating the tutorial.
+
+Please do. I'm always just about to do something about the
+documentation, but there's always something else that's in front of it
+in my pipeline ...
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
