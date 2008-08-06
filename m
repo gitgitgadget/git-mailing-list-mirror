@@ -1,61 +1,75 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: Re: do without .netrc
-Date: Wed, 06 Aug 2008 11:17:48 +0200
-Message-ID: <g7bq85$otb$1@ger.gmane.org>
-References: <4898DBA6.1060707@univie.ac.at> <20080806085025.GU32057@genesis.frugalware.org>
+From: "Pandita, Vikram" <vikram.pandita@ti.com>
+Subject: RE: Query: GIT bare repro
+Date: Wed, 6 Aug 2008 14:45:21 +0530
+Message-ID: <FCCFB4CDC6E5564B9182F639FC35608701C2C85AB4@dbde02.ent.ti.com>
+References: <7vfxpislpf.fsf@gitster.siamese.dyndns.org>
+	 <FCCFB4CDC6E5564B9182F639FC35608701C2C85A14@dbde02.ent.ti.com>
+ <46d6db660808060129u754488d3jda27e3873154c533@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 06 11:19:15 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Christian MICHON <christian.michon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 06 11:20:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQfAo-0003dl-Rm
-	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 11:19:15 +0200
+	id 1KQfBY-0003tb-Vg
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 11:20:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754243AbYHFJSJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Aug 2008 05:18:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751365AbYHFJSJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 05:18:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:54090 "EHLO ciao.gmane.org"
+	id S1756630AbYHFJS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2008 05:18:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754133AbYHFJS5
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 05:18:57 -0400
+Received: from bear.ext.ti.com ([192.94.94.41]:57900 "EHLO bear.ext.ti.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751220AbYHFJSI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2008 05:18:08 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KQf9i-0004qd-Bs
-	for git@vger.kernel.org; Wed, 06 Aug 2008 09:18:06 +0000
-Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 06 Aug 2008 09:18:06 +0000
-Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 06 Aug 2008 09:18:06 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <20080806085025.GU32057@genesis.frugalware.org>
+	id S1751977AbYHFJS5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Aug 2008 05:18:57 -0400
+Received: from dlep95.itg.ti.com ([157.170.170.107])
+	by bear.ext.ti.com (8.13.7/8.13.7) with ESMTP id m769IojQ027397
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 6 Aug 2008 04:18:55 -0500
+Received: from dbde71.ent.ti.com (localhost [127.0.0.1])
+	by dlep95.itg.ti.com (8.13.8/8.13.8) with ESMTP id m769ICcm010063;
+	Wed, 6 Aug 2008 04:18:49 -0500 (CDT)
+Received: from dbde02.ent.ti.com ([172.24.170.145]) by dbde71.ent.ti.com
+ ([172.24.170.149]) with mapi; Wed, 6 Aug 2008 14:45:25 +0530
+Thread-Topic: Query: GIT bare repro
+Thread-Index: Acj3noUCsJ4q567/Ryivk/i7VjBPxAABljCg
+In-Reply-To: <46d6db660808060129u754488d3jda27e3873154c533@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91495>
 
-Miklos Vajna venit, vidit, dixit 06.08.2008 10:50:
-> On Wed, Aug 06, 2008 at 01:00:54AM +0200, J=FCrgen Mangler <juergen.m=
-angler@univie.ac.at> wrote:
->> it is working without a:b@ part, but ~/.netrc instead
->>
->> :-(, is it possible without .netrc
->=20
-> I thought questions have question marks. ;-)
->=20
-> Anyway, what is the advantage of not using a ~/.netrc?
+> From: Christian MICHON [mailto:christian.michon@gmail.com]
+> Sent: Wednesday, August 06, 2008 1:59 PM
+>
+> On Wed, Aug 6, 2008 at 9:46 AM, Pandita, Vikram <vikram.pandita@ti.com> wrote:
+> > Hi GIT users
+> >
+> > I want to use GIT for my team for distributed development.
+> > The team members are working at different sites.
+> >
+> > Would appreciate help on following:
+> >
+> > 1) Could you point me to some document/example for doing so? This should be very common scenario I
+> assume.
+>
+> Please read http://book.git-scm.com/3_distributed_workflows.html
 
-Not having the password on disk[?!]
+Thanks Christian
+Sure this will help.
 
-Michael
+>
+> --
+> Christian
+> --
+> http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
