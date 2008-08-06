@@ -1,73 +1,82 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: do without .netrc
-Date: Wed, 6 Aug 2008 12:50:22 +0200
-Message-ID: <20080806105022.GX32057@genesis.frugalware.org>
-References: <4898DBA6.1060707@univie.ac.at> <20080806085025.GU32057@genesis.frugalware.org> <g7bq85$otb$1@ger.gmane.org>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: something fishy with Git commit and log from file
+Date: Wed, 06 Aug 2008 13:01:32 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <4899848C.6030800@obry.net>
+References: <48997D2E.9030708@obry.net> <20080806104432.GG7121@bit.office.eurotux.com>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="izz28U1oUrj4qnXN"
-Cc: git@vger.kernel.org
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-X-From: git-owner@vger.kernel.org Wed Aug 06 12:51:33 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Luciano Rocha <luciano@eurotux.com>
+X-From: git-owner@vger.kernel.org Wed Aug 06 13:02:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQgc6-0008CJ-EG
-	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 12:51:30 +0200
+	id 1KQgn5-00035D-1C
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 13:02:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755370AbYHFKu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2008 06:50:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754839AbYHFKuZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 06:50:25 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:60756 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754664AbYHFKuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2008 06:50:25 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id C95061B2529;
-	Wed,  6 Aug 2008 12:50:23 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 4C1684465E;
-	Wed,  6 Aug 2008 12:01:13 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id D77CB11901AF; Wed,  6 Aug 2008 12:50:22 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <g7bq85$otb$1@ger.gmane.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1755309AbYHFLBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2008 07:01:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754513AbYHFLBt
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 07:01:49 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:27858 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753849AbYHFLBs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2008 07:01:48 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1550379fgg.17
+        for <git@vger.kernel.org>; Wed, 06 Aug 2008 04:01:47 -0700 (PDT)
+Received: by 10.86.100.19 with SMTP id x19mr350126fgb.15.1218020506904;
+        Wed, 06 Aug 2008 04:01:46 -0700 (PDT)
+Received: from ?192.168.0.100? ( [82.124.201.122])
+        by mx.google.com with ESMTPS id l12sm3632548fgb.6.2008.08.06.04.01.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 06 Aug 2008 04:01:45 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.8.1.16) Gecko/20080708 Thunderbird/2.0.0.16 Mnenhy/0.7.5.0
+In-Reply-To: <20080806104432.GG7121@bit.office.eurotux.com>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91502>
 
+Luciano,
 
---izz28U1oUrj4qnXN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> If the function doesn't exist, try:
+> (gdb) p getwd(malloc(2048))
 
-On Wed, Aug 06, 2008 at 11:17:48AM +0200, Michael J Gruber <michaeljgruber+gmane@fastmail.fm> wrote:
-> Not having the password on disk[?!]
+I got:
 
-I think you can't avoid so (we are talking about http).
+(gdb) p (char *)getwd(malloc(2048))
+$3 = 0x903680 "/home/obry/dev/repositories/git/AWS"
 
-There is no such thing as ssh-agent for http, and typing the password
-for each pull or push is boring. (OK, this is subjective, but I think
-nobody types his/her pass on every push/pull.)
+And this is not the directory I was in. It is the Git root. I was under 
+/home/obry/dev/repositories/git/AWS/regtests when running the command.
 
-You could have the password in the URL, but the it's in .git/config,
-even worse.
+So definitely a Git bug! Can be reproduced with:
 
---izz28U1oUrj4qnXN
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+    $ mkdir repo && cd repo
+    $ git init
+    $ mkdir dir
+    $ cd dir
+    $ echo file > file
+    $ echo log > log
+    $ git add file
+    $ git commit --file=log
+    fatal: could not read log file 'log': No such file or directory
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Pascal.
 
-iEYEARECAAYFAkiZge4ACgkQe81tAgORUJbZtwCfWNAYAcqaxnFyVKSOVfkuG/Pr
-e1kAnirNqBw6978qm0hizT8/oWHWAggY
-=pdau
------END PGP SIGNATURE-----
+-- 
 
---izz28U1oUrj4qnXN--
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
