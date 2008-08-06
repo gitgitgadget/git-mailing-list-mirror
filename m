@@ -1,61 +1,66 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: What's cooking in git.git (Aug 2008, #01; Tue, 05)
-Date: Wed, 6 Aug 2008 07:21:28 -0700
-Message-ID: <20080806142128.GA28231@spearce.org>
-References: <7vmyjqsm04.fsf@gitster.siamese.dyndns.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] perl/Makefile: handle paths with spaces in the NO_PERL_MAKEMAKER
+ section
+Date: Wed, 06 Aug 2008 09:25:18 -0500
+Message-ID: <klGWkbWGpsUHZpuNwl9WvZs5UGGfYVAngWbiM3eippaejrXLNyLpRA@cipher.nrlssc.navy.mil>
+References: <mLu74vNKfH1vFZlC7N_lRX3WekWReoVjWY42voUDUBUnAGVpDNYWndWqlaHoqVAkxOaCdYV6uDk@cipher.nrlssc.navy.mil> <osgPH47FO7h-zLUMqwCv-i9BWln2-_AK5T6TI-5mLGFjwAhJ4Bg_lw@cipher.nrlssc.navy.mil> <7v8wvbuit7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 06 16:22:44 2008
+X-From: git-owner@vger.kernel.org Wed Aug 06 16:27:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQjuJ-0003Ww-MM
-	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 16:22:32 +0200
+	id 1KQjzK-0005dV-Jj
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 16:27:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756060AbYHFOV3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2008 10:21:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754908AbYHFOV3
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 10:21:29 -0400
-Received: from george.spearce.org ([209.20.77.23]:51678 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752612AbYHFOV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2008 10:21:28 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 4141438420; Wed,  6 Aug 2008 14:21:28 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7vmyjqsm04.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755505AbYHFO0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2008 10:26:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757455AbYHFO0F
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 10:26:05 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:43778 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755505AbYHFO0E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2008 10:26:04 -0400
+Received: by mail.nrlssc.navy.mil id m76EPIOW012108; Wed, 6 Aug 2008 09:25:18 -0500
+In-Reply-To: <7v8wvbuit7.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 06 Aug 2008 14:25:18.0872 (UTC) FILETIME=[40936980:01C8F7D0]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91515>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> [New Topics]
-> * sp/smart-http (Sun Aug 3 00:25:17 2008 -0700) 2 commits
->  - [do not merge -- original version] Add Git-aware CGI for Git-aware
->    smart HTTP transport
->  - Add backdoor options to receive-pack for use in Git-aware CGI
+Junio C Hamano wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> writes:
 > 
-> The "magic" detection protocol was revised to use POST to info/refs; the
-> top one queued is from before that discussion.
+>> Use double quotes to protect against paths which may contain spaces.
+>> ...
+>> +	echo '	mkdir -p "$(instdir_SQ)"' >> $@
+> 
+> Is this sufficient?  We seem to apply double-sq when writing shell
+> scriptlet in GIT-BUILD-OPTIONS from the main Makefile, and I suspect you
+> would need to do something similar.
 
-I'm surprised you queued these.  They really are not ready for
-application to a tree.  For example the CGI is really messed up for
-trying to do Transfer-Encoding: chunked on its own, JH was right and
-Apache does it for us.  That removed a good chunk of code from it.
+It seems to be sufficient. The double quotes survived into my perl.mak file
+and the two perl modules were installed correctly when I supplied a prefix
+with spaces. Is there something else to be concerned about?
 
-Writing the client for this is slightly non-trivial.  I more-or-less
-want to shove it into send-pack, not http-push, as the bulk of the
-protocol we need to speak is there in send-pack.
+perl.mak:
+all: private-Error.pm Git.pm
+        mkdir -p blib/lib
+        rm -f blib/lib/Git.pm; cp Git.pm blib/lib/
+        rm -f blib/lib/Error.pm
+        cp private-Error.pm blib/lib/Error.pm
+install:
+        mkdir -p "/home/casey/opt/SunOS spaces/sun4u/lib"
+        rm -f "/home/casey/opt/SunOS spaces/sun4u/lib/Git.pm"; cp Git.pm "/home/casey/opt/SunOS spaces/sun4u/lib"
+        rm -f "/home/casey/opt/SunOS spaces/sun4u/lib/Error.pm"
+        cp private-Error.pm "/home/casey/opt/SunOS spaces/sun4u/lib/Error.pm"
+instlibdir:
+        echo /home/casey/opt/SunOS spaces/sun4u/lib
 
-Anyway, I'm going to try to get back to this topic more later
-this week.  I have been focusing on JGit this week (or at least
-trying to) as I really need to get some stuff done there for EGit.
-
--- 
-Shawn.
+-brandon
