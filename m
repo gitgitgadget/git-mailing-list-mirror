@@ -1,184 +1,172 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Aug 2008, #01; Tue, 05)
-Date: Tue, 05 Aug 2008 23:20:11 -0700
-Message-ID: <7vmyjqsm04.fsf@gitster.siamese.dyndns.org>
+Subject: What's in git.git (Aug 2008, #01; Tue, 05)
+Date: Tue, 05 Aug 2008 23:20:15 -0700
+Message-ID: <7vhc9ysm00.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paul Mackerras <paulus@samba.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 06 08:21:30 2008
+X-From: git-owner@vger.kernel.org Wed Aug 06 08:27:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQcOj-000396-2e
-	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 08:21:25 +0200
+	id 1KQcTv-0004Sr-B6
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 08:26:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753755AbYHFGUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2008 02:20:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753545AbYHFGUT
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 02:20:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64777 "EHLO
+	id S1754640AbYHFGZp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Aug 2008 02:25:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754759AbYHFGU1
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 02:20:27 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38419 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753531AbYHFGUQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2008 02:20:16 -0400
+	with ESMTP id S1753929AbYHFGU0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Aug 2008 02:20:26 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 86C39570C4;
-	Wed,  6 Aug 2008 02:20:15 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 04D8145620;
+	Wed,  6 Aug 2008 02:20:24 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8B2C8570C3; Wed,  6 Aug 2008 02:20:13 -0400 (EDT)
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 06B394561F; Wed,  6 Aug 2008 02:20:18 -0400 (EDT)
+X-maint-at: 2d0f5f3459278475602394a7165bf8919412f4e4
+X-master-at: ddd63e64e4ac7e455dff3e807bf6a6977bb61456
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BBE6023A-637F-11DD-B6C0-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: C0E78772-637F-11DD-A8E1-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91486>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.
+Thanks to many people, we have accumulated quite a few fixes that are
+appropriate for 1.6.0 stabilization effort but at the same time apply
+equally well to 1.5.6 series.  We might want to do 1.5.6.5 to flush the=
+m
+while we are at it.
 
-The topics list the commits in reverse chronological order.  The topics
-meant to be merged to the maintenance series have "maint-" in their names.
+I am planning to tag 1.6.0-rc2 tomorrow evening.  I noticed that both g=
+itk
+and git-gui have fixes and many updated translations that I intend to
+pull before tagging -rc2.
 
-Due to increased activity level from people including GSoC students, I
-expect 'next' to stay somewhat more active than previous rounds during the
-1.6.0-rc cycle.  The request for people who usually follow 'next' is the
-same as usual, though.  After -rc1 is tagged, please run 'master' for your
-daily git use instead, in order to make sure 'master' does what it claims
-to do without regression.
+* The 'maint' branch has these fixes since the last announcement.
 
-Tentative schedule, my wishful thinking:
+Anders Melchiorsen (1):
+  Documentation: fix diff.external example
 
- - 1.6.0-rc2 (Aug  6)
- - 1.6.0-rc3 (Aug 10)
+Brandon Casey (1):
+  t/t4202-log.sh: add newline at end of file
 
-----------------------------------------------------------------
-[New Topics]
+Ciaran McCreesh (1):
+  Make git-add -i accept ranges like 7-
 
-* jc/post-simplify (Sun Aug 3 17:47:16 2008 -0700) 3 commits
- + Topo-sort before --simplify-merges
- + revision traversal: show full history with merge simplification
- + revision.c: whitespace fix
+Jeff King (1):
+  init: handle empty "template" parameter
 
-"log --full-history" is with too much clutter, "log" itself is too cleverer
-than some people, and here is the middle level of merge simplification.
+Jim Meyering (1):
+  git-cvsimport.perl: Print "UNKNOWN LINE..." on stderr, not stdout.
 
-* sp/smart-http (Sun Aug 3 00:25:17 2008 -0700) 2 commits
- - [do not merge -- original version] Add Git-aware CGI for Git-aware
-   smart HTTP transport
- - Add backdoor options to receive-pack for use in Git-aware CGI
+Johannes Schindelin (1):
+  sort_in_topological_order(): avoid setting a commit flag
 
-The "magic" detection protocol was revised to use POST to info/refs; the
-top one queued is from before that discussion.
+Jonathan Nieder (1):
+  git-diff(1): "--c" -> "--cc" typo fix
 
-* jc/add-stop-at-symlink (Mon Aug 4 00:52:37 2008 -0700) 2 commits
- - add: refuse to add working tree items beyond symlinks
- - update-index: refuse to add working tree items beyond symlinks
+Junio C Hamano (6):
+  make sure parsed wildcard refspec ends with slash
+  Documentation: clarify diff --cc
+  Update my e-mail address
+  Start 1.5.6.5 RelNotes to describe accumulated fixes
+  builtin-name-rev.c: split deeply nested part from the main function
+  RelNotes 1.5.6.5 updates
 
-The performance impact of this needs to be discussed in a separate
-thread.
+Linus Torvalds (1):
+  diff.renamelimit is a basic diff configuration
 
-* dp/hash-literally (Sun Aug 3 18:36:22 2008 +0400) 6 commits
- + add --no-filters option to git hash-object
- + add --path option to git hash-object
- + use parse_options() in git hash-object
- + correct usage help string for git-hash-object
- + correct argument checking test for git hash-object
- + teach index_fd to work with pipes
+Mike Ralphson (1):
+  Documentation: typos / spelling fixes in older RelNotes
 
-Gives a bit more flexibility to hash-objects by allowing us to lie about
-the path the contents comes from.
+Pierre Habouzit (1):
+  git-submodule: move ill placed shift.
 
-* jn/svn-log (Sun Aug 3 14:07:21 2008 +0200) 1 commit
- - git-svn: --clean-changelog=<style> to sanitize messages
+Pieter de Bie (1):
+  git-name-rev: allow --name-only in combination with --stdin
 
-Eric firmly rejected this one so I won't be merging this to 'next' but
-this was an interesting firestarter for discussion nevertheless.
+Ren=C3=A9 Scharfe (1):
+  git-name-rev: don't use printf without format
 
-----------------------------------------------------------------
-[On Hold and/or Cooking]
+Stephan Beyer (1):
+  builtin-revert.c: typofix
 
-* rs/archive-parse-options (Fri Jul 25 12:41:26 2008 +0200) 1 commit
- + archive: allow --exec and --remote without equal sign
+Steve Haslam (1):
+  Propagate -u/--upload-pack option of "git clone" to transport.
 
-None of the following is for 1.6.0.
 
-* mv/merge-custom (Sat Aug 2 10:08:38 2008 +0200) 6 commits
- + Builtin git-help.
- + builtin-help: always load_command_list() in cmd_help()
- + Add a second testcase for handling invalid strategies in git-merge
- + Add a new test for using a custom merge strategy
- + builtin-merge: allow using a custom strategy
- + builtin-help: make some internal functions available to other
-   builtins
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-* cc/merge-base-many (Sun Jul 27 13:47:22 2008 -0700) 4 commits
- - git-merge-octopus: use (merge-base A (merge B C D E...)) for
-   stepwise merge
- + merge-base-many: add trivial tests based on the documentation
- + documentation: merge-base: explain "git merge-base" with more than
-   2 args
- + merge-base: teach "git merge-base" to drive underlying
-   merge_bases_many()
+Abhijit Menon-Sen (4):
+  Git.pm: localise $? in command_close_bidi_pipe()
+  Fix hash slice syntax error
+  Fix typo in perl/Git.pm
+  Fix typos in INSTALL
 
-* rs/imap (Wed Jul 9 22:29:02 2008 +0100) 5 commits
- + Documentation: Improve documentation for git-imap-send(1)
- + imap-send.c: more style fixes
- + imap-send.c: style fixes
- + git-imap-send: Support SSL
- + git-imap-send: Allow the program to be run from subdirectories of
-   a git tree
+Anders Melchiorsen (2):
+  Flush output in start_async
+  Add output flushing before fork()
 
-Some people seem to prefer having this feature available also with gnutls.
-Such an enhancement can be done in-tree on top of this series if they are
-so inclined.
+Avery Pennarun (2):
+  Teach "git diff -p" Pascal/Delphi funcname pattern
+  git-svn: Abort with an error if 'fetch' parameter is invalid.
 
-* cc/bisect (Fri Jul 25 05:36:37 2008 +0200) 2 commits
- - bisect: only check merge bases when needed
- - bisect: test merge base if good rev is not an ancestor of bad rev
+Brandon Casey (1):
+  Teach fsck and prune that tmp_obj_ file names may not be 14 bytes lon=
+g
 
-The first one alone does not pass its self-test but combined together they
-seem to.  It does not build confidence as the latter one is supposed to be
-an optimization only.
+David D. Kilzer (1):
+  Fix race condition in t9119-git-svn-info.sh
 
-* jc/add-addremove (Tue Jul 22 22:30:40 2008 -0700) 2 commits
- + builtin-add.c: optimize -A option and "git add ."
- + builtin-add.c: restructure the code for maintainability
+Dmitry Potapov (1):
+  correct access right for git-svn-dcommit test
 
-* jk/pager-swap (Tue Jul 22 03:14:12 2008 -0400) 2 commits
- + spawn pager via run_command interface
- + run-command: add pre-exec callback
+Eric Wong (2):
+  git-svn: properly set path for "info" command
+  t9119: conditionally re-enable test depending on svn(1) version
 
-This changes the parent-child relationship between the pager and the git
-process.  We used to make pager the parent which meant that the exit
-status from git is lost from the caller.
+Giuseppe Bilotta (2):
+  diff: add ruby funcname pattern
+  diff: chapter and part in funcname for tex
 
-* ph/enable-threaded (Mon Jul 21 11:23:43 2008 +0200) 1 commit
- + Enable threaded delta search on *BSD and Linux.
+Johannes Schindelin (2):
+  clone: Add an option to set up a mirror
+  clone --bare: Add ".git" suffix to the directory name to clone into
 
-* sg/merge-options (Sun Apr 6 03:23:47 2008 +0200) 1 commit
- + merge: remove deprecated summary and diffstat options and config
-   variables
+Jon Jensen (1):
+  Fix reference to Everyday Git, which is an HTML document and not a ma=
+n
+    page.
 
-This was previously in "will be in master soon" category, but it turns out
-that the synonyms to the ones this one deletes are fairly new invention
-that happend in 1.5.6 timeframe, and we cannot do this just yet.  Perhaps
-in 1.7.0.
+Lee Marlow (11):
+  bash completion: remove unused function _git_diff_tree
+  bash completion: Add more long options for 'git log'
+  bash completion: Add completion for 'git grep'
+  bash completion: Add completion for 'git clone'
+  bash completion: Add completion for 'git clean'
+  bash completion: Add completion for 'git init'
+  bash completion: Add completion for 'git revert'
+  bash completion: More completions for 'git stash'
+  bash completion: Add completion for 'git archive'
+  bash completion: Add completion for 'git ls-files'
+  bash completion: Add completion for 'git mv'
 
-* jc/dashless (Thu Jun 26 16:43:34 2008 -0700) 2 commits
- + Revert "Make clients ask for "git program" over ssh and local
-   transport"
- + Make clients ask for "git program" over ssh and local transport
+Mike Ralphson (1):
+  Documentation: typos / spelling fixes
 
-This is the "botched" one.  Will be resurrected during 1.7.0 or 1.8.0
-timeframe.
+Steffen Prohaska (1):
+  Modify mingw_main() workaround to avoid link errors
 
-* jk/renamelimit (Sat May 3 13:58:42 2008 -0700) 1 commit
- . diff: enable "too large a rename" warning when -M/-C is explicitly
-   asked for
-
-This would be the right thing to do for command line use, but gitk will be
-hit due to tcl/tk's limitation, so I am holding this back for now.
+Steven Grimm (1):
+  Optimize sha1_object_info for loose objects, not concurrent repacks
