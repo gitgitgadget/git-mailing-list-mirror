@@ -1,57 +1,58 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] perl/Makefile: handle paths with spaces in the NO_PERL_MAKEMAKER
- section
-Date: Wed, 06 Aug 2008 17:16:14 -0500
-Message-ID: <1JOFfIWYHgmUErPhpB6xWtV5uZYv3_v3tBnt928x644O-1AquEzzIA@cipher.nrlssc.navy.mil>
-References: <mLu74vNKfH1vFZlC7N_lRX3WekWReoVjWY42voUDUBUnAGVpDNYWndWqlaHoqVAkxOaCdYV6uDk@cipher.nrlssc.navy.mil> <osgPH47FO7h-zLUMqwCv-i9BWln2-_AK5T6TI-5mLGFjwAhJ4Bg_lw@cipher.nrlssc.navy.mil> <7v8wvbuit7.fsf@gitster.siamese.dyndns.org> <klGWkbWGpsUHZpuNwl9WvZs5UGGfYVAngWbiM3eippaejrXLNyLpRA@cipher.nrlssc.navy.mil> <7v7iaurwe4.fsf@gitster.siamese.dyndns.org> <lh6XIUcjpbjj8G8Ot7RQFlDitUn1njsc350QhnNmQkcgxlfluBPGZw@cipher.nrlssc.navy.mil> <7vy739nbmp.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Steven Grimm <koreth@midwinter.com>
+Subject: git blame and cherry-picking
+Date: Wed, 6 Aug 2008 15:18:33 -0700
+Message-ID: <91A979F0-1329-4CA6-AADC-6CF55872B57A@midwinter.com>
+Mime-Version: 1.0 (Apple Message framework v926)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 07 00:17:29 2008
+To: Git Users List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 07 00:19:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQrJv-0001Xi-4v
-	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 00:17:27 +0200
+	id 1KQrM1-00027w-Pe
+	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 00:19:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753242AbYHFWQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2008 18:16:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753005AbYHFWQT
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 18:16:19 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:55384 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751877AbYHFWQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2008 18:16:19 -0400
-Received: by mail.nrlssc.navy.mil id m76MGFNA019315; Wed, 6 Aug 2008 17:16:15 -0500
-In-Reply-To: <7vy739nbmp.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 06 Aug 2008 22:16:15.0300 (UTC) FILETIME=[0AB82840:01C8F812]
+	id S1753626AbYHFWSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2008 18:18:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753552AbYHFWSf
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 18:18:35 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:58489 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753366AbYHFWSe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2008 18:18:34 -0400
+Received: (qmail 16576 invoked from network); 6 Aug 2008 22:18:34 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=JVsTPuxhh84JFX47cmUerSx5b1pCIwXOgWA79Aqf5GA8KYnf9yRz+iWAdohyzxL/  ;
+Received: from localhost (HELO ?IPv6:::1?) (127.0.0.1)
+  by localhost with SMTP; 6 Aug 2008 22:18:34 -0000
+X-Mailer: Apple Mail (2.926)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91546>
 
-Junio C Hamano wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
-> 
->> There are problems here with spaces, single quotes, and double quotes.
->> I'll follow up in another email.
-> 
-> I guess we've opened up a large can of worms.  Let's have the minimum fix
-> that says "We do support whitespace in these paths but no other funnies"
-> and leave the more intrusive one for post 1.6.0, for now.
+What, if any, is the approved way to get git blame to follow cherry- 
+picked changes? Right now blame is good about showing you the actual  
+responsible revision and author in the case of merges, but if you  
+cherry-pick a change with "-n" (to test before committing), the  
+modifications are attributed to the person who did the cherry-pick  
+instead of the cherry-picked revision's author. Even without the "-n"  
+option, the changes are attributed to the cherry-pick *revision*  
+instead of the original one.
 
-I think those two patches I just sent are enough.
+My horrible hack workaround for now is to temporarily put a grafts  
+entry in place to make git think the cherry-pick revisions I'm  
+interested in are actually merges. That requires me to know that a  
+given revision is a cherry-pick and I have to be careful to remove my  
+fake graft afterwards. What's more, it can result in some strange and  
+seemingly nonsensical "merge" topologies if, e.g., a newer change is  
+cherry-picked before an older one.
 
-You can apply the double-quote escaping patch I sent earlier if you want
-(the one that escapes double quotes in the macros compiled in c programs).
-But we'd have a problem installing the perl scripts using MakeMaker, and
-we'd have a problem _running_ the perl scripts since the single double
-quote causes a syntax error in the perl script. Let's wait till someone
-wants to have " in their path shows up (and let them figure out how to
-fix it).
+Surely there must be a better way...?
 
--brandon
+-Steve
