@@ -1,70 +1,115 @@
-From: "srinivas naga vutukuri" <srinivas.vutukuri@gmail.com>
-Subject: git problem: pack has bad object at offset 77100841: inflate returned -3
-Date: Wed, 6 Aug 2008 12:45:16 +0530
-Message-ID: <ace3f33d0808060015t25d9c21epc31e48e3c1d041b1@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 06 09:16:25 2008
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [TopGit PATCH] tg.sh: Runtime tg-* command check
+Date: Wed,  6 Aug 2008 09:49:24 +0200
+Message-ID: <1218008964-27286-1-git-send-email-bert.wesarg@googlemail.com>
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Aug 06 09:50:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQdFw-00008H-Gv
-	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 09:16:24 +0200
+	id 1KQdmz-00023I-FG
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 09:50:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754624AbYHFHPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2008 03:15:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754478AbYHFHPT
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 03:15:19 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:45550 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754390AbYHFHPS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2008 03:15:18 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so1672636ywe.1
-        for <git@vger.kernel.org>; Wed, 06 Aug 2008 00:15:16 -0700 (PDT)
+	id S1754319AbYHFHtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2008 03:49:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754045AbYHFHtb
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 03:49:31 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:35123 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753800AbYHFHta (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2008 03:49:30 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1513234fgg.17
+        for <git@vger.kernel.org>; Wed, 06 Aug 2008 00:49:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=noSMJwX2QtlA914xLShKsl1gaoDk9krkrW9aJbJCgxY=;
-        b=gbmQOJSDoSfhiGXDNH0g9eUA51/Zor2RZJFRa7BX9JDSwqk5bUmkdg2ZSjF+T9T+sP
-         muURXra4YRsp0kEUtYoW8JuBI+IFwctEDTrKCuw93u+lW2kVmuh2w7kq/rKFChA0LFd6
-         xRHm0g5Gb7cL6chqPHImWyzQ4KW0MEFE6Tqdg=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=2yS/GcI8WyM2FgI5uLYr/VR+EIZYSJjChO7QfutpbB4=;
+        b=HC0kVEM/jPpLASK+qanX7dAiqetjrE+wRBJ8+fpv/MUV2+mX/fba1B00NDG8RbvMu3
+         RETFnvz6ES9bYUEuwY6Zd+liweUkTJPZdAN8Kl8gPdFKla1uCC7UECDGClYHFMLWV197
+         5xBYF8OrVzMt90kXxbuOmwr1OADAiT/Ig5++o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=vY9YjPoWiJnHB7veZC12F0Xvbp2tkeizSR+ri8nRpLbwk2cTKdQRbMnt49RiZBaYCy
-         +B2mHfyaTwkpkEWmJ8K0tScRy35XdUxxT4D7nxL6zRVu9ATaWaQ0j9+XqbiyvJ16FGHw
-         TWqtj78RFGaeY9NdTaKKnFZUOrRipO0wf9Qow=
-Received: by 10.151.112.14 with SMTP id p14mr2800454ybm.227.1218006916662;
-        Wed, 06 Aug 2008 00:15:16 -0700 (PDT)
-Received: by 10.150.145.18 with HTTP; Wed, 6 Aug 2008 00:15:16 -0700 (PDT)
-Content-Disposition: inline
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=i8q31IXhD34QQMoWCfhzQVW0IvB5j6g8YuAX0WEYbVwFFZcI8FEucxBcknDVf2TN7d
+         qWlKJz3grbRlc9OdGeIIfUyMnVTDtom87+w9k9+fHoMp2dBqsPxKVY3VAwzVlkmS5W5N
+         1WG3Rj53CRBiMrjQfXRwlvCfbYEZQNtv2KApg=
+Received: by 10.103.198.20 with SMTP id a20mr1238622muq.56.1218008968610;
+        Wed, 06 Aug 2008 00:49:28 -0700 (PDT)
+Received: from localhost ( [217.234.68.119])
+        by mx.google.com with ESMTPS id y2sm30650491mug.1.2008.08.06.00.49.26
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 06 Aug 2008 00:49:27 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91489>
 
-I am facing the error
+Check for tg commands at runtime, not the hard coded list inside tg.sh.
 
-remote: Counting objects: 879862, done.
-remote: Compressing objects: 100% (156686/156686), done.
-fatal: pack has bad object at offset 77100841: inflate returned -3
-fatal: index-pack failed
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
-while doing "git clone" of linux kernel of latest 2.6.27-rc2.
-But am able to do the latest stable successfully.
+---
+ tg.sh |   26 +++++++++++++++++++++-----
+ 1 files changed, 21 insertions(+), 5 deletions(-)
 
-Could you help me out in get rid off the problem. And am new to git usage,
-so correct me if am doing any wrong.
-
-I am using cygwin, git 1.5.6.4
-
-
-best regards,
-srinivas.
+diff --git a/tg.sh b/tg.sh
+index 03a392b..179f0de 100644
+--- a/tg.sh
++++ b/tg.sh
+@@ -152,8 +152,21 @@ switch_to_base()
+ do_help()
+ {
+ 	if [ -z "$1" ] ; then
++		## Build available commands list for help output
++
++		cmds=
++		sep=
++		for cmd in "@cmddir@"/tg-*; do
++			! [ -r "$cmd" ] && continue
++			# strip directory part and "tg-" prefix
++			cmd="$(basename "$cmd")"
++			cmd="${cmd#tg-}"
++			cmds="$cmds$sep$cmd"
++			sep="|"
++		done
++
+ 		echo "TopGit v0.1 - A different patch queue manager"
+-		echo "Usage: tg (create|delete|info|patch|summary|update|help) ..."
++		echo "Usage: tg ($cmds|help) ..."
+ 	elif [ -f "@sharedir@/tg-$1.txt" ] ; then
+ 		cat "@sharedir@/tg-$1.txt"
+ 	else
+@@ -171,6 +184,8 @@ root_dir="$(git rev-parse --show-cdup)"; root_dir="${root_dir:-.}"
+ setup_ours
+ setup_hook "pre-commit"
+ 
++[ -d "@cmddir@" ] ||
++	die "No command directory: '@cmddir@'"
+ 
+ ## Dispatch
+ 
+@@ -186,12 +201,13 @@ case "$cmd" in
+ help)
+ 	do_help "$1"
+ 	exit 1;;
+-create|delete|info|patch|summary|update)
+-	. "@cmddir@"/tg-$cmd;;
+ --hooks-path)
+ 	# Internal command
+ 	echo "@hooksdir@";;
+ *)
+-	echo "Unknown subcommand: $cmd" >&2
+-	exit 1;;
++	[ -r "@cmddir@"/tg-$cmd ] || {
++		echo "Unknown subcommand: $cmd" >&2
++		exit 1
++	}
++	. "@cmddir@"/tg-$cmd;;
+ esac
+-- 
+tg: (e311d15..) t/auto-generate-command-list-for-tg.sh (depends on: master)
