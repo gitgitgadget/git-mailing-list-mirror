@@ -1,45 +1,43 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: What's in git.git (Aug 2008, #01; Tue, 05)
-Date: Tue, 05 Aug 2008 23:20:15 -0700
-Message-ID: <7vhc9ysm00.fsf@gitster.siamese.dyndns.org>
+Date: Tue, 05 Aug 2008 23:26:36 -0700
+Message-ID: <7vfxpislpf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Paul Mackerras <paulus@samba.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 06 08:27:00 2008
+X-From: git-owner@vger.kernel.org Wed Aug 06 08:27:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQcTv-0004Sr-B6
-	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 08:26:47 +0200
+	id 1KQcUs-0004nZ-MW
+	for gcvg-git-2@gmane.org; Wed, 06 Aug 2008 08:27:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754640AbYHFGZp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Aug 2008 02:25:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754759AbYHFGU1
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 02:20:27 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38419 "EHLO
+	id S1754581AbYHFG0p convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Aug 2008 02:26:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752493AbYHFG0p
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 02:26:45 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33095 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753929AbYHFGU0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Aug 2008 02:20:26 -0400
+	with ESMTP id S1752458AbYHFG0o convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Aug 2008 02:26:44 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 04D8145620;
-	Wed,  6 Aug 2008 02:20:24 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3394957110;
+	Wed,  6 Aug 2008 02:26:41 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 06B394561F; Wed,  6 Aug 2008 02:20:18 -0400 (EDT)
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 649CC5710D; Wed,  6 Aug 2008 02:26:39 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 X-maint-at: 2d0f5f3459278475602394a7165bf8919412f4e4
 X-master-at: ddd63e64e4ac7e455dff3e807bf6a6977bb61456
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C0E78772-637F-11DD-A8E1-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A1C4C3F4-6380-11DD-AFDD-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91487>
 
 Thanks to many people, we have accumulated quite a few fixes that are
 appropriate for 1.6.0 stabilization effort but at the same time apply
