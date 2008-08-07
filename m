@@ -1,71 +1,78 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: git svn rebase - could not detach HEAD
-Date: Thu, 7 Aug 2008 10:24:06 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0808071013190.19665@iabervon.org>
-References: <f7d8f60b0808062349q92fffb9l33de5550250e4e13@mail.gmail.com>  <7vd4kljnpn.fsf@gitster.siamese.dyndns.org>  <f7d8f60b0808070033g7a322ee4w9147dd51e41850c6@mail.gmail.com>  <20080807074117.GA7648@atjola.homenet>
- <f7d8f60b0808070553o6f709445j9dd036f380763f6e@mail.gmail.com>
+From: "Anton Mostovoy" <git@mostovoy.net>
+Subject: git svn throws locale related error when built from source
+Date: Thu, 7 Aug 2008 10:33:59 -0500
+Message-ID: <5C17B49DFD5F456B8701BE301F4B55A1@chi.orbitz.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-478476910-1218119046=:19665"
-Cc: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Tony Stubbs <antony.stubbs@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 07 16:25:47 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 07 17:35:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KR6Qd-000672-0f
-	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 16:25:23 +0200
+	id 1KR7WA-0002k0-LB
+	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 17:35:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511AbYHGOYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2008 10:24:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751384AbYHGOYK
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 10:24:10 -0400
-Received: from iabervon.org ([66.92.72.58]:51968 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751202AbYHGOYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2008 10:24:09 -0400
-Received: (qmail 23395 invoked by uid 1000); 7 Aug 2008 14:24:06 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 7 Aug 2008 14:24:06 -0000
-In-Reply-To: <f7d8f60b0808070553o6f709445j9dd036f380763f6e@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752419AbYHGPeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2008 11:34:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751643AbYHGPeF
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 11:34:05 -0400
+Received: from an-out-0708.google.com ([209.85.132.250]:13075 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751382AbYHGPeE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2008 11:34:04 -0400
+Received: by an-out-0708.google.com with SMTP id d40so85881and.103
+        for <git@vger.kernel.org>; Thu, 07 Aug 2008 08:34:01 -0700 (PDT)
+Received: by 10.100.120.6 with SMTP id s6mr2367907anc.106.1218123241682;
+        Thu, 07 Aug 2008 08:34:01 -0700 (PDT)
+Received: from AMOSTOVOYT60 ( [198.175.55.5])
+        by mx.google.com with ESMTPS id m6sm13111410wrm.35.2008.08.07.08.34.00
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 07 Aug 2008 08:34:01 -0700 (PDT)
+X-Mailer: Microsoft Office Outlook 11
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5512
+Thread-Index: AcjsOfNYfcm4CrqoT06C29t9bKC2kgAGeF1gAFVHPEACjEOccAAyNmMg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91586>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi
 
---1547844168-478476910-1218119046=:19665
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+I built git 1.5.6.3 manually (no package with 1.5.4+ on gutsy), and I am
+getting the error below when running 'git svn rebase'. 
+svn works fine on its own though.  
+The default locale is set to en_US.UTF-8
 
-On Fri, 8 Aug 2008, Tony Stubbs wrote:
+svn: error: cannot set LC_ALL locale
+svn: error: environment variable LANG is en_US.UTF-8
+svn: error: please check that your locale name is correct
 
-> >> <manually deleted "untracked file" here>
-> >
-> > Maybe you're ignoring that file? git clean deletes ignored files only if
-> > you use -x/-X.
-> >
-> > Björn
-> >
-> 
-> That's probably it, I'll try it tomorrow. However, that could be a
-> problem. There's ignored files I don't want to keep (build artifacts),
-> and there's ignored files I do want to keep (i.e. .metadata).
-> Is there a good solution?
+I found a workaround that works, but it would be nice to have it work
+properly.
+$ LANG= git svn rebase
 
-There's only a problem if there's some reason you specifically want to not 
-keep an ignored file; this is usually only an issue when you're trying to 
-merge/rebase with a branch that has it tracked, at which point you have to 
-decide whether to add your version and merge or remove your version. 
-Ideally, git would tell you when the file that's in the way is ignored, 
-which would probably help you know what's going on, but it's tricky to get 
-that information there.
+Here is the output of the locale command:
+$ locale
+LANG=en_US.UTF-8
+LANGUAGE=en-US.UTF-8
+LC_CTYPE="en_US.UTF-8"
+LC_NUMERIC="en_US.UTF-8"
+LC_TIME="en_US.UTF-8"
+LC_COLLATE="en_US.UTF-8"
+LC_MONETARY="en_US.UTF-8"
+LC_MESSAGES="en_US.UTF-8"
+LC_PAPER="en_US.UTF-8"
+LC_NAME="en_US.UTF-8"
+LC_ADDRESS="en_US.UTF-8"
+LC_TELEPHONE="en_US.UTF-8"
+LC_MEASUREMENT="en_US.UTF-8"
+LC_IDENTIFICATION="en_US.UTF-8"
+LC_ALL=
 
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-478476910-1218119046=:19665--
+ 
+Thanks in advance.
+-Anton
