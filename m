@@ -1,98 +1,71 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2] Documentation: filter-branch: document how to filter all refs
-Date: Thu,  7 Aug 2008 16:16:03 +0200
-Message-ID: <1218118563-28579-1-git-send-email-trast@student.ethz.ch>
-References: <1218117841-27398-1-git-send-email-trast@student.ethz.ch>
-Cc: gitster@pobox.com, Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jan Wielemaker <J.Wielemaker@uva.nl>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 07 16:17:34 2008
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: git svn rebase - could not detach HEAD
+Date: Thu, 7 Aug 2008 10:24:06 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0808071013190.19665@iabervon.org>
+References: <f7d8f60b0808062349q92fffb9l33de5550250e4e13@mail.gmail.com>  <7vd4kljnpn.fsf@gitster.siamese.dyndns.org>  <f7d8f60b0808070033g7a322ee4w9147dd51e41850c6@mail.gmail.com>  <20080807074117.GA7648@atjola.homenet>
+ <f7d8f60b0808070553o6f709445j9dd036f380763f6e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-478476910-1218119046=:19665"
+Cc: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Tony Stubbs <antony.stubbs@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 07 16:25:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KR6If-00029w-HI
-	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 16:17:09 +0200
+	id 1KR6Qd-000672-0f
+	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 16:25:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751525AbYHGOQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2008 10:16:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbYHGOQB
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 10:16:01 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:12300 "EHLO XSMTP0.ethz.ch"
+	id S1751511AbYHGOYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2008 10:24:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751384AbYHGOYK
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 10:24:10 -0400
+Received: from iabervon.org ([66.92.72.58]:51968 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751158AbYHGOQA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2008 10:16:00 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 7 Aug 2008 16:15:58 +0200
-Received: from localhost.localdomain ([129.132.149.43]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 7 Aug 2008 16:15:58 +0200
-X-Mailer: git-send-email 1.6.0.rc1.106.g98a7
-In-Reply-To: <1218117841-27398-1-git-send-email-trast@student.ethz.ch>
-X-OriginalArrivalTime: 07 Aug 2008 14:15:58.0810 (UTC) FILETIME=[1D2A7BA0:01C8F898]
+	id S1751202AbYHGOYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2008 10:24:09 -0400
+Received: (qmail 23395 invoked by uid 1000); 7 Aug 2008 14:24:06 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 7 Aug 2008 14:24:06 -0000
+In-Reply-To: <f7d8f60b0808070553o6f709445j9dd036f380763f6e@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91585>
 
-Document the '--' option that can be used to pass rev-list options
-(not just arguments), and give an example usage of '-- --all'.  Remove
-reference to "the new branch name"; filter-branch takes arbitrary
-arguments to rev-list since dfd05e3.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+--1547844168-478476910-1218119046=:19665
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-At second glance, it turned out the documentation was actually older
-than the code.  So rewrite the documentation of <rev-list options>.
+On Fri, 8 Aug 2008, Tony Stubbs wrote:
 
- Documentation/git-filter-branch.txt |   21 ++++++++++++++++-----
- 1 files changed, 16 insertions(+), 5 deletions(-)
+> >> <manually deleted "untracked file" here>
+> >
+> > Maybe you're ignoring that file? git clean deletes ignored files only if
+> > you use -x/-X.
+> >
+> > Björn
+> >
+> 
+> That's probably it, I'll try it tomorrow. However, that could be a
+> problem. There's ignored files I don't want to keep (build artifacts),
+> and there's ignored files I do want to keep (i.e. .metadata).
+> Is there a good solution?
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index a518ba6..31d3cae 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	[--msg-filter <command>] [--commit-filter <command>]
- 	[--tag-name-filter <command>] [--subdirectory-filter <directory>]
- 	[--original <namespace>] [-d <directory>] [-f | --force]
--	[<rev-list options>...]
-+	[--] [<rev-list options>...]
- 
- DESCRIPTION
- -----------
-@@ -168,10 +168,10 @@ to other tags will be rewritten to point to the underlying commit.
- 	'refs/original/', unless forced.
- 
- <rev-list options>...::
--	When options are given after the new branch name, they will
--	be passed to 'git-rev-list'.  Only commits in the resulting
--	output will be filtered, although the filtered commits can still
--	reference parents which are outside of that set.
-+	Arguments for 'git-rev-list'.  All positive refs included by
-+	these options are rewritten.  You may also specify options
-+	such as '--all', but you must use '--' to separate them from
-+	the 'git-filter-branch' options.
- 
- 
- Examples
-@@ -196,6 +196,17 @@ git filter-branch --index-filter 'git rm --cached filename' HEAD
- 
- Now, you will get the rewritten history saved in HEAD.
- 
-+To rewrite the repository to look as if 'foodir/' had been its project
-+root, and discard all other history:
-+
-+-------------------------------------------------------
-+git filter-branch --subdirectory-filter foodir -- --all
-+-------------------------------------------------------
-+
-+Thus you can, e.g., turn a library subdirectory into a repository of
-+its own.  Note the '--' that separates 'filter-branch' options from
-+revision options, and the '--all' to rewrite all branches and tags.
-+
- To set a commit (which typically is at the tip of another
- history) to be the parent of the current initial commit, in
- order to paste the other history behind the current history:
--- 
-1.6.0.rc1.106.g98a7
+There's only a problem if there's some reason you specifically want to not 
+keep an ignored file; this is usually only an issue when you're trying to 
+merge/rebase with a branch that has it tracked, at which point you have to 
+decide whether to add your version and merge or remove your version. 
+Ideally, git would tell you when the file that's in the way is ignored, 
+which would probably help you know what's going on, but it's tricky to get 
+that information there.
+
+	-Daniel
+*This .sig left intentionally blank*
+--1547844168-478476910-1218119046=:19665--
