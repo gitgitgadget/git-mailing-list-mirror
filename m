@@ -1,156 +1,60 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] perl/Makefile: handle paths with spaces in the NO_PERL_MAKEMAKER
- section
-Date: Wed, 06 Aug 2008 19:23:14 -0500
-Message-ID: <lWtENUxH2rUuPeH6fGlmuHzUPOVM2GJNQWM361G7sj6Za8Qm8qm3Wg@cipher.nrlssc.navy.mil>
-References: <1JOFfIWYHgmUErPhpB6xWtV5uZYv3_v3tBnt928x644O-1AquEzzIA@cipher.nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fail properly when cloning from invalid HTTP URL
+Date: Wed, 06 Aug 2008 17:24:41 -0700
+Message-ID: <7v63qdn03a.fsf@gitster.siamese.dyndns.org>
+References: <1218067590-31590-1-git-send-email-pasky@suse.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 07 02:24:22 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, barkalow@iabervon.org
+To: pasky@suse.cz
+X-From: git-owner@vger.kernel.org Thu Aug 07 02:25:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQtIj-0002k1-MX
-	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 02:24:22 +0200
+	id 1KQtKC-00033l-PP
+	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 02:25:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754084AbYHGAXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2008 20:23:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754126AbYHGAXR
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 20:23:17 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:49910 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753719AbYHGAXQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2008 20:23:16 -0400
-Received: by mail.nrlssc.navy.mil id m770NE5S026561; Wed, 6 Aug 2008 19:23:14 -0500
-In-Reply-To: <1JOFfIWYHgmUErPhpB6xWtV5uZYv3_v3tBnt928x644O-1AquEzzIA@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 07 Aug 2008 00:23:14.0733 (UTC) FILETIME=[C8415DD0:01C8F823]
+	id S1751791AbYHGAYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2008 20:24:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752144AbYHGAYv
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 20:24:51 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61794 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751693AbYHGAYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2008 20:24:50 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3FB574D924;
+	Wed,  6 Aug 2008 20:24:49 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3C53F4D920; Wed,  6 Aug 2008 20:24:44 -0400 (EDT)
+In-Reply-To: <1218067590-31590-1-git-send-email-pasky@suse.cz>
+ (pasky@suse.cz's message of "Thu, 7 Aug 2008 02:06:30 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3EDA6D2E-6417-11DD-A233-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91552>
 
-Brandon Casey wrote:
-> Junio C Hamano wrote:
->> Brandon Casey <casey@nrlssc.navy.mil> writes:
->>
->>> There are problems here with spaces, single quotes, and double quotes.
->>> I'll follow up in another email.
->> I guess we've opened up a large can of worms.  Let's have the minimum fix
->> that says "We do support whitespace in these paths but no other funnies"
->> and leave the more intrusive one for post 1.6.0, for now.
-> 
-> I think those two patches I just sent are enough.
-> 
-> You can apply the double-quote escaping patch I sent earlier if you want
-> (the one that escapes double quotes in the macros compiled in c programs).
-> But we'd have a problem installing the perl scripts using MakeMaker, and
-> we'd have a problem _running_ the perl scripts since the single double
-> quote causes a syntax error in the perl script. Let's wait till someone
-> wants to have " in their path shows up (and let them figure out how to
-> fix it).
+pasky@suse.cz writes:
 
+> diff --git a/transport.c b/transport.c
+> index 6eb65b8..b88b89b 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -464,16 +464,15 @@ static struct ref *get_refs_via_curl(struct transport *transport)
+>  		if (results.curl_result != CURLE_OK) {
+>  			strbuf_release(&buffer);
+>  			if (missing_target(&results)) {
+> +				die("%s not found: did you run git update-server-info on the server?", refs_url);
+>  				return NULL;
 
-ok, here's a patch that allows me to compile, install using MakeMaker, and
-actually use the perl scripts generated by the make file when the installation
-prefix contains odd characters like double quote, single quote, space or
-semi-colon. The patch below includes that patch I mentioned about escaping
-double quotes for c macros.
+Hmm, I do not see a deletion of a line here...
 
--brandon
-
-
---->8---
-diff --git a/Makefile b/Makefile
-index 0d373f7..21241b4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1031,15 +1031,15 @@ endif
- # Shell quote (do not use $(call) to accommodate ancient setups);
- 
- SHA1_HEADER_SQ = $(subst ','\'',$(SHA1_HEADER))
--ETC_GITCONFIG_SQ = $(subst ','\'',$(ETC_GITCONFIG))
-+ETC_GITCONFIG_SQ = $(subst ",\",$(subst ','\'',$(ETC_GITCONFIG)))
- 
- DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
- bindir_SQ = $(subst ','\'',$(bindir))
--mandir_SQ = $(subst ','\'',$(mandir))
--infodir_SQ = $(subst ','\'',$(infodir))
--gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
--template_dir_SQ = $(subst ','\'',$(template_dir))
--htmldir_SQ = $(subst ','\'',$(htmldir))
-+mandir_SQ = $(subst ",\",$(subst ','\'',$(mandir)))
-+infodir_SQ = $(subst ",\",$(subst ','\'',$(infodir)))
-+gitexecdir_SQ = $(subst ",\",$(subst ','\'',$(gitexecdir)))
-+template_dir_SQ = $(subst ",\",$(subst ','\'',$(template_dir)))
-+htmldir_SQ = $(subst ",\",$(subst ','\'',$(htmldir)))
- prefix_SQ = $(subst ','\'',$(prefix))
- 
- SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-@@ -1116,11 +1116,11 @@ perl/perl.mak: GIT-CFLAGS perl/Makefile perl/Makefile.PL
- 
- $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
- 	$(QUIET_GEN)$(RM) $@ $@+ && \
--	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir` && \
-+	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir | sed -e 's/"/\\\\\\\"/g'` && \
- 	sed -e '1{' \
- 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
- 	    -e '	h' \
--	    -e '	s=.*=use lib (split(/:/, $$ENV{GITPERLLIB} || "@@INSTLIBDIR@@"));=' \
-+	    -e '	s=.*=use lib (split(/:/, $$ENV{GITPERLLIB} || q"@@INSTLIBDIR@@"));=' \
- 	    -e '	H' \
- 	    -e '	x' \
- 	    -e '}' \
-@@ -1134,7 +1134,7 @@ gitweb/gitweb.cgi: gitweb/gitweb.perl
- 	$(QUIET_GEN)$(RM) $@ $@+ && \
- 	sed -e '1s|#!.*perl|#!$(PERL_PATH_SQ)|' \
- 	    -e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
--	    -e 's|++GIT_BINDIR++|$(bindir)|g' \
-+	    -e 's|++GIT_BINDIR++|$(subst ",\\",$(bindir_SQ))|g' \
- 	    -e 's|++GITWEB_CONFIG++|$(GITWEB_CONFIG)|g' \
- 	    -e 's|++GITWEB_CONFIG_SYSTEM++|$(GITWEB_CONFIG_SYSTEM)|g' \
- 	    -e 's|++GITWEB_HOME_LINK_STR++|$(GITWEB_HOME_LINK_STR)|g' \
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 90cd99b..155b1ac 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -29,7 +29,7 @@ our $my_uri = $cgi->url(-absolute => 1);
- 
- # core git executable to use
- # this can just be "git" if your webserver has a sensible PATH
--our $GIT = "++GIT_BINDIR++/git";
-+our $GIT = q"++GIT_BINDIR++/git";
- 
- # absolute fs-path which will be prepended to the project path
- #our $projectroot = "/pub/scm";
-diff --git a/perl/Makefile b/perl/Makefile
-index dcbd2dd..2597d60 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -39,7 +39,7 @@ $(makfile): ../GIT-CFLAGS Makefile
- 	echo "	echo "\''$(subst ','\'',$(instdir_SQ))'\' >> $@
- else
- $(makfile): Makefile.PL ../GIT-CFLAGS
--	$(PERL_PATH) $< PREFIX=\''$(prefix_SQ)'\'
-+	$(PERL_PATH) $< PREFIX=\''$(subst ','\'',$(prefix_SQ))'\'
- endif
- 
- # this is just added comfort for calling make directly in perl dir
-diff --git a/perl/Makefile.PL b/perl/Makefile.PL
-index 320253e..e1e465c 100644
---- a/perl/Makefile.PL
-+++ b/perl/Makefile.PL
-@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
- sub MY::postamble {
- 	return <<'MAKE_FRAG';
- instlibdir:
--	@echo '$(INSTALLSITELIB)'
-+	@echo $(INSTALLSITELIB)
- 
- MAKE_FRAG
- }
--- 
-1.5.6.2
+Everybody else in the get_refs_via_ family just die()s, and the caller of
+them do not notice nor treat NULL as anything special; I think your patch
+is a sensible thing to do.
