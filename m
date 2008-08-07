@@ -1,74 +1,77 @@
-From: pasky@suse.cz
-Subject: [PATCH] Fail properly when cloning from invalid HTTP URL
-Date: Thu,  7 Aug 2008 02:06:30 +0200
-Message-ID: <1218067590-31590-1-git-send-email-pasky@suse.cz>
-Cc: git@vger.kernel.org, barkalow@iabervon.org,
-	Petr Baudis <pasky@suse.cz>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 07 02:07:54 2008
+From: Jonathan Nieder <jrnieder@uchicago.edu>
+Subject: [PATCH] Documentation: clarify that git-commit only works with
+ tracked files
+Date: Wed, 6 Aug 2008 19:15:35 -0500 (CDT)
+Message-ID: <Pine.GSO.4.62.0808061906490.24977@harper.uchicago.edu>
+References: <Pine.GSO.4.62.0808061603340.18817@harper.uchicago.edu>
+ <20080806214747.GY32057@genesis.frugalware.org>
+ <Pine.GSO.4.62.0808061725450.21683@harper.uchicago.edu>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Thu Aug 07 02:16:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQt2i-0006Y3-Dd
-	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 02:07:48 +0200
+	id 1KQtBV-0000mI-Tn
+	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 02:16:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752572AbYHGAGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2008 20:06:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753185AbYHGAGo
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 20:06:44 -0400
-Received: from 159-162.104-92.cust.bluewin.ch ([92.104.162.159]:64441 "EHLO
-	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752330AbYHGAGn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2008 20:06:43 -0400
-Received: by pixie.suse.cz (Postfix, from userid 2001)
-	id 17FFE89253; Thu,  7 Aug 2008 02:06:30 +0200 (CEST)
-X-Mailer: git-send-email 1.5.6.3.392.g292f1
+	id S1753482AbYHGAPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2008 20:15:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752952AbYHGAPs
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 20:15:48 -0400
+Received: from smtp00.uchicago.edu ([128.135.12.76]:36702 "EHLO
+	smtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751552AbYHGAPr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2008 20:15:47 -0400
+Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
+	by smtp00.uchicago.edu (8.13.8/8.13.8) with ESMTP id m770FbH5000976;
+	Wed, 6 Aug 2008 19:15:37 -0500
+Received: from localhost (jrnieder@localhost)
+	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m770FZpe025370;
+	Wed, 6 Aug 2008 19:15:35 -0500 (CDT)
+X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
+In-Reply-To: <Pine.GSO.4.62.0808061725450.21683@harper.uchicago.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91550>
 
-From: Petr Baudis <pasky@suse.cz>
+A user unfamiliar with CVS might not realize that a git-add is
+needed before commiting new files.  So emphasize that "git commit
+<path>..." only commits files already in the index.
 
-Currently, when cloning from invalid HTTP URL, git clone will possibly
-return curl error, then a confusing message about remote HEAD and then
-return success and leave an empty repository behind, confusing either
-the end-user or the automated service calling it (think repo.or.cz).
-
-This patch changes the error() calls in get_refs_via_curl() to die()s,
-akin to the other get_refs_*() functions.
-
-Cc: Daniel Barkalow <barkalow@iabervon.org>
-Signed-off-by: Petr Baudis <pasky@suse.cz>
+Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
 ---
- transport.c |    7 +++----
- 1 files changed, 3 insertions(+), 4 deletions(-)
+	I keep on forgetting and getting annoyed when "git commit
+	newfile.c" does not work.  From the same confusion I suggested
+	git commit -A without really thinking about what it meant.
+	This change should make the behavior easier to understand
+	and remember.  Thanks for the help.
 
-diff --git a/transport.c b/transport.c
-index 6eb65b8..b88b89b 100644
---- a/transport.c
-+++ b/transport.c
-@@ -464,16 +464,15 @@ static struct ref *get_refs_via_curl(struct transport *transport)
- 		if (results.curl_result != CURLE_OK) {
- 			strbuf_release(&buffer);
- 			if (missing_target(&results)) {
-+				die("%s not found: did you run git update-server-info on the server?", refs_url);
- 				return NULL;
- 			} else {
--				error("%s", curl_errorstr);
--				return NULL;
-+				die("%s download error - %s", refs_url, curl_errorstr);
- 			}
- 		}
- 	} else {
- 		strbuf_release(&buffer);
--		error("Unable to start request");
--		return NULL;
-+		die("Unable to start HTTP request");
- 	}
+ Documentation/git-commit.txt |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 0e25bb8..9b00ccb 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -27,9 +27,10 @@ The content to be added can be specified in several ways:
+ 2. by using 'git-rm' to remove files from the working tree
+    and the index, again before using the 'commit' command;
  
- 	data = buffer.buf;
+-3. by listing files as arguments to the 'commit' command, in which
+-   case the commit will ignore changes staged in the index, and instead
+-   record the current content of the listed files;
++3. by listing some known files as arguments to the 'commit'
++   command, in which case the commit will ignore changes staged
++   in the index and instead record the current content of the
++   listed files;
+ 
+ 4. by using the -a switch with the 'commit' command to automatically
+    "add" changes from all known files (i.e. all files that are already
 -- 
-1.5.6.3.392.g292f1
+1.6.0.rc1.91.gf0c3
