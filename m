@@ -1,77 +1,156 @@
-From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: [PATCH] Documentation: clarify that git-commit only works with
- tracked files
-Date: Wed, 6 Aug 2008 19:15:35 -0500 (CDT)
-Message-ID: <Pine.GSO.4.62.0808061906490.24977@harper.uchicago.edu>
-References: <Pine.GSO.4.62.0808061603340.18817@harper.uchicago.edu>
- <20080806214747.GY32057@genesis.frugalware.org>
- <Pine.GSO.4.62.0808061725450.21683@harper.uchicago.edu>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] perl/Makefile: handle paths with spaces in the NO_PERL_MAKEMAKER
+ section
+Date: Wed, 06 Aug 2008 19:23:14 -0500
+Message-ID: <lWtENUxH2rUuPeH6fGlmuHzUPOVM2GJNQWM361G7sj6Za8Qm8qm3Wg@cipher.nrlssc.navy.mil>
+References: <1JOFfIWYHgmUErPhpB6xWtV5uZYv3_v3tBnt928x644O-1AquEzzIA@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu Aug 07 02:16:58 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 07 02:24:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KQtBV-0000mI-Tn
-	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 02:16:54 +0200
+	id 1KQtIj-0002k1-MX
+	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 02:24:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753482AbYHGAPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2008 20:15:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752952AbYHGAPs
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 20:15:48 -0400
-Received: from smtp00.uchicago.edu ([128.135.12.76]:36702 "EHLO
-	smtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751552AbYHGAPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2008 20:15:47 -0400
-Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
-	by smtp00.uchicago.edu (8.13.8/8.13.8) with ESMTP id m770FbH5000976;
-	Wed, 6 Aug 2008 19:15:37 -0500
-Received: from localhost (jrnieder@localhost)
-	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m770FZpe025370;
-	Wed, 6 Aug 2008 19:15:35 -0500 (CDT)
-X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
-In-Reply-To: <Pine.GSO.4.62.0808061725450.21683@harper.uchicago.edu>
+	id S1754084AbYHGAXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2008 20:23:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754126AbYHGAXR
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Aug 2008 20:23:17 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:49910 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753719AbYHGAXQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2008 20:23:16 -0400
+Received: by mail.nrlssc.navy.mil id m770NE5S026561; Wed, 6 Aug 2008 19:23:14 -0500
+In-Reply-To: <1JOFfIWYHgmUErPhpB6xWtV5uZYv3_v3tBnt928x644O-1AquEzzIA@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 07 Aug 2008 00:23:14.0733 (UTC) FILETIME=[C8415DD0:01C8F823]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91551>
 
-A user unfamiliar with CVS might not realize that a git-add is
-needed before commiting new files.  So emphasize that "git commit
-<path>..." only commits files already in the index.
+Brandon Casey wrote:
+> Junio C Hamano wrote:
+>> Brandon Casey <casey@nrlssc.navy.mil> writes:
+>>
+>>> There are problems here with spaces, single quotes, and double quotes.
+>>> I'll follow up in another email.
+>> I guess we've opened up a large can of worms.  Let's have the minimum fix
+>> that says "We do support whitespace in these paths but no other funnies"
+>> and leave the more intrusive one for post 1.6.0, for now.
+> 
+> I think those two patches I just sent are enough.
+> 
+> You can apply the double-quote escaping patch I sent earlier if you want
+> (the one that escapes double quotes in the macros compiled in c programs).
+> But we'd have a problem installing the perl scripts using MakeMaker, and
+> we'd have a problem _running_ the perl scripts since the single double
+> quote causes a syntax error in the perl script. Let's wait till someone
+> wants to have " in their path shows up (and let them figure out how to
+> fix it).
 
-Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
----
-	I keep on forgetting and getting annoyed when "git commit
-	newfile.c" does not work.  From the same confusion I suggested
-	git commit -A without really thinking about what it meant.
-	This change should make the behavior easier to understand
-	and remember.  Thanks for the help.
 
- Documentation/git-commit.txt |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+ok, here's a patch that allows me to compile, install using MakeMaker, and
+actually use the perl scripts generated by the make file when the installation
+prefix contains odd characters like double quote, single quote, space or
+semi-colon. The patch below includes that patch I mentioned about escaping
+double quotes for c macros.
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 0e25bb8..9b00ccb 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -27,9 +27,10 @@ The content to be added can be specified in several ways:
- 2. by using 'git-rm' to remove files from the working tree
-    and the index, again before using the 'commit' command;
+-brandon
+
+
+--->8---
+diff --git a/Makefile b/Makefile
+index 0d373f7..21241b4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1031,15 +1031,15 @@ endif
+ # Shell quote (do not use $(call) to accommodate ancient setups);
  
--3. by listing files as arguments to the 'commit' command, in which
--   case the commit will ignore changes staged in the index, and instead
--   record the current content of the listed files;
-+3. by listing some known files as arguments to the 'commit'
-+   command, in which case the commit will ignore changes staged
-+   in the index and instead record the current content of the
-+   listed files;
+ SHA1_HEADER_SQ = $(subst ','\'',$(SHA1_HEADER))
+-ETC_GITCONFIG_SQ = $(subst ','\'',$(ETC_GITCONFIG))
++ETC_GITCONFIG_SQ = $(subst ",\",$(subst ','\'',$(ETC_GITCONFIG)))
  
- 4. by using the -a switch with the 'commit' command to automatically
-    "add" changes from all known files (i.e. all files that are already
+ DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
+ bindir_SQ = $(subst ','\'',$(bindir))
+-mandir_SQ = $(subst ','\'',$(mandir))
+-infodir_SQ = $(subst ','\'',$(infodir))
+-gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
+-template_dir_SQ = $(subst ','\'',$(template_dir))
+-htmldir_SQ = $(subst ','\'',$(htmldir))
++mandir_SQ = $(subst ",\",$(subst ','\'',$(mandir)))
++infodir_SQ = $(subst ",\",$(subst ','\'',$(infodir)))
++gitexecdir_SQ = $(subst ",\",$(subst ','\'',$(gitexecdir)))
++template_dir_SQ = $(subst ",\",$(subst ','\'',$(template_dir)))
++htmldir_SQ = $(subst ",\",$(subst ','\'',$(htmldir)))
+ prefix_SQ = $(subst ','\'',$(prefix))
+ 
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
+@@ -1116,11 +1116,11 @@ perl/perl.mak: GIT-CFLAGS perl/Makefile perl/Makefile.PL
+ 
+ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+-	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir` && \
++	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C perl -s --no-print-directory instlibdir | sed -e 's/"/\\\\\\\"/g'` && \
+ 	sed -e '1{' \
+ 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+ 	    -e '	h' \
+-	    -e '	s=.*=use lib (split(/:/, $$ENV{GITPERLLIB} || "@@INSTLIBDIR@@"));=' \
++	    -e '	s=.*=use lib (split(/:/, $$ENV{GITPERLLIB} || q"@@INSTLIBDIR@@"));=' \
+ 	    -e '	H' \
+ 	    -e '	x' \
+ 	    -e '}' \
+@@ -1134,7 +1134,7 @@ gitweb/gitweb.cgi: gitweb/gitweb.perl
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+ 	sed -e '1s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+ 	    -e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
+-	    -e 's|++GIT_BINDIR++|$(bindir)|g' \
++	    -e 's|++GIT_BINDIR++|$(subst ",\\",$(bindir_SQ))|g' \
+ 	    -e 's|++GITWEB_CONFIG++|$(GITWEB_CONFIG)|g' \
+ 	    -e 's|++GITWEB_CONFIG_SYSTEM++|$(GITWEB_CONFIG_SYSTEM)|g' \
+ 	    -e 's|++GITWEB_HOME_LINK_STR++|$(GITWEB_HOME_LINK_STR)|g' \
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 90cd99b..155b1ac 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -29,7 +29,7 @@ our $my_uri = $cgi->url(-absolute => 1);
+ 
+ # core git executable to use
+ # this can just be "git" if your webserver has a sensible PATH
+-our $GIT = "++GIT_BINDIR++/git";
++our $GIT = q"++GIT_BINDIR++/git";
+ 
+ # absolute fs-path which will be prepended to the project path
+ #our $projectroot = "/pub/scm";
+diff --git a/perl/Makefile b/perl/Makefile
+index dcbd2dd..2597d60 100644
+--- a/perl/Makefile
++++ b/perl/Makefile
+@@ -39,7 +39,7 @@ $(makfile): ../GIT-CFLAGS Makefile
+ 	echo "	echo "\''$(subst ','\'',$(instdir_SQ))'\' >> $@
+ else
+ $(makfile): Makefile.PL ../GIT-CFLAGS
+-	$(PERL_PATH) $< PREFIX=\''$(prefix_SQ)'\'
++	$(PERL_PATH) $< PREFIX=\''$(subst ','\'',$(prefix_SQ))'\'
+ endif
+ 
+ # this is just added comfort for calling make directly in perl dir
+diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+index 320253e..e1e465c 100644
+--- a/perl/Makefile.PL
++++ b/perl/Makefile.PL
+@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
+ sub MY::postamble {
+ 	return <<'MAKE_FRAG';
+ instlibdir:
+-	@echo '$(INSTALLSITELIB)'
++	@echo $(INSTALLSITELIB)
+ 
+ MAKE_FRAG
+ }
 -- 
-1.6.0.rc1.91.gf0c3
+1.5.6.2
