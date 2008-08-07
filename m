@@ -1,78 +1,97 @@
-From: "Anton Mostovoy" <git@mostovoy.net>
-Subject: git svn throws locale related error when built from source
-Date: Thu, 7 Aug 2008 10:33:59 -0500
-Message-ID: <5C17B49DFD5F456B8701BE301F4B55A1@chi.orbitz.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 07 17:35:26 2008
+From: Marcus Griep <marcus@griep.us>
+Subject: [PATCH v2 1/2] Fix multi-glob assertion in git-svn
+Date: Thu,  7 Aug 2008 11:34:01 -0400
+Message-ID: <1218123242-26260-2-git-send-email-marcus@griep.us>
+References: <20080807090008.GA9161@untitled>
+ <1218123242-26260-1-git-send-email-marcus@griep.us>
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marcus Griep <marcus@griep.us>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 07 17:46:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KR7WA-0002k0-LB
-	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 17:35:11 +0200
+	id 1KR7h7-0007v2-37
+	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 17:46:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752419AbYHGPeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2008 11:34:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751643AbYHGPeF
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 11:34:05 -0400
-Received: from an-out-0708.google.com ([209.85.132.250]:13075 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751382AbYHGPeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2008 11:34:04 -0400
-Received: by an-out-0708.google.com with SMTP id d40so85881and.103
-        for <git@vger.kernel.org>; Thu, 07 Aug 2008 08:34:01 -0700 (PDT)
-Received: by 10.100.120.6 with SMTP id s6mr2367907anc.106.1218123241682;
-        Thu, 07 Aug 2008 08:34:01 -0700 (PDT)
-Received: from AMOSTOVOYT60 ( [198.175.55.5])
-        by mx.google.com with ESMTPS id m6sm13111410wrm.35.2008.08.07.08.34.00
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 07 Aug 2008 08:34:01 -0700 (PDT)
-X-Mailer: Microsoft Office Outlook 11
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5512
-Thread-Index: AcjsOfNYfcm4CrqoT06C29t9bKC2kgAGeF1gAFVHPEACjEOccAAyNmMg
+	id S1752426AbYHGPp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2008 11:45:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752352AbYHGPp0
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 11:45:26 -0400
+Received: from boohaunt.net ([209.40.206.144]:46971 "EHLO boohaunt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752108AbYHGPpY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2008 11:45:24 -0400
+Received: by boohaunt.net (Postfix, from userid 1000)
+	id 2126C1878CF3; Thu,  7 Aug 2008 11:34:02 -0400 (EDT)
+X-Mailer: git-send-email 1.6.0.rc2.4.g39f8
+In-Reply-To: <1218123242-26260-1-git-send-email-marcus@griep.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91587>
 
-Hi
+Fixes bad regex match check for multiple globs (would always return
+one glob regardless of actual number).
 
-I built git 1.5.6.3 manually (no package with 1.5.4+ on gutsy), and I am
-getting the error below when running 'git svn rebase'. 
-svn works fine on its own though.  
-The default locale is set to en_US.UTF-8
+Signed-off-by: Marcus Griep <marcus@griep.us>
+---
+ git-svn.perl            |    5 +++--
+ t/t9108-git-svn-glob.sh |   19 +++++++++++++++++++
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 
-svn: error: cannot set LC_ALL locale
-svn: error: environment variable LANG is en_US.UTF-8
-svn: error: please check that your locale name is correct
-
-I found a workaround that works, but it would be nice to have it work
-properly.
-$ LANG= git svn rebase
-
-Here is the output of the locale command:
-$ locale
-LANG=en_US.UTF-8
-LANGUAGE=en-US.UTF-8
-LC_CTYPE="en_US.UTF-8"
-LC_NUMERIC="en_US.UTF-8"
-LC_TIME="en_US.UTF-8"
-LC_COLLATE="en_US.UTF-8"
-LC_MONETARY="en_US.UTF-8"
-LC_MESSAGES="en_US.UTF-8"
-LC_PAPER="en_US.UTF-8"
-LC_NAME="en_US.UTF-8"
-LC_ADDRESS="en_US.UTF-8"
-LC_TELEPHONE="en_US.UTF-8"
-LC_MEASUREMENT="en_US.UTF-8"
-LC_IDENTIFICATION="en_US.UTF-8"
-LC_ALL=
-
+diff --git a/git-svn.perl b/git-svn.perl
+index df0ed90..5974a06 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -4912,14 +4912,15 @@ sub new {
+ 	my ($class, $glob) = @_;
+ 	my $re = $glob;
+ 	$re =~ s!/+$!!g; # no need for trailing slashes
+-	my $nr = ($re =~ s!^(.*)\*(.*)$!\(\[^/\]+\)!g);
+-	my ($left, $right) = ($1, $2);
++	my $nr = $re =~ tr/*/*/;
+ 	if ($nr > 1) {
+ 		die "Only one '*' wildcard expansion ",
+ 		    "is supported (got $nr): '$glob'\n";
+ 	} elsif ($nr == 0) {
+ 		die "One '*' is needed for glob: '$glob'\n";
+ 	}
++	$re =~ s!^(.*)\*(.*)$!\(\[^/\]+\)!g;
++	my ($left, $right) = ($1, $2);
+ 	$re = quotemeta($left) . $re . quotemeta($right);
+ 	if (length $left && !($left =~ s!/+$!!g)) {
+ 		die "Missing trailing '/' on left side of: '$glob' ($left)\n";
+diff --git a/t/t9108-git-svn-glob.sh b/t/t9108-git-svn-glob.sh
+index f6f71d0..ef6d88e 100755
+--- a/t/t9108-git-svn-glob.sh
++++ b/t/t9108-git-svn-glob.sh
+@@ -83,4 +83,23 @@ test_expect_success 'test left-hand-side only globbing' '
+ 	cmp expect.two output.two
+ 	'
  
-Thanks in advance.
--Anton
++echo "Only one '*' wildcard expansion is supported (got 2): 'branches/*/*'" > expect.three
++echo "" >> expect.three
++
++test_expect_success 'test disallow multi-globs' '
++	git config --add svn-remote.three.url "$svnrepo" &&
++	git config --add svn-remote.three.fetch trunk:refs/remotes/three/trunk &&
++	git config --add svn-remote.three.branches \
++	                 "branches/*/*:refs/remotes/three/branches/*" &&
++	git config --add svn-remote.three.tags \
++	                 "tags/*/*:refs/remotes/three/tags/*" &&
++	cd tmp &&
++		echo "try try" >> tags/end/src/b/readme &&
++		poke tags/end/src/b/readme &&
++		svn commit -m "try to try"
++		cd .. &&
++	test_must_fail git-svn fetch three &> stderr.three &&
++	cmp expect.three stderr.three
++	'
++
+ test_done
+-- 
+1.6.0.rc2.4.g39f8
