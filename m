@@ -1,75 +1,90 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFH] filter-branch: ancestor detection weirdness
-Date: Fri,  8 Aug 2008 01:54:02 +0200
-Message-ID: <1218153242-18837-1-git-send-email-trast@student.ethz.ch>
-References: <200808080148.27384.trast@student.ethz.ch>
-Cc: Jan Wielemaker <J.Wielemaker@uva.nl>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 08 01:54:58 2008
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: Re: [RFH/PATCH] asciidoc markup fixes
+Date: Fri, 08 Aug 2008 01:26:33 +0200
+Message-ID: <489B84A9.2090900@isy.liu.se>
+References: <7v8wv8ifyi.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="------------000307060401040004030203"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 08 01:59:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRFJp-0002LK-CL
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 01:54:57 +0200
+	id 1KRFOV-0003sq-TA
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 01:59:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752538AbYHGXx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2008 19:53:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753106AbYHGXx4
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 19:53:56 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:34476 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752372AbYHGXxz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2008 19:53:55 -0400
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Aug 2008 01:53:53 +0200
-Received: from localhost.localdomain ([84.75.158.234]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Aug 2008 01:53:53 +0200
-X-Mailer: git-send-email 1.6.0.rc2.19.g3c9ba
-In-Reply-To: <200808080148.27384.trast@student.ethz.ch>
-X-OriginalArrivalTime: 07 Aug 2008 23:53:53.0660 (UTC) FILETIME=[D8FCB3C0:01C8F8E8]
+	id S1754933AbYHGX6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2008 19:58:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754670AbYHGX6p
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 19:58:45 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:39629 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754459AbYHGX6o (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2008 19:58:44 -0400
+X-Greylist: delayed 1927 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Aug 2008 19:58:43 EDT
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 7A57F25A41;
+	Fri,  8 Aug 2008 01:26:35 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 22154-02; Fri,  4 Jul 2008 02:08:56 +0200 (MEST)
+Received: from [192.168.13.34] (85.8.6.119.static.se.wasadata.net [85.8.6.119])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by bogotron.isy.liu.se (Postfix) with ESMTP id BEBE525947;
+	Fri,  8 Aug 2008 01:26:34 +0200 (MEST)
+User-Agent: Thunderbird 2.0.0.14 (Windows/20080421)
+In-Reply-To: <7v8wv8ifyi.fsf@gitster.siamese.dyndns.org>
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91614>
 
-THIS WILL VERY LIKELY NOT WORK IN ALL CASES.
+This is a multi-part message in MIME format.
+--------------000307060401040004030203
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Use git rev-list -1 -- <subdir> to discover a random ancestor, instead
-of more correct boundary detection.  Oddly enough, this _increases_
-success rate with Jan's repository and --all.  May break randomly with
-more complicated args.
----
+Junio C Hamano wrote:
+> After this patch,
+> 
+>     git grep '`+`,' -- Documentation
+> 
+> should report noting.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Maybe someone understands what's going on and can fix the underlying
-bug...
+Passes the test with ascidoc 8.2.7, xmlto 0.0.21, DocBooks-utils 0.6.14.
 
- git-filter-branch.sh |   12 +++---------
- 1 files changed, 3 insertions(+), 9 deletions(-)
+Tested-by: Gustaf Hendeby <hendeby@isy.liu.se>
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 182822a..52b2bdf 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -325,15 +325,9 @@ while read ref
- do
- 	sha1=$(git rev-parse "$ref"^0)
- 	test -f "$workdir"/../map/$sha1 && continue
--	# Assign the boundarie(s) in the set of rewritten commits
--	# as the replacement commit(s).
--	# (This would look a bit nicer if --not --stdin worked.)
--	for p in $( (cd "$workdir"/../map; ls | sed "s/^/^/") |
--		git rev-list $ref --boundary --stdin |
--		sed -n "s/^-//p")
--	do
--		map $p >> "$workdir"/../map/$sha1
--	done
-+	# Assign the first commit not pruned as the replacement.
-+	candidate=$(git rev-list $ref -1 -- "$filter_subdir")
-+	test "$candidate" && map "$candidate" > "$workdir"/../map/$sha1
- done < "$tempdir"/heads
- 
- # Finally update the refs
--- 
-1.6.0.rc2.19.g3c9ba
+--------------000307060401040004030203
+Content-Type: text/x-vcard; charset=utf-8;
+ name="hendeby.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="hendeby.vcf"
+
+begin:vcard
+fn:Gustaf Hendeby
+n:Hendeby;Gustaf
+org;quoted-printable:Link=C3=B6pings universitet;Department of Electrical Enginering
+adr;quoted-printable;quoted-printable:;;;Link=C3=B6ping;;SE-581 83=0D=0A=
+	;Sweden
+email;internet:hendeby@isy.liu.se
+title:PhD Student
+tel;work:+46 14 28 22 26
+tel;cell:+46 730 64 64 89
+x-mozilla-html:FALSE
+url:http://www.control.isy.liu.se/~hendeby
+version:2.1
+end:vcard
+
+
+--------------000307060401040004030203--
