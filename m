@@ -1,77 +1,142 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: git blame and cherry-picking
-Date: Thu, 7 Aug 2008 13:53:26 -0400
-Message-ID: <32541b130808071053g5fd0ce4u24d28263f38e0207@mail.gmail.com>
-References: <91A979F0-1329-4CA6-AADC-6CF55872B57A@midwinter.com>
+From: martin f krafft <madduck@debian.org>
+Subject: linearising TopGit forests into patch series (was: [ANNOUNCE]
+	TopGit - A different patch queue manager)
+Date: Thu, 7 Aug 2008 14:56:24 -0300
+Organization: The Debian project
+Message-ID: <20080807175623.GA16833@lapse.rw.madduck.net>
+References: <20080803031424.GV32184@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Users List" <git@vger.kernel.org>
-To: "Steven Grimm" <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Thu Aug 07 19:54:54 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: multipart/mixed; boundary="===============4461563666892176285=="
+Cc: vcs distro packaging discussion list
+	<vcs-pkg-discuss@lists.alioth.debian.org>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org Thu Aug 07 19:56:38 2008
+Return-path: <vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org>
+Envelope-to: gcpv-vcs-pkg-discuss@m.gmane.org
+Received: from alioth.debian.org ([217.196.43.134])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KR9h1-0000ok-DJ
-	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 19:54:31 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751147AbYHGRx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2008 13:53:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196AbYHGRx2
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 13:53:28 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:33664 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750901AbYHGRx2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2008 13:53:28 -0400
-Received: by qw-out-2122.google.com with SMTP id 3so53362qwe.37
-        for <git@vger.kernel.org>; Thu, 07 Aug 2008 10:53:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=mhbvj6bL1DsqUSR5mS+vykHAUJ67nPknrpMAOwmEJaw=;
-        b=m7Hr50rFZuUDn6xq5Dmxob4UqZPkazoA6MZMn9sjPzCgrEu6xFmvy9Uxc+lrGpe8KX
-         hlKNhHQFpuPINrAoIm7ua0MmGXSNd7/r8aUiocv/RdsaH2adKBOzmX1q97z2m1+QydRh
-         fDpa6RWKFTHAPDnmduLkqkwCEJZde5j9hQRO8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=XO0P0ivwo9/eNFGma0yxjrRWxO3XHo8Zx3S2gVWOcnU1mlnVB6w7YFv0pQNFZde4Qp
-         Kq6ANx9BQ1Rs5WW8zIZQC/9EUX4iofRzysuBNO/UUlT34H4zbuG4pDAxKoR2y+dI4CVi
-         o6N0h8fNAO0SklN3eLRBJBuHXq45nyQt5zdW4=
-Received: by 10.151.48.20 with SMTP id a20mr5721195ybk.127.1218131607046;
-        Thu, 07 Aug 2008 10:53:27 -0700 (PDT)
-Received: by 10.150.98.19 with HTTP; Thu, 7 Aug 2008 10:53:26 -0700 (PDT)
-In-Reply-To: <91A979F0-1329-4CA6-AADC-6CF55872B57A@midwinter.com>
+	id 1KR9j4-0001gm-0u
+	for gcpv-vcs-pkg-discuss@m.gmane.org; Thu, 07 Aug 2008 19:56:38 +0200
+Received: from localhost
+	([127.0.0.1] helo=alioth.debian.org ident=list)
+	by alioth.debian.org with esmtp (Exim 4.63)
+	(envelope-from <vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org>)
+	id 1KR9i8-00017f-MA
+	for gcpv-vcs-pkg-discuss@m.gmane.org; Thu, 07 Aug 2008 17:55:40 +0000
+Received: from clegg.madduck.net ([193.242.105.96])
+	by alioth.debian.org with esmtp (Exim 4.63)
+	(envelope-from <madduck@lapse.rw.madduck.net>) id 1KR9i0-00015Z-1o
+	for vcs-pkg-discuss@lists.alioth.debian.org;
+	Thu, 07 Aug 2008 17:55:38 +0000
+Received: from lapse.rw.madduck.net (unknown [209.13.181.29])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net",
+	Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id 649F71D40A7;
+	Thu,  7 Aug 2008 19:55:21 +0200 (CEST)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id 5383C80B3; Thu,  7 Aug 2008 14:56:24 -0300 (ART)
+In-Reply-To: <20080803031424.GV32184@machine.or.cz>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel
+	2.6.24-etchnhalf.1+scoflowctrl.1-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.93.1/7972/Thu Aug 7 14:22:20 2008 on
+	clegg.madduck.net
+X-Virus-Status: Clean
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on alioth.debian.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=AWL,BAYES_00,URIBL_RED
+	autolearn=ham version=3.2.3
+X-BeenThere: vcs-pkg-discuss@lists.alioth.debian.org
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: Discussions on using VCS for distro packaging
+	<vcs-pkg-discuss.lists.alioth.debian.org>
+List-Unsubscribe: <http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss>,
+	<mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=unsubscribe>
+List-Archive: <http://lists.alioth.debian.org/pipermail/vcs-pkg-discuss>
+List-Post: <mailto:vcs-pkg-discuss@lists.alioth.debian.org>
+List-Help: <mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=help>
+List-Subscribe: <http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss>,
+	<mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=subscribe>
+Mime-version: 1.0
+Sender: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+Errors-To: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+X-SA-Exim-Connect-IP: 127.0.0.1
+X-SA-Exim-Mail-From: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+X-SA-Exim-Scanned: No (on alioth.debian.org); SAEximRunCond expanded to false
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91593>
+
+
+--===============4461563666892176285==
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="/04w6evG8XlLl3ft"
 Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91592>
 
-On 8/6/08, Steven Grimm <koreth@midwinter.com> wrote:
-> What, if any, is the approved way to get git blame to follow cherry-picked
-> changes? Right now blame is good about showing you the actual responsible
-> revision and author in the case of merges, but if you cherry-pick a change
-> with "-n" (to test before committing), the modifications are attributed to
-> the person who did the cherry-pick instead of the cherry-picked revision's
-> author. Even without the "-n" option, the changes are attributed to the
-> cherry-pick *revision* instead of the original one.
 
-It sounds like you at least want to avoid using "-n", if it really
-does lose author information that way.  If the patch doesn't work, you
-can always "git commit --amend" or "git reset --hard HEAD^".
+--/04w6evG8XlLl3ft
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I don't think tracing through to the original revision is useful
-anyway; nothing you'd find through the original commit would be
-relevant to git blame, AFAICS, since none of those other patches were
-applied to the branch you're looking at.
+Hi Petr and everyone else,
 
-Have fun,
+as some of you may know, I am working on http://vcs-pkg.org, and
+Pierre kindly alerted me to your announcement, which looks very
+interesting for what we are trying to do.
 
-Avery
+Assuming a number of interdependent topic branches, does TopGit
+provide a way for me to linearise/flatten/serialise these branches
+in a one-patch-per-branch fashion, so that I could turn any TopGit
+repository into a quilt series? I am only interested in a one-way
+conversion from TopGit to quilt for now.
+
+The reason for this is quite simply that while it's fabulous to use
+e.g. Git for managing the source repository from which to build
+distro packages, the resulting packages will have all
+distro-specific changes applied or collated into a single diff. This
+makes it hard for other distributions to grab patches, for upstream
+to keep on top of what is being distributed, and for bug fixers to
+separate patches and test only specific ones.
+
+If we could turn a TopGit-managed forest into a quilt series, we
+could distribute the series with the package and allow those who
+inspect the source package to use quilt to navigate the patches.
+
+If anyone has any input on the matter, I'd love to hear it.
+
+Thank you,
+
+--=20
+ .''`.   martin f. krafft <madduck@debian.org>
+: :'  :  proud Debian developer, author, administrator, and user
+`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
+  `-  Debian - when you have better things to do than fixing systems
+=20
+infinite loop: see 'loop, infinite'.
+loop, infinite: see 'infinite loop'.
+
+--/04w6evG8XlLl3ft
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkibNz8ACgkQIgvIgzMMSnU5iACgla6EGfnOsIwVBT036xoAfBZ7
+qRkAn1FVE+isGqT9+uRnd8DEHvW29BYv
+=G7ER
+-----END PGP SIGNATURE-----
+
+--/04w6evG8XlLl3ft--
+
+
+--===============4461563666892176285==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
