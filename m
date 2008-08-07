@@ -1,110 +1,74 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git filter-branch --subdirectory-filter, still a mistery
-Date: Fri, 8 Aug 2008 01:48:05 +0200
-Message-ID: <200808080148.27384.trast@student.ethz.ch>
-References: <200808061539.50268.J.Wielemaker@uva.nl> <200808070950.23754.trast@student.ethz.ch> <200808071214.25399.J.Wielemaker@uva.nl>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart5057959.M3n1VQpjPy";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jan Wielemaker <J.Wielemaker@uva.nl>
-X-From: git-owner@vger.kernel.org Fri Aug 08 01:49:25 2008
+Subject: [PATCH] filter-branch: be more helpful when an annotated tag changes
+Date: Fri,  8 Aug 2008 01:50:31 +0200
+Message-ID: <1218153031-18443-1-git-send-email-trast@student.ethz.ch>
+References: <200808080148.27384.trast@student.ethz.ch>
+Cc: Jan Wielemaker <J.Wielemaker@uva.nl>, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 08 01:51:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRFEP-0000qK-9b
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 01:49:21 +0200
+	id 1KRFGX-0001PP-O3
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 01:51:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751738AbYHGXsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2008 19:48:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752837AbYHGXsT
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 19:48:19 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:20143 "EHLO xsmtp1.ethz.ch"
+	id S1755983AbYHGXu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2008 19:50:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755954AbYHGXu0
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 19:50:26 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:20316 "EHLO xsmtp1.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751658AbYHGXsS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2008 19:48:18 -0400
+	id S1755592AbYHGXuZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2008 19:50:25 -0400
 Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Aug 2008 01:48:17 +0200
-Received: from [192.168.0.3] ([84.75.158.234]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Aug 2008 01:48:17 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <200808071214.25399.J.Wielemaker@uva.nl>
-X-OriginalArrivalTime: 07 Aug 2008 23:48:17.0068 (UTC) FILETIME=[105CD6C0:01C8F8E8]
+	 Fri, 8 Aug 2008 01:50:24 +0200
+Received: from localhost.localdomain ([84.75.158.234]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 8 Aug 2008 01:50:23 +0200
+X-Mailer: git-send-email 1.6.0.rc2.19.g3c9ba
+In-Reply-To: <200808080148.27384.trast@student.ethz.ch>
+X-OriginalArrivalTime: 07 Aug 2008 23:50:23.0911 (UTC) FILETIME=[5BF78B70:01C8F8E8]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91612>
 
---nextPart5057959.M3n1VQpjPy
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Previously, git-filter-branch failed if it attempted to update an
+annotated tag.  Now we ignore this condition if --tag-name-filter is
+given, so that we can later rewrite the tag.  If no such option was
+provided, we warn the user that he might want to run with
+--tag-name-filter cat to achieve the intended effect.
 
-Jan Wielemaker wrote:
->   Ref 'refs/tags/V5.6.50' was rewritten
->   error: Ref refs/tags/V5.6.50 is at 8678b32f71178019c06aefa40e2d3fb9a2e8=
-ef25=20
-> but
-> 	expected 2e8aef64e2fed088720a19ac2ffa2481e5bc7806
->   fatal: Cannot lock the ref 'refs/tags/V5.6.50'.
->   Could not rewrite refs/tags/V5.6.50
-[...]
-> Now, if I look in .git/packed-refs [...] and I changed all these to
-> `lightweight' tags
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ git-filter-branch.sh |   14 +++++++++++---
+ 1 files changed, 11 insertions(+), 3 deletions(-)
 
-This appears to be a bug.  I've whipped up a patch that will follow
-and should fix the bug.  It has nothing to do with packed-refs; the
-current filter-branch chokes on annotated tags during
-=2D-subdirectory-filter, even though there is support for tag rewriting.
-
-However, to enable tag rewriting, you need to say --tag-name-filter
-cat.
-
-> Now it runs to the end.  Unfortunagtely the history is completely
-> screwed up :-(:
->=20
-> 	* There are a lot of commits that are not related to the dir
-> 	* Commits start long before the directory came into existence,
-> 	Looks like it just shows the whole project at this place.
-
-=46or some reason the ancestor detection does not work right.  I'm also
-following up with an RFH patch that significantly improves the success
-rate (in terms of branches and tags successfully mapped to a rewritten
-commit) in the case of your repository.  I doubt more staring at the
-code would yield any more ideas at this hour, so ideas would be
-appreciated.
-
-The rest is just the other commits/tags showing a lot of the history.
-I don't know of any built-in way to prune the branches and tags that
-aren't part of the new master, but
-
-  git branch -a --no-merged master
-
-can tell you which branches aren't ancestors of master.
-
-=2D Thomas
-
-=2D-=20
-Thomas Rast
-trast@student.ethz.ch
-
-
---nextPart5057959.M3n1VQpjPy
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkibicsACgkQqUud07tmzP1AqwCeN/qXfP5h+NatERHlGECx/xSa
-VzEAnjLBf/E27jHb3rbwmXd1RSeAo/ov
-=SwCS
------END PGP SIGNATURE-----
-
---nextPart5057959.M3n1VQpjPy--
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 182822a..a324cf0 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -361,9 +361,17 @@ do
+ 	;;
+ 	$_x40)
+ 		echo "Ref '$ref' was rewritten"
+-		git update-ref -m "filter-branch: rewrite" \
+-				"$ref" $rewritten $sha1 ||
+-			die "Could not rewrite $ref"
++		if ! git update-ref -m "filter-branch: rewrite" \
++					"$ref" $rewritten $sha1 2>/dev/null; then
++			if test $(git cat-file -t "$ref") = tag; then
++				if test -z "$filter_tag_name"; then
++					warn "WARNING: You said to rewrite tagged commits, but not the corresponding tag."
++					warn "WARNING: Perhaps use '--tag-name-filter cat' to rewrite the tag."
++				fi
++			else
++				die "Could not rewrite $ref"
++			fi
++		fi
+ 	;;
+ 	*)
+ 		# NEEDSWORK: possibly add -Werror, making this an error
+-- 
+1.6.0.rc2.19.g3c9ba
