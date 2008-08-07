@@ -1,84 +1,81 @@
-From: "Tony Stubbs" <antony.stubbs@gmail.com>
-Subject: Re: git svn rebase - could not detach HEAD
-Date: Fri, 8 Aug 2008 00:53:41 +1200
-Message-ID: <f7d8f60b0808070553o6f709445j9dd036f380763f6e@mail.gmail.com>
-References: <f7d8f60b0808062349q92fffb9l33de5550250e4e13@mail.gmail.com>
-	 <7vd4kljnpn.fsf@gitster.siamese.dyndns.org>
-	 <f7d8f60b0808070033g7a322ee4w9147dd51e41850c6@mail.gmail.com>
-	 <20080807074117.GA7648@atjola.homenet>
+From: Luciano Rocha <luciano@eurotux.com>
+Subject: Re: [PATCH] files given on the command line are relative to $cwd
+Date: Thu, 7 Aug 2008 10:03:41 +0100
+Message-ID: <20080807090341.GA6421@bit.office.eurotux.com>
+References: <48997D2E.9030708@obry.net> <20080806104432.GG7121@bit.office.eurotux.com> <4899848C.6030800@obry.net> <7v3alirw6b.fsf@gitster.siamese.dyndns.org> <4899D119.1080403@obry.net> <7vy73aqe9m.fsf@gitster.siamese.dyndns.org> <7vr692oufw.fsf@gitster.siamese.dyndns.org> <2008-08-07-10-45-21+trackit+sam@rfc1149.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?=" <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 07 14:54:48 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jRHKVT23PllUwdXP"
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>,
+	pascal@obry.net, Pierre Habouzit <madcoder@debian.org>,
+	Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+To: Samuel Tardieu <sam@rfc1149.net>
+X-From: git-owner@vger.kernel.org Thu Aug 07 15:05:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KR50x-0001TU-HG
-	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 14:54:47 +0200
+	id 1KR5Ak-0005Zd-Dq
+	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 15:04:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756406AbYHGMxo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Aug 2008 08:53:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756393AbYHGMxo
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 08:53:44 -0400
-Received: from py-out-1112.google.com ([64.233.166.181]:8504 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756360AbYHGMxn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Aug 2008 08:53:43 -0400
-Received: by py-out-1112.google.com with SMTP id p76so255875pyb.10
-        for <git@vger.kernel.org>; Thu, 07 Aug 2008 05:53:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=UACmlShPribgbMmHGtQbWN2wiB9bmP4ebsAfW3rzPoA=;
-        b=m/qg88O9DjuhZW+PayCpPCuDm+YBMcExD5hOzYAEku8CUO1f4RM0hZy6tD8pYFzFke
-         Qehn0ZglaNj0WfXBtByXPqnNijD+YMnosljb4sLstwJRUgByEiY98cysoV63HQ/WYnxa
-         F8Tbmzckht6o+qaspPlF22PbjgTAsOXaSGuAk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Ym8hQZyt2iuUddRx+PhDTTKeTN3WNBOeQDbx5FIfxdf6QjyJZINoIDUYouulqRFOEk
-         SWXD0Iun5aQFe1MXo+4oa96yESJQNNe2N5mCIUM4QfIaxsxpEDW8X1K9n18cQAT3sefl
-         fVei2hJ5j98Ov3ou4q+RuhoyXa8ejmcdLqsfE=
-Received: by 10.115.79.8 with SMTP id g8mr1246631wal.215.1218113621549;
-        Thu, 07 Aug 2008 05:53:41 -0700 (PDT)
-Received: by 10.114.157.2 with HTTP; Thu, 7 Aug 2008 05:53:41 -0700 (PDT)
-In-Reply-To: <20080807074117.GA7648@atjola.homenet>
+	id S1751613AbYHGNDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2008 09:03:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751428AbYHGNDu
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 09:03:50 -0400
+Received: from os.eurotux.com ([216.75.63.6]:51583 "EHLO os.eurotux.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751360AbYHGNDt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2008 09:03:49 -0400
+Received: (qmail 29994 invoked from network); 7 Aug 2008 09:03:46 -0000
+Received: from unknown (HELO bit.office.eurotux.com) (luciano@213.205.93.24)
+  by 0 with AES256-SHA encrypted SMTP; 7 Aug 2008 09:03:46 -0000
 Content-Disposition: inline
+In-Reply-To: <2008-08-07-10-45-21+trackit+sam@rfc1149.net>
+User-Agent: Mutt/1.5.14 (2007-03-31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91579>
 
-2008/8/7 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
->> that seems to have got it. so are you going to apply that patch to g=
-it proper?
->
-> It already is.
 
-Great!
+--jRHKVT23PllUwdXP
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> <manually deleted "untracked file" here>
->
-> Maybe you're ignoring that file? git clean deletes ignored files only=
- if
-> you use -x/-X.
->
-> Bj=F6rn
->
+On Thu, Aug 07, 2008 at 10:45:21AM +0200, Samuel Tardieu wrote:
+> >>>>> "Junio" =3D=3D Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> Junio> When running "git commit -F file" and "git tag -F file" from a
+> Junio> subdirectory, we should take it as relative to the directory we
+> Junio> started from, not relative to the top-level directory.
+>=20
+> Don't we have the same problem with "git show"? If you go into
+> the "gitweb" directory of the GIT source, "git show HEAD:README" will
+> show you the toplevel "README" instead of the one in the "gitweb"
+> directory.
 
-That's probably it, I'll try it tomorrow. However, that could be a
-problem. There's ignored files I don't want to keep (build artifacts),
-and there's ignored files I do want to keep (i.e. .metadata).
-Is there a good solution?
+No, git show has different semantics. It has been discussed often in
+this list.
+
+For instance:
+http://thread.gmane.org/gmane.comp.version-control.git/68786/focus=3D68852
 
 --=20
-___________________________
-http://stubbisms.wordpress.com/
+Luciano Rocha <luciano@eurotux.com>
+Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
+
+--jRHKVT23PllUwdXP
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkiaum0ACgkQinSul6a7oB9P1QCfUsKRGruHFOCoOiM66OzvPO3e
+qx4AnijH7tbMAHRFFXZtFcl72foeRRZR
+=+WIE
+-----END PGP SIGNATURE-----
+
+--jRHKVT23PllUwdXP--
