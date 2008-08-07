@@ -1,252 +1,124 @@
-From: "Thiago Alves" <thiago.salves@gmail.com>
-Subject: [PATCH] git grep colorized
-Date: Thu, 7 Aug 2008 08:53:45 -0300
-Message-ID: <ecd9a7b10808070453o3e0b34e5w27564d2e4ee73191@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: add ability to specify --commit-url for dcommit
+Date: Thu, 7 Aug 2008 02:06:16 -0700
+Message-ID: <20080807090616.GA9335@untitled>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_18900_6812843.1218110025821"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 07 14:25:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 07 14:27:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KR4YA-0005qL-GE
-	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 14:25:02 +0200
+	id 1KR4az-00074H-N8
+	for gcvg-git-2@gmane.org; Thu, 07 Aug 2008 14:27:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751637AbYHGMWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2008 08:22:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753018AbYHGMWm
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 08:22:42 -0400
-Received: from rv-out-0506.google.com ([209.85.198.229]:20512 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753130AbYHGMWj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2008 08:22:39 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so450827rvb.1
-        for <git@vger.kernel.org>; Thu, 07 Aug 2008 05:22:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type;
-        bh=dYvUZKyPDV5w027INUhDL85x8wKKGY+Xl+CL0V4T6rA=;
-        b=qbw7Ff1BF/23Z/gT4OxbNCnsZAuALUvdlKlOzBONLFREt8HHHzfy24bZCgMCXGs6Cc
-         ZHk/sjfYNmfASeWHAXINqj2Oe/R+qDXZq7dN+jr+5DP1uN1oQR/TIFI8IvzuAFn+eQPS
-         pebGhksdebcQyG5tt0VLXVF/bkLZLbiGje89g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type;
-        b=Zmh0/qIUS1DMwmRxFQcEWgsdPYyZW3YYIzYv4e4X3KfTBdGNkBE3AalRVDKrppux7D
-         v6slIXZMJsVj/dKhJr+ndYGbdQPJj8G5g/6KIUcqBfBP13JJr0VzIRAUVYRSV3B6V4mt
-         T2z55DFY1tJOKQG1z7MdIhcUFI0AlTtgrnNp0=
-Received: by 10.141.71.14 with SMTP id y14mr687487rvk.24.1218110025843;
-        Thu, 07 Aug 2008 04:53:45 -0700 (PDT)
-Received: by 10.141.28.21 with HTTP; Thu, 7 Aug 2008 04:53:45 -0700 (PDT)
+	id S1754703AbYHGMYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2008 08:24:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754690AbYHGMYJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 08:24:09 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:55315 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754644AbYHGMYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2008 08:24:06 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 3B28D2DC032;
+	Thu,  7 Aug 2008 02:06:16 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91571>
 
-------=_Part_18900_6812843.1218110025821
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Content-Disposition: inline
+This allows one to use public svn:// URLs for fetch and
+svn+ssh:// URLs for committing (without using the complicated
+rewriteRoot option, reimporting or git-filter-branch).
 
-SGkgZ3V5cywKCnJlY2VudGx5IEkgdHJ5IHRvIHB1dCBzb21lIGNvbG9ycyBvbiBteSBnaXQtZ3Jl
-cCBhbmQgZm91bmQgYSBwYXRjaApmcm9tIE5ndXnhu4VuIFRow6FpIE5n4buNYyBEdXkgPHBjbG91
-ZHNAZ21haWwuY29tPiB0byBkbyBpdCEKVGhlIHByb2JsZW0gd2l0aCB0aGlzIHBhdGNoIGlzIHRo
-YXQgaXQgZG9lc24ndCBzdXBwb3J0IHRoZSBjb25maWcgZmlsZQp0byBwZXJzaXN0IHRoZSBjb2xv
-ciBvcHRpb24gb24gZ3JlcC4KCkkgdG9vayB0aGUgbGliZXJ0eSB0byBjaGFuZ2UgaGlzIHBhdGNo
-IGFuZCBhZGQgc3VwcG9ydCB0byBjb25maWcgZmlsZXMKYW5kIGJhc2ggY29tcGxldGlvbi4KCkF0
-dGFjaGVkIGlzIHRoZSByZXN1bHRhbnQgcGF0Y2ghCgpJIGhvcGUgdGhpcyBjb3VsZCBiZSB1c2Vm
-dWwgdG8gc29tZW9uZS4KClRoaWFnbyBkb3MgU2FudG9zIEFsdmVzCkNvbXB1dGVyIFNjaWVudGlz
-dAoKdGhpYWdvLnNhbHZlc0BnbWFpbC5jb20KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KIk1hbidzIG1pbmQsIG9uY2Ugc3RyZXRjaGVkIGJ5IGEg
-bmV3IGlkZWEsIG5ldmVyIHJlZ2FpbnMgaXQncyBvcmlnaW5hbApkaW1lbnNpb25zLiIK
-------=_Part_18900_6812843.1218110025821
-Content-Type: application/octet-stream; name=git_grep_color.patch
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fjlb6rc20
-Content-Disposition: attachment; filename=git_grep_color.patch
+Using this can also help avoid unnecessary server
+authentication/encryption overhead on busy SVN servers.
 
-ZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZ2l0LWdyZXAudHh0IGIvRG9jdW1lbnRhdGlvbi9n
-aXQtZ3JlcC50eHQKaW5kZXggZmE0ZDEzMy4uODU1NDA2OCAxMDA2NDQKLS0tIGEvRG9jdW1lbnRh
-dGlvbi9naXQtZ3JlcC50eHQKKysrIGIvRG9jdW1lbnRhdGlvbi9naXQtZ3JlcC50eHQKQEAgLTE1
-LDcgKzE1LDcgQEAgU1lOT1BTSVMKIAkgICBbLUUgfCAtLWV4dGVuZGVkLXJlZ2V4cF0gWy1HIHwg
-LS1iYXNpYy1yZWdleHBdCiAJICAgWy1GIHwgLS1maXhlZC1zdHJpbmdzXSBbLW5dCiAJICAgWy1s
-IHwgLS1maWxlcy13aXRoLW1hdGNoZXNdIFstTCB8IC0tZmlsZXMtd2l0aG91dC1tYXRjaF0KLQkg
-ICBbLWMgfCAtLWNvdW50XSBbLS1hbGwtbWF0Y2hdCisJICAgWy1jIHwgLS1jb3VudF0gWy0tYWxs
-LW1hdGNoXSBbLS1jb2xvciB8IC0tbm8tY29sb3JdCiAJICAgWy1BIDxwb3N0LWNvbnRleHQ+XSBb
-LUIgPHByZS1jb250ZXh0Pl0gWy1DIDxjb250ZXh0Pl0KIAkgICBbLWYgPGZpbGU+XSBbLWVdIDxw
-YXR0ZXJuPgogCSAgIFstLWFuZHwtLW9yfC0tbm90fCh8KXwtZSA8cGF0dGVybj4uLi5dIFs8dHJl
-ZT4uLi5dCkBAIC05OSw2ICs5OSwxMyBAQCBPUFRJT05TCiAJSW5zdGVhZCBvZiBzaG93aW5nIGV2
-ZXJ5IG1hdGNoZWQgbGluZSwgc2hvdyB0aGUgbnVtYmVyIG9mCiAJbGluZXMgdGhhdCBtYXRjaC4K
-IAorLS1jb2xvcjo6CisJQ29sb3JpemUgZ3JlcCBvdXRwdXQgaGlnaGxpZ2h0aW5nIG1hdGNoZXMs
-IGZpbGUgbmFtZXMgYW5kIGxpbmUgbnVtYmVycy4KKworLS1uby1jb2xvcjo6CisJVHVybiBvZmYg
-Z3JlcCBjb2xvcnMsIGV2ZW4gd2hlbiB0aGUgY29uZmlndXJhdGlvbiBmaWxlIGdpdmVzIHRoZQor
-CWRlZmF1bHQgdG8gY29sb3Igb3V0cHV0LgorCiAtW0FCQ10gPGNvbnRleHQ+OjoKIAlTaG93IGBj
-b250ZXh0YCB0cmFpbGluZyAoYEFgIC0tIGFmdGVyKSwgb3IgbGVhZGluZyAoYEJgCiAJLS0gYmVm
-b3JlKSwgb3IgYm90aCAoYENgIC0tIGNvbnRleHQpIGxpbmVzLCBhbmQgcGxhY2UgYQpkaWZmIC0t
-Z2l0IGEvYnVpbHRpbi1ncmVwLmMgYi9idWlsdGluLWdyZXAuYwppbmRleCA2MzExMjlkLi4yOWU3
-ZDVhIDEwMDY0NAotLS0gYS9idWlsdGluLWdyZXAuYworKysgYi9idWlsdGluLWdyZXAuYwpAQCAt
-MTEsNiArMTEsNyBAQAogI2luY2x1ZGUgInRyZWUtd2Fsay5oIgogI2luY2x1ZGUgImJ1aWx0aW4u
-aCIKICNpbmNsdWRlICJncmVwLmgiCisjaW5jbHVkZSAiY29sb3IuaCIKIAogI2lmbmRlZiBOT19F
-WFRFUk5BTF9HUkVQCiAjaWZkZWYgX191bml4X18KQEAgLTIwLDYgKzIxLDcgQEAKICNlbmRpZgog
-I2VuZGlmCiAKK3N0YXRpYyBpbnQgZ3JlcF91c2VfY29sb3IgPSAtMTsKIC8qCiAgKiBnaXQgZ3Jl
-cCBwYXRoc3BlY3MgYXJlIHNvbWV3aGF0IGRpZmZlcmVudCBmcm9tIGRpZmYtdHJlZSBwYXRoc3Bl
-Y3M7CiAgKiBwYXRobmFtZSB3aWxkY2FyZHMgYXJlIGFsbG93ZWQuCkBAIC0zODYsNyArMzg4LDcg
-QEAgc3RhdGljIGludCBncmVwX2NhY2hlKHN0cnVjdCBncmVwX29wdCAqb3B0LCBjb25zdCBjaGFy
-ICoqcGF0aHMsIGludCBjYWNoZWQpCiAJICogd2UgZ3JlcCB0aHJvdWdoIHRoZSBjaGVja2VkLW91
-dCBmaWxlcy4gSXQgdGVuZHMgdG8KIAkgKiBiZSBhIGxvdCBtb3JlIG9wdGltaXplZAogCSAqLwot
-CWlmICghY2FjaGVkKSB7CisJaWYgKCFjYWNoZWQgJiYgIW9wdC0+Y29sb3IpIHsKIAkJaGl0ID0g
-ZXh0ZXJuYWxfZ3JlcChvcHQsIHBhdGhzLCBjYWNoZWQpOwogCQlpZiAoaGl0ID49IDApCiAJCQly
-ZXR1cm4gaGl0OwpAQCAtNTA3LDYgKzUwOSwyMiBAQCBzdGF0aWMgY29uc3QgY2hhciBlbXNnX21p
-c3NpbmdfY29udGV4dF9sZW5bXSA9CiBzdGF0aWMgY29uc3QgY2hhciBlbXNnX21pc3NpbmdfYXJn
-dW1lbnRbXSA9CiAib3B0aW9uIHJlcXVpcmVzIGFuIGFyZ3VtZW50IC0lcyI7CiAKK3N0YXRpYyBp
-bnQgZ2l0X2dyZXBfY29uZmlnKGNvbnN0IGNoYXIgKnZhciwgY29uc3QgY2hhciAqdmFsdWUsIHZv
-aWQgKmNiKQoreworCWlmICghc3RyY21wKHZhciwgImNvbG9yLmdyZXAiKSkgeworCQlncmVwX3Vz
-ZV9jb2xvciA9IGdpdF9jb25maWdfY29sb3Jib29sKHZhciwgdmFsdWUsIC0xKTsKKwkJcmV0dXJu
-IDA7CisJfQorICAgIGlmICghcHJlZml4Y21wKHZhciwgImNvbG9yLmdyZXAuIikpIHsKKwkJaW50
-IHNsb3QgPSBwYXJzZV9ncmVwX2NvbG9yX3Nsb3QodmFyLCAxMSk7CisJCWlmICghdmFsdWUpCisJ
-CQlyZXR1cm4gY29uZmlnX2Vycm9yX25vbmJvb2wodmFyKTsKKwkJY29sb3JfcGFyc2UodmFsdWUs
-IHZhciwgZ3JlcF9nZXRfY29sb3Ioc2xvdCkpOworCQlyZXR1cm4gMDsKKwl9CisJcmV0dXJuIGdp
-dF9jb2xvcl9kZWZhdWx0X2NvbmZpZyh2YXIsIHZhbHVlLCBjYik7Cit9CisKIGludCBjbWRfZ3Jl
-cChpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkKIHsKIAlp
-bnQgaGl0ID0gMDsKQEAgLTUyNCw2ICs1NDIsMTEgQEAgaW50IGNtZF9ncmVwKGludCBhcmdjLCBj
-b25zdCBjaGFyICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4KQogCW9wdC5wYXR0ZXJuX3RhaWwg
-PSAmb3B0LnBhdHRlcm5fbGlzdDsKIAlvcHQucmVnZmxhZ3MgPSBSRUdfTkVXTElORTsKIAorCWdp
-dF9jb25maWcoZ2l0X2dyZXBfY29uZmlnLCBOVUxMKTsKKwlpZiAoZ3JlcF91c2VfY29sb3IgPT0g
-LTEpCisJCWdyZXBfdXNlX2NvbG9yID0gZ2l0X3VzZV9jb2xvcl9kZWZhdWx0OworICAgIG9wdC5j
-b2xvciA9IGdyZXBfdXNlX2NvbG9yOworCiAJLyoKIAkgKiBJZiB0aGVyZSBpcyBubyAtLSB0aGVu
-IHRoZSBwYXRocyBtdXN0IGV4aXN0IGluIHRoZSB3b3JraW5nCiAJICogdHJlZS4gIElmIHRoZXJl
-IGlzIG5vIGV4cGxpY2l0IHBhdHRlcm4gc3BlY2lmaWVkIHdpdGggLWUgb3IKQEAgLTcxMSw2ICs3
-MzQsMTQgQEAgaW50IGNtZF9ncmVwKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwgY29uc3Qg
-Y2hhciAqcHJlZml4KQogCQkJb3B0LnJlbGF0aXZlID0gMDsKIAkJCWNvbnRpbnVlOwogCQl9CisJ
-CWlmICghc3RyY21wKCItLWNvbG9yIiwgYXJnKSkgeworCQkJb3B0LmNvbG9yID0gMTsKKwkJCWNv
-bnRpbnVlOworCQl9CisJCWlmICghc3RyY21wKCItLW5vLWNvbG9yIiwgYXJnKSkgeworCQkJb3B0
-LmNvbG9yID0gMDsKKwkJCWNvbnRpbnVlOworCQl9CiAJCWlmICghc3RyY21wKCItLSIsIGFyZykp
-IHsKIAkJCS8qIGxhdGVyIHByb2Nlc3Npbmcgd2FudHMgdG8gaGF2ZSB0aGlzIGF0IGFyZ3ZbMV0g
-Ki8KIAkJCWFyZ3YtLTsKZGlmZiAtLWdpdCBhL2NvbnRyaWIvY29tcGxldGlvbi9naXQtY29tcGxl
-dGlvbi5iYXNoIGIvY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJhc2gKaW5kZXgg
-MzM5NmUzNS4uZWU0ZDUwOSAxMDA3NTUKLS0tIGEvY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21w
-bGV0aW9uLmJhc2gKKysrIGIvY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJhc2gK
-QEAgLTExNTcsNyArMTE1Nyw3IEBAIF9naXRfY29uZmlnICgpCiAJCV9fZ2l0Y29tcCAiJChfX2dp
-dF9tZXJnZV9zdHJhdGVnaWVzKSIKIAkJcmV0dXJuCiAJCTs7Ci0JY29sb3IuYnJhbmNofGNvbG9y
-LmRpZmZ8Y29sb3Iuc3RhdHVzKQorCWNvbG9yLmJyYW5jaHxjb2xvci5kaWZmfGNvbG9yLnN0YXR1
-c3xjb2xvci5ncmVwKQogCQlfX2dpdGNvbXAgImFsd2F5cyBuZXZlciBhdXRvIgogCQlyZXR1cm4K
-IAkJOzsKQEAgLTEyNDAsNiArMTI0MCwxMSBAQCBfZ2l0X2NvbmZpZyAoKQogCQljb2xvci5kaWZm
-Lm5ldwogCQljb2xvci5kaWZmLmNvbW1pdAogCQljb2xvci5kaWZmLndoaXRlc3BhY2UKKwkJY29s
-b3IuZ3JlcAorCQljb2xvci5ncmVwLmZpbGVwYXRoCisJCWNvbG9yLmdyZXAubGluZW5vCisJCWNv
-bG9yLmdyZXAuc2VwYXJhdG9yCisJCWNvbG9yLmdyZXAubWF0Y2gKIAkJY29sb3IucGFnZXIKIAkJ
-Y29sb3Iuc3RhdHVzCiAJCWNvbG9yLnN0YXR1cy5oZWFkZXIKQEAgLTEzOTAsNiArMTM5NSwyMiBA
-QCBfZ2l0X3Nob3J0bG9nICgpCiAJX19naXRfY29tcGxldGVfcmV2bGlzdAogfQogCitfZ2l0X2dy
-ZXAgKCkKK3sKKyAgICBsb2NhbCBjdXI9IiR7Q09NUF9XT1JEU1tDT01QX0NXT1JEXX0iCisgICAg
-Y2FzZSAiJGN1ciIgaW4KKyAgICAtLSopCisgICAgICAgIF9fZ2l0Y29tcCAiCisgICAgICAgIC0t
-Y2FjaGVkIC0tdGV4dCAtLWlnbm9yZS1jYXNlIC0td29yZC1yZWdleHAgLS1pbnZlcnQtbWF0Y2gK
-KyAgICAgICAgLS1mdWxsLW5hbWUgLS1leHRlbmQtcmVnZXhwIC0tZml4ZWQtc3RyaW5ncyAtLWZp
-bGVzLXdpdGgtbWF0Y2hlcworICAgICAgICAtLWZpbGVzLXdpdGhvdXQtbWF0Y2ggLS1jb3VudCAt
-LWFuZCAtLW9yIC0tbm90IC0tYWxsLW1hdGNoCisgICAgICAgIC0tY29sb3IKKyAgICAgICAgIgor
-ICAgICAgICByZXR1cm4KKyAgICAgICAgOzsKKyAgICBlc2FjCit9CisKIF9naXRfc2hvdyAoKQog
-ewogCWxvY2FsIGN1cj0iJHtDT01QX1dPUkRTW0NPTVBfQ1dPUkRdfSIKQEAgLTE2NDIsNyArMTY2
-Myw3IEBAIF9naXQgKCkKIAlmZXRjaCkgICAgICAgX2dpdF9mZXRjaCA7OwogCWZvcm1hdC1wYXRj
-aCkgX2dpdF9mb3JtYXRfcGF0Y2ggOzsKIAlnYykgICAgICAgICAgX2dpdF9nYyA7OwotCWdyZXAp
-ICAgICAgICBfZ2l0X2dyZXAgOzsKKyAgICBncmVwKSAgICAgICAgX2dpdF9ncmVwIDs7CiAJaGVs
-cCkgICAgICAgIF9naXRfaGVscCA7OwogCWluaXQpICAgICAgICBfZ2l0X2luaXQgOzsKIAlsb2cp
-ICAgICAgICAgX2dpdF9sb2cgOzsKZGlmZiAtLWdpdCBhL2dyZXAuYyBiL2dyZXAuYwppbmRleCBm
-NjdkNjcxLi41YzNlNmNkIDEwMDY0NAotLS0gYS9ncmVwLmMKKysrIGIvZ3JlcC5jCkBAIC0xLDcg
-KzEsMzkgQEAKICNpbmNsdWRlICJjYWNoZS5oIgogI2luY2x1ZGUgImdyZXAuaCIKKyNpbmNsdWRl
-ICJjb2xvci5oIgogI2luY2x1ZGUgInhkaWZmLWludGVyZmFjZS5oIgogCitzdGF0aWMgY2hhciBn
-cmVwX2NvbG9yc1tdW0NPTE9SX01BWExFTl0gPSB7CisJIlwwMzNbbSIsICAgICAgICAgIC8qIHJl
-c2V0ICovCisJIiIsCSAgICAgICAgICAgICAgIC8qIFBMQUlOIChub3JtYWwpICovCisJIlwwMzNb
-MzVtIiwgICAgICAgIC8qIEZJTEVQQVRIIChtYWdlbnRhKSAqLworCSJcMDMzWzMybSIsICAgICAg
-ICAvKiBMSU5FTk8gKGdyZWVuKSAqLworCSJcMDMzWzM2bSIsICAgICAgICAvKiBTRVBBUkFUT1Ig
-KGN5YW4pICovCisgICAgIlwwMzNbMW1cMDMzWzMxbSIsIC8qIE1BVENIIChyZWQpKi8KK307CisK
-K2NvbnN0IGNoYXIgKmdyZXBfZ2V0X2NvbG9yKGVudW0gY29sb3JfZ3JlcCBpeCkKK3sKKwlyZXR1
-cm4gZ3JlcF9jb2xvcnNbaXhdOworfQorCitpbnQgcGFyc2VfZ3JlcF9jb2xvcl9zbG90KGNvbnN0
-IGNoYXIgKnZhciwgaW50IG9mcykKK3sKKwlpZiAoIXN0cmNhc2VjbXAodmFyK29mcywgInBsYWlu
-IikpCisJCXJldHVybiBDT0xPUl9HUkVQX1BMQUlOOworCWlmICghc3RyY2FzZWNtcCh2YXIrb2Zz
-LCAicmVzZXQiKSkKKwkJcmV0dXJuIENPTE9SX0dSRVBfUkVTRVQ7CisJaWYgKCFzdHJjYXNlY21w
-KHZhcitvZnMsICJmaWxlcGF0aCIpKQorCQlyZXR1cm4gQ09MT1JfR1JFUF9GSUxFUEFUSDsKKwlp
-ZiAoIXN0cmNhc2VjbXAodmFyK29mcywgImxpbmVubyIpKQorCQlyZXR1cm4gQ09MT1JfR1JFUF9M
-SU5FTk87CisJaWYgKCFzdHJjYXNlY21wKHZhcitvZnMsICJzZXBhcmF0b3IiKSkKKwkJcmV0dXJu
-IENPTE9SX0dSRVBfU0VQQVJBVE9SOworCWlmICghc3RyY2FzZWNtcCh2YXIrb2ZzLCAibWF0Y2gi
-KSkKKwkJcmV0dXJuIENPTE9SX0dSRVBfTUFUQ0g7CisJZGllKCJiYWQgY29uZmlnIHZhcmlhYmxl
-ICclcyciLCB2YXIpOworfQorCiB2b2lkIGFwcGVuZF9ncmVwX3BhdHRlcm4oc3RydWN0IGdyZXBf
-b3B0ICpvcHQsIGNvbnN0IGNoYXIgKnBhdCwKIAkJCSBjb25zdCBjaGFyICpvcmlnaW4sIGludCBu
-bywgZW51bSBncmVwX3BhdF90b2tlbiB0KQogewpAQCAtMjQ3LDcgKzI3OSwxMCBAQCBzdGF0aWMg
-aW50IGZpeG1hdGNoKGNvbnN0IGNoYXIgKnBhdHRlcm4sIGNoYXIgKmxpbmUsIHJlZ21hdGNoX3Qg
-Km1hdGNoKQogCX0KIH0KIAotc3RhdGljIGludCBtYXRjaF9vbmVfcGF0dGVybihzdHJ1Y3QgZ3Jl
-cF9vcHQgKm9wdCwgc3RydWN0IGdyZXBfcGF0ICpwLCBjaGFyICpib2wsIGNoYXIgKmVvbCwgZW51
-bSBncmVwX2NvbnRleHQgY3R4KQorc3RhdGljIGludCBtYXRjaF9vbmVfcGF0dGVybl8xKHN0cnVj
-dCBncmVwX29wdCAqb3B0LCBzdHJ1Y3QgZ3JlcF9wYXQgKnAsCisJCQkgICAgICAgY2hhciAqYm9s
-LCBjaGFyICplb2wsCisJCQkgICAgICAgZW51bSBncmVwX2NvbnRleHQgY3R4LCBpbnQgZWZsYWdz
-LAorCQkJICAgICAgIGludCAqcm1fc28sIGludCAqcm1fZW8pCiB7CiAJaW50IGhpdCA9IDA7CiAJ
-aW50IGF0X3RydWVfYm9sID0gMTsKQEAgLTI2MSw3ICsyOTYsNyBAQCBzdGF0aWMgaW50IG1hdGNo
-X29uZV9wYXR0ZXJuKHN0cnVjdCBncmVwX29wdCAqb3B0LCBzdHJ1Y3QgZ3JlcF9wYXQgKnAsIGNo
-YXIgKmJvbAogCWlmICghb3B0LT5maXhlZCkgewogCQlyZWdleF90ICpleHAgPSAmcC0+cmVnZXhw
-OwogCQloaXQgPSAhcmVnZXhlYyhleHAsIGJvbCwgQVJSQVlfU0laRShwbWF0Y2gpLAotCQkJICAg
-ICAgIHBtYXRjaCwgMCk7CisJCQkgICAgICAgcG1hdGNoLCBlZmxhZ3MpOwogCX0KIAllbHNlIHsK
-IAkJaGl0ID0gIWZpeG1hdGNoKHAtPnBhdHRlcm4sIGJvbCwgcG1hdGNoKTsKQEAgLTI5OCw5ICsz
-MzMsMjAgQEAgc3RhdGljIGludCBtYXRjaF9vbmVfcGF0dGVybihzdHJ1Y3QgZ3JlcF9vcHQgKm9w
-dCwgc3RydWN0IGdyZXBfcGF0ICpwLCBjaGFyICpib2wKIAkJCWdvdG8gYWdhaW47CiAJCX0KIAl9
-CisJaWYgKGhpdCkgeworCQlpZiAocm1fc28pCisJCQkqcm1fc28gPSBwbWF0Y2hbMF0ucm1fc287
-CisJCWlmIChybV9lbykKKwkJCSpybV9lbyA9IHBtYXRjaFswXS5ybV9lbzsKKwl9CiAJcmV0dXJu
-IGhpdDsKIH0KIAorc3RhdGljIGludCBtYXRjaF9vbmVfcGF0dGVybihzdHJ1Y3QgZ3JlcF9vcHQg
-Km9wdCwgc3RydWN0IGdyZXBfcGF0ICpwLCBjaGFyICpib2wsIGNoYXIgKmVvbCwgZW51bSBncmVw
-X2NvbnRleHQgY3R4KQoreworCXJldHVybiBtYXRjaF9vbmVfcGF0dGVybl8xKG9wdCwgcCwgYm9s
-LCBlb2wsIGN0eCwgMCwgTlVMTCwgTlVMTCk7Cit9CisKIHN0YXRpYyBpbnQgbWF0Y2hfZXhwcl9l
-dmFsKHN0cnVjdCBncmVwX29wdCAqbywKIAkJCSAgIHN0cnVjdCBncmVwX2V4cHIgKngsCiAJCQkg
-ICBjaGFyICpib2wsIGNoYXIgKmVvbCwKQEAgLTM2NSw2ICs0MTEsNTQgQEAgc3RhdGljIGludCBt
-YXRjaF9saW5lKHN0cnVjdCBncmVwX29wdCAqb3B0LCBjaGFyICpib2wsIGNoYXIgKmVvbCwKIAly
-ZXR1cm4gMDsKIH0KIAorc3RhdGljIHZvaWQgc2hvd19saW5lX2NvbG9yZWQoc3RydWN0IGdyZXBf
-b3B0ICpvcHQsIGNoYXIgKmJvbCwgY2hhciAqZW9sLAorCQkJICAgICAgY29uc3QgY2hhciAqbmFt
-ZSwgdW5zaWduZWQgbG5vLCBjaGFyIHNpZ24pCit7CisJc3RydWN0IGdyZXBfcGF0ICpwOworCWlu
-dCBybV9zbywgcm1fZW8sIGVmbGFncyA9IDA7CisJaW50IGNoOworCisJaWYgKG9wdC0+cGF0aG5h
-bWUpCisJCXByaW50ZigiJXMlcyVzJWMlcyIsIAorICAgICAgICAgICAgICAgZ3JlcF9nZXRfY29s
-b3IoQ09MT1JfR1JFUF9GSUxFUEFUSCksIAorICAgICAgICAgICAgICAgbmFtZSwgCisgICAgICAg
-ICAgICAgICBncmVwX2dldF9jb2xvcihDT0xPUl9HUkVQX1NFUEFSQVRPUiksIAorICAgICAgICAg
-ICAgICAgc2lnbiwgCisgICAgICAgICAgICAgICBncmVwX2dldF9jb2xvcihDT0xPUl9HUkVQX1JF
-U0VUKSk7CisJaWYgKG9wdC0+bGluZW51bSkKKwkJcHJpbnRmKCIlcyVkJXMlYyVzIiwgCisgICAg
-ICAgICAgICAgICBncmVwX2dldF9jb2xvcihDT0xPUl9HUkVQX0xJTkVOTyksIAorICAgICAgICAg
-ICAgICAgbG5vLCAKKyAgICAgICAgICAgICAgIGdyZXBfZ2V0X2NvbG9yKENPTE9SX0dSRVBfU0VQ
-QVJBVE9SKSwgCisgICAgICAgICAgICAgICBzaWduLCAKKyAgICAgICAgICAgICAgIGdyZXBfZ2V0
-X2NvbG9yKENPTE9SX0dSRVBfUkVTRVQpKTsKKworCWNoID0gKmVvbDsKKwkqZW9sID0gMDsKKwl3
-aGlsZSAoYm9sIDwgZW9sKSB7CisJCWZvciAocCA9IG9wdC0+cGF0dGVybl9saXN0OyBwOyBwID0g
-cC0+bmV4dCkgeworCQkJaWYgKG1hdGNoX29uZV9wYXR0ZXJuXzEob3B0LCBwLCBib2wsIGVvbCwg
-R1JFUF9DT05URVhUX0JPRFksIGVmbGFncywgJnJtX3NvLCAmcm1fZW8pKQorCQkJCWJyZWFrOwor
-CQl9CisKKwkJLyogTm8gbWF0Y2gsIGJyZWFrIHRoZSBsb29wICovCisJCWlmICghcCB8fAorCQkg
-ICAgKHJtX3NvIDwgMCkgfHwgKGVvbCAtIGJvbCkgPD0gcm1fc28gfHwKKwkJICAgIChybV9lbyA8
-IDApIHx8IChlb2wgLSBib2wpIDwgcm1fZW8pCisJCQlicmVhazsKKworCQlwcmludGYoIiUuKnMl
-cyUuKnMlcyIsCisJCSAgICAgICBybV9zbywgYm9sLAorICAgICAgICAgICAgICAgZ3JlcF9nZXRf
-Y29sb3IoQ09MT1JfR1JFUF9NQVRDSCksIAorCQkgICAgICAgcm1fZW8tcm1fc28sIGJvbCtybV9z
-bywKKyAgICAgICAgICAgICAgIGdyZXBfZ2V0X2NvbG9yKENPTE9SX0dSRVBfUkVTRVQpKTsKKwkJ
-Ym9sICs9IHJtX2VvOworCQllZmxhZ3MgPSBSRUdfTk9UQk9MOworCX0KKwlwcmludGYoIiVzXG4i
-LCBib2wpOworCSplb2wgPSBjaDsKK30KKwogc3RhdGljIGludCBncmVwX2J1ZmZlcl8xKHN0cnVj
-dCBncmVwX29wdCAqb3B0LCBjb25zdCBjaGFyICpuYW1lLAogCQkJIGNoYXIgKmJ1ZiwgdW5zaWdu
-ZWQgbG9uZyBzaXplLCBpbnQgY29sbGVjdF9oaXRzKQogewpAQCAtNDY2LDggKzU2MCwxMiBAQCBz
-dGF0aWMgaW50IGdyZXBfYnVmZmVyXzEoc3RydWN0IGdyZXBfb3B0ICpvcHQsIGNvbnN0IGNoYXIg
-Km5hbWUsCiAJCQl9CiAJCQlpZiAobGFzdF9zaG93biAmJiBsbm8gIT0gbGFzdF9zaG93biArIDEp
-CiAJCQkJcHJpbnRmKGh1bmtfbWFyayk7Ci0JCQlpZiAoIW9wdC0+Y291bnQpCi0JCQkJc2hvd19s
-aW5lKG9wdCwgYm9sLCBlb2wsIG5hbWUsIGxubywgJzonKTsKKwkJCWlmICghb3B0LT5jb3VudCkg
-eworCQkJCWlmIChvcHQtPmNvbG9yKQorCQkJCQlzaG93X2xpbmVfY29sb3JlZChvcHQsIGJvbCwg
-ZW9sLCBuYW1lLCBsbm8sICc6Jyk7CisJCQkJZWxzZQorCQkJCQlzaG93X2xpbmUob3B0LCBib2ws
-IGVvbCwgbmFtZSwgbG5vLCAnOicpOworCQkJfQogCQkJbGFzdF9zaG93biA9IGxhc3RfaGl0ID0g
-bG5vOwogCQl9CiAJCWVsc2UgaWYgKGxhc3RfaGl0ICYmCmRpZmYgLS1naXQgYS9ncmVwLmggYi9n
-cmVwLmgKaW5kZXggZDI1MmRkMi4uOTA3MzExNCAxMDA2NDQKLS0tIGEvZ3JlcC5oCisrKyBiL2dy
-ZXAuaApAQCAtMzMsNiArMzMsMTUgQEAgZW51bSBncmVwX2V4cHJfbm9kZSB7CiAJR1JFUF9OT0RF
-X09SLAogfTsKIAorZW51bSBjb2xvcl9ncmVwIHsKKwlDT0xPUl9HUkVQX1JFU0VUID0gMCwKKwlD
-T0xPUl9HUkVQX1BMQUlOID0gMSwKKwlDT0xPUl9HUkVQX0ZJTEVQQVRIID0gMiwKKwlDT0xPUl9H
-UkVQX0xJTkVOTyA9IDMsCisJQ09MT1JfR1JFUF9TRVBBUkFUT1IgPSA0LAorICAgIENPTE9SX0dS
-RVBfTUFUQ0ggPSA1LAorfTsKKwogc3RydWN0IGdyZXBfZXhwciB7CiAJZW51bSBncmVwX2V4cHJf
-bm9kZSBub2RlOwogCXVuc2lnbmVkIGhpdDsKQEAgLTY4LDExICs3NywxNCBAQCBzdHJ1Y3QgZ3Jl
-cF9vcHQgewogCXVuc2lnbmVkIGV4dGVuZGVkOjE7CiAJdW5zaWduZWQgcmVsYXRpdmU6MTsKIAl1
-bnNpZ25lZCBwYXRobmFtZToxOworCXVuc2lnbmVkIGNvbG9yOjE7CiAJaW50IHJlZ2ZsYWdzOwog
-CXVuc2lnbmVkIHByZV9jb250ZXh0OwogCXVuc2lnbmVkIHBvc3RfY29udGV4dDsKIH07CiAKK2V4
-dGVybiBjb25zdCBjaGFyICpncmVwX2dldF9jb2xvcihlbnVtIGNvbG9yX2dyZXAgaXgpOworZXh0
-ZXJuIGludCBwYXJzZV9ncmVwX2NvbG9yX3Nsb3QoY29uc3QgY2hhciAqdmFyLCBpbnQgb2ZzKTsK
-IGV4dGVybiB2b2lkIGFwcGVuZF9ncmVwX3BhdHRlcm4oc3RydWN0IGdyZXBfb3B0ICpvcHQsIGNv
-bnN0IGNoYXIgKnBhdCwgY29uc3QgY2hhciAqb3JpZ2luLCBpbnQgbm8sIGVudW0gZ3JlcF9wYXRf
-dG9rZW4gdCk7CiBleHRlcm4gdm9pZCBjb21waWxlX2dyZXBfcGF0dGVybnMoc3RydWN0IGdyZXBf
-b3B0ICpvcHQpOwogZXh0ZXJuIHZvaWQgZnJlZV9ncmVwX3BhdHRlcm5zKHN0cnVjdCBncmVwX29w
-dCAqb3B0KTsK
-------=_Part_18900_6812843.1218110025821--
+Along with the new --revision option, this can also be allowed
+to override the branch detection in dcommit, too.  This is
+potentially dangerous and not recommended!  (And also purposely
+undocumented, but the loaded gun is there in case somebody
+wants to make it safe).
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ Documentation/git-svn.txt |    9 +++++++++
+ git-svn.perl              |    9 ++++++---
+ 2 files changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 773ae96..1e644ca 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -138,6 +138,15 @@ and have no uncommitted changes.
+ +
+ --no-rebase;;
+ 	After committing, do not rebase or reset.
++--commit-url <URL>;;
++	Commit to this SVN URL (the full path).  This is intended to
++	allow existing git-svn repositories created with one transport
++	method (e.g. `svn://` or `http://` for anonymous read) to be
++	reused if a user is later given access to an alternate transport
++	method (e.g. `svn+ssh://` or `https://`) for commit.
++
++	Using this option for any other purpose (don't ask)
++	is very strongly discouraged.
+ --
+ 
+ 'log'::
+diff --git a/git-svn.perl b/git-svn.perl
+index df0ed90..06a82c8 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -66,7 +66,7 @@ my ($_stdin, $_help, $_edit,
+ 	$_version, $_fetch_all, $_no_rebase,
+ 	$_merge, $_strategy, $_dry_run, $_local,
+ 	$_prefix, $_no_checkout, $_url, $_verbose,
+-	$_git_format);
++	$_git_format, $_commit_url);
+ $Git::SVN::_follow_parent = 1;
+ my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
+                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
+@@ -127,6 +127,8 @@ my %cmd = (
+ 			  'verbose|v' => \$_verbose,
+ 			  'dry-run|n' => \$_dry_run,
+ 			  'fetch-all|all' => \$_fetch_all,
++			  'commit-url=s' => \$_commit_url,
++			  'revision|r=i' => \$_revision,
+ 			  'no-rebase' => \$_no_rebase,
+ 			%cmt_opts, %fc_opts } ],
+ 	'set-tree' => [ \&cmd_set_tree,
+@@ -416,6 +418,8 @@ sub cmd_dcommit {
+ 	$head ||= 'HEAD';
+ 	my @refs;
+ 	my ($url, $rev, $uuid, $gs) = working_head_info($head, \@refs);
++	$url = $_commit_url if defined $_commit_url;
++	my $last_rev = $_revision if defined $_revision;
+ 	if ($url) {
+ 		print "Committing to $url ...\n";
+ 	}
+@@ -423,7 +427,6 @@ sub cmd_dcommit {
+ 		die "Unable to determine upstream SVN information from ",
+ 		    "$head history.\nPerhaps the repository is empty.";
+ 	}
+-	my $last_rev;
+ 	my ($linear_refs, $parents) = linearize_history($gs, \@refs);
+ 	if ($_no_rebase && scalar(@$linear_refs) > 1) {
+ 		warn "Attempting to commit more than one change while ",
+@@ -446,7 +449,7 @@ sub cmd_dcommit {
+ 			my $cmt_rev;
+ 			my %ed_opts = ( r => $last_rev,
+ 			                log => get_commit_entry($d)->{log},
+-			                ra => Git::SVN::Ra->new($gs->full_url),
++			                ra => Git::SVN::Ra->new($url),
+ 			                config => SVN::Core::config_get_config(
+ 			                        $Git::SVN::Ra::config_dir
+ 			                ),
+-- 
+Eric Wong
