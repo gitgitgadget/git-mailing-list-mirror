@@ -1,135 +1,69 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [TOY PATCH] filter-branch: add option --delete-unchanged
-Date: Fri,  8 Aug 2008 22:10:24 +0200
-Message-ID: <1218226224-25273-1-git-send-email-trast@student.ethz.ch>
-References: <1218153031-18443-1-git-send-email-trast@student.ethz.ch>
-Cc: Jan Wielemaker <J.Wielemaker@uva.nl>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 08 22:11:23 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: add a target which will abort compilation with
+ ancient shells
+Date: Fri, 08 Aug 2008 13:19:00 -0700
+Message-ID: <7vwsirb6q3.fsf@gitster.siamese.dyndns.org>
+References: <BUkcoxp99ASidQD8sGQ9PR7w1MT6DXx-6v_djYMHRBKTs_wNXEO3hw@cipher.nrlssc.navy.mil> <S1hQNVU9hvkXWOErhlMRjqFKaCUFasuIfMwjO4N7QOvu1ddz9cU6_w@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Aug 08 22:20:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRYJ0-0008DB-7G
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 22:11:22 +0200
+	id 1KRYRY-0002Lx-Ua
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 22:20:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753290AbYHHUKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 16:10:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753225AbYHHUKT
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 16:10:19 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:21460 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752821AbYHHUKT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 16:10:19 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Aug 2008 22:10:17 +0200
-Received: from localhost.localdomain ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Aug 2008 22:10:17 +0200
-X-Mailer: git-send-email 1.6.0.rc2.26.g50c1
-In-Reply-To: <1218153031-18443-1-git-send-email-trast@student.ethz.ch>
-X-OriginalArrivalTime: 08 Aug 2008 20:10:17.0566 (UTC) FILETIME=[C6C8F7E0:01C8F992]
+	id S1753786AbYHHUTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 16:19:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753751AbYHHUTJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 16:19:09 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61190 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753692AbYHHUTJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 16:19:09 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 242C64EBAB;
+	Fri,  8 Aug 2008 16:19:07 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 7A2124EB7E; Fri,  8 Aug 2008 16:19:03 -0400 (EDT)
+In-Reply-To: <S1hQNVU9hvkXWOErhlMRjqFKaCUFasuIfMwjO4N7QOvu1ddz9cU6_w@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Thu, 07 Aug 2008 14:06:26 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 40B1830A-6587-11DD-9105-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91709>
 
-With --delete-unchanged, we nuke refs whose targets did not change
-during rewriting.  It is intended to be used along with
---subdirectory-filter to clean out old refs from before the first
-commit to the filtered subdirectory.  (They would otherwise keep the
-old history alive.)
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-Obviously this is a rather dangerous mode of operation.
+> This adds a make target which can be used to try to execute certain shell
+> constructs which are required for compiling and running git.
+>
+> This patch provides a test for the $() notation for command substition
+> which is used in the Makefile and extensively in the git scripts.
+>
+> The make target is named in such a way as to be a hint to the user that
+> SHELL_PATH should be set to an appropriate shell. If the shell command
+> fails, the user should receive a message similar to the following:
+>
+> make: *** [please_set_SHELL_PATH_to_a_more_modern_shell] Error 2
+>
+> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+> ---
+>
+>
+> Johannes Schindelin wrote:
+>> Maybe we can even have some sanity check that tests if SHELL_PATH groks 
+>> $()?
+>
+> how about this?
 
-Note the "sort -u" is required: Without it, --all includes
-'origin/master' twice (from 'origin/master' and via 'origin/HEAD'),
-and the second pass concludes it is unchanged and nukes the ref.
-
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
-
-This applies on top of "filter-branch: be more helpful when an
-annotated tag changes".
-
-I'm not really sure if this should go in, but it might have solved
-Jan's problem.
-
- git-filter-branch.sh |   33 +++++++++++++++++++++++----------
- 1 files changed, 23 insertions(+), 10 deletions(-)
-
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index a140337..539b2e6 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -114,6 +114,7 @@ filter_tag_name=
- filter_subdir=
- orig_namespace=refs/original/
- force=
-+delete_unchanged=
- while :
- do
- 	case "$1" in
-@@ -126,6 +127,11 @@ do
- 		force=t
- 		continue
- 		;;
-+	--delete-unchanged-refs)
-+		shift
-+		delete_unchanged=t
-+		continue
-+		;;
- 	-*)
- 		;;
- 	*)
-@@ -215,6 +221,7 @@ export GIT_DIR GIT_WORK_TREE
- 
- # The refs should be updated if their heads were rewritten
- git rev-parse --no-flags --revs-only --symbolic-full-name --default HEAD "$@" |
-+sort -u |
- sed -e '/^^/d' >"$tempdir"/heads
- 
- test -s "$tempdir"/heads ||
-@@ -344,7 +351,7 @@ do
- 	sha1=$(git rev-parse "$ref"^0)
- 	rewritten=$(map $sha1)
- 
--	test $sha1 = "$rewritten" &&
-+	test $sha1 = "$rewritten" -a -z "$delete_unchanged" &&
- 		warn "WARNING: Ref '$ref' is unchanged" &&
- 		continue
- 
-@@ -355,16 +362,22 @@ do
- 			die "Could not delete $ref"
- 	;;
- 	$_x40)
--		echo "Ref '$ref' was rewritten"
--		if ! git update-ref -m "filter-branch: rewrite" \
--					"$ref" $rewritten $sha1 2>/dev/null; then
--			if test $(git cat-file -t "$ref") = tag; then
--				if test -z "$filter_tag_name"; then
--					warn "WARNING: You said to rewrite tagged commits, but not the corresponding tag."
--					warn "WARNING: Perhaps use '--tag-name-filter cat' to rewrite the tag."
-+		if test "$delete_unchanged" -a $sha1 = "$rewritten"; then
-+			echo "Ref '$ref' was deleted because it is unchanged"
-+			git update-ref -m "filter-branch: delete" -d "$ref" $sha1 ||
-+				die "Could not delete $ref"
-+		else
-+			echo "Ref '$ref' was rewritten"
-+			if ! git update-ref -m "filter-branch: rewrite" \
-+			   "$ref" $rewritten $sha1 2>/dev/null; then
-+				if test $(git cat-file -t "$ref") = tag; then
-+					if test -z "$filter_tag_name"; then
-+						warn "WARNING: You said to rewrite tagged commits, but not the corresponding tag."
-+						warn "WARNING: Perhaps use '--tag-name-filter cat' to rewrite the tag."
-+					fi
-+				else
-+					die "Could not rewrite $ref"
- 				fi
--			else
--				die "Could not rewrite $ref"
- 			fi
- 		fi
- 	;;
--- 
-1.6.0.rc2.24.gf1dd.dirty
+Thanks, both.  I think this is cute and at the same time the right thing
+to do ;-).
