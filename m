@@ -1,80 +1,70 @@
-From: =?ISO-8859-1?Q?=22Peter_Valdemar_M=F8rch_=28Lists=29=22?= 
-	<4ux6as402@sneakemail.com>
-Subject: How to fix (and find) many git-* --check errors?
-Date: Fri, 08 Aug 2008 14:49:00 +0200
-Message-ID: <489C40BC.8000008@sneakemail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git diff/log --check exitcode and PAGER environment variable
+Date: Fri, 8 Aug 2008 09:17:59 -0400
+Message-ID: <20080808131759.GA19705@sigill.intra.peff.net>
+References: <489C145B.5090400@sneakemail.com> <7vfxpfet8a.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 08 14:50:10 2008
+Cc: Peter Valdemar =?utf-8?B?TcO4cmNoIChMaXN0cyk=?= 
+	<4ux6as402@sneakemail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 08 15:19:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRRQ2-0003QC-2E
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 14:50:10 +0200
+	id 1KRRs2-0006A2-Pk
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 15:19:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752031AbYHHMtH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 08:49:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751720AbYHHMtG
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 08:49:06 -0400
-Received: from morch.com ([193.58.255.207]:47542 "EHLO morch.com"
+	id S1752634AbYHHNSE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 09:18:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752771AbYHHNSE
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 09:18:04 -0400
+Received: from peff.net ([208.65.91.99]:1933 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751651AbYHHMtF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 08:49:05 -0400
-Received: from [192.168.1.214] (ANice-157-1-71-161.w90-36.abo.wanadoo.fr [90.36.206.161])
-	by morch.com (Postfix) with ESMTP id 18708278E
-	for <git@vger.kernel.org>; Fri,  8 Aug 2008 14:51:33 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
+	id S1751686AbYHHNSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 09:18:03 -0400
+Received: (qmail 19983 invoked by uid 111); 8 Aug 2008 13:18:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 08 Aug 2008 09:18:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Aug 2008 09:18:00 -0400
+Content-Disposition: inline
+In-Reply-To: <7vfxpfet8a.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91662>
 
-We have > 37000 white space "errors" in HEAD, mostly trailing=20
-whitespace, and I'm looking for a
+On Fri, Aug 08, 2008 at 02:44:37AM -0700, Junio C Hamano wrote:
 
-$ git diff --check | git??? --whitespace=3Dfix
+> "Peter Valdemar M=C3=B8rch (Lists)"  <4ux6as402@sneakemail.com> write=
+s:
+>=20
+> > There is this old thread:
+> > "[PATCH 1/5] "diff --check" should affect exit status"
+> > http://thread.gmane.org/gmane.comp.version-control.git/68145/focus=3D=
+68148
+> > which seemed not to reach a conclusion.
+>=20
+> Conclusion was (1) if you really care about the exit code, do not use
+> pager; (2) after 1.6.0 we will swap the child/parent between git and =
+pager
+> to expose exit code from us, but not before.
+>=20
+> Or am I mistaken?
 
-command.
+Yes, all of his testing with "git diff" is hampered by the pager hiding
+the exit code. And that is dealt with by the patches in next (and I
+tested his examples with 'next', and they work fine).
 
-Is there such a beast?
+But that still leaves the part about "git log" not changing its exit
+code. I don't think it has ever been designed to, and I'm not even sure
+what the semantics would be (exit code !=3D 0 if any logged commit has =
+a
+whitespace problem? That seems the most logical, and it might be useful
+for limited ranges).
 
-I see that git-apply has a --whitespace=3D<action> option, but I don't=20
-seem to grock how to be able to use it for fixing my working directory.
-
-Details follow:
-
-I can create a perl script that does this for me (e.g. inspired by=20
-1.5.6's hooks/pre-commit's perl version of git diff --check) and post i=
-t=20
-here if anybody would like it, but I'd rather use some well-tested=20
-method if one exists. And it seems git-apply has the functionality some=
-how.
-
-Of course, I can also:
-
-$ git diff --check > tmpcfile
-# (Or some other command to find all of them under ./)
-$ vim
-:cfile tmpcfile
-
-Thank you for --check having a handy output format, BTW! But I prefer=20
-automation (and automated auditing of the results) for 37000 lines.
-
-Also the way I found them is like this:
-
-$ git diff --check $(git log --pretty=3Dformat:%H | tail -1)..HEAD .
-
-(The diff between "the empty commit" and HEAD - well between the first=20
-commit and HEAD anyway. Is there a ref for "totally empty" or the=20
-revision before the first commit? Or a more elegant way to get this lis=
-t?)
-
-Peter
---=20
-Peter Valdemar M=F8rch
-http://www.morch.com
+-Peff
