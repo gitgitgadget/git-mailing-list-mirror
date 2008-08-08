@@ -1,64 +1,135 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to fix (and find) many git-* --check errors?
-Date: Fri, 08 Aug 2008 12:27:18 -0700
-Message-ID: <7viqubcnop.fsf@gitster.siamese.dyndns.org>
-References: <489C40BC.8000008@sneakemail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Peter_Valdemar_M=C3=B8rch_=28Lists=29?= 
-	<4ux6as402@sneakemail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 08 21:28:47 2008
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [TOY PATCH] filter-branch: add option --delete-unchanged
+Date: Fri,  8 Aug 2008 22:10:24 +0200
+Message-ID: <1218226224-25273-1-git-send-email-trast@student.ethz.ch>
+References: <1218153031-18443-1-git-send-email-trast@student.ethz.ch>
+Cc: Jan Wielemaker <J.Wielemaker@uva.nl>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 08 22:11:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRXdh-0000jT-OL
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 21:28:42 +0200
+	id 1KRYJ0-0008DB-7G
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 22:11:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753682AbYHHT10 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 15:27:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753098AbYHHT10
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 15:27:26 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56431 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752843AbYHHT1Z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Aug 2008 15:27:25 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6115050174;
-	Fri,  8 Aug 2008 15:27:24 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 70CE450173; Fri,  8 Aug 2008 15:27:21 -0400 (EDT)
-In-Reply-To: <489C40BC.8000008@sneakemail.com> (Peter Valdemar =?utf-8?Q?M?=
- =?utf-8?Q?=C3=B8rch's?= message of "Fri, 08 Aug 2008 14:49:00 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 074C1816-6580-11DD-A921-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753290AbYHHUKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 16:10:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753225AbYHHUKT
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 16:10:19 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:21460 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752821AbYHHUKT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 16:10:19 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 8 Aug 2008 22:10:17 +0200
+Received: from localhost.localdomain ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 8 Aug 2008 22:10:17 +0200
+X-Mailer: git-send-email 1.6.0.rc2.26.g50c1
+In-Reply-To: <1218153031-18443-1-git-send-email-trast@student.ethz.ch>
+X-OriginalArrivalTime: 08 Aug 2008 20:10:17.0566 (UTC) FILETIME=[C6C8F7E0:01C8F992]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91708>
 
-"Peter Valdemar M=C3=B8rch (Lists)"  <4ux6as402@sneakemail.com> writes:
+With --delete-unchanged, we nuke refs whose targets did not change
+during rewriting.  It is intended to be used along with
+--subdirectory-filter to clean out old refs from before the first
+commit to the filtered subdirectory.  (They would otherwise keep the
+old history alive.)
 
-> We have > 37000 white space "errors" in HEAD, mostly trailing
-> whitespace, and I'm looking for a
->
-> $ git diff --check | git??? --whitespace=3Dfix
->
-> command.
+Obviously this is a rather dangerous mode of operation.
 
-Starting from a clean checkout, you could do something like this:
+Note the "sort -u" is required: Without it, --all includes
+'origin/master' twice (from 'origin/master' and via 'origin/HEAD'),
+and the second pass concludes it is unchanged and nukes the ref.
 
-	$ git reset --hard
-        $ rm .git/index
-        $ git diff --binary -R HEAD >P.diff
-        $ git apply --whitespace=3Dfix --cached <P.diff
-	$ git commit -m "Fixed all whitespace gotchas"
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-P.diff contains essentially everything, and you are recreating everythi=
-ng
-from that patch.
+This applies on top of "filter-branch: be more helpful when an
+annotated tag changes".
+
+I'm not really sure if this should go in, but it might have solved
+Jan's problem.
+
+ git-filter-branch.sh |   33 +++++++++++++++++++++++----------
+ 1 files changed, 23 insertions(+), 10 deletions(-)
+
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index a140337..539b2e6 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -114,6 +114,7 @@ filter_tag_name=
+ filter_subdir=
+ orig_namespace=refs/original/
+ force=
++delete_unchanged=
+ while :
+ do
+ 	case "$1" in
+@@ -126,6 +127,11 @@ do
+ 		force=t
+ 		continue
+ 		;;
++	--delete-unchanged-refs)
++		shift
++		delete_unchanged=t
++		continue
++		;;
+ 	-*)
+ 		;;
+ 	*)
+@@ -215,6 +221,7 @@ export GIT_DIR GIT_WORK_TREE
+ 
+ # The refs should be updated if their heads were rewritten
+ git rev-parse --no-flags --revs-only --symbolic-full-name --default HEAD "$@" |
++sort -u |
+ sed -e '/^^/d' >"$tempdir"/heads
+ 
+ test -s "$tempdir"/heads ||
+@@ -344,7 +351,7 @@ do
+ 	sha1=$(git rev-parse "$ref"^0)
+ 	rewritten=$(map $sha1)
+ 
+-	test $sha1 = "$rewritten" &&
++	test $sha1 = "$rewritten" -a -z "$delete_unchanged" &&
+ 		warn "WARNING: Ref '$ref' is unchanged" &&
+ 		continue
+ 
+@@ -355,16 +362,22 @@ do
+ 			die "Could not delete $ref"
+ 	;;
+ 	$_x40)
+-		echo "Ref '$ref' was rewritten"
+-		if ! git update-ref -m "filter-branch: rewrite" \
+-					"$ref" $rewritten $sha1 2>/dev/null; then
+-			if test $(git cat-file -t "$ref") = tag; then
+-				if test -z "$filter_tag_name"; then
+-					warn "WARNING: You said to rewrite tagged commits, but not the corresponding tag."
+-					warn "WARNING: Perhaps use '--tag-name-filter cat' to rewrite the tag."
++		if test "$delete_unchanged" -a $sha1 = "$rewritten"; then
++			echo "Ref '$ref' was deleted because it is unchanged"
++			git update-ref -m "filter-branch: delete" -d "$ref" $sha1 ||
++				die "Could not delete $ref"
++		else
++			echo "Ref '$ref' was rewritten"
++			if ! git update-ref -m "filter-branch: rewrite" \
++			   "$ref" $rewritten $sha1 2>/dev/null; then
++				if test $(git cat-file -t "$ref") = tag; then
++					if test -z "$filter_tag_name"; then
++						warn "WARNING: You said to rewrite tagged commits, but not the corresponding tag."
++						warn "WARNING: Perhaps use '--tag-name-filter cat' to rewrite the tag."
++					fi
++				else
++					die "Could not rewrite $ref"
+ 				fi
+-			else
+-				die "Could not rewrite $ref"
+ 			fi
+ 		fi
+ 	;;
+-- 
+1.6.0.rc2.24.gf1dd.dirty
