@@ -1,98 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re* git diff/log --check exitcode and PAGER environment variable
-Date: Fri, 08 Aug 2008 13:40:02 -0700
-Message-ID: <7vsktfb5r1.fsf@gitster.siamese.dyndns.org>
-References: <489C145B.5090400@sneakemail.com>
- <7vfxpfet8a.fsf@gitster.siamese.dyndns.org>
- <7v1w0zersg.fsf_-_@gitster.siamese.dyndns.org>
- <489C27DD.90603@sneakemail.com>
- <alpine.DEB.1.00.0808081315060.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [PATCH 1/3] Refactoring: Split up diff_tree_stdin
+Date: Fri, 08 Aug 2008 22:48:23 +0200
+Message-ID: <20080808204823.7744.57203.stgit@yoghurt>
+References: <20080808204348.7744.46006.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Peter_Valdemar_M=C3=B8rch_=28Lists=29?= 
-	<4ux6as402@sneakemail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 08 22:41:16 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 08 22:49:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRYlv-0001Su-Qv
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 22:41:16 +0200
+	id 1KRYu6-00058H-8M
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 22:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753033AbYHHUkN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 16:40:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752210AbYHHUkM
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 16:40:12 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36340 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751852AbYHHUkL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Aug 2008 16:40:11 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0E5984EED1;
-	Fri,  8 Aug 2008 16:40:10 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 4F6414EECE; Fri,  8 Aug 2008 16:40:06 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0808081315060.9611@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
- Schindelin's message of "Fri, 8 Aug 2008 13:23:03 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 317261EA-658A-11DD-855F-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753277AbYHHUsi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 16:48:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753139AbYHHUsi
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 16:48:38 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4158 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752239AbYHHUsh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 16:48:37 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1KRZEM-0000vU-00; Fri, 08 Aug 2008 22:10:38 +0100
+In-Reply-To: <20080808204348.7744.46006.stgit@yoghurt>
+User-Agent: StGIT/0.14.3.222.g9ef2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91711>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Into a first half that determines what operation to do, and a second
+half that does it.
 
-> On Fri, 8 Aug 2008, "Peter Valdemar M=C3=B8rch (Lists)" wrote:
->
->> I don't want to be a troll... But in my original post, I write that =
-git=20
->> log exits with 0 even when there are --check failures *and* --no-pag=
-er=20
->> is used.
->
-> You seem to care enough.  That is good.  Because I will give you a fe=
-w=20
-> pointers to help yourself, and you can in return help us by submittin=
-g a=20
-> patch:
->
-> - the code to be changed lives in log-tree.c.  Look for calls to the=20
->   function log_tree_diff_flush().  You need to check the exit status
->   after that (needs to be done only when DIFF_OPT_TST(opt->diffopt,=20
->   EXIT_WITH_STATUS).
->
-> - you can get at the exit status with the call=20
->   diff_result_code(opt->diffopt, 0) (see the implementation in diff.c=
- to=20
->   find out what the 0 means, and why it is correct).
->
-> - you need to accumulate the exit status (plural, with a long u) over=
- all=20
->   calls to log_tree_diff(), best thing would be to add a member to th=
-e
->   log_info struct.
->
-> - you need to test rev->loginfo->exit_code in the end, and return fai=
-lure=20
->   if it is non-zero.  I think the place is in cmd_log_walk().
->
-> Bon chance,
-> Dscho
+Currently the only operation is diffing one or more commits, but a
+later patch will add diffing of trees, at which point this refactoring
+will pay off.
 
-Dscho, thanks for a nice writeup.
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-And sorry, Peter, for being dense earlier.
+---
 
-I somehow thought you were talking about "diff" but you are right; "log=
-"
-has been solely used for "_view_ log with various format of diffs" and
-nobody wanted it to pay attention to individual diff's exit status so f=
-ar
-(I am not saying "everybody wanted it not to pay attention to it" -- it
-was just nobody felt the need for log to report the diff exit status).
+ builtin-diff-tree.c |   31 +++++++++++++++++++------------
+ 1 files changed, 19 insertions(+), 12 deletions(-)
+
+
+diff --git a/builtin-diff-tree.c b/builtin-diff-tree.c
+index 415cb16..ebbd631 100644
+--- a/builtin-diff-tree.c
++++ b/builtin-diff-tree.c
+@@ -14,20 +14,10 @@ static int diff_tree_commit_sha1(const unsigned cha=
+r *sha1)
+ 	return log_tree_commit(&log_tree_opt, commit);
+ }
+=20
+-static int diff_tree_stdin(char *line)
++/* Diff one or more commits. */
++static int stdin_diff_commit(struct commit *commit, char *line, int le=
+n)
+ {
+-	int len =3D strlen(line);
+ 	unsigned char sha1[20];
+-	struct commit *commit;
+-
+-	if (!len || line[len-1] !=3D '\n')
+-		return -1;
+-	line[len-1] =3D 0;
+-	if (get_sha1_hex(line, sha1))
+-		return -1;
+-	commit =3D lookup_commit(sha1);
+-	if (!commit || parse_commit(commit))
+-		return -1;
+ 	if (isspace(line[40]) && !get_sha1_hex(line+41, sha1)) {
+ 		/* Graft the fake parents locally to the commit */
+ 		int pos =3D 41;
+@@ -52,6 +42,23 @@ static int diff_tree_stdin(char *line)
+ 	return log_tree_commit(&log_tree_opt, commit);
+ }
+=20
++static int diff_tree_stdin(char *line)
++{
++	int len =3D strlen(line);
++	unsigned char sha1[20];
++	struct commit *commit;
++
++	if (!len || line[len-1] !=3D '\n')
++		return -1;
++	line[len-1] =3D 0;
++	if (get_sha1_hex(line, sha1))
++		return -1;
++	commit =3D lookup_commit(sha1);
++	if (!commit || parse_commit(commit))
++		return -1;
++	return stdin_diff_commit(commit, line, len);
++}
++
+ static const char diff_tree_usage[] =3D
+ "git diff-tree [--stdin] [-m] [-c] [--cc] [-s] [-v] [--pretty] [-t] [-=
+r] [--root] "
+ "[<common diff options>] <tree-ish> [<tree-ish>] [<path>...]\n"
