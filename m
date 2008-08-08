@@ -1,131 +1,86 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: git reset --hard isn't resetting
-Date: Fri, 8 Aug 2008 10:40:03 -0400
-Message-ID: <32541b130808080740q249cb0f6t4395cc2623e67c5a@mail.gmail.com>
-References: <1c5969370808060941q59cb8f7fhabee3ef3c5107715@mail.gmail.com>
-	 <32541b130808061102q752076a8ydc02fef4e799491f@mail.gmail.com>
-	 <1c5969370808071806g1f989260n55a4b8bebfedb6e@mail.gmail.com>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH] tests: use $TEST_DIRECTORY to refer to the t/ directory
+Date: Fri, 8 Aug 2008 16:40:07 +0200
+Message-ID: <20080808144007.GA12098@leksak.fem-net>
+References: <alpine.DEB.1.00.0808080752210.9611@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808080754230.9611@pacific.mpi-cbg.de.mpi-cbg.de> <489BF95F.1070000@lsrfire.ath.cx> <7vprojgbbu.fsf@gitster.siamese.dyndns.org> <7vod43etuw.fsf_-_@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0808081232210.9611@pacific.mpi-cbg.de.mpi-cbg.de> <7vmyjndc2c.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Eric Wong" <normalperson@yhbt.net>
-To: "Matt Graham" <mdg149@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 08 16:41:16 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 08 16:41:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRT9Q-0005JE-FM
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 16:41:08 +0200
+	id 1KRT9b-0005PF-GQ
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 16:41:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752055AbYHHOkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 10:40:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752002AbYHHOkG
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 10:40:06 -0400
-Received: from an-out-0708.google.com ([209.85.132.245]:1198 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751892AbYHHOkE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 10:40:04 -0400
-Received: by an-out-0708.google.com with SMTP id d40so163155and.103
-        for <git@vger.kernel.org>; Fri, 08 Aug 2008 07:40:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=sRs5iNljy84I1sgFWGfxnSWC8+IXTtxaXJJPsKycplA=;
-        b=JIhvGATVEBwIw3RV4ajltwPYa3v8S7MV0zrIR4x+DCRjCBFt3xw21LsnBXGLUCURg1
-         zcSJ/LzmgmYHYj/l6KcsFo615LFPocQoC3wL9UPZsLz0aw+nWAYvrjzHtHc7gU7aDQ+3
-         3pSMQexlUtBy91iXRkSH6ejHWrMJ6H6sfveL4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=HYaVzTzWOjvb/BnVwkyCLepQ3oVurpCvvCTgoeuBnXb9I52PQ1OsCwKk4BUUhmdGj6
-         +y1ijC9mPu8Bs7GvVcJybnKyEx5hajbnyPQsH9nSI2mml/YbrvsSMx9XFGcpKADGFrfg
-         asEJSJlAv7onMIV7RN3Zinml+mnYVmhMomQLA=
-Received: by 10.100.228.17 with SMTP id a17mr3791871anh.82.1218206403501;
-        Fri, 08 Aug 2008 07:40:03 -0700 (PDT)
-Received: by 10.100.8.19 with HTTP; Fri, 8 Aug 2008 07:40:03 -0700 (PDT)
-In-Reply-To: <1c5969370808071806g1f989260n55a4b8bebfedb6e@mail.gmail.com>
+	id S1752092AbYHHOkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 10:40:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752082AbYHHOkM
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 10:40:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55906 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752002AbYHHOkK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 10:40:10 -0400
+Received: (qmail invoked by alias); 08 Aug 2008 14:40:08 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp026) with SMTP; 08 Aug 2008 16:40:08 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1/jp7RORzfjI17cxeJDppmrapsGc8tBij3XKz7fdT
+	LYlQG6qGN+ZMXB
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KRT8R-0005jn-2V; Fri, 08 Aug 2008 16:40:07 +0200
 Content-Disposition: inline
+In-Reply-To: <7vmyjndc2c.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.52
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91674>
 
-On Thu, Aug 7, 2008 at 9:06 PM, Matt Graham <mdg149@gmail.com> wrote:
-> On Wed, Aug 6, 2008 at 2:02 PM, Avery Pennarun <apenwarr@gmail.com> wrote:
->> Try:
->>   git log --name-only
->> to see which patches change which files.  It's a virtual certainty
->> that they were renamed in svn at some point.
->
-> They weren't "renamed".  Further investigation w/ the hated svn tools
-> showed that the upper case was removed, then many commits later, the
-> lowercase was added.
+Hi,
 
-Hmm.  Well, one possibly important thing is that if you take a diff
-between the version before the old files were removed, and the version
-after the new files were added, it will *look* like a rename because
-git doesn't look at the intermediate revisions.  And note that this
-sort of thing will be happen if you "git checkout" the before and
-after versions.
+Junio C Hamano wrote:
+> Hint, hint...
 
-> Indeed that was the problem.  In fact, l now noticed that my linux
-> machine has both versions as well.  Being case sensitive, it didn't
-> mind and the problem wasn't obvious.
+I've taken only a short look, and:
 
-Did your Linux machine import the data using git-svn, or did it clone
-a repo from Windows that imported using git-svn?
+	$ GIT_TEST_HTTPD=1 ./t5540-http-push.sh
+	* skipping test, web server setup failed
+	* passed all 0 test(s)
 
-I can imagine a situation where git-svn on Windows could get confused
-and add the wrong filenames (although it would be kind of unlikely if
-they really were removed in one revision, then readded in another; why
-would git-svn even think about the old names in that case?).  However,
-there's no explanation for a Linux system introducing such a mistake,
-since the two files are just unrelated as far as Linux is concerned.
+after the following change, it became:
 
-> This worked fine exactly as you said.  I'm curious what will happen when I do
->   git svn dcommit
-> These aren't my files and I'm sort of using git svn on the sly.  I'd
-> prefer to not have something weird happen to the svn repository due to
-> this.  Due to the schedule, our tolerance for screwing things up b/c I
-> want to use git will be low.  And my argument that we should have used
-> git from the outset probably won't help any.
+	$ GIT_TEST_HTTPD=1 ./t5540-http-push.sh
+	*   ok 1: setup remote repository
+	*   ok 2: clone remote repository
+	*   still broken 3: push to remote repository
+	*   still broken 4: create and delete remote branch
+	* still have 2 known breakage(s)
+	* passed all remaining 2 test(s)
 
-If your git-svn repo doesn't reflect *exactly* the set of files in
-your real svn repo, then you've hit a pretty bad bug and you're almost
-certainly going to have problems with dcommit.  On the other hand,
-you're unlikely to manage to screw up your svn repo, assuming the
-files you deleted were the ones that weren't supposed to be there;
-"extra deleting" them from svn wouldn't be dangerous.  I'd expect git
-svn dcommit to just fail with a weird error.
+Regards.
 
->> I'm not really sure what git should do better in this case, although
->> the current behaviour is obviously a bit confusing.
->
-> Yes, if SVN is going to have both versions, it's understandable that
-> git wouldn't know what to do.  Unfortunately, it looks like SVN only
-> had one version at a time.  So it seems git somehow revived the
-> uppercase version when the lowercase one was readded through git svn.
+--snip--
 
-Since this seems virtually impossible, it would be nice if you could
-double check your SVN repo to make sure the problem really doesn't
-exist there in *any* version.  It just doesn't seem likely that git
-would have had this problem if the files were cleanly removed in one
-revision, then added in a later one.  I could imagine it if they were
-renamed all in one revision, though, or if there was *ever* an svn
-revision where both files existed at once.  In all those cases we
-effectively have a bug in git-svn, but at least in the latter cases
-it's an explainable one :)
-
-Beware that svn doesn't reliably sort its filename lists, so you might
-find that two different files in the *same* directory are in totally
-different places in the list; perhaps you missed a filename that way.
-
-Good luck,
-
-Avery
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index dc473df..6ac312b 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -14,7 +14,7 @@ fi
+ LIB_HTTPD_PATH=${LIB_HTTPD_PATH-'/usr/sbin/apache2'}
+ LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'8111'}
+ 
+-TEST_PATH="$PWD"/../lib-httpd
++TEST_PATH="$TEST_DIRECTORY"/lib-httpd
+ HTTPD_ROOT_PATH="$PWD"/httpd
+ HTTPD_DOCUMENT_ROOT_PATH=$HTTPD_ROOT_PATH/www
+ 
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
