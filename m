@@ -1,132 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] tests: use $TEST_DIRECTORY to refer to the t/ directory
-Date: Fri, 08 Aug 2008 02:31:03 -0700
-Message-ID: <7vod43etuw.fsf_-_@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0808080752210.9611@pacific.mpi-cbg.de.mpi-cbg.de>
- <alpine.DEB.1.00.0808080754230.9611@pacific.mpi-cbg.de.mpi-cbg.de>
- <489BF95F.1070000@lsrfire.ath.cx> <7vprojgbbu.fsf@gitster.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?=22Peter_Valdemar_M=F8rch_=28Lists=29=22?= 
+	<4ux6as402@sneakemail.com>
+Subject: git diff/log --check exitcode and PAGER environment variable
+Date: Fri, 08 Aug 2008 11:39:39 +0200
+Message-ID: <489C145B.5090400@sneakemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, gitster@pobox.com
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Fri Aug 08 11:32:18 2008
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 08 11:40:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KROKV-0008Us-4n
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 11:32:15 +0200
+	id 1KROSk-0003oA-9F
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 11:40:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752705AbYHHJbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 05:31:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751308AbYHHJbN
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 05:31:13 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46665 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752467AbYHHJbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 05:31:12 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C83EA59D62;
-	Fri,  8 Aug 2008 05:31:10 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D858359D61; Fri,  8 Aug 2008 05:31:05 -0400 (EDT)
-In-Reply-To: <7vprojgbbu.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 08 Aug 2008 01:28:21 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BC98A45E-652C-11DD-B354-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753268AbYHHJjo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 05:39:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753032AbYHHJjo
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 05:39:44 -0400
+Received: from morch.com ([193.58.255.207]:57919 "EHLO morch.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752763AbYHHJjn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 05:39:43 -0400
+Received: from [192.168.1.214] (ANice-157-1-71-161.w90-36.abo.wanadoo.fr [90.36.206.161])
+	by morch.com (Postfix) with ESMTP id 5AE64278E
+	for <git@vger.kernel.org>; Fri,  8 Aug 2008 11:42:13 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91643>
 
-I'll push this out as 'test-deeper' branch to repo.or.cz (alt-git.git)
-because the test suite has unprintable bytes that are inappropriate for
-e-mail transmission.
+Using my default PAGER=3Dless, git log --check exits with exit code 0,=20
+contrary to documentation.
 
--- >8 --
-Many test scripts assumed that they will start in a 'trash' subdirectory
-that is a single level down from the t/ directory, and referred to their
-test vector files by asking for files like "../t9999/expect".  This will
-break if we move the 'trash' subdirectory elsewhere.
+There is this old thread:
+"[PATCH 1/5] "diff --check" should affect exit status"
+http://thread.gmane.org/gmane.comp.version-control.git/68145/focus=3D68=
+148
+which seemed not to reach a conclusion.
 
-To solve this, we earlier introduced "$TEST_DIRECTORY" so that they can
-refer to t/ directory reliably.  This finally makes all the tests use
-it to refer to the outside environment.
+=46or git log, I still have not been able to make it exit with anything=
+=20
+other than 0 - contrary to documentation.
 
-With this patch, and a one-liner not included here (because it would
-contradict with what Dscho really wants to do):
+May I propose a change to either documentation or behavior of "git diff=
+=20
+--check". The current one has:
 
-| diff --git a/t/test-lib.sh b/t/test-lib.sh
-| index 70ea7e0..60e69e4 100644
-| --- a/t/test-lib.sh
-| +++ b/t/test-lib.sh
-| @@ -485,7 +485,7 @@ fi
-|  . ../GIT-BUILD-OPTIONS
-|
-|  # Test repository
-| -test="trash directory"
-| +test="trash directory/another level/yet another"
-|  rm -fr "$test" || {
-|         trap - exit
-|         echo >&5 "FATAL: Cannot prepare test area"
+--check::
+	Warn if changes introduce trailing whitespace
+	or an indent that uses a space before a tab. Exits with
+	non-zero status if problems are found. Not compatible with
+	--exit-code.
 
-all the tests still pass, but we would want extra sets of eyeballs on this
-type of change to really make sure.
+This, clearly, is not correct:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t0022-crlf-rename.sh                   |    4 ++--
- t/t1000-read-tree-m-3way.sh              |    2 +-
- t/t3900-i18n-commit.sh                   |   18 +++++++++---------
- t/t3901-i18n-patch.sh                    |   28 ++++++++++++++--------------
- t/t4000-diff-format.sh                   |    2 +-
- t/t4001-diff-rename.sh                   |    2 +-
- t/t4002-diff-basic.sh                    |    2 +-
- t/t4003-diff-rename-1.sh                 |    6 +++---
- t/t4004-diff-rename-symlink.sh           |    2 +-
- t/t4005-diff-rename-2.sh                 |    6 +++---
- t/t4007-rename-3.sh                      |    4 ++--
- t/t4008-diff-break-rewrite.sh            |    6 +++---
- t/t4009-diff-rename-4.sh                 |    6 +++---
- t/t4010-diff-pathspec.sh                 |    2 +-
- t/t4011-diff-symlink.sh                  |    2 +-
- t/t4012-diff-binary.sh                   |    2 +-
- t/t4013-diff-various.sh                  |    2 +-
- t/t4015-diff-whitespace.sh               |    2 +-
- t/t4020-diff-external.sh                 |    2 +-
- t/t4022-diff-rewrite.sh                  |    4 ++--
- t/t4023-diff-rename-typechange.sh        |   14 +++++++-------
- t/t4027-diff-submodule.sh                |    2 +-
- t/t4100-apply-stat.sh                    |    4 ++--
- t/t4101-apply-nonl.sh                    |    2 +-
- t/t5100-mailinfo.sh                      |   18 +++++++++---------
- t/t5515-fetch-merge-logic.sh             |    4 ++--
- t/t5540-http-push.sh                     |    2 +-
- t/t6002-rev-list-bisect.sh               |    2 +-
- t/t6003-rev-list-topo-order.sh           |    2 +-
- t/t6023-merge-file.sh                    |    2 +-
- t/t6027-merge-binary.sh                  |    2 +-
- t/t6101-rev-parse-parents.sh             |    2 +-
- t/t6200-fmt-merge-msg.sh                 |    4 ++--
- t/t7001-mv.sh                            |    4 ++--
- t/t7004-tag.sh                           |    2 +-
- t/t7101-reset.sh                         |   10 +++++-----
- t/t7500-commit.sh                        |   16 ++++++++--------
- t/t8001-annotate.sh                      |    2 +-
- t/t8002-blame.sh                         |    2 +-
- t/t9110-git-svn-use-svm-props.sh         |    2 +-
- t/t9111-git-svn-use-svnsync-props.sh     |    2 +-
- t/t9115-git-svn-dcommit-funky-renames.sh |    2 +-
- t/t9121-git-svn-fetch-renamed-dir.sh     |    2 +-
- t/t9200-git-cvsexportcommit.sh           |   14 +++++++-------
- t/t9300-fast-import.sh                   |    2 +-
- t/t9301-fast-export.sh                   |    2 +-
- t/t9500-gitweb-standalone-no-errors.sh   |   16 ++++++++--------
- t/t9700-perl-git.sh                      |    2 +-
- t/t9700/test.pl                          |    3 ---
- t/test-lib.sh                            |    2 +-
- 50 files changed, 123 insertions(+), 126 deletions(-)
+$ PAGER=3Dless git diff --check
+(my default PAGER)
+or
+$ unset PAGER ; git diff --check
+always exits with exit code 0. But
+
+$ git --no-pager diff --check
+or
+$ PAGER=3Dcat git diff --check
+or
+$ PAGER=3D git diff --check
+exits with exit code 2 on error
+(curiously PAGER=3D and unset PAGER give different results)
+
+But the --exit-code overrides any of that:
+
+$ git --no-pager diff --check --exit-code
+exits with exit code 3 on error (with or without the --no-pager).
+
+I'm not sure about a good rephrasing. How about:
+'... "git diff" exits with non-zero status if problems are found and ru=
+n=20
+with --exit-code.'
+
+While this documentation string is found in diff-options.txt and=20
+included in:
+
+git-diff-files.txt
+git-diff-index.txt
+git-diff-tree.txt
+git-diff.txt
+git-format-patch.txt
+git-log.txt
+
+At least for the git-log cases, the behavior is not the same as for=20
+git-diff:
+
+$ PAGER=3Dcat git --no-pager log HEAD~20..HEAD --check --exit-code
+$ echo $?
+0
+Though there are several check failures (red squares in output), it=20
+exits with 0, even when using all the tricks that work with "git diff".
+
+Clearly here, the documentation is "even more wrong". Hence the explici=
+t=20
+mention of "git diff" in the help string for the --check option.
+
+What do you think?
+
+Peter
+--=20
+Peter Valdemar M=F8rch
+http://www.morch.com
