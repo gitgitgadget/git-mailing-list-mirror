@@ -1,430 +1,132 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 2/3] git-svn: Allow deep branch names by supporting multi-globs
-Date: Fri, 8 Aug 2008 01:57:24 -0700
-Message-ID: <20080808085724.GB9479@untitled>
-References: <20080807090008.GA9161@untitled> <1218123242-26260-1-git-send-email-marcus@griep.us> <20080808084025.GA8718@untitled>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] tests: use $TEST_DIRECTORY to refer to the t/ directory
+Date: Fri, 08 Aug 2008 02:31:03 -0700
+Message-ID: <7vod43etuw.fsf_-_@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0808080752210.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+ <alpine.DEB.1.00.0808080754230.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+ <489BF95F.1070000@lsrfire.ath.cx> <7vprojgbbu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Marcus Griep <marcus@griep.us>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 08 10:58:35 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, gitster@pobox.com
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Fri Aug 08 11:32:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRNno-0006Tv-EE
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 10:58:29 +0200
+	id 1KROKV-0008Us-4n
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 11:32:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752083AbYHHI50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 04:57:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752042AbYHHI5Z
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 04:57:25 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:56550 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752024AbYHHI5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 04:57:25 -0400
+	id S1752705AbYHHJbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 05:31:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751308AbYHHJbN
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 05:31:13 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46665 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752467AbYHHJbM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 05:31:12 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 85B542DC01B;
-	Fri,  8 Aug 2008 01:57:24 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20080808084025.GA8718@untitled>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C83EA59D62;
+	Fri,  8 Aug 2008 05:31:10 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id D858359D61; Fri,  8 Aug 2008 05:31:05 -0400 (EDT)
+In-Reply-To: <7vprojgbbu.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Fri, 08 Aug 2008 01:28:21 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: BC98A45E-652C-11DD-B354-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91642>
 
-From: Marcus Griep <marcus@griep.us>
-Date: Thu, 7 Aug 2008 11:34:02 -0400
-Subject: [PATCH 2/3] git-svn: Allow deep branch names by supporting multi-globs
+I'll push this out as 'test-deeper' branch to repo.or.cz (alt-git.git)
+because the test suite has unprintable bytes that are inappropriate for
+e-mail transmission.
 
-Some repositories use a deep branching strategy, such as:
-branches/1.0/1.0.rc1
-branches/1.0/1.0.rc2
-branches/1.0/1.0.rtm
-branches/1.0/1.0.gold
+-- >8 --
+Many test scripts assumed that they will start in a 'trash' subdirectory
+that is a single level down from the t/ directory, and referred to their
+test vector files by asking for files like "../t9999/expect".  This will
+break if we move the 'trash' subdirectory elsewhere.
 
-Only allowing a single glob stiffles this.
+To solve this, we earlier introduced "$TEST_DIRECTORY" so that they can
+refer to t/ directory reliably.  This finally makes all the tests use
+it to refer to the outside environment.
 
-This change allows for a single glob 'set' to accept this deep
-branching strategy.
+With this patch, and a one-liner not included here (because it would
+contradict with what Dscho really wants to do):
 
-The ref glob depth must match the branch glob depth.  When using
-the -b or -t options for init or clone, this is automatically
-done.
+| diff --git a/t/test-lib.sh b/t/test-lib.sh
+| index 70ea7e0..60e69e4 100644
+| --- a/t/test-lib.sh
+| +++ b/t/test-lib.sh
+| @@ -485,7 +485,7 @@ fi
+|  . ../GIT-BUILD-OPTIONS
+|
+|  # Test repository
+| -test="trash directory"
+| +test="trash directory/another level/yet another"
+|  rm -fr "$test" || {
+|         trap - exit
+|         echo >&5 "FATAL: Cannot prepare test area"
 
-For example, using the above branches:
-  svn-remote.svn.branches = branches/*/*:refs/remote/*/*
-gives the following branch names:
-  1.0/1.0.rc1
-  1.0/1.0.rc2
-  1.0/1.0.rtm
-  1.0/1.0.gold
+all the tests still pass, but we would want extra sets of eyeballs on this
+type of change to really make sure.
 
-[ew:
-  * removed unrelated line-wrapping changes
-  * fixed line-wrapping in a few more places
-  * removed trailing whitespace
-  * fixed bashism in test
-  * removed unnecessary httpd startup in test
-  * changed copyright on tests to 2008 Marcus Griep
-  * added executable permissions to new tests
-]
-
-Signed-off-by: Marcus Griep <marcus@griep.us>
-Acked-by: Eric Wong <normalperson@yhbt.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Oops, resent as I forgot to change the From: header
-
- git-svn.perl                               |   61 ++++++++---
- t/t9108-git-svn-glob.sh                    |    9 +-
- t/t9108-git-svn-multi-glob.sh              |  157 ++++++++++++++++++++++++++++
- t/t9125-git-svn-multi-glob-branch-names.sh |   37 +++++++
- 4 files changed, 244 insertions(+), 20 deletions(-)
- create mode 100755 t/t9108-git-svn-multi-glob.sh
- create mode 100755 t/t9125-git-svn-multi-glob-branch-names.sh
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 503a7c9..47ad378 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -987,8 +987,10 @@ sub complete_url_ls_init {
- 	if (length $pfx && $pfx !~ m#/$#) {
- 		die "--prefix='$pfx' must have a trailing slash '/'\n";
- 	}
--	command_noisy('config', "svn-remote.$gs->{repo_id}.$n",
--				"$remote_path:refs/remotes/$pfx*");
-+	command_noisy('config',
-+	              "svn-remote.$gs->{repo_id}.$n",
-+	              "$remote_path:refs/remotes/$pfx*" .
-+	                ('/*' x (($remote_path =~ tr/*/*/) - 1)) );
- }
- 
- sub verify_ref {
-@@ -4124,16 +4126,38 @@ sub gs_fetch_loop_common {
- 	Git::SVN::gc();
- }
- 
-+sub get_dir_globbed {
-+	my ($self, $left, $depth, $r) = @_;
-+
-+	my @x = eval { $self->get_dir($left, $r) };
-+	return unless scalar @x == 3;
-+	my $dirents = $x[0];
-+	my @finalents;
-+	foreach my $de (keys %$dirents) {
-+		next if $dirents->{$de}->{kind} != $SVN::Node::dir;
-+		if ($depth > 1) {
-+			my @args = ("$left/$de", $depth - 1, $r);
-+			foreach my $dir ($self->get_dir_globbed(@args)) {
-+				push @finalents, "$de/$dir";
-+			}
-+		} else {
-+			push @finalents, $de;
-+		}
-+	}
-+	@finalents;
-+}
-+
- sub match_globs {
- 	my ($self, $exists, $paths, $globs, $r) = @_;
- 
- 	sub get_dir_check {
- 		my ($self, $exists, $g, $r) = @_;
--		my @x = eval { $self->get_dir($g->{path}->{left}, $r) };
--		return unless scalar @x == 3;
--		my $dirents = $x[0];
--		foreach my $de (keys %$dirents) {
--			next if $dirents->{$de}->{kind} != $SVN::Node::dir;
-+
-+		my @dirs = $self->get_dir_globbed($g->{path}->{left},
-+		                                  $g->{path}->{depth},
-+		                                  $r);
-+
-+		foreach my $de (@dirs) {
- 			my $p = $g->{path}->full_path($de);
- 			next if $exists->{$p};
- 			next if (length $g->{path}->{right} &&
-@@ -4915,16 +4939,21 @@ sub new {
- 	my ($class, $glob) = @_;
- 	my $re = $glob;
- 	$re =~ s!/+$!!g; # no need for trailing slashes
--	my $nr = $re =~ tr/*/*/;
--	if ($nr > 1) {
--		die "Only one '*' wildcard expansion ",
--		    "is supported (got $nr): '$glob'\n";
--	} elsif ($nr == 0) {
-+	$re =~ m!^([^*]*)(\*(?:/\*)*)([^*]*)$!;
-+	my $temp = $re;
-+	my ($left, $right) = ($1, $3);
-+	$re = $2;
-+	my $depth = $re =~ tr/*/*/;
-+	if ($depth != $temp =~ tr/*/*/) {
-+		die "Only one set of wildcard directories " .
-+			"(e.g. '*' or '*/*/*') is supported: '$glob'\n";
-+	}
-+	if ($depth == 0) {
- 		die "One '*' is needed for glob: '$glob'\n";
- 	}
--	$re =~ s!^(.*)\*(.*)$!\(\[^/\]+\)!g;
--	my ($left, $right) = ($1, $2);
--	$re = quotemeta($left) . $re . quotemeta($right);
-+	$re =~ s!\*!\[^/\]*!g;
-+#	$re =~ s!\?!\[^/\]!g;
-+	$re = quotemeta($left) . "($re)" . quotemeta($right);
- 	if (length $left && !($left =~ s!/+$!!g)) {
- 		die "Missing trailing '/' on left side of: '$glob' ($left)\n";
- 	}
-@@ -4933,7 +4962,7 @@ sub new {
- 	}
- 	my $left_re = qr/^\/\Q$left\E(\/|$)/;
- 	bless { left => $left, right => $right, left_regex => $left_re,
--	        regex => qr/$re/, glob => $glob }, $class;
-+	        regex => qr/$re/, glob => $glob, depth => $depth }, $class;
- }
- 
- sub full_path {
-diff --git a/t/t9108-git-svn-glob.sh b/t/t9108-git-svn-glob.sh
-index a6f88bd..bb9df56 100755
---- a/t/t9108-git-svn-glob.sh
-+++ b/t/t9108-git-svn-glob.sh
-@@ -52,7 +52,8 @@ test_expect_success 'test refspec globbing' '
- 	test "`git rev-parse refs/remotes/tags/end~1`" = \
- 		"`git rev-parse refs/remotes/branches/start`" &&
- 	test "`git rev-parse refs/remotes/branches/start~2`" = \
--		"`git rev-parse refs/remotes/trunk`"
-+		"`git rev-parse refs/remotes/trunk`" &&
-+	test_must_fail git rev-parse refs/remotes/tags/end@3
- 	'
- 
- echo try to try > expect.two
-@@ -83,8 +84,8 @@ test_expect_success 'test left-hand-side only globbing' '
- 	cmp expect.two output.two
- 	'
- 
--echo "Only one '*' wildcard expansion is supported (got 2): 'branches/*/*'" \
--     > expect.three
-+echo "Only one set of wildcard directories" \
-+     "(e.g. '*' or '*/*/*') is supported: 'branches/*/t/*'" > expect.three
- echo "" >> expect.three
- 
- test_expect_success 'test disallow multi-globs' '
-@@ -92,7 +93,7 @@ test_expect_success 'test disallow multi-globs' '
- 	git config --add svn-remote.three.fetch \
- 	                 trunk:refs/remotes/three/trunk &&
- 	git config --add svn-remote.three.branches \
--	                 "branches/*/*:refs/remotes/three/branches/*" &&
-+	                 "branches/*/t/*:refs/remotes/three/branches/*" &&
- 	git config --add svn-remote.three.tags \
- 	                 "tags/*/*:refs/remotes/three/tags/*" &&
- 	cd tmp &&
-diff --git a/t/t9108-git-svn-multi-glob.sh b/t/t9108-git-svn-multi-glob.sh
-new file mode 100755
-index 0000000..9fb51d6
---- /dev/null
-+++ b/t/t9108-git-svn-multi-glob.sh
-@@ -0,0 +1,157 @@
-+#!/bin/sh
-+# Copyright (c) 2007 Eric Wong
-+test_description='git-svn globbing refspecs'
-+. ./lib-git-svn.sh
-+
-+cat > expect.end <<EOF
-+the end
-+hi
-+start a new branch
-+initial
-+EOF
-+
-+test_expect_success 'test refspec globbing' '
-+	mkdir -p trunk/src/a trunk/src/b trunk/doc &&
-+	echo "hello world" > trunk/src/a/readme &&
-+	echo "goodbye world" > trunk/src/b/readme &&
-+	svn import -m "initial" trunk "$svnrepo"/trunk &&
-+	svn co "$svnrepo" tmp &&
-+	cd tmp &&
-+		mkdir branches branches/v1 tags &&
-+		svn add branches tags &&
-+		svn cp trunk branches/v1/start &&
-+		svn commit -m "start a new branch" &&
-+		svn up &&
-+		echo "hi" >> branches/v1/start/src/b/readme &&
-+		poke branches/v1/start/src/b/readme &&
-+		echo "hey" >> branches/v1/start/src/a/readme &&
-+		poke branches/v1/start/src/a/readme &&
-+		svn commit -m "hi" &&
-+		svn up &&
-+		svn cp branches/v1/start tags/end &&
-+		echo "bye" >> tags/end/src/b/readme &&
-+		poke tags/end/src/b/readme &&
-+		echo "aye" >> tags/end/src/a/readme &&
-+		poke tags/end/src/a/readme &&
-+		svn commit -m "the end" &&
-+		echo "byebye" >> tags/end/src/b/readme &&
-+		poke tags/end/src/b/readme &&
-+		svn commit -m "nothing to see here"
-+		cd .. &&
-+	git config --add svn-remote.svn.url "$svnrepo" &&
-+	git config --add svn-remote.svn.fetch \
-+	                 "trunk/src/a:refs/remotes/trunk" &&
-+	git config --add svn-remote.svn.branches \
-+	                 "branches/*/*/src/a:refs/remotes/branches/*/*" &&
-+	git config --add svn-remote.svn.tags\
-+	                 "tags/*/src/a:refs/remotes/tags/*" &&
-+	git-svn multi-fetch &&
-+	git log --pretty=oneline refs/remotes/tags/end | \
-+	    sed -e "s/^.\{41\}//" > output.end &&
-+	cmp expect.end output.end &&
-+	test "`git rev-parse refs/remotes/tags/end~1`" = \
-+		"`git rev-parse refs/remotes/branches/v1/start`" &&
-+	test "`git rev-parse refs/remotes/branches/v1/start~2`" = \
-+		"`git rev-parse refs/remotes/trunk`" &&
-+	test_must_fail git rev-parse refs/remotes/tags/end@3
-+	'
-+
-+echo try to try > expect.two
-+echo nothing to see here >> expect.two
-+cat expect.end >> expect.two
-+
-+test_expect_success 'test left-hand-side only globbing' '
-+	git config --add svn-remote.two.url "$svnrepo" &&
-+	git config --add svn-remote.two.fetch trunk:refs/remotes/two/trunk &&
-+	git config --add svn-remote.two.branches \
-+	                 "branches/*/*:refs/remotes/two/branches/*/*" &&
-+	git config --add svn-remote.two.tags \
-+	                 "tags/*:refs/remotes/two/tags/*" &&
-+	cd tmp &&
-+		echo "try try" >> tags/end/src/b/readme &&
-+		poke tags/end/src/b/readme &&
-+		svn commit -m "try to try"
-+		cd .. &&
-+	git-svn fetch two &&
-+	test `git rev-list refs/remotes/two/tags/end | wc -l` -eq 6 &&
-+	test `git rev-list refs/remotes/two/branches/v1/start | wc -l` -eq 3 &&
-+	test `git rev-parse refs/remotes/two/branches/v1/start~2` = \
-+	     `git rev-parse refs/remotes/two/trunk` &&
-+	test `git rev-parse refs/remotes/two/tags/end~3` = \
-+	     `git rev-parse refs/remotes/two/branches/v1/start` &&
-+	git log --pretty=oneline refs/remotes/two/tags/end | \
-+	    sed -e "s/^.\{41\}//" > output.two &&
-+	cmp expect.two output.two
-+	'
-+cat > expect.four <<EOF
-+adios
-+adding more
-+Changed 2 in v2/start
-+Another versioned branch
-+initial
-+EOF
-+
-+test_expect_success 'test another branch' '
-+	(
-+		cd tmp &&
-+		mkdir branches/v2 &&
-+		svn add branches/v2 &&
-+		svn cp trunk branches/v2/start &&
-+		svn commit -m "Another versioned branch" &&
-+		svn up &&
-+		echo "hello" >> branches/v2/start/src/b/readme &&
-+		poke branches/v2/start/src/b/readme &&
-+		echo "howdy" >> branches/v2/start/src/a/readme &&
-+		poke branches/v2/start/src/a/readme &&
-+		svn commit -m "Changed 2 in v2/start" &&
-+		svn up &&
-+		svn cp branches/v2/start tags/next &&
-+		echo "bye" >> tags/next/src/b/readme &&
-+		poke tags/next/src/b/readme &&
-+		echo "aye" >> tags/next/src/a/readme &&
-+		poke tags/next/src/a/readme &&
-+		svn commit -m "adding more" &&
-+		echo "byebye" >> tags/next/src/b/readme &&
-+		poke tags/next/src/b/readme &&
-+		svn commit -m "adios"
-+	) &&
-+	git config --add svn-remote.four.url "$svnrepo" &&
-+	git config --add svn-remote.four.fetch trunk:refs/remotes/four/trunk &&
-+	git config --add svn-remote.four.branches \
-+	                 "branches/*/*:refs/remotes/four/branches/*/*" &&
-+	git config --add svn-remote.four.tags \
-+	                 "tags/*:refs/remotes/four/tags/*" &&
-+	git-svn fetch four &&
-+	test `git rev-list refs/remotes/four/tags/next | wc -l` -eq 5 &&
-+	test `git rev-list refs/remotes/four/branches/v2/start | wc -l` -eq 3 &&
-+	test `git rev-parse refs/remotes/four/branches/v2/start~2` = \
-+	     `git rev-parse refs/remotes/four/trunk` &&
-+	test `git rev-parse refs/remotes/four/tags/next~2` = \
-+	     `git rev-parse refs/remotes/four/branches/v2/start` &&
-+	git log --pretty=oneline refs/remotes/four/tags/next | \
-+	    sed -e "s/^.\{41\}//" > output.four &&
-+	cmp expect.four output.four
-+	'
-+
-+echo "Only one set of wildcard directories" \
-+     "(e.g. '*' or '*/*/*') is supported: 'branches/*/t/*'" > expect.three
-+echo "" >> expect.three
-+
-+test_expect_success 'test disallow multiple globs' '
-+	git config --add svn-remote.three.url "$svnrepo" &&
-+	git config --add svn-remote.three.fetch \
-+	                 trunk:refs/remotes/three/trunk &&
-+	git config --add svn-remote.three.branches \
-+	                 "branches/*/t/*:refs/remotes/three/branches/*/*" &&
-+	git config --add svn-remote.three.tags \
-+	                 "tags/*:refs/remotes/three/tags/*" &&
-+	cd tmp &&
-+		echo "try try" >> tags/end/src/b/readme &&
-+		poke tags/end/src/b/readme &&
-+		svn commit -m "try to try"
-+		cd .. &&
-+	test_must_fail git-svn fetch three 2> stderr.three &&
-+	cmp expect.three stderr.three
-+	'
-+
-+test_done
-diff --git a/t/t9125-git-svn-multi-glob-branch-names.sh b/t/t9125-git-svn-multi-glob-branch-names.sh
-new file mode 100755
-index 0000000..6b62b52
---- /dev/null
-+++ b/t/t9125-git-svn-multi-glob-branch-names.sh
-@@ -0,0 +1,37 @@
-+#!/bin/sh
-+# Copyright (c) 2008 Marcus Griep
-+
-+test_description='git-svn multi-glob branch names'
-+. ./lib-git-svn.sh
-+
-+test_expect_success 'setup svnrepo' '
-+	mkdir project project/trunk project/branches \
-+			project/branches/v14.1 project/tags &&
-+	echo foo > project/trunk/foo &&
-+	svn import -m "$test_description" project "$svnrepo/project" &&
-+	rm -rf project &&
-+	svn cp -m "fun" "$svnrepo/project/trunk" \
-+	                "$svnrepo/project/branches/v14.1/beta" &&
-+	svn cp -m "more fun!" "$svnrepo/project/branches/v14.1/beta" \
-+	                      "$svnrepo/project/branches/v14.1/gold"
-+	'
-+
-+test_expect_success 'test clone with multi-glob in branch names' '
-+	git svn clone -T trunk -b branches/*/* -t tags \
-+	              "$svnrepo/project" project &&
-+	cd project &&
-+		git rev-parse "refs/remotes/v14.1/beta" &&
-+		git rev-parse "refs/remotes/v14.1/gold" &&
-+	cd ..
-+	'
-+
-+test_expect_success 'test dcommit to multi-globbed branch' "
-+	cd project &&
-+	git reset --hard 'refs/remotes/v14.1/gold' &&
-+	echo hello >> foo &&
-+	git commit -m 'hello' -- foo &&
-+	git svn dcommit &&
-+	cd ..
-+	"
-+
-+test_done
--- 
-1.6.0.rc2.4.g0643f
+ t/t0022-crlf-rename.sh                   |    4 ++--
+ t/t1000-read-tree-m-3way.sh              |    2 +-
+ t/t3900-i18n-commit.sh                   |   18 +++++++++---------
+ t/t3901-i18n-patch.sh                    |   28 ++++++++++++++--------------
+ t/t4000-diff-format.sh                   |    2 +-
+ t/t4001-diff-rename.sh                   |    2 +-
+ t/t4002-diff-basic.sh                    |    2 +-
+ t/t4003-diff-rename-1.sh                 |    6 +++---
+ t/t4004-diff-rename-symlink.sh           |    2 +-
+ t/t4005-diff-rename-2.sh                 |    6 +++---
+ t/t4007-rename-3.sh                      |    4 ++--
+ t/t4008-diff-break-rewrite.sh            |    6 +++---
+ t/t4009-diff-rename-4.sh                 |    6 +++---
+ t/t4010-diff-pathspec.sh                 |    2 +-
+ t/t4011-diff-symlink.sh                  |    2 +-
+ t/t4012-diff-binary.sh                   |    2 +-
+ t/t4013-diff-various.sh                  |    2 +-
+ t/t4015-diff-whitespace.sh               |    2 +-
+ t/t4020-diff-external.sh                 |    2 +-
+ t/t4022-diff-rewrite.sh                  |    4 ++--
+ t/t4023-diff-rename-typechange.sh        |   14 +++++++-------
+ t/t4027-diff-submodule.sh                |    2 +-
+ t/t4100-apply-stat.sh                    |    4 ++--
+ t/t4101-apply-nonl.sh                    |    2 +-
+ t/t5100-mailinfo.sh                      |   18 +++++++++---------
+ t/t5515-fetch-merge-logic.sh             |    4 ++--
+ t/t5540-http-push.sh                     |    2 +-
+ t/t6002-rev-list-bisect.sh               |    2 +-
+ t/t6003-rev-list-topo-order.sh           |    2 +-
+ t/t6023-merge-file.sh                    |    2 +-
+ t/t6027-merge-binary.sh                  |    2 +-
+ t/t6101-rev-parse-parents.sh             |    2 +-
+ t/t6200-fmt-merge-msg.sh                 |    4 ++--
+ t/t7001-mv.sh                            |    4 ++--
+ t/t7004-tag.sh                           |    2 +-
+ t/t7101-reset.sh                         |   10 +++++-----
+ t/t7500-commit.sh                        |   16 ++++++++--------
+ t/t8001-annotate.sh                      |    2 +-
+ t/t8002-blame.sh                         |    2 +-
+ t/t9110-git-svn-use-svm-props.sh         |    2 +-
+ t/t9111-git-svn-use-svnsync-props.sh     |    2 +-
+ t/t9115-git-svn-dcommit-funky-renames.sh |    2 +-
+ t/t9121-git-svn-fetch-renamed-dir.sh     |    2 +-
+ t/t9200-git-cvsexportcommit.sh           |   14 +++++++-------
+ t/t9300-fast-import.sh                   |    2 +-
+ t/t9301-fast-export.sh                   |    2 +-
+ t/t9500-gitweb-standalone-no-errors.sh   |   16 ++++++++--------
+ t/t9700-perl-git.sh                      |    2 +-
+ t/t9700/test.pl                          |    3 ---
+ t/test-lib.sh                            |    2 +-
+ 50 files changed, 123 insertions(+), 126 deletions(-)
