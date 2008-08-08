@@ -1,83 +1,100 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] Documentation: commit-tree: remove 16 parents restriction
-Date: Fri, 8 Aug 2008 13:41:22 +0200
-Message-ID: <200808081341.24451.trast@student.ethz.ch>
-References: <1218181975-12093-1-git-send-email-trast@student.ethz.ch> <alpine.DEB.1.00.0808081238250.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "Giovanni Funchal" <gafunchal@gmail.com>
+Subject: Can't get git clone over https with proxy and invalid certificate...
+Date: Fri, 8 Aug 2008 13:48:24 +0200
+Message-ID: <c475e2e60808080448x40683db1wadcd834e94d7d263@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart9374822.Nu5KPqMTVm";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 08 13:42:19 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 08 13:49:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRQMM-0003hq-7B
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 13:42:18 +0200
+	id 1KRQTH-0006AU-Ij
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 13:49:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755312AbYHHLlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 07:41:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755067AbYHHLlQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 07:41:16 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:13055 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754282AbYHHLlP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 07:41:15 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Aug 2008 13:41:13 +0200
-Received: from cx-public-docking-1-043.ethz.ch ([129.132.149.43]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Aug 2008 13:41:14 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0808081238250.9611@pacific.mpi-cbg.de.mpi-cbg.de>
-X-OriginalArrivalTime: 08 Aug 2008 11:41:14.0123 (UTC) FILETIME=[A9796DB0:01C8F94B]
+	id S1757688AbYHHLs1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 07:48:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755680AbYHHLs1
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 07:48:27 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:57185 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757678AbYHHLs0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 07:48:26 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so525227fgg.17
+        for <git@vger.kernel.org>; Fri, 08 Aug 2008 04:48:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=HIONI1OlKq/vrloZktX+uwzsRK5jnsqlWgxgQzGZs/o=;
+        b=PdJiQCF34AeEcmpKd9cuXecFCaRywOe/hd2EHU/K4FekuQpAiZFh+3qURBjspEiojj
+         JQQsBRddxaOy+lBo+HzTJXarrHhH/dyI1xFgBdDg/xOz00F3GMnNAwgKdlNRDLrRZBa+
+         Ec1VdceI0CaNTg2ymL5VIHyk7KT0LzPHIroq4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=ciRcHOpZq9H8gWZA3hc2d1kRxCiYe1el59NXaD+y9CvDdDEvVCtFXX+06L2x6+gcud
+         mBxqIT8qZRw9U+YF2QBs19UcxrLJiobQR7ngwoINZb6WqCssZlnp5IkOmeCA8ycrJR4K
+         RUErzFuUIEwGAzHvnQym6udUAFXeniOQvhxyU=
+Received: by 10.187.238.1 with SMTP id p1mr179499far.67.1218196104371;
+        Fri, 08 Aug 2008 04:48:24 -0700 (PDT)
+Received: by 10.187.187.17 with HTTP; Fri, 8 Aug 2008 04:48:24 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91660>
 
---nextPart9374822.Nu5KPqMTVm
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi all,
 
-Johannes Schindelin wrote:
->=20
-> On Fri, 8 Aug 2008, Thomas Rast wrote:
->=20
-> >  Creates a new commit object based on the provided tree object and
-> > -emits the new commit object id on stdout. If no parent is given then
-> > -it is considered to be an initial tree.
-> > +emits the new commit object id on stdout.
->=20
-> Oops.
+I've been trying without success to clone a git repository over https.
+I've got a complicated situation because I have a proxy which only
+allows http/https and the server I'm trying to connect to has an
+invalid certificate. I'm using git 1.5.6.4 and curl 7.18.1 compiled on
+x86_64.
 
-I deliberately removed that sentence because I wanted to enumerate all
-options in the new second paragraph (0, 1, or many), and felt it would
-be redundant.
+Ok, so I have created the following ~/.curlrc:
+   netrc
+   proxytunnel
+   insecure
+   proxy = http://proxyserver.com:8080
+   proxy-user = proxyuser:proxypassword
 
-=2D Thomas
+accompanied by the following ~/.netrc:
+   machine remoteserver.com
+   login remoteuser
+   password remotepassword
 
-=2D-=20
-Thomas Rast
-trast@student.ethz.ch
+and the following ~/.gitconfig:
+   [user]
+      name = My Name
+      email = my.em@il.com
+   [http]
+      sslVerify = false
 
+All above files permissions are set to 600 and I have also set the
+environment variables http_proxy, https_proxy and all_proxy (one never
+knows) to:
+   http://proxyuser:proxypassword@proxyserver.com:8080
 
---nextPart9374822.Nu5KPqMTVm
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+Ok, now lets try:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+$ wget -q --no-check-certificate
+https://remoteuser@remoteserver.com/.git/HEAD && cat HEAD && rm HEAD
+ref: refs/heads/master
+$ curl https://remoteuser@remoteserver.com/.git/HEAD
+ref: refs/heads/master
+$ git clone https://remoteuser@remoteserver.com/.git/
+Initialized empty Git repository in /home/user/.git/
+error: Proxy requires authorization!
+warning: remote HEAD refers to nonexistent ref, unable to checkout.
 
-iEYEABECAAYFAkicMOQACgkQqUud07tmzP0z3ACdHbRHj0JDd9xe2bg9Ttahpyzg
-vcYAmwT6thhQVsqHsnFSjoRTFU2/toaT
-=n6CD
------END PGP SIGNATURE-----
+Both wget and curl work, but git won't! Any clues?
 
---nextPart9374822.Nu5KPqMTVm--
+Thanks in advance and best regards,
+-- Giovanni
