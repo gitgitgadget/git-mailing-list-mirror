@@ -1,103 +1,111 @@
-From: Christian Jaeger <christian@jaeger.mine.nu>
-Subject: Re: GIT-VERSION-GEN gives "-dirty" when file metadata changed
-Date: Fri, 08 Aug 2008 10:55:50 +0200
-Message-ID: <489C0A16.4040403@jaeger.mine.nu>
-References: <sjj6zt28jy9qy7y8@jaeger.mine.nu> <7vd4kkijjd.fsf@gitster.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 1/3] Fix multi-glob assertion in git-svn
+Date: Fri, 8 Aug 2008 01:56:55 -0700
+Message-ID: <20080808085655.GA9479@untitled>
+References: <20080807090008.GA9161@untitled> <1218123242-26260-1-git-send-email-marcus@griep.us> <20080808084025.GA8718@untitled>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Gerrit Pape <pape@smarden.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Marcus Griep <marcus@griep.us>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 08 10:56:57 2008
+X-From: git-owner@vger.kernel.org Fri Aug 08 10:58:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRNmJ-0005vg-MJ
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 10:56:56 +0200
+	id 1KRNnJ-0006Gf-OZ
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 10:57:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751499AbYHHIzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 04:55:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbYHHIzx
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 04:55:53 -0400
-Received: from ethlife-a.ethz.ch ([129.132.49.178]:39086 "HELO ethlife.ethz.ch"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751202AbYHHIzx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 04:55:53 -0400
-Received: (qmail 11738 invoked from network); 8 Aug 2008 08:55:50 -0000
-Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
-  by localhost with SMTP; 8 Aug 2008 08:55:50 -0000
-Received: (qmail 4729 invoked from network); 8 Aug 2008 08:55:50 -0000
-Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
-  by elvis-jaeger.mine.nu with SMTP; 8 Aug 2008 08:55:50 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <7vd4kkijjd.fsf@gitster.siamese.dyndns.org>
+	id S1752001AbYHHI44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 04:56:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751943AbYHHI44
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 04:56:56 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:56544 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751874AbYHHI4z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 04:56:55 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 1E1E62DC01B;
+	Fri,  8 Aug 2008 01:56:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20080808084025.GA8718@untitled>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91640>
 
-Junio C Hamano wrote:
-> Christian Jaeger <christian@jaeger.mine.nu> writes:
->
->   
->> Today I've created custom Debian packages from Git for the first time (yes I know there are Debian packages already, I'm doing it so that I can patch Git and still have the convenience of a package system),
->>     
->
-> I personally think that _you_ are responsible for doing the refresh
-> yourself after becoming root, if you checkout as yourself and then build
-> as root (or use fakeroot to build as if it is built as root).
->
-> By the way "man fakeroot" says...
->
->        -u, --unknown-is-real
->               Use the real ownership of files previously unknown  to  fakeroot
->               instead of pretending they are owned by root:root.
->
->
-> which sounds like a sensible thing to do (I would even imagine that would
-> be a sensible default for fakeroot in general), and I would imagine that
-> would help.
->   
+From: Marcus Griep <marcus@griep.us>
+Date: Thu, 7 Aug 2008 11:34:01 -0400
+Subject: [PATCH 1/3] Fix multi-glob assertion in git-svn
 
-That's true, running "dpkg-buildpackage -uc -us -b -r'fakeroot -u'" 
-makes the dirty bit go away.
+Fixes bad regex match check for multiple globs (would always return
+one glob regardless of actual number).
 
-Although my guess is that most users who haven't read this thread will 
-run into the same issue until they understand the reason after some half 
-or full hour of debugging or so.
+[ew: fixed a bashism in the test and some minor line-wrapping]
 
-Also I don't see why I should keep in mind to run the refresh 
-explicitely if any changes happened (are there any users who are using 
-Git to report metadata changes to them (occasionally) which aren't 
-changes that would be stored in Git when running commit?).
+Signed-off-by: Marcus Griep <marcus@griep.us>
+Acked-by: Eric Wong <normalperson@yhbt.net>
+---
 
-> Not that an extra update-index --refresh would be a huge performance hit,
-> but I hesitate to take a patch that adds something that should
-> conceptually be unnecessary.
->   
+ Oops, resent as I forgot to change the From: header
 
-Isn't conceptually of interest whether the *contents* of the files have 
-changed (or a metadata piece that matters to Git)? As mentioned, even 
-just moving the sources to another partition using "mv" after checkout 
-but before running "make" will give a binary that is "dirty", and the 
-user might be confused and led into wrong conclusions or needless 
-investigations.
+ git-svn.perl            |    5 +++--
+ t/t9108-git-svn-glob.sh |   21 +++++++++++++++++++++
+ 2 files changed, 24 insertions(+), 2 deletions(-)
 
-I realize that also some git porcellain does not fall back to checking 
-the contents, for example the current gitk will report the working dir 
-as having "local uncommitted changes" (which in fact did confuse me when 
-it happened to me, IIRC because of "mv"-ing a checkout, and left a 
-feeling of slight brokenness). Still at the more relevant places like 
-"git commit" there will of course be the content check.
-
-I personally think it would be cleaner to always only report changes if 
-really changes which can be stored in Git have happened. Not only in 
-GIT-VERSION-GEN but also in gitk and maybe some other places. Isn't the 
-metadata checking only used as a performance optimization? It would be 
-sensible to report changes if metadata has changed that is actually 
-being stored in Git, i.e. the exec bit, of course (and then no content 
-check would be necessary).
-
-Christian.
+diff --git a/git-svn.perl b/git-svn.perl
+index 06a82c8..503a7c9 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -4915,14 +4915,15 @@ sub new {
+ 	my ($class, $glob) = @_;
+ 	my $re = $glob;
+ 	$re =~ s!/+$!!g; # no need for trailing slashes
+-	my $nr = ($re =~ s!^(.*)\*(.*)$!\(\[^/\]+\)!g);
+-	my ($left, $right) = ($1, $2);
++	my $nr = $re =~ tr/*/*/;
+ 	if ($nr > 1) {
+ 		die "Only one '*' wildcard expansion ",
+ 		    "is supported (got $nr): '$glob'\n";
+ 	} elsif ($nr == 0) {
+ 		die "One '*' is needed for glob: '$glob'\n";
+ 	}
++	$re =~ s!^(.*)\*(.*)$!\(\[^/\]+\)!g;
++	my ($left, $right) = ($1, $2);
+ 	$re = quotemeta($left) . $re . quotemeta($right);
+ 	if (length $left && !($left =~ s!/+$!!g)) {
+ 		die "Missing trailing '/' on left side of: '$glob' ($left)\n";
+diff --git a/t/t9108-git-svn-glob.sh b/t/t9108-git-svn-glob.sh
+index f6f71d0..a6f88bd 100755
+--- a/t/t9108-git-svn-glob.sh
++++ b/t/t9108-git-svn-glob.sh
+@@ -83,4 +83,25 @@ test_expect_success 'test left-hand-side only globbing' '
+ 	cmp expect.two output.two
+ 	'
+ 
++echo "Only one '*' wildcard expansion is supported (got 2): 'branches/*/*'" \
++     > expect.three
++echo "" >> expect.three
++
++test_expect_success 'test disallow multi-globs' '
++	git config --add svn-remote.three.url "$svnrepo" &&
++	git config --add svn-remote.three.fetch \
++	                 trunk:refs/remotes/three/trunk &&
++	git config --add svn-remote.three.branches \
++	                 "branches/*/*:refs/remotes/three/branches/*" &&
++	git config --add svn-remote.three.tags \
++	                 "tags/*/*:refs/remotes/three/tags/*" &&
++	cd tmp &&
++		echo "try try" >> tags/end/src/b/readme &&
++		poke tags/end/src/b/readme &&
++		svn commit -m "try to try"
++		cd .. &&
++	test_must_fail git-svn fetch three 2> stderr.three &&
++	cmp expect.three stderr.three
++	'
++
+ test_done
+-- 
+1.6.0.rc2.4.g0643f
