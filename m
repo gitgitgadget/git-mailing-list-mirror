@@ -1,61 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] Enable parallel tests
-Date: Fri, 08 Aug 2008 01:28:21 -0700
-Message-ID: <7vprojgbbu.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0808080752210.9611@pacific.mpi-cbg.de.mpi-cbg.de>
- <alpine.DEB.1.00.0808080754230.9611@pacific.mpi-cbg.de.mpi-cbg.de>
- <489BF95F.1070000@lsrfire.ath.cx>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: On PPC64, the parsing of integers on the commandline is  bitshifted.
+Date: Fri, 08 Aug 2008 10:38:04 +0200
+Message-ID: <20080808083804.GB13578@artemis.madism.org>
+References: <20080807203122.GR22707@curie-int.orbis-terrarum.net> <X68iwLodMeAo1RYVJdU3iyNzAFylpDRpP1jkviJTeiOnoNs5n2qZcg@cipher.nrlssc.navy.mil> <CxVxAoKmEQsrgFdHEvL0sjkgBBIVZ3Zvsl0pPSuDSfH_8xM8NOSGfw@cipher.nrlssc.navy.mil> <7vhc9wijsq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, gitster@pobox.com
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Fri Aug 08 10:29:41 2008
+Content-Type: multipart/signed; boundary="/WwmFnJnmDyWGHa4";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	"Robin H. Johnson" <robbat2@gentoo.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 08 10:39:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRNLq-0005rd-8L
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 10:29:34 +0200
+	id 1KRNVA-0000Fx-Az
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 10:39:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753592AbYHHI2b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 04:28:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753522AbYHHI2b
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 04:28:31 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33891 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753419AbYHHI2b convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Aug 2008 04:28:31 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 827C8599D3;
-	Fri,  8 Aug 2008 04:28:29 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id CDD89599D2; Fri,  8 Aug 2008 04:28:24 -0400 (EDT)
-In-Reply-To: <489BF95F.1070000@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
- Scharfe's message of "Fri, 08 Aug 2008 09:44:31 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FAB1FD5C-6523-11DD-8E2E-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1753422AbYHHIiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 04:38:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753401AbYHHIiJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 04:38:09 -0400
+Received: from pan.madism.org ([88.191.52.104]:36279 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753395AbYHHIiI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 04:38:08 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 995F43D01B;
+	Fri,  8 Aug 2008 10:38:06 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id B54A15BB160; Fri,  8 Aug 2008 10:38:04 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vhc9wijsq.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91634>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-> test=3D"trash directory/$this_test"?
->
-> The advantage would be that all trash was still inside "trash
-> directory".  Not sure if the extra directory level would break
-> something.  (Note: $this_test is defined a bit later in the script.)
+--/WwmFnJnmDyWGHa4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The extra directory level may break some tests that refer to their
-precomputed test vectors in ../tXXXX, but I think they should be fixed
-regardless.  That's what $TEST_DIRECTORY is for.
+On Thu, Aug 07, 2008 at 09:42:29PM +0000, Junio C Hamano wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> writes:
+>=20
+> > Brandon Casey wrote:
+> >> Robin H. Johnson wrote:
+> >>> In a 64-bit userland, big-endian environment, the parser gets integers
+> >>> wrong.
+> >>=20
+> >> There is a fix on master. Can you try that out?
+> >> Unfortunately, looks like it did not make it into 1.5.6.5
+> >
+> > Also, just so you know, it is test-parse-options.c that is broken, not
+> > the parsing code. So, the rest of git should be using an int with
+> > OPT_INTEGER() and should operate correctly.
+>=20
+> Yup, that is why it is not on 'maint' --- but somebody should audit the
+> parse_options() users in the real programs to make sure that there is no
+> similar breakages, namely, giving a pointer to long to OPT_INTEGER().
 
-I'd very much prefer having 't/trash directory/t1234-test-name/' so tha=
-t
-we can say "make clean" to clean "t/trash directory" in one go.
+  Well FWIW I'll probably write some __GNUC__ guarded glue using
+__builtin_types_compatible and friends to ensure we're not passing crap
+to the OPT_* macros. I just didn't have time to yet.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--/WwmFnJnmDyWGHa4
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkicBewACgkQvGr7W6HudhwraACfR2EiehREk+5VwTcTcs0i27wk
+cJkAoINHZs0087QtFA6upwx4C9Q7oE/L
+=OTgK
+-----END PGP SIGNATURE-----
+
+--/WwmFnJnmDyWGHa4--
