@@ -1,91 +1,49 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] clone --mirror: avoid storing repeated tags
-Date: Fri, 8 Aug 2008 04:29:35 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808080428520.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] clone --mirror: avoid storing repeated tags
+Date: Thu, 07 Aug 2008 21:57:08 -0700
+Message-ID: <7vej50gl3v.fsf@gitster.siamese.dyndns.org>
 References: <489B9A8B.9050807@cesarb.net>
+ <alpine.DEB.1.00.0808080428520.9611@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Cesar Eduardo Barros <cesarb@cesarb.net>
-X-From: git-owner@vger.kernel.org Fri Aug 08 04:26:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Cesar Eduardo Barros <cesarb@cesarb.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 08 06:58:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRHg7-0004mU-3w
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 04:26:07 +0200
+	id 1KRK3Q-0004U8-CR
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 06:58:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754520AbYHHCZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2008 22:25:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754458AbYHHCZE
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 22:25:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41697 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754182AbYHHCZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2008 22:25:03 -0400
-Received: (qmail invoked by alias); 08 Aug 2008 02:25:00 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp006) with SMTP; 08 Aug 2008 04:25:00 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Fl7QVi5XFgwqedCU9lNzMmHAqZxY5aNIvAVAU3r
-	Ca9fTzLR0c2TRZ
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <489B9A8B.9050807@cesarb.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1751427AbYHHE5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 00:57:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbYHHE5S
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 00:57:18 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56278 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751202AbYHHE5R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 00:57:17 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4C26450F8F;
+	Fri,  8 Aug 2008 00:57:15 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 4498C50F8C; Fri,  8 Aug 2008 00:57:11 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0808080428520.9611@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
+ Schindelin's message of "Fri, 8 Aug 2008 04:29:35 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 78459EEA-6506-11DD-BF0C-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91619>
 
+Thanks for reporting and a quick fix.
 
-With --mirror, clone asks for refs/* already, so it does not need to
-ask for ref/tags/*, too.
-
-Noticed by Cesar Eduardo Barros.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin-clone.c  |    3 ++-
- t/t5601-clone.sh |   12 ++++++++++++
- 2 files changed, 14 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 8612d59..c0e3086 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -330,7 +330,8 @@ static struct ref *write_remote_refs(const struct ref *refs,
- 	struct ref *r;
- 
- 	get_fetch_map(refs, refspec, &tail, 0);
--	get_fetch_map(refs, tag_refspec, &tail, 0);
-+	if (!option_mirror)
-+		get_fetch_map(refs, tag_refspec, &tail, 0);
- 
- 	for (r = local_refs; r; r = r->next)
- 		add_extra_ref(r->peer_ref->name, r->old_sha1, 0);
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index a13b6f9..59c65fe 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -95,4 +95,16 @@ test_expect_success 'clone --bare names the local repository <name>.git' '
- 
- '
- 
-+test_expect_success 'clone --mirror does not repeat tags' '
-+
-+	(cd src &&
-+	 git tag some-tag HEAD) &&
-+	git clone --mirror src mirror2 &&
-+	(cd mirror2 &&
-+	 git show-ref 2> clone.err > clone.out) &&
-+	test_must_fail grep Duplicate mirror2/clone.err &&
-+	grep some-tag mirror2/clone.out
-+
-+'
-+
- test_done
--- 
-1.6.0.rc1.112.gebbe4
+This made me wonder if this relatively new "pack cloned refs" codepath has
+funny interaction with --reference which is another user of add_extra_refs(),
+but I think it is safe (we clear the real "extra" ones used during the
+object transfer before calling write_remote_refs()).
