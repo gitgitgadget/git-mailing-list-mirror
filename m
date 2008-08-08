@@ -1,81 +1,101 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH 3/3 v2] Enable parallel tests
-Date: Fri, 8 Aug 2008 17:03:59 +0200
-Message-ID: <20080808150359.GA25106@leksak.fem-net>
-References: <alpine.DEB.1.00.0808080752210.9611@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808080754230.9611@pacific.mpi-cbg.de.mpi-cbg.de> <489BF95F.1070000@lsrfire.ath.cx> <alpine.DEB.1.00.0808081236010.9611@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808081302180.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "Giovanni Funchal" <gafunchal@gmail.com>
+Subject: Re: Can't get git clone over https with proxy and invalid certificate...
+Date: Fri, 8 Aug 2008 17:13:30 +0200
+Message-ID: <c475e2e60808080813o4498fc1eu1a08ae05218cec83@mail.gmail.com>
+References: <c475e2e60808080448x40683db1wadcd834e94d7d263@mail.gmail.com>
+	 <20080808142819.GJ28749@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 08 17:06:20 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Matthieu Moy" <Matthieu.Moy@imag.fr>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Aug 08 17:14:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRTWe-0007PR-Lc
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 17:05:38 +0200
+	id 1KRTfo-0002W7-0n
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 17:14:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752286AbYHHPEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 11:04:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752139AbYHHPEE
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 11:04:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44552 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751967AbYHHPEC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 11:04:02 -0400
-Received: (qmail invoked by alias); 08 Aug 2008 15:04:01 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp059) with SMTP; 08 Aug 2008 17:04:01 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+4b4U/dIi4Y64Cu+jAnIxnzzZQ0btFDF4oS3bFYP
-	9ymgOloMg+us4X
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KRTVX-0006Xi-Of; Fri, 08 Aug 2008 17:03:59 +0200
+	id S1751694AbYHHPNd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 11:13:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751713AbYHHPNd
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 11:13:33 -0400
+Received: from fk-out-0910.google.com ([209.85.128.185]:2023 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751019AbYHHPNc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 11:13:32 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so738338fkq.5
+        for <git@vger.kernel.org>; Fri, 08 Aug 2008 08:13:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=kHmxbfXFcaVcLFvVN70pu8RtRUVw6TPOmJhxwB3QrAM=;
+        b=qvsxKmNs7eDO5O2jIk0bRAnCePBeyFt647Y2tkwQz5uJQhk0Gy+juf3k/6BVWxSaiT
+         dTZi/IxE/QmRoLnpMUmrTI2pB79ZIY4AV6aijliv2Mu5pcEXf0+ACvbfn5WG+sTgq0EL
+         Mrp3PApFSCNz65wqSz5PMtwj/R1m+znp0V//8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=etKW1VIDuSCXLw2TZowlFlV09sSU1oFuMF0Gp4/UunL3UBd2QoZbKz70qdiTFtVeuF
+         h/ECzkZbvm+nKeN0jv6ouAWoVTHOHewJtENBlvCYEuKRkZ6BQiMNpbM6yvz1z/motuqR
+         ggkCysGMgaa4jKeJHY8zvO3CFWGW74ZH1tkRQ=
+Received: by 10.187.194.1 with SMTP id w1mr187095fap.41.1218208410309;
+        Fri, 08 Aug 2008 08:13:30 -0700 (PDT)
+Received: by 10.187.187.17 with HTTP; Fri, 8 Aug 2008 08:13:30 -0700 (PDT)
+In-Reply-To: <20080808142819.GJ28749@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0808081302180.9611@pacific.mpi-cbg.de.mpi-cbg.de>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91679>
 
-Hi,
+Hello,
 
-Johannes Schindelin wrote:
-> @@ -485,7 +490,8 @@ fi
->  . ../GIT-BUILD-OPTIONS
->  
->  # Test repository
-> -test="trash directory"
-> +test="trash directory.$(basename "$0" .sh)"
-> +remove_trash="$(pwd)/$test"
->  rm -fr "$test" || {
->  	trap - exit
->  	echo >&5 "FATAL: Cannot prepare test area"
+Well, turns out that my problem was that my gcc doesn't like the `-R'
+switch!! Strangely enough, ./configure does not check this!! (one
+should define Makefile's existing option NO_R_TO_GCC_LINKER)
 
-Please also change t/README, there is a text like:
+While this seems pretty serious, gcc only shows a tiny message while
+compiling ("unrecognized option -R"), not even a warning, and compiles
+anyway. So if you "make all install doc install-doc" like me, you
+won't see the bug.
 
-  [...]
-   database and chdir(2) into it.  This directory is 't/trash directory'
-   if you must know, but I do not think you care.
-
-If the subdirectory variant is chosen ("trash directory/foo/" instead
-of "trash directory.foo/"), then
-
-   This directory is below 't/trash directory'."
-
-could be sufficient.
-
-Btw, Junio, about the passage: "I do not think you care" -- I cared :)
-Sometimes it's nice to change to 'trash directory' and do git log, git diff,
-git show or whatever.
+I think git build system could be improved somehow to check for that.
+I'll perhaps try to make a patch to this during the weekend.
 
 Regards,
-  Stephan
+-- Giovanni
 
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+On Fri, Aug 8, 2008 at 4:28 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Giovanni Funchal <gafunchal@gmail.com> wrote:
+>> Ok, so I have created the following ~/.curlrc:
+>>    netrc
+>>    proxytunnel
+>>    insecure
+>>    proxy = http://proxyserver.com:8080
+>>    proxy-user = proxyuser:proxypassword
+> ...
+>> $ git clone https://remoteuser@remoteserver.com/.git/
+>> Initialized empty Git repository in /home/user/.git/
+>> error: Proxy requires authorization!
+>> warning: remote HEAD refers to nonexistent ref, unable to checkout.
+>
+> Last time I used Git with an HTTP proxy that required authentication
+> I was doing it with an environment variable:
+>
+>  http_proxy=http://me:pass@proxyserver.com:8080 git clone ...
+>
+> Fortunately this was on a Windows desktop where I was the only
+> user who was logged into the system, so leaking my password into my
+> environment for a short duration was about the same risk as putting
+> into a ~/. file.
+>
+> --
+> Shawn.
+>
