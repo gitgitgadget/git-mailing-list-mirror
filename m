@@ -1,73 +1,79 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: How to fix (and find) many git-* --check errors?
-Date: Fri, 8 Aug 2008 15:28:08 +0200
-Message-ID: <20080808132808.GA22674@atjola.homenet>
-References: <489C40BC.8000008@sneakemail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Peter Valdemar =?iso-8859-1?Q?M=F8rch_=28Lists=29?= 
-	<4ux6as402@sneakemail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 08 15:29:16 2008
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCH] gitweb: shortlog now also obeys $hash_parent
+Date: Fri,  8 Aug 2008 16:12:11 +0200
+Message-ID: <1218204731-9931-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 08 16:13:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRS1r-0001lZ-KU
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 15:29:16 +0200
+	id 1KRSic-0002CX-Ov
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 16:13:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752833AbYHHN2N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 09:28:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752881AbYHHN2N
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 09:28:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46391 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751651AbYHHN2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 09:28:12 -0400
-Received: (qmail invoked by alias); 08 Aug 2008 13:28:10 -0000
-Received: from i577BBBF4.versanet.de (EHLO atjola.local) [87.123.187.244]
-  by mail.gmx.net (mp067) with SMTP; 08 Aug 2008 15:28:10 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18OB8pgUUIO203kEBibg/ze2TzMr5pg7DP2aqjTY1
-	zKfAOP4LGBF4Cl
-Content-Disposition: inline
-In-Reply-To: <489C40BC.8000008@sneakemail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1753867AbYHHOMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 10:12:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753892AbYHHOMX
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 10:12:23 -0400
+Received: from mu-out-0910.google.com ([209.85.134.191]:53066 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752352AbYHHOMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 10:12:22 -0400
+Received: by mu-out-0910.google.com with SMTP id w8so1461231mue.1
+        for <git@vger.kernel.org>; Fri, 08 Aug 2008 07:12:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=NFAlIZa1HOVRdCQ1bmm8GR2ERbgS/NgbslPPht4cWRE=;
+        b=LOxX3younlNVTb0Uoa9Ubd/jEvrHIHfDOf1vTwQytvYCAFkjXfc5Dm/OkENVLzZvdL
+         xvS+tSkAiHTxeQ1AhEem1V+O2XXILzqYcJitj3mL0gX9Vbvoa7vJRdQmZZKiTU/U+sUk
+         FLuehItOhd0ryGHluims/CWiNi6OSlgOikIBA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=a224jgll5XU9QGurNEfh8Rkw+f5VwA9S7ZUXueIUbOpbAgxBJefru8U0SBs7X2tNbl
+         1fY1FAHfMwUtzoP8Xk8PSvQA5Tztqbx7a/ZgS+tB1karM4wPM2rxwbvlmJV0/OLBGB/p
+         K0HtAD22uQ6VgJit2tMYDjbFekf/20sdXmurc=
+Received: by 10.103.16.14 with SMTP id t14mr3155718mui.130.1218204740889;
+        Fri, 08 Aug 2008 07:12:20 -0700 (PDT)
+Received: from localhost ( [78.13.48.196])
+        by mx.google.com with ESMTPS id y2sm6365742mug.1.2008.08.08.07.12.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 08 Aug 2008 07:12:19 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91666>
 
-On 2008.08.08 14:49:00 +0200, "Peter Valdemar M=F8rch (Lists)" wrote:
-> We have > 37000 white space "errors" in HEAD, mostly trailing =20
-> whitespace, and I'm looking for a
->
-> $ git diff --check | git??? --whitespace=3Dfix
->
-> command.
->
-> Is there such a beast?
->
-> I see that git-apply has a --whitespace=3D<action> option, but I don'=
-t =20
-> seem to grock how to be able to use it for fixing my working director=
-y.
+If $hash_parent is defined, shortlog now limits the list of commits at
+those between $hash_parent (exclusive) and $hash (inclusive).
 
-I'd probably do something like:
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
+ gitweb/gitweb.perl |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
-# Create a commit with an empty tree
-rm .git/index
-git commit -m tmp
-
-rm -r * (include dotfiles if required, ie. remove all tracked files)
-
-git diff -R HEAD^ | git apply --index --whitespace=3Dfix
-git commit --amend -m "Whitespace fixed up"
-
-But probably there's some smarter way than that.
-
-Bj=F6rn
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a12ce87..d811dd4 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -5472,7 +5472,11 @@ sub git_shortlog {
+ 	}
+ 	my $refs = git_get_references();
+ 
+-	my @commitlist = parse_commits($hash, 101, (100 * $page));
++	my $commit_hash = $hash;
++	if (defined $hash_parent) {
++		$commit_hash = "$hash_parent..$hash";
++	}
++	my @commitlist = parse_commits($commit_hash, 101, (100 * $page));
+ 
+ 	my $paging_nav = format_paging_nav('shortlog', $hash, $head, $page, $#commitlist >= 100);
+ 	my $next_link = '';
+-- 
+1.5.6.3
