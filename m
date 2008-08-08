@@ -1,71 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Documentation: commit-tree: remove 16 parents
- restriction
-Date: Fri, 8 Aug 2008 12:38:46 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808081238250.9611@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <1218181975-12093-1-git-send-email-trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] tests: use $TEST_DIRECTORY to refer to the t/ directory
+Date: Fri, 08 Aug 2008 03:40:43 -0700
+Message-ID: <7vmyjndc2c.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0808080752210.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+ <alpine.DEB.1.00.0808080754230.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+ <489BF95F.1070000@lsrfire.ath.cx> <7vprojgbbu.fsf@gitster.siamese.dyndns.org>
+ <7vod43etuw.fsf_-_@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0808081232210.9611@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Aug 08 12:35:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 08 12:42:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRPJX-0004or-Bs
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 12:35:19 +0200
+	id 1KRPPu-0007Gg-S0
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 12:41:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754120AbYHHKeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 06:34:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754105AbYHHKeO
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 06:34:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50999 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754098AbYHHKeN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 06:34:13 -0400
-Received: (qmail invoked by alias); 08 Aug 2008 10:34:11 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp023) with SMTP; 08 Aug 2008 12:34:11 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/U60cKnknUU5N2e+vtYmA4RuP8Y4IVq3kmg0irTO
-	eT2qNfz5efgfsX
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <1218181975-12093-1-git-send-email-trast@student.ethz.ch>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1753431AbYHHKkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 06:40:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752229AbYHHKkw
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 06:40:52 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45454 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752139AbYHHKkw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 06:40:52 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9B93850C99;
+	Fri,  8 Aug 2008 06:40:50 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id A602450C98; Fri,  8 Aug 2008 06:40:46 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0808081232210.9611@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
+ Schindelin's message of "Fri, 8 Aug 2008 12:35:12 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 77F59C94-6536-11DD-B6DB-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91653>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Fri, 8 Aug 2008, Thomas Rast wrote:
+> Frankly, I do not have the time.  It is not only about looking what you 
+> changed, but also what you did not change.
 
-> ef98c5ca lifted the 16 parents restriction in builtin-commit-tree.c,
-> but forgot to update the documentation.
-> 
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
->  Documentation/git-commit-tree.txt |   10 +++++-----
->  1 files changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-> index feec584..92ab3ab 100644
-> --- a/Documentation/git-commit-tree.txt
-> +++ b/Documentation/git-commit-tree.txt
-> @@ -16,12 +16,12 @@ This is usually not what an end user wants to run directly.  See
->  linkgit:git-commit[1] instead.
->  
->  Creates a new commit object based on the provided tree object and
-> -emits the new commit object id on stdout. If no parent is given then
-> -it is considered to be an initial tree.
-> +emits the new commit object id on stdout.
+That's Ok.  You are not (and you shouldn't be) the only person who is
+capable of reviewing and helping the development process ;-)
 
-Oops.
-
-Ciao,
-Dscho
+Hint, hint...
