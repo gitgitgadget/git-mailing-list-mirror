@@ -1,147 +1,61 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH] Read several objects at once with git cat-file --batch
-Date: Fri, 08 Aug 2008 10:07:04 +0200
-Message-ID: <20080808080614.23424.28169.stgit@yoghurt>
-References: <20080808082728.GA24017@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] Enable parallel tests
+Date: Fri, 08 Aug 2008 01:28:21 -0700
+Message-ID: <7vprojgbbu.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0808080752210.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+ <alpine.DEB.1.00.0808080754230.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+ <489BF95F.1070000@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 08 10:08:17 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, gitster@pobox.com
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Fri Aug 08 10:29:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRN1C-0007gd-0p
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 10:08:14 +0200
+	id 1KRNLq-0005rd-8L
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 10:29:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753575AbYHHIHL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 04:07:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753544AbYHHIHL
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 04:07:11 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2775 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753418AbYHHIHJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 04:07:09 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1KRNLd-0006K0-00; Fri, 08 Aug 2008 09:29:21 +0100
-In-Reply-To: <20080808082728.GA24017@diana.vm.bytemark.co.uk>
-User-Agent: StGIT/0.14.3.222.g9ef2
+	id S1753592AbYHHI2b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 04:28:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753522AbYHHI2b
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 04:28:31 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33891 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753419AbYHHI2b convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Aug 2008 04:28:31 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 827C8599D3;
+	Fri,  8 Aug 2008 04:28:29 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id CDD89599D2; Fri,  8 Aug 2008 04:28:24 -0400 (EDT)
+In-Reply-To: <489BF95F.1070000@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
+ Scharfe's message of "Fri, 08 Aug 2008 09:44:31 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FAB1FD5C-6523-11DD-8E2E-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91633>
 
-Instead of spawning a separate cat-file process for every blob and
-commit we want to read. This speeds things up slightly: about 6-8%
-when uncommitting and rebasing 1470 linux-kernel patches (perftest.py
-rebase-newrebase-add-file-linux).
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+> test=3D"trash directory/$this_test"?
+>
+> The advantage would be that all trash was still inside "trash
+> directory".  Not sure if the extra directory level would break
+> something.  (Note: $this_test is defined a bit later in the script.)
 
----
+The extra directory level may break some tests that refer to their
+precomputed test vectors in ../tXXXX, but I think they should be fixed
+regardless.  That's what $TEST_DIRECTORY is for.
 
- stgit/lib/git.py |   34 +++++++++++++++++++++++++++++++++-
- stgit/run.py     |   17 +++++++++++++++++
- 2 files changed, 50 insertions(+), 1 deletions(-)
-
-
-diff --git a/stgit/lib/git.py b/stgit/lib/git.py
-index 648e190..95efd9a 100644
---- a/stgit/lib/git.py
-+++ b/stgit/lib/git.py
-@@ -520,6 +520,37 @@ class RunWithEnvCwd(RunWithEnv):
-         @param args: Command and argument vector"""
-         return RunWithEnv.run(self, args, self.env_in_cwd)
-=20
-+class CatFileProcess(object):
-+    def __init__(self, repo):
-+        self.__repo =3D repo
-+        self.__proc =3D None
-+    def __get_process(self):
-+        if not self.__proc:
-+            self.__proc =3D self.__repo.run(['git', 'cat-file', '--bat=
-ch']
-+                                          ).run_background()
-+        return self.__proc
-+    def cat_file(self, sha1):
-+        p =3D self.__get_process()
-+        p.stdin.write('%s\n' % sha1)
-+        p.stdin.flush()
-+
-+        # Read until we have the entire status line.
-+        s =3D ''
-+        while not '\n' in s:
-+            s +=3D os.read(p.stdout.fileno(), 4096)
-+        h, b =3D s.split('\n', 1)
-+        if h =3D=3D '%s missing' % sha1:
-+            raise SomeException()
-+        hash, type, length =3D h.split()
-+        assert hash =3D=3D sha1
-+        length =3D int(length)
-+
-+        # Read until we have the entire object plus the trailing
-+        # newline.
-+        while len(b) < length + 1:
-+            b +=3D os.read(p.stdout.fileno(), 4096)
-+        return type, b[:-1]
-+
- class Repository(RunWithEnv):
-     """Represents a git repository."""
-     def __init__(self, directory):
-@@ -531,6 +562,7 @@ class Repository(RunWithEnv):
-         self.__default_index =3D None
-         self.__default_worktree =3D None
-         self.__default_iw =3D None
-+        self.__catfile =3D CatFileProcess(self)
-     env =3D property(lambda self: { 'GIT_DIR': self.__git_dir })
-     @classmethod
-     def default(cls):
-@@ -580,7 +612,7 @@ class Repository(RunWithEnv):
-     directory =3D property(lambda self: self.__git_dir)
-     refs =3D property(lambda self: self.__refs)
-     def cat_object(self, sha1):
--        return self.run(['git', 'cat-file', '-p', sha1]).raw_output()
-+        return self.__catfile.cat_file(sha1)[1]
-     def rev_parse(self, rev):
-         try:
-             return self.get_commit(self.run(
-diff --git a/stgit/run.py b/stgit/run.py
-index 7493ed3..ccca059 100644
---- a/stgit/run.py
-+++ b/stgit/run.py
-@@ -130,6 +130,19 @@ class Run:
-             raise self.exc('%s failed: %s' % (self.__cmd[0], e))
-         self.__log_end(self.exitcode)
-         self.__check_exitcode()
-+    def __run_background(self):
-+        """Run in background."""
-+        assert self.__indata =3D=3D None
-+        try:
-+            p =3D subprocess.Popen(self.__cmd, env =3D self.__env, cwd=
- =3D self.__cwd,
-+                                 stdin =3D subprocess.PIPE,
-+                                 stdout =3D subprocess.PIPE,
-+                                 stderr =3D subprocess.PIPE)
-+        except OSError, e:
-+            raise self.exc('%s failed: %s' % (self.__cmd[0], e))
-+        self.stdin =3D p.stdin
-+        self.stdout =3D p.stdout
-+        self.stderr =3D p.stderr
-     def returns(self, retvals):
-         self.__good_retvals =3D retvals
-         return self
-@@ -181,6 +194,10 @@ class Run:
-     def run(self):
-         """Just run, with no IO redirection."""
-         self.__run_noio()
-+    def run_background(self):
-+        """Run as a background process."""
-+        self.__run_background()
-+        return self
-     def xargs(self, xargs):
-         """Just run, with no IO redirection. The extra arguments are
-         appended to the command line a few at a time; the command is
+I'd very much prefer having 't/trash directory/t1234-test-name/' so tha=
+t
+we can say "make clean" to clean "t/trash directory" in one go.
