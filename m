@@ -1,143 +1,97 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [PATCH 2/3] Teach git diff-tree --stdin to diff trees
-Date: Fri, 08 Aug 2008 22:48:29 +0200
-Message-ID: <20080808204829.7744.11661.stgit@yoghurt>
-References: <20080808204348.7744.46006.stgit@yoghurt>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Not going beyond symbolic links
+Date: Fri, 08 Aug 2008 13:55:30 -0700
+Message-ID: <7vod43b519.fsf@gitster.siamese.dyndns.org>
+References: <20080721002354.GK10151@machine.or.cz>
+ <20080721002508.26773.92277.stgit@localhost>
+ <7v8wvpm9cl.fsf@gitster.siamese.dyndns.org>
+ <7vej5543v5.fsf_-_@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.10.0808041719380.3299@nehalem.linux-foundation.org>
+ <7vk5etjozt.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 08 22:50:33 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Aug 08 22:56:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRYuf-0005JY-3u
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 22:50:17 +0200
+	id 1KRZ0v-0007fl-FP
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 22:56:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754629AbYHHUtL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 16:49:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754561AbYHHUtK
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 16:49:10 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4164 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754366AbYHHUtI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 16:49:08 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1KRZES-0000vh-00; Fri, 08 Aug 2008 22:10:44 +0100
-In-Reply-To: <20080808204348.7744.46006.stgit@yoghurt>
-User-Agent: StGIT/0.14.3.222.g9ef2
+	id S1754510AbYHHUzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 16:55:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753430AbYHHUzm
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 16:55:42 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42673 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752557AbYHHUzl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 16:55:41 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D027D4A0B9;
+	Fri,  8 Aug 2008 16:55:39 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id F30F14A0B4; Fri,  8 Aug 2008 16:55:33 -0400 (EDT)
+In-Reply-To: <7vk5etjozt.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 06 Aug 2008 23:52:38 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5BA5A358-658C-11DD-A634-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91715>
 
-In addition to accepting lines with one or more commits, it now
-accepts lines with precisely two trees.
+Junio C Hamano <gitster@pobox.com> writes:
 
-When diffing trees, the -m, -s, -v, --pretty, --abbrev-commit,
---encoding, --no-commit-id, -c, --cc, and --always options are
-ignored, since they do not apply to trees. This is the same behavior
-you get when specifying two trees on the command line instead of with
---stdin.
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>
+>> On Mon, 4 Aug 2008, Junio C Hamano wrote:
+>>> 
+>>> I started to revisit this issue and patched "git update-index --add"
+>>> and "git add" so far.  Patches follow.
+>>
+>> Patches look good to me, but did you check the performance impact?
+>>
+>> The rewritten 'has_symlink_leading_path()' should do ok, but it migth 
+>> still be a huge performance downside to check all the paths for things 
+>> like "git add -u".
+>
+> I couldn't quite measure much meaningful performance impact.
+>
+> My test repository was the kernel tree at v2.6.27-rc2-20-g685d87f, without
+> any build products nor editor temporary crufts.
+>
+> By the way, if anybody wants to reproduce this, be careful with the tests
+> that run "rm -f .git/index" before adding everything.  After doing so, if
+> you check the result with "git diff --stat HEAD", you will notice many
+> missing files --- I almost got a heart attack before inspecting this file:
+>
+> 	$ cat arch/powerpc/.gitignore
+>         include
+>
+> Yes, it excludes 261 already tracked files.  Is it intended?  I dunno.
+> ...
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+Seeing that you applied my arch/powerpc/.gitignore patch to the kernel
+(Yaay, I now have a short-log entry in the kernel history ;-), you have
+seen the message with some benchmarks I am replying to as well?
 
----
+I actually was expecting to see measurable slowdown by checking leading
+symbolic link more often, but I couldn't, which means either there is not
+much downside that the bugfix would hurt real-life usage, or I was too
+incompetent to come up with an example to show that the bugfix actually
+hurts the performance.
 
- Documentation/git-diff-tree.txt |   14 +++++++++-----
- builtin-diff-tree.c             |   35 +++++++++++++++++++++++++++++++=
-----
- 2 files changed, 40 insertions(+), 9 deletions(-)
-
-
-diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-t=
-ree.txt
-index 1fdf20d..0b1ade8 100644
---- a/Documentation/git-diff-tree.txt
-+++ b/Documentation/git-diff-tree.txt
-@@ -49,13 +49,17 @@ include::diff-options.txt[]
- --stdin::
- 	When '--stdin' is specified, the command does not take
- 	<tree-ish> arguments from the command line.  Instead, it
--	reads either one <commit> or a list of <commit>
--	separated with a single space from its standard input.
-+	reads lines containing either two <tree>, one <commit>, or a
-+	list of <commit> from its standard input.  (Use a single space
-+	as separator.)
- +
--When a single commit is given on one line of such input, it compares
--the commit with its parents.  The following flags further affects its
--behavior.  The remaining commits, when given, are used as if they are
-+When two trees are given, it compares the first tree with the second.
-+When a single commit is given, it compares the commit with its
-+parents.  The remaining commits, when given, are used as if they are
- parents of the first commit.
-++
-+The following flags further affects the behavior when comparing
-+commits (but not trees).
-=20
- -m::
- 	By default, 'git-diff-tree --stdin' does not show
-diff --git a/builtin-diff-tree.c b/builtin-diff-tree.c
-index ebbd631..0bdb1cf 100644
---- a/builtin-diff-tree.c
-+++ b/builtin-diff-tree.c
-@@ -42,21 +42,48 @@ static int stdin_diff_commit(struct commit *commit,=
- char *line, int len)
- 	return log_tree_commit(&log_tree_opt, commit);
- }
-=20
-+/* Diff two trees. */
-+static int stdin_diff_trees(struct tree *tree1, char *line, int len)
-+{
-+	unsigned char sha1[20];
-+	struct tree *tree2;
-+	if (len !=3D 82 || !isspace(line[40]) || get_sha1_hex(line + 41, sha1=
-)) {
-+		error("Need precisely two trees, separated by one space");
-+		return -1;
-+	}
-+	tree2 =3D lookup_tree(sha1);
-+	if (!tree2 || parse_tree(tree2))
-+		return -1;
-+	printf("%s %s\n", sha1_to_hex(tree1->object.sha1),
-+			  sha1_to_hex(tree2->object.sha1));
-+	diff_tree_sha1(tree1->object.sha1, tree2->object.sha1,
-+		       "", &log_tree_opt.diffopt);
-+	log_tree_diff_flush(&log_tree_opt);
-+	return 0;
-+}
-+
- static int diff_tree_stdin(char *line)
- {
- 	int len =3D strlen(line);
- 	unsigned char sha1[20];
--	struct commit *commit;
-+	struct object *obj;
-=20
- 	if (!len || line[len-1] !=3D '\n')
- 		return -1;
- 	line[len-1] =3D 0;
- 	if (get_sha1_hex(line, sha1))
- 		return -1;
--	commit =3D lookup_commit(sha1);
--	if (!commit || parse_commit(commit))
-+	obj =3D lookup_object(sha1);
-+	obj =3D obj ? obj : parse_object(sha1);
-+	if (!obj)
- 		return -1;
--	return stdin_diff_commit(commit, line, len);
-+	if (obj->type =3D=3D OBJ_COMMIT)
-+		return stdin_diff_commit((struct commit *)obj, line, len);
-+	if (obj->type =3D=3D OBJ_TREE)
-+		return stdin_diff_trees((struct tree *)obj, line, len);
-+	error("Object %s is a %s, not a commit or tree",
-+	      sha1_to_hex(sha1), typename(obj->type));
-+	return -1;
- }
-=20
- static const char diff_tree_usage[] =3D
+If the former, I think it is a very good news (If the latter, well, we
+have a bigger problem :-<), as the affected codepaths are exactly the ones
+that need to be fixed when somebody tries to add files in a submodule
+directory by mistake, which is an issue (iirc) Dscho had a separate patch
+to fix earlier.  Tracked symbolic links may be rare, but it seems that
+many people are using submodules, and that case cannot be hand-waved
+around by calling it is a feature.
