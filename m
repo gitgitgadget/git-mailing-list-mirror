@@ -1,44 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFH/PATCH] asciidoc markup fixes
-Date: Thu, 07 Aug 2008 22:41:52 -0700
-Message-ID: <7v7iasgj1b.fsf@gitster.siamese.dyndns.org>
-References: <7v8wv8ifyi.fsf@gitster.siamese.dyndns.org>
- <489B84A9.2090900@isy.liu.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 0/3] Enable parallelized tests
+Date: Fri, 8 Aug 2008 07:59:08 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808080752210.9611@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Gustaf Hendeby <hendeby@isy.liu.se>
-X-From: git-owner@vger.kernel.org Fri Aug 08 07:43:10 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Aug 08 07:55:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRKkf-0005dL-Cf
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 07:43:01 +0200
+	id 1KRKws-0000Fg-LU
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 07:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752057AbYHHFl6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 01:41:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751967AbYHHFl6
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 01:41:58 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64693 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751327AbYHHFl6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 01:41:58 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 13CE158F65;
-	Fri,  8 Aug 2008 01:41:57 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8AF0958F64; Fri,  8 Aug 2008 01:41:54 -0400 (EDT)
-In-Reply-To: <489B84A9.2090900@isy.liu.se> (Gustaf Hendeby's message of "Fri,
- 08 Aug 2008 01:26:33 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B6BA9508-650C-11DD-8505-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1752282AbYHHFyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 01:54:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752159AbYHHFyf
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 01:54:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54045 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752139AbYHHFyf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 01:54:35 -0400
+Received: (qmail invoked by alias); 08 Aug 2008 05:54:33 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp003) with SMTP; 08 Aug 2008 07:54:33 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18ie1QdDJsiI5YMOxzNeIzwIS9eTeg2khR7V2UjKN
+	OY4ZtwQnimaXTB
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91621>
 
-Thanks.
+
+This patch pair enables parallel tests.  On a pretty beefy machine,
+
+	$ /usr/bin/time make -j50
+
+shows this:
+
+	69.33user 92.33system 0:59.26elapsed 272%CPU (0avgtext+0avgdata
+	0maxresident)k 0inputs+0outputs (0major+33007360minor)pagefaults 0swaps
+
+vs.
+
+	$ /usr/bin/time make
+
+showing this:
+
+	61.25user 75.10system 3:57.68elapsed 57%CPU (0avgtext+0avgdata
+	0maxresident)k 0inputs+0outputs (0major+32897071minor)pagefaults 0swaps
+
+Note: the machine was used for other tasks during the test, too.
+
+These results are with SVN/CVS tests enabled.  I am pretty sure that the
+results would be even more impressive without them (the SVN/CVS tests come
+all at the end, and seem to idle the CPU mostly, and the last few seconds
+are only spent on 2 tests).
+
+Johannes Schindelin (3):
+  t9700: remove useless check
+  tests: Clarify dependencies between tests, 'aggregate-results' and
+    'clean'
+  Enable parallel tests
+
+ t/Makefile      |   15 ++++++++++++---
+ t/t9700/test.pl |    3 ---
+ t/test-lib.sh   |   11 ++++++++++-
+ 3 files changed, 22 insertions(+), 7 deletions(-)
