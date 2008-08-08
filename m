@@ -1,83 +1,95 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Re* git diff/log --check exitcode and PAGER environment
- variable
-Date: Fri, 8 Aug 2008 13:23:03 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808081315060.9611@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <489C145B.5090400@sneakemail.com> <7vfxpfet8a.fsf@gitster.siamese.dyndns.org> <7v1w0zersg.fsf_-_@gitster.siamese.dyndns.org> <489C27DD.90603@sneakemail.com>
+From: Jan Wielemaker <J.Wielemaker@uva.nl>
+Subject: Re: git filter-branch --subdirectory-filter, still a mistery
+Date: Fri, 8 Aug 2008 13:25:29 +0200
+Message-ID: <200808081325.29241.J.Wielemaker@uva.nl>
+References: <200808061539.50268.J.Wielemaker@uva.nl> <200808071214.25399.J.Wielemaker@uva.nl> <200808080148.27384.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-2042188543-1218194583=:9611"
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?Peter_Valdemar_M=F8rch_=28Lists=29?= 
-	<4ux6as402@sneakemail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 08 13:19:43 2008
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Aug 08 13:27:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRQ0J-0003Yt-FW
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 13:19:31 +0200
+	id 1KRQ7A-0006GU-Lk
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 13:26:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757024AbYHHLSa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 07:18:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757026AbYHHLSa
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 07:18:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54639 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757014AbYHHLS3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 07:18:29 -0400
-Received: (qmail invoked by alias); 08 Aug 2008 11:18:27 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp008) with SMTP; 08 Aug 2008 13:18:27 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19a8CMhfh9abIubJhUYkIUULbC1Q9VVG5Yb5wODxr
-	MjccAD0HkIOyj/
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <489C27DD.90603@sneakemail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1751472AbYHHLZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 07:25:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754282AbYHHLZe
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 07:25:34 -0400
+Received: from smtp-vbr5.xs4all.nl ([194.109.24.25]:3411 "EHLO
+	smtp-vbr5.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753294AbYHHLZe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 07:25:34 -0400
+Received: from ct.xs4all.nl (ct.xs4all.nl [82.92.39.12])
+	by smtp-vbr5.xs4all.nl (8.13.8/8.13.8) with ESMTP id m78BPT9c061518;
+	Fri, 8 Aug 2008 13:25:30 +0200 (CEST)
+	(envelope-from J.Wielemaker@uva.nl)
+User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
+In-Reply-To: <200808080148.27384.trast@student.ethz.ch>
+Content-Disposition: inline
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91657>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Thomas,
 
---8323329-2042188543-1218194583=:9611
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+On Friday 08 August 2008 01:48:05 Thomas Rast wrote:
+> This appears to be a bug.  I've whipped up a patch that will follow
+> and should fix the bug.  It has nothing to do with packed-refs; the
+> current filter-branch chokes on annotated tags during
+> --subdirectory-filter, even though there is support for tag rewriting.
+>
+> However, to enable tag rewriting, you need to say --tag-name-filter
+> cat.
 
-Hi,
+That works!
 
-On Fri, 8 Aug 2008, "Peter Valdemar Mørch (Lists)" wrote:
+> > Now it runs to the end.  Unfortunagtely the history is completely
+> > screwed up :-(:
+> >
+> > 	* There are a lot of commits that are not related to the dir
+> > 	* Commits start long before the directory came into existence,
+> > 	Looks like it just shows the whole project at this place.
+>
+> For some reason the ancestor detection does not work right.  I'm also
+> following up with an RFH patch that significantly improves the success
+> rate (in terms of branches and tags successfully mapped to a rewritten
+> commit) in the case of your repository.  I doubt more staring at the
+> code would yield any more ideas at this hour, so ideas would be
+> appreciated.
+>
+> The rest is just the other commits/tags showing a lot of the history.
+> I don't know of any built-in way to prune the branches and tags that
+> aren't part of the new master, but
+>
+>   git branch -a --no-merged master
+>
+> can tell you which branches aren't ancestors of master.
 
-> I don't want to be a troll... But in my original post, I write that git 
-> log exits with 0 even when there are --check failures *and* --no-pager 
-> is used.
+I retried with your two patches. That looks a *lot* better. After using
+the above and deleting the reported branches there are still some
+branches left, but at least switching to them doesn't bring the complete
+project back.
 
-You seem to care enough.  That is good.  Because I will give you a few 
-pointers to help yourself, and you can in return help us by submitting a 
-patch:
+Now there are a few weird tags left, some of these may well be the
+result of weird things in the repository. The repository was on CVS
+until about a year ago and was converted (using SVN as intermediate).
 
-- the code to be changed lives in log-tree.c.  Look for calls to the 
-  function log_tree_diff_flush().  You need to check the exit status
-  after that (needs to be done only when DIFF_OPT_TST(opt->diffopt, 
-  EXIT_WITH_STATUS).
+The big problem is anything that relates to the days before the filtered
+directory was part of the project. There are lots of tags there and
+switching to them brings back the old project. I'd guess the correct
+behaviour is that either all these tags refer to an empty tree or (which
+I would prefer) all such tags are deleted.
 
-- you can get at the exit status with the call 
-  diff_result_code(opt->diffopt, 0) (see the implementation in diff.c to 
-  find out what the 0 means, and why it is correct).
+Is this a bug?  Is there a trick here?  git clone --depth doesn't
+seem appropriate.
 
-- you need to accumulate the exit status (plural, with a long u) over all 
-  calls to log_tree_diff(), best thing would be to add a member to the
-  log_info struct.
-
-- you need to test rev->loginfo->exit_code in the end, and return failure 
-  if it is non-zero.  I think the place is in cmd_log_walk().
-
-Bon chance,
-Dscho
-
---8323329-2042188543-1218194583=:9611--
+	Cheers --- Jan
