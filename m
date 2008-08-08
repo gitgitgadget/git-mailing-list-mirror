@@ -1,121 +1,64 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2] filter-branch: fix ref rewriting with --subdirectory-filter
-Date: Fri,  8 Aug 2008 20:39:09 +0200
-Message-ID: <1218220749-8469-1-git-send-email-trast@student.ethz.ch>
-References: <200808082037.49918.trast@student.ethz.ch>
-Cc: gitster@pobox.com,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jan Wielemaker <J.Wielemaker@uva.nl>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 08 20:40:23 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How to fix (and find) many git-* --check errors?
+Date: Fri, 08 Aug 2008 12:27:18 -0700
+Message-ID: <7viqubcnop.fsf@gitster.siamese.dyndns.org>
+References: <489C40BC.8000008@sneakemail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Peter_Valdemar_M=C3=B8rch_=28Lists=29?= 
+	<4ux6as402@sneakemail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 08 21:28:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRWsx-0006GX-2m
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 20:40:23 +0200
+	id 1KRXdh-0000jT-OL
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 21:28:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758882AbYHHSjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 14:39:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759224AbYHHSjF
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 14:39:05 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:12192 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752621AbYHHSjE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 14:39:04 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Aug 2008 20:39:01 +0200
-Received: from localhost.localdomain ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Aug 2008 20:39:01 +0200
-X-Mailer: git-send-email 1.6.0.rc2.23.g1e07
-In-Reply-To: <200808082037.49918.trast@student.ethz.ch>
-X-OriginalArrivalTime: 08 Aug 2008 18:39:01.0659 (UTC) FILETIME=[06E3DEB0:01C8F986]
+	id S1753682AbYHHT10 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 15:27:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753098AbYHHT10
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 15:27:26 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56431 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752843AbYHHT1Z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Aug 2008 15:27:25 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6115050174;
+	Fri,  8 Aug 2008 15:27:24 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 70CE450173; Fri,  8 Aug 2008 15:27:21 -0400 (EDT)
+In-Reply-To: <489C40BC.8000008@sneakemail.com> (Peter Valdemar =?utf-8?Q?M?=
+ =?utf-8?Q?=C3=B8rch's?= message of "Fri, 08 Aug 2008 14:49:00 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 074C1816-6580-11DD-A921-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91707>
 
-The previous ancestor discovery code failed on any refs that are
-(pre-rewrite) ancestors of commits marked for rewriting.  This means
-that in a situation
+"Peter Valdemar M=C3=B8rch (Lists)"  <4ux6as402@sneakemail.com> writes:
 
-   A -- B(topic) -- C(master)
+> We have > 37000 white space "errors" in HEAD, mostly trailing
+> whitespace, and I'm looking for a
+>
+> $ git diff --check | git??? --whitespace=3Dfix
+>
+> command.
 
-where B is dropped by --subdirectory-filter pruning, the 'topic' was
-not moved up to A as intended, but left unrewritten because we asked
-about 'git rev-list ^master topic', which does not return anything.
+Starting from a clean checkout, you could do something like this:
 
-Instead, we use the straightforward
+	$ git reset --hard
+        $ rm .git/index
+        $ git diff --binary -R HEAD >P.diff
+        $ git apply --whitespace=3Dfix --cached <P.diff
+	$ git commit -m "Fixed all whitespace gotchas"
 
-   git rev-list -1 $ref -- $filter_subdir
-
-to find the right ancestor.  To justify this, note that the nearest
-ancestor is unique: We use the output of
-
-  git rev-list --parents -- $filter_subdir
-
-to rewrite commits in the first pass, before any ref rewriting.  If B
-is a non-merge commit, the only candidate is its parent.  If it is a
-merge, there are two cases:
-
-- All sides of the merge bring the same subdirectory contents.  Then
-  rev-list already pruned away the merge in favour for just one of its
-  parents, so there is only one candidate.
-
-- Some merge sides, or the merge outcome, differ.  Then the merge is
-  not pruned and can be rewritten directly.
-
-So it is always safe to use rev-list -1.
-
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
-
-Only comments and commit message changed since v1, to update the
-justification.
-
- git-filter-branch.sh |   27 +++++++++++----------------
- 1 files changed, 11 insertions(+), 16 deletions(-)
-
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index a324cf0..a140337 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -317,24 +317,19 @@ done <../revs
- 
- # In case of a subdirectory filter, it is possible that a specified head
- # is not in the set of rewritten commits, because it was pruned by the
--# revision walker.  Fix it by mapping these heads to the next rewritten
--# ancestor(s), i.e. the boundaries in the set of rewritten commits.
-+# revision walker.  Fix it by mapping these heads to the unique nearest
-+# ancestor that survived the pruning.
- 
--# NEEDSWORK: we should sort the unmapped refs topologically first
--while read ref
--do
--	sha1=$(git rev-parse "$ref"^0)
--	test -f "$workdir"/../map/$sha1 && continue
--	# Assign the boundarie(s) in the set of rewritten commits
--	# as the replacement commit(s).
--	# (This would look a bit nicer if --not --stdin worked.)
--	for p in $( (cd "$workdir"/../map; ls | sed "s/^/^/") |
--		git rev-list $ref --boundary --stdin |
--		sed -n "s/^-//p")
-+if test "$filter_subdir"
-+then
-+	while read ref
- 	do
--		map $p >> "$workdir"/../map/$sha1
--	done
--done < "$tempdir"/heads
-+		sha1=$(git rev-parse "$ref"^0)
-+		test -f "$workdir"/../map/$sha1 && continue
-+		ancestor=$(git rev-list -1 $ref -- "$filter_subdir")
-+		test "$ancestor" && echo $(map $ancestor) >> "$workdir"/../map/$sha1
-+	done < "$tempdir"/heads
-+fi
- 
- # Finally update the refs
- 
--- 
-1.6.0.rc2.23.ge69de8
+P.diff contains essentially everything, and you are recreating everythi=
+ng
+from that patch.
