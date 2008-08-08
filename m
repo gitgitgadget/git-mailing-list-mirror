@@ -1,69 +1,64 @@
-From: Andrew Wason <rectalogic@rectalogic.com>
-Subject: [PATCH] Reinstate SIGCHILD handler, signals on Solaris are reset when handled
-Date: Fri, 8 Aug 2008 17:43:55 +0000 (UTC)
-Message-ID: <loom.20080808T174216-369@post.gmane.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Show of hands, how many set USE_NSEC
+Date: Fri, 8 Aug 2008 11:00:17 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0808081056090.3462@nehalem.linux-foundation.org>
+References: <20080808163455.GE9152@spearce.org> <alpine.DEB.1.00.0808081854120.24820@pacific.mpi-cbg.de.mpi-cbg.de> <20080808165718.GG9152@spearce.org> <alpine.LFD.1.10.0808081027590.3462@nehalem.linux-foundation.org> <20080808175247.GH9152@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 08 19:56:14 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Aug 08 20:02:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRWCC-0006ET-My
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 19:56:13 +0200
+	id 1KRWHk-0008Vj-3D
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 20:01:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752912AbYHHRzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 13:55:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752703AbYHHRzK
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 13:55:10 -0400
-Received: from main.gmane.org ([80.91.229.2]:51363 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752166AbYHHRzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 13:55:09 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1KRWB5-0004j7-3O
-	for git@vger.kernel.org; Fri, 08 Aug 2008 17:55:03 +0000
-Received: from 63.251.25.201 ([63.251.25.201])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 08 Aug 2008 17:55:03 +0000
-Received: from rectalogic by 63.251.25.201 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 08 Aug 2008 17:55:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 63.251.25.201 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.1) Gecko/2008070206 Firefox/3.0.1)
+	id S1752257AbYHHSAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 14:00:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752557AbYHHSAy
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 14:00:54 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:38305 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751720AbYHHSAx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Aug 2008 14:00:53 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m78I0IcM009969
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 8 Aug 2008 11:00:19 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m78I0Hqm021004;
+	Fri, 8 Aug 2008 11:00:18 -0700
+In-Reply-To: <20080808175247.GH9152@spearce.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.409 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91701>
-
-git-daemon only reaps the first forked child on Solaris. Solaris signal handlers
-have to be reset each time the signal is handled.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91702>
 
 
-Signed-off-by: Andrew Wason <rectalogic@rectalogic.com>
----
- daemon.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
 
-diff --git a/daemon.c b/daemon.c
-index 4540e8d..47ad8ab 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -794,6 +794,8 @@ static void child_handler(int signo)
- 		}
- 		break;
- 	}
-+	/* Signal handlers must be reinstated on Solaris */
-+	signal(SIGCHLD, child_handler);
- }
- 
- static int set_reuse_addr(int sockfd)
--- 
-1.5.6.2
+On Fri, 8 Aug 2008, Shawn O. Pearce wrote:
+> 
+> That single file however does not need to be structured internallyy
+> the way it is.
+
+Ok, at that point I certainly agree.  
+
+As long as we're talking about a single flat file, I don't think it would 
+be all that painful to have a totally new index format. The original 
+format was (obviously) designed to be just mmap'ed and turned into a C 
+array with no real parsing.
+
+But once we started building a separate index data structure with internal 
+structure _anyway_ (for the extended in-memory flags and the filename 
+hashing), a lot of the reasons for the original format kind of went away.
+
+			Linus
