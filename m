@@ -1,120 +1,95 @@
-From: "Matt Graham" <mdg149@gmail.com>
-Subject: Re: git reset --hard isn't resetting
-Date: Thu, 7 Aug 2008 21:06:27 -0400
-Message-ID: <1c5969370808071806g1f989260n55a4b8bebfedb6e@mail.gmail.com>
-References: <1c5969370808060941q59cb8f7fhabee3ef3c5107715@mail.gmail.com>
-	 <32541b130808061102q752076a8ydc02fef4e799491f@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: GSoC final last meters
+Date: Fri, 8 Aug 2008 03:24:39 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808080321060.9611@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 08 03:07:32 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Vilain <sam@vilain.net>, Joshua Roys <roysjosh@gmail.com>,
+	Sverre Rabbelier <sverre@rabbelier.nl>,
+	David Symonds <dsymonds@gmail.com>,
+	Lea Wiemann <LeWiemann@gmail.com>,
+	John Hawley <warthog19@eaglescrag.net>,
+	Marek Zawirski <marek.zawirski@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 08 03:21:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRGS2-0003tn-BE
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 03:07:30 +0200
+	id 1KRGfI-0007IK-8q
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 03:21:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751314AbYHHBG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2008 21:06:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbYHHBG2
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 21:06:28 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:33287 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751096AbYHHBG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2008 21:06:28 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so1203370wfd.4
-        for <git@vger.kernel.org>; Thu, 07 Aug 2008 18:06:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=PjtgWwtU9/xAOIlVTYLJERZiQQ9izo2Skp+0RobWznY=;
-        b=tepa4Lj2Pdygc3ZpLavMlfdcZur8nlzXg2bYscPBGX9kcZ+FAkJIHbnfxrN2yPU17L
-         adsXLtiNAnrj6ivmVNB0m2C51EsDM4fygG3ddHU10qjToBR4kUvbO3vxSGzkVtHP118p
-         5p5V7HlwI5QFJCSE0/cG/uvb9eG4UQ66LOQZM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=m1SRofmp0kPj11ex5c6wdXKeYeIqG/a3p2/jfMQsf8Wy+j32tXHSeG8EMDIYC9gf8+
-         iF5YFZnkMPsB0nMSdlNH5drRV10epeFE/uww5SZhEjLw8vmHm8FFIBcIJPOAYAPsPqdB
-         wGhLUNW0vDNC72frUM9VIsZ6+O+QFH91fmhsI=
-Received: by 10.142.170.6 with SMTP id s6mr710412wfe.228.1218157587495;
-        Thu, 07 Aug 2008 18:06:27 -0700 (PDT)
-Received: by 10.142.204.21 with HTTP; Thu, 7 Aug 2008 18:06:27 -0700 (PDT)
-In-Reply-To: <32541b130808061102q752076a8ydc02fef4e799491f@mail.gmail.com>
-Content-Disposition: inline
+	id S1752598AbYHHBUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2008 21:20:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752382AbYHHBUK
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Aug 2008 21:20:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48734 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751885AbYHHBUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2008 21:20:08 -0400
+Received: (qmail invoked by alias); 08 Aug 2008 01:20:05 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp039) with SMTP; 08 Aug 2008 03:20:05 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+zpoQSqG+zisJ8XNnc/RMbYUchuBpqYjA9R7WpwQ
+	XTUU0xvwF81Ja3
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91617>
 
-On Wed, Aug 6, 2008 at 2:02 PM, Avery Pennarun <apenwarr@gmail.com> wrote:
-> On 8/6/08, Matt Graham <mdg149@gmail.com> wrote:
->>  I'm using a git svn tree in Cygwin.  I tried doing an svn rebase and
->>  got in some weird state with local changes I can't get rid of.  It's
->>  not an issue w/ the same repository on my linux machine.
->>
->>  git reset --hard
->>  toggles 4 files between capitalization.  The files don't appear to
->>  have changed case in svn, but it's a huge repository and not easy to
->>  determine with certainty.
->
-> Try:
->   git log --name-only
-> to see which patches change which files.  It's a virtual certainty
-> that they were renamed in svn at some point.
+Dear GSoC students, dear mentors, dear Git list,
 
-They weren't "renamed".  Further investigation w/ the hated svn tools
-showed that the upper case was removed, then many commits later, the
-lowercase was added.
+we have all gathered here to participate in the last sprint of the Google 
+Summer of Code.  A lot has happened during all that time.  The Git 
+community has seen "fresh meat", and there may have been a few being 
+reminded of their first or second steps in Open Source looking back with a 
+bit of envy.
 
-> git doesn't handle case-munging filesystems perfectly, and gets into
-> the situation you describe.  First, you need to figure out whether you
-> have files with *both* cases accidentally added to your index (if git
-> reset toggles the capitalization, this is almost certainly the case):
->
->    git ls-tree HEAD
->
-> If you see the same files with different case, that's your problem.
+We saw some of you students prosper from the hands-on discussions with a 
+few of the brightest minds that Open Source has to offer.
 
-Indeed that was the problem.  In fact, l now noticed that my linux
-machine has both versions as well.  Being case sensitive, it didn't
-mind and the problem wasn't obvious.
+We have seen good work, we have seen excellent work, but also work that 
+does not fall into these categories, and also work that was not done.
 
-> Now just 'git rm' the ones with the case you don't want, and commit
-> the result.  (Do *not* use commit -a!)  'git status' will give you
-> some funny messages indicating that files you *didn't* 'git rm' have
-> gone away in the filesystem; it's true, of course, but don't worry
-> about that.  Now 'git reset --hard HEAD' and you should be okay.
+As you might know, the week between the 11th of August and the 18th of 
+same month is the week when the mentors have to give their evaluations 
+about their students' work.  The mentors are not allowed to base their 
+evaluations on anything that might come after the deadline, but only on 
+work completed by that time.
 
-This worked fine exactly as you said.  I'm curious what will happen when I do
-   git svn dcommit
-These aren't my files and I'm sort of using git svn on the sly.  I'd
-prefer to not have something weird happen to the svn repository due to
-this.  Due to the schedule, our tolerance for screwing things up b/c I
-want to use git will be low.  And my argument that we should have used
-git from the outset probably won't help any.
+Now, dear students: it is not necessary to have all your work merged into 
+git.git yet; indeed, the 1.6.0 release cycle is on, and you can hope at 
+most for 'next', but not 'master'.
 
-> I'm not really sure what git should do better in this case, although
-> the current behaviour is obviously a bit confusing.
+However, in order to hope for a good evaluation, it is necessary to have 
+at least something that comes _close_ to being mergeable.
 
-Yes, if SVN is going to have both versions, it's understandable that
-git wouldn't know what to do.  Unfortunately, it looks like SVN only
-had one version at a time.  So it seems git somehow revived the
-uppercase version when the lowercase one was readded through git svn.
+Dear mentors, now I come to you.  Please make sure that you work with your 
+students during those last days of the project, and help them reach their 
+goal.
 
-This happened on both the cygwin and linux versions, although it only
-caused an obvious problem on the cygwin version.  I don't know git
-well enough to speculate why this happened, but it looks like it's a
-real bug that shouldn't have happened in this case.
+And when it comes to the evaluations, be honest: Google is extremely 
+generous to provide us with funding for our students, but the students 
+have to earn it.  Every dollar that is spent undeservedly will be a dollar 
+that is not given to other, more worthy Open Source activities.
 
-On cygwin I'm using 1.5.5.1 and the repository only used that version.
-On linux, I currently have 1.6.0.rc0.79.gb0320 but the repo may have
-been originally cloned w/ earlier versions.
+To all of you who are neither GSoC students nor GSoC mentors: please help 
+by reviewing and encouraging.
+
+With those thoughts in mind, I wish us all a fun and frantic last days of 
+the GSoC project, and I look forward to see you all even after the Summer 
+has ended.
+
+Ciao,
+Dscho
