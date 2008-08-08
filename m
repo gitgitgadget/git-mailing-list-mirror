@@ -1,115 +1,73 @@
-From: Jeff King <peff@peff.net>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
 Subject: Re: How to fix (and find) many git-* --check errors?
-Date: Fri, 8 Aug 2008 09:23:26 -0400
-Message-ID: <20080808132326.GC19705@sigill.intra.peff.net>
+Date: Fri, 8 Aug 2008 15:28:08 +0200
+Message-ID: <20080808132808.GA22674@atjola.homenet>
 References: <489C40BC.8000008@sneakemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?Q?=22Peter_Valdemar_M=C3=B8rch_=28Lists=29=22?= 
+To: Peter Valdemar =?iso-8859-1?Q?M=F8rch_=28Lists=29?= 
 	<4ux6as402@sneakemail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 08 15:24:32 2008
+X-From: git-owner@vger.kernel.org Fri Aug 08 15:29:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRRxG-0008NI-8d
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 15:24:30 +0200
+	id 1KRS1r-0001lZ-KU
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 15:29:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753062AbYHHNX2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 09:23:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753046AbYHHNX2
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 09:23:28 -0400
-Received: from peff.net ([208.65.91.99]:2995 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752960AbYHHNX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 09:23:27 -0400
-Received: (qmail 20047 invoked by uid 111); 8 Aug 2008 13:23:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 08 Aug 2008 09:23:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Aug 2008 09:23:26 -0400
+	id S1752833AbYHHN2N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 09:28:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752881AbYHHN2N
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 09:28:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46391 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751651AbYHHN2M (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 09:28:12 -0400
+Received: (qmail invoked by alias); 08 Aug 2008 13:28:10 -0000
+Received: from i577BBBF4.versanet.de (EHLO atjola.local) [87.123.187.244]
+  by mail.gmx.net (mp067) with SMTP; 08 Aug 2008 15:28:10 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18OB8pgUUIO203kEBibg/ze2TzMr5pg7DP2aqjTY1
+	zKfAOP4LGBF4Cl
 Content-Disposition: inline
 In-Reply-To: <489C40BC.8000008@sneakemail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91665>
 
-On Fri, Aug 08, 2008 at 02:49:00PM +0200, "Peter Valdemar M=C3=B8rch (L=
-ists)" wrote:
+On 2008.08.08 14:49:00 +0200, "Peter Valdemar M=F8rch (Lists)" wrote:
+> We have > 37000 white space "errors" in HEAD, mostly trailing =20
+> whitespace, and I'm looking for a
+>
+> $ git diff --check | git??? --whitespace=3Dfix
+>
+> command.
+>
+> Is there such a beast?
+>
+> I see that git-apply has a --whitespace=3D<action> option, but I don'=
+t =20
+> seem to grock how to be able to use it for fixing my working director=
+y.
 
-> (The diff between "the empty commit" and HEAD - well between the firs=
-t
-> commit and HEAD anyway. Is there a ref for "totally empty" or the
-> revision before the first commit? Or a more elegant way to get this
-> list?)
+I'd probably do something like:
 
-It is not advertised, but we always recognize the empty sha1 of the
-empty tree:
+# Create a commit with an empty tree
+rm .git/index
+git commit -m tmp
 
-  git diff --check 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+rm -r * (include dotfiles if required, ie. remove all tracked files)
 
-In fact, just the other day I was using this for the Nth time and got
-tired of looking it up in the code, so I wrote the patch below. I don't
-know if it is too crazy to be included in mainline git (it was discusse=
-d
-a long time ago, but I think the general response was "what would it be
-good for?").
+git diff -R HEAD^ | git apply --index --whitespace=3Dfix
+git commit --amend -m "Whitespace fixed up"
 
----
- cache.h     |    4 ++++
- refs.c      |    4 ++++
- sha1_file.c |    3 +--
- 3 files changed, 9 insertions(+), 2 deletions(-)
+But probably there's some smarter way than that.
 
-diff --git a/cache.h b/cache.h
-index 30f1d62..4aa02ae 100644
---- a/cache.h
-+++ b/cache.h
-@@ -567,6 +567,10 @@ static inline unsigned int hexval(unsigned char c)
- #define MINIMUM_ABBREV 4
- #define DEFAULT_ABBREV 7
-=20
-+#define EMPTY_TREE_SHA1 \
-+	"\x4b\x82\x5d\xc6\x42\xcb\x6e\xb9\xa0\x60" \
-+	"\xe5\x4b\xf8\xd6\x92\x88\xfb\xee\x49\x04"
-+
- extern int get_sha1(const char *str, unsigned char *sha1);
- extern int get_sha1_with_mode(const char *str, unsigned char *sha1, un=
-signed *mode);
- extern int get_sha1_hex(const char *hex, unsigned char *sha1);
-diff --git a/refs.c b/refs.c
-index 39a3b23..0acbcbc 100644
---- a/refs.c
-+++ b/refs.c
-@@ -427,6 +427,10 @@ const char *resolve_ref(const char *ref, unsigned =
-char *sha1, int reading, int *
- 				}
- 				list =3D list->next;
- 			}
-+			if (!strcmp(ref, "EMPTY")) {
-+				hashcpy(sha1, (unsigned char *)EMPTY_TREE_SHA1);
-+				return ref;
-+			}
- 			if (reading || errno !=3D ENOENT)
- 				return NULL;
- 			hashclr(sha1);
-diff --git a/sha1_file.c b/sha1_file.c
-index 2aff59b..38aad13 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1985,8 +1985,7 @@ static int cached_object_nr, cached_object_alloc;
-=20
- static struct cached_object empty_tree =3D {
- 	/* empty tree sha1: 4b825dc642cb6eb9a060e54bf8d69288fbee4904 */
--	"\x4b\x82\x5d\xc6\x42\xcb\x6e\xb9\xa0\x60"
--	"\xe5\x4b\xf8\xd6\x92\x88\xfb\xee\x49\x04",
-+	EMPTY_TREE_SHA1,
- 	OBJ_TREE,
- 	"",
- 	0
---=20
-1.6.0.rc1.260.g4782
+Bj=F6rn
