@@ -1,73 +1,127 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Show of hands, how many set USE_NSEC
-Date: Fri, 8 Aug 2008 09:57:18 -0700
-Message-ID: <20080808165718.GG9152@spearce.org>
-References: <20080808163455.GE9152@spearce.org> <alpine.DEB.1.00.0808081854120.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+From: martin f krafft <madduck@debian.org>
+Subject: Re: linearising TopGit forests into patch series (was: [ANNOUNCE]
+	TopGit - A different patch queue manager)
+Date: Fri, 8 Aug 2008 14:06:58 -0300
+Organization: The Debian project
+Message-ID: <20080808170658.GA16055@lapse.rw.madduck.net>
+References: <20080803031424.GV32184@machine.or.cz>
+	<20080807175623.GA16833@lapse.rw.madduck.net>
+	<36ca99e90808071258h62b65981s20a5b053d9bc5754@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 08 18:58:23 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: multipart/mixed; boundary="===============0226844854829706067=="
+To: Bert Wesarg <bert.wesarg@googlemail.com>, Petr Baudis <pasky@suse.cz>,
+	git@vger.kernel.org, vcs distro packaging discussion list
+	<vcs-pkg-discuss@lists.alioth.debian.org>
+X-From: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org Fri Aug 08 19:07:29 2008
+Return-path: <vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org>
+Envelope-to: gcpv-vcs-pkg-discuss@m.gmane.org
+Received: from alioth.debian.org ([217.196.43.134])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRVIE-0007zj-K3
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 18:58:23 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751705AbYHHQ5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 12:57:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751780AbYHHQ5U
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 12:57:20 -0400
-Received: from george.spearce.org ([209.20.77.23]:55345 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751654AbYHHQ5T (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 12:57:19 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id D7F0D38420; Fri,  8 Aug 2008 16:57:18 +0000 (UTC)
+	id 1KRVQw-0002nn-FQ
+	for gcpv-vcs-pkg-discuss@m.gmane.org; Fri, 08 Aug 2008 19:07:22 +0200
+Received: from localhost
+	([127.0.0.1] helo=alioth.debian.org ident=list)
+	by alioth.debian.org with esmtp (Exim 4.63)
+	(envelope-from <vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org>)
+	id 1KRVQ1-0001hJ-3O
+	for gcpv-vcs-pkg-discuss@m.gmane.org; Fri, 08 Aug 2008 17:06:25 +0000
+Received: from clegg.madduck.net ([193.242.105.96])
+	by alioth.debian.org with esmtp (Exim 4.63)
+	(envelope-from <madduck@lapse.rw.madduck.net>) id 1KRVPq-0001YP-Gb
+	for vcs-pkg-discuss@lists.alioth.debian.org;
+	Fri, 08 Aug 2008 17:06:22 +0000
+Received: from lapse.rw.madduck.net (unknown [209.13.181.29])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net",
+	Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id EEA5B1D40AE;
+	Fri,  8 Aug 2008 19:05:52 +0200 (CEST)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id 3C11C80B6; Fri,  8 Aug 2008 14:06:58 -0300 (ART)
+In-Reply-To: <36ca99e90808071258h62b65981s20a5b053d9bc5754@mail.gmail.com>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel
+	2.6.24-etchnhalf.1+scoflowctrl.1-686 i686
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.93.1/7981/Fri Aug 8 17:29:53 2008 on
+	clegg.madduck.net
+X-Virus-Status: Clean
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on alioth.debian.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=AWL,BAYES_00,URIBL_RED
+	autolearn=ham version=3.2.3
+X-BeenThere: vcs-pkg-discuss@lists.alioth.debian.org
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: Discussions on using VCS for distro packaging
+	<vcs-pkg-discuss.lists.alioth.debian.org>
+List-Unsubscribe: <http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss>,
+	<mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=unsubscribe>
+List-Archive: <http://lists.alioth.debian.org/pipermail/vcs-pkg-discuss>
+List-Post: <mailto:vcs-pkg-discuss@lists.alioth.debian.org>
+List-Help: <mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=help>
+List-Subscribe: <http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss>,
+	<mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=subscribe>
+Mime-version: 1.0
+Sender: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+Errors-To: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+X-SA-Exim-Connect-IP: 127.0.0.1
+X-SA-Exim-Mail-From: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+X-SA-Exim-Scanned: No (on alioth.debian.org); SAEximRunCond expanded to false
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91697>
+
+
+--===============0226844854829706067==
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="6TrnltStXW4iwmi0"
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0808081854120.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91696>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Fri, 8 Aug 2008, Shawn O. Pearce wrote:
-> 
-> > I'm trying to come up with a sane way for jgit to realize it should 
-> > truncate the milliseconds out of a timestamp before it comes to the 
-> > index record.
-> 
-> You could add a config variable.
 
-I was thinking a gitconfig (e.g. jcore.usensec) to enable the tv_nsec
-usage (ok, well milliseconds only) in that repository, or globally
-(if in ~/.gitconfig).
+--6TrnltStXW4iwmi0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I also thought about looking at the index records to see if the
-tv_nsec fields were always 0.  If all of them were 0 it would be a
-good indication that the filesystem doesn't support that level of
-granularity, or that whoever last wrote this index doesn't support
-that level of granularity.  But this is a very expensive operation
-to perform, relatively speaking.
+also sprach Bert Wesarg <bert.wesarg@googlemail.com> [2008.08.07.1658 -0300=
+]:
+> Should be doable, I think. At least you can get a topological sorted
+> list of the TopGit branches (with git show-branch --topo-order <list
+> of TopGit-branches>). But than it get complicated, because you don't
+> need the diff from branch-base to branch-head, this would only work
+> for a single dependent list of topic branches.
 
-> I hope that soon, we no longer need to 
-> share the same index between C Git and JGit (I hope for a delta 
-> pack implementation in Java...)
+Hm, I am not entirely following. I understand that I can get
+a topological list of branches, but why don't I need the diff from
+branch-base to branch-head?
 
-I fail to see what the DIRC (.git/index) file format and its cache
-of tv_sec/tv_nsec has to do with delta pack implementation in Java.
-Or are you saying that you could stop using C Git in certain cases
-if you had delta pack generation in Java?
+Also, what happens if branches cross-merge?
 
-Really I'd just like to scrap the entire DIRC file format and do
-it over again.  Having the flat namespace is nuts.  Linus and I
-really disagree here, and since I have never produced code for C
-Git to replace it (and prove why its better) I think he has me in
-his kill file now.  :)
+--=20
+ .''`.   martin f. krafft <madduck@debian.org>
+: :'  :  proud Debian developer, author, administrator, and user
+`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
+  `-  Debian - when you have better things to do than fixing systems
+=20
+don't hate yourself in the morning -- sleep till noon.
 
--- 
-Shawn.
+--6TrnltStXW4iwmi0
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkicfSsACgkQIgvIgzMMSnUq1QCgtpjFdQ38s0PgKE6+7+2iN/tf
+KM0An0UbRZ7sDwfuXfOLdAWJ4d7637ms
+=3grt
+-----END PGP SIGNATURE-----
+
+--6TrnltStXW4iwmi0--
+
+
+--===============0226844854829706067==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
