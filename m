@@ -1,79 +1,58 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] Fix multi-glob assertion in git-svn
-Date: Fri, 08 Aug 2008 02:41:10 -0700
-Message-ID: <7vk5erete1.fsf@gitster.siamese.dyndns.org>
-References: <20080808084025.GA8718@untitled>
- <1218184918-9135-1-git-send-email-normalperson@yhbt.net>
+Subject: Re: git diff/log --check exitcode and PAGER environment variable
+Date: Fri, 08 Aug 2008 02:44:37 -0700
+Message-ID: <7vfxpfet8a.fsf@gitster.siamese.dyndns.org>
+References: <489C145B.5090400@sneakemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Marcus Griep <marcus@griep.us>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Aug 08 11:42:34 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Peter_Valdemar_M=C3=B8rch_=28Lists=29?= 
+	<4ux6as402@sneakemail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 08 11:45:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KROUI-0004LK-4j
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 11:42:22 +0200
+	id 1KROXa-0005U7-Td
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 11:45:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753544AbYHHJlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 05:41:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753065AbYHHJlS
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 05:41:18 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48601 "EHLO
+	id S1752467AbYHHJop convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 05:44:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752901AbYHHJop
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 05:44:45 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41943 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752352AbYHHJlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 05:41:17 -0400
+	with ESMTP id S1752352AbYHHJoo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Aug 2008 05:44:44 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8068959E1C;
-	Fri,  8 Aug 2008 05:41:16 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C47A7508C5;
+	Fri,  8 Aug 2008 05:44:43 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id DA95E59E1B; Fri,  8 Aug 2008 05:41:12 -0400 (EDT)
-In-Reply-To: <1218184918-9135-1-git-send-email-normalperson@yhbt.net> (Eric
- Wong's message of "Fri, 8 Aug 2008 01:41:56 -0700")
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 10223508C3; Fri,  8 Aug 2008 05:44:40 -0400 (EDT)
+In-Reply-To: <489C145B.5090400@sneakemail.com> (Peter Valdemar =?utf-8?Q?M?=
+ =?utf-8?Q?=C3=B8rch's?= message of "Fri, 08 Aug 2008 11:39:39 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 25A00D38-652E-11DD-B354-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: A12CC8A6-652E-11DD-8BAF-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91645>
 
-Eric Wong <normalperson@yhbt.net> writes:
+"Peter Valdemar M=C3=B8rch (Lists)"  <4ux6as402@sneakemail.com> writes:
 
-> From: Marcus Griep <marcus@griep.us>
->
-> Fixes bad regex match check for multiple globs (would always return
-> one glob regardless of actual number).
->
-> [ew: fixed a bashism in the test and some minor line-wrapping]
+> There is this old thread:
+> "[PATCH 1/5] "diff --check" should affect exit status"
+> http://thread.gmane.org/gmane.comp.version-control.git/68145/focus=3D=
+68148
+> which seemed not to reach a conclusion.
 
-Thanks both.
+Conclusion was (1) if you really care about the exit code, do not use
+pager; (2) after 1.6.0 we will swap the child/parent between git and pa=
+ger
+to expose exit code from us, but not before.
 
-> +test_expect_success 'test disallow multi-globs' '
-> ...
-> +	cd tmp &&
-> +		echo "try try" >> tags/end/src/b/readme &&
-> +		poke tags/end/src/b/readme &&
-> +		svn commit -m "try to try"
-> +		cd .. &&
-
-Do you want to ignore exit code from 'svn commit -m' here?
-
-In any case, I'd want to see "temporarily work in subdirectory" done in a
-subshell when applicable, so that we won't have to worry about where we
-are when we later add more tests, like this:
-
-	(
-        	cd tmp &&
-                echo "try try" >>tags/end/src/b/readme &&
-                poke tags/end/src/b/readme &&
-                svn commit -m "try to try" &&
-	) &&
-
-> +	test_must_fail git-svn fetch three 2> stderr.three &&
-> +	cmp expect.three stderr.three
-
-s/cmp/test_cmp/;
+Or am I mistaken?
