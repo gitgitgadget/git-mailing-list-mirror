@@ -1,81 +1,75 @@
-From: =?UTF-8?B?SsO8cmdlbiBNYW5nbGVy?= <juergen.mangler@univie.ac.at>
-Subject: Re: do without .netrc
-Date: Fri, 08 Aug 2008 17:36:16 +0200
-Message-ID: <489C67F0.6090609@univie.ac.at>
-References: <4898DBA6.1060707@univie.ac.at> <20080806085025.GU32057@genesis.frugalware.org> <48998AC7.20204@univie.ac.at>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 0/3] Enable parallelized tests
+Date: Fri, 8 Aug 2008 17:36:24 +0200
+Message-ID: <20080808153624.GA28716@neumann>
+References: <alpine.DEB.1.00.0808080752210.9611@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 08 17:37:25 2008
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 08 17:37:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRU1r-00039A-CM
-	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 17:37:23 +0200
+	id 1KRU24-0003Fn-7P
+	for gcvg-git-2@gmane.org; Fri, 08 Aug 2008 17:37:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752352AbYHHPgV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 11:36:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752476AbYHHPgV
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 11:36:21 -0400
-Received: from grace.univie.ac.at ([131.130.3.115]:40217 "EHLO
-	grace.univie.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752273AbYHHPgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 11:36:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=univie.ac.at; s=rev1; h=Message-ID:Date:From:MIME-Version:To:
-	Subject:References:In-Reply-To:Content-Type:
-	Content-Transfer-Encoding; bh=4cQtiLLklWOss+KU5rHM134MGlikK+0Fm5
-	so/6KXHGQ=; b=tPGtUB6u1Twz0SqcEby+KbPRbmI/5cNKoQxt9j7E4S8/gFmMVs
-	obs66wlxOtJ3m6P18Vt8ClbzWWN/FHc4wErjTBwWzPWoMWjEBcELaXAhtm6W9G2A
-	D3Dy7hVWguNAGRW2LBRDCHB5+DEctMSbYR9ZAjKx8nzuRrZo6M2B8qldM=
-Received: from justin.univie.ac.at ([131.130.3.111] helo=justin.univie.ac.at)
-	by grace.univie.ac.at with esmtp (Exim 4.69)
-	(envelope-from <juergen.mangler@univie.ac.at>)
-	id 1KRU0n-0007XF-8j; Fri, 08 Aug 2008 17:36:17 +0200
-Received: from [131.130.37.200] (helo=[172.17.19.72])
-	by justin.univie.ac.at with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <juergen.mangler@univie.ac.at>)
-	id 1KRU0n-00042h-7M; Fri, 08 Aug 2008 17:36:17 +0200
-User-Agent: Thunderbird 2.0.0.16 (X11/20080725)
-In-Reply-To: <48998AC7.20204@univie.ac.at>
+	id S1752601AbYHHPg1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 11:36:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752588AbYHHPg1
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 11:36:27 -0400
+Received: from francis.fzi.de ([141.21.7.5]:8398 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752569AbYHHPg0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 11:36:26 -0400
+Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 8 Aug 2008 17:36:23 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0808080752210.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-OriginalArrivalTime: 08 Aug 2008 15:36:23.0937 (UTC) FILETIME=[83942F10:01C8F96C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91684>
 
-> The advantages for me would be:
->=20
-> a) I have multiple different passwords on the same server for differe=
-nt=20
-> directories, it's not possible to put this to a netrc (AS FAR AS I=20
-> KNOW). So i have to edit the netrc for every push, clone, ... -> very=
-=20
-> inconvenient
-> b) secondly (maybe not a super valid argument for you): netrc is not=20
-> considered to be the most secure thing, isn't it? Our network is inva=
-ded=20
-> every year "tested" by thousands of computer science students, so i=20
-> always try to have as few plain-text passwords as possible lying arou=
-nd=20
-> (one never knows - yes netrc has 0600).
->=20
-> i'd also prefer not to use the user:pass@server schema, but to be ask=
-ed,=20
-> to not show pass in the history and config file in .git although even=
-=20
-> user:pass@server would be an advantage because it solves a).
 
-Valid solutions would therefore include:
+Hi,
 
-* allow http://user@server urls, and ask user for password (A-rated)
-* provide for http.basic.user and http.basic.pass in .git/config file=20
-(B-rated, one has to take care about the security of his config file)
-* allow http://user:pass@server urls (C-rated, the consequences have=20
-been discussed on this list several times)
+On Fri, Aug 08, 2008 at 07:59:08AM +0200, Johannes Schindelin wrote:
+> This patch pair enables parallel tests.
+Glad to see that others have also picked up this topic.  I have also
+written parallel testing patches back in March, but did not send them
+out, as there were issues I could not resolve in a satisfactory way -
+and your patches doesn't seem to address theim either.
 
-J=C3=BCrgen
+There are a few tests involving http transfers, namely:
+  t5540-http-push.sh
+  t9115-git-svn-dcommit-funky-renames.sh=20
+  t9118-git-svn-funky-branch-names.sh
+  t9120-git-svn-clone-with-percent-escapes.sh
+
+These start an apache web server at the beginning of the test and shut
+it down after the test finished.  Obviously, if you run tests in
+parallel then these tests can also run concurrently.  The problem is
+with the svn tests, as all those tests use the same directory and port
+for the web server, resulting in failed tests with -jN.
+
+t5540 is not an issue at the moment, as it uses lib-httpd.sh, hence a
+different directory and a (possibly) different port than the svn
+tests.  However, who knows, in the future we might have other tests
+using lib-httpd.sh.
+
+The simplest solution would be to disable parallel testing altogether
+if http tests are enabled (GIT_TEST_HTTPD and SVN_HTTPD_PORT).  But
+IMHO it would be much better to have only one apache process for the
+_whole_ testsuite, and to have different paths for the test repos
+under its documentroot.  But yes, it's more difficult to implement; at
+least I could not do it.
+
+
+Regards,
+G=E1bor
