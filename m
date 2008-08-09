@@ -1,67 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tests: use $TEST_DIRECTORY to refer to the t/ directory
-Date: Sat, 09 Aug 2008 16:20:36 -0700
-Message-ID: <7vljz54vy3.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0808080752210.9611@pacific.mpi-cbg.de.mpi-cbg.de>
- <alpine.DEB.1.00.0808080754230.9611@pacific.mpi-cbg.de.mpi-cbg.de>
- <489BF95F.1070000@lsrfire.ath.cx> <7vprojgbbu.fsf@gitster.siamese.dyndns.org>
- <7vod43etuw.fsf_-_@gitster.siamese.dyndns.org> <489E1FDB.5070700@free.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: [PATCH 1/2] reflog test: add more tests for 'reflog delete'
+Date: Sun, 10 Aug 2008 01:33:29 +0200
+Message-ID: <1218324810-35376-1-git-send-email-pdebie@ai.rug.nl>
+Cc: Pieter de Bie <pdebie@ai.rug.nl>
+To: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Olivier Marin <dkr+ml.git@free.fr>
-X-From: git-owner@vger.kernel.org Sun Aug 10 01:21:54 2008
+	Git Mailinglist <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 10 01:35:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRxkv-0005H9-Fs
-	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 01:21:53 +0200
+	id 1KRxyE-0008CG-Lx
+	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 01:35:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752815AbYHIXUr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Aug 2008 19:20:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752809AbYHIXUr
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 19:20:47 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63771 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752594AbYHIXUq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Aug 2008 19:20:46 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 628A952840;
-	Sat,  9 Aug 2008 19:20:44 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 325AA5283F; Sat,  9 Aug 2008 19:20:38 -0400 (EDT)
-In-Reply-To: <489E1FDB.5070700@free.fr> (Olivier Marin's message of "Sun, 10
- Aug 2008 00:53:15 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CA5AEA82-6669-11DD-A6FC-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752847AbYHIXdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2008 19:33:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753108AbYHIXdl
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 19:33:41 -0400
+Received: from smtp-1.orange.nl ([193.252.22.241]:13955 "EHLO smtp-1.orange.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752847AbYHIXdj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2008 19:33:39 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6007.online.nl (SMTP Server) with ESMTP id 8FE097000083;
+	Sun, 10 Aug 2008 01:33:37 +0200 (CEST)
+Received: from localhost.localdomain (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6007.online.nl (SMTP Server) with ESMTP id 2FE007000081;
+	Sun, 10 Aug 2008 01:33:31 +0200 (CEST)
+X-ME-UUID: 20080809233337196.2FE007000081@mwinf6007.online.nl
+X-Mailer: git-send-email 1.6.0.rc1.288.g5b89f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91793>
 
-Olivier Marin <dkr+ml.git@free.fr> writes:
+This adds more tests for 'reflog delete' and marks it as
+broken, as currently a call to 'git reflog delete HEAD@{1}'
+deletes entries in the currently checked out branch's log,
+not the HEAD log.
 
-> Junio C Hamano a =C3=A9crit :
->>=20
->> all the tests still pass, but we would want extra sets of eyeballs o=
-n this
->> type of change to really make sure.
->
-> OK, I read the diff and found some trivial quoting issues that will b=
-reak the
-> following tests if $TEST_DIRECTORY contain a space:
->
->>  t/t4101-apply-nonl.sh                    |    2 +-
->>  t/t5100-mailinfo.sh                      |   18 +++++++++---------
->>  t/t7500-commit.sh                        |   16 ++++++++--------
+Noticed by John Wiegley
 
-Ah, GIT_EDITOR is dereferenced twice.  Sheesh.
+Signed-off-by: Pieter de Bie <pdebie@ai.rug.nl>
+---
 
-We could probably use test_set_editor() function from test-lib.sh, hmm?
+	johnw on IRC noticed this. This adds a test that shows the
+	problem. The next patch fixes the issue but I'm not sure of
+	the implementation. Perhaps we just shouldn't resolve symbolic
+	refs? I'm not really sure which functions to use then.
+
+ t/t1410-reflog.sh |   22 ++++++++++++++++++----
+ 1 files changed, 18 insertions(+), 4 deletions(-)
+
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 73f830d..3b9860e 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -175,7 +175,7 @@ test_expect_success 'recover and check' '
+ 
+ '
+ 
+-test_expect_success 'delete' '
++test_expect_failure 'delete' '
+ 	echo 1 > C &&
+ 	test_tick &&
+ 	git commit -m rat C &&
+@@ -188,16 +188,30 @@ test_expect_success 'delete' '
+ 	test_tick &&
+ 	git commit -m tiger C &&
+ 
+-	test 5 = $(git reflog | wc -l) &&
++	HEAD_entry_count=$(git reflog | wc -l)
++	master_entry_count=$(git reflog show master | wc -l)
++
++	test $HEAD_entry_count = 5 &&
++	test $master_entry_count = 5 &&
++
+ 
+ 	git reflog delete master@{1} &&
+ 	git reflog show master > output &&
+-	test 4 = $(wc -l < output) &&
++	test $(($master_entry_count - 1)) = $(wc -l < output) &&
++	test $HEAD_entry_count = $(git reflog | wc -l) &&
+ 	! grep ox < output &&
+ 
++	master_entry_count=$(wc -l < output)
++
++	git reflog delete HEAD@{1} &&
++	test $(($HEAD_entry_count -1)) = $(git reflog | wc -l) &&
++	test $master_entry_count = $(git reflog show master | wc -l) &&
++
++	HEAD_entry_count=$(git reflog | wc -l)
++
+ 	git reflog delete master@{07.04.2005.15:15:00.-0700} &&
+ 	git reflog show master > output &&
+-	test 3 = $(wc -l < output) &&
++	test $(($master_entry_count - 1)) = $(wc -l < output) &&
+ 	! grep dragon < output
+ 
+ '
+-- 
+1.6.0.rc0.320.g49281
