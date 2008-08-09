@@ -1,91 +1,115 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: linearising TopGit forests into patch series (was: [ANNOUNCE]
-	TopGit - A different patch queue manager)
-Date: Sat, 9 Aug 2008 03:08:21 +0200
-Message-ID: <20080809010821.GT10151@machine.or.cz>
-References: <20080803031424.GV32184@machine.or.cz> <20080807175623.GA16833@lapse.rw.madduck.net> <36ca99e90808071258h62b65981s20a5b053d9bc5754@mail.gmail.com> <20080808170658.GA16055@lapse.rw.madduck.net> <20080803031424.GV32184@machine.or.cz> <20080807175623.GA16833@lapse.rw.madduck.net>
+From: Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH] git-svn: Make it scream by minimizing temp files
+Date: Fri, 08 Aug 2008 21:12:38 -0400
+Message-ID: <489CEF06.7050204@griep.us>
+References: <1218235313-19480-1-git-send-email-marcus@griep.us> <7vd4kjazaz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	vcs distro packaging discussion list 
-	<vcs-pkg-discuss@lists.alioth.debian.org>,
-	Bert Wesarg <bert.wesarg@googlemail.com>
-To: martin f krafft <madduck@debian.org>
-X-From: git-owner@vger.kernel.org Sat Aug 09 03:09:28 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Eric Wong <normalperson@yhbt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 09 03:14:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRcxT-0003UB-0X
-	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 03:09:27 +0200
+	id 1KRd1u-0004Ij-HJ
+	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 03:14:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752589AbYHIBIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 21:08:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752580AbYHIBIZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 21:08:25 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:53014 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752568AbYHIBIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 21:08:24 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 0305F2C4C031; Sat,  9 Aug 2008 03:08:22 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080808170658.GA16055@lapse.rw.madduck.net> <20080807175623.GA16833@lapse.rw.madduck.net>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752778AbYHIBM5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2008 21:12:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbYHIBM4
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 21:12:56 -0400
+Received: from wx-out-0506.google.com ([66.249.82.239]:22959 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752681AbYHIBMz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 21:12:55 -0400
+Received: by wx-out-0506.google.com with SMTP id h29so592312wxd.4
+        for <git@vger.kernel.org>; Fri, 08 Aug 2008 18:12:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=BfrUcc2tlJJy+E1Ebwq5xAx2RfNuFDV3vszM/D8fpRs=;
+        b=n1Rq0x5EhOIRPhF+qNzA1ujMwNHFnqdIkW6/FM8JGAzkxfqFZbqTh7qaLU2Uqa8uY1
+         EG8Tvwt/rUAkXFNXp7lvxr2tYwYj5INnu8QNbaXu/HKDWqtOYv3FnybqRGwNN8AvzQOP
+         hFd6pDxPm1llI/Xaq6ph9n61hAvqzqG0HEnaA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=Kk/gur5Pk1R3bnNlIk2XJR81Y4yL+BOGlqdX/Z3RwsQmhNc1WHxw/GtkZXOhesyWvX
+         nauWqcGU1H1DvZBOw6Oe5KW8vr4JwP1ExvDfgc4LXqyoUcx4Pa5dMC97tdQ3AscV2Qyg
+         koIyXVeu0ampN2TPYlIbZoiFnBx/5WpRl88d0=
+Received: by 10.70.8.12 with SMTP id 12mr6827447wxh.89.1218244373622;
+        Fri, 08 Aug 2008 18:12:53 -0700 (PDT)
+Received: from ?192.168.1.64? ( [71.174.65.78])
+        by mx.google.com with ESMTPS id h8sm1486762wxd.11.2008.08.08.18.12.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 08 Aug 2008 18:12:52 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <7vd4kjazaz.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91737>
 
-Hi!
+I am working on that right now; however, against master I am getting
+checksum mismatches with my svn repository, so generating benchmarks
+against that requires committing a revert of ffe256f9, which makes
+things even slower. My work comp is running cygwin, and that could be=20
+why ffe256f9 is a problem.
 
-On Thu, Aug 07, 2008 at 02:56:24PM -0300, martin f krafft wrote:
-> Assuming a number of interdependent topic branches, does TopGit
-> provide a way for me to linearise/flatten/serialise these branches
-> in a one-patch-per-branch fashion, so that I could turn any TopGit
-> repository into a quilt series? I am only interested in a one-way
-> conversion from TopGit to quilt for now.
+I am, however using a smaller repository, namely that of the Boo
+Programming Language, to run some benchmarks.  I'm running it on a=20
+Linux box, and I'll publish the results as soon as they are ready. =20
 
-Not _yet_. But it very well could, and it should be really simple.
+I'll include:
 
-There are two parts:
+ffe256f9 and my patch
+ffe256f9 and no patch
+revert ffe256f9 and my patch
+revert ffe256f9 and no patch
 
-(i) First, getting a "tidied up" commit structure from TopGit, having
-one commit per patch (branch). This is something covered currently in
-the README by:
+Marcus
 
-	TODO: tg collapse for creating a one-commit-per-patch tidied up
-		history (for pulling by upstream)
+Junio C Hamano wrote:
+> Marcus Griep <marcus@griep.us> writes:
+>=20
+>> Currently, git-svn would create a temp file on four occasions:
+>> 1. Reading a blob out of the object db
+>> 2. Creating a delta from svn
+>> 3. Hashing and writing a blob into the object db
+>> 4. Reading a blob out of the object db (in another place in code)
+>>
+>> Any time git-svn did the above, it would dutifully create and then
+>> delete said temp file.  Unfortunately, this means that between 2-4
+>> temporary files are created/deleted per file 'add/modify'-ed in
+>> svn (O(n)).  This causes significant overhead and helps the inode
+>> counter to spin beautifully.
+>>
+>> By its nature, git-svn is a serial beast.  Thus, reusing a temp file
+>> does not pose significant problems.  "truncate and seek" takes much
+>> less time than "unlink and create".  This patch centralizes the
+>> tempfile creation and holds onto the tempfile until they are deleted
+>> on exit.  This significantly reduces file overhead, now requiring
+>> at most three (3) temp files per run (O(1)).
+>=20
+> Beautifully written analysis of the issue being tackled.
+>=20
+> But optimization patch should be backed by numbers --- do you have a
+> benchmark result of some sort that you would want to include here?
+>=20
+>=20
 
-So it's not implemented yet, but it should be *very* easy to do.
-
-(ii) Second, linearizing this commit structures to a series. This should
-be as simple as running
-
-	git log --pretty=email -p --topo-order
-
-on the collapsed history.
-
-> The reason for this is quite simply that while it's fabulous to use
-> e.g. Git for managing the source repository from which to build
-> distro packages, the resulting packages will have all
-> distro-specific changes applied or collated into a single diff. This
-> makes it hard for other distributions to grab patches, for upstream
-> to keep on top of what is being distributed, and for bug fixers to
-> separate patches and test only specific ones.
-
-This is exactly what TopGit seeks to alleviate.
-
-On Fri, Aug 08, 2008 at 02:06:58PM -0300, martin f krafft wrote:
-> Also, what happens if branches cross-merge?
-
-This would mean there is circular dependence between the branches, which
-is invalid setup for TopGit - you could not get a linear ordering out of
-the branches anyway; in result, each branch has to turn out to a single
-final Git commit - with circular dependencies, you cannot do that.
-
--- 
-				Petr "Pasky" Baudis
-The next generation of interesting software will be done
-on the Macintosh, not the IBM PC.  -- Bill Gates
+--=20
+Marcus Griep
+GPG Key ID: 0x5E968152
+=E2=80=94=E2=80=94
+http://www.boohaunt.net
+=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
