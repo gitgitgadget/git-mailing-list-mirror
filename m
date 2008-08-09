@@ -1,75 +1,73 @@
-From: =?UTF-8?B?IlBldGVyIFZhbGRlbWFyIE3DuHJjaCAoTGlzdHMpIg==?= 
-	<4ux6as402@sneakemail.com>
-Subject: Re: How to fix (and find) many git-* --check errors?
-Date: Sat, 09 Aug 2008 09:28:59 +0200
-Message-ID: <489D473B.3090406@sneakemail.com>
-References: <489C40BC.8000008@sneakemail.com> <7viqubcnop.fsf@gitster.siamese.dyndns.org>
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: [TopGit PATCH] tg.sh: Check for read permissions of help files
+Date: Sat, 9 Aug 2008 09:35:19 +0200
+Message-ID: <36ca99e90808090035r6331a118k5a26486de1acf002@mail.gmail.com>
+References: <1218009771-30358-1-git-send-email-bert.wesarg@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 09 09:30:13 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Bert Wesarg" <bert.wesarg@googlemail.com>, git@vger.kernel.org
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sat Aug 09 09:36:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRitv-0004Hy-I1
-	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 09:30:11 +0200
+	id 1KRizz-0005bn-KU
+	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 09:36:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752850AbYHIH3E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Aug 2008 03:29:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753215AbYHIH3E
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 03:29:04 -0400
-Received: from morch.com ([193.58.255.207]:50044 "EHLO morch.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752819AbYHIH3D (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2008 03:29:03 -0400
-Received: from [192.168.1.214] (ANice-157-1-71-161.w90-36.abo.wanadoo.fr [90.36.206.161])
-	by morch.com (Postfix) with ESMTP id 11F9D290D
-	for <git@vger.kernel.org>; Sat,  9 Aug 2008 09:31:34 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <7viqubcnop.fsf@gitster.siamese.dyndns.org>
+	id S1753058AbYHIHfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2008 03:35:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753766AbYHIHfV
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 03:35:21 -0400
+Received: from wx-out-0506.google.com ([66.249.82.228]:38932 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753058AbYHIHfU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2008 03:35:20 -0400
+Received: by wx-out-0506.google.com with SMTP id h29so644886wxd.4
+        for <git@vger.kernel.org>; Sat, 09 Aug 2008 00:35:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Mpt1MkMg9VUzPBjo4qHp9yCkjYV1duJti7QCe3U+0+8=;
+        b=I80Y7nNB8oPp8417isMt1A9gPVsXc7yKBAk84U6IB0McgSlEKDxcdXVT2JevM9ZBoa
+         9eVAXmz2pRZSKYKl1jZKMuNOj+WP7kTB4c/66quVvoG9DO9HFuFthknjLGsnkKDWsMJz
+         Tdx7oULFQHhwjiGNIJyQAcoLzACUQeY1+Kbuc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=T+wqtW9BjzoXjzpwmJVY0Rksvgnovtt+C+OBD6FIOZSARpvLjR2DpxmEyMG+lAgJWn
+         JPm4pDSoH8ETys7mYdEQHaeoRtHwdE+t6JhBr9Ajb2HWcEeRIXs3lJlkKrqsUaVHYg/S
+         XSm6kM8wMui8+/3XpxD+4+D8AlzXm2mGxShp4=
+Received: by 10.70.34.13 with SMTP id h13mr7254240wxh.81.1218267319163;
+        Sat, 09 Aug 2008 00:35:19 -0700 (PDT)
+Received: by 10.70.28.18 with HTTP; Sat, 9 Aug 2008 00:35:19 -0700 (PDT)
+In-Reply-To: <1218009771-30358-1-git-send-email-bert.wesarg@googlemail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91748>
 
-Junio C Hamano gitster-at-pobox.com |Lists| wrote:
-> Starting from a clean checkout, you could do something like this:
->=20
-> 	$ git reset --hard
->         $ rm .git/index
->         $ git diff --binary -R HEAD >P.diff
->         $ git apply --whitespace=3Dfix --cached <P.diff
-> 	$ git commit -m "Fixed all whitespace gotchas"
->=20
-> P.diff contains essentially everything, and you are recreating everyt=
-hing
-> from that patch.
+Petr,
 
-Thanks for taking the time to answer my many mails and questions. It=20
-really is helpful to me.
+On Wed, Aug 6, 2008 at 10:02, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+> -       elif [ -f "@sharedir@/tg-$1.txt" ] ; then
+> +       elif [ -f "@sharedir@/tg-$1.txt" -a -r "@sharedir@/tg-$1.txt" ] ; then
+I saw your simplified commit for this, but you should know, that '-r'
+tests only for read permissions, not for a regular file, so this test
+succeed also for a pipe/socket for which do you have read permissions.
 
-Rambling on:
+Bert
 
-Scary with the "rm .git/index"! It bascially creates an empty index it=20
-seems... That was news to me. As a newbie I try not to meddle too much=20
-in .git/ ...
-
-I tried the above on git.git, and it gave:
-warning: 485 lines applied after fixing whitespace errors.
-
-I would suggest finishing the above with:
-$ git checkout HEAD
-otherwise, the working dir is stuck at the old unfixed state.
-
-But like I posted earlier, I have another solution that works on=20
-selected files. With git, there is always more than one way to do=20
-things, it seems...
-
-Peter
---=20
-Peter Valdemar M=C3=B8rch
-http://www.morch.com
+>                cat "@sharedir@/tg-$1.txt"
+>        else
+>                echo "`basename $0`: no help for $1" 1>&2
+> --
+> tg: (e311d15..) t/check-read-permissions-of-help-files (depends on: master)
+>
