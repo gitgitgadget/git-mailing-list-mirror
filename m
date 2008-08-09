@@ -1,107 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] checkout --track: make up a sensible branch name if '-b'
  was omitted
-Date: Sat, 9 Aug 2008 23:08:04 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808092302520.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <alpine.DEB.1.00.0808091559460.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vtzdu6nb7.fsf@gitster.siamese.dyndns.org> <7vvdya55ur.fsf@gitster.siamese.dyndns.org>
+Date: Sat, 09 Aug 2008 14:11:59 -0700
+Message-ID: <7vsktd51wg.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0808091559460.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <7vtzdu6nb7.fsf@gitster.siamese.dyndns.org>
+ <7vvdya55ur.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0808092302520.24820@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 09 23:04:40 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Aug 09 23:13:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRvc6-0004W4-Nb
-	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 23:04:39 +0200
+	id 1KRvkM-0007H9-IE
+	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 23:13:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752706AbYHIVD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Aug 2008 17:03:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752670AbYHIVD3
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 17:03:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38069 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752576AbYHIVD2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2008 17:03:28 -0400
-Received: (qmail invoked by alias); 09 Aug 2008 21:03:26 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp051) with SMTP; 09 Aug 2008 23:03:26 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/iW50lFYPiB39jc7WMpx53b7TkaXQizVhHRVgKHB
-	vgtr61SH4QyR7q
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <7vvdya55ur.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1751465AbYHIVMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2008 17:12:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751314AbYHIVMH
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 17:12:07 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47941 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751001AbYHIVMG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2008 17:12:06 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 994A146B2E;
+	Sat,  9 Aug 2008 17:12:04 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id DF65946B2B; Sat,  9 Aug 2008 17:12:01 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0808092302520.24820@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
+ Schindelin's message of "Sat, 9 Aug 2008 23:08:04 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D1081D58-6657-11DD-ACA0-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91782>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Sat, 9 Aug 2008, Junio C Hamano wrote:
+> On Sat, 9 Aug 2008, Junio C Hamano wrote:
+> ...
+> At first, I liked the thoughts, but...
+>
+>> (1) You may not necessarily are used to --track, but may still want this
+>>     done.  It might not be a bad idea to associate this "local dwimming"
+>>     to creation of a new branch.  In other words, all of these:
+>> 
+>>     $ git checkout -b origin/next
+>
+> This cannot be dwimmed, as it literally means "start a new branch called 
+> 'origin/next' from HEAD".
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >
-> >> What does the user most likely want with this command?
-> >>
-> >> 	$ git checkout --track origin/next
-> >>
-> >> Exactly.  A branch called 'next', that tracks origin's branch 'next'.
-> >
-> > I like this.
-> >
-> > An explicit --track request from the command line (as opposed to 
-> > happening to have "branch.autosetupmerge" configuration) is a very 
-> > good cue that what the user wants to do is not to take a peek on a 
-> > detached HEAD but a more permanent playpen created.
-> 
-> A couple more thoughts.
+Right.  Forget this part.
 
-At first, I liked the thoughts, but...
+>> (2) If you work with somebody else, you might not want to have the name
+>>     mapping to be "s|^[^/]*/||" (i.e. drop "origin/"):
+>> 
+>>     $ git remote add -f jeff $url_to_his_repository
+>>     $ git checkout -b [--track] jeff-next jeff/next
+>>     $ git checkout -b [--track] origin-next origin/next
+>
+> As I said, I think you must not allow switching around the options -b and 
+> --track.
 
-> (1) You may not necessarily are used to --track, but may still want this
->     done.  It might not be a bad idea to associate this "local dwimming"
->     to creation of a new branch.  In other words, all of these:
-> 
->     $ git checkout -b origin/next
+Oh, that was a typo.  "git checkout [--track] -b" was what I meant, but
+the point was that with your patch "git checkout --track jeff/next" and
+"git checkout --track origin/next" would create 'next' branch which will
+not be useful for people who work with more than one repository.
 
-This cannot be dwimmed, as it literally means "start a new branch called 
-'origin/next' from HEAD".
+Yes, you can of course explicitly name what you want to create with -b,
+but that argument goes directly against the "usability enhancement" theme
+of your patch.
 
-So it would change the current behavior would, breaking people's habits (I 
-do "git checkout -b bla" a lot when I realize that I want to have the 
-current changes on a new branch).
-
->     $ git checkout -b --track origin/next
-
-This is a clear syntax error.  By the same reasoning, we would have to 
-allow "git add remote origin git://..."
-
-I think allowing this would confuse the syntax, and foster unreasonable 
-expectations.
-
->     $ git checkout --track origin/next
-
-That is what my patch does.
-
-> (2) If you work with somebody else, you might not want to have the name
->     mapping to be "s|^[^/]*/||" (i.e. drop "origin/"):
-> 
->     $ git remote add -f jeff $url_to_his_repository
->     $ git checkout -b [--track] jeff-next jeff/next
->     $ git checkout -b [--track] origin-next origin/next
-
-As I said, I think you must not allow switching around the options -b and 
---track.
-
-And the rest of what you describe is already supported.
-
-Ciao,
-Dscho
+Don't mistake this comment as "I oppose to the patch".  I was hoping
+people who care, not necessarily you, might come up with a clean UI and
+mechanism to let users affect how this dwimmery would work depending on
+how the users want to work, by raising this point as something to ponder
+on.
