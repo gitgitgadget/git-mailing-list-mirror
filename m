@@ -1,82 +1,58 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFH] filter-branch: ancestor detection weirdness
-Date: Sat, 9 Aug 2008 11:35:25 +0200
-Message-ID: <200808091135.28249.trast@student.ethz.ch>
-References: <200808080148.27384.trast@student.ethz.ch> <7viqub9dzi.fsf@gitster.siamese.dyndns.org> <200808091125.48897.trast@student.ethz.ch>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 2/3] Teach git diff-tree --stdin to diff trees
+Date: Sat, 9 Aug 2008 12:00:49 +0200
+Message-ID: <20080809100049.GB10804@diana.vm.bytemark.co.uk>
+References: <20080808204348.7744.46006.stgit@yoghurt> <20080808204829.7744.11661.stgit@yoghurt> <20080808214523.GA31424@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3472915.EjgLGiJvko";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Jan Wielemaker <J.Wielemaker@uva.nl>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 09 11:36:23 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 09 11:39:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRks2-00008p-UK
-	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 11:36:23 +0200
+	id 1KRkvU-0000u2-Db
+	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 11:39:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750806AbYHIJfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Aug 2008 05:35:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750802AbYHIJfU
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 05:35:20 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:29600 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750761AbYHIJfT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2008 05:35:19 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 9 Aug 2008 11:35:18 +0200
-Received: from [192.168.0.8] ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 9 Aug 2008 11:35:17 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <200808091125.48897.trast@student.ethz.ch>
-X-OriginalArrivalTime: 09 Aug 2008 09:35:17.0838 (UTC) FILETIME=[3BFD96E0:01C8FA03]
+	id S1750809AbYHIJix convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Aug 2008 05:38:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750802AbYHIJix
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 05:38:53 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1514 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750695AbYHIJix (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2008 05:38:53 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KRlFh-00038Y-00; Sat, 09 Aug 2008 11:00:49 +0100
+Content-Disposition: inline
+In-Reply-To: <20080808214523.GA31424@sigill.intra.peff.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91760>
 
---nextPart3472915.EjgLGiJvko
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On 2008-08-08 17:45:23 -0400, Jeff King wrote:
 
-Thomas Rast wrote:
-> Junio C Hamano wrote:
-> >=20
-> > Perhaps --full-history is needed to the rev-list call (and the recent
->=20
-> But --full-history cannot solve this problem; it would entirely defeat
-> the point of --subdirectory-filter.  (I haven't looked into what
-> --simplify-merges does yet.)
+> Hmm. Just looking at this as a git user, I would have expected it to
+> take one or more hashes, separated by spaces. If only one, then it
+> must be a commit, and it is diffed against its parents. If more than
+> one, then each must be a tree-ish. So you could diff a commit
+> against a tree (or a tag against a commit, or...).
 
-Actually, on this point I stand corrected, in some tests it has a good
-effect.  I'll look into it.
+I agree.
 
-=2D Thomas
+> And I think it might even be easier to code. ;)
 
-=2D-=20
-Thomas Rast
-trast@student.ethz.ch
+Not for someone who's almost entirely unfamiliar with the git API.
+=46inding the right functions to call takes a lot of time ... which is
+why I decided to chicken out and implement only the subset I actually
+needed. But it can be added later -- perhaps by me.
 
-
-
---nextPart3472915.EjgLGiJvko
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkidZOAACgkQqUud07tmzP2x2ACgitAne8qO1jHJbJOdOsYbqnnr
-HV0AmgKlbICriMzRa8nDH2VmCYZp2Xs5
-=VW5L
------END PGP SIGNATURE-----
-
---nextPart3472915.EjgLGiJvko--
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
