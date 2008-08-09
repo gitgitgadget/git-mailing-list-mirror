@@ -1,71 +1,70 @@
-From: "Bert Wesarg" <bert.wesarg@googlemail.com>
-Subject: Re: [TopGit PATCH] tg-create.sh: Support for multiple {to,cc,bcc} options
-Date: Sat, 9 Aug 2008 12:49:35 +0200
-Message-ID: <36ca99e90808090349sf08fab5sa0a3194f8a68ead7@mail.gmail.com>
-References: <1218141086-16063-1-git-send-email-bert.wesarg@googlemail.com>
-	 <20080809003357.GQ10151@machine.or.cz>
-	 <7vbq039dfa.fsf@gitster.siamese.dyndns.org>
-	 <20080809082701.GE32184@machine.or.cz>
+From: Christian Jaeger <christian@jaeger.mine.nu>
+Subject: Re: [PATCH (GITK BUGFIX)] gitk: Allow safely calling nukefile from
+ a run queue handler.
+Date: Sat, 09 Aug 2008 13:24:23 +0200
+Message-ID: <489D7E67.5050205@jaeger.mine.nu>
+References: <42d19ab224653b2e6988d7209a8d3e87e19858f8.1218207346.git.christian@jaeger.mine.nu> <200808091313.52528.angavrilov@gmail.com> <217ad8e755d8d51e2ec0f06b4bffa0864976f7e4.1218277122.git.christian@jaeger.mine.nu> <200808091441.50444.angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Aug 09 12:50:43 2008
+Cc: git@vger.kernel.org
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 09 13:27:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRm1x-0001gb-Oz
-	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 12:50:42 +0200
+	id 1KRmbX-0003ni-V5
+	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 13:27:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751314AbYHIKti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Aug 2008 06:49:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751278AbYHIKti
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 06:49:38 -0400
-Received: from wr-out-0506.google.com ([64.233.184.229]:52735 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751175AbYHIKth (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2008 06:49:37 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so983563wri.5
-        for <git@vger.kernel.org>; Sat, 09 Aug 2008 03:49:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=iELkWNMbigZfHB+8qrhtXC/eOeB30jJoZP5E6Bm2FvE=;
-        b=PyctHw92OmA3NP61NJEfOP/KCDwlCDKDWgIk0aRg865mit7/7XbEJ37Ps2ImwcYT1/
-         lUwKS/VMZYHGhGANEb0TmBPj/TT8phvCsDhd/q7wVLcyzY9og2A0TAcbNz3p1CigjUEl
-         MJioeZsPomQLvrsCwDXHp+Iow63KS2Qs5uhZo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=o83ftpxrATr6mVOYFsDvUz27EjukEPk0jXnrrGpa1KGvSnft1Gkq9kTYH5Q3qUuHUR
-         aelkMFXU7Gmp5NTkJRKBXeCS/ccOh0nrycyjsixS9Q9m4EhkUKT+tnhHVQnrVjKMUE/H
-         681ArN1NBpOTKeS1z/zo4y+JWQV1YggR3S1+I=
-Received: by 10.90.66.5 with SMTP id o5mr7879610aga.94.1218278975296;
-        Sat, 09 Aug 2008 03:49:35 -0700 (PDT)
-Received: by 10.70.28.18 with HTTP; Sat, 9 Aug 2008 03:49:35 -0700 (PDT)
-In-Reply-To: <20080809082701.GE32184@machine.or.cz>
-Content-Disposition: inline
+	id S1751424AbYHILY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2008 07:24:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751413AbYHILY3
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 07:24:29 -0400
+Received: from ethlife-a.ethz.ch ([129.132.49.178]:39749 "HELO ethlife.ethz.ch"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751282AbYHILY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2008 07:24:28 -0400
+Received: (qmail 15257 invoked from network); 9 Aug 2008 11:24:26 -0000
+Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
+  by localhost with SMTP; 9 Aug 2008 11:24:26 -0000
+Received: (qmail 17943 invoked from network); 9 Aug 2008 11:24:23 -0000
+Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
+  by elvis-jaeger.mine.nu with SMTP; 9 Aug 2008 11:24:23 -0000
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <200808091441.50444.angavrilov@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91765>
 
-On Sat, Aug 9, 2008 at 10:27, Petr Baudis <pasky@suse.cz> wrote:
->> >> +
->> >> +  git config --get-all topgit.$1 2>/dev/null |
->> >> +          sed -e "s/^/$prefix /g"
->> >> +}
-> I still don't understand the stderr redirect, though.
-Just precaution, I think. It seems unnecessary.
+Alexander Gavrilov wrote:
+> 	Please test if this patch fixes it.
+>   
 
-Bert
->
->                                Petr "Pasky" Baudis
->
+Yes, with that patch it works reliably.
+
+BTW here's a patch to your patch to make it apply on top of 1.6.0.rc2:
+
+--- patch.eml.1	2008-08-09 13:17:30.000000000 +0200
++++ patch.eml	2008-08-09 13:14:22.000000000 +0200
+@@ -96,10 +96,10 @@
+  gitk |   14 ++++++++------
+  1 files changed, 8 insertions(+), 6 deletions(-)
+ 
+-diff --git a/gitk b/gitk
+-index b523c98..18d000c 100755
+---- a/gitk
+-+++ b/gitk
++diff --git a/gitk-git/gitk b/gitk-git/gitk
++index b523c98..18d000c 100644
++--- a/gitk-git/gitk
+++++ b/gitk-git/gitk
+ @@ -22,11 +22,11 @@ proc gitdir {} {
+  # run before X event handlers, so reading from a fast source can
+  # make the GUI completely unresponsive.
+
+
+
+Christian.
