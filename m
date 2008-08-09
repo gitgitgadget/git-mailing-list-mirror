@@ -1,92 +1,49 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFH] filter-branch: ancestor detection weirdness
-Date: Sat, 9 Aug 2008 02:16:22 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808090212060.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <200808080148.27384.trast@student.ethz.ch> <200808081614.44422.trast@student.ethz.ch> <alpine.DEB.1.00.0808081632580.24820@pacific.mpi-cbg.de.mpi-cbg.de> <200808082037.49918.trast@student.ethz.ch>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] [TopGit] Pretty print the help creation commands in
+	Makefile.
+Date: Sat, 9 Aug 2008 02:28:55 +0200
+Message-ID: <20080809002855.GP10151@machine.or.cz>
+References: <1218177797-21589-1-git-send-email-bert.wesarg@googlemail.com> <1218127155-32192-1-git-send-email-bert.wesarg@googlemail.com> <1218009771-30358-1-git-send-email-bert.wesarg@googlemail.com> <1218008964-27286-1-git-send-email-bert.wesarg@googlemail.com> <20080806024348.GF11179@maggie.localnet>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Jan Wielemaker <J.Wielemaker@uva.nl>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Aug 09 02:12:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Russell Steicke <russellsteicke@gmail.com>,
+	Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 09 02:30:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRc4h-00024f-Nx
-	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 02:12:52 +0200
+	id 1KRcLV-0005Fh-1f
+	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 02:30:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754742AbYHIALt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2008 20:11:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754730AbYHIALt
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 20:11:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34872 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754604AbYHIALs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2008 20:11:48 -0400
-Received: (qmail invoked by alias); 09 Aug 2008 00:11:46 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp027) with SMTP; 09 Aug 2008 02:11:46 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+3sSh1CYm38crWCkp4yNJJ46zjSMhe9IcU/AmA8t
-	3VlX+9LNcyXTJ/
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <200808082037.49918.trast@student.ethz.ch>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1750695AbYHIA27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2008 20:28:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752108AbYHIA26
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Aug 2008 20:28:58 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:58005 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752105AbYHIA26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2008 20:28:58 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 621C72C4C02B; Sat,  9 Aug 2008 02:28:55 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1218177797-21589-1-git-send-email-bert.wesarg@googlemail.com> <1218127155-32192-1-git-send-email-bert.wesarg@googlemail.com> <1218009771-30358-1-git-send-email-bert.wesarg@googlemail.com> <1218008964-27286-1-git-send-email-bert.wesarg@googlemail.com> <20080806024348.GF11179@maggie.localnet>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91731>
 
-Hi,
+  Hi,
 
-On Fri, 8 Aug 2008, Thomas Rast wrote:
+  thanks, patches applied (after heavy dose of swearing in the general
+direction of git-am and git-apply at #git - now I'm really ashamed
+I've ever put "git is well-suited for patch-oriented workflows" on
+any of my slides).
 
-> Johannes Schindelin wrote:
-> > On Fri, 8 Aug 2008, Thomas Rast wrote:
-> > 
-> > > I think a more careful use of rev-list -1 is actually a correct and 
-> > > easy way to figure out an ancestor.
-> > 
-> > I have not looked at your patch closely, or at your explanation, but I 
-> > am really certain that every attempt to replace the --boundary with a 
-> > -1 must fail.
-> > 
-> > Let me show you why I think that.  Just look at this history:
-> > 
-> > A - B - C
-> >   /
-> > D
-> >
-> > > > Where all commits except B touch the inside directory.  Two 
-> > > > options:
-> 
-> 'rev-list' "solves" this problem for us.  At the point where we are 
-> rewriting the branch pointers, commits have already been rewritten to 
-> whatever 'git rev-list --parents -- $subdir' told us to make them.  I 
-> think there are only two cases for its output:
-> 
-> (a) Both A and D bring the same subdirectory contents.  'rev-list
->     --parents -- $subdir' drops one side of the merge during pruning. It 
->     does not look past the merge to see whether the contents were 
->     arrived at via different changesets.  Thus the history becomes
-> 
->       A' -- C'
-> 
->       D'
-> 
->     and even that only if D was reachable by a different ref,
->     otherwise D' is simply dropped.
-
-And this is what I call wrong.  Simply dropping one side of the equation 
-is not what I call "sane".
-
-If you drop information, you are disagreeing with "content is king".
-
-But hey, if other people agree with you, and this kind of thinking ends 
-up in Git proper, I can still resort to other DVCSes.
-
-Ciao,
-Dscho
+-- 
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
