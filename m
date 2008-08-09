@@ -1,114 +1,120 @@
-From: "Bert Wesarg" <bert.wesarg@googlemail.com>
-Subject: Re: [TopGit PATCH 2/2] tg-import.sh: A dump quilt queue importer
-Date: Sat, 9 Aug 2008 09:56:58 +0200
-Message-ID: <36ca99e90808090056n63ce97bduc64a24a524eae2b9@mail.gmail.com>
-References: <1218219588-6849-1-git-send-email-bert.wesarg@googlemail.com>
-	 <1218219588-6849-2-git-send-email-bert.wesarg@googlemail.com>
-	 <20080809005736.GR10151@machine.or.cz>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git reset --hard isn't resetting
+Date: Sat, 9 Aug 2008 01:08:25 -0700
+Message-ID: <20080809080825.GA30694@hand.yhbt.net>
+References: <1c5969370808060941q59cb8f7fhabee3ef3c5107715@mail.gmail.com> <32541b130808061102q752076a8ydc02fef4e799491f@mail.gmail.com> <1c5969370808071806g1f989260n55a4b8bebfedb6e@mail.gmail.com> <32541b130808080740q249cb0f6t4395cc2623e67c5a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Aug 09 10:00:01 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Matt Graham <mdg149@gmail.com>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 09 10:09:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRjMm-0002IC-EK
-	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 10:00:00 +0200
+	id 1KRjW1-0004HS-RP
+	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 10:09:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753647AbYHIH5A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Aug 2008 03:57:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753175AbYHIH5A
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 03:57:00 -0400
-Received: from wx-out-0506.google.com ([66.249.82.234]:41535 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752654AbYHIH47 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2008 03:56:59 -0400
-Received: by wx-out-0506.google.com with SMTP id h29so646381wxd.4
-        for <git@vger.kernel.org>; Sat, 09 Aug 2008 00:56:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=NHHjF7iOd/l1I5h+6Rj0uOZa3OFtMRZ0surW+ld7AmI=;
-        b=UqPOuhKSmbpUmIWQIBUJxrs5dhllIr0J9fWmxXVWVdrV8lIFs7XV0w5mlJabUd8fgr
-         4fzyabtfLQcxtbW4AvFrBg2B3kCqaEdQKkli9haJH9VFjx9X3HKUNEDwWTzCwLchSMez
-         mUZkWkKbsTAkxaw2cgG9dCx+MJJCVd0IVe1gA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=d8uAuYaOaNwnmctpPZz6w0TMq8UEifpSJfGtG4VeIilOhNvM+CGw5zSFvqm6MrEnnN
-         GMpvsQcKoqUT2A+5yoNaJZ/T6CAMRbc8w+hQ81754PNtM7AvBT0So4mSyUn3JXcduw+R
-         mgQBMEpA1PCxJJXDvkWz2ZmJd8+Bww2pgXw54=
-Received: by 10.70.36.20 with SMTP id j20mr7329366wxj.15.1218268618173;
-        Sat, 09 Aug 2008 00:56:58 -0700 (PDT)
-Received: by 10.70.28.18 with HTTP; Sat, 9 Aug 2008 00:56:58 -0700 (PDT)
-In-Reply-To: <20080809005736.GR10151@machine.or.cz>
+	id S1754560AbYHIIIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2008 04:08:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753688AbYHIIIa
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 04:08:30 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:57949 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753175AbYHIII0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2008 04:08:26 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 398362DC01B;
+	Sat,  9 Aug 2008 01:08:26 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <32541b130808080740q249cb0f6t4395cc2623e67c5a@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91751>
 
-On Sat, Aug 9, 2008 at 02:57, Petr Baudis <pasky@suse.cz> wrote:
-> On Fri, Aug 08, 2008 at 08:19:48PM +0200, Bert Wesarg wrote:
->> +tg import
->> +~~~~~~~~~
->> +     Import a quilt queue into TopGit. First argument is the series
->> +     file from quilt. Second is the prefix for the topic names
->> +     (i.e. "t/"). All remaining arguments are the dependencies for
->> +     the first patch in the series.
->
-> Sensible usage, but I'm not happy with making tg import quilt-only;
-> what if we will say want to import to topgit from existing branches,
-> or from StGIT or something else? The command name is good, but maybe
-> I'd add a required --quilt switch. After all, this is not a command you
-> run three times a day by hand.
-Your absolutly right, that import should not be quilt specific. It was
-just what I currently need, so I made it.
+Avery Pennarun <apenwarr@gmail.com> wrote:
+> On Thu, Aug 7, 2008 at 9:06 PM, Matt Graham <mdg149@gmail.com> wrote:
+> > On Wed, Aug 6, 2008 at 2:02 PM, Avery Pennarun <apenwarr@gmail.com> wrote:
+> > Indeed that was the problem.  In fact, l now noticed that my linux
+> > machine has both versions as well.  Being case sensitive, it didn't
+> > mind and the problem wasn't obvious.
+> 
+> Did your Linux machine import the data using git-svn, or did it clone
+> a repo from Windows that imported using git-svn?
+> 
+> I can imagine a situation where git-svn on Windows could get confused
+> and add the wrong filenames (although it would be kind of unlikely if
+> they really were removed in one revision, then readded in another; why
+> would git-svn even think about the old names in that case?).  However,
+> there's no explanation for a Linux system introducing such a mistake,
+> since the two files are just unrelated as far as Linux is concerned.
 
->
->> + Use '-s' if you want to strip
->> +     common patch suffixes from the patch file name (like .diff and
->> +     .patch).
->
-> When *wouldn't* we want to do this? Doesn't it make sense to make this
-> the default?
-I suggest never ;-)
+git-svn *never* touches the working tree on the filesystem directly.
+It only does so via git-rebase or git-reset when dcommiting.
 
->> +             # add all modified files from patch to index
->> +             # (and prepending it with $root_dir)
->> +             # be stupid, hard coded -p1 --strip=1
->> +             lsdiff --strip=1 "$patchfile" |
->> +                     sed -e "s/^/$root_dir_esc\//" |
->> +                     xargs git add
->
-> lsdiff? I don't have this tool. And this won't work with file removals
-> properly anyway.
-lsdiff comes with the patchutils package.
+That said, I have no idea (nor interest in knowing the gory details) as
+to how/if git works on case-insensitive filesystems.  git-svn certainly
+has never done any special with them; git-svn itself will always take
+path names that SVN provides as-is.
 
->
-> I guess git add -u is too new for us, so you might opt for this snippet
-> I've used in git-filter-branch:
->
->        (
->                git diff-index -r --name-only HEAD
->                git ls-files --others
->        ) |
->        git update-index --add --replace --remove --stdin
->
-> Or even better, use git apply?
-Ohh yeah, that sounds reasonable. Sometimes it an be so easy.
+> > This worked fine exactly as you said.  I'm curious what will happen when I do
+> >   git svn dcommit
+> > These aren't my files and I'm sort of using git svn on the sly.  I'd
+> > prefer to not have something weird happen to the svn repository due to
+> > this.  Due to the schedule, our tolerance for screwing things up b/c I
+> > want to use git will be low.  And my argument that we should have used
+> > git from the outset probably won't help any.
 
-Thanks for the comments and input.
+Matt: try using --dry-run with dcommit to figure out what it's doing.
 
-Bert
->
-> --
->                                Petr "Pasky" Baudis
+Whenever git-svn dcommits to SVN, it reads all of its pathnames from
+already-committed history in git, so it's unlikely to be affected
+by issues on the local filesystem.  However the rebase/reset after
+dcommit could be problematic.  --no-rebase can probably be used with
+dcommit here to avoid issues with rebase.
+
+That said, I take no responsibility for any screwups that may happen.
+(especially since Windows is involved).
+
+> If your git-svn repo doesn't reflect *exactly* the set of files in
+> your real svn repo, then you've hit a pretty bad bug and you're almost
+> certainly going to have problems with dcommit.  On the other hand,
+> you're unlikely to manage to screw up your svn repo, assuming the
+> files you deleted were the ones that weren't supposed to be there;
+> "extra deleting" them from svn wouldn't be dangerous.  I'd expect git
+> svn dcommit to just fail with a weird error.
+
+git-svn should always die/croak immediately if it notices anything
+wrong.  Again, there is no guarantee nor warranty :)
+
+> >> I'm not really sure what git should do better in this case, although
+> >> the current behaviour is obviously a bit confusing.
+> >
+> > Yes, if SVN is going to have both versions, it's understandable that
+> > git wouldn't know what to do.  Unfortunately, it looks like SVN only
+> > had one version at a time.  So it seems git somehow revived the
+> > uppercase version when the lowercase one was readded through git svn.
+> 
+> Since this seems virtually impossible, it would be nice if you could
+> double check your SVN repo to make sure the problem really doesn't
+> exist there in *any* version.  It just doesn't seem likely that git
+> would have had this problem if the files were cleanly removed in one
+> revision, then added in a later one.  I could imagine it if they were
+> renamed all in one revision, though, or if there was *ever* an svn
+> revision where both files existed at once.  In all those cases we
+> effectively have a bug in git-svn, but at least in the latter cases
+> it's an explainable one :)
+
+One possibility is that the SVN libraries themselves fail to report
+case-changing renames on Windows when git-svn is fetching.  And then
+(hypothetically) git on cygwin tries to do something smart somewhere
+with case-insensitive paths.
+
+The above is purely a hunch, anybody else want to investigate that
+possibility?
+
+-- 
+Eric Wong
