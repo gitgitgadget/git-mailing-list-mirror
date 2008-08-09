@@ -1,151 +1,157 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] checkout --track: make up a sensible branch name if '-b'
- was omitted
-Date: Sat, 9 Aug 2008 16:00:12 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808091559460.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH] git-svn: Make it scream by minimizing temp files
+Date: Sat, 09 Aug 2008 11:45:14 -0400
+Message-ID: <489DBB8A.2060207@griep.us>
+References: <1218235313-19480-1-git-send-email-marcus@griep.us> <20080809062521.GA10480@untitled>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Aug 09 15:57:12 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Aug 09 17:46:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRowM-0000z5-B3
-	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 15:57:06 +0200
+	id 1KRqeG-0001Rj-8b
+	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 17:46:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752086AbYHINzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Aug 2008 09:55:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751996AbYHINzi
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 09:55:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54049 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751800AbYHINzh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2008 09:55:37 -0400
-Received: (qmail invoked by alias); 09 Aug 2008 13:55:35 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp018) with SMTP; 09 Aug 2008 15:55:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Ms39b4nhMR4C3FDXD5rQ2TR2OI2ellJ0lqrOaEm
-	P6vcGJSLD2wddb
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.44
+	id S1753436AbYHIPpa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Aug 2008 11:45:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753415AbYHIPpa
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 11:45:30 -0400
+Received: from wr-out-0506.google.com ([64.233.184.225]:65392 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753418AbYHIPp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2008 11:45:28 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so1023280wri.5
+        for <git@vger.kernel.org>; Sat, 09 Aug 2008 08:45:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=dQ7XOp5IXRcuzddH5P7foIY8nEVvuZU92J/GUS/3C8k=;
+        b=c+CCoqxvXKfUWGp8bIR0G670PKaw3YjuiLKpHcj11xiR/OyQJRBWxbXiR3PVlZZ/sX
+         NnZaari5Y3fSIFYVLj1xi3Jtqyk5qhiRRKBN+ZgHDkQd3NSolj1tsrqE1tgx0+vWP+EJ
+         I9Putr3LQYg5PNT1xzyPCt+HrO/tiNGVGym6g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=xwMWbEBcCWV9314rloZMozId74ALCOHzaA57PHqIusqgGqTCaiGUfiGtAEljsiH5I8
+         AQCeEKpPuwsnorW97r/QIvged8tG2mufuf9gD50bUKWo3SRV8Ye7iyg5nPy7XoZegnnf
+         HeMs1hmaGr0mTVk2A8dVbzkkw+tDeT4nxTD/8=
+Received: by 10.90.72.3 with SMTP id u3mr8262755aga.45.1218296727375;
+        Sat, 09 Aug 2008 08:45:27 -0700 (PDT)
+Received: from ?192.168.1.64? ( [71.174.65.78])
+        by mx.google.com with ESMTPS id 24sm2892805wrl.8.2008.08.09.08.45.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 09 Aug 2008 08:45:26 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <20080809062521.GA10480@untitled>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91769>
 
+Eric Wong wrote:
+> Wow.  I've considered this in the past didn't think there would be a
+> significant difference (of course I'm always network I/O bound).  Whi=
+ch
+> platform and filesystem are you using are you using for tests?
+>=20
+> I don't notice any difference running the test suite on Linux + ext3
+> here, but the test suite is not a good benchmark :)
 
-What does the user most likely want with this command?
+Yeah, much of the test suite uses small repositories without much histo=
+ry.
+Where you see the benefit is with large repositories with many files.
+In such cases, even a small speedup can reduce the total import time=20
+significantly.
 
-	$ git checkout --track origin/next
+My benchmark against a large repository uses the svn we have at work, b=
+ut
+there is currently a planned power outage, so I'll have to wait until=20
+tonight to run my benchmarks there (and they'll take significant time).
 
-Exactly.  A branch called 'next', that tracks origin's branch 'next'.
-Make it so.
+Nonetheless, my tests against the smaller Boo repository showed almost =
+no
+change in user time, but a 10% reduction in system time used.  There wa=
+s
+also a small (1%) drop in minor page faults.  I'm confident in these
+results, but won't certify them until I'm able to run the tests on a mu=
+ch
+larger repository.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+>> +use File::Temp qw/ :seekable /;
+>=20
+> qw/ :seekable / does not appear in my version of Perl (5.8.8-7etch3 f=
+rom
+> Debian stable)  Just having "use File::Temp;" there works for me.
 
-	This comes in the wake for Shawn's call for more user-friendliness.
+My newbishness in perl shows.  I'll change it to a simple 'use'.
 
- Documentation/git-checkout.txt |   10 +++++++++-
- builtin-checkout.c             |   21 ++++++++++++++++++---
- t/t7201-co.sh                  |   11 +++++++++++
- 3 files changed, 38 insertions(+), 4 deletions(-)
+>> +		seek $TEMP_FILES{$fd}, 0, 0 or croak $!;
+>=20
+> Perhaps a sysseek in addition to the seek above would help
+> with the problems you mentioned in the other email.
+>=20
+> 		sysseek $TEMP_FILES{$fd}, 0, 0 or croak $!;
+>=20
+> (It doesn't seem to affect me when running the test suite, though).
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 5aa69c0..43d4502 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -8,7 +8,7 @@ git-checkout - Checkout a branch or paths to the working tree
- SYNOPSIS
- --------
- [verse]
--'git checkout' [-q] [-f] [[--track | --no-track] -b <new_branch> [-l]] [-m] [<branch>]
-+'git checkout' [-q] [-f] [--track | --no-track] [-b <new_branch> [-l]] [-m] [<branch>]
- 'git checkout' [<tree-ish>] [--] <paths>...
- 
- DESCRIPTION
-@@ -21,6 +21,10 @@ specified, <new_branch>.  Using -b will cause <new_branch> to
- be created; in this case you can use the --track or --no-track
- options, which will be passed to `git branch`.
- 
-+As a convenience, --track will default to create a branch whose
-+name is constructed from the specified branch name by stripping
-+the first namespace level.
-+
- When <paths> are given, this command does *not* switch
- branches.  It updates the named paths in the working tree from
- the index file (i.e. it runs `git checkout-index -f -u`), or
-@@ -59,6 +63,10 @@ OPTIONS
- 	'git-checkout' and 'git-branch' to always behave as if '--no-track' were
- 	given. Set it to `always` if you want this behavior when the
- 	start-point is either a local or remote branch.
-++
-+If no '-b' option was given, a name will be made up for you, by stripping
-+the part up to the first slash of the tracked branch.  For example, if you
-+called 'git checkout --track origin/next', the branch name will be 'next'.
- 
- --no-track::
- 	Ignore the branch.autosetupmerge configuration variable.
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index 411cc51..e95eab9 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -437,13 +437,28 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_default_config, NULL);
- 
--	opts.track = git_branch_track;
-+	opts.track = -1;
- 
- 	argc = parse_options(argc, argv, options, checkout_usage,
- 			     PARSE_OPT_KEEP_DASHDASH);
- 
--	if (!opts.new_branch && (opts.track != git_branch_track))
--		die("git checkout: --track and --no-track require -b");
-+	/* --track without -b should DWIM */
-+	if (opts.track && opts.track != -1 && !opts.new_branch) {
-+		char *slash;
-+		if (!argc || !strcmp(argv[0], "--"))
-+			die ("--track needs a branch name");
-+		slash = strchr(argv[0], '/');
-+		if (slash && !prefixcmp(argv[0], "refs/"))
-+			slash = strchr(slash + 1, '/');
-+		if (slash && !prefixcmp(argv[0], "remotes/"))
-+			slash = strchr(slash + 1, '/');
-+		if (!slash || !slash[1])
-+			die ("Missing branch name; try -b");
-+		opts.new_branch = slash + 1;
-+	}
-+
-+	if (opts.track == -1)
-+		opts.track = git_branch_track;
- 
- 	if (opts.force && opts.merge)
- 		die("git checkout: -f and -m are incompatible");
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 9ad5d63..943dd57 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -337,4 +337,15 @@ test_expect_success \
-     test refs/heads/delete-me = "$(git symbolic-ref HEAD)" &&
-     test_must_fail git checkout --track -b track'
- 
-+test_expect_success \
-+    'checkout with --track fakes a sensible -b <name>' '
-+    git update-ref refs/remotes/origin/koala/bear renamer &&
-+    git checkout --track origin/koala/bear &&
-+    test "refs/heads/koala/bear" = "$(git symbolic-ref HEAD)" &&
-+    test "$(git rev-parse HEAD)" = "$(git rev-parse renamer)"'
-+
-+test_expect_success \
-+    'checkout with --track, but without -b, fails with too short tracked name' '
-+    test_must_fail git checkout --track renamer'
-+
- test_done
--- 
-1.6.0.rc2.26.g0d7ea
+Sounds like a good idea, but I found the source of my cygwin issue,
+namely that /tmp (which perl uses for its temp files) was mounted
+in textmode.  I fixed that by remounting that folder in binmode.
+
+Nonetheless, if consumers may use sysread, after getting the file handl=
+e
+then we'll want to use sysseek.
+
+>> +	} else {
+>> +		$TEMP_FILES{$fd} =3D File::Temp->new(
+>> +									TEMPLATE =3D> 'GitSvn_XXXXXX',
+>> +									DIR =3D> File::Spec->tmpdir
+>> +									) or croak $!;
+>=20
+> Way too much indentation :x
+
+That's what I get for assuming a tab width of 4.  I'll redo it with
+about half as many tabs.
+
+>> +		if (defined $autoflush) {
+>> +			$TEMP_FILES{$fd}->autoflush($autoflush);
+>> +		}
+>=20
+> Given how much we interact with external programs, I'd rather force
+> every autoflush on every file handle to avoid subtle bugs on
+> different platforms.  It's faster in some (most?) cases, too.
+
+That sounds good to me.
+
+> Also, this seems generic enough that other programs (git-cvsimport
+> perhaps) can probably use it, too.  So maybe it could go into Git.pm =
+or
+> a new module, Git/Tempfile.pm?
+
+I'd advocate the latter since it's not really Git functionality, but
+rather a support, so a submodule would perhaps be the better placement.
+
+Also, I came up with one more optimization inside 'sub close_file', so
+I'll roll that in too.  Tell me where you/the community would prefer=20
+the tempfile functionality, and I'll submit a new patch series with=20
+one patch for the module and one patch for git-svn.
+
+By then, I should have some better benchmark results.
+
+--=20
+Marcus Griep
+GPG Key ID: 0x5E968152
+=E2=80=94=E2=80=94
+http://www.boohaunt.net
+=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
