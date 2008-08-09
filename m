@@ -1,108 +1,63 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFH] filter-branch: ancestor detection weirdness
-Date: Sat, 9 Aug 2008 12:00:19 +0200
-Message-ID: <200808091200.21634.trast@student.ethz.ch>
-References: <200808080148.27384.trast@student.ethz.ch> <200808082037.49918.trast@student.ethz.ch> <alpine.DEB.1.00.0808090212060.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart8253307.IxbjYPbSuh";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Aug 09 12:02:34 2008
+From: Christian Jaeger <christian@jaeger.mine.nu>
+Subject: [PATCH] gitk: make diff and tree display work reliably again
+Date: Sat, 9 Aug 2008 12:04:43 +0200
+Message-ID: <217ad8e755d8d51e2ec0f06b4bffa0864976f7e4.1218277122.git.christian@jaeger.mine.nu>
+References: <42d19ab224653b2e6988d7209a8d3e87e19858f8.1218207346.git.christian@jaeger.mine.nu> <200808091313.52528.angavrilov@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 09 12:26:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRlHN-0005Kd-RP
-	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 12:02:34 +0200
+	id 1KRlek-0002yr-Qy
+	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 12:26:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750944AbYHIKAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Aug 2008 06:00:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750929AbYHIKAO
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 06:00:14 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:39184 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750733AbYHIKAN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2008 06:00:13 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 9 Aug 2008 12:00:10 +0200
-Received: from [192.168.0.8] ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 9 Aug 2008 12:00:11 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0808090212060.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-X-OriginalArrivalTime: 09 Aug 2008 10:00:11.0134 (UTC) FILETIME=[B61079E0:01C8FA06]
+	id S1751193AbYHIKZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2008 06:25:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751181AbYHIKZk
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 06:25:40 -0400
+Received: from ethlife-a.ethz.ch ([129.132.49.178]:38589 "HELO ethlife.ethz.ch"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751177AbYHIKZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2008 06:25:39 -0400
+Received: (qmail 11370 invoked by uid 1000); 9 Aug 2008 10:25:37 -0000
+In-Reply-To: <200808091313.52528.angavrilov@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91762>
 
---nextPart8253307.IxbjYPbSuh
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+This reverts parts of the commit e439e092b8ee5248e92ed4cb4400f9dbed70f689.
 
-Johannes Schindelin wrote:
-> But hey, if other people agree with you, and this kind of thinking ends=20
-> up in Git proper, I can still resort to other DVCSes.
+gitk would not show diffs (or trees when choosing tree view) about
+half of the times it is started, it would only show the commit
+messages. Sometimes it took dozens of times to get it to show a diff
+again, then show it again the next 3 starts, then the next 2 starts
+not, then the next 2 starts would show it again, and so on.
 
-BTW, the following is fairly ironic.  (It was later rewritten in
-813b473 to the current one-shot 'rev-list --parents' form.)
+The problem has been observed on Linux 2.6.26 x86_64 (Core 2 Duo),
+Debian lenny, tk8.4 8.4.19-2. (Playing with frequency scaling settings
+didn't show a difference; switching off one core made it more
+reproducible.)
 
-commit 685ef546b62d063c72b401cd38b83a879301aac4
-Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Date:   Fri Jun 8 01:30:35 2007 +0100
+Signed-off-by: Christian Jaeger <christian@jaeger.mine.nu>
+---
+ gitk-git/gitk |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-    Teach filter-branch about subdirectory filtering
-   =20
-    With git-filter-branch --subdirectory-filter <subdirectory> you can
-    get at the history, as seen by a certain subdirectory. The history
-    of the rewritten branch will only contain commits that touched that
-    subdirectory, and the subdirectory will be rewritten to be the new
-    project root.
-   =20
-    Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-[...snip...]
-@@ -224,7 +228,13 @@ set_ident () {
-=20
- # list all parent's object names for a given commit
- get_parents () {
-=2D	git-rev-list -1 --parents "$1" | sed "s/^[0-9a-f]*//"
-+	case "$filter_subdir" in
-+	"")
-+		git-rev-list -1 --parents "$1"
-+		;;
-+	*)
-+		git-rev-list -1 --parents "$1" -- "$filter_subdir"
-+	esac | sed "s/^[0-9a-f]*//"
- }
-=20
- tempdir=3D.git-rewrite
-[...snip...]
-
-=2D-=20
-Thomas Rast
-trast@student.ethz.ch
-
-
-
---nextPart8253307.IxbjYPbSuh
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkidarUACgkQqUud07tmzP0GBACgllYlBbcx56oThh+qS1OhssQz
-ga8An15YUgjJ4if1gzXP+fkGDO1PP7DF
-=Cpoc
------END PGP SIGNATURE-----
-
---nextPart8253307.IxbjYPbSuh--
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index d093a39..216a3ce 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -4145,7 +4145,7 @@ proc readdifffiles {fd serial inst} {
+ 	set isdiff 0
+     }
+     # we only need to see one line and we don't really care what it says...
+-    stop_instance $inst
++    close $fd
+ 
+     if {$serial != $lserial} {
+ 	return 0
+-- 
+1.6.0.rc2.1.g42d19
