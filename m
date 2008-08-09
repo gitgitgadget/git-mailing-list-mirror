@@ -1,87 +1,127 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: Re: [BUG/PATCH] Revert "gitk: Arrange to kill diff-files & diff-index on quit"
-Date: Sat, 9 Aug 2008 13:13:52 +0400
-Organization: TEPKOM
-Message-ID: <200808091313.52528.angavrilov@gmail.com>
-References: <42d19ab224653b2e6988d7209a8d3e87e19858f8.1218207346.git.christian@jaeger.mine.nu>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFH] filter-branch: ancestor detection weirdness
+Date: Sat, 9 Aug 2008 11:25:42 +0200
+Message-ID: <200808091125.48897.trast@student.ethz.ch>
+References: <200808080148.27384.trast@student.ethz.ch> <alpine.DEB.1.00.0808090212060.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7viqub9dzi.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: multipart/signed;
+  boundary="nextPart2507986.pTBfuuCl3n";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Christian Jaeger <christian@jaeger.mine.nu>
-X-From: git-owner@vger.kernel.org Sat Aug 09 11:15:21 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Jan Wielemaker <J.Wielemaker@uva.nl>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 09 11:26:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRkXb-0003eM-An
-	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 11:15:15 +0200
+	id 1KRkik-0006T2-4H
+	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 11:26:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753291AbYHIJOI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Aug 2008 05:14:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752935AbYHIJOI
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 05:14:08 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:8940 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753116AbYHIJOF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2008 05:14:05 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so715101fgg.17
-        for <git@vger.kernel.org>; Sat, 09 Aug 2008 02:14:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=ZxCubYwUMk1gSFl5HjVF0P1QRYZgnq9gEwp4Gy/XrIM=;
-        b=WF1Mpb4kl74D8LFYUEJQCKErFb+l/Q7pRUTTxabIk9Y9ZjDbi98DF8rQnA7VdqVsUX
-         1o9IOPERCbZy0pQ6iJe9wtDAABdBXV7SQM/X7C8W/tguwRhNjdSGNZWXjs3bzSxuXwbs
-         1ShuV1AuJ27ks6jc72HmX61x4e+ospm3wXCH8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=UHqXdPyMwNS8EbadK1+Jjzd8w42zZLQODh4KTWPFzYk/Og7x6a0WROlDF3bk5dZ1G3
-         FRTpwzhQmMg+GipaT2ebJXOvk8Ys/VkMLMqnLfD7uaE1rSYNOidOKv6mg0ppDwPQ3KrS
-         RrWbhJgBTa2Wp/9GY4WQ1KtrEhTsFPafz83Ao=
-Received: by 10.86.95.8 with SMTP id s8mr1173685fgb.6.1218273243687;
-        Sat, 09 Aug 2008 02:14:03 -0700 (PDT)
-Received: from desktop2 ( [92.255.84.130])
-        by mx.google.com with ESMTPS id 3sm3568468fge.3.2008.08.09.02.14.02
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 09 Aug 2008 02:14:03 -0700 (PDT)
+	id S1753716AbYHIJZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2008 05:25:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753675AbYHIJZl
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 05:25:41 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:28863 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752606AbYHIJZk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2008 05:25:40 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 9 Aug 2008 11:25:39 +0200
+Received: from [192.168.0.8] ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 9 Aug 2008 11:25:38 +0200
 User-Agent: KMail/1.9.9
-In-Reply-To: <42d19ab224653b2e6988d7209a8d3e87e19858f8.1218207346.git.christian@jaeger.mine.nu>
-Content-Disposition: inline
+In-Reply-To: <7viqub9dzi.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 09 Aug 2008 09:25:38.0681 (UTC) FILETIME=[E2C93E90:01C8FA01]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91757>
 
-On Friday 08 August 2008 18:41:07 Christian Jaeger wrote:
-> gitk would not show diffs (or trees when choosing tree view) about
-> half of the times it is started, it would only show the commit
-> messages. Sometimes it took dozens of times to get it to show a diff
-> again with 3 starts, then the next 2 starts not, then the next 2
-> starts would show it again, and so on.
+--nextPart2507986.pTBfuuCl3n
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> My system environment:
->   Debian Lenny (testing)
->   tk8.4 8.4.19-2
+Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>=20
+> >> (a) Both A and D bring the same subdirectory contents.  'rev-list
+> >>     --parents -- $subdir' drops one side of the merge during pruning. =
+It=20
+> >>     does not look past the merge to see whether the contents were=20
+> >>     arrived at via different changesets.  Thus the history becomes
+> >>=20
+> >>       A' -- C'
+> >>=20
+> >>       D'
+> >>=20
+> >>     and even that only if D was reachable by a different ref,
+> >>     otherwise D' is simply dropped.
+> >
+> > And this is what I call wrong.  Simply dropping one side of the equatio=
+n=20
+> > is not what I call "sane".
+> >
+> > If you drop information, you are disagreeing with "content is king".
 
-I cannot reproduce this on my Fedora 7 system with tk8.4.13 no matter how I try.
-Could you please try to isolate which hunk causes the problem? You should be
-able to remove them from bottom to top without any serious problems.
+I wonder why I have to be the devil's advocate here.
+
+Let me emphasise: _This is how filter-branch currently works._  It is
+not some obscure feature coming with my patch.  The user _asks_ for
+this simplification by using --subdirectory-filter.  It is also
+_happening long before branch rewriting_, and we are discussing a
+patch to said branch rewriting.
+
+Junio has a point:
+
+> I think the aggressive merge simplification that gives "one simplest
+> explanation for the contents of the paths specified" is a wrong mode of
+> operation to use when you are filtering branches.  It might be a good
+> thing to support as an option, but I agree with you that it should not be
+> the default.
+>=20
+> Perhaps --full-history is needed to the rev-list call (and the recent
+
+But --full-history cannot solve this problem; it would entirely defeat
+the point of --subdirectory-filter.  (I haven't looked into what
+=2D-simplify-merges does yet.)
+
+The only thing my patch changes is the behaviour with branches _that
+the user asked us to rewrite to the subdirectory history_ but that
+don't point to a precise commit that survived the simplification.  Why
+would rewriting the branch pointer approriately be bad when the user
+specifically asked for it?
+
+And your _existing_ branch rewriting code had the same thing in mind:
+move back to an ancestor that roughly fits the ticket.  You just
+missed the problem with 'rev-list ^master ancestor' that has a high
+chance to break the mechanism with --all.
+
+And broke in Jan's case, which is why we're having this discussion,
+remember?
+
+=2D Thomas
+
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
 
 
-By the way, I experienced a similar problem while working on another patch
-(although it required a more elaborate sequence of actions to trigger it), and
-made a fix for it:
+--nextPart2507986.pTBfuuCl3n
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-http://repo.or.cz/w/git.git?a=commitdiff;h=7272131b3e49879d3a7bedacad3cdb12ae678ee8
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-For some reason, now I cannot reproduce that either.
+iEYEABECAAYFAkidYpwACgkQqUud07tmzP1FbwCfSdxCN18n9fQFe6g6e7V9LKaF
+uXYAn37k5vCSIdVTz+4B7/JANQd0mqIy
+=x14y
+-----END PGP SIGNATURE-----
 
--- Alexander
+--nextPart2507986.pTBfuuCl3n--
