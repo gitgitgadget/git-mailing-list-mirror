@@ -1,96 +1,100 @@
-From: =?utf-8?q?Peter=20Valdemar=20M=C3=B8rch?= 
-	<4ux6as402@sneakemail.com>
-Subject: [PATCH] Teach git log --check to return an appropriate error code
-Date: Sat,  9 Aug 2008 08:57:34 +0200
-Message-ID: <1218265054-19220-1-git-send-email-4ux6as402@sneakemail.com>
-References: <alpine.DEB.1.00.0808081315060.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: [TopGit PATCH] tg-create.sh: Support for multiple {to,cc,bcc} options
+Date: Sat, 9 Aug 2008 09:23:15 +0200
+Message-ID: <36ca99e90808090023r545bbef4ie6fbe6e5561f3a55@mail.gmail.com>
+References: <1218141086-16063-1-git-send-email-bert.wesarg@googlemail.com>
+	 <20080809003357.GQ10151@machine.or.cz>
+	 <7vbq039dfa.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 09 09:04:27 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 09 09:24:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRiV0-0007iq-FQ
-	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 09:04:26 +0200
+	id 1KRioF-0003BJ-BF
+	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 09:24:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752099AbYHIG5p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Aug 2008 02:57:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752119AbYHIG5p
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 02:57:45 -0400
-Received: from morch.com ([193.58.255.207]:46543 "EHLO morch.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751729AbYHIG5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2008 02:57:44 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by morch.com (Postfix) with ESMTP id B292A290D
-	for <git@vger.kernel.org>; Sat,  9 Aug 2008 09:00:16 +0200 (CEST)
-X-Mailer: git-send-email 1.6.0.rc2.6.gcd432.dirty
-In-Reply-To: <alpine.DEB.1.00.0808081315060.9611@pacific.mpi-cbg.de.mpi-cbg.de>
+	id S1752643AbYHIHXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2008 03:23:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752489AbYHIHXR
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 03:23:17 -0400
+Received: from wx-out-0506.google.com ([66.249.82.239]:38770 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752179AbYHIHXQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2008 03:23:16 -0400
+Received: by wx-out-0506.google.com with SMTP id h29so643979wxd.4
+        for <git@vger.kernel.org>; Sat, 09 Aug 2008 00:23:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=VE28AzvehCbp+08qnhQnBD1h1yYxVtr2kRi7FDPx3W0=;
+        b=jOFS9DWme4nuQUoeLnLU79d1joEBCzuvsDNd1LmmsrT8YWRGiUL0W5s9cQmrfjh8R3
+         A8IojLLrfX+xR+8XNbYFX0+4KZ/JLEw58JxIwseE0W+kEiUuhrWNLlceo3saTBsRu6qb
+         1WD8j8frscC8cErg9WhX1111M0cDHrgAegWQc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=mLdKRrh9U/HAeK30qC1eSegy3zd1XvStPgMkE7a6d76uU2H/wwogQm1p5ISPJkzCjH
+         eTbx7R2UrFGqgbqSrdxULXcHFJc6Fo1d1zuSFpl33dNp8VnT+Hl/+u7URknuv7kHUxVT
+         +5XFhChJpbkTScp9Runft6mA9vdueuM2Cii/o=
+Received: by 10.70.74.11 with SMTP id w11mr7271522wxa.47.1218266595256;
+        Sat, 09 Aug 2008 00:23:15 -0700 (PDT)
+Received: by 10.70.28.18 with HTTP; Sat, 9 Aug 2008 00:23:15 -0700 (PDT)
+In-Reply-To: <7vbq039dfa.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91745>
 
-=46rom: Peter Valdemar M=C3=B8rch <peter@morch.com>
+On Sat, Aug 9, 2008 at 03:37, Junio C Hamano <gitster@pobox.com> wrote:
+> Petr Baudis <pasky@suse.cz> writes:
+>
+>>> +    prefix="$(echo "$2" | sed -e 's/\//\\\\\//g')"
+>>
+>> Maybe use s### ? ;-)
+>
+> Personally I like '|' instead.  It's much less visually distracting than #.
+  ^^^^^^^^^^ says it all ;-)
+>
+>>> +
+>>> +    git config --get-all topgit.$1 2>/dev/null |
+>>> +            sed -e "s/^/$prefix /g"
+>>> +}
+>>
+>> Won't this return an error code and terminate the script in case no
+>> option is defined?
+I tested it with none defined options: no error, no distracting empty
+lines, no error messages. so it worked here.
 
+>>> -    ! header="$(git config topgit.to)" || echo "To: $header"
+>>> -    ! header="$(git config topgit.cc)" || echo "Cc: $header"
+>>> -    ! header="$(git config topgit.bcc)" || echo "Bcc: $header"
+>>> +    get_multi_config to  "To:"
+>>> +    get_multi_config cc  "Cc:"
+>>> +    get_multi_config bcc "Bcc:"
+>>>      ! subject_prefix="$(git config topgit.subjectprefix)" || subject_prefix="$subject_prefix "
+>>>      echo "Subject: [${subject_prefix}PATCH] $name"
+>>>      echo
+>>
+>> One trouble here is that I've seen mailers mess up when there is
+>> multiple occurences of these headers, so it would be probably safer to
+>> concatenate them all to single line, comma-separated.
+>
+> It is not just "I've seen mailers"; RFC2822 wants you to have at most one
+> (see the table on Page 20).
+But do we generate a valid mail with tg patch, or just a patch file
+with some special looking lines? Anyway, I thought about the comma
+separated solution too, but git send-mail handles these multi lines
+well. So I take the easy road.
 
-Signed-off-by: Peter Valdemar M=C3=B8rch <peter@morch.com>
----
-
-	Ok. I take on the callenge. Thanks for a very helpful writeup!
-	The patch in the end is very short. And since it doesn't
-	follow your writeup, let me explain my rationale:
-=09
-	Whether or not a check fails is stored in the
-	DIFF_OPT_CHECK_FAILED field of flags in struct diff_options.
-	This flag-field is only set (diff.c:1644), never cleared.
-	Since the same diff_options is used throughout, it is enough
-	to check that field at the end - it already does the
-	accumulation because it never gets cleared.
-=09
-	diff_result_code: The second argument to it is never used
-	since (opt->output_format & DIFF_FORMAT_CHECKDIFF), so the
-	value doesn't matter (0 would have been fine as you suggest).
-	The return value is a bitfield, with |=3D 1 if HAS_CHANGES
-	(clearly log has changes "always" - except e.g. "git log
-	HEAD..HEAD") and |=3D 2 if CHECK_FAILED.
-=09
-	Therefore I was left with either:
-=09
-	* Return the value of diff_result_code ("always" |=3D1,
-	sometimes |=3D2 if a check failed. This would put the burden
-	on the caller to check different values of $?.
-=09
-	* Return value of (diff_result_code & 02). Then I would
-	suggest adding the constant 02 to a header file.
-=09
-	* Pick out the logic from diff_result_code with respect to
-	CHECK_FAILED. I chose this path. (I return 02 here too, and
-	perhaps that *should* go in a header file. I decided not
-	to.)
-
-
- builtin-log.c |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-log.c b/builtin-log.c
-index f4975cf..45ce8ea 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -227,6 +227,10 @@ static int cmd_log_walk(struct rev_info *rev)
- 		free_commit_list(commit->parents);
- 		commit->parents =3D NULL;
- 	}
-+	if (rev->diffopt.output_format & DIFF_FORMAT_CHECKDIFF &&
-+	    DIFF_OPT_TST(&rev->diffopt, CHECK_FAILED)) {
-+		return 02;
-+	}
- 	return 0;
- }
-=20
---=20
-1.6.0.rc2.6.gcd432.dirty
+Bert
