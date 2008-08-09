@@ -1,58 +1,108 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH 2/3] Teach git diff-tree --stdin to diff trees
-Date: Sat, 9 Aug 2008 12:00:49 +0200
-Message-ID: <20080809100049.GB10804@diana.vm.bytemark.co.uk>
-References: <20080808204348.7744.46006.stgit@yoghurt> <20080808204829.7744.11661.stgit@yoghurt> <20080808214523.GA31424@sigill.intra.peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFH] filter-branch: ancestor detection weirdness
+Date: Sat, 9 Aug 2008 12:00:19 +0200
+Message-ID: <200808091200.21634.trast@student.ethz.ch>
+References: <200808080148.27384.trast@student.ethz.ch> <200808082037.49918.trast@student.ethz.ch> <alpine.DEB.1.00.0808090212060.24820@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 09 11:39:57 2008
+Content-Type: multipart/signed;
+  boundary="nextPart8253307.IxbjYPbSuh";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Aug 09 12:02:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRkvU-0000u2-Db
-	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 11:39:56 +0200
+	id 1KRlHN-0005Kd-RP
+	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 12:02:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750809AbYHIJix convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Aug 2008 05:38:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750802AbYHIJix
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 05:38:53 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1514 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750695AbYHIJix (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2008 05:38:53 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KRlFh-00038Y-00; Sat, 09 Aug 2008 11:00:49 +0100
-Content-Disposition: inline
-In-Reply-To: <20080808214523.GA31424@sigill.intra.peff.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1750944AbYHIKAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2008 06:00:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750929AbYHIKAO
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 06:00:14 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:39184 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750733AbYHIKAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2008 06:00:13 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 9 Aug 2008 12:00:10 +0200
+Received: from [192.168.0.8] ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 9 Aug 2008 12:00:11 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0808090212060.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+X-OriginalArrivalTime: 09 Aug 2008 10:00:11.0134 (UTC) FILETIME=[B61079E0:01C8FA06]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91761>
 
-On 2008-08-08 17:45:23 -0400, Jeff King wrote:
+--nextPart8253307.IxbjYPbSuh
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> Hmm. Just looking at this as a git user, I would have expected it to
-> take one or more hashes, separated by spaces. If only one, then it
-> must be a commit, and it is diffed against its parents. If more than
-> one, then each must be a tree-ish. So you could diff a commit
-> against a tree (or a tag against a commit, or...).
+Johannes Schindelin wrote:
+> But hey, if other people agree with you, and this kind of thinking ends=20
+> up in Git proper, I can still resort to other DVCSes.
 
-I agree.
+BTW, the following is fairly ironic.  (It was later rewritten in
+813b473 to the current one-shot 'rev-list --parents' form.)
 
-> And I think it might even be easier to code. ;)
+commit 685ef546b62d063c72b401cd38b83a879301aac4
+Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Fri Jun 8 01:30:35 2007 +0100
 
-Not for someone who's almost entirely unfamiliar with the git API.
-=46inding the right functions to call takes a lot of time ... which is
-why I decided to chicken out and implement only the subset I actually
-needed. But it can be added later -- perhaps by me.
+    Teach filter-branch about subdirectory filtering
+   =20
+    With git-filter-branch --subdirectory-filter <subdirectory> you can
+    get at the history, as seen by a certain subdirectory. The history
+    of the rewritten branch will only contain commits that touched that
+    subdirectory, and the subdirectory will be rewritten to be the new
+    project root.
+   =20
+    Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+[...snip...]
+@@ -224,7 +228,13 @@ set_ident () {
+=20
+ # list all parent's object names for a given commit
+ get_parents () {
+=2D	git-rev-list -1 --parents "$1" | sed "s/^[0-9a-f]*//"
++	case "$filter_subdir" in
++	"")
++		git-rev-list -1 --parents "$1"
++		;;
++	*)
++		git-rev-list -1 --parents "$1" -- "$filter_subdir"
++	esac | sed "s/^[0-9a-f]*//"
+ }
+=20
+ tempdir=3D.git-rewrite
+[...snip...]
+
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
+
+
+
+--nextPart8253307.IxbjYPbSuh
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkidarUACgkQqUud07tmzP0GBACgllYlBbcx56oThh+qS1OhssQz
+ga8An15YUgjJ4if1gzXP+fkGDO1PP7DF
+=Cpoc
+-----END PGP SIGNATURE-----
+
+--nextPart8253307.IxbjYPbSuh--
