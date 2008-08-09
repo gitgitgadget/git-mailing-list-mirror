@@ -1,147 +1,151 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [PATCH 2/3 v2] Teach git diff-tree --stdin to diff trees
-Date: Sat, 09 Aug 2008 14:11:18 +0200
-Message-ID: <20080809120816.11085.66578.stgit@yoghurt>
-References: <20080809095605.GA10804@diana.vm.bytemark.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] checkout --track: make up a sensible branch name if '-b'
+ was omitted
+Date: Sat, 9 Aug 2008 16:00:12 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808091559460.24820@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 09 14:12:56 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Aug 09 15:57:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRnJS-0007TT-Ly
-	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 14:12:51 +0200
+	id 1KRowM-0000z5-B3
+	for gcvg-git-2@gmane.org; Sat, 09 Aug 2008 15:57:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751591AbYHIML1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Aug 2008 08:11:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751586AbYHIML1
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 08:11:27 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3909 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751564AbYHIML0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2008 08:11:26 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1KRnda-0003Uu-00; Sat, 09 Aug 2008 13:33:38 +0100
-In-Reply-To: <20080809095605.GA10804@diana.vm.bytemark.co.uk>
-User-Agent: StGIT/0.14.3.222.g9ef2
+	id S1752086AbYHINzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2008 09:55:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751996AbYHINzi
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 09:55:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54049 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751800AbYHINzh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2008 09:55:37 -0400
+Received: (qmail invoked by alias); 09 Aug 2008 13:55:35 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp018) with SMTP; 09 Aug 2008 15:55:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Ms39b4nhMR4C3FDXD5rQ2TR2OI2ellJ0lqrOaEm
+	P6vcGJSLD2wddb
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91768>
 
-When feeding trees on the command line, you can give exactly two
-trees, not three nor one; --stdin now supports this "two tree" form on
-its input, in addition to accepting lines with one or more commits.
 
-When diffing trees (either specified on the command line or from the
-standard input), the -m, -s, -v, --pretty, --abbrev-commit,
---encoding, --no-commit-id, -c, --cc, and --always options are
-ignored, since they do not apply to trees.
+What does the user most likely want with this command?
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+	$ git checkout --track origin/next
 
+Exactly.  A branch called 'next', that tracks origin's branch 'next'.
+Make it so.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
 
-With updated commit message. (And I checked -- your earlier doc patch
-_is_ obsoleted by this patch, so I saw no need to change anything
-else.)
+	This comes in the wake for Shawn's call for more user-friendliness.
 
- Documentation/git-diff-tree.txt |   14 +++++++++-----
- builtin-diff-tree.c             |   35 +++++++++++++++++++++++++++++++=
-----
- 2 files changed, 40 insertions(+), 9 deletions(-)
+ Documentation/git-checkout.txt |   10 +++++++++-
+ builtin-checkout.c             |   21 ++++++++++++++++++---
+ t/t7201-co.sh                  |   11 +++++++++++
+ 3 files changed, 38 insertions(+), 4 deletions(-)
 
-
-diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-t=
-ree.txt
-index 1fdf20d..0b1ade8 100644
---- a/Documentation/git-diff-tree.txt
-+++ b/Documentation/git-diff-tree.txt
-@@ -49,13 +49,17 @@ include::diff-options.txt[]
- --stdin::
- 	When '--stdin' is specified, the command does not take
- 	<tree-ish> arguments from the command line.  Instead, it
--	reads either one <commit> or a list of <commit>
--	separated with a single space from its standard input.
-+	reads lines containing either two <tree>, one <commit>, or a
-+	list of <commit> from its standard input.  (Use a single space
-+	as separator.)
- +
--When a single commit is given on one line of such input, it compares
--the commit with its parents.  The following flags further affects its
--behavior.  The remaining commits, when given, are used as if they are
-+When two trees are given, it compares the first tree with the second.
-+When a single commit is given, it compares the commit with its
-+parents.  The remaining commits, when given, are used as if they are
- parents of the first commit.
-++
-+The following flags further affects the behavior when comparing
-+commits (but not trees).
-=20
- -m::
- 	By default, 'git-diff-tree --stdin' does not show
-diff --git a/builtin-diff-tree.c b/builtin-diff-tree.c
-index ebbd631..0bdb1cf 100644
---- a/builtin-diff-tree.c
-+++ b/builtin-diff-tree.c
-@@ -42,21 +42,48 @@ static int stdin_diff_commit(struct commit *commit,=
- char *line, int len)
- 	return log_tree_commit(&log_tree_opt, commit);
- }
-=20
-+/* Diff two trees. */
-+static int stdin_diff_trees(struct tree *tree1, char *line, int len)
-+{
-+	unsigned char sha1[20];
-+	struct tree *tree2;
-+	if (len !=3D 82 || !isspace(line[40]) || get_sha1_hex(line + 41, sha1=
-)) {
-+		error("Need precisely two trees, separated by one space");
-+		return -1;
-+	}
-+	tree2 =3D lookup_tree(sha1);
-+	if (!tree2 || parse_tree(tree2))
-+		return -1;
-+	printf("%s %s\n", sha1_to_hex(tree1->object.sha1),
-+			  sha1_to_hex(tree2->object.sha1));
-+	diff_tree_sha1(tree1->object.sha1, tree2->object.sha1,
-+		       "", &log_tree_opt.diffopt);
-+	log_tree_diff_flush(&log_tree_opt);
-+	return 0;
-+}
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 5aa69c0..43d4502 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -8,7 +8,7 @@ git-checkout - Checkout a branch or paths to the working tree
+ SYNOPSIS
+ --------
+ [verse]
+-'git checkout' [-q] [-f] [[--track | --no-track] -b <new_branch> [-l]] [-m] [<branch>]
++'git checkout' [-q] [-f] [--track | --no-track] [-b <new_branch> [-l]] [-m] [<branch>]
+ 'git checkout' [<tree-ish>] [--] <paths>...
+ 
+ DESCRIPTION
+@@ -21,6 +21,10 @@ specified, <new_branch>.  Using -b will cause <new_branch> to
+ be created; in this case you can use the --track or --no-track
+ options, which will be passed to `git branch`.
+ 
++As a convenience, --track will default to create a branch whose
++name is constructed from the specified branch name by stripping
++the first namespace level.
 +
- static int diff_tree_stdin(char *line)
- {
- 	int len =3D strlen(line);
- 	unsigned char sha1[20];
--	struct commit *commit;
-+	struct object *obj;
-=20
- 	if (!len || line[len-1] !=3D '\n')
- 		return -1;
- 	line[len-1] =3D 0;
- 	if (get_sha1_hex(line, sha1))
- 		return -1;
--	commit =3D lookup_commit(sha1);
--	if (!commit || parse_commit(commit))
-+	obj =3D lookup_object(sha1);
-+	obj =3D obj ? obj : parse_object(sha1);
-+	if (!obj)
- 		return -1;
--	return stdin_diff_commit(commit, line, len);
-+	if (obj->type =3D=3D OBJ_COMMIT)
-+		return stdin_diff_commit((struct commit *)obj, line, len);
-+	if (obj->type =3D=3D OBJ_TREE)
-+		return stdin_diff_trees((struct tree *)obj, line, len);
-+	error("Object %s is a %s, not a commit or tree",
-+	      sha1_to_hex(sha1), typename(obj->type));
-+	return -1;
- }
-=20
- static const char diff_tree_usage[] =3D
+ When <paths> are given, this command does *not* switch
+ branches.  It updates the named paths in the working tree from
+ the index file (i.e. it runs `git checkout-index -f -u`), or
+@@ -59,6 +63,10 @@ OPTIONS
+ 	'git-checkout' and 'git-branch' to always behave as if '--no-track' were
+ 	given. Set it to `always` if you want this behavior when the
+ 	start-point is either a local or remote branch.
+++
++If no '-b' option was given, a name will be made up for you, by stripping
++the part up to the first slash of the tracked branch.  For example, if you
++called 'git checkout --track origin/next', the branch name will be 'next'.
+ 
+ --no-track::
+ 	Ignore the branch.autosetupmerge configuration variable.
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index 411cc51..e95eab9 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -437,13 +437,28 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 
+ 	git_config(git_default_config, NULL);
+ 
+-	opts.track = git_branch_track;
++	opts.track = -1;
+ 
+ 	argc = parse_options(argc, argv, options, checkout_usage,
+ 			     PARSE_OPT_KEEP_DASHDASH);
+ 
+-	if (!opts.new_branch && (opts.track != git_branch_track))
+-		die("git checkout: --track and --no-track require -b");
++	/* --track without -b should DWIM */
++	if (opts.track && opts.track != -1 && !opts.new_branch) {
++		char *slash;
++		if (!argc || !strcmp(argv[0], "--"))
++			die ("--track needs a branch name");
++		slash = strchr(argv[0], '/');
++		if (slash && !prefixcmp(argv[0], "refs/"))
++			slash = strchr(slash + 1, '/');
++		if (slash && !prefixcmp(argv[0], "remotes/"))
++			slash = strchr(slash + 1, '/');
++		if (!slash || !slash[1])
++			die ("Missing branch name; try -b");
++		opts.new_branch = slash + 1;
++	}
++
++	if (opts.track == -1)
++		opts.track = git_branch_track;
+ 
+ 	if (opts.force && opts.merge)
+ 		die("git checkout: -f and -m are incompatible");
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index 9ad5d63..943dd57 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -337,4 +337,15 @@ test_expect_success \
+     test refs/heads/delete-me = "$(git symbolic-ref HEAD)" &&
+     test_must_fail git checkout --track -b track'
+ 
++test_expect_success \
++    'checkout with --track fakes a sensible -b <name>' '
++    git update-ref refs/remotes/origin/koala/bear renamer &&
++    git checkout --track origin/koala/bear &&
++    test "refs/heads/koala/bear" = "$(git symbolic-ref HEAD)" &&
++    test "$(git rev-parse HEAD)" = "$(git rev-parse renamer)"'
++
++test_expect_success \
++    'checkout with --track, but without -b, fails with too short tracked name' '
++    test_must_fail git checkout --track renamer'
++
+ test_done
+-- 
+1.6.0.rc2.26.g0d7ea
