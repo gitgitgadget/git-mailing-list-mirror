@@ -1,63 +1,83 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH] git gui: visually wrap lines of commit message
-Date: Sun, 10 Aug 2008 00:14:13 +0200
-Message-ID: <200808100014.13408.johannes.sixt@telecom.at>
-References: <20080809160557.GA902@localhost> <200808092344.33332.johannes.sixt@telecom.at> <20080809220637.GA20963@localhost>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+From: Pieter de Bie <pieter@frim.nl>
+Subject: Re: [PATCH] checkout --track: make up a sensible branch name if '-b' was omitted
+Date: Sat, 9 Aug 2008 23:44:49 +0200
+Message-ID: <A6E466C6-C3B5-40EB-940C-516CF4D02ADF@frim.nl>
+References: <alpine.DEB.1.00.0808091559460.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vtzdu6nb7.fsf@gitster.siamese.dyndns.org> <7vvdya55ur.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0808092302520.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vsktd51wg.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sun Aug 10 00:15:26 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 10 00:18:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRwib-0006fc-JH
-	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 00:15:26 +0200
+	id 1KRwlQ-0007VL-QE
+	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 00:18:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752342AbYHIWOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Aug 2008 18:14:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752384AbYHIWOQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 18:14:16 -0400
-Received: from smtp2.srv.eunet.at ([193.154.160.116]:34616 "EHLO
-	smtp2.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752294AbYHIWOQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2008 18:14:16 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp2.srv.eunet.at (Postfix) with ESMTP id EC686BEEBA;
-	Sun, 10 Aug 2008 00:14:13 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 8307D1226D;
-	Sun, 10 Aug 2008 00:14:13 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080809220637.GA20963@localhost>
-Content-Disposition: inline
+	id S1752323AbYHIWRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2008 18:17:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752359AbYHIWRS
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 18:17:18 -0400
+Received: from frim.nl ([87.230.85.232]:49393 "EHLO
+	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752288AbYHIWRS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Aug 2008 18:17:18 -0400
+X-Greylist: delayed 1935 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Aug 2008 18:17:17 EDT
+Received: from ip63-33-210-87.adsl2.static.versatel.nl ([87.210.33.63] helo=[192.168.1.244])
+	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <pieter@frim.nl>)
+	id 1KRwF7-0001aq-2n; Sat, 09 Aug 2008 23:44:57 +0200
+In-Reply-To: <7vsktd51wg.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91789>
 
-On Sonntag, 10. August 2008, Clemens Buchacher wrote:
-> On Sat, Aug 09, 2008 at 11:44:33PM +0200, Johannes Sixt wrote:
-> > On Samstag, 9. August 2008, Clemens Buchacher wrote:
-> > > Visually wrap lines in the commit message text box. That way we can
-> > > avoid a horizontal scroll bar (which was not available anyways).
-> > >
-> > > Note: This does _not_ break lines in the actual commit message.
-> >
-> > Please don't do that. I want to get what I see.
+
+On Aug 9, 2008, at 11:11 PM, Junio C Hamano wrote:
+
+>>> (1) You may not necessarily are used to --track, but may still  
+>>> want this
+>>>    done.  It might not be a bad idea to associate this "local  
+>>> dwimming"
+>>>    to creation of a new branch.  In other words, all of these:
+>>>
+>>>    $ git checkout -b origin/next
+>>
+>> This cannot be dwimmed, as it literally means "start a new branch  
+>> called
+>> 'origin/next' from HEAD".
 >
-> Currently you don't see the whole message anyways if the box is too small
-> for the text. I find that quite annoying, especially since there are
-> neither keys nor a scrollbar to scroll horizontally.
+> Right.  Forget this part.
 
-In this case, I use the middle mouse button to pan around. And then I do see 
-what I will get.
+This is too bad. I often see people make mistakes like
 
-The width of the box was chosen wisely: It takes a bit less than 80 columns, 
-to leave room for quoting in emails and to avoid wrapping of git log output.
+	git checkout -b origin/master
+or
+	git checkout -b origin/master origin/master
 
--- Hannes
+which should be
+
+	git checkout -b origin/master master
+
+I think both forms should at least be an error if the remote branch  
+"origin/master" already exists, as then suddenly they aren't reachable  
+anymore by using "origin/master".
+
+Changing the behaviour to mean "git checkout -b origin/master master"  
+will change the meaning, but who uses -b with an existing remote  
+branch anyway? I think the current behaviour leads to more confusion  
+in every case and should at least error out ("Error: creating a local  
+repository with the same name as the remote is not allowed") or do  
+what it's meant to do, which is create a local repository with the  
+trailing part.
+
+Just my .02,
+
+- Pieter
