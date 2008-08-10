@@ -1,255 +1,107 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [EGIT PATCH 10/11] Add a TreeWalk iterator implementation for IContainer
-Date: Sun, 10 Aug 2008 01:46:25 -0700
-Message-ID: <1218357986-19671-11-git-send-email-spearce@spearce.org>
-References: <1218357986-19671-1-git-send-email-spearce@spearce.org>
- <1218357986-19671-2-git-send-email-spearce@spearce.org>
- <1218357986-19671-3-git-send-email-spearce@spearce.org>
- <1218357986-19671-4-git-send-email-spearce@spearce.org>
- <1218357986-19671-5-git-send-email-spearce@spearce.org>
- <1218357986-19671-6-git-send-email-spearce@spearce.org>
- <1218357986-19671-7-git-send-email-spearce@spearce.org>
- <1218357986-19671-8-git-send-email-spearce@spearce.org>
- <1218357986-19671-9-git-send-email-spearce@spearce.org>
- <1218357986-19671-10-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 10 10:48:25 2008
+From: "Jonas Fonseca" <jonas.fonseca@gmail.com>
+Subject: Re: [tig] Feeding specific revisions to tig
+Date: Sun, 10 Aug 2008 11:16:37 +0200
+Message-ID: <2c6b72b30808100216j2c719bf2yb7dfba651db901e3@mail.gmail.com>
+References: <ae63f8b50806041152v11a2997y9411c5ea3ebc9598@mail.gmail.com>
+	 <20080604192916.GB17327@sigill.intra.peff.net>
+	 <ae63f8b50806041304i20de789ej492681f4b9306934@mail.gmail.com>
+	 <20080604230858.GA27136@sigill.intra.peff.net>
+	 <2c6b72b30808060406u10d7b332g22ea28fe5470ddb1@mail.gmail.com>
+	 <20080808211916.GA30583@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jean-Baptiste Quenot" <jbq@caraldi.com>, git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Aug 10 11:18:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KS6b7-00020G-Ia
-	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 10:48:22 +0200
+	id 1KS74Z-0007zF-8l
+	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 11:18:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752332AbYHJIqv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2008 04:46:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752603AbYHJIqv
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 04:46:51 -0400
-Received: from george.spearce.org ([209.20.77.23]:51269 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752430AbYHJIqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2008 04:46:35 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id A921F3837A; Sun, 10 Aug 2008 08:46:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id CBE20381FD;
-	Sun, 10 Aug 2008 08:46:32 +0000 (UTC)
-X-Mailer: git-send-email 1.6.0.rc2.219.g1250ab
-In-Reply-To: <1218357986-19671-10-git-send-email-spearce@spearce.org>
+	id S1752692AbYHJJQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2008 05:16:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752662AbYHJJQl
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 05:16:41 -0400
+Received: from fk-out-0910.google.com ([209.85.128.184]:26046 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752649AbYHJJQk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2008 05:16:40 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so1339642fkq.5
+        for <git@vger.kernel.org>; Sun, 10 Aug 2008 02:16:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ZLyImaaEfdfLj9sQUY9VijGHe0r5O/32bU1MyLvTUYE=;
+        b=QwACeb8S+JH+LhnsnmAmbVlTth0bLGVw2WgmRB9ovZcu+nkRvSuMT0bcNeECwzfWuv
+         oVruBGRuu7TyFIbdTdfIm8eaEH+IF3/yXOqOs5eRnuzCd8CM+NoEh7kOBHnkuOZkKJ5r
+         wstv+svB1ifVVnH0gyKLigniF67ZFElFOHYbw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=a7xYe7gX5Jrdzf07fJ+CIWxxEZhHSTjBSoLbynzXjnaPKh9y1zRJTPD5Fyc9e2c14T
+         KchFutQ8PoPJIwOxyWEFZfuuVG6xX1sdJq2uo2pUWqqfokfziuB4Kfk+P/LL9qjqnHPC
+         o6Y6c3xA2+6yY6VuYHltDmixAT4DpAUh3SYGA=
+Received: by 10.180.217.1 with SMTP id p1mr1203198bkg.80.1218359797587;
+        Sun, 10 Aug 2008 02:16:37 -0700 (PDT)
+Received: by 10.125.73.6 with HTTP; Sun, 10 Aug 2008 02:16:37 -0700 (PDT)
+In-Reply-To: <20080808211916.GA30583@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91824>
 
-Treating the Eclipse workspace as a filesystem backend for TreeWalk
-can give us some nice caching on the file modification times and on
-directory contents.  We also get nice APIs to open a file and read
-its contents.
+On Fri, Aug 8, 2008 at 23:19, Jeff King <peff@peff.net> wrote:
+> On Wed, Aug 06, 2008 at 01:06:51PM +0200, Jonas Fonseca wrote:
+>> I actually added something that let's you alter the command executed
+>> for each view. So here is another possibility that can be used:
+>>
+>> function tignowalk ()
+>> {
+>>    tmp=$(mktemp) # or .git/tigfiles or similar
+>>    # Safe stuff from "stdin" and run tig with custom rev-list command
+>>    cat > "$tmp
+>>    TIG_MAIN_CMD="git rev-list --pretty=raw --no-walk --stdin < $tmp"
+>> tig < /dev/tty
+>>    rm "$tmp"
+>> }
+>
+> Neat, if a bit hack-ish. :) You are missing a closing quotation mark
+> after
+>
+>  cat > "$tmp
+>
+> and the line break between TIG_MAIN_CMD and tig is obviously problematic
+> (presumably an artifact of the email, but it confused my cut and paste
+> efforts for a minute). One other thing to note is that even though you
+> try to handle a $tmp with whitespace in the cat and rm commands, I
+> suspect it would fail when tig hands TIG_MAIN_CMD to the shell. That
+> would require double-quoting.
 
-This iterator allows combining a walk over an IContainer with any
-other sort of directory walk we may do, like against a stored tree
-object in the object database or against the index file, or even
-any other IContainer in the workspace (e.g. diff two projects).
+Yes, this way to "hook" into tig is a bit hackish and gives some
+problems with handling files. But then again, it is hidden away in
+env. variables, which seems very effective in not getting it too
+exposed. :)
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../spearce/egit/core/ContainerTreeIterator.java   |  181 ++++++++++++++++++++
- 1 files changed, 181 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.egit.core/src/org/spearce/egit/core/ContainerTreeIterator.java
+> So here is my cut-and-pastable version:
+>
+>  tignowalk() {
+>    tmp=$(mktemp)
+>    cat >"$tmp"
+>    TIG_MAIN_CMD="git rev-list --pretty=raw --no-walk --stdin <$tmp" \
+>      tig </dev/tty
+>    rm "$tmp"
+>  }
 
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/ContainerTreeIterator.java b/org.spearce.egit.core/src/org/spearce/egit/core/ContainerTreeIterator.java
-new file mode 100644
-index 0000000..17b8414
---- /dev/null
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/ContainerTreeIterator.java
-@@ -0,0 +1,181 @@
-+/*******************************************************************************
-+ * Copyright (C) 2008, Google Inc.
-+ *
-+ * All rights reserved. This program and the accompanying materials
-+ * are made available under the terms of the Eclipse Public License v1.0
-+ * See LICENSE for the full license text, also available.
-+ *******************************************************************************/
-+
-+package org.spearce.egit.core;
-+
-+import java.io.File;
-+import java.io.IOException;
-+import java.io.InputStream;
-+
-+import org.eclipse.core.resources.IContainer;
-+import org.eclipse.core.resources.IFile;
-+import org.eclipse.core.resources.IResource;
-+import org.eclipse.core.runtime.CoreException;
-+import org.spearce.egit.core.project.RepositoryMapping;
-+import org.spearce.jgit.errors.IncorrectObjectTypeException;
-+import org.spearce.jgit.lib.Constants;
-+import org.spearce.jgit.lib.FileMode;
-+import org.spearce.jgit.lib.ObjectId;
-+import org.spearce.jgit.lib.Repository;
-+import org.spearce.jgit.treewalk.AbstractTreeIterator;
-+import org.spearce.jgit.treewalk.WorkingTreeIterator;
-+import org.spearce.jgit.util.FS;
-+
-+/**
-+ * Adapts an Eclipse {@link IContainer} for use in a <code>TreeWalk</code>.
-+ * <p>
-+ * This iterator converts an Eclipse IContainer object into something that a
-+ * TreeWalk instance can iterate over in parallel with any other Git tree data
-+ * structure, such as another working directory tree from outside of the
-+ * workspace or a stored tree from a Repository object database.
-+ * <p>
-+ * Modification times provided by this iterator are obtained from the cache
-+ * Eclipse uses to track external resource modification. This can be faster, but
-+ * requires the user refresh their workspace when external modifications take
-+ * place. This is not really a concern as it is common practice to need to do a
-+ * workspace refresh after externally modifying a file.
-+ * 
-+ * @see org.spearce.jgit.treewalk.TreeWalk
-+ */
-+public class ContainerTreeIterator extends WorkingTreeIterator {
-+	private static String computePrefix(final IContainer base) {
-+		final RepositoryMapping rm = RepositoryMapping.getMapping(base);
-+		if (rm == null)
-+			throw new IllegalArgumentException("Not in a Git project: " + base);
-+		return rm.getRepoRelativePath(base);
-+	}
-+
-+	private final IContainer node;
-+
-+	/**
-+	 * Construct a new iterator from the workspace.
-+	 * <p>
-+	 * The iterator will support traversal over the named container, but only if
-+	 * it is contained within a project which has the Git repository provider
-+	 * connected and this resource is mapped into a Git repository. During the
-+	 * iteration the paths will be automatically generated to match the proper
-+	 * repository paths for this container's children.
-+	 * 
-+	 * @param base
-+	 *            the part of the workspace the iterator will walk over.
-+	 */
-+	public ContainerTreeIterator(final IContainer base) {
-+		super(computePrefix(base));
-+		node = base;
-+	}
-+
-+	private ContainerTreeIterator(final WorkingTreeIterator p,
-+			final IContainer base) {
-+		super(p);
-+		node = base;
-+	}
-+
-+	@Override
-+	public AbstractTreeIterator createSubtreeIterator(final Repository db)
-+			throws IncorrectObjectTypeException, IOException {
-+		if (FileMode.TREE.equals(mode))
-+			return new ContainerTreeIterator(this,
-+					(IContainer) ((ResourceEntry) current()).rsrc);
-+		else
-+			throw new IncorrectObjectTypeException(ObjectId.zeroId(),
-+					Constants.TYPE_TREE);
-+	}
-+
-+	@Override
-+	protected Entry[] getEntries() throws IOException {
-+		final IResource[] all;
-+		try {
-+			all = node.members(IContainer.INCLUDE_HIDDEN);
-+		} catch (CoreException err) {
-+			final IOException ioe = new IOException(err.getMessage());
-+			ioe.initCause(err);
-+			throw ioe;
-+		}
-+
-+		final Entry[] r = new Entry[all.length];
-+		for (int i = 0; i < r.length; i++)
-+			r[i] = new ResourceEntry(all[i]);
-+		return r;
-+	}
-+
-+	static class ResourceEntry extends Entry {
-+		final IResource rsrc;
-+
-+		private final FileMode mode;
-+
-+		private long length = -1;
-+
-+		ResourceEntry(final IResource f) {
-+			rsrc = f;
-+
-+			switch (f.getType()) {
-+			case IResource.FILE:
-+				if (FS.INSTANCE.canExecute(asFile()))
-+					mode = FileMode.EXECUTABLE_FILE;
-+				else
-+					mode = FileMode.REGULAR_FILE;
-+				break;
-+			case IResource.FOLDER: {
-+				final IContainer c = (IContainer) f;
-+				if (c.findMember(".git") != null)
-+					mode = FileMode.GITLINK;
-+				else
-+					mode = FileMode.TREE;
-+				break;
-+			}
-+			default:
-+				mode = FileMode.MISSING;
-+				break;
-+			}
-+		}
-+
-+		@Override
-+		public FileMode getMode() {
-+			return mode;
-+		}
-+
-+		@Override
-+		public String getName() {
-+			return rsrc.getName();
-+		}
-+
-+		@Override
-+		public long getLength() {
-+			if (length < 0) {
-+				if (rsrc instanceof IFile)
-+					length = asFile().length();
-+				else
-+					length = 0;
-+			}
-+			return length;
-+		}
-+
-+		@Override
-+		public long getLastModified() {
-+			return rsrc.getLocalTimeStamp();
-+		}
-+
-+		@Override
-+		public InputStream openInputStream() throws IOException {
-+			if (rsrc instanceof IFile) {
-+				try {
-+					return ((IFile) rsrc).getContents(true);
-+				} catch (CoreException err) {
-+					final IOException ioe = new IOException(err.getMessage());
-+					ioe.initCause(err);
-+					throw ioe;
-+				}
-+			}
-+			throw new IOException("Not a regular file: " + rsrc);
-+		}
-+
-+		private File asFile() {
-+			return ((IFile) rsrc).getLocation().toFile();
-+		}
-+	}
-+}
+Thanks for the fixed up version.
+
 -- 
-1.6.0.rc2.219.g1250ab
+Jonas Fonseca
