@@ -1,95 +1,101 @@
-From: "Gustavo Sverzut Barbieri" <barbieri@profusion.mobi>
-Subject: Re: [PATCH 0/2] gitweb use sections
-Date: Sun, 10 Aug 2008 16:45:14 -0300
-Message-ID: <b1f2b8c40808101245j2942dc70sa429cca05c1bb5c7@mail.gmail.com>
-References: <1217298868-16513-1-git-send-email-barbieri@profusion.mobi>
-	 <b1f2b8c40807311243i5689683avcc3c3c91e4e6a900@mail.gmail.com>
-	 <20080731203250.GO10151@machine.or.cz>
-	 <b1f2b8c40807311358k4132ba8bw931279d7a6a7bcb5@mail.gmail.com>
+From: "Ken Pratt" <ken@kenpratt.net>
+Subject: pack operation is thrashing my server
+Date: Sun, 10 Aug 2008 12:47:37 -0700
+Message-ID: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Jakub Narebski" <jnareb@gmail.com>
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sun Aug 10 21:46:24 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 10 21:48:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSGrt-0006Bu-2U
-	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 21:46:21 +0200
+	id 1KSGu9-0006pA-9I
+	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 21:48:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753532AbYHJTpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2008 15:45:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753502AbYHJTpR
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 15:45:17 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:30279 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753436AbYHJTpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2008 15:45:16 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so888289fgg.17
-        for <git@vger.kernel.org>; Sun, 10 Aug 2008 12:45:14 -0700 (PDT)
-Received: by 10.86.60.15 with SMTP id i15mr6696100fga.43.1218397514235;
-        Sun, 10 Aug 2008 12:45:14 -0700 (PDT)
-Received: by 10.86.86.16 with HTTP; Sun, 10 Aug 2008 12:45:14 -0700 (PDT)
-In-Reply-To: <b1f2b8c40807311358k4132ba8bw931279d7a6a7bcb5@mail.gmail.com>
+	id S1753396AbYHJTrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2008 15:47:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753391AbYHJTrj
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 15:47:39 -0400
+Received: from rv-out-0506.google.com ([209.85.198.226]:53630 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753387AbYHJTri (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2008 15:47:38 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1922866rvb.1
+        for <git@vger.kernel.org>; Sun, 10 Aug 2008 12:47:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition:x-google-sender-auth;
+        bh=3QBhJznXWvyT7aVuILgmYiDvpPdB/Gd6M7u7nVZt5pI=;
+        b=hu/8XufAn+VP43uQJHOEEpC1kSg2yDL2PiWjs1BGUP43wDO0nwDMy9rSUZza0q45oR
+         FvOMmNwgILEilT7VoDtn4cGbKRbgpDpEPbgzuMvR8wCGuXR5GHezIDqPWyiSRS7KCdjI
+         CrpxRxx2EGNHISFkdxW8vXh08JyOss525xZx8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=QxY57Bx8dmFfn6Lp6j00KBmF12QXO6+GmtRmD1r2KWTzvN6CgC7XzFvQUkQbz5vN9C
+         K5Vfl6oqzA12wjw8HERKbHdOipxOv6aJ50EplTPCcdweFm0BKCXivv4D7VnG9jn/iFw8
+         33Lpn2obchdh3h7EaFPsb7lNdeRHr39vWfym4=
+Received: by 10.115.110.1 with SMTP id n1mr2963128wam.66.1218397657889;
+        Sun, 10 Aug 2008 12:47:37 -0700 (PDT)
+Received: by 10.114.149.3 with HTTP; Sun, 10 Aug 2008 12:47:37 -0700 (PDT)
 Content-Disposition: inline
+X-Google-Sender-Auth: d0cc190f0adc9522
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91881>
 
-Yet another "ping" on this topic, news?
+Hi,
 
-On Thu, Jul 31, 2008 at 5:58 PM, Gustavo Sverzut Barbieri
-<barbieri@profusion.mobi> wrote:
-> On Thu, Jul 31, 2008 at 5:32 PM, Petr Baudis <pasky@suse.cz> wrote:
->>  Hi,
->>
->> On Thu, Jul 31, 2008 at 04:43:35PM -0300, Gustavo Sverzut Barbieri wrote:
->>> Since nobody replied and I missed some gitweb guys in CC, I'm adding
->>> Petr and Jakub, as some guys said on IRC.
->>>
->>> Have anyone tried this patch, any problems?
->>
->>  sorry, I have it in my review queue. At first pass it was looking
->> good, but I wanted to look at it better before commenting.
->
-> no problem, just to see it was noticed or not :-)
->
->
->>  One thing I'm wondering about is how to make this stuff configurable,
->> since I'm not very comfortable with adding more "unbound" configuration
->> variables and would rather prefer stuff to be added to the $features
->> array... I'm not at all sure about my own sentiment here, however.
->
-> Path comparison (first patch), Sections (second), both?
->
-> I know path comparison can be a performance hit on large listings on
-> sites with heavy traffic. However, I don't see many people accessing
-> the projects page at the same time for long periods, it's not like
-> slashdot... people mostly use it to know about repositories and then
-> use git to track it.
->    The slowness is due O(n^2) worst case of sort and each step is not
-> a bit heavier since it need to split path into components and walk
-> these. Maybe cache the split?
->
-> --
-> Gustavo Sverzut Barbieri
-> http://profusion.mobi embedded systems
-> --------------------------------------
-> MSN: barbieri@gmail.com
-> Skype: gsbarbieri
-> Mobile: +55 (19) 9225-2202
->
+I'm having memory issues when trying to clone a remote git repository.
 
+I'm running: "git clone git+ssh://user@foo.bar.com/var/git/foo"
 
+The remote repository is bare, and is 180MB in size (says du), with
+1824 objects. The remote (VPS) server is running git version 1.5.6.4
+on Arch Linux on a x86_64 Opteron with 256MB of dedicated RAM.
 
--- 
-Gustavo Sverzut Barbieri
-http://profusion.mobi embedded systems
---------------------------------------
-MSN: barbieri@gmail.com
-Skype: gsbarbieri
-Mobile: +55 (19) 9225-2202
+The clone command fires off some packing operations that bring the
+server to its knees:
+
+PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+21782 kenpratt  20   0  444m 212m  272 D    3 83.0   0:04.98 git-pack-object
+
+The clone also seems to hang forever. Progress stays at 0% for hours,
+and it never progresses past compressing the first object.
+
+I've tried very conservative pack settings:
+
+[pack]
+        threads = 1
+        windowmemory = 64M
+        deltacachesize = 1M
+        deltacachelimit = 1M
+
+[pack]
+        threads = 1
+        windowmemory = 16M
+        deltacachesize = 16M
+        deltacachelimit = 0
+
+I've tries many variations like those, but nothing seems to help.
+
+A "git repack -a -d" only takes 5 seconds to run on the same
+repository on my laptop (a non-bare copy), and seems to peak at ~160MB
+of RAM usage.
+
+Any tips/help would be greatly appreciated. This repository is still
+small -- it will eventually grow to multiple GB in size, as it is a
+mix of small text files and binaries ranging in size from 2MB to
+200MB. Is it not feasible to clone repositories of that size that are
+hosted on a server with 256MB of RAM?
+
+Thanks!
+
+Ken
