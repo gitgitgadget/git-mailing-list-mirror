@@ -1,76 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-submodule - Add 'foreach' subcommand
-Date: Sun, 10 Aug 2008 15:37:55 -0700
-Message-ID: <7vsktczebg.fsf@gitster.siamese.dyndns.org>
-References: <1218386647-2348-1-git-send-email-mlevedahl@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] checkout --track: make up a sensible branch name if '-b'
+ was omitted
+Date: Mon, 11 Aug 2008 01:02:33 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808110058360.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <alpine.DEB.1.00.0808091559460.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vtzdu6nb7.fsf@gitster.siamese.dyndns.org> <7vvdya55ur.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0808092302520.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <7vsktd51wg.fsf@gitster.siamese.dyndns.org> <A6E466C6-C3B5-40EB-940C-516CF4D02ADF@frim.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 11 00:39:13 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Pieter de Bie <pieter@frim.nl>
+X-From: git-owner@vger.kernel.org Mon Aug 11 00:59:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSJZ4-0003Ld-Os
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 00:39:07 +0200
+	id 1KSJsJ-0008Cg-3r
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 00:58:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753710AbYHJWiE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2008 18:38:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753684AbYHJWiD
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 18:38:03 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51493 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753646AbYHJWiB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2008 18:38:01 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4E0CD506FA;
-	Sun, 10 Aug 2008 18:37:59 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id BEBBE506F8; Sun, 10 Aug 2008 18:37:56 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FBE1A294-672C-11DD-A328-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	id S1751501AbYHJW54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2008 18:57:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751054AbYHJW54
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 18:57:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55589 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751163AbYHJW5z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2008 18:57:55 -0400
+Received: (qmail invoked by alias); 10 Aug 2008 22:57:53 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 11 Aug 2008 00:57:53 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/4cIZSxA34eHUihjF97IdQahQI8ElerDOfH29qOk
+	4+LgdIHBv/gLpE
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <A6E466C6-C3B5-40EB-940C-516CF4D02ADF@frim.nl>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91897>
 
-Mark Levedahl <mlevedahl@gmail.com> writes:
+Hi,
 
-> This utility is inspired by a number of threads on the mailing list
-> looking for ways to better integrate submodules in a tree and work
-> with them as a unit.
+On Sat, 9 Aug 2008, Pieter de Bie wrote:
 
-Thanks for keeping the topic going
+> Changing the behaviour to mean "git checkout -b origin/master master" 
+> will change the meaning, but who uses -b with an existing remote branch 
+> anyway?
 
-> +foreach::
-> +	Executes an arbitrary list of commands in each checked out submodule.
-> +	$path is the name of the submodule directory relative to the
-> +	superproject, and $sha1 is the commit as recorded in the superproject.
-> +	And submodules defined in the superproject but not checked out are
-> +	ignored by this command, and an empty command-list provides no output.
-> ++
-> +As an example, "git submodule foreach 'echo $path `git rev-parse HEAD`' will
-> +show the path and currently checked out commit for each submodule.
+FWIW I am totally opposed to this kind of reasoning.  I consider it sloppy 
+to make assumptions that might or might not be true, and to force 
+a change that might be convenient to you, but is likely to hurt others.
 
-I think this is a sensible building block to have.
+Besides, your suggestion completely breaks consistency.  If somebody asks 
+to name a new branch "origin/master" (and "-b origin/master" is _just_ 
+_that_), then it is not Git's job to fix the user's mistake.  Just like it 
+is not Git's job to fix when somebody said "git commit", but meant "git 
+push".
 
-> +cmd_foreach()
-> +{
-> +	git ls-files --stage | grep '^160000 ' |
-> +	while read mode sha1 stage path
-> +	do
-> +		if test -e "$path"/.git
-> +		then
-> +			(cd "$path" && eval "$@")
-> +		fi
-> +	done
-> +}
+After all, I might _want_ to create a local branch "origin/master", and 
+you would just break the valid assumption that "-b origin/master" would do 
+that for me.
 
-I suspect we may want to stop the loop upon failure from eval (any user
-that wants to run command in all submodules no matter what could add '||:'
-to the cmd list), but other than that this is a simple enough and good
-addition.
+Hth,
+Dscho
