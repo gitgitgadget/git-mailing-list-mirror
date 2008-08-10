@@ -1,97 +1,86 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC PATCH] Documentation: rev-list-options: clarify history
- simplification with paths
-Date: Sun, 10 Aug 2008 15:16:43 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0808101507510.3462@nehalem.linux-foundation.org>
-References: <1218375840-4292-1-git-send-email-trast@student.ethz.ch> <7vabfk3cge.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0808101226130.3462@nehalem.linux-foundation.org> <7v63q8353m.fsf@gitster.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] git-submodule - Add 'foreach' subcommand
+Date: Mon, 11 Aug 2008 00:22:33 +0200
+Message-ID: <200808110022.33696.johan@herland.net>
+References: <1218386647-2348-1-git-send-email-mlevedahl@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 11 00:18:08 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 11 00:23:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSJEl-0006UH-MZ
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 00:18:08 +0200
+	id 1KSJKM-0007oY-F4
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 00:23:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753333AbYHJWRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2008 18:17:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753269AbYHJWRE
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 18:17:04 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:42702 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753258AbYHJWRD (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Aug 2008 18:17:03 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7AMGinn032538
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 10 Aug 2008 15:16:45 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7AMGhhN002285;
-	Sun, 10 Aug 2008 15:16:44 -0700
-In-Reply-To: <7v63q8353m.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.909 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753248AbYHJWWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2008 18:22:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753252AbYHJWWw
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 18:22:52 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:62623 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752952AbYHJWWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2008 18:22:51 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0K5E00G09OU1KR00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 11 Aug 2008 00:22:49 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K5E008NKOTM0J60@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 11 Aug 2008 00:22:34 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K5E009MHOTLDY72@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Mon, 11 Aug 2008 00:22:34 +0200 (CEST)
+In-reply-to: <1218386647-2348-1-git-send-email-mlevedahl@gmail.com>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91892>
 
+On Sunday 10 August 2008, Mark Levedahl wrote:
+> submodule foreach <command-list> will execute the list of commands in
+> each currently checked out submodule directory. The list of commands
+> is arbitrary as long as it is acceptable to sh. The variables '$path'
+> and '$sha1' are availble to the command-list, defining the submodule
+> path relative to the superproject and the submodules's commitID as
+> recorded in the superproject (this may be different than HEAD in the
+> submodule).
+>
+> This utility is inspired by a number of threads on the mailing list
+> looking for ways to better integrate submodules in a tree and work
+> with them as a unit. This could include fetching a new branch in each
+> from a given source, or possibly checking out a given named branch in
+> each. Currently, there is no consensus as to what additional commands
+> should be implemented in the porcelain, requiring all users whose needs
+> exceed that of git-submodule to do their own scripting. The foreach
+> command is intended to support such scripting, and in particular does
+> no error checking and produces no output, thus allowing end users
+> complete control over any information printed out and over what
+> constitutes an error.
+>
+> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
 
+Hi,
 
-On Sun, 10 Aug 2008, Junio C Hamano wrote:
-> 
-> Oh, I was not talking about revs.print_parents part, but about
-> revs.rewrite_parents part.  What got Thomas puzzled about was exactly how
-> the set of commits _shown_ are different with and without --parents, which
-> sets both of these internal flags.  Your "pointless" argument applies to
-> "print_parents" part, but "rewrite_parents" affects the resulting set.
+I was about to send an equivalent patch, but you beat me to it. Yours is 
+shorter and more elegant as well, so thanks for saving me the 
+embarrasment ;)
 
-Umm. Since --parents sets both, I don't see the point of that statement.
+So, FWIW:
 
-The fact is, --parents makes us show parenthood. That means that we need 
-the merges to show up, otherwise the parenthood is meaningless.
+Liked-by: Johan Herland <johan@herland.net>
 
-So without "--parents", there is absolutely no point in showing the merges 
-that don't have any other reason to be shown. And _with_ --parents, we 
-need to show them because they matter for parenthood.
-
-What's so confusing or hard to understand?
-
-And yes, we now have split that "parents" flag into two separate flags 
-internally, but that has absolutely _zero_ meaning for "--parents" itself, 
-and it is totally irrelevant and meaningless to bring up that internal 
-implementation issue and mentioning "print_parents" and "rewrite_parents". 
-
-They are immaterial to the actual argument, and the split-up happened 
-because of the "--graph" flag, where we actually *do* show parents too, 
-but we show them through the graph, not by printing the SHA1 of the 
-parent. So the reason "rewrite_parents" is the one that affects the set of 
-commits that get output is a small _internal_ implementation detail, and I 
-really don't see what it has to do with anything at all.
-
-So the fact is:
-
- - "rewrite_parents" is the flag that says that we are interested in 
-   parenthood and keeping the graph consistent and dense.
-
-   This very much implies showing merges that would otherwise not be 
-   relevant.
-
- - "print_parents" is just a flag whether we should print the parent SHA1 
-   or not. Nothing less, nothing more.
-
-   This one has absolutely no relevance to whether a merge should be shown 
-   or not, since it only affects the output _format_. It's related to 
-   pretty-printing, not to anything else!
-
-I really don't see what the confusion is all about. It's very 
-straightforward and obvious.
-
-			Linus
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
