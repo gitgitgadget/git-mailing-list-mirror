@@ -1,86 +1,76 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] git-submodule - Add 'foreach' subcommand
-Date: Mon, 11 Aug 2008 00:22:33 +0200
-Message-ID: <200808110022.33696.johan@herland.net>
-References: <1218386647-2348-1-git-send-email-mlevedahl@gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH] Read several objects at once with git cat-file --batch
+Date: Sun, 10 Aug 2008 23:25:08 +0100
+Message-ID: <b0943d9e0808101525w1e6f1e60h162a4b137d6dca6c@mail.gmail.com>
+References: <20080808082728.GA24017@diana.vm.bytemark.co.uk>
+	 <20080808080614.23424.28169.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 11 00:23:57 2008
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Aug 11 00:26:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSJKM-0007oY-F4
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 00:23:54 +0200
+	id 1KSJMa-0008K9-Eg
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 00:26:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753248AbYHJWWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2008 18:22:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753252AbYHJWWw
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 18:22:52 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:62623 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752952AbYHJWWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2008 18:22:51 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0K5E00G09OU1KR00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 11 Aug 2008 00:22:49 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K5E008NKOTM0J60@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 11 Aug 2008 00:22:34 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K5E009MHOTLDY72@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 11 Aug 2008 00:22:34 +0200 (CEST)
-In-reply-to: <1218386647-2348-1-git-send-email-mlevedahl@gmail.com>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1753429AbYHJWZK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Aug 2008 18:25:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753396AbYHJWZK
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 18:25:10 -0400
+Received: from rv-out-0506.google.com ([209.85.198.226]:63889 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753269AbYHJWZI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Aug 2008 18:25:08 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1962659rvb.1
+        for <git@vger.kernel.org>; Sun, 10 Aug 2008 15:25:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=GxzC1DVEhuYyQSV/p1M2Li5wx3GSQByFlEw+kHVsMNY=;
+        b=NsNMod+da/8VpNn1IYFsG99J9Cq8Mw6Oi+BAZKt/PuOT6YK56Jk+db/EgBuS7pqXl3
+         xZk5WXcK/rTft8cYta6BXIx4LGfniLNZvsMUzVUl4OxiXJPFOIVXJHeZ7s+AC4zYCZyN
+         EHij9DMndN94ks++p76zhwL3kNGqTtpSr21Z8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=x2vekVl/qvq9+Ean0eWeNWxaQ5J/EueDv0ifEtVLDKnJJWmEtXwpBhCv+Fxo4i5XnY
+         wsI5k9zrnaRaEGYndsUU5hy71J1yExMpsAH1xwJodzh3gZEHtwLoIO4sCgTy1VU31/dP
+         l9tOBYagLV8a3HqAdI7juQZsZGX097frSc2ls=
+Received: by 10.114.147.7 with SMTP id u7mr2995461wad.188.1218407108313;
+        Sun, 10 Aug 2008 15:25:08 -0700 (PDT)
+Received: by 10.114.193.12 with HTTP; Sun, 10 Aug 2008 15:25:08 -0700 (PDT)
+In-Reply-To: <20080808080614.23424.28169.stgit@yoghurt>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91893>
 
-On Sunday 10 August 2008, Mark Levedahl wrote:
-> submodule foreach <command-list> will execute the list of commands in
-> each currently checked out submodule directory. The list of commands
-> is arbitrary as long as it is acceptable to sh. The variables '$path'
-> and '$sha1' are availble to the command-list, defining the submodule
-> path relative to the superproject and the submodules's commitID as
-> recorded in the superproject (this may be different than HEAD in the
-> submodule).
->
-> This utility is inspired by a number of threads on the mailing list
-> looking for ways to better integrate submodules in a tree and work
-> with them as a unit. This could include fetching a new branch in each
-> from a given source, or possibly checking out a given named branch in
-> each. Currently, there is no consensus as to what additional commands
-> should be implemented in the porcelain, requiring all users whose needs
-> exceed that of git-submodule to do their own scripting. The foreach
-> command is intended to support such scripting, and in particular does
-> no error checking and produces no output, thus allowing end users
-> complete control over any information printed out and over what
-> constitutes an error.
->
-> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+2008/8/8 Karl Hasselstr=F6m <kha@treskal.com>:
+> Instead of spawning a separate cat-file process for every blob and
+> commit we want to read. This speeds things up slightly: about 6-8%
+> when uncommitting and rebasing 1470 linux-kernel patches (perftest.py
+> rebase-newrebase-add-file-linux).
 
-Hi,
+Which version of Git got the --batch option to git-cat-file? It might
+be possible that default Git in Debian (testing) or Ubuntu doesn't
+have this option. Maybe we could still have the original behaviour as
+a fallback.
 
-I was about to send an equivalent patch, but you beat me to it. Yours is 
-shorter and more elegant as well, so thanks for saving me the 
-embarrasment ;)
+Otherwise, the patch looks allright. It took me a bit of time to see
+why we need the new run_background() function (but in my current Git,
+1.5.3.4.206.g58ba4, there wasn't such an option; I had to upgrade).
 
-So, FWIW:
+Thanks.
 
-Liked-by: Johan Herland <johan@herland.net>
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+--=20
+Catalin
