@@ -1,76 +1,87 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH] Read several objects at once with git cat-file --batch
-Date: Sun, 10 Aug 2008 23:25:08 +0100
-Message-ID: <b0943d9e0808101525w1e6f1e60h162a4b137d6dca6c@mail.gmail.com>
-References: <20080808082728.GA24017@diana.vm.bytemark.co.uk>
-	 <20080808080614.23424.28169.stgit@yoghurt>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Plumbing-only support for storing object metadata
+Date: Sun, 10 Aug 2008 15:34:37 -0700
+Message-ID: <7v7iao1oua.fsf@gitster.siamese.dyndns.org>
+References: <20080809210733.GA6637@oh.minilop.net>
+ <d411cc4a0808091449n7e0c9b7et7980cf668106aead@mail.gmail.com>
+ <20080810035101.GA22664@spearce.org> <20080810112038.GB30892@cuci.nl>
+ <alpine.DEB.1.10.0808100502530.32620@asgard.lang.hm>
+ <20080810145019.GC3955@efreet.light.src> <20080810175735.GA14237@cuci.nl>
+ <20080810181115.GA3906@efreet.light.src> <20080810201651.GB14237@cuci.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Aug 11 00:26:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jan Hudec <bulb@ucw.cz>, david@lang.hm,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>,
+	Jamey Sharp <jamey@minilop.net>,
+	Josh Triplett <josh@freedesktop.org>, git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Mon Aug 11 00:36:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSJMa-0008K9-Eg
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 00:26:12 +0200
+	id 1KSJW0-0002Oj-Ek
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 00:35:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753429AbYHJWZK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Aug 2008 18:25:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753396AbYHJWZK
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 18:25:10 -0400
-Received: from rv-out-0506.google.com ([209.85.198.226]:63889 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753269AbYHJWZI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Aug 2008 18:25:08 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1962659rvb.1
-        for <git@vger.kernel.org>; Sun, 10 Aug 2008 15:25:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=GxzC1DVEhuYyQSV/p1M2Li5wx3GSQByFlEw+kHVsMNY=;
-        b=NsNMod+da/8VpNn1IYFsG99J9Cq8Mw6Oi+BAZKt/PuOT6YK56Jk+db/EgBuS7pqXl3
-         xZk5WXcK/rTft8cYta6BXIx4LGfniLNZvsMUzVUl4OxiXJPFOIVXJHeZ7s+AC4zYCZyN
-         EHij9DMndN94ks++p76zhwL3kNGqTtpSr21Z8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=x2vekVl/qvq9+Ean0eWeNWxaQ5J/EueDv0ifEtVLDKnJJWmEtXwpBhCv+Fxo4i5XnY
-         wsI5k9zrnaRaEGYndsUU5hy71J1yExMpsAH1xwJodzh3gZEHtwLoIO4sCgTy1VU31/dP
-         l9tOBYagLV8a3HqAdI7juQZsZGX097frSc2ls=
-Received: by 10.114.147.7 with SMTP id u7mr2995461wad.188.1218407108313;
-        Sun, 10 Aug 2008 15:25:08 -0700 (PDT)
-Received: by 10.114.193.12 with HTTP; Sun, 10 Aug 2008 15:25:08 -0700 (PDT)
-In-Reply-To: <20080808080614.23424.28169.stgit@yoghurt>
-Content-Disposition: inline
+	id S1753619AbYHJWeu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2008 18:34:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753535AbYHJWeu
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 18:34:50 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50880 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753260AbYHJWet (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2008 18:34:49 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9D322506A6;
+	Sun, 10 Aug 2008 18:34:48 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id DB9C1506A0; Sun, 10 Aug 2008 18:34:39 -0400 (EDT)
+In-Reply-To: <20080810201651.GB14237@cuci.nl> (Stephen R. van den Berg's
+ message of "Sun, 10 Aug 2008 22:16:51 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8A3A68C4-672C-11DD-A328-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91894>
 
-2008/8/8 Karl Hasselstr=F6m <kha@treskal.com>:
-> Instead of spawning a separate cat-file process for every blob and
-> commit we want to read. This speeds things up slightly: about 6-8%
-> when uncommitting and rebasing 1470 linux-kernel patches (perftest.py
-> rebase-newrebase-add-file-linux).
+"Stephen R. van den Berg" <srb@cuci.nl> writes:
 
-Which version of Git got the --batch option to git-cat-file? It might
-be possible that default Git in Debian (testing) or Ubuntu doesn't
-have this option. Maybe we could still have the original behaviour as
-a fallback.
+> I agree that using a custom rare extension would allow for almost no
+> change to git-core.
 
-Otherwise, the patch looks allright. It took me a bit of time to see
-why we need the new run_background() function (but in my current Git,
-1.5.3.4.206.g58ba4, there wasn't such an option; I had to upgrade).
+And at that point there is no "plumbing" side change necessary.  You just
+have to teach your Porcelain to notice the associated "metainfo" files and
+deal with them.
 
-Thanks.
+For merging such "metainfo", you would need to do your "flattish/unrich"
+checkout anyway, so it might be that an easier approach for such a
+Porcelain might be:
 
---=20
-Catalin
+ * Define a specific leading path, say ".attrs" the hierarchy to store the
+   attributes information.  Attributes to a file README and t/Makefile
+   will be stored in .attrs/README and .attrs/t/Makefile.  They are
+   probably just plain text file you can do your merges and parsing easily
+   but with this counterproposal the only requirement is they are simple
+   plain blobs.  The plumbing layer does not care what payload they carry.
+
+ * When you want to "git setattr $path", the Porcelain mucks with
+   ".attr/$path".  Probably checkout codepath would give you a hook that
+   lets you reflect what ".attr/$path" records to "$path", and checkin
+   (i.e. not commit but update-index) codepath would have another hook to
+   let you grab attributes for "$path" and update ".attr/$path".
+
+ * Merging and handling updates to ".attrs/" hierarchy are done the usual
+   way we handle blobs.  Your Porcelain would then take the result and do
+   whatever changes to ACL or xattrs to the corresponding path, perhaps
+   from a hook after merge.
+
+So it will most likely boild down to a "Porcelain only" convention that
+different Porcelains would agree on.
+
+My reaction for the initial proposal was very similar to the one given by
+Shawn.  I do not see much point on having plumbing side support (yet).
