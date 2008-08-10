@@ -1,99 +1,88 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH 2/3 v2] Teach git diff-tree --stdin to diff trees
-Date: Sun, 10 Aug 2008 17:38:48 +0200
-Message-ID: <20080810153848.GA28032@diana.vm.bytemark.co.uk>
-References: <20080809095605.GA10804@diana.vm.bytemark.co.uk> <20080809120816.11085.66578.stgit@yoghurt> <7vwsip53bg.fsf@gitster.siamese.dyndns.org>
+From: Jan Engelhardt <jengelh@medozas.de>
+Subject: Two-step tag fetching
+Date: Sun, 10 Aug 2008 11:19:42 -0400 (EDT)
+Message-ID: <alpine.LNX.1.10.0808101115290.1727@fbirervta.pbzchgretzou.qr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 10 17:17:55 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 10 17:20:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSCg3-0004ug-DB
-	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 17:17:51 +0200
+	id 1KSCit-0005vq-7h
+	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 17:20:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753414AbYHJPQs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Aug 2008 11:16:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753424AbYHJPQs
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 11:16:48 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4751 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753056AbYHJPQs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2008 11:16:48 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KSD0K-00087Z-00; Sun, 10 Aug 2008 16:38:48 +0100
-Content-Disposition: inline
-In-Reply-To: <7vwsip53bg.fsf@gitster.siamese.dyndns.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753842AbYHJPTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2008 11:19:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753676AbYHJPTp
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 11:19:45 -0400
+Received: from sovereign.computergmbh.de ([85.214.69.204]:53006 "EHLO
+	sovereign.computergmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752142AbYHJPTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2008 11:19:44 -0400
+Received: by sovereign.computergmbh.de (Postfix, from userid 25121)
+	id 7268818032C9B; Sun, 10 Aug 2008 17:19:42 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by sovereign.computergmbh.de (Postfix) with ESMTP id 5DEB81C415402
+	for <git@vger.kernel.org>; Sun, 10 Aug 2008 11:19:42 -0400 (EDT)
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91844>
 
-On 2008-08-09 13:41:23 -0700, Junio C Hamano wrote:
+Hi,
 
-> Karl Hasselstr=F6m <kha@treskal.com> writes:
->
-> > When diffing trees (either specified on the command line or from
-> > the standard input), the -m, -s, -v, --pretty, --abbrev-commit,
-> > --encoding, --no-commit-id, -c, --cc, and --always options are
-> > ignored, since they do not apply to trees.
->
-> I've commented on this part already; -m, -c, --cc are excluded
-> because they make sense only when you are dealing with three or more
-> trees.
 
-=46ixed.
+I have a somewhat older development tree at git://dev.medozas.de/linux 
+(about 2.6.26-rc6), and without any tags. Now, adding in Linus's 
+repository makes it gather all the new stuff, and all the missing tags:
 
-> > +	if (len !=3D 82 || !isspace(line[40]) || get_sha1_hex(line + 41, =
-sha1)) {
-> > +		error("Need precisely two trees, separated by one space");
-> > +		return -1;
-> > +	}
->
-> error() returns -1, so:
->
-> 	if (len !=3D 82 || !isspace(line[40]) || get_sha1_hex(line + 41, sha=
-1))
-> 		return error("Need two trees, separated by one space");
+$ git remote add linus 
+git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+$ git fetch linus
+remote: Counting objects: 85029, done.
+remote: Compressing objects: 100% (14727/14727), done.
+remote: Total 74992 (delta 61774), reused 72751 (delta 59953)
+Receiving objects: 100% (74992/74992), 23.08 MiB | 1375 KiB/s, done.
+Resolving deltas: 100% (61774/61774), completed with 6853 local objects.
+From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+ * [new branch]      master     -> linus/master
+ * [new tag]         v2.6.12    -> v2.6.12
+ * [new tag]         v2.6.12-rc2 -> v2.6.12-rc2
+ * [new tag]         v2.6.12-rc3 -> v2.6.12-rc3
+ * [new tag]         v2.6.12-rc4 -> v2.6.12-rc4
+[... lots of new tags ...]
+ * [new tag]         v2.6.25    -> v2.6.25
+ * [new tag]         v2.6.25-rc1 -> v2.6.25-rc1
+ * [new tag]         v2.6.25-rc2 -> v2.6.25-rc2
+ * [new tag]         v2.6.25-rc3 -> v2.6.25-rc3
+ * [new tag]         v2.6.25-rc4 -> v2.6.25-rc4
+ * [new tag]         v2.6.25-rc5 -> v2.6.25-rc5
+ * [new tag]         v2.6.25-rc6 -> v2.6.25-rc6
+ * [new tag]         v2.6.25-rc7 -> v2.6.25-rc7
+ * [new tag]         v2.6.25-rc8 -> v2.6.25-rc8
+ * [new tag]         v2.6.25-rc9 -> v2.6.25-rc9
+ * [new tag]         v2.6.26-rc1 -> v2.6.26-rc1
+ * [new tag]         v2.6.26-rc2 -> v2.6.26-rc2
+ * [new tag]         v2.6.26-rc3 -> v2.6.26-rc3
+ * [new tag]         v2.6.26-rc4 -> v2.6.26-rc4
+ * [new tag]         v2.6.26-rc5 -> v2.6.26-rc5
+ * [new tag]         v2.6.26-rc6 -> v2.6.26-rc6
+ * [new tag]         v2.6.26-rc7 -> v2.6.26-rc7
+ * [new tag]         v2.6.26-rc8 -> v2.6.26-rc8
+From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+ * [new tag]         v2.6.26    -> v2.6.26
+ * [new tag]         v2.6.26-rc9 -> v2.6.26-rc9
+ * [new tag]         v2.6.27-rc1 -> v2.6.27-rc1
+ * [new tag]         v2.6.27-rc2 -> v2.6.27-rc2
 
-=46ixed.
 
-> > +	tree2 =3D lookup_tree(sha1);
-> > +	if (!tree2 || parse_tree(tree2))
-> > +		return -1;
->
-> Don't you want to make error() say something here as well?
+What interests me here is why there are two "From" lines.
 
-Looking at lookup_tree() and parse_tree(), I got the impression that
-they take care of that themselves. Do they miss some case that I need
-to cover?
 
-> > +	printf("%s %s\n", sha1_to_hex(tree1->object.sha1),
-> > +			  sha1_to_hex(tree2->object.sha1));
->
-> Since this is strictly for Porcelain's use, you may want to document
-> this output format.
 
-Yes. Fixed.
-
-> Two-tree form from the command line does not have anything like
-> this, and two-commit form from --stdin have either a single object
-> name, the log message under -v or --pretty options. I notice that
-> these are not documented but we may want to document it while at it.
-
-I'll whip something up and send it out as a separate patch.
-
-> Other than that, the patch looks good. Thanks.
-
-Thanks for the feedback.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+thanks,
+Jan
