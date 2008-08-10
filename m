@@ -1,87 +1,65 @@
-From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH] Fix typo in comments of longest_ancestor_length()
-Date: Sun, 10 Aug 2008 22:26:23 +0700
-Message-ID: <20080810152623.GA22259@laptop>
+From: Jan Engelhardt <jengelh@medozas.de>
+Subject: Re: Two-step tag fetching
+Date: Sun, 10 Aug 2008 11:27:20 -0400 (EDT)
+Message-ID: <alpine.LNX.1.10.0808101124370.1727@fbirervta.pbzchgretzou.qr>
+References: <alpine.LNX.1.10.0808101115290.1727@fbirervta.pbzchgretzou.qr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 10 17:27:37 2008
+X-From: git-owner@vger.kernel.org Sun Aug 10 17:28:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSCpV-0007w4-9y
-	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 17:27:37 +0200
+	id 1KSCqF-0008Bw-R3
+	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 17:28:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753455AbYHJP0f convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Aug 2008 11:26:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753480AbYHJP0f
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 11:26:35 -0400
-Received: from rv-out-0506.google.com ([209.85.198.231]:35078 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752357AbYHJP0e (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2008 11:26:34 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1854059rvb.1
-        for <git@vger.kernel.org>; Sun, 10 Aug 2008 08:26:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:subject
-         :message-id:mime-version:content-type:content-disposition
-         :content-transfer-encoding:user-agent;
-        bh=4JmsKKcCI5f8YWuuipKWU5zMt3yVjPZQXbO4yE9CDKY=;
-        b=sR5XLxOVQRI1iSiN5gRHY7wfndAcVUpXmkFl8q0OtHROrrtyhYR8cKAW5vCz/vb265
-         fHFxIpJ+9qg00+tUg2M/JOZQ1R60ONObdfR42deFmWXq4bR7/5RIeNvw4Fwkx8F2oBai
-         aHIt8tt5vZPBY7MZQkJIqFLA1wk9Ja7D5ya+c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        b=vIJ+srA3V25VJmUadL3xkYcfBCbvGPcvrWlKn15Z+iRAB/PqqJbBOw2zy7cGefJveI
-         Ookhgw3gsQduqj6JaJzHxgcJanyx2VLv8fhGHRCf8Wdy3F3WniaI24llXSND/Vzr7Tg0
-         KkKrvI2rHTEVo3K/t/0BYk1G/lZo9RRbbUmWA=
-Received: by 10.114.109.1 with SMTP id h1mr2907424wac.35.1218381994205;
-        Sun, 10 Aug 2008 08:26:34 -0700 (PDT)
-Received: from pclouds@gmail.com ( [117.5.7.85])
-        by mx.google.com with ESMTPS id z20sm6068945pod.11.2008.08.10.08.26.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 10 Aug 2008 08:26:32 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 10 Aug 2008 22:26:23 +0700
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753781AbYHJP1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2008 11:27:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753902AbYHJP1W
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 11:27:22 -0400
+Received: from sovereign.computergmbh.de ([85.214.69.204]:36145 "EHLO
+	sovereign.computergmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753718AbYHJP1V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2008 11:27:21 -0400
+Received: by sovereign.computergmbh.de (Postfix, from userid 25121)
+	id 8E84E18032C9B; Sun, 10 Aug 2008 17:27:20 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by sovereign.computergmbh.de (Postfix) with ESMTP id 8537B1C415402
+	for <git@vger.kernel.org>; Sun, 10 Aug 2008 11:27:20 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.10.0808101115290.1727@fbirervta.pbzchgretzou.qr>
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91847>
 
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Not really important but it might confuse new comers.
+On Sunday 2008-08-10 11:19, Jan Engelhardt wrote:
+>
+>
+>I have a somewhat older development tree at git://dev.medozas.de/linux 
+>(about 2.6.26-rc6), and without any tags. Now, adding in Linus's 
+>repository makes it gather all the new stuff, and all the missing tags:
+>[...]
+>What interests me here is why there are two "From" lines.
 
- path.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I just noticed the same with stable-2.6.19.y.git (and all others), like
 
-diff --git a/path.c b/path.c
-index 9df447b..76e8872 100644
---- a/path.c
-+++ b/path.c
-@@ -365,7 +365,7 @@ int normalize_absolute_path(char *buf, const char *=
-path)
-  * path =3D Canonical absolute path
-  * prefix_list =3D Colon-separated list of absolute paths
-  *
-- * Determines, for each path in parent_list, whether the "prefix" real=
-ly
-+ * Determines, for each path in prefix_list, whether the "prefix" real=
-ly
-  * is an ancestor directory of path.  Returns the length of the longes=
-t
-  * ancestor directory, excluding any trailing slashes, or -1 if no pre=
-fix
-  * is an ancestor.  (Note that this means 0 is returned if prefix_list=
- is
---=20
-1.5.5.GIT
+>From git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.19.y
+ * [new branch]      master     -> stable19/master
+ * [new tag]         v2.6.19.7  -> v2.6.19.7
+From git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.19.y
+ * [new tag]         v2.6.19.1  -> v2.6.19.1
+ * [new tag]         v2.6.19.2  -> v2.6.19.2
+ * [new tag]         v2.6.19.3  -> v2.6.19.3
+ * [new tag]         v2.6.19.4  -> v2.6.19.4
+ * [new tag]         v2.6.19.5  -> v2.6.19.5
+ * [new tag]         v2.6.19.6  -> v2.6.19.6
+
+And my suspicion is that v2.6.19.1--v2.6.19.6 have been repacked into 
+packed-refs, and v2.6.19.7 has been added later and is a loose tag (as 
+is the master branch). So the packed-refs (with less recent history) are 
+fetched later, which conflicts with the output from Linus's repo where I 
+get the (possibly packed) tags first, in chronological order.
