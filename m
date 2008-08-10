@@ -1,147 +1,68 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC PATCH] Documentation: rev-list-options: clarify history simplification with paths
-Date: Sun, 10 Aug 2008 23:31:51 +0200
-Message-ID: <200808102331.55385.trast@student.ethz.ch>
-References: <1218375840-4292-1-git-send-email-trast@student.ethz.ch> <7vabfk3cge.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] Documentation: rev-list-options: clarify history
+ simplification with paths
+Date: Sun, 10 Aug 2008 14:58:05 -0700
+Message-ID: <7v63q8353m.fsf@gitster.siamese.dyndns.org>
+References: <1218375840-4292-1-git-send-email-trast@student.ethz.ch>
+ <7vabfk3cge.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.10.0808101226130.3462@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3075356.E9tA7Nbpgx";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 10 23:32:54 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Aug 10 23:59:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSIWz-0007gj-Ro
-	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 23:32:54 +0200
+	id 1KSIwX-00017h-7F
+	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 23:59:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753688AbYHJVbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2008 17:31:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753684AbYHJVbs
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 17:31:48 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:40711 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753601AbYHJVbr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2008 17:31:47 -0400
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 10 Aug 2008 23:31:46 +0200
-Received: from [192.168.0.4] ([84.75.158.234]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 10 Aug 2008 23:31:45 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vabfk3cge.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 10 Aug 2008 21:31:46.0012 (UTC) FILETIME=[7D5A21C0:01C8FB30]
+	id S1753018AbYHJV6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2008 17:58:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753048AbYHJV6N
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 17:58:13 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46188 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753018AbYHJV6N (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2008 17:58:13 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0EF0054ABF;
+	Sun, 10 Aug 2008 17:58:12 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 27B3154ABE; Sun, 10 Aug 2008 17:58:07 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.10.0808101226130.3462@nehalem.linux-foundation.org> (Linus
+ Torvalds's message of "Sun, 10 Aug 2008 12:27:58 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6CF740AC-6727-11DD-94A8-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91889>
 
---nextPart3075356.E9tA7Nbpgx
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Junio C Hamano wrote:
-> Thomas Rast <trast@student.ethz.ch> writes:
->=20
-> >   $ g rev-list --pretty=3Doneline --full-history HEAD -- dir
-> > ...
-> > But --parents --full-history magically revives the merge:
-> > ...
->=20
-> Personally I do not think --full-history without --parents is of much
-> usefulness (I'd let Linus or somebody else defend this usage, or make it
-> imply revs.rewrite_parents otherwise).
+> On Sun, 10 Aug 2008, Junio C Hamano wrote:
+>> 
+>> Personally I do not think --full-history without --parents is of much
+>> usefulness (I'd let Linus or somebody else defend this usage, or make it
+>> imply revs.rewrite_parents otherwise).  If you remove that case from your
+>> set of experiments in the equation, do the rest of the results make sense?
+>
+> Oh, it's _very_ useful.
+>
+> The most common case is "git whatchanged". It's useful to find a commit 
+> that did some change _without_ any graphical front-end. 
+>
+> And then the merges and parenthood are totally pointless - no human can 
+> try to tie things together in their head _anyway_, so why show them? You 
+> just want to find the change.
 
-Well,
-
-  --parents::
-          Print the parents of the commit.
-
-does not mention any change in behaviour.  I find it very surprising
-that a simple commit formatting option changes the way commits are
-_selected_.
-
-> One thing I forgot to mention (but the code of course does not forget to
-> do) in the series is that --simplify-merges implies revs.rewrite_parents
-> which roughly translates to your experiments from the command line to
-> always have --parents option.
-
-Then it makes sense of course.
-
-> >   $ git rev-list --pretty=3Doneline --sparse --parents --simplify-merge=
-s HEAD -- dir
-[...]
-> I am not sure what one should expect from combination between these two
-> options.  --sparse says do not drop commits that are of no interest with
-> respect to the paths specified, while --simplify-merges tells it to
-> simplify merges so that the remaining graph shows only the ones that have
-> relevance to !TREESAME (iow "has some changes") nodes.
-
-It makes sense assuming a one-pass (plus simplify-merges) model.  It
-did not fit into my two-pass model that I tried to come up with for an
-easier explanation.
-
-So in my current (ahem, new) understanding, that means (assuming the
-side effect of --parents):
-
-The simplification follows commits backwards into history according to
-the following rules:
-
-=2D-dense:
-	Non-merges are included if TREESAME[1], otherwise they are
-	skipped.
-=2D-sparse:
-	Non-merges are always included.
-
-default:
-	Merges are included unless they are TREESAME with a parent, in
-	which case they are skipped and only that parent is followed.
-=2D-full-history:
-	Merges are always included.
-
-Conceptually, that builds a subset of the history, although it is
-not kept in memory unless absolutely required.  Then:
-
-=2D-simplify-commits:
-	Implies --full-history, then applies your algorithm on the
-	resulting subset.
-
-Which probably means that --sparse --simplify-commits makes no sense,
-but explains the results.
-
-Note that --full-history makes no exceptions, not even for merges that
-are TREESAME w.r.t. all parents, unlike current docs state.  (This is
-empirically correct.)  If the above is correct, and you think that has
-some merit, I'll rewrite my patch to reflect this (with examples) to
-update the docs.
-
-=2D Thomas
-
-
-[1] I still think "touching" was a pretty neat idea ;-)
-
-=2D-=20
-Thomas Rast
-trast@student.ethz.ch
-
-
-
---nextPart3075356.E9tA7Nbpgx
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkifXksACgkQqUud07tmzP2GqwCgjkQHnYWH+mlekU85Z9zt63MJ
-aBgAni4FN4rRdTk7KvmNyyyF647TB+6q
-=vRQX
------END PGP SIGNATURE-----
-
---nextPart3075356.E9tA7Nbpgx--
+Oh, I was not talking about revs.print_parents part, but about
+revs.rewrite_parents part.  What got Thomas puzzled about was exactly how
+the set of commits _shown_ are different with and without --parents, which
+sets both of these internal flags.  Your "pointless" argument applies to
+"print_parents" part, but "rewrite_parents" affects the resulting set.
