@@ -1,76 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] builtin-reflog: fix deletion of HEAD entries
-Date: Sat, 09 Aug 2008 18:01:41 -0700
-Message-ID: <7vd4kh4r9m.fsf@gitster.siamese.dyndns.org>
-References: <1218324810-35376-1-git-send-email-pdebie@ai.rug.nl>
- <1218324810-35376-2-git-send-email-pdebie@ai.rug.nl>
- <7vhc9t4s2c.fsf@gitster.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: Make it scream by minimizing temp files
+Date: Sat, 9 Aug 2008 18:46:25 -0700
+Message-ID: <20080810014625.GA31438@hand.yhbt.net>
+References: <1218235313-19480-1-git-send-email-marcus@griep.us> <20080809062521.GA10480@untitled> <489DBB8A.2060207@griep.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Sun Aug 10 03:02:56 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Marcus Griep <marcus@griep.us>
+X-From: git-owner@vger.kernel.org Sun Aug 10 03:47:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KRzKg-0007Ho-5s
-	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 03:02:54 +0200
+	id 1KS01q-0000U9-27
+	for gcvg-git-2@gmane.org; Sun, 10 Aug 2008 03:47:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752706AbYHJBBu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Aug 2008 21:01:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbYHJBBt
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 21:01:49 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48524 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752009AbYHJBBt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2008 21:01:49 -0400
+	id S1752380AbYHJBq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2008 21:46:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752750AbYHJBq1
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Aug 2008 21:46:27 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:58834 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752324AbYHJBq1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2008 21:46:27 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6466C5370A;
-	Sat,  9 Aug 2008 21:01:47 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8279953705; Sat,  9 Aug 2008 21:01:43 -0400 (EDT)
-In-Reply-To: <7vhc9t4s2c.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 09 Aug 2008 17:44:27 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E835F502-6677-11DD-9226-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+	by hand.yhbt.net (Postfix) with ESMTP id 5E9122DC01B;
+	Sat,  9 Aug 2008 18:46:26 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <489DBB8A.2060207@griep.us>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91798>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Marcus Griep <marcus@griep.us> wrote:
+> Eric Wong wrote:
+> > Perhaps a sysseek in addition to the seek above would help
+> > with the problems you mentioned in the other email.
+> > 
+> > 		sysseek $TEMP_FILES{$fd}, 0, 0 or croak $!;
+> > 
+> > (It doesn't seem to affect me when running the test suite, though).
+> 
+> Sounds like a good idea, but I found the source of my cygwin issue,
+> namely that /tmp (which perl uses for its temp files) was mounted
+> in textmode.  I fixed that by remounting that folder in binmode.
 
-> Pieter de Bie <pdebie@ai.rug.nl> writes:
->
->> dwim_ref() used to resolve HEAD to its symlink (like refs/heads/master),
->> making a call to 'git reflog delete HEAD@{1}' to actually delete the second
->> entry in the master reflog.
->>
->> This patch makes a special case for HEAD (as that's the only non-branch
->> reflog we keep), fixing the issue.
->
-> What happens to remotes/origin/HEAD that points at remotes/origin/master?
+Hmm.. Instead of relying on users on weird platforms to change their
+mount options, git-svn should also set binmode on all filehandles
+regardless.  Will that get around the problem you had with cygwin?
 
-Perhaps this might work better?
+git-svn already sets binmode for all the rev_map files.
 
- builtin-reflog.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Nonetheless, if consumers may use sysread, after getting the file handle
+> then we'll want to use sysseek.
+> 
+> >> +	} else {
+> >> +		$TEMP_FILES{$fd} = File::Temp->new(
+> >> +									TEMPLATE => 'GitSvn_XXXXXX',
+> >> +									DIR => File::Spec->tmpdir
+> >> +									) or croak $!;
+> > 
+> > Way too much indentation :x
+> 
+> That's what I get for assuming a tab width of 4.  I'll redo it with
+> about half as many tabs.
 
-diff --git a/builtin-reflog.c b/builtin-reflog.c
-index 0c34e37..a48f664 100644
---- a/builtin-reflog.c
-+++ b/builtin-reflog.c
-@@ -604,7 +604,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
- 
--		if (!dwim_ref(argv[i], spec - argv[i], sha1, &ref)) {
-+		if (!dwim_log(argv[i], spec - argv[i], sha1, &ref)) {
- 			status |= error("%s points nowhere!", argv[i]);
- 			continue;
- 		}
+Tabwidth is 8 characters by default, and that is what git uses.
+
+> > Also, this seems generic enough that other programs (git-cvsimport
+> > perhaps) can probably use it, too.  So maybe it could go into Git.pm or
+> > a new module, Git/Tempfile.pm?
+> 
+> I'd advocate the latter since it's not really Git functionality, but
+> rather a support, so a submodule would perhaps be the better placement.
+> 
+> Also, I came up with one more optimization inside 'sub close_file', so
+> I'll roll that in too.  Tell me where you/the community would prefer 
+> the tempfile functionality, and I'll submit a new patch series with 
+> one patch for the module and one patch for git-svn.
+> 
+> By then, I should have some better benchmark results.
+
+Junio (or anybody else), any thoughts on what the submodule should be
+named?  I'm not good at naming things :x
+
+-- 
+Eric Wong
