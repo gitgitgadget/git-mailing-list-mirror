@@ -1,165 +1,107 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH] git-submodule - Add 'foreach' subcommand
-Date: Sun, 10 Aug 2008 19:10:04 -0400
-Message-ID: <1218409804-1556-1-git-send-email-mlevedahl@gmail.com>
-References: <7vsktczebg.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org, johan@herland.net,
-	Mark Levedahl <mlevedahl@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Aug 11 01:11:19 2008
+From: david@lang.hm
+Subject: Re: [RFC] Plumbing-only support for storing object metadata
+Date: Sun, 10 Aug 2008 16:10:44 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0808101550570.32620@asgard.lang.hm>
+References: <20080809210733.GA6637@oh.minilop.net> <d411cc4a0808091449n7e0c9b7et7980cf668106aead@mail.gmail.com> <20080810035101.GA22664@spearce.org> <20080810112038.GB30892@cuci.nl> <alpine.DEB.1.10.0808100502530.32620@asgard.lang.hm> <20080810145019.GC3955@efreet.light.src>
+ <20080810175735.GA14237@cuci.nl> <20080810181115.GA3906@efreet.light.src> <20080810201651.GB14237@cuci.nl> <7v7iao1oua.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: "Stephen R. van den Berg" <srb@cuci.nl>, Jan Hudec <bulb@ucw.cz>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>,
+	Jamey Sharp <jamey@minilop.net>,
+	Josh Triplett <josh@freedesktop.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 11 01:11:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSK4A-0002WP-0W
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 01:11:14 +0200
+	id 1KSK4J-0002ZT-Jm
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 01:11:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752296AbYHJXKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2008 19:10:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752668AbYHJXKL
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 19:10:11 -0400
-Received: from wr-out-0506.google.com ([64.233.184.226]:17096 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751687AbYHJXKJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2008 19:10:09 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so1229906wri.5
-        for <git@vger.kernel.org>; Sun, 10 Aug 2008 16:10:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=4G6ZSGXgy+ZEfwgF1dDpaERbpbtmev+xXX9ZMVMtuLQ=;
-        b=btjzibXPw4d5DO5rzbNLLK/GcjEz2pK/Gh7+CAu4wRo4tSCBRAHPfFkKu13911+W+z
-         x4xz/prK8zi7V8Dv1RRV8ggSnUE+zEQWNvqQKBs0brGsBNi0viC7Ly1KYw4UpvUqeIg9
-         WEcSSVLywiVt3CpUvcVNi8YbCJ2Xt9fjtGeVo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=c6WzQLI2ifBYhXAtJ/Dh6Qs4Uiz1i25cvArx2X6iLTNfh44sdf5gXuRikkr5tx8JpW
-         HCqAb/GGHsxjMrG0vpfe1WdtYdzCO6XXPeIzIXNFa210t6cVvan3jX0gIIMrSQKsr74s
-         s39zOKi0pqRBwSd6ydHGfVgw4Z08xw2veAgXQ=
-Received: by 10.90.93.13 with SMTP id q13mr7656235agb.106.1218409808475;
-        Sun, 10 Aug 2008 16:10:08 -0700 (PDT)
-Received: from localhost.localdomain ( [71.163.41.46])
-        by mx.google.com with ESMTPS id g7sm618571wra.16.2008.08.10.16.10.06
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 10 Aug 2008 16:10:07 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.rc2.44.g974eb
-In-Reply-To: <7vsktczebg.fsf@gitster.siamese.dyndns.org>
+	id S1753222AbYHJXKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2008 19:10:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752881AbYHJXKT
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 19:10:19 -0400
+Received: from mail.lang.hm ([64.81.33.126]:50138 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752845AbYHJXKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2008 19:10:18 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m7AN9xXB004138;
+	Sun, 10 Aug 2008 16:09:59 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <7v7iao1oua.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91901>
 
-submodule foreach <command-list> will execute the list of commands in
-each currently checked out submodule directory. The list of commands
-is arbitrary as long as it is acceptable to sh. The variables '$path'
-and '$sha1' are availble to the command-list, defining the submodule
-path relative to the superproject and the submodules's commitID as
-recorded in the superproject (this may be different than HEAD in the
-submodule).
+On Sun, 10 Aug 2008, Junio C Hamano wrote:
 
-This utility is inspired by a number of threads on the mailing list
-looking for ways to better integrate submodules in a tree and work
-with them as a unit. This could include fetching a new branch in each
-from a given source, or possibly checking out a given named branch in
-each. Currently, there is no consensus as to what additional commands
-should be implemented in the porcelain, requiring all users whose needs
-exceed that of git-submodule to do their own scripting. The foreach
-command is intended to support such scripting, and in particular does
-no error checking and produces no output, thus allowing end users
-complete control over any information printed out and over what
-constitutes an error. The processing does terminate if the command-list
-returns an error, but processing can easily be forced for all
-submodules be terminating the list with ';true'.
+>> I agree that using a custom rare extension would allow for almost no
+>> change to git-core.
+>
+> And at that point there is no "plumbing" side change necessary.  You just
+> have to teach your Porcelain to notice the associated "metainfo" files and
+> deal with them.
+>
+> For merging such "metainfo", you would need to do your "flattish/unrich"
+> checkout anyway, so it might be that an easier approach for such a
+> Porcelain might be:
+>
+> * Define a specific leading path, say ".attrs" the hierarchy to store the
+>   attributes information.  Attributes to a file README and t/Makefile
+>   will be stored in .attrs/README and .attrs/t/Makefile.  They are
+>   probably just plain text file you can do your merges and parsing easily
+>   but with this counterproposal the only requirement is they are simple
+>   plain blobs.  The plumbing layer does not care what payload they carry.
+>
+> * When you want to "git setattr $path", the Porcelain mucks with
+>   ".attr/$path".  Probably checkout codepath would give you a hook that
+>   lets you reflect what ".attr/$path" records to "$path", and checkin
+>   (i.e. not commit but update-index) codepath would have another hook to
+>   let you grab attributes for "$path" and update ".attr/$path".
+>
+> * Merging and handling updates to ".attrs/" hierarchy are done the usual
+>   way we handle blobs.  Your Porcelain would then take the result and do
+>   whatever changes to ACL or xattrs to the corresponding path, perhaps
+>   from a hook after merge.
+>
+> So it will most likely boild down to a "Porcelain only" convention that
+> different Porcelains would agree on.
+>
+> My reaction for the initial proposal was very similar to the one given by
+> Shawn.  I do not see much point on having plumbing side support (yet).
 
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
----
- Documentation/git-submodule.txt |   15 +++++++++++++++
- git-submodule.sh                |   23 +++++++++++++++++++++--
- 2 files changed, 36 insertions(+), 2 deletions(-)
+a few items
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index bf33b0c..1e7d352 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -14,6 +14,7 @@ SYNOPSIS
- 'git submodule' [--quiet] init [--] [<path>...]
- 'git submodule' [--quiet] update [--init] [--] [<path>...]
- 'git submodule' [--quiet] summary [--summary-limit <n>] [commit] [--] [<path>...]
-+'git submodule' foreach <command-list>
- 
- 
- DESCRIPTION
-@@ -123,6 +124,20 @@ summary::
- 	in the submodule between the given super project commit and the
- 	index or working tree (switched by --cached) are shown.
- 
-+foreach::
-+	Executes an arbitrary list of commands in each checked out submodule.
-+	$path is the name of the submodule directory relative to the
-+	superproject, and $sha1 is the commit as recorded in the superproject.
-+	Any submodules defined in the superproject but not checked out are
-+	ignored by this command, and an empty command-list provides no output.
-+	A non-zero return from the command-list in any submodule causes
-+	the processing to terminate. This can be overridden by adding '; true'
-+	to the end of the command list.
-++
-+As an example, "git submodule foreach 'echo $path `git rev-parse HEAD`' will
-+show the path and currently checked out commit for each submodule.
-+
-+
- OPTIONS
- -------
- -q::
-diff --git a/git-submodule.sh b/git-submodule.sh
-index b40f876..39a19f0 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -6,7 +6,7 @@
- 
- USAGE="[--quiet] [--cached] \
- [add <repo> [-b branch] <path>]|[status|init|update [-i|--init]|summary [-n|--summary-limit <n>] [<commit>]] \
--[--] [<path>...]"
-+[--] [<path>...]|[foreach <command-list>]"
- OPTIONS_SPEC=
- . git-sh-setup
- require_work_tree
-@@ -199,6 +199,25 @@ cmd_add()
- }
- 
- #
-+# Execute an arbitrary command sequence in each checked out
-+# submodule
-+#
-+# $@ = command to execute
-+#
-+cmd_foreach()
-+{
-+	git ls-files --stage | grep '^160000 ' |
-+	while read mode sha1 stage path
-+	do
-+		if test -e "$path"/.git
-+		then
-+			(cd "$path" && eval "$@") ||
-+			die "Error detected evaluating commands in '$path'"
-+		fi
-+	done
-+}
-+
-+#
- # Register submodules in .git/config
- #
- # $@ = requested paths (default to all)
-@@ -583,7 +602,7 @@ cmd_status()
- while test $# != 0 && test -z "$command"
- do
- 	case "$1" in
--	add | init | update | status | summary)
-+	add | foreach | init | update | status | summary)
- 		command=$1
- 		;;
- 	-q|--quiet)
--- 
-1.6.0.rc2.44.g974eb
+convienience
+
+1. tieing the attributes to the file more directly will make it much 
+easier to deal with them along with the file in the non-rich checkout 
+(it's much easier to say README* then README .attr/README*)
+
+
+consisntancy
+
+2. putting hooks into the plumbing that can call external programs for the 
+rich checkin/checkout will let all porcelains make use of the features 
+without having to modify all of them independanty.
+
+safety
+
+3. when doing checkins/checkouts of individual files you need to be sure 
+that you deal with the correct attributes at the same time (or else that 
+the person is explicity requesting only a piece of it) with the attributes 
+closely associated with the file this is much easier to do (this is 
+another aspect of the convienience in #1 above)
+
+4. if the configuration of what helper to use changes from one revision to 
+another the plumbing (which is already looking at the tree object for both 
+revisions) is in a better position to detect and alert then the porcelains
+
+David Lang
