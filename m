@@ -1,107 +1,103 @@
-From: david@lang.hm
-Subject: Re: [RFC] Plumbing-only support for storing object metadata
-Date: Sun, 10 Aug 2008 16:10:44 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0808101550570.32620@asgard.lang.hm>
-References: <20080809210733.GA6637@oh.minilop.net> <d411cc4a0808091449n7e0c9b7et7980cf668106aead@mail.gmail.com> <20080810035101.GA22664@spearce.org> <20080810112038.GB30892@cuci.nl> <alpine.DEB.1.10.0808100502530.32620@asgard.lang.hm> <20080810145019.GC3955@efreet.light.src>
- <20080810175735.GA14237@cuci.nl> <20080810181115.GA3906@efreet.light.src> <20080810201651.GB14237@cuci.nl> <7v7iao1oua.fsf@gitster.siamese.dyndns.org>
+From: "Ken Pratt" <ken@kenpratt.net>
+Subject: Re: pack operation is thrashing my server
+Date: Sun, 10 Aug 2008 16:12:16 -0700
+Message-ID: <a6b6acf60808101612l300227e9od97e767fe4621dc5@mail.gmail.com>
+References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
+	 <46a038f90808101606j7534b855j9205ae219c350c94@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: "Stephen R. van den Berg" <srb@cuci.nl>, Jan Hudec <bulb@ucw.cz>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Scott Chacon <schacon@gmail.com>,
-	Jamey Sharp <jamey@minilop.net>,
-	Josh Triplett <josh@freedesktop.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 11 01:11:24 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 11 01:13:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSK4J-0002ZT-Jm
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 01:11:24 +0200
+	id 1KSK6B-00038u-J4
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 01:13:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753222AbYHJXKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2008 19:10:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752881AbYHJXKT
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 19:10:19 -0400
-Received: from mail.lang.hm ([64.81.33.126]:50138 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752845AbYHJXKS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2008 19:10:18 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m7AN9xXB004138;
-	Sun, 10 Aug 2008 16:09:59 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <7v7iao1oua.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1753333AbYHJXMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2008 19:12:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753248AbYHJXMR
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 19:12:17 -0400
+Received: from rv-out-0506.google.com ([209.85.198.229]:1029 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753304AbYHJXMQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2008 19:12:16 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1975064rvb.1
+        for <git@vger.kernel.org>; Sun, 10 Aug 2008 16:12:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=UW5cNR+bcKwqSnbcmLJzd75rvNry3HMagZ2lj5XODcY=;
+        b=mUKvUlQWhAfwQFYWhjQcgxASpokDapyWdrGDhQAJdmjAaeEsY474BPsfJGIziUgSU2
+         xHVghgL9BRKW4Qr751REZWyeyvwp1+x5SZHgjc4qw4oLJkapVdyglRLP99RwH7uvvq+0
+         SoUTq5ct5a0bWXOWwR/8ms/O63kSYH229sNaQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=GnkXAz7jirHFk9Uggbz3QIVpHHMk1lVofzj4+WlWN9l3aAkkDRvhtJUu3EL1GbZRhf
+         zCHkE8iVgYY8BEmfIB/OUEAHMYaW0PvKGKcfaOUdBNUURaxwNH/fuyD+jHxPFwO3kjXz
+         liiLO4yThYOvFAakiJSnXgw2EcQaMTQkxr7Vw=
+Received: by 10.141.19.9 with SMTP id w9mr3039355rvi.202.1218409936455;
+        Sun, 10 Aug 2008 16:12:16 -0700 (PDT)
+Received: by 10.141.42.15 with HTTP; Sun, 10 Aug 2008 16:12:16 -0700 (PDT)
+In-Reply-To: <46a038f90808101606j7534b855j9205ae219c350c94@mail.gmail.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: 08dd58b7b3baacdf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91902>
 
-On Sun, 10 Aug 2008, Junio C Hamano wrote:
+Thanks for the tips, Martin.
 
->> I agree that using a custom rare extension would allow for almost no
->> change to git-core.
+How does git over rsync work? It is unauthenticated, like git over
+http? Or authenticated, like git+ssh?
+
+Great ideas though. Unfortunately I don't think I'll be able to use
+the repack locally and then upload strategy for this particular
+workflow, but the rsync clone approach might do it.
+
+-Ken
+
+On Sun, Aug 10, 2008 at 4:06 PM, Martin Langhoff
+<martin.langhoff@gmail.com> wrote:
+> On Mon, Aug 11, 2008 at 7:47 AM, Ken Pratt <ken@kenpratt.net> wrote:
+>> A "git repack -a -d" only takes 5 seconds to run on the same
+>> repository on my laptop (a non-bare copy), and seems to peak at ~160MB
+>> of RAM usage.
 >
-> And at that point there is no "plumbing" side change necessary.  You just
-> have to teach your Porcelain to notice the associated "metainfo" files and
-> deal with them.
+> As a workaround, if you repack on your laptop and rsync the pack+index
+> to the server, it will work. This can be used to serve huge projects
+> out of lightweight-ish servers. Yet another workaround is to perform
+> initial clones via rsync or http.
 >
-> For merging such "metainfo", you would need to do your "flattish/unrich"
-> checkout anyway, so it might be that an easier approach for such a
-> Porcelain might be:
+> In your case, I agree that the repo doesn't seem large enough (or to
+> have large enough objects) to warrant having this problem. But that I
+> can't help much with myself - pack-machiner experts probably can.
 >
-> * Define a specific leading path, say ".attrs" the hierarchy to store the
->   attributes information.  Attributes to a file README and t/Makefile
->   will be stored in .attrs/README and .attrs/t/Makefile.  They are
->   probably just plain text file you can do your merges and parsing easily
->   but with this counterproposal the only requirement is they are simple
->   plain blobs.  The plumbing layer does not care what payload they carry.
+> cheers,
 >
-> * When you want to "git setattr $path", the Porcelain mucks with
->   ".attr/$path".  Probably checkout codepath would give you a hook that
->   lets you reflect what ".attr/$path" records to "$path", and checkin
->   (i.e. not commit but update-index) codepath would have another hook to
->   let you grab attributes for "$path" and update ".attr/$path".
 >
-> * Merging and handling updates to ".attrs/" hierarchy are done the usual
->   way we handle blobs.  Your Porcelain would then take the result and do
->   whatever changes to ACL or xattrs to the corresponding path, perhaps
->   from a hook after merge.
+> m
+> --
+>  martin.langhoff@gmail.com
+>  martin@laptop.org -- School Server Architect
+>  - ask interesting questions
+>  - don't get distracted with shiny stuff - working code first
+>  - http://wiki.laptop.org/go/User:Martinlanghoff
 >
-> So it will most likely boild down to a "Porcelain only" convention that
-> different Porcelains would agree on.
->
-> My reaction for the initial proposal was very similar to the one given by
-> Shawn.  I do not see much point on having plumbing side support (yet).
-
-a few items
-
-convienience
-
-1. tieing the attributes to the file more directly will make it much 
-easier to deal with them along with the file in the non-rich checkout 
-(it's much easier to say README* then README .attr/README*)
 
 
-consisntancy
 
-2. putting hooks into the plumbing that can call external programs for the 
-rich checkin/checkout will let all porcelains make use of the features 
-without having to modify all of them independanty.
-
-safety
-
-3. when doing checkins/checkouts of individual files you need to be sure 
-that you deal with the correct attributes at the same time (or else that 
-the person is explicity requesting only a piece of it) with the attributes 
-closely associated with the file this is much easier to do (this is 
-another aspect of the convienience in #1 above)
-
-4. if the configuration of what helper to use changes from one revision to 
-another the plumbing (which is already looking at the tree object for both 
-revisions) is in a better position to detect and alert then the porcelains
-
-David Lang
+-- 
+Ken Pratt
+http://kenpratt.net/
