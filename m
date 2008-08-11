@@ -1,24 +1,23 @@
 From: Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
-Subject: [PATCH] git-gui: update all remaining translations to French.
-Date: Mon, 11 Aug 2008 17:19:17 -0400
-Message-ID: <1218489557-10169-2-git-send-email-alexandre.bourget@savoirfairelinux.com>
+Subject: [PATCH] git-gui: Update french translation
+Date: Mon, 11 Aug 2008 17:19:16 -0400
+Message-ID: <1218489557-10169-1-git-send-email-alexandre.bourget@savoirfairelinux.com>
 References: <vpqr68vuzoo.fsf@bauges.imag.fr>
- <1218489557-10169-1-git-send-email-alexandre.bourget@savoirfairelinux.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 11 23:20:34 2008
+X-From: git-owner@vger.kernel.org Mon Aug 11 23:20:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSeoL-0005FV-LY
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 23:20:18 +0200
+	id 1KSeoK-0005FV-HN
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 23:20:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757763AbYHKVTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 17:19:15 -0400
+	id S1755085AbYHKVTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 17:19:11 -0400
 X-Warning: Original message contained 8-bit characters, however during
 	   the SMTP transport session the receiving system did not announce
 	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
@@ -29,1435 +28,995 @@ X-Warning: We ASSUME it is less harmful to add the MIME headers, and
 	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
 X-Warning: We don't know what character set the user used, thus we had to
 	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757663AbYHKVTP
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 17:19:15 -0400
-Received: from mail.savoirfairelinux.net ([69.28.212.163]:48709 "EHLO
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755219AbYHKVTJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 17:19:09 -0400
+Received: from mail.savoirfairelinux.net ([69.28.212.163]:48704 "EHLO
 	open-xchange.savoirfairelinux.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754445AbYHKVTG (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Aug 2008 17:19:06 -0400
+	by vger.kernel.org with ESMTP id S1753618AbYHKVTE (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Aug 2008 17:19:04 -0400
 Received: from localhost (unknown [127.0.0.1])
-	by open-xchange.savoirfairelinux.net (Postfix) with ESMTP id 30DA146166E;
-	Mon, 11 Aug 2008 21:19:05 +0000 (UTC)
+	by open-xchange.savoirfairelinux.net (Postfix) with ESMTP id 182FB46190D;
+	Mon, 11 Aug 2008 21:19:02 +0000 (UTC)
 Received: from open-xchange.savoirfairelinux.net ([127.0.0.1])
 	by localhost (open-xchange.savoirfairelinux.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QHxbkoWoWhTO; Mon, 11 Aug 2008 17:18:50 -0400 (EDT)
+	with ESMTP id 60ca5Ig+8wmS; Mon, 11 Aug 2008 17:18:50 -0400 (EDT)
 Received: from xenon.inside.savoirfairelinux.net (mtl.savoirfairelinux.net [199.243.85.90])
-	by open-xchange.savoirfairelinux.net (Postfix) with ESMTP id 911EC4618E2;
+	by open-xchange.savoirfairelinux.net (Postfix) with ESMTP id 79B4946166E;
 	Mon, 11 Aug 2008 17:18:47 -0400 (EDT)
 Received: from localhost.localdomain (dyn221.inside.savoirfairelinux.net [192.168.1.221])
-	by xenon.inside.savoirfairelinux.net (Postfix) with ESMTP id EA4A8F68F3;
+	by xenon.inside.savoirfairelinux.net (Postfix) with ESMTP id E226EF68F2;
 	Mon, 11 Aug 2008 17:18:46 -0400 (EDT)
 X-Mailer: git-send-email 1.5.4.3
-In-Reply-To: <1218489557-10169-1-git-send-email-alexandre.bourget@savoirfairelinux.com>
+In-Reply-To: <vpqr68vuzoo.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92003>
-
-Simply..
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92004>
 
 Signed-off-by: Alexandre Bourget <alexandre.bourget@savoirfairelinux.co=
 m>
 ---
- git-gui/po/fr.po |  553 +++++++++++++++++++++++++++++-----------------=
+ git-gui/po/fr.po |  253 +++++++++++++++++++++++++++-------------------=
 --------
- 1 files changed, 299 insertions(+), 254 deletions(-)
+ 1 files changed, 127 insertions(+), 126 deletions(-)
 
 diff --git a/git-gui/po/fr.po b/git-gui/po/fr.po
-index 128cd69..26b866f 100644
+index 89b6d51..128cd69 100644
 --- a/git-gui/po/fr.po
 +++ b/git-gui/po/fr.po
-@@ -9,8 +9,8 @@ msgid ""
+@@ -1,17 +1,18 @@
+-# translation of fr.po to French
++# translation of fr.po to Fran=C3=A7ais
+ # Translation of git-gui to French.
+ # Copyright (C) 2008 Shawn Pearce, et al.
+ # This file is distributed under the same license as the git package.
+ #
+ # Christian Couder <chriscool@tuxfamily.org>, 2008.
++# Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>, 2008.
+ msgid ""
  msgstr ""
  "Project-Id-Version: fr\n"
  "Report-Msgid-Bugs-To: \n"
--"POT-Creation-Date: 2008-03-14 07:18+0100\n"
--"PO-Revision-Date: 2008-08-11 16:28-0400\n"
-+"POT-Creation-Date: 2008-08-02 14:45-0700\n"
-+"PO-Revision-Date: 2008-08-11 17:12-0400\n"
- "Last-Translator: Alexandre Bourget <alexandre.bourget@savoirfairelinu=
+ "POT-Creation-Date: 2008-03-14 07:18+0100\n"
+-"PO-Revision-Date: 2008-04-04 22:05+0200\n"
+-"Last-Translator: Christian Couder <chriscool@tuxfamily.org>\n"
+-"Language-Team: French\n"
++"PO-Revision-Date: 2008-08-11 16:28-0400\n"
++"Last-Translator: Alexandre Bourget <alexandre.bourget@savoirfairelinu=
 x.com>\n"
- "Language-Team: Fran=C3=A7ais <fr@li.org>\n"
++"Language-Team: Fran=C3=A7ais <fr@li.org>\n"
  "MIME-Version: 1.0\n"
-@@ -19,33 +19,33 @@ msgstr ""
- "X-Generator: KBabel 1.11.4\n"
- "Plural-Forms:  nplurals=3D2; plural=3D(n > 1);\n"
-=20
--#: git-gui.sh:41 git-gui.sh:634 git-gui.sh:648 git-gui.sh:661 git-gui.=
-sh:744
--#: git-gui.sh:763
-+#: git-gui.sh:41 git-gui.sh:688 git-gui.sh:702 git-gui.sh:715 git-gui.=
-sh:798
-+#: git-gui.sh:817
- msgid "git-gui: fatal error"
- msgstr "git-gui: erreur fatale"
-=20
--#: git-gui.sh:593
-+#: git-gui.sh:644
+ "Content-Type: text/plain; charset=3DUTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+@@ -26,15 +27,15 @@ msgstr "git-gui: erreur fatale"
+ #: git-gui.sh:593
  #, tcl-format
  msgid "Invalid font specified in %s:"
- msgstr "Police invalide sp=C3=A9cifi=C3=A9e dans %s :"
+-msgstr "Invalide fonte sp=C3=A9cifi=C3=A9e dans %s :"
++msgstr "Police invalide sp=C3=A9cifi=C3=A9e dans %s :"
 =20
--#: git-gui.sh:620
-+#: git-gui.sh:674
+ #: git-gui.sh:620
  msgid "Main Font"
- msgstr "Police principale"
+-msgstr "Fonte principale"
++msgstr "Police principale"
 =20
--#: git-gui.sh:621
-+#: git-gui.sh:675
+ #: git-gui.sh:621
  msgid "Diff/Console Font"
- msgstr "Police diff/console"
+-msgstr "Fonte diff/console"
++msgstr "Police diff/console"
 =20
--#: git-gui.sh:635
-+#: git-gui.sh:689
+ #: git-gui.sh:635
  msgid "Cannot find git in PATH."
- msgstr "Impossible de trouver git dans PATH."
+@@ -65,7 +66,7 @@ msgstr ""
 =20
--#: git-gui.sh:662
-+#: git-gui.sh:716
- msgid "Cannot parse Git version string:"
- msgstr "Impossible de parser la version de Git :"
-=20
--#: git-gui.sh:680
-+#: git-gui.sh:734
- #, tcl-format
- msgid ""
- "Git version cannot be determined.\n"
-@@ -64,378 +64,381 @@ msgstr ""
- "\n"
- "Peut'on consid=C3=A9rer que '%s' est en version 1.5.0 ?\n"
-=20
--#: git-gui.sh:918
-+#: git-gui.sh:972
+ #: git-gui.sh:918
  msgid "Git directory not found:"
- msgstr "Impossible de trouver le r=C3=A9pertoire git :"
+-msgstr "Impossible de trouver le r=C3=A9pertoire de Git :"
++msgstr "Impossible de trouver le r=C3=A9pertoire git :"
 =20
--#: git-gui.sh:925
-+#: git-gui.sh:979
+ #: git-gui.sh:925
  msgid "Cannot move to top of working directory:"
- msgstr "Impossible d'aller =C3=A0 la racine du r=C3=A9pertoire de trav=
-ail :"
+@@ -73,11 +74,11 @@ msgstr "Impossible d'aller =C3=A0 la racine du r=C3=
+=A9pertoire de travail :"
 =20
--#: git-gui.sh:932
-+#: git-gui.sh:986
+ #: git-gui.sh:932
  msgid "Cannot use funny .git directory:"
- msgstr "Impossible d'utiliser le r=C3=A9pertoire .git:"
+-msgstr "Impossible d'utiliser un dr=C3=B4le de r=C3=A9pertoire git :"
++msgstr "Impossible d'utiliser le r=C3=A9pertoire .git:"
 =20
--#: git-gui.sh:937
-+#: git-gui.sh:991
+ #: git-gui.sh:937
  msgid "No working directory"
- msgstr "Aucun r=C3=A9pertoire de travail"
+-msgstr "Pas de r=C3=A9pertoire de travail"
++msgstr "Aucun r=C3=A9pertoire de travail"
 =20
--#: git-gui.sh:1084 lib/checkout_op.tcl:283
-+#: git-gui.sh:1138 lib/checkout_op.tcl:305
+ #: git-gui.sh:1084 lib/checkout_op.tcl:283
  msgid "Refreshing file status..."
- msgstr "Rafraichissement du status des fichiers..."
+@@ -97,23 +98,23 @@ msgstr "Non modifi=C3=A9"
 =20
--#: git-gui.sh:1149
-+#: git-gui.sh:1194
- msgid "Scanning for modified files ..."
- msgstr "Recherche de fichiers modifi=C3=A9s..."
-=20
--#: git-gui.sh:1324 lib/browser.tcl:246
-+#: git-gui.sh:1369 lib/browser.tcl:246
- msgid "Ready."
- msgstr "Pr=C3=AAt."
-=20
--#: git-gui.sh:1590
-+#: git-gui.sh:1635
- msgid "Unmodified"
- msgstr "Non modifi=C3=A9"
-=20
--#: git-gui.sh:1592
-+#: git-gui.sh:1637
+ #: git-gui.sh:1592
  msgid "Modified, not staged"
- msgstr "Modifi=C3=A9, pas index=C3=A9"
+-msgstr "Modifi=C3=A9, non pr=C3=A9-commit=C3=A9"
++msgstr "Modifi=C3=A9, pas index=C3=A9"
 =20
--#: git-gui.sh:1593 git-gui.sh:1598
-+#: git-gui.sh:1638 git-gui.sh:1643
+ #: git-gui.sh:1593 git-gui.sh:1598
  msgid "Staged for commit"
- msgstr "Index=C3=A9"
+-msgstr "Pr=C3=A9-commit=C3=A9"
++msgstr "Index=C3=A9"
 =20
--#: git-gui.sh:1594 git-gui.sh:1599
-+#: git-gui.sh:1639 git-gui.sh:1644
+ #: git-gui.sh:1594 git-gui.sh:1599
  msgid "Portions staged for commit"
- msgstr "Portions index=C3=A9es"
+-msgstr "En partie pr=C3=A9-commit=C3=A9"
++msgstr "Portions index=C3=A9es"
 =20
--#: git-gui.sh:1595 git-gui.sh:1600
-+#: git-gui.sh:1640 git-gui.sh:1645
+ #: git-gui.sh:1595 git-gui.sh:1600
  msgid "Staged for commit, missing"
- msgstr "Index=C3=A9s, manquant"
+-msgstr "Pr=C3=A9-commit=C3=A9, manquant"
++msgstr "Index=C3=A9s, manquant"
 =20
--#: git-gui.sh:1597
-+#: git-gui.sh:1642
+ #: git-gui.sh:1597
  msgid "Untracked, not staged"
- msgstr "Non versionn=C3=A9, non index=C3=A9"
+-msgstr "Non suivi, non pr=C3=A9-commit=C3=A9"
++msgstr "Non versionn=C3=A9, non index=C3=A9"
 =20
--#: git-gui.sh:1602
-+#: git-gui.sh:1647
+ #: git-gui.sh:1602
  msgid "Missing"
- msgstr "Manquant"
+@@ -121,11 +122,11 @@ msgstr "Manquant"
 =20
--#: git-gui.sh:1603
-+#: git-gui.sh:1648
+ #: git-gui.sh:1603
  msgid "Staged for removal"
- msgstr "Index=C3=A9 pour suppression"
+-msgstr "Pr=C3=A9-commit=C3=A9 pour suppression"
++msgstr "Index=C3=A9 pour suppression"
 =20
--#: git-gui.sh:1604
-+#: git-gui.sh:1649
+ #: git-gui.sh:1604
  msgid "Staged for removal, still present"
- msgstr "Index=C3=A9 pour suppression, toujours pr=C3=A9sent"
+-msgstr "Pr=C3=A9-commit=C3=A9 pour suppression, toujours pr=C3=A9sent"
++msgstr "Index=C3=A9 pour suppression, toujours pr=C3=A9sent"
 =20
--#: git-gui.sh:1606 git-gui.sh:1607 git-gui.sh:1608 git-gui.sh:1609
-+#: git-gui.sh:1651 git-gui.sh:1652 git-gui.sh:1653 git-gui.sh:1654
+ #: git-gui.sh:1606 git-gui.sh:1607 git-gui.sh:1608 git-gui.sh:1609
  msgid "Requires merge resolution"
- msgstr "N=C3=A9cessite la r=C3=A9solution d'une fusion"
+@@ -133,7 +134,7 @@ msgstr "N=C3=A9cessite la r=C3=A9solution d'une fus=
+ion"
 =20
--#: git-gui.sh:1644
-+#: git-gui.sh:1689
+ #: git-gui.sh:1644
  msgid "Starting gitk... please wait..."
- msgstr "Lancement de gitk... un instant..."
+-msgstr "Lancement de gitk... merci de patienter..."
++msgstr "Lancement de gitk... un instant..."
 =20
--#: git-gui.sh:1653
--#, tcl-format
--msgid ""
--"Unable to start gitk:\n"
--"\n"
--"%s does not exist"
--msgstr ""
--"Impossible de lancer gitk :\n"
--"\n"
--"%s inexistant"
-+#: git-gui.sh:1698
-+msgid "Couldn't find gitk in PATH"
-+msgstr "Impossible de trouver gitk dans PATH."
+ #: git-gui.sh:1653
+ #, tcl-format
+@@ -148,11 +149,11 @@ msgstr ""
 =20
--#: git-gui.sh:1860 lib/choose_repository.tcl:36
-+#: git-gui.sh:1948 lib/choose_repository.tcl:36
+ #: git-gui.sh:1860 lib/choose_repository.tcl:36
  msgid "Repository"
- msgstr "D=C3=A9p=C3=B4t"
+-msgstr "R=C3=A9f=C3=A9rentiel"
++msgstr "D=C3=A9p=C3=B4t"
 =20
--#: git-gui.sh:1861
-+#: git-gui.sh:1949
+ #: git-gui.sh:1861
  msgid "Edit"
- msgstr "Edition"
+-msgstr "Editer"
++msgstr "Edition"
 =20
--#: git-gui.sh:1863 lib/choose_rev.tcl:561
-+#: git-gui.sh:1951 lib/choose_rev.tcl:561
+ #: git-gui.sh:1863 lib/choose_rev.tcl:561
  msgid "Branch"
- msgstr "Branche"
+@@ -168,15 +169,15 @@ msgstr "Fusionner"
 =20
--#: git-gui.sh:1866 lib/choose_rev.tcl:548
-+#: git-gui.sh:1954 lib/choose_rev.tcl:548
- msgid "Commit@@noun"
- msgstr "Commit"
-=20
--#: git-gui.sh:1869 lib/merge.tcl:120 lib/merge.tcl:149 lib/merge.tcl:1=
-67
-+#: git-gui.sh:1957 lib/merge.tcl:120 lib/merge.tcl:149 lib/merge.tcl:1=
-67
- msgid "Merge"
- msgstr "Fusionner"
-=20
--#: git-gui.sh:1870 lib/choose_rev.tcl:557
-+#: git-gui.sh:1958 lib/choose_rev.tcl:557
+ #: git-gui.sh:1870 lib/choose_rev.tcl:557
  msgid "Remote"
- msgstr "D=C3=A9p=C3=B4t distant"
+-msgstr "R=C3=A9f=C3=A9rentiel distant"
++msgstr "D=C3=A9p=C3=B4t distant"
 =20
--#: git-gui.sh:1879
-+#: git-gui.sh:1967
+ #: git-gui.sh:1879
  msgid "Browse Current Branch's Files"
- msgstr "Naviguer dans la branche courante"
+-msgstr "Visionner fichiers dans branche courante"
++msgstr "Naviguer dans la branche courante"
 =20
--#: git-gui.sh:1883
-+#: git-gui.sh:1971
+ #: git-gui.sh:1883
  msgid "Browse Branch Files..."
- msgstr "Naviguer dans la branche..."
+-msgstr "Visionner fichiers de branche"
++msgstr "Naviguer dans la branche..."
 =20
--#: git-gui.sh:1888
-+#: git-gui.sh:1976
+ #: git-gui.sh:1888
  msgid "Visualize Current Branch's History"
- msgstr "Visualiser historique branche courante"
+@@ -184,29 +185,29 @@ msgstr "Visualiser historique branche courante"
 =20
--#: git-gui.sh:1892
-+#: git-gui.sh:1980
+ #: git-gui.sh:1892
  msgid "Visualize All Branch History"
- msgstr "Voir l'historique de toutes les branches"
+-msgstr "Visualiser historique toutes branches"
++msgstr "Voir l'historique de toutes les branches"
 =20
--#: git-gui.sh:1899
-+#: git-gui.sh:1987
+ #: git-gui.sh:1899
  #, tcl-format
  msgid "Browse %s's Files"
- msgstr "Naviguer l'arborescence de %s"
+-msgstr "Visionner fichiers de %s"
++msgstr "Naviguer l'arborescence de %s"
 =20
--#: git-gui.sh:1901
-+#: git-gui.sh:1989
+ #: git-gui.sh:1901
  #, tcl-format
  msgid "Visualize %s's History"
- msgstr "Voir l'historique de la branche: %s"
+-msgstr "Visualiser historique de %s"
++msgstr "Voir l'historique de la branche: %s"
 =20
--#: git-gui.sh:1906 lib/database.tcl:27 lib/database.tcl:67
-+#: git-gui.sh:1994 lib/database.tcl:27 lib/database.tcl:67
+ #: git-gui.sh:1906 lib/database.tcl:27 lib/database.tcl:67
  msgid "Database Statistics"
- msgstr "Statistiques du d=C3=A9p=C3=B4t"
+-msgstr "Statistiques base de donn=C3=A9e"
++msgstr "Statistiques du d=C3=A9p=C3=B4t"
 =20
--#: git-gui.sh:1909 lib/database.tcl:34
-+#: git-gui.sh:1997 lib/database.tcl:34
+ #: git-gui.sh:1909 lib/database.tcl:34
  msgid "Compress Database"
- msgstr "Comprimer le d=C3=A9p=C3=B4t"
+-msgstr "Comprimer base de donn=C3=A9e"
++msgstr "Comprimer le d=C3=A9p=C3=B4t"
 =20
--#: git-gui.sh:1912
-+#: git-gui.sh:2000
+ #: git-gui.sh:1912
  msgid "Verify Database"
- msgstr "V=C3=A9rifier le d=C3=A9p=C3=B4t"
+-msgstr "V=C3=A9rifier base de donn=C3=A9e"
++msgstr "V=C3=A9rifier le d=C3=A9p=C3=B4t"
 =20
--#: git-gui.sh:1919 git-gui.sh:1923 git-gui.sh:1927 lib/shortcut.tcl:7
-+#: git-gui.sh:2007 git-gui.sh:2011 git-gui.sh:2015 lib/shortcut.tcl:7
+ #: git-gui.sh:1919 git-gui.sh:1923 git-gui.sh:1927 lib/shortcut.tcl:7
  #: lib/shortcut.tcl:39 lib/shortcut.tcl:71
- msgid "Create Desktop Icon"
- msgstr "Cr=C3=A9er ic=C3=B4ne sur bureau"
+@@ -253,7 +254,7 @@ msgstr "Cr=C3=A9er..."
 =20
--#: git-gui.sh:1932 lib/choose_repository.tcl:177 lib/choose_repository=
-=2Etcl:185
-+#: git-gui.sh:2023 lib/choose_repository.tcl:177 lib/choose_repository=
-=2Etcl:185
- msgid "Quit"
- msgstr "Quitter"
-=20
--#: git-gui.sh:1939
-+#: git-gui.sh:2031
- msgid "Undo"
- msgstr "D=C3=A9faire"
-=20
--#: git-gui.sh:1942
-+#: git-gui.sh:2034
- msgid "Redo"
- msgstr "Refaire"
-=20
--#: git-gui.sh:1946 git-gui.sh:2443
-+#: git-gui.sh:2038 git-gui.sh:2545
- msgid "Cut"
- msgstr "Couper"
-=20
--#: git-gui.sh:1949 git-gui.sh:2446 git-gui.sh:2520 git-gui.sh:2614
-+#: git-gui.sh:2041 git-gui.sh:2548 git-gui.sh:2622 git-gui.sh:2715
- #: lib/console.tcl:69
- msgid "Copy"
- msgstr "Copier"
-=20
--#: git-gui.sh:1952 git-gui.sh:2449
-+#: git-gui.sh:2044 git-gui.sh:2551
- msgid "Paste"
- msgstr "Coller"
-=20
--#: git-gui.sh:1955 git-gui.sh:2452 lib/branch_delete.tcl:26
-+#: git-gui.sh:2047 git-gui.sh:2554 lib/branch_delete.tcl:26
- #: lib/remote_branch_delete.tcl:38
- msgid "Delete"
- msgstr "Supprimer"
-=20
--#: git-gui.sh:1959 git-gui.sh:2456 git-gui.sh:2618 lib/console.tcl:71
-+#: git-gui.sh:2051 git-gui.sh:2558 git-gui.sh:2719 lib/console.tcl:71
- msgid "Select All"
- msgstr "Tout s=C3=A9lectionner"
-=20
--#: git-gui.sh:1968
-+#: git-gui.sh:2060
- msgid "Create..."
- msgstr "Cr=C3=A9er..."
-=20
--#: git-gui.sh:1974
-+#: git-gui.sh:2066
+ #: git-gui.sh:1974
  msgid "Checkout..."
- msgstr "Charger (checkout)..."
+-msgstr "Emprunter... "
++msgstr "Charger (checkout)..."
 =20
--#: git-gui.sh:1980
-+#: git-gui.sh:2072
+ #: git-gui.sh:1980
  msgid "Rename..."
- msgstr "Renommer..."
+@@ -277,27 +278,27 @@ msgstr "Corriger dernier commit"
 =20
--#: git-gui.sh:1985 git-gui.sh:2085
-+#: git-gui.sh:2077 git-gui.sh:2187
- msgid "Delete..."
- msgstr "Supprimer..."
-=20
--#: git-gui.sh:1990
-+#: git-gui.sh:2082
- msgid "Reset..."
- msgstr "R=C3=A9initialiser..."
-=20
--#: git-gui.sh:2002 git-gui.sh:2389
-+#: git-gui.sh:2094 git-gui.sh:2491
- msgid "New Commit"
- msgstr "Nouveau commit"
-=20
--#: git-gui.sh:2010 git-gui.sh:2396
-+#: git-gui.sh:2102 git-gui.sh:2498
- msgid "Amend Last Commit"
- msgstr "Corriger dernier commit"
-=20
--#: git-gui.sh:2019 git-gui.sh:2356 lib/remote_branch_delete.tcl:99
-+#: git-gui.sh:2111 git-gui.sh:2458 lib/remote_branch_delete.tcl:99
+ #: git-gui.sh:2019 git-gui.sh:2356 lib/remote_branch_delete.tcl:99
  msgid "Rescan"
- msgstr "Recharger modifs."
+-msgstr "Resynchroniser"
++msgstr "Recharger modifs."
 =20
--#: git-gui.sh:2025
-+#: git-gui.sh:2117
+ #: git-gui.sh:2025
  msgid "Stage To Commit"
- msgstr "Indexer"
+-msgstr "Commiter un pr=C3=A9-commit"
++msgstr "Indexer"
 =20
--#: git-gui.sh:2031
-+#: git-gui.sh:2123
+ #: git-gui.sh:2031
  msgid "Stage Changed Files To Commit"
- msgstr "Indexer toutes modifications"
+-msgstr "Commiter fichiers modifi=C3=A9s dans pr=C3=A9-commit"
++msgstr "Indexer toutes modifications"
 =20
--#: git-gui.sh:2037
-+#: git-gui.sh:2129
+ #: git-gui.sh:2037
  msgid "Unstage From Commit"
- msgstr "D=C3=A9sindexer"
+-msgstr "Commit vers pr=C3=A9-commit"
++msgstr "D=C3=A9sindexer"
 =20
--#: git-gui.sh:2042 lib/index.tcl:395
-+#: git-gui.sh:2134 lib/index.tcl:395
+ #: git-gui.sh:2042 lib/index.tcl:395
  msgid "Revert Changes"
- msgstr "Annuler les modifications (revert)"
+-msgstr "Inverser modification"
++msgstr "Annuler les modifications (revert)"
 =20
--#: git-gui.sh:2049 git-gui.sh:2368 git-gui.sh:2467
-+#: git-gui.sh:2141 git-gui.sh:2702
-+msgid "Show Less Context"
-+msgstr "Montrer moins de contexte"
-+
-+#: git-gui.sh:2145 git-gui.sh:2706
-+msgid "Show More Context"
-+msgstr "Montrer plus de contexte"
-+
-+#: git-gui.sh:2151 git-gui.sh:2470 git-gui.sh:2569
+ #: git-gui.sh:2049 git-gui.sh:2368 git-gui.sh:2467
  msgid "Sign Off"
- msgstr "Signer"
+-msgstr "Se d=C3=A9sinscrire"
++msgstr "Signer"
 =20
--#: git-gui.sh:2053 git-gui.sh:2372
-+#: git-gui.sh:2155 git-gui.sh:2474
+ #: git-gui.sh:2053 git-gui.sh:2372
  msgid "Commit@@verb"
- msgstr "Commiter"
-=20
--#: git-gui.sh:2064
-+#: git-gui.sh:2166
- msgid "Local Merge..."
- msgstr "Fusion locale..."
-=20
--#: git-gui.sh:2069
-+#: git-gui.sh:2171
- msgid "Abort Merge..."
- msgstr "Abandonner fusion..."
-=20
--#: git-gui.sh:2081
-+#: git-gui.sh:2183
- msgid "Push..."
- msgstr "Pousser..."
-=20
--#: git-gui.sh:2092 lib/choose_repository.tcl:41
--msgid "Apple"
--msgstr "Pomme"
--
--#: git-gui.sh:2095 git-gui.sh:2117 lib/about.tcl:14
-+#: git-gui.sh:2197 git-gui.sh:2219 lib/about.tcl:14
+@@ -323,7 +324,7 @@ msgstr "Pomme"
  #: lib/choose_repository.tcl:44 lib/choose_repository.tcl:50
  #, tcl-format
  msgid "About %s"
- msgstr "=C3=80 propos de %s"
+-msgstr "A propos de %s"
++msgstr "=C3=80 propos de %s"
 =20
--#: git-gui.sh:2099
-+#: git-gui.sh:2201
+ #: git-gui.sh:2099
  msgid "Preferences..."
- msgstr "Pr=C3=A9f=C3=A9rences..."
+@@ -352,15 +353,15 @@ msgstr "Branche courante :"
 =20
--#: git-gui.sh:2107 git-gui.sh:2639
-+#: git-gui.sh:2209 git-gui.sh:2740
- msgid "Options..."
- msgstr "Options..."
-=20
--#: git-gui.sh:2113 lib/choose_repository.tcl:47
-+#: git-gui.sh:2215 lib/choose_repository.tcl:47
- msgid "Help"
- msgstr "Aide"
-=20
--#: git-gui.sh:2154
-+#: git-gui.sh:2256
- msgid "Online Documentation"
- msgstr "Documentation en ligne"
-=20
--#: git-gui.sh:2238
-+#: git-gui.sh:2340
- #, tcl-format
- msgid "fatal: cannot stat path %s: No such file or directory"
--msgstr "erreur fatale : pas d'infos sur le chemin %s : Fichier ou r=C3=
-=A9pertoire inexistant"
-+msgstr ""
-+"erreur fatale : pas d'infos sur le chemin %s : Fichier ou r=C3=A9pert=
-oire "
-+"inexistant"
-=20
--#: git-gui.sh:2271
-+#: git-gui.sh:2373
- msgid "Current Branch:"
- msgstr "Branche courante :"
-=20
--#: git-gui.sh:2292
-+#: git-gui.sh:2394
+ #: git-gui.sh:2292
  msgid "Staged Changes (Will Commit)"
- msgstr "Modifs. index=C3=A9es (pour commit)"
+-msgstr "Modifications pr=C3=A9-commit=C3=A9es"
++msgstr "Modifs. index=C3=A9es (pour commit)"
 =20
--#: git-gui.sh:2312
-+#: git-gui.sh:2414
+ #: git-gui.sh:2312
  msgid "Unstaged Changes"
- msgstr "Modifs. non index=C3=A9es"
+-msgstr "Modifications non pr=C3=A9-commit=C3=A9es"
++msgstr "Modifs. non index=C3=A9es"
 =20
--#: git-gui.sh:2362
-+#: git-gui.sh:2464
+ #: git-gui.sh:2362
  msgid "Stage Changed"
- msgstr "Indexer modifs."
+-msgstr "Pr=C3=A9-commit modifi=C3=A9"
++msgstr "Indexer modifs."
 =20
--#: git-gui.sh:2378 lib/transport.tcl:93 lib/transport.tcl:182
-+#: git-gui.sh:2480 lib/transport.tcl:93 lib/transport.tcl:182
+ #: git-gui.sh:2378 lib/transport.tcl:93 lib/transport.tcl:182
  msgid "Push"
- msgstr "Pousser"
+@@ -416,19 +417,19 @@ msgstr "Rafraichir"
 =20
--#: git-gui.sh:2408
-+#: git-gui.sh:2510
- msgid "Initial Commit Message:"
- msgstr "Message de commit initial :"
-=20
--#: git-gui.sh:2409
-+#: git-gui.sh:2511
- msgid "Amended Commit Message:"
- msgstr "Message de commit corrig=C3=A9 :"
-=20
--#: git-gui.sh:2410
-+#: git-gui.sh:2512
- msgid "Amended Initial Commit Message:"
- msgstr "Message de commit initial corrig=C3=A9 :"
-=20
--#: git-gui.sh:2411
-+#: git-gui.sh:2513
- msgid "Amended Merge Commit Message:"
- msgstr "Message de commit de fusion corrig=C3=A9 :"
-=20
--#: git-gui.sh:2412
-+#: git-gui.sh:2514
- msgid "Merge Commit Message:"
- msgstr "Message de commit de fusion :"
-=20
--#: git-gui.sh:2413
-+#: git-gui.sh:2515
- msgid "Commit Message:"
- msgstr "Message de commit :"
-=20
--#: git-gui.sh:2459 git-gui.sh:2622 lib/console.tcl:73
-+#: git-gui.sh:2561 git-gui.sh:2723 lib/console.tcl:73
- msgid "Copy All"
- msgstr "Copier tout"
-=20
--#: git-gui.sh:2483 lib/blame.tcl:107
-+#: git-gui.sh:2585 lib/blame.tcl:100
- msgid "File:"
- msgstr "Fichier :"
-=20
--#: git-gui.sh:2589
-+#: git-gui.sh:2691
- msgid "Apply/Reverse Hunk"
- msgstr "Appliquer/Inverser section"
-=20
--#: git-gui.sh:2595
--msgid "Show Less Context"
--msgstr "Montrer moins de contexte"
--
--#: git-gui.sh:2602
--msgid "Show More Context"
--msgstr "Montrer plus de contexte"
-+#: git-gui.sh:2696
-+msgid "Apply/Reverse Line"
-+msgstr "Appliquer/Inverser la ligne"
-=20
--#: git-gui.sh:2610
-+#: git-gui.sh:2711
- msgid "Refresh"
- msgstr "Rafraichir"
-=20
--#: git-gui.sh:2631
-+#: git-gui.sh:2732
+ #: git-gui.sh:2631
  msgid "Decrease Font Size"
- msgstr "Diminuer la police"
+-msgstr "R=C3=A9duire fonte"
++msgstr "Diminuer la police"
 =20
--#: git-gui.sh:2635
-+#: git-gui.sh:2736
+ #: git-gui.sh:2635
  msgid "Increase Font Size"
- msgstr "Agrandir la police"
+-msgstr "Agrandir fonte"
++msgstr "Agrandir la police"
 =20
--#: git-gui.sh:2646
-+#: git-gui.sh:2747
+ #: git-gui.sh:2646
  msgid "Unstage Hunk From Commit"
- msgstr "D=C3=A9sindexer la section"
+-msgstr "Enlever section pr=C3=A9-commit=C3=A9e"
++msgstr "D=C3=A9sindexer la section"
 =20
--#: git-gui.sh:2648
-+#: git-gui.sh:2748
-+msgid "Unstage Line From Commit"
-+msgstr "D=C3=A9sindexer la ligne"
-+
-+#: git-gui.sh:2750
+ #: git-gui.sh:2648
  msgid "Stage Hunk For Commit"
- msgstr "Indexer la section"
+-msgstr "Pr=C3=A9-commiter section"
++msgstr "Indexer la section"
 =20
--#: git-gui.sh:2667
-+#: git-gui.sh:2751
-+msgid "Stage Line For Commit"
-+msgstr "Indexer la ligne"
-+
-+#: git-gui.sh:2771
+ #: git-gui.sh:2667
  msgid "Initializing..."
- msgstr "Initialisation..."
+@@ -545,11 +546,11 @@ msgstr "Copi=C3=A9 ou d=C3=A9plac=C3=A9 ici par :=
+"
 =20
--#: git-gui.sh:2762
-+#: git-gui.sh:2876
- #, tcl-format
- msgid ""
- "Possible environment issues exist.\n"
-@@ -452,7 +455,7 @@ msgstr ""
- "sous-processus de Git lanc=C3=A9s par %s\n"
- "\n"
+ #: lib/branch_checkout.tcl:14 lib/branch_checkout.tcl:19
+ msgid "Checkout Branch"
+-msgstr "Emprunter branche"
++msgstr "Charger la branche (checkout)"
 =20
--#: git-gui.sh:2792
-+#: git-gui.sh:2906
- msgid ""
- "\n"
- "This is due to a known issue with the\n"
-@@ -462,7 +465,7 @@ msgstr ""
- "Ceci est du =C3=A0 un probl=C3=A8me connu avec\n"
- "le binaire Tcl distribu=C3=A9 par Cygwin."
-=20
--#: git-gui.sh:2797
-+#: git-gui.sh:2911
- #, tcl-format
- msgid ""
- "\n"
-@@ -483,64 +486,80 @@ msgstr ""
- msgid "git-gui - a graphical user interface for Git."
- msgstr "git-gui - une interface graphique utilisateur pour Git"
-=20
--#: lib/blame.tcl:77
-+#: lib/blame.tcl:70
- msgid "File Viewer"
- msgstr "Visionneur de fichier"
-=20
--#: lib/blame.tcl:81
-+#: lib/blame.tcl:74
- msgid "Commit:"
- msgstr "Commit :"
-=20
--#: lib/blame.tcl:264
-+#: lib/blame.tcl:257
- msgid "Copy Commit"
- msgstr "Copier commit"
-=20
--#: lib/blame.tcl:384
-+#: lib/blame.tcl:260
-+msgid "Do Full Copy Detection"
-+msgstr "Lancer la d=C3=A9tection approfondie des copies"
-+
-+#: lib/blame.tcl:388
- #, tcl-format
- msgid "Reading %s..."
- msgstr "Lecture de %s..."
-=20
--#: lib/blame.tcl:488
-+#: lib/blame.tcl:492
- msgid "Loading copy/move tracking annotations..."
- msgstr "Chargement des annotations de suivi des copies/d=C3=A9placemen=
-ts..."
-=20
--#: lib/blame.tcl:508
-+#: lib/blame.tcl:512
- msgid "lines annotated"
- msgstr "lignes annot=C3=A9es"
-=20
--#: lib/blame.tcl:689
-+#: lib/blame.tcl:704
- msgid "Loading original location annotations..."
- msgstr "Chargement des annotations d'emplacement original"
-=20
--#: lib/blame.tcl:692
-+#: lib/blame.tcl:707
- msgid "Annotation complete."
- msgstr "Annotation termin=C3=A9e."
-=20
--#: lib/blame.tcl:746
-+#: lib/blame.tcl:737
-+msgid "Busy"
-+msgstr "Occup=C3=A9"
-+
-+#: lib/blame.tcl:738
-+msgid "Annotation process is already running."
-+msgstr "Annotation en cours d'ex=C3=A9cution."
-+
-+#: lib/blame.tcl:777
-+msgid "Running thorough copy detection..."
-+msgstr "Recherche de copie approfondie en cours..."
-+
-+#: lib/blame.tcl:827
- msgid "Loading annotation..."
- msgstr "Chargement des annotations..."
-=20
--#: lib/blame.tcl:802
-+#: lib/blame.tcl:883
- msgid "Author:"
- msgstr "Auteur :"
-=20
--#: lib/blame.tcl:806
-+#: lib/blame.tcl:887
- msgid "Committer:"
- msgstr "Commiteur :"
-=20
--#: lib/blame.tcl:811
-+#: lib/blame.tcl:892
- msgid "Original File:"
- msgstr "Fichier original :"
-=20
--#: lib/blame.tcl:925
-+#: lib/blame.tcl:1006
- msgid "Originally By:"
- msgstr "A l'origine par :"
-=20
--#: lib/blame.tcl:931
-+#: lib/blame.tcl:1012
- msgid "In File:"
- msgstr "Dans le fichier :"
-=20
--#: lib/blame.tcl:936
-+#: lib/blame.tcl:1017
- msgid "Copied Or Moved Here By:"
- msgstr "Copi=C3=A9 ou d=C3=A9plac=C3=A9 ici par :"
-=20
-@@ -554,7 +573,7 @@ msgstr "Charger (checkout)"
+ #: lib/branch_checkout.tcl:23
+ msgid "Checkout"
+-msgstr "Emprunter"
++msgstr "Charger (checkout)"
 =20
  #: lib/branch_checkout.tcl:27 lib/branch_create.tcl:35
  #: lib/branch_delete.tcl:32 lib/branch_rename.tcl:30 lib/browser.tcl:2=
 82
--#: lib/checkout_op.tcl:522 lib/choose_font.tcl:43 lib/merge.tcl:171
-+#: lib/checkout_op.tcl:544 lib/choose_font.tcl:43 lib/merge.tcl:171
- #: lib/option.tcl:103 lib/remote_branch_delete.tcl:42 lib/transport.tc=
-l:97
- msgid "Cancel"
- msgstr "Annuler"
-@@ -563,7 +582,7 @@ msgstr "Annuler"
- msgid "Revision"
- msgstr "R=C3=A9vision"
+@@ -568,11 +569,11 @@ msgstr "Options"
 =20
--#: lib/branch_checkout.tcl:36 lib/branch_create.tcl:69 lib/option.tcl:=
-242
-+#: lib/branch_checkout.tcl:36 lib/branch_create.tcl:69 lib/option.tcl:=
-244
- msgid "Options"
- msgstr "Options"
+ #: lib/branch_checkout.tcl:39 lib/branch_create.tcl:92
+ msgid "Fetch Tracking Branch"
+-msgstr "Branche suivant r=C3=A9cup=C3=A9ration"
++msgstr "R=C3=A9cup=C3=A9rer la branche de suivi"
 =20
-@@ -615,7 +634,7 @@ msgstr "Non"
+ #: lib/branch_checkout.tcl:44
+ msgid "Detach From Local Branch"
+-msgstr "D=C3=A9tacher de branche locale"
++msgstr "D=C3=A9tacher de la branche locale"
+=20
+ #: lib/branch_create.tcl:22
+ msgid "Create Branch"
+@@ -600,7 +601,7 @@ msgstr "Trouver nom de branche de suivi"
+=20
+ #: lib/branch_create.tcl:66
+ msgid "Starting Revision"
+-msgstr "D=C3=A9but de r=C3=A9vision"
++msgstr "R=C3=A9vision initiale"
+=20
+ #: lib/branch_create.tcl:72
+ msgid "Update Existing Branch:"
+@@ -612,7 +613,7 @@ msgstr "Non"
+=20
+ #: lib/branch_create.tcl:80
  msgid "Fast Forward Only"
- msgstr "Mise-=C3=A0-jour rectiligne seulement (fast-forward)"
+-msgstr "Avance rapide seulement"
++msgstr "Mise-=C3=A0-jour rectiligne seulement (fast-forward)"
 =20
--#: lib/branch_create.tcl:85 lib/checkout_op.tcl:514
-+#: lib/branch_create.tcl:85 lib/checkout_op.tcl:536
+ #: lib/branch_create.tcl:85 lib/checkout_op.tcl:514
  msgid "Reset"
- msgstr "R=C3=A9initialiser"
+@@ -620,20 +621,20 @@ msgstr "R=C3=A9initialiser"
 =20
-@@ -655,7 +674,7 @@ msgstr "Branches locales"
+ #: lib/branch_create.tcl:97
+ msgid "Checkout After Creation"
+-msgstr "Emprunt apr=C3=A8s cr=C3=A9ation"
++msgstr "Charger (checkout) apr=C3=A8s cr=C3=A9ation"
 =20
- #: lib/branch_delete.tcl:52
- msgid "Delete Only If Merged Into"
--msgstr "Supprimer ssi fusion dedans"
-+msgstr "Supprimer seulement si fusionn=C3=A9e dans:"
+ #: lib/branch_create.tcl:131
+ msgid "Please select a tracking branch."
+-msgstr "Merci de choisir une branche de suivi"
++msgstr "Choisissez une branche de suivi"
 =20
- #: lib/branch_delete.tcl:54
- msgid "Always (Do not perform merge test.)"
-@@ -705,7 +724,7 @@ msgstr "Nouveau nom :"
- msgid "Please select a branch to rename."
- msgstr "Merci de s=C3=A9lectionner une branche =C3=A0 renommer."
-=20
--#: lib/branch_rename.tcl:96 lib/checkout_op.tcl:179
-+#: lib/branch_rename.tcl:96 lib/checkout_op.tcl:201
+ #: lib/branch_create.tcl:140
  #, tcl-format
- msgid "Branch '%s' already exists."
- msgstr "La branche '%s' existe d=C3=A9j=C3=A0."
-@@ -737,31 +756,36 @@ msgid "Browse Branch Files"
- msgstr "Naviguer dans les fichiers de le branche"
+ msgid "Tracking branch %s is not a branch in the remote repository."
+-msgstr "La branche de suivi %s n'est pas une branche dans le r=C3=A9f=C3=
+=A9rentiel distant."
++msgstr "La branche de suivi %s n'est pas une branche dans le d=C3=A9p=C3=
+=B4t distant."
+=20
+ #: lib/branch_create.tcl:153 lib/branch_rename.tcl:86
+ msgid "Please supply a branch name."
+-msgstr "Merci de fournir un nom de branche."
++msgstr "Fournissez un nom de branche."
+=20
+ #: lib/branch_create.tcl:164 lib/branch_rename.tcl:106
+ #, tcl-format
+@@ -712,7 +713,7 @@ msgstr "La branche '%s' existe d=C3=A9j=C3=A0."
+ #: lib/branch_rename.tcl:117
+ #, tcl-format
+ msgid "Failed to rename '%s'."
+-msgstr "Le renommage de '%s' a =C3=A9chou=C3=A9."
++msgstr "=C3=89chec pour renommer '%s'."
+=20
+ #: lib/browser.tcl:17
+ msgid "Starting..."
+@@ -733,13 +734,13 @@ msgstr "[Jusqu'au parent]"
+=20
+ #: lib/browser.tcl:267 lib/browser.tcl:273
+ msgid "Browse Branch Files"
+-msgstr "Visionner fichiers de branches"
++msgstr "Naviguer dans les fichiers de le branche"
 =20
  #: lib/browser.tcl:278 lib/choose_repository.tcl:387
--#: lib/choose_repository.tcl:474 lib/choose_repository.tcl:484
--#: lib/choose_repository.tcl:987
-+#: lib/choose_repository.tcl:472 lib/choose_repository.tcl:482
-+#: lib/choose_repository.tcl:985
+ #: lib/choose_repository.tcl:474 lib/choose_repository.tcl:484
+ #: lib/choose_repository.tcl:987
  msgid "Browse"
- msgstr "Naviguer"
+-msgstr "Visionner"
++msgstr "Naviguer"
 =20
--#: lib/checkout_op.tcl:79
-+#: lib/checkout_op.tcl:84
+ #: lib/checkout_op.tcl:79
  #, tcl-format
- msgid "Fetching %s from %s"
- msgstr "R=C3=A9cup=C3=A9ration de %s =C3=A0 partir de %s"
-=20
--#: lib/checkout_op.tcl:127
-+#: lib/checkout_op.tcl:132
- #, tcl-format
- msgid "fatal: Cannot resolve %s"
- msgstr "erreur fatale : Impossible de r=C3=A9soudre %s"
-=20
--#: lib/checkout_op.tcl:140 lib/console.tcl:81 lib/database.tcl:31
-+#: lib/checkout_op.tcl:145 lib/console.tcl:81 lib/database.tcl:31
- msgid "Close"
- msgstr "Fermer"
-=20
--#: lib/checkout_op.tcl:169
-+#: lib/checkout_op.tcl:174
- #, tcl-format
- msgid "Branch '%s' does not exist."
- msgstr "La branche '%s' n'existe pas."
-=20
--#: lib/checkout_op.tcl:206
-+#: lib/checkout_op.tcl:193
-+#, tcl-format
-+msgid "Failed to configure simplified git-pull for '%s'."
-+msgstr "=C3=89chec de la configuration simplifi=C3=A9e de git-pull pou=
-r '%s'."
-+
-+#: lib/checkout_op.tcl:228
- #, tcl-format
- msgid ""
- "Branch '%s' already exists.\n"
-@@ -774,21 +798,21 @@ msgstr ""
- "Impossible de faire une avance rapide (fast forward) vers %s.\n"
+@@ -770,7 +771,7 @@ msgid ""
+ msgstr ""
+ "La branche '%s' existe d=C3=A9j=C3=A0.\n"
+ "\n"
+-"Impossible d'avancer rapidement =C3=A0 %s.\n"
++"Impossible de faire une avance rapide (fast forward) vers %s.\n"
  "Une fusion est n=C3=A9cessaire."
 =20
--#: lib/checkout_op.tcl:220
-+#: lib/checkout_op.tcl:242
- #, tcl-format
- msgid "Merge strategy '%s' not supported."
- msgstr "La strat=C3=A9gie de fusion '%s' n'est pas support=C3=A9e."
+ #: lib/checkout_op.tcl:220
+@@ -785,7 +786,7 @@ msgstr "La mise =C3=A0 jour de '%s' a =C3=A9chou=C3=
+=A9e."
 =20
--#: lib/checkout_op.tcl:239
-+#: lib/checkout_op.tcl:261
- #, tcl-format
- msgid "Failed to update '%s'."
- msgstr "La mise =C3=A0 jour de '%s' a =C3=A9chou=C3=A9e."
-=20
--#: lib/checkout_op.tcl:251
-+#: lib/checkout_op.tcl:273
+ #: lib/checkout_op.tcl:251
  msgid "Staging area (index) is already locked."
- msgstr "L'index (staging area) est d=C3=A9j=C3=A0 v=C3=A9rouill=C3=A9"
+-msgstr "L'espace de pr=C3=A9-commit ('index' ou 'staging') est d=C3=A9=
+j=C3=A0 v=C3=A9rouill=C3=A9."
++msgstr "L'index (staging area) est d=C3=A9j=C3=A0 v=C3=A9rouill=C3=A9"
 =20
--#: lib/checkout_op.tcl:266
-+#: lib/checkout_op.tcl:288
+ #: lib/checkout_op.tcl:266
  msgid ""
- "Last scanned state does not match repository state.\n"
- "\n"
-@@ -797,36 +821,39 @@ msgid ""
+@@ -796,9 +797,9 @@ msgid ""
  "\n"
  "The rescan will be automatically started now.\n"
  msgstr ""
 -"L'=C3=A9tat lors de la derni=C3=A8re synchronisation ne correspond pl=
-us =C3=A0 l'=C3=A9tat du d=C3=A9p=C3=B4t\n"
+us =C3=A0 l'=C3=A9tat du r=C3=A9f=C3=A9rentiel.\n"
 +"L'=C3=A9tat lors de la derni=C3=A8re synchronisation ne correspond pl=
-us =C3=A0 l'=C3=A9tat du "
-+"d=C3=A9p=C3=B4t\n"
+us =C3=A0 l'=C3=A9tat du d=C3=A9p=C3=B4t\n"
  "\n"
--"Un autre programme Git a modifi=C3=A9 ce d=C3=A9p=C3=B4t depuis la de=
+-"Un autre programme Git a modifi=C3=A9 ce r=C3=A9f=C3=A9rentiel depuis=
+ la derni=C3=A8re synchronisation. Une resynchronisation doit =C3=AAtre=
+ effectu=C3=A9e avant de pouvoir modifier la branche courante.\n"
++"Un autre programme Git a modifi=C3=A9 ce d=C3=A9p=C3=B4t depuis la de=
 rni=C3=A8re synchronisation. Une resynchronisation doit =C3=AAtre effec=
 tu=C3=A9e avant de pouvoir modifier la branche courante.\n"
-+"Un autre programme Git a modifi=C3=A9 ce d=C3=A9p=C3=B4t depuis la de=
-rni=C3=A8re "
-+"synchronisation. Une resynchronisation doit =C3=AAtre effectu=C3=A9e =
-avant de pouvoir "
-+"modifier la branche courante.\n"
  "\n"
  "Cela va =C3=AAtre fait tout de suite automatiquement.\n"
 =20
--#: lib/checkout_op.tcl:322
-+#: lib/checkout_op.tcl:344
- #, tcl-format
- msgid "Updating working directory to '%s'..."
- msgstr "Mise =C3=A0 jour du r=C3=A9pertoire courant avec '%s'..."
+@@ -809,12 +810,12 @@ msgstr "Mise =C3=A0 jour du r=C3=A9pertoire coura=
+nt avec '%s'..."
 =20
--#: lib/checkout_op.tcl:323
-+#: lib/checkout_op.tcl:345
+ #: lib/checkout_op.tcl:323
  msgid "files checked out"
- msgstr "fichiers charg=C3=A9s"
+-msgstr "fichiers emprunt=C3=A9s"
++msgstr "fichiers charg=C3=A9s"
 =20
--#: lib/checkout_op.tcl:353
-+#: lib/checkout_op.tcl:375
+ #: lib/checkout_op.tcl:353
  #, tcl-format
  msgid "Aborted checkout of '%s' (file level merging is required)."
- msgstr "Chargement de '%s' abandonn=C3=A9 (il est n=C3=A9cessaire de f=
+-msgstr "Emprunt de '%s' abandonn=C3=A9. (Il est n=C3=A9cessaire de fus=
+ionner des fichiers.)"
++msgstr "Chargement de '%s' abandonn=C3=A9 (il est n=C3=A9cessaire de f=
 usionner des fichiers)."
 =20
--#: lib/checkout_op.tcl:354
-+#: lib/checkout_op.tcl:376
+ #: lib/checkout_op.tcl:354
  msgid "File level merge required."
- msgstr "Il est n=C3=A9cessaire de fusionner des fichiers."
-=20
--#: lib/checkout_op.tcl:358
-+#: lib/checkout_op.tcl:380
- #, tcl-format
- msgid "Staying on branch '%s'."
- msgstr "Le r=C3=A9pertoire de travail reste sur la branche '%s'."
-=20
--#: lib/checkout_op.tcl:429
-+#: lib/checkout_op.tcl:451
- msgid ""
- "You are no longer on a local branch.\n"
- "\n"
-@@ -838,30 +865,30 @@ msgstr ""
- "Si vous vouliez =C3=AAtre sur une branche, cr=C3=A9ez en une maintena=
-nt en partant de "
- "'Cet emprunt d=C3=A9tach=C3=A9'."
-=20
--#: lib/checkout_op.tcl:446 lib/checkout_op.tcl:450
-+#: lib/checkout_op.tcl:468 lib/checkout_op.tcl:472
+@@ -840,7 +841,7 @@ msgstr ""
+ #: lib/checkout_op.tcl:446 lib/checkout_op.tcl:450
  #, tcl-format
  msgid "Checked out '%s'."
- msgstr "'%s' charg=C3=A9."
+-msgstr "'%s' emprunt=C3=A9."
++msgstr "'%s' charg=C3=A9."
 =20
--#: lib/checkout_op.tcl:478
-+#: lib/checkout_op.tcl:500
+ #: lib/checkout_op.tcl:478
  #, tcl-format
- msgid "Resetting '%s' to '%s' will lose the following commits:"
- msgstr "R=C3=A9initialiser '%s' =C3=A0 '%s' va faire perdre les commit=
-s suivants :"
+@@ -884,15 +885,15 @@ msgstr "S=C3=A9lectionner"
 =20
--#: lib/checkout_op.tcl:500
-+#: lib/checkout_op.tcl:522
- msgid "Recovering lost commits may not be easy."
- msgstr "R=C3=A9cup=C3=A9rer les commits perdus ne sera peut =C3=AAtre =
-pas facile."
+ #: lib/choose_font.tcl:53
+ msgid "Font Family"
+-msgstr "Famille de fonte"
++msgstr "Familles de polices"
 =20
--#: lib/checkout_op.tcl:505
-+#: lib/checkout_op.tcl:527
- #, tcl-format
- msgid "Reset '%s'?"
- msgstr "R=C3=A9initialiser '%s' ?"
+ #: lib/choose_font.tcl:74
+ msgid "Font Size"
+-msgstr "Taille de fonte"
++msgstr "Taille de police"
 =20
--#: lib/checkout_op.tcl:510 lib/merge.tcl:163
-+#: lib/checkout_op.tcl:532 lib/merge.tcl:163
- msgid "Visualize"
- msgstr "Visualiser"
+ #: lib/choose_font.tcl:91
+ msgid "Font Example"
+-msgstr "Exemple de fonte"
++msgstr "Exemple de police"
 =20
--#: lib/checkout_op.tcl:578
-+#: lib/checkout_op.tcl:600
- #, tcl-format
+ #: lib/choose_font.tcl:103
  msgid ""
- "Failed to set current branch.\n"
-@@ -915,7 +942,7 @@ msgstr "Cr=C3=A9er nouveau d=C3=A9p=C3=B4t"
+@@ -900,7 +901,7 @@ msgid ""
+ "If you like this text, it can be your font."
+ msgstr ""
+ "C'est un texte d'exemple.\n"
+-"Si vous aimez ce texte, vous pouvez choisir cette fonte."
++"Si vous aimez ce texte, vous pouvez choisir cette police"
+=20
+ #: lib/choose_repository.tcl:28
+ msgid "Git Gui"
+@@ -908,7 +909,7 @@ msgstr "Git Gui"
+=20
+ #: lib/choose_repository.tcl:81 lib/choose_repository.tcl:376
+ msgid "Create New Repository"
+-msgstr "Cr=C3=A9er nouveau r=C3=A9f=C3=A9rentiel"
++msgstr "Cr=C3=A9er nouveau d=C3=A9p=C3=B4t"
+=20
+ #: lib/choose_repository.tcl:87
  msgid "New..."
- msgstr "Nouveau..."
+@@ -916,7 +917,7 @@ msgstr "Nouveau..."
 =20
--#: lib/choose_repository.tcl:94 lib/choose_repository.tcl:460
-+#: lib/choose_repository.tcl:94 lib/choose_repository.tcl:458
+ #: lib/choose_repository.tcl:94 lib/choose_repository.tcl:460
  msgid "Clone Existing Repository"
- msgstr "Cloner d=C3=A9p=C3=B4t existant"
+-msgstr "Cloner r=C3=A9f=C3=A9rentiel existant"
++msgstr "Cloner d=C3=A9p=C3=B4t existant"
 =20
-@@ -923,7 +950,7 @@ msgstr "Cloner d=C3=A9p=C3=B4t existant"
+ #: lib/choose_repository.tcl:100
  msgid "Clone..."
- msgstr "Cloner..."
+@@ -924,7 +925,7 @@ msgstr "Cloner..."
 =20
--#: lib/choose_repository.tcl:107 lib/choose_repository.tcl:976
-+#: lib/choose_repository.tcl:107 lib/choose_repository.tcl:974
+ #: lib/choose_repository.tcl:107 lib/choose_repository.tcl:976
  msgid "Open Existing Repository"
- msgstr "Ouvrir d=C3=A9p=C3=B4t existant"
+-msgstr "Ouvrir r=C3=A9f=C3=A9rentiel existant"
++msgstr "Ouvrir d=C3=A9p=C3=B4t existant"
 =20
-@@ -945,187 +972,187 @@ msgstr "Ouvrir d=C3=A9p=C3=B4t r=C3=A9cent :"
+ #: lib/choose_repository.tcl:113
+ msgid "Open..."
+@@ -932,17 +933,17 @@ msgstr "Ouvrir..."
+=20
+ #: lib/choose_repository.tcl:126
+ msgid "Recent Repositories"
+-msgstr "R=C3=A9f=C3=A9rentiels r=C3=A9cents"
++msgstr "D=C3=A9p=C3=B4t r=C3=A9cemment utilis=C3=A9s"
+=20
+ #: lib/choose_repository.tcl:132
+ msgid "Open Recent Repository:"
+-msgstr "Ouvrir r=C3=A9f=C3=A9rentiel r=C3=A9cent :"
++msgstr "Ouvrir d=C3=A9p=C3=B4t r=C3=A9cent :"
+=20
+ #: lib/choose_repository.tcl:296 lib/choose_repository.tcl:303
+ #: lib/choose_repository.tcl:310
+ #, tcl-format
  msgid "Failed to create repository %s:"
- msgstr "La cr=C3=A9ation du d=C3=A9p=C3=B4t %s a =C3=A9chou=C3=A9e :"
+-msgstr "La cr=C3=A9ation du r=C3=A9f=C3=A9rentiel %s a =C3=A9chou=C3=A9=
+e :"
++msgstr "La cr=C3=A9ation du d=C3=A9p=C3=B4t %s a =C3=A9chou=C3=A9e :"
 =20
--#: lib/choose_repository.tcl:381 lib/choose_repository.tcl:478
-+#: lib/choose_repository.tcl:381 lib/choose_repository.tcl:476
+ #: lib/choose_repository.tcl:381 lib/choose_repository.tcl:478
  msgid "Directory:"
- msgstr "R=C3=A9pertoire :"
-=20
--#: lib/choose_repository.tcl:412 lib/choose_repository.tcl:537
--#: lib/choose_repository.tcl:1011
-+#: lib/choose_repository.tcl:410 lib/choose_repository.tcl:535
-+#: lib/choose_repository.tcl:1007
+@@ -951,7 +952,7 @@ msgstr "R=C3=A9pertoire :"
+ #: lib/choose_repository.tcl:412 lib/choose_repository.tcl:537
+ #: lib/choose_repository.tcl:1011
  msgid "Git Repository"
- msgstr "D=C3=A9p=C3=B4t Git"
+-msgstr "R=C3=A9f=C3=A9rentiel Git"
++msgstr "D=C3=A9p=C3=B4t Git"
 =20
--#: lib/choose_repository.tcl:437
-+#: lib/choose_repository.tcl:435
+ #: lib/choose_repository.tcl:437
  #, tcl-format
- msgid "Directory %s already exists."
- msgstr "Le r=C3=A9pertoire %s existe d=C3=A9j=C3=A0."
-=20
--#: lib/choose_repository.tcl:441
-+#: lib/choose_repository.tcl:439
- #, tcl-format
- msgid "File %s already exists."
- msgstr "Le fichier %s existe d=C3=A9j=C3=A0."
-=20
--#: lib/choose_repository.tcl:455
-+#: lib/choose_repository.tcl:453
- msgid "Clone"
- msgstr "Cloner"
-=20
--#: lib/choose_repository.tcl:468
-+#: lib/choose_repository.tcl:466
- msgid "URL:"
- msgstr "URL :"
-=20
--#: lib/choose_repository.tcl:489
-+#: lib/choose_repository.tcl:487
- msgid "Clone Type:"
- msgstr "Type de clonage :"
-=20
--#: lib/choose_repository.tcl:495
-+#: lib/choose_repository.tcl:493
- msgid "Standard (Fast, Semi-Redundant, Hardlinks)"
- msgstr "Standard (rapide, semi-redondant, liens durs)"
-=20
--#: lib/choose_repository.tcl:501
-+#: lib/choose_repository.tcl:499
- msgid "Full Copy (Slower, Redundant Backup)"
- msgstr "Copy compl=C3=A8te (plus lent, sauvegarde redondante)"
-=20
--#: lib/choose_repository.tcl:507
-+#: lib/choose_repository.tcl:505
- msgid "Shared (Fastest, Not Recommended, No Backup)"
- msgstr "Partag=C3=A9 (le plus rapide, non recommand=C3=A9, pas de sauv=
-egarde)"
-=20
--#: lib/choose_repository.tcl:543 lib/choose_repository.tcl:590
--#: lib/choose_repository.tcl:736 lib/choose_repository.tcl:806
--#: lib/choose_repository.tcl:1017 lib/choose_repository.tcl:1025
-+#: lib/choose_repository.tcl:541 lib/choose_repository.tcl:588
-+#: lib/choose_repository.tcl:734 lib/choose_repository.tcl:804
-+#: lib/choose_repository.tcl:1013 lib/choose_repository.tcl:1021
+@@ -992,15 +993,15 @@ msgstr "Partag=C3=A9 (le plus rapide, non recomma=
+nd=C3=A9, pas de sauvegarde)"
+ #: lib/choose_repository.tcl:1017 lib/choose_repository.tcl:1025
  #, tcl-format
  msgid "Not a Git repository: %s"
- msgstr "'%s' n'est pas un d=C3=A9p=C3=B4t Git."
+-msgstr "'%s' n'est pas un r=C3=A9f=C3=A9rentiel Git."
++msgstr "'%s' n'est pas un d=C3=A9p=C3=B4t Git."
 =20
--#: lib/choose_repository.tcl:579
-+#: lib/choose_repository.tcl:577
+ #: lib/choose_repository.tcl:579
  msgid "Standard only available for local repository."
- msgstr "Standard n'est disponible que pour un d=C3=A9p=C3=B4t local."
+-msgstr "Standard n'est disponible que pour un r=C3=A9f=C3=A9rentiel lo=
+cal."
++msgstr "Standard n'est disponible que pour un d=C3=A9p=C3=B4t local."
 =20
--#: lib/choose_repository.tcl:583
-+#: lib/choose_repository.tcl:581
+ #: lib/choose_repository.tcl:583
  msgid "Shared only available for local repository."
- msgstr "Partag=C3=A9 n'est disponible que pour un d=C3=A9p=C3=B4t loca=
+-msgstr "Partag=C3=A9 n'est disponible que pour un r=C3=A9f=C3=A9rentie=
+l local."
++msgstr "Partag=C3=A9 n'est disponible que pour un d=C3=A9p=C3=B4t loca=
 l."
 =20
--#: lib/choose_repository.tcl:604
-+#: lib/choose_repository.tcl:602
+ #: lib/choose_repository.tcl:604
  #, tcl-format
- msgid "Location %s already exists."
- msgstr "L'emplacement %s existe d=C3=A9j=C3=A0."
+@@ -1013,7 +1014,7 @@ msgstr "La configuration de l'origine a =C3=A9cho=
+u=C3=A9e."
 =20
--#: lib/choose_repository.tcl:615
-+#: lib/choose_repository.tcl:613
- msgid "Failed to configure origin"
- msgstr "La configuration de l'origine a =C3=A9chou=C3=A9e."
-=20
--#: lib/choose_repository.tcl:627
-+#: lib/choose_repository.tcl:625
+ #: lib/choose_repository.tcl:627
  msgid "Counting objects"
- msgstr "D=C3=A9compte des objets"
+-msgstr "Comptage des objets"
++msgstr "D=C3=A9compte des objets"
 =20
--#: lib/choose_repository.tcl:628
-+#: lib/choose_repository.tcl:626
+ #: lib/choose_repository.tcl:628
  msgid "buckets"
- msgstr "paniers"
-=20
--#: lib/choose_repository.tcl:652
-+#: lib/choose_repository.tcl:650
- #, tcl-format
- msgid "Unable to copy objects/info/alternates: %s"
- msgstr "Impossible de copier 'objects/info/alternates' : %s"
-=20
--#: lib/choose_repository.tcl:688
-+#: lib/choose_repository.tcl:686
- #, tcl-format
- msgid "Nothing to clone from %s."
- msgstr "Il n'y a rien =C3=A0 cloner depuis %s."
-=20
--#: lib/choose_repository.tcl:690 lib/choose_repository.tcl:904
--#: lib/choose_repository.tcl:916
-+#: lib/choose_repository.tcl:688 lib/choose_repository.tcl:902
-+#: lib/choose_repository.tcl:914
+@@ -1032,11 +1033,11 @@ msgstr "Il n'y a rien =C3=A0 cloner depuis %s."
+ #: lib/choose_repository.tcl:690 lib/choose_repository.tcl:904
+ #: lib/choose_repository.tcl:916
  msgid "The 'master' branch has not been initialized."
- msgstr "La branche 'master' n'a pas =C3=A9t=C3=A9 initialis=C3=A9e."
+-msgstr "Cette branche 'master' n'a pas =C3=A9t=C3=A9 initialis=C3=A9e.=
+"
++msgstr "La branche 'master' n'a pas =C3=A9t=C3=A9 initialis=C3=A9e."
 =20
--#: lib/choose_repository.tcl:703
-+#: lib/choose_repository.tcl:701
+ #: lib/choose_repository.tcl:703
  msgid "Hardlinks are unavailable.  Falling back to copying."
- msgstr "Les liens durs ne sont pas support=C3=A9s. Une copie sera effe=
+-msgstr "Les liens durs ne sont pas disponibles. On se r=C3=A9soud =C3=A0=
+ copier."
++msgstr "Les liens durs ne sont pas support=C3=A9s. Une copie sera effe=
 ctu=C3=A9e =C3=A0 la place."
 =20
--#: lib/choose_repository.tcl:715
-+#: lib/choose_repository.tcl:713
+ #: lib/choose_repository.tcl:715
  #, tcl-format
- msgid "Cloning from %s"
- msgstr "Clonage depuis %s"
-=20
--#: lib/choose_repository.tcl:746
-+#: lib/choose_repository.tcl:744
- msgid "Copying objects"
- msgstr "Copie des objets"
-=20
--#: lib/choose_repository.tcl:747
-+#: lib/choose_repository.tcl:745
- msgid "KiB"
- msgstr "KiB"
-=20
--#: lib/choose_repository.tcl:771
-+#: lib/choose_repository.tcl:769
- #, tcl-format
- msgid "Unable to copy object: %s"
- msgstr "Impossible de copier l'objet : %s"
-=20
--#: lib/choose_repository.tcl:781
-+#: lib/choose_repository.tcl:779
- msgid "Linking objects"
- msgstr "Liaison des objets"
-=20
--#: lib/choose_repository.tcl:782
-+#: lib/choose_repository.tcl:780
- msgid "objects"
- msgstr "objets"
-=20
--#: lib/choose_repository.tcl:790
-+#: lib/choose_repository.tcl:788
- #, tcl-format
- msgid "Unable to hardlink object: %s"
- msgstr "Impossible cr=C3=A9er un lien dur pour l'objet : %s"
-=20
--#: lib/choose_repository.tcl:845
-+#: lib/choose_repository.tcl:843
- msgid "Cannot fetch branches and objects.  See console output for deta=
-ils."
- msgstr ""
- "Impossible de r=C3=A9cup=C3=A9rer les branches et objets. Voir la sor=
-tie console pour "
- "plus de d=C3=A9tails."
-=20
--#: lib/choose_repository.tcl:856
-+#: lib/choose_repository.tcl:854
+@@ -1078,7 +1079,7 @@ msgstr ""
+ #: lib/choose_repository.tcl:856
  msgid "Cannot fetch tags.  See console output for details."
  msgstr ""
--"Impossible de r=C3=A9cup=C3=A9rer les marques (tags). Voir la sortie =
-console pour plus de "
--"d=C3=A9tails."
+-"Impossible de r=C3=A9cup=C3=A9rer les marques. Voir la sortie console=
+ pour plus de "
 +"Impossible de r=C3=A9cup=C3=A9rer les marques (tags). Voir la sortie =
-console pour plus "
-+"de d=C3=A9tails."
+console pour plus de "
+ "d=C3=A9tails."
 =20
--#: lib/choose_repository.tcl:880
-+#: lib/choose_repository.tcl:878
- msgid "Cannot determine HEAD.  See console output for details."
- msgstr "Impossible de d=C3=A9terminer HEAD. Voir la sortie console pou=
-r plus de d=C3=A9tails."
+ #: lib/choose_repository.tcl:880
+@@ -1114,7 +1115,7 @@ msgstr "fichiers"
 =20
--#: lib/choose_repository.tcl:889
-+#: lib/choose_repository.tcl:887
- #, tcl-format
- msgid "Unable to cleanup %s"
- msgstr "Impossible de nettoyer %s"
-=20
--#: lib/choose_repository.tcl:895
-+#: lib/choose_repository.tcl:893
- msgid "Clone failed."
- msgstr "Le clonage a =C3=A9chou=C3=A9."
-=20
--#: lib/choose_repository.tcl:902
-+#: lib/choose_repository.tcl:900
- msgid "No default branch obtained."
- msgstr "Aucune branche par d=C3=A9faut n'a =C3=A9t=C3=A9 obtenue."
-=20
--#: lib/choose_repository.tcl:913
-+#: lib/choose_repository.tcl:911
- #, tcl-format
- msgid "Cannot resolve %s as a commit."
- msgstr "Impossible de r=C3=A9soudre %s comme commit."
-=20
--#: lib/choose_repository.tcl:925
-+#: lib/choose_repository.tcl:923
- msgid "Creating working directory"
- msgstr "Cr=C3=A9ation du r=C3=A9pertoire de travail"
-=20
--#: lib/choose_repository.tcl:926 lib/index.tcl:65 lib/index.tcl:127
-+#: lib/choose_repository.tcl:924 lib/index.tcl:65 lib/index.tcl:127
- #: lib/index.tcl:193
- msgid "files"
- msgstr "fichiers"
-=20
--#: lib/choose_repository.tcl:955
-+#: lib/choose_repository.tcl:953
+ #: lib/choose_repository.tcl:955
  msgid "Initial file checkout failed."
- msgstr "Chargement initial du fichier =C3=A9chou=C3=A9."
+-msgstr "L'emprunt initial de fichier a =C3=A9chou=C3=A9."
++msgstr "Chargement initial du fichier =C3=A9chou=C3=A9."
 =20
--#: lib/choose_repository.tcl:971
-+#: lib/choose_repository.tcl:969
+ #: lib/choose_repository.tcl:971
  msgid "Open"
- msgstr "Ouvrir"
+@@ -1122,12 +1123,12 @@ msgstr "Ouvrir"
 =20
--#: lib/choose_repository.tcl:981
-+#: lib/choose_repository.tcl:979
+ #: lib/choose_repository.tcl:981
  msgid "Repository:"
- msgstr "D=C3=A9p=C3=B4t :"
+-msgstr "R=C3=A9f=C3=A9rentiel :"
++msgstr "D=C3=A9p=C3=B4t :"
 =20
--#: lib/choose_repository.tcl:1031
-+#: lib/choose_repository.tcl:1027
+ #: lib/choose_repository.tcl:1031
  #, tcl-format
  msgid "Failed to open repository %s:"
- msgstr "Impossible d'ouvrir le d=C3=A9p=C3=B4t %s :"
-@@ -1165,7 +1192,7 @@ msgstr "L'expression de r=C3=A9vision est vide."
+-msgstr "Impossible d'ouvrir le r=C3=A9f=C3=A9rentiel %s :"
++msgstr "Impossible d'ouvrir le d=C3=A9p=C3=B4t %s :"
+=20
+ #: lib/choose_rev.tcl:53
+ msgid "This Detached Checkout"
+@@ -1143,11 +1144,11 @@ msgstr "Branche locale"
+=20
+ #: lib/choose_rev.tcl:79
+ msgid "Tracking Branch"
+-msgstr "Suivi de branche"
++msgstr "Branche de suivi"
+=20
+ #: lib/choose_rev.tcl:84 lib/choose_rev.tcl:538
+ msgid "Tag"
+-msgstr "Marque"
++msgstr "Marque (tag)"
+=20
+ #: lib/choose_rev.tcl:317
+ #, tcl-format
+@@ -1164,7 +1165,7 @@ msgstr "L'expression de r=C3=A9vision est vide."
 =20
  #: lib/choose_rev.tcl:531
  msgid "Updated"
--msgstr "=C3=80 jour (updated)"
-+msgstr "Mise-=C3=A0-jour:"
+-msgstr "Misa =C3=A0 jour"
++msgstr "=C3=80 jour (updated)"
 =20
  #: lib/choose_rev.tcl:559
  msgid "URL"
-@@ -1421,7 +1448,7 @@ msgstr ""
- msgid "Invalid date from Git: %s"
- msgstr "Date invalide de Git : %s"
+@@ -1218,9 +1219,9 @@ msgid ""
+ "The rescan will be automatically started now.\n"
+ msgstr ""
+ "L'=C3=A9tat lors de la derni=C3=A8re synchronisation ne correspond pl=
+us =C3=A0 l'=C3=A9tat du "
+-"r=C3=A9f=C3=A9rentiel.\n"
++"d=C3=A9p=C3=B4t.\n"
+ "\n"
+-"Un autre programme Git a modifi=C3=A9 ce r=C3=A9f=C3=A9rentiel depuis=
+ la derni=C3=A8re "
++"Un autre programme Git a modifi=C3=A9 ce d=C3=A9p=C3=B4t depuis la de=
+rni=C3=A8re "
+ "synchronisation. Une resynshronisation doit =C3=AAtre effectu=C3=A9e =
+avant de pouvoir "
+ "cr=C3=A9er un nouveau commit.\n"
+ "\n"
+@@ -1258,7 +1259,7 @@ msgid ""
+ msgstr ""
+ "Pas de modification =C3=A0 commiter.\n"
+ "\n"
+-"Vous devez pr=C3=A9-commiter au moins 1 fichier avant de pouvoir comm=
+iter.\n"
++"Vous devez indexer au moins 1 fichier avant de pouvoir commiter.\n"
 =20
--#: lib/diff.tcl:42
-+#: lib/diff.tcl:44
- #, tcl-format
+ #: lib/commit.tcl:183
  msgid ""
- "No differences detected.\n"
-@@ -1444,40 +1471,48 @@ msgstr ""
- "Une resynchronisation va =C3=AAtre lanc=C3=A9e automatiquement pour t=
-rouver d'autres "
- "fichiers qui pourraient se trouver dans le m=C3=AAme =C3=A9tat."
+@@ -1285,19 +1286,19 @@ msgstr "attention : Tcl ne supporte pas l'encod=
+age '%s'."
 =20
--#: lib/diff.tcl:81
-+#: lib/diff.tcl:83
- #, tcl-format
- msgid "Loading diff of %s..."
- msgstr "Chargement des diff=C3=A9rences de %s..."
+ #: lib/commit.tcl:221
+ msgid "Calling pre-commit hook..."
+-msgstr "Appel du programme externe d'avant commit..."
++msgstr "Lancement de l'action d'avant-commit..."
 =20
--#: lib/diff.tcl:114 lib/diff.tcl:184
-+#: lib/diff.tcl:116 lib/diff.tcl:190
- #, tcl-format
- msgid "Unable to display %s"
- msgstr "Impossible d'afficher %s"
+ #: lib/commit.tcl:236
+ msgid "Commit declined by pre-commit hook."
+-msgstr "Commit refus=C3=A9 par le programme externe d'avant commit."
++msgstr "Commit refus=C3=A9 par l'action d'avant-commit."
 =20
--#: lib/diff.tcl:115
-+#: lib/diff.tcl:117
- msgid "Error loading file:"
- msgstr "Erreur lors du chargement du fichier :"
+ #: lib/commit.tcl:259
+ msgid "Calling commit-msg hook..."
+-msgstr "Appel du programme externe de message de commit..."
++msgstr "Lancement de l'action \"message de commit\"..."
 =20
--#: lib/diff.tcl:122
-+#: lib/diff.tcl:124
+ #: lib/commit.tcl:274
+ msgid "Commit declined by commit-msg hook."
+-msgstr "Commit refus=C3=A9 par le programme externe de message de comm=
+it."
++msgstr "Commit refus=C3=A9 par l'action \"message de commit\"."
+=20
+ #: lib/commit.tcl:287
+ msgid "Committing changes..."
+@@ -1406,7 +1407,7 @@ msgid ""
+ "\n"
+ "Compress the database now?"
+ msgstr ""
+-"Ce r=C3=A9f=C3=A9rentiel comprend actuellement environ %i objets ayan=
+t leur fichier "
++"Ce d=C3=A9p=C3=B4t comprend actuellement environ %i objets ayant leur=
+ fichier "
+ "particulier.\n"
+ "\n"
+ "Pour conserver une performance optimale, il est fortement recommand=C3=
+=A9 de "
+@@ -1459,7 +1460,7 @@ msgstr "Erreur lors du chargement du fichier :"
+=20
+ #: lib/diff.tcl:122
  msgid "Git Repository (subproject)"
- msgstr "D=C3=A9p=C3=B4t Git (sous projet)"
+-msgstr "R=C3=A9f=C3=A9rentiel Git (sous projet)"
++msgstr "D=C3=A9p=C3=B4t Git (sous projet)"
 =20
--#: lib/diff.tcl:134
-+#: lib/diff.tcl:136
+ #: lib/diff.tcl:134
  msgid "* Binary file (not showing content)."
- msgstr "* Fichier binaire (pas d'apper=C3=A7u du contenu)."
+@@ -1471,11 +1472,11 @@ msgstr "Erreur lors du chargement des diff=C3=A9=
+rences :"
 =20
--#: lib/diff.tcl:185
-+#: lib/diff.tcl:191
- msgid "Error loading diff:"
- msgstr "Erreur lors du chargement des diff=C3=A9rences :"
-=20
--#: lib/diff.tcl:303
-+#: lib/diff.tcl:313
+ #: lib/diff.tcl:303
  msgid "Failed to unstage selected hunk."
- msgstr "=C3=89chec lors de la d=C3=A9sindexation de la section s=C3=A9=
+-msgstr "La suppression dans le pr=C3=A9-commit de la section s=C3=A9le=
+ctionn=C3=A9e a =C3=A9chou=C3=A9e."
++msgstr "=C3=89chec lors de la d=C3=A9sindexation de la section s=C3=A9=
 lectionn=C3=A9e."
 =20
--#: lib/diff.tcl:310
-+#: lib/diff.tcl:320
+ #: lib/diff.tcl:310
  msgid "Failed to stage selected hunk."
- msgstr "=C3=89chec lors de l'indexation de la section."
+-msgstr "Le pr=C3=A9-commit de la section s=C3=A9lectionn=C3=A9e a =C3=A9=
+chou=C3=A9."
++msgstr "=C3=89chec lors de l'indexation de la section."
 =20
-+#: lib/diff.tcl:386
-+msgid "Failed to unstage selected line."
-+msgstr "=C3=89chec lors de la d=C3=A9sindexation de la ligne s=C3=A9le=
-ctionn=C3=A9e."
-+
-+#: lib/diff.tcl:394
-+msgid "Failed to stage selected line."
-+msgstr "=C3=89chec lors de l'indexation de la ligne."
-+
  #: lib/error.tcl:20 lib/error.tcl:114
  msgid "error"
- msgstr "erreur"
-@@ -1502,7 +1537,9 @@ msgstr "Erreur de l'index"
+@@ -1491,17 +1492,17 @@ msgstr "Vous devez corriger les erreurs suivant=
+es avant de pouvoir commiter."
+=20
+ #: lib/index.tcl:6
+ msgid "Unable to unlock the index."
+-msgstr "Impossible de d=C3=A9v=C3=A9rouiller le pr=C3=A9-commit."
++msgstr "Impossible de d=C3=A9v=C3=A9rouiller l'index."
+=20
+ #: lib/index.tcl:15
+ msgid "Index Error"
+-msgstr "Erreur de pr=C3=A9-commit"
++msgstr "Erreur de l'index"
+=20
+ #: lib/index.tcl:21
  msgid ""
  "Updating the Git index failed.  A rescan will be automatically starte=
 d to "
  "resynchronize git-gui."
--msgstr "=C3=89chec de la mise =C3=A0 jour de l'index. Une resynchronis=
+-msgstr "Le pr=C3=A9-commit a =C3=A9chou=C3=A9. Une resynchronisation v=
+a =C3=AAtre lanc=C3=A9e automatiquement."
++msgstr "=C3=89chec de la mise =C3=A0 jour de l'index. Une resynchronis=
 ation va =C3=AAtre lanc=C3=A9e automatiquement."
-+msgstr ""
-+"=C3=89chec de la mise =C3=A0 jour de l'index. Une resynchronisation v=
-a =C3=AAtre lanc=C3=A9e "
-+"automatiquement."
 =20
  #: lib/index.tcl:27
  msgid "Continue"
-@@ -1539,8 +1576,8 @@ msgstr "Annuler les modifications dans ces %i fic=
-hiers ?"
+@@ -1509,12 +1510,12 @@ msgstr "Continuer"
+=20
+ #: lib/index.tcl:31
+ msgid "Unlock Index"
+-msgstr "D=C3=A9v=C3=A9rouiller le pr=C3=A9-commit"
++msgstr "D=C3=A9verouiller l'index"
+=20
+ #: lib/index.tcl:282
+ #, tcl-format
+ msgid "Unstaging %s from commit"
+-msgstr "Supprimer %s du commit"
++msgstr "D=C3=A9sindexation de: %s"
+=20
+ #: lib/index.tcl:313
+ msgid "Ready to commit."
+@@ -1523,23 +1524,23 @@ msgstr "Pr=C3=AAt =C3=A0 =C3=AAtre commit=C3=A9=
+=2E"
+ #: lib/index.tcl:326
+ #, tcl-format
+ msgid "Adding %s"
+-msgstr "Ajouter %s"
++msgstr "Ajout de %s"
+=20
+ #: lib/index.tcl:381
+ #, tcl-format
+ msgid "Revert changes in file %s?"
+-msgstr "Inverser les modifications dans le fichier %s ? "
++msgstr "Annuler les modifications dans le fichier %s ? "
+=20
+ #: lib/index.tcl:383
+ #, tcl-format
+ msgid "Revert changes in these %i files?"
+-msgstr "Inverser les modifications dans ces %i fichiers ?"
++msgstr "Annuler les modifications dans ces %i fichiers ?"
+=20
  #: lib/index.tcl:391
  msgid "Any unstaged changes will be permanently lost by the revert."
  msgstr ""
--"Toutes les modifications non-index=C3=A9es seront d=C3=A9finitivement=
- perdues "
--"par l'annulation."
+-"Toutes les modifications non pr=C3=A9-commit=C3=A9es seront d=C3=A9fi=
+nitivement perdues "
+-"lors de l'inversion."
 +"Toutes les modifications non-index=C3=A9es seront d=C3=A9finitivement=
- perdues par "
-+"l'annulation."
+ perdues "
++"par l'annulation."
 =20
  #: lib/index.tcl:394
  msgid "Do Nothing"
-@@ -1589,8 +1626,8 @@ msgstr ""
+@@ -1551,7 +1552,7 @@ msgid ""
+ "\n"
+ "You must finish amending this commit before starting any type of merg=
+e.\n"
+ msgstr ""
+-"Impossible de fucionner pendant une correction.\n"
++"Impossible de fusionner pendant une correction.\n"
+ "\n"
+ "Vous devez finir de corriger ce commit avant de lancer une quelconque=
+ "
+ "fusion.\n"
+@@ -1566,9 +1567,9 @@ msgid ""
+ "The rescan will be automatically started now.\n"
+ msgstr ""
+ "L'=C3=A9tat lors de la derni=C3=A8re synchronisation ne correspond pl=
+us =C3=A0 l'=C3=A9tat du "
+-"r=C3=A9f=C3=A9rentiel.\n"
++"d=C3=A9p=C3=B4t.\n"
+ "\n"
+-"Un autre programme Git a modifi=C3=A9 ce r=C3=A9f=C3=A9rentiel depuis=
+ la derni=C3=A8re "
++"Un autre programme Git a modifi=C3=A9 ce d=C3=A9p=C3=B4t depuis la de=
+rni=C3=A8re "
+ "synchronisation. Une resynchronisation doit =C3=AAtre effectu=C3=A9e =
+avant de pouvoir "
+ "fusionner de nouveau.\n"
+ "\n"
+@@ -1588,8 +1589,8 @@ msgstr ""
  "\n"
  "Le fichier %s a des conflicts de fusion.\n"
  "\n"
--"Vous devez les r=C3=A9soudre, puis indexer le fichier, et enfin commi=
-ter "
--"pour terminer la fusion courante. Seulement =C3=A0 ce moment l=C3=A0 =
-sera-t-il possible "
+-"Vous devez les r=C3=A9soudre, puis pr=C3=A9-commiter le fichier, et e=
+nfin commiter "
+-"pour terminer la fusion courante. Seulement=C3=A0 ce moment l=C3=A0, =
+il sera possible "
 +"Vous devez les r=C3=A9soudre, puis indexer le fichier, et enfin commi=
-ter pour "
-+"terminer la fusion courante. Seulement =C3=A0 ce moment l=C3=A0 sera-=
-t-il possible "
+ter "
++"pour terminer la fusion courante. Seulement =C3=A0 ce moment l=C3=A0 =
+sera-t-il possible "
  "d'effectuer une nouvelle fusion.\n"
 =20
  #: lib/merge.tcl:54
-@@ -1686,11 +1723,11 @@ msgstr "Abandon"
- msgid "files reset"
- msgstr "fichiers r=C3=A9initialis=C3=A9s"
-=20
--#: lib/merge.tcl:265
-+#: lib/merge.tcl:266
- msgid "Abort failed."
- msgstr "L'abandon a =C3=A9chou=C3=A9."
-=20
--#: lib/merge.tcl:267
-+#: lib/merge.tcl:268
- msgid "Abort completed.  Ready."
- msgstr "Abandon temin=C3=A9. Pr=C3=AAt."
-=20
-@@ -1744,42 +1781,62 @@ msgid "Match Tracking Branches"
- msgstr "Faire correspondre les branches de suivi"
-=20
- #: lib/option.tcl:126
-+msgid "Blame Copy Only On Changed Files"
-+msgstr "Annoter les copies seulement sur fichiers modifi=C3=A9s"
-+
-+#: lib/option.tcl:127
-+msgid "Minimum Letters To Blame Copy On"
-+msgstr "Minimum de carat=C3=A8res pour annoter une copie"
-+
-+#: lib/option.tcl:128
- msgid "Number of Diff Context Lines"
- msgstr "Nombre de lignes de contexte dans les diffs"
-=20
--#: lib/option.tcl:127
-+#: lib/option.tcl:129
- msgid "Commit Message Text Width"
- msgstr "Largeur du texte de message de commit"
-=20
--#: lib/option.tcl:128
-+#: lib/option.tcl:130
- msgid "New Branch Name Template"
- msgstr "Nouveau mod=C3=A8le de nom de branche"
-=20
--#: lib/option.tcl:192
-+#: lib/option.tcl:194
- msgid "Spelling Dictionary:"
- msgstr "Dictionnaire d'orthographe :"
-=20
--#: lib/option.tcl:216
-+#: lib/option.tcl:218
- msgid "Change Font"
- msgstr "Modifier les polices"
-=20
--#: lib/option.tcl:220
-+#: lib/option.tcl:222
+@@ -1704,11 +1705,11 @@ msgstr "Sauvegarder"
+ #: lib/option.tcl:109
  #, tcl-format
- msgid "Choose %s"
- msgstr "Choisir %s"
+ msgid "%s Repository"
+-msgstr "R=C3=A9f=C3=A9rentiel de %s"
++msgstr "D=C3=A9p=C3=B4t: %s"
 =20
--#: lib/option.tcl:226
-+#: lib/option.tcl:228
- msgid "pt."
- msgstr "pt."
+ #: lib/option.tcl:110
+ msgid "Global (All Repositories)"
+-msgstr "Globales (tous les r=C3=A9f=C3=A9rentiels)"
++msgstr "Globales (tous les d=C3=A9p=C3=B4ts)"
 =20
--#: lib/option.tcl:240
-+#: lib/option.tcl:242
- msgid "Preferences"
- msgstr "Pr=C3=A9f=C3=A9rences"
+ #: lib/option.tcl:116
+ msgid "User Name"
+@@ -1736,7 +1737,7 @@ msgstr "Faire confiance aux dates de modification=
+ de fichiers "
 =20
--#: lib/option.tcl:275
-+#: lib/option.tcl:277
- msgid "Failed to completely save options:"
- msgstr "La sauvegarde compl=C3=A8te des options a =C3=A9chou=C3=A9e :"
+ #: lib/option.tcl:124
+ msgid "Prune Tracking Branches During Fetch"
+-msgstr "Nettoyer les branches de suivi pendant la r=C3=A9cup=C3=A9rati=
+on"
++msgstr "Purger les branches de suivi pendant la r=C3=A9cup=C3=A9ration=
+"
 =20
-+#: lib/remote.tcl:165
-+msgid "Prune from"
+ #: lib/option.tcl:125
+ msgid "Match Tracking Branches"
+@@ -1760,7 +1761,7 @@ msgstr "Dictionnaire d'orthographe :"
+=20
+ #: lib/option.tcl:216
+ msgid "Change Font"
+-msgstr "Modifier les fontes"
++msgstr "Modifier les polices"
+=20
+ #: lib/option.tcl:220
+ #, tcl-format
+@@ -1785,7 +1786,7 @@ msgstr "Supprimer branche distante"
+=20
+ #: lib/remote_branch_delete.tcl:47
+ msgid "From Repository"
+-msgstr "R=C3=A9f=C3=A9rentiel"
++msgstr "D=C3=A9p=C3=B4t source"
+=20
+ #: lib/remote_branch_delete.tcl:50 lib/transport.tcl:123
+ msgid "Remote:"
+@@ -1856,7 +1857,7 @@ msgstr "Supprimer les branches de %s"
+=20
+ #: lib/remote_branch_delete.tcl:286
+ msgid "No repository selected."
+-msgstr "Aucun r=C3=A9f=C3=A9rentiel n'est s=C3=A9lectionn=C3=A9."
++msgstr "Aucun d=C3=A9p=C3=B4t n'est s=C3=A9lectionn=C3=A9."
+=20
+ #: lib/remote_branch_delete.tcl:291
+ #, tcl-format
+@@ -1865,7 +1866,7 @@ msgstr "Synchronisation de %s..."
+=20
+ #: lib/remote.tcl:165
+ msgid "Prune from"
+-msgstr "Nettoyer de"
 +msgstr "Purger de"
-+
-+#: lib/remote.tcl:170
-+msgid "Fetch from"
-+msgstr "R=C3=A9cup=C3=A9rer de"
-+
-+#: lib/remote.tcl:213
-+msgid "Push to"
-+msgstr "Pousser vers"
-+
- #: lib/remote_branch_delete.tcl:29 lib/remote_branch_delete.tcl:34
- msgid "Delete Remote Branch"
- msgstr "Supprimer branche distante"
-@@ -1864,18 +1921,6 @@ msgstr "Aucun d=C3=A9p=C3=B4t n'est s=C3=A9lecti=
-onn=C3=A9."
- msgid "Scanning %s..."
- msgstr "Synchronisation de %s..."
 =20
--#: lib/remote.tcl:165
--msgid "Prune from"
--msgstr "Purger de"
--
--#: lib/remote.tcl:170
--msgid "Fetch from"
--msgstr "R=C3=A9cup=C3=A9rer de"
--
--#: lib/remote.tcl:213
--msgid "Push to"
--msgstr "Pousser vers"
--
- #: lib/shortcut.tcl:20 lib/shortcut.tcl:61
- msgid "Cannot write shortcut:"
- msgstr "Impossible d'=C3=A9crire le raccourcis :"
-@@ -1909,15 +1954,15 @@ msgstr "La v=C3=A9rification d'orthographe a =C3=
-=A9chou=C3=A9e silentieusement au d=C3=A9marrage
- msgid "Unrecognized spell checker"
- msgstr "V=C3=A9rificateur d'orthographe non reconnu"
+ #: lib/remote.tcl:170
+ msgid "Fetch from"
+@@ -1914,7 +1915,7 @@ msgstr "Aucune suggestion"
 =20
--#: lib/spellcheck.tcl:180
-+#: lib/spellcheck.tcl:186
- msgid "No Suggestions"
- msgstr "Aucune suggestion"
-=20
--#: lib/spellcheck.tcl:381
-+#: lib/spellcheck.tcl:387
+ #: lib/spellcheck.tcl:381
  msgid "Unexpected EOF from spell checker"
- msgstr "EOF inattendue envoy=C3=A9e par le v=C3=A9rificateur d'orthogr=
+-msgstr "Fin de fichier innatendue envoy=C3=A9e par le v=C3=A9rificateu=
+r d'orthographe"
++msgstr "EOF inattendue envoy=C3=A9e par le v=C3=A9rificateur d'orthogr=
 aphe"
 =20
--#: lib/spellcheck.tcl:385
-+#: lib/spellcheck.tcl:391
+ #: lib/spellcheck.tcl:385
  msgid "Spell Checker Failed"
- msgstr "Le v=C3=A9rificateur d'orthographe a =C3=A9chou=C3=A9"
+@@ -1938,7 +1939,7 @@ msgstr "R=C3=A9cup=C3=A9ration des derni=C3=A8res=
+ modifications de %s"
+ #: lib/transport.tcl:18
+ #, tcl-format
+ msgid "remote prune %s"
+-msgstr "nettoyer =C3=A0 distance %s"
++msgstr "purger =C3=A0 distance %s"
+=20
+ #: lib/transport.tcl:19
+ #, tcl-format
+@@ -1970,11 +1971,11 @@ msgstr "Branches source"
+=20
+ #: lib/transport.tcl:120
+ msgid "Destination Repository"
+-msgstr "R=C3=A9f=C3=A9rentiel de destination"
++msgstr "D=C3=A9p=C3=B4t de destination"
+=20
+ #: lib/transport.tcl:158
+ msgid "Transfer Options"
+-msgstr "Transf=C3=A9rer options"
++msgstr "Options de transfert"
+=20
+ #: lib/transport.tcl:160
+ msgid "Force overwrite existing branch (may discard changes)"
+@@ -1988,5 +1989,5 @@ msgstr "Utiliser des petits paquets (pour les con=
+nexions lentes)"
+=20
+ #: lib/transport.tcl:168
+ msgid "Include tags"
+-msgstr "Inclure les marques"
++msgstr "Inclure les marques (tags)"
 =20
 --=20
 1.5.4.3
