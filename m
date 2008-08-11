@@ -1,82 +1,53 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH] Fix commit_tree() buffer leak
-Date: Tue, 12 Aug 2008 00:35:11 +0200
-Message-ID: <1218494111-13388-1-git-send-email-s-beyer@gmx.net>
-Cc: Stephan Beyer <s-beyer@gmx.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 12 00:36:21 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC: Allow missing objects during packing
+Date: Mon, 11 Aug 2008 15:39:47 -0700
+Message-ID: <7vk5enuqfg.fsf@gitster.siamese.dyndns.org>
+References: <20080811182839.GJ26363@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Aug 12 00:40:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSfzw-00054e-EC
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 00:36:20 +0200
+	id 1KSg4Q-0006JK-IN
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 00:40:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755568AbYHKWfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 18:35:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753438AbYHKWfS
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 18:35:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43305 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755568AbYHKWfQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 18:35:16 -0400
-Received: (qmail invoked by alias); 11 Aug 2008 22:35:14 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp025) with SMTP; 12 Aug 2008 00:35:14 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/D7SsdaejDIYI0PZyIhtRWaWwRCs3eA3kAFA30+j
-	dT6rzz/YQEfeV4
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KSfyp-0003Ub-Ah; Tue, 12 Aug 2008 00:35:11 +0200
-X-Mailer: git-send-email 1.6.0.rc2.274.ga7606
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1752580AbYHKWjz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 18:39:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752231AbYHKWjz
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 18:39:55 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49787 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751962AbYHKWjy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 18:39:54 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C20615CA67;
+	Mon, 11 Aug 2008 18:39:52 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 35F655CA65; Mon, 11 Aug 2008 18:39:49 -0400 (EDT)
+In-Reply-To: <20080811182839.GJ26363@spearce.org> (Shawn O. Pearce's message
+ of "Mon, 11 Aug 2008 11:28:39 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 69EE2770-67F6-11DD-B3F8-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92014>
 
-The commit_tree() strbuf has a minimum size of 8k and it has not been
-released yet.  This patch releases the buffer.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
----
-   Hi,
+> ... It seems pretty harmless to allow an object we
+> aren't going to transmit but that we want to use as a delta base
+> in a thin pack to be missing.  At worst we just get a little bit
+> more data transfer.
 
-   I haven't checked if there really is some git command that
-   calls commit_tree() several times, but for the case and for
-   libification's sake this patch seemed useful.
-
-   Regards,
-     Stephan
-
- builtin-commit-tree.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-commit-tree.c b/builtin-commit-tree.c
-index 7a9a309..f773db5 100644
---- a/builtin-commit-tree.c
-+++ b/builtin-commit-tree.c
-@@ -48,6 +48,7 @@ static const char commit_utf8_warn[] =
- int commit_tree(const char *msg, unsigned char *tree,
- 		struct commit_list *parents, unsigned char *ret)
- {
-+	int result;
- 	int encoding_is_utf8;
- 	struct strbuf buffer;
- 
-@@ -86,7 +87,9 @@ int commit_tree(const char *msg, unsigned char *tree,
- 	if (encoding_is_utf8 && !is_utf8(buffer.buf))
- 		fprintf(stderr, commit_utf8_warn);
- 
--	return write_sha1_file(buffer.buf, buffer.len, commit_type, ret);
-+	result = write_sha1_file(buffer.buf, buffer.len, commit_type, ret);
-+	strbuf_release(&buffer);
-+	return result;
- }
- 
- int cmd_commit_tree(int argc, const char **argv, const char *prefix)
--- 
-1.6.0.rc2.274.ga7606
+If the check is only about a thin delta base that is not going to be
+transmit, I'd agree.  But I do not see how you are distinguishing that
+case and the case where an object you are actually sending is missing (in
+which case we would want to error out, wouldn't we?)
