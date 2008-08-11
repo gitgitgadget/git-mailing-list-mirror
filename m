@@ -1,57 +1,59 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: How to replace a single corrupt, packed object?
-Date: Sun, 10 Aug 2008 20:46:08 -0700
-Message-ID: <20080811034608.GA27684@spearce.org>
-References: <alpine.DEB.1.00.0808081639490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <0BF03F86-8E4E-46D2-9B04-4385CEBD6902@ai.rug.nl> <20080808161937.GC9152@spearce.org> <90E12BC7-1950-41DF-8BE5-C6B63CE060D9@ai.rug.nl> <alpine.DEB.1.00.0808081841290.24820@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LFD.1.10.0808102146050.22892@xanadu.home> <20080811030744.GD27195@spearce.org> <alpine.LFD.1.10.0808102325280.22892@xanadu.home>
+From: Balazs Nagy <js@iksz.hu>
+Subject: Re: [PATCH] git-submodule - Add 'foreach' subcommand
+Date: Mon, 11 Aug 2008 08:28:57 +0200
+Message-ID: <489FDC29.5090503@iksz.hu>
+References: <7vsktczebg.fsf@gitster.siamese.dyndns.org> <1218409804-1556-1-git-send-email-mlevedahl@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Aug 11 05:47:12 2008
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org, johan@herland.net
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 11 08:40:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSONE-0000Tm-7a
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 05:47:12 +0200
+	id 1KSR4p-00022m-AL
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 08:40:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753867AbYHKDqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2008 23:46:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753862AbYHKDqJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 23:46:09 -0400
-Received: from george.spearce.org ([209.20.77.23]:39711 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753854AbYHKDqI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2008 23:46:08 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 2BC2E38375; Mon, 11 Aug 2008 03:46:08 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0808102325280.22892@xanadu.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751058AbYHKGjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 02:39:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbYHKGjO
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 02:39:14 -0400
+Received: from www.hnt.hu ([195.56.65.48]:51872 "EHLO mail.aranyoroszlan.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751058AbYHKGjO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 02:39:14 -0400
+X-Greylist: delayed 610 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 Aug 2008 02:39:14 EDT
+Received: from localhost (mailhost [172.31.1.5])
+	by mail.aranyoroszlan.hu (Postfix) with ESMTP id C8D0810FB79D;
+	Mon, 11 Aug 2008 08:28:49 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at aranyoroszlan.hu
+X-Spam-Flag: NO
+X-Spam-Score: -0.999
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.999 required=5 tests=[ALL_TRUSTED=-1.44,
+	AWL=0.441]
+Received: from mail.aranyoroszlan.hu ([172.31.1.5])
+	by localhost (tcb.aranyoroszlan.hu [172.31.1.5]) (amavisd-new, port 10024)
+	with ESMTP id iSGo5-XYtd-n; Mon, 11 Aug 2008 08:28:47 +0200 (CEST)
+Received: from [192.168.1.101] (pool-0508.adsl.interware.hu [213.178.101.252])
+	(Authenticated sender: js@iksz.hu)
+	by mail.aranyoroszlan.hu (Postfix) with ESMTPA id 9BEAA10FB79C;
+	Mon, 11 Aug 2008 08:28:46 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <1218409804-1556-1-git-send-email-mlevedahl@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91917>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> The actual downside I see with this patch is the fact that real data 
-> corruptions might be "fixed" automagically with user unaware of it.  
-> This could be a serious sign that the hardware is going bad and 
-> requiring the user to consciously use -f to fix things is good.  However 
-> it is most unlikely that redundant objects will be kept around in the 
-> normal case, hence manual intervention will be needed anyway to bring a 
-> copy of bad object into the repository.  So not having to use -f might 
-> not be such an issue.
+Hi,
 
-Yup, I agree completely.
+Sorry for being a bit late, but what if we would have --all for all
+submodule commands instead of having another command?
 
-Duplicates should be rare, and likely are only the fault of a
-dumb transport fetch, or the user trying to fix their repository
-by placing copies of corrupt objects obtained from elsewhere.
-Requiring -f to fix such cases is heavy-handed.  Some trees can
-take many hours to repack with -f; think gcc or OOo.
-
+Rgds,
 -- 
-Shawn.
+-jul-
