@@ -1,121 +1,77 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: How to replace a single corrupt, packed object?
-Date: Sun, 10 Aug 2008 22:55:22 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0808102146050.22892@xanadu.home>
-References: <alpine.DEB.1.00.0808081639490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
- <0BF03F86-8E4E-46D2-9B04-4385CEBD6902@ai.rug.nl>
- <20080808161937.GC9152@spearce.org>
- <90E12BC7-1950-41DF-8BE5-C6B63CE060D9@ai.rug.nl>
- <alpine.DEB.1.00.0808081841290.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: pack operation is thrashing my server
+Date: Sun, 10 Aug 2008 20:04:44 -0700
+Message-ID: <20080811030444.GC27195@spearce.org>
+References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Pieter de Bie <pdebie@ai.rug.nl>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 11 04:56:42 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Ken Pratt <ken@kenpratt.net>
+X-From: git-owner@vger.kernel.org Mon Aug 11 05:06:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSNaD-0000OH-N5
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 04:56:34 +0200
+	id 1KSNjE-0002Gr-7w
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 05:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753824AbYHKCz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2008 22:55:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753807AbYHKCz2
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 22:55:28 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:9794 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753429AbYHKCz1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2008 22:55:27 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K5F006OC1GARPF0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 10 Aug 2008 22:55:23 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.DEB.1.00.0808081841290.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1753843AbYHKDEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2008 23:04:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753831AbYHKDEp
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Aug 2008 23:04:45 -0400
+Received: from george.spearce.org ([209.20.77.23]:54945 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753828AbYHKDEp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2008 23:04:45 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id A0D0938375; Mon, 11 Aug 2008 03:04:44 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91913>
 
-On Fri, 8 Aug 2008, Johannes Schindelin wrote:
+Ken Pratt <ken@kenpratt.net> wrote:
+> I'm having memory issues when trying to clone a remote git repository.
+> 
+> The remote repository is bare, and is 180MB in size (says du), with
+> 1824 objects. The remote (VPS) server is running git version 1.5.6.4
+> on Arch Linux on a x86_64 Opteron with 256MB of dedicated RAM.
+> 
+> PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+> 21782 kenpratt  20   0  444m 212m  272 D    3 83.0   0:04.98 git-pack-object
 
-> In any case, the pack is too large for me to let my computer repack 
-> everything, when only one object needs repacking.
-
-By that you mean you cannot/don't want to use repack -f, right?
-
-There _could_ be a way to hack pack-objects so not to reuse bad objects.  
-However I don't want that to impact the code too much for an 
-event that hopefully should almost never happens, especially if using -f 
-does work around it already.
-
-Well, let's see.
-
-[...]
-
-OK, here's what the patch to allow repacking without -f and still using 
-redundant objects in presence of pack corruption might look like.  
-Please tell me if that works for you.
-
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 2dadec1..88e73f3 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -277,6 +277,7 @@ static unsigned long write_object(struct sha1file *f,
- 				 */
+Well, clearly the server is swapping at this point.  212m resident
+for this git-pack-objects process leaves no room available for
+anything else.  Git is using too much memory for this system.
  
- 	if (!to_reuse) {
-+		no_reuse:
- 		if (!usable_delta) {
- 			buf = read_sha1_file(entry->idx.sha1, &type, &size);
- 			if (!buf)
-@@ -364,14 +365,28 @@ static unsigned long write_object(struct sha1file *f,
- 			reused_delta++;
- 		}
- 		hdrlen = encode_header(type, entry->size, header);
-+
- 		offset = entry->in_pack_offset;
- 		revidx = find_pack_revindex(p, offset);
- 		datalen = revidx[1].offset - offset;
- 		if (!pack_to_stdout && p->index_version > 1 &&
--		    check_pack_crc(p, &w_curs, offset, datalen, revidx->nr))
--			die("bad packed object CRC for %s", sha1_to_hex(entry->idx.sha1));
-+		    check_pack_crc(p, &w_curs, offset, datalen, revidx->nr)) {
-+			error("bad packed object CRC for %s", sha1_to_hex(entry->idx.sha1));
-+			if (entry->delta)
-+				reused_delta--;
-+			goto no_reuse;
-+		}
-+
- 		offset += entry->in_pack_header_size;
- 		datalen -= entry->in_pack_header_size;
-+		if (!pack_to_stdout && p->index_version == 1 &&
-+		    check_pack_inflate(p, &w_curs, offset, datalen, entry->size)) {
-+			die("corrupt packed object for %s", sha1_to_hex(entry->idx.sha1));
-+			if (entry->delta)
-+				reused_delta--;
-+			goto no_reuse;
-+		}
-+
- 		if (type == OBJ_OFS_DELTA) {
- 			off_t ofs = entry->idx.offset - entry->delta->idx.offset;
- 			unsigned pos = sizeof(dheader) - 1;
-@@ -394,10 +409,6 @@ static unsigned long write_object(struct sha1file *f,
- 				return 0;
- 			sha1write(f, header, hdrlen);
- 		}
--
--		if (!pack_to_stdout && p->index_version == 1 &&
--		    check_pack_inflate(p, &w_curs, offset, datalen, entry->size))
--			die("corrupt packed object for %s", sha1_to_hex(entry->idx.sha1));
- 		copy_pack_data(f, p, &w_curs, offset, datalen);
- 		unuse_pack(&w_curs);
- 		reused++;
+> I've tried very conservative pack settings:
+> 
+> [pack]
+>         threads = 1
+>         windowmemory = 64M
+>         deltacachesize = 1M
+>         deltacachelimit = 1M
 
+Have you tried something like this?
 
-Nicolas
+	[core]
+		packedGitWindowSize = 16m
+		packedGitLimit = 64m
+
+	[pack]
+		threads = 1
+		windowMemory = 64m
+		deltaCacheSize = 1m
+
+On a 64 bit system packedGitWindowSize and packedGitLimit have very
+large thresholds which will cause it to mmap in the entire pack file.
+You may need to try even smaller settings than these; 256m physical
+memory isn't a lot when dealing with a repository 180m in size.
+Especially on a 64 bit system.
+
+-- 
+Shawn.
