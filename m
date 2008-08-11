@@ -1,98 +1,83 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] git-submodule - Add 'foreach' subcommand
-Date: Mon, 11 Aug 2008 12:23:45 +0200
-Message-ID: <20080811102344.GG32184@machine.or.cz>
-References: <7vsktczebg.fsf@gitster.siamese.dyndns.org> <1218409804-1556-1-git-send-email-mlevedahl@gmail.com>
+Subject: Re: [PATCH v2] Make cherry-pick use rerere for conflict resolution.
+Date: Mon, 11 Aug 2008 12:40:06 +0200
+Message-ID: <20080811104006.GH32184@machine.or.cz>
+References: <1218368935-31124-1-git-send-email-ams@toroid.org> <alpine.DEB.1.00.0808110111430.24820@pacific.mpi-cbg.de.mpi-cbg.de> <20080811023053.GA9144@toroid.org> <alpine.DEB.1.00.0808111218160.24820@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org, johan@herland.net
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 11 12:24:51 2008
+Cc: Abhijit Menon-Sen <ams@toroid.org>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 11 12:41:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSUa1-0007VA-UU
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 12:24:50 +0200
+	id 1KSUpu-0002wN-3d
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 12:41:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751400AbYHKKXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 06:23:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751360AbYHKKXs
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 06:23:48 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:54273 "EHLO machine.or.cz"
+	id S1751404AbYHKKkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 06:40:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751360AbYHKKkK
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 06:40:10 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:51740 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751290AbYHKKXr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 06:23:47 -0400
+	id S1751342AbYHKKkJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 06:40:09 -0400
 Received: by machine.or.cz (Postfix, from userid 2001)
-	id 0BF88393B31F; Mon, 11 Aug 2008 12:23:45 +0200 (CEST)
+	id CDA93393B31F; Mon, 11 Aug 2008 12:40:06 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <1218409804-1556-1-git-send-email-mlevedahl@gmail.com>
+In-Reply-To: <alpine.DEB.1.00.0808111218160.24820@pacific.mpi-cbg.de.mpi-cbg.de>
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91929>
 
   Hi,
 
-On Sun, Aug 10, 2008 at 07:10:04PM -0400, Mark Levedahl wrote:
-> submodule foreach <command-list> will execute the list of commands in
-> each currently checked out submodule directory. The list of commands
-> is arbitrary as long as it is acceptable to sh. The variables '$path'
-> and '$sha1' are availble to the command-list, defining the submodule
-> path relative to the superproject and the submodules's commitID as
-> recorded in the superproject (this may be different than HEAD in the
-> submodule).
+  this makes revert use rerere too, right? Maybe use
 
-  in principle, this looks pretty sensible.
+	Make cherry-pick and revert call rerere for conflicts
 
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index bf33b0c..1e7d352 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -14,6 +14,7 @@ SYNOPSIS
->  'git submodule' [--quiet] init [--] [<path>...]
->  'git submodule' [--quiet] update [--init] [--] [<path>...]
->  'git submodule' [--quiet] summary [--summary-limit <n>] [commit] [--] [<path>...]
-> +'git submodule' foreach <command-list>
->  
->  
->  DESCRIPTION
+instead?
 
-  But as visible here, this is a little bit inconsistent. I think
-foreach should be by default verbose about which submodules does it
-recurse into - this is what you want in case of casual usage on
-command-line. In case you want to have full control on the output within
-a script, you can always pass the extra --quiet and it's less obnoxious
-this way around.
+  For janitors looking for a cleanup job, it would be nice to share this
+code with suggest_conflicts() in the future.
 
-  I also have a problem with the <command-list> - is this one argument?
-Multiple arguments? The semantics is ill-defined. If it is supposed to
-be a single argument, please drop the -list bit; silent DWIMmery of
-using "$@" internally is acceptable, I guess. If it is supposed to be
-multiple arguments, you need to
+On Mon, Aug 11, 2008 at 12:19:50PM +0200, Johannes Schindelin wrote:
+> On Mon, 11 Aug 2008, Abhijit Menon-Sen wrote:
+> 
+> > It was a dark and stormy night. Sam struggled to keep his eyelids open
+> > as he integrated yet another gigantic patch series. Ever the optimist,
+> > he'd pulled in the changes, only to discover several merge conflicts.
+> > But the night was young then, and he'd fixed them all by hand.
+> > 
+> > It was only later that he noticed many lousy, one-line commit messages.
+> > Undaunted, he reset his branch and began to cherry-pick patches, giving
+> > them a once-over, writing a comment here, squashing the odd grotesque
+> > hack there, and writing sensible commit messages more often than not.
+> > 
+> > But even that was hours ago, and each new but oh-so-familiar conflict
+> > ate into his determination like maggots through decaying meat; and Sam
+> > was beginning to question the wisdom of staying in this fruit business.
+> > His whiskey was running low, and time was running out.
+> > 
+> > "If only", thought Sam, "If only cherry-pick would..."
+> 
+> Nice try.
+> 
+> I have tried the whole dark and lonely night to find where in the git.git 
+> history we have some equally enlightening commit message.
+> 
+> So in essence, it is nice what you wrote, but not a commit message.  
+> Please imitate the style of existing commit messages, especially if you 
+> want to have your patch applied.
 
-	(i) Specify that as <command>... instead
-
-	(ii) Either have an eternal annoyance about insane behaviour
-here, or use something better than eval "$@". Since
-
-	git submodule foreach cp x\ y z
-
-will simply _not_ work properly.
-
-  So I think it's best to just drop the 'list' part. You're just
-evaluating a shell expression passed in a parameter.
-
-> @@ -123,6 +124,20 @@ summary::
->  	in the submodule between the given super project commit and the
->  	index or working tree (switched by --cached) are shown.
->  
-> +foreach::
-> +	Executes an arbitrary list of commands in each checked out submodule.
-
-I think "evaluates" is a better word here, too.
+  come on. :-)  I think it's harmless and amusing. If there was some
+useful information lost because of this, that would be troublesome, but
+what kind of "rationale" do you want here? The point seems obvious.
 
 -- 
 				Petr "Pasky" Baudis
