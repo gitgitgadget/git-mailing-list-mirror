@@ -1,130 +1,99 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [TopGit PATCH v2] tg-create.sh: Support for multiple
-	{to,cc,bcc} options
-Date: Mon, 11 Aug 2008 22:47:23 +0200
-Message-ID: <20080811204723.GF10151@machine.or.cz>
-References: <1218307736-24891-1-git-send-email-bert.wesarg@googlemail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 11 22:48:39 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Add a new test to ensure merging a submodule is handled properly.
+Date: Mon, 11 Aug 2008 22:48:00 +0200
+Message-ID: <1218487680-7933-1-git-send-email-vmiklos@frugalware.org>
+References: <20080811204511.GV18960@genesis.frugalware.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 11 22:48:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSeJZ-0002g2-OQ
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 22:48:30 +0200
+	id 1KSeJl-0002kR-G3
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 22:48:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753937AbYHKUr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 16:47:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753784AbYHKUr1
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 16:47:27 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:51882 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753528AbYHKUr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 16:47:26 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id CD731393B320; Mon, 11 Aug 2008 22:47:23 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1218307736-24891-1-git-send-email-bert.wesarg@googlemail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1754079AbYHKUrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 16:47:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754047AbYHKUrd
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 16:47:33 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:50316 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753784AbYHKUrc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 16:47:32 -0400
+Received: from vmobile.example.net (dsl5401CD7E.pool.t-online.hu [84.1.205.126])
+	by yugo.frugalware.org (Postfix) with ESMTP id 0ABCC1DDC5B;
+	Mon, 11 Aug 2008 22:47:30 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 9A2451A5FBF; Mon, 11 Aug 2008 22:48:00 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.rc0.14.g95f8.dirty
+In-Reply-To: <20080811204511.GV18960@genesis.frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92000>
 
-  Hi,
+In this test we cause a directory / submodule conflict then we check if
+the index is unlocked properly.
 
-On Sat, Aug 09, 2008 at 08:48:56PM +0200, Bert Wesarg wrote:
-> Git config supports multiple values for the same config key, so support it
-> for these TopGit config options, too.
-> 
-> New in v2:
-> Print a RFC2822 compliant header.
-> 
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-  oops, I'm really sorry! I thought I already commented on this while
-apparently, I forgot to.
+I'm no exactly sure if this should be included or not, I just wrote it
+to make sure that a die() insure merge-recursive will not cause an
+unlocked index at the end.
 
-> ---
->  tg-create.sh |   35 ++++++++++++++++++++++++++++++++---
->  1 files changed, 32 insertions(+), 3 deletions(-)
-> 
-> diff --git a/tg-create.sh b/tg-create.sh
-> index 6cce7ed..d7ee1d2 100644
-> --- a/tg-create.sh
-> +++ b/tg-create.sh
-> @@ -100,13 +100,42 @@ git checkout -b "$name"
->  echo "$deps" | sed 's/ /\n/g' >"$root_dir/.topdeps"
->  git add "$root_dir/.topdeps"
->  
-> +# Print a RFC2822 compliant header ($2) with values from the config option
-> +# ($1 without the topgit. prefix)
-> +get_multi_config()
-> +{
-> +	# Do we need to escape it for awk double quotes?
-> +	prefix="$2"
-> +	prefix_align="$(printf "%*s  " "${#2}" "")"
-> +
-> +	git config --get-all topgit.$1 |
-> +		awk '
-> +			BEGIN {
-> +				line = ""
-> +				prefix = "'"$prefix"': "
-> +			}
-> +				{
-> +					if (line != "") {
-> +						print prefix line ","
-> +						prefix = "'"$prefix_align"'"
-> +					}
-> +					line = $0
-> +				}
-> +			END {
-> +				if (line != "") {
-> +					print prefix line
-> +				}
-> +			}
-> +		'
-> +}
-> +
+ t/t7607-merge-submodule.sh |   40 ++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 40 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7607-merge-submodule.sh
 
-I'm not too happy about this, for several reasons:
-
-	(i) This code is so awfully complicated.
-
-	(ii) It would be simpler to just prefix all the further lines
-with a tab; wouldn't something like
-
-		sed '2,$s/^/\t/'
-
-actually work?
-
-	(iii) This is troublesome because now header values can span
-multiple lines. Until now, we were just blisfully ignorant about this
-possibility. At least tg export needs to be adjusted to account for this
-now, and I fear dealing with this will be pretty annoying when
-prototyping new features.
-
->  author="$(git var GIT_AUTHOR_IDENT)"
->  author_addr="${author%> *}>"
->  {
->  	echo "From: $author_addr"
-> -	! header="$(git config topgit.to)" || echo "To: $header"
-> -	! header="$(git config topgit.cc)" || echo "Cc: $header"
-> -	! header="$(git config topgit.bcc)" || echo "Bcc: $header"
-> +	get_multi_config to  "To"
-> +	get_multi_config cc  "Cc"
-> +	get_multi_config bcc "Bcc"
->  	! subject_prefix="$(git config topgit.subjectprefix)" || subject_prefix="$subject_prefix "
->  	echo "Subject: [${subject_prefix}PATCH] $name"
->  	echo
-> -- 
-> tg: (2e5b885..) t/support-for-multiple-to-cc-bcc-options (depends on: master)
-
+diff --git a/t/t7607-merge-submodule.sh b/t/t7607-merge-submodule.sh
+new file mode 100755
+index 0000000..552930a
+--- /dev/null
++++ b/t/t7607-merge-submodule.sh
+@@ -0,0 +1,40 @@
++#!/bin/sh
++
++test_description='git-merge
++
++Testing if a directory / submodule conflict is handled properly.'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	mkdir lib &&
++	cd lib &&
++	git init &&
++	echo c1 >c1.c &&
++	git add c1.c &&
++	git commit -m "submodule init" &&
++	mkdir ../main &&
++	cd ../main &&
++	git init &&
++	echo main >main.c &&
++	git add main.c &&
++	git commit -m "c0: main init" &&
++	git tag c0 &&
++	mkdir lib &&
++	echo lib >lib/c1.c &&
++	git add lib/c1.c &&
++	git commit -m "c1: lib init" &&
++	git tag c1 &&
++	git reset --hard c0 &&
++	git submodule add "`pwd`/../lib" lib &&
++	git commit -m "c2: add submodule" &&
++	git tag c2
++'
++
++test_expect_success 'dir/submodule conflict' '
++	git reset --hard c1 &&
++	test_must_fail git merge c2 &&
++	test ! -f .git/index.lock
++'
++
++test_done
 -- 
-				Petr "Pasky" Baudis
-The next generation of interesting software will be done
-on the Macintosh, not the IBM PC.  -- Bill Gates
+1.6.0.rc0.14.g95f8.dirty
