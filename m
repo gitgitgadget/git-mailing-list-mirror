@@ -1,85 +1,164 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH v2] Make cherry-pick use rerere for conflict resolution.
-Date: Mon, 11 Aug 2008 12:40:06 +0200
-Message-ID: <20080811104006.GH32184@machine.or.cz>
-References: <1218368935-31124-1-git-send-email-ams@toroid.org> <alpine.DEB.1.00.0808110111430.24820@pacific.mpi-cbg.de.mpi-cbg.de> <20080811023053.GA9144@toroid.org> <alpine.DEB.1.00.0808111218160.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Jan Wielemaker <J.Wielemaker@uva.nl>
+Subject: Re: [TOY PATCH] filter-branch: add option --delete-unchanged
+Date: Mon, 11 Aug 2008 12:43:06 +0200
+Organization: HCS, University of Amsterdam
+Message-ID: <200808111243.06466.J.Wielemaker@uva.nl>
+References: <1218153031-18443-1-git-send-email-trast@student.ethz.ch> <1218226224-25273-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Abhijit Menon-Sen <ams@toroid.org>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 11 12:41:14 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Aug 11 12:45:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSUpu-0002wN-3d
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 12:41:14 +0200
+	id 1KSUtb-0003sK-Hx
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 12:45:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751404AbYHKKkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 06:40:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751360AbYHKKkK
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 06:40:10 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:51740 "EHLO machine.or.cz"
+	id S1751342AbYHKKoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 06:44:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751338AbYHKKoB
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 06:44:01 -0400
+Received: from korteweg.uva.nl ([146.50.98.70]:41864 "EHLO korteweg.uva.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751342AbYHKKkJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 06:40:09 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id CDA93393B31F; Mon, 11 Aug 2008 12:40:06 +0200 (CEST)
+	id S1751290AbYHKKoA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 06:44:00 -0400
+Received: from gollem.science.uva.nl ([146.50.26.20]) by korteweg.uva.nl with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 11 Aug 2008 12:43:58 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <1218226224-25273-1-git-send-email-trast@student.ethz.ch>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0808111218160.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+X-OriginalArrivalTime: 11 Aug 2008 10:43:58.0497 (UTC) FILETIME=[28EBC110:01C8FB9F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91930>
 
-  Hi,
+Hi Thomas,
 
-  this makes revert use rerere too, right? Maybe use
+On Friday 08 August 2008 10:10:24 pm Thomas Rast wrote:
+> With --delete-unchanged, we nuke refs whose targets did not change
+> during rewriting.  It is intended to be used along with
+> --subdirectory-filter to clean out old refs from before the first
+> commit to the filtered subdirectory.  (They would otherwise keep the
+> old history alive.)
+>
+> Obviously this is a rather dangerous mode of operation.
+>
+> Note the "sort -u" is required: Without it, --all includes
+> 'origin/master' twice (from 'origin/master' and via 'origin/HEAD'),
+> and the second pass concludes it is unchanged and nukes the ref.
+>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
+>
+> This applies on top of "filter-branch: be more helpful when an
+> annotated tag changes".
+>
+> I'm not really sure if this should go in, but it might have solved
+> Jan's problem.
 
-	Make cherry-pick and revert call rerere for conflicts
+I may hope it isn't just `my problem' :-)  I tested with this patch,
+and I can confirm the following produces precisily what I want:
 
-instead?
+git clone /home/git/pl.git/
+cd pl
+git remote rm origin
+git filter-branch --subdirectory-filter packages/chr --tag-name-filter 
+cat --delete-unchanged-refs -- --all
+rm -r .git/refs/original
+cd ..
+git clone file://pl chr
 
-  For janitors looking for a cleanup job, it would be nice to share this
-code with suggest_conflicts() in the future.
+chr is now a nice clean 2 MB repository, starting in 2004, the epoch of
+this directory rather than 1992 (the overall project epoch). 
 
-On Mon, Aug 11, 2008 at 12:19:50PM +0200, Johannes Schindelin wrote:
-> On Mon, 11 Aug 2008, Abhijit Menon-Sen wrote:
-> 
-> > It was a dark and stormy night. Sam struggled to keep his eyelids open
-> > as he integrated yet another gigantic patch series. Ever the optimist,
-> > he'd pulled in the changes, only to discover several merge conflicts.
-> > But the night was young then, and he'd fixed them all by hand.
-> > 
-> > It was only later that he noticed many lousy, one-line commit messages.
-> > Undaunted, he reset his branch and began to cherry-pick patches, giving
-> > them a once-over, writing a comment here, squashing the odd grotesque
-> > hack there, and writing sensible commit messages more often than not.
-> > 
-> > But even that was hours ago, and each new but oh-so-familiar conflict
-> > ate into his determination like maggots through decaying meat; and Sam
-> > was beginning to question the wisdom of staying in this fruit business.
-> > His whiskey was running low, and time was running out.
-> > 
-> > "If only", thought Sam, "If only cherry-pick would..."
-> 
-> Nice try.
-> 
-> I have tried the whole dark and lonely night to find where in the git.git 
-> history we have some equally enlightening commit message.
-> 
-> So in essence, it is nice what you wrote, but not a commit message.  
-> Please imitate the style of existing commit messages, especially if you 
-> want to have your patch applied.
+B.t.w. Pretending a remote clone was the only way to get a nice 2MB
+repo.  The initial is 140MB.  After the filtering it is 62 MB.  Funny:
+after a git gc it grows to 1.1 Gb!?
 
-  come on. :-)  I think it's harmless and amusing. If there was some
-useful information lost because of this, that would be troublesome, but
-what kind of "rationale" do you want here? The point seems obvious.
+Anyway, thanks a lot and I hope this makes it into the next git release!
 
--- 
-				Petr "Pasky" Baudis
-The next generation of interesting software will be done
-on the Macintosh, not the IBM PC.  -- Bill Gates
+	Cheers --- Jan
+
+>  git-filter-branch.sh |   33 +++++++++++++++++++++++----------
+>  1 files changed, 23 insertions(+), 10 deletions(-)
+>
+> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+> index a140337..539b2e6 100755
+> --- a/git-filter-branch.sh
+> +++ b/git-filter-branch.sh
+> @@ -114,6 +114,7 @@ filter_tag_name=
+>  filter_subdir=
+>  orig_namespace=refs/original/
+>  force=
+> +delete_unchanged=
+>  while :
+>  do
+>  	case "$1" in
+> @@ -126,6 +127,11 @@ do
+>  		force=t
+>  		continue
+>  		;;
+> +	--delete-unchanged-refs)
+> +		shift
+> +		delete_unchanged=t
+> +		continue
+> +		;;
+>  	-*)
+>  		;;
+>  	*)
+> @@ -215,6 +221,7 @@ export GIT_DIR GIT_WORK_TREE
+>
+>  # The refs should be updated if their heads were rewritten
+>  git rev-parse --no-flags --revs-only --symbolic-full-name --default HEAD
+> "$@" | +sort -u |
+>  sed -e '/^^/d' >"$tempdir"/heads
+>
+>  test -s "$tempdir"/heads ||
+> @@ -344,7 +351,7 @@ do
+>  	sha1=$(git rev-parse "$ref"^0)
+>  	rewritten=$(map $sha1)
+>
+> -	test $sha1 = "$rewritten" &&
+> +	test $sha1 = "$rewritten" -a -z "$delete_unchanged" &&
+>  		warn "WARNING: Ref '$ref' is unchanged" &&
+>  		continue
+>
+> @@ -355,16 +362,22 @@ do
+>  			die "Could not delete $ref"
+>  	;;
+>  	$_x40)
+> -		echo "Ref '$ref' was rewritten"
+> -		if ! git update-ref -m "filter-branch: rewrite" \
+> -					"$ref" $rewritten $sha1 2>/dev/null; then
+> -			if test $(git cat-file -t "$ref") = tag; then
+> -				if test -z "$filter_tag_name"; then
+> -					warn "WARNING: You said to rewrite tagged commits, but not the
+> corresponding tag." -					warn "WARNING: Perhaps use '--tag-name-filter
+> cat' to rewrite the tag." +		if test "$delete_unchanged" -a $sha1 =
+> "$rewritten"; then
+> +			echo "Ref '$ref' was deleted because it is unchanged"
+> +			git update-ref -m "filter-branch: delete" -d "$ref" $sha1 ||
+> +				die "Could not delete $ref"
+> +		else
+> +			echo "Ref '$ref' was rewritten"
+> +			if ! git update-ref -m "filter-branch: rewrite" \
+> +			   "$ref" $rewritten $sha1 2>/dev/null; then
+> +				if test $(git cat-file -t "$ref") = tag; then
+> +					if test -z "$filter_tag_name"; then
+> +						warn "WARNING: You said to rewrite tagged commits, but not the
+> corresponding tag." +						warn "WARNING: Perhaps use '--tag-name-filter
+> cat' to rewrite the tag." +					fi
+> +				else
+> +					die "Could not rewrite $ref"
+>  				fi
+> -			else
+> -				die "Could not rewrite $ref"
+>  			fi
+>  		fi
+>  	;;
