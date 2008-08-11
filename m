@@ -1,121 +1,101 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] builtin-revert.c: Make use of merge_recursive()
-Date: Mon, 11 Aug 2008 21:01:23 +0200
-Message-ID: <20080811190123.GA14413@leksak.fem-net>
-References: <cover.1218374062.git.vmiklos@frugalware.org> <1218467003-14591-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0808111737270.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 2/2] builtin-merge: avoid run_command_v_opt() for
+	recursive
+Date: Mon, 11 Aug 2008 21:07:05 +0200
+Message-ID: <20080811190705.GQ18960@genesis.frugalware.org>
+References: <cover.1218374062.git.vmiklos@frugalware.org> <3db5bd9a8fa1fefb9bd188cc148db826b77fec12.1218374062.git.vmiklos@frugalware.org> <ea5b9868df7c17c55cd091b4408f08a310bed641.1218374062.git.vmiklos@frugalware.org> <7vhc9rxuc4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 11 21:02:39 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="vTUhhhdwRI43FzeR"
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 11 21:08:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KScf2-0001ZP-CJ
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 21:02:32 +0200
+	id 1KSckH-0003dj-3D
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 21:07:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753761AbYHKTBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 15:01:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753125AbYHKTB3
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 15:01:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60186 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753761AbYHKTB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 15:01:29 -0400
-Received: (qmail invoked by alias); 11 Aug 2008 19:01:26 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp009) with SMTP; 11 Aug 2008 21:01:26 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX18nKQxNneonhTPnXbtFqmoyg7Lu44j1bBrtxc81rd
-	lN99RyzRmYpjzF
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KScdv-0000YL-5U; Mon, 11 Aug 2008 21:01:23 +0200
+	id S1753125AbYHKTGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 15:06:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752108AbYHKTGx
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 15:06:53 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:60532 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751943AbYHKTGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 15:06:52 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 4FD721B251A;
+	Mon, 11 Aug 2008 21:06:51 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 7A9CA4465E;
+	Mon, 11 Aug 2008 20:14:57 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 5723C1190002; Mon, 11 Aug 2008 21:07:05 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0808111737270.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+In-Reply-To: <7vhc9rxuc4.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91977>
 
-Hi,
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Mon, 11 Aug 2008, Stephan Beyer wrote:
-> 
-> > diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
-> > index 09aa830..d8bd21f 100644
-> > --- a/builtin-merge-recursive.c
-> > +++ b/builtin-merge-recursive.c
-> > @@ -1327,7 +1327,7 @@ static const char *better_branch_name(const char *branch)
-> >  	return name ? name : branch;
-> >  }
-> >  
-> > -static struct commit *get_ref(const char *ref)
-> > +struct commit *get_ref(const char *ref)
-> 
-> The name get_ref() is way too generic to be non-static.
+--vTUhhhdwRI43FzeR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That's right.
+On Mon, Aug 11, 2008 at 11:47:07AM -0700, Junio C Hamano <gitster@pobox.com=
+> wrote:
+> Yes, it saves a fork, but is this really worth it in the bigger picture?
+>=20
+> Doesn't the current code structure have benefit of allowing git-merge
+> itself do necessary clean-up action when merge-recursive calls any of the
+> die() it has in many places?
 
-> But I have a hunch that peel_to_type() does a lot of what we want here,
-> if not all of it.
+As far as I see in most cases merge-recursive does not call die().
 
-get_ref() has a big advantage over peel_to_type(): it can handle trees,
-via "virtual commits" (make_virtual_commit()).
-If you wonder where we need to handle trees on cherry-pick/revert:
-With the -n (no commit) option you are allowed to have a dirty index.
-So the recursive merge is not done using the HEAD commit but using the
-uncommitted tree of the index.
+Cases when it does are like:
 
-Well, a good alternative could be to just make the really cool
-make_virtual_commit() function non-static.
-The name could be generic enough. Is it? :-)
-Or perhaps: make_virtual_commit_from_tree().
+- broken snprintf
+- cache_tree_fully_valid() or cache_tree_update() fails
+- diff_setup_done() fails
+- flush_buffer() fails
+- read_sha1_file() fails
+- ll_merge() fails
 
-Btw I also need get_ref() (or make_virtual_commit()) for threeway
-fallback of the sequencer "patch -3" instruction ("git am -3"). ;)
+etc.
 
-> > +	h1 = get_ref(head_sha1);
-> > +	h2 = get_ref(next_sha1);
-> > +
-> > +	index_fd = hold_locked_index(lock, 1);
-> > +	clean = merge_recursive(h1, h2, head_name, next_name, ca, &result);
-> 
-> h1 and h2 are not expressive.  head_commit and next_commit would be.
+In short, I think there are two cases when a die() would be problematic
+inside merge-recursive when calling it from builtin-merge:
 
-This is also quite true.
-Those names, also "ca", were taken from cmd_merge_recursive().
-(This is no excuse, just an explanation.)
+- merge-recursive can't handle a merge, but an other strategy could do.
+  This is the case when doing an octopus merge but in that case
+  merge_recursive() is not called at all.
 
-> Rest looks good to me -- even if I had to spend too much time (therefore 
-> being not really thorough in the end) verifying that merge_recursive() 
-> does not lock the index itself,
+- merge-recursive results in conflicts, but an other strategy could
+  handle the merge without conflicts. In this case die() isn't used
+  either, so this will not be a problem.
 
-I can't help here.  Miklos has the same change in patch v2/2 and I
-wonder if you really expect that I don't test my patches, because
-a double lock wouldn't have worked.
+So I don't think there is a case when a die() inside merge-recursive
+would occur, but an other strategy would handle the merge properly.
 
-> and that GITHEAD_* definitions are not necessary anymore, since merge_recursive()
-> takes the arguments directly;
+Unless I missed something. ;-)
 
-Ok, I hoped that would've been clear by using head_name/next_name
-directly in the merge_recursive() arguments, but nevertheless
-thanks for your comment, ...because: using get_ref() the GITHEAD_*
-definitions *are* still needed, because it takes the GITHEAD_*
-name for the virtual commits...
+--vTUhhhdwRI43FzeR
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Under this additional circumstance, I really tend to make
-make_virtual_commit() non-static.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Kind regards,
-  Stephan
+iEYEARECAAYFAkigjdkACgkQe81tAgORUJan+QCgpWEinOjKIzjIim+7sYNk83HB
+GC8An1P/+DNQQLEFoL+u871FFlLaUfkQ
+=6J8L
+-----END PGP SIGNATURE-----
 
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+--vTUhhhdwRI43FzeR--
