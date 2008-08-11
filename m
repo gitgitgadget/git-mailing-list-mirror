@@ -1,52 +1,54 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-submodule - Add 'foreach' subcommand
-Date: Mon, 11 Aug 2008 13:40:32 -0700
-Message-ID: <7vhc9rwain.fsf@gitster.siamese.dyndns.org>
-References: <7vsktczebg.fsf@gitster.siamese.dyndns.org>
- <1218409804-1556-1-git-send-email-mlevedahl@gmail.com>
- <20080811102344.GG32184@machine.or.cz>
+Subject: Re: [PATCH (GITK BUGFIX)] gitk: Allow safely calling nukefile from a
+ run queue handler.
+Date: Mon, 11 Aug 2008 13:44:10 -0700
+Message-ID: <7vd4kfwacl.fsf@gitster.siamese.dyndns.org>
+References: <42d19ab224653b2e6988d7209a8d3e87e19858f8.1218207346.git.christian@jaeger.mine.nu> <200808091313.52528.angavrilov@gmail.com> <217ad8e755d8d51e2ec0f06b4bffa0864976f7e4.1218277122.git.christian@jaeger.mine.nu> <200808091441.50444.angavrilov@gmail.com> <489D7E67.5050205@jaeger.mine.nu> <489F8FAE.2040201@jaeger.mine.nu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Mark Levedahl <mlevedahl@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org, johan@herland.net
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Aug 11 22:41:50 2008
+Cc: git@vger.kernel.org
+To: Christian Jaeger <christian@jaeger.mine.nu>
+X-From: git-owner@vger.kernel.org Mon Aug 11 22:45:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSeD1-0000X6-MS
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 22:41:44 +0200
+	id 1KSeGV-0001da-HK
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 22:45:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753962AbYHKUkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 16:40:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753723AbYHKUkl
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 16:40:41 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48784 "EHLO
+	id S1752898AbYHKUoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 16:44:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752729AbYHKUoR
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 16:44:17 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64731 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753628AbYHKUkk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 16:40:40 -0400
+	with ESMTP id S1752532AbYHKUoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 16:44:16 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6C292556B9;
-	Mon, 11 Aug 2008 16:40:40 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 877065B809;
+	Mon, 11 Aug 2008 16:44:15 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 69C29556B8; Mon, 11 Aug 2008 16:40:34 -0400 (EDT)
-In-Reply-To: <20080811102344.GG32184@machine.or.cz> (Petr Baudis's message of
- "Mon, 11 Aug 2008 12:23:45 +0200")
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id EED4F5B805; Mon, 11 Aug 2008 16:44:12 -0400 (EDT)
+In-Reply-To: <489F8FAE.2040201@jaeger.mine.nu> (Christian Jaeger's message of
+ "Mon, 11 Aug 2008 03:02:38 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C2CC506C-67E5-11DD-A08B-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 43035C44-67E6-11DD-8B7C-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91996>
 
-Petr Baudis <pasky@suse.cz> writes:
+Christian Jaeger <christian@jaeger.mine.nu> writes:
 
->   in principle, this looks pretty sensible.
-> ...
-> I think "evaluates" is a better word here, too.
+> I wrote:
+>> BTW here's a patch to your patch to make it apply on top of 1.6.0.rc2:
+>
+> Note to self: how could I be so naive to assume Git didn't offer a
+> solution to that. I've missed the -3 option to git am.
 
-I think your refinements all make sense.  Thanks for commenting.
+Not only that, it is customary to offer gitk and git-gui patches to the
+upstream (i.e. not against git.git).  I essentially pull from them and
+without ever modifying their parts inside git.git.
