@@ -1,85 +1,99 @@
-From: "Francis Moreau" <francis.moro@gmail.com>
-Subject: Re: git-bisect: weird usage of read(1)
-Date: Mon, 11 Aug 2008 16:18:40 +0200
-Message-ID: <38b2ab8a0808110718x2f63608ga3d2d77e317ce4eb@mail.gmail.com>
-References: <38b2ab8a0808110657y24ac9526wca4acea3bddaec00@mail.gmail.com>
-	 <alpine.DEB.1.00.0808111615260.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git gc does not discard objects found in alternate unless
+	the?alternate storage is packed
+Date: Mon, 11 Aug 2008 07:33:08 -0700
+Message-ID: <20080811143308.GA26363@spearce.org>
+References: <loom.20080810T210546-549@post.gmane.org> <20080811025438.GB27195@spearce.org> <loom.20080811T101110-879@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 11 16:19:57 2008
+To: sergio <sergio.callegari@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 11 16:34:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSYFN-0003xh-7T
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 16:19:45 +0200
+	id 1KSYTM-0001SG-IO
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 16:34:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751042AbYHKOSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 10:18:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750852AbYHKOSm
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 10:18:42 -0400
-Received: from wr-out-0506.google.com ([64.233.184.239]:3468 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750817AbYHKOSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 10:18:41 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so1388886wri.5
-        for <git@vger.kernel.org>; Mon, 11 Aug 2008 07:18:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=G9TAVLQg0tdNqfRMpVeoV9B9nQnbqUTjbfYMm/YNv4o=;
-        b=HY+7UQzRUNt1rTyfyPEGvhQKklTv5oR5FXVMPpmi418H4qY+5rmubkOKsHAiH5vTQ3
-         g949J0rjr60lJFgE6o+2qzav/nzl3j56EVYN4pcfn7baeBGXQIKFPIU3BTnMCkytsAy0
-         H1e+M+dB7RRqSY/wnShr+ZCoTlHx40dB6iOAc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=nQXhHI0TYei0rC4t+Kbf6i3Y9vMtShBAXLB1bZAI0j+l3CTJtSZPjkCy6N8DJZGErc
-         +YEzmr/JYWcwMqNe9eWxDxImgDqr5H5ugbnpTCH3ySjkx0UzHHFDVNjQ58Syy0wZ96RT
-         /ltSVxO+2Uu4589onv0S7UkbgylE02nPxz4sY=
-Received: by 10.90.33.5 with SMTP id g5mr10635660agg.113.1218464320245;
-        Mon, 11 Aug 2008 07:18:40 -0700 (PDT)
-Received: by 10.90.98.3 with HTTP; Mon, 11 Aug 2008 07:18:40 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0808111615260.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+	id S1751193AbYHKOdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 10:33:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751181AbYHKOdJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 10:33:09 -0400
+Received: from george.spearce.org ([209.20.77.23]:45803 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751154AbYHKOdJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 10:33:09 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 4002E38375; Mon, 11 Aug 2008 14:33:08 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <loom.20080811T101110-879@post.gmane.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91940>
 
-Hello
+sergio <sergio.callegari@gmail.com> wrote:
+> Shawn O. Pearce <spearce <at> spearce.org> writes:
+> > Sergio <sergio.callegari <at> gmail.com> wrote:
+> > >
+> > > Is it the intended behaviour?
+> > 
+> > This is the current (intended) behavior.  We have never pruned an
+> > object from a repository unless the object is packed in the shared
+> > alternate repository.  See git-prune-packed's man page.  The prune
+> > logic for loose objects only deletes objects which are in packs,
+> > and it doesn't care where that pack came from.
+> 
+> Many thanks for the explanation.
+> Two more questions:
+> 1) Is there a way to prune objects that are anyway available at the alternate
+> without touching the alternate (to repack it)?
 
-On Mon, Aug 11, 2008 at 4:15 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Mon, 11 Aug 2008, Francis Moreau wrote:
->
->> I found this in git bisect:
->>
->>               printf >&2 'Are you sure [Y/n]? '
->>               case "$(read yesno)" in [Nn]*) exit 1 ;; esac
->>
->> which looks very weird since read(1) returns a status and not the
->> string reads from std input.
->>
+No, no such function exists today in Git.  Why?  Because nobody has
+coded it.  We needed git-prune-packed for local repository usage
+once git-repack has finished its main work of running pack-objects
+to produce a new pack file.  This extended nicely into also pruning
+loose objects which are also available from a shared database,
+as the code was actually identical.
 
-sorry I should have said that there's a status but no output...
+> 2) Would there be any contraindication in doing so? (namely, is the current
+> behaviour of git gc a mere consequence of the prune-packed logic or a behaviour
+> purposely introduced for safety?)
 
->> Am I missing something ?
->
-> Yes.  "$()" does not return the status, but the output.
->
+Well, yes and no.
 
-But what's the output in that case ?
+The first part of the answer is that yes, one could delete the
+object from the clone if it is available loose in the alternate.
+The object can still be read through the alternate, so there is no
+data loss, and thus it really is just a matter of someone writing
+the necessary code to implement this prune function.
+
+The second part of the answer is that no, doing this deletion may
+make it less safe to use the alternate as an alternate.  The reason
+is that objects which are contained in pack files are likely to
+be reachable in the alternate, and thus won't disappear during a
+later git-prune invocation, as they are needed by that alternate.
+
+This assumption is based upon the fact that an object only goes
+into a pack file if it is reachable in that repository, as the
+packing code uses reachability to determine what to pack.
+
+Relying upon a loose object may cause breakage later on if the
+alternate doesn't actually need that object and prunes it away,
+and the clone doesn't have it either.
+
+However, this pack based assumption can fail anyway if the
+alternate repository rewinds a branch and repacks.  The object you
+were relying on in the alternate may now be ejected into a loose
+object, or discarded altogether, and the clone will (eventually)
+break anyway when the object(s) it needs goes missing.
+
+So it is sort-of a safety measure, but its a crude one at best.
+And it only works about some X% of the time, where X is well
+under 100.  :-)
 
 -- 
-Francis
+Shawn.
