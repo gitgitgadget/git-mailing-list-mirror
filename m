@@ -1,54 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] Teach git diff-tree --stdin to diff trees
-Date: Mon, 11 Aug 2008 18:28:36 -0400
-Message-ID: <20080811222836.GA12301@sigill.intra.peff.net>
-References: <20080808204348.7744.46006.stgit@yoghurt> <20080808204829.7744.11661.stgit@yoghurt> <20080808214523.GA31424@sigill.intra.peff.net> <20080809100049.GB10804@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-revert: Make use of merge_recursive()
+Date: Mon, 11 Aug 2008 15:33:32 -0700
+Message-ID: <7vod3zuqpv.fsf@gitster.siamese.dyndns.org>
+References: <20080811190924.GR18960@genesis.frugalware.org>
+ <1218491096-28756-1-git-send-email-s-beyer@gmx.net>
+ <20080811214639.GA28340@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Aug 12 00:29:45 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Miklos Vajna <vmiklos@frugalware.org>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Tue Aug 12 00:34:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSftY-0003LL-NN
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 00:29:45 +0200
+	id 1KSfyO-0004hf-7x
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 00:34:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751944AbYHKW2m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Aug 2008 18:28:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751996AbYHKW2l
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 18:28:41 -0400
-Received: from peff.net ([208.65.91.99]:2387 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751626AbYHKW2k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 18:28:40 -0400
-Received: (qmail 18905 invoked by uid 111); 11 Aug 2008 22:28:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 11 Aug 2008 18:28:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Aug 2008 18:28:36 -0400
-Content-Disposition: inline
-In-Reply-To: <20080809100049.GB10804@diana.vm.bytemark.co.uk>
+	id S1752122AbYHKWdm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 18:33:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752104AbYHKWdm
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 18:33:42 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57923 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751800AbYHKWdl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 18:33:41 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CFBCB5531B;
+	Mon, 11 Aug 2008 18:33:39 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id DA03E5531A; Mon, 11 Aug 2008 18:33:34 -0400 (EDT)
+In-Reply-To: <20080811214639.GA28340@leksak.fem-net> (Stephan Beyer's message
+ of "Mon, 11 Aug 2008 23:46:39 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8BA3F242-67F5-11DD-84B0-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92012>
 
-On Sat, Aug 09, 2008 at 12:00:49PM +0200, Karl Hasselstr=C3=B6m wrote:
+Stephan Beyer <s-beyer@gmx.net> writes:
 
-> > And I think it might even be easier to code. ;)
->=20
-> Not for someone who's almost entirely unfamiliar with the git API.
-> Finding the right functions to call takes a lot of time ... which is
-> why I decided to chicken out and implement only the subset I actually
-> needed. But it can be added later -- perhaps by me.
+> Sorry, I forgot to change this to [PATCH v2] or something.
+>
+> And...
+>
+> Stephan Beyer wrote:
+>> diff --git a/merge-recursive.h b/merge-recursive.h
+>> index f37630a..a9eead3 100644
+>> --- a/merge-recursive.h
+>> +++ b/merge-recursive.h
+>> @@ -1,6 +1,8 @@
+>>  #ifndef MERGE_RECURSIVE_H
+>>  #define MERGE_RECURSIVE_H
+>>  
+>> +extern struct commit *make_virtual_commit(struct tree *tree,
+>> +					  const char *comment);
+>>  int merge_recursive(struct commit *h1,
+>>  		    struct commit *h2,
+>>  		    const char *branch1,
+>
+> Is this a mistake that some forward declarations in header files are not
+> declared "extern"?
 
-:) I took a quick look, and I don't think it would be too hard to reuse
-the logic from the command-line codepath. However, your patches are
-already in 'next', and I don't see much point doing it the other way
-unless there is actually some demand for mixed commit/tree input.
-
--Peff
+Yup, that looks old fashioned.
