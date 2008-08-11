@@ -1,71 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin-revert: Make use of merge_recursive()
-Date: Mon, 11 Aug 2008 15:33:32 -0700
-Message-ID: <7vod3zuqpv.fsf@gitster.siamese.dyndns.org>
-References: <20080811190924.GR18960@genesis.frugalware.org>
- <1218491096-28756-1-git-send-email-s-beyer@gmx.net>
- <20080811214639.GA28340@leksak.fem-net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Miklos Vajna <vmiklos@frugalware.org>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Tue Aug 12 00:34:45 2008
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH] Fix commit_tree() buffer leak
+Date: Tue, 12 Aug 2008 00:35:11 +0200
+Message-ID: <1218494111-13388-1-git-send-email-s-beyer@gmx.net>
+Cc: Stephan Beyer <s-beyer@gmx.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 12 00:36:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSfyO-0004hf-7x
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 00:34:44 +0200
+	id 1KSfzw-00054e-EC
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 00:36:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752122AbYHKWdm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 18:33:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752104AbYHKWdm
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 18:33:42 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57923 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751800AbYHKWdl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 18:33:41 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CFBCB5531B;
-	Mon, 11 Aug 2008 18:33:39 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id DA03E5531A; Mon, 11 Aug 2008 18:33:34 -0400 (EDT)
-In-Reply-To: <20080811214639.GA28340@leksak.fem-net> (Stephan Beyer's message
- of "Mon, 11 Aug 2008 23:46:39 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8BA3F242-67F5-11DD-84B0-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1755568AbYHKWfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 18:35:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753438AbYHKWfS
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 18:35:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43305 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755568AbYHKWfQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 18:35:16 -0400
+Received: (qmail invoked by alias); 11 Aug 2008 22:35:14 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp025) with SMTP; 12 Aug 2008 00:35:14 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1/D7SsdaejDIYI0PZyIhtRWaWwRCs3eA3kAFA30+j
+	dT6rzz/YQEfeV4
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KSfyp-0003Ub-Ah; Tue, 12 Aug 2008 00:35:11 +0200
+X-Mailer: git-send-email 1.6.0.rc2.274.ga7606
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92013>
 
-Stephan Beyer <s-beyer@gmx.net> writes:
+The commit_tree() strbuf has a minimum size of 8k and it has not been
+released yet.  This patch releases the buffer.
 
-> Sorry, I forgot to change this to [PATCH v2] or something.
->
-> And...
->
-> Stephan Beyer wrote:
->> diff --git a/merge-recursive.h b/merge-recursive.h
->> index f37630a..a9eead3 100644
->> --- a/merge-recursive.h
->> +++ b/merge-recursive.h
->> @@ -1,6 +1,8 @@
->>  #ifndef MERGE_RECURSIVE_H
->>  #define MERGE_RECURSIVE_H
->>  
->> +extern struct commit *make_virtual_commit(struct tree *tree,
->> +					  const char *comment);
->>  int merge_recursive(struct commit *h1,
->>  		    struct commit *h2,
->>  		    const char *branch1,
->
-> Is this a mistake that some forward declarations in header files are not
-> declared "extern"?
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+---
+   Hi,
 
-Yup, that looks old fashioned.
+   I haven't checked if there really is some git command that
+   calls commit_tree() several times, but for the case and for
+   libification's sake this patch seemed useful.
+
+   Regards,
+     Stephan
+
+ builtin-commit-tree.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-commit-tree.c b/builtin-commit-tree.c
+index 7a9a309..f773db5 100644
+--- a/builtin-commit-tree.c
++++ b/builtin-commit-tree.c
+@@ -48,6 +48,7 @@ static const char commit_utf8_warn[] =
+ int commit_tree(const char *msg, unsigned char *tree,
+ 		struct commit_list *parents, unsigned char *ret)
+ {
++	int result;
+ 	int encoding_is_utf8;
+ 	struct strbuf buffer;
+ 
+@@ -86,7 +87,9 @@ int commit_tree(const char *msg, unsigned char *tree,
+ 	if (encoding_is_utf8 && !is_utf8(buffer.buf))
+ 		fprintf(stderr, commit_utf8_warn);
+ 
+-	return write_sha1_file(buffer.buf, buffer.len, commit_type, ret);
++	result = write_sha1_file(buffer.buf, buffer.len, commit_type, ret);
++	strbuf_release(&buffer);
++	return result;
+ }
+ 
+ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+-- 
+1.6.0.rc2.274.ga7606
