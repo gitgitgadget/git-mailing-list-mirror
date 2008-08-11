@@ -1,75 +1,234 @@
 From: Marcus Griep <marcus@griep.us>
-Subject: [PATCH 0/3] git-svn and temporary file improvements
-Date: Mon, 11 Aug 2008 11:53:52 -0400
-Message-ID: <1218470035-13864-1-git-send-email-marcus@griep.us>
+Subject: [PATCH 1/3] Git.pm: Add faculties to allow temp files to be cached
+Date: Mon, 11 Aug 2008 11:53:53 -0400
+Message-ID: <1218470035-13864-2-git-send-email-marcus@griep.us>
 References: <489DBB8A.2060207@griep.us>
+ <1218470035-13864-1-git-send-email-marcus@griep.us>
 Cc: Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>
+	Junio C Hamano <gitster@pobox.com>,
+	Marcus Griep <marcus@griep.us>
 To: Git Mailing List <git@vger.kernel.org>
 X-From: git-owner@vger.kernel.org Mon Aug 11 17:55:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSZk8-00080k-P6
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 17:55:37 +0200
+	id 1KSZk7-00080k-83
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 17:55:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753436AbYHKPyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 11:54:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755795AbYHKPyA
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 11:54:00 -0400
-Received: from boohaunt.net ([209.40.206.144]:33692 "EHLO boohaunt.net"
+	id S1755789AbYHKPx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 11:53:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755763AbYHKPx6
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 11:53:58 -0400
+Received: from boohaunt.net ([209.40.206.144]:33688 "EHLO boohaunt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755732AbYHKPx5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 11:53:57 -0400
+	id S1754699AbYHKPx4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 11:53:56 -0400
 Received: by boohaunt.net (Postfix, from userid 1000)
-	id DB8341878CCA; Mon, 11 Aug 2008 11:53:55 -0400 (EDT)
+	id DE8D51878AB4; Mon, 11 Aug 2008 11:53:55 -0400 (EDT)
 X-Mailer: git-send-email 1.6.0.rc2.6.g8eda3
-In-Reply-To: <489DBB8A.2060207@griep.us>
+In-Reply-To: <1218470035-13864-1-git-send-email-marcus@griep.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91952>
 
+This patch offers a generic interface to allow temp files to be
+cached while using an instance of the 'Git' package. If many
+temp files are created and destroyed during the execution of a
+program, this caching mechanism can help reduce the amount of
+files created and destroyed by the filesystem.
 
-This series of patches relates to temp file usage within git-svn and possible
-extensions applicable to other perl auxiliary functions.
+There are two methods offered for creating a new file: a no-lock and
+a acquire-lock version. The no-lock version provides no
+guarantee that a file is not in use or that the temp file may be
+stolen by a subsequent request. The acquire-lock version provides a
+weak guarantee that a temp file will not be stolen by subsequent
+requests even from a no-lock request. If a file is locked when
+another acquire request is made, a simple error is thrown.
 
-The first patch allows for a central "registry" of temp files to be maintained.
-It offers both locking and non-locking constructs depending upon the user's
-complexity concern. The functions provided are also documented for perldoc.
+Signed-off-by: Marcus Griep <marcus@griep.us>
+---
+ perl/Git.pm |  145 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 143 insertions(+), 2 deletions(-)
 
-The second patch changes git-svn to utilize the central registry in the first
-patch to help reduce the amount of temp files created and destroyed during a
-normal run of git-svn. The asymptotic limit on the number of temp files needed
-is decreased from O(n+m) to O(1) where n is the number of files imported and
-m is the number of file deltas. In real terms, this change does not
-significantly reduce the time required for an import as other concerns, such as
-network and disk i/o dominate over inode/MFT changes, however an incremental
-reduction of ~10% system time was found on large change sets, though in a large
-repository of small changesets, this incremental reduction reduced to 
-approximately 3%.
-
-The third patch modifies the way git-svn handles symlinks versus normal files
-imported from svn. Currently, git-svn is very inefficient in this respect,
-duplicating entire files solely for the sake of eliminating the first five
-bytes of the file if it is a symlink. This causes a large amount of unnecessary
-disk i/o, even when considering most of it takes place in in-memory buffers.
-By eliminating the unnecessary duplication for normal files, a significant 48%
-reduction in system time and a 33% reduction in user time was realized on
-large changesets. Over many commits with small changesets, other operations
-dominate, but an incremental 6% reduction was still noted. In addition, in both
-cases a 15-25% reduction in maximum resident set size was found.
-
-Logs and results of the benchmarks along with the procedure used are available
-at http://blog.xpdm.us/2008/08/git-svn-and-temporary-files.html.
-
-Marcus Griep (3):
-      Git.pm: Add faculties to allow temp files to be cached
-      git-svn: Make it scream by minimizing temp files
-      git-svn: Reduce temp file usage when dealing with non-links
-
- git-svn.perl |   84 ++++++++++++++++++++--------------
- perl/Git.pm  |  145 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 192 insertions(+), 37 deletions(-)
+diff --git a/perl/Git.pm b/perl/Git.pm
+index e1ca5b4..fc24f55 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -57,7 +57,8 @@ require Exporter;
+                 command_output_pipe command_input_pipe command_close_pipe
+                 command_bidi_pipe command_close_bidi_pipe
+                 version exec_path hash_object git_cmd_try
+-                remote_refs);
++                remote_refs
++                temp_acquire temp_release temp_unsafe temp_reset);
+ 
+ 
+ =head1 DESCRIPTION
+@@ -99,7 +100,9 @@ use Carp qw(carp croak); # but croak is bad - throw instead
+ use Error qw(:try);
+ use Cwd qw(abs_path);
+ use IPC::Open2 qw(open2);
+-
++use File::Temp ();
++require File::Spec;
++use Fcntl qw(SEEK_SET);
+ }
+ 
+ 
+@@ -933,6 +936,143 @@ sub _close_cat_blob {
+ 	delete @$self{@vars};
+ }
+ 
++
++{ # %TEMP_* Lexical Context
++
++my (%TEMP_LOCKS, %TEMP_FILES);
++
++=item temp_acquire ( NAME )
++
++Attempts to retreive the temporary file mapped to the string C<NAME>. If an
++associated temp file has not been created this session or was closed, it is
++created, cached, and set for autoflush and binmode.
++
++Internally locks the file mapped to C<NAME>. This lock must be released with
++C<temp_release()> when the temp file is no longer needed. Subsequent attempts
++to retrieve temporary files mapped to the same C<NAME> while still locked will
++cause an error. This locking mechanism provides a weak guarantee and is not
++threadsafe. It does provide some error checking to help prevent temp file refs
++writing over one another.
++
++The L<File::Handle> returned is truncated and seeked to position 0.
++
++In general, the L<File::Handle> returned should not be closed by consumers as
++it defeats the purpose of this caching mechanism. If you need to close the temp
++file handle, then you should use L<File::Temp> or another temp file faculty
++directly. If a handle is closed and then requested again, then a warning will
++issue.
++
++=cut
++
++sub temp_acquire {
++	my ($self, $name) = _maybe_self(@_);
++
++	my $temp_fd = _temp_cache($name);
++
++	$TEMP_LOCKS{$temp_fd} = 1;
++	$temp_fd;
++}
++
++=item temp_release ( NAME [, BOOL] )
++
++=item temp_release ( FILEHANDLE [, BOOL] )
++
++Releases a lock acquired through C<temp_acquire()>. Can be called either with
++the C<NAME> mapping used when acquiring the temp file or with the C<FILEHANDLE>
++referencing a locked temp file.
++
++Warns if an attempt is made to release a file that is not locked.
++
++If called with C<BOOL> true, then the temp file will be truncated before being
++released. This can help to reduce disk I/O where the system is smart enough to
++detect the truncation while data is in the output buffers.
++
++=cut
++
++sub temp_release {
++	my ($self, $temp_fd, $trunc) = _maybe_self(@_);
++
++	if (ref($temp_fd) ne 'File::Temp') {
++		$temp_fd = $TEMP_FILES{$temp_fd};
++	}
++	unless ($TEMP_LOCKS{$temp_fd}) {
++		carp "Attempt to release temp file '$temp_fd' that has not been locked";
++	}
++	temp_reset($temp_fd) if $trunc and $temp_fd->opened;
++
++	$TEMP_LOCKS{$temp_fd} = 0;
++	undef;
++}
++
++=item temp_unsafe ( NAME )
++
++Attempts to retreive the temporary file mapped to the string C<NAME>. If an
++associated temp file has not been created this session or was closed, it is
++created, cached, and set for autoflush and binmode.
++
++If the file mapped to C<NAME> has been locked using C<temp_acquire()>, then
++this method will throw an L<Error::Simple>.
++
++The L<File::Handle> returned is truncated and seeked to position 0.
++
++In general, the L<File::Handle> returned should not be closed by consumers as
++it defeats the purpose of this caching mechanism. If you need to close the temp
++file handle, then you should use L<File::Temp> or another temp file faculty
++directly. If a handle is closed and then requested again, then a warning will
++issue.
++
++=cut
++
++sub temp_unsafe {
++	my ($self, $name) = _maybe_self(@_);
++
++	_temp_cache($name);
++}
++
++sub _temp_cache {
++	my ($name) = @_;
++
++	my $temp_fd = \$TEMP_FILES{$name};
++	if (defined $$temp_fd and $$temp_fd->opened) {
++		if ($TEMP_LOCKS{$$temp_fd}) {
++			throw Error::Simple("Temp file with moniker '$name' already in use");
++		}
++		temp_reset($$temp_fd);
++	} else {
++		if (defined $$temp_fd) { # then we're here because of a closed handle.
++			carp "Temp file '$name' was closed. Opening replacement.";
++		}
++		$$temp_fd = File::Temp->new(
++			TEMPLATE => 'Git_XXXXXX',
++			DIR => File::Spec->tmpdir
++			) or throw Error::Simple("couldn't open new temp file");
++		$$temp_fd->autoflush;
++		binmode $$temp_fd;
++	}
++	$$temp_fd;
++}
++
++=item temp_reset ( FILEHANDLE )
++
++Truncates and resets the position of the C<FILEHANDLE>.  Uses C<sysseek>.
++
++=cut
++
++sub temp_reset {
++	my ($self, $temp_fd) = _maybe_self(@_);
++
++	truncate $temp_fd, 0
++		or throw Error::Simple("couldn't truncate file");
++	sysseek $temp_fd, 0, SEEK_SET
++		or throw Error::Simple("couldn't seek to beginning of file");
++}
++
++sub END {
++	unlink values %TEMP_FILES if %TEMP_FILES;
++}
++
++} # %TEMP_* Lexical Context
++
+ =back
+ 
+ =head1 ERROR HANDLING
+@@ -1153,6 +1293,7 @@ sub DESTROY {
+ 	my ($self) = @_;
+ 	$self->_close_hash_and_insert_object();
+ 	$self->_close_cat_blob();
++	unlink values %{$self->{temp_files}} if $self->{temp_files};
+ }
+ 
+ 
+-- 
+1.6.0.rc2.6.g8eda3
