@@ -1,82 +1,130 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH 1/2] merge-recursive: prepare merge_recursive() to be
-	called from builtins
-Date: Mon, 11 Aug 2008 22:46:16 +0200
-Message-ID: <20080811204616.GA26823@leksak.fem-net>
-References: <cover.1218374062.git.vmiklos@frugalware.org> <3db5bd9a8fa1fefb9bd188cc148db826b77fec12.1218374062.git.vmiklos@frugalware.org> <20080811151303.GA11208@leksak.fem-net> <7vzlnjwcog.fsf@gitster.siamese.dyndns.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [TopGit PATCH v2] tg-create.sh: Support for multiple
+	{to,cc,bcc} options
+Date: Mon, 11 Aug 2008 22:47:23 +0200
+Message-ID: <20080811204723.GF10151@machine.or.cz>
+References: <1218307736-24891-1-git-send-email-bert.wesarg@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 11 22:47:37 2008
+Cc: git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 11 22:48:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSeIf-0002Ms-Oa
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 22:47:34 +0200
+	id 1KSeJZ-0002g2-OQ
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 22:48:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753904AbYHKUqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 16:46:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757770AbYHKUqX
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 16:46:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34905 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757740AbYHKUqW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 16:46:22 -0400
-Received: (qmail invoked by alias); 11 Aug 2008 20:46:19 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp056) with SMTP; 11 Aug 2008 22:46:19 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX18HoGhJ9rcHGALCSRo9ya7dSK2q1FUih94T5THZCk
-	imI8vJWoPyq79m
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KSeHQ-0000q9-RS; Mon, 11 Aug 2008 22:46:16 +0200
+	id S1753937AbYHKUr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 16:47:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753784AbYHKUr1
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 16:47:27 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:51882 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753528AbYHKUr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 16:47:26 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id CD731393B320; Mon, 11 Aug 2008 22:47:23 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vzlnjwcog.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+In-Reply-To: <1218307736-24891-1-git-send-email-bert.wesarg@googlemail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91999>
 
-Hi,
+  Hi,
 
-Junio C Hamano wrote:
-> Stephan Beyer <s-beyer@gmx.net> writes:
+On Sat, Aug 09, 2008 at 08:48:56PM +0200, Bert Wesarg wrote:
+> Git config supports multiple values for the same config key, so support it
+> for these TopGit config options, too.
 > 
-> > Hmm, I have the long-run vision that we have a nice libgit some day,
-> > with merge_recursive() being part of it.  And I'm a little unsure if
-> > libified functions should rely on environment variables.
+> New in v2:
+> Print a RFC2822 compliant header.
 > 
-> I think the environment variable is the least of your worries.  
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+
+  oops, I'm really sorry! I thought I already commented on this while
+apparently, I forgot to.
+
+> ---
+>  tg-create.sh |   35 ++++++++++++++++++++++++++++++++---
+>  1 files changed, 32 insertions(+), 3 deletions(-)
 > 
-> I do not think anybody has vetted if it is safe to call merge_recursive()
-> more than once in a single run of a process.
+> diff --git a/tg-create.sh b/tg-create.sh
+> index 6cce7ed..d7ee1d2 100644
+> --- a/tg-create.sh
+> +++ b/tg-create.sh
+> @@ -100,13 +100,42 @@ git checkout -b "$name"
+>  echo "$deps" | sed 's/ /\n/g' >"$root_dir/.topdeps"
+>  git add "$root_dir/.topdeps"
+>  
+> +# Print a RFC2822 compliant header ($2) with values from the config option
+> +# ($1 without the topgit. prefix)
+> +get_multi_config()
+> +{
+> +	# Do we need to escape it for awk double quotes?
+> +	prefix="$2"
+> +	prefix_align="$(printf "%*s  " "${#2}" "")"
+> +
+> +	git config --get-all topgit.$1 |
+> +		awk '
+> +			BEGIN {
+> +				line = ""
+> +				prefix = "'"$prefix"': "
+> +			}
+> +				{
+> +					if (line != "") {
+> +						print prefix line ","
+> +						prefix = "'"$prefix_align"'"
+> +					}
+> +					line = $0
+> +				}
+> +			END {
+> +				if (line != "") {
+> +					print prefix line
+> +				}
+> +			}
+> +		'
+> +}
+> +
 
-I use it in builtin-sequencer.c, without yet spending much effort in
-libifying it. For the tests, it works. (Each "pick" calls a
-merge_recursive(), each threeway-merge needing "patch" does.)
-But I should either spend some effort in improving the libification
-or, if this gets too time-consuming before Aug 17, I revert the commits
-that make use of merge_recursive() instead of running git-merge-recursive.
+I'm not too happy about this, for several reasons:
 
-> leaking of "virtual commit",
+	(i) This code is so awfully complicated.
 
-Apropos, I think I have some tiny leak fixes lying around here.
-Would such patches go into 1.6.0 or is it too dangerous?
-(A free() that fixes a leak in one place could cause a segmentation
-fault in another place. Of course I can try to explain in the commit
-messages, why those are leaks in every case.)
+	(ii) It would be simpler to just prefix all the further lines
+with a tab; wouldn't something like
 
-> But such a clean-up may not be too bad as I initially feared, I suppose.
+		sed '2,$s/^/\t/'
 
-I suppose, too.
+actually work?
 
-Regards.
+	(iii) This is troublesome because now header values can span
+multiple lines. Until now, we were just blisfully ignorant about this
+possibility. At least tg export needs to be adjusted to account for this
+now, and I fear dealing with this will be pretty annoying when
+prototyping new features.
+
+>  author="$(git var GIT_AUTHOR_IDENT)"
+>  author_addr="${author%> *}>"
+>  {
+>  	echo "From: $author_addr"
+> -	! header="$(git config topgit.to)" || echo "To: $header"
+> -	! header="$(git config topgit.cc)" || echo "Cc: $header"
+> -	! header="$(git config topgit.bcc)" || echo "Bcc: $header"
+> +	get_multi_config to  "To"
+> +	get_multi_config cc  "Cc"
+> +	get_multi_config bcc "Bcc"
+>  	! subject_prefix="$(git config topgit.subjectprefix)" || subject_prefix="$subject_prefix "
+>  	echo "Subject: [${subject_prefix}PATCH] $name"
+>  	echo
+> -- 
+> tg: (2e5b885..) t/support-for-multiple-to-cc-bcc-options (depends on: master)
 
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
