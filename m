@@ -1,65 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] checkout --track: make up a sensible branch name if '-b'
- was omitted
-Date: Mon, 11 Aug 2008 11:54:08 -0700
-Message-ID: <7vbpzzxu0f.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0808091559460.24820@pacific.mpi-cbg.de.mpi-cbg.de>
- <7vtzdu6nb7.fsf@gitster.siamese.dyndns.org>
- <7vvdya55ur.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0808092302520.24820@pacific.mpi-cbg.de.mpi-cbg.de>
- <7vsktd51wg.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0808111256260.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: How to replace a single corrupt, packed object?
+Date: Mon, 11 Aug 2008 20:59:46 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808111818460.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <alpine.DEB.1.00.0808081639490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <0BF03F86-8E4E-46D2-9B04-4385CEBD6902@ai.rug.nl> <20080808161937.GC9152@spearce.org> <90E12BC7-1950-41DF-8BE5-C6B63CE060D9@ai.rug.nl> <alpine.DEB.1.00.0808081841290.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <alpine.LFD.1.10.0808102146050.22892@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 11 20:55:20 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Pieter de Bie <pdebie@ai.rug.nl>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Aug 11 20:56:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KScY3-0007Bj-9S
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 20:55:19 +0200
+	id 1KScZ8-0007fZ-SY
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 20:56:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753312AbYHKSyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 14:54:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753095AbYHKSyQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 14:54:16 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39287 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751762AbYHKSyP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 14:54:15 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8028555C01;
-	Mon, 11 Aug 2008 14:54:14 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C2A5D55BFD; Mon, 11 Aug 2008 14:54:11 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0808111256260.24820@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
- Schindelin's message of "Mon, 11 Aug 2008 13:01:40 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E47EBA6A-67D6-11DD-BC15-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753128AbYHKSzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 14:55:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753481AbYHKSzJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 14:55:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60960 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753050AbYHKSzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 14:55:07 -0400
+Received: (qmail invoked by alias); 11 Aug 2008 18:55:05 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp025) with SMTP; 11 Aug 2008 20:55:05 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18GKuwKPBEGSosWFx9daw4ggKM9G8btSgzN/6qx0E
+	bFA2ujmL9gegfi
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <alpine.LFD.1.10.0808102146050.22892@xanadu.home>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91974>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> Don't get me wrong.  I do not need that patch in git.git desperately.  
-> But if it is rejected, I want it to be rejected for reasons I understand.
+On Sun, 10 Aug 2008, Nicolas Pitre wrote:
 
-You are the second person in the past few days to talk about rejection
-after my comments.  I'll try to do better in the future, but if it was not
-clear, I thought the original is good enough for inclusion as-is.
+> On Fri, 8 Aug 2008, Johannes Schindelin wrote:
+> 
+> > In any case, the pack is too large for me to let my computer repack 
+> > everything, when only one object needs repacking.
+> 
+> By that you mean you cannot/don't want to use repack -f, right?
 
-My comments were about potential improvements on top of what was
-presented, and I say "potential" not in the sense that yours is inferior
-than the ideal because it lacks such improvements, but in the sense that
-the suggested line of thought might not be even an improvement (iow, I do
-not mean "the code your patch brings is has potential to improve and not
-good enough as it stands", but "I think we might also want to do these on
-top of it, but I may well have overlooked downsides in my suggestion hence
-I am bringing it up for discussion").
+Right.  However, I had a relatively fast machine standing nearby today, 
+so that scp was not too painful.
+
+> There _could_ be a way to hack pack-objects so not to reuse bad objects.  
+> However I don't want that to impact the code too much for an event that 
+> hopefully should almost never happens, especially if using -f does work 
+> around it already.
+> 
+> Well, let's see.
+> 
+> [...]
+> 
+> OK, here's what the patch to allow repacking without -f and still using 
+> redundant objects in presence of pack corruption might look like.  
+> Please tell me if that works for you.
+
+The testing took quite a while unfortunately, mainly because I followed 
+Shawn's advice, and added not only a loose object, but also a single pack 
+with the single object in it, and a newer timestamp.
+
+This resulted in my CPU being hogged when Git tried to read the object.  I 
+do not know exactly what is happening, but I suspect an infinite loop due 
+to the funny interaction between a valid and a corrupt pack containing the 
+same object.  Or maybe the issue described later in this mail.
+
+Only when I removed the pack did things actually go further, so there is 
+still a bug lurking.
+
+Your patch worked _almost_:
+
+>  		offset += entry->in_pack_header_size;
+>  		datalen -= entry->in_pack_header_size;
+> +		if (!pack_to_stdout && p->index_version == 1 &&
+> +		    check_pack_inflate(p, &w_curs, offset, datalen, entry->size)) {
+> +			die("corrupt packed object for %s", sha1_to_hex(entry->idx.sha1));
+
+This needs to be an error(), obviously.
+
+> +			if (entry->delta)
+> +				reused_delta--;
+> +			goto no_reuse;
+> +		}
+> +
+>  		if (type == OBJ_OFS_DELTA) {
+>  			off_t ofs = entry->idx.offset - entry->delta->idx.offset;
+>  			unsigned pos = sizeof(dheader) - 1;
+
+With that, it took quite a while, then it told me about the corrupt 
+object.
+
+And then it hangs in the loop sha1_file.c:1511.  The function inflate() 
+returns Z_BUF_ERROR, and nothing is read.
+
+Oh, and it still tries to access the same corrupt pack.
+
+Thanks,
+Dscho
+
+P.S.: I have to wrap up my work at my current (interim) job, and will be 
+moving in the next days, so do not expect too much from my side before 
+Monday.
