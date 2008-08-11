@@ -1,106 +1,157 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Update french translation
-Date: Tue, 12 Aug 2008 00:04:13 +0200
-Message-ID: <vpqwsinjjj6.fsf@bauges.imag.fr>
-References: <1218465592-2446-1-git-send-email-alexandre.bourget@savoirfairelinux.com>
-	<1218465592-2446-2-git-send-email-alexandre.bourget@savoirfairelinux.com>
-	<vpqr68vuzoo.fsf@bauges.imag.fr>
-	<1218489461.11353.135.camel@alexandre-desktop>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's in git.git (Aug 2008, #02; Mon, 11)
+Date: Mon, 11 Aug 2008 15:06:53 -0700
+Message-ID: <7vy733urya.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: alexandre.bourget@savoirfairelinux.com
-X-From: git-owner@vger.kernel.org Tue Aug 12 00:07:56 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 12 00:08:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSfYR-00055i-5k
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 00:07:55 +0200
+	id 1KSfZM-0005N8-Lh
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 00:08:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756371AbYHKWGu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Aug 2008 18:06:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756104AbYHKWGt
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 18:06:49 -0400
-Received: from imag.imag.fr ([129.88.30.1]:43280 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755470AbYHKWGs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 18:06:48 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m7BM4Jrg013175
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 12 Aug 2008 00:04:19 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KSfUr-0008TI-Gm; Tue, 12 Aug 2008 00:04:13 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KSfUr-0005ch-EQ; Tue, 12 Aug 2008 00:04:13 +0200
-In-Reply-To: <1218489461.11353.135.camel@alexandre-desktop> (Alexandre Bourget's message of "Mon\, 11 Aug 2008 17\:17\:41 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 12 Aug 2008 00:04:19 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1755128AbYHKWHB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Aug 2008 18:07:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755048AbYHKWHA
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 18:07:00 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41355 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751014AbYHKWG7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Aug 2008 18:06:59 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 580955C763;
+	Mon, 11 Aug 2008 18:06:58 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 990F35C762; Mon, 11 Aug 2008 18:06:56 -0400 (EDT)
+X-maint-at: 4f80b27d48fee1c588810f3341ffe5d14558cea2
+X-master-at: 10d9d887ecdc81197162d7bbe5dfc0d028498fd6
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D11365A0-67F1-11DD-9286-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92009>
 
-Alexandre Bourget <alexandre.bourget@savoirfairelinux.com> writes:
+Minor fixes toward 1.6.0 final continue to flow in, but many of them ar=
+e
+also applicable to 'maint'.
 
-> Le lundi 11 ao=FBt 2008 =E0 21:19 +0200, Matthieu Moy a =E9crit :
->> General remark: you should split your patch into
->>=20
->> * Some word substitution on the one side (s/r=E9f=E9rentiel/d=E9pos/=
-g,
->>   s/fonte/police/g, ...)
->>=20
->> * Some manual rephrasing.
->
-> This is funny requirement, especially when I see what you've let in a=
-s a
-> "french" translation :) I doubt=20
+Also on 'maint' branch, there are a few backmerges of topics that have
+already been in 'master' for a while.  Not all of them are "fixes",
+though.  We may or may not have 1.5.6.6 before 1.6.0 happens.
 
-??
+* The 'maint' branch has these fixes since the last announcement.
 
-Your patch is deadly long, and 90% of it is just about changing the
-translation of 3 words (police, d=E9pos and index). Really, my review
-would have been _much_ more efficient with a clean patch serie.
+Alexander Gavrilov (1):
+  Fix quadratic performance in rewrite_one.
 
-BTW, the requirement of splitting a patch to small and related changes
-is indeed not at all uncommon here.
+Ivan Stankovic (1):
+  Documentation: fix invalid reference to 'mybranch' in user manual
 
-> http://www.granddictionnaire.com reveals us that "supporter" is a
-> computer-related term that means just what we need here, and it's bee=
-n
-> reviewed by the "Office de la langue fran=E7aise" in 2002.
+Junio C Hamano (7):
+  Per-ref reflog expiry configuration
+  Make default expiration period of reflog used for stash infinite
+  fix diff-tree --stdin documentation
+  Files given on the command line are relative to $cwd
+  GIT 1.5.6.5
+  asciidoc markup fixes
+  Fix deleting reflog entries from HEAD reflog
 
-Interesting. Still, this is all about Canadian-french, not
-=46rance-french. According to
-http://atilf.atilf.fr/dendien/scripts/tlfiv5/visusel.exe?13;s=3D3509465=
-295;r=3D1;nat=3D;sol=3D2
-this is indeed both anglicism and "canadianism" ;-).
+Linus Torvalds (4):
+  Split up default "core" config parsing into helper routine
+  Split up default "user" config parsing into helper routine
+  Split up default "i18n" and "branch" config parsing into helper routi=
+nes
+  Add config option to enable 'fsync()' of object files
 
-Well, anyway, that's just nitpick, your translation is at least good
-in the sense that everybody understands it.
+Petr Baudis (1):
+  Fail properly when cloning from invalid HTTP URL
 
->> >  #: lib/choose_rev.tcl:531
->> >  msgid "Updated"
->> > -msgstr "Misa =E0 jour"
->> > +msgstr "=C0 jour (updated)"
->>=20
->> If you go for "index=E9" elsewhere, you should s/updated/index=E9/ h=
-ere
->> also.
->
-> Have you looked at the context ?
+Pieter de Bie (1):
+  reflog test: add more tests for 'reflog delete'
 
-No, and you're rigth. Sorry for the noise.
+Thomas Rast (1):
+  Documentation: rev-list-options: Fix -g paragraph formatting
 
---=20
-Matthieu
+
+* The 'master' branch has these since the last announcement
+  in addition to the above.
+
+Alexander Gavrilov (6):
+  gitk: Kill back-end processes on window close
+  gitk: Arrange to kill diff-files & diff-index on quit
+  gitk: On Windows, use a Cygwin-specific flag for kill
+  gitk: Fixed broken exception handling in diff
+  gitk: Fixed automatic row selection during load
+  gitk: Fallback to selecting the head commit upon load
+
+Brandon Casey (3):
+  perl/Makefile: handle paths with spaces in the NO_PERL_MAKEMAKER sect=
+ion
+  Makefile: set SHELL to value of SHELL_PATH
+  Makefile: add a target which will abort compilation with ancient shel=
+ls
+
+Christian Stimming (2):
+  git-gui: Update German translation
+  gitk: Updated German translation
+
+Eric Wong (2):
+  git-svn: add ability to specify --commit-url for dcommit
+  git-svn: wrap long lines in a few places
+
+Johannes Schindelin (1):
+  clone --mirror: avoid storing repeated tags
+
+Johannes Sixt (1):
+  git-gui: Adapt discovery of oguilib to execdir 'libexec/git-core'
+
+Jonathan Nieder (1):
+  Documentation: user-manual: "git commit -a" doesn't motivate .gitigno=
+re
+
+Junio C Hamano (4):
+  GIT 1.6.0-rc2
+  GIT-VERSION-GEN: mark the version 'dirty' only if there are modified
+    files
+  mailinfo: fix MIME multi-part message boundary handling
+  Update draft RelNotes for 1.6.0
+
+Marcus Griep (2):
+  Fix multi-glob assertion in git-svn
+  git-svn: Allow deep branch names by supporting multi-globs
+
+Michele Ballabio (2):
+  git-gui: update po/it.po
+  git-gui: add a part about format strings in po/README
+
+Mikael Magnusson (2):
+  git-gui: Update swedish translation.
+  gitk: Update swedish translation.
+
+Nanako Shiraishi (1):
+  git-gui: update Japanese translation
+
+Pieter de Bie (1):
+  builtin-rm: Add a --force flag
+
+Ren=C3=A9 Scharfe (1):
+  archive: allow --exec and --remote without equal sign
+
+SZEDER G=C3=A1bor (1):
+  bash: remove redundant check for 'git stash apply' options
+
+Shawn O. Pearce (1):
+  git-gui: Update git-gui.pot for 0.11 nearing release
+
+Thomas Rast (3):
+  Documentation: commit-tree: remove 16 parents restriction
+  Documentation: filter-branch: document how to filter all refs
+  filter-branch: be more helpful when an annotated tag changes
