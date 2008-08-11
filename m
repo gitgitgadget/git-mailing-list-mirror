@@ -1,55 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-submodule - Add 'foreach' subcommand
-Date: Mon, 11 Aug 2008 12:08:15 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808111207070.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <7vsktczebg.fsf@gitster.siamese.dyndns.org> <1218409804-1556-1-git-send-email-mlevedahl@gmail.com> <489FDC29.5090503@iksz.hu>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [RFC] Plumbing-only support for storing object metadata
+Date: Mon, 11 Aug 2008 12:11:32 +0200
+Message-ID: <20080811101132.GB31686@cuci.nl>
+References: <d411cc4a0808091449n7e0c9b7et7980cf668106aead@mail.gmail.com> <20080810035101.GA22664@spearce.org> <20080810112038.GB30892@cuci.nl> <alpine.DEB.1.10.0808100502530.32620@asgard.lang.hm> <20080810145019.GC3955@efreet.light.src> <20080810175735.GA14237@cuci.nl> <20080810181115.GA3906@efreet.light.src> <20080810201651.GB14237@cuci.nl> <7v7iao1oua.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.10.0808101550570.32620@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mark Levedahl <mlevedahl@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org, johan@herland.net
-To: Balazs Nagy <js@iksz.hu>
-X-From: git-owner@vger.kernel.org Mon Aug 11 12:04:42 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Jan Hudec <bulb@ucw.cz>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>,
+	Jamey Sharp <jamey@minilop.net>,
+	Josh Triplett <josh@freedesktop.org>, git@vger.kernel.org
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Mon Aug 11 12:12:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSUGX-0002C0-CP
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 12:04:41 +0200
+	id 1KSUOC-0004YR-M3
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 12:12:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751404AbYHKKDi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 06:03:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751400AbYHKKDi
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 06:03:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52609 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751184AbYHKKDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 06:03:37 -0400
-Received: (qmail invoked by alias); 11 Aug 2008 10:03:35 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp015) with SMTP; 11 Aug 2008 12:03:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/oDo55AsboGuqy2KJEMPydzXUulXkgq3KABxuNDv
-	MdB9qYU2XadwZZ
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <489FDC29.5090503@iksz.hu>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.76
+	id S1751200AbYHKKLe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 06:11:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbYHKKLe
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 06:11:34 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:54696 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751108AbYHKKLd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 06:11:33 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id BC3C85465; Mon, 11 Aug 2008 12:11:32 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.10.0808101550570.32620@asgard.lang.hm>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91924>
 
-Hi,
+david@lang.hm wrote:
+>On Sun, 10 Aug 2008, Junio C Hamano wrote:
+>>* Define a specific leading path, say ".attrs" the hierarchy to store the
+>>  attributes information.  Attributes to a file README and t/Makefile
 
-On Mon, 11 Aug 2008, Balazs Nagy wrote:
+>1. tieing the attributes to the file more directly will make it much 
+>easier to deal with them along with the file in the non-rich checkout 
+>(it's much easier to say README* then README .attr/README*)
 
-> Sorry for being a bit late, but what if we would have --all for all 
-> submodule commands instead of having another command?
+I have to agree that from a practical standpoint for the user, having
+the file and the attribute tree right next to each other in the tree is
+a lot easier to manage.
 
-and the foreach patch would go into which existing command, exactly?  "git 
---all"?  A new "git foreach --all"?
+So even though setting up a shadow attribute tree is cleaner because it
+doesn't need some kind of magic extension, it tends to clutter the
+management in the flat-file checkout case.
+-- 
+Sincerely,
+           Stephen R. van den Berg.
 
-Just kidding,
-Dscho
+"Beware: In C++, your friends can see your privates!"
