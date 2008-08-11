@@ -1,80 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-bisect: weird usage of read(1)
-Date: Mon, 11 Aug 2008 11:59:52 -0700
-Message-ID: <7v7ianxtqv.fsf@gitster.siamese.dyndns.org>
-References: <38b2ab8a0808110657y24ac9526wca4acea3bddaec00@mail.gmail.com>
- <alpine.DEB.1.00.0808111615260.24820@pacific.mpi-cbg.de.mpi-cbg.de>
- <38b2ab8a0808110718x2f63608ga3d2d77e317ce4eb@mail.gmail.com>
- <3f4fd2640808110859r148550d2h833dae05b9e6544e@mail.gmail.com>
- <20080811164945.GI32184@machine.or.cz> <48A0705B.3030107@lsrfire.ath.cx>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH] builtin-revert.c: Make use of merge_recursive()
+Date: Mon, 11 Aug 2008 21:01:23 +0200
+Message-ID: <20080811190123.GA14413@leksak.fem-net>
+References: <cover.1218374062.git.vmiklos@frugalware.org> <1218467003-14591-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0808111737270.24820@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>, Reece Dunn <msclrhd@googlemail.com>,
-	Francis Moreau <francis.moro@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Aug 11 21:01:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 11 21:02:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KScdf-0000zX-4g
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 21:01:07 +0200
+	id 1KScf2-0001ZP-CJ
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 21:02:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754010AbYHKTAG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Aug 2008 15:00:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752302AbYHKTAF
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 15:00:05 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39862 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754010AbYHKTAE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Aug 2008 15:00:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7B90655C84;
-	Mon, 11 Aug 2008 15:00:02 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0070655C7E; Mon, 11 Aug 2008 14:59:54 -0400 (EDT)
-In-Reply-To: <48A0705B.3030107@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
- Scharfe's message of "Mon, 11 Aug 2008 19:01:15 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B3E85856-67D7-11DD-9B56-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753761AbYHKTBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 15:01:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753125AbYHKTB3
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 15:01:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60186 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753761AbYHKTB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 15:01:29 -0400
+Received: (qmail invoked by alias); 11 Aug 2008 19:01:26 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp009) with SMTP; 11 Aug 2008 21:01:26 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX18nKQxNneonhTPnXbtFqmoyg7Lu44j1bBrtxc81rd
+	lN99RyzRmYpjzF
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KScdv-0000YL-5U; Mon, 11 Aug 2008 21:01:23 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0808111737270.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91976>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Hi,
 
-> Petr Baudis schrieb:
->> On Mon, Aug 11, 2008 at 04:59:32PM +0100, Reece Dunn wrote:
->>>>> On Mon, 11 Aug 2008, Francis Moreau wrote:
->>>>>>               case "$(read yesno)" in [Nn]*) exit 1 ;; esac
->>> does not work as expected. Replacing this with
->>>
->>>                case "$(read yesno; echo $yesno)" in [Nn]*) exit 1 ;=
-; esac
->>>
->>> would work as intended, as Mikael has pointed out.
->>=20
->>   Wouldn't it be more elegant to
->>=20
->> 	case "$(head -n 1)" in [Nn]*) exit 1 ;; esac
->
-> Only if head is a built-in, otherwise you fork needlessly.  Not that
-> this is a performance critical part, but I wouldn't call it "elegant"=
-=2E
->
-> What's wrong with the following variant, already used a few lines up =
-in
-> the file?
->
-> 	read yesno
-> 	case "$yesno" in [Nn]*) exit 1 ;; esac
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 11 Aug 2008, Stephan Beyer wrote:
+> 
+> > diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
+> > index 09aa830..d8bd21f 100644
+> > --- a/builtin-merge-recursive.c
+> > +++ b/builtin-merge-recursive.c
+> > @@ -1327,7 +1327,7 @@ static const char *better_branch_name(const char *branch)
+> >  	return name ? name : branch;
+> >  }
+> >  
+> > -static struct commit *get_ref(const char *ref)
+> > +struct commit *get_ref(const char *ref)
+> 
+> The name get_ref() is way too generic to be non-static.
 
-That's the right way to spell it.  Sorry, I must have been too tired
-when I did this.
+That's right.
+
+> But I have a hunch that peel_to_type() does a lot of what we want here,
+> if not all of it.
+
+get_ref() has a big advantage over peel_to_type(): it can handle trees,
+via "virtual commits" (make_virtual_commit()).
+If you wonder where we need to handle trees on cherry-pick/revert:
+With the -n (no commit) option you are allowed to have a dirty index.
+So the recursive merge is not done using the HEAD commit but using the
+uncommitted tree of the index.
+
+Well, a good alternative could be to just make the really cool
+make_virtual_commit() function non-static.
+The name could be generic enough. Is it? :-)
+Or perhaps: make_virtual_commit_from_tree().
+
+Btw I also need get_ref() (or make_virtual_commit()) for threeway
+fallback of the sequencer "patch -3" instruction ("git am -3"). ;)
+
+> > +	h1 = get_ref(head_sha1);
+> > +	h2 = get_ref(next_sha1);
+> > +
+> > +	index_fd = hold_locked_index(lock, 1);
+> > +	clean = merge_recursive(h1, h2, head_name, next_name, ca, &result);
+> 
+> h1 and h2 are not expressive.  head_commit and next_commit would be.
+
+This is also quite true.
+Those names, also "ca", were taken from cmd_merge_recursive().
+(This is no excuse, just an explanation.)
+
+> Rest looks good to me -- even if I had to spend too much time (therefore 
+> being not really thorough in the end) verifying that merge_recursive() 
+> does not lock the index itself,
+
+I can't help here.  Miklos has the same change in patch v2/2 and I
+wonder if you really expect that I don't test my patches, because
+a double lock wouldn't have worked.
+
+> and that GITHEAD_* definitions are not necessary anymore, since merge_recursive()
+> takes the arguments directly;
+
+Ok, I hoped that would've been clear by using head_name/next_name
+directly in the merge_recursive() arguments, but nevertheless
+thanks for your comment, ...because: using get_ref() the GITHEAD_*
+definitions *are* still needed, because it takes the GITHEAD_*
+name for the virtual commits...
+
+Under this additional circumstance, I really tend to make
+make_virtual_commit() non-static.
+
+Kind regards,
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
