@@ -1,66 +1,80 @@
-From: "Bryan Richardson" <btricha@gmail.com>
-Subject: Help reverting a particular file
-Date: Mon, 11 Aug 2008 17:00:41 -0600
-Message-ID: <3f81a4240808111600u78c5eeefu588a6b1250a0dd02@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Adjust for the new way of enabling the default
+	post-update hook
+Date: Tue, 12 Aug 2008 01:05:40 +0200
+Message-ID: <20080811230540.GG10151@machine.or.cz>
+References: <20080811223446.8342.37008.stgit@localhost> <7vfxpbuplr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 12 01:01:46 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 12 01:06:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSgOX-0003Xq-VO
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 01:01:46 +0200
+	id 1KSgTO-0004ks-Jv
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 01:06:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751962AbYHKXAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 19:00:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751826AbYHKXAn
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 19:00:43 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:38530 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751800AbYHKXAn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 19:00:43 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so827326yxm.1
-        for <git@vger.kernel.org>; Mon, 11 Aug 2008 16:00:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=adEls5QjV+6jcXe2eFt04nzhYt6swdB3vi7jr4eizQY=;
-        b=jYBXWyWy6Y+6WWkIHKZ+CvGJ7G7dWVIZjSuDnDMbdO4okFliUSSJmRbIEbEdxEI/ML
-         /CNFp6aEQnNm0MDDEARVyVo2auNdQcED4faxBaT7mm5SVyAD6YnwZzVyBpqKN1Ygzn8g
-         GKRCwP2U0wURRIawnafqDiv2YSNKi5UL13/h4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=Y3o7VRm4iTcUB99LpdIfIMQRCni9yIkpvSY/1I9w5+6wR060HLjE4J0P4erSYCH5L4
-         JYzTsmpY6vnZh+PWhYxwmqn3Qjz3j+24c4O2ftcS9WBXWBAXAkzug98+hIzn6EiEX802
-         0lOpUQUxv5Ag3e5P5vm4dQVtUqPZEhZXWxgWw=
-Received: by 10.115.75.14 with SMTP id c14mr4140087wal.45.1218495641381;
-        Mon, 11 Aug 2008 16:00:41 -0700 (PDT)
-Received: by 10.114.161.4 with HTTP; Mon, 11 Aug 2008 16:00:41 -0700 (PDT)
+	id S1752419AbYHKXFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 19:05:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752341AbYHKXFo
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 19:05:44 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:60591 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751627AbYHKXFn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 19:05:43 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 1D81D393B31D; Tue, 12 Aug 2008 01:05:40 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <7vfxpbuplr.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92019>
 
-Hello all,
+On Mon, Aug 11, 2008 at 03:57:36PM -0700, Junio C Hamano wrote:
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> > This patch emphasizes this change in the release notes (since
+> > I believe this is rather noticeable backwards-incompatible change).
+> 
+> Anybody who tries to chmod an nonexisting file would notice, so I
+> personally think you are making a mountain out of a molehill.
+> 
+> Nevertheless, mentioning it in the release notes would be a good finishing
+> touch.
 
-Can anyone tell me how to revert a particular file using git?  I
-executed a commit, then froze my Rails application to the latest Rails
-version.  This caused my custom config/boot.rb file to be overwritten
-and I would like to restore it without rolling back to the previous
-commit (which would roll back the rails freeze).  In general I need to
-know how to do this anyway. :)
+Well, my only point is that you might want to know that you have to
+modify your scripts _before_ they break.
 
-Please help!
+> > +The standard way of making repositories friendly to dumb protocols
+> > +(i.e. HTTP) changed: instead of making hooks/post-update executable,
+> > +hooks/post-update.sample is to be moved to hooks/post-update.
+> 
+> I'm actually not very happy with the above wording that makes it sound as
+> if any of the samples are part of any "standard way".
+> 
+> The only standard thing is to make sure update-server-info runs.  You do
+> not have to start from the sample hook to do so, even though it may be one
+> of the easiest ways.
 
---
-Thanks!
-Bryan
+Then the question is what is "standard" defined as, and why shouldn't
+this be the standard way? This is how our user documentation (both the
+User Manual and the Git Core Tutorial) teaches the users to do it.
+
+> The rest of the patches look good, but have you actually made sure
+> AsciiDoc markups are correct (I am not complaining, just asking, as I
+> haven't)?
+
+I haven't - actually, for various technical reasons, I don't even have
+AsciiDoc installed on my notebook right now. I plan to get around
+to investigate the problem, but didn't yet and I didn't want to hold
+this off.
+
+-- 
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
