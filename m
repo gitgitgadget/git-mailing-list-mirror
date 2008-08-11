@@ -1,68 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Do not talk about "diff" in rev-list documentation.
-Date: Mon, 11 Aug 2008 11:46:56 -0700
-Message-ID: <7vsktbxucf.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH v2] Make cherry-pick use rerere for conflict resolution.
+Date: Mon, 11 Aug 2008 11:47:01 -0700
+Message-ID: <7vmyjjxuca.fsf@gitster.siamese.dyndns.org>
+References: <1218368935-31124-1-git-send-email-ams@toroid.org>
+ <alpine.DEB.1.00.0808110111430.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <20080811023053.GA9144@toroid.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 11 20:48:11 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Abhijit Menon-Sen <ams@toroid.org>
+X-From: git-owner@vger.kernel.org Mon Aug 11 20:48:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KScR8-0004bR-9D
-	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 20:48:10 +0200
+	id 1KScRe-0004nA-Js
+	for gcvg-git-2@gmane.org; Mon, 11 Aug 2008 20:48:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755593AbYHKSrF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 14:47:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755074AbYHKSrF
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 14:47:05 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38330 "EHLO
+	id S1756245AbYHKSrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 14:47:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756229AbYHKSrK
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 14:47:10 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38766 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754879AbYHKSrD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 14:47:03 -0400
+	with ESMTP id S1755704AbYHKSrI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 14:47:08 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0F1114F6F8;
-	Mon, 11 Aug 2008 14:47:01 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0C9DB55B56;
+	Mon, 11 Aug 2008 14:47:07 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7570E4F6F6; Mon, 11 Aug 2008 14:46:58 -0400 (EDT)
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id EDB7255B54; Mon, 11 Aug 2008 14:47:02 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E220F810-67D5-11DD-9212-CE28B26B55AE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: E5B35734-67D5-11DD-9BFA-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/91971>
 
-Since 8c02eee (git-rev-list(1): group options; reformat; document more
-options, 2006-09-01), git-rev-list documentation talks as if it supports
-any kind of diff output.  It doesn't.
+Abhijit Menon-Sen <ams@toroid.org> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+> It was a dark and stormy night. Sam struggled to keep his eyelids open
+> as he integrated yet another gigantic patch series. Ever the optimist,
+> he'd pulled in the changes, only to discover several merge conflicts.
+> But the night was young then, and he'd fixed them all by hand.
+>
+> It was only later that he noticed many lousy, one-line commit messages.
+> Undaunted, he reset his branch and began to cherry-pick patches, giving
+> them a once-over, writing a comment here, squashing the odd grotesque
+> hack there, and writing sensible commit messages more often than not.
+>
+> But even that was hours ago, and each new but oh-so-familiar conflict
+> ate into his determination like maggots through decaying meat; and Sam
+> was beginning to question the wisdom of staying in this fruit business.
+> His whiskey was running low, and time was running out.
+>
+> "If only", thought Sam, "If only cherry-pick would..."
 
- Documentation/rev-list-options.txt |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+That's cute, but I do not think that story is a good example.
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 3aa3809..3d54b94 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -94,6 +94,7 @@ you would get an output line this:
- This implies the '--topo-order' option by default, but the
- '--date-order' option may also be specified.
- 
-+ifndef::git-rev-list[]
- Diff Formatting
- ~~~~~~~~~~~~~~~
- 
-@@ -123,6 +124,7 @@ options may be given. See linkgit:git-diff-files[1] for more options.
- -t::
- 
- 	Show the tree objects in the diff output. This implies '-r'.
-+endif::git-rev-list[]
- 
- Commit Limiting
- ~~~~~~~~~~~~~~~
+By "pulled in the changes" do you mean "he merged somebody else's work"?
+If so, the cherry-pick would be doing rebase of the series manually, and
+as you already may know, you are not supposed to be rebasing other
+people's work.  And if you are indeed rebasing, that would not be a good
+example of cherry-pick, either.
+
+Do you mean instead "he applied many patches, but there were conflicts and
+he wiggled them in?"  If so, at the resolution time rerere() wouldn't have
+recorded them in the first place, and more importantly, what you would be
+cherry-picking won't have conflicts.  What the second paragraph describes
+is what he would do with "git rebase -i" on top of the same base, so there
+won't be merge conflicts, and even if there were, the use case is again
+about rebase and not cherry-pick.
+
+A better example would be if you have two (or more) maintenance tracks
+from similarly old vintage and a far more advanced development track, and
+cherry-picking from that development track to backport a fix down to one
+of the maintenance track would have conflicts you need to fix.  Then you
+would face the same conflict while propagating the same fix to another
+maintenance track.  But even then, you would most likely cherry-pick the
+cherry-picked fix from the maintenance track, which would be conflict
+free, instead of cherry-picking it from the development track.
