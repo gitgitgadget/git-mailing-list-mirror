@@ -1,64 +1,136 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: How to fork
-Date: Tue, 12 Aug 2008 11:09:54 +0200
-Message-ID: <vpqhc9q4n19.fsf@bauges.imag.fr>
-References: <200808121030.21384.thomas@koch.ro>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [BUG?] rebase -i -p leaves index changed
+Date: Tue, 12 Aug 2008 11:16:39 +0200
+Message-ID: <200808121116.41535.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Koch <thomas@koch.ro>
-X-From: git-owner@vger.kernel.org Tue Aug 12 11:17:13 2008
+Content-Type: multipart/signed;
+  boundary="nextPart1224283.K3RXXnPsSE";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 12 11:17:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSq07-0004Gl-8F
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 11:17:11 +0200
+	id 1KSq0X-0004PU-GN
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 11:17:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752154AbYHLJQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 05:16:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752110AbYHLJQJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 05:16:09 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:45791 "EHLO harmonie.imag.fr"
+	id S1752165AbYHLJQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 05:16:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752159AbYHLJQg
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 05:16:36 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:49498 "EHLO xsmtp1.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752093AbYHLJQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 05:16:08 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m7C9D6Ok019762;
-	Tue, 12 Aug 2008 11:13:06 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KSpt4-0005gv-SR; Tue, 12 Aug 2008 11:09:54 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KSpt4-00060b-P1; Tue, 12 Aug 2008 11:09:54 +0200
-In-Reply-To: <200808121030.21384.thomas@koch.ro> (Thomas Koch's message of "Tue\, 12 Aug 2008 10\:30\:21 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 12 Aug 2008 11:13:06 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752103AbYHLJQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 05:16:34 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 12 Aug 2008 11:16:33 +0200
+Received: from cx-public-docking-1-043.ethz.ch ([129.132.149.43]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 12 Aug 2008 11:16:32 +0200
+User-Agent: KMail/1.9.9
+X-OriginalArrivalTime: 12 Aug 2008 09:16:32.0864 (UTC) FILETIME=[1CB16E00:01C8FC5C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92086>
 
-Thomas Koch <thomas@koch.ro> writes:
+--nextPart1224283.K3RXXnPsSE
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> I just wonder, that neither the official Git manual, nor the kernel
-> hackers guide to git describe the best practice to fork a project.
+Hi,
 
-Well, in Git, technically, any clone is a fork. The difference between
-a contributor's repository and a forker's is social, not technical (I
-usually define "fork" as a branch where one of the projects has no
-intention of merging the other's changes).
+'rebase -i -p' appears to be a bit confused about what it is doing.
+Try a history like this:
 
-So, just clone and publish (push) your changes, and you're done.
+  O -- A -- M -- B
+   \       /
+    \- C -/
 
-Or, ask a more precise question, I may have missed something ;-).
+built by:
 
--- 
-Matthieu
+  git init
+  touch foo
+  git add foo
+  git ci -m initial
+  git tag root
+  git co -b side
+  echo blah > other
+  git add other
+  git ci -m other
+  git co master
+  echo a >> foo
+  git add foo
+  git ci -m a
+  git add foo
+  git merge side
+  echo b >> foo
+  git add foo
+  git ci -m 'b: depends on side'
+
+=46irst try this:
+
+  GIT_EDITOR=3Dtrue git rebase -i -p root
+  git diff --cached
+
+resulting in
+
+  diff --git a/foo b/foo
+  index 422c2b7..e69de29 100644
+  --- a/foo
+  +++ b/foo
+  @@ -1,2 +0,0 @@
+  -a
+  -b
+  diff --git a/other b/other
+  deleted file mode 100644
+  index 907b308..0000000
+  --- a/other
+  +++ /dev/null
+  @@ -1 +0,0 @@
+  -blah
+
+Second, 'edit' is also a bit suspicious:
+
+  git reset --hard
+  GIT_EDITOR=3D'perl -i -pe "s/pick 096/edit 096/"' git rebase -i -p root
+
+Despite claiming "Stopped at 096[...] a", a quick 'git show' tells us
+that it is actually stuck at 'initial'.  (At least 'git rebase
+=2D-continue' then ends up with the same result as the first test.)
+
+Granted, I'm not entirely sure what it _should_ do.  In my use case
+(relating to the filter-branch topic), C was a commit from elsewhere
+that B depended on.  So I kind of hoped 'rebase -i -p' would let me
+edit A, then rebuild M and B on top, while leaving C alone.
+
+=2D Thomas
+
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
+
+
+
+
+
+
+--nextPart1224283.K3RXXnPsSE
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkihVPkACgkQqUud07tmzP163QCfVbhc1x5wJW/SYKuXNUqeE2Fk
+l94AniHBCESi1GEf7QtIVrwtbSbu8ae0
+=dQla
+-----END PGP SIGNATURE-----
+
+--nextPart1224283.K3RXXnPsSE--
