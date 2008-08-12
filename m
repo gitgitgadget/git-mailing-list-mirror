@@ -1,84 +1,83 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH v2] pack-objects: Allow missing base objects when creating
- thin packs
-Date: Tue, 12 Aug 2008 14:43:45 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0808121439150.22892@xanadu.home>
-References: <20080811182839.GJ26363@spearce.org>
- <7vk5enuqfg.fsf@gitster.siamese.dyndns.org>
- <20080811224404.GQ26363@spearce.org> <20080812012859.GT26363@spearce.org>
- <alpine.LFD.1.10.0808120023250.22892@xanadu.home>
- <20080812164149.GB31092@spearce.org>
- <alpine.LFD.1.10.0808121402440.22892@xanadu.home>
- <20080812181843.GD31092@spearce.org>
- <alpine.LFD.1.10.0808121426100.22892@xanadu.home>
- <20080812183106.GE31092@spearce.org>
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: TopGit: problem with patch series generation
+Date: Tue, 12 Aug 2008 20:54:00 +0200
+Message-ID: <36ca99e90808121154l1f7978a1v4de40d990005cb0e@mail.gmail.com>
+References: <20080812161854.GB30067@lapse.rw.madduck.net>
+	 <32541b130808120925y663967ebm38eced6df77ffe4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Aug 12 20:45:04 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "git discussion list" <git@vger.kernel.org>, pasky@suse.cz,
+	"Manoj Srivastava" <srivasta@debian.org>,
+	"vcs distro packaging discussion list" 
+	<vcs-pkg-discuss@lists.alioth.debian.org>
+To: "Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 12 20:55:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSyrZ-0007bc-1a
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 20:44:57 +0200
+	id 1KSz1P-0002rb-UI
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 20:55:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751378AbYHLSnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 14:43:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751368AbYHLSnv
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 14:43:51 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:44143 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751352AbYHLSnv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 14:43:51 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K5I00DZ6405CG00@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 12 Aug 2008 14:43:17 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080812183106.GE31092@spearce.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1751682AbYHLSyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 14:54:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751289AbYHLSyD
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 14:54:03 -0400
+Received: from wx-out-0506.google.com ([66.249.82.224]:29952 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751087AbYHLSyB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 14:54:01 -0400
+Received: by wx-out-0506.google.com with SMTP id h29so1753668wxd.4
+        for <git@vger.kernel.org>; Tue, 12 Aug 2008 11:54:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=VE1kpsA/gYG1i5Uio4mOa+Q9jiXOgQqA4STmjlMNeKk=;
+        b=lTU/jg05ECTPcDLsqzkpBNTyJm5uKfOCsc25yvyOUMTy1yXslDpR8q6WRJpAO+cdlb
+         Z7v0gmXKjZVU6D7k1XDEs3aEIkrP7X1uVqsN7K2bKF42gNHOPZv8gJKRMpJ3Q6PiycmP
+         YP+ZlpWBko4mOtsFlfbGwf03EEZhRQGrXTU1s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=hw6HCb4c8NYNO4aRlSPAlDoQsaKkNINg5uXVniO91rzJ1I3rn8cqsXYfji2B2mVa4z
+         em4yJh27+3TtW4jyadCOhLKOautdAs7SbLs/30ckFfStoku+2MT3OM/ClcVKRaoo6PUO
+         f+44ZAa/8iXv9e7EYFU52/GeRivcKxytZKvp8=
+Received: by 10.70.39.10 with SMTP id m10mr12835527wxm.41.1218567240877;
+        Tue, 12 Aug 2008 11:54:00 -0700 (PDT)
+Received: by 10.70.49.12 with HTTP; Tue, 12 Aug 2008 11:54:00 -0700 (PDT)
+In-Reply-To: <32541b130808120925y663967ebm38eced6df77ffe4@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92131>
 
-On Tue, 12 Aug 2008, Shawn O. Pearce wrote:
+On Tue, Aug 12, 2008 at 18:25, Avery Pennarun <apenwarr@gmail.com> wrote:
+> On Tue, Aug 12, 2008 at 12:18 PM, martin f krafft <madduck@debian.org> wrote:
+>> As I am packaging TopGit for Debian, I encountered
+>> the situation that two branches conflict with each other (they
+>> change the same line), but there is no dependency between the
+>> branches. Thus, when I squash the branches into a series, the
+>> resulting patches will not apply (they both change the same original
+>> line to something else).
+>
+> Isn't this what git-rerere is for?  If TopGit doesn't use rerere,
+> maybe it would be easy to add...
+I thought about this too, but have no experience with rerere.
 
-> If we are building a thin pack and one of the base objects we would
-> consider for deltification is missing its OK, the other side already
-> has that base object.  We may be able to get a delta from another
-> object, or we can simply send the new object whole (no delta).
-> 
-> This change allows a shallow clone to store only the objects which
-> are unique to it, as well as the boundary commit and its trees, but
-> avoids storing the boundary blobs.  This special form of a shallow
-> clone is able to represent just the difference between two trees.
-> 
-> Pack objects change suggested by Nicolas Pitre.
-> 
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> ---
-> 
->  Nicolas Pitre <nico@cam.org> wrote:
->  > On Tue, 12 Aug 2008, Shawn O. Pearce wrote:
->  > I'm not talking about the last command but the "test $(git rev-parse 
->  > HEAD) = $B" line.
->  
->  Oh, right.  Good catch.
-
-Acked-by: Nicolas Pitre <nico@cam.org>
-
-> +++ b/t/t5306-pack-nobase.sh
-> @@ -0,0 +1,80 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2008 Google Inc.
-
-Heh.  ;-)
-
-
-Nicolas
+Bert
+>
+> Have fun,
+>
+> Avery
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
