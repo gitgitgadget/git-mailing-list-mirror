@@ -1,127 +1,161 @@
-From: Marcus Griep <marcus@griep.us>
-Subject: [PATCH 3/3] git-svn: Reduce temp file usage when dealing with non-links
-Date: Tue, 12 Aug 2008 12:01:16 -0400
-Message-ID: <1218556876-26554-1-git-send-email-marcus@griep.us>
-References: <1218470035-13864-4-git-send-email-marcus@griep.us>
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marcus Griep <marcus@griep.us>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 12 18:04:06 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+From: martin f krafft <madduck@debian.org>
+Subject: TopGit: problem with patch series generation
+Date: Tue, 12 Aug 2008 13:18:54 -0300
+Organization: The Debian project
+Message-ID: <20080812161854.GB30067@lapse.rw.madduck.net>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============0765819825672679647=="
+Cc: vcs distro packaging discussion list
+	<vcs-pkg-discuss@lists.alioth.debian.org>
+To: git discussion list <git@vger.kernel.org>
+X-From: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org Tue Aug 12 18:19:16 2008
+Return-path: <vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org>
+Envelope-to: gcpv-vcs-pkg-discuss@m.gmane.org
+Received: from alioth.debian.org ([217.196.43.134])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSwKD-00055F-8u
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 18:02:21 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753642AbYHLQBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 12:01:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753599AbYHLQBR
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 12:01:17 -0400
-Received: from boohaunt.net ([209.40.206.144]:35985 "EHLO boohaunt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752973AbYHLQBR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 12:01:17 -0400
-Received: by boohaunt.net (Postfix, from userid 1000)
-	id A88AA1878ACF; Tue, 12 Aug 2008 12:01:16 -0400 (EDT)
-X-Mailer: git-send-email 1.6.0.rc2.6.g8eda3
-In-Reply-To: <1218470035-13864-4-git-send-email-marcus@griep.us>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92108>
+	id 1KSwaX-0003Vu-S7
+	for gcpv-vcs-pkg-discuss@m.gmane.org; Tue, 12 Aug 2008 18:19:13 +0200
+Received: from localhost
+	([127.0.0.1] helo=alioth.debian.org ident=list)
+	by alioth.debian.org with esmtp (Exim 4.63)
+	(envelope-from <vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org>)
+	id 1KSwZb-0008IZ-TU
+	for gcpv-vcs-pkg-discuss@m.gmane.org; Tue, 12 Aug 2008 16:18:15 +0000
+Received: from clegg.madduck.net ([193.242.105.96])
+	by alioth.debian.org with esmtp (Exim 4.63)
+	(envelope-from <madduck@lapse.rw.madduck.net>) id 1KSwZT-0008Hd-4d
+	for vcs-pkg-discuss@lists.alioth.debian.org;
+	Tue, 12 Aug 2008 16:18:13 +0000
+Received: from lapse.rw.madduck.net (unknown [209.13.181.29])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net",
+	Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id 349461D40AD;
+	Tue, 12 Aug 2008 18:17:52 +0200 (CEST)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id 7D09C80B5; Tue, 12 Aug 2008 13:18:54 -0300 (ART)
+Mail-Followup-To: git discussion list <git@vger.kernel.org>, pasky@suse.cz,
+	Manoj Srivastava <srivasta@debian.org>,
+	vcs distro packaging discussion list
+	<vcs-pkg-discuss@lists.alioth.debian.org>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel
+	2.6.24-etchnhalf.1+scoflowctrl.1-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.93.1/8018/Tue Aug 12 10:36:31 2008 on
+	clegg.madduck.net
+X-Virus-Status: Clean
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on alioth.debian.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=AWL,BAYES_00,URIBL_RED
+	autolearn=ham version=3.2.3
+X-BeenThere: vcs-pkg-discuss@lists.alioth.debian.org
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: Discussions on using VCS for distro packaging
+	<vcs-pkg-discuss.lists.alioth.debian.org>
+List-Unsubscribe: <http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss>,
+	<mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=unsubscribe>
+List-Archive: <http://lists.alioth.debian.org/pipermail/vcs-pkg-discuss>
+List-Post: <mailto:vcs-pkg-discuss@lists.alioth.debian.org>
+List-Help: <mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=help>
+List-Subscribe: <http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss>,
+	<mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=subscribe>
+Mime-version: 1.0
+Sender: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+Errors-To: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+X-SA-Exim-Connect-IP: 127.0.0.1
+X-SA-Exim-Mail-From: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+X-SA-Exim-Scanned: No (on alioth.debian.org); SAEximRunCond expanded to false
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92109>
 
-Currently, in sub 'close_file', git-svn creates a temporary file and
-copies the contents of the blob to be written into it. This is useful
-for symlinks because svn stores symlinks in the form:
 
-link $FILE_PATH
+--===============0765819825672679647==
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="nVMJ2NtxeReIH9PS"
+Content-Disposition: inline
 
-Git creates a blob only out of '$FILE_PATH' and uses file mode to
-indicate that the blob should be interpreted as a symlink.
 
-As git-hash-object is invoked with --stdin-paths, a duplicate of the
-link from svn must be created that leaves off the first five bytes,
-i.e. 'link '. However, this is wholly unnecessary for normal blobs,
-though, as we already have a temp file with their contents. Copying
-the entire file gains nothing, and effectively requires a file to be
-written twice before making it into the object db.
+--nVMJ2NtxeReIH9PS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This patch corrects that issue, holding onto the substr-like
-duplication for symlinks, but skipping it altogether for normal blobs
-by reusing the existing temp file.
+Hi folks,
 
-Signed-off-by: Marcus Griep <marcus@griep.us>
----
- git-svn.perl |   46 ++++++++++++++++++++++------------------------
- 1 files changed, 22 insertions(+), 24 deletions(-)
+I am playing around with TopGit and encountered a (conceptual)
+problem. I'd love to hear some input.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 9eae5e8..95d1510 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -3268,38 +3268,36 @@ sub close_file {
- 				    "expected: $exp\n    got: $got\n";
- 			}
- 		}
--		sysseek($fh, 0, 0) or croak $!;
- 		if ($fb->{mode_b} == 120000) {
--			eval {
--				sysread($fh, my $buf, 5) == 5 or croak $!;
--				$buf eq 'link ' or die "$path has mode 120000",
--						       " but is not a link";
--			};
--			if ($@) {
--				warn "$@\n";
--				sysseek($fh, 0, 0) or croak $!;
--			}
--		}
--
--		my $tmp_fh = Git::temp_acquire('svn_hash');
--		my $result;
--		while ($result = sysread($fh, my $string, 1024)) {
--			my $wrote = syswrite($tmp_fh, $string, $result);
--			defined($wrote) && $wrote == $result
--				or croak("write ",
--					$tmp_fh->filename, ": $!\n");
--		}
--		defined $result or croak $!;
-+			sysseek($fh, 0, 0) or croak $!;
-+			sysread($fh, my $buf, 5) == 5 or croak $!;
- 
-+			unless ($buf eq 'link ') {
-+				warn "$path has mode 120000",
-+						" but is not a link\n";
-+			} else {
-+				my $tmp_fh = Git::temp_acquire('svn_hash');
-+				my $res;
-+				while ($res = sysread($fh, my $str, 1024)) {
-+					my $out = syswrite($tmp_fh, $str, $res);
-+					defined($out) && $out == $res
-+						or croak("write ",
-+							$tmp_fh->filename,
-+							": $!\n");
-+				}
-+				defined $result or croak $!;
- 
--		Git::temp_release($fh, 1);
-+				($fh, $tmp_fh) = ($tmp_fh, $fh);
-+				Git::temp_release($tmp_fh, 1);
-+			}
-+		}
- 
- 		$hash = $::_repository->hash_and_insert_object(
--				$tmp_fh->filename);
-+				$fh->filename);
- 		$hash =~ /^[a-f\d]{40}$/ or die "not a sha1: $hash\n";
- 
- 		Git::temp_release($fb->{base}, 1);
--		Git::temp_release($tmp_fh, 1);
-+		Git::temp_release($fh, 1);
- 	} else {
- 		$hash = $fb->{blob} or die "no blob information\n";
- 	}
--- 
-1.6.0.rc2.6.g8eda3
+I want to use TopGit for distro packaging. Any of my packages have
+one or more feature branches, some intended for upstream, some
+distro-specific. As I am packaging TopGit for Debian, I encountered
+the situation that two branches conflict with each other (they
+change the same line), but there is no dependency between the
+branches. Thus, when I squash the branches into a series, the
+resulting patches will not apply (they both change the same original
+line to something else).
+
+Obviously, I can introduce a "fake" dependency to force TopGit to
+create one patch based on another. However, this then prevents me
+=66rom testing and developing the depending branch in isolation,
+meaning that I always have to have the dependent branch applied when
+I want to work on the second feature. Furthermore, it's not
+trivially possible in this situation to cherry-pick only the second
+patch.
+
+I see that this is a hard problem with no obvious solution. The only
+thing that comes to my mind is maintaining multiple patches for each
+branch. In the above, if B "fake-depends" on A, which depends on
+master, then I would have A and B depend on master only, but have
+TopGit also manage B2 for me, which is a diff against A.
+
+Doing this for all branches is polynomial, but then again, the
+number of independent branches, or rather branch trees, is likely to
+be pretty low in most cases.
+
+As an alternative, it may be possible, however, to let TopGit know
+about a "fake dependency" from B on A. When serialised, TopGit would
+notice that there are multiple paths from master to B (master->B and
+master->A->B) and use the longer one.
+
+Do you see any other ways in which the situation could be handled?
+
+Is the above something that TopGit could learn, Petr?
+
+Cheers,
+
+--=20
+ .''`.   martin f. krafft <madduck@debian.org>
+: :'  :  proud Debian developer, author, administrator, and user
+`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
+  `-  Debian - when you have better things to do than fixing systems
+=20
+"with sufficient thrust, pigs fly just fine. however, this is not
+ necessarily a good idea. it is hard to be sure where they are going
+ to land, and it could be dangerous sitting under them as they fly
+ overhead."
+                                                           -- rfc 1925
+
+--nVMJ2NtxeReIH9PS
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkiht+4ACgkQIgvIgzMMSnV2lgCgy+zvLQ/5SEgk661as3OM6+xb
+aosAn3MbzDFqYxjsYTGl3pSi48VAH0he
+=1Lh8
+-----END PGP SIGNATURE-----
+
+--nVMJ2NtxeReIH9PS--
+
+
+--===============0765819825672679647==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
