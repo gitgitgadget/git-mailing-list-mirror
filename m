@@ -1,77 +1,89 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 3/3] git-svn: Reduce temp file usage when dealing with non-links
-Date: Mon, 11 Aug 2008 20:37:00 -0700
-Message-ID: <20080812033700.GC14051@untitled>
-References: <489DBB8A.2060207@griep.us> <1218470035-13864-1-git-send-email-marcus@griep.us> <1218470035-13864-2-git-send-email-marcus@griep.us> <1218470035-13864-3-git-send-email-marcus@griep.us> <1218470035-13864-4-git-send-email-marcus@griep.us>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: RFC: Allow missing objects during packing
+Date: Tue, 12 Aug 2008 00:44:11 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0808120023250.22892@xanadu.home>
+References: <20080811182839.GJ26363@spearce.org>
+ <7vk5enuqfg.fsf@gitster.siamese.dyndns.org>
+ <20080811224404.GQ26363@spearce.org> <20080812012859.GT26363@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Marcus Griep <marcus@griep.us>
-X-From: git-owner@vger.kernel.org Tue Aug 12 05:38:07 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Aug 12 06:52:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSkhy-0003CU-Hv
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 05:38:06 +0200
+	id 1KSlrZ-0000SW-Ft
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 06:52:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751437AbYHLDhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 23:37:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751433AbYHLDhD
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 23:37:03 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:33168 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751189AbYHLDhB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 23:37:01 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 10A932DC01B;
-	Mon, 11 Aug 2008 20:37:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1218470035-13864-4-git-send-email-marcus@griep.us>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1750875AbYHLEoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 00:44:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbYHLEoR
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 00:44:17 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:63069 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750807AbYHLEoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 00:44:17 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K5H00COK15N0YH0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 12 Aug 2008 00:44:11 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20080812012859.GT26363@spearce.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92066>
 
-Marcus Griep <marcus@griep.us> wrote:
-> Currently, in sub 'close_file', git-svn creates a temporary file and
-> copies the contents of the blob to be written into it. This is useful
-> for symlinks because svn stores symlinks in the form:
+On Mon, 11 Aug 2008, Shawn O. Pearce wrote:
+
+> > Junio C Hamano <gitster@pobox.com> wrote:
+> > > If the check is only about a thin delta base that is not going to be
+> > > transmit, I'd agree.  But I do not see how you are distinguishing that
+> > > case and the case where an object you are actually sending is missing (in
+> > > which case we would want to error out, wouldn't we?)
 > 
-> link $FILE_PATH
-> 
-> Git creates a blob only out of '$FILE_PATH' and uses file mode to
-> indicate that the blob should be interpreted as a symlink.
-> 
-> As git-hash-object is invoked with --stdin-paths, a duplicate of the
-> link from svn must be created that leaves off the first five bytes,
-> i.e. 'link '. However, this is wholly unnecessary for normal blobs,
-> though, as we already have a temp file with their contents. Copying
-> the entire file gains nothing, and effectively requires a file to be
-> written twice before making it into the object db.
-> 
-> This patch corrects that issue, holding onto the substr-like
-> duplication for symlinks, but skipping it altogether for normal blobs
-> by reusing the existing temp file.
+> Turns out to be pretty simple I think.  We just delay the
+> error handling for ->type < 0 until write_object().  If we
+> get this far we know we wanted to include the object but
+> we really don't have it.  Up until that point its fine
+> for us to get objects which are missing, we'll just wind
+> up with a suboptimal pack.
 
-Sweet optimization!  Thanks!
+If you're going to die anyway due to an object with unknown type, better 
+do so _before_ going through the delta search phase and leaving a 
+partial pack behind.  IOW, the type check can be performed in 
+prepare_pack() instead of write_object() like:
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 2dadec1..01ab49c 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1722,8 +1733,12 @@ static void prepare_pack(int window, int depth)
+ 		if (entry->no_try_delta)
+ 			continue;
+ 
+-		if (!entry->preferred_base)
++		if (!entry->preferred_base) {
+ 			nr_deltas++;
++			if (entry->type < 0)
++				die("unable to get type of object %s",
++				    sha1_to_hex(entry->idx.sha1));
++		}
+ 
+ 		delta_list[n++] = entry;
+ 	}
+
+Also a comment in check_object() mentioning where the return value of 
+sha1_object_info() is verified would be in order.
+
+And I also agree with Junio about a test script for this so the usage is 
+fully demonstrated, and to ensure it keeps on working as intended 
+(most people will simply never exercise this otherwise).
 
 
-One thing, again, can you please make sure things don't exceed
-80-columns when using 8 character-wide tabs?
-
-I'm not sure how much it matters to the guys maintaining Git.pm, but
-that's the standard for here and the Linux kernel (although it
-unfortunately seems to have gotten more lax in recent years...).
-
-Larger monitors can't help me because I use big fonts that would require
-me to move my neck or eyes to see across the screen, leading to more eye
-and neck strain (I have a bad neck).  I very much wish ANSI had
-standardized on something even smaller, perhaps 64-char wide terminals
-:)
-
--- 
-Eric Wong
+Nicolas
