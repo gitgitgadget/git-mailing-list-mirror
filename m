@@ -1,96 +1,234 @@
-From: "=?UTF-8?Q?Eddy_Petri=C8=99or?=" <eddy.petrisor@gmail.com>
-Subject: Re: [PATCH] git svn: should not display zombie externals
-Date: Tue, 12 Aug 2008 20:05:49 +0300
-Message-ID: <60381eeb0808121005h72ee6ef2g8a979d9f6875ee51@mail.gmail.com>
-References: <48923DAF.7070900@gmail.com> <48923E95.2020302@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] topgit: Implement tg-import
+Date: Tue, 12 Aug 2008 19:31:50 +0200
+Message-ID: <20080812173150.GM32184@machine.or.cz>
+References: <1218558943-14398-1-git-send-email-aneesh.kumar@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 12 19:07:32 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: aneesh.kumar@gmail.com
+X-From: git-owner@vger.kernel.org Tue Aug 12 19:33:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSxKp-00053B-PB
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 19:07:04 +0200
+	id 1KSxjs-0006Ig-Hl
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 19:32:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752450AbYHLRFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 13:05:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752579AbYHLRFx
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 13:05:53 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:33920 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752302AbYHLRFw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 13:05:52 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so958186yxm.1
-        for <git@vger.kernel.org>; Tue, 12 Aug 2008 10:05:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=GTMMXlQpmuZKHnUJcnyd6h1TIaXkEvTK/GjOGopnbn0=;
-        b=WTCbSkunybSke1nH5ONzG769qyZchIOUM3B6ynISJeybmOqUObEdSVvpycjfgH0RwK
-         uDWlTUroofgEimOKXovb0m/He5kjn0JjXcVHLZ6fn7kNg3pSx6x5Fw1HLzllbL4YdGfu
-         3wN7YvkF4e8OvwOP4b63nPGa7GI/OTY7I74Pc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=dRVSJdYlOipq1s+Vpc4zroX0SDIcj7pWyiEnYJBY9nT+751hX9MLAuPklCzt6d8Vmb
-         bVqCcDaZsAlkKoesJI4kO4AuqFYUbx5L7vHTgDj1PmPvN8dRN9pKsdTJRfJpFZnmmoIP
-         TKVWleLeLU4irsxEUHkptzhLRtER8deTLxgHQ=
-Received: by 10.114.158.1 with SMTP id g1mr5140651wae.111.1218560749201;
-        Tue, 12 Aug 2008 10:05:49 -0700 (PDT)
-Received: by 10.114.153.16 with HTTP; Tue, 12 Aug 2008 10:05:49 -0700 (PDT)
-In-Reply-To: <48923E95.2020302@gmail.com>
+	id S1750849AbYHLRby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 13:31:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750705AbYHLRbx
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 13:31:53 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:58443 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750779AbYHLRbx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 13:31:53 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 3714C393A816; Tue, 12 Aug 2008 19:31:50 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <1218558943-14398-1-git-send-email-aneesh.kumar@gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92118>
 
-MjAwOC84LzEgRWRkeSBQZXRyaciZb3IgPGVkZHkucGV0cmlzb3JAZ21haWwuY29tPjoKPgo+IGR1
-cmluZyB0aGUgaGlzdG9yeSBvZiBhIHJlcG8gYSBzdm46ZXh0ZXJuYWwgY291bGQgYmUgYWRkZWQg
-YW5kIGxhdGVyCj4gcmVtb3ZlZDsgc3VjaCBleHRlcm5hbHMgc2hvdWxkbid0IGJlIGRpc3BsYXll
-ZCBzaW5jZSBvbmx5IHRoZSBjdXJyZW50Cj4gc3RhdGUgaXMgcmVsZXZhbnQKPgo+IEkgaGF2ZSBl
-bmNvdW50ZXJlZCB0aGUgYnJva2VuIGJlaGF2aW91ciBvbiBhIGdpdC1zdm4gcmVwbyB3aXRoIHRo
-ZSBzdm4KPiBvcmlnaW4gYSByZXBvIHNlcnZlZCB2aWEgaHR0cHMgKGdpdCAxOjEuNS42LTF+YnBv
-NDArMSBmcm9tIERlYmlhbiBFdGNoCj4gYmFja3BvcnRzLikgSSBob3BlIHRoaXMgYnVnIGRvZXNu
-J3QgaGF2ZSB0byBkbyB3aXRoIHRoZSBzdm4gcmVwbyBiZWluZwo+IHNlcnZlZCB2aWEgaHR0cHMu
-CgpJIGhhdmUgZmluYWxseSBmb3VuZCB0aGUgcm9vdCBvZiB0aGlzIGJyZWFrYWdlLiBJdCBzZWVt
-cyB0aGF0IHRoZQpvbGRlciB2ZXJzaW9ucyBvZiBzdWJ2ZXJzaW9uIGFsbG93ZWQgYSBzdm46ZXh0
-ZXJuYWwgcHJvcGVydHkgdG8gYmUKZW1wdHksIHRodXMgZ2VuZXJhdGluZyB0aGUgem9tYmllIGV4
-dGVybmFscy4gTmV3ZXIgdmVyc2lvbnMgb2YKc3VidmVyc2lvbiAoSSBjaGVja2VkIHRoaXMgd2l0
-aCAxLjQuMiAocjIyMTk2KSBmcm9tIERlYmlhbiBFdGNoKSBkbwpub3QgYWxsb3cgc3VjaCBlbXB0
-eSBzdm46ZXh0ZXJuYWxzLgoKPiBTaWduZWQtb2ZmLWJ5OiBFZGR5IFBldHJpyJlvciA8ZWRkeS5w
-ZXRyaXNvckBnbWFpbC5jb20+Cj4gLS0tCj4gIHQvdDkxMDEtZ2l0LXN2bi1wcm9wcy5zaCB8ICAg
-MjMgKysrKysrKysrKysrKysrKysrKysrKy0KPiAgMSBmaWxlcyBjaGFuZ2VkLCAyMiBpbnNlcnRp
-b25zKCspLCAxIGRlbGV0aW9ucygtKQo+Cj4gZGlmZiAtLWdpdCBhL3QvdDkxMDEtZ2l0LXN2bi1w
-cm9wcy5zaCBiL3QvdDkxMDEtZ2l0LXN2bi1wcm9wcy5zaAo+IGluZGV4IGY0MjA3OTYuLmU1YWI3
-NDggMTAwNzU1Cj4gLS0tIGEvdC90OTEwMS1naXQtc3ZuLXByb3BzLnNoCj4gKysrIGIvdC90OTEw
-MS1naXQtc3ZuLXByb3BzLnNoCj4gQEAgLTIxMSw3ICsyMTEsMjggQEAgRU9GCj4KPiAgdGVzdF9l
-eHBlY3Rfc3VjY2VzcyAndGVzdCBwcm9wbGlzdCcgIgo+ICAgICAgICBnaXQtc3ZuIHByb3BsaXN0
-IC4gfCBjbXAgLSBwcm9wLmV4cGVjdCAmJgo+IC0gICAgICAgZ2l0LXN2biBwcm9wbGlzdCBuZXN0
-ZWQvZGlyZWN0b3J5Ly5rZWVwIHwgY21wIC0gcHJvcDIuZXhwZWN0Cj4gKyAgICAgICBnaXQtc3Zu
-IHByb3BsaXN0IG5lc3RlZC9kaXJlY3RvcnkvLmtlZXAgfCBjbXAgLSBwcm9wMi5leHBlY3QgJiYK
-PiArICAgICAgIGNkIC4uCj4gKyAgICAgICAiCj4gKwo+ICt0ZXN0X2V4cGVjdF9zdWNjZXNzICdz
-aG93IGV4dGVybmFsJyAiCj4gKyAgICAgICBjZCB0ZXN0X3djICYmCj4gKyAgICAgICAgICAgICAg
-IHN2biBwcm9wc2V0IHN2bjpleHRlcm5hbHMgJ3pvbWJpZSBmaWxlOi8vL2Zha2UvZXh0ZXJuYWwn
-IC4KPiAmJgo+ICsgICAgICAgICAgICAgICBzdm4gY2kgLW0gJ2FkZGVkIGEgZmFrZSBzdm46ZXh0
-ZXJuYWwnICYmCj4gKyAgICAgICBjZCAuLiAmJgo+ICsgICAgICAgZ2l0LXN2biBmZXRjaCAmJgo+
-ICsgICAgICAgZ2l0LW1lcmdlIGdpdC1zdm4gJiYKPiArICAgICAgIGdpdC1zdm4gc2hvdy1leHRl
-cm5hbHMgfCBncmVwIC1xICd6b21iaWUnCj4gKyAgICAgICAiCj4gKwo+ICt0ZXN0X2V4cGVjdF9z
-dWNjZXNzICdyZW1vdmUgZXh0ZXJuYWwnICIKPiArICAgICAgIGNkIHRlc3Rfd2MgJiYKPiArICAg
-ICAgICAgICAgICAgc3ZuIHByb3BkZWwgc3ZuOmV4dGVybmFscyAuICYmCj4gKyAgICAgICAgICAg
-ICAgIHN2biBjaSAtbSAnZGVsZXRlZCB0aGUgZmFrZSBleHRlcm5hbCcgJiYKPiArICAgICAgIGNk
-IC4uICYmCj4gKyAgICAgICBnaXQtc3ZuIGZldGNoICYmCj4gKyAgICAgICBnaXQtbWVyZ2UgZ2l0
-LXN2biAmJgo+ICsgICAgICAgZ2l0LXN2biBzaG93LWV4dGVybmFscyB8IGdyZXAgLXEgLXYgJ3pv
-bWJpZScKPiAgICAgICAgIgo+Cj4gIHRlc3RfZG9uZQo+IC0tCj4gMS41LjYuMwo+Cj4KPiBUaGlz
-IG9uZSBpcyBwcm9wZXJseSBmb3JtYXRlZCAodGhlIHByZXZpb3VzIG9uZSB3YXMgYSBjb3B5L3Bh
-c3RlIGZyb20gdGhlCj4gb3V0cHV0IG9mIHRoZSBjb25zb2xlKS4KPgoKCgotLSAKUmVnYXJkcywK
-RWRkeVAKPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiJJbWFn
-aW5hdGlvbiBpcyBtb3JlIGltcG9ydGFudCB0aGFuIGtub3dsZWRnZSIgQS5FaW5zdGVpbgo=
+  Hi,
+
+On Tue, Aug 12, 2008 at 10:05:43PM +0530, aneesh.kumar@gmail.com wrote:
+> From: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+> 
+> This can be used to import a set of commits
+> between range specified by range1..range2
+> This should help us to convert an already
+> existing quilt, stgit branches to topgit
+> managed one
+> 
+> Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+
+  thanks, unfortunately this script still needs work.
+
+> ---
+>  tg-import.sh |   97 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 files changed, 97 insertions(+), 0 deletions(-)
+>  create mode 100644 tg-import.sh
+
+  There seems to be no documentation.
+
+> diff --git a/tg-import.sh b/tg-import.sh
+> new file mode 100644
+> index 0000000..0158f3b
+> --- /dev/null
+> +++ b/tg-import.sh
+> @@ -0,0 +1,97 @@
+> +#!/bin/bash
+> +#derived out of git-format-patch.sh
+
+  I feel this is a wrong approach - it should be derived from some of
+the tg scripts instead. Please use the common header and options
+parsing infrastructure. Also, please adjust your script to be non-bash
+specific.
+
+> +function die()
+> +{
+> +	echo >&2 "$@"
+> +	exit 1
+> +}
+
+  We already have this function.
+
+> +function tg_get_commit_msg
+> +{
+> +	commit=$1
+
+  Please quote variables use; this also applies to the rest of the
+script.
+
+> +commitScript='
+
+  Indentation?
+
+> +	1,/^$/d
+> +	: loop
+> +	/^$/b loop
+> +	: body
+> +	p
+> +	n
+> +	b body'
+> +	author=$(git cat-file commit "$commit" | grep author |
+> +		cut -d ">" -f 1 | sed -ne "s/author//gp")
+> +	echo "From: "$author">"
+> +	git cat-file commit "$commit" | sed -ne "$commitScript"
+> +}
+
+  Wouldn't it be much more convenient to just use
+
+	git log -1 --pretty=format:"From: %an <%ae>%nSubject: %s%n%n%b"
+
+> +function tg_get_patch
+> +{
+> +	git show $1
+> +}
+> +
+> +function tg_get_branch_name
+> +{
+> +
+> +titleScript='
+> +	1,/^$/d
+> +	: loop
+> +	/^$/b loop
+> +	s/[^-a-z.A-Z_0-9]/-/g
+> +        s/\.\.\.*/\./g
+> +	s/\.*$//
+> +	s/--*/-/g
+> +	s/^-//
+> +	s/-$//
+> +	q
+> +'
+
+You should document the origin of this snippet.
+
+> +	commit=$1
+> +	title=$(git cat-file commit "$commit" | sed -e "$titleScript")
+> +	echo ${title}
+> +}
+> +
+> +tmp=.tmp-series$$
+
+Please use mktemp.
+
+Do you actually need the tmp file at all?
+
+> +trap 'rm -f $tmp-*' 0 1 2 3 15
+> +
+> +series=$tmp-series
+> +# Now we have what we want in $@
+
+We didn't before?
+
+> +for revpair
+> +do
+> +	case "$revpair" in
+> +	?*..?*)
+> +		rev1=`expr "z$revpair" : 'z\(.*\)\.\.'`
+> +		rev2=`expr "z$revpair" : 'z.*\.\.\(.*\)'`
+> +		;;
+> +	*)
+> +		echo >&2 "Unknow range spec $revpair"
+> +		exit
+
+die?
+
+> +		;;
+> +	esac
+> +	git rev-parse --verify "$rev1^0" >/dev/null 2>&1 ||
+> +		die "Not a valid rev $rev1 ($revpair)"
+> +	git rev-parse --verify "$rev2^0" >/dev/null 2>&1 ||
+> +		die "Not a valid rev $rev2 ($revpair)"
+> +	git cherry -v "$rev1" "$rev2" |
+> +	while read sign rev comment
+> +	do
+> +		case "$sign" in
+> +		'-')
+> +			echo >&2 "Merged already: $comment"
+
+info?
+
+> +			;;
+> +		*)
+> +			echo $rev
+
+Does it make sense to print it all out now?
+
+> +			;;
+> +		esac
+> +	done
+> +done >$series
+
+Why do we need all the rev-parses? Is the git cherry checking really
+useful?
+
+This flattens the commit structure, which is another problem; the commit
+relationships should rather be described in the .topdeps files. Using
+git log --parents should give us that information?
+
+> +while read commit
+> +do
+
+Why do you actually loop twice?
+
+> +	branch_name=$(tg_get_branch_name $commit)
+> +	echo "Importing $commit to $branch_name"
+> +	tg create tp/$branch_name
+
+Make this configurable?
+
+> +	tg_get_commit_msg $commit > .topmsg
+> +	git add .topmsg
+> +	git commit -a -m "Add the commit message for the topic branch"
+> +	tg_get_patch $commit | patch -p1
+
+Also, I don't think reimplementing git rebase here is good idea at all.
+I would just imagine the script to do something like
+
+	git rev-list ^HEAD lastcommit | while read commit; do
+		tg create tp/$branch_name
+		git read-tree $commit
+		git add .top*
+		git commit -C $commit
+	done
+
+So allow only to import commits that are _on top_ of the same commit the
+topic branches system is going to be based on.
+
+> +	git commit -a -m "Import the initial patch to the topic branch"
+
+Why two commits?
+
+> +done < $series
+
+-- 
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
