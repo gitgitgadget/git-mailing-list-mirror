@@ -1,62 +1,89 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: TOPGIT: [PATCH] tg create: add --force option to resolve merge
-	dependencies.
-Date: Tue, 12 Aug 2008 15:38:57 +0200
-Message-ID: <20080812133857.GL32184@machine.or.cz>
-References: <1218546106.7264.11.camel@heerbeest>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
-X-From: git-owner@vger.kernel.org Tue Aug 12 15:40:09 2008
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: [PATCH 1/2] gitattributes: Document built in hunk header patterns
+Date: Tue, 12 Aug 2008 16:24:25 +0200
+Message-ID: <1218551066-13012-1-git-send-email-hendeby@isy.liu.se>
+Cc: Gustaf Hendeby <hendeby@isy.liu.se>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 12 16:25:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSu6W-00046q-Oa
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 15:40:05 +0200
+	id 1KSuoh-00066H-PS
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 16:25:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752318AbYHLNjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 09:39:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752259AbYHLNjA
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 09:39:00 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:59567 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751651AbYHLNjA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 09:39:00 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 1C0A9393B282; Tue, 12 Aug 2008 15:38:57 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1218546106.7264.11.camel@heerbeest>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752082AbYHLOYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 10:24:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751993AbYHLOYa
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 10:24:30 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:37678 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751492AbYHLOYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 10:24:30 -0400
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 67DE725A69
+	for <git@vger.kernel.org>; Tue, 12 Aug 2008 16:24:28 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 20156-01; Sun, 31 Dec 1967 01:00:02 +0100 (MET)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id A90C225A53;
+	Tue, 12 Aug 2008 16:24:26 +0200 (MEST)
+Received: by pluring.isy.liu.se (Postfix, from userid 2087)
+	id 4E73E2ED78; Tue, 12 Aug 2008 16:24:26 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.rc2.37.gbb9f5.dirty
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92099>
 
-  Hi,
+Since the hunk header pattern text was written patterns for Ruby and
+Pascal/Delphi have been added.  For users to be able to find them they
+should be documented not only in code.
 
-On Tue, Aug 12, 2008 at 03:01:46PM +0200, Jan Nieuwenhuizen wrote:
-> I have been trying to adapt my ooo-build export to topgit
-> instead of plain git and ran into the (documented and
-> expected) merge conflicts in .top*.
-> 
-> After unsuccesfully trying to script around it in my
-> gob git-export script, I found that this simple tg-create.sh
-> seems to work for me: just remove any <<<,===,>>> from
-> .topdeps and simply generate the new .topmgs later.
-> 
-> What do you think?  Is this naive way of 'auto' resolving
-> dependency problems doing the right thing?
+Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
+---
 
-  how exactly did you get the morge conflicts? These should never happen
-- I don't think we document them either? Pre-0.2 TopGit with dash as
-/bin/sh had a bug that caused the conflicts to still happen, but that
-should've been fixed (check if your .git/info/attributes does not
-contain '-e' at the line beginnings ;-).
+Would it maybe be a good idea to also link to this information in the
+git diff documentation?  At the moment I can't find any documentation
+about hunk headers and hunk header patterns at all in the diff
+documentation.  The git diff documentation is the first place I would
+look for that kind of information.  OTOH, the diff documentation is
+already quite lengthy and I'm not really found of making it even
+longer.  Oppinions how this nice feature should best be made generally
+known?
 
+/Gustaf
+
+ Documentation/gitattributes.txt |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index d7b4114..c61a58d 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -307,9 +307,16 @@ backslash, and zero or more occurrences of `sub` followed by
+ There are a few built-in patterns to make this easier, and `tex`
+ is one of them, so you do not have to write the above in your
+ configuration file (you still need to enable this with the
+-attribute mechanism, via `.gitattributes`).  Another built-in
+-pattern is defined for `java` that defines a pattern suitable
+-for program text in Java language.
++attribute mechanism, via `.gitattributes`).  The following built in
++patterns are available:
++
++- `java` suitable for source code in the Java lanugage.
++
++- `pascal` suitable for source code in the Pascal/Delphi language.
++
++- `ruby` suitable for source code in the Ruby language.
++
++- `tex` suitable for source code for LaTeX documents.
+ 
+ 
+ Performing a three-way merge
 -- 
-				Petr "Pasky" Baudis
-The next generation of interesting software will be done
-on the Macintosh, not the IBM PC.  -- Bill Gates
+1.6.0.rc2.30.gf3f0.dirty
