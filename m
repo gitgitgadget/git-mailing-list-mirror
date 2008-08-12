@@ -1,60 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] filter-branch: use --simplify-merges
-Date: Mon, 11 Aug 2008 23:59:32 -0700
-Message-ID: <7vsktara5n.fsf@gitster.siamese.dyndns.org>
-References: <7viqub9dzi.fsf@gitster.siamese.dyndns.org>
- <7vljz3t2ts.fsf@gitster.siamese.dyndns.org>
- <7v7iant1yx.fsf@gitster.siamese.dyndns.org>
- <200808120747.22228.trast@student.ethz.ch>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2] Make cherry-pick use rerere for conflict   resolution.
+Date: Tue, 12 Aug 2008 09:02:05 +0200
+Message-ID: <48A1356D.6020200@viscovery.net>
+References: <1218368935-31124-1-git-send-email-ams@toroid.org> <alpine.DEB.1.00.0808110111430.24820@pacific.mpi-cbg.de.mpi-cbg.de> <20080811023053.GA9144@toroid.org> <alpine.DEB.1.00.0808111218160.24820@pacific.mpi-cbg.de.mpi-cbg.de> <20080811104006.GH32184@machine.or.cz> <alpine.DEB.1.00.0808111328590.24820@pacific.mpi-cbg.de.mpi-cbg.de> <48A0274D.8090504@viscovery.net> <alpine.DEB.1.00.0808111748220.24820@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jan Wielemaker <J.Wielemaker@uva.nl>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Aug 12 09:00:53 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, Abhijit Menon-Sen <ams@toroid.org>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 12 09:03:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSns8-00046L-Uu
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 09:00:49 +0200
+	id 1KSnuU-0004cw-Jm
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 09:03:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439AbYHLG7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 02:59:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751437AbYHLG7k
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 02:59:40 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61529 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751402AbYHLG7j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 02:59:39 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 61B2556F2E;
-	Tue, 12 Aug 2008 02:59:39 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 656B056F2D; Tue, 12 Aug 2008 02:59:34 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3B50FB54-683C-11DD-A9BE-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751510AbYHLHCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 03:02:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751505AbYHLHCM
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 03:02:12 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:63453 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751466AbYHLHCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 03:02:11 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KSntN-0000lj-S6; Tue, 12 Aug 2008 09:02:06 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 7EA3AAFCC; Tue, 12 Aug 2008 09:02:05 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <alpine.DEB.1.00.0808111748220.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92074>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Johannes Schindelin schrieb:
+> On Mon, 11 Aug 2008, Johannes Sixt wrote:
+>> If the reversal is part of a topic branch that you rebase at least once, 
+>> then you want to have the resolutions recorded, don't you?
+> 
+> That is not the revert we are talking about.  The revert we are talking 
+> about is a literal "git revert <commit>".  Not a replay of a commit (that 
+> might have been a revert originally).
 
-> Junio C Hamano wrote:
->>  ... 
->> Nevermind.  You based this on top of the "fix ancestor discovery" patch.
->>
->> I'll squash these two and queue them in 'pu' for now.
->
-> Please don't.  I'm still convinced the "fix ancestor discovery" is a
-> fix to current code that works independent of --simplify-merges.  If
-> you squash them, it cannot go into a release before --simplify-merges
-> even if I manage to convince Dscho of this.
+You are right. My example misses the point.
 
-Anything parked in 'pu' is a fair game for replacement later, so please
-send a replacement series and tell me to drop the previous ones from 'pu'.
+Another example is when you have to repeat the revert, say, you find out
+you did it on the wrong branch. When you repeat the 'git revert' on the
+correct branch, you want to have the resolutions replayed.
+
+> I am a little worried that these reverts (being negative changes) could 
+> interfer with the common operation: positive changes.  Although I haven't 
+> been able to come up with a scenario where the recorded revert would 
+> actively be wrong in a subsequent rebase/cherry-pick.
+
+I think that your worries are not justified.  A 'git revert' is not a
+"negative" change; it a change like any other. 'git revert' is just a
+short hand for a more sequence of diff+apply+commit.
+
+-- Hannes
