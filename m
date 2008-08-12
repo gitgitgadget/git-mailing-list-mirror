@@ -1,141 +1,100 @@
-From: "Bert Wesarg" <bert.wesarg@googlemail.com>
-Subject: Re: [TopGit PATCH v2] tg-create.sh: Support for multiple {to,cc,bcc} options
-Date: Tue, 12 Aug 2008 07:14:51 +0200
-Message-ID: <36ca99e90808112214hb8f01f0j30cff74e4f6c1ead@mail.gmail.com>
-References: <1218307736-24891-1-git-send-email-bert.wesarg@googlemail.com>
-	 <20080811204723.GF10151@machine.or.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] diff --check: do not unconditionally complain about trailing
+ empty lines
+Date: Mon, 11 Aug 2008 22:21:43 -0700
+Message-ID: <7vabfist94.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Aug 12 07:15:57 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 12 07:23:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSmEd-0005Aa-Kp
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 07:15:56 +0200
+	id 1KSmLM-0006YR-QY
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 07:22:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750878AbYHLFOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 01:14:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750930AbYHLFOx
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 01:14:53 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:51279 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750875AbYHLFOw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 01:14:52 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so760556ywe.1
-        for <git@vger.kernel.org>; Mon, 11 Aug 2008 22:14:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=QYuKkHBL+Vejt4hkgITbmpW9bFNm6goUzGq2vNRocBo=;
-        b=KjDkgaQeF6Nkyt1+I4Nc5fJSOSpoCCKBJPWt4oo435nLYEvBws8DbI+4r5LKOq0/0H
-         BSSydvuOtpHZshurGZbUNQbdcvjOWcadyEBjykhe66k0lbtUvPiAibc/AD08OWCeTqBF
-         l1RD0LFt3dIu6EEq+0bxFI0DmeZY6OT5RxIJs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=kUFP45AIgYrk1N+O0r0lGpLu8opBnE76wKoPQGEvaCJNHlEG/r4KLITQUHTaEGjiX0
-         m47McY4uwwLAp9OsAntlqoNkGWkSddpmzpSghva0oPZSuD9y/MZcCPSNREm8B9Isk9G8
-         XFCLVTEpSbfClkjIkmw+nN1Tac44ShGrrJmp4=
-Received: by 10.151.150.20 with SMTP id c20mr13672390ybo.6.1218518091315;
-        Mon, 11 Aug 2008 22:14:51 -0700 (PDT)
-Received: by 10.70.49.12 with HTTP; Mon, 11 Aug 2008 22:14:51 -0700 (PDT)
-In-Reply-To: <20080811204723.GF10151@machine.or.cz>
-Content-Disposition: inline
+	id S1750930AbYHLFVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 01:21:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751071AbYHLFVu
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 01:21:50 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54592 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750927AbYHLFVu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 01:21:50 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2E3F356989;
+	Tue, 12 Aug 2008 01:21:49 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id EDAC656988; Tue, 12 Aug 2008 01:21:45 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9068065E-682E-11DD-BF52-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92068>
 
-On Mon, Aug 11, 2008 at 22:47, Petr Baudis <pasky@suse.cz> wrote:
->  Hi,
->
-> On Sat, Aug 09, 2008 at 08:48:56PM +0200, Bert Wesarg wrote:
->> Git config supports multiple values for the same config key, so support it
->> for these TopGit config options, too.
->>
->> New in v2:
->> Print a RFC2822 compliant header.
->>
->> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
->
->  oops, I'm really sorry! I thought I already commented on this while
-> apparently, I forgot to.
->
->> ---
->>  tg-create.sh |   35 ++++++++++++++++++++++++++++++++---
->>  1 files changed, 32 insertions(+), 3 deletions(-)
->>
->> diff --git a/tg-create.sh b/tg-create.sh
->> index 6cce7ed..d7ee1d2 100644
->> --- a/tg-create.sh
->> +++ b/tg-create.sh
->> @@ -100,13 +100,42 @@ git checkout -b "$name"
->>  echo "$deps" | sed 's/ /\n/g' >"$root_dir/.topdeps"
->>  git add "$root_dir/.topdeps"
->>
->> +# Print a RFC2822 compliant header ($2) with values from the config option
->> +# ($1 without the topgit. prefix)
->> +get_multi_config()
->> +{
->> +     # Do we need to escape it for awk double quotes?
->> +     prefix="$2"
->> +     prefix_align="$(printf "%*s  " "${#2}" "")"
->> +
->> +     git config --get-all topgit.$1 |
->> +             awk '
->> +                     BEGIN {
->> +                             line = ""
->> +                             prefix = "'"$prefix"': "
->> +                     }
->> +                             {
->> +                                     if (line != "") {
->> +                                             print prefix line ","
->> +                                             prefix = "'"$prefix_align"'"
->> +                                     }
->> +                                     line = $0
->> +                             }
->> +                     END {
->> +                             if (line != "") {
->> +                                     print prefix line
->> +                             }
->> +                     }
->> +             '
->> +}
->> +
->
-> I'm not too happy about this, for several reasons:
->
->        (i) This code is so awfully complicated.
-For my first awk script, its very clean and not that complicated. I think ;-)
+Recently "git diff --check" learned to detect new trailing blank lines
+just like "git apply --whitespace" does.  However this check should not
+trigger unconditionally.  This patch makes it honor the whitespace
+settings from core.whitespace and gitattributes.
 
->
->        (ii) It would be simpler to just prefix all the further lines
-> with a tab; wouldn't something like
->
->                sed '2,$s/^/\t/'
-No objections with this.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ diff.c                  |    3 ++-
+ t/t4019-diff-wserror.sh |   21 ++++++++++++++++++++-
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 
->
-> actually work?
->
->        (iii) This is troublesome because now header values can span
-> multiple lines. Until now, we were just blisfully ignorant about this
-> possibility. At least tg export needs to be adjusted to account for this
-> now, and I fear dealing with this will be pretty annoying when
-> prototyping new features.
-Than we should go back to v1. As I asked in a previous line: "But do
-we generate a valid mail with tg patch, or just a patch file with some
-special looking lines?"
-
-Bert
-> --
->                                Petr "Pasky" Baudis
+diff --git a/diff.c b/diff.c
+index 8746c60..6954f99 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1631,7 +1631,8 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
+ 		ecb.priv = &data;
+ 		xdi_diff(&mf1, &mf2, &xpp, &xecfg, &ecb);
+ 
+-		if (data.trailing_blanks_start) {
++		if ((data.ws_rule & WS_TRAILING_SPACE) &&
++		    data.trailing_blanks_start) {
+ 			fprintf(o->file, "%s:%d: ends with blank lines.\n",
+ 				data.filename, data.trailing_blanks_start);
+ 			data.status = 1; /* report errors */
+diff --git a/t/t4019-diff-wserror.sh b/t/t4019-diff-wserror.sh
+index 0d9cbb6..dfa11f6 100755
+--- a/t/t4019-diff-wserror.sh
++++ b/t/t4019-diff-wserror.sh
+@@ -13,7 +13,8 @@ test_expect_success setup '
+ 	echo " 	HT and SP indent" >>F &&
+ 	echo "With trailing SP " >>F &&
+ 	echo "Carriage ReturnQ" | tr Q "\015" >>F &&
+-	echo "No problem" >>F
++	echo "No problem" >>F &&
++	echo >>F
+ 
+ '
+ 
+@@ -160,4 +161,21 @@ test_expect_success 'with cr-at-eol (attribute)' '
+ 
+ '
+ 
++test_expect_success 'trailing empty lines (1)' '
++
++	rm -f .gitattributes &&
++	test_must_fail git diff --check >output &&
++	grep "ends with blank lines." output &&
++	grep "trailing whitespace" output
++
++'
++
++test_expect_success 'trailing empty lines (2)' '
++
++	echo "F -whitespace" >.gitattributes &&
++	git diff --check >output &&
++	! test -s output
++
++'
++
+ test_done
