@@ -1,102 +1,86 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] git-daemon: Simplify child management and associated
-	logging by
-Date: Wed, 13 Aug 2008 00:32:24 +0200
-Message-ID: <20080812223224.GA4134@steel.home>
-References: <20080812193613.32388.92145.stgit@aristoteles.cuci.nl> <20080812212534.6871.19377.stgit@aristoteles.cuci.nl>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: TopGit: problem with patch series generation
+Date: Tue, 12 Aug 2008 19:41:55 -0300
+Message-ID: <20080812224155.GB15521@lapse.rw.madduck.net>
+References: <20080812161854.GB30067@lapse.rw.madduck.net> <8aa486160808121428t259f5340x6d1a14cadedac30c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Wed Aug 13 00:33:44 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jho1yZJdad60DJr+"
+To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>,
+	git discussion list <git@vger.kernel.org>, pasky@suse.cz,
+	Manoj Srivastava <srivasta@debian.org>,
+	vcs distro packaging discussion li
+X-From: git-owner@vger.kernel.org Wed Aug 13 00:42:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KT2Qk-0006Vt-2e
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 00:33:30 +0200
+	id 1KT2Z9-0000rj-W7
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 00:42:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752110AbYHLWc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 18:32:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751985AbYHLWc1
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 18:32:27 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.181]:64790 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751928AbYHLWc1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 18:32:27 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20lf5y8=
-Received: from tigra.home (Fab06.f.strato-dslnet.de [195.4.171.6])
-	by post.webmailer.de (mrclete mo44) (RZmta 16.47)
-	with ESMTP id j02f52k7CIVIAN ; Wed, 13 Aug 2008 00:32:25 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 1B01A277AE;
-	Wed, 13 Aug 2008 00:32:25 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id D30AA56D2A; Wed, 13 Aug 2008 00:32:24 +0200 (CEST)
+	id S1752034AbYHLWlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 18:41:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbYHLWlI
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 18:41:08 -0400
+Received: from clegg.madduck.net ([193.242.105.96]:40741 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751985AbYHLWlH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 18:41:07 -0400
+Received: from lapse.rw.madduck.net (unknown [209.13.181.29])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id B28FF1D40AD;
+	Wed, 13 Aug 2008 00:40:47 +0200 (CEST)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id 1587C80B5; Tue, 12 Aug 2008 19:41:55 -0300 (ART)
 Content-Disposition: inline
-In-Reply-To: <20080812212534.6871.19377.stgit@aristoteles.cuci.nl>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <8aa486160808121428t259f5340x6d1a14cadedac30c@mail.gmail.com>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel
+	2.6.24-etchnhalf.1+scoflowctrl.1-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.93.1/8021/Tue Aug 12 21:27:39 2008 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92149>
 
-Stephen R. van den Berg, Tue, Aug 12, 2008 23:25:35 +0200:
-> +        struct child*newborn;
 
-You may want to reformat the patch using tabs instead of spaces.
+--jho1yZJdad60DJr+
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> +        newborn = xmalloc(sizeof *newborn);
+also sprach Santi B=E9jar <sbejar@gmail.com> [2008.08.12.1828 -0300]:
+> I don=B4t know if it fits topgit, but this is what Junio uses:
+>=20
+> http://article.gmane.org/gmane.comp.version-control.git/24498
 
-The custom here is to use "sizeof(type)". Brackets and typename.
+I think this is definitely something TopGit can automate.
 
-> +        if (newborn) {
-> +	        struct child**cradle,*blanket;
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+"life is what happens to you while you're busy making other plans."
+                                                        -- john lennon
+=20
+spamtraps: madduck.bogus@madduck.net
 
-"struct child **cradle, *blanket;" (the spaces before asterisks)
+--jho1yZJdad60DJr+
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
 
-> +		memcpy(memset(&newborn->address, 0, sizeof newborn->address),
-> +		 addr, addrlen);
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Aren't separate calls easier to read (and type)?
+iEYEARECAAYFAkiiEbIACgkQIgvIgzMMSnViegCfYycawcoPu8B4gDq5Ay6LIRy+
+SC0Anif0iP3/yFbwiPe5sxJj0bL8dfNq
+=kMGE
+-----END PGP SIGNATURE-----
 
-	memset(&newborn->address, 0, sizeof(newborn->address));
-	memcpy(&newborn->address, addr, addrlen);
-
-> -static void kill_some_children(int signo, unsigned start, unsigned stop)
-> +static void kill_some_child(int signo)
->  {
-> -	start %= MAX_CHILDREN;
-> -	stop %= MAX_CHILDREN;
-> -	while (start != stop) {
-> -		if (!(start & 3))
-> -			kill(live_child[start].pid, signo);
-> -		start = (start + 1) % MAX_CHILDREN;
-> +	const struct child *blanket;
-> +
-> +	if ((blanket = firstborn)) {
-
-	if (firstborn) {
-	    const struct child *blanket = firstborn;
-
-You don't even use blanket outside of the "if".
-
->  static void check_dead_children(void)
->  {
-> +		loginfo("[%d] Disconnected%s", (int)pid, dead);
-
-BTW, why do you need that pid_t->int cast?
-
-> @@ -1105,6 +1026,10 @@ int main(int argc, char **argv)
->  			init_timeout = atoi(arg+15);
->  			continue;
->  		}
-> +		if (!prefixcmp(arg, "--max-connections=")) {
-> +			max_connections = atoi(arg+18);
-
-An error checking wouldn't go amiss. And it can't be done with atoi
-(consider strtol).
+--jho1yZJdad60DJr+--
