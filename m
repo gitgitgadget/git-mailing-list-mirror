@@ -1,70 +1,85 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] Make cherry-pick use rerere for conflict   resolution.
-Date: Tue, 12 Aug 2008 09:02:05 +0200
-Message-ID: <48A1356D.6020200@viscovery.net>
-References: <1218368935-31124-1-git-send-email-ams@toroid.org> <alpine.DEB.1.00.0808110111430.24820@pacific.mpi-cbg.de.mpi-cbg.de> <20080811023053.GA9144@toroid.org> <alpine.DEB.1.00.0808111218160.24820@pacific.mpi-cbg.de.mpi-cbg.de> <20080811104006.GH32184@machine.or.cz> <alpine.DEB.1.00.0808111328590.24820@pacific.mpi-cbg.de.mpi-cbg.de> <48A0274D.8090504@viscovery.net> <alpine.DEB.1.00.0808111748220.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: clone branching?
+Date: Tue, 12 Aug 2008 09:34:35 +0200
+Message-ID: <20080812073435.GA30811@diana.vm.bytemark.co.uk>
+References: <4b6f054f0808111124g58309f64v496ceb250a068985@mail.gmail.com> <20080811203917.GA20662@diana.vm.bytemark.co.uk> <4b6f054f0808111324x5a7c44afj6f93bc1e36fc481a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, Abhijit Menon-Sen <ams@toroid.org>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Aug 12 09:03:16 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Trans <transfire@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 12 09:13:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSnuU-0004cw-Jm
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 09:03:15 +0200
+	id 1KSo4S-0007jR-UK
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 09:13:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510AbYHLHCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 03:02:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751505AbYHLHCM
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 03:02:12 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:63453 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751466AbYHLHCL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 03:02:11 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KSntN-0000lj-S6; Tue, 12 Aug 2008 09:02:06 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 7EA3AAFCC; Tue, 12 Aug 2008 09:02:05 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.DEB.1.00.0808111748220.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751742AbYHLHM2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Aug 2008 03:12:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751773AbYHLHM2
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 03:12:28 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1923 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751714AbYHLHM2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 03:12:28 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KSoOp-00086N-00; Tue, 12 Aug 2008 08:34:35 +0100
+Content-Disposition: inline
+In-Reply-To: <4b6f054f0808111324x5a7c44afj6f93bc1e36fc481a@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92075>
 
-Johannes Schindelin schrieb:
-> On Mon, 11 Aug 2008, Johannes Sixt wrote:
->> If the reversal is part of a topic branch that you rebase at least once, 
->> then you want to have the resolutions recorded, don't you?
-> 
-> That is not the revert we are talking about.  The revert we are talking 
-> about is a literal "git revert <commit>".  Not a replay of a commit (that 
-> might have been a revert originally).
+On 2008-08-11 16:24:57 -0400, Trans wrote:
 
-You are right. My example misses the point.
+> On Mon, Aug 11, 2008 at 4:39 PM, Karl Hasselstr=F6m <kha@treskal.com>
+> wrote:
+>
+> > git supports multiple branches per repository/working copy, but
+> > doesn't force you to have more than one. And it's very easy to
+> > pull changes from one repo to another.
+>
+> In retrospect, It's more the tags I need rather then branches, but
+> just the same... So if I have a repository like:
+>
+>   myapp/
+>     1.0.0/
+>     1.0.1/
+>     1.1.0/
+>     current/
+>
+> This would be okay? No other "giter" is going to look at this and
+> think "what the hell?"
 
-Another example is when you have to repeat the revert, say, you find out
-you did it on the wrong branch. When you repeat the 'git revert' on the
-correct branch, you want to have the resolutions replayed.
+That would be OK. But "myapp" wouldn't be a repository -- it'd be a
+directory that contains four repositories. Each of those repositories
+would have a specific branch checked out, but they'd probably all
+contain the full set of tags and branches.
 
-> I am a little worried that these reverts (being negative changes) could 
-> interfer with the common operation: positive changes.  Although I haven't 
-> been able to come up with a scenario where the recorded revert would 
-> actively be wrong in a subsequent rebase/cherry-pick.
+> Hmm... actually I don't see how this can work. If .get is under
+> current/ than no one will be able to see the tags on my shared repo,
+> but if it is under myapp/ then I'd be branching and tagging my tags
+> --that's doesn't make any sense. I'm confused.
 
-I think that your worries are not justified.  A 'git revert' is not a
-"negative" change; it a change like any other. 'git revert' is just a
-short hand for a more sequence of diff+apply+commit.
+All your repositories have a .git directory. That's what makes them
+git reppositories.
 
--- Hannes
+I think what you need to do to get un-confused is to learn about how
+git stores history. Specifically, that
+
+  1. the history consists of a DAG of commits, and
+
+  2. that branches and tags are just named pointers to commits.
+
+http://eagain.net/articles/git-for-computer-scientists/ is a short and
+sweet introduction.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
