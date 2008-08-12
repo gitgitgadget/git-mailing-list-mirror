@@ -1,68 +1,50 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: How to edit commit messages?
-Date: Tue, 12 Aug 2008 14:49:49 +0200
-Message-ID: <vpqd4kepfde.fsf@bauges.imag.fr>
-References: <g7s088$o1p$1@ger.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: fastest way to check if dir is a workdir
+Date: Tue, 12 Aug 2008 09:01:28 -0400
+Message-ID: <20080812130128.GA28658@sigill.intra.peff.net>
+References: <200808121334.57066.thomas@koch.ro>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: dr.chiarello@gmail.com
-X-From: git-owner@vger.kernel.org Tue Aug 12 14:53:17 2008
+To: Thomas Koch <thomas@koch.ro>
+X-From: git-owner@vger.kernel.org Tue Aug 12 15:03:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KStN6-0002xW-SA
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 14:53:09 +0200
+	id 1KStWI-0006gy-Nr
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 15:02:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754193AbYHLMv3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Aug 2008 08:51:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754184AbYHLMv2
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 08:51:28 -0400
-Received: from imag.imag.fr ([129.88.30.1]:61328 "EHLO imag.imag.fr"
+	id S1753010AbYHLNBf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 09:01:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752875AbYHLNBf
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 09:01:35 -0400
+Received: from peff.net ([208.65.91.99]:4435 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754156AbYHLMv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 08:51:27 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m7CCnrvn015944
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 12 Aug 2008 14:49:53 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KStJt-0000FM-47; Tue, 12 Aug 2008 14:49:49 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KStJt-0008Bt-1i; Tue, 12 Aug 2008 14:49:49 +0200
-In-Reply-To: <g7s088$o1p$1@ger.gmane.org> (dr chiarello's message of "Tue\, 12 Aug 2008 14\:38\:32 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 12 Aug 2008 14:49:53 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752179AbYHLNBe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 09:01:34 -0400
+Received: (qmail 23299 invoked by uid 111); 12 Aug 2008 13:01:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 12 Aug 2008 09:01:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Aug 2008 09:01:28 -0400
+Content-Disposition: inline
+In-Reply-To: <200808121334.57066.thomas@koch.ro>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92095>
 
-dr.chiarello@gmail.com writes:
+On Tue, Aug 12, 2008 at 01:34:56PM +0200, Thomas Koch wrote:
 
-> Hi all,
-> =A0 what are the best solution to:
-> 1) interactively edit commit's messages (some or all)
+> I'm writing a little php-git-wrapper and would like to have a function
+> which tells me, whether a given path is part of a git checkout or not.
+> 
+> What would be the fastest commandline to check, whether the current dir
+> is part of a checkout? It may be assumed that the repository is at the
+> standard position.
 
-  git rebase -i
+How about "git rev-parse --is-inside-work-tree"?
 
-can help.
-
-> 2) batch edit commit's messages (for example using sed)
-
-  git filter-branch --msg-filter sed 's/foo/bar/'
-
-should do it.
-
---=20
-Matthieu
+-Peff
