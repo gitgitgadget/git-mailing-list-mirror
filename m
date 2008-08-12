@@ -1,89 +1,80 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 3/3] filter-branch: use --simplify-merges
-Date: Tue, 12 Aug 2008 10:45:59 +0200
-Message-ID: <fb479cdb219a3ebbcd19cc864a50dd76c603b38a.1218529494.git.trast@student.ethz.ch>
-References: <cover.1218529494.git.trast@student.ethz.ch>
- <b6bda5e5028aea161e5d18e0c70c45d5a94dac82.1218529494.git.trast@student.ethz.ch>
- <2c31171ea3181f9dfe7c96a2af98e1a5bcf1358a.1218529494.git.trast@student.ethz.ch>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jan Wielemaker <J.Wielemaker@uva.nl>
+From: Thomas Koch <thomas@koch.ro>
+Subject: tried submodules and corrupted repo
+Date: Tue, 12 Aug 2008 10:09:38 +0200
+Organization: Young Media Concepts
+Message-ID: <200808121009.38941.thomas@koch.ro>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Tue Aug 12 10:47:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSpXB-0002oq-Sf
+	id 1KSpXC-0002oq-Hc
 	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 10:47:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751985AbYHLIqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 04:46:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751993AbYHLIqB
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 04:46:01 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:33951 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751978AbYHLIp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 04:45:59 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 12 Aug 2008 10:45:54 +0200
-Received: from localhost.localdomain ([129.132.149.43]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 12 Aug 2008 10:45:53 +0200
-X-Mailer: git-send-email 1.6.0.rc2.30.gb6bda
-In-Reply-To: <2c31171ea3181f9dfe7c96a2af98e1a5bcf1358a.1218529494.git.trast@student.ethz.ch>
-In-Reply-To: <7vsktara5n.fsf@gitster.siamese.dyndns.org>
-References: <7vsktara5n.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 12 Aug 2008 08:45:53.0677 (UTC) FILETIME=[D473C3D0:01C8FC57]
+	id S1752029AbYHLIqO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 04:46:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752010AbYHLIqM
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 04:46:12 -0400
+Received: from koch.ro ([195.34.83.107]:42477 "EHLO
+	ve825703057.providerbox.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751993AbYHLIqL (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Aug 2008 04:46:11 -0400
+Received: from 217-162-251-183.dclient.hispeed.ch ([217.162.251.183] helo=jona.local)
+	by ve825703057.providerbox.net with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <thomas@koch.ro>)
+	id 1KSowz-0007uh-6j
+	for git@vger.kernel.org; Tue, 12 Aug 2008 10:09:54 +0200
+User-Agent: KMail/1.9.9
+Content-Disposition: inline
+X-Spam_score: -2.3
+X-Spam_score_int: -22
+X-Spam_bar: --
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92082>
 
-Use rev-list --simplify-merges everywhere.  This changes the behaviour
-of --subdirectory-filter in cases such as
+Hi,
 
-  O -- A -\
-   \       \
-    \- B -- M
+in my trial to use a submodule, it seems that I messed up my repo.
 
-where A and B bring the same changes to the subdirectory: It now keeps
-both sides of the merge.  Previously, the history would have been
-simplified to 'O -- A'.  Merges of unrelated side histories that never
-touch the subdirectory are still removed.
+I've put both repos at
+http://git.koch.ro
+clone url is
+http://git.koch.ro/git/REPONAME
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- git-filter-branch.sh |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+I wanted to have the git-php-wrapper repo as a submodule inside wigit,
+which did not work at all. I always ended up with a git-php-wrapper
+subdir and a .git inside it, but no workdir files.
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index a140337..2688254 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -232,11 +232,11 @@ mkdir ../map || die "Could not create map/ directory"
- case "$filter_subdir" in
- "")
- 	git rev-list --reverse --topo-order --default HEAD \
--		--parents "$@"
-+		--parents --simplify-merges "$@"
- 	;;
- *)
- 	git rev-list --reverse --topo-order --default HEAD \
--		--parents "$@" -- "$filter_subdir"
-+		--parents --simplify-merges "$@" -- "$filter_subdir"
- esac > ../revs || die "Could not get the commits"
- commits=$(wc -l <../revs | tr -d " ")
- 
-@@ -326,7 +326,8 @@ then
- 	do
- 		sha1=$(git rev-parse "$ref"^0)
- 		test -f "$workdir"/../map/$sha1 && continue
--		ancestor=$(git rev-list -1 $ref -- "$filter_subdir")
-+		ancestor=$(git rev-list --simplify-merges -1 \
-+				$ref -- "$filter_subdir")
- 		test "$ancestor" && echo $(map $ancestor) >> "$workdir"/../map/$sha1
- 	done < "$tempdir"/heads
- fi
+Now I wanted to start from scratch, to clone wigit again to my local
+machine. But when I try
+git clone http://git.koch.ro/git/wigit
+it says:
+Initialized empty Git repository in /var/checkouts/wigit/.git/
+warning: remote HEAD refers to nonexistent ref, unable to checkout.
+
+Is there a way to resque my wigit repo? And how to get the submodule
+working afterwards? 
+
+Best regards,
 -- 
-1.6.0.rc2.30.gb6bda
+Thomas Koch, Software Developer
+http://www.koch.ro
+
+Young Media Concepts GmbH
+Sonnenstr. 4
+CH-8280 Kreuzlingen
+Switzerland
+
+Tel    +41 (0)71 / 508 24 86
+Fax    +41 (0)71 / 560 53 89
+Mobile +49 (0)170 / 753 89 16
+Web    www.ymc.ch
