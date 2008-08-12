@@ -1,82 +1,122 @@
-From: Petr Baudis <pasky@suse.cz>
+From: martin f krafft <madduck@madduck.net>
 Subject: Re: TopGit: problem with patch series generation
-Date: Wed, 13 Aug 2008 00:59:16 +0200
-Message-ID: <20080812225916.GN10151@machine.or.cz>
-References: <20080812161854.GB30067@lapse.rw.madduck.net> <8aa486160808121428t259f5340x6d1a14cadedac30c@mail.gmail.com> <20080812224155.GB15521@lapse.rw.madduck.net>
+Date: Tue, 12 Aug 2008 20:07:27 -0300
+Message-ID: <20080812230727.GB16481@lapse.rw.madduck.net>
+References: <20080812161854.GB30067@lapse.rw.madduck.net>
+	<20080812173257.GK10151@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Santi =?iso-8859-2?Q?B=E9jar?= <sbejar@gmail.com>,
-	git discussion list <git@vger.kernel.org>,
+Content-Type: multipart/mixed; boundary="===============6514446152805932296=="
+To: Petr Baudis <pasky@suse.cz>, git discussion list <git@vger.kernel.org>,
 	Manoj Srivastava <srivasta@debian.org>,
-	vcs distro packaging discussion list 
+	vcs distro packaging discussion list
 	<vcs-pkg-discuss@lists.alioth.debian.org>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Wed Aug 13 01:00:21 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+X-From: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org Wed Aug 13 01:11:17 2008
+Return-path: <vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org>
+Envelope-to: gcpv-vcs-pkg-discuss@m.gmane.org
+Received: from alioth.debian.org ([217.196.43.134])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KT2qi-0006MS-OZ
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 01:00:21 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752322AbYHLW7U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Aug 2008 18:59:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751548AbYHLW7T
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 18:59:19 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:33456 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751457AbYHLW7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 18:59:19 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id DF89A393A807; Wed, 13 Aug 2008 00:59:16 +0200 (CEST)
+	id 1KT31H-0000bm-T7
+	for gcpv-vcs-pkg-discuss@m.gmane.org; Wed, 13 Aug 2008 01:11:15 +0200
+Received: from localhost
+	([127.0.0.1] helo=alioth.debian.org ident=list)
+	by alioth.debian.org with esmtp (Exim 4.63)
+	(envelope-from <vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org>)
+	id 1KT30M-0000y0-0T
+	for gcpv-vcs-pkg-discuss@m.gmane.org; Tue, 12 Aug 2008 23:10:18 +0000
+Received: from seamus.madduck.net ([213.203.238.82])
+	by alioth.debian.org with esmtp (Exim 4.63)
+	(envelope-from <madduck@lapse.rw.madduck.net>) id 1KT30D-0000o8-Da
+	for vcs-pkg-discuss@lists.alioth.debian.org;
+	Tue, 12 Aug 2008 23:10:14 +0000
+Received: from lapse.rw.madduck.net (unknown [209.13.181.29])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net",
+	Issuer "CAcert Class 3 Root" (verified OK))
+	by seamus.madduck.net (postfix) with ESMTPS id 34D47440AB5;
+	Wed, 13 Aug 2008 01:09:53 +0200 (CEST)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id 04EE680B6; Tue, 12 Aug 2008 20:07:27 -0300 (ART)
+In-Reply-To: <20080812173257.GK10151@machine.or.cz>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel
+	2.6.24-etchnhalf.1+scoflowctrl.1-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.93.1/8021/Tue Aug 12 21:27:39 2008 on
+	seamus.madduck.net
+X-Virus-Status: Clean
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on alioth.debian.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham
+	version=3.2.3
+X-BeenThere: vcs-pkg-discuss@lists.alioth.debian.org
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: Discussions on using VCS for distro packaging
+	<vcs-pkg-discuss.lists.alioth.debian.org>
+List-Unsubscribe: <http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss>,
+	<mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=unsubscribe>
+List-Archive: <http://lists.alioth.debian.org/pipermail/vcs-pkg-discuss>
+List-Post: <mailto:vcs-pkg-discuss@lists.alioth.debian.org>
+List-Help: <mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=help>
+List-Subscribe: <http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss>,
+	<mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=subscribe>
+Mime-version: 1.0
+Sender: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+Errors-To: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+X-SA-Exim-Connect-IP: 127.0.0.1
+X-SA-Exim-Mail-From: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+X-SA-Exim-Scanned: No (on alioth.debian.org); SAEximRunCond expanded to false
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92152>
+
+
+--===============6514446152805932296==
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="FkmkrVfFsRoUs1wW"
 Content-Disposition: inline
-In-Reply-To: <20080812224155.GB15521@lapse.rw.madduck.net>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92151>
 
-On Tue, Aug 12, 2008 at 07:41:55PM -0300, martin f krafft wrote:
-> also sprach Santi B=E9jar <sbejar@gmail.com> [2008.08.12.1828 -0300]:
-> > I don=B4t know if it fits topgit, but this is what Junio uses:
-> >=20
-> > http://article.gmane.org/gmane.comp.version-control.git/24498
->=20
-> I think this is definitely something TopGit can automate.
 
-This seems to be in principle the same as the tie branches. It might
-make sense to have a way to _optionally_ make a tie branch.
+--FkmkrVfFsRoUs1wW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-How should that work? Maybe there needs to be even an explicit support
-for this - should TopGit just check the dependency tree when
-sequencing the topic branches and have a step that says:
+also sprach Petr Baudis <pasky@suse.cz> [2008.08.12.1432 -0300]:
+> I'm not really happy about this idea, though. It would complicate
+> TopGit even much more than it is now, and I'm not sure if this is
+> worth it instead of just requiring you to maintain your
+> dependencies more carefully when you intend to serialize your
+> series later.
 
-	"I'm going to sequence branch A. If there is branch T that has
-	only already sequenced branches + branch A as dependencies,
-	use T's content instead of A."
-
-Would that be satisfactory?
-
-=46inding out this information would be very expensive, of course. But =
-for
-other reasons, we might want to keep a cache of branch dependencies.
-
-Of course, in the case of
-
-        A1--A2--A3--A4--C
-                       /
-        B1--B2--B3--B4.
-
-the sequenced branches would still be like
-
-        A1--A2--A3--A4--B1--B2--B3--C
-
-unless you create the T1..T4 branches manually.
+Sure, but there are no dependencies between some of these branches.
 
 --=20
-				Petr "Pasky" Baudis
-The next generation of interesting software will be done
-on the Macintosh, not the IBM PC.  -- Bill Gates
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+"i worked myself up from nothing to a state of extreme poverty."
+                                                       -- groucho marx
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--FkmkrVfFsRoUs1wW
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkiiF68ACgkQIgvIgzMMSnVO6QCgv+lvKByqfriaitq7gCz8eYvw
+oVIAnA53ZYmy6LMAUPIvJZ6y3wFzanrd
+=GUEC
+-----END PGP SIGNATURE-----
+
+--FkmkrVfFsRoUs1wW--
+
+
+--===============6514446152805932296==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
