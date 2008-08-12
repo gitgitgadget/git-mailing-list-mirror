@@ -1,7 +1,7 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [EGIT PATCH 26/26] Rewrite AssumeUnchangedOperation to use DirCache
-Date: Mon, 11 Aug 2008 18:08:13 -0700
-Message-ID: <1218503293-14057-27-git-send-email-spearce@spearce.org>
+Subject: [EGIT PATCH 21/26] Add debugging commands to interact with the new DirCache code
+Date: Mon, 11 Aug 2008 18:08:08 -0700
+Message-ID: <1218503293-14057-22-git-send-email-spearce@spearce.org>
 References: <1218503293-14057-1-git-send-email-spearce@spearce.org>
  <1218503293-14057-2-git-send-email-spearce@spearce.org>
  <1218503293-14057-3-git-send-email-spearce@spearce.org>
@@ -23,244 +23,417 @@ References: <1218503293-14057-1-git-send-email-spearce@spearce.org>
  <1218503293-14057-19-git-send-email-spearce@spearce.org>
  <1218503293-14057-20-git-send-email-spearce@spearce.org>
  <1218503293-14057-21-git-send-email-spearce@spearce.org>
- <1218503293-14057-22-git-send-email-spearce@spearce.org>
- <1218503293-14057-23-git-send-email-spearce@spearce.org>
- <1218503293-14057-24-git-send-email-spearce@spearce.org>
- <1218503293-14057-25-git-send-email-spearce@spearce.org>
- <1218503293-14057-26-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Aug 12 03:11:27 2008
+X-From: git-owner@vger.kernel.org Tue Aug 12 03:11:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSiPf-0006OQ-IO
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 03:11:04 +0200
+	id 1KSiPb-0006OQ-6Y
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 03:11:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752577AbYHLBJg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 21:09:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752532AbYHLBJf
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 21:09:35 -0400
-Received: from george.spearce.org ([209.20.77.23]:38645 "EHLO
+	id S1752017AbYHLBJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 21:09:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751973AbYHLBJX
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 21:09:23 -0400
+Received: from george.spearce.org ([209.20.77.23]:38619 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750869AbYHLBJP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 21:09:15 -0400
+	with ESMTP id S1751582AbYHLBIk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 21:08:40 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id D7EF23838B; Tue, 12 Aug 2008 01:08:41 +0000 (UTC)
+	id 204CC3841C; Tue, 12 Aug 2008 01:08:39 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+X-Spam-Status: No, score=-4.3 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 8DC013837C;
-	Tue, 12 Aug 2008 01:08:21 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id EC5243838A;
+	Tue, 12 Aug 2008 01:08:19 +0000 (UTC)
 X-Mailer: git-send-email 1.6.0.rc2.22.g71b99
-In-Reply-To: <1218503293-14057-26-git-send-email-spearce@spearce.org>
+In-Reply-To: <1218503293-14057-21-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92046>
 
-Its faster to use the DirCache and run over the range of entries
-than to use GitIndex and probe the hash many times as we are in
-a loop over the resources in the workspace.
+These debug commands allow the command line user to read or write
+the dircache, to exercise the code, and test it against C Git.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../egit/core/op/AssumeUnchangedOperation.java     |  133 ++++++++++----------
- 1 files changed, 69 insertions(+), 64 deletions(-)
+ .../services/org.spearce.jgit.pgm.TextBuiltin      |    5 ++
+ .../org/spearce/jgit/pgm/debug/MakeCacheTree.java  |   67 ++++++++++++++++++
+ .../org/spearce/jgit/pgm/debug/ReadDirCache.java   |   53 ++++++++++++++
+ .../org/spearce/jgit/pgm/debug/ShowCacheTree.java  |   69 +++++++++++++++++++
+ .../org/spearce/jgit/pgm/debug/ShowDirCache.java   |   72 ++++++++++++++++++++
+ .../org/spearce/jgit/pgm/debug/WriteDirCache.java  |   54 +++++++++++++++
+ 6 files changed, 320 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/MakeCacheTree.java
+ create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/ReadDirCache.java
+ create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/ShowCacheTree.java
+ create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/ShowDirCache.java
+ create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/WriteDirCache.java
 
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/op/AssumeUnchangedOperation.java b/org.spearce.egit.core/src/org/spearce/egit/core/op/AssumeUnchangedOperation.java
-index 78a84bb..fa70b6c 100644
---- a/org.spearce.egit.core/src/org/spearce/egit/core/op/AssumeUnchangedOperation.java
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/op/AssumeUnchangedOperation.java
-@@ -1,6 +1,7 @@
- /*******************************************************************************
-  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
-  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
-+ * Copyright (C) 2008, Google Inc.
-  *
-  * All rights reserved. This program and the accompanying materials
-  * are made available under the terms of the Eclipse Public License v1.0
-@@ -11,11 +12,11 @@ package org.spearce.egit.core.op;
- import java.io.IOException;
- import java.util.Collection;
- import java.util.IdentityHashMap;
--import java.util.Iterator;
-+import java.util.Map;
+diff --git a/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin b/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin
+index 734de3d..8ff815a 100644
+--- a/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin
++++ b/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin
+@@ -12,4 +12,9 @@ org.spearce.jgit.pgm.RevList
+ org.spearce.jgit.pgm.ShowRev
+ org.spearce.jgit.pgm.Tag
  
- import org.eclipse.core.resources.IContainer;
-+import org.eclipse.core.resources.IProject;
- import org.eclipse.core.resources.IResource;
--import org.eclipse.core.resources.IResourceVisitor;
- import org.eclipse.core.resources.IWorkspaceRunnable;
- import org.eclipse.core.runtime.CoreException;
- import org.eclipse.core.runtime.IAdaptable;
-@@ -23,9 +24,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
- import org.eclipse.core.runtime.NullProgressMonitor;
- import org.spearce.egit.core.Activator;
- import org.spearce.egit.core.CoreText;
-+import org.spearce.egit.core.project.GitProjectData;
- import org.spearce.egit.core.project.RepositoryMapping;
--import org.spearce.jgit.lib.GitIndex;
--import org.spearce.jgit.lib.GitIndex.Entry;
++org.spearce.jgit.pgm.debug.MakeCacheTree
++org.spearce.jgit.pgm.debug.ReadDirCache
++org.spearce.jgit.pgm.debug.ShowCacheTree
+ org.spearce.jgit.pgm.debug.ShowCommands
++org.spearce.jgit.pgm.debug.ShowDirCache
++org.spearce.jgit.pgm.debug.WriteDirCache
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/MakeCacheTree.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/MakeCacheTree.java
+new file mode 100644
+index 0000000..a7d7438
+--- /dev/null
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/MakeCacheTree.java
+@@ -0,0 +1,67 @@
++/*
++ * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.pgm.debug;
++
 +import org.spearce.jgit.dircache.DirCache;
-+import org.spearce.jgit.dircache.DirCacheEntry;
-+import org.spearce.jgit.lib.Repository;
- 
- /**
-  * Tell JGit to ignore changes in selected files
-@@ -33,87 +36,89 @@ import org.spearce.jgit.lib.GitIndex.Entry;
- public class AssumeUnchangedOperation implements IWorkspaceRunnable {
- 	private final Collection rsrcList;
- 
-+	private final IdentityHashMap<Repository, DirCache> caches;
++import org.spearce.jgit.dircache.DirCacheTree;
++import org.spearce.jgit.pgm.TextBuiltin;
 +
-+	private final IdentityHashMap<RepositoryMapping, Object> mappings;
-+
- 	/**
- 	 * Create a new operation to ignore changes in tracked files
--	 *
-+	 * 
- 	 * @param rsrcs
--	 *            collection of {@link IResource}s which should be 
--	 *            ignored when looking for changes or committing.
-+	 *            collection of {@link IResource}s which should be ignored when
-+	 *            looking for changes or committing.
- 	 */
- 	public AssumeUnchangedOperation(final Collection rsrcs) {
- 		rsrcList = rsrcs;
-+		caches = new IdentityHashMap<Repository, DirCache>();
-+		mappings = new IdentityHashMap<RepositoryMapping, Object>();
- 	}
- 
- 	public void run(IProgressMonitor m) throws CoreException {
--		if (m == null) {
-+		if (m == null)
- 			m = new NullProgressMonitor();
--		}
- 
--		final IdentityHashMap<RepositoryMapping, Boolean> tomerge = new IdentityHashMap<RepositoryMapping, Boolean>();
--		m.beginTask(CoreText.AssumeUnchangedOperation_adding, rsrcList.size() * 200);
-+		caches.clear();
-+		mappings.clear();
-+
-+		m.beginTask(CoreText.AssumeUnchangedOperation_adding,
-+				rsrcList.size() * 200);
- 		try {
- 			for (Object obj : rsrcList) {
--				obj = ((IAdaptable)obj).getAdapter(IResource.class);
--				if (obj instanceof IResource) {
--					final IResource toAssumeValid = (IResource)obj;
--					final RepositoryMapping rm = RepositoryMapping.getMapping(toAssumeValid);
--					final GitIndex index = rm.getRepository().getIndex();
--
--					if (toAssumeValid instanceof IContainer) {
--						((IContainer)toAssumeValid).accept(new IResourceVisitor() {
--							public boolean visit(IResource resource) throws CoreException {
--								try {
--									String repoPath = rm.getRepoRelativePath(resource);
--									Entry entry = index.getEntry(repoPath);
--									if (entry != null) {
--										if (!entry.isAssumedValid()) {
--											entry.setAssumeValid(true);
--											tomerge.put(rm, Boolean.TRUE);
--										}
--									}
--								} catch (IOException e) {
--									e.printStackTrace();
--									throw Activator.error(CoreText.AssumeUnchangedOperation_failed, e);
--								}
--								return true;
--							}
--						},IResource.DEPTH_INFINITE, IContainer.EXCLUDE_DERIVED);
--					} else {
--						String repoPath = rm.getRepoRelativePath((IResource) obj);
--						Entry entry = index.getEntry(repoPath);
--						if (entry != null) {
--							if (!entry.isAssumedValid()) {
--								entry.setAssumeValid(true);
--								tomerge.put(rm, Boolean.TRUE);
--							}
--						}
--					}
--				}
-+				obj = ((IAdaptable) obj).getAdapter(IResource.class);
-+				if (obj instanceof IResource)
-+					assumeValid((IResource) obj);
- 				m.worked(200);
- 			}
--			for (RepositoryMapping rm : tomerge.keySet()) {
--				m.setTaskName("Writing index for "+rm.getRepository().getDirectory());
--				rm.getRepository().getIndex().write();
-+
-+			for (Map.Entry<Repository, DirCache> e : caches.entrySet()) {
-+				final Repository db = e.getKey();
-+				final DirCache editor = e.getValue();
-+				m.setTaskName("Writing index for " + db.getDirectory());
-+				editor.write();
-+				editor.commit();
- 			}
- 		} catch (RuntimeException e) {
--			e.printStackTrace();
--			throw Activator.error(CoreText.AssumeUnchangedOperation_failed, e);
-+			throw Activator.error(CoreText.UntrackOperation_failed, e);
- 		} catch (IOException e) {
--			e.printStackTrace();
--			throw Activator.error(CoreText.AssumeUnchangedOperation_failed, e);
-+			throw Activator.error(CoreText.UntrackOperation_failed, e);
- 		} finally {
-+			for (final RepositoryMapping rm : mappings.keySet())
-+				rm.fireRepositoryChanged();
-+			caches.clear();
-+			mappings.clear();
-+			m.done();
-+		}
++class MakeCacheTree extends TextBuiltin {
++	@Override
++	protected void run() throws Exception {
++		final DirCache cache = DirCache.read(db);
++		final DirCacheTree tree = cache.getCacheTree(true);
++		show(tree);
 +	}
 +
-+	private void assumeValid(final IResource resource) throws CoreException {
-+		final IProject proj = resource.getProject();
-+		final GitProjectData pd = GitProjectData.get(proj);
-+		if (pd == null)
-+			return;
-+		final RepositoryMapping rm = pd.getRepositoryMapping(resource);
-+		if (rm == null)
-+			return;
-+		final Repository db = rm.getRepository();
++	private void show(final DirCacheTree tree) {
++		out.print("\"");
++		out.print(tree.getPathString());
++		out.print("\"");
++		out.print(":  ");
++		out.print(tree.getEntrySpan());
++		out.print(" entries");
++		out.print(", ");
++		out.print(tree.getChildCount());
++		out.print(" children");
++		out.println();
 +
-+		DirCache cache = caches.get(db);
-+		if (cache == null) {
- 			try {
--				final Iterator i = tomerge.keySet().iterator();
--				while (i.hasNext()) {
--					final RepositoryMapping r = (RepositoryMapping) i.next();
--					r.getRepository().getIndex().read();
--					r.fireRepositoryChanged();
--				}
--			} catch (IOException e) {
--				e.printStackTrace();
--			} finally {
--				m.done();
-+				cache = DirCache.lock(db);
-+			} catch (IOException err) {
-+				throw Activator.error(CoreText.UntrackOperation_failed, err);
- 			}
-+			caches.put(db, cache);
-+			mappings.put(rm, rm);
++		for (int i = 0; i < tree.getChildCount(); i++)
++			show(tree.getChild(i));
++	}
++}
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/ReadDirCache.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/ReadDirCache.java
+new file mode 100644
+index 0000000..d92a9fd
+--- /dev/null
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/ReadDirCache.java
+@@ -0,0 +1,53 @@
++/*
++ * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.pgm.debug;
++
++import org.spearce.jgit.dircache.DirCache;
++import org.spearce.jgit.pgm.TextBuiltin;
++
++class ReadDirCache extends TextBuiltin {
++	@Override
++	protected void run() throws Exception {
++		final int cnt = 100;
++		final long start = System.currentTimeMillis();
++		for (int i = 0; i < cnt; i++)
++			DirCache.read(db);
++		final long end = System.currentTimeMillis();
++		out.println(" average " + ((end - start) / cnt) + " ms/read");
++	}
++}
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/ShowCacheTree.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/ShowCacheTree.java
+new file mode 100644
+index 0000000..0683fa7
+--- /dev/null
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/ShowCacheTree.java
+@@ -0,0 +1,69 @@
++/*
++ * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.pgm.debug;
++
++import org.spearce.jgit.dircache.DirCache;
++import org.spearce.jgit.dircache.DirCacheTree;
++import org.spearce.jgit.pgm.TextBuiltin;
++
++class ShowCacheTree extends TextBuiltin {
++	@Override
++	protected void run() throws Exception {
++		final DirCache cache = DirCache.read(db);
++		final DirCacheTree tree = cache.getCacheTree(false);
++		if (tree == null)
++			throw die("no 'TREE' section in index");
++		show(tree);
++	}
++
++	private void show(final DirCacheTree tree) {
++		out.print("\"");
++		out.print(tree.getPathString());
++		out.print("\"");
++		out.print(":  ");
++		out.print(tree.getEntrySpan());
++		out.print(" entries");
++		out.print(", ");
++		out.print(tree.getChildCount());
++		out.print(" children");
++		out.println();
++
++		for (int i = 0; i < tree.getChildCount(); i++)
++			show(tree.getChild(i));
++	}
++}
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/ShowDirCache.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/ShowDirCache.java
+new file mode 100644
+index 0000000..0822503
+--- /dev/null
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/ShowDirCache.java
+@@ -0,0 +1,72 @@
++/*
++ * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.pgm.debug;
++
++import java.text.SimpleDateFormat;
++import java.util.Date;
++
++import org.spearce.jgit.dircache.DirCache;
++import org.spearce.jgit.dircache.DirCacheEntry;
++import org.spearce.jgit.lib.FileMode;
++import org.spearce.jgit.pgm.TextBuiltin;
++
++class ShowDirCache extends TextBuiltin {
++	@Override
++	protected void run() throws Exception {
++		final SimpleDateFormat fmt;
++		fmt = new SimpleDateFormat("yyyyMMdd,HHmmss.SSS");
++
++		final DirCache cache = DirCache.read(db);
++		for (int i = 0; i < cache.getEntryCount(); i++) {
++			final DirCacheEntry ent = cache.getEntry(i);
++			final FileMode mode = FileMode.fromBits(ent.getRawMode());
++			final int len = ent.getLength();
++			final Date mtime = new Date(ent.getLastModified());
++
++			out.print(mode);
++			out.format(" %6d", len);
++			out.print(' ');
++			out.print(fmt.format(mtime));
++			out.print(' ');
++			out.print(ent.getObjectId());
++			out.print('\t');
++			out.print(ent.getPathString());
++			out.println();
 +		}
++	}
++}
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/WriteDirCache.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/WriteDirCache.java
+new file mode 100644
+index 0000000..a613cbe
+--- /dev/null
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/WriteDirCache.java
+@@ -0,0 +1,54 @@
++/*
++ * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
 +
-+		final String path = rm.getRepoRelativePath(resource);
-+		if (resource instanceof IContainer) {
-+			for (final DirCacheEntry ent : cache.getEntriesWithin(path))
-+				ent.setAssumeValid(true);
-+		} else {
-+			final DirCacheEntry ent = cache.getEntry(path);
-+			if (ent != null)
-+				ent.setAssumeValid(true);
- 		}
- 	}
- }
++package org.spearce.jgit.pgm.debug;
++
++import org.spearce.jgit.dircache.DirCache;
++import org.spearce.jgit.pgm.TextBuiltin;
++
++class WriteDirCache extends TextBuiltin {
++	@Override
++	protected void run() throws Exception {
++		final DirCache cache = DirCache.read(db);
++		if (!cache.lock())
++			throw die("failed to lock index");
++		cache.read();
++		cache.write();
++		if (!cache.commit())
++			throw die("failed to commit index");
++	}
++}
 -- 
 1.6.0.rc2.22.g71b99
