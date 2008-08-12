@@ -1,108 +1,102 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFH] filter-branch: ancestor detection weirdness
-Date: Wed, 13 Aug 2008 00:15:51 +0200
-Message-ID: <200808130016.13948.trast@student.ethz.ch>
-References: <200808080148.27384.trast@student.ethz.ch> <200808091200.21634.trast@student.ethz.ch> <7v7ialrk9a.fsf@gitster.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] git-daemon: Simplify child management and associated
+	logging by
+Date: Wed, 13 Aug 2008 00:32:24 +0200
+Message-ID: <20080812223224.GA4134@steel.home>
+References: <20080812193613.32388.92145.stgit@aristoteles.cuci.nl> <20080812212534.6871.19377.stgit@aristoteles.cuci.nl>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart38083914.WXyhTt8BAg";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 00:17:19 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Wed Aug 13 00:33:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KT2B0-0001t2-DN
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 00:17:14 +0200
+	id 1KT2Qk-0006Vt-2e
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 00:33:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751505AbYHLWQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 18:16:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751411AbYHLWQJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 18:16:09 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:17782 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750849AbYHLWQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 18:16:08 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 13 Aug 2008 00:16:06 +0200
-Received: from [192.168.0.4] ([84.75.158.234]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 13 Aug 2008 00:16:05 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <7v7ialrk9a.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 12 Aug 2008 22:16:06.0050 (UTC) FILETIME=[03AF3820:01C8FCC9]
+	id S1752110AbYHLWc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 18:32:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751985AbYHLWc1
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 18:32:27 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.181]:64790 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751928AbYHLWc1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 18:32:27 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20lf5y8=
+Received: from tigra.home (Fab06.f.strato-dslnet.de [195.4.171.6])
+	by post.webmailer.de (mrclete mo44) (RZmta 16.47)
+	with ESMTP id j02f52k7CIVIAN ; Wed, 13 Aug 2008 00:32:25 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 1B01A277AE;
+	Wed, 13 Aug 2008 00:32:25 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id D30AA56D2A; Wed, 13 Aug 2008 00:32:24 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080812212534.6871.19377.stgit@aristoteles.cuci.nl>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92148>
 
---nextPart38083914.WXyhTt8BAg
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Stephen R. van den Berg, Tue, Aug 12, 2008 23:25:35 +0200:
+> +        struct child*newborn;
 
-Junio C Hamano wrote:
-> Hmm, Dscho, perhaps we should take Thomas's patch as a "revert to 685ef54
-> to fix breakage introduced by 813b473", and demonstrate the breakage with
-> one of the new tests in his series?
+You may want to reformat the patch using tabs instead of spaces.
 
-Now you've lost me.
+> +        newborn = xmalloc(sizeof *newborn);
 
-If you're saying 813b473 is at fault: it is not.  The code I'm trying
-to fix came about in dfd05e38.
+The custom here is to use "sizeof(type)". Brackets and typename.
 
-To see that the change in 813b473 is ok, you can simply run the
-following in git.git:
+> +        if (newborn) {
+> +	        struct child**cradle,*blanket;
 
-  diff -u <(git rev-list --reverse --parents --topo-order HEAD -- gitk) \
-    <(git rev-list --reverse --topo-order HEAD -- gitk | while read commit
-      do echo $(git rev-list -1 --parents $commit -- gitk); done)
+"struct child **cradle, *blanket;" (the spaces before asterisks)
 
-The one thing that breaks down is (04c6e9e:git-filter-branch.sh:331)
+> +		memcpy(memset(&newborn->address, 0, sizeof newborn->address),
+> +		 addr, addrlen);
 
-        for p in $( (cd "$workdir"/../map; ls | sed "s/^/^/") |
-                git rev-list $ref --boundary --stdin |
-                sed -n "s/^-//p")
+Aren't separate calls easier to read (and type)?
 
-> I also _suspect_ that if you use --simplify-merges, the optimization
-> made by 813b473 would still be usable even with path limiter.
+	memset(&newborn->address, 0, sizeof(newborn->address));
+	memcpy(&newborn->address, addr, addrlen);
 
-It is always usable, if we are careful enough to use the same limiting
-arguments in all rev-lists involved.
+> -static void kill_some_children(int signo, unsigned start, unsigned stop)
+> +static void kill_some_child(int signo)
+>  {
+> -	start %= MAX_CHILDREN;
+> -	stop %= MAX_CHILDREN;
+> -	while (start != stop) {
+> -		if (!(start & 3))
+> -			kill(live_child[start].pid, signo);
+> -		start = (start + 1) % MAX_CHILDREN;
+> +	const struct child *blanket;
+> +
+> +	if ((blanket = firstborn)) {
 
-> By the way, I am not sure if using --simplify-merges unconditionally is
-> necessarily a good thing to do.
+	if (firstborn) {
+	    const struct child *blanket = firstborn;
 
-I think filter-branch would need a generic mechanism to pass arguments
-that affect commit selection.  Passing '-- -- file' or '-- ^commit' to
-filter-branch --subdirectory-filter will probably break a few things,
-so it either needs to recognize those arguments itself or have a
-mechanism to specify them, if we want to support it.  This also goes
-for the simplification mode.
+You don't even use blanket outside of the "if".
 
-=2D Thomas
+>  static void check_dead_children(void)
+>  {
+> +		loginfo("[%d] Disconnected%s", (int)pid, dead);
 
-=2D-=20
-Thomas Rast
-trast@student.ethz.ch
+BTW, why do you need that pid_t->int cast?
 
+> @@ -1105,6 +1026,10 @@ int main(int argc, char **argv)
+>  			init_timeout = atoi(arg+15);
+>  			continue;
+>  		}
+> +		if (!prefixcmp(arg, "--max-connections=")) {
+> +			max_connections = atoi(arg+18);
 
---nextPart38083914.WXyhTt8BAg
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkiiC60ACgkQqUud07tmzP32cACfdKL/RlKKKp14K63+F5b+nO8Y
-P3cAn3B2Ea52qXIwjma99JknHgT5+sRj
-=zrmn
------END PGP SIGNATURE-----
-
---nextPart38083914.WXyhTt8BAg--
+An error checking wouldn't go amiss. And it can't be done with atoi
+(consider strtol).
