@@ -1,86 +1,77 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: TopGit: problem with patch series generation
-Date: Tue, 12 Aug 2008 19:41:55 -0300
-Message-ID: <20080812224155.GB15521@lapse.rw.madduck.net>
-References: <20080812161854.GB30067@lapse.rw.madduck.net> <8aa486160808121428t259f5340x6d1a14cadedac30c@mail.gmail.com>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [PATCH] git-daemon: Simplify child management and associated logging by
+Date: Wed, 13 Aug 2008 00:56:42 +0200
+Message-ID: <20080812225642.GA15265@cuci.nl>
+References: <20080812193613.32388.92145.stgit@aristoteles.cuci.nl> <20080812212534.6871.19377.stgit@aristoteles.cuci.nl> <7vzlnhq48b.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jho1yZJdad60DJr+"
-To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>,
-	git discussion list <git@vger.kernel.org>, pasky@suse.cz,
-	Manoj Srivastava <srivasta@debian.org>,
-	vcs distro packaging discussion li
-X-From: git-owner@vger.kernel.org Wed Aug 13 00:42:12 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 13 00:58:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KT2Z9-0000rj-W7
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 00:42:12 +0200
+	id 1KT2od-0005hl-Bh
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 00:58:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752034AbYHLWlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 18:41:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbYHLWlI
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 18:41:08 -0400
-Received: from clegg.madduck.net ([193.242.105.96]:40741 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751985AbYHLWlH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 18:41:07 -0400
-Received: from lapse.rw.madduck.net (unknown [209.13.181.29])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id B28FF1D40AD;
-	Wed, 13 Aug 2008 00:40:47 +0200 (CEST)
-Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
-	id 1587C80B5; Tue, 12 Aug 2008 19:41:55 -0300 (ART)
+	id S1752289AbYHLW4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 18:56:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752285AbYHLW4n
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 18:56:43 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:52360 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752289AbYHLW4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 18:56:43 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 13D255465; Wed, 13 Aug 2008 00:56:42 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <8aa486160808121428t259f5340x6d1a14cadedac30c@mail.gmail.com>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel
-	2.6.24-etchnhalf.1+scoflowctrl.1-686 i686
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.93.1/8021/Tue Aug 12 21:27:39 2008 on clegg.madduck.net
-X-Virus-Status: Clean
+In-Reply-To: <7vzlnhq48b.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92150>
 
+Junio C Hamano wrote:
+>"Stephen R. van den Berg" <srb@cuci.nl> writes:
+>Sorry, but this does too many things in one patch.
 
---jho1yZJdad60DJr+
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, I know, got carried away.  Then again, the code has a lot of
+overlapping places (spacewise); I kind of leapt from one place to the
+next; you fix one thing, and then the next wart stares you in the face.
+I'll see if I can split it up, if that suits you better.
 
-also sprach Santi B=E9jar <sbejar@gmail.com> [2008.08.12.1828 -0300]:
-> I don=B4t know if it fits topgit, but this is what Junio uses:
->=20
-> http://article.gmane.org/gmane.comp.version-control.git/24498
+> - Taking advantage of poll() getting interrupted by SIGCHLD, so that you
+>   do not have to do anything in the signal handler, is so obvious that I
+>   am actually ashamed of not having to think of it the last time we
+>   touched this code.  Is there a poll() that does not return EINTR but
+>   just call the handler and restart after that as if nothing has
+>   happened, I have to wonder...
 
-I think this is definitely something TopGit can automate.
+Only if the signal is set to SIG_IGN on all systems I worked with since
+1987.
 
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"life is what happens to you while you're busy making other plans."
-                                                        -- john lennon
-=20
-spamtraps: madduck.bogus@madduck.net
+> - Conversion from silly fixed array to dynamic and configurable maximum
+>   would be a good idea, but that is independent from the above, isn't it?
 
---jho1yZJdad60DJr+
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
+It is, but the code is on the same lines (in large parts).
+Separating it causes two things:
+a. The patches to become dependent on each other in the timeline.
+b. More (redundant) work, because some parts that need to be rewritten, get
+   deleted by the following patch(es).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+> - I see you have a call to vsyslog, which is the first user of the
+>   function.  How portable is it (the patch coming from you, I know
+>   Solaris would have it, and recent 4BSD also would, but what about the
+>   others)?
 
-iEYEARECAAYFAkiiEbIACgkQIgvIgzMMSnViegCfYycawcoPu8B4gDq5Ay6LIRy+
-SC0Anif0iP3/yFbwiPe5sxJj0bL8dfNq
-=kMGE
------END PGP SIGNATURE-----
+Cygwin has it, Solaris does, Linux does, MacOSX does.
+AIX and HPUX don't, perhaps.
+I'll see what I can do to avoid it, yet simplify the code.
+-- 
+Sincerely,
+           Stephen R. van den Berg.
 
---jho1yZJdad60DJr+--
+Father's Day Special at the local clinic -- Vasectomy!
