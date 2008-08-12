@@ -1,98 +1,126 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: RFC: Allow missing objects during packing
-Date: Mon, 11 Aug 2008 18:28:59 -0700
-Message-ID: <20080812012859.GT26363@spearce.org>
-References: <20080811182839.GJ26363@spearce.org> <7vk5enuqfg.fsf@gitster.siamese.dyndns.org> <20080811224404.GQ26363@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 12 03:30:06 2008
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: [PATCH] git-submodule foreach - Include output and clarify usage.
+Date: Mon, 11 Aug 2008 21:45:52 -0400
+Message-ID: <1218505552-3276-1-git-send-email-mlevedahl@gmail.com>
+References: <7vhc9rwain.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Mark Levedahl <mlevedahl@gmail.com>
+To: gitster@pobox.com, pasky@suse.cz, johan@herland.net
+X-From: git-owner@vger.kernel.org Tue Aug 12 03:47:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSii5-0003kq-3h
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 03:30:05 +0200
+	id 1KSiyU-0007To-P0
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 03:47:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751204AbYHLB3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 21:29:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbYHLB3A
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 21:29:00 -0400
-Received: from george.spearce.org ([209.20.77.23]:48042 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751164AbYHLB3A (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 21:29:00 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6996E38375; Tue, 12 Aug 2008 01:28:59 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20080811224404.GQ26363@spearce.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1750976AbYHLBp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 21:45:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750987AbYHLBp7
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 21:45:59 -0400
+Received: from wr-out-0506.google.com ([64.233.184.236]:23294 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750971AbYHLBp6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 21:45:58 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so1655391wri.5
+        for <git@vger.kernel.org>; Mon, 11 Aug 2008 18:45:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=/x9CaPZBj2rlUZ/8R++RIjqTr5c11nTFJbO9EbvXmD8=;
+        b=trFXaxEXkKBoe9hgZBrMDW9/GZP+kA92dRdsSV1T0jIZjisnA99N5xJ6m4hGkgNEsL
+         JmG0au0PZleVAXaWZWkB60L81ZWzS95J30Mf+TsOQa3NxdJmr8wJmaQLwXBmzh4agbXF
+         RYwlRWJwakNI84OKqSKnjCJ9BlN8lXjAlzG90=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=j8bHhlXf7zG0qkUgPC4IXnBQohTF3SYskYSD8hPVwS5foQtHgSsJAOAlRoXi7EkK2t
+         wsA/LvypAtpIMMiLMJGCyuoxD+5EL3E1FCdUjzOZLDO2ObsH/usVEQ7z/Dqzloym2U2I
+         MJmP0SD1Ga67wXZWu67IXFEDoqPtTiQN68BqU=
+Received: by 10.90.90.4 with SMTP id n4mr4804005agb.108.1218505557646;
+        Mon, 11 Aug 2008 18:45:57 -0700 (PDT)
+Received: from localhost.localdomain ( [71.163.41.46])
+        by mx.google.com with ESMTPS id 18sm1288820wry.18.2008.08.11.18.45.56
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 11 Aug 2008 18:45:57 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.rc2.45.g1363
+In-Reply-To: <7vhc9rwain.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92058>
 
-> Junio C Hamano <gitster@pobox.com> wrote:
-> > If the check is only about a thin delta base that is not going to be
-> > transmit, I'd agree.  But I do not see how you are distinguishing that
-> > case and the case where an object you are actually sending is missing (in
-> > which case we would want to error out, wouldn't we?)
+Petr Baudis provided good feedback on the list, leading to this
+patch to modify foreach.
 
-Turns out to be pretty simple I think.  We just delay the
-error handling for ->type < 0 until write_object().  If we
-get this far we know we wanted to include the object but
-we really don't have it.  Up until that point its fine
-for us to get objects which are missing, we'll just wind
-up with a suboptimal pack.
+This clarifies that the input to "foreach" is a single shell command,
+though internally foreach evaluates "$@" so *may* work even if the
+user fails to enclose the command in quotes. Also, this adds output
+of each submodule entered unless --quiet is given, providing feedback
+at the command line but still allowing a script to precisely control
+the output given.
 
-We also don't even need to report the error from sha1_object_info
-as it already issues an error message (see sha1_loose_object_info).
-
---8<--
-pack-objects: Allow missing base objects when creating thin packs
-
-If we are building a thin pack and one of the base objects we would
-consider for deltification is missing its OK, the other side already
-has that base object.  We may be able to get a delta from another
-object, or we can simply send the new object whole (no delta).
-
-This allows a shallow clone which may have only commits and trees
-(but only partial blobs) to generate a pack for a fetch client,
-so the shallow clone only needs to contain objects that are not
-in the common base.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
 ---
- builtin-pack-objects.c |    5 ++---
- 1 files changed, 2 insertions(+), 3 deletions(-)
+ Documentation/git-submodule.txt |   12 +++++++-----
+ git-submodule.sh                |    3 ++-
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 2dadec1..187cb19 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -243,6 +243,8 @@ static unsigned long write_object(struct sha1file *f,
- 		crc32_begin(f);
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 3470795..abbd5b7 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -14,7 +14,7 @@ SYNOPSIS
+ 'git submodule' [--quiet] init [--] [<path>...]
+ 'git submodule' [--quiet] update [--init] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--summary-limit <n>] [commit] [--] [<path>...]
+-'git submodule' foreach <command-list>
++'git submodule' [--quiet] foreach <command>
  
- 	type = entry->type;
-+	if (type < 0)
-+		die("unable to read object %s", sha1_to_hex(entry->idx.sha1));
  
- 	/* write limit if limited packsize and not first object */
- 	limit = pack_size_limit && nr_written ?
-@@ -1096,9 +1098,6 @@ static void check_object(struct object_entry *entry)
- 	}
+ DESCRIPTION
+@@ -125,14 +125,16 @@ summary::
+ 	index or working tree (switched by --cached) are shown.
  
- 	entry->type = sha1_object_info(entry->idx.sha1, &entry->size);
--	if (entry->type < 0)
--		die("unable to get type of object %s",
--		    sha1_to_hex(entry->idx.sha1));
- }
+ foreach::
+-	Executes an arbitrary list of commands in each checked out submodule.
++	Evaluates an arbitrary shell command in each checked out submodule.
++	The command has access to the variables $path and $sha1:
+ 	$path is the name of the submodule directory relative to the
+ 	superproject, and $sha1 is the commit as recorded in the superproject.
+ 	Any submodules defined in the superproject but not checked out are
+-	ignored by this command, and an empty command-list provides no output.
+-	A non-zero return from the command-list in any submodule causes
++	ignored by this command. Unless given --quiet, foreach prints the name
++	of each submodule before evaluating the command.
++	A non-zero return from the command in any submodule causes
+ 	the processing to terminate. This can be overridden by adding '|| :'
+-	to the end of the command list.
++	to the end of the command.
+ +
+ As an example, "git submodule foreach 'echo $path `git rev-parse HEAD`' will
+ show the path and currently checked out commit for each submodule.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index fc41e59..2d57d60 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -6,7 +6,7 @@
  
- static int pack_offset_sort(const void *_a, const void *_b)
+ USAGE="[--quiet] [--cached] \
+ [add <repo> [-b branch] <path>]|[status|init|update [-i|--init]|summary [-n|--summary-limit <n>] [<commit>]] \
+-[--] [<path>...]|[foreach <command-list>]"
++[--] [<path>...]|[foreach <command>]"
+ OPTIONS_SPEC=
+ . git-sh-setup
+ require_work_tree
+@@ -211,6 +211,7 @@ cmd_foreach()
+ 	do
+ 		if test -e "$path"/.git
+ 		then
++			say "Entering '$path'"
+ 			(cd "$path" && eval "$@") ||
+ 			die "Stopping at '$path'; script returned non-zero status."
+ 		fi
 -- 
-1.6.0.rc2.22.g71b99
-
--- 
-Shawn.
+1.6.0.rc2.45.g1363
