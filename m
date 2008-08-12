@@ -1,207 +1,95 @@
-From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: [TopGit PATCH/RFC] Do not use mktemp
-Date: Tue, 12 Aug 2008 13:14:27 -0500 (CDT)
-Message-ID: <Pine.GSO.4.62.0808121309000.18832@harper.uchicago.edu>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] pack-objects: Allow missing base objects when creating
+	thin packs
+Date: Tue, 12 Aug 2008 11:18:43 -0700
+Message-ID: <20080812181843.GD31092@spearce.org>
+References: <20080811182839.GJ26363@spearce.org> <7vk5enuqfg.fsf@gitster.siamese.dyndns.org> <20080811224404.GQ26363@spearce.org> <20080812012859.GT26363@spearce.org> <alpine.LFD.1.10.0808120023250.22892@xanadu.home> <20080812164149.GB31092@spearce.org> <alpine.LFD.1.10.0808121402440.22892@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: pasky@suse.cz
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 12 20:15:42 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Aug 12 20:19:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSyPA-0005C6-NJ
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 20:15:37 +0200
+	id 1KSyTD-0006bJ-JO
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 20:19:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751594AbYHLSOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 14:14:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbYHLSOe
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 14:14:34 -0400
-Received: from smtp00.uchicago.edu ([128.135.12.76]:37294 "EHLO
-	smtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751163AbYHLSOd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 14:14:33 -0400
-Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
-	by smtp00.uchicago.edu (8.13.8/8.13.8) with ESMTP id m7CIESIM014267;
-	Tue, 12 Aug 2008 13:14:28 -0500
-Received: from localhost (jrnieder@localhost)
-	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m7CIES8p019115;
-	Tue, 12 Aug 2008 13:14:28 -0500 (CDT)
-X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
+	id S1751426AbYHLSSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 14:18:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbYHLSSo
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 14:18:44 -0400
+Received: from george.spearce.org ([209.20.77.23]:43729 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751052AbYHLSSo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 14:18:44 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 8A83138375; Tue, 12 Aug 2008 18:18:43 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0808121402440.22892@xanadu.home>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92125>
 
-Old operating systems may not even have mktemp; less old
-operating systems may have a mktemp which is not compatible with
-the usual post-1.5 version.  Let's try to do without.
+Nicolas Pitre <nico@cam.org> wrote:
+> On Tue, 12 Aug 2008, Shawn O. Pearce wrote:
+> > +# Clone patch_clone indirectly by cloning base and fetching.
+> > +#
+> > +test_expect_success \
+> > +    'indirectly clone patch_clone' \
+> > +    '(mkdir user_clone &&
+> > +      cd user_clone &&
+> > +      git init &&
+> > +      git pull ../.git &&
+> > +      test $(git rev-parse HEAD) = $B
+> > +
+> > +      git pull ../patch_clone/.git &&
+> > +      test $(git rev-parse HEAD) = $C
+> > +     )
+> > +    '
+> 
+> What if the first test command fails?  Won't its result be ignored?
 
-This patch makes us use /tmp/meaningful-prefix.$$ and
-$git_dir/prefix.$$ as temporary filenames when they are
-needed.  But there are two exceptions:
+Isn't the exit status of the subshell the exit status of the last
+command in the subshell?
 
- - The needs_update function in tg.sh requires more than one
-   temporary file, so we imitate mktemp semantics for it
+I just changed the test line to compare to "x$C" instead of $C
+and it correctly detected the error condition:
 
- - A temporary file is used in tg-patch for some hack I do not
-   want to put effort into preserving.  I reused the mktemp
-   imitation as a band-aid there.
+$ git diff
+diff --git a/t/t5306-pack-nobase.sh b/t/t5306-pack-nobase.sh
+index 503e9d4..7c55e9e 100755
+--- a/t/t5306-pack-nobase.sh
++++ b/t/t5306-pack-nobase.sh
+@@ -62,7 +62,7 @@ test_expect_success \
+       test $(git rev-parse HEAD) = $B
 
-One word of warning: for needs_update there is a 'trap' to
-destroy the temporary directory used, but this overrides any
-other traps that the caller might have set before.  Luckily, the
-only other use of 'trap' is in tg-export, which never calls
-needs_update.  But it leaves me uncomfortable.
+       git pull ../patch_clone/.git &&
+-      test $(git rev-parse HEAD) = $C
++      test $(git rev-parse HEAD) = x$C
+      )
+     '
 
-Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
----
-	On my computer, mktemp requires its template argument;
-	on a computer I often ssh into, there is no mktemp at
-	all.  So I would rather that topgit didn't use it.  This
-	patch has a number of problems, but I thought I would
-	send it out anyway to see what people say.
+$ ./t5306-pack-nobase.sh
+*   ok 1: setup base
+*   ok 2: setup patch_clone
+* FAIL 3: indirectly clone patch_clone
+        (mkdir user_clone &&
+              cd user_clone &&
+              git init &&
+              git pull ../.git &&
+              test $(git rev-parse HEAD) = $B
 
-	The biggest issue is that this slows needs_update down,
-	since awk 'srand(); rand()' comes up with the same random
-	numbers again and again.  This is because the random
-	number generator is seeded with the current time *in
-	seconds*.  I hope there is some other way...
+              git pull ../patch_clone/.git &&
+              test $(git rev-parse HEAD) = x$C
+             )
 
-	Comments welcome.  Thanks,
+*   ok 4: clone of patch_clone is incomplete
+* failed 1 among 4 test(s)
 
-	Jonathan
-
- tg-export.sh |    5 +++--
- tg-info.sh   |    4 +++-
- tg-patch.sh  |    3 ++-
- tg-update.sh |    4 +++-
- tg.sh        |   31 ++++++++++++++++++++++++++++++-
- 5 files changed, 41 insertions(+), 6 deletions(-)
-
-diff --git a/tg-export.sh b/tg-export.sh
-index 73ad2ef..9a232d3 100644
---- a/tg-export.sh
-+++ b/tg-export.sh
-@@ -31,8 +31,9 @@ name="$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
- base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)" ||
- 	die "not on a TopGit-controlled branch"
- 
--
--playground="$(mktemp -d)"
-+playground=${TMPDIR:-/tmp}/tg-export-playground.$$
-+( umask 077 && mkdir "$playground" ) ||
-+	die "cannot make temporary directory: $!"
- trap 'rm -rf "$playground"' EXIT
- 
- 
-diff --git a/tg-info.sh b/tg-info.sh
-index 43589f9..c50c9b7 100644
---- a/tg-info.sh
-+++ b/tg-info.sh
-@@ -41,7 +41,9 @@ branch_contains "$name" "$base_rev" ||
- git cat-file blob "$name:.topdeps" |
- 	sed '1{s/^/Depends: /;n}; s/^/         /;'
- 
--depcheck="$(mktemp)"
-+depcheck=$git_dir/tg-depcheck.$$
-+( set -C && umask 077 && : >"$depcheck" ) ||
-+	die "cannot make temporary file: $!"
- missing_deps=
- needs_update "$name" >"$depcheck" || :
- if [ -n "$missing_deps" ]; then
-diff --git a/tg-patch.sh b/tg-patch.sh
-index 04023c0..7517f0f 100644
---- a/tg-patch.sh
-+++ b/tg-patch.sh
-@@ -29,7 +29,8 @@ echo
- [ -n "$(git grep '^[-]--' "$name" -- ".topmsg")" ] || echo '---'
- 
- # Evil obnoxious hack to work around the lack of git diff --exclude
--git_is_stupid="$(mktemp)"
-+git_is_stupid=$(temp_filename "$git_dir/tg-patch-tmp.") ||
-+	die "$git_is_stupid"
- git diff-tree --name-only "$base_rev" "$name" |
- 	fgrep -vx ".topdeps" |
- 	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
-diff --git a/tg-update.sh b/tg-update.sh
-index 27a8e81..7125f02 100644
---- a/tg-update.sh
-+++ b/tg-update.sh
-@@ -21,7 +21,9 @@ base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)"
- 
- ## First, take care of our base
- 
--depcheck="$(mktemp)"
-+depcheck=$git_dir/tg-depcheck.$$
-+( set -C && umask 077 && : >"$depcheck" ) ||
-+	die "cannot make temporary file: $!"
- missing_deps=
- needs_update "$name" >"$depcheck" || :
- [ -z "$missing_deps" ] || die "some dependencies are missing: $missing_deps"
-diff --git a/tg.sh b/tg.sh
-index e5766fe..c31256f 100644
---- a/tg.sh
-+++ b/tg.sh
-@@ -80,6 +80,27 @@ branch_contains()
- 	[ -z "$(git rev-list ^"$1" "$2")" ]
- }
- 
-+# temp_filename PREFIX
-+# Prints an error message *to standard output* and exits with
-+# nonzero status on failure
-+temp_filename()
-+{
-+	set -C && umask 077
-+	prefix=$1
-+	i=0
-+	suffix=$(awk 'BEGIN { srand(); rand(); print int(rand()*99999) }')
-+	while test $i -lt 256
-+	do
-+		tmp=$prefix$suffix
-+		: >"$tmp" && break
-+		i=$(($i+1))
-+		suffix=$(($suffix+1))
-+	done
-+	test $i -gt 255 &&
-+		die "cannot create temporary file: $!"
-+	echo $tmp
-+}
-+
- # recurse_deps CMD NAME [BRANCHPATH...]
- # Recursively eval CMD on all dependencies of NAME.
- # CMD can refer to $_name for queried branch name,
-@@ -90,12 +111,15 @@ branch_contains()
- # of the whole function.
- # If recurse_deps() hits missing dependencies, it will append
- # them to space-separated $missing_deps list and skip them.
-+# Uses a $recurse_deps_tmp directory, which should be
-+# set in advance
- recurse_deps()
- {
- 	_cmd="$1"; shift
- 	_name="$1"; # no shift
- 	_depchain="$*"
--	_depsfile="$(mktemp)"
-+	_depsfile=$(temp_filename "$recurse_deps_tmp/") ||
-+		die "$_depsfile"
- 	git cat-file blob "$_name:.topdeps" >"$_depsfile"
- 	_ret=0
- 	while read _dep; do
-@@ -156,7 +180,12 @@ branch_needs_update()
- # them to space-separated $missing_deps list and skip them.
- needs_update()
- {
-+	recurse_deps_tmp=$git_dir/tg-depcheck-tmpdir.$$
-+	( umask 077 && mkdir "$recurse_deps_tmp" ) ||
-+		die "cannot make temporary directory: $!"
-+	trap 'rm -rf "$recurse_deps_tmp"' EXIT
- 	recurse_deps branch_needs_update "$@"
-+	rm -rf "$recurse_deps_tmp"
- }
- 
- # branch_empty NAME
 -- 
-1.6.0.rc2.531.g79a96
+Shawn.
