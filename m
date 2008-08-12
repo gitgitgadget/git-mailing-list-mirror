@@ -1,129 +1,72 @@
-From: martin f krafft <madduck-JX/+c5DPh7vR7s880joybQ@public.gmane.org>
-Subject: Re: TopGit: problem with patch series generation
-Date: Tue, 12 Aug 2008 14:52:06 -0300
-Message-ID: <20080812175206.GA9131@lapse.rw.madduck.net>
-References: <20080812161854.GB30067@lapse.rw.madduck.net>
-	<32541b130808120925y663967ebm38eced6df77ffe4@mail.gmail.com>
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: TOPGIT: [PATCH] tg create: add --force option to resolve merge dependencies.
+Date: Tue, 12 Aug 2008 19:55:16 +0200
+Message-ID: <36ca99e90808121055v5efcc1do68731b905a359a68@mail.gmail.com>
+References: <1218546106.7264.11.camel@heerbeest>
+	 <20080812133857.GL32184@machine.or.cz>
+	 <1218553338.7264.14.camel@heerbeest>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="===============6989209692078317020=="
-To: Avery Pennarun <apenwarr-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,
-	git discussion list <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, pasky-AlSwsSmVLrQ@public.gmane.org,
-	Manoj Srivastava <srivasta-8fiUuRrzOP0dnm+yROfE0A@public.gmane.org>,
-	vcs distro packaging discussion list
-	<vcs-pkg-d
-X-From: vcs-pkg-discuss-bounces+gcvp-vcs-pkg=m.gmane.org-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org Tue Aug 12 19:52:27 2008
-Return-path: <vcs-pkg-discuss-bounces+gcvp-vcs-pkg=m.gmane.org-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org>
-Envelope-to: gcvp-vcs-pkg@m.gmane.org
-Received: from alioth.debian.org ([217.196.43.134])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSy2j-0005RK-0E
-	for gcvp-vcs-pkg@m.gmane.org; Tue, 12 Aug 2008 19:52:25 +0200
-Received: from localhost
-	([127.0.0.1] helo=alioth.debian.org ident=list)
-	by alioth.debian.org with esmtp (Exim 4.63)
-	(envelope-from <vcs-pkg-discuss-bounces+gcvp-vcs-pkg=m.gmane.org-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org>)
-	id 1KSy1n-0000A6-0I
-	for gcvp-vcs-pkg@m.gmane.org; Tue, 12 Aug 2008 17:51:27 +0000
-Received: from seamus.madduck.net ([213.203.238.82])
-	by alioth.debian.org with esmtp (Exim 4.63)
-	(envelope-from <madduck-0owbi4v4jRjYceiJAzDLgeTW4wlIGRCZ@public.gmane.org>) id 1KSy1e-00009Y-1L
-	for vcs-pkg-discuss-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org;
-	Tue, 12 Aug 2008 17:51:23 +0000
-Received: from lapse.rw.madduck.net (unknown [209.13.181.29])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.rw.madduck.net",
-	Issuer "CAcert Class 3 Root" (verified OK))
-	by seamus.madduck.net (postfix) with ESMTPS id A9E29432D76;
-	Tue, 12 Aug 2008 19:51:01 +0200 (CEST)
-Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
-	id C264F80B5; Tue, 12 Aug 2008 14:52:06 -0300 (ART)
-In-Reply-To: <32541b130808120925y663967ebm38eced6df77ffe4-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel
-	2.6.24-etchnhalf.1+scoflowctrl.1-686 i686
-X-Spamtrap: madduck.bogus-JX/+c5DPh7vR7s880joybQ@public.gmane.org
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.93.1/8018/Tue Aug 12 10:36:31 2008 on
-	seamus.madduck.net
-X-Virus-Status: Clean
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on alioth.debian.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00 autolearn=ham
-	version=3.2.3
-X-BeenThere: vcs-pkg-discuss-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org
-X-Mailman-Version: 2.1.9
-Precedence: list
-List-Id: Discussions on using VCS for distro packaging
-	<vcs-pkg-discuss.lists.alioth.debian.org>
-List-Unsubscribe: <http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss>,
-	<mailto:vcs-pkg-discuss-request-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org?subject=unsubscribe>
-List-Archive: <http://lists.alioth.debian.org/pipermail/vcs-pkg-discuss>
-List-Post: <mailto:vcs-pkg-discuss-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org>
-List-Help: <mailto:vcs-pkg-discuss-request-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org?subject=help>
-List-Subscribe: <http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss>,
-	<mailto:vcs-pkg-discuss-request-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org?subject=subscribe>
-Mime-version: 1.0
-Sender: vcs-pkg-discuss-bounces+gcvp-vcs-pkg=m.gmane.org-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org
-Errors-To: vcs-pkg-discuss-bounces+gcvp-vcs-pkg=m.gmane.org-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org
-X-SA-Exim-Connect-IP: 127.0.0.1
-X-SA-Exim-Mail-From: vcs-pkg-discuss-bounces+gcvp-vcs-pkg=m.gmane.org-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org
-X-SA-Exim-Scanned: No (on alioth.debian.org); SAEximRunCond expanded to false
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92120>
-
-
---===============6989209692078317020==
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Nq2Wo0NMKNjxTN9z"
-Content-Disposition: inline
-
-
---Nq2Wo0NMKNjxTN9z
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-also sprach Avery Pennarun <apenwarr-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> [2008.08.12.1325 -0300]:
-> Isn't this what git-rerere is for?  If TopGit doesn't use rerere,
-> maybe it would be easy to add...
-
-I'd rather avoid the need to replay conflict resolution and do it in
-one place only. It always seemed to me that git-rerere is a solution
-to a problem that could have been avoided.
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"it is only the modern that ever becomes old-fashioned."=20
-                                                        -- oscar wilde
-=20
-spamtraps: madduck.bogus-JX/+c5DPh7vR7s880joybQ@public.gmane.org
-
---Nq2Wo0NMKNjxTN9z
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkihzcYACgkQIgvIgzMMSnWENACgnmq4J9WaJh8FvEwVZAlYlwL1
-U84Anjt4sy/4yI0moEUKkES3wfswU50Y
-=144N
------END PGP SIGNATURE-----
-
---Nq2Wo0NMKNjxTN9z--
-
-
---===============6989209692078317020==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
+To: "Jan Nieuwenhuizen" <janneke-list@xs4all.nl>
+X-From: git-owner@vger.kernel.org Tue Aug 12 19:56:25 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1KSy6X-0006jv-3E
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 19:56:21 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751386AbYHLRzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 13:55:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751350AbYHLRzS
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 13:55:18 -0400
+Received: from wx-out-0506.google.com ([66.249.82.239]:25536 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751175AbYHLRzR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 13:55:17 -0400
+Received: by wx-out-0506.google.com with SMTP id h29so1721491wxd.4
+        for <git@vger.kernel.org>; Tue, 12 Aug 2008 10:55:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=CLYZsW+9hSdxvItn6M+pdbUUheiBpygdROFsevHurAk=;
+        b=V3O3fG2FlK8cd0lAJVtc00bk9jZoyoCsUI0VW9JWOl+iJ/ITg6wlukFLF9twld84hA
+         Gs7eU56wwf5/nD9b9dMQbXhgyX5u/e9nW9n849C+Aq+OibmNrpBANIhIiDgv2iJsYjP3
+         HQsdP/uJVbHHAGZTQIt1VETVWlTlKRe/Chcj8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=EOsBI4bx682EH+eLRWoUpJArKHquLRzD+oXAiBLaGS9kOhrcjAPdPARHortBzrhQOF
+         p1vVa0NF3gZnqtnFsAo9sXWTXud/lGbvyPXDV0Q7scvSMBZ8xphJsSmt6U07j8H7/kt+
+         FGrafsyFs66NkMMZpxXXolEoPG71f5cJaPdSc=
+Received: by 10.70.16.8 with SMTP id 8mr12761030wxp.65.1218563716029;
+        Tue, 12 Aug 2008 10:55:16 -0700 (PDT)
+Received: by 10.70.49.12 with HTTP; Tue, 12 Aug 2008 10:55:16 -0700 (PDT)
+In-Reply-To: <1218553338.7264.14.camel@heerbeest>
 Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92121>
 
-_______________________________________________
-vcs-pkg-discuss mailing list
-vcs-pkg-discuss-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org
-http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss
+On Tue, Aug 12, 2008 at 17:02, Jan Nieuwenhuizen <janneke-list@xs4all.nl> wrote:
+> On di, 2008-08-12 at 15:38 +0200, Petr Baudis wrote:
+>
+>>   how exactly did you get the morge conflicts?
+>
+> I'm not sure, cannot seem to reproduce them anymore.  May
+> have been pre-0.2 issue or another goof-up over here.
+Could be, there was a fix for this from me. If you have a
+.git/info/gitattributes file, you where hit by the bug. But with 0.2
+this is gone.
 
---===============6989209692078317020==--
+Bert
+>
+> Thanks.
