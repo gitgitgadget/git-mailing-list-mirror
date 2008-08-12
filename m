@@ -1,98 +1,103 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: Summer of Code 2008 Midterm Summary
-Date: Tue, 12 Aug 2008 17:25:25 +0200
-Message-ID: <48A1AB65.2080809@gmail.com>
-References: <20080726232743.GA16870@spearce.org>
+From: Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH 1/3] Git.pm: Add faculties to allow temp files to be cached
+Date: Tue, 12 Aug 2008 11:41:28 -0400
+Message-ID: <48A1AF28.5000400@griep.us>
+References: <489DBB8A.2060207@griep.us> <1218470035-13864-1-git-send-email-marcus@griep.us> <1218470035-13864-2-git-send-email-marcus@griep.us> <20080812030809.GA14051@untitled>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Aug 12 17:27:46 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Aug 12 17:43:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSvmY-0005vn-D5
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 17:27:34 +0200
+	id 1KSw17-0003kg-9E
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 17:42:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752980AbYHLPZ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 11:25:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753331AbYHLPZ4
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 11:25:56 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:49282 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754673AbYHLPZz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 11:25:55 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1374916fgg.17
-        for <git@vger.kernel.org>; Tue, 12 Aug 2008 08:25:53 -0700 (PDT)
+	id S1751993AbYHLPle convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Aug 2008 11:41:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752033AbYHLPld
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 11:41:33 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:16735 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751548AbYHLPld (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 11:41:33 -0400
+Received: by qw-out-2122.google.com with SMTP id 3so216493qwe.37
+        for <git@vger.kernel.org>; Tue, 12 Aug 2008 08:41:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=mq2Ik7qfQVsu17IU/cwhnpbTZWAxmd3eU36GhNHoqX4=;
-        b=rRomfj73vulIkF7XXputYnXkTnXnl1cn08/dT/y+QHbhjACCEbMpK7AdFSdd6SifuR
-         8XA/YmI0PbJVv/IFambpESxLkY4KDGMrvgjfM7wE0IX6Ls93v1VzixwMB+PiOWGwXy8B
-         CT27jH9QRbMUDSkr49cMtCWA2jSqBseJBkm2Q=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=JDNwxTvfUP4XY8Hl714gfAQ4ncW3iqm6QnKVS97Neeg=;
+        b=LTv9vYTk59axdiJLtYKmi0ZKQLHupJsLigmn/XOBuIBRrXgRAIPfbsCW4c3HFhdSTc
+         x0j1vLL4cgz+ilsrZkvQH8Fx2IcLQP6hbSuiB0YuoKsrBWytKYrkHWAjFGSGEgrib6Ca
+         G/2SA/5TGpMRdvaG7wl4yD0QQoWyrkF7L3QSE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=v6nimtFEVvix8v+YWrze19hFknazLl06pk+7vDIRsDp2cJxh8eDBMigpbIrXoHft+a
-         NW5iLHDi4vSWaK8DwjpP9XdmpWz5PqyBrrrjragELZyzp8j3xqdxrMgCXDOykfeTKYHa
-         tIyS88BkPTUCLZa+j+3tASakP4VKTFuRPSJ5A=
-Received: by 10.86.27.19 with SMTP id a19mr10481140fga.56.1218554753606;
-        Tue, 12 Aug 2008 08:25:53 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.192.246])
-        by mx.google.com with ESMTPS id l12sm4181973fgb.6.2008.08.12.08.25.51
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 12 Aug 2008 08:25:52 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080707 Thunderbird/2.0.0.16 Mnenhy/0.7.5.666
-In-Reply-To: <20080726232743.GA16870@spearce.org>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=qHrzPudLY6rwHH545ao7r0d/QO4Uf0tkQ7TDoH6he7gCkQjuonxRN14byX6RYg10AD
+         cJTWP7SnnWY8PpNBL3B18XHJB/9KTLdFWuEtryt8A2sVlOmMd592b0n1/0/u1KODla2B
+         fqPKPZGK+DrLLf0WqfzuAdTKCCfCTjvQXhgQI=
+Received: by 10.214.46.9 with SMTP id t9mr6615880qat.34.1218555691808;
+        Tue, 12 Aug 2008 08:41:31 -0700 (PDT)
+Received: from ?10.95.36.106? ( [4.79.245.132])
+        by mx.google.com with ESMTPS id 39sm802891wrl.29.2008.08.12.08.41.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 12 Aug 2008 08:41:30 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <20080812030809.GA14051@untitled>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92103>
 
-I know I'm 2 weeks late ;-), but here are some comments (I'm a GSoC
-student working on gitweb caching):
+Eric Wong wrote:
+> I'm not sure if the no-lock version is worth the potential for
+> buggy or dangerous code.  I like this new idea of locking the
+> files to prevent bugs.
 
-Shawn O. Pearce wrote:
-> Q: How much time have you spent per week interacting with your mentor
-> 
->    All of our students (except 1) said 0-5 hours per week [...].
->    Nearly all of the mentors on the other hand chose 6-10 hours
+I can agree with that, and the "unsafe" version was just a front to the
+common function.  I've removed the unsafe version from @EXPORT_OK and
+removed temp_unsafe, but _temp_cached is still available for those
+that _really_ want the unsafe version.
 
-Maybe mentors tended to count public interaction (on the list), and
-students tended not to (or to underestimate how long it takes to write
-email).
+> Always truncating on release makes the interface simpler.  With locki=
+ng,
+> we can probably *only* truncate on release if you're that worried abo=
+ut
+> the extra overhead :)
 
->    In terms of community building this question's answers seem to
->    suggest we need to try harder to make our students included,
+I agree with this.  I introduced a nice bug on myself when just startin=
+g
+with it though, which is why I made it optional.  Careful conversion an=
+d
+testing should be good enough protection.
 
-That could include making sure that all students are comfortable with
-IRC (which I've found very helpful), and discouraging taking discussion
-off the main list (like it happened with GitTorrent).
+> I would do a regular seek() here in addition to the sysseek() below. =
+I
+> am not certain one of the many userspace buffering layers Perl can
+> potentially use doesn't do anything funky with its offset accounting.
+>=20
+> I would also put a tell() here after the sysseek and throw an error i=
+f
+> it returns a non-zero value just in case.  Yes, I'm really paranoid
+> about this stuff and have a huge distrust of userspace I/O layers :)
 
-> Q: Do you feel that you are on track to complete your project?
-> 
->    I'm not sure if this is good or bad.  3 students (50%!) are
->    ahead of schedule, 1 is on schedule, and 2 are behind.
+I went ahead and threw in a sysseek(,,SEEK_CUR) with the tell and added
+a seek to the sysseek(,,SEEK_SET), so we should be protected on the
+buffered and unbuffered sides.
 
-I think it's actually fine, since this is mostly a function of how
-optimistic your initial plan was.  I picked "ahead" because I got
-through faster than I originally estimated, but it simply means I can
-implement some 'optional' features.
-
->    [Since 3 students are ahead] I wonder if as mentors we didn't
->    demand enough of our students?
-
-I'd guess the opposite is true -- demanding more (as long as you don't
-hit the 'overwhelm' effect), if anything, tends to make me stay on track
-better.  E.g. last year I was 'behind schedule', and part of the reason
-was that I had to balance GSoC and life and my mentor didn't kick my
-butt quite hard enough. ;-)
-
--- Lea
+--=20
+Marcus Griep
+GPG Key ID: 0x5E968152
+=E2=80=94=E2=80=94
+http://www.boohaunt.net
+=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
