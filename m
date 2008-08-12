@@ -1,100 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] diff --check: do not unconditionally complain about trailing
- empty lines
-Date: Mon, 11 Aug 2008 22:21:43 -0700
-Message-ID: <7vabfist94.fsf@gitster.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] filter-branch: use --simplify-merges
+Date: Tue, 12 Aug 2008 07:47:19 +0200
+Message-ID: <200808120747.22228.trast@student.ethz.ch>
+References: <7viqub9dzi.fsf@gitster.siamese.dyndns.org> <7vljz3t2ts.fsf@gitster.siamese.dyndns.org> <7v7iant1yx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 12 07:23:00 2008
+Content-Type: multipart/signed;
+  boundary="nextPart1343318.E6vqctpQD8";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jan Wielemaker <J.Wielemaker@uva.nl>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 12 07:48:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSmLM-0006YR-QY
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 07:22:53 +0200
+	id 1KSmjx-0003bv-B9
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 07:48:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750930AbYHLFVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 01:21:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751071AbYHLFVu
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 01:21:50 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54592 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750927AbYHLFVu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 01:21:50 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2E3F356989;
-	Tue, 12 Aug 2008 01:21:49 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id EDAC656988; Tue, 12 Aug 2008 01:21:45 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9068065E-682E-11DD-BF52-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1750958AbYHLFrP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 01:47:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750976AbYHLFrP
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 01:47:15 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:2992 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750878AbYHLFrO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 01:47:14 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 12 Aug 2008 07:47:15 +0200
+Received: from [192.168.0.4] ([84.75.158.234]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 12 Aug 2008 07:47:13 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <7v7iant1yx.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 12 Aug 2008 05:47:13.0401 (UTC) FILETIME=[DEAB7690:01C8FC3E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92069>
 
-Recently "git diff --check" learned to detect new trailing blank lines
-just like "git apply --whitespace" does.  However this check should not
-trigger unconditionally.  This patch makes it honor the whitespace
-settings from core.whitespace and gitattributes.
+--nextPart1343318.E6vqctpQD8
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c                  |    3 ++-
- t/t4019-diff-wserror.sh |   21 ++++++++++++++++++++-
- 2 files changed, 22 insertions(+), 2 deletions(-)
+Junio C Hamano wrote:
+> > Thomas Rast <trast@student.ethz.ch> writes:
+> >
+> >> -		ancestor=3D$(git rev-list -1 $ref -- "$filter_subdir")
+> >> +		ancestor=3D$(git rev-list --simplify-merges -1 \
+> >> +				$ref -- "$filter_subdir")
+> >
+> > Hmm, where does this preimage come from?
+>=20
+> Nevermind.  You based this on top of the "fix ancestor discovery" patch.
+>=20
+> I'll squash these two and queue them in 'pu' for now.
 
-diff --git a/diff.c b/diff.c
-index 8746c60..6954f99 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1631,7 +1631,8 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
- 		ecb.priv = &data;
- 		xdi_diff(&mf1, &mf2, &xpp, &xecfg, &ecb);
- 
--		if (data.trailing_blanks_start) {
-+		if ((data.ws_rule & WS_TRAILING_SPACE) &&
-+		    data.trailing_blanks_start) {
- 			fprintf(o->file, "%s:%d: ends with blank lines.\n",
- 				data.filename, data.trailing_blanks_start);
- 			data.status = 1; /* report errors */
-diff --git a/t/t4019-diff-wserror.sh b/t/t4019-diff-wserror.sh
-index 0d9cbb6..dfa11f6 100755
---- a/t/t4019-diff-wserror.sh
-+++ b/t/t4019-diff-wserror.sh
-@@ -13,7 +13,8 @@ test_expect_success setup '
- 	echo " 	HT and SP indent" >>F &&
- 	echo "With trailing SP " >>F &&
- 	echo "Carriage ReturnQ" | tr Q "\015" >>F &&
--	echo "No problem" >>F
-+	echo "No problem" >>F &&
-+	echo >>F
- 
- '
- 
-@@ -160,4 +161,21 @@ test_expect_success 'with cr-at-eol (attribute)' '
- 
- '
- 
-+test_expect_success 'trailing empty lines (1)' '
-+
-+	rm -f .gitattributes &&
-+	test_must_fail git diff --check >output &&
-+	grep "ends with blank lines." output &&
-+	grep "trailing whitespace" output
-+
-+'
-+
-+test_expect_success 'trailing empty lines (2)' '
-+
-+	echo "F -whitespace" >.gitattributes &&
-+	git diff --check >output &&
-+	! test -s output
-+
-+'
-+
- test_done
+Please don't.  I'm still convinced the "fix ancestor discovery" is a
+fix to current code that works independent of --simplify-merges.  If
+you squash them, it cannot go into a release before --simplify-merges
+even if I manage to convince Dscho of this.
+
+Thanks.
+
+=2D Thomas
+
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
+
+
+--nextPart1343318.E6vqctpQD8
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkihI+oACgkQqUud07tmzP14FACfYggVs60yPWoUtuAq0GnRmquh
+bZYAnjjh2FiywBk/6JwurVfi5RiHRgEe
+=ABDW
+-----END PGP SIGNATURE-----
+
+--nextPart1343318.E6vqctpQD8--
