@@ -1,131 +1,161 @@
-From: Marcus Griep <marcus@griep.us>
-Subject: [PATCH v2 3/3] git-svn: Reduce temp file usage when dealing with non-links
-Date: Tue, 12 Aug 2008 12:45:39 -0400
-Message-ID: <1218559539-24304-1-git-send-email-marcus@griep.us>
-References: <1218556876-26554-1-git-send-email-marcus@griep.us>
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marcus Griep <marcus@griep.us>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 12 18:46:54 2008
+From: aneesh.kumar@gmail.com
+Subject: [PATCH] topgit: Implement tg-import
+Date: Tue, 12 Aug 2008 22:05:43 +0530
+Message-ID: <1218558943-14398-1-git-send-email-aneesh.kumar@gmail.com>
+Cc: git@vger.kernel.org, "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+To: pasky@ucw.cz
+X-From: git-owner@vger.kernel.org Tue Aug 12 19:04:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSx19-0005cp-3l
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 18:46:43 +0200
+	id 1KSxIJ-00041D-AR
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 19:04:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751659AbYHLQpl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 12:45:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751629AbYHLQpl
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 12:45:41 -0400
-Received: from boohaunt.net ([209.40.206.144]:56348 "EHLO boohaunt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750911AbYHLQpk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 12:45:40 -0400
-Received: by boohaunt.net (Postfix, from userid 1000)
-	id EB7F71878ACF; Tue, 12 Aug 2008 12:45:39 -0400 (EDT)
-X-Mailer: git-send-email 1.6.0.rc2.6.g8eda3
-In-Reply-To: <1218556876-26554-1-git-send-email-marcus@griep.us>
+	id S1752170AbYHLRDT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 13:03:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752302AbYHLRDT
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 13:03:19 -0400
+Received: from E23SMTP02.au.ibm.com ([202.81.18.163]:38420 "EHLO
+	e23smtp02.au.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752170AbYHLRDS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 13:03:18 -0400
+Received: from sd0109e.au.ibm.com (d23rh905.au.ibm.com [202.81.18.225])
+	by e23smtp02.au.ibm.com (8.13.1/8.13.1) with ESMTP id m7CGZWj4014757
+	for <git@vger.kernel.org>; Wed, 13 Aug 2008 02:35:32 +1000
+Received: from d23av02.au.ibm.com (d23av02.au.ibm.com [9.190.235.138])
+	by sd0109e.au.ibm.com (8.13.8/8.13.8/NCO v9.0) with ESMTP id m7CGZumZ304222
+	for <git@vger.kernel.org>; Wed, 13 Aug 2008 02:35:56 +1000
+Received: from d23av02.au.ibm.com (loopback [127.0.0.1])
+	by d23av02.au.ibm.com (8.12.11.20060308/8.13.3) with ESMTP id m7CGZuTA023170
+	for <git@vger.kernel.org>; Wed, 13 Aug 2008 02:35:56 +1000
+Received: from localhost.localdomain ([9.77.81.154])
+	by d23av02.au.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id m7CGZnWX023097;
+	Wed, 13 Aug 2008 02:35:50 +1000
+X-Mailer: git-send-email 1.6.0.rc0.42.g186458.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92116>
 
-Currently, in sub 'close_file', git-svn creates a temporary file and
-copies the contents of the blob to be written into it. This is useful
-for symlinks because svn stores symlinks in the form:
+From: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
 
-link $FILE_PATH
+This can be used to import a set of commits
+between range specified by range1..range2
+This should help us to convert an already
+existing quilt, stgit branches to topgit
+managed one
 
-Git creates a blob only out of '$FILE_PATH' and uses file mode to
-indicate that the blob should be interpreted as a symlink.
+Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
 
-As git-hash-object is invoked with --stdin-paths, a duplicate of the
-link from svn must be created that leaves off the first five bytes,
-i.e. 'link '. However, this is wholly unnecessary for normal blobs,
-though, as we already have a temp file with their contents. Copying
-the entire file gains nothing, and effectively requires a file to be
-written twice before making it into the object db.
-
-This patch corrects that issue, holding onto the substr-like
-duplication for symlinks, but skipping it altogether for normal blobs
-by reusing the existing temp file.
-
-Signed-off-by: Marcus Griep <marcus@griep.us>
 ---
+ tg-import.sh |   97 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 97 insertions(+), 0 deletions(-)
+ create mode 100644 tg-import.sh
 
-Sorry for the second version.  I was silly and didn't run the
-"perl typo checker".  This is corrected and tested via "full-svn-test".
-
- git-svn.perl |   46 ++++++++++++++++++++++------------------------
- 1 files changed, 22 insertions(+), 24 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 9eae5e8..099fd02 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -3268,38 +3268,36 @@ sub close_file {
- 				    "expected: $exp\n    got: $got\n";
- 			}
- 		}
--		sysseek($fh, 0, 0) or croak $!;
- 		if ($fb->{mode_b} == 120000) {
--			eval {
--				sysread($fh, my $buf, 5) == 5 or croak $!;
--				$buf eq 'link ' or die "$path has mode 120000",
--						       " but is not a link";
--			};
--			if ($@) {
--				warn "$@\n";
--				sysseek($fh, 0, 0) or croak $!;
--			}
--		}
--
--		my $tmp_fh = Git::temp_acquire('svn_hash');
--		my $result;
--		while ($result = sysread($fh, my $string, 1024)) {
--			my $wrote = syswrite($tmp_fh, $string, $result);
--			defined($wrote) && $wrote == $result
--				or croak("write ",
--					$tmp_fh->filename, ": $!\n");
--		}
--		defined $result or croak $!;
-+			sysseek($fh, 0, 0) or croak $!;
-+			sysread($fh, my $buf, 5) == 5 or croak $!;
- 
-+			unless ($buf eq 'link ') {
-+				warn "$path has mode 120000",
-+						" but is not a link\n";
-+			} else {
-+				my $tmp_fh = Git::temp_acquire('svn_hash');
-+				my $res;
-+				while ($res = sysread($fh, my $str, 1024)) {
-+					my $out = syswrite($tmp_fh, $str, $res);
-+					defined($out) && $out == $res
-+						or croak("write ",
-+							$tmp_fh->filename,
-+							": $!\n");
-+				}
-+				defined $res or croak $!;
- 
--		Git::temp_release($fh, 1);
-+				($fh, $tmp_fh) = ($tmp_fh, $fh);
-+				Git::temp_release($tmp_fh, 1);
-+			}
-+		}
- 
- 		$hash = $::_repository->hash_and_insert_object(
--				$tmp_fh->filename);
-+				$fh->filename);
- 		$hash =~ /^[a-f\d]{40}$/ or die "not a sha1: $hash\n";
- 
- 		Git::temp_release($fb->{base}, 1);
--		Git::temp_release($tmp_fh, 1);
-+		Git::temp_release($fh, 1);
- 	} else {
- 		$hash = $fb->{blob} or die "no blob information\n";
- 	}
+diff --git a/tg-import.sh b/tg-import.sh
+new file mode 100644
+index 0000000..0158f3b
+--- /dev/null
++++ b/tg-import.sh
+@@ -0,0 +1,97 @@
++#!/bin/bash
++#derived out of git-format-patch.sh
++
++function die()
++{
++	echo >&2 "$@"
++	exit 1
++}
++
++function tg_get_commit_msg
++{
++	commit=$1
++commitScript='
++	1,/^$/d
++	: loop
++	/^$/b loop
++	: body
++	p
++	n
++	b body'
++	author=$(git cat-file commit "$commit" | grep author |
++		cut -d ">" -f 1 | sed -ne "s/author//gp")
++	echo "From: "$author">"
++	git cat-file commit "$commit" | sed -ne "$commitScript"
++}
++
++function tg_get_patch
++{
++	git show $1
++}
++
++function tg_get_branch_name
++{
++
++titleScript='
++	1,/^$/d
++	: loop
++	/^$/b loop
++	s/[^-a-z.A-Z_0-9]/-/g
++        s/\.\.\.*/\./g
++	s/\.*$//
++	s/--*/-/g
++	s/^-//
++	s/-$//
++	q
++'
++	commit=$1
++	title=$(git cat-file commit "$commit" | sed -e "$titleScript")
++	echo ${title}
++}
++
++tmp=.tmp-series$$
++trap 'rm -f $tmp-*' 0 1 2 3 15
++
++series=$tmp-series
++# Now we have what we want in $@
++for revpair
++do
++	case "$revpair" in
++	?*..?*)
++		rev1=`expr "z$revpair" : 'z\(.*\)\.\.'`
++		rev2=`expr "z$revpair" : 'z.*\.\.\(.*\)'`
++		;;
++	*)
++		echo >&2 "Unknow range spec $revpair"
++		exit
++		;;
++	esac
++	git rev-parse --verify "$rev1^0" >/dev/null 2>&1 ||
++		die "Not a valid rev $rev1 ($revpair)"
++	git rev-parse --verify "$rev2^0" >/dev/null 2>&1 ||
++		die "Not a valid rev $rev2 ($revpair)"
++	git cherry -v "$rev1" "$rev2" |
++	while read sign rev comment
++	do
++		case "$sign" in
++		'-')
++			echo >&2 "Merged already: $comment"
++			;;
++		*)
++			echo $rev
++			;;
++		esac
++	done
++done >$series
++
++while read commit
++do
++	branch_name=$(tg_get_branch_name $commit)
++	echo "Importing $commit to $branch_name"
++	tg create tp/$branch_name
++	tg_get_commit_msg $commit > .topmsg
++	git add .topmsg
++	git commit -a -m "Add the commit message for the topic branch"
++	tg_get_patch $commit | patch -p1
++	git commit -a -m "Import the initial patch to the topic branch"
++done < $series
 -- 
-1.6.0.rc2.6.g8eda3
+1.6.0.rc0.42.g186458.dirty
