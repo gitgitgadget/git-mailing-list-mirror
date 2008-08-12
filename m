@@ -1,77 +1,82 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [PATCH] git-daemon: Simplify child management and associated logging by
-Date: Wed, 13 Aug 2008 00:56:42 +0200
-Message-ID: <20080812225642.GA15265@cuci.nl>
-References: <20080812193613.32388.92145.stgit@aristoteles.cuci.nl> <20080812212534.6871.19377.stgit@aristoteles.cuci.nl> <7vzlnhq48b.fsf@gitster.siamese.dyndns.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: TopGit: problem with patch series generation
+Date: Wed, 13 Aug 2008 00:59:16 +0200
+Message-ID: <20080812225916.GN10151@machine.or.cz>
+References: <20080812161854.GB30067@lapse.rw.madduck.net> <8aa486160808121428t259f5340x6d1a14cadedac30c@mail.gmail.com> <20080812224155.GB15521@lapse.rw.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 00:58:12 2008
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Santi =?iso-8859-2?Q?B=E9jar?= <sbejar@gmail.com>,
+	git discussion list <git@vger.kernel.org>,
+	Manoj Srivastava <srivasta@debian.org>,
+	vcs distro packaging discussion list 
+	<vcs-pkg-discuss@lists.alioth.debian.org>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Wed Aug 13 01:00:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KT2od-0005hl-Bh
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 00:58:11 +0200
+	id 1KT2qi-0006MS-OZ
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 01:00:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752289AbYHLW4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 18:56:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752285AbYHLW4n
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 18:56:43 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:52360 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752289AbYHLW4n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 18:56:43 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 13D255465; Wed, 13 Aug 2008 00:56:42 +0200 (CEST)
+	id S1752322AbYHLW7U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Aug 2008 18:59:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751548AbYHLW7T
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 18:59:19 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:33456 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751457AbYHLW7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 18:59:19 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id DF89A393A807; Wed, 13 Aug 2008 00:59:16 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vzlnhq48b.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20080812224155.GB15521@lapse.rw.madduck.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92151>
 
-Junio C Hamano wrote:
->"Stephen R. van den Berg" <srb@cuci.nl> writes:
->Sorry, but this does too many things in one patch.
+On Tue, Aug 12, 2008 at 07:41:55PM -0300, martin f krafft wrote:
+> also sprach Santi B=E9jar <sbejar@gmail.com> [2008.08.12.1828 -0300]:
+> > I don=B4t know if it fits topgit, but this is what Junio uses:
+> >=20
+> > http://article.gmane.org/gmane.comp.version-control.git/24498
+>=20
+> I think this is definitely something TopGit can automate.
 
-Yes, I know, got carried away.  Then again, the code has a lot of
-overlapping places (spacewise); I kind of leapt from one place to the
-next; you fix one thing, and then the next wart stares you in the face.
-I'll see if I can split it up, if that suits you better.
+This seems to be in principle the same as the tie branches. It might
+make sense to have a way to _optionally_ make a tie branch.
 
-> - Taking advantage of poll() getting interrupted by SIGCHLD, so that you
->   do not have to do anything in the signal handler, is so obvious that I
->   am actually ashamed of not having to think of it the last time we
->   touched this code.  Is there a poll() that does not return EINTR but
->   just call the handler and restart after that as if nothing has
->   happened, I have to wonder...
+How should that work? Maybe there needs to be even an explicit support
+for this - should TopGit just check the dependency tree when
+sequencing the topic branches and have a step that says:
 
-Only if the signal is set to SIG_IGN on all systems I worked with since
-1987.
+	"I'm going to sequence branch A. If there is branch T that has
+	only already sequenced branches + branch A as dependencies,
+	use T's content instead of A."
 
-> - Conversion from silly fixed array to dynamic and configurable maximum
->   would be a good idea, but that is independent from the above, isn't it?
+Would that be satisfactory?
 
-It is, but the code is on the same lines (in large parts).
-Separating it causes two things:
-a. The patches to become dependent on each other in the timeline.
-b. More (redundant) work, because some parts that need to be rewritten, get
-   deleted by the following patch(es).
+=46inding out this information would be very expensive, of course. But =
+for
+other reasons, we might want to keep a cache of branch dependencies.
 
-> - I see you have a call to vsyslog, which is the first user of the
->   function.  How portable is it (the patch coming from you, I know
->   Solaris would have it, and recent 4BSD also would, but what about the
->   others)?
+Of course, in the case of
 
-Cygwin has it, Solaris does, Linux does, MacOSX does.
-AIX and HPUX don't, perhaps.
-I'll see what I can do to avoid it, yet simplify the code.
--- 
-Sincerely,
-           Stephen R. van den Berg.
+        A1--A2--A3--A4--C
+                       /
+        B1--B2--B3--B4.
 
-Father's Day Special at the local clinic -- Vasectomy!
+the sequenced branches would still be like
+
+        A1--A2--A3--A4--B1--B2--B3--C
+
+unless you create the T1..T4 branches manually.
+
+--=20
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
