@@ -1,89 +1,141 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: RFC: Allow missing objects during packing
-Date: Tue, 12 Aug 2008 00:44:11 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0808120023250.22892@xanadu.home>
-References: <20080811182839.GJ26363@spearce.org>
- <7vk5enuqfg.fsf@gitster.siamese.dyndns.org>
- <20080811224404.GQ26363@spearce.org> <20080812012859.GT26363@spearce.org>
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: [TopGit PATCH v2] tg-create.sh: Support for multiple {to,cc,bcc} options
+Date: Tue, 12 Aug 2008 07:14:51 +0200
+Message-ID: <36ca99e90808112214hb8f01f0j30cff74e4f6c1ead@mail.gmail.com>
+References: <1218307736-24891-1-git-send-email-bert.wesarg@googlemail.com>
+	 <20080811204723.GF10151@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Aug 12 06:52:06 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Tue Aug 12 07:15:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSlrZ-0000SW-Ft
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 06:52:05 +0200
+	id 1KSmEd-0005Aa-Kp
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 07:15:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750875AbYHLEoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 00:44:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbYHLEoR
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 00:44:17 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:63069 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750807AbYHLEoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 00:44:17 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K5H00COK15N0YH0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 12 Aug 2008 00:44:11 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080812012859.GT26363@spearce.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1750878AbYHLFOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 01:14:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750930AbYHLFOx
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 01:14:53 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:51279 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750875AbYHLFOw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 01:14:52 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so760556ywe.1
+        for <git@vger.kernel.org>; Mon, 11 Aug 2008 22:14:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=QYuKkHBL+Vejt4hkgITbmpW9bFNm6goUzGq2vNRocBo=;
+        b=KjDkgaQeF6Nkyt1+I4Nc5fJSOSpoCCKBJPWt4oo435nLYEvBws8DbI+4r5LKOq0/0H
+         BSSydvuOtpHZshurGZbUNQbdcvjOWcadyEBjykhe66k0lbtUvPiAibc/AD08OWCeTqBF
+         l1RD0LFt3dIu6EEq+0bxFI0DmeZY6OT5RxIJs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=kUFP45AIgYrk1N+O0r0lGpLu8opBnE76wKoPQGEvaCJNHlEG/r4KLITQUHTaEGjiX0
+         m47McY4uwwLAp9OsAntlqoNkGWkSddpmzpSghva0oPZSuD9y/MZcCPSNREm8B9Isk9G8
+         XFCLVTEpSbfClkjIkmw+nN1Tac44ShGrrJmp4=
+Received: by 10.151.150.20 with SMTP id c20mr13672390ybo.6.1218518091315;
+        Mon, 11 Aug 2008 22:14:51 -0700 (PDT)
+Received: by 10.70.49.12 with HTTP; Mon, 11 Aug 2008 22:14:51 -0700 (PDT)
+In-Reply-To: <20080811204723.GF10151@machine.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92067>
 
-On Mon, 11 Aug 2008, Shawn O. Pearce wrote:
+On Mon, Aug 11, 2008 at 22:47, Petr Baudis <pasky@suse.cz> wrote:
+>  Hi,
+>
+> On Sat, Aug 09, 2008 at 08:48:56PM +0200, Bert Wesarg wrote:
+>> Git config supports multiple values for the same config key, so support it
+>> for these TopGit config options, too.
+>>
+>> New in v2:
+>> Print a RFC2822 compliant header.
+>>
+>> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+>
+>  oops, I'm really sorry! I thought I already commented on this while
+> apparently, I forgot to.
+>
+>> ---
+>>  tg-create.sh |   35 ++++++++++++++++++++++++++++++++---
+>>  1 files changed, 32 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/tg-create.sh b/tg-create.sh
+>> index 6cce7ed..d7ee1d2 100644
+>> --- a/tg-create.sh
+>> +++ b/tg-create.sh
+>> @@ -100,13 +100,42 @@ git checkout -b "$name"
+>>  echo "$deps" | sed 's/ /\n/g' >"$root_dir/.topdeps"
+>>  git add "$root_dir/.topdeps"
+>>
+>> +# Print a RFC2822 compliant header ($2) with values from the config option
+>> +# ($1 without the topgit. prefix)
+>> +get_multi_config()
+>> +{
+>> +     # Do we need to escape it for awk double quotes?
+>> +     prefix="$2"
+>> +     prefix_align="$(printf "%*s  " "${#2}" "")"
+>> +
+>> +     git config --get-all topgit.$1 |
+>> +             awk '
+>> +                     BEGIN {
+>> +                             line = ""
+>> +                             prefix = "'"$prefix"': "
+>> +                     }
+>> +                             {
+>> +                                     if (line != "") {
+>> +                                             print prefix line ","
+>> +                                             prefix = "'"$prefix_align"'"
+>> +                                     }
+>> +                                     line = $0
+>> +                             }
+>> +                     END {
+>> +                             if (line != "") {
+>> +                                     print prefix line
+>> +                             }
+>> +                     }
+>> +             '
+>> +}
+>> +
+>
+> I'm not too happy about this, for several reasons:
+>
+>        (i) This code is so awfully complicated.
+For my first awk script, its very clean and not that complicated. I think ;-)
 
-> > Junio C Hamano <gitster@pobox.com> wrote:
-> > > If the check is only about a thin delta base that is not going to be
-> > > transmit, I'd agree.  But I do not see how you are distinguishing that
-> > > case and the case where an object you are actually sending is missing (in
-> > > which case we would want to error out, wouldn't we?)
-> 
-> Turns out to be pretty simple I think.  We just delay the
-> error handling for ->type < 0 until write_object().  If we
-> get this far we know we wanted to include the object but
-> we really don't have it.  Up until that point its fine
-> for us to get objects which are missing, we'll just wind
-> up with a suboptimal pack.
+>
+>        (ii) It would be simpler to just prefix all the further lines
+> with a tab; wouldn't something like
+>
+>                sed '2,$s/^/\t/'
+No objections with this.
 
-If you're going to die anyway due to an object with unknown type, better 
-do so _before_ going through the delta search phase and leaving a 
-partial pack behind.  IOW, the type check can be performed in 
-prepare_pack() instead of write_object() like:
+>
+> actually work?
+>
+>        (iii) This is troublesome because now header values can span
+> multiple lines. Until now, we were just blisfully ignorant about this
+> possibility. At least tg export needs to be adjusted to account for this
+> now, and I fear dealing with this will be pretty annoying when
+> prototyping new features.
+Than we should go back to v1. As I asked in a previous line: "But do
+we generate a valid mail with tg patch, or just a patch file with some
+special looking lines?"
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 2dadec1..01ab49c 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -1722,8 +1733,12 @@ static void prepare_pack(int window, int depth)
- 		if (entry->no_try_delta)
- 			continue;
- 
--		if (!entry->preferred_base)
-+		if (!entry->preferred_base) {
- 			nr_deltas++;
-+			if (entry->type < 0)
-+				die("unable to get type of object %s",
-+				    sha1_to_hex(entry->idx.sha1));
-+		}
- 
- 		delta_list[n++] = entry;
- 	}
-
-Also a comment in check_object() mentioning where the return value of 
-sha1_object_info() is verified would be in order.
-
-And I also agree with Junio about a test script for this so the usage is 
-fully demonstrated, and to ensure it keeps on working as intended 
-(most people will simply never exercise this otherwise).
-
-
-Nicolas
+Bert
+> --
+>                                Petr "Pasky" Baudis
