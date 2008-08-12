@@ -1,124 +1,195 @@
-From: "Bert Wesarg" <bert.wesarg@googlemail.com>
-Subject: Re: TOPGIT: [PATCH] Use standard prefix and DESTDIR rather than explain
-Date: Tue, 12 Aug 2008 18:34:34 +0200
-Message-ID: <36ca99e90808120934h6d86a7cbpeca8a6c85ba3bce2@mail.gmail.com>
-References: <1218545670.7264.2.camel@heerbeest>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] pack-objects: Allow missing base objects when creating
+	thin packs
+Date: Tue, 12 Aug 2008 09:41:49 -0700
+Message-ID: <20080812164149.GB31092@spearce.org>
+References: <20080811182839.GJ26363@spearce.org> <7vk5enuqfg.fsf@gitster.siamese.dyndns.org> <20080811224404.GQ26363@spearce.org> <20080812012859.GT26363@spearce.org> <alpine.LFD.1.10.0808120023250.22892@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: "Jan Nieuwenhuizen" <janneke-list@xs4all.nl>
-X-From: git-owner@vger.kernel.org Tue Aug 12 18:35:47 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Aug 12 18:43:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSwqY-0001S3-BS
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 18:35:46 +0200
+	id 1KSwxR-00047L-4w
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 18:42:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751654AbYHLQei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 12:34:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbYHLQei
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 12:34:38 -0400
-Received: from qw-out-2122.google.com ([74.125.92.26]:23302 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751567AbYHLQeg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 12:34:36 -0400
-Received: by qw-out-2122.google.com with SMTP id 3so228880qwe.37
-        for <git@vger.kernel.org>; Tue, 12 Aug 2008 09:34:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=5cswz66GKF9arosx7sa2mLokvuCY2c14p4qUmwekWnY=;
-        b=WgD5OMLWB14TYfSWnblT9sr+NMK2dc72TZlp+IY7ojrr+eZyur1TTZ9r7Cfnzo1ais
-         8KNyH4NiwiaaiMsF9Ib2e/MMK0w3o2ZEkg9NYuRfD9prlXyOpdzFuAwdb0GZMGiEUhsC
-         gx1g0eyh0BT5mX3+f1bG7ZHjNL+S66qs5wRKY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=I8H3vGik2m+6XTes8I0oqpKJnPjjfnK2EXhNh5zD0keji9CM22j7s04HldU6Of+V23
-         EbACCIQlpA1ff8dK3vXG4jk5fsoYoz/CcegvKj/mK5WYG1x3Y0RCrr2OVJCF+CIsZL3j
-         PKwEN2klxZzIYMZ0/5OjECb99CacxuWcrsRgs=
-Received: by 10.215.66.19 with SMTP id t19mr6711442qak.22.1218558874719;
-        Tue, 12 Aug 2008 09:34:34 -0700 (PDT)
-Received: by 10.70.49.12 with HTTP; Tue, 12 Aug 2008 09:34:34 -0700 (PDT)
-In-Reply-To: <1218545670.7264.2.camel@heerbeest>
+	id S1752237AbYHLQlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 12:41:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752082AbYHLQlu
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 12:41:50 -0400
+Received: from george.spearce.org ([209.20.77.23]:32789 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751861AbYHLQlt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 12:41:49 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 589B938375; Tue, 12 Aug 2008 16:41:49 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0808120023250.22892@xanadu.home>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92113>
 
-On Tue, Aug 12, 2008 at 14:54, Jan Nieuwenhuizen <janneke-list@xs4all.nl> wrote:
-> First an install nitpick.
->
->
->
-> Signed-off-by: Jan Nieuwenhuizen <janneke@gnu.org>
-> ---
->  Makefile |   26 +++++++++++++-------------
->  1 files changed, 13 insertions(+), 13 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 6eade1e..ea6489e 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1,8 +1,7 @@
-> -# Set PREFIX to wherever you want to install TopGit
-> -PREFIX = $(HOME)
-> -bindir = $(PREFIX)/bin
-> -cmddir = $(PREFIX)/libexec/topgit
-> -sharedir = $(PREFIX)/share/topgit
-> +prefix = $(HOME)
-> +bindir = $(prefix)/bin
-> +cmddir = $(prefix)/libexec/topgit
-> +sharedir = $(prefix)/share/topgit
->  hooksdir = $(cmddir)/hooks
->
->
-> @@ -31,14 +30,15 @@ $(help_out): README
->        ./create-help.sh $$CMD
->
->  install:: all
-> -       install -d -m 755 "$(bindir)"
-> -       install tg "$(bindir)"
-> -       install -d -m 755 "$(cmddir)"
-> -       install $(commands_out) "$(cmddir)"
-> -       install -d -m 755 "$(hooksdir)"
-> -       install $(hooks_out) "$(hooksdir)"
-> -       install -d -m 755 "$(sharedir)"
-> -       install -m 644 $(help_out) "$(sharedir)"
+If we are building a thin pack and one of the base objects we would
+consider for deltification is missing its OK, the other side already
+has that base object.  We may be able to get a delta from another
+object, or we can simply send the new object whole (no delta).
 
-> +       install -d -m 755 "$(DESTDIR)$(bindir)"
-> +       install -d -m 755 "$(DESTDIR)$(bindir)"
-duplicate
+This change allows a shallow clone to store only the objects which
+are unique to it, as well as the boundary commit and its trees, but
+avoids storing the boundary blobs.  This special form of a shallow
+clone is able to represent just the difference between two trees.
 
-Bert
-> +       install tg "$(DESTDIR)$(bindir)"
-> +       install -d -m 755 "$(DESTDIR)$(cmddir)"
-> +       install $(commands_out) "$(DESTDIR)$(cmddir)"
-> +       install -d -m 755 "$(DESTDIR)$(hooksdir)"
-> +       install $(hooks_out) "$(DESTDIR)$(hooksdir)"
-> +       install -d -m 755 "$(DESTDIR)$(sharedir)"
-> +       install -m 644 $(help_out) "$(DESTDIR)$(sharedir)"
->
->  clean::
->        rm -f tg $(commands_out) $(hooks_out) $(help_out)
-> --
-> 1.6.0.rc0.44.g67270
->
->
-> --
-> Jan Nieuwenhuizen <janneke@gnu.org> | GNU LilyPond - The music typesetter
-> http://www.xs4all.nl/~jantien       | http://www.lilypond.org
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Pack objects change suggested by Nicolas Pitre.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+
+ Nicolas Pitre <nico@cam.org> wrote:
+ > On Mon, 11 Aug 2008, Shawn O. Pearce wrote:
+ > > > Junio C Hamano <gitster@pobox.com> wrote:
+ > > > > If the check is only about a thin delta base that is not going to be
+ > > > > transmit, I'd agree.
+ > 
+ > If you're going to die anyway due to an object with unknown type, better 
+ > do so _before_ going through the delta search phase and leaving a 
+ > partial pack behind.
+
+ Now with a test! :-)
+ 
+ builtin-pack-objects.c |   15 ++++++--
+ t/t5306-pack-nobase.sh |   80 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 91 insertions(+), 4 deletions(-)
+ create mode 100755 t/t5306-pack-nobase.sh
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 2dadec1..a90302d 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1096,9 +1096,12 @@ static void check_object(struct object_entry *entry)
+ 	}
+ 
+ 	entry->type = sha1_object_info(entry->idx.sha1, &entry->size);
+-	if (entry->type < 0)
+-		die("unable to get type of object %s",
+-		    sha1_to_hex(entry->idx.sha1));
++	/*
++ 	 * The error condition is checked in prepare_pack().  This is
++ 	 * to permit a missing preferred base object to be ignored
++ 	 * as a preferred base.  Doing so can result in a larger
++ 	 * pack file, but the transfer will still take place.
++ 	 */
+ }
+ 
+ static int pack_offset_sort(const void *_a, const void *_b)
+@@ -1722,8 +1725,12 @@ static void prepare_pack(int window, int depth)
+ 		if (entry->no_try_delta)
+ 			continue;
+ 
+-		if (!entry->preferred_base)
++		if (!entry->preferred_base) {
+ 			nr_deltas++;
++			if (entry->type < 0)
++				die("unable to get type of object %s",
++				    sha1_to_hex(entry->idx.sha1));
++		}
+ 
+ 		delta_list[n++] = entry;
+ 	}
+diff --git a/t/t5306-pack-nobase.sh b/t/t5306-pack-nobase.sh
+new file mode 100755
+index 0000000..503e9d4
+--- /dev/null
++++ b/t/t5306-pack-nobase.sh
+@@ -0,0 +1,80 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 Google Inc.
++#
++
++test_description='git-pack-object with missing base
++
++'
++. ./test-lib.sh
++
++# Create A-B chain
++#
++test_expect_success \
++    'setup base' \
++    'for a in a b c d e f g h i; do echo $a >>text; done &&
++     echo side >side &&
++     git update-index --add text side &&
++     A=$(echo A | git commit-tree $(git write-tree)) &&
++
++     echo m >>text &&
++     git update-index text &&
++     B=$(echo B | git commit-tree $(git write-tree) -p $A) &&
++     git update-ref HEAD $B
++    '
++
++# Create repository with C whose parent is B.
++# Repository contains C, C^{tree}, C:text, B, B^{tree}.
++# Repository is missing B:text (best delta base for C:text).
++# Repository is missing A (parent of B).
++# Repository is missing A:side.
++#
++test_expect_success \
++    'setup patch_clone' \
++    'base_objects=$(pwd)/.git/objects &&
++     (mkdir patch_clone &&
++      cd patch_clone &&
++      git init &&
++      echo "$base_objects" >.git/objects/info/alternates &&
++      echo q >>text &&
++      git read-tree $B &&
++      git update-index text &&
++      git update-ref HEAD $(echo C | git commit-tree $(git write-tree) -p $B) &&
++      rm .git/objects/info/alternates &&
++
++      git --git-dir=../.git cat-file commit $B |
++      git hash-object -t commit -w --stdin &&
++
++      git --git-dir=../.git cat-file tree "$B^{tree}" |
++      git hash-object -t tree -w --stdin
++     ) &&
++     C=$(git --git-dir=patch_clone/.git rev-parse HEAD)
++    '
++
++# Clone patch_clone indirectly by cloning base and fetching.
++#
++test_expect_success \
++    'indirectly clone patch_clone' \
++    '(mkdir user_clone &&
++      cd user_clone &&
++      git init &&
++      git pull ../.git &&
++      test $(git rev-parse HEAD) = $B
++
++      git pull ../patch_clone/.git &&
++      test $(git rev-parse HEAD) = $C
++     )
++    '
++
++# Cloning the patch_clone directly should fail.
++#
++test_expect_success \
++    'clone of patch_clone is incomplete' \
++    '(mkdir user_direct &&
++      cd user_direct &&
++      git init &&
++      test_must_fail git fetch ../patch_clone/.git
++     )
++    '
++
++test_done
+-- 
+1.6.0.rc2.22.g71b99
+
+
+-- 
+Shawn.
