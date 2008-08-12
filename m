@@ -1,95 +1,76 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] pack-objects: Allow missing base objects when creating
-	thin packs
-Date: Tue, 12 Aug 2008 11:18:43 -0700
-Message-ID: <20080812181843.GD31092@spearce.org>
-References: <20080811182839.GJ26363@spearce.org> <7vk5enuqfg.fsf@gitster.siamese.dyndns.org> <20080811224404.GQ26363@spearce.org> <20080812012859.GT26363@spearce.org> <alpine.LFD.1.10.0808120023250.22892@xanadu.home> <20080812164149.GB31092@spearce.org> <alpine.LFD.1.10.0808121402440.22892@xanadu.home>
+From: Jonathan Nieder <jrnieder@uchicago.edu>
+Subject: [TopGit PATCH/RFC fixup] suppress "cannot overwrite existing file"
+ error
+Date: Tue, 12 Aug 2008 13:21:13 -0500 (CDT)
+Message-ID: <Pine.GSO.4.62.0808121317110.18832@harper.uchicago.edu>
+References: <Pine.GSO.4.62.0808121309000.18832@harper.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Aug 12 20:19:49 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: pasky@suse.cz
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 12 20:22:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSyTD-0006bJ-JO
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 20:19:48 +0200
+	id 1KSyVc-0007Pq-Og
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 20:22:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751426AbYHLSSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 14:18:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbYHLSSo
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 14:18:44 -0400
-Received: from george.spearce.org ([209.20.77.23]:43729 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751052AbYHLSSo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 14:18:44 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 8A83138375; Tue, 12 Aug 2008 18:18:43 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0808121402440.22892@xanadu.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751582AbYHLSVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 14:21:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751163AbYHLSVQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 14:21:16 -0400
+Received: from smtp00.uchicago.edu ([128.135.12.76]:49648 "EHLO
+	smtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751368AbYHLSVQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 14:21:16 -0400
+Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
+	by smtp00.uchicago.edu (8.13.8/8.13.8) with ESMTP id m7CILCRc015580;
+	Tue, 12 Aug 2008 13:21:13 -0500
+Received: from localhost (jrnieder@localhost)
+	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m7CILD8h019369;
+	Tue, 12 Aug 2008 13:21:13 -0500 (CDT)
+X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
+In-Reply-To: <Pine.GSO.4.62.0808121309000.18832@harper.uchicago.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92126>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> On Tue, 12 Aug 2008, Shawn O. Pearce wrote:
-> > +# Clone patch_clone indirectly by cloning base and fetching.
-> > +#
-> > +test_expect_success \
-> > +    'indirectly clone patch_clone' \
-> > +    '(mkdir user_clone &&
-> > +      cd user_clone &&
-> > +      git init &&
-> > +      git pull ../.git &&
-> > +      test $(git rev-parse HEAD) = $B
-> > +
-> > +      git pull ../patch_clone/.git &&
-> > +      test $(git rev-parse HEAD) = $C
-> > +     )
-> > +    '
-> 
-> What if the first test command fails?  Won't its result be ignored?
+We had been using sh -C ": >filename" to atomically create a file,
+but this has the unfortunate side effect of producing an error
+message if the file already exists.  So suppress the error.
 
-Isn't the exit status of the subshell the exit status of the last
-command in the subshell?
+Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
+---
+	Here's a fix to a mistake in the patch I just sent.  If the
+	patch was meant for application, I would be suggesting
+	squashing this change in.  Sorry for the noise.
 
-I just changed the test line to compare to "x$C" instead of $C
-and it correctly detected the error condition:
+ tg.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-$ git diff
-diff --git a/t/t5306-pack-nobase.sh b/t/t5306-pack-nobase.sh
-index 503e9d4..7c55e9e 100755
---- a/t/t5306-pack-nobase.sh
-+++ b/t/t5306-pack-nobase.sh
-@@ -62,7 +62,7 @@ test_expect_success \
-       test $(git rev-parse HEAD) = $B
-
-       git pull ../patch_clone/.git &&
--      test $(git rev-parse HEAD) = $C
-+      test $(git rev-parse HEAD) = x$C
-      )
-     '
-
-$ ./t5306-pack-nobase.sh
-*   ok 1: setup base
-*   ok 2: setup patch_clone
-* FAIL 3: indirectly clone patch_clone
-        (mkdir user_clone &&
-              cd user_clone &&
-              git init &&
-              git pull ../.git &&
-              test $(git rev-parse HEAD) = $B
-
-              git pull ../patch_clone/.git &&
-              test $(git rev-parse HEAD) = x$C
-             )
-
-*   ok 4: clone of patch_clone is incomplete
-* failed 1 among 4 test(s)
-
+diff --git a/tg.sh b/tg.sh
+index c31256f..65375d6 100644
+--- a/tg.sh
++++ b/tg.sh
+@@ -85,14 +85,14 @@ branch_contains()
+ # nonzero status on failure
+ temp_filename()
+ {
+-	set -C && umask 077
++	umask 077
+ 	prefix=$1
+ 	i=0
+ 	suffix=$(awk 'BEGIN { srand(); rand(); print int(rand()*99999) }')
+ 	while test $i -lt 256
+ 	do
+ 		tmp=$prefix$suffix
+-		: >"$tmp" && break
++		sh -C -c ': >"$tmp"' 2>/dev/null && break
+ 		i=$(($i+1))
+ 		suffix=$(($suffix+1))
+ 	done
 -- 
-Shawn.
+1.6.0.rc2.531.g79a96
