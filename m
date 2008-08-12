@@ -1,66 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] filter-branch: use --simplify-merges
-Date: Mon, 11 Aug 2008 19:13:26 -0700
-Message-ID: <7v7iant1yx.fsf@gitster.siamese.dyndns.org>
-References: <7viqub9dzi.fsf@gitster.siamese.dyndns.org>
- <1218376960-6406-1-git-send-email-trast@student.ethz.ch>
- <7vljz3t2ts.fsf@gitster.siamese.dyndns.org>
+From: Abhijit Menon-Sen <ams@toroid.org>
+Subject: Re: [PATCH v2] Make cherry-pick use rerere for conflict resolution.
+Date: Tue, 12 Aug 2008 08:04:11 +0530
+Message-ID: <20080812023411.GA14831@toroid.org>
+References: <1218368935-31124-1-git-send-email-ams@toroid.org> <alpine.DEB.1.00.0808110111430.24820@pacific.mpi-cbg.de.mpi-cbg.de> <20080811023053.GA9144@toroid.org> <7vmyjjxuca.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jan Wielemaker <J.Wielemaker@uva.nl>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Aug 12 04:14:45 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 12 04:35:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSjPB-0005Nf-PY
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 04:14:38 +0200
+	id 1KSjjS-000105-AE
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 04:35:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564AbYHLCNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2008 22:13:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbYHLCNf
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 22:13:35 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41019 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751419AbYHLCNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2008 22:13:35 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B674B55AE1;
-	Mon, 11 Aug 2008 22:13:34 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 9E45855ADB; Mon, 11 Aug 2008 22:13:28 -0400 (EDT)
-In-Reply-To: <7vljz3t2ts.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 11 Aug 2008 18:54:55 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 446922C0-6814-11DD-98B1-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751876AbYHLCeR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2008 22:34:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751466AbYHLCeQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Aug 2008 22:34:16 -0400
+Received: from fugue.toroid.org ([85.10.196.113]:41268 "EHLO fugue.toroid.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751705AbYHLCeQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2008 22:34:16 -0400
+Received: from penne.toroid.org (penne-vpn [10.8.0.6])
+	by fugue.toroid.org (Postfix) with ESMTP id B3AFA5583C5;
+	Tue, 12 Aug 2008 04:34:14 +0200 (CEST)
+Received: by penne.toroid.org (Postfix, from userid 1000)
+	id D476BADC36D; Tue, 12 Aug 2008 08:04:11 +0530 (IST)
+Content-Disposition: inline
+In-Reply-To: <7vmyjjxuca.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92062>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Thomas Rast <trast@student.ethz.ch> writes:
+At 2008-08-11 11:47:01 -0700, gitster@pobox.com wrote:
 >
->> @@ -333,7 +333,8 @@ then
->>  	do
->>  		sha1=$(git rev-parse "$ref"^0)
->>  		test -f "$workdir"/../map/$sha1 && continue
->> -		ancestor=$(git rev-list -1 $ref -- "$filter_subdir")
->> +		ancestor=$(git rev-list --simplify-merges -1 \
->> +				$ref -- "$filter_subdir")
->>  		test "$ancestor" && echo $(map $ancestor) >> "$workdir"/../map/$sha1
->>  	done < "$tempdir"/heads
->>  fi
->
-> Hmm, where does this preimage come from?
+> I do not think that story is a good example.
 
-Nevermind.  You based this on top of the "fix ancestor discovery" patch.
+I agree, it's a stretch.
 
-I'll squash these two and queue them in 'pu' for now.
+I can't think of any better rationale for the change than "It might
+conceivably be convenient to someone at some point", which falls a
+fair bit short of being convincing.
+
+To be honest, it took so little time to implement this suggestion that
+I didn't realise until later that there was no realistic use-case and
+nothing to say about the patch.
+
+Sorry for the noise.
+
+-- ams
