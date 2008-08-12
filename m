@@ -1,80 +1,50 @@
-From: Thomas Koch <thomas@koch.ro>
-Subject: tried submodules and corrupted repo
-Date: Tue, 12 Aug 2008 10:09:38 +0200
-Organization: Young Media Concepts
-Message-ID: <200808121009.38941.thomas@koch.ro>
+From: bain <bain@devslashzero.com>
+Subject: Git rebase UI
+Date: Tue, 12 Aug 2008 02:02:58 -0700 (PDT)
+Message-ID: <779511aa-4bf5-4e20-845a-4534a1875324@r15g2000prd.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 12 10:47:19 2008
+X-From: git-owner@vger.kernel.org Tue Aug 12 11:04:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSpXC-0002oq-Hc
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 10:47:18 +0200
+	id 1KSpnQ-0000Cm-7y
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 11:04:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752029AbYHLIqO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 04:46:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752010AbYHLIqM
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 04:46:12 -0400
-Received: from koch.ro ([195.34.83.107]:42477 "EHLO
-	ve825703057.providerbox.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751993AbYHLIqL (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Aug 2008 04:46:11 -0400
-Received: from 217-162-251-183.dclient.hispeed.ch ([217.162.251.183] helo=jona.local)
-	by ve825703057.providerbox.net with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <thomas@koch.ro>)
-	id 1KSowz-0007uh-6j
-	for git@vger.kernel.org; Tue, 12 Aug 2008 10:09:54 +0200
-User-Agent: KMail/1.9.9
-Content-Disposition: inline
-X-Spam_score: -2.3
-X-Spam_score_int: -22
-X-Spam_bar: --
+	id S1751978AbYHLJDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 05:03:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751944AbYHLJDA
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 05:03:00 -0400
+Received: from yw-out-2122.google.com ([74.125.46.27]:7460 "EHLO
+	yw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751927AbYHLJC7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 05:02:59 -0400
+Received: by yw-out-2122.google.com with SMTP id 4so3540818ywd.1
+        for <git@vger.kernel.org>; Tue, 12 Aug 2008 02:02:58 -0700 (PDT)
+Received: by 10.151.108.17 with SMTP id k17mr453702ybm.8.1218531778582; Tue, 
+	12 Aug 2008 02:02:58 -0700 (PDT)
+X-IP: 203.193.154.151
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) 
+	Gecko/2008070206 Firefox/3.0.1,gzip(gfe),gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92083>
 
-Hi,
+I am in middle of designing a UI for interactive git rebase,
+But i am getting into quite a few usability decisions to be made.
 
-in my trial to use a submodule, it seems that I messed up my repo.
+So i was wondering has anybody implemented or attempted to implement
+such a thing before, from which i can _not_take_ mistakes/reinvent the
+wheel (or atleast redesign it).
 
-I've put both repos at
-http://git.koch.ro
-clone url is
-http://git.koch.ro/git/REPONAME
+Googling doesn't give me any, so i thought i will ask if somebody has
+it in his private closet.
 
-I wanted to have the git-php-wrapper repo as a submodule inside wigit,
-which did not work at all. I always ended up with a git-php-wrapper
-subdir and a .git inside it, but no workdir files.
-
-Now I wanted to start from scratch, to clone wigit again to my local
-machine. But when I try
-git clone http://git.koch.ro/git/wigit
-it says:
-Initialized empty Git repository in /var/checkouts/wigit/.git/
-warning: remote HEAD refers to nonexistent ref, unable to checkout.
-
-Is there a way to resque my wigit repo? And how to get the submodule
-working afterwards? 
-
-Best regards,
--- 
-Thomas Koch, Software Developer
-http://www.koch.ro
-
-Young Media Concepts GmbH
-Sonnenstr. 4
-CH-8280 Kreuzlingen
-Switzerland
-
-Tel    +41 (0)71 / 508 24 86
-Fax    +41 (0)71 / 560 53 89
-Mobile +49 (0)170 / 753 89 16
-Web    www.ymc.ch
+Thanks,
+BAIN
