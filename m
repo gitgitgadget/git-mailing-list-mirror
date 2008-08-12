@@ -1,66 +1,98 @@
-From: Thomas Koch <thomas@koch.ro>
-Subject: fastest way to check if dir is a workdir
-Date: Tue, 12 Aug 2008 13:34:56 +0200
-Organization: Young Media Concepts
-Message-ID: <200808121334.57066.thomas@koch.ro>
+From: Jan Wielemaker <J.Wielemaker@uva.nl>
+Subject: Re: [PATCH 0/3] filter-branch --subdirectory-filter improvements
+Date: Tue, 12 Aug 2008 14:11:06 +0200
+Organization: HCS, University of Amsterdam
+Message-ID: <200808121411.06452.J.Wielemaker@uva.nl>
+References: <7vsktara5n.fsf@gitster.siamese.dyndns.org> <cover.1218529494.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="utf-8"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 12 13:36:52 2008
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Aug 12 14:13:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSsBH-0002Df-CC
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 13:36:51 +0200
+	id 1KSskh-0005kt-I7
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 14:13:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751366AbYHLLfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 07:35:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbYHLLfs
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 07:35:48 -0400
-Received: from koch.ro ([195.34.83.107]:60900 "EHLO
-	ve825703057.providerbox.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750958AbYHLLfs (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Aug 2008 07:35:48 -0400
-Received: from 217-162-251-183.dclient.hispeed.ch ([217.162.251.183] helo=jona.local)
-	by ve825703057.providerbox.net with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <thomas@koch.ro>)
-	id 1KSs9j-0007pq-9S
-	for git@vger.kernel.org; Tue, 12 Aug 2008 13:35:17 +0200
+	id S1751548AbYHLMME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 08:12:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271AbYHLMMC
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 08:12:02 -0400
+Received: from korteweg.uva.nl ([146.50.98.70]:10237 "EHLO korteweg.uva.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751213AbYHLMMB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 08:12:01 -0400
+Received: from gollem.science.uva.nl ([146.50.26.20]) by korteweg.uva.nl with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 12 Aug 2008 14:11:59 +0200
 User-Agent: KMail/1.9.9
+In-Reply-To: <cover.1218529494.git.trast@student.ethz.ch>
 Content-Disposition: inline
-X-Spam_score: -2.3
-X-Spam_score_int: -22
-X-Spam_bar: --
+X-OriginalArrivalTime: 12 Aug 2008 12:11:59.0735 (UTC) FILETIME=[9F327870:01C8FC74]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92088>
 
-Hi,
+On Tuesday 12 August 2008 10:45:56 am Thomas Rast wrote:
+> Junio C Hamano wrote:
+> > Anything parked in 'pu' is a fair game for replacement later, so please
+> > send a replacement series and tell me to drop the previous ones from
+> > 'pu'.
+>
+> So let's try this one.  The first two do not depend on
+> --simplify-merges.
 
-I'm writing a little php-git-wrapper and would like to have a function
-which tells me, whether a given path is part of a git checkout or not.
+And I can confirm that (2) is a very important fix and (3) is a necessary
+step to achieve what I believe --subdirectory-filter is meant for: extract
+a directory from a big project and turn it into stand-alone project.  In
+this case I want:
 
-What would be the fastest commandline to check, whether the current dir
-is part of a checkout? It may be assumed that the repository is at the
-standard position.
+	% filter out dir X, creating X.git
+	% git rm -r X
+	% git submodule add <url> X
 
-Thanks a lot,
--- 
-Thomas Koch, Software Developer
-http://www.koch.ro
+And someone with a totally unrelated project adds X.git to his project.
+That requires the history of X to become totally independent from the
+original project.
 
-Young Media Concepts GmbH
-Sonnenstr. 4
-CH-8280 Kreuzlingen
-Switzerland
+This works great with Thomas' patches.
 
-Tel    +41 (0)71 / 508 24 86
-Fax    +41 (0)71 / 560 53 89
-Mobile +49 (0)170 / 753 89 16
-Web    www.ymc.ch
+	Cheers --- Jan
+
+P.s.	Note that this is a common problem for people moving from some
+	unnamed ancient SCM system, either transferring a repository or
+	simply starting the wrong way due to historical brainwashing :-)
+
+> 1/3 is new, and extends the --subdirectory-filter test to prove the
+> existence of the bug in current filter-branch.  I hope it helps
+> explain the issue.
+>
+> 2/3 is the same as before[*] modulo changing the test to expect
+> success again.
+>
+> The third one does depend on --simplify-merges.
+>
+> 3/3 introduces --simplify-merges, which improves the history that
+> results from --subdirectory-filter.  It has absolutely nothing to do
+> with 2/3, except that it touches the same area of code.  (You could
+> s/rev-list/rev-list --simplify-merges/ in master:git-filter-branch.sh,
+> and get the improved history without the bugfix.)
+>
+> Sorry that I dispersed the patches and v2s randomly across the thread.
+>
+> - Thomas
+>
+> [*] http://kerneltrap.org/mailarchive/git/2008/8/8/2867244
+> "[PATCH v2] filter-branch: fix ref rewriting with --subdirectory-filter"
+>
+>
+> Thomas Rast (3):
+>   filter-branch: Extend test to show rewriting bug
+>   filter-branch: fix ref rewriting with --subdirectory-filter
+>   filter-branch: use --simplify-merges
