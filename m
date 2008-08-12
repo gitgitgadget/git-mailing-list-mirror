@@ -1,134 +1,89 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 2/3] filter-branch: fix ref rewriting with --subdirectory-filter
-Date: Tue, 12 Aug 2008 10:45:58 +0200
-Message-ID: <2c31171ea3181f9dfe7c96a2af98e1a5bcf1358a.1218529494.git.trast@student.ethz.ch>
+Subject: [PATCH 3/3] filter-branch: use --simplify-merges
+Date: Tue, 12 Aug 2008 10:45:59 +0200
+Message-ID: <fb479cdb219a3ebbcd19cc864a50dd76c603b38a.1218529494.git.trast@student.ethz.ch>
 References: <cover.1218529494.git.trast@student.ethz.ch>
  <b6bda5e5028aea161e5d18e0c70c45d5a94dac82.1218529494.git.trast@student.ethz.ch>
+ <2c31171ea3181f9dfe7c96a2af98e1a5bcf1358a.1218529494.git.trast@student.ethz.ch>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Jan Wielemaker <J.Wielemaker@uva.nl>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 12 10:47:18 2008
+X-From: git-owner@vger.kernel.org Tue Aug 12 10:47:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KSpXB-0002oq-7I
-	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 10:47:17 +0200
+	id 1KSpXB-0002oq-Sf
+	for gcvg-git-2@gmane.org; Tue, 12 Aug 2008 10:47:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752009AbYHLIqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 04:46:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751985AbYHLIqA
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 04:46:00 -0400
+	id S1751985AbYHLIqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 04:46:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751993AbYHLIqB
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 04:46:01 -0400
 Received: from xsmtp0.ethz.ch ([82.130.70.14]:33951 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751927AbYHLIp6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 04:45:58 -0400
+	id S1751978AbYHLIp7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 04:45:59 -0400
 Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
 	 Tue, 12 Aug 2008 10:45:54 +0200
 Received: from localhost.localdomain ([129.132.149.43]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
 	 Tue, 12 Aug 2008 10:45:53 +0200
 X-Mailer: git-send-email 1.6.0.rc2.30.gb6bda
-In-Reply-To: <b6bda5e5028aea161e5d18e0c70c45d5a94dac82.1218529494.git.trast@student.ethz.ch>
+In-Reply-To: <2c31171ea3181f9dfe7c96a2af98e1a5bcf1358a.1218529494.git.trast@student.ethz.ch>
 In-Reply-To: <7vsktara5n.fsf@gitster.siamese.dyndns.org>
 References: <7vsktara5n.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 12 Aug 2008 08:45:53.0567 (UTC) FILETIME=[D462FAF0:01C8FC57]
+X-OriginalArrivalTime: 12 Aug 2008 08:45:53.0677 (UTC) FILETIME=[D473C3D0:01C8FC57]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92081>
 
-The previous ancestor discovery code failed on any refs that are
-(pre-rewrite) ancestors of commits marked for rewriting.  This means
-that in a situation
+Use rev-list --simplify-merges everywhere.  This changes the behaviour
+of --subdirectory-filter in cases such as
 
-   A -- B(topic) -- C(master)
+  O -- A -\
+   \       \
+    \- B -- M
 
-where B is dropped by --subdirectory-filter pruning, the 'topic' was
-not moved up to A as intended, but left unrewritten because we asked
-about 'git rev-list ^master topic', which does not return anything.
-
-Instead, we use the straightforward
-
-   git rev-list -1 $ref -- $filter_subdir
-
-to find the right ancestor.  To justify this, note that the nearest
-ancestor is unique: We use the output of
-
-  git rev-list --parents -- $filter_subdir
-
-to rewrite commits in the first pass, before any ref rewriting.  If B
-is a non-merge commit, the only candidate is its parent.  If it is a
-merge, there are two cases:
-
-- All sides of the merge bring the same subdirectory contents.  Then
-  rev-list already pruned away the merge in favour for just one of its
-  parents, so there is only one candidate.
-
-- Some merge sides, or the merge outcome, differ.  Then the merge is
-  not pruned and can be rewritten directly.
-
-So it is always safe to use rev-list -1.
+where A and B bring the same changes to the subdirectory: It now keeps
+both sides of the merge.  Previously, the history would have been
+simplified to 'O -- A'.  Merges of unrelated side histories that never
+touch the subdirectory are still removed.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- git-filter-branch.sh     |   27 +++++++++++----------------
- t/t7003-filter-branch.sh |    2 +-
- 2 files changed, 12 insertions(+), 17 deletions(-)
+ git-filter-branch.sh |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index a324cf0..a140337 100755
+index a140337..2688254 100755
 --- a/git-filter-branch.sh
 +++ b/git-filter-branch.sh
-@@ -317,24 +317,19 @@ done <../revs
+@@ -232,11 +232,11 @@ mkdir ../map || die "Could not create map/ directory"
+ case "$filter_subdir" in
+ "")
+ 	git rev-list --reverse --topo-order --default HEAD \
+-		--parents "$@"
++		--parents --simplify-merges "$@"
+ 	;;
+ *)
+ 	git rev-list --reverse --topo-order --default HEAD \
+-		--parents "$@" -- "$filter_subdir"
++		--parents --simplify-merges "$@" -- "$filter_subdir"
+ esac > ../revs || die "Could not get the commits"
+ commits=$(wc -l <../revs | tr -d " ")
  
- # In case of a subdirectory filter, it is possible that a specified head
- # is not in the set of rewritten commits, because it was pruned by the
--# revision walker.  Fix it by mapping these heads to the next rewritten
--# ancestor(s), i.e. the boundaries in the set of rewritten commits.
-+# revision walker.  Fix it by mapping these heads to the unique nearest
-+# ancestor that survived the pruning.
- 
--# NEEDSWORK: we should sort the unmapped refs topologically first
--while read ref
--do
--	sha1=$(git rev-parse "$ref"^0)
--	test -f "$workdir"/../map/$sha1 && continue
--	# Assign the boundarie(s) in the set of rewritten commits
--	# as the replacement commit(s).
--	# (This would look a bit nicer if --not --stdin worked.)
--	for p in $( (cd "$workdir"/../map; ls | sed "s/^/^/") |
--		git rev-list $ref --boundary --stdin |
--		sed -n "s/^-//p")
-+if test "$filter_subdir"
-+then
-+	while read ref
+@@ -326,7 +326,8 @@ then
  	do
--		map $p >> "$workdir"/../map/$sha1
--	done
--done < "$tempdir"/heads
-+		sha1=$(git rev-parse "$ref"^0)
-+		test -f "$workdir"/../map/$sha1 && continue
-+		ancestor=$(git rev-list -1 $ref -- "$filter_subdir")
-+		test "$ancestor" && echo $(map $ancestor) >> "$workdir"/../map/$sha1
-+	done < "$tempdir"/heads
-+fi
- 
- # Finally update the refs
- 
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 4382baa..233254f 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -101,7 +101,7 @@ test_expect_success 'filter subdirectory only' '
- 		refs/heads/sub refs/heads/sub-earlier
- '
- 
--test_expect_failure 'subdirectory filter result looks okay' '
-+test_expect_success 'subdirectory filter result looks okay' '
- 	test 2 = $(git rev-list sub | wc -l) &&
- 	git show sub:new &&
- 	test_must_fail git show sub:subdir &&
+ 		sha1=$(git rev-parse "$ref"^0)
+ 		test -f "$workdir"/../map/$sha1 && continue
+-		ancestor=$(git rev-list -1 $ref -- "$filter_subdir")
++		ancestor=$(git rev-list --simplify-merges -1 \
++				$ref -- "$filter_subdir")
+ 		test "$ancestor" && echo $(map $ancestor) >> "$workdir"/../map/$sha1
+ 	done < "$tempdir"/heads
+ fi
 -- 
 1.6.0.rc2.30.gb6bda
