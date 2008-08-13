@@ -1,108 +1,80 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2 1/2] rebase -i -p: handle index and workdir correctly
-Date: Wed, 13 Aug 2008 13:56:59 +0200
-Message-ID: <23b4780a3a7bbe06f4157b6843d1d9dab26d7087.1218628444.git.trast@student.ethz.ch>
-References: <200808131207.31616.trast@student.ethz.ch>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 13 13:58:17 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: pack operation is thrashing my server
+Date: Wed, 13 Aug 2008 05:43:15 -0700 (PDT)
+Message-ID: <m3abfht7a9.fsf@localhost.localdomain>
+References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Ken Pratt" <ken@kenpratt.net>
+X-From: git-owner@vger.kernel.org Wed Aug 13 14:44:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTEzQ-0007TY-4j
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 13:58:08 +0200
+	id 1KTFiB-0007tr-Na
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 14:44:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754537AbYHML44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 07:56:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754506AbYHML4z
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 07:56:55 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:47922 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754166AbYHML4y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 07:56:54 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 13 Aug 2008 13:56:53 +0200
-Received: from localhost.localdomain ([129.132.149.43]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 13 Aug 2008 13:56:52 +0200
-X-Mailer: git-send-email 1.6.0.rc2.36.g234a
-In-Reply-To: <200808131207.31616.trast@student.ethz.ch>
-X-OriginalArrivalTime: 13 Aug 2008 11:56:53.0014 (UTC) FILETIME=[AD299360:01C8FD3B]
+	id S1752212AbYHMMnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 08:43:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbYHMMnT
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 08:43:19 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:9407 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752184AbYHMMnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 08:43:19 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so11326fgg.17
+        for <git@vger.kernel.org>; Wed, 13 Aug 2008 05:43:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=oxdD3Pw8daWkzXBYKccNu3M9Ya6PueYolKiEd9BSRV4=;
+        b=a7/bX3oAbhCvId2TNVeER9Jho+6/DLG1DAw3x+G+J3Dj3/kKBPODwa5tG4c5Ib51uY
+         4tKvWj5bGtMHdLpjlb64RZ71tg1j0U5y3pD3/6wr4TgOj74N1IXGNz6V5lf5oGNzbssd
+         9gLhzcr7+bvSFGx9s4QXzf0UlCP4NQIW8nMIY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=K4+IYgtz3VWZZjNBNz/lW5OLPnKjdzJ0kyHX/wOT2HD54PSC1dLfiIikE8fwBXhL+O
+         9t8HGGL9kRG9doGC61UAJnGHUhn+ZrwIRhYE3+IgHTzkaVD2E3GX6FfBzTusG/lqRjr8
+         9THy3p6B3kR3GP8ipVDdnJvDCCr/X1v2x0VQU=
+Received: by 10.86.95.20 with SMTP id s20mr12360229fgb.49.1218631396958;
+        Wed, 13 Aug 2008 05:43:16 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.245.20])
+        by mx.google.com with ESMTPS id 3sm628596fge.3.2008.08.13.05.43.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 13 Aug 2008 05:43:15 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m7DChCfL020141;
+	Wed, 13 Aug 2008 14:43:12 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m7DChAsm020137;
+	Wed, 13 Aug 2008 14:43:10 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92213>
 
-'git rebase -i -p' forgot to update the index and working directory
-during fast forwards.  Fix this.  Makes 'GIT_EDITOR=true rebase -i -p
-<ancestor>' a no-op again.
+[...]
 
-Also, it attempted to do a fast forward even if it was instructed not
-to commit (via -n).  Fall back to the cherry-pick code path and let
-that handle the issue for us.
+If I remember correctly there were on git mailing list some patches by
+Dana How which put an upper bound on the size of individual objects
+going to pack; objects with size above threshold would be left as
+loose object (and shared via network drive).
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- git-rebase--interactive.sh    |   13 ++++++++++++-
- t/t3404-rebase-interactive.sh |    6 ++++++
- 2 files changed, 18 insertions(+), 1 deletions(-)
+Unfortunately if I remember correctly they were not accepted in git.
+You can try to pack large objects into separate pack, and .keep it,
+or try to ressurect the patches from git mailing list archive.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 4e334ba..1dc24b1 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -145,7 +145,16 @@ pick_one () {
- }
- 
- pick_one_preserving_merges () {
--	case "$1" in -n) sha1=$2 ;; *) sha1=$1 ;; esac
-+	fast_forward=t
-+	case "$1" in
-+	-n)
-+		fast_forward=f
-+		sha1=$2
-+		;;
-+	*)
-+		sha1=$1
-+		;;
-+	esac
- 	sha1=$(git rev-parse $sha1)
- 
- 	if test -f "$DOTEST"/current-commit
-@@ -182,6 +191,8 @@ pick_one_preserving_merges () {
- 	t)
- 		output warn "Fast forward to $sha1"
- 		test $preserve = f || echo $sha1 > "$REWRITTEN"/$sha1
-+		output git reset --hard $sha1 ||
-+			die "Cannot fast forward to $sha1"
- 		;;
- 	f)
- 		test "a$1" = a-n && die "Refusing to squash a merge: $sha1"
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index ffe3dd9..4d62b9a 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -202,6 +202,9 @@ test_expect_success 'retain authorship when squashing' '
- test_expect_success '-p handles "no changes" gracefully' '
- 	HEAD=$(git rev-parse HEAD) &&
- 	git rebase -i -p HEAD^ &&
-+	git update-index --refresh &&
-+	git diff-files --quiet &&
-+	git diff-index --quiet --cached HEAD -- &&
- 	test $HEAD = $(git rev-parse HEAD)
- '
- 
-@@ -235,6 +238,9 @@ test_expect_success 'preserve merges with -p' '
- 	git checkout -b to-be-rebased &&
- 	test_tick &&
- 	git rebase -i -p --onto branch1 master &&
-+	git update-index --refresh &&
-+	git diff-files --quiet &&
-+	git diff-index --quiet --cached HEAD -- &&
- 	test $(git rev-parse HEAD~6) = $(git rev-parse branch1) &&
- 	test $(git rev-parse HEAD~4^2) = $(git rev-parse to-be-preserved) &&
- 	test $(git rev-parse HEAD^^2^) = $(git rev-parse HEAD^^^) &&
+HTH.
 -- 
-1.6.0.rc2.36.g234a
+Jakub Narebski
+Poland
+ShadeHawk on #git
