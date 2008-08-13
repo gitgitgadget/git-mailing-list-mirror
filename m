@@ -1,59 +1,72 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH (1b)] merge-recursive.c: Add more generic
- merge_recursive_generic()
-Date: Wed, 13 Aug 2008 13:54:16 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0808131333230.19665@iabervon.org>
-References: <1218559514-16890-1-git-send-email-vmiklos@frugalware.org> <1218572040-23362-1-git-send-email-s-beyer@gmx.net> <alpine.LNX.1.00.0808122309460.19665@iabervon.org> <20080813172938.GC12871@leksak.fem-net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: pack operation is thrashing my server
+Date: Wed, 13 Aug 2008 13:57:59 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0808131352260.4352@xanadu.home>
+References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
+ <m363q5t152.fsf@localhost.localdomain> <20080813150425.GC3782@spearce.org>
+ <200808131810.19914.johan@herland.net>
+ <a6b6acf60808131038s1ae7fb69s2b703c25766a82c0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Aug 13 19:55:31 2008
+Content-Transfer-Encoding: 7BIT
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Geert Bosch <bosch@adacore.com>,
+	Andi Kleen <andi@firstfloor.org>
+To: Ken Pratt <ken@kenpratt.net>
+X-From: git-owner@vger.kernel.org Wed Aug 13 19:59:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTKZA-00069b-1k
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 19:55:24 +0200
+	id 1KTKcz-0007cn-Vl
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 19:59:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752781AbYHMRyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 13:54:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752911AbYHMRyS
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 13:54:18 -0400
-Received: from iabervon.org ([66.92.72.58]:57229 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752294AbYHMRyR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 13:54:17 -0400
-Received: (qmail 31791 invoked by uid 1000); 13 Aug 2008 17:54:16 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 13 Aug 2008 17:54:16 -0000
-In-Reply-To: <20080813172938.GC12871@leksak.fem-net>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1753064AbYHMR6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 13:58:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753079AbYHMR6S
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 13:58:18 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:47432 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752953AbYHMR6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 13:58:17 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K5J00HP0WKXBBIB@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 13 Aug 2008 13:58:09 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <a6b6acf60808131038s1ae7fb69s2b703c25766a82c0@mail.gmail.com>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92252>
 
-On Wed, 13 Aug 2008, Stephan Beyer wrote:
+On Wed, 13 Aug 2008, Ken Pratt wrote:
 
-> Hi,
+> > As for how to estimate entropy, isn't that just a matter of feeding it
+> > through zlib and compare the output size to the input size? Especially
+> > if we're already about to feed it through zlib anyway... In other
+> > words, feed (an initial part of) the data through zlib, and if the
+> > compression ratio so far looks good, keep going and write out the
+> > compressed object, otherwise abort zlib and write out the original
+> > object with compression level 0.
 > 
-> Daniel Barkalow wrote:
-> > You might look at builtin-checkout and see if merge_working_tree() could 
-> > be made cleaner with this API, or if some other API could accomodate both 
-> > cases more nicely.
-> 
-> Puhh, I've not dug into merging stuff that deep, but for me it does not
-> look that this can be done in a useful way, i.e. merge_working_tree()
-> does not do a recursive merge.
+> This is probably off topic now, but as the OP, I'd like to mention
+> that I tried setting pack.compression = 0 and it did not solve my
+> memory issues.
 
-Ah, true. It's actually doing a single merge in the way that 
-merge_recursive would do a single merge. I think it ought to be doing 
-a recursive merge, but that's probably a change for later, anyway. (This 
-is for -m, which essentially picks the uncommited changes versus the old 
-branch, applied to the new branch uncommitted)
+Yeah, the compression level is a tengential issue which has to do with 
+speed.
 
-	-Daniel
-*This .sig left intentionally blank*
+> So it seems to be that the packing itself that is
+> sucking up all the memory -- not the compression.
+
+Initial packing requires enough memory.  And if your repository is not 
+packed, then every clone request will act just like a first packing. So 
+for git on a server to behave well, repositories have to be well packed.
+
+
+Nicolas
