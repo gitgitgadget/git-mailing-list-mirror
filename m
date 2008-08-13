@@ -1,38 +1,38 @@
 From: "Stephen R. van den Berg" <srb@cuci.nl>
 Subject: [PATCH] git-daemon: Simplify child management and associated logging
 	by
-Date: Wed, 13 Aug 2008 01:52:47 +0200
-Message-ID: <20080812235247.8353.95609.stgit@aristoteles.cuci.nl>
-References: <20080812225642.GA15265@cuci.nl>
+Date: Wed, 13 Aug 2008 02:03:12 +0200
+Message-ID: <20080813000312.12323.65448.stgit@aristoteles.cuci.nl>
+References: <20080812235247.8353.95609.stgit@aristoteles.cuci.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 13 01:56:05 2008
+X-From: git-owner@vger.kernel.org Wed Aug 13 02:06:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KT3iX-0003cg-QN
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 01:55:58 +0200
+	id 1KT3sc-0006Zi-3c
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 02:06:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751700AbYHLXyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 19:54:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751411AbYHLXyt
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 19:54:49 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:41834 "EHLO
+	id S1752393AbYHMAEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 20:04:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754671AbYHMAEy
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 20:04:54 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:60517 "EHLO
 	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751594AbYHLXyr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 19:54:47 -0400
+	with ESMTP id S1752393AbYHMAEx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 20:04:53 -0400
 Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 868595465; Wed, 13 Aug 2008 01:54:46 +0200 (CEST)
-In-Reply-To: <20080812225642.GA15265@cuci.nl>
+	id 64E895465; Wed, 13 Aug 2008 02:04:52 +0200 (CEST)
+In-Reply-To: <20080812235247.8353.95609.stgit@aristoteles.cuci.nl>
 User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92156>
 
 making the signal handler almost a no-op.
 Fix the killing code to actually be smart instead of the
@@ -47,15 +47,11 @@ Changed two calls to error() into logerror().
 Signed-off-by: Stephen R. van den Berg <srb@cuci.nl>
 ---
 
-Took out the vsyslog().
-Cleanup a bit left and right.
-Can this go in in one piece?  Or do I need to split it up?
-Like I said, large parts of the split-up are obsolete due do getting
-deleted.
+Cleaned up a bit further.
 
  Documentation/git-daemon.txt |    8 +
- daemon.c                     |  285 ++++++++++++++++--------------------------
- 2 files changed, 114 insertions(+), 179 deletions(-)
+ daemon.c                     |  280 ++++++++++++++++--------------------------
+ 2 files changed, 110 insertions(+), 178 deletions(-)
 
 diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
 index 4ba4b75..48bcc25 100644
@@ -84,7 +80,7 @@ index 4ba4b75..48bcc25 100644
  	Log to syslog instead of stderr. Note that this option does not imply
  	--verbose, thus by default only error conditions will be logged.
 diff --git a/daemon.c b/daemon.c
-index 1c00305..82eb224 100644
+index 1c00305..0de92a8 100644
 --- a/daemon.c
 +++ b/daemon.c
 @@ -16,12 +16,11 @@
@@ -151,7 +147,7 @@ index 1c00305..82eb224 100644
  }
  
  static void logerror(const char *err, ...)
-@@ -604,40 +584,38 @@ static int execute(struct sockaddr *addr)
+@@ -604,40 +584,37 @@ static int execute(struct sockaddr *addr)
  	return -1;
  }
  
@@ -195,14 +191,13 @@ index 1c00305..82eb224 100644
 -	live_child[idx].addrlen = addrlen;
 -	memcpy(&live_child[idx].address, addr, addrlen);
 +	struct child*newborn;
-+	newborn = xmalloc(sizeof *newborn);
++	newborn = xcalloc(1, sizeof *newborn);
 +	if (newborn) {
 +		struct child **cradle, *blanket;
 +
 +		live_children++;
 +		newborn->pid = pid;
-+		memcpy(memset(&newborn->address, 0, sizeof newborn->address),
-+		 addr, addrlen);
++		memcpy(&newborn->address, addr, addrlen);
 +		for (cradle = &firstborn;
 +		     (blanket = *cradle);
 +		     cradle = &blanket->next)
@@ -217,7 +212,7 @@ index 1c00305..82eb224 100644
  }
  
  /*
-@@ -646,107 +624,74 @@ static void add_child(int idx, pid_t pid, struct sockaddr *addr, int addrlen)
+@@ -646,107 +623,72 @@ static void add_child(int idx, pid_t pid, struct sockaddr *addr, int addrlen)
   * We move everything up by one, since the new "deleted" will
   * be one higher.
   */
@@ -225,7 +220,8 @@ index 1c00305..82eb224 100644
 +static void remove_child(pid_t pid)
  {
 -	struct child n;
--
++	struct child **cradle, *blanket;
+ 
 -	deleted %= MAX_CHILDREN;
 -	spawned %= MAX_CHILDREN;
 -	if (live_child[deleted].pid == pid) {
@@ -244,11 +240,7 @@ index 1c00305..82eb224 100644
 -			return;
 -		n = m;
 -	}
-+	struct child **cradle, *blanket;
-+
-+	for (cradle = &firstborn;
-+	     (blanket = *cradle);
-+	     cradle = &blanket->next)
++	for (cradle = &firstborn; (blanket = *cradle); cradle = &blanket->next)
 +		if (blanket->pid == pid) {
 +			*cradle = blanket->next;
 +			live_children--;
@@ -365,7 +357,7 @@ index 1c00305..82eb224 100644
  		sleep(1);
  	}
  }
-@@ -756,16 +701,13 @@ static void handle(int incoming, struct sockaddr *addr, int addrlen)
+@@ -756,16 +698,13 @@ static void handle(int incoming, struct sockaddr *addr, int addrlen)
  	pid_t pid = fork();
  
  	if (pid) {
@@ -386,7 +378,7 @@ index 1c00305..82eb224 100644
  		check_max_connections();
  		return;
  	}
-@@ -779,21 +721,10 @@ static void handle(int incoming, struct sockaddr *addr, int addrlen)
+@@ -779,21 +718,10 @@ static void handle(int incoming, struct sockaddr *addr, int addrlen)
  
  static void child_handler(int signo)
  {
@@ -412,7 +404,7 @@ index 1c00305..82eb224 100644
  	signal(SIGCHLD, child_handler);
  }
  
-@@ -836,7 +767,7 @@ static int socksetup(char *listen_addr, int listen_port, int **socklist_p)
+@@ -836,7 +764,7 @@ static int socksetup(char *listen_addr, int listen_port, int **socklist_p)
  		if (sockfd < 0)
  			continue;
  		if (sockfd >= FD_SETSIZE) {
@@ -421,7 +413,7 @@ index 1c00305..82eb224 100644
  			close(sockfd);
  			continue;
  		}
-@@ -936,35 +867,30 @@ static int service_loop(int socknum, int *socklist)
+@@ -936,35 +864,30 @@ static int service_loop(int socknum, int *socklist)
  	struct pollfd *pfd;
  	int i;
  
@@ -468,7 +460,7 @@ index 1c00305..82eb224 100644
  
  		for (i = 0; i < socknum; i++) {
  			if (pfd[i].revents & POLLIN) {
-@@ -1055,10 +981,7 @@ int main(int argc, char **argv)
+@@ -1055,10 +978,7 @@ int main(int argc, char **argv)
  	gid_t gid = 0;
  	int i;
  
@@ -480,7 +472,7 @@ index 1c00305..82eb224 100644
  
  	for (i = 1; i < argc; i++) {
  		char *arg = argv[i];
-@@ -1105,6 +1028,10 @@ int main(int argc, char **argv)
+@@ -1105,6 +1025,10 @@ int main(int argc, char **argv)
  			init_timeout = atoi(arg+15);
  			continue;
  		}
@@ -491,7 +483,7 @@ index 1c00305..82eb224 100644
  		if (!strcmp(arg, "--strict-paths")) {
  			strict_paths = 1;
  			continue;
-@@ -1178,9 +1105,11 @@ int main(int argc, char **argv)
+@@ -1178,9 +1102,11 @@ int main(int argc, char **argv)
  	}
  
  	if (log_syslog) {
@@ -504,7 +496,7 @@ index 1c00305..82eb224 100644
  
  	if (inetd_mode && (group_name || user_name))
  		die("--user and --group are incompatible with --inetd");
-@@ -1233,8 +1162,10 @@ int main(int argc, char **argv)
+@@ -1233,8 +1159,10 @@ int main(int argc, char **argv)
  		return execute(peer);
  	}
  
