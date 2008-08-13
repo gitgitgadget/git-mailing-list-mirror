@@ -1,68 +1,84 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 3/3] git-svn: Reduce temp file usage when dealing with non-links
-Date: Tue, 12 Aug 2008 20:52:11 -0700
-Message-ID: <20080813035211.GA31792@untitled>
-References: <1218470035-13864-4-git-send-email-marcus@griep.us> <1218556876-26554-1-git-send-email-marcus@griep.us> <20080813032956.GC5904@untitled> <48A2583A.1000509@griep.us>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Marcus Griep <marcus@griep.us>
-X-From: git-owner@vger.kernel.org Wed Aug 13 05:53:19 2008
+From: Geert Bosch <bosch@adacore.com>
+Subject: Re: pack operation is thrashing my server
+Date: Tue, 12 Aug 2008 23:58:22 -0400
+Message-ID: <70550C21-8358-4BEF-A7BA-3A41C1ACB346@adacore.com>
+References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com> <20080811030444.GC27195@spearce.org> <a6b6acf60808110043t76dc0ae6l428c5da473d79c71@mail.gmail.com> <87vdy71i6w.fsf@basil.nowhere.org> <1EE44425-6910-4C37-9242-54D0078FC377@adacore.com> <20080813031503.GC5855@spearce.org>
+Mime-Version: 1.0 (Apple Message framework v928.1)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Andi Kleen <andi@firstfloor.org>, Ken Pratt <ken@kenpratt.net>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Aug 13 05:59:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KT7QD-00039L-Gk
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 05:53:17 +0200
+	id 1KT7WC-0004GH-92
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 05:59:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754273AbYHMDwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 23:52:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754085AbYHMDwO
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 23:52:14 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:34383 "EHLO hand.yhbt.net"
+	id S1754382AbYHMD6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 23:58:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754380AbYHMD6Z
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 23:58:25 -0400
+Received: from rock.gnat.com ([205.232.38.15]:43468 "EHLO rock.gnat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752086AbYHMDwO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 23:52:14 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 430092DC01B;
-	Tue, 12 Aug 2008 20:52:13 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <48A2583A.1000509@griep.us>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754333AbYHMD6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 23:58:25 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by filtered-rock.gnat.com (Postfix) with ESMTP id 8D42A2A9B48;
+	Tue, 12 Aug 2008 23:58:24 -0400 (EDT)
+Received: from rock.gnat.com ([127.0.0.1])
+	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id pyZB0oF9q-UA; Tue, 12 Aug 2008 23:58:24 -0400 (EDT)
+Received: from [172.16.1.95] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rock.gnat.com (Postfix) with ESMTP id 22C012A9B3F;
+	Tue, 12 Aug 2008 23:58:24 -0400 (EDT)
+In-Reply-To: <20080813031503.GC5855@spearce.org>
+X-Mailer: Apple Mail (2.928.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92178>
 
-Marcus Griep <marcus@griep.us> wrote:
-> Eric Wong wrote:
-> > Thank you Marcus!
-> > 
-> > Acked-by: Eric Wong <normalperson@yhbt.net>
-> 
-> Errr, you want to Ack [PATCH v2 3/3]; not this one; there's one minor
-> typo when I shortened the variable $result to $res.
-> 
-> >> +				my $res;
-> >> +				while ($res = sysread($fh, my $str, 1024)) {
-> >> +					my $out = syswrite($tmp_fh, $str, $res);
-> >> +					defined($out) && $out == $res
-> >> +						or croak("write ",
-> >> +							$tmp_fh->filename,
-> >> +							": $!\n");
-> >> +				}
-> >> +				defined $result or croak $!;
-> 
-> That last line causes compilation errors with 'use strict'.  It is fixed
-> in the alternate version.
 
-Oops, I applied the right patch but managed to reopen the wrong one when
-I acked it.
+On Aug 12, 2008, at 23:15, Shawn O. Pearce wrote:
 
-I've just pushed out my repository with acks to
-  git://bogomips.org/git-svn.git
+> Geert Bosch <bosch@adacore.com> wrote:
+>> I've always felt that keeping largish objects (say anything >1MB)
+>> loose makes perfect sense. These objects are accessed infrequently,
+>> often binary or otherwise poor candidates for the delta algorithm.
+>
+> Sadly this causes huge problems with streaming a pack because the
+> loose object has to be inflated and then delfated again to fit into
+> the pack stream.
+Sure, but that really is not that much of an issue. For people
+with large systems connected by very fast networks, the current
+situation is probably fine, and spending a lot of effort for
+packing often makes sense.
 
--- 
-Eric Wong
+However, for a random repository of Joe User, all the effort spent
+on packing will probably never be gained back. Most people just
+suck content from upstream and at most maintain a couple of local
+hacks on top of that. Little or nothing is ever pushed to other
+systems.
+
+Even when pushing to other systems, this often is just a handful of  
+objects
+though a slow line and compression/decompression speeds just don't  
+matter
+much.
+
+> The new style loose object format was meant to fix this problem,
+> and it did, but the code was difficult to manage so it was backed
+> out of the tree.
+
+One nice optimization we could do for those pesky binary large objects
+(like PDF, JPG and GZIP-ed data), is to detect such files and revert
+to compression level 0. This should be especially beneficial
+since already compressed data takes most time to compress again.
+
+   -Geert
