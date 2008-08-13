@@ -1,78 +1,105 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [PATCH] git-daemon: Simplify child management and associated logging by
-Date: Wed, 13 Aug 2008 09:36:13 +0200
-Message-ID: <20080813073613.GB12628@cuci.nl>
-References: <20080812193613.32388.92145.stgit@aristoteles.cuci.nl> <20080812212534.6871.19377.stgit@aristoteles.cuci.nl> <7vzlnhq48b.fsf@gitster.siamese.dyndns.org> <20080812225642.GA15265@cuci.nl> <7vvdy5pxz6.fsf@gitster.siamese.dyndns.org>
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: Why doesn't git-apply remove empty file
+Date: Wed, 13 Aug 2008 09:48:11 +0200
+Message-ID: <38b2ab8a0808130048t506dbb7ah1d6fcd6bd4f3c90c@mail.gmail.com>
+References: <38b2ab8a0808120917h10f15c81v4d1f04c0174dc994@mail.gmail.com>
+	 <7vod3xpxq2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 09:37:20 2008
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 13 09:49:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTAv0-0005YN-1K
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 09:37:18 +0200
+	id 1KTB6y-0000kb-Lz
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 09:49:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752125AbYHMHgP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 03:36:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbYHMHgP
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 03:36:15 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:45479 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752125AbYHMHgO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 03:36:14 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id E0DC95465; Wed, 13 Aug 2008 09:36:13 +0200 (CEST)
+	id S1752621AbYHMHsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 03:48:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752380AbYHMHsN
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 03:48:13 -0400
+Received: from rv-out-0506.google.com ([209.85.198.227]:7931 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753331AbYHMHsL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 03:48:11 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so3184500rvb.1
+        for <git@vger.kernel.org>; Wed, 13 Aug 2008 00:48:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=fH9tyG2a/ULaqIehZvQCZWwY7h6UsXKJRHqC4QrI6Dw=;
+        b=b+zY00m/yBfoZz/Tq3bBNM21k+n9Tg2UH0/y+AZjkUHREPAeUiYTp09C46IdNxVxuu
+         4OzWeNauI/VeAxOXPTnUJ+xO1/NhqtJLchVy87nSBnUkHrCD2apxA2C0dRTyKjctMLE4
+         j6F1yKx4kHKShIXIc+N5aEttTbc/qge6BRIWA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=RpJcvytX4BcMdFbYGzbpsxqi+uV6zX+dxoRZPFPHzgegdhelwrNO4cUTRVzxs+htUJ
+         OjtsygewFES5c7CISyn1D7PL+Jz9mSMtrolN6BMEpycv3rh8ZoIO6HbCiICXCjrEwoev
+         k4yPBBKSPJt9uHJ1xg+Y6KXyY9wMsQiMugjIc=
+Received: by 10.140.162.21 with SMTP id k21mr5004964rve.110.1218613691113;
+        Wed, 13 Aug 2008 00:48:11 -0700 (PDT)
+Received: by 10.140.170.16 with HTTP; Wed, 13 Aug 2008 00:48:11 -0700 (PDT)
+In-Reply-To: <7vod3xpxq2.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7vvdy5pxz6.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92190>
 
-Junio C Hamano wrote:
->"Stephen R. van den Berg" <srb@cuci.nl> writes:
+Hello,
 
->> Separating it causes two things:
->> a. The patches to become dependent on each other in the timeline.
->> b. More (redundant) work, because some parts that need to be rewritten, get
->>    deleted by the following patch(es).
+On Wed, Aug 13, 2008 at 2:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> On the other hand, if you want to remove an empty file, the patch would
+> look like this:
+>
+>        diff --git a/bar b/bar
+>        deleted file mode 100644
+>        index 257cc56..0000000
+>        --- a/bar
+>        +++ /dev/null
+>        @@ -1 +0,0 @@
+>        -foo
+>
+> A patch generated by non-git tools would lack "index" and "deleted" lines,
+> but they will still have difference between "bar" and "/dev/null" on the
+> postimage filename (i.e. "+++" line), and git-apply leaves an empty file
+> for the former, and removes the file for the latter patch.
+>
 
->These are actually desirable properties from reviewability point of view.
+Hm this is somehow wrong, please see:
 
-Ok, I'll look into the splitup.
+    $ mkdir a b
+    $ date > a/f
+    $ diff -Nurp a/f b/f
+    --- a/f 2008-08-13 09:27:29.000000000 +0200
+    +++ b/f 1970-01-01 01:00:00.000000000 +0100
+    @@ -1 +0,0 @@
+    -Wed Aug 13 09:27:29 CEST 2008
 
->>> - I see you have a call to vsyslog, which is the first user of the
->>>   function.  How portable is it (the patch coming from you, I know
->>>   Solaris would have it, and recent 4BSD also would, but what about the
->>>   others)?
+So '/dev/null' doesn't appear here. I think patch(1) uses the date of
+b/f for removing
+the file.
 
->> Cygwin has it, Solaris does, Linux does, MacOSX does.
->> AIX and HPUX don't, perhaps.
->> I'll see what I can do to avoid it, yet simplify the code.
+If we keep going on:
 
->That's one of the reasons why I asked you to split it to three patches, so
->that the syslog change can potentially be independently replaced with a
->better alternative.
+    $ diff -Nurp a b > test.patch
+    $ ( cd a && git apply ../test.patch )
+    $ ls a
+    f
+    $ cat a/f
+    $
 
-Well, I've already found an alternative, and looks a lot more appealing
-than the buffer-juggling code of before.
+of course patch(1) does remove the file.
 
->In any case, it is already late in the rc cycle; I'd like to apply your
->earlier "In SysV, signal(SIGCHLD) need to be rearmed" patch and nothing
->else for now.  The clean-up is very attractive but can be done post 1.6.0.
-
-No problem.  That's the reason I chipped that first patch off; it's a
-direct bugfix.  And BTW, don't mistake me for a "Solaris guy".  I've
-been using Linux almost exclusively since 1991.  My SunOS/Solaris knowledge
-has been fading steadily ever since.  It's just that I had to install
-git-daemon on someone else's Solaris box just recently.
+Thanks
 -- 
-Sincerely,
-           Stephen R. van den Berg.
-
-"And now for something *completely* different!"
+Francis
