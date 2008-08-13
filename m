@@ -1,66 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] Adding a challenge-response authentication method to
-	git://
-Date: Wed, 13 Aug 2008 09:40:38 -0700
-Message-ID: <20080813164038.GE3782@spearce.org>
-References: <20080813162644.GC12200@cuci.nl>
+From: Jeff King <peff@peff.net>
+Subject: Re: git -p does not detect a bare repository
+Date: Wed, 13 Aug 2008 12:51:36 -0400
+Message-ID: <20080813165135.GA19490@sigill.intra.peff.net>
+References: <48A2E6D9.5000609@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git <git@vger.kernel.org>
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Wed Aug 13 18:41:50 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Aug 13 18:52:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTJPx-00026P-0D
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 18:41:49 +0200
+	id 1KTJaV-0006S2-Lw
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 18:52:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752353AbYHMQkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 12:40:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752454AbYHMQkj
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 12:40:39 -0400
-Received: from george.spearce.org ([209.20.77.23]:56703 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752353AbYHMQkj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 12:40:39 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 8206D38375; Wed, 13 Aug 2008 16:40:38 +0000 (UTC)
+	id S1752588AbYHMQvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 12:51:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752380AbYHMQvk
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 12:51:40 -0400
+Received: from peff.net ([208.65.91.99]:1663 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752166AbYHMQvj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 12:51:39 -0400
+Received: (qmail 4268 invoked by uid 111); 13 Aug 2008 16:51:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 13 Aug 2008 12:51:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Aug 2008 12:51:36 -0400
 Content-Disposition: inline
-In-Reply-To: <20080813162644.GC12200@cuci.nl>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <48A2E6D9.5000609@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92242>
 
-"Stephen R. van den Berg" <srb@cuci.nl> wrote:
-> What are the opinions on adding a basic challenge-response type
-> authentication mechanism to the native git protocol?
-> I.e. the authentication would be a simple one, which uses
-> SHA1 (surprise ;-) to actually encrypt username/password/salt
-> and authenticate the user.
+On Wed, Aug 13, 2008 at 03:51:21PM +0200, Johannes Sixt wrote:
+
+> If $PWD is a bare repository, is it expected behavior that
 > 
-> I'm willing to do the work, if there are no objections.
+>   $ git diff-tree master^ master
+> 
+> works as expected, but
+> 
+>   $ git -p diff-tree master^ master
+> 
+> errors out:
+> 
+>   fatal: ambiguous argument 'master^': unknown revision or path blabla...
 
-Last time we talked about this we got off onto some tagent about
-using GnuPG public keys to authenticate users, and then how we might
-store the public keys in a keyring and log pushes (changes to refs)
-so that one could replicate the log on another server and come up
-with the same result.  Hence not just the current source code but
-also the "how we got here" could be verified externally.
+Yep. This has been broken for some time, too. I bisected it down to
+cad3a205 from last year, which is in v1.5.3.
 
-Username/password management is always ugly.  Some admins will want
-you to plug into PAM, others just want a flat file that is unique
-to the service, others want LDAP.  And then you get into people
-wanting Kerberos support because they already have everything else
-in their domain supporting it.  Tons of complexity for our project.
+It's yet another incarnation of the same bug we keep seeing (which I
+suppose is why you cc'd me). Anytime you look at the config before
+running setup_git_directory, it screws up the GIT_DIR calculation for
+bare repositories. AFAIK it's a bad interaction between the lazy setup
+in setup_git_env and the magic in setup_git_directory.
 
-Isn't there some authentication frontend that some IMAP servers
-use to handle the authentication for them?  I think last time
-I setup bincimap it used checkpassword.  We might want to do the
-same if we are going down this road...
+I'm sure there is a "right" solution but I haven't had time to figure it
+out yet. In this case, we are looking at the config to get the value of
+core.pager. As a workaround, you could try doing that lookup in the
+forked pager child (however, I don't think that would work on platforms
+where run_command doesn't use fork).
 
--- 
-Shawn.
+-Peff
