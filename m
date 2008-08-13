@@ -1,72 +1,78 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: pack operation is thrashing my server
-Date: Wed, 13 Aug 2008 13:57:59 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0808131352260.4352@xanadu.home>
-References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
- <m363q5t152.fsf@localhost.localdomain> <20080813150425.GC3782@spearce.org>
- <200808131810.19914.johan@herland.net>
- <a6b6acf60808131038s1ae7fb69s2b703c25766a82c0@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC] Adding a challenge-response authentication method to
+	git://
+Date: Wed, 13 Aug 2008 11:08:57 -0700
+Message-ID: <20080813180857.GH3782@spearce.org>
+References: <20080813162644.GC12200@cuci.nl> <20080813164038.GE3782@spearce.org> <20080813173757.GE12200@cuci.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Geert Bosch <bosch@adacore.com>,
-	Andi Kleen <andi@firstfloor.org>
-To: Ken Pratt <ken@kenpratt.net>
-X-From: git-owner@vger.kernel.org Wed Aug 13 19:59:25 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Wed Aug 13 20:10:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTKcz-0007cn-Vl
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 19:59:22 +0200
+	id 1KTKnL-0002q6-Ds
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 20:10:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753064AbYHMR6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 13:58:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753079AbYHMR6S
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 13:58:18 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:47432 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752953AbYHMR6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 13:58:17 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K5J00HP0WKXBBIB@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 13 Aug 2008 13:58:09 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <a6b6acf60808131038s1ae7fb69s2b703c25766a82c0@mail.gmail.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1751768AbYHMSI7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 14:08:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751682AbYHMSI7
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 14:08:59 -0400
+Received: from george.spearce.org ([209.20.77.23]:37654 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751016AbYHMSI6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 14:08:58 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id A95C038375; Wed, 13 Aug 2008 18:08:57 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20080813173757.GE12200@cuci.nl>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92253>
 
-On Wed, 13 Aug 2008, Ken Pratt wrote:
-
-> > As for how to estimate entropy, isn't that just a matter of feeding it
-> > through zlib and compare the output size to the input size? Especially
-> > if we're already about to feed it through zlib anyway... In other
-> > words, feed (an initial part of) the data through zlib, and if the
-> > compression ratio so far looks good, keep going and write out the
-> > compressed object, otherwise abort zlib and write out the original
-> > object with compression level 0.
+"Stephen R. van den Berg" <srb@cuci.nl> wrote:
+> Shawn O. Pearce wrote:
+> >"Stephen R. van den Berg" <srb@cuci.nl> wrote:
+> >> What are the opinions on adding a basic challenge-response type
+> >> authentication mechanism to the native git protocol?
 > 
-> This is probably off topic now, but as the OP, I'd like to mention
-> that I tried setting pack.compression = 0 and it did not solve my
-> memory issues.
+> In order to aid them in setting up a simple accesslist, git would do
+> just fine by simply offering a flat-file like list.  Forcing those
+> setups to use anything more complicated makes adoption of git for those
+> kind of projects unreasonably more complicated (IMO).
 
-Yeah, the compression level is a tengential issue which has to do with 
-speed.
+Well, anytime you get into a flat-file access list you get into
+management of that list.  How do users change their own password?
+How does an admin add/remove a user, or reset a password?  What
+defines an admin?  Can you do these things remotely? Can you keep
+the password encrypted on the remote side so an admin cannot see
+a user's (common) password and maybe gain access to unrelated sites?
 
-> So it seems to be that the packing itself that is
-> sucking up all the memory -- not the compression.
+If you are going to keep it "really simple" you may be tempted to
+say that all user additions/deletions/password changes should be
+done by the admin directly editing the password list.  At which
+point it may actually be easier (and safer) for the admin to just
+handle a GnuPG or SSH public key.
 
-Initial packing requires enough memory.  And if your repository is not 
-packed, then every clone request will act just like a first packing. So 
-for git on a server to behave well, repositories have to be well packed.
+This is why we tend to rely on SSH.  It neatly solves all of this
+for us, and does it in a way that UNIX administrators are familiar
+with managing.
 
+This is also why the last discussion on this topic went down the road
+of using GnuPG to handle the authentication portion of the protocol.
+Unfortunately dealing with the server side keychain is a little
+bit more complex then I'd like it to be out of the box, and the
+client side I think is lacking something as common as ssh-agent
+for caching the decrypted key.
 
-Nicolas
+I can see how it would be pretty simple to add authentication to
+git-daemon based upon a shared secret, but such schemes always
+cause management problems on both sides.
+ 
+-- 
+Shawn.
