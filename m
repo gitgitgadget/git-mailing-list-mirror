@@ -1,69 +1,77 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Why doesn't git-apply remove empty file
-Date: Wed, 13 Aug 2008 23:52:58 +0200
-Message-ID: <48A357BA.8060003@lsrfire.ath.cx>
-References: <38b2ab8a0808120917h10f15c81v4d1f04c0174dc994@mail.gmail.com>	 <7vod3xpxq2.fsf@gitster.siamese.dyndns.org> <38b2ab8a0808130048t506dbb7ah1d6fcd6bd4f3c90c@mail.gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit] kha/{safe,experimental} updated
+Date: Wed, 13 Aug 2008 22:54:57 +0100
+Message-ID: <b0943d9e0808131454p16cb104bs1bcf67a6c660a88a@mail.gmail.com>
+References: <20080808082728.GA24017@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 23:54:17 2008
+Cc: git@vger.kernel.org, "Samuel Tardieu" <sam@rfc1149.net>,
+	"Daniel White" <daniel@whitehouse.id.au>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Wed Aug 13 23:56:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTOIK-0005RG-Fi
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 23:54:16 +0200
+	id 1KTOK2-0005vX-2T
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 23:56:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752285AbYHMVxN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Aug 2008 17:53:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752125AbYHMVxN
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 17:53:13 -0400
-Received: from india601.server4you.de ([85.25.151.105]:47755 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751983AbYHMVxM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 17:53:12 -0400
-Received: from [10.0.1.200] (p57B7DDA7.dip.t-dialin.net [87.183.221.167])
-	by india601.server4you.de (Postfix) with ESMTPSA id 88AFA2F8041;
-	Wed, 13 Aug 2008 23:53:10 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <38b2ab8a0808130048t506dbb7ah1d6fcd6bd4f3c90c@mail.gmail.com>
+	id S1753110AbYHMVy7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Aug 2008 17:54:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753041AbYHMVy7
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 17:54:59 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:52348 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752749AbYHMVy6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Aug 2008 17:54:58 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so94577waf.23
+        for <git@vger.kernel.org>; Wed, 13 Aug 2008 14:54:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=IUdDwl+pPF7wsKHVTmu/sDS+W5no9zs9L7+KZE3GXQk=;
+        b=PkwjbhHBi+EZmJn/GX/9cVwIBqKMZljKxR6t77q++7d4YS4Zzhr0y2Xm5sRatrQjm/
+         6TNRl/CX9UuMnnCeyExzkfh+sEQO8NIGbtGGbDqkWOfSMRXXk2EraxVLgVv+gEPevonB
+         FSGTkGa38doy6xhGHbzBeHWb1WT45MPpK9Auk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=vP1R3b2A7URggt1sG78ADUXPiganpH/pw9YDXaXEmj+EA8hZ10r3or24Ov27PvLoM7
+         enOnSUPanMP+8tQxjt8b4EhTcvjPi4BjPyCrmxbOqcxEAdI4S6DKGVSZQPohksgwaUL3
+         OxB+gZg/FIv0b4FwHsdozIBG+hRpLtytTCY6I=
+Received: by 10.115.16.1 with SMTP id t1mr483441wai.49.1218664497922;
+        Wed, 13 Aug 2008 14:54:57 -0700 (PDT)
+Received: by 10.114.193.12 with HTTP; Wed, 13 Aug 2008 14:54:57 -0700 (PDT)
+In-Reply-To: <20080808082728.GA24017@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92284>
 
-=46rancis Moreau schrieb:
->     $ mkdir a b
->     $ date > a/f
->     $ diff -Nurp a/f b/f
->     --- a/f 2008-08-13 09:27:29.000000000 +0200
->     +++ b/f 1970-01-01 01:00:00.000000000 +0100
->     @@ -1 +0,0 @@
->     -Wed Aug 13 09:27:29 CEST 2008
->=20
-> So '/dev/null' doesn't appear here. I think patch(1) uses the date of
-> b/f for removing
-> the file.
->=20
-> If we keep going on:
->=20
->     $ diff -Nurp a b > test.patch
->     $ ( cd a && git apply ../test.patch )
->     $ ls a
->     f
->     $ cat a/f
->     $
->=20
-> of course patch(1) does remove the file.
+2008/8/8 Karl Hasselstr=F6m <kha@treskal.com>:
+> Catalin has pulled the safe and stable branches, but I've accumulated
+> some new stuff in kha/safe.
 
-I bet you are using GNU patch.  It removes files that are empty after
-patching and you need to specify --posix to make it keep empty files.
+I merged it, thanks.
 
-Larry Wall's original version of patch keeps empty files by default and
-you need to use the option option -E (or --remove-empty-files) to make
-it remove them.
+> The stack log stuff (and nothing else) is still in kha/experimental.
+> It's unchanged since my last status mail, except for the addition of
+> an optimization at the end (will post as a follow-up to this mail).
 
-Ren=E9
+I'm on holiday until Monday and I haven't got the time to test the
+performance but we can probably move the experimental stuff into
+master and start preparing some release candidates. I'll repost my
+patches with the new git id format as well and we need a 0.14.4 in the
+meantime (hopefully over the next two weeks).
+
+Thanks.
+
+--=20
+Catalin
