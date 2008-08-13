@@ -1,68 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH (1b)] merge-recursive.c: Add more generic
- merge_recursive_generic()
-Date: Tue, 12 Aug 2008 23:17:27 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0808122309460.19665@iabervon.org>
-References: <1218559514-16890-1-git-send-email-vmiklos@frugalware.org> <1218572040-23362-1-git-send-email-s-beyer@gmx.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Aug 13 05:18:31 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [EGIT PATCH] Allow EGit to handle linked resources at any depth
+Date: Tue, 12 Aug 2008 20:24:09 -0700
+Message-ID: <1218597849-24412-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Marek Zawirski <marek.zawirski@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 13 05:25:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KT6sY-0004XW-Vn
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 05:18:31 +0200
+	id 1KT6z4-00060l-8N
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 05:25:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754130AbYHMDR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 23:17:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754081AbYHMDR2
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 23:17:28 -0400
-Received: from iabervon.org ([66.92.72.58]:39435 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752717AbYHMDR2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 23:17:28 -0400
-Received: (qmail 16479 invoked by uid 1000); 13 Aug 2008 03:17:27 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 13 Aug 2008 03:17:27 -0000
-In-Reply-To: <1218572040-23362-1-git-send-email-s-beyer@gmx.net>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1754176AbYHMDYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 23:24:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752240AbYHMDYL
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 23:24:11 -0400
+Received: from george.spearce.org ([209.20.77.23]:35584 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751966AbYHMDYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 23:24:11 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id BD06B38376; Wed, 13 Aug 2008 03:24:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 1E050381FD;
+	Wed, 13 Aug 2008 03:24:10 +0000 (UTC)
+X-Mailer: git-send-email 1.6.0.rc2.242.gb31c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92171>
 
-On Tue, 12 Aug 2008, Stephan Beyer wrote:
+We already were handling linked resources that appear anywhere
+in the project, but Eclipse didn't know we were willing to do
+that sort of magic in our provider code as we did not override
+the correct method for it in GitProvider.
 
-> merge_recursive_generic() takes, in comparison to to merge_recursive(),
-> no commit ("struct commit *") arguments but SHA ids ("unsigned char *"),
-> and no commit list of bases but an array of refs ("const char **").
-> 
-> This makes it more generic in the case that it can also take the SHA
-> of a tree to merge trees without commits, for the bases, the head
-> and the remote.
-> 
-> merge_recursive_generic() also handles locking and updating of the
-> index, which is a common use case of merge_recursive().
-> 
-> This patch also rewrites builtin-merge-recursive.c to make use of
-> merge_recursive_generic().  By doing this, I stumbled over the
-> limitation of 20 bases and I've added a warning if this limitation
-> is exceeded.
-> 
-> This patch qualifies make_virtual_commit() as static again because
-> this function is not needed anymore outside merge-recursive.c.
+We now support linked folders which are at any level.
 
-You might look at builtin-checkout and see if merge_working_tree() could 
-be made cleaner with this API, or if some other API could accomodate both 
-cases more nicely.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../src/org/spearce/egit/core/GitProvider.java     |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-(I'm not sure either way, but it would be a good confirmation that the API 
-is properly convenient if that additional case could use it.)
-
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/GitProvider.java b/org.spearce.egit.core/src/org/spearce/egit/core/GitProvider.java
+index fcab971..a16aca9 100644
+--- a/org.spearce.egit.core/src/org/spearce/egit/core/GitProvider.java
++++ b/org.spearce.egit.core/src/org/spearce/egit/core/GitProvider.java
+@@ -41,6 +41,11 @@ public class GitProvider extends RepositoryProvider {
+ 		return true;
+ 	}
+ 
++	@Override
++	public boolean canHandleLinkedResourceURI() {
++		return true;
++	}
++
+ 	public synchronized IMoveDeleteHook getMoveDeleteHook() {
+ 		if (hook == null) {
+ 			hook = new GitMoveDeleteHook(getData());
+-- 
+1.6.0.rc2.242.gb31c
