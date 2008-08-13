@@ -1,66 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Why doesn't git-apply remove empty file
-Date: Tue, 12 Aug 2008 17:25:41 -0700
-Message-ID: <7vod3xpxq2.fsf@gitster.siamese.dyndns.org>
-References: <38b2ab8a0808120917h10f15c81v4d1f04c0174dc994@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git problem: pack has bad object at offset 77100841: inflate
+ returned -3
+Date: Tue, 12 Aug 2008 21:17:49 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0808122111180.9984@xanadu.home>
+References: <ace3f33d0808060015t25d9c21epc31e48e3c1d041b1@mail.gmail.com>
+ <20080806143310.GB28231@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Francis Moreau" <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 02:26:55 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: srinivas naga vutukuri <srinivas.vutukuri@gmail.com>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Aug 13 03:19:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KT4CT-0002vO-QP
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 02:26:54 +0200
+	id 1KT50w-0005Oc-7Z
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 03:19:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752202AbYHMAZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 20:25:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752165AbYHMAZs
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 20:25:48 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50530 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752191AbYHMAZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 20:25:48 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id ECA0857BE9;
-	Tue, 12 Aug 2008 20:25:45 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 1979A57BE8; Tue, 12 Aug 2008 20:25:42 -0400 (EDT)
-In-Reply-To: <38b2ab8a0808120917h10f15c81v4d1f04c0174dc994@mail.gmail.com>
- (Francis Moreau's message of "Tue, 12 Aug 2008 18:17:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5F1CEEDE-68CE-11DD-8D70-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753591AbYHMBR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2008 21:17:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752165AbYHMBR4
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 21:17:56 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:21661 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753352AbYHMBR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2008 21:17:56 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K5I002L6M9PDAH4@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 12 Aug 2008 21:17:49 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20080806143310.GB28231@spearce.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92162>
 
-If you want to create an empty file, the patch would look like this:
+On Wed, 6 Aug 2008, Shawn O. Pearce wrote:
 
-        diff --git a/bar b/bar
-        index 257cc56..e69de29 100644
-        --- a/bar
-        +++ b/bar
-        @@ -1 +0,0 @@
-        -foo
+> srinivas naga vutukuri <srinivas.vutukuri@gmail.com> wrote:
+> > remote: Counting objects: 879862, done.
+> > remote: Compressing objects: 100% (156686/156686), done.
+> > fatal: pack has bad object at offset 77100841: inflate returned -3
+> > fatal: index-pack failed
+> > 
+> > while doing "git clone" of linux kernel of latest 2.6.27-rc2.
+> > But am able to do the latest stable successfully.
+> ...
+> > I am using cygwin, git 1.5.6.4
+> 
+> Where are you cloning from?
+> 
+> This is an indication that the data sent to your system from the
+> remote side is corrupt.  Possibly a bad network link?
+> 
+> Remote side corruption should have been detected by the remote
+> server as it was writing the data out.  The message above however
+> came from your client, so the server seems to be OK.
 
-On the other hand, if you want to remove an empty file, the patch would
-look like this:
+Well, not exactly.  The server (git pack-objects) does skip some data 
+integrity validation that the client (git index-pack) is doing anyway in 
+order to cut cycles on the server machine.
 
-        diff --git a/bar b/bar
-        deleted file mode 100644
-        index 257cc56..0000000
-        --- a/bar
-        +++ /dev/null
-        @@ -1 +0,0 @@
-        -foo
 
-A patch generated by non-git tools would lack "index" and "deleted" lines,
-but they will still have difference between "bar" and "/dev/null" on the
-postimage filename (i.e. "+++" line), and git-apply leaves an empty file
-for the former, and removes the file for the latter patch.
+Nicolas
