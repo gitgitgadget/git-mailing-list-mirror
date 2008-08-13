@@ -1,155 +1,116 @@
-From: Brian Downing <bdowning@lavos.net>
-Subject: [PATCH 2/2] Use strbuf for struct xdiff_emit_state's remainder
-Date: Wed, 13 Aug 2008 02:07:19 -0500
-Message-ID: <20080813070719.GC4396@lavos.net>
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: [TopGit TOY PATCH] tg-graft: forge tip--base--<deps...> history for a subcommand
+Date: Wed, 13 Aug 2008 09:10:40 +0200
+Message-ID: <36ca99e90808130010w226a8947y1e1c59e5f5d57989@mail.gmail.com>
+References: <1218575416-16711-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 09:08:32 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>
+To: "Thomas Rast" <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Aug 13 09:11:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTAT5-0005F8-C8
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 09:08:27 +0200
+	id 1KTAWG-0006KT-8C
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 09:11:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751369AbYHMHHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 03:07:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751362AbYHMHHY
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 03:07:24 -0400
-Received: from qmta09.emeryville.ca.mail.comcast.net ([76.96.30.96]:55727 "EHLO
-	QMTA09.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751309AbYHMHHX (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Aug 2008 03:07:23 -0400
-Received: from OMTA02.emeryville.ca.mail.comcast.net ([76.96.30.19])
-	by QMTA09.emeryville.ca.mail.comcast.net with comcast
-	id 1ixN1a0090QkzPwA9j7MZT; Wed, 13 Aug 2008 07:07:21 +0000
-Received: from mnementh.lavos.net ([98.212.138.194])
-	by OMTA02.emeryville.ca.mail.comcast.net with comcast
-	id 1j7K1a0074BqYqi8Nj7Lhj; Wed, 13 Aug 2008 07:07:21 +0000
-X-Authority-Analysis: v=1.0 c=1 a=ub2J-iLhTbsA:10 a=okfeYmnVdu8A:10
- a=RV2KCPfeohWhKwn3gvMA:9 a=TWH0ydkigSCkKbdMv_8A:7
- a=DXuWzZFeDgHd0t5vflK30KNsfnIA:4 a=GB4YReQY-hoA:10 a=6bqG61NMjcsA:10
-Received: by mnementh.lavos.net (Postfix, from userid 1000)
-	id B1229309F23; Wed, 13 Aug 2008 02:07:19 -0500 (CDT)
+	id S1751763AbYHMHKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 03:10:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751722AbYHMHKl
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 03:10:41 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:16339 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751664AbYHMHKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 03:10:41 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so1124733yxm.1
+        for <git@vger.kernel.org>; Wed, 13 Aug 2008 00:10:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=URf4GqYNS3dc3cVyvT25zd/tdoWnKvNc/kqXIkwh0xg=;
+        b=fQCZIwfie/jEOS7wRCTXmhJt8yDJ2Lah1Xmqfl512R09gcHsqhcKwUHUTSI46YHRMG
+         nCczsAefHPTpHy5EGFlnc1n232rUKcEm5DBqen3b+mpLjCPByHgNmWNPd0WRQMbBgY3W
+         3GnWe1gc5tMwPUZ0bX3mjGXvHYGvSQZ1175Eg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=A7rM2hjGubZrLqohymd+1AeAPIage3MUM1O2rEWDMK28upyCz7USD8SOUFAKuhEeNY
+         LugwzXR0h29GK4dadQE5SNzFF0YUE3lT9EUNhaDI5o9R8H0UtBGqFWOIM4d6oFQijcwF
+         cG7xjkxeX1lnHhC10iHwVpXhdtEvEU36uuKQI=
+Received: by 10.151.51.18 with SMTP id d18mr15922079ybk.96.1218611440192;
+        Wed, 13 Aug 2008 00:10:40 -0700 (PDT)
+Received: by 10.70.49.12 with HTTP; Wed, 13 Aug 2008 00:10:40 -0700 (PDT)
+In-Reply-To: <1218575416-16711-1-git-send-email-trast@student.ethz.ch>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92185>
 
-Continually xreallocing and freeing the remainder member of struct
-xdiff_emit_state was a noticeable performance hit.  Use a strbuf
-instead.
+On Tue, Aug 12, 2008 at 23:10, Thomas Rast <trast@student.ethz.ch> wrote:
+> Adds a command 'tg graft <command>' that evaluates <command> with a
+> special GIT_GRAFT_FILE: the parent of each patch head is its patch
+> base, and the parents of the patch base are the dependencies of the
+> patch.
+>
+> Try, for example, 'tg graft "gitk --all"'.
+>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
+>
+> Mainly sending this so someone can turn it into a useful feature, and
+> maybe build a few subcommands on top of it (that might call gitk or
+> 'git log --graph', for example).
+>
+> The one big issue with the resulting history is that the commit
+> messages at the tip aren't very interesting and may even be completely
+> irrelevant (for a base merge).  I don't see a good solution for that.
+>
+>  Makefile    |    2 +-
+>  tg-graft.sh |   47 +++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 48 insertions(+), 1 deletions(-)
+>  create mode 100755 tg-graft.sh
+>
+> diff --git a/Makefile b/Makefile
+> index 6eade1e..57745c0 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -6,7 +6,7 @@ sharedir = $(PREFIX)/share/topgit
+>  hooksdir = $(cmddir)/hooks
+>
+>
+> -commands_in = tg-create.sh tg-delete.sh tg-export.sh tg-info.sh tg-patch.sh tg-summary.sh tg-update.sh
+> +commands_in = tg-create.sh tg-delete.sh tg-export.sh tg-info.sh tg-patch.sh tg-summary.sh tg-update.sh tg-graft.sh
+Petr, maybe we should use a wildcard here, to prevent merge conflicts
+while adding new commands.
 
-This yields a decent performance improvement on "git blame" on certain
-repositories.  For example, before this commit:
+I will send a patch.
 
-$ time git blame -M -C -C -p --incremental server.c >/dev/null
-101.52user 0.17system 1:41.73elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+39561minor)pagefaults 0swaps
-
-With this commit:
-
-$ time git blame -M -C -C -p --incremental server.c >/dev/null
-80.38user 0.30system 1:20.81elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+50979minor)pagefaults 0swaps
-
-Signed-off-by: Brian Downing <bdowning@lavos.net>
----
- xdiff-interface.c |   33 +++++++++++----------------------
- xdiff-interface.h |    4 ++--
- 2 files changed, 13 insertions(+), 24 deletions(-)
-
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 9c5e277..4462177 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -66,6 +66,7 @@ void xdiff_outf_init(xdemitcb_t *ecb, void *priv_)
- 	struct xdiff_emit_state *priv = priv_;
- 	ecb->outf = xdiff_outf;
- 	ecb->priv = priv;
-+	strbuf_init(&priv->remainder, 0);
- }
- 
- int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
-@@ -76,42 +77,30 @@ int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
- 	for (i = 0; i < nbuf; i++) {
- 		if (mb[i].ptr[mb[i].size-1] != '\n') {
- 			/* Incomplete line */
--			priv->remainder = xrealloc(priv->remainder,
--						   priv->remainder_size +
--						   mb[i].size);
--			memcpy(priv->remainder + priv->remainder_size,
--			       mb[i].ptr, mb[i].size);
--			priv->remainder_size += mb[i].size;
-+			strbuf_add(&priv->remainder, mb[i].ptr, mb[i].size);
- 			continue;
- 		}
- 
- 		/* we have a complete line */
--		if (!priv->remainder) {
-+		if (!priv->remainder.len) {
- 			consume_one(priv, mb[i].ptr, mb[i].size);
- 			continue;
- 		}
--		priv->remainder = xrealloc(priv->remainder,
--					   priv->remainder_size +
--					   mb[i].size);
--		memcpy(priv->remainder + priv->remainder_size,
--		       mb[i].ptr, mb[i].size);
--		consume_one(priv, priv->remainder,
--			    priv->remainder_size + mb[i].size);
--		free(priv->remainder);
--		priv->remainder = NULL;
--		priv->remainder_size = 0;
-+		strbuf_add(&priv->remainder, mb[i].ptr, mb[i].size);
-+		consume_one(priv, priv->remainder.buf, priv->remainder.len);
-+		strbuf_reset(&priv->remainder);
- 	}
--	if (priv->remainder) {
--		consume_one(priv, priv->remainder, priv->remainder_size);
--		free(priv->remainder);
--		priv->remainder = NULL;
--		priv->remainder_size = 0;
-+	if (priv->remainder.len) {
-+		consume_one(priv, priv->remainder.buf, priv->remainder.len);
-+		strbuf_reset(&priv->remainder);
- 	}
- 	return 0;
- }
- 
- void xdiff_outf_release(void *priv_)
- {
-+	struct xdiff_emit_state *priv = priv_;
-+	strbuf_release(&priv->remainder);
- }
- 
- /*
-diff --git a/xdiff-interface.h b/xdiff-interface.h
-index fca6200..9b7e4a8 100644
---- a/xdiff-interface.h
-+++ b/xdiff-interface.h
-@@ -2,6 +2,7 @@
- #define XDIFF_INTERFACE_H
- 
- #include "xdiff/xdiff.h"
-+#include "strbuf.h"
- 
- struct xdiff_emit_state;
- 
-@@ -9,8 +10,7 @@ typedef void (*xdiff_emit_consume_fn)(void *, char *, unsigned long);
- 
- struct xdiff_emit_state {
- 	xdiff_emit_consume_fn consume;
--	char *remainder;
--	unsigned long remainder_size;
-+	struct strbuf remainder;
- };
- 
- int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t const *xecfg, xdemitcb_t *ecb);
--- 
-1.5.6.1
+>  hooks_in = hooks/pre-commit.sh
+>
+>  commands_out = $(patsubst %.sh,%,$(commands_in))
+> diff --git a/tg-graft.sh b/tg-graft.sh
+> new file mode 100755
+> index 0000000..b6d0458
+> --- /dev/null
+> +++ b/tg-graft.sh
+> @@ -0,0 +1,47 @@
+> +#!/bin/sh
+> +# TopGit - A different patch queue manager
+> +# (c) Petr Baudis <pasky@suse.cz>  2008
+> +# GPLv2
+> +
+> +if [ -z "$1" -o -n "$2" ]; then
+> +       echo "Usage: tg graft <command>" >&2
+> +       exit 1
+> +fi
+> +
+> +mkdir -p "$git_dir"/info
+This shouldn't be needed, the info dir is created by git init.
