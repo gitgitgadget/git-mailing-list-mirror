@@ -1,60 +1,64 @@
 From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Show of hands, how many set USE_NSEC
-Date: Wed, 13 Aug 2008 22:01:26 +0200
-Message-ID: <200808132201.26868.robin.rosenberg.lists@dewire.com>
-References: <20080808163455.GE9152@spearce.org>
+Subject: Re: [EGIT PATCH 10/11] Add a TreeWalk iterator implementation for IContainer
+Date: Wed, 13 Aug 2008 22:41:45 +0200
+Message-ID: <200808132241.45402.robin.rosenberg.lists@dewire.com>
+References: <1218357986-19671-1-git-send-email-spearce@spearce.org> <1218357986-19671-10-git-send-email-spearce@spearce.org> <1218357986-19671-11-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marek Zawirski <marek.zawirski@gmail.com>, git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Aug 13 22:44:15 2008
+X-From: git-owner@vger.kernel.org Wed Aug 13 22:44:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTNCJ-0004Bz-Jd
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 22:44:00 +0200
+	id 1KTNCK-0004Bz-Jp
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 22:44:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753452AbYHMUmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 16:42:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753353AbYHMUmy
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 16:42:54 -0400
-Received: from av12-1-sn2.hy.skanova.net ([81.228.8.185]:35092 "EHLO
-	av12-1-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753124AbYHMUmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 16:42:53 -0400
-Received: by av12-1-sn2.hy.skanova.net (Postfix, from userid 502)
-	id 89AE437F40; Wed, 13 Aug 2008 22:42:51 +0200 (CEST)
-Received: from smtp4-1-sn2.hy.skanova.net (smtp4-1-sn2.hy.skanova.net [81.228.8.92])
-	by av12-1-sn2.hy.skanova.net (Postfix) with ESMTP
-	id 772EC37F37; Wed, 13 Aug 2008 22:42:51 +0200 (CEST)
-Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
-	by smtp4-1-sn2.hy.skanova.net (Postfix) with ESMTP id 5F38E37E42;
+	id S1753575AbYHMUm5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Aug 2008 16:42:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753438AbYHMUmz
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 16:42:55 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:2169 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753316AbYHMUmx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Aug 2008 16:42:53 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 5778C8027F2;
+	Wed, 13 Aug 2008 22:42:52 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id rqFZWFR02u9p; Wed, 13 Aug 2008 22:42:51 +0200 (CEST)
+Received: from [10.9.0.4] (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id B908080068B;
 	Wed, 13 Aug 2008 22:42:51 +0200 (CEST)
 User-Agent: KMail/1.9.9
-In-Reply-To: <20080808163455.GE9152@spearce.org>
+In-Reply-To: <1218357986-19671-11-git-send-email-spearce@spearce.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92270>
 
-fredagen den 8 augusti 2008 18.34.55 skrev Shawn O. Pearce:
-> How many users really build their Git with USE_NSEC=1?
-> 
-> I'm suspecting a status issue in jgit caused by jgit honoring a
-> millisecond resolution on file modification timestamps, and the
-> underlying filesystem supporting at least a 1/2 second (or finer)
-> granularity, but C Git was built without USE_NSEC so it only honors
-> 1 second granularity.
-> 
-> This can cause jgit to think a file is locally modified as the
-> mtime has data in the tv_nsec field, but C Git set that to 0 in
-> the index as USE_NSEC wasn't enabled at build time.
-When jgit finds an index entry with zero nsec it ignores the subsecond
-portion of the file timestamp when comparing.
+s=F6ndagen den 10 augusti 2008 10.46.25 skrev Shawn O. Pearce:
+> diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/Containe=
+rTreeIterator.java b/org.spearce.egit.core/src/org/spearce/egit/core/Co=
+ntainerTreeIterator.java
+> new file mode 100644
+> index 0000000..17b8414
+> --- /dev/null
+> +++ b/org.spearce.egit.core/src/org/spearce/egit/core/ContainerTreeIt=
+erator.java
+=2E..
+> +	@Override
+> +	protected Entry[] getEntries() throws IOException {
+> +		final IResource[] all;
+> +		try {
+> +			all =3D node.members(IContainer.INCLUDE_HIDDEN);
+
+INCLUDE_HIDDEN is a 3.4 flag.
 
 -- robin
