@@ -1,74 +1,55 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Local uncommitted changes, not checked in to index with gitk
-Date: Wed, 13 Aug 2008 15:49:40 +0200
-Message-ID: <vpq63q5autn.fsf@bauges.imag.fr>
-References: <ace3f33d0808130207w109e834bxa12b3e96ce3ec096@mail.gmail.com>
-	<vpqljz1cfkm.fsf@bauges.imag.fr>
-	<ace3f33d0808130553g318ce97gf654c3f998d4047a@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: git -p does not detect a bare repository
+Date: Wed, 13 Aug 2008 15:51:21 +0200
+Message-ID: <48A2E6D9.5000609@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "srinivas naga vutukuri" <srinivas.vutukuri@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 15:51:13 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 13 15:52:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTGkV-0001Ck-Uk
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 15:50:52 +0200
+	id 1KTGm4-0001zN-Ua
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 15:52:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751702AbYHMNtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 09:49:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbYHMNtr
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 09:49:47 -0400
-Received: from imag.imag.fr ([129.88.30.1]:64252 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751449AbYHMNtr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 09:49:47 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m7DDne8E012464
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 13 Aug 2008 15:49:40 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KTGjM-0000hy-OV; Wed, 13 Aug 2008 15:49:40 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KTGjM-0001m7-M4; Wed, 13 Aug 2008 15:49:40 +0200
-In-Reply-To: <ace3f33d0808130553g318ce97gf654c3f998d4047a@mail.gmail.com> (srinivas naga vutukuri's message of "Wed\, 13 Aug 2008 18\:23\:41 +0530")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 13 Aug 2008 15:49:41 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751861AbYHMNv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 09:51:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752191AbYHMNv0
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 09:51:26 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:14095 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751861AbYHMNvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 09:51:25 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KTGl0-0007ZA-0z; Wed, 13 Aug 2008 15:51:22 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id C7A7C4FB; Wed, 13 Aug 2008 15:51:21 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92216>
 
-"srinivas naga vutukuri" <srinivas.vutukuri@gmail.com> writes:
+If $PWD is a bare repository, is it expected behavior that
 
-> Actually am doing around the 2.6 linux kernel git, and once cloned
-> using rsync url
-> and then done couple of times the git pull, to sync to the latest to the remote.
->
-> I just done "git status", Its giving the following output. But i
-> have't done around these files anything at all, not opened, etc.
+  $ git diff-tree master^ master
 
-You probably updated the .git/ directory without updating the working
-tree. Normally, "git pull" does not do that, so I don't know what's
-wrong.
+works as expected, but
 
-Can you provide exactly the way to reproduce? i.e. stg like
+  $ git -p diff-tree master^ master
 
-$ git status
-# nothing
-$ git pull
-$ git status
-# something
+errors out:
 
--- 
-Matthieu
+  fatal: ambiguous argument 'master^': unknown revision or path blabla...
+
+-- Hannes
