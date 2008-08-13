@@ -1,57 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/7] prefix discovery at runtime (on Windows)
-Date: Sun, 17 Aug 2008 11:01:25 -0700
-Message-ID: <7v3al35xmy.fsf@gitster.siamese.dyndns.org>
-References: <1218977083-14526-1-git-send-email-prohaska@zib.de>
+From: Kristis Makris <kristis.makris-tTJs1oqo2yY@public.gmane.org>
+Subject: Re: Git and Scmbug integration
+Date: Wed, 13 Aug 2008 02:23:05 -0700
+Message-ID: <1218619385.4058.0.camel@localhost>
+References: <1194980792.4106.6.camel@localhost>
+	<ee77f5c20711131500h6ee067ffv3e488ac7bde1d22c@mail.gmail.com>
+	<1194998142.4106.24.camel@localhost>
+	<ee77f5c20711131602m5b9042fx72689af53e24ddd2@mail.gmail.com>
+	<1194999404.4106.40.camel@localhost>
+	<7vtznppr8m.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Aug 17 20:02:42 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: multipart/mixed; boundary="=_morpheus-13102-1218994671-0001-2"
+Cc: David Symonds <dsymonds-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org,
+  git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, jnareb-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+To: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+X-From: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org Sun Aug 17 20:09:09 2008
+Return-path: <scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org>
+Envelope-to: gcbsu-scmbug-users@m.gmane.org
+Received: from net.mkgnu.net ([67.40.69.52] helo=mail.mkgnu.net)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUmaP-0003Dc-A3
-	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 20:02:41 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755457AbYHQSBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Aug 2008 14:01:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755132AbYHQSBe
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 14:01:34 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45694 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752901AbYHQSBd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Aug 2008 14:01:33 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0ECFB65BC8;
-	Sun, 17 Aug 2008 14:01:32 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 28F7A65BC7; Sun, 17 Aug 2008 14:01:27 -0400 (EDT)
-In-Reply-To: <1218977083-14526-1-git-send-email-prohaska@zib.de> (Steffen
- Prohaska's message of "Sun, 17 Aug 2008 14:44:36 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 85FF0936-6C86-11DD-A98E-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92617>
+	id 1KUmgc-0004hQ-U1
+	for gcbsu-scmbug-users@m.gmane.org; Sun, 17 Aug 2008 20:09:09 +0200
+Received: from [192.168.0.100] (localhost [::ffff:127.0.0.1])
+  by morpheus with esmtp; Sun, 17 Aug 2008 10:37:51 -0700
+  id 00027B4D.48A861EF.0000332E
+Received: from demokritos5.cytanet.com.cy (demokritos5.cytanet.com.cy
+	[::ffff:195.14.130.179])
+	by morpheus with esmtp; Sun, 17 Aug 2008 10:37:45 -0700
+	id 000092D6.48A861EA.00003327
+X-Virus-Scanned: By virus scanner at Cytanet
+Received: from [192.168.1.4] (83-0-09.netrunf.cytanet.com.cy [83.168.0.9])
+	by demokritos5.cytanet.com.cy (Postfix) with ESMTP id B12EA187C99;
+	Sun, 17 Aug 2008 21:06:18 +0300 (EEST)
+In-Reply-To: <7vtznppr8m.fsf-jO8aZxhGsIagbBziECNbOZn29agUkmeCHZ5vskTnxNA@public.gmane.org>
+X-Mailer: Evolution 2.6.3 
+X-BeenThere: scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: General Scmbug list <scmbug-users.lists.mkgnu.net>
+List-Unsubscribe: <http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users>, 
+	<mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://lists.mkgnu.net/pipermail/scmbug-users>
+List-Post: <mailto:scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org>
+List-Help: <mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=help>
+List-Subscribe: <http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users>, 
+	<mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=subscribe>
+Sender: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+Errors-To: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92618>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+This is a MIME-formatted message.  If you see this text it means that your
+E-mail software does not support MIME-formatted messages.
 
-> Apologies for proposing such large changes that late in the release cycle.
-> Maybe we want to postpone the series until 1.6.0.1 or even 1.6.1.
+--=_morpheus-13102-1218994671-0001-2
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=_morpheus-13102-1218994671-0001-3"
 
-Well, from the cursory look, it does not seem to be 1.6.0.1 material, even
-though it is possible to fork a topic at 1.6.0 and use the changes in
-'next', then 'master', and eventually to 'maint' to produce 1.6.0.X, if
-all of this hapapens before 1.6.1.
+This is a MIME-formatted message.  If you see this text it means that your
+E-mail software does not support MIME-formatted messages.
 
-I wouldn't mind at all if the binary distribution on Windows is based on
-"git.git plus port specific patchset that will eventually be sent
-upstream" like it used to be.  In fact it might even be preferrable, as I
-won't be testing ports to that platform myself anyway.
+--=_morpheus-13102-1218994671-0001-3
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, 2007-11-13 at 17:09 -0800, Junio C Hamano wrote:
+> Kristis Makris <kristis.makris-tTJs1oqo2yY@public.gmane.org> writes:
+>=20
+> > I just tried again tagging with both:
+> >
+> > $ git tag TAG_NAME
+> >
+> > $ git tag -a TAG_NAME
+> >
+> > and I don't get the post-commit hook executed.
+> >
+> > Perhaps I missed something ?
+>=20
+> You didn't.  You did not create any commit.  No post-commit hook
+> runs.  There is no post-tag hook.
+>=20
+> > Can the new commit SHA-1 hash be added as a parameter to the post-commi=
+t
+> > hook please ?
+>=20
+> Looking at "git-rev-parse HEAD" in your hook should be enough.
+
+But ... which hook ? There is not post-tag hook!!=20
+
+--=_morpheus-13102-1218994671-0001-3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Transfer-Encoding: 7bit
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBIoqf5/KuTDwnYLxERAtgwAJsEoeD2hKyue5W9aowPpy20/DbwawCeMBZW
+BsuvZaYwjuaYYBR17j2oyNM=
+=nIS/
+-----END PGP SIGNATURE-----
+
+--=_morpheus-13102-1218994671-0001-3--
+
+--=_morpheus-13102-1218994671-0001-2
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+scmbug-users mailing list
+scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users
+
+--=_morpheus-13102-1218994671-0001-2--
