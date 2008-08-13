@@ -1,135 +1,100 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: pack operation is thrashing my server
-Date: Wed, 13 Aug 2008 13:26:14 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0808131304560.4352@xanadu.home>
-References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
- <20080811030444.GC27195@spearce.org>
- <a6b6acf60808110043t76dc0ae6l428c5da473d79c71@mail.gmail.com>
- <87vdy71i6w.fsf@basil.nowhere.org>
- <1EE44425-6910-4C37-9242-54D0078FC377@adacore.com>
- <alpine.LFD.1.10.0808131024460.4352@xanadu.home>
- <3E057C8D-FF72-47A2-BBA8-27A22AD67167@adacore.com>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH (1b)] merge-recursive.c: Add more generic
+	merge_recursive_generic()
+Date: Wed, 13 Aug 2008 19:26:22 +0200
+Message-ID: <20080813172622.GB12871@leksak.fem-net>
+References: <1218559514-16890-1-git-send-email-vmiklos@frugalware.org> <1218572040-23362-1-git-send-email-s-beyer@gmx.net> <20080812214410.GG18960@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Andi Kleen <andi@firstfloor.org>, Ken Pratt <ken@kenpratt.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Geert Bosch <bosch@adacore.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 19:27:26 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="opJtzjQTFsWo+cga"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Aug 13 19:27:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTK84-000399-R2
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 19:27:25 +0200
+	id 1KTK8J-0003GP-9B
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 19:27:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751952AbYHMR0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 13:26:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855AbYHMR0V
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 13:26:21 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:8231 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751104AbYHMR0V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 13:26:21 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K5J00GFLV3QIJ75@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 13 Aug 2008 13:26:15 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <3E057C8D-FF72-47A2-BBA8-27A22AD67167@adacore.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1751954AbYHMR01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 13:26:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855AbYHMR01
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 13:26:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41696 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751306AbYHMR00 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 13:26:26 -0400
+Received: (qmail invoked by alias); 13 Aug 2008 17:26:23 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp054) with SMTP; 13 Aug 2008 19:26:23 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+iPN9NakWinBDN06DXy+/WNTL2u05TTYcVXGWaEv
+	Q5c+AYt8LM2y7G
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KTK74-0003X3-4W; Wed, 13 Aug 2008 19:26:22 +0200
+Content-Disposition: inline
+In-Reply-To: <20080812214410.GG18960@genesis.frugalware.org>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92246>
-
-On Wed, 13 Aug 2008, Geert Bosch wrote:
-
-> On Aug 13, 2008, at 10:35, Nicolas Pitre wrote:
-> > On Tue, 12 Aug 2008, Geert Bosch wrote:
-> > 
-> > > I've always felt that keeping largish objects (say anything >1MB)
-> > > loose makes perfect sense. These objects are accessed infrequently,
-> > > often binary or otherwise poor candidates for the delta algorithm.
-> > 
-> > Or, as I suggested in the past, they can be grouped into a separate
-> > pack, or even occupy a pack of their own.
-> 
-> This is fine, as long as we're not trying to create deltas
-> of the large objects, or do other things that requires keeping
-> the inflated data in memory.
-
-First, there is the delta attribute:
-
-|commit a74db82e15cd8a2c53a4a83e9a36dc7bf7a4c750
-|Author: Junio C Hamano <junkio@cox.net>
-|Date:   Sat May 19 00:39:31 2007 -0700
-|
-|    Teach "delta" attribute to pack-objects.
-|
-|    This teaches pack-objects to use .gitattributes mechanism so
-|    that the user can specify certain blobs are not worth spending
-|    CPU cycles to attempt deltification.
-|
-|    The name of the attrbute is "delta", and when it is set to
-|    false, like this:
-|
-|        == .gitattributes ==
-|        *.jpg   -delta
-|
-|    they are always stored in the plain-compressed base object
-|    representation.
-
-This could probably be extended to take a size limit argument as well.
-
-> > As soon as you have more than
-> > one revision of such largish objects then you lose again by keeping them
-> > loose.
-> 
-> Yes, you lose potentially in terms of disk space, but you avoid the
-> large memory footprint during pack generation. For very large blobs,
-> it is best to degenerate to having each revision of each file on
-> its own (whether we call it a single-file pack, loose object or whatever).
-> That way, the large file can stay immutable on disk, and will only
-> need to be accessed during checkout. GIT will then scale with good
-> performance until we run out of disk space.
-
-Loose objects, though, will always be selected for potential delta 
-generation.  Packed objects, deltified or not, are always streamed as is 
-when serving pull requests.  And by default delta compression is not 
-(re)attempted between objects which are part of the same pack, the 
-reason being that if they were not deltified on the first packing 
-attempt then there is no point trying again when streaming them over the 
-net. So you always benefit from having your large objects packed with 
-the rest.  This, plus the delta prevention mechanism above should cover 
-most cases.
-
-> > You'll have memory usage issues whenever such objects are accessed,
-> > loose or not.
-> Why? The only time we'd need to access their contents for checkout
-> or when pushing across the network. These should all be steaming operations
-> with small memory footprint.
-
-Pushing across the network, or repacking without -f, is streamed.  
-Checking out currently isn't (although it probably could).  Repacking 
-with -f definitely isn't and probably shouldn't because of complexity 
-issues.
-
-> > However, once those big objects are packed once, they can
-> > be repacked (or streamed over the net) without really "accessing" them.
-> > Packed object data is simply copied into a new pack in that case which
-> > is less of an issue on memory usage, irrespective of the original pack
-> > size.
-> Agreed, but still, at least very large objects. If I have a 600MB
-> file in my repository, it should just not get in the way. If it gets
-> copied around during each repack, that just wastes I/O time for no
-> good reason. Even worse, it causes incremental backups or filesystem
-> checkpoints to become way more expensive. Just leaving large files
-> alone as immutable objects on disk avoids all these issues.
-
-Pack them in a pack of their own and stick a .keep file along with it.  
-At that point they will never be rewritten.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92247>
 
 
-Nicolas
+--opJtzjQTFsWo+cga
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+Miklos Vajna wrote:
+> On Tue, Aug 12, 2008 at 10:13:59PM +0200, Stephan Beyer <s-beyer@gmx.net>=
+ wrote:
+> > merge_recursive_generic() takes, in comparison to to merge_recursive(),
+> > no commit ("struct commit *") arguments but SHA ids ("unsigned char *"),
+> > and no commit list of bases but an array of refs ("const char **").
+> >=20
+> > This makes it more generic in the case that it can also take the SHA
+> > of a tree to merge trees without commits, for the bases, the head
+> > and the remote.
+> >=20
+> > merge_recursive_generic() also handles locking and updating of the
+> > index, which is a common use case of merge_recursive().
+>=20
+> Then what about adding an extra parameter to merge_recursive_generic()
+> so that merge_recursive_setup() could be a static function?
+
+Could it?
+
+I did not intend to replace merge_recursive() by merge_recursive_generic(),
+because merge_recursive() may be the better choice in cases where the caller
+only deals with commit objects and never with tree objects directly.
+Or if the caller does not want to lock the index or do some other stuff
+with the index...
+In that case merge_recursive_setup() is still needed, isn't it?
+
+Regards,
+  Stephan
+
+--=20
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+
+--opJtzjQTFsWo+cga
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iD8DBQFIoxk+bt3SB/zFBA8RAhLmAKCNibZzdGe7JBQqMTLBrS5fleWM8QCghAeQ
+5tAtW2b2bVSNyJgg7FNIkpk=
+=KOuw
+-----END PGP SIGNATURE-----
+
+--opJtzjQTFsWo+cga--
