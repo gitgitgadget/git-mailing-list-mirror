@@ -1,73 +1,91 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH (1b)] merge-recursive.c: Add more generic
-	merge_recursive_generic()
-Date: Wed, 13 Aug 2008 22:13:20 +0200
-Message-ID: <20080813201320.GP18960@genesis.frugalware.org>
-References: <1218559514-16890-1-git-send-email-vmiklos@frugalware.org> <1218572040-23362-1-git-send-email-s-beyer@gmx.net> <20080812214410.GG18960@genesis.frugalware.org> <20080813172622.GB12871@leksak.fem-net>
+From: Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH 1/3] Git.pm: Add faculties to allow temp files to be cached
+Date: Wed, 13 Aug 2008 16:13:28 -0400
+Message-ID: <48A34068.9060509@griep.us>
+References: <489DBB8A.2060207@griep.us> <1218470035-13864-1-git-send-email-marcus@griep.us> <1218470035-13864-2-git-send-email-marcus@griep.us> <48A33E70.8060804@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="UrGtnQA9R6QcIU0f"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Aug 13 22:27:18 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 13 22:28:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTMjk-0007rl-Ve
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 22:14:29 +0200
+	id 1KTMkC-00082A-Ta
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 22:14:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753175AbYHMUNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 16:13:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752788AbYHMUNY
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 16:13:24 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:40072 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752464AbYHMUNX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 16:13:23 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 856E71B2509;
-	Wed, 13 Aug 2008 22:13:22 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 794FE4465E;
-	Wed, 13 Aug 2008 21:20:16 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 122421190002; Wed, 13 Aug 2008 22:13:20 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080813172622.GB12871@leksak.fem-net>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1754695AbYHMUNf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Aug 2008 16:13:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754250AbYHMUNf
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 16:13:35 -0400
+Received: from wr-out-0506.google.com ([64.233.184.227]:45618 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753064AbYHMUNd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 16:13:33 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so143049wri.5
+        for <git@vger.kernel.org>; Wed, 13 Aug 2008 13:13:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=2KrSGX2LR9ylEMsBfgMJ4QlSyDYL0AWprjm6z+9xtNE=;
+        b=g7y4vJpbRjs/pwLtCWvHwFiF57nm7olOZI3H0DJER+3/Zj9UM434WF7/gyOsPrLr2T
+         C/GckTwcG64OiGahpSF1aL67scH0OShDeMdTFtR/ykj3Jy3CSo4q5E50xzGnxpNaxIuY
+         1ANsUTfkgAYA/EJWdphjDSe6eR2p1/vX8oWJE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=R0IS+akz4/FYug2H0J2ioa+8Fl9ITB8F4JD8AFtT7BltZbk/VNKB5r45G1ZdIz8J80
+         tvDjB+M1uzQqNC9zi5X4EkneGVTMrKNvqvk0GPnW5onj/pzqvsccL/viuULL2rm3vMBu
+         pdLsCXLWealgziFwXMs7ncH5DWb1YrEWzptnE=
+Received: by 10.90.80.18 with SMTP id d18mr365853agb.44.1218658412784;
+        Wed, 13 Aug 2008 13:13:32 -0700 (PDT)
+Received: from ?10.95.36.106? ( [4.79.245.132])
+        by mx.google.com with ESMTPS id 10sm1305092wrl.11.2008.08.13.13.13.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 13 Aug 2008 13:13:31 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <48A33E70.8060804@gmail.com>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92263>
 
+Yeesh; didn't realize it would create that heavy of a dependency.  Perh=
+aps this should be split into a submodule so that Git.pm doesn't requir=
+e the newer dependency.  Eric/Junio?
 
---UrGtnQA9R6QcIU0f
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Lea Wiemann wrote:
+> Marcus Griep wrote:
+>> diff --git a/perl/Git.pm b/perl/Git.pm
+>>
+>> +require File::Spec;
+>=20
+> This makes Git.pm dependent on Perl 5.6.1.  Some tests (like
+> t3701-add-interactive.sh) seem to work with pretty much any Perl vers=
+ion
+> out there, and requiring File::Spec changes this.  Hence to avoid
+> complaints about failing tests, I suggest that you add a check for
+> File::Spec availability at the beginning of any test that (indirectly=
+)
+> uses Git.pm.
+>=20
+> (All my statements are untested... ;-))
+>=20
+> -- Lea
 
-On Wed, Aug 13, 2008 at 07:26:22PM +0200, Stephan Beyer <s-beyer@gmx.net> wrote:
-> I did not intend to replace merge_recursive() by merge_recursive_generic(),
-> because merge_recursive() may be the better choice in cases where the caller
-> only deals with commit objects and never with tree objects directly.
-> Or if the caller does not want to lock the index or do some other stuff
-> with the index...
-> In that case merge_recursive_setup() is still needed, isn't it?
-
-Hm, OK. I was not aware pure merge_recursive() will be interesting for
-other builtins even after merge_recursive_generic().
-
---UrGtnQA9R6QcIU0f
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkijQGAACgkQe81tAgORUJbAkQCfTT/9p+Tlc8awrhqlmj6WLPBf
-aksAn13syokgblihjndMd2wft6ufeciY
-=4e2y
------END PGP SIGNATURE-----
-
---UrGtnQA9R6QcIU0f--
+--=20
+Marcus Griep
+GPG Key ID: 0x5E968152
+=E2=80=94=E2=80=94
+http://www.boohaunt.net
+=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
