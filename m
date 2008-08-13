@@ -1,80 +1,111 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: pack operation is thrashing my server
-Date: Wed, 13 Aug 2008 05:43:15 -0700 (PDT)
-Message-ID: <m3abfht7a9.fsf@localhost.localdomain>
-References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
+From: "srinivas naga vutukuri" <srinivas.vutukuri@gmail.com>
+Subject: Re: Local uncommitted changes, not checked in to index with gitk
+Date: Wed, 13 Aug 2008 18:23:41 +0530
+Message-ID: <ace3f33d0808130553g318ce97gf654c3f998d4047a@mail.gmail.com>
+References: <ace3f33d0808130207w109e834bxa12b3e96ce3ec096@mail.gmail.com>
+	 <vpqljz1cfkm.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Ken Pratt" <ken@kenpratt.net>
-X-From: git-owner@vger.kernel.org Wed Aug 13 14:44:24 2008
+To: "Matthieu Moy" <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Aug 13 14:54:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTFiB-0007tr-Na
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 14:44:24 +0200
+	id 1KTFsE-0002xl-F8
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 14:54:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752212AbYHMMnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 08:43:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbYHMMnT
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 08:43:19 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:9407 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752184AbYHMMnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 08:43:19 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so11326fgg.17
-        for <git@vger.kernel.org>; Wed, 13 Aug 2008 05:43:17 -0700 (PDT)
+	id S1752616AbYHMMxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 08:53:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752758AbYHMMxn
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 08:53:43 -0400
+Received: from wf-out-1314.google.com ([209.85.200.175]:29873 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752338AbYHMMxl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 08:53:41 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so5503345wfd.4
+        for <git@vger.kernel.org>; Wed, 13 Aug 2008 05:53:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=oxdD3Pw8daWkzXBYKccNu3M9Ya6PueYolKiEd9BSRV4=;
-        b=a7/bX3oAbhCvId2TNVeER9Jho+6/DLG1DAw3x+G+J3Dj3/kKBPODwa5tG4c5Ib51uY
-         4tKvWj5bGtMHdLpjlb64RZ71tg1j0U5y3pD3/6wr4TgOj74N1IXGNz6V5lf5oGNzbssd
-         9gLhzcr7+bvSFGx9s4QXzf0UlCP4NQIW8nMIY=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=3gC1HfJkMSUcyb3idz7YhEaAXNStKbKcDb/izeU/188=;
+        b=mASX/v88VrYkAArjG/XqJ/r8IRpEHks9Ixayiqt4g+zL4fhnbv0eNpZRS4QHP54OJn
+         FfzTONUbETN22i7grgcc5tKzTM5OkGCP+h6jOIGG23Gn4x6X/6jsOyy8RXq6nWzPAUpe
+         YmxSmxmdoLWI92ozq5+q16eFxW9xP5LY4I07I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=K4+IYgtz3VWZZjNBNz/lW5OLPnKjdzJ0kyHX/wOT2HD54PSC1dLfiIikE8fwBXhL+O
-         9t8HGGL9kRG9doGC61UAJnGHUhn+ZrwIRhYE3+IgHTzkaVD2E3GX6FfBzTusG/lqRjr8
-         9THy3p6B3kR3GP8ipVDdnJvDCCr/X1v2x0VQU=
-Received: by 10.86.95.20 with SMTP id s20mr12360229fgb.49.1218631396958;
-        Wed, 13 Aug 2008 05:43:16 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.245.20])
-        by mx.google.com with ESMTPS id 3sm628596fge.3.2008.08.13.05.43.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 13 Aug 2008 05:43:15 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m7DChCfL020141;
-	Wed, 13 Aug 2008 14:43:12 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m7DChAsm020137;
-	Wed, 13 Aug 2008 14:43:10 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=vD1Vtrl6XOSoDVOGhH/xoGHACXlubUn76jg5l/HcK+MExFzBnpetGS/8kVQR/pMgXX
+         55qAmQ2hO0EbVPFXYUF6NOyVlC0vaNj5O+64+BGNVpZHy9FckGZdwQrYibHhHgYiC9NP
+         w7xb4UXNaYbl9bb3uNMqah07sRaCcewM9+goE=
+Received: by 10.142.80.7 with SMTP id d7mr2609751wfb.173.1218632021013;
+        Wed, 13 Aug 2008 05:53:41 -0700 (PDT)
+Received: by 10.142.134.7 with HTTP; Wed, 13 Aug 2008 05:53:40 -0700 (PDT)
+In-Reply-To: <vpqljz1cfkm.fsf@bauges.imag.fr>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92214>
 
-[...]
+Actually am doing around the 2.6 linux kernel git, and once cloned
+using rsync url
+and then done couple of times the git pull, to sync to the latest to the remote.
 
-If I remember correctly there were on git mailing list some patches by
-Dana How which put an upper bound on the size of individual objects
-going to pack; objects with size above threshold would be left as
-loose object (and shared via network drive).
+I just done "git status", Its giving the following output. But i
+have't done around these files anything at all, not opened, etc.
 
-Unfortunately if I remember correctly they were not accepted in git.
-You can try to pack large objects into separate pack, and .keep it,
-or try to ressurect the patches from git mailing list archive.
+-------------
+# On branch master
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#
+#       modified:   include/linux/netfilter/xt_connmark.h
+#       modified:   include/linux/netfilter/xt_dscp.h
+#       modified:   include/linux/netfilter/xt_mark.h
+#       modified:   include/linux/netfilter/xt_rateest.h
+#       modified:   include/linux/netfilter/xt_tcpmss.h
+#       modified:   include/linux/netfilter_ipv4/ipt_connmark.h
+#       modified:   include/linux/netfilter_ipv4/ipt_dscp.h
+#       modified:   include/linux/netfilter_ipv4/ipt_ecn.h
+#       modified:   include/linux/netfilter_ipv4/ipt_mark.h
+#       modified:   include/linux/netfilter_ipv4/ipt_tcpmss.h
+#       modified:   include/linux/netfilter_ipv4/ipt_tos.h
+#       modified:   include/linux/netfilter_ipv4/ipt_ttl.h
+#       modified:   include/linux/netfilter_ipv6/ip6t_hl.h
+#       modified:   include/linux/netfilter_ipv6/ip6t_mark.h
+#       modified:   net/ipv4/netfilter/ipt_ecn.c
+#       modified:   net/ipv4/netfilter/ipt_ttl.c
+#       modified:   net/ipv6/netfilter/ip6t_hl.c
+#       modified:   net/netfilter/xt_connmark.c
+#       modified:   net/netfilter/xt_dscp.c
+#       modified:   net/netfilter/xt_mark.c
+#       modified:   net/netfilter/xt_rateest.c
+#       modified:   net/netfilter/xt_tcpmss.c
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+---------------
 
-HTH.
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+-srinivas.
+
+
+On Wed, Aug 13, 2008 at 5:06 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> "srinivas naga vutukuri" <srinivas.vutukuri@gmail.com> writes:
+>
+>> just cloning any git repository, next time onwards after pulling
+>> changes, the gitk is showing
+>> at the top "Local uncommitted changes, not checked in to index". Why
+>> it is happening.
+>
+> What do "git status" and "git diff" say?
+>
+> --
+> Matthieu
+>
