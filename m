@@ -1,137 +1,136 @@
-From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: [TopGit PATCH] supply template argument to mktemp
-Date: Tue, 12 Aug 2008 19:17:22 -0500 (CDT)
-Message-ID: <Pine.GSO.4.62.0808121911340.1112@harper.uchicago.edu>
-References: <Pine.GSO.4.62.0808121309000.18832@harper.uchicago.edu>
- <20080812204433.GM10151@machine.or.cz> <Pine.GSO.4.62.0808121557290.24244@harper.uchicago.edu>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: TopGit: problem with patch series generation
+Date: Wed, 13 Aug 2008 02:18:09 +0200
+Message-ID: <20080813001809.GO10151@machine.or.cz>
+References: <20080812161854.GB30067@lapse.rw.madduck.net>
+	<8aa486160808121428t259f5340x6d1a14cadedac30c@mail.gmail.com>
+	<20080812224155.GB15521@lapse.rw.madduck.net>
+	<20080812225916.GN10151@machine.or.cz>
+	<20080812231037.GC16481@lapse.rw.madduck.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Aug 13 02:18:35 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: vcs distro packaging discussion list
+	<vcs-pkg-discuss@lists.alioth.debian.org>,
+	Santi =?iso-8859-2?Q?B=E9jar?= <sbejar@gmail.com>,
+	git discussion list <git@vger.kernel.org>
+To: martin f krafft <madduck@madduck.net>
+X-From: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org Wed Aug 13 02:19:17 2008
+Return-path: <vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org>
+Envelope-to: gcpv-vcs-pkg-discuss@m.gmane.org
+Received: from alioth.debian.org ([217.196.43.134])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KT44P-0001CX-Hw
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 02:18:33 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752178AbYHMARY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 20:17:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752165AbYHMARY
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 20:17:24 -0400
-Received: from smtp01.uchicago.edu ([128.135.12.77]:38700 "EHLO
-	smtp01.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752155AbYHMARY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 20:17:24 -0400
-Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
-	by smtp01.uchicago.edu (8.13.8/8.13.8) with ESMTP id m7D0HMHv004583
-	for <git@vger.kernel.org>; Tue, 12 Aug 2008 19:17:22 -0500
-Received: from localhost (jrnieder@localhost)
-	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m7D0HMNG001324;
-	Tue, 12 Aug 2008 19:17:22 -0500 (CDT)
-X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
-In-Reply-To: <Pine.GSO.4.62.0808121557290.24244@harper.uchicago.edu>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92158>
+	id 1KT457-0001Jp-7F
+	for gcpv-vcs-pkg-discuss@m.gmane.org; Wed, 13 Aug 2008 02:19:17 +0200
+Received: from localhost ([127.0.0.1] helo=alioth.debian.org)
+	by alioth.debian.org with esmtp (Exim 4.63)
+	(envelope-from <vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org>)
+	id 1KT44B-0007d0-8b
+	for gcpv-vcs-pkg-discuss@m.gmane.org; Wed, 13 Aug 2008 00:18:19 +0000
+Received: from w241.dkm.cz ([62.24.88.241] helo=machine.or.cz ident=postfix)
+	by alioth.debian.org with esmtp (Exim 4.63)
+	(envelope-from <pasky@machine.or.cz>) id 1KT442-0007cY-7l
+	for vcs-pkg-discuss@lists.alioth.debian.org;
+	Wed, 13 Aug 2008 00:18:15 +0000
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 3BD6C393A807; Wed, 13 Aug 2008 02:18:09 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080812231037.GC16481@lapse.rw.madduck.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on alioth.debian.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00 autolearn=ham
+	version=3.2.3
+X-BeenThere: vcs-pkg-discuss@lists.alioth.debian.org
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: Discussions on using VCS for distro packaging
+	<vcs-pkg-discuss.lists.alioth.debian.org>
+List-Unsubscribe: <http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss>,
+	<mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=unsubscribe>
+List-Archive: <http://lists.alioth.debian.org/pipermail/vcs-pkg-discuss>
+List-Post: <mailto:vcs-pkg-discuss@lists.alioth.debian.org>
+List-Help: <mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=help>
+List-Subscribe: <http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss>,
+	<mailto:vcs-pkg-discuss-request@lists.alioth.debian.org?subject=subscribe>
+Sender: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+Errors-To: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+X-SA-Exim-Connect-IP: 127.0.0.1
+X-SA-Exim-Mail-From: vcs-pkg-discuss-bounces+gcpv-vcs-pkg-discuss=m.gmane.org@lists.alioth.debian.org
+X-SA-Exim-Scanned: No (on alioth.debian.org); SAEximRunCond expanded to false
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92159>
 
-mktemp versions before 1.5 did not allow omitting the template
-(prefix.XXXXXX) argument.  Thus on Mac OS X,
+On Tue, Aug 12, 2008 at 08:10:37PM -0300, martin f krafft wrote:
+> also sprach Petr Baudis <pasky@suse.cz> [2008.08.12.1959 -0300]:
+> > How should that work? Maybe there needs to be even an explicit support
+> > for this - should TopGit just check the dependency tree when
+> > sequencing the topic branches and have a step that says:
+> > 
+> > 	"I'm going to sequence branch A. If there is branch T that has
+> > 	only already sequenced branches + branch A as dependencies,
+> > 	use T's content instead of A."
+> > 
+> > Would that be satisfactory?
+> 
+> Yes, that's what I was thinking about, if I read you correctly.
 
-	$ mktemp -d
-	usage: mktemp [-d] [-q] [-t prefix] [-u] template ...
-	       mktemp [-d] [-q] [-u] -t prefix
+But we _REALLY_ want to do this only for stage branches!
 
-So supply a filename template.  To maintain the intended
-behavior, we have to add -t, too.  It was implied before.
+> > Of course, in the case of
+> > 
+> >         A1--A2--A3--A4--C
+> >                        /
+> >         B1--B2--B3--B4.
+> > 
+> > the sequenced branches would still be like
+> > 
+> >         A1--A2--A3--A4--B1--B2--B3--C
+> > 
+> > unless you create the T1..T4 branches manually.
+> 
+> Yes. Or add a dependency. I'd just prefer not to add a dependency
+> where there is none; instead, I'd prefer if TopGit could be aided
+> with the serialisation in cases when it cannot possibly make
+> a proper decision.
 
-Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
----
-	Jonathan Nieder wrote:
+Yes, and it should certainly warn you about this at any rate, and give
+you a chance to resolve this manually - possibly taking advantage of
+rerere.
 
-	> So thinking it through, perhaps we should do the following:
-	>  - provide a simple mini-mktemp for users to install themselves
-	>    on old systems
-	>  - always provide the template argument to mktemp
+So, my idea: tg export --quilt should set up and maintain a private
+working branch where it merges all the exported branches, one-by-one
+(possibly doing the sling as described above first). In case there is a
+conflict, it either aborts or gives you a chance to resolve it and go on
+with the export. It could also offer you to save your resolution in a
+new tie branch for future auto-slinging, but it would be tricky to
+figure out exactly what patches does it depend on.
 
-	Here's the second part.  With this change, plus a sed
-	portability fix I will send separately, topgit on Mac OS X
-	works.  Thanks for the help.
+Overally, I'd start simply with implementing the sequential merge and
+forget about slinging resolutions from tie branches. The former should
+be very simple and solve most of the cases, especially when using rerere.
+For the hairy cases, you can just add a dependency for now - sort of
+preliminary serialization. :-)
 
- tg-export.sh |    2 +-
- tg-info.sh   |    2 +-
- tg-patch.sh  |    2 +-
- tg-update.sh |    2 +-
- tg.sh        |    2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+The slinging might be feasible, but would be much more complicated
+to implement. I think this can simply wait.
 
-diff --git a/tg-export.sh b/tg-export.sh
-index 62361dd..62ea4f9 100644
---- a/tg-export.sh
-+++ b/tg-export.sh
-@@ -32,7 +32,7 @@ base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)"
- 	die "not on a TopGit-controlled branch"
- 
- 
--playground="$(mktemp -d)"
-+playground="$(mktemp -d -t tg-export.XXXXXX)"
- trap 'rm -rf "$playground"' EXIT
- 
- 
-diff --git a/tg-info.sh b/tg-info.sh
-index 43589f9..f2b6365 100644
---- a/tg-info.sh
-+++ b/tg-info.sh
-@@ -41,7 +41,7 @@ branch_contains "$name" "$base_rev" ||
- git cat-file blob "$name:.topdeps" |
- 	sed '1{s/^/Depends: /;n}; s/^/         /;'
- 
--depcheck="$(mktemp)"
-+depcheck="$(mktemp -t tg-depcheck.XXXXXX)"
- missing_deps=
- needs_update "$name" >"$depcheck" || :
- if [ -n "$missing_deps" ]; then
-diff --git a/tg-patch.sh b/tg-patch.sh
-index 04023c0..48f4d77 100644
---- a/tg-patch.sh
-+++ b/tg-patch.sh
-@@ -29,7 +29,7 @@ echo
- [ -n "$(git grep '^[-]--' "$name" -- ".topmsg")" ] || echo '---'
- 
- # Evil obnoxious hack to work around the lack of git diff --exclude
--git_is_stupid="$(mktemp)"
-+git_is_stupid="$(mktemp -t tg-patch-changes.XXXXXX)"
- git diff-tree --name-only "$base_rev" "$name" |
- 	fgrep -vx ".topdeps" |
- 	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
-diff --git a/tg-update.sh b/tg-update.sh
-index 27a8e81..50b29b4 100644
---- a/tg-update.sh
-+++ b/tg-update.sh
-@@ -21,7 +21,7 @@ base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)"
- 
- ## First, take care of our base
- 
--depcheck="$(mktemp)"
-+depcheck="$(mktemp -t tg-depcheck.XXXXXX)"
- missing_deps=
- needs_update "$name" >"$depcheck" || :
- [ -z "$missing_deps" ] || die "some dependencies are missing: $missing_deps"
-diff --git a/tg.sh b/tg.sh
-index e5766fe..1bc886a 100644
---- a/tg.sh
-+++ b/tg.sh
-@@ -95,7 +95,7 @@ recurse_deps()
- 	_cmd="$1"; shift
- 	_name="$1"; # no shift
- 	_depchain="$*"
--	_depsfile="$(mktemp)"
-+	_depsfile="$(mktemp -t tg-depsfile.XXXXXX)"
- 	git cat-file blob "$_name:.topdeps" >"$_depsfile"
- 	_ret=0
- 	while read _dep; do
+But to be clear, I don't plean to do any of this myself in the near
+future anyway, since this case is not that important for me - I now need
+TopGit to support remote topic branches instead. So if this is a
+priority for you, you need to implement this on your own. But the
+sequential merge part should be really easy, just something like
+
+	git checkout -b tmp
+	foreach patch_branch
+		git merge patch_branch
+		cat .topmsg >output/patch.diff
+		git diff HEAD^..HEAD >>output/patch.diff
+
+with all the frills. ;-) (Maybe make a special "show diff between X and
+Y instead of base and head" flag for tg patch so that we can rely on it
+for the frills.)
+
 -- 
-tg: (f27e693..) t/topgit/mktemp-template (depends on: )
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
