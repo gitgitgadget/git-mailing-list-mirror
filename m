@@ -1,95 +1,104 @@
-From: Marcus Griep <neoeinstein@gmail.com>
-Subject: Re: [PATCH 1/3] Git.pm: Add faculties to allow temp files to be cached
-Date: Wed, 13 Aug 2008 16:31:15 -0400
-Message-ID: <48A34493.2000307@gmail.com>
-References: <489DBB8A.2060207@griep.us> <1218470035-13864-1-git-send-email-marcus@griep.us> <1218470035-13864-2-git-send-email-marcus@griep.us> <48A33E70.8060804@gmail.com> <48A34068.9060509@griep.us>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH (1b)] merge-recursive.c: Add more generic
+ merge_recursive_generic()
+Date: Wed, 13 Aug 2008 16:36:36 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0808131559060.19665@iabervon.org>
+References: <1218559514-16890-1-git-send-email-vmiklos@frugalware.org> <1218572040-23362-1-git-send-email-s-beyer@gmx.net> <alpine.LNX.1.00.0808122309460.19665@iabervon.org> <20080813172938.GC12871@leksak.fem-net> <alpine.LNX.1.00.0808131333230.19665@iabervon.org>
+ <7v3al8ofjw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 22:35:56 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Stephan Beyer <s-beyer@gmx.net>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 13 22:38:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTN15-0006q7-UK
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 22:32:24 +0200
+	id 1KTN6b-0001cx-86
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 22:38:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751693AbYHMUbU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Aug 2008 16:31:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751896AbYHMUbU
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 16:31:20 -0400
-Received: from hs-out-0708.google.com ([64.233.178.242]:33568 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750995AbYHMUbT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 16:31:19 -0400
-Received: by hs-out-0708.google.com with SMTP id 4so98364hsl.5
-        for <git@vger.kernel.org>; Wed, 13 Aug 2008 13:31:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=STKtHrjf8jFrTZuHMS5ysGGDBEBeSfK4Iy0HnyOzsrk=;
-        b=GDyysBOb3CHaMnkj8r7xl08MBPc9iTtTbOtntZDHXVrBxUhVnvWLtfSCgdj2PKs092
-         BKjLSI8cjG7XaN+uLUTjrdpv6jjPAzSizKSGHWZC9RK0ZtvLmcx6kY91zYCUmGRCzids
-         je2H/JwR/unRZ7HYQQZpTmJpI4Jt7NQ1usb3A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=MOlHoXgyplPvO2b6PViUXJk+vLl2tiImOpbQ+2z4b6dGItG3vAZ3o1YQ8EoCdL5P1K
-         Db4JRNCcKayNUe7yILaXlmWa9JGrUs/69x+hLVJcb3L1eEN/zg/5TqPPKfwXdM5dr8Lg
-         oCKe6CCS6O615b/Y+tZJMp+7FNpyodlHkfgpM=
-Received: by 10.90.94.2 with SMTP id r2mr392407agb.49.1218659478240;
-        Wed, 13 Aug 2008 13:31:18 -0700 (PDT)
-Received: from ?10.95.36.106? ( [4.79.245.132])
-        by mx.google.com with ESMTPS id m75sm283019wrm.31.2008.08.13.13.31.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 13 Aug 2008 13:31:17 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <48A34068.9060509@griep.us>
-X-Enigmail-Version: 0.95.6
+	id S1752626AbYHMUgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 16:36:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752758AbYHMUgo
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 16:36:44 -0400
+Received: from iabervon.org ([66.92.72.58]:41894 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751388AbYHMUgn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 16:36:43 -0400
+Received: (qmail 10537 invoked by uid 1000); 13 Aug 2008 20:36:36 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 13 Aug 2008 20:36:36 -0000
+In-Reply-To: <7v3al8ofjw.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92266>
 
-Hrmmm...  From what I see in CPAN, File::Spec has been around=20
-perl since 1998 (around v5.4.7).  Based on this is it safe-ish=20
-to assume availability of File::Spec?
+On Wed, 13 Aug 2008, Junio C Hamano wrote:
 
-Or, as I said earlier, should we kick out a submodule for the tempfile
-functions?
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> >> Puhh, I've not dug into merging stuff that deep, but for me it does not
+> >> look that this can be done in a useful way, i.e. merge_working_tree()
+> >> does not do a recursive merge.
+> >
+> > Ah, true. It's actually doing a single merge in the way that 
+> > merge_recursive would do a single merge. I think it ought to be doing 
+> > a recursive merge, but that's probably a change for later, anyway. (This 
+> > is for -m, which essentially picks the uncommited changes versus the old 
+> > branch, applied to the new branch uncommitted)
+> 
+> Why would you think it should be doing a recursive merge?  It shouldn't.
+> 
+> Think of builtin-merge-recursive.c::merge_trees() as a fancier version of
+> 3-tree variant of "unpack_trees()", with -m and -u option.
+> 
+> When you want to perform an exact three-way merge (i.e. you have two
+> states O and B, and you want to apply changes between O and B to your
+> state A, and you _precisely_ know what O is) that's the interface you
+> would want to use, not the recursive one.  The recursive behaviour is
+> desirable only when you have A and B and need to infer where O should be,
+> and/or there are multiple O's to deal with (i.e. running "git-merge B"
+> when you are at A).
 
-Marcus Griep wrote:
-> Yeesh; didn't realize it would create that heavy of a dependency.
-> Perhaps this should be split into a submodule so that Git.pm doesn't
-> require the newer dependency.  Eric/Junio?
->
-> Lea Wiemann wrote:
->> This makes Git.pm dependent on Perl 5.6.1.  Some tests (like
->> t3701-add-interactive.sh) seem to work with pretty much any Perl ver=
-sion
->> out there, and requiring File::Spec changes this.  Hence to avoid
->> complaints about failing tests, I suggest that you add a check for
->> File::Spec availability at the beginning of any test that (indirectl=
-y)
->> uses Git.pm.
->>
->> (All my statements are untested... ;-))
->>
->> -- Lea
->=20
+I understand that you know exactly what the change is, but I'm not 
+convinced that you don't want to consider how O is related to A in 
+determining who to apply that change to A. My naive impression was:
 
---=20
-Marcus Griep
-GPG Key ID: 0x5E968152
-=E2=80=94=E2=80=94
-http://www.boohaunt.net
-=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
+ - the difference between O and B is to change X to Y, and we can 
+   determine this exactly
+ - we need to find X' in A to change it to Y'
+ - we can more accurately find X' in A if we find Z in the common 
+   ancestors of O and A such that X in O corresponds to Z in the
+   ancestors, and we get similar benefits in determining the right Y'
+
+That is, we care about the common ancestor not only for finding the 
+relevant change in the near side to apply, but also for finding how to 
+apply it to the far side.
+
+> In all the potential users of merge-recursive machinery, namely, "revert",
+> "cherry-pick", "stash apply", "am -3", and "checkout -m", you know what
+> single common tree to use for your three-way merge.  These operations,
+> when done with direct C call into merge machinery, should NOT be using the
+> "recursive" one.
+
+I agree that they should all be using the same mechanism, but I'm not sure 
+it shouldn't be recursive or take history into account.
+
+And I'd certainly believe that just running our merge-recursive won't 
+actually do anything clever with the rest of the history, and that 
+merge_trees() is the most suitable method currently available (which is 
+essentially why I ended up using it in checkout -m, not entirely 
+realizing that I'd removed the "recursive" aspect in the process of 
+skipping parts of merge_recursive that weren't relevant).
+
+Maybe merge_trees should get the two sides as structs with a struct tree * 
+and a char * branch name, and the struct could someday get optional struct 
+commit *s for the lineage of the side if somebody comes up with a method 
+for merging that makes use of the component changes.
+
+	-Daniel
+*This .sig left intentionally blank*
