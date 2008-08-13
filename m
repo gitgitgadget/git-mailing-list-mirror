@@ -1,89 +1,93 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: Re: [PATCH 00/12] Allow users to access Perforce repositories requiring authentication
-Date: Wed, 13 Aug 2008 21:47:41 +0200
-Message-ID: <200808132147.55119.simon@lst.de>
-References: <1218392795-4084-1-git-send-email-wildfire@progsoc.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH (1b)] merge-recursive.c: Add more generic
+ merge_recursive_generic()
+Date: Wed, 13 Aug 2008 12:55:47 -0700
+Message-ID: <7v3al8ofjw.fsf@gitster.siamese.dyndns.org>
+References: <1218559514-16890-1-git-send-email-vmiklos@frugalware.org>
+ <1218572040-23362-1-git-send-email-s-beyer@gmx.net>
+ <alpine.LNX.1.00.0808122309460.19665@iabervon.org>
+ <20080813172938.GC12871@leksak.fem-net>
+ <alpine.LNX.1.00.0808131333230.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart23901996.7dP7tj7ohj";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Anand Kumria <wildfire@progsoc.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 21:53:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephan Beyer <s-beyer@gmx.net>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Aug 13 21:57:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTMMG-0000Hj-1X
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 21:50:12 +0200
+	id 1KTMSq-0002aY-C3
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 21:57:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752534AbYHMTsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 15:48:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752478AbYHMTsz
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 15:48:55 -0400
-Received: from hoat.troll.no ([62.70.27.150]:43393 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752191AbYHMTsy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 15:48:54 -0400
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 31D5D20B5A;
-	Wed, 13 Aug 2008 21:48:49 +0200 (CEST)
-Received: from rani.localnet (unknown [172.20.1.59])
-	by hoat.troll.no (Postfix) with ESMTP id B7E9120AA2;
-	Wed, 13 Aug 2008 21:48:48 +0200 (CEST)
-User-Agent: KMail/1.10.0 (Linux/2.6.24-19-generic; KDE/4.1.0; i686; ; )
-In-Reply-To: <1218392795-4084-1-git-send-email-wildfire@progsoc.org>
+	id S1752472AbYHMTz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 15:55:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752424AbYHMTz5
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 15:55:57 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38633 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752183AbYHMTz4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 15:55:56 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AF9AC53F98;
+	Wed, 13 Aug 2008 15:55:54 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id C858253F95; Wed, 13 Aug 2008 15:55:49 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.00.0808131333230.19665@iabervon.org> (Daniel
+ Barkalow's message of "Wed, 13 Aug 2008 13:54:16 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D6CE5F96-6971-11DD-BC8D-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92257>
 
---nextPart23901996.7dP7tj7ohj
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-Hi,
-
-On Sunday 10 August 2008 20:26:23 Anand Kumria wrote:
-> Hi,
+>> Puhh, I've not dug into merging stuff that deep, but for me it does not
+>> look that this can be done in a useful way, i.e. merge_working_tree()
+>> does not do a recursive merge.
 >
-> This series of patches refactors a few function calls into git-p4
-> so that they all go via the same function to build up the command
-> line.
->
-> It also then allows users to specify any particular user / password
-> required to access their Perforce repository (plus a few other parameters=
-).
->
-> I have specifically tested this agains the public Zimbra repository and
-> it works for me fine. Any feedback would be welcomed.
+> Ah, true. It's actually doing a single merge in the way that 
+> merge_recursive would do a single merge. I think it ought to be doing 
+> a recursive merge, but that's probably a change for later, anyway. (This 
+> is for -m, which essentially picks the uncommited changes versus the old 
+> branch, applied to the new branch uncommitted)
 
-Junio, I saw that you queued up this series in pu as ak/p4. I looked throug=
-h=20
-the patches and I think they look great. I suggest to include them into mas=
-ter=20
-after 1.6.0.
+Why would you think it should be doing a recursive merge?  It shouldn't.
 
-Anand, great work :)
+Think of builtin-merge-recursive.c::merge_trees() as a fancier version of
+3-tree variant of "unpack_trees()", with -m and -u option.
 
+When you want to perform an exact three-way merge (i.e. you have two
+states O and B, and you want to apply changes between O and B to your
+state A, and you _precisely_ know what O is) that's the interface you
+would want to use, not the recursive one.  The recursive behaviour is
+desirable only when you have A and B and need to infer where O should be,
+and/or there are multiple O's to deal with (i.e. running "git-merge B"
+when you are at A).
 
-Simon
+In all the potential users of merge-recursive machinery, namely, "revert",
+"cherry-pick", "stash apply", "am -3", and "checkout -m", you know what
+single common tree to use for your three-way merge.  These operations,
+when done with direct C call into merge machinery, should NOT be using the
+"recursive" one.
 
---nextPart23901996.7dP7tj7ohj
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+When you switch branches from A to B with checkout, and you have local
+changes A', then you would want an exact three-way merge that modifies B
+by applying changes from A to A'.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+When you cherry-pick commit C on top of your current HEAD, you want an exact
+three-way merge that modifies your HEAD by applying changes from C^ to C,
+and you do not want the merge machinery to take ancestry relation (and
+criss cross merges) between HEAD and C into account at all.
 
-iD8DBQBIozprWXvMThJCpvIRAm/2AJ92d/uM74S4Pz110uUtZ2KbAP8LPwCgzDFv
-ReUEshjH1Ysz4Cs7NL+vRKM=
-=pqxC
------END PGP SIGNATURE-----
-
---nextPart23901996.7dP7tj7ohj--
+The scripted version of revert/cherry-pick used git-merge-recursive
+because that is the Porcelain API available, and the current C-rewrite
+uses it as well, but if we are rewriting it to call merge-recursive
+machinery directly, it should be making a single merge request to
+merge_trees(), not "recursive" one.
