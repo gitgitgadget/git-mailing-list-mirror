@@ -1,84 +1,77 @@
-From: Geert Bosch <bosch@adacore.com>
-Subject: Re: pack operation is thrashing my server
-Date: Tue, 12 Aug 2008 23:58:22 -0400
-Message-ID: <70550C21-8358-4BEF-A7BA-3A41C1ACB346@adacore.com>
-References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com> <20080811030444.GC27195@spearce.org> <a6b6acf60808110043t76dc0ae6l428c5da473d79c71@mail.gmail.com> <87vdy71i6w.fsf@basil.nowhere.org> <1EE44425-6910-4C37-9242-54D0078FC377@adacore.com> <20080813031503.GC5855@spearce.org>
-Mime-Version: 1.0 (Apple Message framework v928.1)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Andi Kleen <andi@firstfloor.org>, Ken Pratt <ken@kenpratt.net>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Aug 13 05:59:29 2008
+From: Jonathan Nieder <jrnieder@uchicago.edu>
+Subject: [TopGit PATCH] tg-info: fix sed typo
+Date: Wed, 13 Aug 2008 00:16:33 -0500 (CDT)
+Message-ID: <Pine.GSO.4.62.0808130013480.8904@harper.uchicago.edu>
+References: <Pine.GSO.4.62.0808121309000.18832@harper.uchicago.edu>
+ <20080812204433.GM10151@machine.or.cz> <Pine.GSO.4.62.0808121557290.24244@harper.uchicago.edu>
+ <Pine.GSO.4.62.0808121911340.1112@harper.uchicago.edu>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Aug 13 07:17:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KT7WC-0004GH-92
-	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 05:59:28 +0200
+	id 1KT8ju-0003lO-AO
+	for gcvg-git-2@gmane.org; Wed, 13 Aug 2008 07:17:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754382AbYHMD6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2008 23:58:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754380AbYHMD6Z
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Aug 2008 23:58:25 -0400
-Received: from rock.gnat.com ([205.232.38.15]:43468 "EHLO rock.gnat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754333AbYHMD6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2008 23:58:25 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by filtered-rock.gnat.com (Postfix) with ESMTP id 8D42A2A9B48;
-	Tue, 12 Aug 2008 23:58:24 -0400 (EDT)
-Received: from rock.gnat.com ([127.0.0.1])
-	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id pyZB0oF9q-UA; Tue, 12 Aug 2008 23:58:24 -0400 (EDT)
-Received: from [172.16.1.95] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rock.gnat.com (Postfix) with ESMTP id 22C012A9B3F;
-	Tue, 12 Aug 2008 23:58:24 -0400 (EDT)
-In-Reply-To: <20080813031503.GC5855@spearce.org>
-X-Mailer: Apple Mail (2.928.1)
+	id S1751449AbYHMFQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 01:16:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751443AbYHMFQj
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 01:16:39 -0400
+Received: from smtp01.uchicago.edu ([128.135.12.77]:53003 "EHLO
+	smtp01.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751369AbYHMFQi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 01:16:38 -0400
+Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
+	by smtp01.uchicago.edu (8.13.8/8.13.8) with ESMTP id m7D5GYLn024359;
+	Wed, 13 Aug 2008 00:16:34 -0500
+Received: from localhost (jrnieder@localhost)
+	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m7D5GYdK009049;
+	Wed, 13 Aug 2008 00:16:34 -0500 (CDT)
+X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
+In-Reply-To: <Pine.GSO.4.62.0808121911340.1112@harper.uchicago.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92179>
 
+There was a semicolon missing before a closing brace.  The result
+is an error message on some operating systems (e.g., Mac OS 10.3).
 
-On Aug 12, 2008, at 23:15, Shawn O. Pearce wrote:
+	$ tg info
+	Topic Branch: t/some-topic (       2/       2 commits)
+	Subject: [PATCH] t/some-topic
+	Base: 082a7c9
+	sed: 1: "1{s/^/Depends: /;n}; s/ ...": extra characters a
+	t the end of n command
 
-> Geert Bosch <bosch@adacore.com> wrote:
->> I've always felt that keeping largish objects (say anything >1MB)
->> loose makes perfect sense. These objects are accessed infrequently,
->> often binary or otherwise poor candidates for the delta algorithm.
->
-> Sadly this causes huge problems with streaming a pack because the
-> loose object has to be inflated and then delfated again to fit into
-> the pack stream.
-Sure, but that really is not that much of an issue. For people
-with large systems connected by very fast networks, the current
-situation is probably fine, and spending a lot of effort for
-packing often makes sense.
+Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
 
-However, for a random repository of Joe User, all the effort spent
-on packing will probably never be gained back. Most people just
-suck content from upstream and at most maintain a couple of local
-hacks on top of that. Little or nothing is ever pushed to other
-systems.
+---
+	Hi again,
 
-Even when pushing to other systems, this often is just a handful of  
-objects
-though a slow line and compression/decompression speeds just don't  
-matter
-much.
+	Here is the other change I needed to run topgit.  I
+	hope it is of some use.
 
-> The new style loose object format was meant to fix this problem,
-> and it did, but the code was difficult to manage so it was backed
-> out of the tree.
+ tg-info.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-One nice optimization we could do for those pesky binary large objects
-(like PDF, JPG and GZIP-ed data), is to detect such files and revert
-to compression level 0. This should be especially beneficial
-since already compressed data takes most time to compress again.
-
-   -Geert
+diff --git a/tg-info.sh b/tg-info.sh
+index 43589f9..7899ada 100644
+--- a/tg-info.sh
++++ b/tg-info.sh
+@@ -39,7 +39,7 @@ branch_contains "$name" "$base_rev" ||
+ 	echo "Base is newer than head! Please run \`tg update\`."
+ 
+ git cat-file blob "$name:.topdeps" |
+-	sed '1{s/^/Depends: /;n}; s/^/         /;'
++	sed '1{ s/^/Depends: /; n; }; s/^/         /'
+ 
+ depcheck="$(mktemp)"
+ missing_deps=
+-- 
+tg: (f27e693..) t/sed-fix (depends on: )
