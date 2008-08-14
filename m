@@ -1,77 +1,48 @@
-From: "Eric Raible" <raible@gmail.com>
-Subject: bash completion: 'git apply' should use 'fix' not 'strip'
-Date: Thu, 14 Aug 2008 10:12:54 -0700
-Message-ID: <279b37b20808141012l460e2218lbe440dfe3ee44462@mail.gmail.com>
+From: david@lang.hm
+Subject: Re: [RFC] Adding a challenge-response authentication method to
+ git://
+Date: Thu, 14 Aug 2008 10:18:38 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0808141018220.13400@asgard.lang.hm>
+References: <20080813162644.GC12200@cuci.nl> <20080813164038.GE3782@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: spearce@spearce.org, "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 14 19:14:18 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: "Stephen R. van den Berg" <srb@cuci.nl>, git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Aug 14 19:19:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTgOg-0008R6-Ug
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 19:14:03 +0200
+	id 1KTgTh-0002Eb-Ac
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 19:19:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755301AbYHNRM4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 13:12:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754852AbYHNRM4
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 13:12:56 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:15171 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754188AbYHNRMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 13:12:55 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so829248wfd.4
-        for <git@vger.kernel.org>; Thu, 14 Aug 2008 10:12:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=JLdI/5ALTTibr99eEC0bM7pLq4QD9P4TZh2Ehr/Ii5w=;
-        b=WJqChCCO7DltjjER8JHjgZrKHdZF0RwG8T6bU3lUx9WPU7repZOFf1Qyde5GDS6mBm
-         +fofjhgpx40DugHkn8W5mMP6CFKJGByfZquZ5kkZXd7XfBFmUdB3GY4kFRu+In6oNruL
-         F9P89kHGpYEw+ENseURP2kCROwS/4G7m4k5LE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=MhVsk/nZOvLsK2bvDIlsv1/uBm3ZqKPCXQ23Z0ti5ypd/7kxj3w4kqYduHf2UbCSDT
-         u0ivfBLGUmH7yQgBLhaTqnTwXTD3D/YwODyD7WyFkOCXsAAd0v6AbI1Tf4pk3g94Fepl
-         gFIwE4UOLnx0ry89+UDnUkrLyWYDGZUMnooMs=
-Received: by 10.142.14.18 with SMTP id 18mr588431wfn.62.1218733974378;
-        Thu, 14 Aug 2008 10:12:54 -0700 (PDT)
-Received: by 10.142.14.12 with HTTP; Thu, 14 Aug 2008 10:12:54 -0700 (PDT)
-Content-Disposition: inline
+	id S1756926AbYHNRSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 13:18:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756589AbYHNRSJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 13:18:09 -0400
+Received: from mail.lang.hm ([64.81.33.126]:60948 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756144AbYHNRSI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 13:18:08 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m7EHHu0D029633;
+	Thu, 14 Aug 2008 10:17:56 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <20080813164038.GE3782@spearce.org>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92373>
 
-Bring completion up to date with the man page.
+On Wed, 13 Aug 2008, Shawn O. Pearce wrote:
 
-Signed-off-by: Eric Raible <raible@gmail.com>
----
-Seems to me that this qualifies as "obviously correct"...
+> Isn't there some authentication frontend that some IMAP servers
+> use to handle the authentication for them?  I think last time
+> I setup bincimap it used checkpassword.  We might want to do the
+> same if we are going down this road...
 
- contrib/completion/git-completion.bash |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+are you thinking of SASL?
 
-diff --git a/contrib/completion/git-completion.bash
-b/contrib/completion/git-completion.bash
-index 3396e35..95040bd 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -501,7 +501,7 @@ __git_has_doubledash ()
-       return 1
- }
-
--__git_whitespacelist="nowarn warn error error-all strip"
-+__git_whitespacelist="nowarn warn error error-all fix"
-
- _git_am ()
- {
---
-1.6.0.rc1.1206.gff2cf
+David Lang
