@@ -1,102 +1,67 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH v2 2/3] strbuf: Add method to convert byte-size to
-	human  readable form
-Date: Fri, 15 Aug 2008 01:24:59 +0200
-Message-ID: <20080814232459.GF10360@machine.or.cz>
-References: <1218752308-3173-1-git-send-email-marcus@griep.us> <1218752308-3173-2-git-send-email-marcus@griep.us> <1218752308-3173-3-git-send-email-marcus@griep.us> <20080814223429.GC10544@machine.or.cz> <7viqu3ci5k.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marcus Griep <marcus@griep.us>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 15 01:26:08 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH] Paper bag fix 'jgit glog' handling of commit-ish arguments
+Date: Thu, 14 Aug 2008 16:26:03 -0700
+Message-ID: <1218756363-27702-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Aug 15 01:27:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTmCl-00032r-Vw
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 01:26:08 +0200
+	id 1KTmDp-0003Pq-6P
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 01:27:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751799AbYHNXZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 19:25:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751872AbYHNXZE
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 19:25:04 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:48906 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751706AbYHNXZC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 19:25:02 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id B8270393A2C9; Fri, 15 Aug 2008 01:24:59 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7viqu3ci5k.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751904AbYHNX0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 19:26:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751900AbYHNX0H
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 19:26:07 -0400
+Received: from george.spearce.org ([209.20.77.23]:60835 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751872AbYHNX0G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 19:26:06 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 8118A38376; Thu, 14 Aug 2008 23:26:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 1982538265;
+	Thu, 14 Aug 2008 23:26:04 +0000 (UTC)
+X-Mailer: git-send-email 1.6.0.rc3.250.g8dd0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92440>
 
-On Thu, Aug 14, 2008 at 04:04:55PM -0700, Junio C Hamano wrote:
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> > My point still stands - in case of binary units, we should always
-> > consistently use the i suffix. So having an example in the commit
-> > message that advertises "bps" is simply wrong when it should read "iB/s"
-> > (like it does with the current progress.c code).
-> >
-> > I may sound boring, but it seems to me that you're still ignoring my
-> > point quitly without proper counter-argumentation and I think it's an
-> > important want, and since it's so hard to keep things consistent across
-> > the wide Git codebase, we should do all we can to keep it.
-> 
-> I pretty much agree with everything you said in this thread.  In addition,
-> I wonder if we would want to be able to say:
-> 
-> 	960 bps
->         0.9 KiB/s
-> 	2.3 MiB/s
+When we parsed these arguments into RevCommit instances they were
+done against the wrong RevWalk instance.  We parsed them into a
+generic RevWalk which has no plotting support, so the objects do
+not have the extra fields used by the plotting code.  We need to
+lookup the commit from the PlotRevWalk and use those instances.
 
-I dont hink it would be a big deal to say bytes/s or B/s (which is as
-long as bps).
+One of the calls (markStart) failed to use the secondary RevWalk
+instance, resulting in a ClassCastException during plotting.
 
-> IOW, I do not think it is a good idea to have the list of "prefixes" in
-> this function and force callers to _append_ unit.  You might be better off
-> by making the interface to the function to pass something like this:
-> 
-> 	struct human_unit {
-> 		char *unitname;
->                 unsigned long valuescale;
-> 	} bps_to_human[] = {
->         	{ "bps", 1 },
->                 { "KiB/s", 1024 },
->                 { "MiB/s", 1024 * 1024 },
->                 { NULL, 0 },
-> 	};
-> 
-> and perhaps give canned set of unit list for sizes and throughputs as
-> convenience.
-> 
-> By doing so, you could even do this:
-> 
-> 	struct human_unit bits_to_human[] = {
->         	{ "bits", 1 },
->                 { "bytes", 8 },
->                 { "Kbytes", 8 * 1024 },
->                 { "Mbytes", 8 * 1024 * 1024 },
->                 { NULL, 0 },
-> 	};
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../org/spearce/jgit/pgm/RevWalkTextBuiltin.java   |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Frankly, my gut feeling here is that we are overengineering the whole
-thing quite a bit, which is the same reason I dislike maxlen.
-
-If it turns out we really do need to have custom prefixes somewhere, we
-would have to go with something like this, but on the other hand this
-goes against the consistency of output, and I have a bit of trouble
-imagining a convincing use-case. So far we have two fairly different
-users of such a code and just tailoring it to these two seems to make it
-general enough for now.
-
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/RevWalkTextBuiltin.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/RevWalkTextBuiltin.java
+index 97fe7a4..338af40 100644
+--- a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/RevWalkTextBuiltin.java
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/RevWalkTextBuiltin.java
+@@ -152,7 +152,7 @@ abstract class RevWalkTextBuiltin extends TextBuiltin {
+ 			if (c.has(RevFlag.UNINTERESTING))
+ 				walk.markUninteresting(real);
+ 			else
+-				walk.markStart(c);
++				walk.markStart(real);
+ 		}
+ 
+ 		final long start = System.currentTimeMillis();
 -- 
-				Petr "Pasky" Baudis
-The next generation of interesting software will be done
-on the Macintosh, not the IBM PC.  -- Bill Gates
+1.6.0.rc3.250.g8dd0
