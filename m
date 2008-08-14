@@ -1,99 +1,231 @@
-From: Marcus Griep <marcus@griep.us>
-Subject: Re: [PATCH 2] count-objects: add human-readable size option
-Date: Thu, 14 Aug 2008 00:44:11 -0400
-Message-ID: <48A3B81B.10804@griep.us>
-References: <1218657910-22096-1-git-send-email-marcus@griep.us> <1218687684-11671-1-git-send-email-marcus@griep.us> <20080814043817.GC11232@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Aug 14 06:45:22 2008
+From: Brian Downing <bdowning@lavos.net>
+Subject: [PATCHv2 1/2] Make xdi_diff_outf interface for running xdiff_outf diffs
+Date: Thu, 14 Aug 2008 00:13:21 -0500
+Message-ID: <1218690802-30536-1-git-send-email-bdowning@lavos.net>
+References: <7viqu4gx8c.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Brian Downing <bdowning@lavos.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 14 07:14:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTUi9-0000hU-8e
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 06:45:21 +0200
+	id 1KTVAO-00079F-EJ
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 07:14:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751166AbYHNEoR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2008 00:44:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751215AbYHNEoR
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 00:44:17 -0400
-Received: from hs-out-0708.google.com ([64.233.178.245]:63745 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751026AbYHNEoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 00:44:17 -0400
-Received: by hs-out-0708.google.com with SMTP id 4so218207hsl.5
-        for <git@vger.kernel.org>; Wed, 13 Aug 2008 21:44:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=Vwt18FptG9Jp7T1GmL81AWtu91/dEA2b+xcV67YLrbc=;
-        b=NH5ONdxyIOSO1HyOVwB02YjMAeb1xug1uvTevOjb9GbhPxol9UF8l93SmkZrT4fX6c
-         WzFW1wNqmfBC4l6gnK+L2IClmHBUVwTZJo8x0IJsc5hioecGlX8U56rPbYTH7gya6Lgw
-         FMaMFXFZLyN5U8iZB9pl1RyZB0FZuouDBHRJs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding:sender;
-        b=DVWnIn5+HZQZBOpWAx0DV5xUZYRz6jKgMgP2YkpEntHpwtGEfH9tG4ziQzDpD0wRfQ
-         tIRMBslc14LAuVwRsgL0BZe5IVAVWZ9Es5tBdUdbcRg/L0FAUo8k7VMLKrKXeOz7MNb0
-         0qFgtoY6gM3mQ1USG3DsReusa4HmFkWdBp5G4=
-Received: by 10.90.104.20 with SMTP id b20mr1090256agc.69.1218689056237;
-        Wed, 13 Aug 2008 21:44:16 -0700 (PDT)
-Received: from ?192.168.1.3? ( [71.174.65.78])
-        by mx.google.com with ESMTPS id 17sm1206545hsq.19.2008.08.13.21.44.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 13 Aug 2008 21:44:15 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <20080814043817.GC11232@spearce.org>
-X-Enigmail-Version: 0.95.6
+	id S1751294AbYHNFNb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 01:13:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751489AbYHNFNa
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 01:13:30 -0400
+Received: from qmta09.emeryville.ca.mail.comcast.net ([76.96.30.96]:49430 "EHLO
+	QMTA09.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751294AbYHNFN1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Aug 2008 01:13:27 -0400
+Received: from OMTA04.emeryville.ca.mail.comcast.net ([76.96.30.35])
+	by QMTA09.emeryville.ca.mail.comcast.net with comcast
+	id 1y1E1a00a0lTkoCA95DPxT; Thu, 14 Aug 2008 05:13:23 +0000
+Received: from mnementh.lavos.net ([98.212.138.194])
+	by OMTA04.emeryville.ca.mail.comcast.net with comcast
+	id 25DM1a0064BqYqi8Q5DNW7; Thu, 14 Aug 2008 05:13:22 +0000
+X-Authority-Analysis: v=1.0 c=1 a=bqo1WFAFWAAA:10 a=kKmAwbWmaUAA:10
+ a=NWSkBRwQxq3ECH699xUA:9 a=2JXgEud9D_wQ6GP4vf8A:7
+ a=xYJ4oeahKHRrgnQYQM6-uHELbjQA:4 a=GB4YReQY-hoA:10 a=DFZ4TeuG6JwA:10
+Received: from silvara.lavos.net (silvara.lavos.net [10.4.0.20])
+	by mnementh.lavos.net (Postfix) with SMTP id 2B691309F23;
+	Thu, 14 Aug 2008 00:13:21 -0500 (CDT)
+Received: (nullmailer pid 30560 invoked by uid 1000);
+	Thu, 14 Aug 2008 05:13:22 -0000
+X-Mailer: git-send-email 1.5.6.1
+In-Reply-To: <7viqu4gx8c.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92315>
 
-Shawn O. Pearce wrote:
-> Hmm.  This probably should be static.  Or if it really is meant
-> to be a utility for use elsewhere in Git, moved to someplace where
-> string handling is done.  Its not strbuf related, but maybe strbuf.c
-> is a better location for this sort of library function.
->=20
-> If you do move this to strbuf.c, how about having it take a strbuf
-> in and appending the formatted text onto it?  You'll neer have to
-> worry about the buffer being too small and it fits into the whole
-> strbuf.c module thing.
->=20
-> If you keep this static here in builtin-count-objects.c, how about
-> making the char *buf static scoped to the function, so you don't
-> need to pass the buffer, its size, nor check its size?
+To prepare for the need to initialize and release resources for an
+xdi_diff with the xdiff_outf output function, make a new function to
+wrap this usage.
 
-I'll take this into account.  Though I didn't plan it to be a
-cross-git utility function, it probably could be, so I'll look
-at putting it in strbuf.c.
+Old:
 
-> We don't declare variables after statements.  Please declare all
-> variables at the start of the block as not all compilers we support
-> support this C99 syntax.
+	ecb.outf = xdiff_outf;
+	ecb.priv = &state;
+	...
+	xdi_diff(file_p, file_o, &xpp, &xecfg, &ecb);
 
-This is the first time I've hacked on vanilla-C in about 5 years,
-so I'm quite rusty.  Much less my first time hacking on perl, ever,
-in the case of git-svn.  Thanks for the pointers.
+New:
 
-> Oh, and welcome to Git.  I saw your SVN patches.  Glad to see
-> you hacking.  ;-)
+	xdi_diff_outf(file_p, file_o, &state.xm, &xpp, &xecfg, &ecb);
 
-Glad to be a part.
+Signed-off-by: Brian Downing <bdowning@lavos.net>
+---
 
---=20
-Marcus Griep
-GPG Key ID: 0x5E968152
-=E2=80=94=E2=80=94
-http://www.boohaunt.net
-=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
+    Let's try this instead; it's quite a bit cleaner than my last
+    effort.
+
+ builtin-blame.c   |    4 +---
+ combine-diff.c    |    5 ++---
+ diff.c            |   20 +++++---------------
+ xdiff-interface.c |   13 ++++++++++++-
+ xdiff-interface.h |    4 +++-
+ 5 files changed, 23 insertions(+), 23 deletions(-)
+
+diff --git a/builtin-blame.c b/builtin-blame.c
+index 4ea3431..8cca3b1 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -528,15 +528,13 @@ static struct patch *compare_buffer(mmfile_t *file_p, mmfile_t *file_o,
+ 	xpp.flags = xdl_opts;
+ 	memset(&xecfg, 0, sizeof(xecfg));
+ 	xecfg.ctxlen = context;
+-	ecb.outf = xdiff_outf;
+-	ecb.priv = &state;
+ 	memset(&state, 0, sizeof(state));
+ 	state.xm.consume = process_u_diff;
+ 	state.ret = xmalloc(sizeof(struct patch));
+ 	state.ret->chunks = NULL;
+ 	state.ret->num = 0;
+ 
+-	xdi_diff(file_p, file_o, &xpp, &xecfg, &ecb);
++	xdi_diff_outf(file_p, file_o, &state.xm, &xpp, &xecfg, &ecb);
+ 
+ 	if (state.ret->num) {
+ 		struct chunk *chunk;
+diff --git a/combine-diff.c b/combine-diff.c
+index 9f80a1c..72dd6d2 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -217,8 +217,6 @@ static void combine_diff(const unsigned char *parent, mmfile_t *result_file,
+ 	parent_file.size = sz;
+ 	xpp.flags = XDF_NEED_MINIMAL;
+ 	memset(&xecfg, 0, sizeof(xecfg));
+-	ecb.outf = xdiff_outf;
+-	ecb.priv = &state;
+ 	memset(&state, 0, sizeof(state));
+ 	state.xm.consume = consume_line;
+ 	state.nmask = nmask;
+@@ -227,7 +225,8 @@ static void combine_diff(const unsigned char *parent, mmfile_t *result_file,
+ 	state.num_parent = num_parent;
+ 	state.n = n;
+ 
+-	xdi_diff(&parent_file, result_file, &xpp, &xecfg, &ecb);
++	xdi_diff_outf(&parent_file, result_file,
++		      &state.xm, &xpp, &xecfg, &ecb);
+ 	free(parent_file.ptr);
+ 
+ 	/* Assign line numbers for this parent.
+diff --git a/diff.c b/diff.c
+index bf5d5f1..913a92f 100644
+--- a/diff.c
++++ b/diff.c
+@@ -459,10 +459,8 @@ static void diff_words_show(struct diff_words_data *diff_words)
+ 
+ 	xpp.flags = XDF_NEED_MINIMAL;
+ 	xecfg.ctxlen = diff_words->minus.alloc + diff_words->plus.alloc;
+-	ecb.outf = xdiff_outf;
+-	ecb.priv = diff_words;
+ 	diff_words->xm.consume = fn_out_diff_words_aux;
+-	xdi_diff(&minus, &plus, &xpp, &xecfg, &ecb);
++	xdi_diff_outf(&minus, &plus, &diff_words->xm, &xpp, &xecfg, &ecb);
+ 
+ 	free(minus.ptr);
+ 	free(plus.ptr);
+@@ -1521,15 +1519,13 @@ static void builtin_diff(const char *name_a,
+ 			xecfg.ctxlen = strtoul(diffopts + 10, NULL, 10);
+ 		else if (!prefixcmp(diffopts, "-u"))
+ 			xecfg.ctxlen = strtoul(diffopts + 2, NULL, 10);
+-		ecb.outf = xdiff_outf;
+-		ecb.priv = &ecbdata;
+ 		ecbdata.xm.consume = fn_out_consume;
+ 		if (DIFF_OPT_TST(o, COLOR_DIFF_WORDS)) {
+ 			ecbdata.diff_words =
+ 				xcalloc(1, sizeof(struct diff_words_data));
+ 			ecbdata.diff_words->file = o->file;
+ 		}
+-		xdi_diff(&mf1, &mf2, &xpp, &xecfg, &ecb);
++		xdi_diff_outf(&mf1, &mf2, &ecbdata.xm, &xpp, &xecfg, &ecb);
+ 		if (DIFF_OPT_TST(o, COLOR_DIFF_WORDS))
+ 			free_diff_words_data(&ecbdata);
+ 	}
+@@ -1580,9 +1576,7 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 
+ 		memset(&xecfg, 0, sizeof(xecfg));
+ 		xpp.flags = XDF_NEED_MINIMAL | o->xdl_opts;
+-		ecb.outf = xdiff_outf;
+-		ecb.priv = diffstat;
+-		xdi_diff(&mf1, &mf2, &xpp, &xecfg, &ecb);
++		xdi_diff_outf(&mf1, &mf2, &diffstat->xm, &xpp, &xecfg, &ecb);
+ 	}
+ 
+  free_and_return:
+@@ -1628,9 +1622,7 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
+ 
+ 		memset(&xecfg, 0, sizeof(xecfg));
+ 		xpp.flags = XDF_NEED_MINIMAL;
+-		ecb.outf = xdiff_outf;
+-		ecb.priv = &data;
+-		xdi_diff(&mf1, &mf2, &xpp, &xecfg, &ecb);
++		xdi_diff_outf(&mf1, &mf2, &data.xm, &xpp, &xecfg, &ecb);
+ 
+ 		if ((data.ws_rule & WS_TRAILING_SPACE) &&
+ 		    data.trailing_blanks_start) {
+@@ -3128,9 +3120,7 @@ static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1)
+ 		xpp.flags = XDF_NEED_MINIMAL;
+ 		xecfg.ctxlen = 3;
+ 		xecfg.flags = XDL_EMIT_FUNCNAMES;
+-		ecb.outf = xdiff_outf;
+-		ecb.priv = &data;
+-		xdi_diff(&mf1, &mf2, &xpp, &xecfg, &ecb);
++		xdi_diff_outf(&mf1, &mf2, &data.xm, &xpp, &xecfg, &ecb);
+ 	}
+ 
+ 	SHA1_Final(sha1, &ctx);
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index 61dc5c5..be448a0 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -61,7 +61,7 @@ static void consume_one(void *priv_, char *s, unsigned long size)
+ 	}
+ }
+ 
+-int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
++static int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
+ {
+ 	struct xdiff_emit_state *priv = priv_;
+ 	int i;
+@@ -141,6 +141,17 @@ int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t co
+ 	return xdl_diff(&a, &b, xpp, xecfg, xecb);
+ }
+ 
++int xdi_diff_outf(mmfile_t *mf1, mmfile_t *mf2,
++		  struct xdiff_emit_state *state, xpparam_t const *xpp,
++		  xdemitconf_t const *xecfg, xdemitcb_t *xecb)
++{
++	int ret;
++	xecb->outf = xdiff_outf;
++	xecb->priv = state;
++	ret = xdl_diff(mf1, mf2, xpp, xecfg, xecb);
++	return ret;
++}
++
+ int read_mmfile(mmfile_t *ptr, const char *filename)
+ {
+ 	struct stat st;
+diff --git a/xdiff-interface.h b/xdiff-interface.h
+index f7f791d..6f3b361 100644
+--- a/xdiff-interface.h
++++ b/xdiff-interface.h
+@@ -14,7 +14,9 @@ struct xdiff_emit_state {
+ };
+ 
+ int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t const *xecfg, xdemitcb_t *ecb);
+-int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf);
++int xdi_diff_outf(mmfile_t *mf1, mmfile_t *mf2,
++		  struct xdiff_emit_state *state, xpparam_t const *xpp,
++		  xdemitconf_t const *xecfg, xdemitcb_t *xecb);
+ int parse_hunk_header(char *line, int len,
+ 		      int *ob, int *on,
+ 		      int *nb, int *nn);
+-- 
+1.5.6.1
