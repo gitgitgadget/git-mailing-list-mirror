@@ -1,74 +1,97 @@
-From: "=?ISO-8859-1?Q?Asbj=F8rn_Morell?=" <atmorell@gmail.com>
-Subject: git: symbol lookup error: git: undefined symbol: deflateBound
-Date: Thu, 14 Aug 2008 18:17:56 +0200
-Message-ID: <809705790808140917qa28878blac13b76a7d213077@mail.gmail.com>
+From: Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH 2] count-objects: add human-readable size option
+Date: Thu, 14 Aug 2008 12:26:49 -0400
+Message-ID: <48A45CC9.5040708@griep.us>
+References: <1218657910-22096-1-git-send-email-marcus@griep.us> <1218687684-11671-1-git-send-email-marcus@griep.us> <20080814151451.GA10544@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 14 18:19:12 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Aug 14 18:28:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTfXT-0002M3-Cp
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 18:19:03 +0200
+	id 1KTfgW-0005sV-NA
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 18:28:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751852AbYHNQR5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2008 12:17:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751373AbYHNQR5
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 12:17:57 -0400
-Received: from rv-out-0506.google.com ([209.85.198.230]:8297 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751784AbYHNQR5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Aug 2008 12:17:57 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so480807rvb.1
-        for <git@vger.kernel.org>; Thu, 14 Aug 2008 09:17:56 -0700 (PDT)
+	id S1755218AbYHNQ05 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2008 12:26:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754451AbYHNQ05
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 12:26:57 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:46676 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750840AbYHNQ04 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 12:26:56 -0400
+Received: by qw-out-2122.google.com with SMTP id 3so44042qwe.37
+        for <git@vger.kernel.org>; Thu, 14 Aug 2008 09:26:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=ZTU+DEaVP0y3zovmghtyRnWy/hZFYRqx+qG80iBszkE=;
-        b=pdg3f565AKpdn6HSjWG3aNqoQLLhV+QJuwNBYLfR0RH3qRbxj+5O0qN5Y1LXbSlQu4
-         meqULsqfHtbSbvZBmgiLuudGKgxiLRdrsFnhEIn0LpBzUq8CfY3m3nUfHxjKZ5OpTs3C
-         vF0jAkreLq+B8SeHEGmEoJhfxFLTymLE8N5y8=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=dIpVNKGO+p9TxXa2aD8bNEJg+1DQcPVBJ0CUiN6bgO0=;
+        b=sHWv4I9KZGcMefJyjKXTYxehfqzj9aItp7INa/NFwn9jKp4/W5p+9T26DzxmoHVzu1
+         fYxBOCXs6k/mE1qy/vGIDnNJuY6oiZPna3fV6l11Bryazoj08PT+dIb4kQjxO61vYNoe
+         km/TSjGT4778eZbNrDxCYa6+WmYFmu5warZ70=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=OqohPty7eZKGtUWnHi0eYR/vns+TcLDfZP2BX8cuhUEXltnNCDorIKB/8HhZHNtSg2
-         5Mvb172fp10Otc/cKhCQlnK+wFiILebXUjpopm2kuxK/wWshibOq44/372cGjwTknlq+
-         /JgO2qlu6opwiO6tNcLhTJOch79dpDgt87GTE=
-Received: by 10.141.48.6 with SMTP id a6mr803532rvk.236.1218730676523;
-        Thu, 14 Aug 2008 09:17:56 -0700 (PDT)
-Received: by 10.140.207.14 with HTTP; Thu, 14 Aug 2008 09:17:56 -0700 (PDT)
-Content-Disposition: inline
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=uXdJb5e4xN9E16TA77ZngwkWkzNdydo2cgm1UFlTLpq0Ce8FnwcixsUOt08y/myyYq
+         pEEQmrrR5M4PsbwD6LVbZ1eA1fRouaRaHrQU47n/nQ8Y89pp551Wmq6NmE4UNB586A+3
+         0MzJcsyWDtq/BwLJRDx/nkiYVo9wDZme8Rldo=
+Received: by 10.214.81.3 with SMTP id e3mr1393727qab.92.1218731214678;
+        Thu, 14 Aug 2008 09:26:54 -0700 (PDT)
+Received: from ?10.95.36.106? ( [4.79.245.132])
+        by mx.google.com with ESMTPS id 26sm3018079wrl.38.2008.08.14.09.26.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 14 Aug 2008 09:26:53 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <20080814151451.GA10544@machine.or.cz>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92368>
 
-Hello,
+Petr Baudis wrote:
+> Are you aware of progress.c:throughput_string()? It would make sense =
+to
+> use the same code in both instances.
 
-I have compiled and installed the latest version of git from source.
-When I try to add a file to my repository I get this error:
-git: symbol lookup error: git: undefined symbol: deflateBound
+I was not. After reviewing it, it is limited to its purposes (who's got
+transfer speeds in TiB/s?), but consolidating the human-readable-ness i=
+s
+a good idea.
 
-The second time I try to run the command git outputs this warning:
-fatal: unable to create '.git/index.lock': File exists
+> I'd prefer you to keep using binary units instead of the ambiguous
+> prefixes, since we should keep our output consistent and I believe th=
+ey
+> usually end up to be the least confusing choice. (Otherwise, don't yo=
+u
+> want to use "bkM" instead of "BKM"? I never really know.)
 
-Hmmm I am really lost. Tried different versions with the same result.
-The strange thing is that I used git some month ago without any
-problems. Could there be some old conflicting files on my system?
-Maybe from a older version of git?
+In general, "b" would be supplied as a part of the suffix, so that is n=
+o
+longer in the prefix list.  The distinction comes with kilo vs. kibi.  =
+In
+an earlier email reply, I mentioned a flag to denote SI versus binary
+periods.  In common nomenclature, Kilo (1000) is designated 'k', while
+Kibi (1024) is designated 'K' (the 'i' after the 'K' is supplied by the
+suffix if desired).  Thus, if the user wants binary, they'll get the ca=
+pital
+'K', and if they want SI, they'll get the lowercase 'k'.
 
-root@server [/home/test]# git-init
-Initialized empty Git repository in /home/test/.git/
-root@server [/home/test]# git add .
-git: symbol lookup error: git: undefined symbol: deflateBound
-root@server [/home/test]#
+Sound reasonable?
 
-Best regards.
-Asbj=F8rn Morell.
+--=20
+Marcus Griep
+GPG Key ID: 0x5E968152
+=E2=80=94=E2=80=94
+http://www.boohaunt.net
+=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
