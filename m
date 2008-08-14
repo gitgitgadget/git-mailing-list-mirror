@@ -1,86 +1,85 @@
-From: Mark Struberg <struberg@yahoo.de>
-Subject: Re: does anything like cvs export exist in git?
-Date: Thu, 14 Aug 2008 22:44:40 +0000 (GMT)
-Message-ID: <799439.71089.qm@web27808.mail.ukl.yahoo.com>
-References: <20080814221221.GT3782@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Aug 15 00:45:49 2008
+From: Anand Kumria <wildfire@progsoc.org>
+Subject: [PATCH 2/2]  Utilise our new p4_read_pipe and p4_write_pipe wrappers
+Date: Thu, 14 Aug 2008 23:40:39 +0100
+Message-ID: <1218753639-32716-2-git-send-email-wildfire@progsoc.org>
+References: <g829vo@ger.gmane.org>
+ <1218753639-32716-1-git-send-email-wildfire@progsoc.org>
+Cc: simon@lst.de, torarvid@gmail.com,
+	Anand Kumria <wildfire@progsoc.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 15 00:51:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTlZi-0000VU-K1
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 00:45:47 +0200
+	id 1KTlfA-0001w3-Nd
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 00:51:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751433AbYHNWon convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2008 18:44:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751289AbYHNWom
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 18:44:42 -0400
-Received: from web27808.mail.ukl.yahoo.com ([217.146.182.13]:44991 "HELO
-	web27808.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1750822AbYHNWom convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 18:44:42 -0400
-Received: (qmail 71279 invoked by uid 60001); 14 Aug 2008 22:44:40 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.de;
-  h=Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=frz7rLZ+2oLVD39uJp/1D1tl8CIjsoMo2p7ol5Z5tfjHgO743me4bbjnkOEm45VaX4py1vfb5c0PjgJIZDtR8AUbAQnqyJMTKlYAc0yQATKnZKdnuuhcYb+B07oTdR35I5xzbGhIr4GrsQHgyC9iTAQfGWm9Y2rj37P0t2kLjLI=;
-Received: from [213.162.66.179] by web27808.mail.ukl.yahoo.com via HTTP; Thu, 14 Aug 2008 22:44:40 GMT
-X-Mailer: YahooMailWebService/0.7.218
-In-Reply-To: <20080814221221.GT3782@spearce.org>
+	id S1751775AbYHNWuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 18:50:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750846AbYHNWuV
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 18:50:21 -0400
+Received: from 133.105.233.220.exetel.com.au ([220.233.105.133]:38619 "EHLO
+	giskard.kumria.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750822AbYHNWuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 18:50:20 -0400
+Received: from caliban.kumria.com ([203.7.227.146] helo=eve.kumria.com)
+	by giskard.kumria.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <wildfire@progsoc.uts.edu.au>)
+	id 1KTle5-0004Gq-Nv; Fri, 15 Aug 2008 08:50:19 +1000
+Received: from anand by eve.kumria.com with local (Exim 4.69)
+	(envelope-from <wildfire@progsoc.uts.edu.au>)
+	id 1KTlUl-0008W3-Cm; Thu, 14 Aug 2008 23:40:39 +0100
+X-Mailer: git-send-email 1.5.6.3
+In-Reply-To: <1218753639-32716-1-git-send-email-wildfire@progsoc.org>
+In-Reply-To: <g829vo@ger.gmane.org>
+References: <g829vo@ger.gmane.org>
+X-Spam-Score: -2.3
+X-Spam-Score-Int: -22
+X-Spam-Bar: --
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92430>
-
-Hi Shawn!
-
---- Shawn O. Pearce <spearce@spearce.org> schrieb am Fr, 15.8.2008:
-
-> Von: Shawn O. Pearce <spearce@spearce.org>
-> Betreff: Re: does anything like cvs export exist in git?
-> An: "Mark Struberg" <struberg@yahoo.de>
-> CC: git@vger.kernel.org
-> Datum: Freitag, 15. August 2008, 0:12
-> Mark Struberg <struberg@yahoo.de> wrote:
-> > Since maven-scm should run under various OS (including
-> Windoof)
-> > the tar thingy will not work out.
->=20
-> OK.  Maven could also consider using JGit, since its pure
-> Java
-> and thus just as portable as the JRE is.
-
-I looked at JGit when I started implementation back in October last yea=
-r but it wasn't rdy then. This is definitely on my list, and the whole =
-project is already setup to support both, a native plus a Java implemen=
-tation. But just one step after the other, I'd like to help finishing t=
-he german git manpages first ;)
-
-> > At least I now know that it's really unlikely that this
-> > functionality does exist yet.
->=20
-> Its not implemented for a reason; we suggest to users to
-> use
-> git-archive when they need to export a tree outside of Git.
-Yup, this is completely ok from a git perspective, but maven-scm aims t=
-o deliver the same result for each SCM system. And since cvs has been f=
-irst...
-Also, export is not very important (and also not time critical), all re=
-ally important functions already work fine.
-
-txs and LieGr=FC,
-strub
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92431>
 
 
-__________________________________________________
-Do You Yahoo!?
-Sie sind Spam leid? Yahoo! Mail verf=FCgt =FCber einen herausragenden S=
-chutz gegen Massenmails.=20
-http://mail.yahoo.com=20
+Signed-off-by: Anand Kumria <wildfire@progsoc.org>
+---
+ contrib/fast-import/git-p4 |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 3e9df70..12fa9d3 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -141,7 +141,7 @@ def setP4ExecBit(file, mode):
+ def getP4OpenedType(file):
+     # Returns the perforce file type for the given file.
+ 
+-    result = read_pipe("p4 opened %s" % file)
++    result = p4_read_pipe("opened %s" % file)
+     match = re.match(".*\((.+)\)\r?$", result)
+     if match:
+         return match.group(1)
+@@ -681,7 +681,7 @@ class P4Submit(Command):
+             submitTemplate = self.prepareLogMessage(template, logMessage)
+             if os.environ.has_key("P4DIFF"):
+                 del(os.environ["P4DIFF"])
+-            diff = read_pipe("p4 diff -du ...")
++            diff = p4_read_pipe("diff -du ...")
+ 
+             newdiff = ""
+             for newFile in filesToAdd:
+@@ -719,7 +719,7 @@ class P4Submit(Command):
+             if self.isWindows:
+                 submitTemplate = submitTemplate.replace("\r\n", "\n")
+ 
+-            write_pipe("p4 submit -i", submitTemplate)
++            p4_write_pipe("submit -i", submitTemplate)
+         else:
+             fileName = "submit.txt"
+             file = open(fileName, "w+")
+-- 
+1.5.6.3
