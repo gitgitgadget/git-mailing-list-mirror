@@ -1,109 +1,76 @@
 From: Marcus Griep <marcus@griep.us>
-Subject: Re: [PATCH 2] count-objects: add human-readable size option
-Date: Thu, 14 Aug 2008 10:26:07 -0400
-Message-ID: <48A4407F.6080902@griep.us>
-References: <1218657910-22096-1-git-send-email-marcus@griep.us> <1218687684-11671-1-git-send-email-marcus@griep.us> <20080814043817.GC11232@spearce.org> <7vskt8f9x2.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH 1/3] Git.pm: Add faculties to allow temp files to be cached
+Date: Thu, 14 Aug 2008 10:35:22 -0400
+Message-ID: <48A442AA.8090505@griep.us>
+References: <489DBB8A.2060207@griep.us> <1218470035-13864-1-git-send-email-marcus@griep.us> <1218470035-13864-2-git-send-email-marcus@griep.us> <7vwsikds99.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Eric Wong <normalperson@yhbt.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 14 16:27:37 2008
+X-From: git-owner@vger.kernel.org Thu Aug 14 16:36:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTdnJ-0005Cg-LB
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 16:27:18 +0200
+	id 1KTdwF-0000mb-VT
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 16:36:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751156AbYHNO0N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2008 10:26:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750974AbYHNO0N
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 10:26:13 -0400
-Received: from wr-out-0506.google.com ([64.233.184.239]:18980 "EHLO
+	id S1750974AbYHNOf2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2008 10:35:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750995AbYHNOf2
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 10:35:28 -0400
+Received: from wr-out-0506.google.com ([64.233.184.225]:16594 "EHLO
 	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750753AbYHNO0M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 10:26:12 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so555413wri.5
-        for <git@vger.kernel.org>; Thu, 14 Aug 2008 07:26:11 -0700 (PDT)
+	with ESMTP id S1750888AbYHNOf1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 10:35:27 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so559313wri.5
+        for <git@vger.kernel.org>; Thu, 14 Aug 2008 07:35:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from
          :user-agent:mime-version:to:cc:subject:references:in-reply-to
          :x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=94KHCOpbtjHPEL0wtnTbrvxD8+FBwnrZjDp8xi3MdlA=;
-        b=JHSQFfLiQj5Ky5ifbTH1XfkpCyZvwPRkGiB6PFoQOb2KWPiBRXjDGbgQZQci9YnhSD
-         UtiV74D4DlP136nXvkaQeCcTZfdvU1IcUf1mM63IxUPp5ABPQleWWjzVpzHXumX09WUM
-         r/n3iBuCDod9JMjKIlNu93+tA5rln/y+sBcK8=
+        bh=4EyMJJut75Y/8eHYm7GHMhC/DOca7yvA0Mc7Oyki+5M=;
+        b=gcYIEs4qGKfYBdVgY5jQcPysKKiqLFPQA2RaSWpRF/V6aeUYUCYOmI0TRajiRQNBgw
+         Ka7tYXpR2XZ6JbpSZiees+khmqGD1hjneIOjPOWKpJmf1EysF2lhoMSO6u7VOmFu+430
+         CUlzjvjfRbqORDqSaeNdu/J76eAuUbqGGbQCE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:x-enigmail-version:content-type
          :content-transfer-encoding:sender;
-        b=g0MKT6oIYEUt1g14VWZPjAfHTjXiONHo6jwX2TVFZFe9Dl9rNZwvtbrLIZUkdkatVe
-         2ceZrxiv2UuYCa1CouQK1Wb7ZuR7IJrM75fztUBBahJtb4CWYLku8xRWlR6oa7guSSa2
-         006FoeTZA8fZKDxvwtOmed4AF2RbQmR3Sg6j0=
-Received: by 10.90.55.20 with SMTP id d20mr1909201aga.65.1218723971543;
-        Thu, 14 Aug 2008 07:26:11 -0700 (PDT)
+        b=NTC/m3nLgIM/Yf6Uzh5BbAEnGwRb4gFIQB+pEoEmtFTgEPmLCdW0ImT2lWCWT9LEpk
+         dxlPE8Gqj8ALfg/snMH+B38Yu2pvrm/MIvpklEbPY+5YL2TL59kb5t8LMro2xh1GPB24
+         4TFrrNH1I0gNLI0Ia2PLrObYYiQ8BJJI4//Sk=
+Received: by 10.90.90.4 with SMTP id n4mr1922874agb.117.1218724526109;
+        Thu, 14 Aug 2008 07:35:26 -0700 (PDT)
 Received: from ?192.168.1.3? ( [71.174.65.78])
-        by mx.google.com with ESMTPS id 71sm2713505wry.16.2008.08.14.07.26.09
+        by mx.google.com with ESMTPS id p60sm1917831hsa.14.2008.08.14.07.35.23
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 14 Aug 2008 07:26:10 -0700 (PDT)
+        Thu, 14 Aug 2008 07:35:25 -0700 (PDT)
 User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <7vskt8f9x2.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7vwsikds99.fsf@gitster.siamese.dyndns.org>
 X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92364>
 
 Junio C Hamano wrote:
->     extern int human_readable(struct strbuf *,
->     			      double value, int precision,
->                               const char **unit);
->=20
->     static const char **size_unit =3D {
->     	"byte", "KB", "MB", "GB", NULL,
->     };
->     static const char **throughput_unit =3D {
->     	"bps", "Kbps", "Mbps", "Gbps", NULL,
->     };
->=20
->     human_readble(&sb, (double) bytes_transferred, 0, size_unit);
->     human_readble(&sb, (double) throughput, 2, throughput_unit);
+> By the way, I think your commit title has a typo: s/cul/cili/.  I've
+> already pulled this via Eric, so it will stay in the history forever,
+> though...
 
-Here's what I'm looking at as a new signature:
+Actually, I meant faculties.  While in common use faculty is
+usually meant as a body of teachers, the primary definition is
+"An inherent power or ability".  Adding the caching of temp files gave
+Git.pm another power or ability, hence a new faculty.
 
-extern int strbuf_add_human_readable(struct strbuf *,
-				double value, int maxlen,
-				int scale, const char *suffix,
-				int flags);
-
-where 'maxlen' specifies the longest string that should be returned.
-That will make it easier for any pretty-ish formatting like ls and
-du use. A value of 0 is unlimited length.
-
-'scale' is used to specify a boundary, above which value should be
-reduced, and below which it should be reported. Commonly this is
-1000.  If 0, then it will find a scale that best fits into 'maxlen'.
-If both 'maxlen' and 'scale' are 0, then it will use the default
-of 1000.
-
-'suffix' is appended onto every formatted string.  This would often be
-"", "B", "bps".
-
-'flags' would provide the ability to switch between a binary (1024)
-and an si (1000) period.  Also, adding a space between number and
-unit.
-
-On success, would return 0.  If maxlen is specified and there is not
-enough space given the scale or an inordinately large value, return
--n, where n is the amount of additional length that would have been
-needed.
-
-Does this sound appropriate?
+The caching mechanism itself is also a facility that can be used by
+others, and, of course, would also apply. :-P
 
 --=20
 Marcus Griep
