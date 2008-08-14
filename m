@@ -1,115 +1,102 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008 projects?
-Date: Fri, 15 Aug 2008 01:23:31 +0200
-Message-ID: <200808150123.33546.jnareb@gmail.com>
-References: <200807080227.43515.jnareb@gmail.com> <200808140457.56464.jnareb@gmail.com> <1218717743.11530.99.camel@maia.lan>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH v2 2/3] strbuf: Add method to convert byte-size to
+	human  readable form
+Date: Fri, 15 Aug 2008 01:24:59 +0200
+Message-ID: <20080814232459.GF10360@machine.or.cz>
+References: <1218752308-3173-1-git-send-email-marcus@griep.us> <1218752308-3173-2-git-send-email-marcus@griep.us> <1218752308-3173-3-git-send-email-marcus@griep.us> <20080814223429.GC10544@machine.or.cz> <7viqu3ci5k.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Joshua Roys <roysjosh@gmail.com>,
-	Sverre Rabbelier <alturin@gmail.com>,
-	Sverre Rabbelier <sverre@rabbelier.nl>,
-	David Symonds <dsymonds@gmail.com>,
-	Lea Wiemann <LeWiemann@gmail.com>,
-	John Hawley <warthog19@eaglescrag.net>,
-	Marek Zawirski <marek.zawirski@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	gittorrent@lists.utsl.gen.nz
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Fri Aug 15 01:24:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Marcus Griep <marcus@griep.us>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 15 01:26:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTmBV-0002dq-57
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 01:24:49 +0200
+	id 1KTmCl-00032r-Vw
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 01:26:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832AbYHNXXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 19:23:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbYHNXXj
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 19:23:39 -0400
-Received: from qb-out-0506.google.com ([72.14.204.238]:49262 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751272AbYHNXXh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 19:23:37 -0400
-Received: by qb-out-0506.google.com with SMTP id a16so834176qbd.17
-        for <git@vger.kernel.org>; Thu, 14 Aug 2008 16:23:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=cDIxvSWsZHNIB2ZcTN2Ux3TMfYvzVPvPgQ79jlTgN1w=;
-        b=by9Tbcuig5rGtbWmDp6Eo24sHdRhcPABfJTQueyBuf2rIwDWnpZAtr5BGoulbdNPyI
-         iLx1mXMr3yMrDyi8yvHvn5cPONw/Q1Nvm9Zmoyx5K56pQMtfb78L+tTI+Ak1AG/smx2k
-         Zu22Q71F+Px02PTDpxmEi6sHzxlDfWeeofpHg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=g5Ti2BxlYBt0NG6YaO1GMAo8qdEo3UgOik4HvJs0r1mUR60ljHndDEJC2lZuSfVrsu
-         ufytNEAXNsWVddOryPeO4UceWaVjENSxT5mYDivd9JB6MaFQRaDGftGro9/3aQXwiIkr
-         /OhFqLQgopp5e+NNrj0pn1rhHxBw1K6xnf1ZM=
-Received: by 10.210.115.15 with SMTP id n15mr2126434ebc.81.1218756216293;
-        Thu, 14 Aug 2008 16:23:36 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.237.184])
-        by mx.google.com with ESMTPS id c24sm3282688ika.4.2008.08.14.16.23.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 14 Aug 2008 16:23:34 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1218717743.11530.99.camel@maia.lan>
+	id S1751799AbYHNXZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 19:25:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751872AbYHNXZE
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 19:25:04 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:48906 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751706AbYHNXZC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 19:25:02 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id B8270393A2C9; Fri, 15 Aug 2008 01:24:59 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <7viqu3ci5k.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92439>
 
-On Thu, 14 Aug 2008, Sam Vilain wrote:
-> On Thu, 2008-08-14 at 04:57 +0200, Jakub Narebski wrote:
->>
->> 1. GitTorrent
->>  
->> Student: Joshua Roys
->> Mentor: Sam Vilain
->> 
->> If I remember correctly at midterm it was deemed to be somewhat late;
->> metainfo was done, tracker was in works, some core infrastructure
->> and beginnings of peer to peer:
->>   http://thread.gmane.org/gmane.comp.version-control.git.gittorrent/1
-[...]
-
->> Status: I have no idea how close GitTorrent is to completion (where by 
->> completion I mean ready, tested and benchmarked code running e.g. on 
->> kernel.org).  I'm not sure if it is meant to be incorporated in git, 
->> even in contrib, or remain separate like StGIT, TopGit or jgit.
+On Thu, Aug 14, 2008 at 04:04:55PM -0700, Junio C Hamano wrote:
+> Petr Baudis <pasky@suse.cz> writes:
 > 
-> The scope outlined in the GitTorrent proposal was a little bit more of a
-> research project; being ready for production use on kernel.org or having
-> code ready to merge to git was not directly a deliverable.
+> > My point still stands - in case of binary units, we should always
+> > consistently use the i suffix. So having an example in the commit
+> > message that advertises "bps" is simply wrong when it should read "iB/s"
+> > (like it does with the current progress.c code).
+> >
+> > I may sound boring, but it seems to me that you're still ignoring my
+> > point quitly without proper counter-argumentation and I think it's an
+> > important want, and since it's so hard to keep things consistent across
+> > the wide Git codebase, we should do all we can to keep it.
 > 
-> The approved idea at the outset of *this* project was to try out the RFC
-> protocol design as it stands, iron out the weaknesses and see how it
-> performs. [...]
+> I pretty much agree with everything you said in this thread.  In addition,
+> I wonder if we would want to be able to say:
+> 
+> 	960 bps
+>         0.9 KiB/s
+> 	2.3 MiB/s
 
-That is a very good idea, but neither 
-http://git.or.cz/gitwiki/SoC2008Projects#GitTorrent nor
-http://code.google.com/soc/2008/git/appinfo.html?csaid=F544F0DAA82AFDFC
-tells me that it is more about prototype implementation, or even
-pre-prototype implementation (testing protocol design), than actually
-implementing it in the state for it to be ready to use.
+I dont hink it would be a big deal to say bytes/s or B/s (which is as
+long as bps).
 
-What I (and I guess also GSoC 2008 admins) would know is how far this
-research on GitTorrent Protocol went; what milestones were achieved and
-what were missed...
+> IOW, I do not think it is a good idea to have the list of "prefixes" in
+> this function and force callers to _append_ unit.  You might be better off
+> by making the interface to the function to pass something like this:
+> 
+> 	struct human_unit {
+> 		char *unitname;
+>                 unsigned long valuescale;
+> 	} bps_to_human[] = {
+>         	{ "bps", 1 },
+>                 { "KiB/s", 1024 },
+>                 { "MiB/s", 1024 * 1024 },
+>                 { NULL, 0 },
+> 	};
+> 
+> and perhaps give canned set of unit list for sizes and throughputs as
+> convenience.
+> 
+> By doing so, you could even do this:
+> 
+> 	struct human_unit bits_to_human[] = {
+>         	{ "bits", 1 },
+>                 { "bytes", 8 },
+>                 { "Kbytes", 8 * 1024 },
+>                 { "Mbytes", 8 * 1024 * 1024 },
+>                 { NULL, 0 },
+> 	};
+
+Frankly, my gut feeling here is that we are overengineering the whole
+thing quite a bit, which is the same reason I dislike maxlen.
+
+If it turns out we really do need to have custom prefixes somewhere, we
+would have to go with something like this, but on the other hand this
+goes against the consistency of output, and I have a bit of trouble
+imagining a convincing use-case. So far we have two fairly different
+users of such a code and just tailoring it to these two seems to make it
+general enough for now.
 
 -- 
-Jakub Narebski
-Poland
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
