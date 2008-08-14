@@ -1,100 +1,78 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: pack operation is thrashing my server
-Date: Thu, 14 Aug 2008 15:04:13 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0808141442150.4352@xanadu.home>
-References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
- <20080811030444.GC27195@spearce.org>
- <a6b6acf60808110043t76dc0ae6l428c5da473d79c71@mail.gmail.com>
- <87vdy71i6w.fsf@basil.nowhere.org>
- <1EE44425-6910-4C37-9242-54D0078FC377@adacore.com>
- <alpine.LFD.1.10.0808131024460.4352@xanadu.home>
- <20080813145944.GB3782@spearce.org>
- <alpine.LFD.1.10.0808131123221.4352@xanadu.home>
- <20080813155016.GD3782@spearce.org>
- <alpine.LFD.1.10.0808131228270.4352@xanadu.home>
- <alpine.LFD.1.10.0808141014410.3324@nehalem.linux-foundation.org>
- <alpine.LFD.1.10.0808141022500.3324@nehalem.linux-foundation.org>
+From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>
+Subject: Re: [EGIT PATCH] Fix invalid menubar and toolbar entries in plugin.xml
+Date: Thu, 14 Aug 2008 21:13:51 +0200
+Message-ID: <48A483EF.10508@gmail.com>
+References: <48A3310A.8080306@gmail.com> <200808140747.35753.robin.rosenberg.lists@dewire.com> <200808141942.55448.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Geert Bosch <bosch@adacore.com>,
-	Andi Kleen <andi@firstfloor.org>, Ken Pratt <ken@kenpratt.net>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
 	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Aug 14 21:08:56 2008
+X-From: git-owner@vger.kernel.org Thu Aug 14 21:15:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTi8S-0005KK-Md
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 21:05:45 +0200
+	id 1KTiHt-0001WU-4R
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 21:15:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752001AbYHNTEU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 15:04:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752178AbYHNTEU
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 15:04:20 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:55807 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751379AbYHNTET (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 15:04:19 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K5L00D5VUB1NICF@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 14 Aug 2008 15:04:14 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LFD.1.10.0808141022500.3324@nehalem.linux-foundation.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1752923AbYHNTOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 15:14:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752781AbYHNTOE
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 15:14:04 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:16870 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752663AbYHNTOC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 15:14:02 -0400
+Received: by ug-out-1314.google.com with SMTP id h2so440420ugf.16
+        for <git@vger.kernel.org>; Thu, 14 Aug 2008 12:14:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=6RrR2LEPwJW7HvtJQ30LPGO0MDGPktgNJC9TgQE5iRY=;
+        b=wqTiPJTQgrcF+8HLewyUhgPhqQt0wuG8Rc3AtRmltjzdJdNocHjt3Aj2/Dz/K7cXey
+         nCwbZwOJHS0aKwikdD/elCHWjAqheuHZaw0rMj7BxLgL3rAXR92yuM0yBu7byCV+pWsQ
+         dWlW2xn33Ku17+W1C/ZRXfoUm07Bx5NIxOV9M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        b=snAQl/aIOTzUEcrLN131FmyrjsFy7LETEur0tD75fdtDdfn8+ssWKkcC8BwOFCLNi3
+         lGK3uTg/q88cpw9hc6A69mrltuYa24e/pBF+iVq+4wifk5KEMuDzcIzF9yl+xNQ5iklM
+         ORWN4/ioPE4/gQ99/7ys+KW8ZPf2vpQbnFz0M=
+Received: by 10.210.116.10 with SMTP id o10mr1816748ebc.165.1218741240740;
+        Thu, 14 Aug 2008 12:14:00 -0700 (PDT)
+Received: from ?192.168.1.20? ( [84.202.12.123])
+        by mx.google.com with ESMTPS id z33sm559434ikz.0.2008.08.14.12.13.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 14 Aug 2008 12:13:59 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <200808141942.55448.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92389>
 
-On Thu, 14 Aug 2008, Linus Torvalds wrote:
-
-> Btw, it's not that hard to run oprofile (link git statically to get better 
-> numbers). For me, the answer to what is going on for a kernel rev-list is 
-> pretty straightforward:
+Robin Rosenberg wrote:
+>>> The menu entry was not used, and was causing an extra
+>>> empty space in the menu bar.
 > 
-> 	263742   26.6009  lookup_object
-> 	135945   13.7113  inflate
-> 	110525   11.1475  inflate_fast
-> 	75124     7.5770  inflate_table
-> 	64676     6.5232  strlen
-> 	48635     4.9053  memcpy
-> 	47744     4.8154  find_pack_entry_one
-> 	35265     3.5568  _int_malloc
-> 	31579     3.1850  decode_tree_entry
-> 	28388     2.8632  adler32
-> 	19441     1.9608  process_tree
-> 	10398     1.0487  patch_delta
-> 	8925      0.9002  _int_free
-> 	..
+> When I applied this patch the Git menu disappeared. (3.3)
 
-OK, inflate went down since last time I profiled this, but that's 
-probably because lookup_object went up.
+Ah, I see. It appears the menu was used, but because it had the wrong
+path ('org.spearce.egit.ui.gitmenu' instead of 'additions') the four 
+entries did not show up in 3.4. 
 
-> so most of it is in inflate,
+Either way I suggest the patch is still valid, because it removes
+the Git menu from the menu bar. This is consistent with what other 
+platform plugins do, ie. not populating the main menu bar with plugin
+specific entries, but instead using sub menus, context menus and views.
 
-Which, again, would be eliminated entirely by pack v4.
+In the long run we should probably also move the global toolbar entries
+to the synchronize view, when I get the chance to look at implementing 
+that. 
 
-> but I suspect the cost of "lookup_object()" 
-> is so high becuase when we parse the trees we also have to look up every 
-> blob - even if they didn't change - just to see whether we already saw it 
-> or not.
-
-One optimization with pack v4 was to have delta chunks aligned on tree 
-records, and because tree objects are no longer compressed, parsing a 
-tree object could be done by simply walking the delta chain directly.  
-Then, another optimization would consist of simply skipping any part of 
-a tree object making a delta reference to a base object which has 
-already been parsed which would avoid a large bunch of lookup_object() 
-calls too.
-
-And because 
-delta base objects are normally seen first in recency order then this 
-would reduce the combinatorial complexity significantly.
-
-
-Nicolas
+Tor Arne
