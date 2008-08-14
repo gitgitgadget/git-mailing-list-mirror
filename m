@@ -1,98 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/3] strbuf: Add method to convert byte-size to human
- readable form
-Date: Thu, 14 Aug 2008 16:04:55 -0700
-Message-ID: <7viqu3ci5k.fsf@gitster.siamese.dyndns.org>
-References: <1218752308-3173-1-git-send-email-marcus@griep.us>
- <1218752308-3173-2-git-send-email-marcus@griep.us>
- <1218752308-3173-3-git-send-email-marcus@griep.us>
- <20080814223429.GC10544@machine.or.cz>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: pack operation is thrashing my server
+Date: Thu, 14 Aug 2008 16:14:26 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0808141544150.3324@nehalem.linux-foundation.org>
+References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com> <20080811030444.GC27195@spearce.org> <a6b6acf60808110043t76dc0ae6l428c5da473d79c71@mail.gmail.com> <87vdy71i6w.fsf@basil.nowhere.org> <1EE44425-6910-4C37-9242-54D0078FC377@adacore.com>
+ <alpine.LFD.1.10.0808131024460.4352@xanadu.home> <20080813145944.GB3782@spearce.org> <alpine.LFD.1.10.0808131123221.4352@xanadu.home> <20080813155016.GD3782@spearce.org> <alpine.LFD.1.10.0808131228270.4352@xanadu.home> <alpine.LFD.1.10.0808141014410.3324@nehalem.linux-foundation.org>
+ <alpine.LFD.1.10.0808141022500.3324@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808141442150.4352@xanadu.home> <alpine.LFD.1.10.0808141215520.3324@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808141633080.4352@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marcus Griep <marcus@griep.us>,
-	Git Mailing List <git@vger.kernel.org>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Aug 15 01:06:20 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Geert Bosch <bosch@adacore.com>,
+	Andi Kleen <andi@firstfloor.org>, Ken Pratt <ken@kenpratt.net>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Aug 15 01:16:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTltU-00069o-RY
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 01:06:13 +0200
+	id 1KTm36-0000EX-Tw
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 01:16:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751818AbYHNXFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 19:05:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbYHNXFI
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 19:05:08 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44266 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751424AbYHNXFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 19:05:07 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CAC425EE3D;
-	Thu, 14 Aug 2008 19:05:01 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id AE7FF5EE3C; Thu, 14 Aug 2008 19:04:57 -0400 (EDT)
-In-Reply-To: <20080814223429.GC10544@machine.or.cz> (Petr Baudis's message of
- "Fri, 15 Aug 2008 00:34:29 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6C9AC972-6A55-11DD-92F9-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1751950AbYHNXPD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 19:15:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbYHNXPD
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 19:15:03 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:43743 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751272AbYHNXPA (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Aug 2008 19:15:00 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7ENERYW028309
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 14 Aug 2008 16:14:28 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7ENEQVP002294;
+	Thu, 14 Aug 2008 16:14:26 -0700
+In-Reply-To: <alpine.LFD.1.10.0808141633080.4352@xanadu.home>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.413 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92436>
 
-Petr Baudis <pasky@suse.cz> writes:
 
-> My point still stands - in case of binary units, we should always
-> consistently use the i suffix. So having an example in the commit
-> message that advertises "bps" is simply wrong when it should read "iB/s"
-> (like it does with the current progress.c code).
->
-> I may sound boring, but it seems to me that you're still ignoring my
-> point quitly without proper counter-argumentation and I think it's an
-> important want, and since it's so hard to keep things consistent across
-> the wide Git codebase, we should do all we can to keep it.
+On Thu, 14 Aug 2008, Nicolas Pitre wrote:
+> 
+> Possible.  However, the fact that both the "Compressing objects" and the 
+> "Writing objects" phases during a repack (without -f) together are 
+> _faster_ than the "Counting objects" phase is a sign that something is 
+> more significant than cache misses here, especially when tree 
+> information is a small portion of the total pack data size.
 
-I pretty much agree with everything you said in this thread.  In addition,
-I wonder if we would want to be able to say:
+Hmm. I think I may have clue.
 
-	960 bps
-        0.9 KiB/s
-	2.3 MiB/s
+The size of the delta cache seems to be a sensitive parameter for this 
+thing. Not so much for the git archive, but working on the kernel tree, 
+raising it to 1024 seems to give a 20% performance improvement. That, in 
+turn, implies that we may be unpacking things over and over again because 
+of bad locality wrt delta generation. 
 
-IOW, I do not think it is a good idea to have the list of "prefixes" in
-this function and force callers to _append_ unit.  You might be better off
-by making the interface to the function to pass something like this:
+I'm not sure how easy something like that is to fix, though. We generate 
+the object list in "recency" order for a reason, but that also happens to 
+be the worst possible order for re-using the delta cache - by the time we 
+get back to the next version of some tree entry, we'll have cycled through 
+all the other trees, and blown all the caches, so we'll end up likely 
+re-doing the whole delta chain.
 
-	struct human_unit {
-		char *unitname;
-                unsigned long valuescale;
-	} bps_to_human[] = {
-        	{ "bps", 1 },
-                { "KiB/s", 1024 },
-                { "MiB/s", 1024 * 1024 },
-                { NULL, 0 },
-	};
+So it's quite possible that what ends up happening is that some directory 
+with a deep delta chain will basically end up unpacking the whole chain - 
+which obviously includes inflating each delta - over and over again.
 
-and perhaps give canned set of unit list for sizes and throughputs as
-convenience.
+That's what the delta cache was supposed to avoid..
 
-By doing so, you could even do this:
+Looking at some call graphs, for the kernel I get:
 
-	struct human_unit bits_to_human[] = {
-        	{ "bits", 1 },
-                { "bytes", 8 },
-                { "Kbytes", 8 * 1024 },
-                { "Mbytes", 8 * 1024 * 1024 },
-                { NULL, 0 },
-	};
+ - process_tree() called 10 million times
 
-I also am not particularly happy about using "double" in this API.  Most
-of the callers that gather stats in the rest of the codebase count in
-(long) integers as far as I can tell, and it may be conceptually cleaner
-to keep the use of double as an internal implementation issue of this
-particular function.
+ - causing parse_tree() called 479,466 times (whew, so 19 out of 20 trees 
+   have already been seen and can be discarded)
+
+ - which in turn calls read_sha1_file() (total: 588,110 times, but there's 
+   a hundred thousand+ commits)
+
+but that actually causes 
+
+ - 588,110 cals to cache_or_unpack_entry
+
+out of which 5,850 calls hit in the cache, and 582,260 do *not*.
+
+IOW, the delta cache effectively never triggers because the working set is 
+_way_ bigger than the cache, and the patterns aren't good. So since most 
+trees are deltas, and the max delta depth is 10, the average depth is 
+soemthing like 5, and we actually get an ugly
+
+ - 1,637,999 calls to unpack_compressed_entry
+
+which all results in a zlib inflate call.
+
+So we actually have three times as many calls to inflate as we even have 
+objects parsed, due to the delta chains on the trees (the commits almost 
+never delta-chain at all, much less any deeper than a couple of entries).
+
+So yeah, trees are the problem here, and yes, avoiding inflating them 
+would help - but mainly because we do it something like four times per 
+object on average!
+
+Ouch. But we really can't just make the cache bigger, and the bad access 
+patterns really are on purpose here. The delta cache was not meant for 
+this, it was really meant for the "dig deeper into the history of a single 
+file" kind of situation that gets very different patterns indeed.
+
+I'll see if I can think of anything simple to avoid all this unnecessary 
+work. But it doesn't look too good.
+
+		Linus
