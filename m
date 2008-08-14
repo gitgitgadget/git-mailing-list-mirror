@@ -1,79 +1,87 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 2/7] Refactor of RefUpdate force to call common
-	updateImpl instead of duplication
-Date: Thu, 14 Aug 2008 15:23:45 -0700
-Message-ID: <20080814222345.GU3782@spearce.org>
-References: <1218708829-8175-1-git-send-email-charleso@charleso.org> <1218708829-8175-2-git-send-email-charleso@charleso.org> <1218708829-8175-3-git-send-email-charleso@charleso.org>
+From: Mark Struberg <struberg@yahoo.de>
+Subject: Re: does anything like cvs export exist in git?
+Date: Thu, 14 Aug 2008 22:31:15 +0000 (GMT)
+Message-ID: <670518.86623.qm@web27804.mail.ukl.yahoo.com>
+References: <20080814221148.GB10544@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Charles O'Farrell <charleso@charleso.org>
-X-From: git-owner@vger.kernel.org Fri Aug 15 00:24:53 2008
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri Aug 15 00:32:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTlFO-0002dw-Uj
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 00:24:47 +0200
+	id 1KTlMk-0004oD-JW
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 00:32:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754428AbYHNWXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 18:23:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752282AbYHNWXq
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 18:23:46 -0400
-Received: from george.spearce.org ([209.20.77.23]:58052 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751863AbYHNWXq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 18:23:46 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 831A438376; Thu, 14 Aug 2008 22:23:45 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1218708829-8175-3-git-send-email-charleso@charleso.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751649AbYHNWbT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2008 18:31:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751433AbYHNWbS
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 18:31:18 -0400
+Received: from web27804.mail.ukl.yahoo.com ([217.146.182.9]:41658 "HELO
+	web27804.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1750822AbYHNWbR convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 18:31:17 -0400
+Received: (qmail 86813 invoked by uid 60001); 14 Aug 2008 22:31:15 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.de;
+  h=Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=N6uPW0HYhJhBQV8HOcqSMS0D0jexJGpYgYawtN88iomedMuXk+UnZ6pHIAOpExuktSyosfWZ/EGSWyNk/BOVk7OYI3G+pmwXiL6DvaBMs57BOqaLzM8MgjLkcO+LJAS42eQauGXmiMlJU0TZGBjMlL2tDsVyyg9BRppQFHkU97Q=;
+Received: from [213.162.66.179] by web27804.mail.ukl.yahoo.com via HTTP; Thu, 14 Aug 2008 22:31:15 GMT
+X-Mailer: YahooMailWebService/0.7.218
+In-Reply-To: <20080814221148.GB10544@machine.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92423>
 
-Charles O'Farrell <charleso@charleso.org> wrote:
-> @@ -266,31 +266,8 @@ public class RefUpdate {
->  	 *             an unexpected IO error occurred while writing changes.
->  	 */
->  	public Result forceUpdate() throws IOException {
-[clipped uinteresting deletions to show only the postimage]
-> +		force = true;
-> +		return update();
->  	}
->  
->  	/**
-> @@ -347,6 +324,12 @@ public class RefUpdate {
->  			if (oldValue == null)
->  				return store(lock, Result.NEW);
->  
-> +			if (isForceUpdate()) {
-> +				if (oldValue.equals(newValue))
-> +					return Result.NO_CHANGE;
-> +				return store(lock, Result.FORCED);
-> +			}
-> +
->  			newObj = walk.parseAny(newValue);
->  			oldObj = walk.parseAny(oldValue);
->  			if (newObj == oldObj)
-> @@ -355,13 +338,8 @@ public class RefUpdate {
->  			if (newObj instanceof RevCommit && oldObj instanceof RevCommit) {
->  				if (walk.isMergedInto((RevCommit) oldObj, (RevCommit) newObj))
->  					return store(lock, Result.FAST_FORWARD);
-> -				if (isForceUpdate())
-> -					return store(lock, Result.FORCED);
-> -				return Result.REJECTED;
+Hi Petr!
 
-The problem with this change is that calls to just update() which
-have isForceUpdate() true but actually turn out to be FAST_FORWARD
-types of updates now report FORCED as the result.  We don't want
-to always report FORCED if the application is using just update().
+basically a good idea, but git-cvsserver hast to be run as a _server_, =
+so this is not an option here :(
 
-Its nice to know that the remote side didn't rewind since we last
-saw them (for example).
+txs anyway,
+mark
 
--- 
-Shawn.
+
+--- Petr Baudis <pasky@suse.cz> schrieb am Fr, 15.8.2008:
+
+> Von: Petr Baudis <pasky@suse.cz>
+> Betreff: Re: does anything like cvs export exist in git?
+> An: "Mark Struberg" <struberg@yahoo.de>
+> CC: git@vger.kernel.org
+> Datum: Freitag, 15. August 2008, 0:11
+> Hi,
+>=20
+> On Thu, Aug 14, 2008 at 09:20:10PM +0000, Mark Struberg
+> wrote:
+> > I'm the initial author of the Apache
+> maven-scm-providers-git and I need to update our SCM-Matrix.
+>=20
+> >=20
+> > This is just for making sure I did not oversee
+> anything.
+> >=20
+> > I didn't came across anything like 'cvs
+> export' and I do not think git really needs this, since
+> it doesn't pollute the working directories with lots of
+> waste like CVS and SVN does.=20
+> > But I just want to make sure to not build workarounds
+> in our scm-provider (checkout + afterwards blasting the
+> GIT_DIR) for things that do exist natively in git.
+>=20
+>   I'm not sure what exactly do you want, but
+> couldn't you abuse
+> git-cvsserver for the job?
+>=20
+> 				Petr "Pasky" Baudis
+
+__________________________________________________
+Do You Yahoo!?
+Sie sind Spam leid? Yahoo! Mail verf=FCgt =FCber einen herausragenden S=
+chutz gegen Massenmails.=20
+http://mail.yahoo.com=20
