@@ -1,138 +1,55 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: pack operation is thrashing my server
-Date: Thu, 14 Aug 2008 08:33:59 +0200
-Message-ID: <48A3D1D7.5030805@op5.se>
-References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com> <20080811030444.GC27195@spearce.org> <a6b6acf60808110043t76dc0ae6l428c5da473d79c71@mail.gmail.com> <87vdy71i6w.fsf@basil.nowhere.org> <1EE44425-6910-4C37-9242-54D0078FC377@adacore.com> <alpine.LFD.1.10.0808131024460.4352@xanadu.home> <20080813145944.GB3782@spearce.org> <alpine.LFD.1.10.0808131123221.4352@xanadu.home> <20080813155016.GD3782@spearce.org> <alpine.LFD.1.10.0808131228270.4352@xanadu.home>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 2] count-objects: add human-readable size option
+Date: Thu, 14 Aug 2008 08:45:24 +0200
+Message-ID: <20080814064524.GA4379@blimp.local>
+References: <1218657910-22096-1-git-send-email-marcus@griep.us> <1218687684-11671-1-git-send-email-marcus@griep.us>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Geert Bosch <bosch@adacore.com>,
-	Andi Kleen <andi@firstfloor.org>, Ken Pratt <ken@kenpratt.net>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Aug 14 08:35:58 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Marcus Griep <marcus@griep.us>
+X-From: git-owner@vger.kernel.org Thu Aug 14 08:47:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTWRB-0007va-QY
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 08:35:58 +0200
+	id 1KTWcH-0002dB-FF
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 08:47:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751798AbYHNGet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 02:34:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751831AbYHNGet
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 02:34:49 -0400
-Received: from mail.op5.se ([193.201.96.20]:55733 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751589AbYHNGes (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 02:34:48 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id A71A01B80087;
-	Thu, 14 Aug 2008 08:38:05 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id H1vvuYJNe318; Thu, 14 Aug 2008 08:38:05 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [172.27.78.10])
-	by mail.op5.se (Postfix) with ESMTP id 715E21B80086;
-	Thu, 14 Aug 2008 08:38:04 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <alpine.LFD.1.10.0808131228270.4352@xanadu.home>
+	id S1758015AbYHNGpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 02:45:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758460AbYHNGpa
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 02:45:30 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.181]:47315 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757288AbYHNGp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 02:45:28 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg2r84hO89yw==
+Received: from tigra.home (Fa869.f.strato-dslnet.de [195.4.168.105])
+	by post.webmailer.de (mrclete mo58) (RZmta 16.47)
+	with ESMTP id p03732k7E5RYOB ; Thu, 14 Aug 2008 08:45:25 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from blimp (unknown [192.168.1.28])
+	by tigra.home (Postfix) with ESMTP id 2C10B277AE;
+	Thu, 14 Aug 2008 08:45:25 +0200 (CEST)
+Received: by blimp (Postfix, from userid 1000)
+	id 01E3E36D1A; Thu, 14 Aug 2008 08:45:24 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1218687684-11671-1-git-send-email-marcus@griep.us>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92328>
 
-Nicolas Pitre wrote:
-> On Wed, 13 Aug 2008, Shawn O. Pearce wrote:
-> 
->> Nicolas Pitre <nico@cam.org> wrote:
->>> Well, we are talking about 50MB which is not that bad.
->> I think we're closer to 100MB here due to the extra overheads
->> I just alluded to above, and which weren't in your 104 byte
->> per object figure.
-> 
-> Sure.  That should still be workable on a machine with 256MB of RAM.
-> 
->>> However there is a point where we should be realistic and just admit 
->>> that you need a sufficiently big machine if you have huge repositories 
->>> to deal with.  Git should be fine serving pull requests with relatively 
->>> little memory usage, but anything else such as the initial repack simply 
->>> require enough RAM to be effective.
->> Yea.  But it would also be nice to be able to just concat packs
->> together.  Especially if the repository in question is an open source
->> one and everything published is already known to be in the wild,
->> as say it is also available over dumb HTTP.  Yea, I know people
->> like the 'security feature' of the packer not including objects
->> which aren't reachable.
-> 
-> It is not only that, even if it is a point I consider important.  If you 
-> end up with 10 packs, it is likely that a base object in each of those 
-> packs could simply be a delta against a single common base object, and 
-> therefore the amount of data to transfer might be up to 10 times higher 
-> than necessary.
-> 
+Marcus Griep, Thu, Aug 14, 2008 06:21:24 +0200:
+>  SYNOPSIS
+>  --------
+> -'git count-objects' [-v]
+> +'git count-objects' [-v [-H]]
+>  
 
-[cut]
-
->> This is also true for many internal corporate repositories.
->> Users probably have full read access to the object database anyway,
->> and maybe even have direct write access to it.  Doing the object
->> enumeration there is pointless as a security measure.
-> 
-> It is good for network bandwidth efficiency as I mentioned.
-> 
-
-As a corporate git user, I can say that I'm very rarely worried
-about how much data gets sent over our in-office gigabit network.
-My primary concern wrt server side git is cpu- and IO-heavy
-operations, as we run the entire machine in a vmware guest os
-which just plain sucks at such things.
-
-With that in mind, a config variable in /etc/gitconfig would
-work wonderfully for that situation, as our central watering
-hole only ever serves locally.
-
->> I'm too busy to write a pack concat implementation proposal, so
->> I'll just shutup now.  But it wouldn't be hard if someone wanted
->> to improve at least the initial clone serving case.
-> 
-> A much better solution would consist of finding just _why_ object 
-> enumeration is so slow.  This is indeed my biggest grip with git 
-> performance at the moment.
-> 
-> |nico@xanadu:linux-2.6> time git rev-list --objects --all > /dev/null
-> |
-> |real    0m21.742s
-> |user    0m21.379s
-> |sys     0m0.360s
-> 
-> That's way too long for 1030198 objects (roughly 48k objects/sec).  And 
-> it gets even worse with the gcc repository:
-> 
-> |nico@xanadu:gcc> time git rev-list --objects --all > /dev/null
-> |
-> |real    1m51.591s
-> |user    1m50.757s
-> |sys     0m0.810s
-> 
-> That's for 1267993 objects, or about 11400 objects/sec.
-> 
-> Clearly something is not scaling here.
-> 
-
-What are the different packing options for the two repositories?
-A longer deltachain and larger packwindow would increase the
-enumeration time, wouldn't it?
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+GNU ls and du use "-h", with du using -H for SI units.
