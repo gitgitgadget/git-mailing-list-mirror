@@ -1,87 +1,102 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: pack operation is thrashing my server
-Date: Thu, 14 Aug 2008 11:54:06 +1200
-Message-ID: <46a038f90808131654r228a1b57y964f7cdb9c77be5f@mail.gmail.com>
-References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
-	 <a6b6acf60808110043t76dc0ae6l428c5da473d79c71@mail.gmail.com>
-	 <87vdy71i6w.fsf@basil.nowhere.org>
-	 <1EE44425-6910-4C37-9242-54D0078FC377@adacore.com>
-	 <20080813031503.GC5855@spearce.org>
-	 <70550C21-8358-4BEF-A7BA-3A41C1ACB346@adacore.com>
-	 <alpine.LFD.1.10.0808131036590.4352@xanadu.home>
-	 <m363q5t152.fsf@localhost.localdomain>
-	 <20080813150425.GC3782@spearce.org>
-	 <e1dab3980808130826m4870df3ctf09ecf0062ef6e7c@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] git-daemon: make the signal handler almost a no-op
+Date: Wed, 13 Aug 2008 17:09:12 -0700
+Message-ID: <7v1w0sjw47.fsf@gitster.siamese.dyndns.org>
+References: <20080813084330.30845.89753.stgit@aristoteles.cuci.nl>
+ <20080813084331.30845.74788.stgit@aristoteles.cuci.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"Nicolas Pitre" <nico@cam.org>, "Geert Bosch" <bosch@adacore.com>,
-	"Andi Kleen" <andi@firstfloor.org>, "Ken Pratt" <ken@kenpratt.net>,
-	git@vger.kernel.org
-To: "David Tweed" <david.tweed@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 14 01:55:14 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Thu Aug 14 02:10:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTQBN-0006Pt-2V
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 01:55:13 +0200
+	id 1KTQQC-0001qt-9n
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 02:10:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752908AbYHMXyK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 19:54:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752663AbYHMXyI
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 19:54:08 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:59740 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752001AbYHMXyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 19:54:07 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so305197wfd.4
-        for <git@vger.kernel.org>; Wed, 13 Aug 2008 16:54:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=rUevlIK7FVoLZRb3+XCwPUYgQKt0jQAybgHWJQqKUjQ=;
-        b=RLPf7+BXOPblLnlSGYsM85aMTtT/hV4JZ6n24dam6oKDVcsnjqtH7JJpsz//6HNVMQ
-         Yq0ttPTy8rbSxJJiyLmqvYfP/YeViV4VhDhF6ZmsJ42xCxNw1luLVgORO2YY8vXDNzw8
-         U24l+ghTyKQIwzM5mCJbUolE2rlg5wv5B5lKg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Fzs5FXPb8E4C6knuUabXyrEq05+h4A2roB/TgTFJHl/YY67JRN+jj/Hae/bBLEiOMn
-         6Ox9PSeI1Cha9tHEik3TR/e2gT1+SqVh3euA420E2pR2iasFqeIYrhfIXU4uRWLK023g
-         xzmfs8Tf36IbeokUvdRYu1Efs3RFUJudzOMdw=
-Received: by 10.142.135.16 with SMTP id i16mr175915wfd.286.1218671646122;
-        Wed, 13 Aug 2008 16:54:06 -0700 (PDT)
-Received: by 10.142.43.6 with HTTP; Wed, 13 Aug 2008 16:54:06 -0700 (PDT)
-In-Reply-To: <e1dab3980808130826m4870df3ctf09ecf0062ef6e7c@mail.gmail.com>
-Content-Disposition: inline
+	id S1756085AbYHNAJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 20:09:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752865AbYHNAJX
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 20:09:23 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57348 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756868AbYHNAJW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 20:09:22 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7064A58863;
+	Wed, 13 Aug 2008 20:09:21 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6289858861; Wed, 13 Aug 2008 20:09:14 -0400 (EDT)
+In-Reply-To: <20080813084331.30845.74788.stgit@aristoteles.cuci.nl> (Stephen
+ R. van den Berg's message of "Wed, 13 Aug 2008 10:43:31 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3EBA3A12-6995-11DD-A5C2-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92295>
 
-On Thu, Aug 14, 2008 at 3:26 AM, David Tweed <david.tweed@gmail.com> wrote:
-> FWIW, PDF format is a mix of sections of uncompressed higher level
-> ASCII notation and sections of compressed actual glyph/location data
+"Stephen R. van den Berg" <srb@cuci.nl> writes:
 
-The PDF spec allows compression of the "text" sections - if a PDF is
-uncompressed, it's a good candidate for delta & compression.
-Unfortunately, within the same file you might have an embedded JPEG.
+> by exploiting the fact that systemcalls get interrupted by signals;
+> and even they aren't, all zombies will be collected before the next
+> accept().
 
-cheers,
+Dscho may want to say something about "even they aren't..." part, after he
+comes back to the keyboard.
 
+> Fix another error() -> logerror() call.
 
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+which should have been in 1/3, I suppose.
+
+> @@ -1036,10 +1034,7 @@ int main(int argc, char **argv)
+>  	gid_t gid = 0;
+>  	int i;
+>  
+> -	/* Without this we cannot rely on waitpid() to tell
+> -	 * what happened to our children.
+> -	 */
+> -	signal(SIGCHLD, SIG_DFL);
+> +	child_handler(0);
+
+Why?
+
+child_handler() logically is a two step process:
+
+ * We are just informed that somebody died; let's do something about the
+   corpse;
+
+ * On some systems we need to rearm signals once they fired, so let's do
+   that if necessary.
+
+With your change, the first part happens to be almost no-op, but I do not
+think it justifies this hunk.
+
+After all, we might even want to do something like:
+
+	static void child_handler(int signo)
+        {
+        	if (USE_SYSV_SIGNAL_SEMANTICS)
+                	signal(SIGCHLD, child_handler);
+	}
+
+and have the compiler optimize out the signal rearming with
+
+	cc CFLAGS=-DUSE_SYSV_SIGNAL_SEMANTICS=0
+
+on suitable platforms in the future.  But you still want the initial
+signal set-up to happen unconditionally.
+
+At this point, we aren't informed by the system that somebody died, and we
+would want to arm the signal regardless of the platform's signal semantics.
+
+The rest of the patch looked sane, although I did not read it very
+carefully.
+
+Thanks.
