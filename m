@@ -1,78 +1,78 @@
-From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>
-Subject: Re: [EGIT PATCH] Fix invalid menubar and toolbar entries in plugin.xml
-Date: Thu, 14 Aug 2008 21:13:51 +0200
-Message-ID: <48A483EF.10508@gmail.com>
-References: <48A3310A.8080306@gmail.com> <200808140747.35753.robin.rosenberg.lists@dewire.com> <200808141942.55448.robin.rosenberg.lists@dewire.com>
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: Why doesn't git-apply remove empty file
+Date: Thu, 14 Aug 2008 21:42:22 +0200
+Message-ID: <38b2ab8a0808141242k4bd6867dt8ef54f160713061f@mail.gmail.com>
+References: <38b2ab8a0808120917h10f15c81v4d1f04c0174dc994@mail.gmail.com>
+	 <7vod3xpxq2.fsf@gitster.siamese.dyndns.org>
+	 <38b2ab8a0808130048t506dbb7ah1d6fcd6bd4f3c90c@mail.gmail.com>
+	 <48A357BA.8060003@lsrfire.ath.cx>
+	 <alpine.LFD.1.10.0808131602200.3462@nehalem.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 14 21:15:11 2008
+Cc: "=?ISO-8859-1?Q?Ren=E9_Scharfe?=" <rene.scharfe@lsrfire.ath.cx>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 14 21:43:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTiHt-0001WU-4R
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 21:15:09 +0200
+	id 1KTijY-0004GP-5a
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 21:43:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752923AbYHNTOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 15:14:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752781AbYHNTOE
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 15:14:04 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:16870 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752663AbYHNTOC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 15:14:02 -0400
-Received: by ug-out-1314.google.com with SMTP id h2so440420ugf.16
-        for <git@vger.kernel.org>; Thu, 14 Aug 2008 12:14:00 -0700 (PDT)
+	id S1753638AbYHNTmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 15:42:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753502AbYHNTmY
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 15:42:24 -0400
+Received: from rv-out-0506.google.com ([209.85.198.238]:28777 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753676AbYHNTmX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 15:42:23 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so563030rvb.1
+        for <git@vger.kernel.org>; Thu, 14 Aug 2008 12:42:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=6RrR2LEPwJW7HvtJQ30LPGO0MDGPktgNJC9TgQE5iRY=;
-        b=wqTiPJTQgrcF+8HLewyUhgPhqQt0wuG8Rc3AtRmltjzdJdNocHjt3Aj2/Dz/K7cXey
-         nCwbZwOJHS0aKwikdD/elCHWjAqheuHZaw0rMj7BxLgL3rAXR92yuM0yBu7byCV+pWsQ
-         dWlW2xn33Ku17+W1C/ZRXfoUm07Bx5NIxOV9M=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=UeOCK9m6IhYroPEsNJlh1Ye9Tu0in8eEboAehgt9+1g=;
+        b=FAJKOCfTIKWm8ntTL6NQXJ/9h/KscMGffwGsgde/b1/naO4V0w0xwXx5xw9d84+psm
+         gnN8816mpLuHkJ2gBmTISogXVrAQEGSOiaVKXhyx3FmBeRkCZTR0o0lSA+R8BugGtXkS
+         d4wTZRxKG51IoqF83EpGAoXh2N2/GMjqw/lxs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        b=snAQl/aIOTzUEcrLN131FmyrjsFy7LETEur0tD75fdtDdfn8+ssWKkcC8BwOFCLNi3
-         lGK3uTg/q88cpw9hc6A69mrltuYa24e/pBF+iVq+4wifk5KEMuDzcIzF9yl+xNQ5iklM
-         ORWN4/ioPE4/gQ99/7ys+KW8ZPf2vpQbnFz0M=
-Received: by 10.210.116.10 with SMTP id o10mr1816748ebc.165.1218741240740;
-        Thu, 14 Aug 2008 12:14:00 -0700 (PDT)
-Received: from ?192.168.1.20? ( [84.202.12.123])
-        by mx.google.com with ESMTPS id z33sm559434ikz.0.2008.08.14.12.13.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 14 Aug 2008 12:13:59 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <200808141942.55448.robin.rosenberg.lists@dewire.com>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=jcvC/aByGV5ahnYg/V8jNNL7JBOXPioSuOX45BXpzDXSkOOKKHL+290hJI8J+SMeSl
+         ukF61LOUkVtcRAuGkp3zywRiCEteGxOqblDsYz/aKzpNyQL0KoCMvj3M35sqGCHMu+Rc
+         D5Rouj2b6ucd1grgOyWLhnN+Za8r3lW8VGLMw=
+Received: by 10.141.176.4 with SMTP id d4mr981251rvp.14.1218742942742;
+        Thu, 14 Aug 2008 12:42:22 -0700 (PDT)
+Received: by 10.140.170.16 with HTTP; Thu, 14 Aug 2008 12:42:22 -0700 (PDT)
+In-Reply-To: <alpine.LFD.1.10.0808131602200.3462@nehalem.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92390>
 
-Robin Rosenberg wrote:
->>> The menu entry was not used, and was causing an extra
->>> empty space in the menu bar.
-> 
-> When I applied this patch the Git menu disappeared. (3.3)
+On Thu, Aug 14, 2008 at 1:09 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+> and no, git never did that file date thing, so git acts differently from
+> GNU patch in this thing (as in so many others, for that matter).
+>
 
-Ah, I see. It appears the menu was used, but because it had the wrong
-path ('org.spearce.egit.ui.gitmenu' instead of 'additions') the four 
-entries did not show up in 3.4. 
+Well patch(1) is so used out there that makes git-apply often do the
+wrong thing for such corner cases when applying a patch made by
+patch(1).
 
-Either way I suggest the patch is still valid, because it removes
-the Git menu from the menu bar. This is consistent with what other 
-platform plugins do, ie. not populating the main menu bar with plugin
-specific entries, but instead using sub menus, context menus and views.
+Maybe git-apply would be more friendly regarding patch(1) if it has an
+option to emulate GNU patch for some situations. Or if this means
+adding too many quirks in git-apply code, maybe give the possibity for
+git-am to use patch(1) instead of git-apply.
 
-In the long run we should probably also move the global toolbar entries
-to the synchronize view, when I get the chance to look at implementing 
-that. 
-
-Tor Arne
+-- 
+Francis
