@@ -1,58 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] git-daemon: make the signal handler almost a no-op
-Date: Thu, 14 Aug 2008 15:41:35 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808141539210.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <20080813084330.30845.89753.stgit@aristoteles.cuci.nl> <20080813084331.30845.74788.stgit@aristoteles.cuci.nl>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: pack operation is thrashing my server
+Date: Thu, 14 Aug 2008 10:01:03 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0808140954400.4352@xanadu.home>
+References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
+ <20080811030444.GC27195@spearce.org>
+ <a6b6acf60808110043t76dc0ae6l428c5da473d79c71@mail.gmail.com>
+ <87vdy71i6w.fsf@basil.nowhere.org>
+ <1EE44425-6910-4C37-9242-54D0078FC377@adacore.com>
+ <alpine.LFD.1.10.0808131024460.4352@xanadu.home>
+ <20080813145944.GB3782@spearce.org>
+ <alpine.LFD.1.10.0808131123221.4352@xanadu.home>
+ <20080813155016.GD3782@spearce.org>
+ <alpine.LFD.1.10.0808131228270.4352@xanadu.home> <48A3D1D7.5030805@op5.se>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Thu Aug 14 15:38:44 2008
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Geert Bosch <bosch@adacore.com>,
+	Andi Kleen <andi@firstfloor.org>, Ken Pratt <ken@kenpratt.net>,
+	git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Aug 14 16:02:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTd1W-0000zP-DQ
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 15:37:54 +0200
+	id 1KTdPA-00039x-NW
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 16:02:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754315AbYHNNgv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 09:36:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754349AbYHNNgv
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 09:36:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:32808 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752980AbYHNNgu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 09:36:50 -0400
-Received: (qmail invoked by alias); 14 Aug 2008 13:36:48 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp067) with SMTP; 14 Aug 2008 15:36:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18tu7t6j9Utc90pmDItLJ8N1hAzBKGpv4KlmlF20D
-	9iEjpswaiDyNJS
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <20080813084331.30845.74788.stgit@aristoteles.cuci.nl>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1754038AbYHNOBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 10:01:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752675AbYHNOBO
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 10:01:14 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:33897 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751152AbYHNOBM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 10:01:12 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K5L00DEBG9SNILE@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 14 Aug 2008 10:01:04 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <48A3D1D7.5030805@op5.se>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92358>
 
-Hi,
+On Thu, 14 Aug 2008, Andreas Ericsson wrote:
 
-On Wed, 13 Aug 2008, Stephen R. van den Berg wrote:
+> As a corporate git user, I can say that I'm very rarely worried
+> about how much data gets sent over our in-office gigabit network.
+> My primary concern wrt server side git is cpu- and IO-heavy
+> operations, as we run the entire machine in a vmware guest os
+> which just plain sucks at such things.
 
-> by exploiting the fact that systemcalls get interrupted by signals; and 
-> even they aren't, all zombies will be collected before the next 
-> accept(). Fix another error() -> logerror() call.
+In the general case, the amount of data sent over the network is 
+directly proportional to disk IO.
 
-I find this commit message more than cryptic.  So much so that I would 
-have to study the patch in detail to _understand_ what it does.
 
-Not having the time, I refuse,
-Dscho
-
-P.S.: Oh, and I might have been a little appalled by the language of your 
-commit messages.
+Nicolas
