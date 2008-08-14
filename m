@@ -1,72 +1,93 @@
-From: Don Zickus <dzickus@redhat.com>
-Subject: Re: [PATCH] Allow emails with boundaries to work again
-Date: Wed, 13 Aug 2008 21:56:04 -0400
-Message-ID: <20080814015604.GD24172@redhat.com>
-References: <1218667559-26618-1-git-send-email-dzickus@redhat.com> <7vtzdogyx6.fsf@gitster.siamese.dyndns.org>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: [PATCH 1/2] Make xdiff_outf_{init,release} interface
+Date: Wed, 13 Aug 2008 21:06:14 -0500
+Message-ID: <20080814020614.GD4396@lavos.net>
+References: <20080813070508.GB4396@lavos.net> <7vljz0iftm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 14 03:57:25 2008
+X-From: git-owner@vger.kernel.org Thu Aug 14 04:07:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTS5c-0007ga-JJ
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 03:57:25 +0200
+	id 1KTSFL-0001kj-Hz
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 04:07:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751784AbYHNB4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 21:56:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751763AbYHNB4V
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 21:56:21 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:33618 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751386AbYHNB4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 21:56:20 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m7E1u5qf019915;
-	Wed, 13 Aug 2008 21:56:05 -0400
-Received: from mail.boston.redhat.com (mail.boston.redhat.com [10.16.255.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m7E1u4dt030655;
-	Wed, 13 Aug 2008 21:56:04 -0400
-Received: from drseuss.usersys.redhat.com (dhcp-100-19-202.bos.redhat.com [10.16.19.202])
-	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id m7E1u4q6014209;
-	Wed, 13 Aug 2008 21:56:04 -0400
-Received: from drseuss.usersys.redhat.com (localhost.localdomain [127.0.0.1])
-	by drseuss.usersys.redhat.com (8.14.2/8.14.1) with ESMTP id m7E1u4NZ013897;
-	Wed, 13 Aug 2008 21:56:04 -0400
-Received: (from dzickus@localhost)
-	by drseuss.usersys.redhat.com (8.14.2/8.14.2/Submit) id m7E1u4aX013896;
-	Wed, 13 Aug 2008 21:56:04 -0400
-X-Authentication-Warning: drseuss.usersys.redhat.com: dzickus set sender to dzickus@redhat.com using -f
+	id S1751946AbYHNCGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 22:06:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751934AbYHNCGV
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 22:06:21 -0400
+Received: from qmta04.westchester.pa.mail.comcast.net ([76.96.62.40]:48452
+	"EHLO QMTA04.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751784AbYHNCGV (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Aug 2008 22:06:21 -0400
+Received: from OMTA02.westchester.pa.mail.comcast.net ([76.96.62.19])
+	by QMTA04.westchester.pa.mail.comcast.net with comcast
+	id 1nNB1a0080QuhwU5426FQw; Thu, 14 Aug 2008 02:06:15 +0000
+Received: from mnementh.lavos.net ([98.212.138.194])
+	by OMTA02.westchester.pa.mail.comcast.net with comcast
+	id 226F1a0094BqYqi3N26Ftk; Thu, 14 Aug 2008 02:06:15 +0000
+X-Authority-Analysis: v=1.0 c=1 a=90hKlV7EDiYA:10 a=mbLt6yIQpawA:10
+ a=zuFRn8y_ESSqb4kEZGYA:9 a=5E2lgxW02wN3V5MD-VsA:7
+ a=YBMNz9E2VV8DXKN76gfF8R-qFZkA:4 a=GB4YReQY-hoA:10 a=LY0hPdMaydYA:10
+Received: by mnementh.lavos.net (Postfix, from userid 1000)
+	id E7C84309F23; Wed, 13 Aug 2008 21:06:14 -0500 (CDT)
 Content-Disposition: inline
-In-Reply-To: <7vtzdogyx6.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
+In-Reply-To: <7vljz0iftm.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92307>
 
-On Wed, Aug 13, 2008 at 06:36:53PM -0700, Junio C Hamano wrote:
-> Don Zickus <dzickus@redhat.com> writes:
+On Wed, Aug 13, 2008 at 05:46:29PM -0700, Junio C Hamano wrote:
+> Brian Downing <bdowning@lavos.net> writes:
+> > @@ -103,6 +110,10 @@ int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
+> >  	return 0;
+> >  }
+> >  
+> > +void xdiff_outf_release(void *priv_)
+> > +{
+> > +}
+> > +
 > 
-> > Recent changes to is_multipart_boundary() caused git-mailinfo to segfault.
-> > The reason was after handling the end of the boundary the code tried to look
-> > for another boundary.  Because the boundary list was empty, dereferencing
-> > the pointer to the top of the boundary caused the program to go boom.
-> >
-> > The fix is to check to see if the list is empty and if so go on its merry
-> > way instead of looking for another boundary.
-> 
-> Hmm, at this point !*content_top means that we are at the outermost level
-> and we have just seen --boundary-- which is the terminating one, haven't
-> we?  Shouldn't we be simply returning?
+> It might make it more clear to have this function take a pointer to
+> "struct xdiff_emit_state", which is always the first member of the
+> callback private data structure.
 
-That's what I originally did, but then I realized the rest of the
-handle_boundary() reads the next line of text, which is needed to continue
-processing in handle_body().  :-)
+That makes the call sites (slightly) more complicated, in that instead
+of:
+	xdiff_outf_release(&state);
+you'd want:
+	xdiff_outf_release(&state.xm);
 
-Cheers,
-Don
+That was not the typical usage before, in that it said "ecb.priv =
+&state" rather than "ecb.priv = &state.xm", and I used the void *
+argument to mirror that, but I can change it if it'd be preferable.
+ 
+> Although I wish xdi_diff() could do the necessary clean-up immediately
+> before it returns (so that the caller did not have to do anything
+> special), it is not possible to do so cleanly, because there are
+> "outf" implementations other than xdiff_outf that do not even use
+> "struct xdiff_emit_state" in their callbacks.  So I think your patch
+> makes sense.
+
+Well, I could do something like:
+
+	if (xecb->outf == xdiff_outf)
+		/* xdiff_outf cleanup */
+
+at the end of xdi_diff, but that's... kind of horrible I think.
+
+For that matter, I could just make an xdi_outf_diff function that would
+take the state in addition to the other xdi_diff arguments and go ahead
+and set it up, do the diff, and tear it down in one step.  Maybe that
+would be better if it works for everywhere this style of diff needs to
+be called.
+
+Another question:  should I go ahead and make xdiff_outf itself static?
+
+-bcd
