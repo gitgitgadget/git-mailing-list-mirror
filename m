@@ -1,70 +1,55 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: bash completion: 'git apply' should use 'fix' not 'strip'
-Date: Thu, 14 Aug 2008 13:58:04 -0700
-Message-ID: <20080814205804.GP3782@spearce.org>
-References: <279b37b20808141012l460e2218lbe440dfe3ee44462@mail.gmail.com>
+Subject: Re: [RFC] Adding a challenge-response authentication method to
+	git://
+Date: Thu, 14 Aug 2008 14:00:03 -0700
+Message-ID: <20080814210003.GQ3782@spearce.org>
+References: <20080813162644.GC12200@cuci.nl> <20080813164038.GE3782@spearce.org> <alpine.DEB.1.10.0808141018220.13400@asgard.lang.hm>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Eric Raible <raible@gmail.com>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 14 22:59:11 2008
+Cc: "Stephen R. van den Berg" <srb@cuci.nl>, git <git@vger.kernel.org>
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Thu Aug 14 23:01:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTjuY-0007bJ-Rg
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 22:59:11 +0200
+	id 1KTjwT-0008FB-6Q
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 23:01:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753674AbYHNU6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 16:58:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753618AbYHNU6H
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 16:58:07 -0400
-Received: from george.spearce.org ([209.20.77.23]:50985 "EHLO
+	id S1752500AbYHNVAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 17:00:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752467AbYHNVAE
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 17:00:04 -0400
+Received: from george.spearce.org ([209.20.77.23]:55003 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752858AbYHNU6G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 16:58:06 -0400
+	with ESMTP id S1750738AbYHNVAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 17:00:04 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6B03338375; Thu, 14 Aug 2008 20:58:04 +0000 (UTC)
+	id 762E638376; Thu, 14 Aug 2008 21:00:03 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <279b37b20808141012l460e2218lbe440dfe3ee44462@mail.gmail.com>
+In-Reply-To: <alpine.DEB.1.10.0808141018220.13400@asgard.lang.hm>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92400>
 
-Eric Raible <raible@gmail.com> wrote:
-> Bring completion up to date with the man page.
-> 
-> Signed-off-by: Eric Raible <raible@gmail.com>
-> ---
-> Seems to me that this qualifies as "obviously correct"...
- 
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+david@lang.hm wrote:
+> On Wed, 13 Aug 2008, Shawn O. Pearce wrote:
+>
+>> Isn't there some authentication frontend that some IMAP servers
+>> use to handle the authentication for them?  I think last time
+>> I setup bincimap it used checkpassword.  We might want to do the
+>> same if we are going down this road...
+>
+> are you thinking of SASL?
 
-Be nice if it was in 1.6.0.  Eric posted this patch earlier but it
-apparently got missed.
-
->  contrib/completion/git-completion.bash |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/contrib/completion/git-completion.bash
-> b/contrib/completion/git-completion.bash
-> index 3396e35..95040bd 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -501,7 +501,7 @@ __git_has_doubledash ()
->        return 1
->  }
-> 
-> -__git_whitespacelist="nowarn warn error error-all strip"
-> +__git_whitespacelist="nowarn warn error error-all fix"
-> 
->  _git_am ()
->  {
-> --
-> 1.6.0.rc1.1206.gff2cf
+Maybe I was.  But I think I was thinking about DJB's checkpassword
+tool.  There are several tools that implement the same calling
+conventions, some of which link to PAM or an LDAP database, etc.
+Plus its fairly easy to create your own if you really needed a
+custom solution.  You just have to be able to read fd 3.  :)
 
 -- 
 Shawn.
