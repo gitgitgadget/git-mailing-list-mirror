@@ -1,77 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008
- projects?
-Date: Fri, 15 Aug 2008 01:04:44 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808150103430.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <200807080227.43515.jnareb@gmail.com> <200808140457.56464.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
-	Joshua Roys <roysjosh@gmail.com>,
-	Sverre Rabbelier <alturin@gmail.com>,
-	Sverre Rabbelier <sverre@rabbelier.nl>,
-	David Symonds <dsymonds@gmail.com>,
-	Lea Wiemann <LeWiemann@gmail.com>,
-	John Hawley <warthog19@eaglescrag.net>,
-	Marek Zawirski <marek.zawirski@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 15 01:01:12 2008
+From: Anand Kumria <wildfire@progsoc.org>
+Subject: [PATCH 1/2]  Add p4 read_pipe and write_pipe wrappers
+Date: Thu, 14 Aug 2008 23:40:38 +0100
+Message-ID: <1218753639-32716-1-git-send-email-wildfire@progsoc.org>
+References: <g829vo@ger.gmane.org>
+Cc: simon@lst.de, torarvid@gmail.com,
+	Anand Kumria <wildfire@progsoc.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 15 01:03:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTloV-0004Zo-Rj
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 01:01:04 +0200
+	id 1KTlqR-0005FO-9c
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 01:03:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751627AbYHNXAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 19:00:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751490AbYHNXAA
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 19:00:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55481 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751390AbYHNW77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 18:59:59 -0400
-Received: (qmail invoked by alias); 14 Aug 2008 22:59:57 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp006) with SMTP; 15 Aug 2008 00:59:57 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Bk5oscPMBx5PGCUp1zkiAt6F9lJdcc+8ZnZzIWl
-	trCZDVOLVzo50L
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <200808140457.56464.jnareb@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1751863AbYHNXB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 19:01:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751818AbYHNXB7
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 19:01:59 -0400
+Received: from 133.105.233.220.exetel.com.au ([220.233.105.133]:46065 "EHLO
+	giskard.kumria.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751433AbYHNXB6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 19:01:58 -0400
+Received: from caliban.kumria.com ([203.7.227.146] helo=eve.kumria.com)
+	by giskard.kumria.com with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <wildfire@progsoc.uts.edu.au>)
+	id 1KTlXj-00045I-4e; Fri, 15 Aug 2008 08:43:45 +1000
+Received: from anand by eve.kumria.com with local (Exim 4.69)
+	(envelope-from <wildfire@progsoc.uts.edu.au>)
+	id 1KTlUl-0008W2-Af; Thu, 14 Aug 2008 23:40:39 +0100
+X-Mailer: git-send-email 1.5.6.3
+In-Reply-To: <g829vo@ger.gmane.org>
+In-Reply-To: <g829vo@ger.gmane.org>
+References: <g829vo@ger.gmane.org>
+X-Spam-Score: -2.3
+X-Spam-Score-Int: -22
+X-Spam-Bar: --
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92434>
 
-Hi,
+ Two additional wrappers to cover 3 places where we utilise p4
+ in piped form. Found by Tor Arvid Lund.
 
-On Thu, 14 Aug 2008, Jakub Narebski wrote:
+Signed-off-by: Anand Kumria <wildfire@progsoc.org>
+---
+ contrib/fast-import/git-p4 |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
-> 5. git-merge builtin (!!!)
-> 
-> Student: Miklos Vajna
-> Mentor: Johannes Schindelin
-> 
-> In "What's cooking in git.git (topics)" Junio C Hamano wrote:
-> 
->   It already is beginning to become clear what 1.6.0 will look like.
->   [...]
->   * git-merge will be rewritten in C.
-> 
-> Status: Done and merged in.
-> Student retention: Most likely.
-
-I could not put it better, IOW 'nuff said :-)
-
-Ciao,
-Dscho
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 6c64224..3e9df70 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -69,6 +69,10 @@ def write_pipe(c, str):
+ 
+     return val
+ 
++def p4_write_pipe(c, str):
++    real_cmd = p4_build_cmd(c)
++    return write_pipe(c, str)
++
+ def read_pipe(c, ignore_error=False):
+     if verbose:
+         sys.stderr.write('Reading pipe: %s\n' % c)
+@@ -80,6 +84,9 @@ def read_pipe(c, ignore_error=False):
+ 
+     return val
+ 
++def p4_read_pipe(c, ignore_error=False):
++    real_cmd = p4_build_cmd(c)
++    return read_pipe(real_cmd, ignore_error)
+ 
+ def read_pipe_lines(c):
+     if verbose:
+-- 
+1.5.6.3
