@@ -1,152 +1,94 @@
-From: Brian Downing <bdowning@lavos.net>
-Subject: [PATCHv2 2/2] Use strbuf for struct xdiff_emit_state's remainder
-Date: Thu, 14 Aug 2008 00:13:22 -0500
-Message-ID: <1218690802-30536-2-git-send-email-bdowning@lavos.net>
-References: <7viqu4gx8c.fsf@gitster.siamese.dyndns.org>
- <1218690802-30536-1-git-send-email-bdowning@lavos.net>
-Cc: git@vger.kernel.org, Brian Downing <bdowning@lavos.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 14 07:14:33 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2] count-objects: add human-readable size option
+Date: Wed, 13 Aug 2008 22:22:17 -0700
+Message-ID: <7vskt8f9x2.fsf@gitster.siamese.dyndns.org>
+References: <1218657910-22096-1-git-send-email-marcus@griep.us>
+ <1218687684-11671-1-git-send-email-marcus@griep.us>
+ <20080814043817.GC11232@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Marcus Griep <marcus@griep.us>
+X-From: git-owner@vger.kernel.org Thu Aug 14 07:23:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTVAN-00079F-PX
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 07:14:32 +0200
+	id 1KTVJ2-0000Qk-8a
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 07:23:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751445AbYHNFN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 01:13:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751493AbYHNFN2
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 01:13:28 -0400
-Received: from qmta02.emeryville.ca.mail.comcast.net ([76.96.30.24]:40823 "EHLO
-	QMTA02.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751908AbYHNFN1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Aug 2008 01:13:27 -0400
-Received: from OMTA01.emeryville.ca.mail.comcast.net ([76.96.30.11])
-	by QMTA02.emeryville.ca.mail.comcast.net with comcast
-	id 1txi1a0020EPchoA25DQor; Thu, 14 Aug 2008 05:13:24 +0000
-Received: from mnementh.lavos.net ([98.212.138.194])
-	by OMTA01.emeryville.ca.mail.comcast.net with comcast
-	id 25DP1a0064BqYqi8M5DPre; Thu, 14 Aug 2008 05:13:24 +0000
-X-Authority-Analysis: v=1.0 c=1 a=g5Ek3Xm0xi0A:10 a=2mXvQkZ5vegA:10
- a=Dtkb_Dkjc0f87TARwqYA:9 a=epT4o_jl-uhmw23dYmIA:7
- a=VjZGoGTzyh0OYmkbnqmMSeLw3JcA:4 a=GB4YReQY-hoA:10 a=6bqG61NMjcsA:10
-Received: from silvara.lavos.net (silvara.lavos.net [10.4.0.20])
-	by mnementh.lavos.net (Postfix) with SMTP id 5ADBE309F24;
-	Thu, 14 Aug 2008 00:13:21 -0500 (CDT)
-Received: (nullmailer pid 30563 invoked by uid 1000);
-	Thu, 14 Aug 2008 05:13:22 -0000
-X-Mailer: git-send-email 1.5.6.1
-In-Reply-To: <1218690802-30536-1-git-send-email-bdowning@lavos.net>
+	id S1751896AbYHNFW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 01:22:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753871AbYHNFW0
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 01:22:26 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45082 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751272AbYHNFW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 01:22:26 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AF0F957611;
+	Thu, 14 Aug 2008 01:22:24 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 90FF45760F; Thu, 14 Aug 2008 01:22:20 -0400 (EDT)
+In-Reply-To: <20080814043817.GC11232@spearce.org> (Shawn O. Pearce's message
+ of "Wed, 13 Aug 2008 21:38:17 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FA6CA13E-69C0-11DD-BF0D-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92317>
 
-Continually xreallocing and freeing the remainder member of struct
-xdiff_emit_state was a noticeable performance hit.  Use a strbuf
-instead.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-This yields a decent performance improvement on "git blame" on certain
-repositories.  For example, before this commit:
+> Marcus Griep <marcus@griep.us> wrote:
+>> diff --git a/Documentation/git-count-objects.txt b/Documentation/git-count-objects.txt
+>> index 75a8da1..291bc5e 100644
+>> --- a/Documentation/git-count-objects.txt
+>> +++ b/Documentation/git-count-objects.txt
+>> +++ b/builtin-count-objects.c
+> ...
+>> +void human_readable_size(char *buf, int buf_size, double size /* in bytes */)
+>
+> Hmm.  This probably should be static.  Or if it really is meant
+> to be a utility for use elsewhere in Git, moved to someplace where
+> string handling is done.  Its not strbuf related, but maybe strbuf.c
+> is a better location for this sort of library function.
 
-$ time git blame -M -C -C -p --incremental server.c >/dev/null
-101.52user 0.17system 1:41.73elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+39561minor)pagefaults 0swaps
+Yes, with customizable precision (so that the caller can control "1.6k" vs
+"1.62k"), and perhaps cutomizable unit (so that you can use this for
+"3.6kB" and "2.6Mbps"), this kind of thing is a good candidate to be a
+library function in strbuf.c.
 
-With this commit:
+>> +{
+>> +	char human_readable_prefixes[10] = "BKMGTPEZY";
 
-$ time git blame -M -C -C -p --incremental server.c >/dev/null
-80.38user 0.30system 1:20.81elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+50979minor)pagefaults 0swaps
+This enumerates suffix if I am not mistaken.  Do you have to say "10"
+here, or does the compiler counts them for you?
 
-Signed-off-by: Brian Downing <bdowning@lavos.net>
----
- xdiff-interface.c |   32 ++++++++++----------------------
- xdiff-interface.h |    4 ++--
- 2 files changed, 12 insertions(+), 24 deletions(-)
+>> +	for (; i < 8 && size >= 1000 ; ++i, size = size / 1024)
+>> +		;
 
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index be448a0..c999469 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -69,36 +69,22 @@ static int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
- 	for (i = 0; i < nbuf; i++) {
- 		if (mb[i].ptr[mb[i].size-1] != '\n') {
- 			/* Incomplete line */
--			priv->remainder = xrealloc(priv->remainder,
--						   priv->remainder_size +
--						   mb[i].size);
--			memcpy(priv->remainder + priv->remainder_size,
--			       mb[i].ptr, mb[i].size);
--			priv->remainder_size += mb[i].size;
-+			strbuf_add(&priv->remainder, mb[i].ptr, mb[i].size);
- 			continue;
- 		}
- 
- 		/* we have a complete line */
--		if (!priv->remainder) {
-+		if (!priv->remainder.len) {
- 			consume_one(priv, mb[i].ptr, mb[i].size);
- 			continue;
- 		}
--		priv->remainder = xrealloc(priv->remainder,
--					   priv->remainder_size +
--					   mb[i].size);
--		memcpy(priv->remainder + priv->remainder_size,
--		       mb[i].ptr, mb[i].size);
--		consume_one(priv, priv->remainder,
--			    priv->remainder_size + mb[i].size);
--		free(priv->remainder);
--		priv->remainder = NULL;
--		priv->remainder_size = 0;
-+		strbuf_add(&priv->remainder, mb[i].ptr, mb[i].size);
-+		consume_one(priv, priv->remainder.buf, priv->remainder.len);
-+		strbuf_reset(&priv->remainder);
- 	}
--	if (priv->remainder) {
--		consume_one(priv, priv->remainder, priv->remainder_size);
--		free(priv->remainder);
--		priv->remainder = NULL;
--		priv->remainder_size = 0;
-+	if (priv->remainder.len) {
-+		consume_one(priv, priv->remainder.buf, priv->remainder.len);
-+		strbuf_reset(&priv->remainder);
- 	}
- 	return 0;
- }
-@@ -148,7 +134,9 @@ int xdi_diff_outf(mmfile_t *mf1, mmfile_t *mf2,
- 	int ret;
- 	xecb->outf = xdiff_outf;
- 	xecb->priv = state;
-+	strbuf_init(&state->remainder, 0);
- 	ret = xdl_diff(mf1, mf2, xpp, xecfg, xecb);
-+	strbuf_release(&state->remainder);
- 	return ret;
- }
- 
-diff --git a/xdiff-interface.h b/xdiff-interface.h
-index 6f3b361..f6a1ec2 100644
---- a/xdiff-interface.h
-+++ b/xdiff-interface.h
-@@ -2,6 +2,7 @@
- #define XDIFF_INTERFACE_H
- 
- #include "xdiff/xdiff.h"
-+#include "strbuf.h"
- 
- struct xdiff_emit_state;
- 
-@@ -9,8 +10,7 @@ typedef void (*xdiff_emit_consume_fn)(void *, char *, unsigned long);
- 
- struct xdiff_emit_state {
- 	xdiff_emit_consume_fn consume;
--	char *remainder;
--	unsigned long remainder_size;
-+	struct strbuf remainder;
- };
- 
- int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t const *xecfg, xdemitcb_t *ecb);
--- 
-1.5.6.1
+I do not think you would need to use the magic number "8" here.
+
+I have this suspicion that the caller, if this is made into a generic
+library, would want to pass in a list of units, not magnitude suffixes,
+like this:
+
+    extern int human_readable(struct strbuf *,
+    			      double value, int precision,
+                              const char **unit);
+
+    static const char **size_unit = {
+    	"byte", "KB", "MB", "GB", NULL,
+    };
+    static const char **throughput_unit = {
+    	"bps", "Kbps", "Mbps", "Gbps", NULL,
+    };
+
+    human_readble(&sb, (double) bytes_transferred, 0, size_unit);
+    human_readble(&sb, (double) throughput, 2, throughput_unit);
