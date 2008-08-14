@@ -1,96 +1,64 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [PATCH 2/3] git-daemon: make the signal handler almost a no-op
-Date: Thu, 14 Aug 2008 02:18:58 +0200
-Message-ID: <20080814001858.GB14939@cuci.nl>
-References: <20080813084330.30845.89753.stgit@aristoteles.cuci.nl> <20080813084331.30845.74788.stgit@aristoteles.cuci.nl> <7v1w0sjw47.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Make xdiff_outf_{init,release} interface
+Date: Wed, 13 Aug 2008 17:46:29 -0700
+Message-ID: <7vljz0iftm.fsf@gitster.siamese.dyndns.org>
+References: <20080813070508.GB4396@lavos.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 14 02:20:05 2008
+Cc: git@vger.kernel.org
+To: Brian Downing <bdowning@lavos.net>
+X-From: git-owner@vger.kernel.org Thu Aug 14 02:47:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTQZP-0003wH-Lc
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 02:20:04 +0200
+	id 1KTR07-0001Uk-HX
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 02:47:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754266AbYHNAS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 20:18:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753544AbYHNAS7
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 20:18:59 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:38682 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753359AbYHNAS7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 20:18:59 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 23F4C5465; Thu, 14 Aug 2008 02:18:58 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7v1w0sjw47.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752437AbYHNAqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 20:46:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752573AbYHNAqf
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 20:46:35 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59881 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751565AbYHNAqf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 20:46:35 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2D84458B36;
+	Wed, 13 Aug 2008 20:46:34 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 67E8B58B35; Wed, 13 Aug 2008 20:46:31 -0400 (EDT)
+In-Reply-To: <20080813070508.GB4396@lavos.net> (Brian Downing's message of
+ "Wed, 13 Aug 2008 02:05:09 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 7187DBB6-699A-11DD-87B8-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92298>
 
-Junio C Hamano wrote:
->"Stephen R. van den Berg" <srb@cuci.nl> writes:
->> by exploiting the fact that systemcalls get interrupted by signals;
->> and even they aren't, all zombies will be collected before the next
->> accept().
+Brian Downing <bdowning@lavos.net> writes:
 
->Dscho may want to say something about "even they aren't..." part, after he
->comes back to the keyboard.
+> @@ -103,6 +110,10 @@ int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
+>  	return 0;
+>  }
+>  
+> +void xdiff_outf_release(void *priv_)
+> +{
+> +}
+> +
 
-That should have read "even if they aren't".  Nonetheless, I don't know
-systems where it doesn't work this way, but even if a system resisted,
-the problem is mitigated by the fact that we reap the children before
-every accept.
+It might make it more clear to have this function take a pointer to
+"struct xdiff_emit_state", which is always the first member of the
+callback private data structure.
 
->> Fix another error() -> logerror() call.
+Although I wish xdi_diff() could do the necessary clean-up immediately
+before it returns (so that the caller did not have to do anything
+special), it is not possible to do so cleanly, because there are "outf"
+implementations other than xdiff_outf that do not even use "struct
+xdiff_emit_state" in their callbacks.  So I think your patch makes sense.
 
->which should have been in 1/3, I suppose.
-
-Sort of, yes, it was a bit messy to get it out in one piece.
-
->> @@ -1036,10 +1034,7 @@ int main(int argc, char **argv)
->>  	gid_t gid = 0;
->>  	int i;
-
->> -	/* Without this we cannot rely on waitpid() to tell
->> -	 * what happened to our children.
->> -	 */
->> -	signal(SIGCHLD, SIG_DFL);
->> +	child_handler(0);
-
->Why?
-
-child_handler() now does barely more than setup the signal handler,
-which is exactly what we want to do here.
-
->With your change, the first part happens to be almost no-op, but I do not
->think it justifies this hunk.
-
->After all, we might even want to do something like:
-
->	static void child_handler(int signo)
->        {
->        	if (USE_SYSV_SIGNAL_SEMANTICS)
->                	signal(SIGCHLD, child_handler);
-
->and have the compiler optimize out the signal rearming with
-
->	cc CFLAGS=-DUSE_SYSV_SIGNAL_SEMANTICS=0
-
-In return I ask: why?
-There is no particular performance reason to optimise this.
-So in order to keep the code simpler, it might make an extra unneeded
-systemcall on some systems when the signal is processed.  I don't think
-it's worth our while to optimise this further.
--- 
-Sincerely,
-           Stephen R. van den Berg.
-
-"And now for something *completely* different!"
+Thanks.
