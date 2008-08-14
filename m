@@ -1,89 +1,108 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: Re: pack operation is thrashing my server
-Date: Thu, 14 Aug 2008 10:04:55 +0100
-Message-ID: <e1dab3980808140204t29b56fa4h3b22e52fc576fb1e@mail.gmail.com>
-References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
-	 <87vdy71i6w.fsf@basil.nowhere.org>
-	 <1EE44425-6910-4C37-9242-54D0078FC377@adacore.com>
-	 <20080813031503.GC5855@spearce.org>
-	 <70550C21-8358-4BEF-A7BA-3A41C1ACB346@adacore.com>
-	 <alpine.LFD.1.10.0808131036590.4352@xanadu.home>
-	 <m363q5t152.fsf@localhost.localdomain>
-	 <20080813150425.GC3782@spearce.org>
-	 <e1dab3980808130826m4870df3ctf09ecf0062ef6e7c@mail.gmail.com>
-	 <46a038f90808131654r228a1b57y964f7cdb9c77be5f@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [RFC] Adding a challenge-response authentication method to	git://
+Date: Thu, 14 Aug 2008 11:15:22 +0200
+Message-ID: <48A3F7AA.8070001@op5.se>
+References: <20080813162644.GC12200@cuci.nl> <20080813164038.GE3782@spearce.org> <20080813173757.GE12200@cuci.nl> <20080813180857.GH3782@spearce.org> <20080814001029.GA14939@cuci.nl> <20080814005723.GM3782@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"Nicolas Pitre" <nico@cam.org>, "Geert Bosch" <bosch@adacore.com>,
-	"Andi Kleen" <andi@firstfloor.org>, "Ken Pratt" <ken@kenpratt.net>,
-	git@vger.kernel.org
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 14 11:06:57 2008
+Cc: "Stephen R. van den Berg" <srb@cuci.nl>, git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Aug 14 11:17:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTYmq-0004xG-Jk
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 11:06:29 +0200
+	id 1KTYxP-0008Up-1p
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 11:17:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758614AbYHNJE7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 05:04:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758541AbYHNJE6
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 05:04:58 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:5168 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758374AbYHNJE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 05:04:56 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so578924wfd.4
-        for <git@vger.kernel.org>; Thu, 14 Aug 2008 02:04:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=dX0smNaBTAyTem9WPmW0CHJTguD14T5oeNPWo/rgbX0=;
-        b=UgOeK491z77H5/YdPqw7HKQwuKwBewPx8GgAb4d/b/dqD0ttn7KlfqodTu5KC5se1D
-         zpya9rbquK5PwgA1MpOb9n53mT3hq9u+YgRIB7vJR4kb+yG7VLVIB8QagGxWHO92gSRb
-         jHv6Io090stcsN+4sbghj+NNigfY7K1oHe4D4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=JeFEphi5JrPhWK+OwG9hhXtdaIOnEwZmtgXD1wTJN+O2xOTyv4mQJHvP1wDF+jAkKC
-         KvRL9hIGwTjcjcrjqUxZDWkRPL/IfR0HXPhGy3iwXYXvpt4McQ1fbyzEWdTAjxrIg3RG
-         poTPz6ualyjfGR78Vi2fePLZttqQalxzvaD9Y=
-Received: by 10.142.157.15 with SMTP id f15mr394039wfe.186.1218704695293;
-        Thu, 14 Aug 2008 02:04:55 -0700 (PDT)
-Received: by 10.142.233.14 with HTTP; Thu, 14 Aug 2008 02:04:55 -0700 (PDT)
-In-Reply-To: <46a038f90808131654r228a1b57y964f7cdb9c77be5f@mail.gmail.com>
-Content-Disposition: inline
+	id S1758642AbYHNJQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 05:16:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758633AbYHNJQP
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 05:16:15 -0400
+Received: from mail.op5.se ([193.201.96.20]:53862 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756116AbYHNJQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 05:16:13 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id D68121B80087;
+	Thu, 14 Aug 2008 11:19:31 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id NEe5YDvxbmZX; Thu, 14 Aug 2008 11:19:29 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.10])
+	by mail.op5.se (Postfix) with ESMTP id CF6181B80050;
+	Thu, 14 Aug 2008 11:19:28 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20080814005723.GM3782@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92339>
 
-On Thu, Aug 14, 2008 at 12:54 AM, Martin Langhoff
-<martin.langhoff@gmail.com> wrote:
-> On Thu, Aug 14, 2008 at 3:26 AM, David Tweed <david.tweed@gmail.com> wrote:
->> FWIW, PDF format is a mix of sections of uncompressed higher level
->> ASCII notation and sections of compressed actual glyph/location data
->
-> The PDF spec allows compression of the "text" sections - if a PDF is
-> uncompressed, it's a good candidate for delta & compression.
-> Unfortunately, within the same file you might have an embedded JPEG.
+Shawn O. Pearce wrote:
+> "Stephen R. van den Berg" <srb@cuci.nl> wrote:
+>> I'm not trying to solve all management problems, I'm just trying to
+>> offer a simple solution for the small-user-base-central-repository case
+>> without a lot of code-bloat on the git side.
+>> If it doesn't fit ones needs, use ssh or something else; but it does
+>> have its merits for the simple centralised setups.
+> 
+> OK, then my final two cents, and I'll shutup.
+> 
+> - Add to git-daemon a new service command, "git-authenticate-user".
+> - Clients request "git-authenticate-user 'repository'".
+> - The auth_user routine:
+> 	enters 'repository' ('ala upload-pack)
+> 	execs "git-authenticate-user ."
+> 
+> - git-authenticate-user:
+> 	send pkt-line challenge
+> 	recv pkt-line username
+> 	recv pkt-line SHA-1(username + password + challenge)
+> 	
+> 	read gitconfig for "auth.passwordfile"
+> 	read passwordfile for entry $username
+> 		("user:pass:upload-pack,receive-pack")
+> 	verify response
+> 
+> 	send pkt-line ok/fail
+> 	recv pkt-line "git-$service '.'"
+> 	check $service is allowed
+> 	exec git-$service .
+> 
 
-Sure, all I was pointing out was that even pdfs with compressed page
-contents can look like uncompressed text from looking at the entropy
-of the first 4k or 8k.
+I'd do it like this instead:
+
+daemon: auth_user = dlsym(dlopen("auth-module.so", RTLD_NOW), "authenticat");
+client: "git-authenticate action 'repository'"
+daemon: send pkt-line challenge
+client: send pkt-line username
+client: send pkt-line SHA1(username + password + challenge)
+daemon: if (auth_user(repository, action, username, password, struct sockaddr_in *inbound))
+               allow_connection();
+
+This approach has several nifty benefits:
+* The otherwise duplicated code (for different auth schemes) is
+  done only once (in the git daemon).
+* If the git daemon has no authentication module loaded, we might
+  as well not bother sending any challenge and just pretend we do
+  not know about the authentication scheme.
+* Any kind of authentication scheme can be supported without changing
+  the core code. If the authentication module does something wrong,
+  one can continue to serve read-only requests by simply unloading
+  the module.
+* Modules is a great way for newcomers to get started contributing to
+  git so it's a nice way of getting more contributors/sub-maintainers.
 
 -- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-"while having code so boring anyone can maintain it, use Python." --
-attempted insult seen on slashdot
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
