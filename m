@@ -1,73 +1,61 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: Why doesn't git-apply remove empty file
-Date: Thu, 14 Aug 2008 23:10:34 +0200
-Message-ID: <20080814211034.GE7138@leksak.fem-net>
-References: <38b2ab8a0808120917h10f15c81v4d1f04c0174dc994@mail.gmail.com> <7vod3xpxq2.fsf@gitster.siamese.dyndns.org> <38b2ab8a0808130048t506dbb7ah1d6fcd6bd4f3c90c@mail.gmail.com> <48A357BA.8060003@lsrfire.ath.cx> <alpine.LFD.1.10.0808131602200.3462@nehalem.linux-foundation.org> <38b2ab8a0808141242k4bd6867dt8ef54f160713061f@mail.gmail.com> <alpine.LFD.1.10.0808141246190.3324@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808141258180.3324@nehalem.linux-foundation.org> <20080814202159.GD7138@leksak.fem-net> <20080814205447.GC25469@sigill.intra.peff.net>
+From: Mark Struberg <struberg@yahoo.de>
+Subject: does anything like cvs export exist in git?
+Date: Thu, 14 Aug 2008 21:20:10 +0000 (GMT)
+Message-ID: <977100.98240.qm@web27803.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Francis Moreau <francis.moro@gmail.com>,
-	=?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Aug 14 23:11:50 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 14 23:21:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTk6f-0003Ie-T3
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 23:11:42 +0200
+	id 1KTkFx-0006ja-7R
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 23:21:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753743AbYHNVKj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 17:10:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753719AbYHNVKj
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 17:10:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50557 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752638AbYHNVKi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 17:10:38 -0400
-Received: (qmail invoked by alias); 14 Aug 2008 21:10:36 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp005) with SMTP; 14 Aug 2008 23:10:36 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+ANJV2m5iAsJScrMowcNgKgMXRRn8VsuAJjW74gf
-	TIzL/eGXrkmSX3
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KTk5a-00046N-HT; Thu, 14 Aug 2008 23:10:34 +0200
-Content-Disposition: inline
-In-Reply-To: <20080814205447.GC25469@sigill.intra.peff.net>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1753618AbYHNVUO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2008 17:20:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753395AbYHNVUO
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 17:20:14 -0400
+Received: from web27803.mail.ukl.yahoo.com ([217.146.182.8]:24842 "HELO
+	web27803.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752845AbYHNVUN convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 17:20:13 -0400
+Received: (qmail 99107 invoked by uid 60001); 14 Aug 2008 21:20:11 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.de;
+  h=Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=ixxRIIrloZXz/b8VagnV6uUuvZJsBj6V0YQ7/SLuTp9FctgGvJjTsV0axC7qoYyV4rRlVPF/1XSl/VDNk4mwWrTAMmuTIPCZ79wsA0kQ53t7DPY8FepFuIhz6PXDTCM/z7OwaWlz2FHFcwUcZ2DlfB/LL1KD36+CJRHaxHPCr0E=;
+Received: from [213.162.66.179] by web27803.mail.ukl.yahoo.com via HTTP; Thu, 14 Aug 2008 21:20:10 GMT
+X-Mailer: YahooMailWebService/0.7.218
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92402>
 
-Hi,
+Hi!
 
-Jeff King wrote:
-> On Thu, Aug 14, 2008 at 10:21:59PM +0200, Stephan Beyer wrote:
-> 
-> > Instead of generating reject files it puts conflict markers into the file.
-> > (If no context matches at all, then perhaps just insert them at the lines
-> > that the hunk header says.)
-> > And then declaring the files as "unmerged", so that you can see it in
-> > git status.
-> 
-> I use "git am -3" for that. Then you get conflict markers, or you can
-> use git-mergetool.
+I'm the initial author of the Apache maven-scm-providers-git and I need=
+ to update our SCM-Matrix.=20
 
-git am -3 looks for the base blob in the "index" line of the patch.
+This is just for making sure I did not oversee anything.
 
-Now imagine you do not have this blob in git, e.g. because you've not
-fetched some large side branch from another repo.
-Then git am -3 won't help, too. (Yes, in this example fetching the
-branch may help, but there may be other examples.)
+I didn't came across anything like 'cvs export' and I do not think git =
+really needs this, since it doesn't pollute the working directories wit=
+h lots of waste like CVS and SVN does.=20
+But I just want to make sure to not build workarounds in our scm-provid=
+er (checkout + afterwards blasting the GIT_DIR) for things that do exis=
+t natively in git.
 
-Regards,
-  Stephan
+txs in advance and
+LieGr=FC,
+strub
 
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+__________________________________________________
+Do You Yahoo!?
+Sie sind Spam leid? Yahoo! Mail verf=FCgt =FCber einen herausragenden S=
+chutz gegen Massenmails.=20
+http://mail.yahoo.com=20
