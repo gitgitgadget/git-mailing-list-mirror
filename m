@@ -1,102 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] git-daemon: make the signal handler almost a no-op
-Date: Wed, 13 Aug 2008 17:09:12 -0700
-Message-ID: <7v1w0sjw47.fsf@gitster.siamese.dyndns.org>
-References: <20080813084330.30845.89753.stgit@aristoteles.cuci.nl>
- <20080813084331.30845.74788.stgit@aristoteles.cuci.nl>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [RFC] Adding a challenge-response authentication method to git://
+Date: Thu, 14 Aug 2008 02:10:29 +0200
+Message-ID: <20080814001029.GA14939@cuci.nl>
+References: <20080813162644.GC12200@cuci.nl> <20080813164038.GE3782@spearce.org> <20080813173757.GE12200@cuci.nl> <20080813180857.GH3782@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Thu Aug 14 02:10:36 2008
+Cc: git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Aug 14 02:11:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTQQC-0001qt-9n
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 02:10:32 +0200
+	id 1KTQRC-00028Q-HF
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 02:11:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756085AbYHNAJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2008 20:09:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752865AbYHNAJX
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 20:09:23 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57348 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756868AbYHNAJW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2008 20:09:22 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7064A58863;
-	Wed, 13 Aug 2008 20:09:21 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 6289858861; Wed, 13 Aug 2008 20:09:14 -0400 (EDT)
-In-Reply-To: <20080813084331.30845.74788.stgit@aristoteles.cuci.nl> (Stephen
- R. van den Berg's message of "Wed, 13 Aug 2008 10:43:31 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3EBA3A12-6995-11DD-A5C2-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753359AbYHNAKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2008 20:10:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753296AbYHNAKa
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Aug 2008 20:10:30 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:53684 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751934AbYHNAKa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2008 20:10:30 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 0FA745465; Thu, 14 Aug 2008 02:10:29 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080813180857.GH3782@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92296>
 
-"Stephen R. van den Berg" <srb@cuci.nl> writes:
+Shawn O. Pearce wrote:
+>If you are going to keep it "really simple" you may be tempted to
+>say that all user additions/deletions/password changes should be
+>done by the admin directly editing the password list.  At which
 
-> by exploiting the fact that systemcalls get interrupted by signals;
-> and even they aren't, all zombies will be collected before the next
-> accept().
+Correct.
 
-Dscho may want to say something about "even they aren't..." part, after he
-comes back to the keyboard.
+>point it may actually be easier (and safer) for the admin to just
+>handle a GnuPG or SSH public key.
 
-> Fix another error() -> logerror() call.
+If you want that, that is best handled in ssh.
 
-which should have been in 1/3, I suppose.
+>This is why we tend to rely on SSH.  It neatly solves all of this
+>for us, and does it in a way that UNIX administrators are familiar
+>with managing.
 
-> @@ -1036,10 +1034,7 @@ int main(int argc, char **argv)
->  	gid_t gid = 0;
->  	int i;
->  
-> -	/* Without this we cannot rely on waitpid() to tell
-> -	 * what happened to our children.
-> -	 */
-> -	signal(SIGCHLD, SIG_DFL);
-> +	child_handler(0);
+>This is also why the last discussion on this topic went down the road
+>of using GnuPG to handle the authentication portion of the protocol.
+>Unfortunately dealing with the server side keychain is a little
+>bit more complex then I'd like it to be out of the box, and the
+>client side I think is lacking something as common as ssh-agent
+>for caching the decrypted key.
 
-Why?
+I agree, which is why I don't want to put this complexity in git proper.
 
-child_handler() logically is a two step process:
+>I can see how it would be pretty simple to add authentication to
+>git-daemon based upon a shared secret, but such schemes always
+>cause management problems on both sides.
 
- * We are just informed that somebody died; let's do something about the
-   corpse;
+I'm not trying to solve all management problems, I'm just trying to
+offer a simple solution for the small-user-base-central-repository case
+without a lot of code-bloat on the git side.
+If it doesn't fit ones needs, use ssh or something else; but it does
+have its merits for the simple centralised setups.
+-- 
+Sincerely,
+           Stephen R. van den Berg.
 
- * On some systems we need to rearm signals once they fired, so let's do
-   that if necessary.
-
-With your change, the first part happens to be almost no-op, but I do not
-think it justifies this hunk.
-
-After all, we might even want to do something like:
-
-	static void child_handler(int signo)
-        {
-        	if (USE_SYSV_SIGNAL_SEMANTICS)
-                	signal(SIGCHLD, child_handler);
-	}
-
-and have the compiler optimize out the signal rearming with
-
-	cc CFLAGS=-DUSE_SYSV_SIGNAL_SEMANTICS=0
-
-on suitable platforms in the future.  But you still want the initial
-signal set-up to happen unconditionally.
-
-At this point, we aren't informed by the system that somebody died, and we
-would want to arm the signal regardless of the platform's signal semantics.
-
-The rest of the patch looked sane, although I did not read it very
-carefully.
-
-Thanks.
+"And now for something *completely* different!"
