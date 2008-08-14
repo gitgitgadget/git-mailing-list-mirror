@@ -1,78 +1,95 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: Why doesn't git-apply remove empty file
-Date: Thu, 14 Aug 2008 22:21:59 +0200
-Message-ID: <20080814202159.GD7138@leksak.fem-net>
-References: <38b2ab8a0808120917h10f15c81v4d1f04c0174dc994@mail.gmail.com> <7vod3xpxq2.fsf@gitster.siamese.dyndns.org> <38b2ab8a0808130048t506dbb7ah1d6fcd6bd4f3c90c@mail.gmail.com> <48A357BA.8060003@lsrfire.ath.cx> <alpine.LFD.1.10.0808131602200.3462@nehalem.linux-foundation.org> <38b2ab8a0808141242k4bd6867dt8ef54f160713061f@mail.gmail.com> <alpine.LFD.1.10.0808141246190.3324@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808141258180.3324@nehalem.linux-foundation.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT PATCH] Fix invalid menubar and toolbar entries in plugin.xml
+Date: Thu, 14 Aug 2008 22:42:19 +0200
+Message-ID: <200808142242.20476.robin.rosenberg.lists@dewire.com>
+References: <48A3310A.8080306@gmail.com> <200808141942.55448.robin.rosenberg.lists@dewire.com> <48A483EF.10508@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Francis Moreau <francis.moro@gmail.com>,
-	=?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Aug 14 22:23:23 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Tor Arne =?iso-8859-1?q?Vestb=F8?= <torarnv@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 14 22:45:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTjLu-0001jy-9z
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 22:23:22 +0200
+	id 1KTjgk-0001zu-W8
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 22:44:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753324AbYHNUWI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 16:22:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753265AbYHNUWG
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 16:22:06 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41095 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752908AbYHNUWF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 16:22:05 -0400
-Received: (qmail invoked by alias); 14 Aug 2008 20:22:01 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp033) with SMTP; 14 Aug 2008 22:22:01 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/EIK8lnNfEmLJPGM4zFK7Q61nVMJIRR8aRHabd36
-	9Za5kldzg1G8TO
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KTjKZ-00087w-FQ; Thu, 14 Aug 2008 22:21:59 +0200
+	id S1753955AbYHNUne convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2008 16:43:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753618AbYHNUnd
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 16:43:33 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:18235 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753952AbYHNUnc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Aug 2008 16:43:32 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 0A5838006AE;
+	Thu, 14 Aug 2008 22:43:31 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id wWzJ9-SIDhQr; Thu, 14 Aug 2008 22:43:30 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 616AD80069F;
+	Thu, 14 Aug 2008 22:43:30 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <48A483EF.10508@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0808141258180.3324@nehalem.linux-foundation.org>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92396>
 
-Hi,
+torsdagen den 14 augusti 2008 21.13.51 skrev Tor Arne Vestb=F8:
+> Robin Rosenberg wrote:
+> >>> The menu entry was not used, and was causing an extra
+> >>> empty space in the menu bar.
+> >=20
+> > When I applied this patch the Git menu disappeared. (3.3)
+>=20
+> Ah, I see. It appears the menu was used, but because it had the wrong
+> path ('org.spearce.egit.ui.gitmenu' instead of 'additions') the four=20
+> entries did not show up in 3.4.=20
+That's our first 3.4 incompatibilty.
 
-while at the git-apply topic...
+> Either way I suggest the patch is still valid, because it removes
+> the Git menu from the menu bar. This is consistent with what other=20
+But I don't want it removed... , but I can consider hiding the git acti=
+ons by default.
 
-Linus Torvalds wrote:
-> On Thu, 14 Aug 2008, Linus Torvalds wrote:
-> >
-> >   There's no way to do an all-or-nothing patch, which is often 
-> >    a huge requirement.
-[...]
-> 
-> ..or to play games with backup and reject files after-the-fact, of course.
+> platform plugins do, ie. not populating the main menu bar with plugin
+Lots of plugins provide both menus and toolsbars so there is no inconsi=
+stence
+with Git doing it.=20
 
-What I missed when I first used git-apply (git-am) with some not-so-
-well-done patches was something like a "simulated merge" (of course,
-only when you ask for it), i.e. something like a user-friendly
---reject behavior:
-Instead of generating reject files it puts conflict markers into the file.
-(If no context matches at all, then perhaps just insert them at the lines
-that the hunk header says.)
-And then declaring the files as "unmerged", so that you can see it in
-git status.
+> specific entries, but instead using sub menus, context menus and view=
+s.
+You can have it all. Eclipse is good at it. Anywhere there is a customi=
+zeable
+context menu now you'll get a number of actions for RevObject's like th=
+e reset
+etc actions. If you add, say a refs view with RevObjects in it you'd ge=
+t the
+contextg menues there too.
 
-I've seen two or three people asking on #git for such a feature, so
-it looked like I am not the only one who misses this. But yet I've had
-no time to implement such a thing.  Or is it even there, hidden?
+> In the long run we should probably also move the global toolbar entri=
+es
+No.=20
 
-Regards,
-  Stephan
+> to the synchronize view, when I get the chance to look at implementin=
+g=20
+> that.=20
 
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+It is not clear, I think, what the synchronize view would look like to =
+be an effective
+git gui, but if we toss ideas around we might come to some conclusions/=
+agreements.
+
+>=20
+> Tor Arne
+>=20
+
+-- robin
