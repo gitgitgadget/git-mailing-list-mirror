@@ -1,70 +1,77 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [PATCH 2/3] git-daemon: make the signal handler almost a no-op
-Date: Thu, 14 Aug 2008 12:13:07 +0200
-Message-ID: <20080814101307.GG9680@cuci.nl>
-References: <20080813084330.30845.89753.stgit@aristoteles.cuci.nl> <20080813084331.30845.74788.stgit@aristoteles.cuci.nl> <7v1w0sjw47.fsf@gitster.siamese.dyndns.org> <20080814001858.GB14939@cuci.nl> <7v63q4ieqw.fsf@gitster.siamese.dyndns.org> <20080814074717.GC9680@cuci.nl> <7vljz0dmtj.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 14 12:14:17 2008
+From: Charles O'Farrell <charleso@charleso.org>
+Subject: [PATCH 0/7] jgit: Branch command now supports deletion
+Date: Thu, 14 Aug 2008 20:13:42 +1000
+Message-ID: <1218708829-8175-1-git-send-email-charleso@charleso.org>
+Cc: Charles O'Farrell <charleso@charleso.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 14 12:15:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTZqR-0002mo-1H
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 12:14:15 +0200
+	id 1KTZrM-000331-M2
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 12:15:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753098AbYHNKNK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 06:13:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752991AbYHNKNK
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 06:13:10 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:37465 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752683AbYHNKNJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 06:13:09 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 668415465; Thu, 14 Aug 2008 12:13:07 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vljz0dmtj.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753306AbYHNKOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 06:14:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753235AbYHNKOJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 06:14:09 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:50988 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752749AbYHNKOH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 06:14:07 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so199004waf.23
+        for <git@vger.kernel.org>; Thu, 14 Aug 2008 03:14:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:sender;
+        bh=BAYUXAVXOjg6KGH0GfTYc+Rtp6R39FVjaO6KkNmH978=;
+        b=luNWLiU98Rbp6gCXsbfGSZP+SpgQAIQUF+6xuSvcpXfT4pPp79KBgoMSA8+1peXndq
+         6dkxVmUp/4EmXxvocYfczpM36vaDWJQ9k7337yjneGEQUlvjHKR7ifVt1uuC7ojTYmro
+         0npjCpb+zjgjn2NLnr8EpsXZY6fskVur9oMF8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:sender;
+        b=F91Jht39WcESebhrjikrYpqAOiJr+R4nlmp0euAxxzfS7nMQlnRFTnEpEkEvKQTOL8
+         yKQW/P9torISKIGALIhvwz8jyx6AbKnN83nvGIvM5iyvdg3ycxhj1uZ9DCu3kBlj7rwB
+         qeG9zo7+fvf6b4+ZFMKb8dreNq5vKNsi8QYos=
+Received: by 10.114.158.1 with SMTP id g1mr939840wae.203.1218708847246;
+        Thu, 14 Aug 2008 03:14:07 -0700 (PDT)
+Received: from localhost.localdomain ( [123.200.240.102])
+        by mx.google.com with ESMTPS id a8sm2909044poa.12.2008.08.14.03.14.03
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 14 Aug 2008 03:14:06 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.rc2.35.g04c6e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92343>
 
-Junio C Hamano wrote:
->"Stephen R. van den Berg" <srb@cuci.nl> writes:
->> Solution A is what you propose, but which I find less appealing because
->> any future magic to actually setup the handler needs to be maintained
->> and updated in two places.
+Implement branch deletion for jgit, reusing previous packed-refs writing
 
->Well, A is attractive because it leaves the window open for us to later
->not rearming it unconditionally from child_handler().  I happen to think
->that the interface we will use to call "signal()" is much less likely to
->change than what we would do in child_handler().
+Charles O'Farrell (7):
+  Refactor of WalkRemoteObjectDatabase ref writing into common class
+  Refactor of RefUpdate force to call common updateImpl instead of
+    duplication
+  Minor refactor of constants, including log and ROOT_DIR
+  Extract lockAndWriteFile method in RefDatabase for reuse
+  Added removePackedRef method to RefDatabase for packed branch
+    deletion
+  Added ref deletion to RefUpdate
+  jgit: Added branch deletion to jgit command
 
-Then that is the fundamental difference in maintainability-views.
-I find it more likely that we change the interface to setup the signal
-handler (in a future OS or by changing the way you invoke it), than 
-that the actual work done by the signal handler is changed.
-
-But since your view carries more weight here, I'll adapt the patch to
-solution A.
-
->> Solution C is what follows your train of thought better, because it
->> future-proofs the setup as well as the handler.
-
->"setup", but "setup" and "rearm" as separate functions.  Perhaps "setup"
->may start using sigaction() with SA_RESETHAND cleared, and we can make
->"rearm" truly a no-op everywhere.
-
->From a portability standpoint using sigaction is worse than signal, and
-rearming the handler even when it is not required is not a big deal.
--- 
-Sincerely,
-           Stephen R. van den Berg.
-
-"Hold still, while I inject you with SQL."
+ .../src/org/spearce/jgit/pgm/Branch.java           |   57 ++++++-
+ .../src/org/spearce/jgit/lib/Constants.java        |    9 +
+ .../src/org/spearce/jgit/lib/RefDatabase.java      |   41 ++++--
+ .../src/org/spearce/jgit/lib/RefLogWriter.java     |    2 +-
+ .../src/org/spearce/jgit/lib/RefUpdate.java        |  106 ++++++++----
+ .../src/org/spearce/jgit/lib/RefWriter.java        |  175 ++++++++++++++++++++
+ .../src/org/spearce/jgit/lib/Repository.java       |    2 +-
+ .../spearce/jgit/transport/TransportAmazonS3.java  |   10 +-
+ .../org/spearce/jgit/transport/TransportSftp.java  |    6 +-
+ .../spearce/jgit/transport/WalkPushConnection.java |   18 ++-
+ .../jgit/transport/WalkRemoteObjectDatabase.java   |  110 +-----------
+ 11 files changed, 374 insertions(+), 162 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/lib/RefWriter.java
