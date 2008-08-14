@@ -1,65 +1,58 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: does anything like cvs export exist in git?
-Date: Thu, 14 Aug 2008 14:26:54 -0700
-Message-ID: <20080814212654.GS3782@spearce.org>
-References: <977100.98240.qm@web27803.mail.ukl.yahoo.com>
+From: Andi Kleen <andi@firstfloor.org>
+Subject: Re: pack operation is thrashing my server
+Date: Thu, 14 Aug 2008 23:30:33 +0200
+Message-ID: <20080814213033.GE13814@one.firstfloor.org>
+References: <1EE44425-6910-4C37-9242-54D0078FC377@adacore.com> <alpine.LFD.1.10.0808131024460.4352@xanadu.home> <20080813145944.GB3782@spearce.org> <alpine.LFD.1.10.0808131123221.4352@xanadu.home> <20080813155016.GD3782@spearce.org> <alpine.LFD.1.10.0808131228270.4352@xanadu.home> <alpine.LFD.1.10.0808141014410.3324@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808141022500.3324@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808141442150.4352@xanadu.home> <alpine.LFD.1.10.0808141215520.3324@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Mark Struberg <struberg@yahoo.de>
-X-From: git-owner@vger.kernel.org Thu Aug 14 23:28:00 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Geert Bosch <bosch@adacore.com>,
+	Andi Kleen <andi@firstfloor.org>, Ken Pratt <ken@kenpratt.net>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 14 23:30:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTkMQ-00011c-2u
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 23:27:58 +0200
+	id 1KTkOb-0001y5-QV
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 23:30:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751925AbYHNV0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 17:26:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752462AbYHNV0z
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 17:26:55 -0400
-Received: from george.spearce.org ([209.20.77.23]:46293 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751019AbYHNV0y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 17:26:54 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 1B4FC38375; Thu, 14 Aug 2008 21:26:54 +0000 (UTC)
+	id S1752622AbYHNV3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 17:29:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751702AbYHNV3L
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 17:29:11 -0400
+Received: from one.firstfloor.org ([213.235.205.2]:47323 "EHLO
+	one.firstfloor.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751352AbYHNV3K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 17:29:10 -0400
+Received: by one.firstfloor.org (Postfix, from userid 503)
+	id CB1B218900BB; Thu, 14 Aug 2008 23:30:33 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <977100.98240.qm@web27803.mail.ukl.yahoo.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <alpine.LFD.1.10.0808141215520.3324@nehalem.linux-foundation.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92405>
 
-Mark Struberg <struberg@yahoo.de> wrote:
-> I'm the initial author of the Apache maven-scm-providers-git and
-> I need to update our SCM-Matrix.
+> Here's a hint: the cost of a cache miss is generally about a hundred times 
+
+100 times seems quite optimistic %)
+
 > 
-> This is just for making sure I did not oversee anything.
-> 
-> I didn't came across anything like 'cvs export' and I do not
-> think git really needs this, since it doesn't pollute the working
-> directories with lots of waste like CVS and SVN does.
-> 
-> But I just want to make sure to not build workarounds in our
-> scm-provider (checkout + afterwards blasting the GIT_DIR) for things
-> that do exist natively in git.
+> No, zlib isn't perfect, and nope, inflate_fast() is no "memcpy()". And 
+> yes, I'm sure a pure memcpy would be much faster. But I seriously suspect 
+> that a lot of the cost is literally in bringing in the source data to the 
+> CPU. Because we just mmap() the whole pack-file, the first access to the 
+> data is going to see the cost of the cache misses.
 
-You can use:
+I would have thought that zlib has a sequential access pattern that the
+CPU prefetchers have a easy time with hiding latency.
 
-  git archive --tar HEAD | (mkdir ../dest;cd ../dest;tar xf -)
+BTW I always wonder why people reason about cache misses in oprofile
+logs without actually using the cache miss counters.
 
-Or you can do something even more bizzare like:
-
-  export GIT_INDEX_FILE=/tmp/$$.index;
-  export GIT_WORK_TREE=../dest;
-  export GIT_DIR=.git;
-  git read-tree HEAD &&
-  git checkout-index --force --all &&
-  rm $GIT_INDEX_FILE
-
--- 
-Shawn.
+-Andi
