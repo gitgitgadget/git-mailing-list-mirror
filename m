@@ -1,76 +1,92 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Marcus Griep <marcus@griep.us>
 Subject: Re: [PATCH 2] count-objects: add human-readable size option
-Date: Thu, 14 Aug 2008 18:34:46 +0200
-Message-ID: <20080814163446.GD10360@machine.or.cz>
-References: <1218657910-22096-1-git-send-email-marcus@griep.us> <1218687684-11671-1-git-send-email-marcus@griep.us> <20080814151451.GA10544@machine.or.cz> <48A45CC9.5040708@griep.us>
+Date: Thu, 14 Aug 2008 12:42:00 -0400
+Message-ID: <48A46058.6090407@griep.us>
+References: <1218657910-22096-1-git-send-email-marcus@griep.us> <1218687684-11671-1-git-send-email-marcus@griep.us> <20080814151451.GA10544@machine.or.cz> <48A45CC9.5040708@griep.us> <20080814163446.GD10360@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Marcus Griep <marcus@griep.us>
-X-From: git-owner@vger.kernel.org Thu Aug 14 18:36:16 2008
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Aug 14 18:44:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTfnv-0000Fk-Gh
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 18:36:03 +0200
+	id 1KTfv5-0003GC-Pd
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 18:43:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755290AbYHNQet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 12:34:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752225AbYHNQes
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 12:34:48 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:41014 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752461AbYHNQes (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 12:34:48 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 0D7F53939B46; Thu, 14 Aug 2008 18:34:46 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <48A45CC9.5040708@griep.us>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1756116AbYHNQmI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2008 12:42:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756134AbYHNQmH
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 12:42:07 -0400
+Received: from qw-out-2122.google.com ([74.125.92.26]:47360 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750822AbYHNQmE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 12:42:04 -0400
+Received: by qw-out-2122.google.com with SMTP id 3so44801qwe.37
+        for <git@vger.kernel.org>; Thu, 14 Aug 2008 09:42:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=xQkjZKgTJvflu0H4hYdmRBPMWQgeNcNkIbjEozwq4S8=;
+        b=kaYXfO5s8haYgL1D/pRcVvDbBAcsgvCCHa7iHJKEt7JDtpYZNi36B47Pfem+EvUCIR
+         B6C9xOqqPhZxbri77aUAhyBCVm0ufyZswBGP8dApfql4k00v429tS5X+Gpepi9sEp2L0
+         6XmKgRZrhHG7oP4AC6dt8+IR1l9KMi9+xKAdg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=iGxFqOP/V0RI4dw7fObZ2qEYmBbZlzqAMOiMLKc3PfrmcEAELuds9UsU84HGJwITOp
+         7k/BBzwQ0zEvpr+YwVLKEV1TZ6DDnMpVvk/Ydgdd5gz5uLSM4SY8RfmvT8XMTWCLF21A
+         GwKLXmwg8vvgsgSqblitbgfCVn6ARw52nN1Sw=
+Received: by 10.214.43.9 with SMTP id q9mr1417194qaq.86.1218732123013;
+        Thu, 14 Aug 2008 09:42:03 -0700 (PDT)
+Received: from ?10.95.36.106? ( [4.79.245.132])
+        by mx.google.com with ESMTPS id q30sm3710377wrq.36.2008.08.14.09.42.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 14 Aug 2008 09:42:01 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <20080814163446.GD10360@machine.or.cz>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92370>
 
-On Thu, Aug 14, 2008 at 12:26:49PM -0400, Marcus Griep wrote:
-> Petr Baudis wrote:
-> > Are you aware of progress.c:throughput_string()? It would make sense to
-> > use the same code in both instances.
-> 
-> I was not. After reviewing it, it is limited to its purposes, but
-> consolidating the human-readable-ness is a good idea.
+Petr Baudis wrote:
+> I'm confused - you didn't seem to really address my suggestion. Is th=
+ere
+> a good reason _not_ to go with the /.iB/ prefixes, and just forget ab=
+out
+> SI? Who is ever going to need SI?
 
-Of course, it would need an usage overhaul. But otherwise, it seems
-fine? Terabyte-sized objects in Git would be very troublesome venture
-for many reasons.
+It's more of a not limiting support, but in the spirit of YAGNI, I can
+forget about SI until we find some reason to actually want it, and then
+add it at that point.
 
-> (who's got transfer speeds in TiB/s?)
+As for the /.iB/ prefixes, other than the actual magnitude prefix, 'iB'=
+,
+'B', 'bps', etc. would be supplied as a suffix by the consumer so as no=
+t
+to assume that we will be formatting bytes or widgets, since conceivabl=
+y
+you may want to know that there are 203k objects (which would be an SI
+use) or are transferring at a rate of 1.6k blobs/s.
 
-Maybe Dana Brown? ;-)
+In which case, it might be preferable to leave the SI in, since it woul=
+d
+allow more than just bytes to be formatted in shorter, human-readable
+form.
 
-> > I'd prefer you to keep using binary units instead of the ambiguous
-> > prefixes, since we should keep our output consistent and I believe they
-> > usually end up to be the least confusing choice. (Otherwise, don't you
-> > want to use "bkM" instead of "BKM"? I never really know.)
-> 
-> In general, "b" would be supplied as a part of the suffix, so that is no
-> longer in the prefix list.  The distinction comes with kilo vs. kibi.  In
-> an earlier email reply, I mentioned a flag to denote SI versus binary
-> periods.  In common nomenclature, Kilo (1000) is designated 'k', while
-> Kibi (1024) is designated 'K' (the 'i' after the 'K' is supplied by the
-> suffix if desired).  Thus, if the user wants binary, they'll get the capital
-> 'K', and if they want SI, they'll get the lowercase 'k'.
-> 
-> Sound reasonable?
-
-I'm confused - you didn't seem to really address my suggestion. Is there
-a good reason _not_ to go with the /.iB/ prefixes, and just forget about
-SI? Who is ever going to need SI?
-
--- 
-				Petr "Pasky" Baudis
-The next generation of interesting software will be done
-on the Macintosh, not the IBM PC.  -- Bill Gates
+--=20
+Marcus Griep
+GPG Key ID: 0x5E968152
+=E2=80=94=E2=80=94
+http://www.boohaunt.net
+=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
