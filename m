@@ -1,60 +1,174 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2] count-objects: add human-readable size option
-Date: Thu, 14 Aug 2008 09:39:46 +0200
-Message-ID: <48A3E142.9060606@viscovery.net>
-References: <1218657910-22096-1-git-send-email-marcus@griep.us> <1218687684-11671-1-git-send-email-marcus@griep.us>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [PATCH 2/3] git-daemon: make the signal handler almost a no-op
+Date: Thu, 14 Aug 2008 09:47:17 +0200
+Message-ID: <20080814074717.GC9680@cuci.nl>
+References: <20080813084330.30845.89753.stgit@aristoteles.cuci.nl> <20080813084331.30845.74788.stgit@aristoteles.cuci.nl> <7v1w0sjw47.fsf@gitster.siamese.dyndns.org> <20080814001858.GB14939@cuci.nl> <7v63q4ieqw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Marcus Griep <marcus@griep.us>
-X-From: git-owner@vger.kernel.org Thu Aug 14 09:40:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 14 09:48:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTXS2-0002HY-O4
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 09:40:55 +0200
+	id 1KTXZH-0004oT-Au
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 09:48:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752321AbYHNHjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 03:39:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752145AbYHNHjv
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 03:39:51 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:4514 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751966AbYHNHju (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 03:39:50 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KTXQw-0001Dg-Nn; Thu, 14 Aug 2008 09:39:46 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 640F954D; Thu, 14 Aug 2008 09:39:46 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <1218687684-11671-1-git-send-email-marcus@griep.us>
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1752346AbYHNHrT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 03:47:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752285AbYHNHrT
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 03:47:19 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:51567 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752065AbYHNHrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 03:47:19 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id F388E5465; Thu, 14 Aug 2008 09:47:17 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v63q4ieqw.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92332>
 
-Marcus Griep schrieb:
-> +void human_readable_size(char *buf, int buf_size, double size /* in bytes */)
-> +{
-> +	char human_readable_prefixes[10] = "BKMGTPEZY";
-> +	if (buf_size < 5)
-> +		die("insufficient buffer size");
-> +	int i = 0;
-> +	for (; i < 8 && size >= 1000 ; ++i, size = size / 1024)
-> +		;
-> +	if (size >= 1000)
-> +		die("size greater than 999Y");
+Junio C Hamano wrote:
+>"Stephen R. van den Berg" <srb@cuci.nl> writes:
+>>>> -	signal(SIGCHLD, SIG_DFL);
+>>>> +	child_handler(0);
 
-No need to die here. Just make the buffer large enough, and you can have
-something that is as large as 18446744073709551615Y.
+>>>After all, we might even want to do something like:
 
--- Hannes
+>>>	static void child_handler(int signo)
+>>>        {
+>>>        	if (USE_SYSV_SIGNAL_SEMANTICS)
+>>>                	signal(SIGCHLD, child_handler);
+
+>> In return I ask: why?
+
+>I agree it would be very meaningless change as an optimization, but I am
+>concerned more about robustness and what makes sense.
+
+Well, even if robustness and "the principle of least surprise" are
+the prime concerns, my change could still be considered worthwhile, but
+it depends on your viewpoint.
+
+>Do you agree that "child_handler()" is a signal handler to handle SIGCHLD,
+>and such a signal handler conceptually consists of two parts? i.e.
+
+Yes.
+
+>	static void child_handler()
+>        {
+>        	reap_dead_children();
+>                rearm_signal_as_needed();
+
+>Your argument is it is Ok to call this function when you are arming the
+>signal for the first time, because reap_dead_children() happens to be
+>empty, and your rearm_signal_as_needed() happens to be the same as
+>arm_signal_always().
+
+Well, not quite, that is part of the argument, the other parts are
+implicit.
+
+>Yes, it happens to be _Ok_ now.  But is it an improvement in the longer
+>term?  I do not think so.
+
+>I do not see why you think it is better to rely on these two assumptions
+>than being explicit and say "we set up the signal for the first time
+>always on any platform", especially when the latter is much more direct
+>way to say what your intention is.
+
+Renaming the function could do it.
+
+>  Or are you gaining something by not
+>explicitly calling signal() for the first time?  I may be missing some
+>benefit for doing so.
+
+Well, strictly speaking the benefits you're overlooking is:
+
+ It centralises the spot where the systemcall is made to arm the
+ handler.  This means that if the setup needed to arm the handler
+ ever becomes more complicated in future OSes, it only needs to be
+ updated in one place.  This is a direct maintainability benefit.
+
+>It is a trade-off between that some benefit I am not seeing, and downside
+>that your version can be broken more easily by future changes to
+>child_handler(), because you are assuming more about what it happens to do
+>currently.
+
+>That's the kind of thing maintainers worry more about.
+
+Well, I see two solutions which increase maintainability:
+
+Solution A:
+==================================
+void child_handler(int signo) {
+  signal(SIGCHLD, child_handler);	/* rearm always for portability */
+}
+
+main() {
+  ...
+  signal(SIGCHLD, child_handler);
+  ...
+}
+==================================
+
+Solution B:
+==================================
+void setup_child_handler(int signo) {
+  signal(SIGCHLD, setup_child_handler);	/* rearm always for portability */
+}
+
+main() {
+  ...
+  setup_child_handler(0);
+  ...
+}
+==================================
+
+Solution C:
+==================================
+void setup_child_handler(void);
+
+void child_handler(int signo) {
+  setup_child_handler();		/* rearm always for portability */
+}
+
+void setup_child_handler(void) {
+  signal(SIGCHLD, child_handler);
+}
+
+main() {
+  ...
+  setup_child_handler();
+  ...
+}
+==================================
+
+Solution A is what you propose, but which I find less appealing because
+any future magic to actually setup the handler needs to be maintained
+and updated in two places.
+
+Solution C is what follows your train of thought better, because it
+future-proofs the setup as well as the handler.
+
+Solution B is what I consider most elegant and maintainable, because at
+this point in time I cannot imagine what extra handling would be
+required inside the handler which would require a setup as complicated
+as solution C; so in order to keep it as simple as possible and
+eliminate forward declarations and minimise systemcalls I suggest we
+pick solution B until the need for solution C ever arises (I don't
+think it ever will).
+
+But, in any case, you're the maintainer here, not I, so it's your call.
+I vote for B, but just tell me which solution you prefer and I'll adapt
+the code?
+-- 
+Sincerely,
+           Stephen R. van den Berg.
+
+"Hold still, while I inject you with SQL."
