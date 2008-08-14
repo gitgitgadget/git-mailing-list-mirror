@@ -1,74 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2] count-objects: add human-readable size option
-Date: Thu, 14 Aug 2008 16:05:28 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808141604190.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <1218657910-22096-1-git-send-email-marcus@griep.us> <1218687684-11671-1-git-send-email-marcus@griep.us> <20080814043817.GC11232@spearce.org> <7vskt8f9x2.fsf@gitster.siamese.dyndns.org>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: Git tree/blob and corresponding commit
+Date: Thu, 14 Aug 2008 16:02:20 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <48A43AEC.6000904@obry.net>
+References: <489F208B.2070006@obry.net> <Pine.GSO.4.62.0808101519220.16851@harper.uchicago.edu> <Pine.GSO.4.62.0808101542140.17376@harper.uchicago.edu>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Marcus Griep <marcus@griep.us>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 14 16:02:35 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@uchicago.edu>
+X-From: git-owner@vger.kernel.org Thu Aug 14 16:04:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTdP9-00039x-4u
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 16:02:19 +0200
+	id 1KTdQq-0003tr-O2
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 16:04:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753378AbYHNOAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2008 10:00:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754112AbYHNOAp
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 10:00:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40456 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752968AbYHNOAo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 10:00:44 -0400
-Received: (qmail invoked by alias); 14 Aug 2008 14:00:42 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp009) with SMTP; 14 Aug 2008 16:00:42 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+AD/cHceOAMx8nxjDg1mG7ibFMoNkCH/ZOWTPnDk
-	Q9bPKtxox8028C
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <7vskt8f9x2.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1751215AbYHNOC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 10:02:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbYHNOC1
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 10:02:27 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:41085 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750735AbYHNOC0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 10:02:26 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so341138yxm.1
+        for <git@vger.kernel.org>; Thu, 14 Aug 2008 07:02:25 -0700 (PDT)
+Received: by 10.102.253.6 with SMTP id a6mr998534mui.92.1218722544285;
+        Thu, 14 Aug 2008 07:02:24 -0700 (PDT)
+Received: from ?192.168.1.11? ( [90.51.157.92])
+        by mx.google.com with ESMTPS id g1sm4382945muf.8.2008.08.14.07.02.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 14 Aug 2008 07:02:23 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.8.1.16) Gecko/20080708 Thunderbird/2.0.0.16 Mnenhy/0.7.5.0
+In-Reply-To: <Pine.GSO.4.62.0808101542140.17376@harper.uchicago.edu>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92360>
 
-Hi,
+Jonathan,
 
-On Wed, 13 Aug 2008, Junio C Hamano wrote:
+> but I actually meant
+> <http://thread.gmane.org/gmane.comp.version-control.git/44750/focus=44849>.
+> Anyway, the whole thread is interesting.  Sorry for the noise.
 
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > Marcus Griep <marcus@griep.us> wrote:
-> >> diff --git a/Documentation/git-count-objects.txt b/Documentation/git-count-objects.txt
-> >> index 75a8da1..291bc5e 100644
-> >> --- a/Documentation/git-count-objects.txt
-> >> +++ b/Documentation/git-count-objects.txt
-> >> +++ b/builtin-count-objects.c
-> > ...
-> >> +void human_readable_size(char *buf, int buf_size, double size /* in bytes */)
-> >
-> > Hmm.  This probably should be static.  Or if it really is meant
-> > to be a utility for use elsewhere in Git, moved to someplace where
-> > string handling is done.  Its not strbuf related, but maybe strbuf.c
-> > is a better location for this sort of library function.
-> 
-> Yes, with customizable precision (so that the caller can control "1.6k" vs
-> "1.62k"), and perhaps cutomizable unit (so that you can use this for
-> "3.6kB" and "2.6Mbps"), this kind of thing is a good candidate to be a
-> library function in strbuf.c.
+Thanks, I had a look. This is indeed giving some procedure... I was 
+hopping for something faster (git rev-list takes some time!).
 
-Or, should it ever be merged into git.git, the strbuf_vaddf() routine I 
-wrote.
+-- 
 
-Ciao,
-Dscho
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
