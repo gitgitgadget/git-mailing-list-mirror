@@ -1,97 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (Aug 2008, #03; Thu, 14)
-Date: Thu, 14 Aug 2008 01:56:56 -0700
-Message-ID: <7v1w0sdlev.fsf@gitster.siamese.dyndns.org>
+From: "David Tweed" <david.tweed@gmail.com>
+Subject: Re: pack operation is thrashing my server
+Date: Thu, 14 Aug 2008 10:04:55 +0100
+Message-ID: <e1dab3980808140204t29b56fa4h3b22e52fc576fb1e@mail.gmail.com>
+References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
+	 <87vdy71i6w.fsf@basil.nowhere.org>
+	 <1EE44425-6910-4C37-9242-54D0078FC377@adacore.com>
+	 <20080813031503.GC5855@spearce.org>
+	 <70550C21-8358-4BEF-A7BA-3A41C1ACB346@adacore.com>
+	 <alpine.LFD.1.10.0808131036590.4352@xanadu.home>
+	 <m363q5t152.fsf@localhost.localdomain>
+	 <20080813150425.GC3782@spearce.org>
+	 <e1dab3980808130826m4870df3ctf09ecf0062ef6e7c@mail.gmail.com>
+	 <46a038f90808131654r228a1b57y964f7cdb9c77be5f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 14 10:58:54 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Jakub Narebski" <jnareb@gmail.com>,
+	"Nicolas Pitre" <nico@cam.org>, "Geert Bosch" <bosch@adacore.com>,
+	"Andi Kleen" <andi@firstfloor.org>, "Ken Pratt" <ken@kenpratt.net>,
+	git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 14 11:06:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTYem-0001xS-SS
-	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 10:58:09 +0200
+	id 1KTYmq-0004xG-Jk
+	for gcvg-git-2@gmane.org; Thu, 14 Aug 2008 11:06:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752740AbYHNI5G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2008 04:57:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753240AbYHNI5E
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 04:57:04 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59749 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752315AbYHNI5C convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Aug 2008 04:57:02 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8C396585A6;
-	Thu, 14 Aug 2008 04:57:01 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 77C59585A5; Thu, 14 Aug 2008 04:56:59 -0400 (EDT)
-X-maint-at: 21926fe885aa6579f7aa0e89fcb6a9064f8aa516
-X-master-at: a0653d550524a0263d36fde6a8cf98941dd057ab
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F5A0C554-69DE-11DD-ADF8-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1758614AbYHNJE7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 05:04:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758541AbYHNJE6
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 05:04:58 -0400
+Received: from wf-out-1314.google.com ([209.85.200.172]:5168 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758374AbYHNJE4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 05:04:56 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so578924wfd.4
+        for <git@vger.kernel.org>; Thu, 14 Aug 2008 02:04:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=dX0smNaBTAyTem9WPmW0CHJTguD14T5oeNPWo/rgbX0=;
+        b=UgOeK491z77H5/YdPqw7HKQwuKwBewPx8GgAb4d/b/dqD0ttn7KlfqodTu5KC5se1D
+         zpya9rbquK5PwgA1MpOb9n53mT3hq9u+YgRIB7vJR4kb+yG7VLVIB8QagGxWHO92gSRb
+         jHv6Io090stcsN+4sbghj+NNigfY7K1oHe4D4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=JeFEphi5JrPhWK+OwG9hhXtdaIOnEwZmtgXD1wTJN+O2xOTyv4mQJHvP1wDF+jAkKC
+         KvRL9hIGwTjcjcrjqUxZDWkRPL/IfR0HXPhGy3iwXYXvpt4McQ1fbyzEWdTAjxrIg3RG
+         poTPz6ualyjfGR78Vi2fePLZttqQalxzvaD9Y=
+Received: by 10.142.157.15 with SMTP id f15mr394039wfe.186.1218704695293;
+        Thu, 14 Aug 2008 02:04:55 -0700 (PDT)
+Received: by 10.142.233.14 with HTTP; Thu, 14 Aug 2008 02:04:55 -0700 (PDT)
+In-Reply-To: <46a038f90808131654r228a1b57y964f7cdb9c77be5f@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92338>
 
-We will have the 1.6.0 final this weekend.  Please keep "obviously
-correct" fixes flowing in.
+On Thu, Aug 14, 2008 at 12:54 AM, Martin Langhoff
+<martin.langhoff@gmail.com> wrote:
+> On Thu, Aug 14, 2008 at 3:26 AM, David Tweed <david.tweed@gmail.com> wrote:
+>> FWIW, PDF format is a mix of sections of uncompressed higher level
+>> ASCII notation and sections of compressed actual glyph/location data
+>
+> The PDF spec allows compression of the "text" sections - if a PDF is
+> uncompressed, it's a good candidate for delta & compression.
+> Unfortunately, within the same file you might have an embedded JPEG.
 
-* The 'maint' branch has these fixes since the last announcement.
+Sure, all I was pointing out was that even pdfs with compressed page
+contents can look like uncompressed text from looking at the entropy
+of the first 4k or 8k.
 
-Brandon Casey (1):
-  t5304-prune: adjust file mtime based on system time rather than file
-    mtime
-
-=46rancis Moreau (1):
-  git-bisect: fix wrong usage of read(1)
-
-Junio C Hamano (2):
-  Re-fix rev-list-options documentation
-  Do not talk about "diff" in rev-list documentation.
-
-Kevin Ballard (1):
-  Fix escaping of glob special characters in pathspecs
-
-
-* The 'master' branch has these since the last announcement
-  in addition to the above.
-
-Brandon Casey (1):
-  test-parse-options: use appropriate cast in length_callback
-
-Gustaf Hendeby (2):
-  gitattributes: Document built in hunk header patterns
-  Teach git diff about BibTeX head hunk patterns
-
-Junio C Hamano (2):
-  diff --check: do not unconditionally complain about trailing empty li=
-nes
-  GIT 1.6.0-rc3
-
-Marcus Griep (3):
-  Git.pm: Add faculties to allow temp files to be cached
-  git-svn: Make it incrementally faster by minimizing temp files
-  git-svn: Reduce temp file usage when dealing with non-links
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
-  Fix typo in comments of longest_ancestor_length()
-
-Petr Baudis (1):
-  Adjust for the new way of enabling the default post-update hook
-
-Stephen R. van den Berg (1):
-  git-daemon: SysV needs the signal handler reinstated.
-
-Thomas Rast (4):
-  Documentation: rev-list-options: Fix a typo
-  Documentation: rev-list-options: Rewrite simplification descriptions =
-for
-    clarity
-  rebase -i -p: handle index and workdir correctly
-  rebase -i -p: fix parent rewriting
+-- 
+cheers, dave tweed__________________________
+david.tweed@gmail.com
+Rm 124, School of Systems Engineering, University of Reading.
+"while having code so boring anyone can maintain it, use Python." --
+attempted insult seen on slashdot
