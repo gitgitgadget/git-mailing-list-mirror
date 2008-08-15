@@ -1,93 +1,63 @@
-From: Marcus Griep <marcus@griep.us>
-Subject: Re: [PATCH v2 2/3] strbuf: Add method to convert byte-size to human
- readable form
-Date: Thu, 14 Aug 2008 20:53:59 -0400
-Message-ID: <48A4D3A7.6080109@griep.us>
-References: <1218752308-3173-1-git-send-email-marcus@griep.us> <1218752308-3173-2-git-send-email-marcus@griep.us> <1218752308-3173-3-git-send-email-marcus@griep.us> <20080814223429.GC10544@machine.or.cz> <7viqu3ci5k.fsf@gitster.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: pack operation is thrashing my server
+Date: Thu, 14 Aug 2008 21:46:40 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0808142139410.4352@xanadu.home>
+References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
+ <alpine.LFD.1.10.0808131228270.4352@xanadu.home> <48A3D1D7.5030805@op5.se>
+ <200808141204.07530.trast@student.ethz.ch> <48A405A6.7000405@op5.se>
+ <20080814223327.GV3782@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>, Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 15 02:55:13 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Andreas Ericsson <ae@op5.se>, Thomas Rast <trast@student.ethz.ch>,
+	Geert Bosch <bosch@adacore.com>,
+	Andi Kleen <andi@firstfloor.org>, Ken Pratt <ken@kenpratt.net>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Aug 15 03:47:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTnay-0007Eg-0L
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 02:55:12 +0200
+	id 1KToPv-0001dK-8i
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 03:47:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752223AbYHOAyJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2008 20:54:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751052AbYHOAyI
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 20:54:08 -0400
-Received: from wr-out-0506.google.com ([64.233.184.229]:50068 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750738AbYHOAyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2008 20:54:07 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so805802wri.5
-        for <git@vger.kernel.org>; Thu, 14 Aug 2008 17:54:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=xhhOmbvlsM2xcb4Mrg2gRaZLP9u87KLuxDYzJ4irYjI=;
-        b=jDKkKBc6C8g6r7ABk3DlCdwJGxfsSLDjEibzBYftzUQqqxyAJhFP9hwL0xe7iM1Fxw
-         9W5LH33eZlRjAoKJGPF1hesbMI/MPczCSuDKgbW0YudkuuQ8VdP3Zdde/6fCmKni/cCT
-         0ZLBrExrC0GlS6QQ5JbTwTlWkJ9fkE6VxwQKw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding:sender;
-        b=YCt1FlPA5c228G3XzBxtXeQNdD1WYB/hBtYJG7Hmn15uC4ULQkqzUL4jLvze9+uExK
-         V5IKkin8hF4tJ16m9hzf7NASjIUBkJAZKjitl9N7ModJv0BFrWyLgtGFJ0QMQZzhlez9
-         DRYlXrJZYByTa33FMQ+EIplw4MjENR3z3ofNo=
-Received: by 10.90.53.1 with SMTP id b1mr2763008aga.56.1218761645101;
-        Thu, 14 Aug 2008 17:54:05 -0700 (PDT)
-Received: from ?192.168.1.3? ( [71.174.65.78])
-        by mx.google.com with ESMTPS id 10sm4579331wrl.11.2008.08.14.17.54.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 14 Aug 2008 17:54:02 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <7viqu3ci5k.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.6
+	id S1752412AbYHOBqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 21:46:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752440AbYHOBqs
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 21:46:48 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:43691 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752346AbYHOBqr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 21:46:47 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K5M003O3CX1MV10@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 14 Aug 2008 21:46:13 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20080814223327.GV3782@spearce.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92455>
 
-Junio C Hamano wrote:
-> 	960 bps
->         0.9 KiB/s
-> 	2.3 MiB/s
+On Thu, 14 Aug 2008, Shawn O. Pearce wrote:
 
-A pedantic note, but bps is bits per second, whereas Bps or B/s is byte=
-s
-per second.  Requiring the same suffix for each would prevent some easi=
-ly
-overlooked issues like this.
+> Andreas Ericsson <ae@op5.se> wrote:
+> > How does one go about getting the object sizes? rev-list appears
+> > to have no option for it.
+> 
+> With great pain.  You can use the output of verify-pack -v to
+> tell you the size of the inflated portion of the object, but for
+> a delta this is the inflated size of the delta, not of the fully
+> unpacked object.
 
-> I also am not particularly happy about using "double" in this API.  M=
-ost
-> of the callers that gather stats in the rest of the codebase count in
-> (long) integers as far as I can tell, and it may be conceptually clea=
-ner
-> to keep the use of double as an internal implementation issue of this
-> particular function.
+Delta objects have the size of the final object in their header.  There 
+is get_size_from_delta() extracting that information already.  There is 
+simply no interface exporting that info to external tools but that 
+shouldn't be hard to add.
 
-The function requires the use of a double for fractional parts, so lett=
-ing=20
-the compiler perform an upcast were necessary seems innocuous to me.
 
-Also, Yibi-/Zibi-, unlikely to be used as they are, won't fit in a long=
-=2E
-
---=20
-Marcus Griep
-GPG Key ID: 0x5E968152
-=E2=80=94=E2=80=94
-http://www.boohaunt.net
-=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
+Nicolas
