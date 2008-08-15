@@ -1,113 +1,88 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: [PATCH] Fix t3700 on filesystems which do not support question marks in names
-Date: Fri, 15 Aug 2008 09:32:30 +0200
-Message-ID: <81b0412b0808150032o20f69346jb4f573b78cd11f2b@mail.gmail.com>
-References: <81b0412b0808150011r534d8453yab2a5c42b255657f@mail.gmail.com>
-	 <7vproabvcr.fsf@gitster.siamese.dyndns.org>
-	 <81b0412b0808150023sd30559fi68ff1e439013f26e@mail.gmail.com>
+From: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
+Subject: Re: [TopGit PATCH] tg-create.sh: Introduce --add option to add a
+ dependency.
+Date: Fri, 15 Aug 2008 10:10:34 +0200
+Organization: lilypond-design.org
+Message-ID: <1218787834.7585.13.camel@heerbeest>
+References: <1218637514.7561.30.camel@heerbeest>
+	 <Pine.GSO.4.62.0808131100280.1278@harper.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_114533_21022852.1218785550055"
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Kevin Ballard" <kevin@sb.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 15 09:34:01 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>, Jan Holesovsky <kendy@suse.cz>
+To: Jonathan Nieder <jrnieder@uchicago.edu>
+X-From: git-owner@vger.kernel.org Fri Aug 15 10:12:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTtot-0001X0-VI
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 09:34:00 +0200
+	id 1KTuPi-0004oo-Md
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 10:12:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751753AbYHOHcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Aug 2008 03:32:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751711AbYHOHcb
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 03:32:31 -0400
-Received: from rv-out-0506.google.com ([209.85.198.230]:12380 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750953AbYHOHca (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2008 03:32:30 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so824473rvb.1
-        for <git@vger.kernel.org>; Fri, 15 Aug 2008 00:32:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type:references;
-        bh=1qHGjO6KlNDGM96249zzdT1cUj44IhKDnbdUGPBAJGg=;
-        b=PrYOUMG5nHUFZfGZbMab9iBitAf3X0mjunna0KNlWxLAmDV1qnSfMB5ERCzu39wpC8
-         ZEpCgUTIJt5oNVaa/i8xHAfT528qbr0gkAwk0YvU9BcbUCwEwmdBIFj0lzonCIvXuzsz
-         ULn8/4jcypz4IQNswr9x/tJVRgT6l7ww2UnMg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:references;
-        b=iMbLs4RDQ81Ly9cbSgQGqiQiTVfaLlbgnegw3Je+DjRZ6+XKSBIAQa6i9cvtN/14fG
-         4ViX0LMHG+Hqm6O2v2RSjgLKOxzGlBL1zfiQ4lpCldp+++rppJvURYjwcXBIvRioCk4+
-         UopP3wtQznOVCGYe7QB16D+fkyEV1UzrXtr8k=
-Received: by 10.114.73.1 with SMTP id v1mr2203720waa.166.1218785550047;
-        Fri, 15 Aug 2008 00:32:30 -0700 (PDT)
-Received: by 10.114.157.9 with HTTP; Fri, 15 Aug 2008 00:32:30 -0700 (PDT)
-In-Reply-To: <81b0412b0808150023sd30559fi68ff1e439013f26e@mail.gmail.com>
+	id S1752732AbYHOIKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Aug 2008 04:10:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752691AbYHOIKj
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 04:10:39 -0400
+Received: from edu-smtp-02.edutel.nl ([88.159.1.222]:34562 "EHLO
+	edu-smtp-02.edutel.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752530AbYHOIKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2008 04:10:37 -0400
+Received: from heerbeest (unknown [88.159.206.46])
+	by edu-smtp-02.edutel.nl (Postfix) with ESMTP id 765E611E65C;
+	Fri, 15 Aug 2008 10:10:36 +0200 (CEST)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by heerbeest (Postfix) with ESMTP id F273FDC070;
+	Fri, 15 Aug 2008 10:10:35 +0200 (CEST)
+In-Reply-To: <Pine.GSO.4.62.0808131100280.1278@harper.uchicago.edu>
+X-Mailer: Evolution 2.23.6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92464>
 
-------=_Part_114533_21022852.1218785550055
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+On wo, 2008-08-13 at 11:20 -0500, Jonathan Nieder wrote:
 
-Use square brackets instead.
+Hi,
 
-And the prominent example of the deficiency are, as usual, the filesystems
-of Microsoft house.
+> Interesting - I had imagined changing dependencies working in an
+> entirely different way.
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+Thanks!  This is quite interesting.  A few questions
 
-2008/8/15 Junio C Hamano <gitster@pobox.com>:
->>> And the prominent example of the deficiency are, as usual, the filesystems
->>> of Microsoft house.
->>
->> Can other glob specials such as '*' or '[' be used instead of skipping the
->> test?
->
-> Ah... The brackets are allowed.
+> 
+> 	$ git checkout -b P' P
+> 	$ git rebase --onto B' B
 
-Sorry, should have thought of it.
+.. is using rebase a robust solution?  We should provide a way to
+recover after user intervention here?
 
- t/t3700-add.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+> 	$ git checkout P
+> 	$ git merge --no-ff --no-commit B'   (*)
 
-------=_Part_114533_21022852.1218785550055
-Content-Type: text/x-patch;
- name=0001-Fix-t3700-on-filesystems-which-do-not-support-questi.patch
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fjwhfxti0
-Content-Disposition: attachment;
- filename=0001-Fix-t3700-on-filesystems-which-do-not-support-questi.patch
+Do you remember in what area the problem is here, that would make it a 
+lot easier for me to look.
 
-RnJvbSAzYTI1NTI3ZmE2MTQ2M2Q1OTY4NTg2ZWZhMWYzNDc0MDA4YmJlMmQ0IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBGcmksIDE1IEF1ZyAyMDA4IDA5OjAwOjU0ICswMjAwClN1YmplY3Q6IFtQQVRDSF0gRml4IHQz
-NzAwIG9uIGZpbGVzeXN0ZW1zIHdoaWNoIGRvIG5vdCBzdXBwb3J0IHF1ZXN0aW9uIG1hcmtzIGlu
-IG5hbWVzCgpVc2Ugc3F1YXJlIGJyYWNrZXRzIGluc3RlYWQuCgpBbmQgdGhlIHByb21pbmVudCBl
-eGFtcGxlIG9mIHRoZSBkZWZpY2llbmN5IGFyZSwgYXMgdXN1YWwsIHRoZSBmaWxlc3lzdGVtcwpv
-ZiBNaWNyb3NvZnQgaG91c2UuCgpTaWduZWQtb2ZmLWJ5OiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxA
-Z21haWwuY29tPgotLS0KIHQvdDM3MDAtYWRkLnNoIHwgICAgOCArKysrLS0tLQogMSBmaWxlcyBj
-aGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvdC90
-MzcwMC1hZGQuc2ggYi90L3QzNzAwLWFkZC5zaAppbmRleCA3N2E3ODJjLi4yYWM5M2EzIDEwMDc1
-NQotLS0gYS90L3QzNzAwLWFkZC5zaAorKysgYi90L3QzNzAwLWFkZC5zaApAQCAtMjIyLDExICsy
-MjIsMTEgQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyAnZ2l0IGFkZCAoYWRkLmlnbm9yZS1lcnJvcnMg
-PSBmYWxzZSknICcKIAkhICggZ2l0IGxzLWZpbGVzIGZvbzEgfCBncmVwIGZvbzEgKQogJwogCi10
-ZXN0X2V4cGVjdF9zdWNjZXNzICdnaXQgYWRkICdcJydmb1w/YmFyJ1wnJyBpZ25vcmVzIGZvb2Jh
-cicgJwordGVzdF9leHBlY3Rfc3VjY2VzcyAnZ2l0IGFkZCAnXCcnZm9cW291XF1iYXInXCcnIGln
-bm9yZXMgZm9vYmFyJyAnCiAJZ2l0IHJlc2V0IC0taGFyZCAmJgotCXRvdWNoIGZvXD9iYXIgZm9v
-YmFyICYmCi0JZ2l0IGFkZCAnXCcnZm9cP2JhcidcJycgJiYKLQlnaXQgbHMtZmlsZXMgZm9cP2Jh
-ciB8IGdyZXAgLUYgZm9cP2JhciAmJgorCXRvdWNoIGZvXFtvdVxdYmFyIGZvb2JhciAmJgorCWdp
-dCBhZGQgJ1wnJ2ZvXFtvdVxdYmFyJ1wnJyAmJgorCWdpdCBscy1maWxlcyBmb1xbb3VcXWJhciB8
-IGdyZXAgLUYgZm9cW291XF1iYXIgJiYKIAkhICggZ2l0IGxzLWZpbGVzIGZvb2JhciB8IGdyZXAg
-Zm9vYmFyICkKICcKIAotLSAKMS42LjAucmMyLjY4Lmc0OWZhMwoK
-------=_Part_114533_21022852.1218785550055--
+> 	$ git read-tree -u P'
+
+Ouch, I'm feeling so git-unitiated here; what is read-tree doing 
+differently from merge?  Isn't here a -m missing?
+
+> The main problem I see with this story is that if B' is just B with some
+> new changes added this is overly complicated.
+
+Yes, that's my main gripe.  One of the use cases I'm looking at is
+our ooo-build master branch; which includes ~300 topic branches.
+
+Removing or [re-]adding one dependency using this rebase-by-merging 
+approch would take ~7 minutes on my machine.
+
+I'm now also looking at a .topundeps file, to support
+the re-adding of a depenency using the cherry-pick approach...
+
+Greetings,
+Janneke. 
+
+-- 
+Jan Nieuwenhuizen <janneke@gnu.org> | GNU LilyPond - The music typesetter
+http://www.xs4all.nl/~jantien       | http://www.lilypond.org
