@@ -1,58 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add boolean diff.suppress-blank-empty config option
-Date: Fri, 15 Aug 2008 11:28:38 -0700
-Message-ID: <7v4p5mb0a1.fsf@gitster.siamese.dyndns.org>
-References: <87k5eiphro.fsf@rho.meyering.net>
+From: Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH] bash-completion: Add non-command git help files to bash-completion
+Date: Fri, 15 Aug 2008 14:33:43 -0400
+Message-ID: <48A5CC07.2040500@griep.us>
+References: <1218816948-7864-1-git-send-email-marcus@griep.us> <7v8wuyb0m7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>, Paul Eggert <eggert@cs.ucla.edu>
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Fri Aug 15 20:29:58 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 15 20:35:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KU43Z-0004fU-Av
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 20:29:49 +0200
+	id 1KU48S-0006q8-OY
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 20:34:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756505AbYHOS2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Aug 2008 14:28:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755180AbYHOS2q
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 14:28:46 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35650 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754573AbYHOS2p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2008 14:28:45 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BBB57607EB;
-	Fri, 15 Aug 2008 14:28:44 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 2DE53607EA; Fri, 15 Aug 2008 14:28:41 -0400 (EDT)
-In-Reply-To: <87k5eiphro.fsf@rho.meyering.net> (Jim Meyering's message of
- "Fri, 15 Aug 2008 14:47:07 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FE56DD86-6AF7-11DD-AD93-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1757089AbYHOSdu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Aug 2008 14:33:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756515AbYHOSdt
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 14:33:49 -0400
+Received: from wr-out-0506.google.com ([64.233.184.238]:40996 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754573AbYHOSds (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2008 14:33:48 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so1152931wri.5
+        for <git@vger.kernel.org>; Fri, 15 Aug 2008 11:33:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=gebftJw+inki0vUgtHJqcbyINZGlxwcbk64anxw5s3c=;
+        b=wKQGXjBQ4Ho0l7l60XXXBZRr2TIcF5s6Rh2AtW344eOnl5kCi3iOPdjlZmAJLyVJDT
+         mEAbLlONtbo8AUUjJKsg6ZaAJVZpE1iK+yZMA5df9KS8hA+sOBihtj98rXzrAEsQYSR7
+         iflCKLljgMKmouA3EMSNcVVE7cA//lLjJAypU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=aFAeOXRLkoJiq4LixIeQldQauW1VHxs2G36kFeHaGv52MHLy/WUJdSzNN01vNBE8+8
+         6paOTjt1BWnkFmXWFXfFo2S8Lb+N+76LRduRlIkds4z+aIStT6tpMAIrSBPjSnmjCKYE
+         +BTa5BLNS/5SySXorAE1M1vzr12Ahp7yT1oAo=
+Received: by 10.90.99.6 with SMTP id w6mr4089940agb.0.1218825227514;
+        Fri, 15 Aug 2008 11:33:47 -0700 (PDT)
+Received: from ?10.95.36.106? ( [4.79.245.132])
+        by mx.google.com with ESMTPS id g5sm2131066wra.35.2008.08.15.11.33.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 15 Aug 2008 11:33:46 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <7v8wuyb0m7.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92506>
 
-Jim Meyering <jim@meyering.net> writes:
+Junio C Hamano wrote:
+> Marcus Griep <marcus@griep.us> writes:
+>=20
+>> Git allows access to the gitattributes man page via `git help attrib=
+utes`,
+>> but this is not discoverable via the bash-completion mechanism.  Thi=
+s
+>> patch adds all current non-command man pages to the completion candi=
+date
+>> list.
+>=20
+> I really do not think this belongs to completion.  "git help topics"
+> perhaps.
 
-> GNU diff's --suppress-blank-empty option makes it so that diff does not
-> add a space or tab before each empty output line of context.  With this
-> option, empty context lines are empty also in "git diff" output.
+I'm not sure I grok what you mean here...  These items are already acce=
+ssible
+from `git help`, they just aren't discoverable through bash-completion =
+without
+the patch.
 
-AFAIK, ERN 103/120 inspired by your comment merely says an empty context
-is either an empty line or a line with a single space on it and does not
-deprecate the latter, more traditional, form (I do not know the current
-status of the update to the POSIX --- what's the recommended way to find
-it out by outsiders?)
-
-We've hacked the patch application side to accomodate this special case to
-grok output from recent GNU diff already.  Can't we just stop at that,
-without having to do the same for generation side?  What's the downside of
-not doing so?
+--=20
+Marcus Griep
+GPG Key ID: 0x5E968152
+=E2=80=94=E2=80=94
+http://www.boohaunt.net
+=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
