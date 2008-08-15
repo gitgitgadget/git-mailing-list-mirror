@@ -1,83 +1,68 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: pack operation is thrashing my server
-Date: Thu, 14 Aug 2008 17:06:13 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0808141656120.3324@nehalem.linux-foundation.org>
-References: <20080813145944.GB3782@spearce.org> <alpine.LFD.1.10.0808131123221.4352@xanadu.home> <20080813155016.GD3782@spearce.org> <alpine.LFD.1.10.0808131228270.4352@xanadu.home> <alpine.LFD.1.10.0808141014410.3324@nehalem.linux-foundation.org>
- <alpine.LFD.1.10.0808141022500.3324@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808141442150.4352@xanadu.home> <alpine.LFD.1.10.0808141215520.3324@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808141633080.4352@xanadu.home>
- <alpine.LFD.1.10.0808141544150.3324@nehalem.linux-foundation.org> <20080814233958.GA31225@atjola.homenet>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/3] count-objects: add human-readable size option
+Date: Thu, 14 Aug 2008 17:10:25 -0700
+Message-ID: <7vabffcf4e.fsf@gitster.siamese.dyndns.org>
+References: <1218752308-3173-1-git-send-email-marcus@griep.us>
+ <1218752308-3173-2-git-send-email-marcus@griep.us>
+ <1218752308-3173-3-git-send-email-marcus@griep.us>
+ <1218752308-3173-4-git-send-email-marcus@griep.us>
+ <20080814223740.GD10544@machine.or.cz> <48A4C521.6090507@griep.us>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@cam.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Geert Bosch <bosch@adacore.com>,
-	Andi Kleen <andi@firstfloor.org>, Ken Pratt <ken@kenpratt.net>,
-	git@vger.kernel.org
-To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 15 02:08:10 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, Git Mailing List <git@vger.kernel.org>
+To: Marcus Griep <marcus@griep.us>
+X-From: git-owner@vger.kernel.org Fri Aug 15 02:11:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTmrS-0005Fe-4P
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 02:08:10 +0200
+	id 1KTmuq-0006BT-Tm
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 02:11:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752277AbYHOAHE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2008 20:07:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752282AbYHOAHD
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 20:07:03 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:38663 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752225AbYHOAHB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Aug 2008 20:07:01 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7F06EnD032172
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 14 Aug 2008 17:06:16 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7F06Dfs004446;
-	Thu, 14 Aug 2008 17:06:14 -0700
-In-Reply-To: <20080814233958.GA31225@atjola.homenet>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.413 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751433AbYHOAKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2008 20:10:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbYHOAKi
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Aug 2008 20:10:38 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39905 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750738AbYHOAKi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2008 20:10:38 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D1F0F5D41E;
+	Thu, 14 Aug 2008 20:10:36 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 26C235D41D; Thu, 14 Aug 2008 20:10:32 -0400 (EDT)
+In-Reply-To: <48A4C521.6090507@griep.us> (Marcus Griep's message of "Thu, 14
+ Aug 2008 19:52:01 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9615EE72-6A5E-11DD-A548-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92446>
 
+Marcus Griep <marcus@griep.us> writes:
 
+> Petr Baudis wrote:
+>>> +-H::
+>> 
+>> Can you guess what would I bug you about? ;-)
+>
+> If we get '-h', I'll submit another patch :-P
 
-On Fri, 15 Aug 2008, Bj=F6rn Steinbrink wrote:
->=20
-> Since you mention the delta cache, uau (no idea about his real name) =
-on
-> #git was talking about some delta cache optimizations lately, althoug=
-h
-> he was dealing with "git log -S", maybe it affects rev-list in a simi=
-lar
-> way. Unfortunately, I can't seem to find any code for that, just a
-> description of what he did and some numbers on the results in the IRC
-> logs.
+Wasn't the problem about documenting the addition of pack size, which is
+not about this human-readable option?
 
-Yes, interesting.
+>> If it's non-human-readable anyway, why are you dividing this by 1024? At
+>> any rate, it is not obvious at all that the size-pack is not actually
+>> size-pack but size-pack/1024. You should either add the (fixed) unit
+>> string behind or name it size-pack-kb - or just not divide it at all?
+>
+> I divide by 1024 here because the loose object size is reported in KiB.
+> The total that ends up in size_pack is in B, hence to be consistent, I
+> report the pack size in KiB as well.
 
-The delta cache was really a huge hack that just turned out rather=20
-successful. It's been hacked on further since (to do some half-way=20
-reasonable replacement with _another_ hack by adding an LRU on top of i=
-t),=20
-but it really is very hacky indeed.
-
-The "hash" we use for looking things up is also pretty much a joke, and=
- it=20
-has no overflow capability, it just replaces the old entry with a new o=
-ne.
-
-I wonder how hard it would be to replace the whole table thing with our=
-=20
-generic hash.c hash thing. I'll take a look.
-
-			Linus
+I thought this part was ok without room for dispute.
