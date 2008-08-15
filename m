@@ -1,192 +1,250 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] add boolean diff.suppress-blank-empty config option
-Date: Fri, 15 Aug 2008 14:47:07 +0200
-Message-ID: <87k5eiphro.fsf@rho.meyering.net>
+From: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
+Subject: [TopGit PATCH] tg redepend: New command.
+Date: Fri, 15 Aug 2008 15:53:47 +0200
+Organization: lilypond-design.org
+Message-ID: <1218808427.25300.2.camel@heerbeest>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Eggert <eggert@cs.ucla.edu>
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 15 14:48:17 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Jan Holesovsky <kendy@suse.cz>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 15 15:55:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTyj2-00014K-0B
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 14:48:16 +0200
+	id 1KTzlX-0001eC-H1
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 15:54:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753689AbYHOMrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Aug 2008 08:47:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753660AbYHOMrL
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 08:47:11 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:56582 "EHLO smtp6-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753422AbYHOMrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2008 08:47:09 -0400
-Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 1385C1977E;
-	Fri, 15 Aug 2008 14:47:08 +0200 (CEST)
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id E522219743;
-	Fri, 15 Aug 2008 14:47:07 +0200 (CEST)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 975B06A8E8; Fri, 15 Aug 2008 14:47:07 +0200 (CEST)
+	id S1753422AbYHONxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Aug 2008 09:53:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753382AbYHONxv
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 09:53:51 -0400
+Received: from edu-smtp-02.edutel.nl ([88.159.1.222]:38808 "EHLO
+	edu-smtp-02.edutel.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753333AbYHONxu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2008 09:53:50 -0400
+Received: from heerbeest (unknown [88.159.206.46])
+	by edu-smtp-02.edutel.nl (Postfix) with ESMTP id 91A7C11E6E5;
+	Fri, 15 Aug 2008 15:53:48 +0200 (CEST)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by heerbeest (Postfix) with ESMTP id C5062DC070;
+	Fri, 15 Aug 2008 15:53:47 +0200 (CEST)
+X-Mailer: Evolution 2.23.6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92471>
+
+As discussed previously
+
+    http://kerneltrap.org/mailarchive/git/2008/8/13/2925144
+
+Change a topgit branch's dependencies by doing a rebase-by-merge.
 
 
-GNU diff's --suppress-blank-empty option makes it so that diff does not
-add a space or tab before each empty output line of context.  With this
-option, empty context lines are empty also in "git diff" output.
-Before (and without the option), they'd have a single trailing space.
-
-* diff.c (diff_suppress_blank_empty): New global.
-(git_diff_basic_config): Set it.
-(builtin_diff): Use it to set the bit in ecbdata, aka ecb.priv.
-* xdiff-interface.c (xdiff_outf): Honor the new option.
-* xdiff-interface.h (struct xdiff_emit_state) [suppress_blank_empty]:
-New member.
-* t/t4029-diff-trailing-space.sh: New file.
-* Documentation/config.txt: Document it.
+Signed-off-by: Jan Nieuwenhuizen <janneke@gnu.org>
 ---
-I'm posting this solely in case someone else finds it useful.
-Of course, if you're interested in making it part of git, I'll
-be happy to make any required adjustments.
-I've been using a variant of this for over a year with no ill effects.
-[FWIW, this is relative to today's "maint"]
+ Makefile       |    2 +-
+ README         |    5 ++
+ tg-redepend.sh |  154 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 160 insertions(+), 1 deletions(-)
+ create mode 100644 tg-redepend.sh
 
- Documentation/config.txt       |    4 ++++
- diff.c                         |    8 ++++++++
- t/t4029-diff-trailing-space.sh |   39 +++++++++++++++++++++++++++++++++++++++
- xdiff-interface.c              |    7 +++++++
- xdiff-interface.h              |    1 +
- 5 files changed, 59 insertions(+), 0 deletions(-)
- create mode 100755 t/t4029-diff-trailing-space.sh
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index b8ec01c..ccc2432 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -567,6 +567,10 @@ diff.autorefreshindex::
- 	affects only 'git-diff' Porcelain, and not lower level
- 	'diff' commands, such as 'git-diff-files'.
-
-+diff.suppress-blank-empty::
-+	A boolean to inhibit the standard behavior of printing a
-+	space or tab before each empty output line. Defaults to false.
+diff --git a/Makefile b/Makefile
+index ea6489e..3988251 100644
+--- a/Makefile
++++ b/Makefile
+@@ -5,7 +5,7 @@ sharedir = $(prefix)/share/topgit
+ hooksdir = $(cmddir)/hooks
+ 
+ 
+-commands_in = tg-create.sh tg-delete.sh tg-export.sh tg-info.sh tg-patch.sh tg-summary.sh tg-update.sh
++commands_in = tg-create.sh tg-delete.sh tg-export.sh tg-info.sh tg-patch.sh tg-redepend.sh tg-summary.sh tg-update.sh
+ hooks_in = hooks/pre-commit.sh
+ 
+ commands_out = $(patsubst %.sh,%,$(commands_in))
+diff --git a/README b/README
+index b58a1b4..3528602 100644
+--- a/README
++++ b/README
+@@ -330,6 +330,11 @@ tg export
+ 	TODO: Make stripping of [PATCH] and other prefixes configurable
+ 	TODO: --mbox option for other mode of operation
+ 
++tg redepend
++~~~~~~~~~~~
++	Change the current topic branch's list of dependencies
++	by doing a rebase-by-merge onto the new dependencies.
 +
- diff.external::
- 	If this config variable is set, diff generation is not
- 	performed using the internal diff machinery, but using the
-diff --git a/diff.c b/diff.c
-index bf5d5f1..f0fe746 100644
---- a/diff.c
-+++ b/diff.c
-@@ -20,6 +20,7 @@
-
- static int diff_detect_rename_default;
- static int diff_rename_limit_default = 200;
-+static int diff_suppress_blank_empty;
- int diff_use_color_default = -1;
- static const char *external_diff_cmd_cfg;
- int diff_auto_refresh_index = 1;
-@@ -176,6 +177,12 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
-
-+	/* like GNU diff's --suppress-blank-empty option  */
-+	if (!strcmp(var, "diff.suppress-blank-empty")) {
-+		diff_suppress_blank_empty = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (!prefixcmp(var, "diff.")) {
- 		const char *ep = strrchr(var, '.');
- 		if (ep != var + 4) {
-@@ -1523,6 +1530,7 @@ static void builtin_diff(const char *name_a,
- 			xecfg.ctxlen = strtoul(diffopts + 2, NULL, 10);
- 		ecb.outf = xdiff_outf;
- 		ecb.priv = &ecbdata;
-+		ecbdata.xm.suppress_blank_empty = diff_suppress_blank_empty;
- 		ecbdata.xm.consume = fn_out_consume;
- 		if (DIFF_OPT_TST(o, COLOR_DIFF_WORDS)) {
- 			ecbdata.diff_words =
-diff --git a/t/t4029-diff-trailing-space.sh b/t/t4029-diff-trailing-space.sh
-new file mode 100755
-index 0000000..f3351dc
+ tg update
+ ~~~~~~~~~
+ 	Update the current topic branch wrt. changes in the branches
+diff --git a/tg-redepend.sh b/tg-redepend.sh
+new file mode 100644
+index 0000000..e1612ea
 --- /dev/null
-+++ b/t/t4029-diff-trailing-space.sh
-@@ -0,0 +1,39 @@
-+#!/bin/bash
++++ b/tg-redepend.sh
+@@ -0,0 +1,154 @@
++#! /bin/sh
++# TopGit - A different patch queue manager
++# (c) 2008  Jan Nieuwenhuizen <janneke@gnu.org>
++# GNU GPL version 2
++
++add=
++remove=
++redeps=
++restarted=
++
++## Parse options
++
++while [ -n "$1" ]; do
++	arg="$1"; shift
++	case "$arg" in
++		--add)
++			[ -z "$redeps" ] || die "already specified new list of dependencies ($redeps)"
++			[ -z "$remove" ] || die "already specified dependencies to remove ($remove)"
++			add="$add "
++			;;
++		-h|--help)
++			echo "Usage: tg [--add|--remove] DEPENDENCY..." >&2
++			;;
++		--remove)
++			[ -z "$redeps" ] || die "already specified new list of dependencies ($redeps)"
++			[ -z "$add" ] || die "already specified dependencies to add ($add)"
++			remove="$remove "
++			;;
++		*)
++			[ -z "$add" ] || add="$add$arg "
++			[ -z "$remove" ] || remove="$remove$arg "
++			[ ! -z "$add$remove" ] || redeps="$redeps$arg "
++	esac
++done
++
++if [ -n "$add" ]; then
++	add="${add/# }"
++	add="${add//  / }"
++	dupes=$(grep -E "^${add// /|}/\$" "$root_dir/.topdeps" | tr '\n' ' ')
++	[ -z "$dupes" ] || die "already depend on: $dupes"
++	redeps=$(echo "$add" | cat "$root_dir/.topdeps" - | tr '\n' ' ' | sed -e 's/ \+$//')
++elif [ -n "$remove" ]; then
++	remove="${remove//  / }"
++	remove="${remove/# }"
++	avail=$(grep -E "^${remove// /|}/\$" "$root_dir/.topdeps" | sort | tr '\n' ' ')
++	remove_sorted=$(echo "$remove" | tr ' ' '\n' | grep -v '^$' | sort | tr '\n' ' ')
++	[ "$avail" = "$remove_sorted" ] || die "not depending on some of: $remove"
++	redeps=$(grep -vE "^${remove// /|}/\$" "$root_dir/.topdeps" | tr '\n' ' ')
++fi
++
++redeps="${redeps/# }"
++redeps="${redeps/# }"
++
++if [ -z "$redeps" ]; then
++	if [ -s "$git_dir/top-name" -a -s "$git_dir/top-redeps" -a -f "$git_dir/top-rebase" ]; then
++		restarted=rebase
++	elif [ -s "$git_dir/top-name" -a -s "$git_dir/top-redeps" -a -f "$git_dir/top-merge" ]; then
++		restarted=merge
++	else
++		echo "Usage: tg [--add|--remove] DEPENDENCY..." >&2
++		exit 2
++	fi
++fi
++
++function fail () {
++	info "Please resolve conflicts and call: tg redepend"
++	info "It is also safe to abort this operation using:"
++	info "tg delete $b_; git reset --hard some_branch"
++	echo "$p" > "$git_dir/top-name"
++	echo "$redeps" > "$git_dir/top-redeps"
++	touch "$git_dir/top-$1"
++	exit 1
++}
++
++# See http://kerneltrap.org/mailarchive/git/2008/8/13/2925144
 +#
-+# Copyright (c) Jim Meyering
++# B -- (some mess) -- P
 +#
-+test_description='diff does not add trailing spaces'
++# Do "git rebase --onto B' B P" while preserving history to get
++#
++# B -- (some mess) -- old P -- P
++#                             /
++#                           B'
 +
-+. ./test-lib.sh
++if [ -z "$restarted" ]; then
++	info "New list of dependencies: $redeps."
++	p=$(git symbolic-ref HEAD | cut -b 12-)
++else
++	p="$(cat "$git_dir/top-name")"
++	redeps="$(cat "$git_dir/top-redeps")"
++fi
 +
-+cat <<\EOF > exp ||
-+diff --git a/f b/f
-+index 5f6a263..8cb8bae 100644
-+--- a/f
-++++ b/f
-+@@ -1,2 +1,2 @@
++# Clean up any restart stuff
++rm -f "$git_dir/top-name" "$git_dir/top-redeps" "$git_dir/top-rebase" "$git_dir/top-merge"
 +
-+-x
-++y
-+EOF
-+exit 1
++b="$(git rev-parse --short --verify "refs/top-bases/$p" 2>/dev/null)" \
++	|| die "not a TopGit-controlled branch"
++p_=tg-redepend/tmp/${p}_
++b_=tg-redepend/tmp/$p.base_
 +
-+test_expect_success \
-+    "$test_description" \
-+    'printf "\nx\n" > f &&
-+     git add f &&
-+     git commit -q -m. f &&
-+     printf "\ny\n" > f &&
-+     git config --bool diff.suppress-blank-empty true &&
-+     git diff f > actual &&
-+     test_cmp exp actual &&
-+     perl -i.bak -p -e "s/^\$/ /" exp &&
-+     git config --bool diff.suppress-blank-empty false &&
-+     git diff f > actual &&
-+     test_cmp exp actual &&
-+     git config --bool --unset diff.suppress-blank-empty &&
-+     git diff f > actual &&
-+     test_cmp exp actual
-+     '
++# Create new base B' -- does not have to be a topgit branch, but that's easiest
++if [ -z "$restarted" ]; then
++	git branch -D $p_  > /dev/null 2>&1 || :
 +
-+test_done
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 61dc5c5..5544e5a 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -66,6 +66,13 @@ int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
- 	struct xdiff_emit_state *priv = priv_;
- 	int i;
-
-+	if (priv->suppress_blank_empty
-+	    && mb[0].size == 1
-+	    && mb[0].ptr[0] == ' '
-+	    && mb[1].size == 1
-+	    && mb[1].ptr[0] == '\n')
-+	  mb[0].size = 0;
++	tg create $b_ $redeps
++	git commit -m 'tg redepend: add TopGit .top* info.'
 +
- 	for (i = 0; i < nbuf; i++) {
- 		if (mb[i].ptr[mb[i].size-1] != '\n') {
- 			/* Incomplete line */
-diff --git a/xdiff-interface.h b/xdiff-interface.h
-index f7f791d..dc305ba 100644
---- a/xdiff-interface.h
-+++ b/xdiff-interface.h
-@@ -11,6 +11,7 @@ struct xdiff_emit_state {
- 	xdiff_emit_consume_fn consume;
- 	char *remainder;
- 	unsigned long remainder_size;
-+	unsigned int suppress_blank_empty:1;
- };
-
- int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t const *xecfg, xdemitcb_t *ecb);
++# Do "git rebase --onto B' B P" while preserving history
++	git checkout -b $p_ $p
++
++	if ! git rebase --onto $b_ $b; then
++		fail rebase
++	fi
++elif [ "$restarted" = "rebase" ]; then
++	[ ! -d "$git_dir/rebase-apply" ] || git add "$root_dir"
++	[ ! -d "$git_dir/rebase-apply" ] || git add -u "$root_dir"
++	[ ! -d "$git_dir/rebase-apply" ] || if ! git rebase --continue; then
++		fail rebase
++	fi
++	rm -f "$git_dir/top-name" "$git_dir/top-redeps"
++	restarted=
++fi
++
++if [ "$restarted" != "merge" ]; then
++	git checkout $(git rev-parse $p)
++	if ! git merge --no-ff --no-commit $b_; then
++		touch "$git_dir/top-merge"
++		fail merge
++	fi
++elif ! git status | grep 'nothing to commit' > /dev/null; then
++	git add "$root_dir"
++	git add -u "$root_dir"
++	git commit -m 'tg redepend: resolve merge.' > /dev/null 2>&1
++fi
++git read-tree -m -u $(git rev-parse $p_)
++
++echo "$redeps" | tr ' ' '\n' > "$root_dir/.topdeps"
++
++git add "$root_dir"
++git add -u "$root_dir"
++
++git commit -m "Rebased-using-merge onto new dependencies: $redeps."  > /dev/null 2>&1
++
++git branch -f $p
++git checkout $p
++
++tg delete $b_  > /dev/null 2>&1
++git branch -D $p_
++
++info "Rebased-using-merge onto new dependencies: $redeps."
++
++# Local Variables:
++# sh-basic-offset:8
++# End:
 -- 
-1.6.0.rc3.12.g5b095
+1.6.0.rc0.44.g67270
+
+
+-- 
+Jan Nieuwenhuizen <janneke@gnu.org> | GNU LilyPond - The music typesetter
+http://www.xs4all.nl/~jantien       | http://www.lilypond.org
