@@ -1,89 +1,97 @@
-From: Marcus Griep <marcus@griep.us>
-Subject: [PATCH v3 1/3] count-objects: Add total pack size to verbose output
-Date: Fri, 15 Aug 2008 00:20:20 -0400
-Message-ID: <1218774022-30198-1-git-send-email-marcus@griep.us>
-References: <1218752308-3173-1-git-send-email-marcus@griep.us>
-Cc: Junio C Hamano <gitster@pobox.com>, Marcus Griep <marcus@griep.us>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 15 06:21:46 2008
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: [PATCH] Fix t3700 on filesystems which do not support question marks in names
+Date: Fri, 15 Aug 2008 09:11:23 +0200
+Message-ID: <81b0412b0808150011r534d8453yab2a5c42b255657f@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_114463_30129071.1218784283795"
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Kevin Ballard" <kevin@sb.org>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 15 09:12:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTqoj-00080F-KJ
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 06:21:38 +0200
+	id 1KTtU8-0001ZJ-49
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 09:12:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750891AbYHOEUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Aug 2008 00:20:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750870AbYHOEUY
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 00:20:24 -0400
-Received: from boohaunt.net ([209.40.206.144]:32793 "EHLO boohaunt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750795AbYHOEUX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2008 00:20:23 -0400
-Received: by boohaunt.net (Postfix, from userid 1000)
-	id A62B81878CC7; Fri, 15 Aug 2008 00:20:22 -0400 (EDT)
-X-Mailer: git-send-email 1.6.0.rc2.6.g8eda3
-In-Reply-To: <1218752308-3173-1-git-send-email-marcus@griep.us>
+	id S1751723AbYHOHLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Aug 2008 03:11:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751970AbYHOHLZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 03:11:25 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:51643 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750953AbYHOHLY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2008 03:11:24 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so438726waf.23
+        for <git@vger.kernel.org>; Fri, 15 Aug 2008 00:11:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:mime-version:content-type;
+        bh=fcIyDJUAuVEg9oOtOLQmGfX+T4jmOfKYUc0f/8OJJEg=;
+        b=PNj7ZA2ewgCWdKhHJWHRvUHDxHxyEyDeyZQt9jXFW2aY8SJnyr4hmksZEtxTBV232e
+         F44HceffhhWDIZnzaZgd6/Bsx1LkyRObMZR7N1qClxAl3QDBTPin3dDEpAjL2FGt7fFG
+         8RtpyMqS83pgKMrn6E0u37fo/N9S5YznoZY/w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=CYTA6en7tEsF1O2DW5bemFj8AQA2G4ewdbY9YoEtwsRjcqYmik2873ug8P1knY7MoN
+         w0XXKtHHZHGk+KyAuFFPFvsnHMit/jPl4LZo2Htf9B7zyWaT+d52XzHmbO+gB4zVIlK0
+         8RCNeQEiIl9WIndTU8Jt7KpI3nVKvptbeqZP0=
+Received: by 10.114.26.18 with SMTP id 18mr2192004waz.162.1218784283787;
+        Fri, 15 Aug 2008 00:11:23 -0700 (PDT)
+Received: by 10.114.157.9 with HTTP; Fri, 15 Aug 2008 00:11:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92460>
 
-Adds the total pack size (including indexes) the verbose count-objects
-output, floored to the nearest kilobyte.
+------=_Part_114463_30129071.1218784283795
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-Updates documentation to match this addition.
+And the prominent example of the deficiency are, as usual, the filesystems
+of Microsoft house.
 
-Signed-off-by: Marcus Griep <marcus@griep.us>
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
- Documentation/git-count-objects.txt |    5 +++--
- builtin-count-objects.c             |    3 +++
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ t/t3700-add.sh |   19 ++++++++++++-------
+ 1 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git-count-objects.txt b/Documentation/git-count-objects.txt
-index 75a8da1..6bc1c21 100644
---- a/Documentation/git-count-objects.txt
-+++ b/Documentation/git-count-objects.txt
-@@ -21,8 +21,9 @@ OPTIONS
- --verbose::
- 	In addition to the number of loose objects and disk
- 	space consumed, it reports the number of in-pack
--	objects, number of packs, and number of objects that can be
--	removed by running `git prune-packed`.
-+	objects, number of packs, disk space consumed by those packs,
-+	and number of objects that can be removed by running
-+	`git prune-packed`.
- 
- 
- Author
-diff --git a/builtin-count-objects.c b/builtin-count-objects.c
-index 91b5487..249040b 100644
---- a/builtin-count-objects.c
-+++ b/builtin-count-objects.c
-@@ -104,6 +104,7 @@ int cmd_count_objects(int argc, const char **argv, const char *prefix)
- 	if (verbose) {
- 		struct packed_git *p;
- 		unsigned long num_pack = 0;
-+		unsigned long size_pack = 0;
- 		if (!packed_git)
- 			prepare_packed_git();
- 		for (p = packed_git; p; p = p->next) {
-@@ -112,12 +113,14 @@ int cmd_count_objects(int argc, const char **argv, const char *prefix)
- 			if (open_pack_index(p))
- 				continue;
- 			packed += p->num_objects;
-+			size_pack += p->pack_size + p->index_size;
- 			num_pack++;
- 		}
- 		printf("count: %lu\n", loose);
- 		printf("size: %lu\n", loose_size / 2);
- 		printf("in-pack: %lu\n", packed);
- 		printf("packs: %lu\n", num_pack);
-+		printf("size-pack: %lu\n", size_pack / 1024);
- 		printf("prune-packable: %lu\n", packed_loose);
- 		printf("garbage: %lu\n", garbage);
- 	}
--- 
-1.6.0.rc2.6.g8eda3
+------=_Part_114463_30129071.1218784283795
+Content-Type: text/x-patch;
+ name=0001-Fix-t3700-on-filesystems-which-do-not-support-questi.patch
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fjwgk9gf0
+Content-Disposition: attachment;
+ filename=0001-Fix-t3700-on-filesystems-which-do-not-support-questi.patch
+
+RnJvbSAyZTViYmZlYTZhM2VlNmZmOGNmODI1OTljZWMwZTQ5ZGU5NGQwNjMxIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBGcmksIDE1IEF1ZyAyMDA4IDA5OjAwOjU0ICswMjAwClN1YmplY3Q6IFtQQVRDSF0gRml4IHQz
+NzAwIG9uIGZpbGVzeXN0ZW1zIHdoaWNoIGRvIG5vdCBzdXBwb3J0IHF1ZXN0aW9uIG1hcmtzIGlu
+IG5hbWVzCgpBbmQgdGhlIHByb21pbmVudCBleGFtcGxlIG9mIHRoZSBkZWZpY2llbmN5IGFyZSwg
+YXMgdXN1YWwsIHRoZSBmaWxlc3lzdGVtcwpvZiBNaWNyb3NvZnQgaG91c2UuCgpTaWduZWQtb2Zm
+LWJ5OiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgotLS0KIHQvdDM3MDAtYWRkLnNo
+IHwgICAxOSArKysrKysrKysrKystLS0tLS0tCiAxIGZpbGVzIGNoYW5nZWQsIDEyIGluc2VydGlv
+bnMoKyksIDcgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvdC90MzcwMC1hZGQuc2ggYi90L3Qz
+NzAwLWFkZC5zaAppbmRleCA3N2E3ODJjLi4yZmE5MDdlIDEwMDc1NQotLS0gYS90L3QzNzAwLWFk
+ZC5zaAorKysgYi90L3QzNzAwLWFkZC5zaApAQCAtMjIyLDEyICsyMjIsMTcgQEAgdGVzdF9leHBl
+Y3Rfc3VjY2VzcyAnZ2l0IGFkZCAoYWRkLmlnbm9yZS1lcnJvcnMgPSBmYWxzZSknICcKIAkhICgg
+Z2l0IGxzLWZpbGVzIGZvbzEgfCBncmVwIGZvbzEgKQogJwogCi10ZXN0X2V4cGVjdF9zdWNjZXNz
+ICdnaXQgYWRkICdcJydmb1w/YmFyJ1wnJyBpZ25vcmVzIGZvb2JhcicgJwotCWdpdCByZXNldCAt
+LWhhcmQgJiYKLQl0b3VjaCBmb1w/YmFyIGZvb2JhciAmJgotCWdpdCBhZGQgJ1wnJ2ZvXD9iYXIn
+XCcnICYmCi0JZ2l0IGxzLWZpbGVzIGZvXD9iYXIgfCBncmVwIC1GIGZvXD9iYXIgJiYKLQkhICgg
+Z2l0IGxzLWZpbGVzIGZvb2JhciB8IGdyZXAgZm9vYmFyICkKLScKK2lmIHRvdWNoIGZvXD9iYXIK
+K3RoZW4KKwl0ZXN0X2V4cGVjdF9zdWNjZXNzICdnaXQgYWRkICdcJydmb1w/YmFyJ1wnJyBpZ25v
+cmVzIGZvb2JhcicgJworCQlnaXQgcmVzZXQgLS1oYXJkICYmCisJCXRvdWNoIGZvb2JhciAmJgor
+CQlnaXQgYWRkICdcJydmb1w/YmFyJ1wnJyAmJgorCQlnaXQgbHMtZmlsZXMgZm9cP2JhciB8IGdy
+ZXAgLUYgZm9cP2JhciAmJgorCQkhICggZ2l0IGxzLWZpbGVzIGZvb2JhciB8IGdyZXAgZm9vYmFy
+ICkKKwknCitlbHNlCisJc2F5ICJUaGUgZmlsZXN5c3RlbSBkb2VzIG5vdCBzdXBwb3J0ID8gaW4g
+bmFtZXMsIHNvbWUgdGVzdHMgc2tpcHBlZCIKK2ZpCiAKIHRlc3RfZG9uZQotLSAKMS42LjAucmMy
+LjY4Lmc0OWZhMwoK
+------=_Part_114463_30129071.1218784283795--
