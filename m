@@ -1,70 +1,169 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: Re: Converting from svn to git
-Date: Fri, 15 Aug 2008 15:58:11 +0200
-Message-ID: <g8421k$qcs$1@ger.gmane.org>
-References: <e0b44a890808100611t27ddfcb6v21eecea89484c90b@mail.gmail.com>	 <20080810132409.GE18960@genesis.frugalware.org>	 <e0b44a890808100754l536bc4f3kfd953b52044f6e59@mail.gmail.com>	 <g7n1mk$67t$1@ger.gmane.org>	 <e0b44a890808100848p367f5c66qfa21cba1b3ba12a0@mail.gmail.com> <e0b44a890808111046q2626defdnab31b0d7b1c4578@mail.gmail.com>
+From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: [RFC PATCH 0/9] Narrow/Sparse checkout round 3: "easy mode"
+Date: Fri, 15 Aug 2008 21:24:39 +0700
+Message-ID: <20080815142439.GA10609@laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 15 15:59:31 2008
+X-From: git-owner@vger.kernel.org Fri Aug 15 16:25:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTzpx-0003J4-84
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 15:59:29 +0200
+	id 1KU0Fa-0004mF-HL
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 16:25:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753753AbYHON60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Aug 2008 09:58:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753794AbYHON60
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 09:58:26 -0400
-Received: from main.gmane.org ([80.91.229.2]:56395 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753694AbYHON6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2008 09:58:25 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KTzoq-0002MQ-1a
-	for git@vger.kernel.org; Fri, 15 Aug 2008 13:58:20 +0000
-Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Aug 2008 13:58:20 +0000
-Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Aug 2008 13:58:20 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <e0b44a890808111046q2626defdnab31b0d7b1c4578@mail.gmail.com>
+	id S1753700AbYHOOYz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Aug 2008 10:24:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753732AbYHOOYz
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 10:24:55 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:39736 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753674AbYHOOYy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2008 10:24:54 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so532062waf.23
+        for <git@vger.kernel.org>; Fri, 15 Aug 2008 07:24:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:subject
+         :message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=zB39cwImy1I/MVKjCJh4BqKOrP9DJ8x1u21VaqttkaI=;
+        b=Q+yGJ091N1Ks7U0wXQEc5Ead3tE6PlR5Pu0yfuPpiGc8CiYHthoCIhwXoQdPk6XgtR
+         DUmO5oZP6DwLoyzSEMR3wu4Q6Z8d2zlcq/2sUVtNgL54r0a+QkytL6HMU891Cezys6qK
+         E69WOK2A6svjYh0kCS9Tmx0y2ecEkC+9VTVSc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=ahnuNFNJMnzRFpKJH0XdgaJo/d068p5gzj8775AsHbZgTB89wVMkZ91PTkFuF/vM82
+         aHbdYQoA/74A79TI03j+KCwDTwrpq/bfHT+4kHlaVrOnhA9DO6izt8q1ALAxJOrZZW4Z
+         /l9v1gcbeUCyWKnVG1dtFoZFgnXqwhnZEXNAo=
+Received: by 10.115.90.1 with SMTP id s1mr2545520wal.214.1218810293544;
+        Fri, 15 Aug 2008 07:24:53 -0700 (PDT)
+Received: from pclouds@gmail.com ( [125.234.152.212])
+        by mx.google.com with ESMTPS id q20sm52541pog.7.2008.08.15.07.24.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 15 Aug 2008 07:24:52 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 15 Aug 2008 21:24:39 +0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92473>
 
-David Neu venit, vidit, dixit 11.08.2008 19:46:
-> OK, I did
-> 
-> $ git-filter-branch --tree-filter 'rm -rf subdir1/ subdir2/ subdir3/' -- --all
-> 
-> which looks good, except when I open gitk, I still see "empty" commits
-> that correspond to subdir1/, subdir2/ and subdir3/.
-> 
-> Is there anyway to remove those?
+The implementation with insights from Junio turns out smaller and bette=
+r
+(and I was thinking about applying it for huge maildir).
 
-A while ago I "complained" that rebase would skip empty commits. You 
-might experiment with that. Alternatively, the following works for me:
+So there is a bit of changes since the last round. This time I follow
+"assume unchanged" code path and relax the rules a bit. There are issue=
+s
+I will mention later.
 
-git filter-branch --commit-filter 'cmd="git commit-tree"; test `git show 
---pretty=oneline $GIT_COMMIT|wc -l` = 1 && cmd="skip_commit"; $cmd "$@"' 
--- --all
+=46rom user POV, we can now checkout a single file or a subdirectory (c=
+hecking
+out subdirectory non-recursively is possible too). You may start with a=
+ narrow
+clone like:
 
-This skips all commits which introduce no diff. It will not remove 
-branches or tags which are related only to those subdirs.
+git clone --path=3D"Documentation/*" git.git
 
-I am sure there will be more elegant ways to do that (esp. the test with 
-wc).
+or start from a full checkout and narrow it (very much like the last ro=
+und):
 
-Michael
+git checkout --path=3D"Documentation/*"
+
+However narrow spec is now using wildcards, not prefix, so you can chec=
+kout
+a single file, or just header files, etc.
+
+git checkout --add-path|--remove-path has been aded to update narrow ar=
+eas.
+But you don't have to use those. Narrow areas will be widened as needed=
+ when
+you do something outside of it (e.g "git checkout foo" or "git add foo"=
+=2E..)
+
+Another difference from the last round is "narrow rules" will not be pr=
+eserved
+when switching branches. When you switch branch with no option, you wil=
+l get
+full checkout. You may want to use --path|--add-path|--remove-path when
+switching branches to have narrow checkout again.
+
+Now back to technical POV. I did not reuse CE_VALID (assume unchanged) =
+bit
+because it has been used for core.ignorestat. So I took another bit, wh=
+ich
+seems to be the last on-disk bit in ce_flags.
+
+I call this mode "easy mode" because most of constraints have been elim=
+inated.
+Now your "narrow rules" are like "I don't like those files, remove them=
+ if
+they are not needed". If some operations
+need those files on workdir again, they will be checked out. Those may =
+include:
+
+ - "git checkout foo" or "git apply"
+ - git add foo (even if foo is marked no-checkout)
+ - conflict files after merge
+ - new files after merge
+
+"Strict mode" may be added later but then it must clearly define which
+operation is allowed to checkout files. There's a problem with strict m=
+ode if
+it wants to limit checking out new files after merge. Because we don't =
+save
+"narrow rules" anymore (we applied the rules immediately in checkout/cl=
+one
+stage, then update narrow areas over time), we will not know how to dea=
+l with
+new files. Adding [--path|--add-path|--remove-path] to git merge comman=
+ds, and
+apply "narrow rules" again, looks too cumbersome to me. Comments?
+
+Last bit. "Narrow rules" for --path|--add-path|--remove-path is current=
+ly
+wildcards separated by colons. While it does the job, it does not allow=
+ to
+checkout easily a subdirectory non-recusively. I was thinking about '*'=
+ as
+"match everything except slashes" and '**' as "match everything even sl=
+ashes".
+Any ideas?
+
+Oh.. and "git grep" may not work correctly (or "as expected") with narr=
+ow
+checkout. Haven't checked it yet.
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (9):
+  Introduce CE_NO_CHECKOUT bit
+  update-index: add --checkout/--no-checkout options to update
+    CE_NO_CHECKOUT bit
+  ls-files: add --checkout option to show checked out files
+  Prevent diff machinery from examining worktree outside narrow
+    checkout
+  Clear CE_NO_CHECKOUT on checked out entries.
+  Add support for narrow checkout in unpack_trees()
+  ls-files: add --narrow-match=3Dspec option to test narrow matching
+  clone: support narrow checkout with --path option
+  checkout: add new options to support narrow checkout
+
+ builtin-checkout.c     |   41 ++++++++++++++++++
+ builtin-clone.c        |   13 ++++++
+ builtin-ls-files.c     |   23 +++++++++--
+ builtin-update-index.c |   40 +++++++++++-------
+ cache.h                |   11 +++++
+ diff-lib.c             |    5 +-
+ diff.c                 |    4 +-
+ entry.c                |    1 +
+ read-cache.c           |    6 +-
+ unpack-trees.c         |  106 ++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ unpack-trees.h         |    4 ++
+ 11 files changed, 229 insertions(+), 25 deletions(-)
