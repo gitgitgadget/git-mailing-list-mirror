@@ -1,76 +1,80 @@
-From: "Bryan Donlan" <bdonlan@gmail.com>
-Subject: Re: Git tree/blob and corresponding commit
-Date: Fri, 15 Aug 2008 15:39:14 -0400
-Message-ID: <3e8340490808151239u4572f5e4l11c16e0225509224@mail.gmail.com>
-References: <489F208B.2070006@obry.net>
-	 <Pine.GSO.4.62.0808101519220.16851@harper.uchicago.edu>
-	 <Pine.GSO.4.62.0808101542140.17376@harper.uchicago.edu>
-	 <48A43AEC.6000904@obry.net>
+From: Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH] Git.pm: Make File::Spec and File::Temp requirement lazy
+Date: Fri, 15 Aug 2008 15:46:19 -0400
+Message-ID: <48A5DD0B.8050204@griep.us>
+References: <20080814065800.GA16918@untitled>	 <1218813032-18203-1-git-send-email-marcus@griep.us> <3e8340490808151231p700ca76fub16700708f2942bb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jonathan Nieder" <jrnieder@uchicago.edu>,
-	"git list" <git@vger.kernel.org>
-To: pascal@obry.net
-X-From: git-owner@vger.kernel.org Fri Aug 15 21:40:25 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Bryan Donlan <bdonlan@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 15 21:47:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KU59m-0005G0-UP
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 21:40:19 +0200
+	id 1KU5Gj-0007oS-2G
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 21:47:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758094AbYHOTjQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Aug 2008 15:39:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758089AbYHOTjQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 15:39:16 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:37186 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756119AbYHOTjP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2008 15:39:15 -0400
-Received: by gxk9 with SMTP id 9so3554578gxk.13
-        for <git@vger.kernel.org>; Fri, 15 Aug 2008 12:39:14 -0700 (PDT)
+	id S1754907AbYHOTq0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Aug 2008 15:46:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754942AbYHOTq0
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 15:46:26 -0400
+Received: from wr-out-0506.google.com ([64.233.184.224]:43117 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754907AbYHOTqZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2008 15:46:25 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so1180533wri.5
+        for <git@vger.kernel.org>; Fri, 15 Aug 2008 12:46:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=8pC84hXQaQ0bKQA1gAj+WZL4h1LUtEUrIHhpYr5RE1I=;
-        b=nV46lkFUnABOCt/JtVSNHC+G/CK7XKj7YL9JEiS0u0cF5IG1MkyitYlVHr7R8grhUV
-         sqdNsbfOiufevb3wsjot+nJBknLWqCk9MHnZUaPzlUTFc1g+jC9ruBPBLgSJ2i2IOw7l
-         w4xMYPjBA1ouulMlrOBw9KXSwe4jzUnUEpXAE=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=FJZm+9PVVdMaeFFP2yKJU891DylGjxp3NL3NevqZTKo=;
+        b=p3FCTiwkyXK7PEDMU9tnQUoFUH0TlinXWuyz8eMEZeQ1fUpk2kJIKLc/rGaF6jT6lV
+         4e2O9ypw6PdhlOc7QIg393f0uBHn2A9wXfFn/lagJ+I86DquFKPfTmJffF9zZFKo2GYF
+         r+gtQcX78j/lMcWzpf+lLkA7H9G4q/PnMmN7Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=JgJAxDClWvTt8PoE3x09j/oKrSi3vgJJsaXrgnVMDUf51p/6Q9OB0FeoP5hFn7694r
-         zwZFpk25eKXcMu7lqCY7RElQfVN2uTJrnISmFhub7QGNwwMyccTlu5PCK0yQGiyaeE3L
-         oZQgoKxvdrGzi86rud/5Z63pDX7kXGBScpnSw=
-Received: by 10.151.114.6 with SMTP id r6mr4458790ybm.84.1218829154668;
-        Fri, 15 Aug 2008 12:39:14 -0700 (PDT)
-Received: by 10.65.234.13 with HTTP; Fri, 15 Aug 2008 12:39:14 -0700 (PDT)
-In-Reply-To: <48A43AEC.6000904@obry.net>
-Content-Disposition: inline
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=s86J0xJar6dZnbTw7XXuyEpFPwLyqnRTRaOnKzbZFel6XPOn3hUhRLgPm9DDg+zQtw
+         tli7WWKxgYd8OPyiHVgK/o0G1/taVZw+5AtyZEXBJ1Pq/94me5n4XVsfcOj4pRE+2JbF
+         McH08OBHiTYHsVoMhWftZMOYqCJ6LuyHW3F5E=
+Received: by 10.90.101.17 with SMTP id y17mr4169836agb.72.1218829584298;
+        Fri, 15 Aug 2008 12:46:24 -0700 (PDT)
+Received: from ?10.95.36.106? ( [4.79.245.132])
+        by mx.google.com with ESMTPS id g5sm2274151wra.35.2008.08.15.12.46.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 15 Aug 2008 12:46:23 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <3e8340490808151231p700ca76fub16700708f2942bb@mail.gmail.com>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92514>
 
-On Thu, Aug 14, 2008 at 10:02 AM, Pascal Obry <pascal@obry.net> wrote:
-> Jonathan,
->
->> but I actually meant
->>
->> <http://thread.gmane.org/gmane.comp.version-control.git/44750/focus=44849>.
->> Anyway, the whole thread is interesting.  Sorry for the noise.
->
-> Thanks, I had a look. This is indeed giving some procedure... I was hopping
-> for something faster (git rev-list takes some time!).
+Bryan Donlan wrote:
+> perl's 'require' will only attempt to load a module the first time it
+> is used; subsequent attempts will result in a quick no-op, so there's
+> no need to further cache. Unless you mean to cache a negative result?
+> In which case, the require should be quite fast, as it'll quickly get
+> a 'file not found' error without needing to do any compilation.
 
-It's not really meant to be a common case; if the same file is created
-under different names by different commits that aren't ancestors of
-each other, then it's unclear which should be reported. As such,
-there's no index or other such thing to quickly find the commits
-corresponding to a blob, so you just have to walk the entire history.
+Aha.  Point taken.  I was under the mistaken impression that an entirel=
+y
+new context was set up in an 'eval', but it is much more lightweight
+than that.  A simplified patch is forthcoming.
+
+--=20
+Marcus Griep
+GPG Key ID: 0x5E968152
+=E2=80=94=E2=80=94
+http://www.boohaunt.net
+=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
