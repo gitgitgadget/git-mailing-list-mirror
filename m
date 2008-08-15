@@ -1,126 +1,121 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008 projects?
-Date: Fri, 15 Aug 2008 22:36:54 +0200
-Message-ID: <200808152236.56479.jnareb@gmail.com>
-References: <200807080227.43515.jnareb@gmail.com> <200808140457.56464.jnareb@gmail.com> <48A5DB4D.5060906@gmail.com>
+From: Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH] bash-completion: Add non-command git help files to bash-completion
+Date: Fri, 15 Aug 2008 17:17:25 -0400
+Message-ID: <48A5F265.5080905@griep.us>
+References: <1218816948-7864-1-git-send-email-marcus@griep.us> <7v8wuyb0m7.fsf@gitster.siamese.dyndns.org> <48A5CC07.2040500@griep.us> <7vvdy29kok.fsf@gitster.siamese.dyndns.org> <B03ECD53-5920-4750-816F-890980C4CBD6@ai.rug.nl>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
-	Joshua Roys <roysjosh@gmail.com>,
-	Sverre Rabbelier <alturin@gmail.com>,
-	Sverre Rabbelier <sverre@rabbelier.nl>,
-	David Symonds <dsymonds@gmail.com>,
-	John Hawley <warthog19@eaglescrag.net>,
-	Marek Zawirski <marek.zawirski@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 15 22:38:19 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Pieter de Bie <pdebie@ai.rug.nl>
+X-From: git-owner@vger.kernel.org Fri Aug 15 23:18:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KU63k-00034B-Ev
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 22:38:08 +0200
+	id 1KU6gq-0007Yb-GF
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 23:18:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606AbYHOUhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Aug 2008 16:37:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761569AbYHOUhD
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 16:37:03 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:18075 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761493AbYHOUhB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2008 16:37:01 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so746421nfc.21
-        for <git@vger.kernel.org>; Fri, 15 Aug 2008 13:36:59 -0700 (PDT)
+	id S1752500AbYHOVR3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Aug 2008 17:17:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752588AbYHOVR3
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 17:17:29 -0400
+Received: from wr-out-0506.google.com ([64.233.184.226]:47711 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752331AbYHOVR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2008 17:17:28 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so1214617wri.5
+        for <git@vger.kernel.org>; Fri, 15 Aug 2008 14:17:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=4qddXM0jIHuqntnW9l05SOE26s8zA1/gls7kKJhb97o=;
-        b=WkpyMVmOSwZc/nuU9GBDQJNnMvoZCqVQ/6vbxjA5/ykOW7/7D8uhC09B2xPeHWYrzN
-         Voo6NRcGjCv9uc6uxyhrnL27dGj1UKEK/OqKZaEBIbe0OoM4IQBlzFXor2denrIEVNs3
-         I/FyyGsnXv94I3701YB6fHwlioSONVrRjmoGo=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=AQkIaQxkTef1uRcfnC4NT/mrxtX2oiJTMi4j5wmbZZY=;
+        b=rmJClDyN41aysdwAv+6DWjIiYXctK9NsBeVWzWTBqvJdOA5xILFhUYLVLEXrdJPZp+
+         0WB0eWnq0Cgy3FMZhqpVNgv4CrK6GUr5De5G+VZT7nisC3VXHcUvZXAF/I9OqC7xYdJu
+         pBwQ4d68XQLxbOE4PLsdMX3xPOnKFTnreDBDc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=ocSoM/awfavyhYOXBzBR7yLLU50j3SYJUpNIX5qP2P+yhgPiyS6/MqINdkwA5HNB67
-         /9MyygrgDv7sOjb8e3O8IGOkqmdPd2cvGWuzWHHsfHQXrTgOJ7GLupM/VesLZ/pFJyna
-         KEKanoxY0O7no70CPD/mdyZ9aX3HaFzQlRDVU=
-Received: by 10.210.16.11 with SMTP id 11mr193118ebp.137.1218832619609;
-        Fri, 15 Aug 2008 13:36:59 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.253.165])
-        by mx.google.com with ESMTPS id z40sm1072805ikz.7.2008.08.15.13.36.56
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=whKXkj+D1ujdIcL+9OYNOl4aoVtDT3XmK/m4TQHm+kyq7Ay7C8q2sUVGmRe1uOjCnf
+         N/wGfPWfSm48aLFkldipnvBqnoc0pZWLHlX0LDCb1zUdU0u7fArLzOyiWvWh7crYqnYg
+         m2liSKR112LNLu3+YHgSsvK1UEqCqWFCnYSEI=
+Received: by 10.90.55.9 with SMTP id d9mr4290474aga.40.1218835047947;
+        Fri, 15 Aug 2008 14:17:27 -0700 (PDT)
+Received: from ?10.95.36.106? ( [4.79.245.132])
+        by mx.google.com with ESMTPS id q30sm1539900wrq.36.2008.08.15.14.17.26
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 15 Aug 2008 13:36:58 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <48A5DB4D.5060906@gmail.com>
-Content-Disposition: inline
+        Fri, 15 Aug 2008 14:17:26 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <B03ECD53-5920-4750-816F-890980C4CBD6@ai.rug.nl>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92518>
 
-On Fri, 15 August 2008, Lea Wiemann wrote:
-> Jakub Narebski wrote:
-> > 3. Gitweb caching
-> > 
-> > Student: Lea Wiemann
-> > Mentor: John 'warthog' Hawley
-> > 
-> > There are new tests for gitweb (to check if caching would not break 
-> > anything new: it did caught a few breakages), new object Perl API to 
-> > git, and gitweb caching implemented using caching data at the level 
-> > slightly above calling git commands.  But full code (tests, Perl API 
-> > and changes to gitweb) are only after first, maybe second round of 
-> > review.
-> 
-> Correct.  I'm planning to post the next round of patches tonight or
-> tomorrow. [...]
+Pieter de Bie wrote:
+> How about something simple like this?
 
-Please remember that according to timeline in GSoC 2008 FAQ:
-  http://code.google.com/opensource/gsoc/2008/faqs.html#0.1_timeline
-August 18: ~12 noon PDT / 19:00 UTC is "Firm 'pencils down' date."
-(suggested pencils down date was August 11).  So you don't have much
-time, and you don't leave much time for review, so I guess evaluation
-would be "done, but nor merged in" or something like that.
+Seems to do the job.
 
-> 2. I'll run benchmarks under various conditions, to measure how much
-> performance we gain with caching, and under what conditions it is most
-> beneficial.
+> diff --git a/builtin-help.c b/builtin-help.c
 
-And to compare with plain, vanilla gitweb, with kernel.org fork (both
-performance and disk space used I guess) and repo.or.cz fork (only caches
-projects list view, IIRC), I guess.
+Are you working on next? Even though I know next is the new
+master. (master is soooo nearly last week. :-P)
 
-Benchmarking gitweb caching could be difficult, as you would have somehow
-(fio?) replay conditions of I/O pressure as on kernel.org and repo.or.cz,
-as from anegdotical evidence gitweb is IO bound, not CPU bound (so
-ordinary speed benchmarks could give wrong results).
+I had a slightly different take.  Your completion creates a 'k'
+for gitk, which was suggested earlier in the thread suggested=20
+is a bit harder to grok.  This promotes 'git?' commands to use
+'git?' rather than '?' without affecting things otherwise.
+---
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index c0bf7aa..0bb0d79 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -885,7 +885,9 @@ _git_help ()
+                return
+                ;;
+        esac
+-       __gitcomp "$(__git_all_commands)"
++       __gitcomp "$(ls $(./git help man-path)/man?/* |
++               sed -n -e 's/^.*\/git-\?\(.\{2,\}\)\.[0-9]$/\1/p' \
++                       -e 's/^.*\/git\(.\)\.[0-9]$/git\1/p')"
+ }
 
-> > Student retention: unknown.
-> 
-> Well, on the downside, I'm expecting to be pretty busy with college, so
-> there won't be much time to do substantial work on git or gitweb.  On
-> the upside, I feel perfectly comfortable with contributing to git (i.e.,
-> maintaining my own patch queue, sending patches, etc.), so it's very
-> much possible that at some point I'll be hacking git or gitweb again.
+ _git_init ()
+diff --git a/help.c b/help.c
+index 3cb1962..d0416e1 100644
+--- a/help.c
++++ b/help.c
+@@ -717,6 +717,11 @@ int cmd_help(int argc, const char **argv, const ch=
+ar *prefix)
+                return 0;
+        }
 
-It would be nice, even if you would be a "weekend contributor".
++       if (!strcmp("man-path", argv[0])) {
++               printf("%s\n", GIT_MAN_PATH);
++               return 0;
++       }
++
+        switch (help_format) {
+        case HELP_FORMAT_MAN:
+                show_man_page(argv[0]);
+---
 
-But I guess that making you into gitweb maintainer, or git.kernel.org
-admin is out of the question... ;-)
+What do you think, Junio?  If it works, I'll make this a
+normal patch submission.
 
--- 
-Jakub Narebski
-Poland
+--=20
+Marcus Griep
+GPG Key ID: 0x5E968152
+=E2=80=94=E2=80=94
+http://www.boohaunt.net
+=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
