@@ -1,167 +1,103 @@
-From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH 9/9] checkout: add new options to support narrow checkout
-Date: Fri, 15 Aug 2008 21:27:30 +0700
-Message-ID: <20080815142730.GA10781@laptop>
-References: <cover.1218807249.git.pclouds@gmail.com>
+From: Eric Blake <ebb9@byu.net>
+Subject: [PATCH] Makefile: building git in cygwin 1.7.0
+Date: Fri, 15 Aug 2008 15:01:03 +0000 (UTC)
+Message-ID: <loom.20080815T143926-715@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 15 16:29:21 2008
+X-From: git-owner@vger.kernel.org Fri Aug 15 17:02:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KU0Ig-00069p-J5
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 16:29:11 +0200
+	id 1KU0op-0001V4-IB
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 17:02:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757521AbYHOO1q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Aug 2008 10:27:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756655AbYHOO1p
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 10:27:45 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:40055 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756539AbYHOO1o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2008 10:27:44 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so532801waf.23
-        for <git@vger.kernel.org>; Fri, 15 Aug 2008 07:27:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=S7d9HRC51N1oQApXDDlFQk7tujXrTc8kRTsbTYrgjUY=;
-        b=WM5mgl+n4WqDmBB22luZWUte4p97xPuBVa1JIYfcUtXqZc6NPWIWIKPGpkyCRdef+6
-         lkV4KgF8ICLXDQcGMq2EZJSco353RjuY/nr2e4GMh5Cj06zWbtbfyIOlrH51MsYJmRHl
-         XDi1Rh4OBh0OCXMi3yhCa8a4KfZhFlhrxu9W4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=avkSsrJVBUPOpQWOY6ZaThSWJF9RJlfVdniA93IDa+8ejuzeg/lMEMhVOSz0r9CZnK
-         1vpRFIp4Hjn5K8ANxSaUTzYJ7Ph4xsLwJFdieUcqwI5SGls+6YCvANysLALecchENwBQ
-         SMbmiRlyh9IK6GGOf+NMkqyx85yBTbAc4WZ+A=
-Received: by 10.115.110.1 with SMTP id n1mr2557193wam.66.1218810463743;
-        Fri, 15 Aug 2008 07:27:43 -0700 (PDT)
-Received: from pclouds@gmail.com ( [125.234.152.212])
-        by mx.google.com with ESMTPS id z15sm59984pod.2.2008.08.15.07.27.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 15 Aug 2008 07:27:42 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 15 Aug 2008 21:27:30 +0700
-Content-Disposition: inline
-In-Reply-To: <cover.1218807249.git.pclouds@gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1757697AbYHOPBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Aug 2008 11:01:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757505AbYHOPBS
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 11:01:18 -0400
+Received: from main.gmane.org ([80.91.229.2]:50317 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757330AbYHOPBR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2008 11:01:17 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KU0nf-0004uU-Ls
+	for git@vger.kernel.org; Fri, 15 Aug 2008 15:01:12 +0000
+Received: from eblake.csw.l-3com.com ([eblake.csw.l-3com.com])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 15 Aug 2008 15:01:11 +0000
+Received: from ebb9 by eblake.csw.l-3com.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 15 Aug 2008 15:01:11 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 128.170.36.124 (Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; InfoPath.1; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92483>
 
-These options include:
+On platforms with $X, make removes any leftover scripts 'a' from
+earlier builds if a new binary 'a.exe' is now built.  However, on
+cygwin 1.7.0, 'git' and 'git.exe' now consistently name the same file.
+Test for file equality before attempting a remove, in order to avoid
+nuking just-built binaries.
 
- --full: return to full checkout (default)
- --path: narrow checkout to some areas according to given spec
- --add-path/--remove-path: adjust current narrow checkout
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+Signed-off-by: Eric Blake <ebb9@byu.net>
 ---
- builtin-checkout.c |   41 +++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 41 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index e95eab9..f2254c6 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -160,6 +160,11 @@ struct checkout_opts {
- 	char *new_branch;
- 	int new_branch_log;
- 	enum branch_track track;
-+
-+	char *new_path;
-+	char *add_path;
-+	char *remove_path;
-+	int no_narrow_checkout;
- };
-=20
- static int reset_tree(struct tree *tree, struct checkout_opts *o, int =
-worktree)
-@@ -255,6 +260,23 @@ static int merge_working_tree(struct checkout_opts=
- *opts,
- 		tree =3D parse_tree_indirect(new->commit->object.sha1);
- 		init_tree_desc(&trees[1], tree->buffer, tree->size);
-=20
-+		if (opts->no_narrow_checkout) {
-+			/* leave narrow_spec NULL */
-+			topts.new_narrow_path =3D 1;
-+		}
-+		else if (opts->new_path) {
-+			topts.narrow_spec =3D opts->new_path;
-+			topts.new_narrow_path =3D 1;
-+		}
-+		else if (opts->add_path) {
-+			topts.narrow_spec =3D opts->add_path;
-+			topts.add_narrow_path =3D 1;
-+		}
-+		else if (opts->remove_path) {
-+			topts.narrow_spec =3D opts->remove_path;
-+			topts.remove_narrow_path =3D 1;
-+		}
-+
- 		ret =3D unpack_trees(2, trees, &topts);
- 		if (ret =3D=3D -1) {
- 			/*
-@@ -428,6 +450,10 @@ int cmd_checkout(int argc, const char **argv, cons=
-t char *prefix)
- 			BRANCH_TRACK_EXPLICIT),
- 		OPT_BOOLEAN('f', NULL, &opts.force, "force"),
- 		OPT_BOOLEAN('m', NULL, &opts.merge, "merge"),
-+		OPT_BOOLEAN(0, "full", &opts.no_narrow_checkout, "quit sparse checko=
-ut"),
-+		OPT_STRING(0, "path", &opts.new_path, "prefixes", "apply new narrow =
-checkout path"),
-+		OPT_STRING(0, "add-path", &opts.add_path, "prefixes", "add more chec=
-kout area"),
-+		OPT_STRING(0, "remove-path", &opts.remove_path, "prefixes", "narrow =
-checkout area"),
- 		OPT_END(),
- 	};
- 	int has_dash_dash;
-@@ -460,6 +486,18 @@ int cmd_checkout(int argc, const char **argv, cons=
-t char *prefix)
- 	if (opts.track =3D=3D -1)
- 		opts.track =3D git_branch_track;
-=20
-+	if (((opts.no_narrow_checkout ? 1 : 0) +
-+	     (opts.new_path ? 1 : 0) +
-+	     (opts.add_path ? 1 : 0) +
-+	     (opts.remove_path ? 1 : 0)) > 1)
-+		die("git checkout: --path, --full, --add-path and --remove-path are =
-incompatible");
-+
-+	if (opts.new_branch && (opts.add_path || opts.remove_path))
-+		die("git checkout: --add-path and --remove-path should only be used =
-on current branch");
-+
-+	if (opts.new_branch && opts.no_narrow_checkout)
-+		die("git checkout: switching branch with --full does not make sense"=
-);
-+
- 	if (opts.force && opts.merge)
- 		die("git checkout: -f and -m are incompatible");
-=20
-@@ -550,6 +588,9 @@ no_reference:
- 			}
- 		}
-=20
-+		if (opts.no_narrow_checkout || opts.new_path || opts.add_path || opt=
-s.remove_path)
-+			die("git checkout: updating paths is incompatible with setting spar=
-se checkout");
-+
- 		return checkout_paths(source_tree, pathspec);
- 	}
-=20
---=20
-1.6.0.rc3.250.g8dd0
+On cygwin 1.5.x, a script 'a' and binary 'a.exe' could co-exist in the same 
+directory, and exec'ing 'a' tended to favor the script over the binary - 
+problematic for the case where incremental building in an existing git checkout 
+picks up a switch from a script to a builtin.  Likewise, 'rm -f a' refused to 
+remove 'a.exe', so it was a no-op if there was no script 'a', hence the 
+addition of a $X-specific rule to nuke those stale scripts.
+
+But the .exe handling will change in cygwin 1.7.0 (to be released later this 
+year), where it is much harder to create 'a' and 'a.exe' as distinct files ('a' 
+is automatically removed if 'a.exe' is created); and 'rm -f a' now succeeds at 
+removing 'a.exe' if there is no 'a'.  But this means Makefile's $X-specific 
+rule to kill old scripts now nukes the just built binary files:
+
+$ make
+...
+    BUILTIN git-status.exe
+    BUILTIN git-whatchanged.exe
+rm -f 'git-fast-import';  ... rm -f 'git-status';  rm -f 'git-whatchanged';  
+rm -f 'git';
+    SUBDIR git-gui
+...
+$ ls git
+ls: cannot access git: No such file or directory
+
+and all the hard work of building is lost, on every attempt to build.  All 
+platforms that have $X should have a test(1) that understands -ef.
+
+
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index fcff2a4..ca418fc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1071,7 +1071,7 @@ SHELL = $(SHELL_PATH)
+ 
+ all:: shell_compatibility_test $(ALL_PROGRAMS) $(BUILT_INS) $(OTHER_PROGRAMS) 
+GIT-BUILD-OPTIONS
+ ifneq (,$X)
+-	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) 
+git$X)), $(RM) '$p';)
++	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) 
+git$X)), test '$p' -ef '$p$X' || $(RM) '$p';)
+ endif
+ 
+ all::
+-- 
+1.5.6.4
