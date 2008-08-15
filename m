@@ -1,88 +1,85 @@
-From: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
-Subject: Re: [TopGit PATCH] tg-create.sh: Introduce --add option to add a
- dependency.
-Date: Fri, 15 Aug 2008 10:10:34 +0200
-Organization: lilypond-design.org
-Message-ID: <1218787834.7585.13.camel@heerbeest>
-References: <1218637514.7561.30.camel@heerbeest>
-	 <Pine.GSO.4.62.0808131100280.1278@harper.uchicago.edu>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [PATCH] Fix t3700 on filesystems which do not support question marks in names
+Date: Fri, 15 Aug 2008 01:23:40 -0700
+Message-ID: <333CFE63-8410-45F5-9483-4AC6FFEB57F3@sb.org>
+References: <81b0412b0808150011r534d8453yab2a5c42b255657f@mail.gmail.com> <7vproabvcr.fsf@gitster.siamese.dyndns.org> <81b0412b0808150023sd30559fi68ff1e439013f26e@mail.gmail.com> <81b0412b0808150032o20f69346jb4f573b78cd11f2b@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v928.1)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, Jan Holesovsky <kendy@suse.cz>
-To: Jonathan Nieder <jrnieder@uchicago.edu>
-X-From: git-owner@vger.kernel.org Fri Aug 15 10:12:05 2008
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 15 10:24:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KTuPi-0004oo-Md
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 10:12:03 +0200
+	id 1KTuc5-0007zT-D3
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 10:24:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752732AbYHOIKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Aug 2008 04:10:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752691AbYHOIKj
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 04:10:39 -0400
-Received: from edu-smtp-02.edutel.nl ([88.159.1.222]:34562 "EHLO
-	edu-smtp-02.edutel.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752530AbYHOIKh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2008 04:10:37 -0400
-Received: from heerbeest (unknown [88.159.206.46])
-	by edu-smtp-02.edutel.nl (Postfix) with ESMTP id 765E611E65C;
-	Fri, 15 Aug 2008 10:10:36 +0200 (CEST)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by heerbeest (Postfix) with ESMTP id F273FDC070;
-	Fri, 15 Aug 2008 10:10:35 +0200 (CEST)
-In-Reply-To: <Pine.GSO.4.62.0808131100280.1278@harper.uchicago.edu>
-X-Mailer: Evolution 2.23.6 
+	id S1754726AbYHOIXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Aug 2008 04:23:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754563AbYHOIXo
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 04:23:44 -0400
+Received: from mailbigip.dreamhost.com ([208.97.132.5]:37486 "EHLO
+	randymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753422AbYHOIXm (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Aug 2008 04:23:42 -0400
+Received: from [192.168.1.101] (c-76-103-51-229.hsd1.ca.comcast.net [76.103.51.229])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by randymail-a2.g.dreamhost.com (Postfix) with ESMTP id 9A303EEFF6;
+	Fri, 15 Aug 2008 01:23:46 -0700 (PDT)
+In-Reply-To: <81b0412b0808150032o20f69346jb4f573b78cd11f2b@mail.gmail.com>
+X-Mailer: Apple Mail (2.928.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92465>
 
-On wo, 2008-08-13 at 11:20 -0500, Jonathan Nieder wrote:
+Wow, trying to use git-am to apply this patch bus errors. This isn't  
+good. Specifically, git mailinfo bus errors when the email is piped to  
+it. Curiously, the attached "patch" is actually another MIME-formatted  
+message with an inline patch. And I can pipe this "patch" to git-am  
+and that works. How did you generate this message?
 
-Hi,
+In any case, the patch looks good to me.
 
-> Interesting - I had imagined changing dependencies working in an
-> entirely different way.
+Signed-off-by: Kevin Ballard <kevin@sb.org>
 
-Thanks!  This is quite interesting.  A few questions
+-Kevin Ballard
 
-> 
-> 	$ git checkout -b P' P
-> 	$ git rebase --onto B' B
+On Aug 15, 2008, at 12:32 AM, Alex Riesen wrote:
 
-.. is using rebase a robust solution?  We should provide a way to
-recover after user intervention here?
-
-> 	$ git checkout P
-> 	$ git merge --no-ff --no-commit B'   (*)
-
-Do you remember in what area the problem is here, that would make it a 
-lot easier for me to look.
-
-> 	$ git read-tree -u P'
-
-Ouch, I'm feeling so git-unitiated here; what is read-tree doing 
-differently from merge?  Isn't here a -m missing?
-
-> The main problem I see with this story is that if B' is just B with some
-> new changes added this is overly complicated.
-
-Yes, that's my main gripe.  One of the use cases I'm looking at is
-our ooo-build master branch; which includes ~300 topic branches.
-
-Removing or [re-]adding one dependency using this rebase-by-merging 
-approch would take ~7 minutes on my machine.
-
-I'm now also looking at a .topundeps file, to support
-the re-adding of a depenency using the cherry-pick approach...
-
-Greetings,
-Janneke. 
+> Use square brackets instead.
+>
+> And the prominent example of the deficiency are, as usual, the  
+> filesystems
+> of Microsoft house.
+>
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
+>
+> 2008/8/15 Junio C Hamano <gitster@pobox.com>:
+>>>> And the prominent example of the deficiency are, as usual, the  
+>>>> filesystems
+>>>> of Microsoft house.
+>>>
+>>> Can other glob specials such as '*' or '[' be used instead of  
+>>> skipping the
+>>> test?
+>>
+>> Ah... The brackets are allowed.
+>
+> Sorry, should have thought of it.
+>
+> t/t3700-add.sh |    8 ++++----
+> 1 files changed, 4 insertions(+), 4 deletions(-)
+> <0001-Fix-t3700-on-filesystems-which-do-not-support-questi.patch>
 
 -- 
-Jan Nieuwenhuizen <janneke@gnu.org> | GNU LilyPond - The music typesetter
-http://www.xs4all.nl/~jantien       | http://www.lilypond.org
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
