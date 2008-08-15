@@ -1,55 +1,54 @@
 From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH 7/9] ls-files: add --narrow-match=spec option to test
-	narrow matching
-Date: Fri, 15 Aug 2008 21:26:56 +0700
-Message-ID: <20080815142656.GA10750@laptop>
+Subject: [PATCH 8/9] clone: support narrow checkout with --path option
+Date: Fri, 15 Aug 2008 21:27:09 +0700
+Message-ID: <20080815142709.GA10765@laptop>
 References: <cover.1218807249.git.pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 15 16:29:18 2008
+X-From: git-owner@vger.kernel.org Fri Aug 15 16:29:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KU0If-00069p-8w
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 16:29:09 +0200
+	id 1KU0If-00069p-UE
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 16:29:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758918AbYHOO1N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Aug 2008 10:27:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758909AbYHOO1N
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 10:27:13 -0400
+	id S1754416AbYHOO1Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Aug 2008 10:27:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756389AbYHOO1Z
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 10:27:25 -0400
 Received: from yx-out-2324.google.com ([74.125.44.28]:30238 "EHLO
 	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755255AbYHOO1L (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2008 10:27:11 -0400
+	with ESMTP id S1753744AbYHOO1Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2008 10:27:24 -0400
 Received: by yx-out-2324.google.com with SMTP id 8so740227yxm.1
-        for <git@vger.kernel.org>; Fri, 15 Aug 2008 07:27:10 -0700 (PDT)
+        for <git@vger.kernel.org>; Fri, 15 Aug 2008 07:27:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:date:from:to:subject
          :message-id:references:mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=YqAbEfLR9FHKCgRfA7L1sg72ExiYM070IMp/Zexj5JA=;
-        b=MDDefYS7e3TsZGTN+n3NlY7Hm7Kh4aS1Vsmytm8ap5Mo1zulTTwNw9tPx7HB1WJ+oc
-         16ki6vI17f8Cj3P2G3a8RJ6C4VkBbHP2cSc912l4z2c7gxZUfIqwqrcdMDRM5/H0+obJ
-         dw49wM5Jx1re70IWtrzpWC2PF3OQ+cwSkHiDk=
+        bh=0CK7z4/wvh+8znegE5Ot1Qab/szveCObjAnHuTaQdfA=;
+        b=G70wQiOJWbpCwbFQob1DqO3QKnLNnhGp/SztLIVKAMWduo/f2iyaQipDuSzNPP1YgC
+         zK2xcRyF7pPgRGMuzUs46cTJE93d5rD3hoTzlpmzM4RKkdETievUlyiYbL5XsihiE54y
+         NGXxo5dl2PmTgquaJpqGLZ8Z0AiFR810WKqgE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=P/d2O9FpHz+nvuprU/i7m7CM+6Tu634DKN5j1gg9rVwilks0EOYO7fFqg6ABwHzhNk
-         /Gkcx1914As52umOfz27IW8pPe/tLG6k6PxNPzrzO1PIZszVAgVB/HyQ/lxL15YiPqKF
-         DMaaFcvwYd0fmhfQXPkBvaRA4gPZp0SAGJ1qM=
-Received: by 10.115.91.2 with SMTP id t2mr2564416wal.62.1218810429813;
-        Fri, 15 Aug 2008 07:27:09 -0700 (PDT)
+        b=Z++63/b2Q+w+Y2Wb2tNi2roV5DRgeJfng21saAJH9tu6LDEqsi3Vx3lapRCRrL8PRH
+         kupFwKTtrKJElCLTFrWUlmDkYF8s+vTSmBBAzIIcrS5Edfo+qjPuyGKqbVYtqjI0jdCB
+         APtp2BlB8OV6s3MSDBq7Cs5UvvXQUWnGh7vxg=
+Received: by 10.114.184.7 with SMTP id h7mr2558664waf.9.1218810443406;
+        Fri, 15 Aug 2008 07:27:23 -0700 (PDT)
 Received: from pclouds@gmail.com ( [125.234.152.212])
-        by mx.google.com with ESMTPS id y11sm337883pod.5.2008.08.15.07.27.07
+        by mx.google.com with ESMTPS id t1sm82329poh.9.2008.08.15.07.27.20
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 15 Aug 2008 07:27:08 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 15 Aug 2008 21:26:56 +0700
+        Fri, 15 Aug 2008 07:27:22 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 15 Aug 2008 21:27:09 +0700
 Content-Disposition: inline
 In-Reply-To: <cover.1218807249.git.pclouds@gmail.com>
 User-Agent: Mutt/1.5.16 (2007-06-09)
@@ -57,69 +56,66 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92481>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin-ls-files.c |   10 +++++++++-
- 1 files changed, 9 insertions(+), 1 deletions(-)
+ builtin-clone.c |   13 +++++++++++++
+ 1 files changed, 13 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index bcb1536..0064f73 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -29,6 +29,7 @@ static const char **pathspec;
- static int error_unmatch;
- static char *ps_matched;
- static const char *with_tree;
-+static const char *narrow_spec;
+diff --git a/builtin-clone.c b/builtin-clone.c
+index c0e3086..0fcf53d 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -36,6 +36,7 @@ static const char * const builtin_clone_usage[] =3D {
+ static int option_quiet, option_no_checkout, option_bare, option_mirro=
+r;
+ static int option_local, option_no_hardlinks, option_shared;
+ static char *option_template, *option_reference, *option_depth;
++static char *option_narrow_path;
+ static char *option_origin =3D NULL;
+ static char *option_upload_pack =3D "git-upload-pack";
 =20
- static const char *tag_cached =3D "";
- static const char *tag_unmerged =3D "";
-@@ -219,6 +220,7 @@ static void show_ce_entry(const char *tag, struct c=
-ache_entry *ce)
- 	write_name_quoted(ce->name + offset, stdout, line_terminator);
- }
-=20
-+int match_narrow_spec(const char *spec_, const char *path); /* unpack-=
-trees.c */
- static void show_files(struct dir_struct *dir, const char *prefix)
- {
- 	int i;
-@@ -248,6 +250,8 @@ static void show_files(struct dir_struct *dir, cons=
-t char *prefix)
- 				continue;
- 			if (show_checkout && ce_no_checkout(ce))
- 				continue;
-+			if (narrow_spec && !match_narrow_spec(narrow_spec, ce->name))
-+				continue;
- 			show_ce_entry(ce_stage(ce) ? tag_unmerged : tag_cached, ce);
- 		}
+@@ -43,6 +44,8 @@ static struct option builtin_clone_options[] =3D {
+ 	OPT__QUIET(&option_quiet),
+ 	OPT_BOOLEAN('n', "no-checkout", &option_no_checkout,
+ 		    "don't create a checkout"),
++	OPT_STRING(0, "path", &option_narrow_path, "prefixes",
++		    "limit checkout to specified paths (narrow checkout)"),
+ 	OPT_BOOLEAN(0, "bare", &option_bare, "create a bare repository"),
+ 	OPT_BOOLEAN(0, "naked", &option_bare, "create a bare repository"),
+ 	OPT_BOOLEAN(0, "mirror", &option_mirror,
+@@ -376,10 +379,15 @@ int cmd_clone(int argc, const char **argv, const =
+char *prefix)
+ 		if (option_origin)
+ 			die("--bare and --origin %s options are incompatible.",
+ 			    option_origin);
++		if (option_narrow_path)
++			die("--bare and --path options are incompatible.");
+ 		option_no_checkout =3D 1;
+ 		use_separate_remote =3D 0;
  	}
-@@ -429,7 +433,7 @@ static const char ls_files_usage[] =3D
- 	"git ls-files [-z] [-t] [-v] (--[cached|checkout|deleted|others|stage=
-|unmerged|killed|modified])* "
- 	"[ --ignored ] [--exclude=3D<pattern>] [--exclude-from=3D<file>] "
- 	"[ --exclude-per-directory=3D<filename> ] [--exclude-standard] "
--	"[--full-name] [--abbrev] [--] [<file>]*";
-+	"[--narrow-match=3Dnarrowspec] [--full-name] [--abbrev] [--] [<file>]=
-*";
 =20
- int cmd_ls_files(int argc, const char **argv, const char *prefix)
- {
-@@ -472,6 +476,10 @@ int cmd_ls_files(int argc, const char **argv, cons=
-t char *prefix)
- 			show_checkout =3D 1;
- 			continue;
- 		}
-+		if (!prefixcmp(arg, "--narrow-match=3D")) {
-+			narrow_spec =3D arg+15;
-+			continue;
++	if (option_no_checkout && option_narrow_path)
++		die("--no-checkout and --path options are incompatible.");
++
+ 	if (!option_origin)
+ 		option_origin =3D "origin";
+=20
+@@ -586,6 +594,11 @@ int cmd_clone(int argc, const char **argv, const c=
+har *prefix)
+ 		opts.src_index =3D &the_index;
+ 		opts.dst_index =3D &the_index;
+=20
++		if (option_narrow_path) {
++			opts.new_narrow_path =3D 1;
++			opts.narrow_spec =3D option_narrow_path;
 +		}
- 		if (!strcmp(arg, "-d") || !strcmp(arg, "--deleted")) {
- 			show_deleted =3D 1;
- 			continue;
++
+ 		tree =3D parse_tree_indirect(remote_head->old_sha1);
+ 		parse_tree(tree);
+ 		init_tree_desc(&t, tree->buffer, tree->size);
 --=20
 1.6.0.rc3.250.g8dd0
