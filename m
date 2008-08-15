@@ -1,102 +1,92 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [EGIT PATCH] Silently permit invalid ObjectIds during RefUpdate
-Date: Fri, 15 Aug 2008 10:44:46 -0700
-Message-ID: <1218822286-4069-1-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Aug 15 19:45:53 2008
+From: Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH] bash-completion: Add non-command git help files to bash-completion
+Date: Fri, 15 Aug 2008 13:53:32 -0400
+Message-ID: <48A5C29C.5080602@griep.us>
+References: <1218816948-7864-1-git-send-email-marcus@griep.us> <Pine.GSO.4.62.0808151234110.17004@harper.uchicago.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@uchicago.edu>
+X-From: git-owner@vger.kernel.org Fri Aug 15 19:54:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KU3N2-0004Rq-FA
-	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 19:45:52 +0200
+	id 1KU3Vb-0007MH-Ak
+	for gcvg-git-2@gmane.org; Fri, 15 Aug 2008 19:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755259AbYHORos (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Aug 2008 13:44:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755089AbYHORos
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 13:44:48 -0400
-Received: from george.spearce.org ([209.20.77.23]:35778 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753999AbYHORor (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2008 13:44:47 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 3629238376; Fri, 15 Aug 2008 17:44:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id B8C8A38265;
-	Fri, 15 Aug 2008 17:44:46 +0000 (UTC)
-X-Mailer: git-send-email 1.6.0.rc3.250.g8dd0
+	id S1754553AbYHORxi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Aug 2008 13:53:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754530AbYHORxi
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 13:53:38 -0400
+Received: from wr-out-0506.google.com ([64.233.184.228]:40546 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754211AbYHORxh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2008 13:53:37 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so1137543wri.5
+        for <git@vger.kernel.org>; Fri, 15 Aug 2008 10:53:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=y1vCEgS6v3Wn3a7ieMFVWUL6Xme3jO4TJIIONRpYwwI=;
+        b=n4iLHy16tkHxB1gbQhGw+9Rj5btwMh1X3yRFLJfmx5MM/8o/I+97ScUYU9BA9S5Y4m
+         dlJDrLFABFkmzzLjAa29V/v9VAwSCKRFlmk9uLis4hzv0E+cItA33H6yC5bNpoFiPqdy
+         heUprZoACpe++Iqy1KvX4tQ2hZQ1JS/kB55bU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=irWk1A2XPdRWT/XaBL8hCeIoygBL+ldy19Erkn6NhFULVR+ZA5wGXgO0iGkGVKKi0O
+         NLwdUZu/91H9qEAcKheFRUCSaBq8nux4I2MCk1r2afuvexV3AzPc7MWRKFn7TAN/IKyC
+         i5l1/tTTs/YFwuUGaSXEbCIqdKxZGH0/PijeQ=
+Received: by 10.90.81.19 with SMTP id e19mr4029620agb.24.1218822816449;
+        Fri, 15 Aug 2008 10:53:36 -0700 (PDT)
+Received: from ?10.95.36.106? ( [4.79.245.132])
+        by mx.google.com with ESMTPS id l48sm1406212wrl.4.2008.08.15.10.53.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 15 Aug 2008 10:53:35 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <Pine.GSO.4.62.0808151234110.17004@harper.uchicago.edu>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92499>
 
-If we try to parse objects which don't exist it may be because
-we are trying to force deletion of a ref exactly because the
-object the ref currently refers to has been pruned from the
-object database already.  Rather than fail with an exception
-we should still permit the removal.
+It can be either.  In a bash-completion list, though, gitk would probab=
+ly
+be more recognizable.  I'll rehash that one.
 
-This also fixes the breakage in the unit tests introduced by
-Charles' 5a318367 "Refactor of RefUpdate force ...".  One of
-the unit tests for RefUpdate is using a bad ObjectId as the
-new value for the ref, and uses forceUpdate to hammer it into
-the ref database anyway, even though it is not valid as the
-object does not exist.
+Jonathan Nieder wrote:
+> Hi,
+>=20
+> Marcus Griep wrote:
+>=20
+>> Git allows access to the gitattributes man page via `git help attrib=
+utes`,
+>> but this is not discoverable via the bash-completion mechanism.  Thi=
+s
+>> patch adds all current non-command man pages to the completion candi=
+date
+>> list.
+> [...]
+>> +		diffcore glossary hooks ignore k modules
+>=20
+> I think k should be gitk here :)
+>=20
+> Regards,
+> Jonathan
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../src/org/spearce/jgit/lib/RefUpdate.java        |   19 +++++++++++++++++--
- 1 files changed, 17 insertions(+), 2 deletions(-)
-
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
-index 858ba46..ca77b75 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
-@@ -40,6 +40,7 @@
- import java.io.File;
- import java.io.IOException;
- 
-+import org.spearce.jgit.errors.MissingObjectException;
- import org.spearce.jgit.lib.Ref.Storage;
- import org.spearce.jgit.revwalk.RevCommit;
- import org.spearce.jgit.revwalk.RevObject;
-@@ -345,8 +346,8 @@ private Result updateImpl(final RevWalk walk, final Store store)
- 			if (oldValue == null)
- 				return store.store(lock, Result.NEW);
- 
--			newObj = walk.parseAny(newValue);
--			oldObj = walk.parseAny(oldValue);
-+			newObj = safeParse(walk, newValue);
-+			oldObj = safeParse(walk, oldValue);
- 			if (newObj == oldObj)
- 				return Result.NO_CHANGE;
- 
-@@ -363,6 +364,20 @@ private Result updateImpl(final RevWalk walk, final Store store)
- 		}
- 	}
- 
-+	private static RevObject safeParse(final RevWalk rw, final AnyObjectId id)
-+			throws IOException {
-+		try {
-+			return rw.parseAny(id);
-+		} catch (MissingObjectException e) {
-+			// We can expect some objects to be missing, like if we are
-+			// trying to force a deletion of a branch and the object it
-+			// points to has been pruned from the database due to freak
-+			// corruption accidents (it happens with 'git new-work-dir').
-+			//
-+			return null;
-+		}
-+	}
-+
- 	private Result updateStore(final LockFile lock, final Result status)
- 			throws IOException {
- 		lock.setNeedStatInformation(true);
--- 
-1.6.0.rc3.250.g8dd0
+--=20
+Marcus Griep
+GPG Key ID: 0x5E968152
+=E2=80=94=E2=80=94
+http://www.boohaunt.net
+=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
