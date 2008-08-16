@@ -1,107 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Plumbing-only support for storing object metadata
-Date: Sat, 16 Aug 2008 02:55:51 -0700
-Message-ID: <7vd4k9e120.fsf@gitster.siamese.dyndns.org>
-References: <20080810145019.GC3955@efreet.light.src>
- <20080809210733.GA6637@oh.minilop.net>
- <d411cc4a0808091449n7e0c9b7et7980cf668106aead@mail.gmail.com>
- <20080810035101.GA22664@spearce.org> <20080810112038.GB30892@cuci.nl>
- <20080809210733.GA6637@oh.minilop.net>
- <d411cc4a0808091449n7e0c9b7et7980cf668106aead@mail.gmail.com>
- <20080810035101.GA22664@spearce.org> <20080809210733.GA6637@oh.minilop.net>
- <20080810110925.GB3955@efreet.light.src>
- <20080816062130.GA4554@oh.minilop.net>
+Subject: Re: [RFC PATCH 0/9] Narrow/Sparse checkout round 3: "easy mode"
+Date: Sat, 16 Aug 2008 03:31:51 -0700
+Message-ID: <7v1w0pdze0.fsf@gitster.siamese.dyndns.org>
+References: <20080815142439.GA10609@laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jamey Sharp <jamey@minilop.net>, Jan Hudec <bulb@ucw.cz>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Stephen R. van den Berg" <srb@cuci.nl>, david@lang.hm,
-	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
-To: Josh Triplett <josh@freedesktop.org>
-X-From: git-owner@vger.kernel.org Sat Aug 16 11:58:21 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 16 12:33:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUIY8-0005re-5g
-	for gcvg-git-2@gmane.org; Sat, 16 Aug 2008 11:58:20 +0200
+	id 1KUJ5j-0005EH-RT
+	for gcvg-git-2@gmane.org; Sat, 16 Aug 2008 12:33:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752153AbYHPJ4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Aug 2008 05:56:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752125AbYHPJ4H
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Aug 2008 05:56:07 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36781 "EHLO
+	id S1752693AbYHPKcA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Aug 2008 06:32:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752649AbYHPKcA
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Aug 2008 06:32:00 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38906 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751864AbYHPJ4E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Aug 2008 05:56:04 -0400
+	with ESMTP id S1751864AbYHPKb7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Aug 2008 06:31:59 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1D77D5B42A;
-	Sat, 16 Aug 2008 05:56:03 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 811E55B5EA;
+	Sat, 16 Aug 2008 06:31:57 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 490FB5B428; Sat, 16 Aug 2008 05:55:53 -0400 (EDT)
+ ESMTPSA id 4DFB65B5E9; Sat, 16 Aug 2008 06:31:54 -0400 (EDT)
+In-Reply-To: <20080815142439.GA10609@laptop> (=?utf-8?B?Tmd1eeG7hW4gVGg=?=
+ =?utf-8?B?w6FpIE5n4buNYw==?= Duy's message of "Fri, 15 Aug 2008 21:24:39
+ +0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 89622788-6B79-11DD-A213-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8D80BEEC-6B7E-11DD-A833-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92541>
 
-Josh Triplett <josh@freedesktop.org>, Jamey Sharp <jamey@minilop.net>
-writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-> This hook would need to provide a way to process these updates before
-> the blob or tree contents get put into place.  For example, if you check
-> out /etc/shadow, you need to apply the non-world-readable permissions
-> *before* you write out the contents.
+> The implementation with insights from Junio turns out smaller and bet=
+ter
+> (and I was thinking about applying it for huge maildir).
 
-I think such atomicity or "checkout race problem" is irrelevant.
+I think I can agree with the general direction this is taking, except t=
+hat
+we would need to think about the transition plans.  Note that I haven't
+really read through the full series yet.
 
-I'd like to make a comment on this point, even though at the moment
-(especially before the real release), I am not very interested in where
-this "proposal" is going.
+> Another difference from the last round is "narrow rules" will not be =
+preserved
+> when switching branches. When you switch branch with no option, you w=
+ill get
+> full checkout. You may want to use --path|--add-path|--remove-path wh=
+en
+> switching branches to have narrow checkout again.
 
-You mention that you would resolve attribute conflicts just the same way
-you would resolve contents conflicts, which in turn means that you would
-check out a half-merged state with conflict markers to the working tree,
-fix up the filesystem entity (both contents and presumably its attributes
-like perm bits, ownership, xa and whatnot), and mark the path resolved.
-Even without talking about attributes conflicts, what's your position on
-the time-window during which the contents of /etc/shadow and /etc/password
-have conflict markers in them?
+You could save the "narrow rules" in the extension section of the index=
+=2E
+If the final form of this series needs to use a separate CE_NO_CHECKOUT
+bit (which would make the resulting index incompatible with the current
+git), the narrow rules section can be marked as "your git must understa=
+nd
+this" class of extension to make sure that people do not mistakenly acc=
+ess
+an index written by this new version of git with the current or older g=
+it.
 
-Luckily, the markers do not have sufficient number of colons, and that
-would protect your system from attempts to break into it with a phoney
-username '=======' with an empty password ;-), but I think you get the
-idea.  Anything that has to be in some consistent state that cannot see
-conflicted state in the middle should not be merged in-place [*1*], [*2*].
+> Now back to technical POV. I did not reuse CE_VALID (assume unchanged=
+) bit
+> because it has been used for core.ignorestat.
 
-So please simplify your requirements and at least drop atomicity argument.
-
-I am _not_ fundamentally opposed to somebody who wants to use git or any
-other SCM as a cooler representation of snapshots than a sequence of
-tarballs.  I however would be unhappy if your design and implementation
-becomes more complicated than otherwise only because you try to deal with
-the atomicity issue.  IOW, if your solution would become much simpler once
-you pare down the atomicity requirement, then I'd reject the more complex
-variant with atomicity in any second, even though I might still find the
-simpler variant that does not care about atomicity worth considering.
-
-
-[Footnotes]
-
-*1* That is why people often frown upon "using SCM to track changes of a
-live system in-place", and suggest tracking source material in SCM, and
-build material to deploy from the source and install into the final
-destination (not limited to /etc but more often so for e.g. web server
-assets) as a better practice.
-
-*2* Also you should realize your "/etc/shadow must be non-world-readable
-from the beginning" is a very application specific wish.  What if the
-attribute you are trying to enforce is "this path must always be
-world-readable"?  Are you going to limit this "attribute enhancements" to
-what you can specify at creat(2) time only?  How would you handle "this
-path must be owned by user 'www-data' (assuming root drives git)", which
-would be done by creat(2) followed by chown(2)?
+I am not sure what's the relation between these two.
