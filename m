@@ -1,61 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] bash-completion: Add non-command git help files to
- bash-completion
-Date: Sat, 16 Aug 2008 02:30:37 -0700
-Message-ID: <7vskt5gvcy.fsf@gitster.siamese.dyndns.org>
-References: <1218816948-7864-1-git-send-email-marcus@griep.us>
- <1218823168-1753-1-git-send-email-marcus@griep.us>
- <20080815180059.GA17399@spearce.org>
+From: sed <sed.nivo@gmail.com>
+Subject: Casting and dereferencing of pointer
+Date: Sat, 16 Aug 2008 09:33:30 +0000 (UTC)
+Message-ID: <loom.20080816T093019-717@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marcus Griep <marcus@griep.us>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@uchicago.edu>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Aug 16 11:32:01 2008
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 16 11:41:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUI8T-0007Fb-Lm
-	for gcvg-git-2@gmane.org; Sat, 16 Aug 2008 11:31:50 +0200
+	id 1KUIHY-00024U-4W
+	for gcvg-git-2@gmane.org; Sat, 16 Aug 2008 11:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752273AbYHPJaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Aug 2008 05:30:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752155AbYHPJaq
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Aug 2008 05:30:46 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35143 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752153AbYHPJap (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Aug 2008 05:30:45 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A89895B309;
-	Sat, 16 Aug 2008 05:30:44 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 4724E5B308; Sat, 16 Aug 2008 05:30:39 -0400 (EDT)
-In-Reply-To: <20080815180059.GA17399@spearce.org> (Shawn O. Pearce's message
- of "Fri, 15 Aug 2008 11:00:59 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0037F7CE-6B76-11DD-A40D-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752068AbYHPJkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Aug 2008 05:40:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751632AbYHPJkJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Aug 2008 05:40:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:58978 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751864AbYHPJkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Aug 2008 05:40:08 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1KUIGQ-00016P-Id
+	for git@vger.kernel.org; Sat, 16 Aug 2008 09:40:02 +0000
+Received: from ip-91-200-114-146.network.lviv.ua ([ip-91-200-114-146.network.lviv.ua])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 16 Aug 2008 09:40:02 +0000
+Received: from sed.nivo by ip-91-200-114-146.network.lviv.ua with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 16 Aug 2008 09:40:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 91.200.114.146 (Opera/9.51 (Windows NT 5.1; U; en))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92538>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Maybe I should not post in this group but anyway...
 
-> Marcus Griep <marcus@griep.us> wrote:
->> Git allows access to the gitattributes man page via `git help attributes`,
->> but this is not discoverable via the bash-completion mechanism.  This
->> patch adds all current non-command man pages to the completion candidate
->> list.
->> 
->> Signed-off-by: Marcus Griep <marcus@griep.us>
->
-> Acked-by: Shawn O. Pearce <spearce@spearce.org>
+Please look at my code that do the same, except of endianness.
+static void _parseItems(const unsigned char *pBuffer)
+{
+  unsigned int itemSize;
+  itemSize = *((unsigned int*)pBuffer); // this give system fault
+  memcpy(&itemSize, pBuffer, sizeof(unsigned int)); // this works well
+  .......
+}
 
-I'd honor this Ack for 1.6.0 and will apply the patch as-is, but that does
-not mean I do not think this is a wrong approach in the longer run.
+I'm not very experienced with C so I use git as example of good written code.
+In object.c I've found two functions that looks like my one.
+
+static unsigned int hash_obj(struct object *obj, unsigned int n)
+{
+	unsigned int hash = *(unsigned int *)obj->sha1;
+	return hash % n;
+}
+
+static int hashtable_index(const unsigned char *sha1)
+{
+	unsigned int i;
+	memcpy(&i, sha1, sizeof(unsigned int));
+	return (int)(i % obj_hash_size);
+}
+
+I wonder why in the second used memcpy instead of:
+unsigned int i = *(unsigned int *)sha1
+Maybe there is explanation that will help to solve my problem.
+Thank you
