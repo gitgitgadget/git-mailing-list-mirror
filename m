@@ -1,119 +1,93 @@
-From: "John J. Franey" <jjfraney@gmail.com>
-Subject: [JGIT PATCH] On error in DirCache.lock, do not leave the index
-	locked.
-Date: Sat, 16 Aug 2008 16:29:05 -0400
-Message-ID: <1218918545.27000.22.camel@isidore.myhome.westell.com>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Sean Brandt <sean@fuzzymagic.com>
+Subject: Install on Solaris 2008.05
+Date: Sat, 16 Aug 2008 16:51:07 -0400
+Message-ID: <3785F93B-FDC4-46DC-B21D-A7000FAB221E@fuzzymagic.com>
+Mime-Version: 1.0 (Apple Message framework v928.1)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 16 22:30:16 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 16 22:52:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUSPd-0007fB-U7
-	for gcvg-git-2@gmane.org; Sat, 16 Aug 2008 22:30:14 +0200
+	id 1KUSlG-0006dv-Hf
+	for gcvg-git-2@gmane.org; Sat, 16 Aug 2008 22:52:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751772AbYHPU3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Aug 2008 16:29:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751603AbYHPU3J
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Aug 2008 16:29:09 -0400
-Received: from wx-out-0506.google.com ([66.249.82.227]:43578 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751195AbYHPU3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Aug 2008 16:29:08 -0400
-Received: by wx-out-0506.google.com with SMTP id h29so1615730wxd.4
-        for <git@vger.kernel.org>; Sat, 16 Aug 2008 13:29:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:content-type
-         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        bh=d8K5hg9frNd5M3UbVqFh/qUe97L9Uz77bntRFT6IcAE=;
-        b=BiMSkbVkf8yWzXgicR2NvZxj16oPjerK7/HX9+ANj/lKbF/yw0LsfiR9lQhgpklPKb
-         8OU/blo5UwgQT3rFqKErk+NRIvueudrSBYUC2vdkRydMswRGA9JBqagjsHI88waRaaFn
-         B/WbqI043S4pdMPXl2IvoLDsmmL7HbLHVkuQs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        b=i4P1PUHu+t7g4WVbai+vA8PzjnZb/xHL0x1MHlBYCNrpDXJ4i7lYQVsRHS6JEnPPIi
-         MSe/zjmUX0mw6iuDnztao3H2u3OBOv7pOuCYnyDHJgEUmKUxfy0HZn7xJLvgXBsx/q7R
-         3qYICwDyOMNIuqLRnDNN2xYEHFWD/5HG9QiNE=
-Received: by 10.70.26.8 with SMTP id 8mr5075718wxz.13.1218918546551;
-        Sat, 16 Aug 2008 13:29:06 -0700 (PDT)
-Received: from ?192.168.2.101? ( [70.21.159.80])
-        by mx.google.com with ESMTPS id h35sm94821wxd.31.2008.08.16.13.29.04
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 16 Aug 2008 13:29:05 -0700 (PDT)
-X-Mailer: Evolution 2.22.2 
+	id S1751156AbYHPUva (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Aug 2008 16:51:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751155AbYHPUva
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Aug 2008 16:51:30 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:51046 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751282AbYHPUv3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Aug 2008 16:51:29 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so896582waf.23
+        for <git@vger.kernel.org>; Sat, 16 Aug 2008 13:51:28 -0700 (PDT)
+Received: by 10.114.180.18 with SMTP id c18mr3838165waf.128.1218919888795;
+        Sat, 16 Aug 2008 13:51:28 -0700 (PDT)
+Received: from ?192.168.1.15? ( [68.48.33.158])
+        by mx.google.com with ESMTPS id m31sm6776225wag.21.2008.08.16.13.51.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 16 Aug 2008 13:51:26 -0700 (PDT)
+X-Mailer: Apple Mail (2.928.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92555>
+
+I'm building an opensolaris box, and am running into test failures  
+when compiling git.
+
+  I'm installing on opensolaris 2008.05 and the tests fail in t0002- 
+gitfile.sh  ( test numbers 2 and 3 ) is this expected/ok?
+
+*** t0002-gitfile.sh ***
+*   ok 1: initial setup
+* FAIL 2: bad setup: invalid .git file format
+
+                 echo "gitdir $REAL" >.git &&
+                 if git rev-parse 2>.err
+                 then
+                         echo "git rev-parse accepted an invalid .git  
+file"
+                         false
+                 fi &&
+                 if ! grep -qe "Invalid gitfile format" .err
+                 then
+                         echo "git rev-parse returned wrong error"
+                         false
+                 fi
+
+* FAIL 3: bad setup: invalid .git file path
+
+                 echo "gitdir: $REAL.not" >.git &&
+                 if git rev-parse 2>.err
+                 then
+                         echo "git rev-parse accepted an invalid .git  
+file path"
+                         false
+                 fi &&
+                 if ! grep -qe "Not a git repository" .err
+                 then
+                         echo "git rev-parse returned wrong error"
+                         false
+                 fi
+
+*   ok 4: final setup + check rev-parse --git-dir
+*   ok 5: check hash-object
+*   ok 6: check cat-file
+*   ok 7: check update-index
+*   ok 8: check write-tree
+*   ok 9: check commit-tree
+*   ok 10: check rev-list
+* failed 2 among 10 test(s)
+gmake[1]: *** [t0002-gitfile.sh] Error 1
+gmake[1]: Leaving directory `/root/git-1.5.6.5/t'
 
 
->From 557280ecdcb4729c481ff6f1817bb277f11caec7 Mon Sep 17 00:00:00 2001
-From: John J. Franey <jjfraney@gmail.com>
-Date: Sat, 16 Aug 2008 15:32:48 -0400
-Subject: [PATCH] On error in DirCache.lock, do not leave the index locked.
 
-After using C git on the same repository, the jgit cache read
-threw an EOFException, and left the index lock file.
-The repository is still valid according to C git, but
-unreachable by C git because it honors the lock file
-left behind by jgit.
+Thanks
 
-Signed-off-by: John J. Franey <jjfraney@gmail.com>
----
- Hi, hope this helps.
-
- The reason for the EOFException is beyond me right now.  It
- reported "Short read of block."  However, I'm pretty sure
- leaving the lock file in place is an error.
-
- Regards,
- John
-
- .../src/org/spearce/jgit/dircache/DirCache.java    |   18 ++++++++++++++++--
- 1 files changed, 16 insertions(+), 2 deletions(-)
-
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
-index 280149a..c52d98b 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
-@@ -158,7 +158,8 @@ public static DirCache read(final Repository db)
- 	 * <p>
- 	 * The new index will be locked and then read before it is returned to the
- 	 * caller. Read failures are reported as exceptions and therefore prevent
--	 * the method from returning a partially populated index.
-+	 * the method from returning a partially populated index.  On read failure,
-+	 * the lock is released.
- 	 *
- 	 * @param indexLocation
- 	 *            location of the index file on disk.
-@@ -176,7 +177,20 @@ public static DirCache lock(final File indexLocation)
- 		final DirCache c = new DirCache(indexLocation);
- 		if (!c.lock())
- 			throw new IOException("Cannot lock " + indexLocation);
--		c.read();
-+		
-+		try {
-+			c.read();
-+		} catch(IOException e) {
-+			c.unlock();
-+			throw e;
-+		} catch(RuntimeException e) {
-+			c.unlock();
-+			throw e;
-+		} catch(Error e) {
-+			c.unlock();
-+			throw e;
-+		}
-+		
- 		return c;
- 	}
- 
--- 
-1.6.0.rc1.71.gfba5
+- Sean
