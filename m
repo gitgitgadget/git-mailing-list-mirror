@@ -1,96 +1,81 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: pack operation is thrashing my server
-Date: Fri, 15 Aug 2008 17:34:45 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0808151729070.3324@nehalem.linux-foundation.org>
-References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com> <20080811030444.GC27195@spearce.org> <a6b6acf60808110043t76dc0ae6l428c5da473d79c71@mail.gmail.com> <87vdy71i6w.fsf@basil.nowhere.org> <1EE44425-6910-4C37-9242-54D0078FC377@adacore.com>
- <alpine.LFD.1.10.0808131024460.4352@xanadu.home> <20080813145944.GB3782@spearce.org> <alpine.LFD.1.10.0808131123221.4352@xanadu.home> <20080813155016.GD3782@spearce.org> <alpine.LFD.1.10.0808131228270.4352@xanadu.home> <alpine.LFD.1.10.0808141014410.3324@nehalem.linux-foundation.org>
- <alpine.LFD.1.10.0808141022500.3324@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808141442150.4352@xanadu.home> <alpine.LFD.1.10.0808141215520.3324@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808141633080.4352@xanadu.home>
- <alpine.LFD.1.10.0808141544150.3324@nehalem.linux-foundation.org>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008
+	projects?
+Date: Sat, 16 Aug 2008 03:16:33 +0200
+Message-ID: <20080816011633.GC17121@leksak.fem-net>
+References: <200807080227.43515.jnareb@gmail.com> <200808140457.56464.jnareb@gmail.com> <48A5DB4D.5060906@gmail.com> <200808152236.56479.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Geert Bosch <bosch@adacore.com>,
-	Andi Kleen <andi@firstfloor.org>, Ken Pratt <ken@kenpratt.net>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Aug 16 02:36:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org,
+	Sam Vilain <sam@vilain.net>, Joshua Roys <roysjosh@gmail.com>,
+	Sverre Rabbelier <alturin@gmail.com>,
+	Sverre Rabbelier <sverre@rabbelier.nl>,
+	David Symonds <dsymonds@gmail.com>,
+	John Hawley <warthog19@eaglescrag.net>,
+	Marek Zawirski <marek.zawirski@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 16 03:18:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KU9mQ-0007IB-Ft
-	for gcvg-git-2@gmane.org; Sat, 16 Aug 2008 02:36:30 +0200
+	id 1KUAQZ-0006Gs-6P
+	for gcvg-git-2@gmane.org; Sat, 16 Aug 2008 03:17:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752472AbYHPAf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Aug 2008 20:35:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752393AbYHPAf0
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 20:35:26 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:35577 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751938AbYHPAf0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Aug 2008 20:35:26 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7G0YmUd003733
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 15 Aug 2008 17:34:49 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7G0YjFD027528;
-	Fri, 15 Aug 2008 17:34:46 -0700
-In-Reply-To: <alpine.LFD.1.10.0808141544150.3324@nehalem.linux-foundation.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.417 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753266AbYHPBQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Aug 2008 21:16:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752944AbYHPBQl
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Aug 2008 21:16:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55120 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752940AbYHPBQk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2008 21:16:40 -0400
+Received: (qmail invoked by alias); 16 Aug 2008 01:16:38 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp029) with SMTP; 16 Aug 2008 03:16:38 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX19M60BPTdVMx6OJufOmeFMODUiV6rogAH6YTxPG+g
+	kItF6zNiaJnK76
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KUAPB-0003H3-92; Sat, 16 Aug 2008 03:16:33 +0200
+Content-Disposition: inline
+In-Reply-To: <200808152236.56479.jnareb@gmail.com>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92523>
 
+Hi,
 
+Jakub Narebski wrote:
+> Please remember that according to timeline in GSoC 2008 FAQ:
+>   http://code.google.com/opensource/gsoc/2008/faqs.html#0.1_timeline
+> August 18: ~12 noon PDT / 19:00 UTC is "Firm 'pencils down' date."
+> (suggested pencils down date was August 11).  So you don't have much
+> time, and you don't leave much time for review, so I guess evaluation
+> would be "done, but nor merged in" or something like that.
 
-On Thu, 14 Aug 2008, Linus Torvalds wrote:
-> 
-> So yeah, trees are the problem here, and yes, avoiding inflating them 
-> would help - but mainly because we do it something like four times per 
-> object on average!
+I'm wondering about "and you don't leave much time for review".
+A comment on this:
+LH (from the Google Open Source Team) clarified that the state of
+Aug 18 is not the date where everything should be reviewed and merged
+in.  It is the date where the (following) evaluation (done by the mentor)
+of the code is based on.
 
-Interestingly, it turns out that git also hits a sad performance downside 
-of using zlib.
+See also
+http://groups.google.com/group/google-summer-of-code-announce/browse_thread/thread/df7278c6e027dee1
 
-We always tend to set "stream.avail_out" to the exact size of the expected 
-output. And it turns out that that means that the fast-path case of 
-inffast.c doesn't trigger as often as it could. This (idiotic) patch 
-actually seems to help performance on git rev-list by about 5%.
+Regards,
+  Stephan
 
-But maybe it's just me seeing things. But I did this because of the entry 
-assumptions in inflate_fast(), that code only triggers for the case of 
-strm->avail_out >= 258.
-
-Sad, if true.
-
-		Linus
-
----
- sha1_file.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index a57155d..5ca7ce2 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1500,11 +1500,11 @@ static void *unpack_compressed_entry(struct packed_git *p,
- 	z_stream stream;
- 	unsigned char *buffer, *in;
- 
--	buffer = xmalloc(size + 1);
-+	buffer = xmalloc(size + 256 + 1);
- 	buffer[size] = 0;
- 	memset(&stream, 0, sizeof(stream));
- 	stream.next_out = buffer;
--	stream.avail_out = size;
-+	stream.avail_out = size + 256;
- 
- 	inflateInit(&stream);
- 	do {
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
