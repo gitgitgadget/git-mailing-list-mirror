@@ -1,139 +1,104 @@
-From: Giovanni Funchal <gafunchal@gmail.com>
-Subject: [PATCH 1/2] Allow configure to override CC_LD_DYNPATH
-Date: Sat, 16 Aug 2008 15:01:07 +0200
-Message-ID: <1218891667-6014-1-git-send-email-gafunchal@gmail.com>
-Cc: Giovanni Funchal <gafunchal@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 16 15:02:41 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Documentation: document the pager.* configuration setting
+Date: Sat, 16 Aug 2008 15:38:13 +0200
+Message-ID: <1218893893-11242-1-git-send-email-vmiklos@frugalware.org>
+References: <7v63q1lkbj.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 16 15:38:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KULQQ-0001fa-Qs
-	for gcvg-git-2@gmane.org; Sat, 16 Aug 2008 15:02:35 +0200
+	id 1KULzU-0002e7-3w
+	for gcvg-git-2@gmane.org; Sat, 16 Aug 2008 15:38:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751910AbYHPNBK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Aug 2008 09:01:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751741AbYHPNBK
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Aug 2008 09:01:10 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:25648 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751910AbYHPNBJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Aug 2008 09:01:09 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1162787fgg.17
-        for <git@vger.kernel.org>; Sat, 16 Aug 2008 06:01:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=1YvwTwU9LVoE26lh2PJK7gFJ0GT4wXVoCiuJcOZJVLg=;
-        b=Gd9eC/XUMIrP2xreELR7QqPARn72top8pxOr4RD7E9XiXJxrB21zeX4xb/rABuk6ts
-         Rt12qcm92ODfOR1CkBX9Mdpbno7txsW/rfOTdyKMZRoK/yR+fPilog/go51L4M7Sfo01
-         7HXRLn8XVpFlPDhyRbgVXWEMabv3TWJQ7DT2c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=TcS5W+wHWT0GImIM52xxDjd+ar4cV+7VXPp6Pqfg43jzdCP2pZ5n2qbHfOHGAQEbOA
-         mfSH+BJopJL6S1+3qNKii7cfstVMvjvj2mx+XI590cdZmgT/eMOszOtSVV1DXWn65I+a
-         +HGmpPDkvgHj3tdw0bvkROBWJtSOafk6/iPZg=
-Received: by 10.86.52.6 with SMTP id z6mr2943955fgz.48.1218891667612;
-        Sat, 16 Aug 2008 06:01:07 -0700 (PDT)
-Received: from localhost.localdomain ( [85.69.129.210])
-        by mx.google.com with ESMTPS id 3sm275347fge.3.2008.08.16.06.01.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 16 Aug 2008 06:01:06 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.rc3.19.g4db473
+	id S1752521AbYHPNho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Aug 2008 09:37:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752434AbYHPNhn
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Aug 2008 09:37:43 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:48557 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752183AbYHPNhm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Aug 2008 09:37:42 -0400
+Received: from vmobile.example.net (dsl5401C01F.pool.t-online.hu [84.1.192.31])
+	by yugo.frugalware.org (Postfix) with ESMTP id 41D631DDC5B;
+	Sat, 16 Aug 2008 15:37:40 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 466601A5FBF; Sat, 16 Aug 2008 15:38:13 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.rc0.14.g95f8.dirty
+In-Reply-To: <7v63q1lkbj.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92546>
 
-Current Makefile does not allow configure to override CC_LD_DYNPATH because
-"-include config.mak" comes after the "ifdef NO_R_TO_GCC_LINKER". This patch
-moves the referred ifdef.
+It was already documented in RelNotes-1.6.0, but not in the git-config
+manual page.
 
-In addition, another piece of code was moved because the CC_LD_DYNPATH should
-be also used by ALL_LDFLAGS on NetBSD.
-
-Signed-Off-By: Giovanni Funchal <gafunchal@gmail.com>
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 ---
 
-Ok, this is my third try... I have split the patch into two parts this time.
-This first one concerns only the minimal support needed on the Makefile side.
-The next one is the one that does the interesting thing. Sorry for my
-newbieness and hope it is up to Git coding standards this time :)
+On Fri, Aug 15, 2008 at 08:17:52PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> > Ugh, I just noticed that the example was wrong, because paging for
+> > status is disabled by default. Here is a corrected version.
+>
+> Honestly, I do not think the distinction between your two versions
+> matter.
+> Do we need a new example there?
 
-I have also changed some comments and replaced "-Wl,-rpath=" by
-"-Wl,-rpath," for the sake of homogeneity. This should be equivalent
-everywhere. Thanks Matthieu and Junio for the help.
+That is a frequently asked question on #git (in the past, people asked
+how to disable it, now they ask how to enable it), so I thought an
+example can be helpful. Also Jeff provided such an example in the commit
+message of 4e10738.
 
- Makefile |   25 ++++++++++++++-----------
- 1 files changed, 14 insertions(+), 11 deletions(-)
+If you think it's unnecessary, then just remove that hunk.
 
-diff --git a/Makefile b/Makefile
-index 53ab4b5..2572b4b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -113,7 +113,7 @@ all::
- #
- # Define NO_R_TO_GCC_LINKER if your gcc does not like "-R/path/lib"
- # that tells runtime paths to dynamic libraries;
--# "-Wl,-rpath=/path/lib" is used instead.
-+# "-Wl,-rpath,/path/lib" is used instead.
- #
- # Define USE_NSEC below if you want git to care about sub-second file mtimes
- # and ctimes. Note that you need recent glibc (at least 2.2.4) for this, and
-@@ -689,7 +689,6 @@ ifeq ($(uname_S),NetBSD)
- 	endif
- 	BASIC_CFLAGS += -I/usr/pkg/include
- 	BASIC_LDFLAGS += -L/usr/pkg/lib
--	ALL_LDFLAGS += -Wl,-rpath,/usr/pkg/lib
- endif
- ifeq ($(uname_S),AIX)
- 	NO_STRCASESTR=YesPlease
-@@ -763,9 +762,21 @@ ifneq (,$(findstring arm,$(uname_M)))
- 	ARM_SHA1 = YesPlease
- endif
+> The patch to Documentation/config.txt looks Ok, but I do not think you
+> need to say "allows to set your preference".  "Sets your preference"
+> would
+> be enough.
+
+Fixed. I also noticed that above the documentation uses "Specify" and
+not "Specifies" in such a case, so I dropped the "s" here as well.
+
+ Documentation/config.txt     |    5 +++++
+ Documentation/git-config.txt |    6 ++++++
+ 2 files changed, 11 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index b8ec01c..dc70ba6 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -978,6 +978,11 @@ pack.packSizeLimit::
+ 	can be overridden by the `\--max-pack-size` option of
+ 	linkgit:git-repack[1].
  
-+# Runtime dynamic library path switch
-+ifdef NO_R_TO_GCC_LINKER
-+	# Some linkers use -Wl,-rpath,
-+	CC_LD_DYNPATH = -Wl,-rpath,
-+else
-+	# Some others need -R
-+	CC_LD_DYNPATH = -R
-+endif
++pager.<cmd>::
++	Set your pager preference for each command, overriding the default. If
++	`\--pager` or `\--no-pager` is specified on the command line, it takes
++	precedence over this option.
 +
- -include config.mak.autogen
- -include config.mak
+ pull.octopus::
+ 	The default merge strategy to use when pulling multiple branches
+ 	at once.
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 28e1861..c0bc6fa 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -315,6 +315,12 @@ RESET=$(git config --get-color "" "reset")
+ echo "${WS}your whitespace color or blue reverse${RESET}"
+ ------------
  
-+ifeq ($(uname_S),NetBSD)
-+	ALL_LDFLAGS += $(CC_LD_DYNPATH)/usr/pkg/lib
-+endif
- ifeq ($(uname_S),Darwin)
- 	ifndef NO_FINK
- 		ifeq ($(shell test -d /sw/lib && echo y),y)
-@@ -781,19 +792,11 @@ ifeq ($(uname_S),Darwin)
- 	endif
- endif
++To enable the pager for linkgit:git-status[1]:
++
++------------
++% git config pager.status true
++------------
++
+ include::config.txt[]
  
--ifdef NO_R_TO_GCC_LINKER
--	# Some gcc does not accept and pass -R to the linker to specify
--	# the runtime dynamic library path.
--	CC_LD_DYNPATH = -Wl,-rpath=
--else
--	CC_LD_DYNPATH = -R
--endif
--
- ifdef NO_CURL
- 	BASIC_CFLAGS += -DNO_CURL
- else
- 	ifdef CURLDIR
--		# Try "-Wl,-rpath=$(CURLDIR)/$(lib)" in such a case.
-+		# Try specifying runtime dynamic library path in such a case.
- 		BASIC_CFLAGS += -I$(CURLDIR)/include
- 		CURL_LIBCURL = -L$(CURLDIR)/$(lib) $(CC_LD_DYNPATH)$(CURLDIR)/$(lib) -lcurl
- 	else
+ 
 -- 
-1.5.4.3
+1.6.0.rc0.14.g95f8.dirty
