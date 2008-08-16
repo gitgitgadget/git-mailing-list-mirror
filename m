@@ -1,76 +1,61 @@
-From: sed <sed.nivo@gmail.com>
-Subject: Casting and dereferencing of pointer
-Date: Sat, 16 Aug 2008 09:33:30 +0000 (UTC)
-Message-ID: <loom.20080816T093019-717@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-stash: improve synopsis in help and manual page
+Date: Sat, 16 Aug 2008 02:49:06 -0700
+Message-ID: <7vljyxe1d9.fsf@gitster.siamese.dyndns.org>
+References: <1218857251-2971-1-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 16 11:41:14 2008
+Cc: git@vger.kernel.org, Nanako Shiraishi <nanako3@lavabit.com>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Sat Aug 16 11:50:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUIHY-00024U-4W
-	for gcvg-git-2@gmane.org; Sat, 16 Aug 2008 11:41:12 +0200
+	id 1KUIQM-000443-EV
+	for gcvg-git-2@gmane.org; Sat, 16 Aug 2008 11:50:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068AbYHPJkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Aug 2008 05:40:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751632AbYHPJkJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Aug 2008 05:40:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:58978 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751864AbYHPJkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Aug 2008 05:40:08 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1KUIGQ-00016P-Id
-	for git@vger.kernel.org; Sat, 16 Aug 2008 09:40:02 +0000
-Received: from ip-91-200-114-146.network.lviv.ua ([ip-91-200-114-146.network.lviv.ua])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 16 Aug 2008 09:40:02 +0000
-Received: from sed.nivo by ip-91-200-114-146.network.lviv.ua with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 16 Aug 2008 09:40:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 91.200.114.146 (Opera/9.51 (Windows NT 5.1; U; en))
+	id S1752435AbYHPJtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Aug 2008 05:49:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752427AbYHPJtP
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Aug 2008 05:49:15 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41317 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752336AbYHPJtO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Aug 2008 05:49:14 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CD82F62E35;
+	Sat, 16 Aug 2008 05:49:11 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 244EB62E2E; Sat, 16 Aug 2008 05:49:07 -0400 (EDT)
+In-Reply-To: <1218857251-2971-1-git-send-email-s-beyer@gmx.net> (Stephan
+ Beyer's message of "Sat, 16 Aug 2008 05:27:31 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 943D8A5E-6B78-11DD-941E-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92539>
 
-Maybe I should not post in this group but anyway...
+Stephan Beyer <s-beyer@gmx.net> writes:
 
-Please look at my code that do the same, except of endianness.
-static void _parseItems(const unsigned char *pBuffer)
-{
-  unsigned int itemSize;
-  itemSize = *((unsigned int*)pBuffer); // this give system fault
-  memcpy(&itemSize, pBuffer, sizeof(unsigned int)); // this works well
-  .......
-}
+>    btw, should the "create" command be used directly at all?
+>    Then a line for this should perhaps be added.
 
-I'm not very experienced with C so I use git as example of good written code.
-In object.c I've found two functions that looks like my one.
+It's pretty much for Porcelain writer's consumption, so I do not think
+it is worth adding it to command line help, even though it would be nice
+to describe it in the documentation.
 
-static unsigned int hash_obj(struct object *obj, unsigned int n)
-{
-	unsigned int hash = *(unsigned int *)obj->sha1;
-	return hash % n;
-}
+> +dashless=$(basename "$0" | sed -e 's/-/ /')
+> +USAGE="list [<options>]
+> +   or: $dashless (show | drop | pop ) [<stash>]
+> +   or: $dashless [--index] apply [<stash>]
+> +   or: $dashless branch <branchname> [<stash>]
+> +   or: $dashless [--keep-index] [save [<message>]]
+> +   or: $dashless clear"
 
-static int hashtable_index(const unsigned char *sha1)
-{
-	unsigned int i;
-	memcpy(&i, sha1, sizeof(unsigned int));
-	return (int)(i % obj_hash_size);
-}
-
-I wonder why in the second used memcpy instead of:
-unsigned int i = *(unsigned int *)sha1
-Maybe there is explanation that will help to solve my problem.
-Thank you
+These --index and --keep-index are subcommand options and come after
+them (i.e. apply/save).
