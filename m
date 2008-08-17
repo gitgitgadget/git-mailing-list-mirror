@@ -1,7 +1,7 @@
 From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: [EGIT PATCH 28/31] Checkbox images/screenshots
-Date: Sun, 17 Aug 2008 22:44:09 +0200
-Message-ID: <1219005852-21496-29-git-send-email-marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 25/31] Create ListRemoteOperation for listing remote repo branches
+Date: Sun, 17 Aug 2008 22:44:06 +0200
+Message-ID: <1219005852-21496-26-git-send-email-marek.zawirski@gmail.com>
 References: <1219005852-21496-1-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-2-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-3-git-send-email-marek.zawirski@gmail.com>
@@ -27,159 +27,199 @@ References: <1219005852-21496-1-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-23-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-24-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-25-git-send-email-marek.zawirski@gmail.com>
- <1219005852-21496-26-git-send-email-marek.zawirski@gmail.com>
- <1219005852-21496-27-git-send-email-marek.zawirski@gmail.com>
- <1219005852-21496-28-git-send-email-marek.zawirski@gmail.com>
 Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
 To: robin.rosenberg@dewire.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sun Aug 17 22:48:02 2008
+X-From: git-owner@vger.kernel.org Sun Aug 17 22:48:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUpAK-0003WL-Jh
-	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 22:47:57 +0200
+	id 1KUpAI-0003WL-I2
+	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 22:47:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752307AbYHQUqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Aug 2008 16:46:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752187AbYHQUqD
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 16:46:03 -0400
-Received: from mu-out-0910.google.com ([209.85.134.187]:48257 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754809AbYHQUp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Aug 2008 16:45:59 -0400
-Received: by mu-out-0910.google.com with SMTP id w8so2887049mue.1
-        for <git@vger.kernel.org>; Sun, 17 Aug 2008 13:45:59 -0700 (PDT)
+	id S1751952AbYHQUpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Aug 2008 16:45:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754483AbYHQUpw
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 16:45:52 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:31899 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754650AbYHQUpt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Aug 2008 16:45:49 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1489141fgg.17
+        for <git@vger.kernel.org>; Sun, 17 Aug 2008 13:45:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=UoU/qL54hzkBI1w4R5K6dVJQozSqMTF8UGl6tOkXSHk=;
-        b=DLlRvNt8Qi1tJcTIo1N8SkxvH5sML14bwA2vSPFU2+TTtvYOaoPzRRgslrCH03GGot
-         w+jo4cYILPGOXd9FPf5NwbvlXKTYISHBd0LZ5SK+VWyUF97yKqCigAkARRlpB+zdQX7l
-         1xPg5RMAKD4SWnUitnxS+T78R6qAS73a7qwco=
+        bh=fP6A//7eWat2twfu8ONIrnly/U1In9RinWao5sVmIr0=;
+        b=UIaooj4Dii945jGte/I614/fyuNNxf9CGRjgd4Lkb9VLU2e3gy0eSuyPdJ9K73cVI2
+         e818E1WlFN0SJdW+xCnycOUhaNOJSBLyPwGvn4iBjI1UfypIw9LEQBW3cdfC1X0v1UfJ
+         gGEYuySnKUfKE32XSZPs8ptCYGUV2+8fNkRHI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=BQGXt5+aIOHxB7587o8tHhkyAnfKcpoViOeHJIeIpn1kset3OyTVV8N0+u8O85+o3w
-         QCaEizdX+SQjgJslSp04DnzS6uIWAQhscz/fHLj82nI7pMHLpmmvKCnx7EF5lvGaUnGw
-         RxvLmYnN4GGTgDu43+VAaBF70G4ty/fb0i23Q=
-Received: by 10.103.203.4 with SMTP id f4mr3471959muq.8.1219005958958;
-        Sun, 17 Aug 2008 13:45:58 -0700 (PDT)
+        b=IDjgPVMmqT8rcd6V98+7iW8JFmIaUL9yA3I5wQiarMO6WhN8RobgdSNgboPTb9M7Uv
+         D/MxTPdpmR1GCJyEgIVEJ91AA6s5rJ4mnEbqWJy/3dpHm7G09WRDcfqi2C5zQh/MIjCi
+         8kGZBmKEBOdGJJhzjBumoiHo0ni+XCowaXmYE=
+Received: by 10.86.92.7 with SMTP id p7mr3961563fgb.72.1219005947936;
+        Sun, 17 Aug 2008 13:45:47 -0700 (PDT)
 Received: from localhost ( [62.21.19.93])
-        by mx.google.com with ESMTPS id n10sm889483mue.0.2008.08.17.13.45.56
+        by mx.google.com with ESMTPS id d4sm11317203fga.8.2008.08.17.13.45.46
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 17 Aug 2008 13:45:58 -0700 (PDT)
+        Sun, 17 Aug 2008 13:45:47 -0700 (PDT)
 X-Mailer: git-send-email 1.5.6.3
-In-Reply-To: <1219005852-21496-28-git-send-email-marek.zawirski@gmail.com>
+In-Reply-To: <1219005852-21496-25-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92657>
 
-Screenshots of checkboxes in various states, made at QT with Plastik
-style. These images may be used as workaround in cases when we can
-only display images and handle buttons pressed, but can't display Button
-directly.
-
-I'm somewhat uncertain about license issues regarding these images.
-Recently, I realized that they are LGPL licensed perhaps. Is it possible
-to license that small stuff? If so, we may have to replace them by some
-other images or create ours.
+This code is a common task, so it's now bundled in this operation
+with simple progress monitor information.
 
 Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
 ---
- .../icons/checkboxes/disabled_checked.gif          |  Bin 0 -> 166 bytes
- .../icons/checkboxes/disabled_unchecked.gif        |  Bin 0 -> 125 bytes
- .../icons/checkboxes/enabled_checked.gif           |  Bin 0 -> 166 bytes
- .../icons/checkboxes/enabled_unchecked.gif         |  Bin 0 -> 157 bytes
- .../src/org/spearce/egit/ui/UIIcons.java           |   13 +++++++++++++
- 5 files changed, 13 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.egit.ui/icons/checkboxes/disabled_checked.gif
- create mode 100644 org.spearce.egit.ui/icons/checkboxes/disabled_unchecked.gif
- create mode 100644 org.spearce.egit.ui/icons/checkboxes/enabled_checked.gif
- create mode 100644 org.spearce.egit.ui/icons/checkboxes/enabled_unchecked.gif
+ .../src/org/spearce/egit/core/CoreText.java        |    3 +
+ .../src/org/spearce/egit/core/coretext.properties  |    2 +
+ .../spearce/egit/core/op/ListRemoteOperation.java  |  104 ++++++++++++++++++++
+ 3 files changed, 109 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.egit.core/src/org/spearce/egit/core/op/ListRemoteOperation.java
 
-diff --git a/org.spearce.egit.ui/icons/checkboxes/disabled_checked.gif b/org.spearce.egit.ui/icons/checkboxes/disabled_checked.gif
-new file mode 100644
-index 0000000000000000000000000000000000000000..6b86dc94de2bb83490c2f506fa76855e11b7b838
-GIT binary patch
-literal 166
-zcmZ?wbhEHb<YnMxc+A1DcHP=z$B&&meeT@(bI+eYfB*VD5Pbjq{XY(%_)pNeC^fMp
-zHASI3vm`^o-P1RKLGdRGBNqb)gAM}_fDC3}u?uMM)SjUJy7rmmfrOp~FBly&8ZsYl
-wRFv9vVB@Kk9=FTwF10b`7-=vhDkuen`7m)zj=mVtWXE}9&9|hNTuKbq0JEx6@Bjb+
-
-literal 0
-HcmV?d00001
-
-diff --git a/org.spearce.egit.ui/icons/checkboxes/disabled_unchecked.gif b/org.spearce.egit.ui/icons/checkboxes/disabled_unchecked.gif
-new file mode 100644
-index 0000000000000000000000000000000000000000..4b20c7eddc78f300565f520e2661abcc4c081122
-GIT binary patch
-literal 125
-zcmZ?wbhEHb<YnMxIK;-VcHP=@r_Viq{`~#x_dxLd^Y{N?p!iSFxhOTUBsE2$JhLQ2
-z!QIn0fI;ym3nLc;JA)1b5P%F|VAhq`aA$$)smL%zi|p0EAH;rR4DaY&YANLWdLQ@i
-Zb07b3ZN2-b;lY20Ifou{s4y^C0|0zaIU@i7
-
-literal 0
-HcmV?d00001
-
-diff --git a/org.spearce.egit.ui/icons/checkboxes/enabled_checked.gif b/org.spearce.egit.ui/icons/checkboxes/enabled_checked.gif
-new file mode 100644
-index 0000000000000000000000000000000000000000..f25b4ae6b6f55585e2ecfeb3e4ab3ca430ec2c7a
-GIT binary patch
-literal 166
-zcmZ?wbhEHb<YnMxc+A6KXkggWH)YDSDSLPAy?6iK^T*GD;Qj0OK=A$ZcOdxx`#&;J
-z{3qyKl$uzQnxasiS(2gP?&%xAp!k!8k&A(!L5BedKn63g*cG&RW>3(0eO67lVL{`e
-zM~oSqi@LVAWz48JHCu}#_IOiMHRtR%4<3EwSuXOZm8Zt3Lt~|ZV#NB0Lq`wEx-c+U
-F0|3l^QBME>
-
-literal 0
-HcmV?d00001
-
-diff --git a/org.spearce.egit.ui/icons/checkboxes/enabled_unchecked.gif b/org.spearce.egit.ui/icons/checkboxes/enabled_unchecked.gif
-new file mode 100644
-index 0000000000000000000000000000000000000000..82138fec0ce82ffa1c946740956c62d919356c63
-GIT binary patch
-literal 157
-zcmZ?wbhEHb<YnMxc+ADn(>G=BuD$o}-+TV}IS{;m{T>LufBp^x|9}6-1d9Izor_Wv
-zOHxx5$}>wc6x=<10~i#4vM_Qn@H6Nz00GEg1{PC;22bq?TCdltJ@1^}qte-tT3O-o
-odKcU8eTEBUD&~pLdnYW{TwuX+tK-B$mjgLgtm54!0*nmS0LAf6#sB~S
-
-literal 0
-HcmV?d00001
-
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/UIIcons.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/UIIcons.java
-index ba14df3..fcc5707 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/UIIcons.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/UIIcons.java
-@@ -55,6 +55,15 @@ public class UIIcons {
- 	public static final ImageDescriptor ELCL16_TRASH;
- 	/** Clear icon */
- 	public static final ImageDescriptor ELCL16_CLEAR;
-+	
-+	/** Enabled, checked, checkbox image */
-+	public static final ImageDescriptor CHECKBOX_ENABLED_CHECKED;
-+	/** Enabled, unchecked, checkbox image */
-+	public static final ImageDescriptor CHECKBOX_ENABLED_UNCHECKED;
-+	/** Disabled, checked, checkbox image */
-+	public static final ImageDescriptor CHECKBOX_DISABLED_CHECKED;
-+	/** Disabled, unchecked, checkbox image */
-+	public static final ImageDescriptor CHECKBOX_DISABLED_UNCHECKED;
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/CoreText.java b/org.spearce.egit.core/src/org/spearce/egit/core/CoreText.java
+index 8fbda4a..5974a5f 100644
+--- a/org.spearce.egit.core/src/org/spearce/egit/core/CoreText.java
++++ b/org.spearce.egit.core/src/org/spearce/egit/core/CoreText.java
+@@ -95,6 +95,9 @@ public class CoreText extends NLS {
+ 	/** */
+ 	public static String CloneOperation_title;
  
- 	/** Import Wizard banner */
- 	public static final ImageDescriptor WIZBAN_IMPORT_REPO;
-@@ -80,6 +89,10 @@ public class UIIcons {
- 		ELCL16_ADD = map("elcl16/add.gif");
- 		ELCL16_TRASH = map("elcl16/trash.gif");
- 		ELCL16_CLEAR = map("elcl16/clear.gif");
-+		CHECKBOX_ENABLED_CHECKED = map("checkboxes/enabled_checked.gif");
-+		CHECKBOX_ENABLED_UNCHECKED = map("checkboxes/enabled_unchecked.gif");
-+		CHECKBOX_DISABLED_CHECKED = map("checkboxes/disabled_checked.gif");
-+		CHECKBOX_DISABLED_UNCHECKED = map("checkboxes/disabled_unchecked.gif");
- 	}
++	/** */
++	public static String ListRemoteOperation_title;
++
+ 	static {
+ 		final Class c = CoreText.class;
+ 		initializeMessages(c.getPackage().getName() + ".coretext", c);
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/coretext.properties b/org.spearce.egit.core/src/org/spearce/egit/core/coretext.properties
+index 3b3c229..c412161 100644
+--- a/org.spearce.egit.core/src/org/spearce/egit/core/coretext.properties
++++ b/org.spearce.egit.core/src/org/spearce/egit/core/coretext.properties
+@@ -55,3 +55,5 @@ CheckpointJob_writingTrees=modified trees
+ CheckpointJob_failed=Failed to write modified objects.
  
- 	private static ImageDescriptor map(final String icon) {
+ CloneOperation_title=Cloning from {0}
++
++ListRemoteOperation_title=Getting remote branches information
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/op/ListRemoteOperation.java b/org.spearce.egit.core/src/org/spearce/egit/core/op/ListRemoteOperation.java
+new file mode 100644
+index 0000000..d3f777a
+--- /dev/null
++++ b/org.spearce.egit.core/src/org/spearce/egit/core/op/ListRemoteOperation.java
+@@ -0,0 +1,104 @@
++/*******************************************************************************
++ * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
++ * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
++ *
++ * All rights reserved. This program and the accompanying materials
++ * are made available under the terms of the Eclipse Public License v1.0
++ * See LICENSE for the full license text, also available.
++ *******************************************************************************/
++package org.spearce.egit.core.op;
++
++import java.lang.reflect.InvocationTargetException;
++import java.util.Collection;
++import java.util.Map;
++
++import org.eclipse.core.runtime.IProgressMonitor;
++import org.eclipse.jface.operation.IRunnableWithProgress;
++import org.spearce.egit.core.CoreText;
++import org.spearce.jgit.errors.NotSupportedException;
++import org.spearce.jgit.errors.TransportException;
++import org.spearce.jgit.lib.Ref;
++import org.spearce.jgit.lib.Repository;
++import org.spearce.jgit.transport.Connection;
++import org.spearce.jgit.transport.Transport;
++import org.spearce.jgit.transport.URIish;
++
++/**
++ * Operation of listing remote repository advertised refs.
++ */
++public class ListRemoteOperation implements IRunnableWithProgress {
++	private final Repository localDb;
++
++	private final URIish uri;
++
++	private Map<String, Ref> remoteRefsMap;
++
++	/**
++	 * Create listing operation for specified local repository (needed by
++	 * transport) and remote repository URI.
++	 * 
++	 * @param localDb
++	 *            local repository (needed for transport) where fetch would
++	 *            occur.
++	 * @param uri
++	 *            URI of remote repository to list.
++	 */
++	public ListRemoteOperation(final Repository localDb, final URIish uri) {
++		this.localDb = localDb;
++		this.uri = uri;
++	}
++
++	/**
++	 * @return collection of refs advertised by remote side.
++	 * @throws IllegalStateException
++	 *             if error occurred during earlier remote refs listing.
++	 */
++	public Collection<Ref> getRemoteRefs() {
++		checkState();
++		return remoteRefsMap.values();
++	}
++
++	/**
++	 * @param refName
++	 *            remote ref name to search for.
++	 * @return ref with specified refName or null if not found.
++	 * @throws IllegalStateException
++	 *             if error occurred during earlier remote refs listing.
++	 */
++	public Ref getRemoteRef(final String refName) {
++		checkState();
++		return remoteRefsMap.get(refName);
++	}
++
++	public void run(IProgressMonitor pm) throws InvocationTargetException,
++			InterruptedException {
++		Transport transport = null;
++		Connection connection = null;
++		try {
++			transport = Transport.open(localDb, uri);
++
++			if (pm != null)
++				pm.beginTask(CoreText.ListRemoteOperation_title,
++						IProgressMonitor.UNKNOWN);
++			connection = transport.openFetch();
++			remoteRefsMap = connection.getRefsMap();
++		} catch (NotSupportedException e) {
++			throw new InvocationTargetException(e);
++		} catch (TransportException e) {
++			throw new InvocationTargetException(e);
++		} finally {
++			if (connection != null)
++				connection.close();
++			if (transport != null)
++				transport.close();
++			if (pm != null)
++				pm.done();
++		}
++	}
++
++	private void checkState() {
++		if (remoteRefsMap == null)
++			throw new IllegalStateException(
++					"Error occurred during remote repo listing, no refs available");
++	}
++}
+\ No newline at end of file
 -- 
 1.5.6.3
