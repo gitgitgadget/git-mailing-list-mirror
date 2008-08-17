@@ -1,80 +1,120 @@
-From: "Imran M Yousuf" <imyousuf@gmail.com>
-Subject: [JGIT RFC] JGit mavenization done right
-Date: Sun, 17 Aug 2008 10:52:16 +0600
-Message-ID: <7bfdc29a0808162152y4329303dte8f82bfea646180d@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Allow configure to override CC_LD_DYNPATH
+Date: Sat, 16 Aug 2008 21:56:24 -0700
+Message-ID: <7vwsig9r47.fsf@gitster.siamese.dyndns.org>
+References: <1218891667-6014-1-git-send-email-gafunchal@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Robin Rosenberg" <robin.rosenberg@dewire.com>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Aug 17 06:57:08 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Giovanni Funchal <gafunchal@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 17 06:58:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUaKB-0005Uu-Aa
-	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 06:57:07 +0200
+	id 1KUaLp-0005i0-Gk
+	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 06:58:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751149AbYHQEwT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Aug 2008 00:52:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751055AbYHQEwT
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 00:52:19 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:30118 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751050AbYHQEwS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Aug 2008 00:52:18 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so1078533yxm.1
-        for <git@vger.kernel.org>; Sat, 16 Aug 2008 21:52:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=yhWYs8pRP/mhCl4ZvYJ0DNihPdCYVhnBfavUAq1hNdw=;
-        b=xpiICbBrhxAo+VhDC7kI+At0apQ2pFK52WLLSosPu+lSBT0HORWYVYDEWrwdeQAlRR
-         Rp/55o/C2STES/hQo0d/qY0n2/N82iLYF3X9Cv/QGtZOyv4jU0vYZ5YrRLGld5tgaD4N
-         T6HBw5ZFMSiLseBoKRvB+CIxVbZ6zE6GtNuE8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=GOM589iFJpJhTDvVW5JD58nRNwN8ucyosZqtfUgi9zB5L2gBCL2Mt0ybLWoDZZ8JCm
-         eCu+LNWmyiq6Hsyq+rc9aHKfFtlJPgZtujMAMUT+BkA5d6bsE5M5I+SrP7P4HI5UPwjt
-         chsbgIVfVeeouMKe9yeWA0yT0EDM8yfeFui3w=
-Received: by 10.151.108.15 with SMTP id k15mr7059823ybm.53.1218948736639;
-        Sat, 16 Aug 2008 21:52:16 -0700 (PDT)
-Received: by 10.150.225.1 with HTTP; Sat, 16 Aug 2008 21:52:16 -0700 (PDT)
-Content-Disposition: inline
+	id S1751167AbYHQE4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Aug 2008 00:56:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbYHQE4c
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 00:56:32 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37225 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751055AbYHQE4c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Aug 2008 00:56:32 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B90315CB71;
+	Sun, 17 Aug 2008 00:56:30 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id AE6955CB70; Sun, 17 Aug 2008 00:56:27 -0400 (EDT)
+In-Reply-To: <1218891667-6014-1-git-send-email-gafunchal@gmail.com> (Giovanni
+ Funchal's message of "Sat, 16 Aug 2008 15:01:07 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DB64E65C-6C18-11DD-B13A-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92574>
 
-Hi,
+Giovanni Funchal <gafunchal@gmail.com> writes:
 
-Firstly I would like to apologize for taking so long to get it right,
-could not get enough time :(. As of now the mavenized version of jgit
-uses the same codebase and resources of that of the original JGit.
-With modifications in resources location - previously resources were
-being read from the current working directory and now from classpath.
-Moved the location just to separate code and reources.
+> @@ -689,7 +689,6 @@ ifeq ($(uname_S),NetBSD)
+>  	endif
+>  	BASIC_CFLAGS += -I/usr/pkg/include
+>  	BASIC_LDFLAGS += -L/usr/pkg/lib
+> -	ALL_LDFLAGS += -Wl,-rpath,/usr/pkg/lib
+>  endif
+>  ifeq ($(uname_S),AIX)
+>  	NO_STRCASESTR=YesPlease
+> @@ -763,9 +762,21 @@ ifneq (,$(findstring arm,$(uname_M)))
+>  	ARM_SHA1 = YesPlease
+>  endif
+>  
+> +# Runtime dynamic library path switch
+> +ifdef NO_R_TO_GCC_LINKER
+> +	# Some linkers use -Wl,-rpath,
+> +	CC_LD_DYNPATH = -Wl,-rpath,
+> +else
+> +	# Some others need -R
+> +	CC_LD_DYNPATH = -R
+> +endif
+> +
+>  -include config.mak.autogen
+>  -include config.mak
+>  
+> +ifeq ($(uname_S),NetBSD)
+> +	ALL_LDFLAGS += $(CC_LD_DYNPATH)/usr/pkg/lib
+> +endif
 
-I would like to request you all to test out JGit from
-http://repo.or.cz/w/egit/imyousuf.git. Please checkout the branch
-'unified_tst_rsrc' and try to build it with both maven and Eclipse
-(i.e. as was built earlier) and please be kind enough to inform me if
-the build fails. Please feel free to suggest any improvements you have
-in mind.
+I think this NetBSD change might be a good idea.
 
-If it is okayed I will improve it further to configure various test
-report and maven site plugin to host the summary of project.
+By moving "ifdef" before where we "include config.mak", however, you broke
+existing setups that use NO_R_TO_GCC_LINKER to cause "-Wl,-rpath=" to be
+used.
 
-Thank you and Best regards,
+How about doing it the way the attached patch does instead?  Then the
+autoconf can configure CC_LD_DYNPATH to be used that may even be different
+from "-Wl,-rpath=" (e.g. the one with double-dash "-Wl,--rpath").
 
--- 
-Imran M Yousuf
-Email: imran@smartitengineering.com
-Blog: http://imyousuf-tech.blogs.smartitengineering.com/
-Mobile: +880-1711402557
+ Makefile |   17 +++++++++--------
+ 1 files changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 53ab4b5..264ede3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -688,8 +688,7 @@ ifeq ($(uname_S),NetBSD)
+ 		NEEDS_LIBICONV = YesPlease
+ 	endif
+ 	BASIC_CFLAGS += -I/usr/pkg/include
+-	BASIC_LDFLAGS += -L/usr/pkg/lib
+-	ALL_LDFLAGS += -Wl,-rpath,/usr/pkg/lib
++	BASIC_LDFLAGS += -L/usr/pkg/lib $(CC_LD_DYNPATH)/usr/pkg/lib
+ endif
+ ifeq ($(uname_S),AIX)
+ 	NO_STRCASESTR=YesPlease
+@@ -781,12 +780,14 @@ ifeq ($(uname_S),Darwin)
+ 	endif
+ endif
+ 
+-ifdef NO_R_TO_GCC_LINKER
+-	# Some gcc does not accept and pass -R to the linker to specify
+-	# the runtime dynamic library path.
+-	CC_LD_DYNPATH = -Wl,-rpath=
+-else
+-	CC_LD_DYNPATH = -R
++ifndef CC_LD_DYNPATH
++	ifdef NO_R_TO_GCC_LINKER
++		# Some gcc does not accept and pass -R to the linker to specify
++		# the runtime dynamic library path.
++		CC_LD_DYNPATH = -Wl,-rpath,
++	else
++		CC_LD_DYNPATH = -R
++	endif
+ endif
+ 
+ ifdef NO_CURL
