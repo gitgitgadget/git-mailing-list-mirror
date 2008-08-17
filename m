@@ -1,134 +1,75 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 2/7] system_path(): Add prefix computation at runtime if RUNTIME_PREFIX set
-Date: Sun, 17 Aug 2008 14:44:38 +0200
-Message-ID: <1218977083-14526-3-git-send-email-prohaska@zib.de>
-References: <1218977083-14526-1-git-send-email-prohaska@zib.de>
- <1218977083-14526-2-git-send-email-prohaska@zib.de>
+Subject: [PATCH 0/7] prefix discovery at runtime (on Windows)
+Date: Sun, 17 Aug 2008 14:44:36 +0200
+Message-ID: <1218977083-14526-1-git-send-email-prohaska@zib.de>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Steffen Prohaska <prohaska@zib.de>
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sun Aug 17 14:46:49 2008
+X-From: git-owner@vger.kernel.org Sun Aug 17 14:46:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUhej-0001rR-7b
-	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 14:46:49 +0200
+	id 1KUhej-0001rR-Ss
+	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 14:46:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755331AbYHQMp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Aug 2008 08:45:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755274AbYHQMp2
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 08:45:28 -0400
-Received: from mailer.zib.de ([130.73.108.11]:52204 "EHLO mailer.zib.de"
+	id S1755362AbYHQMpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Aug 2008 08:45:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754159AbYHQMpe
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 08:45:34 -0400
+Received: from mailer.zib.de ([130.73.108.11]:52246 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752904AbYHQMp0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Aug 2008 08:45:26 -0400
+	id S1752699AbYHQMpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Aug 2008 08:45:32 -0400
 Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m7HCivSi022016;
-	Sun, 17 Aug 2008 14:45:02 +0200 (CEST)
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m7HCj9Ih022115;
+	Sun, 17 Aug 2008 14:45:14 +0200 (CEST)
 Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m7HCihbP002872;
-	Sun, 17 Aug 2008 14:44:44 +0200 (MEST)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m7HCihbN002872;
+	Sun, 17 Aug 2008 14:44:43 +0200 (MEST)
 X-Mailer: git-send-email 1.5.4.4
-In-Reply-To: <1218977083-14526-2-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92605>
 
-This commit modifies system_path() to compute the prefix at runtime
-if explicitly requested to do so.  If RUNTIME_PREFIX is defined,
-system_path() tries to strip known directories that executables can
-be located in from the path of the executable.  If the path is
-successfully stripped it is used as the prefix.
+Hi,
+This patch series fixes discovery of the installation prefix at runtime on
+Windows.  It introduces a compile flag RUNTIME_PREFIX, which can be set to
+explicitly request prefix computation at runtime.
 
-We print errors if the runtime prefix computation fails.  The user
-needs to know that the global configuration are not picked up,
-because this can cause unexpected behavior.  If a user explicitly
-wants to ignore system wide paths, he can set GIT_CONFIG_NOSYSTEM,
-as our tests do.
+Apologies for proposing such large changes that late in the release cycle.
+Maybe we want to postpone the series until 1.6.0.1 or even 1.6.1.  Note however
+that in this case we should consider not releasing 1.6.0 on Windows because the
+current solution in master does not reliably read the system wide configuration
+on Windows.
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- Makefile   |    3 +++
- exec_cmd.c |   48 ++++++++++++++++++++++++++++++++++++++++++++----
- 2 files changed, 47 insertions(+), 4 deletions(-)
+We probably won't see a Windows installer before mid of September anyway,
+unless someone temporarily takes over the position of the msysgit maintainer
+until I return from holidays.  I'll be completely offline from August 25
+until September 13.
 
-diff --git a/Makefile b/Makefile
-index 9df5a9d..8341558 100644
---- a/Makefile
-+++ b/Makefile
-@@ -982,6 +982,9 @@ ifdef INTERNAL_QSORT
- 	COMPAT_CFLAGS += -DINTERNAL_QSORT
- 	COMPAT_OBJS += compat/qsort.o
- endif
-+ifdef RUNTIME_PREFIX
-+	COMPAT_CFLAGS += -DRUNTIME_PREFIX
-+endif
- 
- ifdef THREADED_DELTA_SEARCH
- 	BASIC_CFLAGS += -DTHREADED_DELTA_SEARCH
-diff --git a/exec_cmd.c b/exec_cmd.c
-index ce6741e..1622481 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -9,11 +9,51 @@ static const char *argv0_path;
- 
- const char *system_path(const char *path)
- {
--	if (!is_absolute_path(path) && argv0_path) {
--		struct strbuf d = STRBUF_INIT;
--		strbuf_addf(&d, "%s/%s", argv0_path, path);
--		path = strbuf_detach(&d, NULL);
-+#ifdef RUNTIME_PREFIX
-+	static const char *prefix;
-+
-+	if (!argv0_path) {
-+		fprintf(stderr, "RUNTIME_PREFIX requested for path '%s', "
-+				"but argv0_path not set.\n", path);
-+		return path;
-+	}
-+
-+	if (!prefix) {
-+		const char *strip[] = {
-+			GIT_EXEC_PATH,
-+			BINDIR,
-+			0
-+		};
-+		const char **s;
-+
-+		for (s = strip; *s; s++) {
-+			const char *sargv = argv0_path + strlen(argv0_path);
-+			const char *ss = *s + strlen(*s);
-+			while (argv0_path < sargv && *s < ss
-+				&& (*sargv == *ss ||
-+				    (is_dir_sep(*sargv) && is_dir_sep(*ss)))) {
-+				sargv--;
-+				ss--;
-+			}
-+			if (*s == ss) {
-+				struct strbuf d = STRBUF_INIT;
-+				strbuf_add(&d, argv0_path, sargv - argv0_path);
-+				prefix = strbuf_detach(&d, NULL);
-+				break;
-+			}
-+		}
- 	}
-+
-+	if (!prefix) {
-+		fprintf(stderr, "RUNTIME_PREFIX requested for path '%s', "
-+				"but prefix computation failed.\n", path);
-+		return path;
-+	}
-+
-+	struct strbuf d = STRBUF_INIT;
-+	strbuf_addf(&d, "%s/%s", prefix, path);
-+	path = strbuf_detach(&d, NULL);
-+#endif
- 	return path;
- }
- 
--- 
-1.6.0.rc3.22.g053fd
+        Steffen
+
+ Makefile       |   21 +++++++++++------
+ daemon.c       |    3 ++
+ exec_cmd.c     |   67 ++++++++++++++++++++++++++++++++++++++++++++++++-------
+ exec_cmd.h     |    2 +-
+ fast-import.c  |    4 +++
+ git.c          |   20 ++++------------
+ hash-object.c  |    4 +++
+ index-pack.c   |    4 +++
+ receive-pack.c |    3 ++
+ unpack-file.c  |    4 +++
+ upload-pack.c  |    3 ++
+ var.c          |    4 +++
+ 12 files changed, 107 insertions(+), 32 deletions(-)
+
+ [PATCH 1/7] Windows: Add workaround for MSYS' path conversion
+ [PATCH 2/7] system_path(): Add prefix computation at runtime if RUNTIME_PREFIX set
+ [PATCH 3/7] Refactor git_set_argv0_path() to git_extract_argv0_path()
+ [PATCH 4/7] Glean libexec path from argv[0] for git-upload-pack and git-receive-pack.
+ [PATCH 5/7] Add calls to git_extract_argv0_path() in programs that call git_config_*
+ [PATCH 6/7] Modify setup_path() to only add git_exec_path() to PATH
+ [PATCH 7/7] Windows: Revert to default paths and convert them by RUNTIME_PREFIX
