@@ -1,103 +1,80 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008 projects?
-Date: Sun, 17 Aug 2008 00:26:07 -0500
-Message-ID: <bd6139dc0808162226mc98de9bg38b44f64ea4969dd@mail.gmail.com>
-References: <200807080227.43515.jnareb@gmail.com>
-	 <200807210029.31543.jnareb@gmail.com>
-Reply-To: sverre@rabbelier.nl
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] minor: wrong handling of GIT_AUTHOR_DATE
+Date: Sat, 16 Aug 2008 22:27:23 -0700
+Message-ID: <7vljyw9pok.fsf@gitster.siamese.dyndns.org>
+References: <20080816205325.GD10729@mrq1.org>
+ <alpine.LFD.1.10.0808161543160.3324@nehalem.linux-foundation.org>
+ <alpine.LFD.1.10.0808161613520.3324@nehalem.linux-foundation.org>
+ <7vr68obbpd.fsf@gitster.siamese.dyndns.org>
+ <7vk5egbaft.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.1.10.0808162054050.3324@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Sam Vilain" <sam@vilain.net>,
-	"Joshua Roys" <roysjosh@gmail.com>,
-	"David Symonds" <dsymonds@gmail.com>,
-	"Lea Wiemann" <LeWiemann@gmail.com>,
-	"John Hawley" <warthog19@eaglescrag.net>,
-	"Marek Zawirski" <marek.zawirski@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Miklos Vajna" <vmiklos@frugalware.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Stephan Beyer" <s-beyer@gmx.net>,
-	"Christian Couder" <chriscool@tuxfamily.org>,
-	"Daniel Barkalow" <barkalow@iabervon.org>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 17 07:27:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Hermann Gausterer <git-mailinglist@mrq1.org>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Aug 17 07:28:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUanS-0000yw-1l
-	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 07:27:22 +0200
+	id 1KUaod-0001FH-1L
+	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 07:28:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291AbYHQF0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Aug 2008 01:26:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751243AbYHQF0J
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 01:26:09 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:7857 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751234AbYHQF0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Aug 2008 01:26:08 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so2359949wfd.4
-        for <git@vger.kernel.org>; Sat, 16 Aug 2008 22:26:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=UvTzuxL+LZPcakZtZ99ANekU63sStUL8WA+VYxYjFZY=;
-        b=F9CkPXQhMP9QHq1z8IibwGFT6XSDjiBpWs8NZw6k1ELroqteTCL2+F5CP64nhd2CBI
-         Nug8q6lXa5z0+hekwapCIMczbeDGq8cyBOuPgKrtDC+chfGAbg3T0iuZGyACoQknXIJ5
-         8fQ0vpsSgRxv6fAEOAUmQER8azQkMl1rl3WQE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=DKi04+FcP5mV7ijDVz0gb2hAsehUbo76wu44mxWCQ/Ik9XXpYCOoOq16Cd9oEzirBt
-         68yiRmrp7Z6k7s9nR4yuD1zYu8a52zOVesuhgxkcVy5d6PU7r3vsvtj6dmt8imOixrOU
-         GopWMHlzCwty460sx4Jcvd44EAdRdQZkjk/ec=
-Received: by 10.143.35.4 with SMTP id n4mr1589324wfj.64.1218950767983;
-        Sat, 16 Aug 2008 22:26:07 -0700 (PDT)
-Received: by 10.142.104.10 with HTTP; Sat, 16 Aug 2008 22:26:07 -0700 (PDT)
-In-Reply-To: <200807210029.31543.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1751369AbYHQF1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Aug 2008 01:27:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751331AbYHQF1c
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 01:27:32 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38789 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751310AbYHQF1b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Aug 2008 01:27:31 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9C5215CCFA;
+	Sun, 17 Aug 2008 01:27:30 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3C2E95CCF9; Sun, 17 Aug 2008 01:27:26 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.10.0808162054050.3324@nehalem.linux-foundation.org> (Linus
+ Torvalds's message of "Sat, 16 Aug 2008 21:25:40 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 2FFFF05E-6C1D-11DD-A029-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92578>
 
-[Reply to all this time, instead of reply, thanks Jakub for poking me
-about that.]
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-On Wed, Aug 13, 2008 at 21:57, Jakub Narebski <jnareb@gmail.com> wrote:
-> 2. git-statistics
+> [ Those four deleted lines I removed just because the cases had already 
+>   been handled, eg the ">1900" case was already handled when we checked 
+>   for a four-digit year, and the >70 case was handled when we checked for 
+>   exactly two digits ]
 >
-> Student: Sverre Rabbelier
-> Mentor: David Symonds
->
-> GitStat development is finished at least with respect to GSoC 2008, see
-> http://thread.gmane.org/gmane.comp.version-control.git/90691 (for the
-> tax reasons), although I guess its development will continue.
+> Hmm?
 
-Yup, it will, although at the moment I am on vacation in the US, and
-I'm having a hard time finding the time to do any coding at all. I
-will try to send in a patch to add GitStats to /contrib sometime soon,
-but between not having internet/little time, it could take a bit.
+> @@ -488,10 +504,6 @@ static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
+>  
+>  	if (num > 0 && num < 32) {
+>  		tm->tm_mday = num;
+> -	} else if (num > 1900) {
+> -		tm->tm_year = num - 1900;
+> -	} else if (num > 70) {
+> -		tm->tm_year = num;
+>  	} else if (num > 0 && num < 13) {
+>  		tm->tm_mon = num-1;
+>  	}
 
-> Status: Finished, I think also accepted: what is left is to put it
-> eventually in 'contrib/gitstat' or 'contrib/stats'
+The comment above this part says we always favor mday over mon, but I
+wonder why this sequence is not like:
 
-Aye, as said above, might take a bit, but I will submit that patch.
+	if (tm->tm_mday is not set && num > 0 && num < 32)
+		tm->tm_mday = num;
+	else if (tm->tm_mon is not set && num > 0 && num < 13)
+		tm->tm_mon = num - 1;
 
-> Student retention: Sverre has said if I remember correctly that he wants
-> to work on improving '--follow', which now works only for very simple
-> histories, for GitStats to be better among others.
-
-Yup, that is correct, I will work on that and on improving GitStats in
-my free time.
-
---
-Cheers,
-
-Sverre Rabbelier
+Is this because we do not initialize tm fields to "unknown" in the
+beginning?  I admit I haven't bothered to look at this part of the code
+for a looong time.
