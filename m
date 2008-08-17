@@ -1,84 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Aug 2008, #03; Thu, 14)
-Date: Sat, 16 Aug 2008 20:29:36 -0700
-Message-ID: <7vd4k8b9pb.fsf@gitster.siamese.dyndns.org>
-References: <7v7iakdln7.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0808161731300.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [BUG] minor: wrong handling of GIT_AUTHOR_DATE
+Date: Sat, 16 Aug 2008 20:50:45 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0808162040160.3324@nehalem.linux-foundation.org>
+References: <20080816205325.GD10729@mrq1.org> <alpine.LFD.1.10.0808161543160.3324@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808161613520.3324@nehalem.linux-foundation.org> <7vr68obbpd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Aug 17 05:32:03 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Hermann Gausterer <git-mailinglist@mrq1.org>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 17 05:52:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUYzo-0000ev-RA
-	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 05:32:01 +0200
+	id 1KUZJa-0003zG-Py
+	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 05:52:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751493AbYHQD3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Aug 2008 23:29:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751445AbYHQD3m
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Aug 2008 23:29:42 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33113 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751350AbYHQD3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Aug 2008 23:29:42 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 182F35C6E4;
-	Sat, 16 Aug 2008 23:29:41 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 36F995C6E3; Sat, 16 Aug 2008 23:29:38 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0808161731300.24820@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
- Schindelin's message of "Sat, 16 Aug 2008 17:33:50 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BA3C2780-6C0C-11DD-BA69-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751631AbYHQDvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Aug 2008 23:51:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751563AbYHQDvX
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Aug 2008 23:51:23 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:37963 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751445AbYHQDvX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Aug 2008 23:51:23 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7H3okRr016667
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 16 Aug 2008 20:50:47 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7H3ojbh018656;
+	Sat, 16 Aug 2008 20:50:46 -0700
+In-Reply-To: <7vr68obbpd.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.924 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92567>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Thu, 14 Aug 2008, Junio C Hamano wrote:
->
->> * js/checkout-dwim-local (Sat Aug 9 16:00:12 2008 +0200) 1 commit
->>  + checkout --track: make up a sensible branch name if '-b' was
->>    omitted
->> 
->> I like this low-impact usability enhancement; will most likely be in
->> master soon after 1.6.0.
->
-> Pity.  I kinda hoped it would make it into 1.6.0.
 
-I do not see any pity here.  I do not think this is so high-impact that
-needs to wait major version boundary --- it can go to 1.6.1 without
-waiting for 1.7.0.
+On Sat, 16 Aug 2008, Junio C Hamano wrote:
+> 
+> People who followed that advice would have gotten used to this already, e.g.
+> 
+>    $ git reflog delete master@{07.04.2005.15:15:00.-0700}
+> 
+> should not be broken.
 
-The policy of not taking new features and unproven "fixes" after -rc1 is
-threefold.
+Hmm. Fair enough. In that case, just the "nodate()" approach is probably 
+fine on its own. HOWEVER:
 
- (1) We would want to avoid regression caused by last minute carelessness
-     (e.g. a "fix" that wants to cover one user mistake and give an
-     "appropriate" error message would give a wrong error message if it
-     inadvertently covered cases wider than it should have).  
+> I think your first hunk needs to distinguish between "very-long-precision
+> posint" (in which case we ignore because it is likely to be nanoseconds
+> fraction) and others.
 
- (2) We would want to have enough time to advertize the change in advance
-     if the change can introduce backward incompatibilities.
+Well, that ignores nanosecond resolution seconds, but not microseconds, 
+for example. Now, microseconds normally don't matter (because they won't 
+trigger the 'seconds-since-epoch' case), but they _can_ trigger some other 
+cases.
 
- (3) We would want to make sure that the change is general enough without
-     obvious room for improvement (we do not want to give half-baked
-     feature, soon to get replaced by something else).
+For example, let's assume that we have microseconds in the date specifier. 
+Then try this one:
 
-But taking this before 1.6.0 would be a pity. I do not offhand think the
-change can have downside impact (it is _supposed to_ kick in only when it
-would have been an error earlier), so it may be excempt from #2 of the
-post -rc rules, but I do think you and I have a track record of being
-careless (not because your patches are often bad, but because you and I
-tend to make the same kind of mistakes --- overlooking the same kind of
-cases where changes are not such a good idea.  Notice I said "offhand" a
-few lines earlier?), and I feel it is prudent to let rule #1 and #3 to
-hold us back a bit longer.
+	./test-date "12:12:12.000001"
+
+Notice what happens? Oops.
+
+With my patch, you get
+
+	12:12:12.0000001 -> Sat Aug 16 12:12:12 2008
+
+and with your, you get
+
+	12:12:12.000001 -> Fri Aug  1 12:12:12 2008
+
+and yeah, it's odd, but I can explain it.
+
+But you are definitely right about the case of doing
+
+	"15:15:00.-0700"
+
+and yes, my patch was crap too. 
+
+			Linus
