@@ -1,120 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Allow configure to override CC_LD_DYNPATH
-Date: Sat, 16 Aug 2008 21:56:24 -0700
-Message-ID: <7vwsig9r47.fsf@gitster.siamese.dyndns.org>
-References: <1218891667-6014-1-git-send-email-gafunchal@gmail.com>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [RFC PATCH 0/9] Narrow/Sparse checkout round 3: "easy mode"
+Date: Sun, 17 Aug 2008 12:12:50 +0700
+Message-ID: <fcaeb9bf0808162212y756465a5ib7ce3a8849765033@mail.gmail.com>
+References: <20080815142439.GA10609@laptop>
+	 <7v1w0pdze0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Giovanni Funchal <gafunchal@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 17 06:58:53 2008
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 17 07:13:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUaLp-0005i0-Gk
-	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 06:58:49 +0200
+	id 1KUaaT-0007hE-8G
+	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 07:13:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751167AbYHQE4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Aug 2008 00:56:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbYHQE4c
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 00:56:32 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37225 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751055AbYHQE4c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Aug 2008 00:56:32 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B90315CB71;
-	Sun, 17 Aug 2008 00:56:30 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id AE6955CB70; Sun, 17 Aug 2008 00:56:27 -0400 (EDT)
-In-Reply-To: <1218891667-6014-1-git-send-email-gafunchal@gmail.com> (Giovanni
- Funchal's message of "Sat, 16 Aug 2008 15:01:07 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DB64E65C-6C18-11DD-B13A-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751280AbYHQFMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Aug 2008 01:12:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751234AbYHQFMx
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 01:12:53 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:1529 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751225AbYHQFMw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Aug 2008 01:12:52 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1345417fgg.17
+        for <git@vger.kernel.org>; Sat, 16 Aug 2008 22:12:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=V2JCzkU+UjOsCNix+A58tUBNR7XFmuhWCeP1bJAg/Hk=;
+        b=EBjGZzQPS0MCYbE66eBBTXO51lQq+JpgggT7ik7pSigIpm7z4sQZoiB2o2/Tv1cQXE
+         bO9doWSoeEKKOnakgEH6BqIfTDuCfTbtdljPZ1TOkZRavL4kkR0eNXm5Zz20DIoSscyy
+         kF11YVEaMv6kw/XeskxoSlijvGdPVy/54YYT4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Q/3ulSmyImgxSo0nOSqqX6MeIOnap3PkXRDu8hnbVECpTTv2ioHd4ohUxwsv9ygsqr
+         T+WE881omxWJCC0i0GXbelDw9ihA8hNMwmKybLH7kVCfdGFGq/BQENtJwc6dLTbPIm2V
+         j7xv/ShhD7ZlctqZqMXBSqevvDC50JhiuyNcU=
+Received: by 10.86.98.10 with SMTP id v10mr3471470fgb.46.1218949970601;
+        Sat, 16 Aug 2008 22:12:50 -0700 (PDT)
+Received: by 10.86.93.13 with HTTP; Sat, 16 Aug 2008 22:12:50 -0700 (PDT)
+In-Reply-To: <7v1w0pdze0.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92575>
 
-Giovanni Funchal <gafunchal@gmail.com> writes:
+On 8/16/08, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>  > Another difference from the last round is "narrow rules" will not be preserved
+>  > when switching branches. When you switch branch with no option, you will get
+>  > full checkout. You may want to use --path|--add-path|--remove-path when
+>  > switching branches to have narrow checkout again.
+>
+>
+> You could save the "narrow rules" in the extension section of the index.
+>  If the final form of this series needs to use a separate CE_NO_CHECKOUT
+>  bit (which would make the resulting index incompatible with the current
+>  git), the narrow rules section can be marked as "your git must understand
+>  this" class of extension to make sure that people do not mistakenly access
+>  an index written by this new version of git with the current or older git.
 
-> @@ -689,7 +689,6 @@ ifeq ($(uname_S),NetBSD)
->  	endif
->  	BASIC_CFLAGS += -I/usr/pkg/include
->  	BASIC_LDFLAGS += -L/usr/pkg/lib
-> -	ALL_LDFLAGS += -Wl,-rpath,/usr/pkg/lib
->  endif
->  ifeq ($(uname_S),AIX)
->  	NO_STRCASESTR=YesPlease
-> @@ -763,9 +762,21 @@ ifneq (,$(findstring arm,$(uname_M)))
->  	ARM_SHA1 = YesPlease
->  endif
->  
-> +# Runtime dynamic library path switch
-> +ifdef NO_R_TO_GCC_LINKER
-> +	# Some linkers use -Wl,-rpath,
-> +	CC_LD_DYNPATH = -Wl,-rpath,
-> +else
-> +	# Some others need -R
-> +	CC_LD_DYNPATH = -R
-> +endif
-> +
->  -include config.mak.autogen
->  -include config.mak
->  
-> +ifeq ($(uname_S),NetBSD)
-> +	ALL_LDFLAGS += $(CC_LD_DYNPATH)/usr/pkg/lib
-> +endif
+The problem is "narrow rules" may change over time in a way that git
+may handle it wrong. Assume that you have a directory with two files:
+a and b. You first narrow checkout a (which would save the rule
+"checkout a"). Then you do "git checkout b". When you update HEAD,
+what should happen?
+ - consider only a and b in narrow area (new files not counted)
+ - consider the whole directory in narrow area (new files counted)
 
-I think this NetBSD change might be a good idea.
+This does not matter until we implement strict mode that only checkout
+new files inside narrow area (the usage is similar to submodule).
 
-By moving "ifdef" before where we "include config.mak", however, you broke
-existing setups that use NO_R_TO_GCC_LINKER to cause "-Wl,-rpath=" to be
-used.
+>  > Now back to technical POV. I did not reuse CE_VALID (assume unchanged) bit
+>  > because it has been used for core.ignorestat.
+>
+>
+> I am not sure what's the relation between these two.
 
-How about doing it the way the attached patch does instead?  Then the
-autoconf can configure CC_LD_DYNPATH to be used that may even be different
-from "-Wl,-rpath=" (e.g. the one with double-dash "-Wl,--rpath").
-
- Makefile |   17 +++++++++--------
- 1 files changed, 9 insertions(+), 8 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 53ab4b5..264ede3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -688,8 +688,7 @@ ifeq ($(uname_S),NetBSD)
- 		NEEDS_LIBICONV = YesPlease
- 	endif
- 	BASIC_CFLAGS += -I/usr/pkg/include
--	BASIC_LDFLAGS += -L/usr/pkg/lib
--	ALL_LDFLAGS += -Wl,-rpath,/usr/pkg/lib
-+	BASIC_LDFLAGS += -L/usr/pkg/lib $(CC_LD_DYNPATH)/usr/pkg/lib
- endif
- ifeq ($(uname_S),AIX)
- 	NO_STRCASESTR=YesPlease
-@@ -781,12 +780,14 @@ ifeq ($(uname_S),Darwin)
- 	endif
- endif
- 
--ifdef NO_R_TO_GCC_LINKER
--	# Some gcc does not accept and pass -R to the linker to specify
--	# the runtime dynamic library path.
--	CC_LD_DYNPATH = -Wl,-rpath=
--else
--	CC_LD_DYNPATH = -R
-+ifndef CC_LD_DYNPATH
-+	ifdef NO_R_TO_GCC_LINKER
-+		# Some gcc does not accept and pass -R to the linker to specify
-+		# the runtime dynamic library path.
-+		CC_LD_DYNPATH = -Wl,-rpath,
-+	else
-+		CC_LD_DYNPATH = -R
-+	endif
- endif
- 
- ifdef NO_CURL
+Because the usage is different? When you "git update-index foo" with
+core.ignorestat=1, it will mark it CE_VALID. And if the same bit is
+used for narrow checkout, the file is considered not existing in
+workdir. I'd expect foo is still in my narrow area after "git
+update-index foo".
+-- 
+Duy
