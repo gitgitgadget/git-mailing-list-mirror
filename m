@@ -1,250 +1,94 @@
 From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: [EGIT PATCH 09/31] Extract Transport findRemoteRefUpdatesFor() as static method
-Date: Sun, 17 Aug 2008 22:43:50 +0200
-Message-ID: <1219005852-21496-10-git-send-email-marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 06/31] Make wildcard checking public in RefSpec
+Date: Sun, 17 Aug 2008 22:43:47 +0200
+Message-ID: <1219005852-21496-7-git-send-email-marek.zawirski@gmail.com>
 References: <1219005852-21496-1-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-2-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-3-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-4-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-5-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-6-git-send-email-marek.zawirski@gmail.com>
- <1219005852-21496-7-git-send-email-marek.zawirski@gmail.com>
- <1219005852-21496-8-git-send-email-marek.zawirski@gmail.com>
- <1219005852-21496-9-git-send-email-marek.zawirski@gmail.com>
 Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
 To: robin.rosenberg@dewire.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sun Aug 17 22:46:01 2008
+X-From: git-owner@vger.kernel.org Sun Aug 17 22:46:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUp8O-0002uV-9h
-	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 22:45:56 +0200
+	id 1KUp8M-0002uV-93
+	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 22:45:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752452AbYHQUov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Aug 2008 16:44:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752426AbYHQUou
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 16:44:50 -0400
-Received: from mu-out-0910.google.com ([209.85.134.187]:48257 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752343AbYHQUos (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Aug 2008 16:44:48 -0400
-Received: by mu-out-0910.google.com with SMTP id w8so2887049mue.1
-        for <git@vger.kernel.org>; Sun, 17 Aug 2008 13:44:47 -0700 (PDT)
+	id S1752143AbYHQUoj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Aug 2008 16:44:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752167AbYHQUoj
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 16:44:39 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:31899 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752119AbYHQUoh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Aug 2008 16:44:37 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1489141fgg.17
+        for <git@vger.kernel.org>; Sun, 17 Aug 2008 13:44:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=aUlPFMLZsYuFvUShYLbEOeuwCs+AvUHkiVZHnDXdels=;
-        b=NY4ToXkMmJ9das6+kft4c9xmDUF2UKCf9h5Q8av+yWbKC88fh2IQ3D9iOb6jKKJPzw
-         2hK+axeJfP3Y6z7pfTn/5AvUbxCit5y0NjGtd0Je/qCbZhvdYjPtIx251LYEzuqHp6bF
-         K11PtBDjknWxyws1WZ3Q6NLJWPG3fM9Tb6hq4=
+        bh=hu8SqPcwxHOWUL9hj0uRk5j2bDFi5UL9UMsrEQeroVg=;
+        b=FUQE70xtdJ83zn1yvE9NrYOLqbHavh5s20QtH1ErVKs9tJh5ph3jSQgQur75xBMkr3
+         AYvtuz/kOLHwu69jH80d8U+1gO/YZvR/eNzGWVVWLgYbS/sg4kL01crdhs6oxoCrbNlO
+         j7C+eormLqUq8o1Aa7Pkky4d4VwYaOm3hSE7o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=BWpJm+Ds5cOkc6fyEnzcbCme0lHp8/kEjfOTUeeuvWuc62rOzHbL7XS4YKAH3cs/5S
-         3yeybdPp39iutrNU8ssnGXN/vcUBxWHWrubaQIj7GTObVi5BaRIle3REQC95DGR6icCv
-         UoBPRoz3aO5dMnJh3n441ANQfgGEkAuRnHq/g=
-Received: by 10.103.17.13 with SMTP id u13mr3460890mui.90.1219005887286;
-        Sun, 17 Aug 2008 13:44:47 -0700 (PDT)
+        b=HLaf+bomzEuGlKAHq5JYriStex8xCHs1vK3amvqqZ/BwMqmVEhTrQlYV+y0Z/LRmqF
+         SgjAHygiLQ8IR2y0Rr8sgntXMtaVspGZ5rVG6/FhOM6RSuJuyeOy/fFQYi73IAIwrgId
+         CROpk63ggPlqQ9bNOrHFffYr17eLKemsF5+l4=
+Received: by 10.102.218.6 with SMTP id q6mr3465136mug.127.1219005876957;
+        Sun, 17 Aug 2008 13:44:36 -0700 (PDT)
 Received: from localhost ( [62.21.19.93])
-        by mx.google.com with ESMTPS id e10sm490317muf.14.2008.08.17.13.44.45
+        by mx.google.com with ESMTPS id s10sm721492mue.15.2008.08.17.13.44.35
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 17 Aug 2008 13:44:46 -0700 (PDT)
+        Sun, 17 Aug 2008 13:44:36 -0700 (PDT)
 X-Mailer: git-send-email 1.5.6.3
-In-Reply-To: <1219005852-21496-9-git-send-email-marek.zawirski@gmail.com>
+In-Reply-To: <1219005852-21496-6-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92639>
 
-This method could be used outside of specific URI scope, so let it be
-static. Otherwise, if someone want to generate remote ref updates from
-refspecs he/she may have to create some dummy transport just for that.
+This constant and method can/should be reused in GUI.
 
 Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
 ---
- .../src/org/spearce/jgit/transport/Transport.java  |  147 ++++++++++++--------
- 1 files changed, 90 insertions(+), 57 deletions(-)
+ .../src/org/spearce/jgit/transport/RefSpec.java    |   15 +++++++++++++--
+ 1 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-index 98853e6..e986e48 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-@@ -211,7 +211,92 @@ public abstract class Transport {
- 
- 		throw new NotSupportedException("URI not supported: " + remote);
- 	}
-+	
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java b/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
+index e489233..9ec5847 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
+@@ -47,9 +47,20 @@ import org.spearce.jgit.lib.Ref;
+  * reference in one repository to another reference in another repository.
+  */
+ public class RefSpec {
+-	private static final String WILDCARD_SUFFIX = "/*";
 +	/**
-+	 * Convert push remote refs update specification from {@link RefSpec} form
-+	 * to {@link RemoteRefUpdate}. Conversion expands wildcards by matching
-+	 * source part to local refs. expectedOldObjectId in RemoteRefUpdate is
-+	 * always set as null. Tracking branch is configured if RefSpec destination
-+	 * matches source of any fetch ref spec for this transport remote
-+	 * configuration.
-+	 * 
-+	 * @param db
-+	 *            local database.
-+	 * @param specs
-+	 *            collection of RefSpec to convert.
-+	 * @param fetchSpecs
-+	 *            fetch specifications used for finding localtracking refs. May
-+	 *            be null or empty collection.
-+	 * @return collection of set up {@link RemoteRefUpdate}.
-+	 * @throws TransportException
-+	 *             when problem occurred during conversion or specification set
-+	 *             up: most probably, missing objects or refs.
++	 * Suffix for wildcard ref spec component, that indicate matching all refs
++	 * with specified prefix.
 +	 */
-+	public static Collection<RemoteRefUpdate> findRemoteRefUpdatesFor(
-+			final Repository db, final Collection<RefSpec> specs,
-+			Collection<RefSpec> fetchSpecs) throws TransportException {
-+		if (fetchSpecs == null)
-+			fetchSpecs = Collections.emptyList();
-+		final List<RemoteRefUpdate> result = new LinkedList<RemoteRefUpdate>();
-+		final Collection<RefSpec> procRefs = expandPushWildcardsFor(db, specs);
-+
-+		for (final RefSpec spec : procRefs) {
-+			try {
-+				final String srcRef = spec.getSource();
-+				// null destination (no-colon in ref-spec) is a special case
-+				final String remoteName = (spec.getDestination() == null ? spec
-+						.getSource() : spec.getDestination());
-+				final boolean forceUpdate = spec.isForceUpdate();
-+				final String localName = findTrackingRefName(remoteName,
-+						fetchSpecs);
-+
-+				final RemoteRefUpdate rru = new RemoteRefUpdate(db, srcRef,
-+						remoteName, forceUpdate, localName, null);
-+				result.add(rru);
-+			} catch (TransportException x) {
-+				throw x;
-+			} catch (Exception x) {
-+				throw new TransportException(
-+						"Problem with resolving push ref spec \"" + spec
-+								+ "\" locally: " + x.getMessage(), x);
-+			}
-+		}
-+		return result;
-+	}
-+
-+	private static Collection<RefSpec> expandPushWildcardsFor(
-+			final Repository db, final Collection<RefSpec> specs) {
-+		final Map<String, Ref> localRefs = db.getAllRefs();
-+		final Collection<RefSpec> procRefs = new HashSet<RefSpec>();
++	public static final String WILDCARD_SUFFIX = "/*";
  
-+		for (final RefSpec spec : specs) {
-+			if (spec.isWildcard()) {
-+				for (final Ref localRef : localRefs.values()) {
-+					if (spec.matchSource(localRef))
-+						procRefs.add(spec.expandFromSource(localRef));
-+				}
-+			} else {
-+				procRefs.add(spec);
-+			}
-+		}
-+		return procRefs;
-+	}
-+
-+	private static String findTrackingRefName(final String remoteName,
-+			final Collection<RefSpec> fetchSpecs) {
-+		// try to find matching tracking refs
-+		for (final RefSpec fetchSpec : fetchSpecs) {
-+			if (fetchSpec.matchSource(remoteName)) {
-+				if (fetchSpec.isWildcard())
-+					return fetchSpec.expandFromSource(remoteName)
-+							.getDestination();
-+				else
-+					return fetchSpec.getDestination();
-+			}
-+		}
-+		return null;
-+	}
-+	
- 	/**
- 	 * Default setting for {@link #fetchThin} option.
- 	 */
-@@ -573,7 +658,10 @@ public abstract class Transport {
- 	 * always set as null. Tracking branch is configured if RefSpec destination
- 	 * matches source of any fetch ref spec for this transport remote
- 	 * configuration.
--	 *
-+	 * <p>
-+	 * Conversion is performed for context of this transport (database, fetch
-+	 * specifications).
+-	private static boolean isWildcard(final String s) {
++	/**
++	 * Check whether provided string is a wildcard ref spec component.
 +	 * 
- 	 * @param specs
- 	 *            collection of RefSpec to convert.
- 	 * @return collection of set up {@link RemoteRefUpdate}.
-@@ -583,30 +671,7 @@ public abstract class Transport {
- 	 */
- 	public Collection<RemoteRefUpdate> findRemoteRefUpdatesFor(
- 			final Collection<RefSpec> specs) throws TransportException {
--		final List<RemoteRefUpdate> result = new LinkedList<RemoteRefUpdate>();
--		final Collection<RefSpec> procRefs = expandPushWildcardsFor(specs);
--
--		for (final RefSpec spec : procRefs) {
--			try {
--				final String srcRef = spec.getSource();
--				// null destination (no-colon in ref-spec) is a special case
--				final String remoteName = (spec.getDestination() == null ? spec
--						.getSource() : spec.getDestination());
--				final boolean forceUpdate = spec.isForceUpdate();
--				final String localName = findTrackingRefName(remoteName);
--
--				final RemoteRefUpdate rru = new RemoteRefUpdate(local, srcRef,
--						remoteName, forceUpdate, localName, null);
--				result.add(rru);
--			} catch (TransportException x) {
--				throw x;
--			} catch (Exception x) {
--				throw new TransportException(
--						"Problem with resolving push ref spec \"" + spec
--								+ "\" locally: " + x.getMessage(), x);
--			}
--		}
--		return result;
-+		return findRemoteRefUpdatesFor(local, specs, fetch);
++	 * @param s
++	 *            ref spec component - string to test. Can be null.
++	 * @return true if provided string is a wildcard ref spec component.
++	 */
++	public static boolean isWildcard(final String s) {
+ 		return s != null && s.endsWith(WILDCARD_SUFFIX);
  	}
  
- 	/**
-@@ -642,36 +707,4 @@ public abstract class Transport {
- 	 * any open file handles used to read the "remote" repository.
- 	 */
- 	public abstract void close();
--
--	private Collection<RefSpec> expandPushWildcardsFor(
--			final Collection<RefSpec> specs) {
--		final Map<String, Ref> localRefs = local.getAllRefs();
--		final Collection<RefSpec> procRefs = new HashSet<RefSpec>();
--
--		for (final RefSpec spec : specs) {
--			if (spec.isWildcard()) {
--				for (final Ref localRef : localRefs.values()) {
--					if (spec.matchSource(localRef))
--						procRefs.add(spec.expandFromSource(localRef));
--				}
--			} else {
--				procRefs.add(spec);
--			}
--		}
--		return procRefs;
--	}
--
--	private String findTrackingRefName(final String remoteName) {
--		// try to find matching tracking refs
--		for (final RefSpec fetchSpec : fetch) {
--			if (fetchSpec.matchSource(remoteName)) {
--				if (fetchSpec.isWildcard())
--					return fetchSpec.expandFromSource(remoteName)
--							.getDestination();
--				else
--					return fetchSpec.getDestination();
--			}
--		}
--		return null;
--	}
- }
 -- 
 1.5.6.3
