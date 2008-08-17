@@ -1,75 +1,79 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 0/7] prefix discovery at runtime (on Windows)
-Date: Sun, 17 Aug 2008 14:44:36 +0200
-Message-ID: <1218977083-14526-1-git-send-email-prohaska@zib.de>
+Subject: [PATCH 7/7] Windows: Revert to default paths and convert them by RUNTIME_PREFIX
+Date: Sun, 17 Aug 2008 14:44:43 +0200
+Message-ID: <1218977083-14526-8-git-send-email-prohaska@zib.de>
+References: <1218977083-14526-1-git-send-email-prohaska@zib.de>
+ <1218977083-14526-2-git-send-email-prohaska@zib.de>
+ <1218977083-14526-3-git-send-email-prohaska@zib.de>
+ <1218977083-14526-4-git-send-email-prohaska@zib.de>
+ <1218977083-14526-5-git-send-email-prohaska@zib.de>
+ <1218977083-14526-6-git-send-email-prohaska@zib.de>
+ <1218977083-14526-7-git-send-email-prohaska@zib.de>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Steffen Prohaska <prohaska@zib.de>
 To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sun Aug 17 14:46:51 2008
+X-From: git-owner@vger.kernel.org Sun Aug 17 14:46:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUhej-0001rR-Ss
-	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 14:46:50 +0200
+	id 1KUhel-0001rR-6Z
+	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 14:46:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755362AbYHQMpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Aug 2008 08:45:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754159AbYHQMpe
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 08:45:34 -0400
-Received: from mailer.zib.de ([130.73.108.11]:52246 "EHLO mailer.zib.de"
+	id S1753876AbYHQMpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Aug 2008 08:45:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755402AbYHQMpp
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 08:45:45 -0400
+Received: from mailer.zib.de ([130.73.108.11]:52306 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752699AbYHQMpc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Aug 2008 08:45:32 -0400
+	id S1753876AbYHQMpo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Aug 2008 08:45:44 -0400
 Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m7HCj9Ih022115;
-	Sun, 17 Aug 2008 14:45:14 +0200 (CEST)
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m7HCjZRC022276;
+	Sun, 17 Aug 2008 14:45:40 +0200 (CEST)
 Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m7HCihbN002872;
-	Sun, 17 Aug 2008 14:44:43 +0200 (MEST)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m7HCihbU002872;
+	Sun, 17 Aug 2008 14:44:44 +0200 (MEST)
 X-Mailer: git-send-email 1.5.4.4
+In-Reply-To: <1218977083-14526-7-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92606>
 
-Hi,
-This patch series fixes discovery of the installation prefix at runtime on
-Windows.  It introduces a compile flag RUNTIME_PREFIX, which can be set to
-explicitly request prefix computation at runtime.
+The RUNTIME_PREFIX mechanism allows us to use the default (absolute) paths
+on Windows too.  Defining RUNTIME_PREFIX explicitly requests for
+translation of paths during runtime, depending on the path to the
+executable.
 
-Apologies for proposing such large changes that late in the release cycle.
-Maybe we want to postpone the series until 1.6.0.1 or even 1.6.1.  Note however
-that in this case we should consider not releasing 1.6.0 on Windows because the
-current solution in master does not reliably read the system wide configuration
-on Windows.
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ Makefile |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
 
-We probably won't see a Windows installer before mid of September anyway,
-unless someone temporarily takes over the position of the msysgit maintainer
-until I return from holidays.  I'll be completely offline from August 25
-until September 13.
-
-        Steffen
-
- Makefile       |   21 +++++++++++------
- daemon.c       |    3 ++
- exec_cmd.c     |   67 ++++++++++++++++++++++++++++++++++++++++++++++++-------
- exec_cmd.h     |    2 +-
- fast-import.c  |    4 +++
- git.c          |   20 ++++------------
- hash-object.c  |    4 +++
- index-pack.c   |    4 +++
- receive-pack.c |    3 ++
- unpack-file.c  |    4 +++
- upload-pack.c  |    3 ++
- var.c          |    4 +++
- 12 files changed, 107 insertions(+), 32 deletions(-)
-
- [PATCH 1/7] Windows: Add workaround for MSYS' path conversion
- [PATCH 2/7] system_path(): Add prefix computation at runtime if RUNTIME_PREFIX set
- [PATCH 3/7] Refactor git_set_argv0_path() to git_extract_argv0_path()
- [PATCH 4/7] Glean libexec path from argv[0] for git-upload-pack and git-receive-pack.
- [PATCH 5/7] Add calls to git_extract_argv0_path() in programs that call git_config_*
- [PATCH 6/7] Modify setup_path() to only add git_exec_path() to PATH
- [PATCH 7/7] Windows: Revert to default paths and convert them by RUNTIME_PREFIX
+diff --git a/Makefile b/Makefile
+index 8341558..8d57557 100644
+--- a/Makefile
++++ b/Makefile
+@@ -748,6 +748,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	SNPRINTF_RETURNS_BOGUS = YesPlease
+ 	NO_SVN_TESTS = YesPlease
+ 	NO_PERL_MAKEMAKER = YesPlease
++	RUNTIME_PREFIX = YesPlease
+ 	NO_POSIX_ONLY_PROGRAMS = YesPlease
+ 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat
+ 	COMPAT_CFLAGS += -DSNPRINTF_SIZE_CORR=1
+@@ -755,9 +756,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	COMPAT_OBJS += compat/mingw.o compat/fnmatch.o compat/regex.o compat/winansi.o
+ 	EXTLIBS += -lws2_32
+ 	X = .exe
+-	gitexecdir = ../libexec/git-core
+-	template_dir = ../share/git-core/templates/
+-	ETC_GITCONFIG = ../etc/gitconfig
+ endif
+ ifneq (,$(findstring arm,$(uname_M)))
+ 	ARM_SHA1 = YesPlease
+-- 
+1.6.0.rc3.22.g053fd
