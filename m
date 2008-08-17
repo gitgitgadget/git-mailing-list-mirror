@@ -1,90 +1,77 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: git submodules
-Date: Sun, 17 Aug 2008 18:54:51 -0400
-Message-ID: <32541b130808171554o2b2f33d5q43d3bd517ed85e06@mail.gmail.com>
-References: <20080728162003.GA4584@artemis.madism.org>
-	 <320075ff0807281323l51bb6478j30e3e4c490974a70@mail.gmail.com>
-	 <20080728205545.GB10409@artemis.madism.org>
-	 <20080728205923.GC10409@artemis.madism.org>
-	 <32541b130807281440v64f3cb9ci50cf6d16be4f2f82@mail.gmail.com>
-	 <20080728220308.GF10409@artemis.madism.org>
-	 <m3r69dtzm9.fsf@localhost.localdomain>
-	 <7vfxptpr76.fsf@gitster.siamese.dyndns.org>
-	 <20080817201336.GA17148@artemis>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"Nigel Magnay" <nigel.magnay@gmail.com>,
-	"Git ML" <git@vger.kernel.org>
-To: "Pierre Habouzit" <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Aug 18 00:55:57 2008
+From: Eric Hanchrow <offby1@blarg.net>
+Subject: [PATCH] Note the use of "rebase -i" to squash consecutive commits into one.
+Date: Sun, 17 Aug 2008 15:32:20 -0700
+Message-ID: <1219012340-23376-1-git-send-email-offby1@blarg.net>
+Cc: Eric Hanchrow <offby1@blarg.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 18 01:04:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUrAD-0004kP-1s
-	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 00:55:57 +0200
+	id 1KUrI0-0006pp-3o
+	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 01:04:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbYHQWyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Aug 2008 18:54:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855AbYHQWyy
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 18:54:54 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:49734 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750930AbYHQWyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Aug 2008 18:54:53 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so194498ywe.1
-        for <git@vger.kernel.org>; Sun, 17 Aug 2008 15:54:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=eO4lmvmPdCOQ1n5XXFfcj14MIEKCIfqK0dJ1Mrxjns4=;
-        b=ol+EsjUHyPOKRGShDYUpgD8NN9x27PuVH787aLqFcAcPLaKrlD23iRgXfU0AMgucf4
-         gBGqh18CmFu9Eb0VdrZIHPQtlr9cHiMXe888FYhsckYzPdFPqqdEq8C5YM9afiGvSJOf
-         +RUu7B5Cp50ahMp3ApOYsFjCXqs1YoehR5TjY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=NXxG2twLYSxxeQbMhBLAZQGN2kaIhxx4DtrieleuHRPNBQu3UWUoQelj9tAAipxhlq
-         I+lwnXqlw5ymn0eZ2sks8r2w2D6tPun6sChhhqbExqv6wCTdfXB6wIae4ncTD9MK0doJ
-         PmTVepnNh1SX+ZffQjM3iPVvLkPGjq420od6k=
-Received: by 10.150.202.9 with SMTP id z9mr8481644ybf.205.1219013692075;
-        Sun, 17 Aug 2008 15:54:52 -0700 (PDT)
-Received: by 10.150.98.19 with HTTP; Sun, 17 Aug 2008 15:54:51 -0700 (PDT)
-In-Reply-To: <20080817201336.GA17148@artemis>
-Content-Disposition: inline
+	id S1752083AbYHQXC4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Aug 2008 19:02:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751986AbYHQXC4
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 19:02:56 -0400
+Received: from smtp61.avvanta.com ([206.124.128.61]:34555 "EHLO
+	mail.avvanta.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751855AbYHQXC4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Aug 2008 19:02:56 -0400
+Received: from mail.avvanta.com (localhost [127.0.0.1])
+	by mail.avvanta.com (Postfix) with ESMTP id BC178276C5C;
+	Sun, 17 Aug 2008 15:32:20 -0700 (PDT)
+Received: from localhost.localdomain (q-static-138-125.avvanta.com [206.124.138.125])
+	by mail.avvanta.com (Postfix) with ESMTP id 778F7276C58;
+	Sun, 17 Aug 2008 15:32:20 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.8.ge92a4
+X-BlargAV-Status: No viruses detected, BlargAV v1.1 on localhost.scooter.p.blarg.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92669>
 
-On Sun, Aug 17, 2008 at 4:13 PM, Pierre Habouzit <madcoder@debian.org> wrote:
->  * It could make things like git-blame better: at work, it's common for
->    us to move files across submodules: we have a stable library shared
->    accross projects, and move there C modules that have staged for
->    quite some time in the applications and are stable enough, and it's
->    pity to loose history then, whereas git could really guess about the
->    move if it sees through GITLINKS in the same object repository.
->    GITLINKS are not very different from trees actually if you can look
->    through them, it's just a matter of dereferencing twice instead of
->    once.
+---
+ Documentation/git-rebase.txt |   24 +++++++++++++++++++++++-
+ 1 files changed, 23 insertions(+), 1 deletions(-)
 
-That would be cool.  I expect you could implement it independently of
-everything else by simply *trying* to dereference gitlinks in the
-local object repository if they exist, and not erroring out if they
-don't.
-
-The other reasons for combining the repos seem fine, but they mostly
-seem to come down to saving disk space.  I like saving disk space, but
-it's not really that important to me.
-
-Have fun,
-
-Avery
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 59c1b02..074f38b 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -341,7 +341,29 @@ was HEAD~4 becomes the new HEAD. To achieve that, you would call
+ $ git rebase -i HEAD~5
+ ----------------------
+ 
+-And move the first patch to the end of the list.
++And move the first patch to the end of the list.  Similarly, you can
++squash a bunch of consecutive commits into one commit.  If you start
++with this:
++
++------------
++    Q---R---S---T---U master
++------------
++
++then the command
++
++----------------------
++$ git rebase -i HEAD~3
++----------------------
++
++would let you edit the last three commits -- S, T, and U; if you
++edit the lines corresponding to T and U by changing "pick" to
++"squash", the result will be
++
++------------
++    Q---R---S' master
++------------
++
++where S' contains all the changes that were in S, T, and U.
+ 
+ You might want to preserve merges, if you have a history like this:
+ 
+-- 
+1.6.0.rc3.6.gf8030
