@@ -1,139 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] Always provide a fallback when hardlinks fail
-Date: Sun, 17 Aug 2008 04:03:59 -0700
-Message-ID: <7vljyv6gyo.fsf@gitster.siamese.dyndns.org>
-References: <0EFF470D-341A-4619-910A-0F9C663D0B51@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: =?ISO-8859-1?Q?Andreas_F=E4rber?= <andreas.faerber@web.de>
+Subject: Re: [PATCH 2/6] Only define NEEDS_SOCKET if libsocket is usable
+Date: Sun, 17 Aug 2008 13:40:45 +0200
+Message-ID: <0380BBDB-ABC4-49D2-AF89-A30256397CFB@web.de>
+References: <2EA0EACE-D8FE-476A-BAE2-7E12EE961C46@web.de> <7v63q080io.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v926)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Andreas =?utf-8?Q?F=C3=A4rber?= <andreas.faerber@web.de>
-X-From: git-owner@vger.kernel.org Sun Aug 17 13:05:57 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 17 13:45:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUg4U-00053j-Cx
-	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 13:05:44 +0200
+	id 1KUghA-0004qU-SO
+	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 13:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752462AbYHQLEM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Aug 2008 07:04:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752444AbYHQLEL
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 07:04:11 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56539 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752434AbYHQLEK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Aug 2008 07:04:10 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 911205D000;
-	Sun, 17 Aug 2008 07:04:08 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7A7A35CFFF; Sun, 17 Aug 2008 07:04:02 -0400 (EDT)
-In-Reply-To: <0EFF470D-341A-4619-910A-0F9C663D0B51@web.de> (Andreas
- =?utf-8?Q?F=C3=A4rber's?= message of "Sun, 17 Aug 2008 11:00:51 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 36E8B322-6C4C-11DD-A645-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752526AbYHQLlL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Aug 2008 07:41:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752525AbYHQLlK
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 07:41:10 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:51505 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752518AbYHQLlJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Aug 2008 07:41:09 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate03.web.de (Postfix) with ESMTP id E7D86E6E50E6;
+	Sun, 17 Aug 2008 13:41:07 +0200 (CEST)
+Received: from [91.18.70.145] (helo=[10.0.1.1])
+	by smtp07.web.de with asmtp (TLSv1:AES128-SHA:128)
+	(WEB.DE 4.109 #226)
+	id 1KUgd9-0001NB-00; Sun, 17 Aug 2008 13:41:07 +0200
+In-Reply-To: <7v63q080io.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.926)
+X-Sender: Andreas.Faerber@web.de
+X-Provags-ID: V01U2FsdGVkX18kYm0J6BtSNgcc8cO2n1vu8nX0em5FOLnp/Q97
+	/E6i/exwS67wS7e1yb8G8z9sajBkkJMu2FdTnuIs6nZjhCiC65
+	GFQpF1vtmGgE9n4DbIjA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92599>
 
-Andreas F=C3=A4rber <andreas.faerber@web.de> writes:
 
-> BFS does not support hardlinks, so suppress the resulting error
-> messages.
+Am 17.08.2008 um 11:16 schrieb Junio C Hamano:
 
-Hmm, this is not specific to BFS.  I would have preferred if you brough=
+> Andreas F=E4rber <andreas.faerber@web.de> writes:
+>
+>> diff --git a/configure.ac b/configure.ac
+>> index 7c2856e..75ec83a 100644
+>> --- a/configure.ac
+>> +++ b/configure.ac
+>> @@ -223,11 +223,11 @@ AC_LINK_IFELSE(ZLIBTEST_SRC,
+>> LIBS=3D"$old_LIBS"
+>> AC_SUBST(NO_DEFLATE_BOUND)
+>> #
+>> -# Define NEEDS_SOCKET if linking with libc is not enough (SunOS,
+>> +# Define NEEDS_SOCKET if linking with libc is required (SunOS,
+>> # Patrick Mauritz).
+>> -AC_CHECK_LIB([c], [socket],
+>> -[NEEDS_SOCKET=3D],
+>> -[NEEDS_SOCKET=3DYesPlease])
+>> +AC_CHECK_LIB([socket], [socket],
+>> +[NEEDS_SOCKET=3DYesPlease],
+>> +[NEEDS_SOCKET=3D])
+>> AC_SUBST(NEEDS_SOCKET)
+>> test -n "$NEEDS_SOCKET" && LIBS=3D"$LIBS -lsocket"
+>
+> Doesn't this force linkage with -lsocket even if -lc is enough to use
+> socket(2) calls?
+
+If both libc and libsocket provide it, yes.
+
+> In other words, "checking libc is not enough" is only half correct.  =
+=20
+> The
+> right thing to do is "check libc and if it is sufficient be happy, bu=
 t
-up much earlier.
+> otherwise do not automatically assume -lsocket is Ok."  Something =20
+> like:
+>
+> AC_CHECK_LIB([c], [socket],
+> [NEEDS_SOCKET=3D],
+> [AC_CHECK_LIB([socket], [socket],
+>        	[NEEDS_SOCKET=3DYesPlease],
+>                [NEEDS_SOCKET=3D])])
 
-Your patch seems to be whitespace damaged.  Here is an alternative.
+Looks okay to me that way.
 
-Note.
+> Other patches seemed Ok from my cursory look; I do not know the
+> people whose Ack's were on your patch submission, though...
 
-We currently install $(bindir)/git to $(gitexecdir)/git, make hardlinks=
- to
-"git-<cmd>" from "git" inside $(gitexecdir), and then finally remove "g=
-it"
-in $(gitexecdir).
+Sorry for not explaining: Ingo is one of the core Haiku developers, =20
+and Scott is from HaikuPorts. This is the initial submission to this =20
+list, trying to adhere to the SubmittingPatches document.
 
-We could avoid this ugliness by:
-
- (1) install "$(gitexecdir)/git-add" (or any other single built-in) by
-     trying hardlink "$(bindir)/git", and if it fails by copying;
-
- (2) for the rest of built-ins, install "$(gitexecdir)/git-<cmd>" by tr=
-ying
-     ln "$(gitexecdir)/git-add" "$(gitexecdir)/git-<cmd>", then
-     ln -s "git-add" "$(gitexecdir)/git-<cmd>", then finally
-     cp "$(gitexecdir)/git-add" "$(gitexecdir)/git-<cmd>".
-
-That is not what I did, but it should be the right thing to do.  It is
-already very late in the release cycle, and this whole thing can be don=
-e
-after 1.6.0 final; we do not have to hurry.
-
----
-=46rom: Andreas F=C3=A4rber <andreas.faerber@web.de>
-Date: Sun, 17 Aug 2008 11:00:51 +0200
-Subject: [PATCH] Makefile: always provide a fallback when hardlinks fai=
-l
-
-We make hardlinks from "git" to "git-<cmd>" built-ins and have been
-careful to avoid cross-device links when linking "git-<cmd>" to gitexec=
-dir.
-
-However, we were not prepared to deal with a build directory that is
-incapable of making hard links within itself.  This patch corrects it.
-
-While at it, avoid 100+ error messages from hardlink failures when we a=
-re
-going to fall back to "cp" by redirecting the standard error to /dev/nu=
-ll.
-
-Signed-off-by: Andreas F=C3=A4rber <andreas.faerber@web.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 53ab4b5..53112bb 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1098,7 +1098,10 @@ help.o: help.c common-cmds.h GIT-CFLAGS
- 		'-DGIT_INFO_PATH=3D"$(infodir_SQ)"' $<
-=20
- $(BUILT_INS): git$X
--	$(QUIET_BUILT_IN)$(RM) $@ && ln git$X $@
-+	$(QUIET_BUILT_IN)$(RM) $@ && \
-+	ln git$X $@ 2>/dev/null || \
-+	ln -s git$X $@ 2>/dev/null || \
-+	cp git$X $@
-=20
- common-cmds.h: ./generate-cmdlist.sh command-list.txt
-=20
-@@ -1365,10 +1368,12 @@ endif
- 	execdir=3D$$(cd '$(DESTDIR_SQ)$(gitexec_instdir_SQ)' && pwd) && \
- 	if test "z$$bindir" !=3D "z$$execdir"; \
- 	then \
--		ln -f "$$bindir/git$X" "$$execdir/git$X" || \
--		cp "$$bindir/git$X" "$$execdir/git$X"; \
-+		$(RM) "$$execdir/git$X" && \
-+		ln "$$bindir/git$X" "$$execdir/git$X" 2>/dev/null || \
-+		ln -s "$$bindir/git$X" "$$execdir/git$X" 2>/dev/null || \
-+		cp "$$bindir/git$X" "$$execdir/git$X" || exit; \
- 	fi && \
--	{ $(foreach p,$(BUILT_INS), $(RM) "$$execdir/$p" && ln "$$execdir/git=
-$X" "$$execdir/$p" ;) } && \
-+	{ $(foreach p,$(BUILT_INS), $(RM) "$$execdir/$p" && ln "$$execdir/git=
-$X" "$$execdir/$p" 2>/dev/null || cp "$$execdir/git$X" "$$execdir/$p" |=
-| exit;) } && \
- 	if test "z$$bindir" !=3D "z$$execdir"; \
- 	then \
- 		$(RM) "$$execdir/git$X"; \
---=20
-1.6.0.rc3.22.g053f
+Andreas
