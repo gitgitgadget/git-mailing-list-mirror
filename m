@@ -1,7 +1,7 @@
 From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: [EGIT PATCH 25/31] Create ListRemoteOperation for listing remote repo branches
-Date: Sun, 17 Aug 2008 22:44:06 +0200
-Message-ID: <1219005852-21496-26-git-send-email-marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 24/31] Clone wizard: force dir to suggested path only if repo selection change
+Date: Sun, 17 Aug 2008 22:44:05 +0200
+Message-ID: <1219005852-21496-25-git-send-email-marek.zawirski@gmail.com>
 References: <1219005852-21496-1-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-2-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-3-git-send-email-marek.zawirski@gmail.com>
@@ -26,200 +26,93 @@ References: <1219005852-21496-1-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-22-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-23-git-send-email-marek.zawirski@gmail.com>
  <1219005852-21496-24-git-send-email-marek.zawirski@gmail.com>
- <1219005852-21496-25-git-send-email-marek.zawirski@gmail.com>
 Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
 To: robin.rosenberg@dewire.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sun Aug 17 22:48:06 2008
+X-From: git-owner@vger.kernel.org Sun Aug 17 22:48:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUpAI-0003WL-I2
-	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 22:47:55 +0200
+	id 1KUpAH-0003WL-Sy
+	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 22:47:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751952AbYHQUpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Aug 2008 16:45:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754483AbYHQUpw
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 16:45:52 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:31899 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754650AbYHQUpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Aug 2008 16:45:49 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1489141fgg.17
-        for <git@vger.kernel.org>; Sun, 17 Aug 2008 13:45:48 -0700 (PDT)
+	id S1754449AbYHQUpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Aug 2008 16:45:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754780AbYHQUpt
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 16:45:49 -0400
+Received: from mu-out-0910.google.com ([209.85.134.187]:48257 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754449AbYHQUpp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Aug 2008 16:45:45 -0400
+Received: by mu-out-0910.google.com with SMTP id w8so2887049mue.1
+        for <git@vger.kernel.org>; Sun, 17 Aug 2008 13:45:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=fP6A//7eWat2twfu8ONIrnly/U1In9RinWao5sVmIr0=;
-        b=UIaooj4Dii945jGte/I614/fyuNNxf9CGRjgd4Lkb9VLU2e3gy0eSuyPdJ9K73cVI2
-         e818E1WlFN0SJdW+xCnycOUhaNOJSBLyPwGvn4iBjI1UfypIw9LEQBW3cdfC1X0v1UfJ
-         gGEYuySnKUfKE32XSZPs8ptCYGUV2+8fNkRHI=
+        bh=tEH4G4nJzkEcciYNzsLJp8DTn2ueC/VeBWdALEsa1WM=;
+        b=bzDvFvegIuedmn/a2ClBPT2X4SGEs+lWIQDK6jKEUZ8nScSLRMpH0Nf9RQyYDh2J9M
+         uE4kT9Y2eChgdzrxXcM+wr71K0C3XaE0hJGfYjM14pZNHzMzINtJEbk/HAVOGp7NNbgE
+         HEdwqPhVcNZL/fpzzdhqPUWIMfyGHJggEqX38=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=IDjgPVMmqT8rcd6V98+7iW8JFmIaUL9yA3I5wQiarMO6WhN8RobgdSNgboPTb9M7Uv
-         D/MxTPdpmR1GCJyEgIVEJ91AA6s5rJ4mnEbqWJy/3dpHm7G09WRDcfqi2C5zQh/MIjCi
-         8kGZBmKEBOdGJJhzjBumoiHo0ni+XCowaXmYE=
-Received: by 10.86.92.7 with SMTP id p7mr3961563fgb.72.1219005947936;
-        Sun, 17 Aug 2008 13:45:47 -0700 (PDT)
+        b=W1S6ylHDvkYIUmi7FoGtHqO6yf19ljjyiDSCVUp5Umy6k9GyW1ouOHl1wMn+lPxpz0
+         7YCPWdyHb5Tz8FWIL+TnC6n7QDkvMBsSsJu1VCmei0ev+NQUSPHEWymyD0a9o0jYKHgP
+         NE0nlS5TnjTgCCWA3aZrkjKffbgY+3wG63GKg=
+Received: by 10.103.213.19 with SMTP id p19mr3463928muq.70.1219005944753;
+        Sun, 17 Aug 2008 13:45:44 -0700 (PDT)
 Received: from localhost ( [62.21.19.93])
-        by mx.google.com with ESMTPS id d4sm11317203fga.8.2008.08.17.13.45.46
+        by mx.google.com with ESMTPS id t10sm468156muh.16.2008.08.17.13.45.43
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 17 Aug 2008 13:45:47 -0700 (PDT)
+        Sun, 17 Aug 2008 13:45:43 -0700 (PDT)
 X-Mailer: git-send-email 1.5.6.3
-In-Reply-To: <1219005852-21496-25-git-send-email-marek.zawirski@gmail.com>
+In-Reply-To: <1219005852-21496-24-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92658>
 
-This code is a common task, so it's now bundled in this operation
-with simple progress monitor information.
+When user moves backward in wizard from destination page to source
+branch selection, then moves forward, we shouldn't overwrite his/her
+directory selection in destination page.
+Let's do it only when repository selection changes.
 
 Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
 ---
- .../src/org/spearce/egit/core/CoreText.java        |    3 +
- .../src/org/spearce/egit/core/coretext.properties  |    2 +
- .../spearce/egit/core/op/ListRemoteOperation.java  |  104 ++++++++++++++++++++
- 3 files changed, 109 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.egit.core/src/org/spearce/egit/core/op/ListRemoteOperation.java
+ .../ui/internal/clone/CloneDestinationPage.java    |   16 ++++++++++------
+ 1 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/CoreText.java b/org.spearce.egit.core/src/org/spearce/egit/core/CoreText.java
-index 8fbda4a..5974a5f 100644
---- a/org.spearce.egit.core/src/org/spearce/egit/core/CoreText.java
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/CoreText.java
-@@ -95,6 +95,9 @@ public class CoreText extends NLS {
- 	/** */
- 	public static String CloneOperation_title;
- 
-+	/** */
-+	public static String ListRemoteOperation_title;
-+
- 	static {
- 		final Class c = CoreText.class;
- 		initializeMessages(c.getPackage().getName() + ".coretext", c);
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/coretext.properties b/org.spearce.egit.core/src/org/spearce/egit/core/coretext.properties
-index 3b3c229..c412161 100644
---- a/org.spearce.egit.core/src/org/spearce/egit/core/coretext.properties
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/coretext.properties
-@@ -55,3 +55,5 @@ CheckpointJob_writingTrees=modified trees
- CheckpointJob_failed=Failed to write modified objects.
- 
- CloneOperation_title=Cloning from {0}
-+
-+ListRemoteOperation_title=Getting remote branches information
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/op/ListRemoteOperation.java b/org.spearce.egit.core/src/org/spearce/egit/core/op/ListRemoteOperation.java
-new file mode 100644
-index 0000000..d3f777a
---- /dev/null
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/op/ListRemoteOperation.java
-@@ -0,0 +1,104 @@
-+/*******************************************************************************
-+ * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
-+ * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
-+ *
-+ * All rights reserved. This program and the accompanying materials
-+ * are made available under the terms of the Eclipse Public License v1.0
-+ * See LICENSE for the full license text, also available.
-+ *******************************************************************************/
-+package org.spearce.egit.core.op;
-+
-+import java.lang.reflect.InvocationTargetException;
-+import java.util.Collection;
-+import java.util.Map;
-+
-+import org.eclipse.core.runtime.IProgressMonitor;
-+import org.eclipse.jface.operation.IRunnableWithProgress;
-+import org.spearce.egit.core.CoreText;
-+import org.spearce.jgit.errors.NotSupportedException;
-+import org.spearce.jgit.errors.TransportException;
-+import org.spearce.jgit.lib.Ref;
-+import org.spearce.jgit.lib.Repository;
-+import org.spearce.jgit.transport.Connection;
-+import org.spearce.jgit.transport.Transport;
-+import org.spearce.jgit.transport.URIish;
-+
-+/**
-+ * Operation of listing remote repository advertised refs.
-+ */
-+public class ListRemoteOperation implements IRunnableWithProgress {
-+	private final Repository localDb;
-+
-+	private final URIish uri;
-+
-+	private Map<String, Ref> remoteRefsMap;
-+
-+	/**
-+	 * Create listing operation for specified local repository (needed by
-+	 * transport) and remote repository URI.
-+	 * 
-+	 * @param localDb
-+	 *            local repository (needed for transport) where fetch would
-+	 *            occur.
-+	 * @param uri
-+	 *            URI of remote repository to list.
-+	 */
-+	public ListRemoteOperation(final Repository localDb, final URIish uri) {
-+		this.localDb = localDb;
-+		this.uri = uri;
-+	}
-+
-+	/**
-+	 * @return collection of refs advertised by remote side.
-+	 * @throws IllegalStateException
-+	 *             if error occurred during earlier remote refs listing.
-+	 */
-+	public Collection<Ref> getRemoteRefs() {
-+		checkState();
-+		return remoteRefsMap.values();
-+	}
-+
-+	/**
-+	 * @param refName
-+	 *            remote ref name to search for.
-+	 * @return ref with specified refName or null if not found.
-+	 * @throws IllegalStateException
-+	 *             if error occurred during earlier remote refs listing.
-+	 */
-+	public Ref getRemoteRef(final String refName) {
-+		checkState();
-+		return remoteRefsMap.get(refName);
-+	}
-+
-+	public void run(IProgressMonitor pm) throws InvocationTargetException,
-+			InterruptedException {
-+		Transport transport = null;
-+		Connection connection = null;
-+		try {
-+			transport = Transport.open(localDb, uri);
-+
-+			if (pm != null)
-+				pm.beginTask(CoreText.ListRemoteOperation_title,
-+						IProgressMonitor.UNKNOWN);
-+			connection = transport.openFetch();
-+			remoteRefsMap = connection.getRefsMap();
-+		} catch (NotSupportedException e) {
-+			throw new InvocationTargetException(e);
-+		} catch (TransportException e) {
-+			throw new InvocationTargetException(e);
-+		} finally {
-+			if (connection != null)
-+				connection.close();
-+			if (transport != null)
-+				transport.close();
-+			if (pm != null)
-+				pm.done();
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/clone/CloneDestinationPage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/clone/CloneDestinationPage.java
+index 97f166a..508781d 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/clone/CloneDestinationPage.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/clone/CloneDestinationPage.java
+@@ -278,15 +278,19 @@ class CloneDestinationPage extends WizardPage {
+ 			checkPage();
+ 			return;
+ 		}
+-		validatedRepoSelection = sourcePage.getSelection();
++		
++		if (!sourcePage.selectionEquals(validatedRepoSelection)) {
++			validatedRepoSelection = sourcePage.getSelection();
++			// update repo-related selection only if it changed
++			final String n = getSuggestedName();
++			setDescription(NLS.bind(UIText.CloneDestinationPage_description, n));
++			directoryText.setText(new File(ResourcesPlugin.getWorkspace()
++					.getRoot().getRawLocation().toFile(), n).getAbsolutePath());
 +		}
-+	}
-+
-+	private void checkState() {
-+		if (remoteRefsMap == null)
-+			throw new IllegalStateException(
-+					"Error occurred during remote repo listing, no refs available");
-+	}
-+}
-\ No newline at end of file
++		
+ 		validatedSelectedBranches = branchPage.getSelectedBranches();
+ 		validatedHEAD = branchPage.getHEAD();
+ 
+-		final String n = getSuggestedName();
+-		setDescription(NLS.bind(UIText.CloneDestinationPage_description, n));
+-		directoryText.setText(new File(ResourcesPlugin.getWorkspace().getRoot()
+-				.getRawLocation().toFile(), n).getAbsolutePath());
+-
+ 		initialBranch.removeAll();
+ 		final Ref head = branchPage.getHEAD();
+ 		int newix = 0;
 -- 
 1.5.6.3
