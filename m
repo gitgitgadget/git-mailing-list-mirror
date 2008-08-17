@@ -1,72 +1,81 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Converting from svn to git
-Date: Sun, 17 Aug 2008 21:11:58 +1200
-Message-ID: <1218964318.2149.3.camel@maia.lan>
-References: <e0b44a890808100611t27ddfcb6v21eecea89484c90b@mail.gmail.com>
-	 <20080810132409.GE18960@genesis.frugalware.org>
-	 <e0b44a890808100754l536bc4f3kfd953b52044f6e59@mail.gmail.com>
-	 <g7n1mk$67t$1@ger.gmane.org>
-	 <e0b44a890808100848p367f5c66qfa21cba1b3ba12a0@mail.gmail.com>
-	 <e0b44a890808111046q2626defdnab31b0d7b1c4578@mail.gmail.com>
-	 <g8421k$qcs$1@ger.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/6] Only define NEEDS_SOCKET if libsocket is usable
+Date: Sun, 17 Aug 2008 02:16:15 -0700
+Message-ID: <7v63q080io.fsf@gitster.siamese.dyndns.org>
+References: <2EA0EACE-D8FE-476A-BAE2-7E12EE961C46@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-X-From: git-owner@vger.kernel.org Sun Aug 17 11:13:15 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Andreas =?utf-8?Q?F=C3=A4rber?= <andreas.faerber@web.de>
+X-From: git-owner@vger.kernel.org Sun Aug 17 11:17:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUeK1-0008Fm-U4
-	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 11:13:14 +0200
+	id 1KUeO6-0000b7-LI
+	for gcvg-git-2@gmane.org; Sun, 17 Aug 2008 11:17:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751963AbYHQJML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Aug 2008 05:12:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751837AbYHQJMJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 05:12:09 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:43459 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751669AbYHQJMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Aug 2008 05:12:08 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id E914D21C93E; Sun, 17 Aug 2008 21:12:06 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00,RDNS_DYNAMIC
-	autolearn=no version=3.2.3
-Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id D69C321C803;
-	Sun, 17 Aug 2008 21:11:58 +1200 (NZST)
-In-Reply-To: <g8421k$qcs$1@ger.gmane.org>
-X-Mailer: Evolution 2.22.3.1 
+	id S1751764AbYHQJQY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Aug 2008 05:16:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752070AbYHQJQY
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Aug 2008 05:16:24 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56631 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751669AbYHQJQX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Aug 2008 05:16:23 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5935A64EAE;
+	Sun, 17 Aug 2008 05:16:22 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id B16AA64EAD; Sun, 17 Aug 2008 05:16:18 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 28C0DB94-6C3D-11DD-8309-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92591>
 
-On Fri, 2008-08-15 at 15:58 +0200, Michael J Gruber wrote:
-> A while ago I "complained" that rebase would skip empty commits. You 
-> might experiment with that. Alternatively, the following works for me:
-> 
-> git filter-branch --commit-filter 'cmd="git commit-tree"; test `git show 
-> --pretty=oneline $GIT_COMMIT|wc -l` = 1 && cmd="skip_commit"; $cmd "$@"' 
-> -- --all
-> 
-> This skips all commits which introduce no diff. It will not remove 
-> branches or tags which are related only to those subdirs.
-> 
-> I am sure there will be more elegant ways to do that (esp. the test with 
-> wc).
+Andreas F=C3=A4rber <andreas.faerber@web.de> writes:
 
-something like this should work:
+> diff --git a/configure.ac b/configure.ac
+> index 7c2856e..75ec83a 100644
+> --- a/configure.ac
+> +++ b/configure.ac
+> @@ -223,11 +223,11 @@ AC_LINK_IFELSE(ZLIBTEST_SRC,
+>  LIBS=3D"$old_LIBS"
+>  AC_SUBST(NO_DEFLATE_BOUND)
+>  #
+> -# Define NEEDS_SOCKET if linking with libc is not enough (SunOS,
+> +# Define NEEDS_SOCKET if linking with libc is required (SunOS,
+>  # Patrick Mauritz).
+> -AC_CHECK_LIB([c], [socket],
+> -[NEEDS_SOCKET=3D],
+> -[NEEDS_SOCKET=3DYesPlease])
+> +AC_CHECK_LIB([socket], [socket],
+> +[NEEDS_SOCKET=3DYesPlease],
+> +[NEEDS_SOCKET=3D])
+>  AC_SUBST(NEEDS_SOCKET)
+>  test -n "$NEEDS_SOCKET" && LIBS=3D"$LIBS -lsocket"
 
-  --commit-filter 'if [ "$1" = `git rev-parse HEAD^{tree}` ]; then
-skip_commit "$@"; else git commit-tree "$@"; fi'
+Doesn't this force linkage with -lsocket even if -lc is enough to use
+socket(2) calls?
 
-Sam.
+In other words, "checking libc is not enough" is only half correct.  Th=
+e
+right thing to do is "check libc and if it is sufficient be happy, but
+otherwise do not automatically assume -lsocket is Ok."  Something like:
+
+AC_CHECK_LIB([c], [socket],
+[NEEDS_SOCKET=3D],
+[AC_CHECK_LIB([socket], [socket],
+        	[NEEDS_SOCKET=3DYesPlease],
+                [NEEDS_SOCKET=3D])])
+
+Other patches seemed Ok from my cursory look; I do not know the
+people whose Ack's were on your patch submission, though...
+
+Thanks.
