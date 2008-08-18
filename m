@@ -1,95 +1,85 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] t1002-read-tree-m-u-2way.sh: use 'git diff -U0' rather than
- 'diff -U0'
-Date: Mon, 18 Aug 2008 18:17:53 -0500
-Message-ID: <jD7q5MKwWCg8rtaY_HWMMwcScqY6a1Yqn2KlDBchicoLNYubT7tjHg@cipher.nrlssc.navy.mil>
-References: <giNXZFTxzY3B65dQob7CwvwwfSKlZpw_60oz81RxU5UN3PsTT_3dMQ@cipher.nrlssc.navy.mil>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC] Plumbing-only support for storing object metadata
+Date: Mon, 18 Aug 2008 16:18:44 -0700
+Message-ID: <20080818231844.GC9572@spearce.org>
+References: <20080810035101.GA22664@spearce.org> <20080810112038.GB30892@cuci.nl> <20080809210733.GA6637@oh.minilop.net> <d411cc4a0808091449n7e0c9b7et7980cf668106aead@mail.gmail.com> <20080810035101.GA22664@spearce.org> <20080809210733.GA6637@oh.minilop.net> <20080810110925.GB3955@efreet.light.src> <20080816062130.GA4554@oh.minilop.net> <20080818061236.GF7376@spearce.org> <20080818230646.GA11044@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 19 01:19:01 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Derek Fawcus <dfawcus@cisco.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 01:19:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVE02-0005VE-Cb
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 01:18:58 +0200
+	id 1KVE0r-0005gQ-5y
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 01:19:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752839AbYHRXRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 19:17:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752811AbYHRXRz
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 19:17:55 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:60924 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752172AbYHRXRy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 19:17:54 -0400
-Received: by mail.nrlssc.navy.mil id m7INHrbj026544; Mon, 18 Aug 2008 18:17:53 -0500
-In-Reply-To: <giNXZFTxzY3B65dQob7CwvwwfSKlZpw_60oz81RxU5UN3PsTT_3dMQ@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 18 Aug 2008 23:17:53.0280 (UTC) FILETIME=[A3D82000:01C90188]
+	id S1752857AbYHRXSq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 19:18:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752811AbYHRXSq
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 19:18:46 -0400
+Received: from george.spearce.org ([209.20.77.23]:60854 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752785AbYHRXSp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 19:18:45 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id B677338375; Mon, 18 Aug 2008 23:18:44 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20080818230646.GA11044@cisco.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92757>
 
-Some old platforms have an old diff which doesn't have the -U option.
-'git diff' can be used in its place. Adjust the comparison function to
-strip git's additional header lines to make this possible.
+Derek Fawcus <dfawcus@cisco.com> wrote:
+> On Sun, Aug 17, 2008 at 11:12:36PM -0700, Shawn O. Pearce wrote:
+> > Adding a new type bit is a lot more than just adding it to the pack
+> > data field.  Look at the amount of code that needed to be changed to
+> > support gitlink in trees, and that was "reusing" the OBJ_COMMIT type.
+> > Anytime you start poking at the core object enumeration code with
+> > new cases there's a lot of corners that are affected.
+> 
+> Actually,  I'd been thinking of how to attach metadata - but more from
+> the perspective of attaching it to commits,  rather than individual
+> blobs or trees.
+>
+> At the moment,  my workaround is simply to add well known lines to
+> the end of the commit comments,
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
- t/t1002-read-tree-m-u-2way.sh |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
+We've talked about adding additional header lines to the commit after
+the "committer" or "encoding" line but before the first blank line
+that ends the headers and starts the message.  Most of the code will
+skip over an unknown header at this position, as we went through
+that pain when we added the "encoding" header to the commit format.
 
-diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
-index aa9dd58..5e40cec 100755
---- a/t/t1002-read-tree-m-u-2way.sh
-+++ b/t/t1002-read-tree-m-u-2way.sh
-@@ -14,6 +14,8 @@ _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
- _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
- compare_change () {
- 	sed >current \
-+	    -e '1{/^diff --git /d;}' \
-+	    -e '2{/^index /d;}' \
- 	    -e '/^--- /d; /^+++ /d; /^@@ /d;' \
- 	    -e 's/^\(.[0-7][0-7][0-7][0-7][0-7][0-7]\) '"$_x40"' /\1 X /' "$1"
- 	test_cmp expected current
-@@ -75,7 +77,7 @@ test_expect_success \
-      git update-index --add yomin &&
-      git read-tree -m -u $treeH $treeM &&
-      git ls-files --stage >4.out || return 1
--     diff -U0 M.out 4.out >4diff.out
-+     git diff -U0 --no-index M.out 4.out >4diff.out
-      compare_change 4diff.out expected &&
-      check_cache_at yomin clean &&
-      sum bozbar frotz nitfol >actual4.sum &&
-@@ -94,7 +96,7 @@ test_expect_success \
-      echo yomin yomin >yomin &&
-      git read-tree -m -u $treeH $treeM &&
-      git ls-files --stage >5.out || return 1
--     diff -U0 M.out 5.out >5diff.out
-+     git diff -U0 --no-index M.out 5.out >5diff.out
-      compare_change 5diff.out expected &&
-      check_cache_at yomin dirty &&
-      sum bozbar frotz nitfol >actual5.sum &&
-@@ -206,7 +208,7 @@ test_expect_success \
-      git update-index --add nitfol &&
-      git read-tree -m -u $treeH $treeM &&
-      git ls-files --stage >14.out || return 1
--     diff -U0 M.out 14.out >14diff.out
-+     git diff -U0 --no-index M.out 14.out >14diff.out
-      compare_change 14diff.out expected &&
-      sum bozbar frotz >actual14.sum &&
-      grep -v nitfol M.sum > expected14.sum &&
-@@ -227,7 +229,7 @@ test_expect_success \
-      echo nitfol nitfol nitfol >nitfol &&
-      git read-tree -m -u $treeH $treeM &&
-      git ls-files --stage >15.out || return 1
--     diff -U0 M.out 15.out >15diff.out
-+     git diff -U0 --no-index M.out 15.out >15diff.out
-      compare_change 15diff.out expected &&
-      check_cache_at nitfol dirty &&
-      sum bozbar frotz >actual15.sum &&
+However, once you start putting headers into there one has to
+actually understand what they mean.  And it gets really ugly if
+your tool thinks "fixed XXX\n" means something different from what
+my tool thinks "fixed YYY\n" means and I use my tool against a
+clone of your repository.  In other words there is no concept of
+"header namespaces".
+
+Thus far I don't think anyone has really tried adding more headers
+here because nobody has come up with a concrete example of how it
+is useful.
+ 
+> I guess there'd have to be some rule - like only one indirect
+> object allowed to be inserted (otherwise its awkward to check
+> for loops),  and there would need to be some custom merge rules.
+
+Loops aren't possible.  If you can create a loop you have a very
+real and very valid attack against SHA-1.  You will probably be
+able to use that in some way that profits you better than a loop
+within some random Git repository.
+
+You may also want to look into the "notes" idea floated on the list
+in the past.  It allowed attaching trees (IIRC) to any commit, and
+finding that later on in O(1) time during say git-log.  This can
+be useful to attach a build report or a test report to a commit
+hours after it was created.
+
 -- 
-1.6.0.13.ge1c8
+Shawn.
