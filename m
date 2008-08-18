@@ -1,844 +1,1167 @@
 From: Lea Wiemann <lewiemann@gmail.com>
-Subject: [PATCH 1/3 v10] gitweb: add test suite with Test::WWW::Mechanize::CGI
-Date: Mon, 18 Aug 2008 21:39:47 +0200
-Message-ID: <1219088389-14828-1-git-send-email-LeWiemann@gmail.com>
-References: <48A9CEC0.2020100@gmail.com>
+Subject: [PATCH 2/3 v2] add new Perl API: Git::Repo, Git::Commit, Git::Tag, and Git::RepoRoot
+Date: Mon, 18 Aug 2008 21:39:48 +0200
+Message-ID: <1219088389-14828-2-git-send-email-LeWiemann@gmail.com>
+References: <1219088389-14828-1-git-send-email-LeWiemann@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 18 21:42:18 2008
+X-From: git-owner@vger.kernel.org Mon Aug 18 21:42:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVAbl-0000ee-Dj
-	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 21:41:42 +0200
+	id 1KVAbm-0000ee-Ga
+	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 21:41:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762590AbYHRTjy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 15:39:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757948AbYHRTjx
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 15:39:53 -0400
-Received: from fk-out-0910.google.com ([209.85.128.187]:17618 "EHLO
+	id S1762644AbYHRTj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 15:39:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758346AbYHRTj5
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 15:39:57 -0400
+Received: from fk-out-0910.google.com ([209.85.128.184]:18266 "EHLO
 	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933461AbYHRTjs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 15:39:48 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so2238159fkq.5
-        for <git@vger.kernel.org>; Mon, 18 Aug 2008 12:39:46 -0700 (PDT)
+	with ESMTP id S933466AbYHRTjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 15:39:49 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so2238162fkq.5
+        for <git@vger.kernel.org>; Mon, 18 Aug 2008 12:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:to:subject:date
-         :message-id:x-mailer:in-reply-to:references:from;
-        bh=kCAVGYrUBudG9dGiy7WAughxN8MZzc2L4ALmT+fkDrU=;
-        b=oLnIBcyHjrATtCCBT4hKH1aq2N0y8B45rt7KtTgIyKB+SZFtNfy/+r+ZVSau1vDeb1
-         WNIW0OmR0Z+xxbv/ZpBSTMrVUbHyMa0bRVJPNdhFbUwu2s1sukNZwzNUb2L9z7Z6n6Ek
-         3WG2oqrpFpZXZeVOKMfV2wJKS8DKdHkzPktUw=
+         :message-id:x-mailer:in-reply-to:references:in-reply-to:references
+         :from;
+        bh=ANXXUxmY6A1g5vEWEYh1Gq/8lcEt11Y6rzLS04PVA/Y=;
+        b=mRMdVFYkvOB5801X2KLd+BqEynZz7U/l6u8H18xpLsmBmydu/F4Bnn9TccBPZ7YEva
+         i9aT3pcObh/tGDUIGUr+wF/T2ETV/y3OlbVgJwOrBWUzu/2xxwqj7agSqRWoo5AOOpd/
+         HZuSS+hQfTd4vkcUY4YpLiYciCFF5mWysvZMM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=to:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        b=UfgrOan1Wq5CrTFu59Wii3Aqhk7+JkndjcJ2fQvlmR2WBDEhnGJx/Scq8m114LoGZ1
-         6qesZuTS9HOP6YVVN0pmVr8EbUyyv3fjvqyHaFNZDLm1VD2HpMwkTgdnWEqbHmkrvv+j
-         pjKyKb87O+CdxSmjY3B77A5SPYCZRgwzHEEnc=
-Received: by 10.180.221.13 with SMTP id t13mr3489131bkg.19.1219088386658;
-        Mon, 18 Aug 2008 12:39:46 -0700 (PDT)
+        b=aJIm971ItZkwacalVtCCbX4P2i8EAUfcUEdvpzJaOu1n7SjdWMWmWkBLDO7G7Xhi/E
+         jr/AtGznUcNA8ZSBaqwyHyUK2AY5XAyWSxTDy5qxiqu8VHSXkfLDCFlMSJAx7Eb5+7tM
+         2aSxGHsarQufp/N65ai30crRX8yjBm+/f9skc=
+Received: by 10.180.213.14 with SMTP id l14mr3495353bkg.55.1219088387216;
+        Mon, 18 Aug 2008 12:39:47 -0700 (PDT)
 Received: from fly ( [91.33.194.4])
-        by mx.google.com with ESMTPS id 28sm8077557fkx.1.2008.08.18.12.39.43
+        by mx.google.com with ESMTPS id z10sm7122966fka.15.2008.08.18.12.39.43
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
         Mon, 18 Aug 2008 12:39:45 -0700 (PDT)
 Received: from lea by fly with local (Exim 4.69)
 	(envelope-from <lea@fly>)
-	id 1KVAZx-0003sA-HN; Mon, 18 Aug 2008 21:39:49 +0200
+	id 1KVAZx-0003sC-KV; Mon, 18 Aug 2008 21:39:49 +0200
 X-Mailer: git-send-email 1.6.0.90.gf3f7b
+In-Reply-To: <1219088389-14828-1-git-send-email-LeWiemann@gmail.com>
 In-Reply-To: <48A9CEC0.2020100@gmail.com>
+References: <48A9CEC0.2020100@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92730>
 
-This test uses Test::WWW::Mechanize::CGI to check gitweb's output.  It
-also uses HTML::Lint, XML::Parser, and Archive::Tar (if present, each)
-to validate the HTML/XML/tgz output, and checks all links on the
-tested pages if --long-tests is given.
+The Git::Repo class provides low-level access to Git repositories.
+The Git::Commit and Git::Tag classes represent commit and tag objects
+and allow for accessing their respective properties (like 'author',
+'tagger', etc.); Git::Object serves as a common base class for them.
+Git::RepoRoot is a helper factory class to instantiate Git::Repo
+objects with common properties for repositories under a common root
+directory.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
 ---
- Makefile                    |    1 +
- t/t9503-gitweb-Mechanize.sh |  144 ++++++++++
- t/t9503/test.pl             |  604 +++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 749 insertions(+), 0 deletions(-)
- create mode 100755 t/t9503-gitweb-Mechanize.sh
- create mode 100755 t/t9503/test.pl
+ perl/Git/Commit.pm       |  179 ++++++++++++++++++++++++++++++
+ perl/Git/Object.pm       |   94 ++++++++++++++++
+ perl/Git/Repo.pm         |  274 ++++++++++++++++++++++++++++++++++++++++++++++
+ perl/Git/RepoRoot.pm     |  103 +++++++++++++++++
+ perl/Git/Tag.pm          |  169 ++++++++++++++++++++++++++++
+ perl/Makefile            |    1 +
+ perl/Makefile.PL         |   10 ++-
+ t/t9710-perl-git-repo.sh |   49 ++++++++
+ t/t9710/test.pl          |  136 +++++++++++++++++++++++
+ 9 files changed, 1014 insertions(+), 1 deletions(-)
+ create mode 100644 perl/Git/Commit.pm
+ create mode 100644 perl/Git/Object.pm
+ create mode 100644 perl/Git/Repo.pm
+ create mode 100644 perl/Git/RepoRoot.pm
+ create mode 100644 perl/Git/Tag.pm
+ create mode 100755 t/t9710-perl-git-repo.sh
+ create mode 100755 t/t9710/test.pl
 
-diff --git a/Makefile b/Makefile
-index ca418fc..35779a7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1289,6 +1289,7 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
- GIT-BUILD-OPTIONS: .FORCE-GIT-BUILD-OPTIONS
- 	@echo SHELL_PATH=\''$(subst ','\'',$(SHELL_PATH_SQ))'\' >$@
- 	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@
-+	@echo PERL_PATH=\''$(subst ','\'',$(PERL_PATH_SQ))'\' >>$@
- 
- ### Detect Tck/Tk interpreter path changes
- ifndef NO_TCLTK
-diff --git a/t/t9503-gitweb-Mechanize.sh b/t/t9503-gitweb-Mechanize.sh
-new file mode 100755
-index 0000000..53f2a8a
+diff --git a/perl/Git/Commit.pm b/perl/Git/Commit.pm
+new file mode 100644
+index 0000000..58e502f
 --- /dev/null
-+++ b/t/t9503-gitweb-Mechanize.sh
-@@ -0,0 +1,144 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Jakub Narebski
-+# Copyright (c) 2008 Lea Wiemann
-+#
++++ b/perl/Git/Commit.pm
+@@ -0,0 +1,179 @@
++=head1 NAME
 +
-+# This test supports the --long-tests option.
++Git::Commit - Object-oriented interface to Git commit objects.
 +
-+# This test only runs on Perl 5.8 and later versions, since
-+# Test::WWW::Mechanize::CGI requires Perl 5.8.
++=head1 DESCRIPTION
 +
-+test_description='gitweb tests (using WWW::Mechanize)
++Git::Commit is a class representing a commit object in a Git
++repository.  It stringifies to the commit object's SHA1.
 +
-+This test uses Test::WWW::Mechanize::CGI to test gitweb.'
++=cut
 +
-+# helper functions
++use strict;
++use warnings;
 +
-+safe_chmod () {
-+	chmod "$1" "$2" &&
-+	if [ "$(git config --get core.filemode)" = false ]
-+	then
-+		git update-index --chmod="$1" "$2"
-+	fi
++
++package Git::Commit;
++
++use base qw(Git::Object);
++
++
++# Keep documentation in one place to save space.
++
++=head1 METHODS
++
++=head2 General Methods
++
++=over
++
++=item $commit = Git::Commit->new($repo, $sha1)
++
++Return a new Git::Commit instance for a commit object with $sha1 in
++repository $repo.
++
++The commit object is loaded lazily.  Hence, calls to this method are
++free, and it does not check whether $sha1 exists and has the right
++type.  However, accessing any of the commit object's properties will
++fail if $sha1 is not a valid commit object.
++
++Note that $sha1 must be the SHA1 of a commit object; tag objects are
++not dereferenced.
++
++The author, committer and message methods return Unicoded strings,
++decoded according to the "encoding" header, with UTF-8 and then
++Latin-1 as fallbacks.  (These Unicode strings can contain code points
++greater than 256 and are *not* UTF-8 strings; see man perlunitut on
++how Perl handles Unicode.)
++
++You will usually want to call $repo->get_commit($sha1) instead of
++instantiating this class directly; see L<Git::Repo>.
++
++=item $obj->repo
++
++Return the Git::Repo instance this object was instantiated with.
++
++=item $obj->sha1
++
++Return the SHA1 of this commit object, as provided at instantiation time.
++
++=back
++
++=head2 Property Methods
++
++Calling any of these methods will cause the commit object to be loaded
++from the repository, if it hasn't been loaded already.
++
++=over
++
++=item $commit->tree
++
++Return an object that stringifies to the SHA1 of the tree that this
++commit object refers to.  (Currently this returns an actual string,
++but don't rely on it.)
++
++=item $commit->parents
++
++Return an array of zero or more parent commit objects.  Note that
++commit objects stringify to their respective SHA1s, so you can
++alternatively treat this as an array of SHA1 strings.
++
++=item $commit->author
++
++Return the author of this commit object as a Unicode string.
++
++=item $commit->committer
++
++Return the committer of this commit object as a Unicode string.
++
++=item $commit->message
++
++Return the commit message of this commit object as a Unicode string.
++
++=item $commit->encoding
++
++Return the encoding header of the commit object, or undef if no
++encoding header is present; note that Git::Commit does the necessary
++decoding for you, so you should not normally need this method.
++
++=back
++
++=cut
++
++
++sub tree {
++	my $self = shift;
++	$self->_load;
++	return $self->{tree};
 +}
 +
-+. ./test-lib.sh
-+
-+# check if test can be run
-+"$PERL_PATH" -MEncode -e 'decode_utf8("", Encode::FB_CROAK)' >/dev/null 2>&1 || {
-+	test_expect_success \
-+		'skipping gitweb tests, perl version is too old' :
-+	test_done
-+	exit
++sub parents {
++	my $self = shift;
++	$self->_load;
++	return map { ref($self)->new($self->repo, $_) } @{$self->{parents}};
 +}
 +
-+"$PERL_PATH" -MTest::WWW::Mechanize::CGI -e '' >/dev/null 2>&1 || {
-+	test_expect_success \
-+		'skipping gitweb tests, Test::WWW::Mechanize::CGI not found' :
-+	test_done
-+	exit
++sub author {
++	my $self = shift;
++	$self->_load;
++	return $self->_decode($self->{author});
 +}
 +
-+# set up test repository
-+test_expect_success 'set up test repository' '
++sub committer {
++	my $self = shift;
++	$self->_load;
++	return $self->_decode($self->{committer});
++}
 +
-+	echo "Not an empty file." > file &&
-+	git add file &&
-+	test_tick && git commit -a -m "Initial commit." &&
-+	git branch b &&
++sub message {
++	my $self = shift;
++	$self->_load;
++	return $self->_decode($self->{message});
++}
 +
-+	echo "New file" > new_file &&
-+	git add new_file &&
-+	test_tick && git commit -a -m "File added." &&
++sub encoding {
++	my $self = shift;
++	$self->_load;
++	return $self->{encoding};
++}
 +
-+	safe_chmod +x new_file &&
-+	test_tick && git commit -a -m "Mode changed." &&
++# Auxiliary method to load (and parse) the commit object from the
++# repository if it hasn't already been loaded.  Optional parameter:
++# The raw contents of the commit object; the commit object will be
++# retrieved from the repository if that parameter is not given.
++sub _load {
++	my ($self, $raw_text) = shift;
++	return if exists $self->{message};  # already loaded
 +
-+	git mv new_file renamed_file &&
-+	test_tick && git commit -a -m "File renamed." &&
++	my $sha1 = $self->sha1;
++	if (!defined $raw_text) {
++		# Retrieve from the repository.
++		(my $type, $raw_text) = $self->repo->get_object($sha1);
++		die "$sha1 is a $type object (expected a commit object)"
++		    unless $type eq 'commit';
++	}
 +
-+	rm renamed_file &&
-+	ln -s file renamed_file &&
-+	test_tick && git commit -a -m "File to symlink." &&
-+	git tag with-symlink &&
-+
-+	git rm renamed_file &&
-+	rm -f renamed_file &&
-+	test_tick && git commit -a -m "File removed." &&
-+
-+	cp file file2 &&
-+	git add file2 &&
-+	test_tick && git commit -a -m "File copied." &&
-+
-+	echo "New line" >> file2 &&
-+	safe_chmod +x file2 &&
-+	test_tick && git commit -a -m "Mode change and modification." &&
-+
-+	mkdir dir1 &&
-+	echo "New file with a \"pickaxe test string\"" > dir1/file1 &&
-+	git add dir1/file1 &&
-+	test_tick && git commit -a -m "File added in subdirectory." &&
-+	git tag -m "creating a tag object" tag-object
-+
-+	git checkout b &&
-+	echo "Branch" >> b &&
-+	git add b &&
-+	test_tick && git commit -a -m "On branch" &&
-+	git checkout master &&
-+	test_tick && git pull . b
-+'
-+
-+# set up gitweb configuration
-+safe_pwd="$("$PERL_PATH" -MPOSIX=getcwd -e 'print quotemeta(getcwd)')"
-+large_cache_root="../t9503/large_cache.tmp"
-+test_expect_success 'create file cache directory' \
-+	'mkdir -p "$large_cache_root"'
-+cat >gitweb_config.perl <<EOF
-+# gitweb configuration for tests
-+
-+our \$version = "current";
-+our \$GIT = "$GIT_EXEC_PATH/git";
-+our \$projectroot = "$safe_pwd";
-+our \$project_maxdepth = 8;
-+our \$home_link_str = "projects";
-+our \$site_name = "[localhost]";
-+our \$site_header = "";
-+our \$site_footer = "";
-+our \$home_text = "indextext.html";
-+our @stylesheets = ("file:///$safe_pwd/../../gitweb/gitweb.css");
-+our \$logo = "file:///$safe_pwd/../../gitweb/git-logo.png";
-+our \$favicon = "file:///$safe_pwd/../../gitweb/git-favicon.png";
-+our \$projects_list = "";
-+our \$export_ok = "";
-+our \$strict_export = "";
-+our %feature;
-+\$feature{'blame'}{'default'} = [1];
-+
-+our \$large_cache_root = "$large_cache_root";
-+if (eval { require Cache::MemoryCache; 1 }) {
-+	our \$cache = Cache::MemoryCache->new;
++	(my $header, $self->{message}) = split "\n\n", $raw_text, 2;
++	# Parse header.
++	for my $line (split "\n", $header) {
++		local $/ = "\n"; # for chomp
++		chomp($line);
++		my ($key, $value) = split ' ', $line, 2;
++		if ($key eq 'tree') {
++			$self->{tree} = $value;
++		} elsif ($key eq 'parent') {
++			push @{$self->{parents}}, $value;
++		} elsif ($key eq 'author') {
++			$self->{author} = $value;
++		} elsif ($key eq 'committer') {
++			$self->{committer} = $value;
++		} elsif ($key eq 'encoding') {
++			$self->{encoding} = $value;
++		} else {
++			# Ignore unrecognized header lines.
++		}
++	}
++	undef;
 +}
 +
 +
 +1;
-+__END__
-+EOF
+diff --git a/perl/Git/Object.pm b/perl/Git/Object.pm
+new file mode 100644
+index 0000000..8a158b2
+--- /dev/null
++++ b/perl/Git/Object.pm
+@@ -0,0 +1,94 @@
++=head1 NAME
 +
-+cat >.git/description <<EOF
-+t9503-gitweb-Mechanize test repository
-+EOF
++Git::Object - Object-oriented interface to Git objects (base class).
 +
-+GITWEB_CONFIG="$(pwd)/gitweb_config.perl"
-+export GITWEB_CONFIG
++=head1 DESCRIPTION
 +
-+# run tests
++Git::Object is a base class that provides access to commit, tag and
++(unimplemented) tree objects.  See L<Git::Commit> and L<Git::Tag>.
 +
-+test_external \
-+	'test gitweb output' \
-+	"$PERL_PATH" ../t9503/test.pl
++Objects are loaded lazily, and hence instantiation is free.
++Git::Object instances stringify to their SHA1s.
 +
-+test_expect_success 'remove file cache directory' \
-+	'rm -rf "$large_cache_root"'
++=cut
++
++
++use strict;
++use warnings;
++
++
++package Git::Object;
++
++use Encode qw(decode);
++
++use base qw(Exporter);
++
++our @EXPORT = qw();
++our @EXPORT_OK = qw();
++
++use overload
++    '""' => \&sha1;
++
++=head1 METHODS
++
++=over
++
++=item Git::Object->new($repo, $sha1)
++
++Return a new Git::Object instance for the object with $sha1 in the
++repository $repo (a Git::Repo instance).
++
++Note that this method does not check whether the object exists in the
++repository.  Trying to accessing its properties through a subclass
++will fail if the object doesn't exist, however.
++
++=cut
++
++sub new {
++	my ($class, $repo, $sha1) = @_;
++	die "$repo is not a Git::Repo instance" unless $repo->isa('Git::Repo');
++	my $self = {repo => $repo, sha1 => $sha1};
++	return bless $self, $class;
++}
++
++=item $obj->repo
++
++Return the Git::Repo instance this object was instantiated with.
++
++=cut
++
++sub repo {
++	shift->{repo}
++}
++
++=item $obj->sha1
++
++Return the SHA1 of this object.
++
++=cut
++
++sub sha1 {
++	shift->{sha1}
++}
++
++# Helper method: Decode the given octets into a Unicode string, trying
++# the $self->{encoding} encoding first, if defined, then trying UTF-8,
++# then falling back to Latin 1.
++
++sub _decode {
++	my ($self, $octets) = @_;
++	my $string;
++	# Try $self->{encoding}:
++	eval { $string = decode($self->{encoding}, $octets, Encode::FB_CROAK) }
++	    if $self->{encoding};
++	# ... else try UTF-8:
++	eval { $string = decode('utf-8', $octets, Encode::FB_CROAK) }
++	    unless defined $string;
++	# ... else fall back to Latin 1 (the first 256 Unicode code
++	# points coincide with Latin 1):
++	$string = $octets unless defined $string;
++	return $string;
++}
++
++
++1;
+diff --git a/perl/Git/Repo.pm b/perl/Git/Repo.pm
+new file mode 100644
+index 0000000..2224c88
+--- /dev/null
++++ b/perl/Git/Repo.pm
+@@ -0,0 +1,274 @@
++=head1 NAME
++
++Git::Repo - Read-only access to the Git repositories.
++
++=head1 DESCRIPTION
++
++Git::Repo aims to provide low-level access to Git repositories.  For
++instance, you can resolve object names (like 'HEAD~2') to SHA1s, and
++inspect objects.  It does not attempt to be a wrapper around the git
++plumbing or porcelain commands.
++
++Error handling is simple: On a consistent repository, the Perl
++interface will never die.  You can use the get_sha1 method to resolve
++arbitrary object names or check the existence of SHA1 hashes; get_sha1
++will return undef if the object does not exist in the repository.  Any
++SHA1 that is returned by get_sha1 can be safely passed to the other
++Git::Repo methods.
++
++=head1 SYNOPSIS
++
++  use Git::Repo;
++
++  my $repo = Git::Repo->new(
++      repo_dir => '/path/to/repository.git',
++      git_binary => '/usr/bin/git');
++  my $sha1 = $repo->get_sha1('HEAD');
++  print "Last log message:\n\n" . $repo->get_commit($sha1)->message;
++
++=cut
++
++
++use strict;
++use warnings;
++# We could be compatible to Perl 5.6, but it doesn't provide sane pipe
++# handling (sane meaning does not go through shell, and allows for
++# accessing the exit code), so we require 5.8 until someone decides to
++# implement fork/exec-based pipe handling, plus possibly workarounds
++# for Windows brokenness.
++use 5.008;
++
++
++package Git::Repo;
++
++use Git::Tag;
++use Git::Commit;
++
++use IPC::Open2 qw(open2);
++use IO::Handle;
++
++use base qw(Exporter);
++
++our @EXPORT = qw();
++our @EXPORT_OK = qw();
++
++# Auxiliary subroutines
++
++sub _assert_opts {
++	die "must have an even number of arguments for named options"
++	    unless $#_ % 2;
++}
++
++sub _assert_sha1 {
++	my $sha1 = shift;
++	die "'$sha1' is not a SHA1 (need to use get_sha1?)"
++	    unless $sha1 && $sha1 =~ /^[a-f0-9]{40}$/;
++}
++
++
++=head1 METHODS
++
++=head2 General methods
++
++=over
++
++=item $repo = Git::Repo->new(%opts)
++
++Return a new Git::Repo object.  The following options are supported:
++
++=over
++
++=item 'repo_dir'
++
++The directory of the repository (mandatory).
++
++Note that this option is working-copy agnostic; you need to
++instantiate it with the working copy's .git directory as the
++'repo_dir' option.
++
++=item 'git_binary'
++
++The name or full path of the git binary (default: 'git').
++
++=back
++
++Calling this method is free, since it does not check whether the
++repository exists.  Trying to access the repository through one of the
++instance methods will fail if it doesn't exist though.
++
++Examples:
++
++    $repo = Git::Repo->new(repo_dir => '/path/to/repository.git');
++    $repo = Git::Repo->new(repo_dir => '/path/to/working_copy/.git');
++
++=cut
++
++sub new {
++	my $class = shift;
++	_assert_opts @_;
++	my $self = {@_};
++	bless $self, $class;
++	die 'no repo_dir given' unless $self->{repo_dir};
++	return $self;
++}
++
++=item $repo->repo_dir
++
++Return the directory of the repository (.../.git in case of a working
++copy).
++
++=cut
++
++sub repo_dir {
++	shift->{repo_dir}
++}
++
++=item $repo->git_binary
++
++Return the name of or path to the git binary (used with exec).
++
++=cut
++
++sub git_binary {
++	shift->{git_binary}
++}
++
++# Return the first items of the git command line, for instance
++# qw(/usr/bin/git --git-dir=/path/to/repo.git).
++sub _git_cmd {
++	my $self = shift;
++	return ($self->git_binary || 'git', '--git-dir=' . $self->repo_dir);
++}
++
++
++=back
++
++=head2 Inspecting the repository
++
++=over
++
++=item $repo->get_sha1($extended_object_identifier)
++
++Look up the object identified by $extended_object_identifier and
++return its SHA1 hash in scalar context or its ($sha1, $type, $size) in
++list context, or undef or () if the lookup failed, where $type is one
++of 'tag', 'commit', 'tree', or 'blob'.
++
++See L<git-rev-parse(1)>, section "Specifying Revisions", for the
++syntax of the $extended_object_identifier string.
++
++Note that even if you pass a SHA1 hash, its existence is still
++checked, and this method returns undef or () if it doesn't exist in
++the repository.
++
++=cut
++
++sub get_sha1 {
++	my ($self, $object_id) = @_;
++	die 'no object identifier given' unless $object_id;
++	die 'object identifier must not contain newlines' if $object_id =~ /\n/;
++	unless ($self->{sha1_stdout}) {
++		# Open bidi pipe the first time get_sha1 is called.
++		# open2 raises an exception on error, no need to 'or die'.
++		open2($self->{sha1_stdout}, $self->{sha1_stdin},
++		      $self->_git_cmd, 'cat-file', '--batch-check');
++	}
++	$self->{sha1_stdin}->print("$object_id\n")
++	    or die 'cannot write to pipe';
++	my $output = $self->{sha1_stdout}->getline
++	    or die 'cannot read from pipe';
++	chomp $output;
++	return if $output =~ /missing$/;
++	my ($sha1, $type, $size) =
++	    ($output =~ /^([0-9a-f]{40}) ([a-z]+) ([0-9]+)$/)
++	    or die "invalid response: $output";
++	return wantarray ? ($sha1, $type, $size) : $sha1;
++}
++
++=item $repo->get_object($sha1)
++
++Return the content (as a string) of the object identified by $sha1, or
++die if no such object exists in the repository.  In list context,
++return the ($type, $content) of the object.
++
++Note that you may want to use the higher-level methods get_commit and
++get_tag instead.
++
++=cut
++
++# Possible to-do items: Add optional $file_handle parameter.  Guard
++# against getting huge blobs back when we don't expect it (for
++# instance, we could limit the size and send SIGPIPE to git if we get
++# a blob that is too large).
++
++sub get_object {
++	my ($self, $sha1) = @_;
++	_assert_sha1($sha1);
++
++	unless ($self->{object_stdout}) {
++		# Open bidi pipe the first time get_object is called.
++		# open2 raises an exception on error, no need to 'or die'.
++		open2($self->{object_stdout}, $self->{object_stdin},
++		      $self->_git_cmd, 'cat-file', '--batch');
++	}
++	$self->{object_stdin}->print("$sha1\n") or die 'cannot write to pipe';
++	my ($ret_sha1, $type, $size) =
++	    split ' ', $self->{object_stdout}->getline
++	    or die 'cannot read from pipe';
++	die "'$sha1' not found in repository" if $type eq 'missing';
++	$self->{object_stdout}->read(my $content, $size);
++	$self->{object_stdout}->getline;  # eat trailing newline
++	return wantarray ? ($type, $content) : $content;
++}
++
++=item $repo->get_commit($commit_sha1)
++
++Return a new L<Git::Commit> instance referring to the commit object
++with SHA1 $commit_sha1.
++
++=cut
++
++sub get_commit {
++	my ($self, $sha1) = @_;
++	_assert_sha1($sha1);
++	return Git::Commit->new($self, $sha1);
++}
++
++=item $repo->get_tag($tag_sha1)
++
++Return a new L<Git::Tag> instance referring to the tag object with SHA1
++$tag_sha1.
++
++=cut
++
++sub get_tag {
++	my ($self, $sha1) = @_;
++	_assert_sha1($sha1);
++	return Git::Tag->new($self, $sha1);
++}
++
++=item $repo->name_rev($committish_sha1, $tags_only = 0)
++
++Return a symbolic name for the commit identified by $committish_sha1,
++or undef if no name can be found; see L<git-name-rev(1)> for details.
++If $tags_only is true, no branch names are used to name the commit.
++
++=cut
++
++sub name_rev {
++	my ($self, $sha1, $tags_only) = @_;
++	_assert_sha1($sha1);
++
++	# Note that we cannot use a bidi pipe here since name git
++	# name-rev --stdin has an excessively high start-up time.
++	# http://thread.gmane.org/gmane.comp.version-control.git/85531
++	open my $fh, '-|', $self->_git_cmd, 'name-rev',
++		$tags_only ? '--tags' : (), '--name-only', $sha1
++	    or die 'error calling git binary';
++	chomp(my $name = <$fh>);
++	close $fh or die 'git name-rev returned an unexpected error';
++	return $name eq 'undefined' ? undef : $name;
++}
++
++
++1;
+diff --git a/perl/Git/RepoRoot.pm b/perl/Git/RepoRoot.pm
+new file mode 100644
+index 0000000..6c8e749
+--- /dev/null
++++ b/perl/Git/RepoRoot.pm
+@@ -0,0 +1,103 @@
++=head1 NAME
++
++Git::RepoRoot - A factory class representing a root directory
++containing Git repositories.
++
++=head1 DESCRIPTION
++
++Git::RepoRoot is a factory class to create L<Git::Repo> instances that
++are located under a common root directory.  It also allows for
++specifying options that all Git::Repo instances will be created with.
++
++Using Git::RepoRoot to create Git::Repo instances is entirely
++optional, but can be more convenient than instantiating them directly.
++
++=cut
++
++
++use strict;
++use warnings;
++
++
++package Git::RepoRoot;
++
++use File::Spec;
++
++use Git::Repo;
++
++use base qw(Exporter);
++
++our @EXPORT = qw();
++our @EXPORT_OK = qw();
++
++=head1 METHODS
++
++=over
++
++=item $repo_root = Git::RepoRoot->new(%opts)
++
++Return a new Git::RepoRoot object.  The following options are
++supported:
++
++=over
++
++=item 'root_dir'
++
++The directory holding all repositories.
++
++=back
++
++All other options will be passed through to Git::Repo->new.
++
++Example:
++
++    $repo_root = Git::RepoRoot->new(root_dir => '/pub/git',
++                                    git_binary => '/usr/bin/git');
++
++=cut
++
++sub new {
++	my $class = shift;
++	Git::Repo::_assert_opts(@_);
++	my $self = {@_};
++	bless $self, $class;
++	die 'no root_dir given' unless $self->{root_dir};
++	return $self;
++}
++
++=item $repo_root->repo(%opts)
++
++Return a new L<Git::Repo> object.  The following options are
++supported:
++
++=over
++
++=item 'root_dir'
++
++The path of the repository relative to the repository root.
++
++=item 'repo_class'
++
++The Repo class to instantiate (default: 'Git::Repo').
++
++=back
++
++All other options are passed through to Git::Repo.
++
++=cut
++
++sub repo {
++	my $self = shift;
++	Git::Repo::_assert_opts(@_);
++	my %opts = (%$self, @_);
++	die 'no repo_dir given' unless $opts{repo_dir};
++	# not technically necessary, but to guard against errors in the caller:
++	die "you passed an absolute path ($opts{repo_dir})"
++	    if $opts{repo_dir} =~ m!^/!;
++	my $repo_class = delete $opts{repo_class} || 'Git::Repo';
++	$opts{repo_dir} = File::Spec->catfile($self->{root_dir}, $opts{repo_dir});
++	return $repo_class->new(%opts);
++}
++
++
++1;
+diff --git a/perl/Git/Tag.pm b/perl/Git/Tag.pm
+new file mode 100644
+index 0000000..07559a4
+--- /dev/null
++++ b/perl/Git/Tag.pm
+@@ -0,0 +1,169 @@
++=head1 NAME
++
++Git::Tag - Object-oriented interface to Git tag objects.
++
++=head1 DESCRIPTION
++
++Git::Tag is a class representing a tag object in a Git repository.  It
++stringifies to the tag object's SHA1.
++
++=cut
++
++use strict;
++use warnings;
++
++
++package Git::Tag;
++
++use base qw(Git::Object);
++
++
++# Keep documentation in one place to save space.
++
++=head1 METHODS
++
++=head2 General Methods
++
++=over
++
++=item $tag = Git::Tag->new($repo, $sha1)
++
++Return a new Git::Tag instance for a tag object with $sha1 in
++repository $repo.
++
++The tag object is loaded lazily.  Hence, calls to this method are
++free, and it does not check whether $sha1 exists and has the right
++type.  However, accessing any of the tag object's properties will fail
++if $sha1 is not a valid tag object.
++
++The tagger and message methods return Unicoded strings, decoded
++according to the "encoding" header, with UTF-8 and then Latin-1 as
++fallbacks.  (These Unicode strings can contain code points greater
++than 256 and are *not* UTF-8 strings; see man perlunitut on how Perl
++handles Unicode.)
++
++You will usually want to call $repo->get_tag($sha1) instead of
++instantiating this class directly; see L<Git::Repo>.
++
++=item $obj->repo
++
++Return the Git::Repo instance this object was instantiated with.
++
++=item $obj->sha1
++
++Return the SHA1 of this tag object, as provided at instantiation time.
++
++=back
++
++=head2 Property Methods
++
++Calling any of these methods will cause the commit object to be loaded
++from the repository, if it hasn't been loaded already.
++
++=over
++
++=item $tag->object
++
++Return the SHA1 string of the object referenced by this tag.
++
++=item $tag->type
++
++Return the type of the referenced object, as claimed by the tag
++object.  This is usually 'commit', but can be any of 'tag', 'commit',
++'tree', or 'blob'.
++
++=item $tag->tagger
++
++Return the tagger string of this tag object.
++
++=item $tag->message
++
++Return the undecoded tag message of this tag object.
++
++=item $tag->encoding
++
++Return the encoding header of the tag object, or undef if no encoding
++header is present; note that Git::Tag does the necessary decoding for
++you, so you should not normally need this method.
++
++=back
++
++=cut
++
++
++sub object {
++	my $self = shift;
++	$self->_load;
++	return $self->{object};
++}
++
++sub type {
++	my $self = shift;
++	$self->_load;
++	return $self->{type};
++}
++
++sub tag {
++	my $self = shift;
++	$self->_load;
++	return $self->_decode($self->{tag});
++}
++
++sub tagger {
++	my $self = shift;
++	$self->_load;
++	return $self->_decode($self->{tagger});
++}
++
++sub message {
++	my $self = shift;
++	$self->_load;
++	return $self->_decode($self->{message});
++}
++
++sub encoding {
++	my $self = shift;
++	$self->_load;
++	return $self->{encoding};
++}
++
++# Auxiliary method to load (and parse) the tag object from the
++# repository if it hasn't already been loaded.  Optional parameter:
++# The raw contents of the tag object; the tag object will be retrieved
++# from the repository if that parameter is not given.
++sub _load {
++	my ($self, $raw_text) = shift;
++	return if exists $self->{message};  # already loaded
++
++	my $sha1 = $self->sha1;
++	if (!defined $raw_text) {
++		(my $type, $raw_text) = $self->repo->get_object($sha1);
++		die "$sha1 is a $type object (expected a tag object)"
++		    unless $type eq 'tag';
++	}
++
++	(my $header, $self->{message}) = split "\n\n", $raw_text, 2;
++	# Parse header.
++	for my $line (split "\n", $header) {
++		local $/ = "\n"; # for chomp
++		chomp($line);
++		my ($key, $value) = split ' ', $line, 2;
++		if ($key eq 'object') {
++			$self->{object} = $value;
++		} elsif ($key eq 'type') {
++			$self->{type} = $value;
++		} elsif ($key eq 'tag') {
++			$self->{tag} = $value;
++		} elsif ($key eq 'tagger') {
++			$self->{tagger} = $value;
++		} elsif ($key eq 'encoding') {
++			$self->{encoding} = $value;
++		} else {
++			# Ignore unrecognized header lines.
++		}
++	}
++	undef;
++}
++
++
++1;
+diff --git a/perl/Makefile b/perl/Makefile
+index e3dd1a5..4572dc5 100644
+--- a/perl/Makefile
++++ b/perl/Makefile
+@@ -31,6 +31,7 @@ $(makfile): ../GIT-CFLAGS Makefile
+ 	echo install: >> $@
+ 	echo '	mkdir -p "$(instdir_SQ)"' >> $@
+ 	echo '	$(RM) "$(instdir_SQ)/Git.pm"; cp Git.pm "$(instdir_SQ)"' >> $@
++	echo '	mkdir -p "$(instdir_SQ)/Git"; $(RM) "$(instdir_SQ)"/Git/*.pm; cp Git/*.pm "$(instdir_SQ)/Git"' >> $@
+ 	echo '	$(RM) "$(instdir_SQ)/Error.pm"' >> $@
+ 	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
+ 	echo '	cp private-Error.pm "$(instdir_SQ)/Error.pm"' >> $@
+diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+index 320253e..6c62160 100644
+--- a/perl/Makefile.PL
++++ b/perl/Makefile.PL
+@@ -8,7 +8,15 @@ instlibdir:
+ MAKE_FRAG
+ }
+ 
+-my %pm = ('Git.pm' => '$(INST_LIBDIR)/Git.pm');
++# Note that when changing %pm, you'll have to remove pm_to_blib rather
++# than the blib directory to .force the .pm files to be re-installed
++# to blib/lib.
++my %pm = ('Git.pm' => '$(INST_LIBDIR)/Git.pm',
++	  'Git/Repo.pm' => '$(INST_LIBDIR)/Git/Repo.pm',
++	  'Git/RepoRoot.pm' => '$(INST_LIBDIR)/Git/RepoRoot.pm',
++	  'Git/Commit.pm' => '$(INST_LIBDIR)/Git/Commit.pm',
++	  'Git/Tag.pm' => '$(INST_LIBDIR)/Git/Tag.pm',
++	  'Git/Object.pm' => '$(INST_LIBDIR)/Git/Object.pm');
+ 
+ # We come with our own bundled Error.pm. It's not in the set of default
+ # Perl modules so install it if it's not available on the system yet.
+diff --git a/t/t9710-perl-git-repo.sh b/t/t9710-perl-git-repo.sh
+new file mode 100755
+index 0000000..eca283d
+--- /dev/null
++++ b/t/t9710-perl-git-repo.sh
+@@ -0,0 +1,49 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 Lea Wiemann
++#
++
++test_description='perl interface (Git/*.pm)'
++. ./test-lib.sh
++
++"$PERL_PATH" -e 'use 5.008' 2>/dev/null || {
++	say_color skip "Perl version older than 5.8, skipping test"
++	test_done
++}
++
++# Set up test repository.  Tagging/branching is a little tricky
++# because it needs to stay unambiguous for the name_rev tests.
++
++test_expect_success \
++    'set up test repository' \
++    'echo "test file 1" > file1 &&
++     echo "test file 2" > file2 &&
++     mkdir directory1 &&
++     echo "in directory1" >> directory1/file &&
++     mkdir directory2 &&
++     echo "in directory2" >> directory2/file &&
++     git add . &&
++     git commit -m "first commit" &&
++
++     git tag -a -m "tag message 1" tag-object-1 &&
++
++     echo "changed file 1" > file1 &&
++     git commit -a -m "second commit" &&
++
++     git branch branch-2 &&
++
++     echo "changed file 2" > file2 &&
++     git commit -a -m "third commit" &&
++
++     git tag -a -m "tag message 3" tag-object-3 &&
++     git tag -a -m "indirect tag message 3" indirect-tag-3 tag-object-3 &&
++
++     echo "changed file 1 again" > file1 &&
++     git commit -a -m "fourth commit"
++     '
++
++test_external_without_stderr \
++    'Git::Repo API' \
++    "$PERL_PATH" ../t9710/test.pl
 +
 +test_done
-diff --git a/t/t9503/test.pl b/t/t9503/test.pl
+diff --git a/t/t9710/test.pl b/t/t9710/test.pl
 new file mode 100755
-index 0000000..93108e7
+index 0000000..8fca725
 --- /dev/null
-+++ b/t/t9503/test.pl
-@@ -0,0 +1,604 @@
++++ b/t/t9710/test.pl
+@@ -0,0 +1,136 @@
 +#!/usr/bin/perl
 +use lib (split(/:/, $ENV{GITPERLLIB}));
-+
-+# This test supports the --long-tests option.
 +
 +use warnings;
 +use strict;
 +
-+use Cwd qw( abs_path );
-+use File::Spec;
-+use File::Temp;
-+use Storable;
-+
 +use Test::More qw(no_plan);
++use Cwd;
++use File::Basename;
++use File::Temp;
 +
-+our $long_tests = $ENV{GIT_TEST_LONG}; # "our" so we can use "local $long_tests"
++BEGIN { use_ok('Git::Repo') }
 +
-+eval { require Archive::Tar; };
-+my $archive_tar_installed = !$@
-+    or diag('Archive::Tar is not installed; no tests for valid snapshots');
++sub dies_ok (&;$) {
++	my ($coderef, $descr) = @_;
++	eval { $coderef->(); };
++	ok($@, $descr);
++}
 +
-+eval { require HTML::Lint; };
-+my $html_lint_installed = !$@
-+    or diag('HTML::Lint is not installed; no HTML validation tests');
++sub lives_ok (&;$) {
++	my ($coderef, $descr) = @_;
++	eval { $coderef->(); };
++	ok(!$@, $descr);
++}
 +
-+eval { require XML::Parser; };
-+my $xml_parser_installed = !$@
-+    or diag('XML::Parser is not installed; no tests for well-formed XML');
++our $old_stderr;
++sub discard_stderr {
++	open our $old_stderr, ">&", STDERR or die "cannot save STDERR";
++	close STDERR;
++}
++sub restore_stderr {
++	open STDERR, ">&", $old_stderr or die "cannot restore STDERR";
++}
 +
++# set up
++our $abs_wc_dir = Cwd->cwd;
++ok(our $r = Git::Repo->new(repo_dir => "./.git"), 'open repository');
 +sub rev_parse {
 +	my $name = shift;
 +	chomp(my $sha1 = `git rev-parse $name 2> /dev/null`);
-+	$sha1 or die;
++	$sha1 or undef;
 +}
-+
-+sub get_type {
-+	my $name = shift;
-+	chomp(my $type = `git cat-file -t $name 2> /dev/null`);
-+	$type or die;
-+}
-+
-+
-+package OurMechanize;
-+
-+use base qw( Test::WWW::Mechanize::CGI );
-+
-+my %page_cache;
-+# Cache requests.
-+sub _make_request {
-+	my ($self, $request) = (shift, shift);
-+
-+	my $response;
-+	unless ($response = Storable::thaw($page_cache{$request->uri})) {
-+		$response = $self->SUPER::_make_request($request, @_);
-+		$page_cache{$request->uri} = Storable::freeze($response);
-+	}
-+	return $response;
-+}
-+
-+# Fix whitespace problem.
-+sub cgi_application {
-+	my ($self, $application) = @_;
-+
-+	# This subroutine was copied (and modified) from
-+	# WWW::Mechanize::CGI 0.3, which is licensed 'under the same
-+	# terms as perl itself' and thus GPL compatible.
-+	my $cgi = sub {
-+		# Use exec, not the shell, to support embedded
-+		# whitespace in the path to $application.
-+		# http://rt.cpan.org/Ticket/Display.html?id=36654
-+		my $status = system $application $application;
-+		my $exit_code  = $status >> 8;
-+
-+		die "Failed to execute application '$application'. Reason: '$!'"
-+		    if ($status == -1);
-+		die "Application '$application' exited with exit code $exit_code"
-+		    if ($exit_code > 0);
-+	};
-+
-+	$self->cgi($cgi);
-+}
-+
-+package main;
-+
 +
 +my @revisions = split /\s/, `git-rev-list --first-parent HEAD`;
-+chomp(my @heads = map { (split('/', $_))[2] } `git-for-each-ref --sort=-committerdate refs/heads`);
-+chomp(my @tags = map { (split('/', $_))[2] } `git-for-each-ref --sort=-committerdate refs/tags`);
-+my @tag_objects = grep { get_type($_) eq 'tag' } @tags;
-+chomp(my @root_entries = `git-ls-tree --name-only HEAD`);
-+my @files = grep { get_type("HEAD:$_") eq 'blob' } @root_entries or die;
-+my @directories = grep { get_type("HEAD:$_") eq 'tree' } @root_entries or die;
-+unless ($long_tests) {
-+	# Only test one of each kind.
-+	@files = $files[0];
-+	@directories = $directories[0];
-+	@tag_objects = $tag_objects[0];
-+}
++my $head = $revisions[0];
 +
-+my $gitweb = abs_path(File::Spec->catfile('..', '..', 'gitweb', 'gitweb.cgi'));
++# get_sha1
++is($r->get_sha1('HEAD'), $head, 'get_sha1: scalar');
++is($r->get_sha1('HEAD'), $head, 'get_sha1: scalar, repeated');
++my($sha1, $type, $head_size) = $r->get_sha1('HEAD');
++is($sha1, $head, 'get_sha1: array (SHA1)');
++is($type, 'commit', 'get_sha1: array (commit)');
++ok($head_size > 0, 'get_sha1: array (size)');
 +
-+my $mech = OurMechanize->new;
-+$mech->cgi_application($gitweb);
-+# On some systems(?) it's necessary to have %ENV here, otherwise the
-+# CGI process won't get *any* of the current environment variables
-+# (not even PATH, etc.)
-+$mech->env(%ENV,
-+	   GITWEB_CONFIG => $ENV{'GITWEB_CONFIG'},
-+	   SCRIPT_FILENAME => $gitweb,
-+	   $mech->env);
++# get_object
++is_deeply([$r->get_object($r->get_sha1("$revisions[-1]:file1"))], ['blob', "test file 1\n"], 'get_object: blob');
++is_deeply([$r->get_object($r->get_sha1("$revisions[-1]:file1"))], ['blob', "test file 1\n"], 'get_object: blob, repeated');
++dies_ok { $r->get_object('0' x 40) } 'get_object: non-existent sha1';
 +
-+# import config, predeclaring config variables
-+our $site_name;
-+require_ok($ENV{'GITWEB_CONFIG'})
-+	or diag('Could not load gitweb config; some tests would fail');
++# get_commit
++isa_ok($r->get_commit($revisions[-1]), 'Git::Commit',
++       'get_commit: returns Git::Commit object');
 +
-+# Perform non-recursive checks on the current page, but do not check
-+# the status code.
-+my %verified_uris;
-+sub _verify_page {
-+	my ($uri, $fragment) = split '#', $mech->uri;
-+	TODO: {
-+		local $TODO = 'line number fragments can be broken for diffs and blames'
-+		    if $fragment && $fragment =~ /^l[0-9]+$/;
-+		$mech->content_like(qr/(name|id)="$fragment"/,
-+				    "[auto] fragment #$fragment exists ($uri)")
-+		    if $fragment;
-+	}
++# get_tag
++isa_ok($r->get_tag($r->get_sha1('tag-object-1')), 'Git::Tag',
++       'get_tag: returns Git::Tag object');
 +
-+	return 1 if $verified_uris{$uri};
-+	$verified_uris{$uri} = 1;
-+
-+	# Internal errors yield 200 but cause gitweb.cgi to exit with
-+	# non-zero exit code, which Mechanize::CGI translates to 500,
-+	# so we don't really need to check for "Software error" here,
-+	# provided that the test cases always check the status code.
-+	#$mech->content_lacks('<h1>Software error:</h1>') or return 0;
-+
-+	# Validate.  This is fast, so we can do it even without
-+	# $long_tests.
-+	$mech->html_lint_ok('[auto] validate HTML') or return 0
-+	    if $html_lint_installed && $mech->is_html;
-+	my $content_type = $mech->response->header('Content-Type')
-+	    or die "$uri does not have a Content-Type header";
-+	if ($xml_parser_installed && $content_type =~ /xml/) {
-+		eval { XML::Parser->new->parse($mech->content); };
-+		ok(!$@, "[auto] check for XML well-formedness ($uri)") or diag($@);
-+	}
-+	if ($archive_tar_installed && $uri =~ /sf=tgz/) {
-+		my $snapshot_file = File::Temp->new;
-+		print $snapshot_file $mech->content;
-+		close $snapshot_file;
-+		my $t = Archive::Tar->new;
-+		$t->read($snapshot_file->filename, 1);
-+		ok($t->get_files, "[auto] valid tgz snapshot ($uri)");
-+	}
-+	# WebService::Validator::Feed::W3C would be nice to
-+	# use, but it doesn't support direct input (as opposed
-+	# to URIs) long enough for our feeds.
-+
-+	return 1;
-+}
-+
-+# Verify and spider the current page, the latter only if --long-tests
-+# (-l) is given.  Do not check the status code of the current page.
-+my %spidered_uris;  # pages whose links have been checked
-+my %status_checked_uris;  # verified pages whose status is known to be 2xx
-+sub check_page {
-+	_verify_page or return 0;
-+	if ($long_tests && !$spidered_uris{$mech->uri} ) {
-+		$spidered_uris{$mech->uri} = 1;
-+		my $orig_url = $mech->uri;
-+		TODO: {
-+			local $TODO = "blame links can be broken sometimes"
-+			    if $orig_url =~ /a=blame/;
-+			for my $url (map { $_->url_abs } $mech->followable_links) {
-+				if (!$status_checked_uris{$url}) {
-+					$status_checked_uris{$url} = 1;
-+					local $long_tests = 0;  # stop recursing
-+					test_page($url, "[auto] check link")
-+					    or diag("broken link to $url on $orig_url");
-+					$mech->back;
-+				}
-+			}
-+		}
-+	}
-+	return 1;
-+}
-+
-+my $baseurl = "http://localhost";
-+my ($params, $url, $pagedesc, $status);
-+
-+# test_page ( <params>, <page_description>, <expected_status> )
-+# Example:
-+# if (test_page('?p=.git;a=summary', 'repository summary')) {
-+#     $mech->...;
-+#     $mech->...;
-+# }
-+#
-+# Test that the page can be opened, call _verify_page on it, and
-+# return true if there was no test failure.  Also set the global
-+# variables $params, $pagedesc, and $url for use in the if block.
-+# Optionally pass a third parameter $status to test the HTTP status
-+# code of the page (useful for error pages).  You can also pass a full
-+# URL instead of just parameters as the first parameter.
-+sub test_page {
-+	($params, $pagedesc, $status) = @_;
-+	# missing $pagedesc is usually accidental
-+	die "$params: no pagedesc given" unless defined $pagedesc;
-+	if($params =~ /^$baseurl/) {
-+		$url = "$params";
-+	} else {
-+		$url = "$baseurl$params";
-+	}
-+	$mech->get($url);
-+	like($mech->status, $status ? qr/$status/ : qr/^[23][0-9][0-9]$/,
-+	     "$pagedesc: $url" . ($status ? " -- yields $status" : ""))
-+	    or return 0;
-+	if ($mech->status =~ /^3/) {
-+		# Don't check 3xx, they tend to look funny.
-+		my $location = $mech->response->header('Location');
-+		$mech->back;  # compensate for history
-+		return test_page($location, "follow redirect from $url");
-+	} else {
-+		return check_page;
-+	}
-+}
-+
-+# follow_link ( \%parms, $pagedesc )
-+# Example:
-+# if (follow_link( { text => 'commit' }, 'first commit link')) {
-+#     $mech->...;
-+#     $mech->back;
-+# }
-+# Like test_page, but does not support status code testing, and
-+# returns true if there was a link at all, regardless of whether it
-+# was [23]xx or not.
-+sub follow_link {
-+	(my $parms, $pagedesc) = @_;
-+	my $link = $mech->find_link(%$parms);
-+	my $current_url = $mech->uri;
-+	ok($link, "link exists: $pagedesc (on page $current_url)") or return 0;
-+	test_page($link->url, "follow link: $pagedesc (on page $current_url)");
-+	return 1;
-+}
-+
-+# like follow_link, except that only checks and goes back immediately;
-+# use this instead of ok(find_link...).
-+sub test_link {
-+	my ($parms, $pagedesc) = @_;
-+	my $current_url = $mech->uri;
-+	if($long_tests) {
-+		# Check status, validate, spider.
-+		return follow_link($parms, $pagedesc) && $mech->back;
-+	} else {
-+		# Only check presence of the link (much faster).
-+		return ok($mech->find_link(%$parms),
-+			  "link exists: $pagedesc (on page $current_url)");
-+	}
-+}
-+
-+sub get_summary {
-+	test_page('?p=.git', 'repository summary');
-+}
-+
-+get_summary or die 'summary page failed; aborting all tests';
++# name_rev
++is($r->name_rev($revisions[-2]), 'branch-2', 'name_rev: branch');
++is($r->name_rev($head, 1), undef, 'name_rev: branch, tags only');
++is($r->name_rev($revisions[-1]), 'tags/tag-object-1^0', 'name_rev: tag object');
++is($r->name_rev($revisions[-1], 1), 'tag-object-1^0', 'name_rev: tag object, tags only');
 +
 +
-+if (test_page '', 'project list (implicit)') {
-+	$mech->title_like(qr!$site_name!,
-+		"title contains $site_name");
-+	$mech->content_contains('t9503-gitweb-Mechanize test repository',
-+		'lists test repository (by description)');
-+}
++
++# Git::Commmit
++print "# Git::Commit:\n";
++
++BEGIN { use_ok('Git::Commit') }
++
++my $invalid_commit = Git::Commit->new($r, '0' x 40);
++is($invalid_commit->sha1, '0' x 40, 'new, sha1: accept invalid SHA1');
++dies_ok { $invalid_commit->tree } 'die on accessing properties of invalid SHA1s';
++
++$invalid_commit = Git::Commit->new($r, $r->get_sha1('HEAD:')); # tree, not commit
++dies_ok { $invalid_commit->tree } 'die on accessing properties of non-commit objects';
++
++my $c = Git::Commit->new($r, $revisions[-2]);
++is($c->repo, $r, 'repo: basic');
++is($c->sha1, $revisions[-2], 'sha1: basic');
++is($c->{parents}, undef, 'lazy loading: not loaded after reading SHA1');
++is($c->tree, $r->get_sha1("$revisions[-2]:"), 'tree: basic');
++ok($c->{parents}, 'lazy loading: loaded after reading tree');
++is_deeply([$c->parents], [$revisions[-1]], 'parents: basic');
++like($c->author, qr/A U Thor <author\@example.com> [0-9]+ \+0000/, 'author: basic');
++like($c->committer, qr/C O Mitter <committer\@example.com> [0-9]+ \+0000/, 'committer: basic');
++is($c->encoding, undef, 'encoding: undef');
++is($c->message, "second commit\n", 'message: basic');
++is($c, $c->sha1, 'stringify: basic');
++
++# error handling
++dies_ok { Git::Commit->new($r, $r->get_sha1('tag-object-3'))->_load }
++    'new: pass tag SHA1 (dies)';
++dies_ok { Git::Commit->new($r, '0' x 40)->_load }
++    'new: pass invalid SHA1 (dies)';
 +
 +
-+# Test repository summary: implicit, implicit with pathinfo, explicit.
-+for my $sumparams ('?p=.git', '/.git', '?p=.git;a=summary') {
-+	if (test_page $sumparams, 'repository summary') {
-+		$mech->title_like(qr!$site_name.*\.git/summary!,
-+				  "title contains $site_name and \".git/summary\"");
-+	}
-+}
++# Git::Tag
++print "# Git::Tag:\n";
++
++BEGIN { use_ok('Git::Tag') }
++
++# We don't test functionality inherited from Git::Object that we
++# already tested in the Git::Commit tests.
++
++my $t = Git::Tag->new($r, $r->get_sha1('tag-object-1'));
++is($t->tag, 'tag-object-1', 'tag: basic');
++is($t->object, $revisions[-1], 'object: basic');
++is($t->type, 'commit', 'tag: type');
++like($t->tagger, qr/C O Mitter <committer\@example.com> [0-9]+ \+0000/, 'tagger: basic');
++is($t->encoding, undef, 'encoding: undef');
++is($t->message, "tag message 1\n", 'message: basic');
++
++# error handling
++dies_ok { Git::Tag->new($r, $head)->_load } 'new: pass commit SHA1 (dies)';
++dies_ok { Git::Tag->new($r, '0' x 40)->_load } 'new: pass invalid SHA1 (dies)';
 +
 +
-+# Search form
++# Git::RepoRoot
++print "# Git::RepoRoot:\n";
 +
-+# Search commit
-+if (get_summary && $mech->submit_form_ok(
-+	    { form_number => 1, fields => { 's' => 'Initial' } },
-+	    'submit search form (default: commit search)')) {
-+	check_page;
-+	$mech->content_contains('Initial commit',
-+				'content contains commit we searched for');
-+}
++BEGIN { use_ok('Git::RepoRoot'); }
 +
-+# Pickaxe
-+if (get_summary && $mech->submit_form_ok(
-+	    { form_number => 1, fields => { 's' => 'pickaxe test string',
-+					    'st' => 'pickaxe' } },
-+	    'submit search form (pickaxe)')) {
-+	check_page;
-+	test_link( { text => 'dir1/file1' }, 'file found with pickaxe' );
-+	$mech->content_contains('A U Thor', 'commit author mentioned');
-+}
-+
-+# Grep
-+# Let's hope the pickaxe test string is still present in HEAD.
-+if (get_summary && $mech->submit_form_ok(
-+	    { form_number => 1, fields => { 's' => 'pickaxe test string',
-+					    'st' => 'grep' } },
-+	    'submit search form (grep)')) {
-+	check_page;
-+	test_link( { text => 'dir1/file1' }, 'file found with grep' );
-+}
-+
-+
-+# Basic error handling
-+test_page('?p=non-existent.git', 'non-existent project', 404);
-+test_page('?p=.git;a=commit;h=non-existent', 'non-existent commit', 404);
-+
-+
-+# Summary view
-+get_summary;
-+
-+# Check short log.  To do: Extract into separate test_short_log
-+# function since the short log occurs on several pages.
-+for my $revision (@revisions) {
-+	for my $link_text qw( commit commitdiff tree snapshot ) {
-+		test_link( { url_abs_regex => qr/h=$revision/, text => $link_text },
-+			   "$link_text link for $revision");
-+	}
-+}
-+
-+# Check that branches and tags are highlighted in green and yellow in
-+# the shortlog.  We assume here that we are on master, so it should be
-+# at the top.
-+$mech->content_like(qr{<span [^>]*class="head"[^>]*>master</span>},
-+		    'master branch is highlighted in shortlog');
-+$mech->content_like(qr{<span [^>]*class="tag"[^>]*>$tags[0]</span>},
-+		    "$tags[0] (most recent tag) is highlighted in shortlog");
-+
-+# Check heads.  (This should be extracted as well.)
-+for my $head (@heads) {
-+	for my $link_text qw( shortlog log tree ) {
-+		test_link( { url_abs_regex => qr{h=refs/heads/$head}, text => $link_text },
-+			   "$link_text link for head '$head'");
-+	}
-+}
-+
-+# Check tags (assume we only have tags referring to commits, not to
-+# blobs or trees).
-+for my $tag (@tags) {
-+	my $commit = rev_parse("$tag^{commit}");
-+	test_link( { url_abs_regex => qr{h=refs/tags/$tag}, text => 'shortlog' },
-+		   "shortlog link for tag '$tag'");
-+	test_link( { url_abs_regex => qr{h=refs/tags/$tag}, text => 'log' },
-+		   "log link for tag '$tag'");
-+	test_link( { url_abs_regex => qr{h=$commit}, text => 'commit' },
-+		   "commit link for tag '$tag'");
-+	test_link( { url_abs_regex => qr{h=$commit}, text => $tag },
-+	   "'$tag' links to the commit as well");
-+	# To do: Test tag link for tag objects.
-+	# Why don't we have tree + snapshot links?
-+}
-+
-+
-+# RSS/Atom/OPML view
-+# Simply retrieve and verify well-formedness, but don't spider.
-+$mech->get_ok('?p=.git;a=atom', 'Atom feed') and _verify_page;
-+$mech->get_ok('?p=.git;a=rss', 'RSS feed') and _verify_page;
-+TODO: {
-+	# Now spider -- but there are broken links.
-+	# http://mid.gmane.org/485EB333.5070108@gmail.com
-+	local $TODO = "fix broken links in Atom/RSS feeds";
-+	test_page('?p=.git;a=atom', 'Atom feed');
-+	test_page('?p=.git;a=rss', 'RSS feed');
-+}
-+test_page('?a=opml', 'OPML outline');
-+
-+
-+# Tag view
-+get_summary;
-+for my $tag (@tag_objects) {
-+	my $tag_sha1 = rev_parse($tag);
-+	my $object_sha1 = rev_parse("$tag^{}");
-+	if(follow_link( { url_abs_regex => qr{h=$tag_sha1}, text => 'tag' },
-+			"tag link for tag object '$tag'" )) {
-+		$mech->content_contains('C O Mitter', 'tagger mentioned');
-+		test_link( { url_abs_regex => qr/h=$object_sha1/ },
-+			   'link to referenced object');
-+		$mech->back;
-+	}
-+}
-+
-+
-+# Commit view
-+if (test_page('?p=.git;a=commit;h=master', 'view HEAD commit')) {
-+	my $tree_sha1 = rev_parse('master:');
-+	test_link( { url_abs_regex => qr/a=tree/, text => rev_parse('master:') },
-+		   "SHA1 link to tree on commit page ($url)");
-+	test_link( { url_abs_regex => qr/h=$tree_sha1/, text => 'tree' },
-+		   "'tree' link to tree on commit page ($url)");
-+	$mech->content_like(qr/A U Thor/, "author mentioned on commit page ($url)");
-+}
-+
-+
-+# Commitdiff view
-+if (get_summary &&
-+    follow_link( { text_regex => qr/file added/i }, 'commit with added file') &&
-+    follow_link( { text => 'commitdiff' }, 'commitdiff')) {
-+	$mech->content_like(qr/new file with mode/, "commitdiff has diffstat ($url)");
-+	$mech->content_like(qr/new file mode/, "commitdiff has diff ($url)");
-+}
-+test_page("?p=.git;a=commitdiff;h=$revisions[-1]",
-+	  'commitdiff without parent');
-+
-+# Diff formatting problem.
-+if (get_summary &&
-+    follow_link( { text_regex => qr/renamed/ }, 'commit with rename') &&
-+    follow_link( { text => 'commitdiff' }, 'commitdiff')) {
-+	TODO: {
-+		local $TODO = "bad a/* link in diff";
-+		if (follow_link( { text_regex => qr!^a/! },
-+				 'a/* link (probably wrong)')) {
-+			# The page we land on here is broken already.
-+			follow_link( { url_abs_regex => qr/a=blob_plain/ },
-+				     'linked file name');  # bang
-+		}
-+	}
-+}
-+
-+
-+# Raw commitdiff (commitdiff_plain) view
-+if (test_page('?p=.git;a=commit;h=refs/tags/tag-object',
-+	      'commit view of tags/tag-object') &&
-+    follow_link( { text => 'commitdiff' }, "'commitdiff'") &&
-+    follow_link( { text => 'raw' }, "'raw' (commitdiff_plain)")) {
-+	$mech->content_like(qr/^From: A U Thor <author\@example.com>$/m,
-+			    'commitdiff_plain: From header');
-+	TODO: {
-+		local $TODO = 'date header mangles timezone';
-+		$mech->content_like(qr/^Date: Thu, 7 Apr 2005 15:..:13 -0700$/m,
-+				    'commitdiff_plain: Date header (correct)');
-+	}
-+	$mech->content_like(qr/^Date: Thu, 7 Apr 2005 22:..:13 \+0000 \(-0700\)$/m,
-+			    'commitdiff_plain: Date header (UTC, wrong)');
-+	$mech->content_like(qr/^Subject: .+$/m,
-+			    'commitdiff_plain: Subject header');
-+	# '$' markers inexplicably don't work here if we use like(...)
-+	# or $mech->content_like().
-+	ok($mech->content =~ /^X-Git-Tag: tag-object\^0$/m,
-+	   'commitdiff_plain: X-Git-Tag header');
-+	ok($mech->content =~ /^X-Git-Url: $baseurl\?p=\.git;a=commitdiff_plain;h=refs%2Ftags%2Ftag-object$/m,
-+	   'commitdiff_plain: X-Git-Url header');
-+	ok($mech->content =~ /^---$/m, 'commitdiff_plain: separator');
-+	ok($mech->content =~ /^diff --git /m, 'commitdiff_plain: diff');
-+}
-+
-+
-+# Blobdiff view
-+# This assumes file2 has changed at least once, so that there can be a
-+# blobdiff for it.
-+if (get_summary && follow_link( { text => 'tree' }, 'first tree link') &&
-+    follow_link( { text => 'history', url_abs_regex => qr/f=file2/ },
-+		 'history of file2') &&
-+    follow_link( { text => 'diff to current' },
-+		 'some "diff to current" (blobdiff)')) {
-+	$mech->content_contains('diff --git', 'blobdiff: has diff header');
-+	test_link( { text => 'raw', url_abs_regex => qr/a=blobdiff_plain/ },
-+		   '"raw" (blobdiff_plain) link');
-+}
-+
-+# Tree view
-+if (get_summary && follow_link( { text => 'tree' }, 'first tree link')) {
-+	for my $file (@files) {
-+		my $sha1 = rev_parse("HEAD:$file");
-+		test_link( { text => $file, url_abs_regex => qr/h=$sha1/ },
-+			   "'$file' is listed and linked");
-+		test_link({ url_abs_regex => qr/f=$file/, text => $_ },
-+			  "'$_' link") foreach qw( blame blob history raw );
-+	}
-+	for my $directory (@directories) {
-+		my $sha1 = rev_parse("HEAD:$directory");
-+		test_link({ url_abs_regex => qr/f=$directory/, text => $_ },
-+			  "'$_' link") foreach qw( tree history );
-+		if(follow_link( { text => $directory, url_abs_regex => qr/h=$sha1/ },
-+				"'$directory is listed and linked" )) {
-+			if(follow_link( { text => '..' }, 'parent directory')) {
-+				test_link({ url_abs_regex => qr/h=$sha1/,
-+					    text => $directory },
-+					  'back to original tree view');
-+				$mech->back;
-+			}
-+			$mech->back;
-+		}
-+	}
-+}
-+
-+
-+# Blame view
-+if (get_summary && follow_link( { text => 'tree' }, 'first tree link')) {
-+	for my $blame_link ($mech->find_all_links(text => 'blame')) {
-+		my $url = $blame_link->url;
-+		$mech->get_ok($url, "get $url -- blame link on tree view")
-+		    and _verify_page;
-+		$mech->content_like(qr/A U Thor/,
-+				    "author mentioned on blame page");
-+		TODO: {
-+			# Now spider -- but there are broken links.
-+			# http://mid.gmane.org/485EC621.7090101@gmail.com
-+			local $TODO = "fix broken links in certain blame views";
-+			check_page;
-+		}
-+		last unless $long_tests; # only test first blame link
-+	}
-+}
-+
-+
-+# History view
-+if (get_summary && follow_link( { text => 'tree' }, 'first tree link')) {
-+	for my $file (@files, @directories) {
-+		my $type = get_type("HEAD:$file");  # blob or tree
-+		if (follow_link( { text => 'history', url_abs_regex => qr/f=$file/ },
-+				 "history link for '$file'")) {
-+			# There is at least one commit, so A U Thor is mentioned.
-+			$mech->content_contains('A U Thor', 'A U Thor mentioned');
-+			# The following tests test for at least *one*
-+			# link of each type and are weak since we
-+			# don't have any knowledge of commit hashes.
-+			test_link( { text => $type, url_abs_regex => qr/f=$file/ },
-+				   "$type");
-+			test_link( { text => 'commitdiff' },
-+				   "commitdiff");
-+			test_link( { url_abs_regex => qr/a=commit;.*h=[a-f0-9]{40}/ },
-+				   "subject links to commit"); # weak, brittle
-+			$mech->back;
-+		}
-+	}
-+}
-+
-+
-+# Blob view
-+if (get_summary && follow_link( { text => 'tree' }, 'first tree link')) {
-+	for my $file (@files) {
-+		if (follow_link( { text => $file, url_abs_regex => qr/a=blob/ },
-+				 "\"$file\" (blob) entry on tree view")) {
-+			chomp(my $first_line_regex = (`cat "$file"`)[0]);
-+			$first_line_regex =~ s/ / |&nbsp;/g;
-+			# Hope that the first line doesn't contain any
-+			# HTML-escapable character.
-+			$mech->content_like(qr/$first_line_regex/,
-+					    "blob view contains first line of file ($url)");
-+			$mech->back;
-+		}
-+	}
-+}
-+
-+
-+# Raw (blob_plain) view
-+if (get_summary && follow_link( { text => 'tree' }, 'first tree link')) {
-+	for my $file (@files) {
-+		if (follow_link( { text => 'raw', url_abs_regex => qr/f=$file/ },
-+				 "raw (blob_plain) entry for \"$file\" in tree view")) {
-+			chomp(my $first_line = (`cat "$file"`)[0]);
-+			$mech->content_contains(
-+				$first_line, "blob_plain view contains first line of file");
-+			$mech->back;
-+		}
-+	}
-+}
-+
-+
-+# Error handling
-+# Pass valid and invalid paths to various file-based actions
-+for my $action qw( blame blob blob_plain ) {
-+	test_page("?p=.git;a=$action;f=$files[0];hb=HEAD",
-+		  "$action: look up existent file");
-+	test_page("?p=.git;a=$action;f=does_not_exist;hb=HEAD",
-+		  "$action: look up non-existent file", 404);
-+	TODO: {
-+		local $TODO = 'wrong error code (but using Git::Repo will fix this)';
-+		test_page("?p=.git;a=$action;f=$directories[0];hb=HEAD",
-+			  "$action: look up directory", 400);
-+	}
-+}
-+TODO: {
-+	local $TODO = 'wrong error code (but using Git::Repo will fix this)';
-+	test_page("?p=.git;a=tree;f=$files[0];hb=HEAD",
-+		  'tree: look up existent file', 400);
-+}
-+# Pass valid and invalid paths to tree action
-+test_page("?p=.git;a=tree;f=does_not_exist;hb=HEAD",
-+	  'tree: look up non-existent file', 404);
-+test_page("?p=.git;a=tree;f=$directories[0];hb=HEAD",
-+	  'tree: look up directory');
-+TODO: {
-+	local $TODO = 'cannot use f=/ or f= for trees';
-+	test_page("?p=.git;a=tree;f=/;hb=HEAD", 'tree: look up directory');
-+}
-+
-+
-+1;
-+__END__
++my $reporoot = Git::RepoRoot->new(root_dir => $abs_wc_dir);
++is($reporoot->repo(repo_dir => '.git')->get_sha1('HEAD'), $head,
++   'repo: basic');
 -- 
 1.6.0.90.gf3f7b
