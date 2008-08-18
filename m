@@ -1,87 +1,59 @@
-From: Tarmigan <tarmigan+git@gmail.com>
-Subject: Re: Call Me Gitless
-Date: Mon, 18 Aug 2008 16:24:35 -0700
-Message-ID: <905315640808181624w58918a0ao939a3f0462f9dc9e@mail.gmail.com>
-References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com>
-	 <alpine.LNX.1.00.0808181512160.19665@iabervon.org>
-	 <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC] Plumbing-only support for storing object metadata
+Date: Mon, 18 Aug 2008 16:28:00 -0700
+Message-ID: <20080818232800.GD9572@spearce.org>
+References: <20080810112038.GB30892@cuci.nl> <20080809210733.GA6637@oh.minilop.net> <d411cc4a0808091449n7e0c9b7et7980cf668106aead@mail.gmail.com> <20080810035101.GA22664@spearce.org> <20080809210733.GA6637@oh.minilop.net> <20080810110925.GB3955@efreet.light.src> <20080816062130.GA4554@oh.minilop.net> <20080818061236.GF7376@spearce.org> <20080818230646.GA11044@cisco.com> <48AA0487.8050009@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Daniel Barkalow" <barkalow@iabervon.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 01:25:44 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Derek Fawcus <dfawcus@cisco.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Marcus Griep <neoeinstein@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 01:29:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVE6X-00077l-M3
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 01:25:42 +0200
+	id 1KVE9p-0007wn-VA
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 01:29:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753114AbYHRXYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 19:24:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752643AbYHRXYi
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 19:24:38 -0400
-Received: from ik-out-1112.google.com ([66.249.90.177]:61112 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752580AbYHRXYh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 19:24:37 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so2478853ika.5
-        for <git@vger.kernel.org>; Mon, 18 Aug 2008 16:24:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=MRL3aI/XxLL2CebyVsEesYvNZFyLLXV8+SBtQjoxdwo=;
-        b=WHO/IYXfKyBPTTF1Nn5lsPDpViHmBlCv+kzLYLY+50doE42fpiQLfVtqZ+yTfxWUif
-         YWmR/N8p2LrEFaEh9vJwfMe8f4c8FNUrfWgzAx7rXdgWJzaB2py+7xvMv1EVqfasXs6/
-         wR0hAMnXWGddy8a10WniXw7NxmXK3C4TTfSYs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=a7NNqF3CxyGjdK6ERPPSLpmfqzdtB5oY90N6K38B7vRDtqK2r0zVFXbQIPBYh/Bky9
-         L5zX47ehdQLgILRWMOYrC2rZJYsZ0za/eV4cphvXZug5IMdba/0oVA+cNfZbaNzBX6a2
-         uBQ7NYKlGuZD5gTyr35y3b92LUK0PrvlOPoM4=
-Received: by 10.210.87.19 with SMTP id k19mr8777702ebb.176.1219101875655;
-        Mon, 18 Aug 2008 16:24:35 -0700 (PDT)
-Received: by 10.210.28.18 with HTTP; Mon, 18 Aug 2008 16:24:35 -0700 (PDT)
-In-Reply-To: <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org>
+	id S1753030AbYHRX2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 19:28:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752898AbYHRX2B
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 19:28:01 -0400
+Received: from george.spearce.org ([209.20.77.23]:39531 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752811AbYHRX2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 19:28:00 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 2FF2238376; Mon, 18 Aug 2008 23:28:00 +0000 (UTC)
 Content-Disposition: inline
-X-Google-Sender-Auth: e6992efaa9c61e31
+In-Reply-To: <48AA0487.8050009@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92761>
 
-On Mon, Aug 18, 2008 at 1:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> (2) Some concepts in git are different from what they are used to, without
->    any good reason.  IOW, the concepts have room for improvement, and our
->    UI is based on these faulty concepts.
->
-> (3) Some concepts in git may be exactly the same with other systems, yet
->    our UI may operate differently from them without any good reason.
+Marcus Griep <neoeinstein@gmail.com> wrote:
+> I was under the impression that tags were references to commit objects,
+> and they to tree objects:
+> 
+> tag -> commit -> tree
 
-One confusing part of the porcelain may be the way that git's revert
-is different from other systems' revert.  What would people think
-about something like this somewhere in git-revert(1)?
+No.  A tag can reference any object.  See for example the
+junio-gpg-pub tag in git.git, it references a blob, not a commit.
+The linux-2.6.git tree has a tag which references a tree.
 
-+DISCUSSION
-+----------
-+If you are more familiar with another SCM, 'git revert' may not do what you
-+expect.  Specifically, if you want to throw away all changes in your working
-+directory, you should read the man page for 'git reset', particulary the
-+'--hard' option.  If you want to extract specific files as they were in a
-+previous commit, you should read the man page for 'git checkout -- <filename>'.
-+
+Tags may also reference other tags.
+ 
+> Also, wouldn't this require large numbers tags, or the ability to multi-
+> target tags?
 
-asciidoc probably won't like that as is, but if people like the idea,
-I can make up a real patch.
+Tag objects don't have to have names in the repository's ref space,
+but it helps that they do when you are doing git-lost-found.
+Having a tag in the database which shouldn't have a ref name in
+refs/tags is more than a bit funny.
 
-Thanks,
-Tarmigan
+-- 
+Shawn.
