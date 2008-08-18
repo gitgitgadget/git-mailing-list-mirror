@@ -1,80 +1,89 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH 2/3] Cleanup of Branch command ready for verbose
-	mode
-Date: Mon, 18 Aug 2008 07:20:39 -0700
-Message-ID: <20080818142039.GA9572@spearce.org>
-References: <1219057305-9284-1-git-send-email-charleso@charleso.org> <1219057305-9284-2-git-send-email-charleso@charleso.org> <1219057305-9284-3-git-send-email-charleso@charleso.org> <48A97C23.8030103@gmail.com>
+From: "David P. Quigley" <dpquigl@tycho.nsa.gov>
+Subject: Re: SeLinux integration
+Date: Mon, 18 Aug 2008 10:29:47 -0400
+Message-ID: <1219069787.2609.86.camel@moss-terrapins.epoch.ncsc.mil>
+References: <6341D084-1A83-4C0F-8C45-943916612D48@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Charles O'Farrell <charleso@charleso.org>, git@vger.kernel.org
-To: Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 18 16:22:00 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jens Neuhalfen <JensNeuhalfen@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 18 16:48:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KV5cK-0005tZ-2T
-	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 16:21:56 +0200
+	id 1KV625-0006g1-00
+	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 16:48:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753286AbYHROUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 10:20:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752964AbYHROUl
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 10:20:41 -0400
-Received: from george.spearce.org ([209.20.77.23]:45229 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752944AbYHROUl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 10:20:41 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 167A538375; Mon, 18 Aug 2008 14:20:40 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <48A97C23.8030103@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753183AbYHROr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 10:47:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753002AbYHROr3
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 10:47:29 -0400
+Received: from mummy.ncsc.mil ([144.51.88.129]:52063 "EHLO mummy.ncsc.mil"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752760AbYHROr2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 10:47:28 -0400
+Received: from facesaver.epoch.ncsc.mil (jazzhorn.ncsc.mil [144.51.5.9])
+	by mummy.ncsc.mil (8.12.10/8.12.10) with ESMTP id m7IElKAq012423;
+	Mon, 18 Aug 2008 14:47:20 GMT
+Received: from [144.51.25.2] (moss-terrapins [144.51.25.2])
+	by facesaver.epoch.ncsc.mil (8.13.1/8.13.1) with ESMTP id m7IElJCI028991;
+	Mon, 18 Aug 2008 10:47:19 -0400
+In-Reply-To: <6341D084-1A83-4C0F-8C45-943916612D48@gmx.de>
+X-Mailer: Evolution 2.22.3.1 (2.22.3.1-1.fc9) 
+X-Spam-Status: No, score=-103.8 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00,
+	USER_IN_WHITELIST autolearn=ham version=3.1.8
+X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on
+	facesaver.epoch.ncsc.mil
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92710>
 
-Marek Zawirski <marek.zawirski@gmail.com> wrote:
-> Charles O'Farrell wrote:
->> diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Branch.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Branch.java
-> (...)
->> @@ -87,17 +91,27 @@ private void list() {
->>  		if (head != null) {
->>  			String current = head.getName();
->>  			if (current.equals(Constants.HEAD))
->> -				printHead("(no branch)", true);
->> -			for (String ref : new TreeSet<String>(refs.keySet())) {
->> -				if (isHead(ref))
->> -					printHead(ref, current.equals(ref));
->> +				addRef("(no branch)", head);
->> +			addRefs(refs, Constants.HEADS_PREFIX, !remote);
->> +			addRefs(refs, Constants.REMOTES_PREFIX, remote);
->
-> We used to use (Constants.HEADS_PREFIX + '/') or  
-> (Constants.REMOTES_PREFIX + '/') in such places, probably to handle  
-> correctly jokes like refs named "refs/remotes_will_broke_your_code".
+On Sun, 2008-08-17 at 12:44 +0200, Jens Neuhalfen wrote:
+> Hi,
+> 
+> I  wrote an SeLinux policy and an init.d script  for the git-daemon  
+> and now seek for comments and improvements.
+> 
+> The scripts were tested on my Centos 5.2 box  and an older version had  
+> been tested on FC 9.
+> 
+>   Features:
+>     * multiple configuration files for the init.d script
+>     * selinux support for git daemon
+>     * seboolean (git_daemon_update_repository) that forces git-daemon  
+> into strict read-only mode when set to false
+> 
+> TODO
+>   * The policy and the accompanying init.d script still lack  
+> documentation
+>   * see selinux/BUGS and initd/BUGS
+> 
+> Feel free to pull from my repository and comment. If the everything is  
+> 'good' I will send patches to the list, so that SeLinux support can be  
+> integrated into the main repository.
+> 
+> 
+>   git://www.neuhalfen.name/git-selinux.git
+> 
+> 
+> Jens
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-Yup.  I hate those constants because they are almost useless.
-Almost anytime we need them, we really need to use instead
-(Constants.FOO_PREFIX + '/').
+Hello,
+   It is great to see people other than the core policy developers
+working on SELinux policy. One thing I would suggest is to post your
+policy to the new reference policy mailing list for SELinux. This way
+people such as Chris PeBenito and Dan Walsh can look over it and give
+suggestions as well. You can find the list at the link below [1]. 
 
-> I've seen this expression so many times that I think it's right moment  
-> to create another Constants.HEADS_PREFIX_SLASHED (same for tags,  
-> remotes) or similar as this piece of this code is redundant in many  
-> places. But wait, does anybody use pure ones without slashes? Maybe we  
-> can just change existing constants.
+[1]http://oss.tresys.com/mailman/listinfo/refpolicy
 
-Right.  It would be a nice cleanup to go through the existing users
-and see if we cannot change the meaning of these.  But that's a
-lot of code to change because you also have to delete the +'/'
-we have everywhere.
-
-> Beside of that detail, me (being just jgit developer) says that the  
-> series looks good. Oh, and it's probably good to follow convention of  
-> marking variables as final when they are final.
-
-Yea, the series does look nice, except the prefix matching bug.
-
--- 
-Shawn.
+Dave
