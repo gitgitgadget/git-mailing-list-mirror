@@ -1,159 +1,79 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 2/2] Revert "Windows: Use a customized struct stat that also has the st_blocks member."
-Date: Mon, 18 Aug 2008 22:01:06 +0200
-Message-ID: <200808182201.06114.johannes.sixt@telecom.at>
-References: <273481A4-0BB2-4A58-83AD-604B425DE824@web.de> <7vy72w6kiv.fsf@gitster.siamese.dyndns.org> <200808182157.16392.johannes.sixt@telecom.at>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 1/6] Disable IPv6 support for Haiku
+Date: Mon, 18 Aug 2008 22:04:29 +0200
+Message-ID: <20080818200429.GD3262@steel.home>
+References: <7CCFCB0B-382F-4A94-B8A7-796156A73CEF@web.de> <20080817203335.GB6366@steel.home> <795912D9-BAA1-4E42-A533-435CB1BCCCAC@web.de>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Andreas =?iso-8859-1?q?F=E4rber?= <andreas.faerber@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 18 22:02:30 2008
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Andreas =?iso-8859-15?Q?F=E4rber?= <andreas.faerber@web.de>
+X-From: git-owner@vger.kernel.org Mon Aug 18 22:06:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVAvt-00080s-GS
-	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 22:02:29 +0200
+	id 1KVAzF-0000IK-3X
+	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 22:05:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757091AbYHRUBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 16:01:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756384AbYHRUBL
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 16:01:11 -0400
-Received: from smtp4.srv.eunet.at ([193.154.160.226]:33614 "EHLO
-	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757062AbYHRUBJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 16:01:09 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp4.srv.eunet.at (Postfix) with ESMTP id 471BB971D6;
-	Mon, 18 Aug 2008 22:01:06 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 368F51D3EC;
-	Mon, 18 Aug 2008 22:01:06 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <200808182157.16392.johannes.sixt@telecom.at>
+	id S1752018AbYHRUEe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Aug 2008 16:04:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751942AbYHRUEd
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 16:04:33 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.180]:24456 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751802AbYHRUEd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 16:04:33 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg2r44hO88yw==
+Received: from tigra.home (Fa968.f.strato-dslnet.de [195.4.169.104])
+	by post.webmailer.de (klopstock mo46) (RZmta 16.47)
+	with ESMTP id D00c76k7IG8TLG ; Mon, 18 Aug 2008 22:04:30 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 66D34277AE;
+	Mon, 18 Aug 2008 22:04:29 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 4911956D2A; Mon, 18 Aug 2008 22:04:29 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <795912D9-BAA1-4E42-A533-435CB1BCCCAC@web.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92734>
 
-This reverts commit fc2ded5b08e071beed974117c0148781b1acc94a.
+Andreas F=E4rber, Mon, Aug 18, 2008 19:23:35 +0200:
+> Am 17.08.2008 um 22:33 schrieb Alex Riesen:
+>> Andreas F=E4rber, Sun, Aug 17, 2008 10:56:56 +0200:
+>>> +ifeq ($(uname_S),Haiku)
+>>> +	NO_IPV6 =3D YesPlease
+>>> +endif
+>>
+>> Does Haiku have no IPv6 support at all, or it is just the getaddrinf=
+o
+>> and the like functions which are missing?
+>
+> Haiku does not yet have complete IPv6 support afaik (would've been a =
+=20
+> GSoC project), it does have getaddrinfo though. Not setting NO_IPV6 =20
+> currently leads to compilation errors (redefinition of struct =20
+> sockaddr_in), I assume that should be fixed on their side of things.
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
-And this is the follow-up to revert to the regular struct stat on MinGW.
+Ah, that's what it was...
 
-BTW, do we sign-off reverts?
+> In the current series of patches I had not included a check for =20
+> libnetwork in configure.ac, so that getaddrinfo does not get detected=
+=2E =20
+> Would you prefer to have it already detected, but to override it via =
+the=20
+> above Makefile line? (That works as well.) Or to have it detected but=
+=20
+> have the user manually pass NO_IPV6=3DYesPlease to avoid a future rev=
+ert of=20
+> that line?
 
- compat/mingw.c |   28 ++++++++--------------------
- compat/mingw.h |   15 +++------------
- 2 files changed, 11 insertions(+), 32 deletions(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 798fb61..ccfa2a0 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -52,9 +52,10 @@ static int do_lstat(const char *file_name, struct stat *buf)
- 		buf->st_ino = 0;
- 		buf->st_gid = 0;
- 		buf->st_uid = 0;
-+		buf->st_nlink = 1;
- 		buf->st_mode = fMode;
- 		buf->st_size = fdata.nFileSizeLow; /* Can't use nFileSizeHigh, since it's not 
-a stat64 */
--		buf->st_dev = _getdrive() - 1;
-+		buf->st_dev = buf->st_rdev = (_getdrive() - 1);
- 		buf->st_atime = filetime_to_time_t(&(fdata.ftLastAccessTime));
- 		buf->st_mtime = filetime_to_time_t(&(fdata.ftLastWriteTime));
- 		buf->st_ctime = filetime_to_time_t(&(fdata.ftCreationTime));
-@@ -88,7 +89,7 @@ static int do_lstat(const char *file_name, struct stat *buf)
-  * complete. Note that Git stat()s are redirected to mingw_lstat()
-  * too, since Windows doesn't really handle symlinks that well.
-  */
--int mingw_lstat(const char *file_name, struct mingw_stat *buf)
-+int mingw_lstat(const char *file_name, struct stat *buf)
- {
- 	int namelen;
- 	static char alt_name[PATH_MAX];
-@@ -116,8 +117,7 @@ int mingw_lstat(const char *file_name, struct mingw_stat *buf)
- }
- 
- #undef fstat
--#undef stat
--int mingw_fstat(int fd, struct mingw_stat *buf)
-+int mingw_fstat(int fd, struct stat *buf)
- {
- 	HANDLE fh = (HANDLE)_get_osfhandle(fd);
- 	BY_HANDLE_FILE_INFORMATION fdata;
-@@ -127,21 +127,8 @@ int mingw_fstat(int fd, struct mingw_stat *buf)
- 		return -1;
- 	}
- 	/* direct non-file handles to MS's fstat() */
--	if (GetFileType(fh) != FILE_TYPE_DISK) {
--		struct stat st;
--		if (fstat(fd, &st))
--			return -1;
--		buf->st_ino = st.st_ino;
--		buf->st_gid = st.st_gid;
--		buf->st_uid = st.st_uid;
--		buf->st_mode = st.st_mode;
--		buf->st_size = st.st_size;
--		buf->st_dev = st.st_dev;
--		buf->st_atime = st.st_atime;
--		buf->st_mtime = st.st_mtime;
--		buf->st_ctime = st.st_ctime;
--		return 0;
--	}
-+	if (GetFileType(fh) != FILE_TYPE_DISK)
-+		return fstat(fd, buf);
- 
- 	if (GetFileInformationByHandle(fh, &fdata)) {
- 		int fMode = S_IREAD;
-@@ -155,9 +142,10 @@ int mingw_fstat(int fd, struct mingw_stat *buf)
- 		buf->st_ino = 0;
- 		buf->st_gid = 0;
- 		buf->st_uid = 0;
-+		buf->st_nlink = 1;
- 		buf->st_mode = fMode;
- 		buf->st_size = fdata.nFileSizeLow; /* Can't use nFileSizeHigh, since it's not 
-a stat64 */
--		buf->st_dev = _getdrive() - 1;
-+		buf->st_dev = buf->st_rdev = (_getdrive() - 1);
- 		buf->st_atime = filetime_to_time_t(&(fdata.ftLastAccessTime));
- 		buf->st_mtime = filetime_to_time_t(&(fdata.ftLastWriteTime));
- 		buf->st_ctime = filetime_to_time_t(&(fdata.ftCreationTime));
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 1472d59..4f275cb 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -162,21 +162,12 @@ int mingw_rename(const char*, const char*);
- 
- /* Use mingw_lstat() instead of lstat()/stat() and
-  * mingw_fstat() instead of fstat() on Windows.
-- * struct stat is redefined because it lacks the st_blocks member.
-  */
--struct mingw_stat {
--	unsigned st_mode;
--	time_t st_mtime, st_atime, st_ctime;
--	unsigned st_dev, st_ino, st_uid, st_gid;
--	size_t st_size;
--};
--int mingw_lstat(const char *file_name, struct mingw_stat *buf);
--int mingw_fstat(int fd, struct mingw_stat *buf);
-+int mingw_lstat(const char *file_name, struct stat *buf);
-+int mingw_fstat(int fd, struct stat *buf);
- #define fstat mingw_fstat
- #define lstat mingw_lstat
--#define stat mingw_stat
--static inline int mingw_stat(const char *file_name, struct mingw_stat *buf)
--{ return mingw_lstat(file_name, buf); }
-+#define stat(x,y) mingw_lstat(x,y)
- 
- int mingw_utime(const char *file_name, const struct utimbuf *times);
- #define utime mingw_utime
--- 
-1.6.0.rc2.4.g07fd3
+I think your patch as-is will be preferred (it just works).
+It is not a big deal to change it later.
