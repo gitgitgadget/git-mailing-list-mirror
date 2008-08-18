@@ -1,101 +1,80 @@
-From: Robert Schiele <rschiele@gmail.com>
-Subject: [PATCH] add definitions for global variables to shell.c
-Date: Mon, 18 Aug 2008 14:37:27 +0200
-Message-ID: <20080818123727.GB11842@schiele.dyndns.org>
-Reply-To: Robert Schiele <rschiele@gmail.com>
+From: Christian Jaeger <christian@jaeger.mine.nu>
+Subject: Re: SeLinux integration
+Date: Mon, 18 Aug 2008 14:47:13 +0200
+Message-ID: <48A96F51.6090404@jaeger.mine.nu>
+References: <6341D084-1A83-4C0F-8C45-943916612D48@gmx.de>	 <48A93696.6010500@jaeger.mine.nu> <1219060960.13808.20.camel@desktop.local.neuhalfen.name>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 18 14:38:57 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jens Neuhalfen <JensNeuhalfen@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 18 14:48:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KV40J-0002N7-SM
-	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 14:38:36 +0200
+	id 1KV49n-0005vX-7b
+	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 14:48:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751921AbYHRMhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 08:37:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752028AbYHRMhb
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 08:37:31 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:15836 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751072AbYHRMha (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 08:37:30 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1635714fgg.17
-        for <git@vger.kernel.org>; Mon, 18 Aug 2008 05:37:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent
-         :from:reply-to;
-        bh=E65OwRYTvFlv+RxC9zMO9GwyuJzrHfJQY7kOiFqzrs8=;
-        b=eZAy7ERUGvts3gQXNa+zl6q4XCWHInM87mpHPmrvintbdGFTIApBu6owNqBTg3/Eww
-         k/iDv5v+WNlDrtbOeriL9NAJnykXVENAWUlwqmlABODfq5ps7nR3F8OnEWJk0hiEE16w
-         mvjUoEoRESxpo+KuBA99iw2Jsnf0PQm2rS60s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent:from:reply-to;
-        b=u4Er6E3TW/BVPzHB+TaxBFP2t3gPhAJ2IzHuH+CqAiXpztnZ3jVRMAhh/mlNUBdf69
-         SSgy4y4et/SHHmtA9zYw7GuDYiWmk3F6JOMMNlgBrXIkTAXBKLjUZkxp34DlYj8vdreq
-         +fIdutjDHuV1g3imB2OoTEZihwzT4Dkx5gUXk=
-Received: by 10.86.23.17 with SMTP id 17mr4537176fgw.44.1219063048748;
-        Mon, 18 Aug 2008 05:37:28 -0700 (PDT)
-Received: from sigkill.schiele.dyndns.org ( [91.18.110.73])
-        by mx.google.com with ESMTPS id 12sm11165616fgg.0.2008.08.18.05.37.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 18 Aug 2008 05:37:28 -0700 (PDT)
-Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
-	id 989091604F; Mon, 18 Aug 2008 14:37:27 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752093AbYHRMrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 08:47:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752031AbYHRMrU
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 08:47:20 -0400
+Received: from ethlife-a.ethz.ch ([129.132.49.178]:60501 "HELO ethlife.ethz.ch"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751940AbYHRMrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 08:47:19 -0400
+Received: (qmail 10295 invoked from network); 18 Aug 2008 12:47:17 -0000
+Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
+  by localhost with SMTP; 18 Aug 2008 12:47:17 -0000
+Received: (qmail 3110 invoked from network); 18 Aug 2008 12:47:13 -0000
+Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
+  by elvis-jaeger.mine.nu with SMTP; 18 Aug 2008 12:47:13 -0000
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <1219060960.13808.20.camel@desktop.local.neuhalfen.name>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92703>
 
-Commit 5b8e6f85 introduced stubs for three functions that make no sense
-for git-shell.  But those stubs defined libgit.a functions a second time
-so that a linker can complain.  While commit 78568448 fixes this problem
-it introduces a new issue on the affected systems: Some versions of the
-Sun compiler generate references to global variables when they see
-extern declarations for those, even when they are never used in the
-code.
+Jens Neuhalfen wrote:
+> The repository is my current development repository which, naturally (?), is based on the 'blessed' repository. My understanding of git was, that anyone with a copy of the blessed git repository can 'pull' from my repository and gets my branches with git transmitting just my changes over the net. Then he/she/it can switch to 'my' branch and test the policy/init-script.
+>
+> Did I get something wrong there? I thought that this is a/the normal way of using git. 
+>   
 
-This patch does a similar workaround for this problem as commit 5b8e6f85
-did for the functions.
+Well I'm sure you could use it this way; but check for yourself, if you 
+start gitk on your repository, one has to first figure out where to find 
+you work, i.e. one has to follow the right parent in your commits to see 
+all of them; it's certainly possible but I guess not very inviting for 
+people who just want to *look* at your work (as opposed to simply try it 
+out). I'll readily admit that I just wanted to look, not try it out. But 
+maybe I'm not the only one with this as his/her primary aim.
 
-Signed-off-by: Robert Schiele <rschiele@gmail.com>
----
- shell.c |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
+> You are right with the commits and their rather terse messages, though the code are not ready for release or an integration review. The plan was: Get some feedback on the current state, refine the code and then send the patches to the list. 
+>   
 
-diff --git a/shell.c b/shell.c
-index 6a48de0..8902ea5 100644
---- a/shell.c
-+++ b/shell.c
-@@ -3,12 +3,17 @@
- #include "exec_cmd.h"
- #include "strbuf.h"
- 
--/* Stubs for functions that make no sense for git-shell. These stubs
-- * are provided here to avoid linking in external redundant modules.
-+/* Stubs for functions and external variables that make no sense for
-+ * git-shell. These stubs are provided here to avoid linking in
-+ * external redundant modules.
-  */
- void release_pack_memory(size_t need, int fd){}
- void trace_argv_printf(const char **argv, const char *fmt, ...){}
- void trace_printf(const char *fmt, ...){}
-+int trust_executable_bit;
-+const unsigned char null_sha1[20];
-+const signed char hexval_table[256];
-+int has_symlinks;
- 
- 
- static int do_generic_cmd(const char *me, char *arg)
--- 
-1.5.4.5
+Ok, maybe how you're doing it is just fine, I'll leave it to others to 
+judge. But still you should be aware that it's common practice with Git 
+to first clean up private history before publishing it. The history can 
+explain the code much better than is possible by just looking at the 
+latest committed version, and since with Git it is possible to rework 
+the history as long at it is private, people frequently do it, so that 
+the readers can get most out of it. (This is more akin to patch sets, 
+where each patch does a certain thing -- versus work steps, which 
+documents how you created the changes. The latter documentation is 
+really only of interest for you, for others it's the intended changes 
+which matter. So you could "git branch my_selinux_prepublish_1" to keep 
+the latter history in case you want to look at it again later, then do 
+the history cleanup as I've suggested and publish that instead. And 
+continue to work on that reworked branch, actually.)
+
+> Christian, have you been able to test the policy? I am very curious, how it works on other machines (say, gentoo) or with other setups (strict-policy is completely untested, although I don't think that anyone really uses it).
+
+I don't have any SELinux setup here. I'm playing with the thought of 
+looking into it, that's why the subject of your mail has catched my 
+attention.
+
+Thanks,
+Christian.
