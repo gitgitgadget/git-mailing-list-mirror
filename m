@@ -1,64 +1,53 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [GSoC] What is status of Git's Google Summer of Code 2008
-	projects?
-Date: Sun, 17 Aug 2008 22:51:33 -0700
-Message-ID: <20080818055133.GD7376@spearce.org>
-References: <200807080227.43515.jnareb@gmail.com> <200808140457.56464.jnareb@gmail.com> <48A88EC1.5020503@gmail.com>
+Subject: Re: [JGIT RFC] JGit mavenization done right
+Date: Sun, 17 Aug 2008 22:55:02 -0700
+Message-ID: <20080818055502.GE7376@spearce.org>
+References: <7bfdc29a0808162152y4329303dte8f82bfea646180d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>, Joshua Roys <roysjosh@gmail.com>,
-	Sverre Rabbelier <alturin@gmail.com>,
-	Sverre Rabbelier <sverre@rabbelier.nl>,
-	David Symonds <dsymonds@gmail.com>,
-	Lea Wiemann <LeWiemann@gmail.com>,
-	John Hawley <warthog19@eaglescrag.net>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 18 07:52:40 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: Imran M Yousuf <imyousuf@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 18 07:56:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUxfU-00079D-4Q
-	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 07:52:40 +0200
+	id 1KUxiq-0007oU-35
+	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 07:56:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751051AbYHRFve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 01:51:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751105AbYHRFve
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 01:51:34 -0400
-Received: from george.spearce.org ([209.20.77.23]:50737 "EHLO
+	id S1751019AbYHRFzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 01:55:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751028AbYHRFzE
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 01:55:04 -0400
+Received: from george.spearce.org ([209.20.77.23]:58503 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751042AbYHRFvd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 01:51:33 -0400
+	with ESMTP id S1750924AbYHRFzD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 01:55:03 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id 1FE9938375; Mon, 18 Aug 2008 05:51:33 +0000 (UTC)
+	id 2D00938375; Mon, 18 Aug 2008 05:55:02 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <48A88EC1.5020503@gmail.com>
+In-Reply-To: <7bfdc29a0808162152y4329303dte8f82bfea646180d@mail.gmail.com>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92685>
 
-Marek Zawirski <marek.zawirski@gmail.com> wrote:
->
->> Student retention: I don't know, but I guess it is likely.
+Imran M Yousuf <imyousuf@gmail.com> wrote:
+> I would like to request you all to test out JGit from
+> http://repo.or.cz/w/egit/imyousuf.git. Please checkout the branch
+> 'unified_tst_rsrc' and try to build it with both maven and Eclipse
+> (i.e. as was built earlier) and please be kind enough to inform me if
+> the build fails. Please feel free to suggest any improvements you have
+> in mind.
 
-Yea, I'm hoping Marek is going to be around for a bit.  He turned
-into a really good contributor this summer.  Its been a pleasure
-working with him on push support.
+Thanks, I'll take a look at it tomorrow or the day after.
 
-> Nice guess! ;) That's quite true. I'm sure that I will no longer have  
-> that much time for coding jgit or egit, but when possible, I'll try to  
-> contribute in some way. Now, I'm starting to work on fetch GUI.
-
-Yay, fetch UI!  ;-)
-
+I am looking forward to making JGit more available to the Java
+community, so support under Maven is welcome, even if Maven isn't
+the project's (current) primary build tool.
+ 
 -- 
 Shawn.
