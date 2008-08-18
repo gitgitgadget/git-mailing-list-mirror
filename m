@@ -1,108 +1,154 @@
-From: "Peter Waller" <peter.waller@gmail.com>
-Subject: Re: Merging repositories and their histories
-Date: Mon, 18 Aug 2008 16:25:54 -0500
-Message-ID: <d3d284ca0808181425v4e0eadbcn9f00f5a15191576@mail.gmail.com>
-References: <19035412.post@talk.nabble.com> <20080818173511.GC6014@blimp.local>
-	 <d3d284ca0808181115j2c9ab5ecufb66780f45d28207@mail.gmail.com>
-	 <20080818194021.GA3262@steel.home>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Call Me Gitless
+Date: Mon, 18 Aug 2008 17:31:21 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0808181628420.19665@iabervon.org>
+References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com> <alpine.LNX.1.00.0808181512160.19665@iabervon.org> <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 18 23:28:19 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Trans <transfire@gmail.com>, Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 18 23:32:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVCGZ-0005K1-Nd
-	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 23:27:56 +0200
+	id 1KVCKy-00070b-PF
+	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 23:32:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755032AbYHRVZ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 17:25:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755025AbYHRVZ6
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 17:25:58 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:51071 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755010AbYHRVZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 17:25:56 -0400
-Received: by gxk9 with SMTP id 9so4288310gxk.13
-        for <git@vger.kernel.org>; Mon, 18 Aug 2008 14:25:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=WGwxXVbQvNTq6RQKejahFbCPwkswSivS5ysejNjKE2E=;
-        b=rJn//xMkN7yFlTfckrMjxgFR6jfRtU2Mh9gDnKC0WYSEihZsUwtxxKItiCvtwUHGmZ
-         o61atCEVEcvbLU7IrFWwgk7pkHZQbOzR2MmLAu02nmYf4XBMCR3th4xJATmpVuTYFbDc
-         vwkG18VsfrZmj96j2F2UV5SlSCGTV1LghBokU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=H0QlvrUS5aQE4v0fqCBPvd0VPHC0Bj4WNg5oI3SpJGFBTQc7EzzE5ZZ+VduZ0yBaFE
-         COHhYtAAzxQlbcaw2xYKwQBoneaV6MdNvz4weM4daMw2vO+BZLrjuT3P+yBMP3Txm5xW
-         RErQuMAIYxqdjhnpkUQcCb+ICNt05CzbnUck0=
-Received: by 10.151.48.15 with SMTP id a15mr10424337ybk.58.1219094754572;
-        Mon, 18 Aug 2008 14:25:54 -0700 (PDT)
-Received: by 10.151.101.8 with HTTP; Mon, 18 Aug 2008 14:25:54 -0700 (PDT)
-In-Reply-To: <20080818194021.GA3262@steel.home>
-Content-Disposition: inline
+	id S1752370AbYHRVbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 17:31:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752900AbYHRVbY
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 17:31:24 -0400
+Received: from iabervon.org ([66.92.72.58]:43320 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752281AbYHRVbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 17:31:23 -0400
+Received: (qmail 23318 invoked by uid 1000); 18 Aug 2008 21:31:21 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 18 Aug 2008 21:31:21 -0000
+In-Reply-To: <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92743>
 
-Thanks, it worked.
+On Mon, 18 Aug 2008, Junio C Hamano wrote:
 
-2008/8/18 Alex Riesen <raa.lkml@gmail.com>:
-> Peter Waller, Mon, Aug 18, 2008 20:15:52 +0200:
->> 2008/8/18 Alex Riesen <raa.lkml@gmail.com>
->>
->> > Peter Waller, Mon, Aug 18, 2008 18:46:14 +0200:
->> > >
->> > > I have three repositories, A, B and C. I wish to bring them
->> > > together to only one repository (.), where they are in a
->> > > directory called ./Archive, so..  ./Archive/{A,B,C}. Then I plan
->> > > at a later date to move files arbitrarily from
->> > > ./Archive/{A/B/C}/Something and into ./Something{A/B/C}. (A lame
->> > > example, but illustrates what I want to do).
->> >
->> > If this transition is meant to be persistent (IOW, the A, B and C stop
->> > existing as repos on their own) you can rewrite their histories to be
->> > in the directories (with git filter-branch) and just merge them in
->> > one. Then the histories will look like as if they have never grown
->> > separately.
->> >
->> I don't quite understand what you are suggesting I do.
->>
->> I have looked over the filter-branch manpage.
->>
->> What would I first do? Copy all three repositories to ./Archive/{A,B,C}?
->
-> Fetch, actually.
->
->    $ mkdir combined && cd combined
->    $ git init
->    $ git fetch ../A master:A
->    $ git fetch ../B master:B
->    $ git fetch ../C master:C
->
->> Then rewrite their histories?
->
-> There is an example at the end of git-filter-branch manpage. Search
-> for "To move the whole tree into a subdirectory". Just use A, B and C
-> instead of HEAD as last argument.
->
-> Then checkout one of the new, the rewritten, branches, and merge the
-> two others into it:
->
->    $ git checkout A
->    $ git merge B
->    $ git merge C
->
-> That's it.
->
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > On Sun, 17 Aug 2008, Trans wrote:
+> >
+> >> Well, after a few days of using git, I've decide Linus is too smart to
+> >> be designing end-user interfaces.
+> >
+> > This is true, but hardly relevant. Git's end-user interface was almost 
+> > entirely designed by other people, using Linus's excellent 
+> > script-developer API.
+> 
+> I'd agree that you cannot judge Linus's ability to design end-user
+> interfaces by observing the UI of git.
+> 
+> I am pleased to see that almost everybody who responded in this thread has
+> refrained from saying meaningless things (aka feeding the troll) to waste
+> people's mental bandwidth.
+> 
+> I think there are three majorly different reasons that new people can get
+> confused.
+> 
+> (1) Some concepts in git are different from what people from other systems
+>     are used to.  For example, A new person may be puzzled by the
+>     distinction among "git diff", "git diff HEAD" and "git diff --cached"
+>     and say "why do you have these three?"
+> 
+>     Complaining that we have these three instead of two, claiming that
+>     such complexity is a source of UI clunkiness, is an invalid argument
+>     made by a new person who does not understand the index.  People who do
+>     take advantage of the index need the distinction among these three.
+>     We shouldn't be doing anything but educate them against that kind of
+>     complaints.
+> 
+>     However, I think it is valid to say, for a person who does not use
+>     index very actively (i.e. one who does not incrementally stage), what
+>     "git diff" does is confusing.  It does not say anything about new
+>     files (until it is modified since added) while showing changes for
+>     existing files.  CVS does the same thing ("file foo is a newly added
+>     file, no comparison available"), but that may not be a good excuse.
+
+There's another issue here, I think. It's not clear from an understanding 
+of the index, working tree, and commits that the default for "git diff" is 
+between the working tree and the index, as opposed to one of the other 
+possibilities. For most systems, "diff" without options is a preview of 
+what would be in the patch if you were to commit; "git diff", on the other 
+hand, shows what would be left out of the patch. So, even given that 
+people understand the meaning of the index, they can fail to understand 
+what "diff" will tell them. And diff is a bit unhelpful in that it 
+generates headers as for "diff -r a b", regardless of what the things are; 
+if you'd get:
+
+--- (index)/foo/bar
++++ ./foo/bar
+
+people would at least be clear on what information they were getting, even 
+if they didn't know why they were getting that as opposed to a different 
+combination.
+
+>     If we had a configuration for "index-free" people, that changes the
+>     semantics of "git add" to register object name of an empty blob when a
+>     new path is added, makes "git add" for existing blobs a no-op, but
+>     keeps "git commit -a" and "git commit <paths>" to operate as they
+>     currently do, then people with such configuration could:
+> 
+> 	$ >new-file
+>         $ git add new-file
+>         $ edit old-file
+>         $ edit new-file
+>         $ git diff
+> 
+>     to always see what's the difference from the HEAD is with "git diff",
+>     and any of these three:
+> 
+> 	$ git commit -a
+>         $ git commit old-file
+>         $ git commit old-file new-file
+> 
+>     would work as expected by them.  We still need to support the three
+>     diff variants for normal git people, but people who do not use index
+>     do not have to know the two variants ("git diff" vs "git diff HEAD");
+>     such a change could be argued as a "UI improvement" [*1*].
+
+I think that having the possibility of adding an empty blob (or maybe a 
+magical "nothing currently here but git-ls-files includes it") would be 
+preferrable to a no-index mode. That is, the operation that corresponds 
+most directly to "cvs add <filename>" is "git update-index --cacheinfo 
+100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 <filename>", which is not 
+exactly easy to do, and just because a user wants to do this doesn't mean 
+the user doesn't want to use the index; a user that makes extensive use of 
+the index is actually more likely to want the state where a file is 
+tracked but all of the content has not yet been staged.
+
+But we've argued this before.
+
+> (2) Some concepts in git are different from what they are used to, without
+>     any good reason.  IOW, the concepts have room for improvement, and our
+>     UI is based on these faulty concepts.
+> 
+> (3) Some concepts in git may be exactly the same with other systems, yet
+>     our UI may operate differently from them without any good reason.
+> 
+> I'd be surprised if there is _no_ UI element that falls into the latter
+> two categories, but obviously I would not be able to list examples.  If I
+> could, they instead would have long been fixed already.
+
+You've got to include the class of "The concepts in git are exactly the 
+same as with other systems (although git also has additional concepts), 
+and commands from other systems do not do the same thing in git (with or 
+without good reason)."
+
+E.g., git has a working directory, and git has a committed state, and CVS 
+has both of these, and "cvs diff" compares the working directory with the 
+committed state, but "git diff" does a different operation.
+
+	-Daniel
+*This .sig left intentionally blank*
