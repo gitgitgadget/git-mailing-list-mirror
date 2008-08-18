@@ -1,71 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Call Me Gitless
-Date: Mon, 18 Aug 2008 15:30:27 -0700
-Message-ID: <7vtzdiklbw.fsf@gitster.siamese.dyndns.org>
-References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com>
- <alpine.LNX.1.00.0808181512160.19665@iabervon.org>
- <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0808181628420.19665@iabervon.org>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: What's cooking in git.git (Aug 2008, #04; Sun, 17)
+Date: Mon, 18 Aug 2008 17:41:05 -0500
+Message-ID: <20080818224105.GA31114@lavos.net>
+References: <7vej4o6j40.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Aug 19 00:31:54 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 00:42:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVDGH-0001uh-6q
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 00:31:41 +0200
+	id 1KVDQW-0004YD-C0
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 00:42:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753518AbYHRWag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 18:30:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753450AbYHRWag
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 18:30:36 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48955 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753205AbYHRWaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 18:30:35 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3B50652B08;
-	Mon, 18 Aug 2008 18:30:32 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 6383C52B04; Mon, 18 Aug 2008 18:30:29 -0400 (EDT)
-In-Reply-To: <alpine.LNX.1.00.0808181628420.19665@iabervon.org> (Daniel
- Barkalow's message of "Mon, 18 Aug 2008 17:31:21 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 44ADFD6C-6D75-11DD-8DD9-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1754246AbYHRWlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 18:41:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753992AbYHRWlM
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 18:41:12 -0400
+Received: from qmta06.westchester.pa.mail.comcast.net ([76.96.62.56]:44367
+	"EHLO QMTA06.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753266AbYHRWlL (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Aug 2008 18:41:11 -0400
+Received: from OMTA05.westchester.pa.mail.comcast.net ([76.96.62.43])
+	by QMTA06.westchester.pa.mail.comcast.net with comcast
+	id 3s6p1a00o0vyq2s56yh6VJ; Mon, 18 Aug 2008 22:41:06 +0000
+Received: from mnementh.lavos.net ([98.212.138.194])
+	by OMTA05.westchester.pa.mail.comcast.net with comcast
+	id 3yh61a0064BqYqi3Ryh6Bb; Mon, 18 Aug 2008 22:41:06 +0000
+X-Authority-Analysis: v=1.0 c=1 a=nfPrcmQaMz8A:10 a=cICym1YevYsA:10
+ a=GANrI_Rz59SNd9fMMoQA:9 a=IJfaiy18UhdxY5PzURmWpf_LRhIA:4 a=LY0hPdMaydYA:10
+Received: by mnementh.lavos.net (Postfix, from userid 1000)
+	id DBC9D309F23; Mon, 18 Aug 2008 17:41:05 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <7vej4o6j40.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92747>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Sun, Aug 17, 2008 at 03:17:35AM -0700, Junio C Hamano wrote:
+> * bd/diff-strbuf (Wed Aug 13 23:18:22 2008 -0700) 3 commits
+>  + xdiff-interface: hide the whole "xdiff_emit_state" business from
+>    the caller
+>  + Use strbuf for struct xdiff_emit_state's remainder
+>  + Make xdi_diff_outf interface for running xdiff_outf diffs
+> 
+> Gives measurable performance improvement to textual diff generation.  For
+> improving "blame" performance, it might be more effective to hook directly
+> to lower level of xdiff machinery so that we do not even have to generate
+> patch only to discard after reading "@@ -l,k +m,n @@" lines, but that
+> would be a separate topic.
 
-> if you'd get:
->
-> --- (index)/foo/bar
-> +++ ./foo/bar
->
-> people would at least be clear on what information they were getting, even 
-> if they didn't know why they were getting that as opposed to a different 
-> combination.
+I have done this, resulting in my blame test case going from about 100s
+on master to about 50s, but I need to do some additional cleanup before
+it's ready to be submitted.  I also have some more ideas for how to
+speed it up some more.  (Basically, with the textual diff generation
+removed, most of the time now is spent in xdiff hashing lines.  Since
+blame in copy-detection mode tends to diff against the same file over
+and over again, this is wasted work.  Allowing the xdiff machinery to
+re-use a diff preparation looks to be a little involved, though...)
 
-[Removed somebody who decided not use git from CC.]
-
-I know you mentioned this as an example of differenciating the output
-between the modes, and not as a serious suggestion.  The above may apply
-cleanly because "(index)" and "." are both one level deep, but they look
-ugly and the filenames do not align.
-
-It does look an interesting approach, though.
-
-I often make a quick patch all inside the work tree, never committing, and
-then send it out by including "git diff --stat -p" output in the mail as a
-suggested patch.  If we did what you suggest, people could tell such a
-patch and a format-patch output.  I actually do like the fact that we
-consistently say "a/" vs "b/", but some people actually may prefer to see
-the difference.
+-bcd
