@@ -1,73 +1,71 @@
-From: Peter Waller <peter.waller@gmail.com>
-Subject: Merging repositories and their histories
-Date: Mon, 18 Aug 2008 09:46:14 -0700 (PDT)
-Message-ID: <19035412.post@talk.nabble.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 18 18:47:53 2008
+From: =?ISO-8859-1?Q?Andreas_F=E4rber?= <andreas.faerber@web.de>
+Subject: Re: [PATCH 1/6] Disable IPv6 support for Haiku
+Date: Mon, 18 Aug 2008 19:23:35 +0200
+Message-ID: <795912D9-BAA1-4E42-A533-435CB1BCCCAC@web.de>
+References: <7CCFCB0B-382F-4A94-B8A7-796156A73CEF@web.de> <20080817203335.GB6366@steel.home>
+Mime-Version: 1.0 (Apple Message framework v926)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 18 19:25:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KV7tV-0006cj-5I
-	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 18:47:49 +0200
+	id 1KV8TY-0002o3-Qq
+	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 19:25:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755466AbYHRQqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 12:46:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755457AbYHRQqQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 12:46:16 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:56353 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755453AbYHRQqP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 12:46:15 -0400
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1KV7ry-0004Fb-J8
-	for git@vger.kernel.org; Mon, 18 Aug 2008 09:46:14 -0700
-X-Nabble-From: peter.waller@gmail.com
+	id S1753316AbYHRRX7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Aug 2008 13:23:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753248AbYHRRX7
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 13:23:59 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:60499 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753303AbYHRRX7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Aug 2008 13:23:59 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate02.web.de (Postfix) with ESMTP id B184DE9144E4;
+	Mon, 18 Aug 2008 19:23:57 +0200 (CEST)
+Received: from [91.18.108.215] (helo=[10.0.1.1])
+	by smtp08.web.de with asmtp (TLSv1:AES128-SHA:128)
+	(WEB.DE 4.109 #226)
+	id 1KV8ST-00089G-00; Mon, 18 Aug 2008 19:23:57 +0200
+In-Reply-To: <20080817203335.GB6366@steel.home>
+X-Mailer: Apple Mail (2.926)
+X-Sender: Andreas.Faerber@web.de
+X-Provags-ID: V01U2FsdGVkX1/99kKjqIZqqfzbjFjLos1ZUVshzcXtvDvJJp+t
+	MX001PjXFvZV4XQm9mZCOxUwc8zBHlFtPH8aSVCs8vRx4WE8vL
+	Ug0OyzSWsu/sfX08/Cpw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92718>
 
 
-I have three repositories, A, B and C. I wish to bring them together to only
-one repository (.), where they are in a directory called ./Archive, so..
-./Archive/{A,B,C}. Then I plan at a later date to move files arbitrarily
-from ./Archive/{A/B/C}/Something and into ./Something{A/B/C}. (A lame
-example, but illustrates what I want to do).
+Am 17.08.2008 um 22:33 schrieb Alex Riesen:
 
-I would like ./SomethingA (etc) to have their complete histories from the
-old repository. I thought I would do this with the subtree mechanism
-described at
-http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtree.html,
-but I have had little luck getting it to work as I desired.
+> Andreas F=E4rber, Sun, Aug 17, 2008 10:56:56 +0200:
+>> +ifeq ($(uname_S),Haiku)
+>> +	NO_IPV6 =3D YesPlease
+>> +endif
+>
+> Does Haiku have no IPv6 support at all, or it is just the getaddrinfo
+> and the like functions which are missing?
 
-Firstly, I create a new repository with git init, then I "remote add A",
-"merge" and "readtree". This immediately leads to two copies of A's files,
-in ./Archive/A/Files and ./Files. The files in Archive/A do not have any
-history.
+Haiku does not yet have complete IPv6 support afaik (would've been a =20
+GSoC project), it does have getaddrinfo though. Not setting NO_IPV6 =20
+currently leads to compilation errors (redefinition of struct =20
+sockaddr_in), I assume that should be fixed on their side of things.
 
-Then if I do this with B, the files do not appear in ./, but again they do
-not have their history. I have tried using git log --follow -M, but this
-does not seem to help. I have tried numerous other ways of doing this, but
-none seem to work.
+In the current series of patches I had not included a check for =20
+libnetwork in configure.ac, so that getaddrinfo does not get detected. =
+=20
+Would you prefer to have it already detected, but to override it via =20
+the above Makefile line? (That works as well.) Or to have it detected =20
+but have the user manually pass NO_IPV6=3DYesPlease to avoid a future =20
+revert of that line?
 
-I thought I would get around my problems doing the merge, then moving the
-files - this works for A, but when I move on to B, the files are not in ./,
-so I can't move them. If I read-tree some files, git status/commit shows
-them as 'new files' and does not seem to recognize them as old files with a
-long history.
-
-Any help would be appreciated on this problem.
-
-Thanks in advance,
-
-- Peter
--- 
-View this message in context: http://www.nabble.com/Merging-repositories-and-their-histories-tp19035412p19035412.html
-Sent from the git mailing list archive at Nabble.com.
+Andreas
