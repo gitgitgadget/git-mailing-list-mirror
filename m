@@ -1,95 +1,78 @@
-From: "Imran M Yousuf" <imyousuf@gmail.com>
-Subject: Re: [JGIT RFC] JGit mavenization done right
-Date: Mon, 18 Aug 2008 12:33:29 +0600
-Message-ID: <7bfdc29a0808172333g1cbe2102n6e76ae98a1943411@mail.gmail.com>
-References: <7bfdc29a0808162152y4329303dte8f82bfea646180d@mail.gmail.com>
-	 <20080818055502.GE7376@spearce.org>
+From: Christian Jaeger <christian@jaeger.mine.nu>
+Subject: Re: SeLinux integration
+Date: Mon, 18 Aug 2008 10:45:10 +0200
+Message-ID: <48A93696.6010500@jaeger.mine.nu>
+References: <6341D084-1A83-4C0F-8C45-943916612D48@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Robin Rosenberg" <robin.rosenberg@dewire.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Aug 18 08:34:37 2008
+Cc: git@vger.kernel.org
+To: Jens Neuhalfen <JensNeuhalfen@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 18 10:46:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUyK3-0006v3-LE
-	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 08:34:36 +0200
+	id 1KV0NY-0004p5-6T
+	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 10:46:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751019AbYHRGdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 02:33:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751083AbYHRGdb
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 02:33:31 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:60431 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750885AbYHRGda (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 02:33:30 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so1220532yxm.1
-        for <git@vger.kernel.org>; Sun, 17 Aug 2008 23:33:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=QrXE+dVK7+VmfDOn0KAmugQ5C4Uoy9/sfPEXdEfdBa4=;
-        b=xgOKvrbN+iIhDMB2Gg3l64ME/n78n2U/Tcp/KWbm8BJ3bFNfLCcnfsby2kLfA17rYl
-         FZs1QaJOdzAG6mIpZBfsotKtyjX0ufbyYlf87dR8YsMrPz/5pPu0cATSaecgJAbayd7q
-         35bACZXmyIACY5oGDNZf4DNzty4618qQkFqJA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=gxO/6CyZuo0r6Wg+ONnfaXmBQO0p6CA1T48fTXr8DCnKSVE4dEmFrZcc1w/te3kWpl
-         ab20L4JSgk/31N5zdaUkfW/3JhwoHb9zlqWn2QPaDJWVQlIUUvBhyZoCpwHrdM8KJtkh
-         g5hW5ub02JBKBWMUxzulY0Mrx0oZOMFFbW634=
-Received: by 10.150.197.8 with SMTP id u8mr9080348ybf.237.1219041209415;
-        Sun, 17 Aug 2008 23:33:29 -0700 (PDT)
-Received: by 10.150.225.1 with HTTP; Sun, 17 Aug 2008 23:33:29 -0700 (PDT)
-In-Reply-To: <20080818055502.GE7376@spearce.org>
-Content-Disposition: inline
+	id S1751684AbYHRIpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 04:45:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751642AbYHRIpP
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 04:45:15 -0400
+Received: from ethlife-a.ethz.ch ([129.132.49.178]:55435 "HELO ethlife.ethz.ch"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751369AbYHRIpN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 04:45:13 -0400
+Received: (qmail 26341 invoked from network); 18 Aug 2008 08:45:11 -0000
+Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
+  by localhost with SMTP; 18 Aug 2008 08:45:11 -0000
+Received: (qmail 5506 invoked from network); 18 Aug 2008 08:45:10 -0000
+Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
+  by elvis-jaeger.mine.nu with SMTP; 18 Aug 2008 08:45:10 -0000
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <6341D084-1A83-4C0F-8C45-943916612D48@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92688>
 
-On Mon, Aug 18, 2008 at 11:55 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Imran M Yousuf <imyousuf@gmail.com> wrote:
->> I would like to request you all to test out JGit from
->> http://repo.or.cz/w/egit/imyousuf.git. Please checkout the branch
->> 'unified_tst_rsrc' and try to build it with both maven and Eclipse
->> (i.e. as was built earlier) and please be kind enough to inform me if
->> the build fails. Please feel free to suggest any improvements you have
->> in mind.
->
-> Thanks, I'll take a look at it tomorrow or the day after.
+Jens Neuhalfen wrote:
+> git://www.neuhalfen.name/git-selinux.git
 
-Thanks, it would nice to know whether it works in the original build
-process or not :).
+I'm just an end user, too, so this isn't representing any official 
+statement, but imho you should clean up your history before you publish 
+it (and also, I think it would be a good idea to mention that your git 
+repo is really including the upstream git so that people know they 
+should use the --reference option to git clone to reuse the contents of 
+a local upstream git to avoid pulling everything from your server):
 
->
-> I am looking forward to making JGit more available to the Java
-> community, so support under Maven is welcome, even if Maven isn't
-> the project's (current) primary build tool.
+- remove commits that don't make sense like your "XXX" file
+- generally look over your history again and rework it so that it makes 
+sense for a receiver (which is not necessarily the historic events of 
+how you wrote it)
+- follow the common commit message format (one line subject, the rest in 
+the body and line wrapped)
+- probably there's no reason to merge your history with historic events 
+of the upstream git, so you should rebase your history onto some point 
+of upstream.
 
-Once this is out of the way I will add configuration to make the
-source code and other project related information to be allowed to be
-published online from maven POM file using the 'site' plugin.
+You can do this by running
 
-Additionally I also want to add configuration to build a distribution
-for JGit PGM project.
+git branch last_upstream 053fd0c1c3da20474c4ff175c56ea4c1d6eeda11
+git rebase --interactive last_upstream
 
->
-> --
-> Shawn.
+(or alternatively (with the advantage that you can open and edit all 
+patches at the same time, but the disadvantage that editing diffs is 
+more difficult to get right than editing files in snapshots), by first 
+creating patch files by running:
 
-Best regards,
+git format-patch master...last_upstream
 
--- 
-Imran M Yousuf
-Email: imran@smartitengineering.com
-Blog: http://imyousuf-tech.blogs.smartitengineering.com/
-Mobile: +880-1711402557
+then editing the patch files (and remove those which don't make sense) 
+and then switch to the upstream branch and run "git-am --3way 00*patch", 
+or replace 00*patch with the patch files in the order you want them 
+applied).
+
+Christian.
