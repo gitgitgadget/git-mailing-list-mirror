@@ -1,92 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Best method of detecting if list of commit refs is a parent
-Date: Sun, 17 Aug 2008 21:41:15 -0700
-Message-ID: <7vfxp3ndec.fsf@gitster.siamese.dyndns.org>
-References: <e47324780808171924j237688faj9e13740f89e75fdf@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Thomas Harning Jr." <harningt@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 18 06:42:28 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 2/7] system_path(): Add prefix computation at runtime if RUNTIME_PREFIX set
+Date: Mon, 18 Aug 2008 07:28:56 +0200
+Message-ID: <6E4B0DFF-DD1D-450D-B02A-9A89E260DBCB@zib.de>
+References: <1218977083-14526-1-git-send-email-prohaska@zib.de> <1218977083-14526-2-git-send-email-prohaska@zib.de> <1218977083-14526-3-git-send-email-prohaska@zib.de> <200808172243.09129.johannes.sixt@telecom.at>
+Mime-Version: 1.0 (Apple Message framework v926)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Mon Aug 18 07:30:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUwZW-0002MO-VT
-	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 06:42:27 +0200
+	id 1KUxJm-0003Nm-1B
+	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 07:30:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751049AbYHRElW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 00:41:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750924AbYHRElW
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 00:41:22 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44086 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750732AbYHRElW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 00:41:22 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8927D66D5A;
-	Mon, 18 Aug 2008 00:41:20 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id DB8B166D59; Mon, 18 Aug 2008 00:41:17 -0400 (EDT)
-In-Reply-To: <e47324780808171924j237688faj9e13740f89e75fdf@mail.gmail.com>
- (Thomas Harning, Jr.'s message of "Sun, 17 Aug 2008 22:24:20 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E7532F7E-6CDF-11DD-A20B-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1750924AbYHRF3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 01:29:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750848AbYHRF3I
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 01:29:08 -0400
+Received: from mailer.zib.de ([130.73.108.11]:60541 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750829AbYHRF3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 01:29:08 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m7I5SilB027688;
+	Mon, 18 Aug 2008 07:28:49 +0200 (CEST)
+Received: from [192.168.178.21] (brln-4db957af.pool.einsundeins.de [77.185.87.175])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m7I5SgGg024643
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Mon, 18 Aug 2008 07:28:43 +0200 (MEST)
+In-Reply-To: <200808172243.09129.johannes.sixt@telecom.at>
+X-Mailer: Apple Mail (2.926)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92679>
 
-"Thomas Harning Jr." <harningt@gmail.com> writes:
 
-> I'm working on my 'Stick' git bug-tracking tool and am working on the
-> functionality to get a list of relevant bug-items at a specific point
-> in history.
+On Aug 17, 2008, at 10:43 PM, Johannes Sixt wrote:
+
+> On Sonntag, 17. August 2008, Steffen Prohaska wrote:
+>>
+>> diff --git a/exec_cmd.c b/exec_cmd.c
+>> index ce6741e..1622481 100644
+>> --- a/exec_cmd.c
+>> +++ b/exec_cmd.c
+>> @@ -9,11 +9,51 @@ static const char *argv0_path;
+>>
+>> const char *system_path(const char *path)
+>> {
+>> -	if (!is_absolute_path(path) && argv0_path) {
+>> -		struct strbuf d = STRBUF_INIT;
+>> -		strbuf_addf(&d, "%s/%s", argv0_path, path);
+>> -		path = strbuf_detach(&d, NULL);
+>> +#ifdef RUNTIME_PREFIX
+>> +	static const char *prefix;
+>> +
+>> +	if (!argv0_path) {
+>> +		fprintf(stderr, "RUNTIME_PREFIX requested for path '%s', "
+>> +				"but argv0_path not set.\n", path);
 >
-> Before I get into figuring out the 'best' way to do this, I thought
-> I'd at least get the simple single-item case of detecting if a
-> specific commit can be walked to from another commit...
+> If this happens, isn't this a logic error: assert(argv0_path)?
 
-It is unclear from your description what you are trying to do here, but if
-you want to know if a commit A is reachable from commit B, the standard
-way to do so is:
+We could consider this a logic error.
 
-        git merge-base A B
 
-If the output from the command is the object name of commit A, that means
-A is reachable from B.  Otherwise A is not reachable from B.
+>> 	}
+>> +
+>> +	if (!prefix) {
+>> +		fprintf(stderr, "RUNTIME_PREFIX requested for path '%s', "
+>> +				"but prefix computation failed.\n", path);
+>
+> Again a logic error?
 
-This is because "merge-base" computes the set of ancestors common to A and
-B that are not reachable from other ancestors common to A and B.
+The user can move the executable, so it's not a logic error.
 
-Examples.
-
-(1) This one is obvious.
-
-        A---o---o---o---B
-
-(2) Merge-base between A and B is M.  The one before M is also an ancestor
-    common to A and B, but because it is reachable from M which is another
-    ancestor common between A and B, it won't be part of the merge-base
-    output.
-
-              o---A
-             /
-        o---M---o---B
-
-If you have bunch of commits A B C D E F and if you would want to know
-which one of them is reachable from X, you could of course run merge-base
-once for each of A..F.  Another way to do this would be to run:
-
-	git rev-list A B C D E F ^X
-
-and look at the output.  The ones among A..F that appear in the output are
-not reachable from X.  The ones that are reachable from X do not appear in
-the output.
-
-This is because "rev-list" outputs everything reachable from the given
-commits without ^ prefix, excluding the ones that are reacahble from the
-ones prefixed with ^.
+	Steffen
