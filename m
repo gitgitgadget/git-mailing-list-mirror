@@ -1,91 +1,106 @@
-From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: Re: [JGIT PATCH 2/3] Cleanup of Branch command ready for verbose
- mode
-Date: Mon, 18 Aug 2008 15:41:55 +0200
-Message-ID: <48A97C23.8030103@gmail.com>
-References: <1219057305-9284-1-git-send-email-charleso@charleso.org> <1219057305-9284-2-git-send-email-charleso@charleso.org> <1219057305-9284-3-git-send-email-charleso@charleso.org>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: [PATCH] adapt git-cvsserver manpage to dash-free syntax
+Date: Mon, 18 Aug 2008 16:17:04 +0200
+Message-ID: <20080818141704.GC11842@schiele.dyndns.org>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Charles O'Farrell <charleso@charleso.org>
-X-From: git-owner@vger.kernel.org Mon Aug 18 15:43:20 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 18 16:18:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KV50o-0000Y0-9Q
-	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 15:43:10 +0200
+	id 1KV5Yk-0004fn-IE
+	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 16:18:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752549AbYHRNmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 09:42:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752545AbYHRNmE
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 09:42:04 -0400
-Received: from mu-out-0910.google.com ([209.85.134.185]:16027 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752099AbYHRNmC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 09:42:02 -0400
-Received: by mu-out-0910.google.com with SMTP id w8so3372273mue.1
-        for <git@vger.kernel.org>; Mon, 18 Aug 2008 06:42:00 -0700 (PDT)
+	id S1752892AbYHRORK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 10:17:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752857AbYHRORK
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 10:17:10 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:44302 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752724AbYHRORI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 10:17:08 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1655762fgg.17
+        for <git@vger.kernel.org>; Mon, 18 Aug 2008 07:17:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=nWl8Y5/woaLizxh5AWwXvgF9bXc4vbR4XsbPe+Bb/vE=;
-        b=ErutK5TWO1bsFLmQTAtyh3oP3+HVBTzUQ+IOoz1umURogoUgHV1u5wTDa7Ffnw7cka
-         if8kz1Now4sQH4T0TcPtkZhZa+yMsqRJDZEZt+feVeMiuTLLUhi9+rxYTwKduhZhH0k9
-         cx1oZVQkKW1Z3lEcDkRMsF0tVMfVAmyuCyWxQ=
+        h=domainkey-signature:received:received:received:date:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent
+         :from:reply-to;
+        bh=m1+yWtwQiIj+xGzvut2aQT2ljGOQurSoHOmGHz4SVDQ=;
+        b=lM/N4CRvja3G3jprGRLtHBew3YTp0B/yDTE5465y6rlhwdV0FQLhnE8/XIDchKvlof
+         vQsnF1zafrf2Ks7v9rAs512pAhKWBMVHIetC+70mYL810zPZikIbjjiX/yF2jvrRBEH1
+         PcDfghjKBjLNz2tfWXu3ToYLVSWg+g7iphun8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=IlIkBckq0czgjASsjWyF2tLujMJsGC4zv9PDEdzmezsERaj80YddkMKDDVhAEf0ecq
-         rVUjKr/0SBjnULSQwl2JBVqkSiiiT1UY5BKlapRVukdBdyy13aGuvYDvbNu2SZs1N/R0
-         wsZJWPcm1ZlQuxOTNs0Wu5HTnwfeQoDp93Ojg=
-Received: by 10.102.228.2 with SMTP id a2mr3953940muh.79.1219066920313;
-        Mon, 18 Aug 2008 06:42:00 -0700 (PDT)
-Received: from ?62.21.4.140? ( [62.21.4.140])
-        by mx.google.com with ESMTPS id y6sm503345mug.7.2008.08.18.06.41.58
+        h=date:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent:from:reply-to;
+        b=fLIw5HeBFU1lFqDu4zFKXc0m3JPoS/fIkO8to3HsfzGHsv9pL5CmVgh+P6CyJzltiA
+         RLiW/nS3wadVUxx+B9qr7jXd1xCztPUyIyz0wenI1YWKiGE2f4XOCRi8TtiUgNDQrC1Z
+         WIUX+0LOHLdCby6s9bM1knyKBFICNX1+UEDXE=
+Received: by 10.86.68.2 with SMTP id q2mr3195592fga.43.1219069026519;
+        Mon, 18 Aug 2008 07:17:06 -0700 (PDT)
+Received: from sigkill.schiele.dyndns.org ( [91.18.110.73])
+        by mx.google.com with ESMTPS id 3sm11294727fge.3.2008.08.18.07.17.05
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 18 Aug 2008 06:41:59 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080702 Iceape/1.1.11 (Debian-1.1.11-1)
-In-Reply-To: <1219057305-9284-3-git-send-email-charleso@charleso.org>
+        Mon, 18 Aug 2008 07:17:05 -0700 (PDT)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 054501604F; Mon, 18 Aug 2008 16:17:04 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92708>
 
-Charles O'Farrell wrote:
-> diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Branch.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Branch.java
-(...)
-> @@ -87,17 +91,27 @@ private void list() {
->  		if (head != null) {
->  			String current = head.getName();
->  			if (current.equals(Constants.HEAD))
-> -				printHead("(no branch)", true);
-> -			for (String ref : new TreeSet<String>(refs.keySet())) {
-> -				if (isHead(ref))
-> -					printHead(ref, current.equals(ref));
-> +				addRef("(no branch)", head);
-> +			addRefs(refs, Constants.HEADS_PREFIX, !remote);
-> +			addRefs(refs, Constants.REMOTES_PREFIX, remote);
+Signed-off-by: Robert Schiele <rschiele@gmail.com>
+---
+ Documentation/git-cvsserver.txt |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-We used to use (Constants.HEADS_PREFIX + '/') or 
-(Constants.REMOTES_PREFIX + '/') in such places, probably to handle 
-correctly jokes like refs named "refs/remotes_will_broke_your_code".
-
-I've seen this expression so many times that I think it's right moment 
-to create another Constants.HEADS_PREFIX_SLASHED (same for tags, 
-remotes) or similar as this piece of this code is redundant in many 
-places. But wait, does anybody use pure ones without slashes? Maybe we 
-can just change existing constants.
-
-Beside of that detail, me (being just jgit developer) says that the 
-series looks good. Oh, and it's probably good to follow convention of 
-marking variables as final when they are final.
-
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index c2d3c90..785779e 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ SSH:
+ 
+ [verse]
+-export CVS_SERVER=git-cvsserver
++export CVS_SERVER="git cvsserver"
+ 'cvs' -d :ext:user@server/path/repo.git co <HEAD_name>
+ 
+ pserver (/etc/inetd.conf):
+@@ -109,7 +109,7 @@ Note: Newer CVS versions (>= 1.12.11) also support specifying
+ CVS_SERVER directly in CVSROOT like
+ 
+ ------
+-cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name>
++cvs -d ":ext;CVS_SERVER=git cvsserver:user@server/path/repo.git" co <HEAD_name>
+ ------
+ This has the advantage that it will be saved in your 'CVS/Root' files and
+ you don't need to worry about always setting the correct environment
+@@ -158,7 +158,7 @@ allowing access over SSH.
+ --
+ ------
+      export CVSROOT=:ext:user@server:/var/git/project.git
+-     export CVS_SERVER=git-cvsserver
++     export CVS_SERVER="git cvsserver"
+ ------
+ --
+ 4. For SSH clients that will make commits, make sure their server-side
+@@ -283,7 +283,7 @@ To get a checkout with the Eclipse CVS client:
+ Protocol notes: If you are using anonymous access via pserver, just select that.
+ Those using SSH access should choose the 'ext' protocol, and configure 'ext'
+ access on the Preferences->Team->CVS->ExtConnection pane. Set CVS_SERVER to
+-'git-cvsserver'. Note that password support is not good when using 'ext',
++"'git cvsserver'". Note that password support is not good when using 'ext',
+ you will definitely want to have SSH keys setup.
+ 
+ Alternatively, you can just use the non-standard extssh protocol that Eclipse
 -- 
-Marek Zawirski [zawir]
-marek.zawirski@gmail.com
+1.5.4.5
