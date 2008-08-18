@@ -1,83 +1,66 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 2/7] system_path(): Add prefix computation at runtime if RUNTIME_PREFIX set
-Date: Mon, 18 Aug 2008 07:28:56 +0200
-Message-ID: <6E4B0DFF-DD1D-450D-B02A-9A89E260DBCB@zib.de>
-References: <1218977083-14526-1-git-send-email-prohaska@zib.de> <1218977083-14526-2-git-send-email-prohaska@zib.de> <1218977083-14526-3-git-send-email-prohaska@zib.de> <200808172243.09129.johannes.sixt@telecom.at>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT PATCH] Enable diff=java for all *.java source files
+Date: Mon, 18 Aug 2008 07:38:21 +0200
+Message-ID: <200808180738.21572.robin.rosenberg.lists@dewire.com>
+References: <1218814822-23307-1-git-send-email-spearce@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Mon Aug 18 07:30:15 2008
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Aug 18 07:41:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KUxJm-0003Nm-1B
-	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 07:30:14 +0200
+	id 1KUxUB-0005Hs-M6
+	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 07:41:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750924AbYHRF3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 01:29:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750848AbYHRF3I
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 01:29:08 -0400
-Received: from mailer.zib.de ([130.73.108.11]:60541 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750829AbYHRF3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 01:29:08 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m7I5SilB027688;
-	Mon, 18 Aug 2008 07:28:49 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db957af.pool.einsundeins.de [77.185.87.175])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m7I5SgGg024643
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 18 Aug 2008 07:28:43 +0200 (MEST)
-In-Reply-To: <200808172243.09129.johannes.sixt@telecom.at>
-X-Mailer: Apple Mail (2.926)
+	id S1751083AbYHRFjr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 01:39:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751019AbYHRFjr
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 01:39:47 -0400
+Received: from av10-2-sn2.hy.skanova.net ([81.228.8.182]:43683 "EHLO
+	av10-2-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750829AbYHRFjq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 01:39:46 -0400
+Received: by av10-2-sn2.hy.skanova.net (Postfix, from userid 502)
+	id 77F783A42C; Mon, 18 Aug 2008 07:39:44 +0200 (CEST)
+Received: from smtp4-1-sn2.hy.skanova.net (smtp4-1-sn2.hy.skanova.net [81.228.8.92])
+	by av10-2-sn2.hy.skanova.net (Postfix) with ESMTP
+	id 33CB33A426; Mon, 18 Aug 2008 07:39:44 +0200 (CEST)
+Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp4-1-sn2.hy.skanova.net (Postfix) with ESMTP id 25BB937E46;
+	Mon, 18 Aug 2008 07:39:43 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <1218814822-23307-1-git-send-email-spearce@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92680>
 
+fredagen den 15 augusti 2008 17.40.22 skrev Shawn O. Pearce:
+> This (usually) gets more reasonable function headers to
+> appear in the header line for a diff hunk.  Its slightly
+> better than the default C rules.
+> 
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> ---
+>  .gitattributes |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 .gitattributes
+> 
+> diff --git a/.gitattributes b/.gitattributes
+> new file mode 100644
+> index 0000000..f57840b
+> --- /dev/null
+> +++ b/.gitattributes
+> @@ -0,0 +1 @@
+> +*.java diff=java
 
-On Aug 17, 2008, at 10:43 PM, Johannes Sixt wrote:
+Is there any reason this isn't the default in git?
 
-> On Sonntag, 17. August 2008, Steffen Prohaska wrote:
->>
->> diff --git a/exec_cmd.c b/exec_cmd.c
->> index ce6741e..1622481 100644
->> --- a/exec_cmd.c
->> +++ b/exec_cmd.c
->> @@ -9,11 +9,51 @@ static const char *argv0_path;
->>
->> const char *system_path(const char *path)
->> {
->> -	if (!is_absolute_path(path) && argv0_path) {
->> -		struct strbuf d = STRBUF_INIT;
->> -		strbuf_addf(&d, "%s/%s", argv0_path, path);
->> -		path = strbuf_detach(&d, NULL);
->> +#ifdef RUNTIME_PREFIX
->> +	static const char *prefix;
->> +
->> +	if (!argv0_path) {
->> +		fprintf(stderr, "RUNTIME_PREFIX requested for path '%s', "
->> +				"but argv0_path not set.\n", path);
->
-> If this happens, isn't this a logic error: assert(argv0_path)?
-
-We could consider this a logic error.
-
-
->> 	}
->> +
->> +	if (!prefix) {
->> +		fprintf(stderr, "RUNTIME_PREFIX requested for path '%s', "
->> +				"but prefix computation failed.\n", path);
->
-> Again a logic error?
-
-The user can move the executable, so it's not a logic error.
-
-	Steffen
+-- robin
