@@ -1,59 +1,74 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] Plumbing-only support for storing object metadata
-Date: Mon, 18 Aug 2008 16:28:00 -0700
-Message-ID: <20080818232800.GD9572@spearce.org>
-References: <20080810112038.GB30892@cuci.nl> <20080809210733.GA6637@oh.minilop.net> <d411cc4a0808091449n7e0c9b7et7980cf668106aead@mail.gmail.com> <20080810035101.GA22664@spearce.org> <20080809210733.GA6637@oh.minilop.net> <20080810110925.GB3955@efreet.light.src> <20080816062130.GA4554@oh.minilop.net> <20080818061236.GF7376@spearce.org> <20080818230646.GA11044@cisco.com> <48AA0487.8050009@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] templates/Makefile: work around SGI install which
+ assumes / if ROOT not defined
+Date: Mon, 18 Aug 2008 16:37:12 -0700
+Message-ID: <7vhc9hlwt3.fsf@gitster.siamese.dyndns.org>
+References: <giNXZFTxzY3B65dQob7CwvwwfSKlZpw_60oz81RxU5UN3PsTT_3dMQ@cipher.nrlssc.navy.mil> <XAO6w2f4AxtqGEL6HNTkRYjhSFFUavQK8LYfdASEGw3-LRoH4_7Cdg@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Derek Fawcus <dfawcus@cisco.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Marcus Griep <neoeinstein@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 01:29:06 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Gerrit Pape <pape@smarden.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue Aug 19 01:38:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVE9p-0007wn-VA
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 01:29:06 +0200
+	id 1KVEIq-0002JJ-Lp
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 01:38:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753030AbYHRX2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 19:28:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752898AbYHRX2B
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 19:28:01 -0400
-Received: from george.spearce.org ([209.20.77.23]:39531 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752811AbYHRX2A (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 19:28:00 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 2FF2238376; Mon, 18 Aug 2008 23:28:00 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <48AA0487.8050009@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753150AbYHRXhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 19:37:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753272AbYHRXhV
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 19:37:21 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55104 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752875AbYHRXhU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 19:37:20 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 37E1453621;
+	Mon, 18 Aug 2008 19:37:18 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 78349535FD; Mon, 18 Aug 2008 19:37:14 -0400 (EDT)
+In-Reply-To: <XAO6w2f4AxtqGEL6HNTkRYjhSFFUavQK8LYfdASEGw3-LRoH4_7Cdg@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Mon, 18 Aug 2008 18:14:23 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 987607A6-6D7E-11DD-825F-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92762>
 
-Marcus Griep <neoeinstein@gmail.com> wrote:
-> I was under the impression that tags were references to commit objects,
-> and they to tree objects:
-> 
-> tag -> commit -> tree
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-No.  A tag can reference any object.  See for example the
-junio-gpg-pub tag in git.git, it references a blob, not a commit.
-The linux-2.6.git tree has a tag which references a tree.
+> diff --git a/templates/Makefile b/templates/Makefile
+> index 9f3f1fc..3ea63e1 100644
+> --- a/templates/Makefile
+> +++ b/templates/Makefile
+> @@ -29,7 +29,7 @@ boilerplates.made : $(bpsrc)
+>  		case "$$boilerplate" in *~) continue ;; esac && \
+>  		dst=`echo "$$boilerplate" | sed -e 's|^this|.|;s|--|/|g'` && \
+>  		dir=`expr "$$dst" : '\(.*\)/'` && \
+> -		$(INSTALL) -d -m 755 blt/$$dir && \
+> +		ROOT=./ $(INSTALL) -d -m 755 blt/$$dir && \
 
-Tags may also reference other tags.
- 
-> Also, wouldn't this require large numbers tags, or the ability to multi-
-> target tags?
+I do not see absolutely any reason to use install there.
 
-Tag objects don't have to have names in the repository's ref space,
-but it helps that they do when you are doing git-lost-found.
-Having a tag in the database which shouldn't have a ref name in
-refs/tags is more than a bit funny.
+I have to wonder why 9907721 (templates/Makefile: don't depend on local
+umask setting, 2008-02-28) did not do this instead:
 
--- 
-Shawn.
+	$(QUIET)umask 022 && ls *--* 2>/dev/null | \
+	while read boilerplate; \
+	do \
+		case "$$boilerplate" in *~) continue ;; esac && \
+		dst=`echo "$$boilerplate" | sed -e 's|^this|.|;s|--|/|g'` && \
+		dir=`expr "$$dst" : '\(.*\)/'` && \
+		mkdir -p blt/$$dir && \
+		case "$$boilerplate" in \
+		*--) ;; \
+		*) cp $$boilerplate blt/$$dst ;; \
+		esac || exit; \
+	done && \
+	date >$@
