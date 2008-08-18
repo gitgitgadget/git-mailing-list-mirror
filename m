@@ -1,78 +1,75 @@
-From: Marcus Griep <neoeinstein@gmail.com>
-Subject: Re: Call Me Gitless
-Date: Mon, 18 Aug 2008 16:17:52 -0400
-Message-ID: <48A9D8F0.9090309@gmail.com>
-References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com> <alpine.LNX.1.00.0808181512160.19665@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add boolean diff.suppress-blank-empty config option
+Date: Mon, 18 Aug 2008 13:20:10 -0700
+Message-ID: <7vmyjam5xh.fsf@gitster.siamese.dyndns.org>
+References: <87k5eiphro.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>, Trans <transfire@gmail.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Aug 18 22:19:09 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>, Paul Eggert <eggert@cs.ucla.edu>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Mon Aug 18 22:21:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVBBu-00052a-Lw
-	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 22:19:03 +0200
+	id 1KVBED-0005v0-Sc
+	for gcvg-git-2@gmane.org; Mon, 18 Aug 2008 22:21:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751102AbYHRUR5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Aug 2008 16:17:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753470AbYHRUR5
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 16:17:57 -0400
-Received: from wr-out-0506.google.com ([64.233.184.237]:38704 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750985AbYHRUR4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 16:17:56 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so2232035wri.5
-        for <git@vger.kernel.org>; Mon, 18 Aug 2008 13:17:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=/qrxistU/8zq5v0pmNsv27xeoo21GlUcykIy/vZBupg=;
-        b=xZ0TVq90zkQqpsLi3HrJwuLECqPa+TH5zPNnJnNlEu/t89LcZwU2kYR24C7jX3pku7
-         DSOn3hSFoeJwvjtemulbaVlM3eFWAvorxcoT6q52ikFcobkS35oiXYY05nb7JGYeMuux
-         5fFE2uBnICI3lkCWItqNvFDK3I/YfAOHuYOKk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=rtT+6ptwEGLQeB19SNZWc8ZN+VAklgr7d8dOJdDWMIMeO7DQN0Kk8h1l6HMppthkZ6
-         d+rfoi46HBxeMdzhw6izNfc3gS+A72yrYQgBckvPwltzqAiMooR+vWDLo2sIUlmqzpvw
-         N7mvJUrLJsRNU/xaJ447gfeEZHiveaA4i9+Y8=
-Received: by 10.90.36.16 with SMTP id j16mr1524665agj.50.1219090675516;
-        Mon, 18 Aug 2008 13:17:55 -0700 (PDT)
-Received: from ?10.95.36.106? ( [4.79.245.132])
-        by mx.google.com with ESMTPS id l22sm3614403wrl.30.2008.08.18.13.17.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 18 Aug 2008 13:17:54 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <alpine.LNX.1.00.0808181512160.19665@iabervon.org>
-X-Enigmail-Version: 0.95.6
+	id S1752807AbYHRUUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 16:20:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752648AbYHRUUU
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 16:20:20 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35937 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752500AbYHRUUT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 16:20:19 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 35E8D5EA00;
+	Mon, 18 Aug 2008 16:20:17 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 514765E9FE; Mon, 18 Aug 2008 16:20:13 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1297B3A2-6D63-11DD-B488-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92736>
 
-Daniel Barkalow wrote:
->> Well, after a few days of using git, I've decide Linus is too smart =
-to
->> be designing end-user interfaces.
->=20
-> This is true, but hardly relevant. Git's end-user interface was almos=
-t=20
-> entirely designed by other people, using Linus's excellent=20
-> script-developer API.
+Jim Meyering <jim@meyering.net> writes:
 
-Blame the plumbers. :-P
+> GNU diff's --suppress-blank-empty option makes it so that diff does not
+> add a space or tab before each empty output line of context.  With this
+> option, empty context lines are empty also in "git diff" output.
+> Before (and without the option), they'd have a single trailing space.
 
---=20
-Marcus Griep
-GPG Key ID: 0x5E968152
-=E2=80=94=E2=80=94
-http://www.boohaunt.net
-=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
+> diff --git a/xdiff-interface.c b/xdiff-interface.c
+> index 61dc5c5..5544e5a 100644
+> --- a/xdiff-interface.c
+> +++ b/xdiff-interface.c
+> @@ -66,6 +66,13 @@ int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
+>  	struct xdiff_emit_state *priv = priv_;
+>  	int i;
+>
+> +	if (priv->suppress_blank_empty
+> +	    && mb[0].size == 1
+> +	    && mb[0].ptr[0] == ' '
+> +	    && mb[1].size == 1
+> +	    && mb[1].ptr[0] == '\n')
+> +	  mb[0].size = 0;
+> +
+>  	for (i = 0; i < nbuf; i++) {
+>  		if (mb[i].ptr[mb[i].size-1] != '\n') {
+>  			/* Incomplete line */
+
+I do not have a fundamental objection to the optional behaviour, but from
+technical point of view, I had to wonder if hooking to xdiff_outf() has
+funny interactions with codepaths that use patch-id (namely, git-rebase,
+git-format-patch, and git-cherry).  Luckily, patch-ids are computed over
+non whitespaces, so it turns out to be Ok, but there may be other
+unintended side effects that I haven't thought about.
+
+I would have preferred the option to hook into a bit higher layer (namely,
+the part that actually writes textual diff to the output stream).
