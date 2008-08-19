@@ -1,79 +1,59 @@
-From: =?ISO-8859-1?Q?Andreas_F=E4rber?= <andreas.faerber@web.de>
-Subject: Re: [PATCH 1/2] compat: introduce stat_to_kilobytes
-Date: Tue, 19 Aug 2008 10:39:48 +0200
-Message-ID: <3C98B537-7CD6-4575-8196-1706F8DA049C@web.de>
-References: <273481A4-0BB2-4A58-83AD-604B425DE824@web.de> <7vy72w6kiv.fsf@gitster.siamese.dyndns.org> <200808182157.16392.johannes.sixt@telecom.at>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] add definitions for global variables to shell.c
+Date: Tue, 19 Aug 2008 10:49:53 +0200
+Message-ID: <48AA8931.1030009@viscovery.net>
+References: <20080818123727.GB11842@schiele.dyndns.org> <7vy72tkfu0.fsf@gitster.siamese.dyndns.org> <20080819072650.GE11842@schiele.dyndns.org> <7vpro5fnke.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Tue Aug 19 10:41:59 2008
+Cc: Robert Schiele <rschiele@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 10:51:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVMmr-0004CE-8T
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 10:41:57 +0200
+	id 1KVMvg-00071L-Pr
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 10:51:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753215AbYHSIkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 04:40:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753198AbYHSIkw
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 04:40:52 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:33625 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752101AbYHSIkv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 04:40:51 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 5AE19E708876;
-	Tue, 19 Aug 2008 10:40:10 +0200 (CEST)
-Received: from [91.18.110.246] (helo=[10.0.1.1])
-	by smtp07.web.de with asmtp (TLSv1:AES128-SHA:128)
-	(WEB.DE 4.109 #226)
-	id 1KVMl8-0003Go-00; Tue, 19 Aug 2008 10:40:10 +0200
-In-Reply-To: <200808182157.16392.johannes.sixt@telecom.at>
-X-Mailer: Apple Mail (2.926)
-X-Sender: Andreas.Faerber@web.de
-X-Provags-ID: V01U2FsdGVkX18kgAeospChfMNYeSasSk8mZzXDJNbVPh4CWF4j
-	I2gI1uXfQyv7C3clA+ZcibiVhlCfv51MRbY6nzMOdlH3YPcaOk
-	cgfAY6Zu1xNcID55fjpA==
+	id S1751557AbYHSIt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 04:49:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752633AbYHSIt7
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 04:49:59 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:61434 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751550AbYHSIt6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 04:49:58 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KVMuY-0004D0-FM; Tue, 19 Aug 2008 10:49:54 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id E556B4FB; Tue, 19 Aug 2008 10:49:53 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vpro5fnke.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92833>
 
+Junio C Hamano schrieb:
+> Even if that is the case, I do not like the prospect of having to maintain
+> a set of duplicated variable definitions.  If we really wanted to address
+> this issue, maybe we would want a separate source file that is linked to
+> both git-shell and to the rest of the system that has nothing but
+> definitions of these variables?  I thought environment.c was meant to be
+> something like that -- would linking environment.o pull in too many extra
+> references these days (again, I didn't try)?
 
-Am 18.08.2008 um 21:57 schrieb Johannes Sixt:
+Why not just revert 5b8e6f85f (shrink git-shell)? It was a nice try. If it
+had not proved as a maintainance burden, it would have had merits. But who
+these days cares whether git-shell takes 300K or 30K in the light of that
+it goes out of the way anyway by execing some other process at the first
+opportunity?
 
-> From: Junio C Hamano <gitster@pobox.com>
->
-> Some platforms do not have st_blocks member in "struct stat"; mingw
-> already emulates it by rounding it up to closest 512-byte blocks (even
-> though it could overcount when a file has holes).
->
-> The reason to use the member is only to figure out how many  
-> kilobytes the
-> file occupies on-disk, so give a helper in git-compat-util.h to help  
-> these
-> platforms.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> Acked-by: Johannes Sixt <johannes.sixt@telecom.at>
-> ---
-> On Sonntag, 17. August 2008, Junio C Hamano wrote:
->>   The comment before "struct mingw_stat" suggests that the only  
->> reason
->>   this compatiblity definition exists is to add st_blocks member,  
->> so I
->>   suspect we could remove the definition and simplify the  
->> compatibility
->>   layer a lot more, but I do not know MinGW, so I am CC'ing j6t here.
->
-> Makes sense. Here it is again, with the Makefile fixup noted by  
-> Andreas.
-
-I have tested this on Haiku, compiles okay and simplifies my patches.
-
-Thanks,
-Andreas
+-- Hannes
