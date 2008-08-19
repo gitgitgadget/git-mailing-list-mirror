@@ -1,117 +1,61 @@
-From: Robert Schiele <rschiele@gmail.com>
-Subject: Re: [PATCH] add definitions for global variables to shell.c
-Date: Tue, 19 Aug 2008 09:26:51 +0200
-Message-ID: <20080819072650.GE11842@schiele.dyndns.org>
-References: <20080818123727.GB11842@schiele.dyndns.org> <7vy72tkfu0.fsf@gitster.siamese.dyndns.org>
-Reply-To: Robert Schiele <rschiele@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] compat: introduce stat_to_kilobytes
+Date: Tue, 19 Aug 2008 00:31:42 -0700
+Message-ID: <7v7iadh34x.fsf@gitster.siamese.dyndns.org>
+References: <273481A4-0BB2-4A58-83AD-604B425DE824@web.de>
+ <7vy72w6kiv.fsf@gitster.siamese.dyndns.org>
+ <200808182157.16392.johannes.sixt@telecom.at>
+ <7vbpzqm50b.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="9hzSyicXuByfNYJd"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 09:28:01 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Andreas =?utf-8?Q?F=C3=A4rber?= <andreas.faerber@web.de>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Tue Aug 19 09:33:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVLdG-0001RC-HG
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 09:27:58 +0200
+	id 1KVLi6-0002XC-TD
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 09:32:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751923AbYHSH0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 03:26:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751879AbYHSH0z
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 03:26:55 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:38069 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751873AbYHSH0y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 03:26:54 -0400
-Received: by ug-out-1314.google.com with SMTP id c2so405362ugf.37
-        for <git@vger.kernel.org>; Tue, 19 Aug 2008 00:26:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent:from:reply-to;
-        bh=6Dg/VZL8M7JLN6pjnAeV4eGr2e+Ane+cOw8rvUEaSMI=;
-        b=agu7/nBswY3f3TEht84drB/8DdKV14ebu0y5e1ebnKJrcvNbneyJoOU7lcdwpylzmr
-         +09y5favd4Op7SJtRq8eAggYwMzLZHm9IEd5kT5pJTvt7P4FqRFc7ezaoNdW3ScFm8BW
-         Yp1acCwCmskytJz8wLuYEVZmI5o5/TcW8Dt5g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:to:cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent:from:reply-to;
-        b=vMfgqrckfLi9dM7syYhkKijd2iB7WJgi7yoWuBcgBWRhFAQLtlwG0qNjLVfQOFZKYu
-         kFJejb1jG2vdXU9+GAoYiekCWD0Zak7FmdMPxeHCD/+8Wkfk2BEIHIFP6y+ZQmH3InXr
-         4CrEqY7LQR1pVm46IhZlH7+3Md03EUkX/POeU=
-Received: by 10.66.234.8 with SMTP id g8mr4707951ugh.43.1219130812959;
-        Tue, 19 Aug 2008 00:26:52 -0700 (PDT)
-Received: from sigkill.schiele.dyndns.org ( [91.18.123.131])
-        by mx.google.com with ESMTPS id 18sm10149196ugk.82.2008.08.19.00.26.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 19 Aug 2008 00:26:52 -0700 (PDT)
-Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
-	id 2648D16051; Tue, 19 Aug 2008 09:26:51 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vy72tkfu0.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752273AbYHSHbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 03:31:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbYHSHbz
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 03:31:55 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64366 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752031AbYHSHbz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 03:31:55 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 24EF459F48;
+	Tue, 19 Aug 2008 03:31:54 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6F65559F47; Tue, 19 Aug 2008 03:31:50 -0400 (EDT)
+In-Reply-To: <7vbpzqm50b.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 18 Aug 2008 13:40:04 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E56F0BD8-6DC0-11DD-83C9-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92822>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---9hzSyicXuByfNYJd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Johannes Sixt <johannes.sixt@telecom.at> writes:
+> ...
+>> But notice that we now underestimated the size of loose objects more than
+>> we did previously because we now round down individual sizes; previously
+>> we rounded down only the total size.
+>
+> Ah, you are right.
+>
+> Perhaps we should fix this by making the helper stat_to_on_disk_bytes(),
+> so that on platform with st_blocks counted in 512-byte blocks we multiply
+> it by 512?
 
-On Mon, Aug 18, 2008 at 05:29:11PM -0700, Junio C Hamano wrote:
-> Haven't looked at the real declarations but if the decl are "extern" and
-> nobody refers to them, why should the resulting object file require them
-> to be defined anywhere?  If the decl are not and in (fortran-ish) "common"
-> section, on the other hand, you shouldn't have to define them yourself
-> like this either.
->=20
-> This sounds like a compiler bug to me.
-
-This was my first thought as well but after more inspection there are two
-things to consider:
-
-1. I was not really precise enough in my description since I didn't spot th=
-at
-   when I looked into the issue first: Actually there are references to the=
-se
-   variables in static inline functions in cache.h.  Thus there actually is=
- a
-   reference though one that will never be used since abspath.c (that inclu=
-des
-   cache.h) is not calling any of these functions.
-
-2. Since these symbols turn out to be referenced though in dead code only I
-   wouldn't call it a compiler bug.  Obviously a smart compiler would do de=
-ad
-   code elimination here but the fact that this compiler is not doing so is
-   bad but not really a bug.
-
-Robert
-
---=20
-Robert Schiele
-Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
-
-"Quidquid latine dictum sit, altum sonatur."
-
---9hzSyicXuByfNYJd
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.4-svn0 (GNU/Linux)
-
-iD8DBQFIqnW6xcDFxyGNGNcRAqwGAJ9jmiO6b4RPW2RzKu97RhLewRZXOQCfeRNR
-NWpj53SJ9Wb+GACtEXK+Img=
-=BL5G
------END PGP SIGNATURE-----
-
---9hzSyicXuByfNYJd--
+I've done this myself and will queue the result.
