@@ -1,61 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] compat: introduce stat_to_kilobytes
-Date: Tue, 19 Aug 2008 00:31:42 -0700
-Message-ID: <7v7iadh34x.fsf@gitster.siamese.dyndns.org>
-References: <273481A4-0BB2-4A58-83AD-604B425DE824@web.de>
- <7vy72w6kiv.fsf@gitster.siamese.dyndns.org>
- <200808182157.16392.johannes.sixt@telecom.at>
- <7vbpzqm50b.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] test-lib.sh: work around ksh's trap shortcomings
+Date: Tue, 19 Aug 2008 00:39:43 -0700
+Message-ID: <7v3al1h2rk.fsf@gitster.siamese.dyndns.org>
+References: <giNXZFTxzY3B65dQob7CwvwwfSKlZpw_60oz81RxU5UN3PsTT_3dMQ@cipher.nrlssc.navy.mil> <gPlIc7E6mNDrXE6mwaHXFoin7rDpLmjvuzlhJfCp-YmuyVK3pEzqNA@cipher.nrlssc.navy.mil> <7vbpzplw9o.fsf@gitster.siamese.dyndns.org> <ZqhiQsjr6llIQS0q8PP8utINgu-mnafhFeUc119IDyjsaBEePvtv9g@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Andreas =?utf-8?Q?F=C3=A4rber?= <andreas.faerber@web.de>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Tue Aug 19 09:33:01 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue Aug 19 09:40:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVLi6-0002XC-TD
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 09:32:59 +0200
+	id 1KVLpm-0004bh-4N
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 09:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752273AbYHSHbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 03:31:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbYHSHbz
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 03:31:55 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64366 "EHLO
+	id S1752630AbYHSHju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 03:39:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752623AbYHSHju
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 03:39:50 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65451 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752031AbYHSHbz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 03:31:55 -0400
+	with ESMTP id S1752520AbYHSHjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 03:39:49 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 24EF459F48;
-	Tue, 19 Aug 2008 03:31:54 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3F5BA59FF4;
+	Tue, 19 Aug 2008 03:39:48 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 6F65559F47; Tue, 19 Aug 2008 03:31:50 -0400 (EDT)
-In-Reply-To: <7vbpzqm50b.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 18 Aug 2008 13:40:04 -0700")
+ ESMTPSA id A788C59FF3; Tue, 19 Aug 2008 03:39:45 -0400 (EDT)
+In-Reply-To: <ZqhiQsjr6llIQS0q8PP8utINgu-mnafhFeUc119IDyjsaBEePvtv9g@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Mon, 18 Aug 2008 19:06:38 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E56F0BD8-6DC0-11DD-83C9-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 00062368-6DC2-11DD-83C9-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92823>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-> Johannes Sixt <johannes.sixt@telecom.at> writes:
+> Junio C Hamano wrote:
+>> Brandon Casey <casey@nrlssc.navy.mil> writes:
+>> 
+>>> In ksh, if trap is called within a function with 0 or EXIT as its signal,
+>>> then the trap will be executed at the time the function returns. This
+>>> causes a problem in the test functions since 'trap - exit' is called
+>>> within the test_done function
+>> 
+>> Your alias test_done that calls function test_done look ugly and confusing
+>> beyond words.
 > ...
->> But notice that we now underestimated the size of loose objects more than
->> we did previously because we now round down individual sizes; previously
->> we rounded down only the total size.
+> I will try your suggestions.
 >
-> Ah, you are right.
->
-> Perhaps we should fix this by making the helper stat_to_on_disk_bytes(),
-> so that on platform with st_blocks counted in 512-byte blocks we multiply
-> it by 512?
+> I also hope you noticed that these patches followed an FYI message
+> and were not meant for direct inclusion. I hope you noticed that
+> since I don't want you to waste your time. Maybe I should have
+> put FYI in the [PATCH] string.
 
-I've done this myself and will queue the result.
+Yeah, I think I got the subtle distinction between [PATCH FYI], [PATCH]
+and ones with and without sign-offs.
+
+I've read "trap" section of 1003.1 2004 three times but I do not see the
+exact definition of "EXIT" condition mentioned.  Is the behaviour to
+consider "function return" the EXIT condition considered a "shortcoming"
+(aka bug)?
