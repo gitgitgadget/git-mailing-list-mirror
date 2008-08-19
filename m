@@ -1,121 +1,133 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: Re: Dumb "continuous" commit dumb question
-Date: Tue, 19 Aug 2008 15:32:58 +0100
-Message-ID: <e1dab3980808190732i303f06ach50e36e13a624bd23@mail.gmail.com>
-References: <48AA4263.8090606@gmail.com>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [PATCH 1/3 v10] gitweb: add test suite with Test::WWW::Mechanize::CGI
+Date: Tue, 19 Aug 2008 16:37:45 +0200
+Message-ID: <48AADAB9.4070706@gmail.com>
+References: <48A9CEC0.2020100@gmail.com> <1219088389-14828-1-git-send-email-LeWiemann@gmail.com> <7vd4k5kdl3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Pat LeSmithe" <qed777@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 16:34:26 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 16:39:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVSHr-0001eG-3a
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 16:34:19 +0200
+	id 1KVSMX-0003eO-LM
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 16:39:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754050AbYHSOdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 10:33:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753144AbYHSOdA
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 10:33:00 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:50078 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754018AbYHSOc7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 10:32:59 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so3755922wfd.4
-        for <git@vger.kernel.org>; Tue, 19 Aug 2008 07:32:58 -0700 (PDT)
+	id S1751708AbYHSOhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 10:37:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751854AbYHSOhr
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 10:37:47 -0400
+Received: from gv-out-0910.google.com ([216.239.58.185]:6835 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750823AbYHSOhq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 10:37:46 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so680924gvc.37
+        for <git@vger.kernel.org>; Tue, 19 Aug 2008 07:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=e4UNPaRny+eBgeZYzBmt0TusxPxTnef92iVXQOHGkG8=;
-        b=AUfDU1XbWkA7sonKXJDzf4QuCsWyxgHYMVjFDH377qWa5ENRz5G0BS56rYf0kE6Kmu
-         +CrtIFXOSEjJvfvB9OYxPss3mzeDuPGZyadS4KBJM2TaolO8xSXdJDTehJpnte3Q+oiQ
-         Q+eXyKNngboc8oWTl7jYYgkiz/1pnQoRK3jVc=
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=hfcYGms2E7vgkue3rmys4pMP+6hrNaUtDGBm/TtWHmo=;
+        b=nezTwAS/xN1T4z1PrmSsi9WrRYas4X8lhYULqo4V5RiJAmAW85WzEc+2aMEcZN0+6J
+         52J/eGAUEtpEHjG1PubEhLJii5hv8mAIh2OWR27KBVtEf7m4tVvmudnvQ6NBGROtfsy9
+         wJ15Reevv648tdInNW/jtT0HvjbuPf+v+D6qs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=WN1kkh7lT1UocmgImvNAo3mIj6xJDuFfhEAJFvQzbgPssSwaYw2zGpnAZPPpdM+FUc
-         61p29vfbQ6w8swkXGKBBSYloPr1en6IPZtb7nLhAn40iGfe/a7Yb+gkFxNHOl9YAIrU7
-         0zQ/2Upw3YI0aNQhATpsSVdaYQECT9uhTemzg=
-Received: by 10.142.154.20 with SMTP id b20mr2536436wfe.222.1219156378177;
-        Tue, 19 Aug 2008 07:32:58 -0700 (PDT)
-Received: by 10.142.136.18 with HTTP; Tue, 19 Aug 2008 07:32:58 -0700 (PDT)
-In-Reply-To: <48AA4263.8090606@gmail.com>
-Content-Disposition: inline
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=dhyQ1R4wY9DYQvd3A934LDom0u/SuPJ+I+1pWKKtkfESiPcCwptZkzkWwCKrmlMNMo
+         0C0ujb4iGC1k07d4H8xITe9+f5BYhWEPeUPBA9R48cgdHg3Yabmp2oDXugE2KBjFUyxC
+         7JaQYAGdKQ1fexlOk9EEl3vcahtWNKz7fU61c=
+Received: by 10.103.169.1 with SMTP id w1mr4888263muo.107.1219156664812;
+        Tue, 19 Aug 2008 07:37:44 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.210.90])
+        by mx.google.com with ESMTPS id e8sm1047117muf.6.2008.08.19.07.37.42
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 19 Aug 2008 07:37:43 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080707 Thunderbird/2.0.0.16 Mnenhy/0.7.5.666
+In-Reply-To: <7vd4k5kdl3.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92866>
 
-On Tue, Aug 19, 2008 at 4:47 AM, Pat LeSmithe <qed777@gmail.com> wrote:
->
-> Hello,
->
-> Is it possible to enable git to automatically and continuously "softly"
-> commit or stage *all* changes to a [subset of] files in a repository,
-> without my intervention, as they happen?  Perhaps via a daemon which
-> monitors the disk for explicit file-saving?
->
-> Of course, I would still be able to perform explicit commits (with
-> descriptive comments) and other git commands, in which case there
-> probably should be smart handling of the recent soft history.  For
-> example, it could simply be discarded.
->
-> I understand that I could simply remember to commit and/or branch early
-> and often.  But given that changes by an individual on a given branch
-> are well-ordered by time, and that the "continuous" operation may be
-> cheap in many situations, a "live" journal could be useful.
+Junio C Hamano wrote:
+> Lea Wiemann <lewiemann@gmail.com> writes:
+> 
+>> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+>> Signed-off-by: Lea Wiemann <LeWiemann@gmail.com>
+> 
+> This s-o-b chain is a bit confusing; was this authored by you or Jakub?
 
-What I do is have a script that runs every 10 minutes that stages
-files to the index and then, using the low-level git plumbing, creates
-tree and commit objects on a side branch "temp". With this you can
-easily commit to the main branch "main" PROVIDING you are commiting a
-superset of the changes you're storing to the side-branch. If you
-wanted to specify exactly the things in your "main" commit I suspect
-you'd have to do some kind of "git-reset --mixed" to rollback the
-side-branch state. One thing to be aware of if you do this is that git
-expects your index file to be describing what you intend to do on the
-current branch you are on (in, eg, git status), but by doing it this
-way you'll get output that acts as if you've staged things for your
-"main" branch.
+Jakub started it, I extended it.  Should we have different SOB lines?
 
-This isn't a problem for me as my (idiosyncratic) usage is to have
-commits on my main branch every hour via cron anyway.
+>> +safe_chmod () {
+>> +	chmod "$1" "$2" &&
+>> +	if [ "$(git config --get core.filemode)" = false ]
+>> +	then
+>> +		git update-index --chmod="$1" "$2"
+>> +	fi
+>> +}
+> 
+> You have this in t9500 as well.  Perhaps it can go to test-lib?
 
-If you're particularly interested in this approach I can either try
-and explain the commands I use in email or you can try and extract
-them from my python script chronoversion:
+Will do in the next version of this patch.
 
-http://www.personal.rdg.ac.uk/~sis05dst/chronoversion.tgz
+>> +# check if test can be run
+>> +"$PERL_PATH" -MEncode -e 'decode_utf8("", Encode::FB_CROAK)' >/dev/null 2>&1 || {
+>> +	test_expect_success \
+>> +		'skipping gitweb tests, perl version is too old' :
+> 
+> It may be helpful to say what exactly is lacking
 
-> Perhaps a better term is branch-aware undo or git with microstructure.
+Right.  Since Encode doesn't run on older Perl versions anyway, I'm
+changing it to
 
-I actually find I don't use the temp branch to actually undo stuff
-(partly because I'm not even trying to keep a neat history so I do
-modifications primarily via new commits). Instead, I sometimes modify
-and extend my research code in a way that I do maybe an hour or so of
-new code and refactoring before it's in a state to actually run again.
-If when it finally runs something's broken I find it very helpful to
-be able to look backwards to see what changes I've made as the problem
-either jumps out or I know where to start experimenting.
+"$PERL_PATH" -e 'use 5.008' >/dev/null 2>&1 || {
+	test_expect_success \
+		'skipping gitweb tests, Perl 5.8 or newer required' :
 
-One problem with chronological backups is that they often don't
-compile/run so you can't bisect on them. One thing I have been trying
-to figure out is if there's an easy way to modify my build system so
-that it makes a commit approximately every 10 minutes but just after a
-successful compile. However, that looks to be a bit too complex and
-error prone for the moment.
+> t3300, t4000, t5540, t9113,
+> t9113, t9600, and t9700 use "say" (or say_color), t3902, t4016, t5000, and
+> t7004 just use "echo", and t9200, t9400, t9401 and t9500 do this phoney
+> "success".  We should standardize these by introducing "test_stop_early
+> $msg".
 
--- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-"while having code so boring anyone can maintain it, use Python." --
-attempted insult seen on slashdot
+Yup; maybe "test_skip_all" is clearer though.  I think this should be
+done in a separate patch.
+
+>> +	test_tick && git pull . b
+> 
+> That "pull . b" is somewhat old fashioned, but is Ok.
+
+Is "git merge b" equivalent?  (The test still passes with it.)
+
+>> +large_cache_root="../t9503/large_cache.tmp"
+> 
+> Please use $TEST_DIRECTORY without relying on the location of "t/trash
+> directory"; it was painful to fix all of them.
+
+Ok, fixed all of those.  I'll also move the cache-setup code to patch 3
+(gitweb caching), since it doesn't belong here as long as caching isn't
+implemented.
+
+>> +# Grep
+> 
+> With these search oriented tests, making sure that you would find what you
+> expect to find is obviously important, but shouldn't you be also making
+> sure that irrelevant entries are not found?
+
+Technically yes, but I'm not inclined at the moment to write that test
+(at least while I'm not hacking the search part of gitweb).  The test is
+basically only there to exercise the code and make sure it returns
+*something* sensible, which is where most breakages would occur.
+
+Thanks for all your feedback!  I'll wait with sending a new patch series
+until I've collected all feedback.
+
+-- Lea
