@@ -1,86 +1,115 @@
 From: Marcus Griep <neoeinstein@gmail.com>
-Subject: Re: Call Me Gitless
-Date: Mon, 18 Aug 2008 23:55:28 -0400
-Message-ID: <48AA4430.3060207@gmail.com>
-References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com> <alpine.LNX.1.00.0808181512160.19665@iabervon.org> <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0808181628420.19665@iabervon.org> <7vtzdiklbw.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0808181839390.19665@iabervon.org> <7vy72tit90.fsf@gitster.siamese.dyndns.org>
+Subject: Re: Dumb "continuous" commit dumb question
+Date: Tue, 19 Aug 2008 00:13:39 -0400
+Message-ID: <48AA4873.4040107@gmail.com>
+References: <48AA4263.8090606@gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
  protocol="application/pgp-signature";
- boundary="------------enig8E69742F58FB2810FD7D9922"
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 05:56:50 2008
+ boundary="------------enig28A65A68ADC33B576C21962C"
+Cc: git@vger.kernel.org
+To: Pat LeSmithe <qed777@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 06:15:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVIKw-0007tX-CQ
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 05:56:50 +0200
+	id 1KVIck-0002SE-3S
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 06:15:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752620AbYHSDzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 23:55:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752758AbYHSDzr
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 23:55:47 -0400
-Received: from wr-out-0506.google.com ([64.233.184.234]:58318 "EHLO
+	id S1750962AbYHSENz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 00:13:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753363AbYHSENy
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 00:13:54 -0400
+Received: from wr-out-0506.google.com ([64.233.184.238]:59522 "EHLO
 	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752382AbYHSDzq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 23:55:46 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so2377495wri.5
-        for <git@vger.kernel.org>; Mon, 18 Aug 2008 20:55:45 -0700 (PDT)
+	with ESMTP id S1750916AbYHSENx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 00:13:53 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so2382802wri.5
+        for <git@vger.kernel.org>; Mon, 18 Aug 2008 21:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from
          :user-agent:mime-version:to:cc:subject:references:in-reply-to
          :x-enigmail-version:content-type;
-        bh=y0/v1i4zHmmJ8DnM78Os68uSIhNaWNu5/qh1RtUJgEg=;
-        b=VMzuZnOqe0cTWG78sf0ywWW+mzXdIpVsIlWifekM8VvFJACUV+ea+SXAuNL0GWLyfF
-         Q8d9iR3KyWOUTSYLr+CkUsPmDTMN16gOZGF/ERJi8oErfXUdW5WV5OKMSnxN8SjGdP5P
-         VZE5bQzIk5iwnYm+otlmmZGGj+wij78sf1Bpw=
+        bh=dCmk8dXZah0OF1J/fQtKw0VnA0NE+WW9e9KHlLpLQ2o=;
+        b=NARb7GFrNv9NNDytCeMqzdhe8xh9/rOqrxV9Ck8EKoyOUQqLACuD8Ntx+T3KTNMRwB
+         WqBOsncTVix2/dMAFTn0psC8WXMcuJhDwam75jm/zexhewkh6f9yEYWBnvQgrihyHGn9
+         kwXhGRBqdjboHpQnsGSQ03++1Njt85+yl/vWQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:x-enigmail-version:content-type;
-        b=YeK2zCALK6tb8DPQ5K0Pvtc/9wf1zb7d+ziU0qcNzQqUpCio3jYbRMe9YIArc5cISS
-         i30NU7IR1t3JB++4OFh/Lrbf72YJ4y5CPmi9IiADlM/+UQeCjhokmMV/ZvpUspRnZa5A
-         KIKyrQSMiV/gBU9Xnc/nPFmhkKlpwhEPnx3nM=
-Received: by 10.90.33.5 with SMTP id g5mr8902209agg.81.1219118145468;
-        Mon, 18 Aug 2008 20:55:45 -0700 (PDT)
+        b=YaG6ce6rps4XhA4pboRBttMsXwcn6XGcBqr8wj3mkoPqKLh1T16xGw0DBCoRNacJ1j
+         GVzMR3voVGzNCUndhV/61VwXpgvr6GoyRKQduqY1+8yVXWt98+HXhmDVWeAyugLTndSc
+         zAepqUO51vKRy/Q5kfbc3k2A50X+CZjlJ1RsU=
+Received: by 10.90.71.15 with SMTP id t15mr6800724aga.14.1219119232622;
+        Mon, 18 Aug 2008 21:13:52 -0700 (PDT)
 Received: from ?192.168.1.3? ( [71.174.65.78])
-        by mx.google.com with ESMTPS id 38sm3242883aga.4.2008.08.18.20.55.43
+        by mx.google.com with ESMTPS id 7sm2666997agc.14.2008.08.18.21.13.50
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 18 Aug 2008 20:55:44 -0700 (PDT)
+        Mon, 18 Aug 2008 21:13:51 -0700 (PDT)
 User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <7vy72tit90.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <48AA4263.8090606@gmail.com>
 X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92811>
 
 This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig8E69742F58FB2810FD7D9922
+--------------enig28A65A68ADC33B576C21962C
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano wrote:
-> This implements Daniel's idea to indicate what are compared by using
-> prefix different from the traditional a/ and b/ in the textual diff
-> header:
+Pat LeSmithe wrote:
+> Hello,
 >=20
->     "git diff" compares the (i)ndex and the (w)ork tree;
->     "git diff HEAD" compares a (c)ommit and the (w)ork tree;
->     "git diff --cached" compares a (c)ommit and the (i)ndex;
->     "git diff HEAD:f /tmp/f" compares an (o)bject and (w)ork tree.
->=20
-> Because these mnemonics now have meanings, they are swapped when revers=
-e
-> diff is in effect.
+> Is it possible to enable git to automatically and continuously "softly"=
 
-I like this proposal-ish; making the prefixes more intuitive could be
-useful when looking at a bare diff from git too.  I'd put some time in
-to help implement this.
+> commit or stage *all* changes to a [subset of] files in a repository,
+> without my intervention, as they happen?  Perhaps via a daemon which
+> monitors the disk for explicit file-saving?
+
+Perhaps with a cron job running a script every minute or so.  You'd want
+to verify that changes actually took place before attempting a commit.
+Also, what log messages would you be providing?  Log messages can be
+very important to the context of a change and the ability to later find
+them.
+
+If you're using a specific application, such as a Wiki, it may work
+nicely, as log messages can be easily gleaned, and many offer post-edit
+hooks that you could use to invoke git.
+
+> Of course, I would still be able to perform explicit commits (with
+> descriptive comments) and other git commands, in which case there
+> probably should be smart handling of the recent soft history.  For
+> example, it could simply be discarded.
+
+You may want to use StGit as that may allow you to make such lightweight
+commits easily while still allowing reordering, etc., though I am not
+familiar with that application porcelain.
+
+> I understand that I could simply remember to commit and/or branch early=
+
+> and often.  But given that changes by an individual on a given branch
+> are well-ordered by time, and that the "continuous" operation may be
+> cheap in many situations, a "live" journal could be useful.
+>=20
+> Perhaps a better term is branch-aware undo or git with microstructure.
+
+Obviously, my final caution is that while this is possible with some
+configuration, you may lose valuable "signal" information in the "noise" =
+of
+commits that such a continuous operation might incur.  This low SNR may
+make it more difficult to find and revert changes you didn't actually wan=
+t
+to happen or to glean a meaningful history of your working tree.
+
+While in the operable borders of Git, it's outside the normal usage patte=
+rns.
+If you have success, let us know how it worked for you.
 
 --=20
 Marcus Griep
@@ -90,26 +119,26 @@ http://www.boohaunt.net
 =D7=90=D7=AA.=CF=88=CE=BF=C2=B4
 
 
---------------enig8E69742F58FB2810FD7D9922
+--------------enig28A65A68ADC33B576C21962C
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIVAwUBSKpEPgPFruyc22R/AQL77w/+IzPAcPrfmq1zC/ox/JDT6ZmOd7EyklQc
-C94OSLiAirjOqi2fiWw1NeQK3mqRideEl39IZDYUq2G4OX233UFyKuemlIfSMig2
-j9AwKghIceAYVkz363JfiyOh5ohcTfw6SpXvavxlOrhR6YBqohtE4mjOkFehXTbY
-PckktxqimfNNOpj7VC8+CocZFv+nfLj5XH1G0xY2bgGoAYSlhkj/GZJp/VWEgcxk
-T3kruCCh8+ueRKc0pYBIvTzQJdkosRd7CDWdcHIiZBef0Xo2yC4rdFXU8LBDl5fS
-dLPwa5u+tbJbcfq9Mux4fd1p4jqyClPJYTyS5YNNxfG1/jcI1h3EPBZZpU6Yn4As
-jDrNosvN4okTA5qGaRLAA/GsIEv7PVsUGfQDL/EtNMuyiJXnPLU8D/j7VpEAtrR5
-/YjghLzZmIHDVmoLi5mLuzgiQ9MFogqhEzmvM6pAD3/CZcdHABRrh7N0MOPdoBD7
-/bjGgviuOba546axGhgvjj6fq7tJRhoLq1pAxEm1XC6P28S27FHB8RglDliyhr3J
-fAHJhM4iZEYBGoFdNVD8qTHXjUUHFK5t/O+TLuHOjUnAue5Om4dTS/L0ZuTEBLVq
-TTah0DxX/xo6dL6dfpitQy1Hoc1FHNQZBz0yQcJdPzyih6OouZDFZZjwP/KDLi9q
-AXDWHNDjiEE=
-=Pj82
+iQIVAwUBSKpIfQPFruyc22R/AQIeMxAAufGw2V385ejgTZBS06sEUGZEd6axhc3i
+weqlj+cveKKSaYAWz43shYe4pXJ+QTO6KRZQdMOleSmEYa2X3n/ixZTGmFWvOFxt
+CPD63nT9vAxBr3hm29D5ikzopM7VfVtjz1cGCSa+4PUen0gn7JQo/egUE1j3JV1k
+AhEvucDrZY9vhR2RdXCkuTN/kp4q1NQ6xauzBR8O6sh7kI6B1e9R9GbS7rxW8xjx
+kIEwmE+mMy/KG7rFvUR57z9LoeH9Me549lIJp5ZTOC/EsAltMShdJiXjVmFxquJY
+0xpZyO3nTIqrgTjASd5PDJvu1AuvzIcfsqh3Usm19QWqxFl7lrzm611e3OT5rGEr
+fVtBOft6adkEmXgNEMEOTTlCsCYBix3/N1j20wxBIoS4ulERAqXtYZE6T68/54+y
+9cA/QAoe+9agZeQER17vGdciNmVmJCdKvnLrCJIvwe2KJ2CwmnLz5r0OY50vUKGQ
+TkPbKqssvtdfZHLZUZc+WPhd9fifIw2G4j/BEym3nm1ewkg+u9TN9NrpSvqFDOxQ
+33fSo/nlV95gIQGj8ucVaBtTBcV0KATcP5Auf2jTsI4Xo8vo7SguX+O0iEMt0970
+dzhDJYMCfN/ZBeulpmTqwHT2CVqPMWsHwRG95J3MVfjEcPqqQIcY4jM93qEjLjoU
+bXZvHADiE6M=
+=lzJY
 -----END PGP SIGNATURE-----
 
---------------enig8E69742F58FB2810FD7D9922--
+--------------enig28A65A68ADC33B576C21962C--
