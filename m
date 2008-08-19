@@ -1,98 +1,61 @@
 From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [FYI] How I compile on SunOS 5.7 with the SUNWspro compiler	and
- ksh
-Date: Mon, 18 Aug 2008 19:47:39 -0500
-Message-ID: <L3gfLYBAXG5GUGcbdLqOnZab_UfskZC4FTgP9d47MJuoAiJRa2V5ZQ@cipher.nrlssc.navy.mil>
-References: <IH0MHSTEimhAN93AedvpRKq4qfzm1QA814ZYyhbSBtSdNbq8vuE6aw@cipher.nrlssc.navy.mil> <20080819002047.GA15770@coredump.intra.peff.net>
+Subject: Re: [PATCH] templates/Makefile: work around SGI install which assumes
+ / if ROOT not defined
+Date: Mon, 18 Aug 2008 19:52:50 -0500
+Message-ID: <FnxO7Orp3rSZw-HOO0O0Mr3CM46BkVX3CwFWT098m6GBmWq0jNk82A@cipher.nrlssc.navy.mil>
+References: <giNXZFTxzY3B65dQob7CwvwwfSKlZpw_60oz81RxU5UN3PsTT_3dMQ@cipher.nrlssc.navy.mil> <XAO6w2f4AxtqGEL6HNTkRYjhSFFUavQK8LYfdASEGw3-LRoH4_7Cdg@cipher.nrlssc.navy.mil> <7vhc9hlwt3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 19 02:48:53 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Gerrit Pape <pape@smarden.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 02:55:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVFP2-00045I-Qm
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 02:48:53 +0200
+	id 1KVFV7-0005Vi-11
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 02:55:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753736AbYHSArt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 20:47:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753274AbYHSArt
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 20:47:49 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:59674 "EHLO
+	id S1757827AbYHSAxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 20:53:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758312AbYHSAxt
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 20:53:49 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:46793 "EHLO
 	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752544AbYHSArs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 20:47:48 -0400
-Received: by mail.nrlssc.navy.mil id m7J0ldOC003951; Mon, 18 Aug 2008 19:47:39 -0500
-In-Reply-To: <20080819002047.GA15770@coredump.intra.peff.net>
-X-OriginalArrivalTime: 19 Aug 2008 00:47:39.0440 (UTC) FILETIME=[2E3EEB00:01C90195]
+	with ESMTP id S1757837AbYHSAxs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 20:53:48 -0400
+Received: by mail.nrlssc.navy.mil id m7J0qpA8004080; Mon, 18 Aug 2008 19:52:51 -0500
+In-Reply-To: <7vhc9hlwt3.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 19 Aug 2008 00:52:50.0989 (UTC) FILETIME=[E7F185D0:01C90195]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92799>
 
-Jeff King wrote:
-> On Mon, Aug 18, 2008 at 06:39:40PM -0500, Brandon Casey wrote:
+Junio C Hamano wrote:
+> I do not see absolutely any reason to use install there.
 > 
->> 1) the t5000 tests which fail are due to the installed gnu tar being
->> too old, and
+> I have to wonder why 9907721 (templates/Makefile: don't depend on local
+> umask setting, 2008-02-28) did not do this instead:
 > 
-> Hmm. I thought I had t5000 working on Solaris 5.7 a few months ago.
-> Unfortunately, the Solaris box I test on is down at the moment, so I
-> can't take a closer look. What is the problem?
+> 	$(QUIET)umask 022 && ls *--* 2>/dev/null | \
+> 	while read boilerplate; \
+> 	do \
+> 		case "$$boilerplate" in *~) continue ;; esac && \
+> 		dst=`echo "$$boilerplate" | sed -e 's|^this|.|;s|--|/|g'` && \
+> 		dir=`expr "$$dst" : '\(.*\)/'` && \
+> 		mkdir -p blt/$$dir && \
+> 		case "$$boilerplate" in \
+> 		*--) ;; \
+> 		*) cp $$boilerplate blt/$$dst ;; \
+> 		esac || exit; \
+> 	done && \
+> 	date >$@
+> 
 
-Probably:
-$ gtar --version
-tar (GNU tar) 1.12
-
-
-If I stop t5000-tar-tree.sh by inserting an exit before the 10th test
-(which is the first one that fails):
-
-    t5000-tar-tree.sh:
-    ...
-    test_expect_success \
-       'git get-tar-commit-id' \
-       'git get-tar-commit-id <b.tar >b.commitid &&
-        diff .git/$(git symbolic-ref HEAD) b.commitid'
-
-    exit
-
-    test_expect_success \
-       'extract tar archive' \
-       '(cd b && "$TAR" xf -) <b.tar'
-    ...
-
-and then execute the test commands manually, I get:
-
-$ cd t/trash\ directory
-$ cd b
-$ gtar xf - < ../b.tar
-/apps/bin/gtar: Unknown file type 'g' for pax_global_header, extracted as normal file
-/apps/bin/gtar: : Could not create directory: No such file or directory
-/apps/bin/gtar: Error exit delayed from previous errors
-$ find .
-.
-./a
-./a/a
-./a/l1
-./a/substfile1
-./a/long_path_to_a_file
-./a/long_path_to_a_file/long_path_to_a_file
-./a/long_path_to_a_file/long_path_to_a_file/long_path_to_a_file
-./a/long_path_to_a_file/long_path_to_a_file/long_path_to_a_file/long_path_to_a_file
-./a/bin
-./a/bin/sh
-./a/substfile2
-./pax_global_header
-./file_with_long_path
-
-
-The native tar returns:
-$ tar xf - < ../b.tar
-tar: directory checksum error
+That works just fine for me.
 
 -brandon
