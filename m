@@ -1,108 +1,84 @@
-From: "Imran M Yousuf" <imyousuf@gmail.com>
+From: Teemu Likonen <tlikonen@iki.fi>
 Subject: Re: Call Me Gitless
-Date: Tue, 19 Aug 2008 14:53:09 +0600
-Message-ID: <7bfdc29a0808190153o3d3b2635v4276ef4fa65fbb8@mail.gmail.com>
-References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com>
-	 <alpine.LNX.1.00.0808181512160.19665@iabervon.org>
-	 <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org>
-	 <905315640808181624w58918a0ao939a3f0462f9dc9e@mail.gmail.com>
-	 <48AA7BE9.4040108@sneakemail.com>
-	 <7vk5edfn6g.fsf@gitster.siamese.dyndns.org>
-	 <7bfdc29a0808190110nddaf57fw5bf40903f3072bff@mail.gmail.com>
-	 <48AA83B4.2080009@sneakemail.com>
+Date: Tue, 19 Aug 2008 11:56:22 +0300
+Message-ID: <20080819085622.GA6261@mithlond.arda.local>
+References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com> <alpine.LNX.1.00.0808181512160.19665@iabervon.org> <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org> <905315640808181624w58918a0ao939a3f0462f9dc9e@mail.gmail.com> <48AA7BE9.4040108@sneakemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Peter_Valdemar_M=F8rch_(Lists)?=" 
+To: Peter Valdemar =?iso-8859-1?Q?M=F8rch_=28Lists=29?= 
 	<4ux6as402@sneakemail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 10:54:24 2008
+X-From: git-owner@vger.kernel.org Tue Aug 19 10:57:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVMyl-0007zM-2G
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 10:54:15 +0200
+	id 1KVN1v-0000bb-RB
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 10:57:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752085AbYHSIxM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Aug 2008 04:53:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752063AbYHSIxM
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 04:53:12 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:4983 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751475AbYHSIxL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Aug 2008 04:53:11 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so1415355yxm.1
-        for <git@vger.kernel.org>; Tue, 19 Aug 2008 01:53:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=fVnQCKLnpIGLW/uJwZOzMiNjP7T6QcL1ihzeyARkRr4=;
-        b=IYrWlDMzK4b1lYEtc/+lX8LxfwAx8SrQ01ygrZ6OwzpFn82ZFwUUuVr5e9HTjUAd9q
-         Jdcp4r6Bu5zVHxBHZxY4Z+69vqEBSAau2TyyjGHmqFTGIaEB/sJutOrct+pEl1i5NG6v
-         9thWNgO0tATUv2LyFwWGOXWUpCBs5yz4vpO2E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=up2+7wKMUhwRXR59TthgpNH2NOICqWgsbXBE9KHt5fVnpK3gzdv6gfWxcKpPPlScay
-         Q3x5b1X36SQD6rZ8gC8b8tt4G01XVwggE007gkOO+U9IBgw8h/6qE4aBNLuP+rRrc2xO
-         olIphB6aF87ifum7Q8TEzGaNI4oQpuFFxeOSI=
-Received: by 10.150.219.18 with SMTP id r18mr6653781ybg.113.1219135989378;
-        Tue, 19 Aug 2008 01:53:09 -0700 (PDT)
-Received: by 10.150.225.1 with HTTP; Tue, 19 Aug 2008 01:53:09 -0700 (PDT)
-In-Reply-To: <48AA83B4.2080009@sneakemail.com>
+	id S1752649AbYHSI42 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Aug 2008 04:56:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752599AbYHSI42
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 04:56:28 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:60613 "EHLO jenni1.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752560AbYHSI41 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Aug 2008 04:56:27 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni1.inet.fi (8.5.014)
+        id 488F153400DAD423; Tue, 19 Aug 2008 11:56:22 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1KVN0o-0001qA-8L; Tue, 19 Aug 2008 11:56:22 +0300
 Content-Disposition: inline
+In-Reply-To: <48AA7BE9.4040108@sneakemail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92836>
 
-On Tue, Aug 19, 2008 at 2:26 PM, "Peter Valdemar M=F8rch (Lists)"
-<4ux6as402@sneakemail.com> wrote:
-> Hi,
->
-> Imran M Yousuf imyousuf-at-gmail.com |Lists| wrote:
->>
->> I would not agree it to be a part of git-add man page, but rather it
->> should be a part of doc that explains basic git commands and their
->> flows. I feel that we need a place where git flows are explained. IM=
-O,
->> gitwiki is a great place for it. I would like to volunteer to add
->> these pages to Wiki.
->
-> Why not? Shouldn't the man pages be a superset of those other docs?
->
-> Does it seem clear to you from reading "git help reset" that it is re=
-lated
-> to "git add" and that one can undo a git add with git reset?
+"Peter Valdemar M=F8rch (Lists)" wrote (2008-08-19 09:53 +0200):
 
-Actually when I learned git I never learned one command after another,
-rather I learned the flows and the most the scenarios mentioned in
-this thread mostly got covered then in either first or second flow I
-was trying. What learning flows enabled was, for me to experience how
-commands are inter-related.
+> Also, in the same area, I've now understood that to undo a "git add" =
+-=20
+> to remove a change from the index and making it show up as a differen=
+ce=20
+> between the working tree and the index - one can use "git reset"=20
+> (without --hard). Would've been helpful to me to have a sentense or=20
+> paragraph about that in git-add.txt, or even in git-reset.txt. (I gue=
+ss=20
+> it is there in some form  in git-reset.txt, but not clearly. The "Und=
+o=20
+> add" example talks about a dirty index and pull) I missed the simple=20
+> relationship between git-add and git-reset for a long time.
 
-It basically depends how a person learns the tool. My way of learning
-a tool is to learn flows. I have also taken the same steps to teach
-some of my friends and colleagues git and all seem to understand the
-stuffs :). But hey, that is my opinion :) only.
+I quite agree here. I've used git about six months now and I'm quite=20
+familiar with the porcelain layer. I don't even care about the plumbing=
+=20
+(even though I've used some plumbing commands in a script).
 
-Best regards,
+Anyway, to me the index wasn't difficult. It took about two days to be=20
+_comfortable_ enough with the idea of staging area for commits but it=20
+wasn't too hard. I have been a lot more confused with the
 
-Imran
+    git reset <commit> -- <file>
+    git checkout <commit> -- <file>
 
->
-> Peter
-> --
-> Peter Valdemar M=F8rch
-> http://www.morch.com
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+business. These commands still aren't completely clear to me but it has=
+=20
+been helpful that "git status" prints info about how to get back change=
+s=20
+from the index. I think the info is a good idea because "git status" is=
+, =20
+to me at least, a general "give me some clue" command.
+
+I think the confusion with reset and checkout comes from the fact that=20
+first I learned that "git checkout" changes branches and later that it=20
+can actually check-out any commits. Checking out a file to overwrite on=
+e=20
+in the working directory is something I'd expect from "git reset".=20
+I don't think that documentation would have helped much; it's more abou=
+t=20
+the double meaning of the commands.
