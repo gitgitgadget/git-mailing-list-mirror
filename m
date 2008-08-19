@@ -1,127 +1,76 @@
-From: Tarmigan Casebolt <tarmigan+git@gmail.com>
-Subject: [PATCH] Add hints to revert documentation about other ways to undo changes
-Date: Tue, 19 Aug 2008 12:50:31 -0700
-Message-ID: <1219175431-20730-1-git-send-email-tarmigan+git@gmail.com>
-References: <7vk5ec7s05.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org, Tarmigan Casebolt <tarmigan+git@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Lea Wiemann <lewiemann@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Aug 19 21:39:26 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add a 'pre-push' hook
+Date: Tue, 19 Aug 2008 12:39:07 -0700
+Message-ID: <7v63pw3ick.fsf@gitster.siamese.dyndns.org>
+References: <1219170876-46893-1-git-send-email-schacon@gmail.com>
+ <d411cc4a0808191155g188b0f10je5fd79afb92f36ef@mail.gmail.com>
+ <20080819185804.GA17943@coredump.intra.peff.net>
+ <d411cc4a0808191200o39837fd0ka2530aed870e06b0@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org
+To: "Scott Chacon" <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 21:40:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVX32-0007Pn-QQ
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 21:39:21 +0200
+	id 1KVX41-0007lh-73
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 21:40:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753673AbYHSTiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 15:38:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753609AbYHSTiN
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 15:38:13 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:50394 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753032AbYHSTiM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 15:38:12 -0400
-Received: by gxk9 with SMTP id 9so5605406gxk.13
-        for <git@vger.kernel.org>; Tue, 19 Aug 2008 12:38:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:sender;
-        bh=q+uhhl12xRTzMIy3JkQkXtY//erYeyJo+Bv1klHHE64=;
-        b=cBrV0DyUn94I8oIO6Al1kQW60sjWpQJVJZMltgRiegOgmRPUbxYuAaQEketBYI8jZc
-         6k0ZzyvgJgF6FWLK44tjPQDRdNLKrLAG4JZU3s+DhLeA0zCITHZA9SdR65sg0nWefDr+
-         AJF1YpLFtQv/Qa83nOxRiaYurQWKWNotWtWnI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :sender;
-        b=RaChY/gV8Tox6924oQugQuMSH0S43FPuJLAyc4eT2fFfAbdbLLSg7azI+/3iKlBziV
-         HdW3kan76jUUv70KMLEwmYnQ+IqBzL2NEeESNsXIWd6A8EHSwjMUoiN4YkpgUETyBzAM
-         ABAZH/VLtweDhv+kF5tXz8HUxtI9KZXDa7GJw=
-Received: by 10.142.134.20 with SMTP id h20mr2660435wfd.21.1219174691009;
-        Tue, 19 Aug 2008 12:38:11 -0700 (PDT)
-Received: from localhost ( [24.130.14.197])
-        by mx.google.com with ESMTPS id 27sm860699wfa.2.2008.08.19.12.38.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 19 Aug 2008 12:38:09 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0
-In-Reply-To: <7vk5ec7s05.fsf@gitster.siamese.dyndns.org>
+	id S1753312AbYHSTjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 15:39:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753432AbYHSTjQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 15:39:16 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38105 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753248AbYHSTjQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 15:39:16 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AF3C752B14;
+	Tue, 19 Aug 2008 15:39:13 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id BEE2952B0C; Tue, 19 Aug 2008 15:39:09 -0400 (EDT)
+In-Reply-To: <d411cc4a0808191200o39837fd0ka2530aed870e06b0@mail.gmail.com>
+ (Scott Chacon's message of "Tue, 19 Aug 2008 12:00:38 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 80A4558A-6E26-11DD-BFFF-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92913>
 
-Based on its name, people may read the 'git revert' documentation when
-they want to undo local changes, especially people who have used other
-SCM's.  'git revert' may not be what they had in mind, but git
-provides several other ways to undo changes to files.  We can help
-them by pointing them towards the git commands that do what they might
-want to do.
+"Scott Chacon" <schacon@gmail.com> writes:
 
-Cc: Daniel Barkalow <barkalow@iabervon.org>
-Cc: Lea Wiemann <lewiemann@gmail.com>
-Signed-off-by: Tarmigan Casebolt <tarmigan+git@gmail.com>
----
+> If the patch is acceptable, I will update the githooks doc with more
+> information, but we would like this so that you could add a hook that
+> runs your automated tests before a push would go through.
 
-On Tue, Aug 19, 2008 at 11:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> The last sentence makes the paragraph incoherent, doesn't it?
+I've said this number of times on this list but I guess it has been while
+since the last time I said it.
 
-Yeah.  My thinking was that the people who would appreciate this note
-would be newbies, and it might be nice to warn them not to just try
-'git reset --hard' without thinking.
+"If the patch is acceptable, I'll document it" is the last thing we as
+reviewers would want to hear from the submitter, *unless* there is an
+ongoing discussion that already have established what is wanted and a
+patch came as "ok, here is a possible solution, what do you guys think?".
 
-> By starting this paragraph with "Despite its name", you are stating your
-> expectation that the people who find "git revert" nonintuitive are the
-> majority.  
->
-> And you explain how to perform the operation that majority
-> would expect, which is to throw away uncommitted changes to go back to the
-> clean slate.  If that is what the target audience of this paragraph
-> expects to happen anyway, why do you need to caution against it in the
-> last sentence?
+If the original submitter does not care enough to defend why it is needed,
+why should reviewers spend their precious brain cycles to decipher what it
+does, guess what situation the change would help, and determine if the
+change actually would help the situation it might be trying to help (and
+risk wasting all this work because they guessed the motivation wrong)?
+And what assurance would we have that the change will be maintained and
+supported?
 
-I envision this note as useful for a majority of newbies who don't yet
-have a sense of everything 'git reset' and 'git checkout' can do.
+Having said that, I would agree "validate and potentially stop before
+pushing" is a very good thing to have.
 
-> If the answer is "because it is not cut-and-dried which expectation is the
-> majority, and we try to be careful not to lose local modifications of
-> users", then the tone of the paragraph needs to become more neutral.
->
-> I'd suggest either dropping the first sentence altogether and starting the
-> paragraph with "If you want to throw away...", or replacing the first
-> sentence with "'git revert' is used to record a new commit to reverse the
-> effect of an earlier commit (often a faulty one)."
-
-Good idea.  I like the later option.
-
-Thanks,
-Tarmigan
-
- Documentation/git-revert.txt |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index 98cfa3c..e578edf 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -15,7 +15,15 @@ Given one existing commit, revert the change the patch introduces, and record a
- new commit that records it.  This requires your working tree to be clean (no
- modifications from the HEAD commit).
- 
-+Note: 'git revert' is used to record a new commit to reverse the
-+effect of an earlier commit (often a faulty one).  If you want to
-+throw away all uncommitted changes in your working directory, you
-+should see linkgit:git-reset[1], particularly the '--hard' option.  If
-+you want to extract specific files as they were in another commit, you
-+should see linkgit:git-checkout[1], specifically the 'git checkout
-+<commit> -- <filename>' syntax.  Take care with these alternatives as
-+both will discard uncommitted changes in your working directory.
-+
- OPTIONS
- -------
- <commit>::
--- 
-1.6.0
+It is still unclear at this point what kind of input that validation would
+want to base its decision on.  At least we would want what branch is being
+pushed (so that a validation failure on a branch that is not being pushed
+would not interfere), and possibly where you are pushing to (so that you
+can still push a change you would want to verify and potentially polish on
+a different test/dev box without getting interfered).
