@@ -1,62 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Call Me Gitless
-Date: Tue, 19 Aug 2008 14:45:25 -0400
-Message-ID: <20080819184525.GA17691@coredump.intra.peff.net>
-References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com> <alpine.LNX.1.00.0808181512160.19665@iabervon.org> <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0808181628420.19665@iabervon.org> <7vtzdiklbw.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0808181839390.19665@iabervon.org> <7vy72tit90.fsf@gitster.siamese.dyndns.org> <20080819175220.GA10142@coredump.intra.peff.net> <alpine.LNX.1.00.0808191407160.19665@iabervon.org>
+From: Jim Meyering <meyering@redhat.com>
+Subject: [PATCH] * remote.c (valid_fetch_refspec): remove useless if-before-free test
+Date: Tue, 19 Aug 2008 20:46:30 +0200
+Message-ID: <87k5ecx2pl.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Aug 19 20:47:16 2008
+Content-Type: text/plain; charset=us-ascii
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 19 20:47:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVWEe-0003oV-7T
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 20:47:16 +0200
+	id 1KVWF5-000409-Ph
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 20:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753704AbYHSSp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 14:45:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751171AbYHSSp2
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 14:45:28 -0400
-Received: from peff.net ([208.65.91.99]:1802 "EHLO peff.net"
+	id S1753128AbYHSSqd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 14:46:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750916AbYHSSqc
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 14:46:32 -0400
+Received: from smtp6-g19.free.fr ([212.27.42.36]:36099 "EHLO smtp6-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753221AbYHSSp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 14:45:28 -0400
-Received: (qmail 3944 invoked by uid 111); 19 Aug 2008 18:45:26 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 19 Aug 2008 14:45:26 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Aug 2008 14:45:25 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.00.0808191407160.19665@iabervon.org>
+	id S1751171AbYHSSqc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 14:46:32 -0400
+Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id CD2161979D
+	for <git@vger.kernel.org>; Tue, 19 Aug 2008 20:46:30 +0200 (CEST)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id A35F417233
+	for <git@vger.kernel.org>; Tue, 19 Aug 2008 20:46:30 +0200 (CEST)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 8640338BA4; Tue, 19 Aug 2008 20:46:30 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92898>
 
-On Tue, Aug 19, 2008 at 02:39:22PM -0400, Daniel Barkalow wrote:
+We removed a handful of these useless if-before-free tests
+several months ago.  This change removes a new one that snuck back in.
 
-> Hmm... everybody who doesn't like it is concerned about scripts and 
-> sending it places, while the people who like it seem to be interested in 
-> looking at the output. Maybe there should be an option that controls it, 
-> with the default being to use -a+b for pipelines and informational stuff 
-> for pager?
+Signed-off-by: Jim Meyering <meyering@redhat.com>
+---
+There are four in regex.c, too, but that's imported code,
+so probably not worth modifying in git:
 
-To clarify my statement: no, I'm concerned about looking at it. That is,
-I don't think it will break scripts, but I think the output is
-potentially confusing to humans.
+    compat/regex.c: if (var) free (var)
+    compat/regex.c: if (preg->buffer != NULL)
+        free (preg->buffer)
+    compat/regex.c: if (preg->fastmap != NULL)
+        free (preg->fastmap)
+    compat/regex.c: if (preg->translate != NULL)
+        free (preg->translate)
 
-But like I said before, it's just my intuition; I don't have real facts
-to back it up, so feel free to ignore.
+ remote.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
-> (For that matter, maybe format-patch should be able to handle uncommitted 
-> changes, and should hide what it did? What's with all these people faking 
-> format-patch output with other commands, rather than having format-patch 
-> actually generate suitable output in their situations?)
+diff --git a/remote.c b/remote.c
+index f61a3ab..105668f 100644
+--- a/remote.c
++++ b/remote.c
+@@ -579,8 +579,7 @@ int valid_fetch_refspec(const char *fetch_refspec_str)
+ 	struct refspec *refspec;
 
-I do it because I haven't actually committed the content.  I dump the
-diff right into an email I'm already writing.
+ 	refspec = parse_refspec_internal(1, fetch_refspec, 1, 1);
+-	if (refspec)
+-		free(refspec);
++	free(refspec);
+ 	return !!refspec;
+ }
 
--Peff
+--
+1.6.0.9.gae2e487
