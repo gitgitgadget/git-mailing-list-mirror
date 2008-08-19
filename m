@@ -1,75 +1,87 @@
-From: Pascal Obry <pascal@obry.net>
+From: Mark Struberg <struberg@yahoo.de>
 Subject: Re: Call Me Gitless
-Date: Tue, 19 Aug 2008 13:27:19 +0200
-Organization: Home - http://www.obry.net
-Message-ID: <48AAAE17.1070800@obry.net>
-References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com>	 <alpine.LNX.1.00.0808181512160.19665@iabervon.org>	 <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org>	 <905315640808181624w58918a0ao939a3f0462f9dc9e@mail.gmail.com>	 <48AA7BE9.4040108@sneakemail.com>	 <7vk5edfn6g.fsf@gitster.siamese.dyndns.org>	 <ee521d6f0808190157s6a676a75t2ba3ef095f608431@mail.gmail.com>	 <vpqk5edid2y.fsf@bauges.imag.fr> <ee521d6f0808190309n7f0114a6q2e8113238cb2142b@mail.gmail.com>
-Reply-To: pascal@obry.net
+Date: Tue, 19 Aug 2008 11:31:35 +0000 (GMT)
+Message-ID: <660749.49882.qm@web27803.mail.ukl.yahoo.com>
+References: <ee521d6f0808190157s6a676a75t2ba3ef095f608431@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?TGlzdHMgUGV0ZXIgVmFsZGVtYXIgTcO4cmNo?= 
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?iso-8859-1?Q?Peter_Valdemar_M=F8rch_=28Lists=29?= 
 	<4ux6as402@sneakemail.com>, git@vger.kernel.org
-To: Alexander E Genaud <alex@genaud.net>
-X-From: git-owner@vger.kernel.org Tue Aug 19 13:28:45 2008
+To: Junio C Hamano <gitster@pobox.com>,
+	Alexander E Genaud <alex@genaud.net>
+X-From: git-owner@vger.kernel.org Tue Aug 19 13:32:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVPOC-0007u8-2w
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 13:28:40 +0200
+	id 1KVPS5-0000bq-7G
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 13:32:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752266AbYHSL1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 07:27:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752062AbYHSL1d
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 07:27:33 -0400
-Received: from wr-out-0506.google.com ([64.233.184.229]:12663 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752044AbYHSL1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 07:27:33 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so2476654wri.5
-        for <git@vger.kernel.org>; Tue, 19 Aug 2008 04:27:32 -0700 (PDT)
-Received: by 10.90.119.20 with SMTP id r20mr393025agc.83.1219145249852;
-        Tue, 19 Aug 2008 04:27:29 -0700 (PDT)
-Received: from ?192.168.0.100? ( [90.2.74.169])
-        by mx.google.com with ESMTPS id 7sm123354wrl.22.2008.08.19.04.27.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 19 Aug 2008 04:27:29 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.8.1.16) Gecko/20080708 Thunderbird/2.0.0.16 Mnenhy/0.7.5.0
-In-Reply-To: <ee521d6f0808190309n7f0114a6q2e8113238cb2142b@mail.gmail.com>
-X-Enigmail-Version: 0.95.6
+	id S1752688AbYHSLbi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Aug 2008 07:31:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752654AbYHSLbh
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 07:31:37 -0400
+Received: from web27803.mail.ukl.yahoo.com ([217.146.182.8]:46771 "HELO
+	web27803.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752468AbYHSLbh convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 07:31:37 -0400
+Received: (qmail 49925 invoked by uid 60001); 19 Aug 2008 11:31:35 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.de;
+  h=Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=5g70s1qxnl+bNLZ2bWK7TLzbBjrZ5mc2SvSu2hgo4/wyjlhndBaPjHH5LiVUtcVT91mZ1Jrajt49xarlA8N9HNzUKxVrW43oKhs8v1kIHAu9ihoDUbgSCJoasGC1AsdjgN+5NviakekLrHRE/Y0Ru+cngV0Tad+KDfyXk2Pft9w=;
+Received: from [81.19.198.7] by web27803.mail.ukl.yahoo.com via HTTP; Tue, 19 Aug 2008 11:31:35 GMT
+X-Mailer: YahooMailWebService/0.7.218
+In-Reply-To: <ee521d6f0808190157s6a676a75t2ba3ef095f608431@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92848>
+
+Hi Alex!
+
+--- Alexander E Genaud <alex@genaud.net> schrieb am Di, 19.8.2008:
+
+> Von: Alexander E Genaud <alex@genaud.net>
+> Betreff: Re: Call Me Gitless
+> An: "Junio C Hamano" <gitster@pobox.com>
+> CC: "Peter Valdemar M=F8rch (Lists)" <4ux6as402@sneakemail.com>, git@=
+vger.kernel.org
+> Datum: Dienstag, 19. August 2008, 10:57
+> ...
+> Remote never seems to do what I expect, so I manually edit
+> the .git/refs!!=20
+> Nor is git-reset what I expect and use git
+> checkout (which
+> does make sense only after a few backup trials). Git-add
+> adds to the
+> index but does not create, however git-rm removes from the
+> index and
+> does delete (an --index-only or --keep flag might be nice).
+
+This is explicitely stated in the git-rm manpages: --cached:  Use this =
+option to unstage and remove paths only from the index. Working tree fi=
+les, whether modified or not, will be left alone.
 
 
-For what it's worth, I have added this since I've been working with Git 
-on my aliases:
+> A single term for cache and index should be decided upon.
+> git diff --cached is not intuitive when 'index' is used
+> throughout the documentation.=20
 
-[alias]
-  staged = diff --cached
+The changes are "cached" in the "Index". But I wouldn't name the "Index=
+" really a "Cache" because it is a lot more. All comments for --cached =
+in the manpages mention the Index mechanism.=20
+Additionally there is a more detailed introduction to the Index in sect=
+ion 7 (Git concepts) of the Git User's Manual=20
 
-Since then I'm always running:
+LieGrue,
+strub
 
-    $ git staged
-
-This looks more intuitive to me and faster than typing:
-
-    $ git diff --cached
-
-I agree that "stage", "staging area" is a clean term to use.
-
--- 
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+__________________________________________________
+Do You Yahoo!?
+Sie sind Spam leid? Yahoo! Mail verf=FCgt =FCber einen herausragenden S=
+chutz gegen Massenmails.=20
+http://mail.yahoo.com=20
