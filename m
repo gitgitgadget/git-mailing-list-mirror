@@ -1,78 +1,54 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Call Me Gitless
-Date: Tue, 19 Aug 2008 14:57:04 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0808191448530.19665@iabervon.org>
-References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com> <alpine.LNX.1.00.0808181512160.19665@iabervon.org> <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0808181628420.19665@iabervon.org> <7vtzdiklbw.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0808181839390.19665@iabervon.org> <7vy72tit90.fsf@gitster.siamese.dyndns.org> <20080819175220.GA10142@coredump.intra.peff.net> <alpine.LNX.1.00.0808191407160.19665@iabervon.org> <20080819184525.GA17691@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] add a 'pre-push' hook
+Date: Tue, 19 Aug 2008 14:58:04 -0400
+Message-ID: <20080819185804.GA17943@coredump.intra.peff.net>
+References: <1219170876-46893-1-git-send-email-schacon@gmail.com> <d411cc4a0808191155g188b0f10je5fd79afb92f36ef@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 19 20:59:14 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 20:59:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVWPF-00086P-Qc
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 20:58:14 +0200
+	id 1KVWQD-00006l-IE
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 20:59:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752839AbYHSS5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 14:57:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753605AbYHSS5H
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 14:57:07 -0400
-Received: from iabervon.org ([66.92.72.58]:38325 "EHLO iabervon.org"
+	id S1751730AbYHSS6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 14:58:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751943AbYHSS6H
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 14:58:07 -0400
+Received: from peff.net ([208.65.91.99]:4068 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752793AbYHSS5F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 14:57:05 -0400
-Received: (qmail 2342 invoked by uid 1000); 19 Aug 2008 18:57:04 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 19 Aug 2008 18:57:04 -0000
-In-Reply-To: <20080819184525.GA17691@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751581AbYHSS6G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 14:58:06 -0400
+Received: (qmail 4177 invoked by uid 111); 19 Aug 2008 18:58:05 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 19 Aug 2008 14:58:05 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Aug 2008 14:58:04 -0400
+Content-Disposition: inline
+In-Reply-To: <d411cc4a0808191155g188b0f10je5fd79afb92f36ef@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92903>
 
-On Tue, 19 Aug 2008, Jeff King wrote:
+On Tue, Aug 19, 2008 at 11:55:27AM -0700, Scott Chacon wrote:
 
-> On Tue, Aug 19, 2008 at 02:39:22PM -0400, Daniel Barkalow wrote:
+> This commit adds support for a 'pre-push' hook that can be called before
+> a `git push` command.
 > 
-> > Hmm... everybody who doesn't like it is concerned about scripts and 
-> > sending it places, while the people who like it seem to be interested in 
-> > looking at the output. Maybe there should be an option that controls it, 
-> > with the default being to use -a+b for pipelines and informational stuff 
-> > for pager?
+> It takes no arguments currently, but if the .git/hooks/pre-push script
+> exists and is executable, it will be called before the 'git push' command
+> and will stop the push process if it does not exit with a 0 status.
 > 
-> To clarify my statement: no, I'm concerned about looking at it. That is,
-> I don't think it will break scripts, but I think the output is
-> potentially confusing to humans.
+> This hook can be overridden by passing in the --no-verify or -n option to
+> git push.  Documentation and tests have been updated to reflect the change.
 
-Humans being recipients of emails, or humans being the users who typed the 
-command? Unless you're cut-and-pasting out of a pager (which never works 
-well for me if it's long enough to include diff headers, context, and some 
-change), recipients of emails would get what scripts get. (I personnaly do 
-that as "git diff > temp.patch" and read temp.patch into my mailer; this 
-doesn't trigger starting a pager, and wouldn't trigger the default to be 
-informative prefixes.)
+Would you care to describe what this is useful for (either in
+documentation, to help potential users, or at least in the commit log,
+so we know there is a need that is not otherwise fulfilled)?
 
-> But like I said before, it's just my intuition; I don't have real facts
-> to back it up, so feel free to ignore.
-> 
-> > (For that matter, maybe format-patch should be able to handle uncommitted 
-> > changes, and should hide what it did? What's with all these people faking 
-> > format-patch output with other commands, rather than having format-patch 
-> > actually generate suitable output in their situations?)
-> 
-> I do it because I haven't actually committed the content.  I dump the
-> diff right into an email I'm already writing.
-
-Yeah, that's why I think that format-patch should work on content that you 
-haven't committed, generating something you can dump right into an email 
-(with the --- and diffstat that you'd get if you actually did commit and 
-use format-patch now).
-
-	-Daniel
-*This .sig left intentionally blank*
+-Peff
