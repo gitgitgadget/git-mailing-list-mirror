@@ -1,88 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: setup-git-server-over-http: Mention davfs2
-Date: Mon, 18 Aug 2008 22:57:45 -0700
-Message-ID: <7vwsidh7hi.fsf@gitster.siamese.dyndns.org>
-References: <48A9E8BE.9040807@gmail.com>
- <1219095967-15971-1-git-send-email-gafunchal@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [FYI] How I compile on SunOS 5.7 with the SUNWspro compiler
+	and ksh
+Date: Tue, 19 Aug 2008 08:13:47 +0200
+Message-ID: <20080819061346.GA4046@blimp.local>
+References: <IH0MHSTEimhAN93AedvpRKq4qfzm1QA814ZYyhbSBtSdNbq8vuE6aw@cipher.nrlssc.navy.mil>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-	git@wingding.demon.nl, Matthieu.Moy@imag.fr
-To: Giovanni Funchal <gafunchal@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 07:59:05 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue Aug 19 08:16:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVKFE-0005EN-HA
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 07:59:04 +0200
+	id 1KVKVu-0000Rp-0S
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 08:16:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752934AbYHSF56 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 01:57:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752896AbYHSF56
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 01:57:58 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45533 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752826AbYHSF56 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 01:57:58 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 66E265EE62;
-	Tue, 19 Aug 2008 01:57:56 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id EAAD65EE61; Tue, 19 Aug 2008 01:57:49 -0400 (EDT)
-In-Reply-To: <1219095967-15971-1-git-send-email-gafunchal@gmail.com>
- (Giovanni Funchal's message of "Mon, 18 Aug 2008 23:46:07 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C515FFE8-6DB3-11DD-A05C-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752974AbYHSGNv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 02:13:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753035AbYHSGNu
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 02:13:50 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.182]:26081 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752951AbYHSGNu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 02:13:50 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg2r44hO88yw==
+Received: from tigra.home (Fa968.f.strato-dslnet.de [195.4.169.104])
+	by post.webmailer.de (fruni mo18) (RZmta 16.47)
+	with ESMTP id 506c7dk7J4ZoOY ; Tue, 19 Aug 2008 08:13:47 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from blimp (unknown [192.168.0.8])
+	by tigra.home (Postfix) with ESMTP id 94A70277AE;
+	Tue, 19 Aug 2008 08:13:47 +0200 (CEST)
+Received: by blimp (Postfix, from userid 1000)
+	id 2716936D1A; Tue, 19 Aug 2008 08:13:47 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <IH0MHSTEimhAN93AedvpRKq4qfzm1QA814ZYyhbSBtSdNbq8vuE6aw@cipher.nrlssc.navy.mil>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92813>
 
-Giovanni Funchal <gafunchal@gmail.com> writes:
+Brandon Casey, Tue, Aug 19, 2008 01:39:40 +0200:
+> 
+> GIT_SKIP_TESTS='
+>    t3900.1[0-289] t3900.2[023]
+>    t3901.*
+>    t5000.1[0-24-689] t5000.2[01]
+>    t5100.[56] t5100.1[02]
+>    t6030.1[2-9] t6030.2[0-9]
+>    t9301.4
+> '
+> 
+> GIT_TEST_CMP='cmp -s'
+> 
+> PATH="/usr/xpg4/bin:$PATH"
+> 
+> export PATH GIT_TEST_CMP GIT_SKIP_TESTS
+> 
+> exec gmake \
+>     CC=/opt/SUNWspro/bin/cc \
+>     INSTALL=ginstall \
+>     TAR=gtar \
+>     CFLAGS='-fast' \
+>     NO_CURL=1 \
+>     NO_OPENSSL=1 \
+>     NO_TCLTK=1 \
+>     NO_PERL_MAKEMAKER=1 \
+>     THREADED_DELTA_SEARCH=1 \
+>     "$@"
 
-> I just came across an interesting file system driver that allows to mount
-> WebDAV resources into file system tree: davfs2. I though it would be worth
-> mentioning this on setup-git-server-over-http.txt.
-
-I might agree with "It would be worth mentioning", but I do not think that
-is what you did.
-
-> +
-> +Step 2 1/2: testing your WebDAV server
-> +--------------------------------------
-> +
-> ...
-> -A command line tool to test WebDAV is cadaver. If you prefer GUIs, for
-> -example, konqueror can open WebDAV URLs as "webdav://..." or
-> -"webdavs://...".
-> +An alternative is to use davfs2, a driver that allows mounting a WebDAV
-> +resource into the system tree. This requires root access and kernel
-> +support (probably your kernel includes this).
-> +
-> +  $ apt-get install davfs2
-> +  $ mkdir -p /mnt/webdav
-> +  $ mount -t davfs http://<servername>/ /mnt/webdav
-> +  $ ls /mnt/webdav
-> +  $ umount /mnt/webdav
-> +
-> +If you prefer GUIs, for example, konqueror can open WebDAV URLs as
-> +"webdav://..." or "webdavs://...".
-
-You are dropping mention of cadaver and the only remaining suggestion for
-command line testing is via davfs2.
-
-Googling for "davfs2 WebDAV" returns 13,600 hits, while "cadaver WebDAV"
-hits 39,100.  In addition, testing with davfs2 requires you to have root
-access.  
-
-When troubleshooting a nonworking system, it often is easier to do it from
-a command line tool than from GUI (one of whose main point is to hide away
-the low-level details).  And I thought the title of this semi-section was
-"Testing"?
-
-Offering alternatives for command line tools is good, but that is not what
-this patch does.
+You can put all of it in config.mak. It is exactly what it is there
+for: build customizations.
