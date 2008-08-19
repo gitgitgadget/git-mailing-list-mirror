@@ -1,81 +1,77 @@
-From: =?ISO-8859-1?Q?=22Peter_Valdemar_M=F8rch_=28Lists=29=22?= 
-	<4ux6as402@sneakemail.com>
-Subject: Re: Call Me Gitless
-Date: Tue, 19 Aug 2008 09:53:13 +0200
-Message-ID: <48AA7BE9.4040108@sneakemail.com>
-References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com>	 <alpine.LNX.1.00.0808181512160.19665@iabervon.org>	 <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org> <905315640808181624w58918a0ao939a3f0462f9dc9e@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add definitions for global variables to shell.c
+Date: Tue, 19 Aug 2008 00:53:21 -0700
+Message-ID: <7vpro5fnke.fsf@gitster.siamese.dyndns.org>
+References: <20080818123727.GB11842@schiele.dyndns.org>
+ <7vy72tkfu0.fsf@gitster.siamese.dyndns.org>
+ <20080819072650.GE11842@schiele.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 19 09:54:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Robert Schiele <rschiele@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 09:54:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVM2m-00086g-Ib
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 09:54:21 +0200
+	id 1KVM30-0008Ad-Ls
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 09:54:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753074AbYHSHxR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Aug 2008 03:53:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753062AbYHSHxR
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 03:53:17 -0400
-Received: from morch.com ([193.58.255.207]:53789 "EHLO morch.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752928AbYHSHxQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 03:53:16 -0400
-Received: from [192.168.1.214] (ANice-157-1-115-112.w90-41.abo.wanadoo.fr [90.41.26.112])
-	by morch.com (Postfix) with ESMTP id 1D662278E
-	for <git@vger.kernel.org>; Tue, 19 Aug 2008 09:56:17 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <905315640808181624w58918a0ao939a3f0462f9dc9e@mail.gmail.com>
+	id S1753098AbYHSHx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 03:53:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbYHSHx3
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 03:53:29 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52951 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753062AbYHSHx2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 03:53:28 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CAF695F4C7;
+	Tue, 19 Aug 2008 03:53:26 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id DF1505F4C6; Tue, 19 Aug 2008 03:53:23 -0400 (EDT)
+In-Reply-To: <20080819072650.GE11842@schiele.dyndns.org> (Robert Schiele's
+ message of "Tue, 19 Aug 2008 09:26:51 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E7ED5A06-6DC3-11DD-AB15-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92827>
 
-Tarmigan tarmigan+git-at-gmail.com |Lists| wrote:
-> One confusing part of the porcelain may be the way that git's revert
-> is different from other systems' revert.  What would people think
-> about something like this somewhere in git-revert(1)?
->=20
-> +DISCUSSION
-> +----------
-> +If you are more familiar with another SCM, 'git revert' may not do w=
-hat you
-> +expect.  Specifically, if you want to throw away all changes in your=
- working
-> +directory, you should read the man page for 'git reset', particulary=
- the
-> +'--hard' option.  If you want to extract specific files as they were=
- in a
-> +previous commit, you should read the man page for 'git checkout -- <=
-filename>'.
-> +
+Robert Schiele <rschiele@gmail.com> writes:
 
-Here, here! That is *exactly* what I was thinking when I started readin=
-g=20
-this thread: "Hey, the "git diff" stuff was easy enough, it was the=20
-reverting (and friends) that caused me trouble!"
+> On Mon, Aug 18, 2008 at 05:29:11PM -0700, Junio C Hamano wrote:
+>> Haven't looked at the real declarations but if the decl are "extern" and
+>> nobody refers to them, why should the resulting object file require them
+>> to be defined anywhere?  If the decl are not and in (fortran-ish) "common"
+>> section, on the other hand, you shouldn't have to define them yourself
+>> like this either.
+>> 
+>> This sounds like a compiler bug to me.
+>
+> This was my first thought as well but after more inspection there are two
+> things to consider:
+>
+> 1. I was not really precise enough in my description since I didn't spot that
+>    when I looked into the issue first: Actually there are references to these
+>    variables in static inline functions in cache.h.  Thus there actually is a
+>    reference though one that will never be used since abspath.c (that includes
+>    cache.h) is not calling any of these functions.
+>
+> 2. Since these symbols turn out to be referenced though in dead code only I
+>    wouldn't call it a compiler bug.
 
-Also, in the same area, I've now understood that to undo a "git add" -=20
-to remove a change from the index and making it show up as a difference=
-=20
-between the working tree and the index - one can use "git reset"=20
-(without --hard). Would've been helpful to me to have a sentense or=20
-paragraph about that in git-add.txt, or even in git-reset.txt. (I guess=
-=20
-it is there in some form  in git-reset.txt, but not clearly. The "Undo=20
-add" example talks about a dirty index and pull) I missed the simple=20
-relationship between git-add and git-reset for a long time.
+Ok, as I said, I didn't look.  If they are indeed referenced, that is a
+different story.
 
-We've covered this recently in the " Considering teaching plumbing to=20
-users harmful" thread, but to me, the newbie, the sheer number of=20
-different commands was also quite bewildering.
-
-Peter
---=20
-Peter Valdemar M=F8rch
-http://www.morch.com
+Even if that is the case, I do not like the prospect of having to maintain
+a set of duplicated variable definitions.  If we really wanted to address
+this issue, maybe we would want a separate source file that is linked to
+both git-shell and to the rest of the system that has nothing but
+definitions of these variables?  I thought environment.c was meant to be
+something like that -- would linking environment.o pull in too many extra
+references these days (again, I didn't try)?
