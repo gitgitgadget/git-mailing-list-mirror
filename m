@@ -1,69 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] add a 'pre-push' hook
-Date: Tue, 19 Aug 2008 15:08:32 -0400
-Message-ID: <20080819190832.GC17943@coredump.intra.peff.net>
-References: <1219170876-46893-1-git-send-email-schacon@gmail.com> <d411cc4a0808191155g188b0f10je5fd79afb92f36ef@mail.gmail.com> <20080819185804.GA17943@coredump.intra.peff.net> <d411cc4a0808191200o39837fd0ka2530aed870e06b0@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Aug 2008, #05; Tue, 19)
+Date: Tue, 19 Aug 2008 12:19:09 -0700
+Message-ID: <7vabf83j9u.fsf@gitster.siamese.dyndns.org>
+References: <7vpro5cr2x.fsf@gitster.siamese.dyndns.org>
+ <20080819125429.GD17582@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 21:10:32 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Tue Aug 19 21:20:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVWaw-0004el-Vt
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 21:10:19 +0200
+	id 1KVWkh-0008Ac-KW
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 21:20:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756626AbYHSTIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 15:08:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756504AbYHSTIh
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 15:08:37 -0400
-Received: from peff.net ([208.65.91.99]:1168 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756518AbYHSTIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 15:08:35 -0400
-Received: (qmail 4327 invoked by uid 111); 19 Aug 2008 19:08:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 19 Aug 2008 15:08:33 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Aug 2008 15:08:32 -0400
-Content-Disposition: inline
-In-Reply-To: <d411cc4a0808191200o39837fd0ka2530aed870e06b0@mail.gmail.com>
+	id S1753235AbYHSTTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 15:19:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751617AbYHSTTS
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 15:19:18 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64038 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752800AbYHSTTS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 15:19:18 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B20B8520E4;
+	Tue, 19 Aug 2008 15:19:16 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 8C2F5520E0; Tue, 19 Aug 2008 15:19:12 -0400 (EDT)
+In-Reply-To: <20080819125429.GD17582@genesis.frugalware.org> (Miklos Vajna's
+ message of "Tue, 19 Aug 2008 14:54:29 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B72E432A-6E23-11DD-8C97-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92909>
 
-On Tue, Aug 19, 2008 at 12:00:38PM -0700, Scott Chacon wrote:
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-> If the patch is acceptable, I will update the githooks doc with more
-> information, but we would like this so that you could add a hook that
-> runs your automated tests before a push would go through.
+> On Tue, Aug 19, 2008 at 02:05:42AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+>> [On Hold]
+>> (...)
+>> * mv/merge-recursive (Tue Aug 12 22:14:00 2008 +0200) 3 commits
+>>  - Make builtin-revert.c use merge_recursive_generic()
+>>  - merge-recursive.c: Add more generic merge_recursive_generic()
+>>  - Split out merge_recursive() to merge-recursive.c
+>> 
+>> I do not think builtlin-revert should use "recursive", but these patches
+>> give a good starting point to separate the bulk of the "rename-aware
+>> three-way merge" into library form.
+>
+> I wanted to send a patch that makes builtin-merge use the new
+> merge_recursive_setup(), but then I was not able to decide to use
+> merge_recursive_generic() or not.
 
-I think the common wisdom has been that such tests should be done on the
-_receiving_ end, since that makes a more trustworthy enforcement point.
-E.g., I know that crap can't get into my central repo because a hook
-checks everything coming in. But if a developer has turned off his
-pre-push hook (or accidentally failed to enable it), he can still send
-crap.
+I think git-merge and git-merge-recursive should be the only two that
+actually trigger the "recursive" behaviour.  Everybody else should be
+using non-recursive one, and that non-recursive one can be shared by the
+one that is recursive.
 
-One other argument I have seen is that, to prevent the proliferation of
-hooks, the rule is not to add a hook that could just as easily be done
-as a sequence of commands. IOW, what's wrong with
+Here is how the callchain looks like with your variant.
 
-  run_my_automated_tests && git push
+ cmd_merge_recursive()
+ -> merge_recursive_setup()
+ -> merge_recursive_generic()
+    -> merge_recursive()
+       -> merge_recursive()
+       -> merge_trees()
 
-?
+The merge_recursive() is the "recursive" one.  The workhorse that is not
+recursive is merge_trees().
 
-Off the top of my head, I guess the response to those two arguments
-would be:
+Since the latter is what everybody else ("checkout -m", "revert",
+"cherry-pick", "am -3", "stash apply") should be using, I think it is
+pretty much up to "git-merge" and "git-merge-recursive" implementations
+how the caller of merge_recursive() function is structured.  I suspect
+that you would not need two separate functions, _setup() and _generic(),
+for these two codepaths, but I didn't look closely.
 
- - sometimes the receiving end isn't set up to run tests, which means it
-   is more reasonable to do it on the sending side
+And make_virtual_commit() should become static inside merge_recursive.c;
+use of these fake commits is strictly an internal implementation issue of
+how merge_recursive() function works and does not concern the caller, does
+it?
 
- - it's more convenient to just type "git push" than to remember "tests
-   && git push", so this reduces the chances of contributors
-   accidentally pushing crap
-
--Peff
+By the way, the calling convention of merge_recursive_generic() looks
+confusing (even though by the above reasoning it does not matter very much
+outside "git-merge" and "git-merge-recursive").  Why does it take textual
+object names for bases but binary object names for head and next?
