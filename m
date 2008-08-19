@@ -1,146 +1,127 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Call Me Gitless
-Date: Tue, 19 Aug 2008 15:22:30 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0808191143040.19665@iabervon.org>
-References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com> <alpine.LNX.1.00.0808181512160.19665@iabervon.org> <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0808181628420.19665@iabervon.org>
- <7vbpzph3fx.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 21:24:28 2008
+From: Tarmigan Casebolt <tarmigan+git@gmail.com>
+Subject: [PATCH] Add hints to revert documentation about other ways to undo changes
+Date: Tue, 19 Aug 2008 12:50:31 -0700
+Message-ID: <1219175431-20730-1-git-send-email-tarmigan+git@gmail.com>
+References: <7vk5ec7s05.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Tarmigan Casebolt <tarmigan+git@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Lea Wiemann <lewiemann@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Aug 19 21:39:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVWoT-000133-6g
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 21:24:17 +0200
+	id 1KVX32-0007Pn-QQ
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 21:39:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757946AbYHSTWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 15:22:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757931AbYHSTWj
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 15:22:39 -0400
-Received: from iabervon.org ([66.92.72.58]:33993 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757946AbYHSTWh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 15:22:37 -0400
-Received: (qmail 4647 invoked by uid 1000); 19 Aug 2008 19:22:30 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 19 Aug 2008 19:22:30 -0000
-In-Reply-To: <7vbpzph3fx.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1753673AbYHSTiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 15:38:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753609AbYHSTiN
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 15:38:13 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:50394 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753032AbYHSTiM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 15:38:12 -0400
+Received: by gxk9 with SMTP id 9so5605406gxk.13
+        for <git@vger.kernel.org>; Tue, 19 Aug 2008 12:38:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:sender;
+        bh=q+uhhl12xRTzMIy3JkQkXtY//erYeyJo+Bv1klHHE64=;
+        b=cBrV0DyUn94I8oIO6Al1kQW60sjWpQJVJZMltgRiegOgmRPUbxYuAaQEketBYI8jZc
+         6k0ZzyvgJgF6FWLK44tjPQDRdNLKrLAG4JZU3s+DhLeA0zCITHZA9SdR65sg0nWefDr+
+         AJF1YpLFtQv/Qa83nOxRiaYurQWKWNotWtWnI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :sender;
+        b=RaChY/gV8Tox6924oQugQuMSH0S43FPuJLAyc4eT2fFfAbdbLLSg7azI+/3iKlBziV
+         HdW3kan76jUUv70KMLEwmYnQ+IqBzL2NEeESNsXIWd6A8EHSwjMUoiN4YkpgUETyBzAM
+         ABAZH/VLtweDhv+kF5tXz8HUxtI9KZXDa7GJw=
+Received: by 10.142.134.20 with SMTP id h20mr2660435wfd.21.1219174691009;
+        Tue, 19 Aug 2008 12:38:11 -0700 (PDT)
+Received: from localhost ( [24.130.14.197])
+        by mx.google.com with ESMTPS id 27sm860699wfa.2.2008.08.19.12.38.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 19 Aug 2008 12:38:09 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0
+In-Reply-To: <7vk5ec7s05.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92912>
 
-On Tue, 19 Aug 2008, Junio C Hamano wrote:
+Based on its name, people may read the 'git revert' documentation when
+they want to undo local changes, especially people who have used other
+SCM's.  'git revert' may not be what they had in mind, but git
+provides several other ways to undo changes to files.  We can help
+them by pointing them towards the git commands that do what they might
+want to do.
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > .... For most systems, "diff" without options is a preview of 
-> > what would be in the patch if you were to commit; "git diff", on the other 
-> > hand, shows what would be left out of the patch.
-> 
-> That is true, but I also think that is because (1) on other systems, you
-> cannot even choose to select changes to "leave out of the patch", so they
-> have no option other than showing "what could be committed", and (2) by
-> definition active use of index means that you are staging incrementally,
-> and it is natural to expect you to want to view "changes since the last
-> staging" much more often than "what would be committed" when you are
-> staging incrementally, so the current default is the _right_ one.
+Cc: Daniel Barkalow <barkalow@iabervon.org>
+Cc: Lea Wiemann <lewiemann@gmail.com>
+Signed-off-by: Tarmigan Casebolt <tarmigan+git@gmail.com>
+---
 
-Wow, that's a completely different idea of how to use the index than I 
-think of. When I think of staging things incrementally, I'm taking a 
-working tree with a ton of changes, and triaging them into: (a) things 
-that go into this commit; (b) things that I want to hang onto but not put 
-in yet; and (c) things I want to get rid of. This is after I've got a 
-working version of the change, and I'm just cleaning it up and debugging. 
-This, of course, is essentially the same as using the index for merging, 
-where you start using the index when you've got all the content available 
-(including stuff you don't want), and you finish with the state you'll 
-want to commit.
+On Tue, Aug 19, 2008 at 11:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> The last sentence makes the paragraph incoherent, doesn't it?
 
-When I want to do what you're doing, I just do a commit and then use 
---amend when I've done more work (or I work on a temporary branch). I 
-think the real benefit of the index is that it doesn't have to match a 
-complete-working-tree state you've actually had, so you can use it to 
-commit the correct version of API A without user B when you really wrote a 
-buggy version of A, then wrote B, then fixed A.
+Yeah.  My thinking was that the people who would appreciate this note
+would be newbies, and it might be nice to warn them not to just try
+'git reset --hard' without thinking.
 
-> So I'd say the below is a faulty argument:
-> 
-> > ...  So, even given that 
-> > people understand the meaning of the index, they can fail to understand 
-> > what "diff" will tell them.
-> 
-> If they understand "the meaning of the index", not just as literal reading
-> of the manual page "it is a staging area to prepare for the next commit",
-> but including the reason why there is a "staging area" and how it is to be
-> used, they would reach the conclusion that "diff by default will show the
-> leftover from incremental staging and it is the right thing".
+> By starting this paragraph with "Despite its name", you are stating your
+> expectation that the people who find "git revert" nonintuitive are the
+> majority.  
+>
+> And you explain how to perform the operation that majority
+> would expect, which is to throw away uncommitted changes to go back to the
+> clean slate.  If that is what the target audience of this paragraph
+> expects to happen anyway, why do you need to caution against it in the
+> last sentence?
 
-I think you may be overly limited in "how the index is to be used". One of 
-the major advantages, in my view, of git over other systems is that you 
-can incrementally decide what of the changes persent in your working tree 
-will be included in the next commit, and the index stores what you've 
-decided to include. That is, you can not only checkpoint your work on 
-changing the content, you can even checkpoint your work on forming the 
-content change into commits, and you can checkpoint your work on resolving 
-merge conflicts.
+I envision this note as useful for a majority of newbies who don't yet
+have a sense of everything 'git reset' and 'git checkout' can do.
 
-Simply checkpointing content changes is, IMHO, better done in ways other 
-than the index (git stash, throw-away development branches) that allow you 
-to recover to earlier checkpoints; having private commits satisfies this 
-need admirably, while the index allows incremental work on preparing a 
-commit out of changes you've written, which is an area where nothing but 
-the index works nearly so well.
+> If the answer is "because it is not cut-and-dried which expectation is the
+> majority, and we try to be careful not to lose local modifications of
+> users", then the tone of the paragraph needs to become more neutral.
+>
+> I'd suggest either dropping the first sentence altogether and starting the
+> paragraph with "If you want to throw away...", or replacing the first
+> sentence with "'git revert' is used to record a new commit to reverse the
+> effect of an earlier commit (often a faulty one)."
 
-> > ... And diff is a bit unhelpful in that it 
-> > generates headers as for "diff -r a b", regardless of what the things are.
-> 
-> We have a separate thread on this now ;-)
+Good idea.  I like the later option.
 
-Right.
+Thanks,
+Tarmigan
 
-> >> (2) Some concepts in git are different from what they are used to, without
-> >>     any good reason.  IOW, the concepts have room for improvement, and our
-> >>     UI is based on these faulty concepts.
-> >> 
-> >> (3) Some concepts in git may be exactly the same with other systems, yet
-> >>     our UI may operate differently from them without any good reason.
-> >> 
-> >> I'd be surprised if there is _no_ UI element that falls into the latter
-> >> two categories, but obviously I would not be able to list examples.  If I
-> >> could, they instead would have long been fixed already.
-> >
-> > You've got to include the class of "The concepts in git are exactly the 
-> > same as with other systems (although git also has additional concepts), 
-> > and commands from other systems do not do the same thing in git (with or 
-> > without good reason)."
-> 
-> Isn't it the same as (3)?
+ Documentation/git-revert.txt |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
-Well there may be a good reason, which (3) excludes. 
-
-> > E.g., git has a working directory, and git has a committed state, and CVS 
-> > has both of these, and "cvs diff" compares the working directory with the 
-> > committed state, but "git diff" does a different operation.
-> 
-> Ah, Ok, that is not the same as (3), but "although git has more" makes it
-> totally different.
-> 
-> Your example sounds like comparing a car and a motorcycle.  Yes they both
-> share two tyres, but the former having two more tyres makes the driving
-> technique of the whole thing quite different, doesn't it?
-
-Ah, but a motorcycle has handlebars and a car has a steering wheel. That 
-is, they somewhat arbitrarily have different user interfaces, 
-corresponding to the difference in driving technique. That would be like 
-having "git diff" not exist, but "git cmp" serve the same goal as "cvs 
-diff", because git can do a different and more useful operation than cvs 
-can do, but we'd name it differently because it's not the same operation.
-
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+index 98cfa3c..e578edf 100644
+--- a/Documentation/git-revert.txt
++++ b/Documentation/git-revert.txt
+@@ -15,7 +15,15 @@ Given one existing commit, revert the change the patch introduces, and record a
+ new commit that records it.  This requires your working tree to be clean (no
+ modifications from the HEAD commit).
+ 
++Note: 'git revert' is used to record a new commit to reverse the
++effect of an earlier commit (often a faulty one).  If you want to
++throw away all uncommitted changes in your working directory, you
++should see linkgit:git-reset[1], particularly the '--hard' option.  If
++you want to extract specific files as they were in another commit, you
++should see linkgit:git-checkout[1], specifically the 'git checkout
++<commit> -- <filename>' syntax.  Take care with these alternatives as
++both will discard uncommitted changes in your working directory.
++
+ OPTIONS
+ -------
+ <commit>::
+-- 
+1.6.0
