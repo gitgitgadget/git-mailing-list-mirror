@@ -1,70 +1,74 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Call Me Gitless
-Date: Mon, 18 Aug 2008 20:32:32 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0808182027240.19665@iabervon.org>
-References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com>  <alpine.LNX.1.00.0808181512160.19665@iabervon.org>  <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org> <905315640808181624w58918a0ao939a3f0462f9dc9e@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t9301-fast-export.sh: don't unset config variable while
+ we're skipping test 4
+Date: Mon, 18 Aug 2008 17:32:45 -0700
+Message-ID: <7vtzdhkfo2.fsf@gitster.siamese.dyndns.org>
+References: <giNXZFTxzY3B65dQob7CwvwwfSKlZpw_60oz81RxU5UN3PsTT_3dMQ@cipher.nrlssc.navy.mil> <kbCw6MBjduXNz0eWrsdfGIVr60qjr7cf1eJqhd4l-UzDfHEk1LrlkA@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Tarmigan <tarmigan+git@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 02:33:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue Aug 19 02:34:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVFAV-0000rY-DG
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 02:33:51 +0200
+	id 1KVFAg-0000ux-LH
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 02:34:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754466AbYHSAcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 20:32:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754540AbYHSAce
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 20:32:34 -0400
-Received: from iabervon.org ([66.92.72.58]:59250 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754344AbYHSAce (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 20:32:34 -0400
-Received: (qmail 3092 invoked by uid 1000); 19 Aug 2008 00:32:32 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 19 Aug 2008 00:32:32 -0000
-In-Reply-To: <905315640808181624w58918a0ao939a3f0462f9dc9e@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752933AbYHSAcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 20:32:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754500AbYHSAcw
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 20:32:52 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34690 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752933AbYHSAcv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 20:32:51 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AF06C53CCE;
+	Mon, 18 Aug 2008 20:32:49 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 2099253CCD; Mon, 18 Aug 2008 20:32:46 -0400 (EDT)
+In-Reply-To: <kbCw6MBjduXNz0eWrsdfGIVr60qjr7cf1eJqhd4l-UzDfHEk1LrlkA@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Mon, 18 Aug 2008 18:20:12 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5A2ED1AA-6D86-11DD-B679-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92795>
 
-On Mon, 18 Aug 2008, Tarmigan wrote:
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-> On Mon, Aug 18, 2008 at 1:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > (2) Some concepts in git are different from what they are used to, without
-> >    any good reason.  IOW, the concepts have room for improvement, and our
-> >    UI is based on these faulty concepts.
-> >
-> > (3) Some concepts in git may be exactly the same with other systems, yet
-> >    our UI may operate differently from them without any good reason.
-> 
-> One confusing part of the porcelain may be the way that git's revert
-> is different from other systems' revert.  What would people think
-> about something like this somewhere in git-revert(1)?
-> 
-> +DISCUSSION
-> +----------
-> +If you are more familiar with another SCM, 'git revert' may not do what you
-> +expect.  Specifically, if you want to throw away all changes in your working
-> +directory, you should read the man page for 'git reset', particulary the
-> +'--hard' option.  If you want to extract specific files as they were in a
-> +previous commit, you should read the man page for 'git checkout -- <filename>'.
+> ---
+>
+>
+> This is necessary if t9301.4 is included in the GIT_SKIP_TESTS
+> environment variable.
 
-"as they were in a particular commit"; it works for the current commit as 
-well as older ones. And skip the first sentence; even people who aren't 
-familiar with another SCM are reasonably likely to be attracted by the 
-name "revert" as being descriptive of what they want to do.
+If it is not skipped what happens?  Does your change break this test?
 
-I think this is a good idea, although clever placement is necessary to 
-neither distract people who really do want "revert" nor get missed by 
-people who are looking in the wrong place.
+How about attempting to unset always (because the test does not want to
+have the configuration) but ignore the result from the command (because
+the config may not have had anything to unset to begin with depending on
+what happened in the previous tests)?
 
-	-Daniel
-*This .sig left intentionally blank*
+>  t/t9301-fast-export.sh |    1 -
+>  1 files changed, 0 insertions(+), 1 deletions(-)
+>
+> diff --git a/t/t9301-fast-export.sh b/t/t9301-fast-export.sh
+> index c19b4a2..475aadd 100755
+> --- a/t/t9301-fast-export.sh
+> +++ b/t/t9301-fast-export.sh
+> @@ -190,7 +190,6 @@ export GIT_COMMITTER_NAME='C O Mitter'
+>  
+>  test_expect_success 'setup copies' '
+>  
+> -	git config --unset i18n.commitencoding &&
+>  	git checkout -b copy rein &&
+>  	git mv file file3 &&
+>  	git commit -m move1 &&
+> -- 
+> 1.6.0.13.ge1c8
