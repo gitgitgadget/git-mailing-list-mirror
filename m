@@ -1,107 +1,61 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH FYI] test-lib.sh: work around ksh's trap shortcomings
-Date: Mon, 18 Aug 2008 19:11:41 -0500
-Message-ID: <20fxFRoix9DAAeLmqmpHU-KsSuokk8Un2zipN8uZkXEQln3EHA-Paw@cipher.nrlssc.navy.mil>
-References: <IH0MHSTEimhAN93AedvpRKq4qfzm1QA814ZYyhbSBtSdNbq8vuE6aw@cipher.nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [JGIT PATCH 01/14] Detect path names which overflow the name
+ length field in the index
+Date: Mon, 18 Aug 2008 17:11:51 -0700
+Message-ID: <7v7iadlv7c.fsf@gitster.siamese.dyndns.org>
+References: <1219103602-32222-1-git-send-email-spearce@spearce.org>
+ <1219103602-32222-2-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 19 02:12:48 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Aug 19 02:13:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVEq6-0004ao-U8
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 02:12:47 +0200
+	id 1KVEqN-0004f3-KT
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 02:13:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754245AbYHSALn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 20:11:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754057AbYHSALn
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 20:11:43 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50186 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753307AbYHSALm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 20:11:42 -0400
-Received: by mail.nrlssc.navy.mil id m7J0BfG1031722; Mon, 18 Aug 2008 19:11:41 -0500
-In-Reply-To: <IH0MHSTEimhAN93AedvpRKq4qfzm1QA814ZYyhbSBtSdNbq8vuE6aw@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 19 Aug 2008 00:11:41.0333 (UTC) FILETIME=[27E9EC50:01C90190]
+	id S1755315AbYHSAL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 20:11:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755290AbYHSAL7
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 20:11:59 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54458 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755312AbYHSAL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 20:11:58 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 63FA65F2A5;
+	Mon, 18 Aug 2008 20:11:57 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 647295F2A4; Mon, 18 Aug 2008 20:11:53 -0400 (EDT)
+In-Reply-To: <1219103602-32222-2-git-send-email-spearce@spearce.org> (Shawn
+ O. Pearce's message of "Mon, 18 Aug 2008 16:53:09 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6FC036D8-6D83-11DD-A3DF-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92786>
 
-In ksh, if trap is called within a function with 0 or EXIT as its signal,
-then the trap will be executed at the time the function returns. This
-causes a problem in the test functions since 'trap - exit' is called
-within the test_done function in order to remove the trap which calls
-die() on exit. This means trap has to be called from the scripts top-level.
-Do so using an alias.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Additionally, there is some strangeness with respect to aliases and
-sourced script files; the alias hack doesn't work. So call 'trap - 0'
-directly in lib-git-svn.sh before calling the test_done function.
----
+> C Git allows a path name to be longer than 4095 bytes by storing 4095
+> into the path name length field within flags and then searching for a
+> null terminator at the end of the path name, instead of relying on the
+> length indicatior.
 
+This reminds me.
 
-This is the same patch I posted earlier with respect to compiling on IRIX
-and Junio has suggested a more elegant solution.
+In the longer term, we should make this "CE_NAMEMASK gives the real length
+for sane names but otherwise we need to count" merely a property of the
+on-disk index structure.  In-core index should gain a new ce_namelen field
+that records the real name (even when it is longer than the mask would
+permit).  IOW, the knowledge of CE_NAMEMASK should be confined to
+read_index_from() and ce_write_entry().
 
--brandon
-
-
- t/lib-git-svn.sh |    3 +++
- t/test-lib.sh    |    2 +-
- 2 files changed, 4 insertions(+), 1 deletions(-)
-
-diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-index a841df2..e2e8cf3 100644
---- a/t/lib-git-svn.sh
-+++ b/t/lib-git-svn.sh
-@@ -3,6 +3,7 @@
- if test -n "$NO_SVN_TESTS"
- then
- 	test_expect_success 'skipping git-svn tests, NO_SVN_TESTS defined' :
-+	trap - exit
- 	test_done
- 	exit
- fi
-@@ -15,6 +16,7 @@ svn >/dev/null 2>&1
- if test $? -ne 1
- then
-     test_expect_success 'skipping git-svn tests, svn not found' :
-+    trap - exit
-     test_done
-     exit
- fi
-@@ -39,6 +41,7 @@ then
- 		err='Perl SVN libraries not found or unusable, skipping test'
- 	fi
- 	test_expect_success "$err" :
-+	trap - exit
- 	test_done
- 	exit
- fi
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 11c0275..6a3fc93 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -415,7 +415,6 @@ test_create_repo () {
- }
- 
- test_done () {
--	trap - exit
- 	test_results_dir="$TEST_DIRECTORY/test-results"
- 	mkdir -p "$test_results_dir"
- 	test_results_path="$test_results_dir/${0%-*}-$$"
-@@ -457,6 +456,7 @@ test_done () {
- 
- 	esac
- }
-+alias test_done='trap - exit && test_done'
- 
- # Test the binaries we have just built.  The tests are kept in
- # t/ subdirectory and are run in 'trash directory' subdirectory.
--- 
-1.6.0.11.gecc7e
+I expect this to be a relatively easy janitor project; hint, hint...
