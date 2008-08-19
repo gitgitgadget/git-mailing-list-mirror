@@ -1,61 +1,48 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH FYI] t9301-fast-export.sh: don't unset config variable while
- we're skipping test 4
-Date: Mon, 18 Aug 2008 19:20:44 -0500
-Message-ID: <vGteI3DnC7lCPEEY8NLHOpwB6QEGihg6tXMEhCKrvrD3WSJ6OM1o-A@cipher.nrlssc.navy.mil>
+From: Jeff King <peff@peff.net>
+Subject: Re: [FYI] How I compile on SunOS 5.7 with the SUNWspro compiler
+	and ksh
+Date: Mon, 18 Aug 2008 20:20:48 -0400
+Message-ID: <20080819002047.GA15770@coredump.intra.peff.net>
 References: <IH0MHSTEimhAN93AedvpRKq4qfzm1QA814ZYyhbSBtSdNbq8vuE6aw@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 19 02:21:51 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue Aug 19 02:22:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVEys-0006tM-CZ
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 02:21:50 +0200
+	id 1KVEz1-0006v4-Qw
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 02:22:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754265AbYHSAUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2008 20:20:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754061AbYHSAUq
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 20:20:46 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:39949 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754037AbYHSAUp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2008 20:20:45 -0400
-Received: by mail.nrlssc.navy.mil id m7J0KjMc001446; Mon, 18 Aug 2008 19:20:45 -0500
+	id S1754279AbYHSAUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2008 20:20:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754171AbYHSAUv
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Aug 2008 20:20:51 -0400
+Received: from peff.net ([208.65.91.99]:4284 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754151AbYHSAUu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2008 20:20:50 -0400
+Received: (qmail 17654 invoked by uid 111); 19 Aug 2008 00:20:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 18 Aug 2008 20:20:49 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Aug 2008 20:20:48 -0400
+Content-Disposition: inline
 In-Reply-To: <IH0MHSTEimhAN93AedvpRKq4qfzm1QA814ZYyhbSBtSdNbq8vuE6aw@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 19 Aug 2008 00:20:44.0852 (UTC) FILETIME=[6BE05740:01C90191]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92790>
 
----
+On Mon, Aug 18, 2008 at 06:39:40PM -0500, Brandon Casey wrote:
 
+> 1) the t5000 tests which fail are due to the installed gnu tar being
+> too old, and
 
-Necessary if using my compile script which included t9301.4 in GIT_SKIP_TESTS
-environment variable.
+Hmm. I thought I had t5000 working on Solaris 5.7 a few months ago.
+Unfortunately, the Solaris box I test on is down at the moment, so I
+can't take a closer look. What is the problem?
 
--brandon
-
-
- t/t9301-fast-export.sh |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
-
-diff --git a/t/t9301-fast-export.sh b/t/t9301-fast-export.sh
-index c19b4a2..475aadd 100755
---- a/t/t9301-fast-export.sh
-+++ b/t/t9301-fast-export.sh
-@@ -190,7 +190,6 @@ export GIT_COMMITTER_NAME='C O Mitter'
- 
- test_expect_success 'setup copies' '
- 
--	git config --unset i18n.commitencoding &&
- 	git checkout -b copy rein &&
- 	git mv file file3 &&
- 	git commit -m move1 &&
--- 
-1.6.0.11.gecc7e
+-Peff
