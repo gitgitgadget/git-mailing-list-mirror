@@ -1,85 +1,84 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: What's cooking in git.git (Aug 2008, #05; Tue, 19)
-Date: Tue, 19 Aug 2008 14:54:29 +0200
-Message-ID: <20080819125429.GD17582@genesis.frugalware.org>
-References: <7vpro5cr2x.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Call Me Gitless
+Date: Tue, 19 Aug 2008 06:15:38 -0700 (PDT)
+Message-ID: <m3skt1s0c6.fsf@localhost.localdomain>
+References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="6Nae48J/T25AfBN4"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 14:55:48 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: Trans <transfire@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 15:16:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVQkO-0005sK-NA
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 14:55:41 +0200
+	id 1KVR4r-0005YG-10
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 15:16:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753300AbYHSMyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 08:54:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753291AbYHSMyh
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 08:54:37 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:34482 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753258AbYHSMyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 08:54:36 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 6DCFC1B250C;
-	Tue, 19 Aug 2008 14:54:30 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id F164A4465E;
-	Tue, 19 Aug 2008 13:58:32 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id F0E971770019; Tue, 19 Aug 2008 14:54:29 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vpro5cr2x.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1753398AbYHSNPp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 09:15:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753386AbYHSNPp
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 09:15:45 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:59848 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753316AbYHSNPo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 09:15:44 -0400
+Received: by gxk9 with SMTP id 9so4978864gxk.13
+        for <git@vger.kernel.org>; Tue, 19 Aug 2008 06:15:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=H1DYfMXbCa9khL5k/3VnqgoTDsDqa/YAlZmcCNWF8XI=;
+        b=JGjsPQl4CP9VxqvK96KTa45xJovy0vckfXLJ+MQ/Z/4AvOzWXg+OMPiNSvwuP/3b4K
+         Fxa5KKlDgH+OxD8RkKwxWZwgWgKM/5X0beECuqds0DQuKQIqh9/D83ZnebZfMeg3ZkmG
+         hvrsuOMIYZC2J09fEZdyQPZiI9Fv7iTyo88ik=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=x11x3Sp8b0D7KEgGbM1kwzqKBI8peOm3uMhLN6isBYbxH6SMmOLPr5di0IORnOW5Fg
+         HclwPEKAXI3qeRAC8fjzPQR7GPdPbquo6eHqC51m+M3lEreUqr9j/yEyk4sTxHeJXBUW
+         oK1kNhPcLlLHSgxeW5PgG7SkKLMXcRvfiHUfE=
+Received: by 10.150.181.7 with SMTP id d7mr11839510ybf.136.1219151742965;
+        Tue, 19 Aug 2008 06:15:42 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.242.212])
+        by mx.google.com with ESMTPS id j13sm317816rne.4.2008.08.19.06.15.32
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 19 Aug 2008 06:15:38 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m7JBaieH002275;
+	Tue, 19 Aug 2008 13:36:44 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m7JBagkb002272;
+	Tue, 19 Aug 2008 13:36:42 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92854>
 
+Trans <transfire@gmail.com> writes:
 
---6Nae48J/T25AfBN4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Well, after a few days of using git, I've decide Linus is too smart to
+> be designing end-user interfaces.
 
-On Tue, Aug 19, 2008 at 02:05:42AM -0700, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> [On Hold]
-> (...)
-> * mv/merge-recursive (Tue Aug 12 22:14:00 2008 +0200) 3 commits
->  - Make builtin-revert.c use merge_recursive_generic()
->  - merge-recursive.c: Add more generic merge_recursive_generic()
->  - Split out merge_recursive() to merge-recursive.c
->=20
-> I do not think builtlin-revert should use "recursive", but these patches
-> give a good starting point to separate the bulk of the "rename-aware
-> three-way merge" into library form.
+Actually git was developed and designed in bottoms-up fashion,
+in the "worse is better" way that is quite characteristic for
+UNIX tools.  And the mantle of being git maintainer passed
+to Junio Hamano before git acquired truly end-user interface
+(as opposed to power-user interface).
 
-I wanted to send a patch that makes builtin-merge use the new
-merge_recursive_setup(), but then I was not able to decide to use
-merge_recursive_generic() or not.
+As I can see even if you didn't provide any details about _what_
+do you find difficult in git end-user interface (you are using
+current git version, and reading up-to-date git documentation?),
+git UI continues improving, even in this thread...
 
-What is your preference here? I just want to avoid a "this could be
-merged, but it uses merge_recursive(), not merge_recursive_generic()" or
-the opposite of this. :)
-
-Thanks.
-
---6Nae48J/T25AfBN4
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkiqwoUACgkQe81tAgORUJZueQCeIFoMfGz3/4QPiAe2JkIHETSL
-QGEAn2xUxeBFXae+TcIMjSHsI8ASuKNf
-=4E6C
------END PGP SIGNATURE-----
-
---6Nae48J/T25AfBN4--
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
