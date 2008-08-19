@@ -1,55 +1,108 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: [JGIT PATCH 00/14] TreeWalk D/F conflict detection
-Date: Tue, 19 Aug 2008 09:52:11 +0100
-Message-ID: <1219135931.3184.473.camel@pmac.infradead.org>
-References: <1219103602-32222-1-git-send-email-spearce@spearce.org>
+From: "Imran M Yousuf" <imyousuf@gmail.com>
+Subject: Re: Call Me Gitless
+Date: Tue, 19 Aug 2008 14:53:09 +0600
+Message-ID: <7bfdc29a0808190153o3d3b2635v4276ef4fa65fbb8@mail.gmail.com>
+References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com>
+	 <alpine.LNX.1.00.0808181512160.19665@iabervon.org>
+	 <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org>
+	 <905315640808181624w58918a0ao939a3f0462f9dc9e@mail.gmail.com>
+	 <48AA7BE9.4040108@sneakemail.com>
+	 <7vk5edfn6g.fsf@gitster.siamese.dyndns.org>
+	 <7bfdc29a0808190110nddaf57fw5bf40903f3072bff@mail.gmail.com>
+	 <48AA83B4.2080009@sneakemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Aug 19 10:53:32 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Peter_Valdemar_M=F8rch_(Lists)?=" 
+	<4ux6as402@sneakemail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 10:54:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVMxr-0007gw-Ul
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 10:53:20 +0200
+	id 1KVMyl-0007zM-2G
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 10:54:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750992AbYHSIwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 04:52:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750824AbYHSIwQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 04:52:16 -0400
-Received: from bombadil.infradead.org ([18.85.46.34]:41825 "EHLO
-	bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750992AbYHSIwP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 04:52:15 -0400
-Received: from pmac.infradead.org ([2001:8b0:10b:1:20d:93ff:fe7a:3f2c])
-	by bombadil.infradead.org with esmtpsa (Exim 4.68 #1 (Red Hat Linux))
-	id 1KVMwn-0005Sb-GE; Tue, 19 Aug 2008 08:52:13 +0000
-In-Reply-To: <1219103602-32222-1-git-send-email-spearce@spearce.org>
-X-Mailer: Evolution 2.22.3.1 (2.22.3.1-1.fc9) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by bombadil.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S1752085AbYHSIxM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Aug 2008 04:53:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752063AbYHSIxM
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 04:53:12 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:4983 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751475AbYHSIxL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Aug 2008 04:53:11 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so1415355yxm.1
+        for <git@vger.kernel.org>; Tue, 19 Aug 2008 01:53:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=fVnQCKLnpIGLW/uJwZOzMiNjP7T6QcL1ihzeyARkRr4=;
+        b=IYrWlDMzK4b1lYEtc/+lX8LxfwAx8SrQ01ygrZ6OwzpFn82ZFwUUuVr5e9HTjUAd9q
+         Jdcp4r6Bu5zVHxBHZxY4Z+69vqEBSAau2TyyjGHmqFTGIaEB/sJutOrct+pEl1i5NG6v
+         9thWNgO0tATUv2LyFwWGOXWUpCBs5yz4vpO2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=up2+7wKMUhwRXR59TthgpNH2NOICqWgsbXBE9KHt5fVnpK3gzdv6gfWxcKpPPlScay
+         Q3x5b1X36SQD6rZ8gC8b8tt4G01XVwggE007gkOO+U9IBgw8h/6qE4aBNLuP+rRrc2xO
+         olIphB6aF87ifum7Q8TEzGaNI4oQpuFFxeOSI=
+Received: by 10.150.219.18 with SMTP id r18mr6653781ybg.113.1219135989378;
+        Tue, 19 Aug 2008 01:53:09 -0700 (PDT)
+Received: by 10.150.225.1 with HTTP; Tue, 19 Aug 2008 01:53:09 -0700 (PDT)
+In-Reply-To: <48AA83B4.2080009@sneakemail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92835>
 
-On Mon, 2008-08-18 at 16:53 -0700, Shawn O. Pearce wrote:
-> This series is about fixing the "mistake" in Git trees where
-> subtrees sort as through their name is "path/" and not "path".
+On Tue, Aug 19, 2008 at 2:26 PM, "Peter Valdemar M=F8rch (Lists)"
+<4ux6as402@sneakemail.com> wrote:
+> Hi,
+>
+> Imran M Yousuf imyousuf-at-gmail.com |Lists| wrote:
+>>
+>> I would not agree it to be a part of git-add man page, but rather it
+>> should be a part of doc that explains basic git commands and their
+>> flows. I feel that we need a place where git flows are explained. IM=
+O,
+>> gitwiki is a great place for it. I would like to volunteer to add
+>> these pages to Wiki.
+>
+> Why not? Shouldn't the man pages be a superset of those other docs?
+>
+> Does it seem clear to you from reading "git help reset" that it is re=
+lated
+> to "git add" and that one can undo a git add with git reset?
 
-Er, really? Does that mean this commit is broken, then?
+Actually when I learned git I never learned one command after another,
+rather I learned the flows and the most the scenarios mentioned in
+this thread mostly got covered then in either first or second flow I
+was trying. What learning flows enabled was, for me to experience how
+commands are inter-related.
 
-http://git.kernel.org/?p=linux/kernel/git/dwmw2/misc-git-hacks.git;a=commitdiff;h=fc1b73da
+It basically depends how a person learns the tool. My way of learning
+a tool is to learn flows. I have also taken the same steps to teach
+some of my friends and colleagues git and all seem to understand the
+stuffs :). But hey, that is my opinion :) only.
 
-I shouldn't need to know that -- I'd _really_ like a version of
-'git-hash-object -t tree' which validates and sorts its input for me.
-And maybe even takes input in _text_ form, so I don't have to convert
-the sha1 to binary.
+Best regards,
 
--- 
-David Woodhouse                            Open Source Technology Centre
-David.Woodhouse@intel.com                              Intel Corporation
+Imran
+
+>
+> Peter
+> --
+> Peter Valdemar M=F8rch
+> http://www.morch.com
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
