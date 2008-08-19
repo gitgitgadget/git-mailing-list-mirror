@@ -1,62 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT PATCH 00/31] Push GUI, GUI improvements, various jgit
-	stuff
-Date: Tue, 19 Aug 2008 10:59:31 -0700
-Message-ID: <20080819175931.GH20947@spearce.org>
-References: <1219005852-21496-1-git-send-email-marek.zawirski@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Call Me Gitless
+Date: Tue, 19 Aug 2008 11:15:55 -0700
+Message-ID: <7v4p5gdg6c.fsf@gitster.siamese.dyndns.org>
+References: <ee521d6f0808190157s6a676a75t2ba3ef095f608431@mail.gmail.com>
+ <660749.49882.qm@web27803.mail.ukl.yahoo.com>
+ <ee521d6f0808190504u12be6195o71eb2f3a38f73a5f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: robin.rosenberg@dewire.com, git@vger.kernel.org
-To: Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 20:00:38 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Mark Struberg" <struberg@yahoo.de>,
+	"" Peter Valdemar =?utf-8?Q?M?= =?utf-8?Q?=C3=B8rch?= (Lists) "" 
+	<4ux6as402@sneakemail.com>, git@vger.kernel.org
+To: "Alexander E Genaud" <alex@genaud.net>
+X-From: git-owner@vger.kernel.org Tue Aug 19 20:17:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVVVV-0003Wc-QF
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 20:00:38 +0200
+	id 1KVVll-0000Ye-0z
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 20:17:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752112AbYHSR7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 13:59:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753145AbYHSR7d
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 13:59:33 -0400
-Received: from george.spearce.org ([209.20.77.23]:43284 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752112AbYHSR7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 13:59:32 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id BC00E38375; Tue, 19 Aug 2008 17:59:31 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1219005852-21496-1-git-send-email-marek.zawirski@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751236AbYHSSQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 14:16:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752423AbYHSSQK
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 14:16:10 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64789 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751236AbYHSSQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 14:16:08 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7676453F2C;
+	Tue, 19 Aug 2008 14:16:07 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id CAC2753F28; Tue, 19 Aug 2008 14:15:58 -0400 (EDT)
+In-Reply-To: <ee521d6f0808190504u12be6195o71eb2f3a38f73a5f@mail.gmail.com>
+ (Alexander E. Genaud's message of "Tue, 19 Aug 2008 14:04:42 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E49D9706-6E1A-11DD-B8A7-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92891>
 
-Marek Zawirski <marek.zawirski@gmail.com> wrote:
-> Robin, Tor, I know that you were already contributing some graphics to
-> egit. If someone of you would like to do some icon for push/fetch with
-> pleasure, you are welcome. Otherwise I'll have to do some crappy icon
-> instead ;) Another matter are checkboxes screenshots. I'm not sure
-> about legality status of including them. Any ideas if/how we co use
-> them or some another set that we can for sure?
+"Alexander E Genaud" <alex@genaud.net> writes:
 
-So my office-mate suggests that the output of a program (in this
-case the checkbox icon) isn't covered by the same copyright as the
-program that created it.  So we may be OK.  Or we just use some
-other sort of icon for the checkbox.  Maybe Tor would be able to
-come up with something useful here?
+> Thanks for pointing me to 'git-rm --cached'.
+>
+>> The changes are "cached" in the "Index". But I wouldn't name
+>> the "Index" really a "Cache" because it is a lot more. All
+>> comments for --cached in the manpages mention the Index
+>> mechanism. Additionally there is a more detailed introduction
+>> to the Index in section 7 (Git concepts) of the Git User's
+>> Manual
+>
+> Funny the first example shows the contents of the index using a '--stage' flag.
+>
+> $ git ls-files --stage
 
-Anyway, most of this series looks pretty good to me.  I found a
-few other annoying bugs in JGit and EGit as a result of testing
-this series, but they are unrelated to the series and have been
-there all along.  So I may try to fix them in the coming weeks.
- 
->  55 files changed, 6471 insertions(+), 981 deletions(-)
+For ls-files, --cached mode is the default so you did not even have to say
+it in your example.
 
-Heh.  Been busy, hmm?  ;-)
+With the option --stage, you are specifying how that --cached state is
+shown.  Normally we do not show the object name nor their merge stages,
+but we do when you give the --stage option.
 
--- 
-Shawn.
+Also look at the end of gitcli(7) documentation.
