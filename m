@@ -1,60 +1,74 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Dumb "continuous" commit dumb question
-Date: Tue, 19 Aug 2008 07:48:53 -0700
-Message-ID: <20080819144853.GD20947@spearce.org>
-References: <48AA4263.8090606@gmail.com> <e1dab3980808190732i303f06ach50e36e13a624bd23@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] bash-completion: fix getting strategy list
+Date: Tue, 19 Aug 2008 16:50:35 +0200
+Message-ID: <48AADDBB.1080203@viscovery.net>
+References: <fcaeb9bf0808190527q60869fd0uccbfd165431a752d@mail.gmail.com> <20080819132803.GA26201@laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Pat LeSmithe <qed777@gmail.com>, git@vger.kernel.org
-To: David Tweed <david.tweed@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 16:50:14 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 16:51:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVSWz-00089Q-M6
-	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 16:49:58 +0200
+	id 1KVSYh-0000SO-2Y
+	for gcvg-git-2@gmane.org; Tue, 19 Aug 2008 16:51:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752156AbYHSOsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 10:48:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752040AbYHSOsy
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 10:48:54 -0400
-Received: from george.spearce.org ([209.20.77.23]:37470 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751832AbYHSOsx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 10:48:53 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 109DF38375; Tue, 19 Aug 2008 14:48:53 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <e1dab3980808190732i303f06ach50e36e13a624bd23@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753129AbYHSOuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 10:50:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753053AbYHSOui
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 10:50:38 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:12232 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752700AbYHSOui (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 10:50:38 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KVSXc-0004wA-3r; Tue, 19 Aug 2008 16:50:36 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id DCDA24FB; Tue, 19 Aug 2008 16:50:35 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20080819132803.GA26201@laptop>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92869>
 
-David Tweed <david.tweed@gmail.com> wrote:
-> What I do is have a script that runs every 10 minutes that stages
-> files to the index and then, using the low-level git plumbing, creates
-> tree and commit objects on a side branch "temp". With this you can
-> easily commit to the main branch "main" PROVIDING you are commiting a
-> superset of the changes you're storing to the side-branch.
+Nguyen Thai Ngoc Duy schrieb:
+> +--show-strategies::
+> +	Show all available strategies. For internal use only.
+> +
 
-Have the script use "export GIT_INDEX_FILE=.git/temp-branch-index"
-so that it stages changes into an index which isn't the main one,
-and thus has no impact on the main branch.  Thus you can still
-commit a subset of the temp branch at any time.
+IMO, you don't need to declare this option as internal; offering it for
+the public is fine...
 
-Actually you can do something like this:
+> +	/* needed for git bash completion and similar tools */
 
-	export GIT_INDEX_FILE=.git/temp-branch-index &&
-	cp .git/index $GIT_INDEX_FILE &&
-	git add . &&
-	git add -u &&
-	git update-ref refs/heads/temp $(date | git commit-tree $(git write-tree) -p temp)
+... which would make this comment slightly odd.
 
-;-)
+> +	if (argc == 2 && !strcmp(argv[1], "--show-strategies")) {
+> +		for (i = 0; i < ARRAY_SIZE(all_strategy); i++)
+> +			printf("%s\n", all_strategy[i].name);
+> +		return 0;
 
--- 
-Shawn.
+Improved error checking, but quick and dirty:
+
++	if (!strcmp(argv[1], "--show-strategies")) {
++		for (i = 0; i < ARRAY_SIZE(all_strategy); i++)
++			printf("%s\n", all_strategy[i].name);
++		return argc == 2 ? 0 :
++			 error("--show-strategies does not take "
++				"any arguments");
+
+> +	$(git --exec-path)/git-merge --show-strategies
+
++	git merge --show-strategies
+
+-- Hannes
