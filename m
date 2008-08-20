@@ -1,77 +1,103 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git-aware Issue Tracking?
-Date: Wed, 20 Aug 2008 09:44:09 -0700
-Message-ID: <20080820164409.GH3483@spearce.org>
-References: <1219005852-21496-1-git-send-email-marek.zawirski@gmail.com> <20080819175931.GH20947@spearce.org> <200808192121.30372.robin.rosenberg.lists@dewire.com> <48AB84A2.7010905@gmail.com> <20080820141326.GA3483@spearce.org> <20080820152305.GJ10544@machine.or.cz>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH] bash-completion: fix getting strategy list
+Date: Wed, 20 Aug 2008 23:58:14 +0700
+Message-ID: <fcaeb9bf0808200958u65ad8fa3oa118b88e16c9c50c@mail.gmail.com>
+References: <fcaeb9bf0808190527q60869fd0uccbfd165431a752d@mail.gmail.com>
+	 <20080819132803.GA26201@laptop> <48AADDBB.1080203@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Marek Zawirski <marek.zawirski@gmail.com>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Aug 20 18:45:53 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Sixt" <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Aug 20 18:59:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVqo8-0005qH-Mi
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 18:45:17 +0200
+	id 1KVr1m-0004AA-MT
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 18:59:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751697AbYHTQoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 12:44:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751508AbYHTQoM
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 12:44:12 -0400
-Received: from george.spearce.org ([209.20.77.23]:47075 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751474AbYHTQoL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 12:44:11 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id EB6AB38375; Wed, 20 Aug 2008 16:44:09 +0000 (UTC)
+	id S1754546AbYHTQ6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 12:58:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754082AbYHTQ6Q
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 12:58:16 -0400
+Received: from rv-out-0506.google.com ([209.85.198.230]:27424 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751174AbYHTQ6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 12:58:14 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so540196rvb.1
+        for <git@vger.kernel.org>; Wed, 20 Aug 2008 09:58:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=GowzZR9JVRBSuP4Al94gaqBbjissM/5YCASQmZe8M0c=;
+        b=cqqe2qeAxbB2Yx4n2Q8/iQKhRbfJzHDJq4eY0pLMHAhvH2lS4+5YQ6/xEBnLO04Sb6
+         xX/yrOjEoVJcd9YgAMiYkqnwZibtfKdKxU6ZfXw/g780xynI8xLhAwVnQgOwAFTR/6kz
+         6AUgZ282i5NDdLFstY1mN0B7ExnTIlW7vCRHo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=plhBk+SbRlXRftAyKPuFtBA0iSj44cXyz6snBVkyTv+YYTORPgnuS/9BGmvlZ5R1kd
+         aivgAegzFPaeh8I604tFbwrUyeFLWPWl0phizVnwv2Hxb9+tDnuptOBnkSdfjAJ+gVrB
+         mne7sEZ7b8UMzhSrNXQUK0IZQ7lvJALT7q36w=
+Received: by 10.141.170.10 with SMTP id x10mr172004rvo.105.1219251494485;
+        Wed, 20 Aug 2008 09:58:14 -0700 (PDT)
+Received: by 10.141.98.6 with HTTP; Wed, 20 Aug 2008 09:58:14 -0700 (PDT)
+In-Reply-To: <48AADDBB.1080203@viscovery.net>
 Content-Disposition: inline
-In-Reply-To: <20080820152305.GJ10544@machine.or.cz>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92995>
 
-Petr Baudis <pasky@suse.cz> wrote:
-> On Wed, Aug 20, 2008 at 07:13:26AM -0700, Shawn O. Pearce wrote:
-> > I've thought about starting a code.google.com project just to use
-> > the issue tracking system there.
-> 
-> I have been thinking about issue tracking for some of my projects too,
-> but I'm wondering, does anyone have a comprehensive picture of the state
-> of the Git-supporting issue tracking tools, especially those that keep
-> the tracked issues in a Git repository as well?
-> 
-> 	http://git.or.cz/gitwiki/InterfacesFrontendsAndTools#head-73b23f376ebd0222d1e4b08f09158172aa34c24f
-> 
-> has three, but two of them are in Ruby, which is rather discouraging.
-> But Cil (in Perl) is already "self-hosting", so it might be well usable?
+On 8/19/08, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Nguyen Thai Ngoc Duy schrieb:
+>
+> > +--show-strategies::
+>  > +     Show all available strategies. For internal use only.
+>  > +
+>
+>
+> IMO, you don't need to declare this option as internal; offering it for
+>  the public is fine...
 
-Cil is interesting.  I'm concerned about keeping the state in tree
-with the repository though in a distributed development team.
+On second thought, I don't think the patch's worth it. The code in
+git-completion.bash is a hack and I replace it with another the hack.
+It won't work for custom merges and git-completion.bash will need to
+be synced manually anyway, so maybe this patch will do better:
 
-If I mark the status of an issue in a branch that isn't ready
-for mainline how do I share that status update with everyone else?
-I have to put it into a branch somewhere, no big deal.  repo.or.cz is
-pretty good at publishing things.
+diff --git a/contrib/completion/git-completion.bash
+b/contrib/completion/git-completion.bash
+index 158b912..2fed6ac 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -267,19 +267,8 @@ __git_remotes ()
 
-But do that now for 5 developers working on 10 or 20 different
-branches at once.  We'll have status updates all over the place
-and Marek's desire to see what we are each working on (to reduce
-wasted effort and perhaps help each other out more) still isn't met.
+ __git_merge_strategies ()
+ {
+-	if [ -n "$__git_merge_strategylist" ]; then
+-		echo "$__git_merge_strategylist"
+-		return
+-	fi
+-	sed -n "/^all_strategies='/{
+-		s/^all_strategies='//
+-		s/'//
+-		p
+-		q
+-		}" "$(git --exec-path)/git-merge"
+-}
+-__git_merge_strategylist=
+-__git_merge_strategylist="$(__git_merge_strategies 2>/dev/null)"
++	echo recursive octopus resolve ours subtree
++}
 
-This is the number one reason a DIT (distributed issue tracker)
-isn't available.  Nobody has solved the hard technical problem of
-making it easy to distribute the state changes, yet still provide
-a reasonably current global view of the issue status.
-
-Perhaps running Cil in its own egit-cil.git repository would get
-us what we neeed.  I looked at the code and its pretty clean,
-but I didn't see how merges of the .cil database work.
+ __git_complete_file ()
+ {
 
 -- 
-Shawn.
+Duy
