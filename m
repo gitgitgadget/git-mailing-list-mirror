@@ -1,66 +1,80 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: git-cvsimport - losing changes in subsequent pulls of a CVS branch
- that I thought I wasn't modifying in the GIT repo.
-Date: Wed, 20 Aug 2008 08:24:25 +0200
-Message-ID: <48ABB899.4090608@alum.mit.edu>
-References: <48AA6F8E.70807@bluelane.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 2/2] Build-in "git-shell"
+Date: Wed, 20 Aug 2008 08:54:14 +0200
+Message-ID: <48ABBF96.2050609@viscovery.net>
+References: <20080818123727.GB11842@schiele.dyndns.org> <7vy72tkfu0.fsf@gitster.siamese.dyndns.org> <20080819072650.GE11842@schiele.dyndns.org> <7vpro5fnke.fsf@gitster.siamese.dyndns.org> <48AA8931.1030009@viscovery.net> <20080819091830.GG11842@schiele.dyndns.org> <7vbpzoy53d.fsf@gitster.siamese.dyndns.org> <7v7iacv6kb.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Matthias Urlichs <smurf@smurf.noris.de>,
-	Piet Delaney <piet.delaney@gmail.com>,
-	Piet Delaney <pdelaney@bluelane.com>
-To: piet@bluelane.com
-X-From: git-owner@vger.kernel.org Wed Aug 20 08:25:40 2008
+Cc: Robert Schiele <rschiele@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 20 08:55:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVh8U-0004jd-OP
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 08:25:39 +0200
+	id 1KVhbL-0003wQ-B6
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 08:55:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751714AbYHTGYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 02:24:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751701AbYHTGYf
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 02:24:35 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:42270 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751522AbYHTGYe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 02:24:34 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m7K6OQXY004216
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 20 Aug 2008 08:24:26 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080724 Thunderbird/2.0.0.16 Mnenhy/0.7.5.666
-In-Reply-To: <48AA6F8E.70807@bluelane.com>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752207AbYHTGyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 02:54:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751854AbYHTGyT
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 02:54:19 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:44747 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752188AbYHTGyS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 02:54:18 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KVhaB-0008DR-6p; Wed, 20 Aug 2008 08:54:15 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id CD77154D; Wed, 20 Aug 2008 08:54:14 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7v7iacv6kb.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 0.2 (/)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2, UPPERCASE_25_50=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92966>
 
-Pete/Piet Delaney wrote:
-> I'm running into a problem with git-cvsimport.  [...]
-> 
-> I'll take another stab at it tomarrow. Any thoughts or
-> recommendations appreciated.
+Junio C Hamano schrieb:
+> This trivially makes "git-shell" a built-in.  It makes the executable even
+> fatter, though.
+...
+> diff --git a/Makefile b/Makefile
+> index 71339e1..1a52f71 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -546,6 +546,7 @@ BUILTIN_OBJS += builtin-rev-parse.o
+>  BUILTIN_OBJS += builtin-revert.o
+>  BUILTIN_OBJS += builtin-rm.o
+>  BUILTIN_OBJS += builtin-send-pack.o
+> +BUILTIN_OBJS += builtin-shell.o
+>  BUILTIN_OBJS += builtin-shortlog.o
+>  BUILTIN_OBJS += builtin-show-branch.o
+>  BUILTIN_OBJS += builtin-show-ref.o
 
-If this is a one-time conversion (i.e., you don't need to actively track
-a live CVS repository), then I suggest that you try cvs2svn/cvs2git [1].
- It can migrate to git via a git-fast-import output stream [2].  All
-cvsps-based tools necessarily have problems because cvsps (a) doesn't
-output enough information for a reliable conversion and (b) gets
-confused by certain patterns that commonly occur in CVS repository
-histories.  cvs2svn can handle every CVS repository that we have seen
-and is also highly configurable [3].
+You must squash this in:
 
-Michael
+diff --git a/Makefile b/Makefile
+index 57d16cb..fae9b22 100644
+--- a/Makefile
++++ b/Makefile
+@@ -826,7 +826,6 @@ EXTLIBS += -lz
+ ifndef NO_POSIX_ONLY_PROGRAMS
+ 	PROGRAMS += git-daemon$X
+ 	PROGRAMS += git-imap-send$X
+-	PROGRAMS += git-shell$X
+ endif
+ ifndef NO_OPENSSL
+ 	OPENSSL_LIBSSL = -lssl
 
-[1] http://cvs2svn.tigris.org/
-[2] http://cvs2svn.tigris.org/cvs2git.html
-[3] http://cvs2svn.tigris.org/features.html
+We removed git-shell from the MinGW build only because of the compat
+dependencies. We don't have problems building it as a built-in.
+
+-- Hannes
