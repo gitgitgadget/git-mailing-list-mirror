@@ -1,94 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-submodule.sh - Remove trailing / from URL if found
-Date: Tue, 19 Aug 2008 21:07:59 -0700
-Message-ID: <7vpro4tjkw.fsf@gitster.siamese.dyndns.org>
-References: <1219198703-2388-1-git-send-email-mlevedahl@gmail.com>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: [PATCH] add definitions for global variables to shell.c
+Date: Wed, 20 Aug 2008 06:36:46 +0200
+Message-ID: <20080820043646.GH11842@schiele.dyndns.org>
+References: <20080818123727.GB11842@schiele.dyndns.org> <7vy72tkfu0.fsf@gitster.siamese.dyndns.org> <20080819072650.GE11842@schiele.dyndns.org> <7vpro5fnke.fsf@gitster.siamese.dyndns.org> <48AA8931.1030009@viscovery.net> <20080819091830.GG11842@schiele.dyndns.org> <7vbpzoy53d.fsf@gitster.siamese.dyndns.org> <7vzln8trzj.fsf@gitster.siamese.dyndns.org>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 20 06:09:21 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="J+xDcZ1j08+V/OfU"
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 20 06:39:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVf0X-0007Q0-Cs
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 06:09:17 +0200
+	id 1KVfTb-0005Q4-Mz
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 06:39:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750818AbYHTEIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 00:08:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750814AbYHTEIK
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 00:08:10 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46363 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750801AbYHTEIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 00:08:09 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D69D157155;
-	Wed, 20 Aug 2008 00:08:07 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id E95B857154; Wed, 20 Aug 2008 00:08:04 -0400 (EDT)
-In-Reply-To: <1219198703-2388-1-git-send-email-mlevedahl@gmail.com> (Mark
- Levedahl's message of "Tue, 19 Aug 2008 22:18:23 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 986BA636-6E6D-11DD-A109-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1751036AbYHTEgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 00:36:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750897AbYHTEgu
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 00:36:50 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:1517 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750819AbYHTEgu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 00:36:50 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so195557fgg.17
+        for <git@vger.kernel.org>; Tue, 19 Aug 2008 21:36:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent:from:reply-to;
+        bh=gBVTzjCuLT56tux9DHMNp0mD1mkA3ScgnT+tr8DgcxU=;
+        b=dYObMSnZ5WmhvzeaW7ZZXlfDS5Je4uMGTPlpM9ds7affZD17MhzB6DYf8CnKMMJGDq
+         pNjP4kP0lHC3d6opkIoIKLR/Gs0raC7HgM0CAxQPKiBJ7YWJiYk31N+XiVM12TRE6QHw
+         3U2bLMNzYAmeru/+pmRNM9NMlVShMPGVcMSh0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:to:cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=qNFomr9hzDxxJJQRXgeqZ4lxkrt8jzAZIEkfhU3yj3ezeVyrCkGstfOQLLeOgHOHJi
+         rb/Ek9cWEypNlnDvOCRpiAN1TkW5zB6++M/DtR0wy8hzNwl7VT9rMQ8q6WQsre+G6CNC
+         tQgzlz3iPDz7rxaGrdvpvs8k74YJRN19wgtek=
+Received: by 10.86.63.19 with SMTP id l19mr6170330fga.77.1219207008051;
+        Tue, 19 Aug 2008 21:36:48 -0700 (PDT)
+Received: from sigkill.schiele.dyndns.org ( [91.18.86.104])
+        by mx.google.com with ESMTPS id 4sm1229907fgg.4.2008.08.19.21.36.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 19 Aug 2008 21:36:47 -0700 (PDT)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 52C8E1604F; Wed, 20 Aug 2008 06:36:46 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vzln8trzj.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92962>
 
-Mark Levedahl <mlevedahl@gmail.com> writes:
 
-> git clone does not complain if a trailing '/' is included in the origin
-> URL, but doing so causes resolution of a submodule's URL relative to the
-> superproject to fail. Regardless of whether git is changed to remove the
-> trailing / before recording the URL, we should avoid this issue in
-> submodule as existing repositories can have this problem.
->
-> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
-> ---
->  git-submodule.sh |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index ea6357b..fa9dd3a 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -34,7 +34,7 @@ resolve_relative_url ()
->  	remote=$(get_default_remote)
->  	remoteurl=$(git config "remote.$remote.url") ||
->  		die "remote ($remote) does not have a url in .git/config"
-> -	url="$1"
-> +	url="${1%/}"
->  	while test -n "$url"
->  	do
->  		case "$url" in
+--J+xDcZ1j08+V/OfU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hmm, the case arms outside the context looks like this:
+On Tue, Aug 19, 2008 at 06:06:24PM -0700, Junio C Hamano wrote:
+> The result would look like this two-patch series.
+>=20
+>  [1/2] shell: do not play duplicated definition games to shrink the execu=
+table
+>  [2/2] Build-in "git-shell"
 
-	while test -n "$url"
-	do
-		case "$url" in
-		../*)
-			url="${url#../}"
-			remoteurl="${remoteurl%/*}"
-			;;
-		./*)
-			url="${url#./}"
-			;;
-		*)
-			break;;
-		esac
-	done
-	echo "$remoteurl/$url"
+Thanks, this makes the Sun compilers happy again without the need of weired
+hacks.
 
-If you call "resolve_relative_url ../", the first arm used to fire once
-and stripped one level away, but with your patch it does not do so
-anymore, and returns "$remoteurl/.." instead?
+Robert
 
-I know you are primarily interested in making sure that "../foo" and
-"../foo/" are handled the same way, but somehow this change does not feel
-right.  How about stripping the trailing slash from the end result?
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
+
+"Quidquid latine dictum sit, altum sonatur."
+
+--J+xDcZ1j08+V/OfU
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.4-svn0 (GNU/Linux)
+
+iD8DBQFIq59excDFxyGNGNcRAhPsAKCTd7AmWlrJWnsMHrP3B25o+yCeQwCePr43
+c9BqESUAxqWk7Vyi+ajJdq8=
+=OdW1
+-----END PGP SIGNATURE-----
+
+--J+xDcZ1j08+V/OfU--
