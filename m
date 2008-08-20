@@ -1,60 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] allow '%d' pretty format specifier to show
- decoration
-Date: Wed, 20 Aug 2008 11:32:16 -0700
-Message-ID: <7vwsibr0zz.fsf@gitster.siamese.dyndns.org>
-References: <20080820175325.GD27773@sigill.intra.peff.net>
- <20080820180034.GB32005@sigill.intra.peff.net>
+From: Don Zickus <dzickus@redhat.com>
+Subject: Re: [PATCH] mailinfo: avoid violating strbuf assertion
+Date: Wed, 20 Aug 2008 14:34:59 -0400
+Message-ID: <20080820183459.GA26052@redhat.com>
+References: <20080819172824.GA9886@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>,
-	git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 20 20:33:41 2008
+X-From: git-owner@vger.kernel.org Wed Aug 20 20:37:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVsUw-00083l-SR
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 20:33:35 +0200
+	id 1KVsYO-00010C-C5
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 20:37:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884AbYHTSc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 14:32:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752263AbYHTSc3
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 14:32:29 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41646 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751550AbYHTSc2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 14:32:28 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7A7565AB6A;
-	Wed, 20 Aug 2008 14:32:24 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 4160C5AB68; Wed, 20 Aug 2008 14:32:19 -0400 (EDT)
-In-Reply-To: <20080820180034.GB32005@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 20 Aug 2008 14:00:34 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 555FE720-6EE6-11DD-84DE-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1752691AbYHTSf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 14:35:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752271AbYHTSf6
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 14:35:58 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:41779 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751574AbYHTSf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 14:35:57 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m7KIZDMd027019;
+	Wed, 20 Aug 2008 14:35:13 -0400
+Received: from mail.boston.redhat.com (mail.boston.redhat.com [10.16.255.12])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m7KIZ0xd022409;
+	Wed, 20 Aug 2008 14:35:11 -0400
+Received: from drseuss.usersys.redhat.com (dhcp-100-19-202.bos.redhat.com [10.16.19.202])
+	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id m7KIZ0SK013100;
+	Wed, 20 Aug 2008 14:35:00 -0400
+Received: from drseuss.usersys.redhat.com (localhost.localdomain [127.0.0.1])
+	by drseuss.usersys.redhat.com (8.14.2/8.14.1) with ESMTP id m7KIZ0R3004931;
+	Wed, 20 Aug 2008 14:35:00 -0400
+Received: (from dzickus@localhost)
+	by drseuss.usersys.redhat.com (8.14.2/8.14.2/Submit) id m7KIZ0xm004930;
+	Wed, 20 Aug 2008 14:35:00 -0400
+X-Authentication-Warning: drseuss.usersys.redhat.com: dzickus set sender to dzickus@redhat.com using -f
+Content-Disposition: inline
+In-Reply-To: <20080819172824.GA9886@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93010>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Aug 19, 2008 at 01:28:24PM -0400, Jeff King wrote:
+> In handle_from, we calculate the end boundary of a section
+> to remove from a strbuf using strcspn like this:
+> 
+>   el = strcspn(buf, set_of_end_boundaries);
+>   strbuf_remove(&sb, start, el + 1);
+> 
+> This works fine if "el" is the offset of the boundary
+> character, meaning we remove up to and including that
+> character. But if the end boundary didn't match (that is, we
+> hit the end of the string as the boundary instead) then we
+> want just "el". Asking for "el+1" caught an out-of-bounds
+> assertion in the strbuf library.
+> 
+> This manifested itself when we got a 'From' header that had
+> just an email address with nothing else in it (the end of
+> the string was the end of the address, rather than, e.g., a
+> trailing '>' character), causing git-mailinfo to barf.
 
->     Is it too loose? Perhaps the enclosing parentheses should be
->     automatic,...
+Odd, I just ran into this myself today too.  Wonder if we share the same
+culprit.. :-)
 
-I think so.  The default output should primarily be for humans.
-
->   - should this turn on --decorate automatically?
-
-Oh, absolutely.  If you plan to have different kind of decorations in the
-future, then the logic can be "if there is explicit decoration specified,
-don't do anything, but if there isn't any, turn the default one on."
-
-Also, if it doesn't already, "--pretty=[t]format:" should make sure parent
-rewriting is enabled when %p and %P is used.  I didn't look.
+Tested-by: Don Zickus <dzickus@redhat.com>
