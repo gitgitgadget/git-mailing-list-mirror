@@ -1,80 +1,119 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/2] Build-in "git-shell"
-Date: Wed, 20 Aug 2008 08:54:14 +0200
-Message-ID: <48ABBF96.2050609@viscovery.net>
-References: <20080818123727.GB11842@schiele.dyndns.org> <7vy72tkfu0.fsf@gitster.siamese.dyndns.org> <20080819072650.GE11842@schiele.dyndns.org> <7vpro5fnke.fsf@gitster.siamese.dyndns.org> <48AA8931.1030009@viscovery.net> <20080819091830.GG11842@schiele.dyndns.org> <7vbpzoy53d.fsf@gitster.siamese.dyndns.org> <7v7iacv6kb.fsf@gitster.siamese.dyndns.org>
+From: Pete/Piet Delaney <pete@bluelane.com>
+Subject: Re: git-cvsimport - losing changes in subsequent pulls of a CVS branch
+ that I thought I wasn't modifying in the GIT repo.
+Date: Wed, 20 Aug 2008 00:35:31 -0700
+Organization: Bluelane
+Message-ID: <48ABC943.20508@bluelane.com>
+References: <48AA6F8E.70807@bluelane.com> <48ABB899.4090608@alum.mit.edu>
+Reply-To: piet@bluelane.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Robert Schiele <rschiele@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 20 08:55:32 2008
+Cc: piet@bluelane.com, Git Mailing List <git@vger.kernel.org>,
+	Matthias Urlichs <smurf@smurf.noris.de>,
+	Piet Delaney <piet.delaney@gmail.com>,
+	Piet Delaney <pdelaney@bluelane.com>,
+	Avinash Kaul <avinash@bluelane.com>,
+	Aravind Srinivasan <aravinds@bluelane.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>,
+	Matthias Urlichs <smurf@smurf.noris.de>
+X-From: git-owner@vger.kernel.org Wed Aug 20 09:36:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVhbL-0003wQ-B6
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 08:55:27 +0200
+	id 1KViFM-0006ky-W7
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 09:36:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752207AbYHTGyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 02:54:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751854AbYHTGyT
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 02:54:19 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:44747 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752188AbYHTGyS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 02:54:18 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KVhaB-0008DR-6p; Wed, 20 Aug 2008 08:54:15 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id CD77154D; Wed, 20 Aug 2008 08:54:14 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7v7iacv6kb.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 0.2 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2, UPPERCASE_25_50=0
+	id S1750861AbYHTHfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 03:35:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751617AbYHTHfp
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 03:35:45 -0400
+Received: from outbound.mse2.exchange.ms ([69.25.50.247]:30483 "EHLO
+	mse2fe1.mse2.exchange.ms" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1749667AbYHTHfo (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Aug 2008 03:35:44 -0400
+Received: from piet2.bluelane.com ([64.94.92.242]) by mse2fe1.mse2.exchange.ms with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 20 Aug 2008 03:35:42 -0400
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <48ABB899.4090608@alum.mit.edu>
+X-Enigmail-Version: 0.95.7
+X-OriginalArrivalTime: 20 Aug 2008 07:35:43.0103 (UTC) FILETIME=[5A0F28F0:01C90297]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92967>
 
-Junio C Hamano schrieb:
-> This trivially makes "git-shell" a built-in.  It makes the executable even
-> fatter, though.
-...
-> diff --git a/Makefile b/Makefile
-> index 71339e1..1a52f71 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -546,6 +546,7 @@ BUILTIN_OBJS += builtin-rev-parse.o
->  BUILTIN_OBJS += builtin-revert.o
->  BUILTIN_OBJS += builtin-rm.o
->  BUILTIN_OBJS += builtin-send-pack.o
-> +BUILTIN_OBJS += builtin-shell.o
->  BUILTIN_OBJS += builtin-shortlog.o
->  BUILTIN_OBJS += builtin-show-branch.o
->  BUILTIN_OBJS += builtin-show-ref.o
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-You must squash this in:
+Michael Haggerty wrote:
+> Pete/Piet Delaney wrote:
+>> I'm running into a problem with git-cvsimport.  [...]
+>>
+>> I'll take another stab at it tomarrow. Any thoughts or
+>> recommendations appreciated.
+> 
+> If this is a one-time conversion (i.e., you don't need to actively track
+> a live CVS repository), then I suggest that you try cvs2svn/cvs2git [1].
+>  It can migrate to git via a git-fast-import output stream [2].  All
+> cvsps-based tools necessarily have problems because cvsps (a) doesn't
+> output enough information for a reliable conversion and (b) gets
+> confused by certain patterns that commonly occur in CVS repository
+> histories.  cvs2svn can handle every CVS repository that we have seen
+> and is also highly configurable [3].
 
-diff --git a/Makefile b/Makefile
-index 57d16cb..fae9b22 100644
---- a/Makefile
-+++ b/Makefile
-@@ -826,7 +826,6 @@ EXTLIBS += -lz
- ifndef NO_POSIX_ONLY_PROGRAMS
- 	PROGRAMS += git-daemon$X
- 	PROGRAMS += git-imap-send$X
--	PROGRAMS += git-shell$X
- endif
- ifndef NO_OPENSSL
- 	OPENSSL_LIBSSL = -lssl
+Hi Michael:
 
-We removed git-shell from the MinGW build only because of the compat
-dependencies. We don't have problems building it as a built-in.
+  I migrated our BLUX build environment from CVS to GIT about six
+months ago. In the mean time some additional development occurred
+in the CVS repo in a new 'virtualshield_saflow' branch.
 
--- Hannes
+  In parallel, I updated the git repository and bit keeper repos in
+an upgrade from 2.6.12 to 2.6.16 kernel and quite a few of
+the associated Linux-From-Scratch (LFS) library migrations.
+
+  My 1st resync using git-cvsimport to update the git repo by pulling in
+the new 'virtualshield_saflow' branch went without any problems; thought
+I recall that it seems more in sync after doing a second cvsimport.
+
+  A few weeks later, the second resync came out totally wrong.
+This evening I updated the git repo with the corrected files. It
+would be interesting to know how it could have been done right in
+the first place and to understand why do things like modifying the
+imported 'engg' branch that I imported and NEVER should have been
+done confused git. I suspect that doing:
+
+    git-cvsimport -o virtualshield_saflow -r origin blux
+
+wasn't right I don't think I has to use "-r origin' option on the
+1st import of the 'virtualshield_saflow' branch.
+
+  Hopefully we are done with the CVS repo updates. If it turns out
+that it all should be done again, avoiding the modification of
+imported branches, we'll look at using the cvs2git approach that
+your recommending.
+
+  How does your proposed cvs2git facility deal with importing on top
+of branches that have been modified?
+
+> 
+> Michael
+> 
+> [1] http://cvs2svn.tigris.org/
+> [2] http://cvs2svn.tigris.org/cvs2git.html
+> [3] http://cvs2svn.tigris.org/features.html
+
+Thanks for to pointers.
+
+- -piet
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFIq8lDJICwm/rv3hoRAut5AJ4qLkfBBym9aC7Aajae8VkkrxE58gCffb5S
+I5g8ri5ZLPUQ7uL7h/Kx2/M=
+=RF1O
+-----END PGP SIGNATURE-----
