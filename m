@@ -1,81 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Extend "checkout --track" DWIM to support more cases
-Date: Wed, 20 Aug 2008 15:22:21 -0700
-Message-ID: <7vd4k3nx7m.fsf@gitster.siamese.dyndns.org>
-References: <20080820185028.GA16626@blimp.local>
- <alpine.DEB.1.00.0808202151320.24820@pacific.mpi-cbg.de.mpi-cbg.de>
- <20080820200440.GF16626@blimp.local>
- <alpine.DEB.1.00.0808202213340.24820@pacific.mpi-cbg.de.mpi-cbg.de>
- <20080820202952.GH16626@blimp.local>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Local branch ahead of tracked remote branch but git push claims
+ everything up-to-date
+Date: Wed, 20 Aug 2008 18:25:03 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0808201808400.19665@iabervon.org>
+References: <1219263969579-736663.post@n2.nabble.com>  <8585F10E-C33C-481E-B044-A7125F3316F2@web.de>  <32541b130808201401l2ad105ccnc37acdacd08d4c3a@mail.gmail.com>  <7vbpznpeup.fsf@gitster.siamese.dyndns.org>
+ <32541b130808201422l2b128beer142544ff91de5ca3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 21 00:23:36 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1232006117-1219270337=:19665"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-15?Q?Andreas_F=E4rber?= <andreas.faerber@web.de>,
+	ir0s <imirene@gmail.com>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 00:26:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVw5T-000719-Qr
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 00:23:32 +0200
+	id 1KVw83-0007sM-AX
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 00:26:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753380AbYHTWW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 18:22:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753190AbYHTWW2
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 18:22:28 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48464 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753111AbYHTWW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 18:22:27 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4A11461E5D;
-	Wed, 20 Aug 2008 18:22:27 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 50C8F61E5C; Wed, 20 Aug 2008 18:22:23 -0400 (EDT)
-In-Reply-To: <20080820202952.GH16626@blimp.local> (Alex Riesen's message of
- "Wed, 20 Aug 2008 22:29:52 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 787D37F6-6F06-11DD-8219-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752829AbYHTWZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 18:25:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752271AbYHTWZH
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 18:25:07 -0400
+Received: from iabervon.org ([66.92.72.58]:57848 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752062AbYHTWZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 18:25:06 -0400
+Received: (qmail 12809 invoked by uid 1000); 20 Aug 2008 22:25:03 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 20 Aug 2008 22:25:03 -0000
+In-Reply-To: <32541b130808201422l2b128beer142544ff91de5ca3@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+Content-ID: <alpine.LNX.1.00.0808201812360.19665@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93065>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Johannes Schindelin, Wed, Aug 20, 2008 22:16:19 +0200:
->> > 
->> > No. It strips refs/ OR remotes/ (because of prefixcmp with argv[0]).
->> > And I still wanted refs/<namespace>/something...
->> 
->> Yes, you are correct.  However, to fix my thinko, I deem this preferable:
->> 
->> -- snipsnap --
->> 
->>  builtin-checkout.c |    6 ++++--
->>  1 files changed, 4 insertions(+), 2 deletions(-)
->> 
->> diff --git a/builtin-checkout.c b/builtin-checkout.c
->> index e95eab9..2a076cf 100644
->> --- a/builtin-checkout.c
->> +++ b/builtin-checkout.c
->> @@ -448,8 +448,10 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
->>  		if (!argc || !strcmp(argv[0], "--"))
->>  			die ("--track needs a branch name");
->>  		slash = strchr(argv[0], '/');
->> -		if (slash && !prefixcmp(argv[0], "refs/"))
->> -			slash = strchr(slash + 1, '/');
->> +		if (slash && !prefixcmp(argv[0], "refs/")) {
->> +			argv[0] = slash + 1;
->> +			slash = strchr(argv[0], '/');
->> +		}
->
-> Yes, I agree (and its shorter). The git-checkout manpage can be
-> improved, too (no DWIM is obvious, except may be for the implementor).
+--1547844168-1232006117-1219270337=:19665
+Content-Type: TEXT/PLAIN; CHARSET=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
+Content-ID: <alpine.LNX.1.00.0808201812361.19665@iabervon.org>
 
-I think that makes sense.  Care to send an appliable patch with
-documentation updates, please?
+On Wed, 20 Aug 2008, Avery Pennarun wrote:
+
+> On Wed, Aug 20, 2008 at 5:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > "Avery Pennarun" <apenwarr@gmail.com> writes:
+> >
+> >> On Wed, Aug 20, 2008 at 4:40 PM, Andreas Färber <andreas.faerber@web.de> wrote:
+> >>> You need to name the local branch, not the remote one:
+> >>>
+> >>> $ git push origin mybranch
+> >>>
+> >>> It should then push to remotebranch.
+> >>
+> >> Not only that, but the "ahead of tracked branch" message depends on
+> >> your local copy of the remote branch, not the remote copy of the
+> >> remote branch.
+> >
+> > I think we have long been doing so.  Daniel, correct me.
+> 
+> ...and I'm dumb.
+> 
+> I apologize.  "git pull origin mybranch" does not update
+> origin/mybranch.  "git push origin mybranch" does.
+> 
+> It could be argued that pull should update the local reference too,
+> but that's irrelevant at the moment.
+
+That is actually to say that fetch should do it (pull calls fetch for that 
+part), and I agree with that, assuming you've actually got that fetch 
+config, of course.
+
+	-Daniel
+*This .sig left intentionally blank*
+--1547844168-1232006117-1219270337=:19665--
