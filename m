@@ -1,70 +1,79 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: [BUG] pull faulty 'not uptodate'
-Date: Wed, 20 Aug 2008 23:00:42 +0200
-Message-ID: <1508D1DF-EDE7-4A64-B354-E2F26578E24D@ai.rug.nl>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: Git Mailinglist <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 20 23:02:04 2008
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: Local branch ahead of tracked remote branch but git push claims everything up-to-date
+Date: Wed, 20 Aug 2008 17:01:56 -0400
+Message-ID: <32541b130808201401l2ad105ccnc37acdacd08d4c3a@mail.gmail.com>
+References: <1219263969579-736663.post@n2.nabble.com>
+	 <8585F10E-C33C-481E-B044-A7125F3316F2@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: ir0s <imirene@gmail.com>, git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Andreas_F=E4rber?=" <andreas.faerber@web.de>
+X-From: git-owner@vger.kernel.org Wed Aug 20 23:03:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVuoV-00024V-2R
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 23:01:55 +0200
+	id 1KVupz-0002bt-FT
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 23:03:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751029AbYHTVAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 17:00:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbYHTVAv
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 17:00:51 -0400
-Received: from frim.nl ([87.230.85.232]:52690 "EHLO
-	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750932AbYHTVAu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Aug 2008 17:00:50 -0400
-Received: from 113.25-64-87.adsl-dyn.isp.belgacom.be ([87.64.25.113] helo=[192.168.1.15])
-	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <pdebie@ai.rug.nl>)
-	id 1KVunQ-0005Ia-Jv
-	for git@vger.kernel.org; Wed, 20 Aug 2008 23:00:48 +0200
-X-Mailer: Apple Mail (2.926)
+	id S1755689AbYHTVB7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Aug 2008 17:01:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751520AbYHTVB7
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 17:01:59 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:42095 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751389AbYHTVB5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Aug 2008 17:01:57 -0400
+Received: by gxk9 with SMTP id 9so170955gxk.13
+        for <git@vger.kernel.org>; Wed, 20 Aug 2008 14:01:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=3m/V4TNAhjKTAKnVLY3fdyzY4vd2t+CT9VHHvN5LRcM=;
+        b=sJ3jzdBCZI8nmtYND/or4HUkAe+2Ud44iF98h5r2uIsm008pUOTWrtsW5KLXCrFXPy
+         9bkkUl55dstvRlHl8OLB7Y7ApfeT6R0+/RXthgSEG8LwrtLESifBdOv7bY0jLRFRRqgC
+         R0zz2Md3e18FDwy+ibx3MGAm/MQXM4oQdB3Ls=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=YKamBy1B5rl/AQusOLosCmt03/gpyb3gfeptC3uuvH1M0f57N6bhjmKVlKKVrQs7rP
+         67Vsdwb9ukRDwSSYJ/ahWZcODCin2AJrfME3fseX//rLfvT0qHB160mR5ZWx7RGyQD5R
+         9/F3VCMP+0OYX7HAjGpG9dNwmChjUd6Lm9s6g=
+Received: by 10.150.137.8 with SMTP id k8mr760209ybd.79.1219266116778;
+        Wed, 20 Aug 2008 14:01:56 -0700 (PDT)
+Received: by 10.150.98.19 with HTTP; Wed, 20 Aug 2008 14:01:56 -0700 (PDT)
+In-Reply-To: <8585F10E-C33C-481E-B044-A7125F3316F2@web.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93044>
 
-Hi,
+On Wed, Aug 20, 2008 at 4:40 PM, Andreas F=E4rber <andreas.faerber@web.=
+de> wrote:
+> You need to name the local branch, not the remote one:
+>
+> $ git push origin mybranch
+>
+> It should then push to remotebranch.
 
-I think git pull does not refresh the index before trying to merge:
+Not only that, but the "ahead of tracked branch" message depends on
+your local copy of the remote branch, not the remote copy of the
+remote branch.  So after pushing, you have to do:
 
-Tirana:gitbot pieter$ git reset --hard 5ff4dff
-HEAD is now at 5ff4dff Add a Git FAQ plugin
-Tirana:gitbot pieter$ touch test/gitfaq.rb
-Tirana:gitbot pieter$ git pull
-Updating 5ff4dff..931a247
-error: Entry 'test/gitfaq.rb' not uptodate. Cannot merge.
-Tirana:gitbot pieter$ git st
-# On branch master
-# Your branch is behind 'origin/master' by 2 commits, and can be fast- 
-forwarded.
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#	GitLink.py
-#	faq.yaml
-#	test.py
-nothing added to commit but untracked files present (use "git add" to  
-track)
-Tirana:gitbot pieter$ git pull
-Updating 5ff4dff..931a247
-Fast forward
-  plugins/gitfaq.rb  |   46 ++++++++++++++++++++++--------------------
-  plugins/irc.rb     |   56 +++++++++++++++++++++++++ 
-+-------------------------
-  test/faq-test.html |   10 +++++++++
-  test/gitfaq.rb     |   42 +++++++++++++++++++-------------------
-  4 files changed, 84 insertions(+), 70 deletions(-)
-  create mode 100644 test/faq-test.html
+   git fetch origin
+
+I've often wondered if we can't just have push refetch the updated
+remote ref automatically.  It's extremely hard to explain to newbies
+that after a push, the order of refs from newest to oldest is 'origin
+master', 'master', and 'origin/master'.
+
+Have fun,
+
+Avery
