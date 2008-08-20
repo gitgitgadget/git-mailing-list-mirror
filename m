@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [bug] pull faulty 'not uptodate'
-Date: Wed, 20 Aug 2008 14:50:28 -0700
-Message-ID: <7vy72rnyor.fsf@gitster.siamese.dyndns.org>
+Date: Wed, 20 Aug 2008 14:50:40 -0700
+Message-ID: <7vwsibnyof.fsf@gitster.siamese.dyndns.org>
 References: <1508D1DF-EDE7-4A64-B354-E2F26578E24D@ai.rug.nl>
  <7v7iabpejv.fsf@gitster.siamese.dyndns.org>
  <EAFC48F0-5512-4A83-B9B2-44FF53319285@ai.rug.nl>
@@ -9,38 +9,38 @@ Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailinglist <git@vger.kernel.org>
 To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Wed Aug 20 23:51:49 2008
+X-From: git-owner@vger.kernel.org Wed Aug 20 23:51:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVvae-00059i-CV
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 23:51:40 +0200
+	id 1KVvar-0005E2-H7
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 23:51:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751831AbYHTVug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 17:50:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751870AbYHTVug
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 17:50:36 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64883 "EHLO
+	id S1752189AbYHTVur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 17:50:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751906AbYHTVur
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 17:50:47 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45927 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751101AbYHTVuf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 17:50:35 -0400
+	with ESMTP id S1751870AbYHTVur (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 17:50:47 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D800D559A3;
-	Wed, 20 Aug 2008 17:50:33 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 102DE61BD9;
+	Wed, 20 Aug 2008 17:50:45 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id ABE1A5599C; Wed, 20 Aug 2008 17:50:30 -0400 (EDT)
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 4278161BD8; Wed, 20 Aug 2008 17:50:42 -0400 (EDT)
 In-Reply-To: <EAFC48F0-5512-4A83-B9B2-44FF53319285@ai.rug.nl> (Pieter de
  Bie's message of "Wed, 20 Aug 2008 23:29:35 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 03FFA3CC-6F02-11DD-BED0-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 0AAAB478-6F02-11DD-8E6C-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93059>
 
 Pieter de Bie <pdebie@ai.rug.nl> writes:
 
@@ -56,7 +56,7 @@ Pieter de Bie <pdebie@ai.rug.nl> writes:
 > do this is to put [BUG] in the subject line. If that is not the common
 > way to report bugs, I'm sorry. I can also downcase it ;)
 
-Nah, don't bother --- that wouldn't help.
+Nah, don't bother --- that wouldn't help.  A bug is a bug is a bug.
 
 Checking if it is a regression ("it used to work but recently broken") or
 a bug ("it does not work as I expect it") and marking the report as such
