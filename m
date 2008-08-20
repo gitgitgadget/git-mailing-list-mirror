@@ -1,47 +1,61 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [RFC v2] Git User's Survey 2008
-Date: Wed, 20 Aug 2008 14:04:58 +0200
-Message-ID: <20080820120458.GI10544@machine.or.cz>
-References: <200807230325.04184.jnareb@gmail.com> <200808200308.26308.jnareb@gmail.com> <81b0412b0808200434j64fb97c9l64cfba62f179d99a@mail.gmail.com>
+From: Rick Moynihan <rick@calicojack.co.uk>
+Subject: managing git submodules with git-svn
+Date: Wed, 20 Aug 2008 10:35:36 +0100
+Message-ID: <48ABE568.80106@calicojack.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 20 14:06:55 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 20 14:38:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVmRz-00039O-U2
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 14:06:08 +0200
+	id 1KVmvM-0007xx-J9
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 14:36:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755472AbYHTMFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 08:05:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754945AbYHTMFE
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 08:05:04 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:39179 "EHLO machine.or.cz"
+	id S1753038AbYHTMfY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 08:35:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753143AbYHTMfY
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 08:35:24 -0400
+Received: from storm.bpweb.net ([83.223.106.8]:58049 "EHLO storm.bpweb.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754230AbYHTMFD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 08:05:03 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 1C44F393A2E2; Wed, 20 Aug 2008 14:04:58 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <81b0412b0808200434j64fb97c9l64cfba62f179d99a@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752945AbYHTMfX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 08:35:23 -0400
+X-Greylist: delayed 10775 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Aug 2008 08:35:23 EDT
+Received: from lechuck.local (host-77-100-223-163.static.telewest.net [77.100.223.163])
+	(authenticated bits=0)
+	by storm.bpweb.net (8.13.1/8.13.1) with ESMTP id m7K9Zfoc024401
+	for <git@vger.kernel.org>; Wed, 20 Aug 2008 10:35:47 +0100
+User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
+X-BpTo: <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92983>
 
-On Wed, Aug 20, 2008 at 01:34:39PM +0200, Alex Riesen wrote:
-> 2008/8/20 Jakub Narebski <jnareb@gmail.com>:
-> >   xx. What tools would you like to see Git support in?
-> 
-> "What tools (IDE, RAD, editors) would you like to support Git?"
+Hi all,
 
-Isn't this question more general, like covering also bugtrackers,
-automated testing tools and whatnot?
+We are currently using a mixture of git and svn to manage a project with 
+an array of subprojects.  We use git primarily for its excellent 
+branching and merging support, and as a means of more effectively 
+managing commits etc...  We're not yet ready to make the leap entirely 
+to git and find subversion still has a role, primarily due to some 3rd 
+party upstream (e.g. Apache) projects using svn.  SVN is also better 
+supported by some of our tools/systems.
 
-				Petr "Pasky" Baudis
+Our project is made up of a number of subprojects, and I'd like to use 
+git submodules to easily track and lock changes in component versions. 
+git submodules appear to do exactly this, versioning the meta-repo with 
+each subproject locked at a specific commit/SHA-1.
+
+My question is; is there anyway to easily do this but have git use 
+git-svn manage the submodule?  I think this makes sense and suspect it 
+would be possible to do, though it looks like it's currently not a 
+feature.  Is this a feature anyone else would find useful?
+
+
+Thanks again,
+
+R.
