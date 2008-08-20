@@ -1,109 +1,110 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] test-lib.sh: work around ksh's trap shortcomings
-Date: Tue, 19 Aug 2008 19:19:13 -0500
-Message-ID: <nEEUmh6BVMDYtwf1vENCYuaLiFUWKW_dbgPP__ECl3s@cipher.nrlssc.navy.mil>
-References: <giNXZFTxzY3B65dQob7CwvwwfSKlZpw_60oz81RxU5UN3PsTT_3dMQ@cipher.nrlssc.navy.mil> <gPlIc7E6mNDrXE6mwaHXFoin7rDpLmjvuzlhJfCp-YmuyVK3pEzqNA@cipher.nrlssc.navy.mil> <7vbpzplw9o.fsf@gitster.siamese.dyndns.org> <cqiOMMbzSSjqZoLDEa5uscl2d0D71PrGu2TpSOULLuV5nTVnEEWCzQ@cipher.nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] shell: do not play duplicated definition games to shrink
+ the executable
+Date: Tue, 19 Aug 2008 18:06:06 -0700
+Message-ID: <7vd4k4v6kh.fsf@gitster.siamese.dyndns.org>
+References: <20080818123727.GB11842@schiele.dyndns.org>
+ <7vy72tkfu0.fsf@gitster.siamese.dyndns.org>
+ <20080819072650.GE11842@schiele.dyndns.org>
+ <7vpro5fnke.fsf@gitster.siamese.dyndns.org> <48AA8931.1030009@viscovery.net>
+ <20080819091830.GG11842@schiele.dyndns.org>
+ <7vbpzoy53d.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 20 02:20:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Robert Schiele <rschiele@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 20 03:07:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVbRA-0001c9-38
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 02:20:32 +0200
+	id 1KVcAX-0003uf-Ms
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 03:07:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753672AbYHTATY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 20:19:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753699AbYHTATX
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 20:19:23 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:47248 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753216AbYHTATX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 20:19:23 -0400
-Received: by mail.nrlssc.navy.mil id m7K0JEtm017320; Tue, 19 Aug 2008 19:19:14 -0500
-In-Reply-To: <cqiOMMbzSSjqZoLDEa5uscl2d0D71PrGu2TpSOULLuV5nTVnEEWCzQ@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 20 Aug 2008 00:19:13.0539 (UTC) FILETIME=[5FDCD530:01C9025A]
+	id S1753080AbYHTBGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 21:06:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbYHTBGO
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 21:06:14 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50670 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753020AbYHTBGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 21:06:13 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8F4CF53729;
+	Tue, 19 Aug 2008 21:06:12 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 9C30C53727; Tue, 19 Aug 2008 21:06:08 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 2E661E74-6E54-11DD-BC2A-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92945>
 
-Brandon Casey wrote:
-> Junio C Hamano wrote:
->> Your alias test_done that calls function test_done look ugly and confusing
->> beyond words.  Perhaps test_done() can instead set a global variable and
->> die() can notice it instead, like this?  I haven't bothered to change the
->> other "trap - exit" but I think you got the idea...
-> 
-> Yes that works and is much clearer. Tested on solaris and irix.
+Playing with linker games to shrink git-shell did not go well with various
+other platforms and compilers.
 
-I spoke too soon. Failing tests do not terminate the testing.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Makefile |    9 +--------
+ shell.c  |    8 --------
+ 2 files changed, 1 insertions(+), 16 deletions(-)
 
-ksh does not place the exit status of the shell in $? or provide it as an argument
-to the trap function. Possibly the status of the 'exit' command is provided instead?
-
-$ cat test.sh
-#!/bin/sh
-
-die () {
-    status=$?
-    echo >&2 "die status: $status"
-    exit $status
-}
-
-trap 'die' 0
-
-echo "I am dying"
-exit 1
-
-###### END TEST SCRIPT ######
-
-linux $ /bin/sh test.sh
-I am dying
-die status: 1
-linux $ echo $?
-1
-
-linux $ /usr/bin/ksh test.sh
-I am dying
-die status: 1
-linux $ echo $?
-1
-
-IRIX $ /bin/ksh test.sh
-I am dying
-die status: 0
-IRIX $ echo $?
-0
-
-SunOS $ /usr/xpg4/bin/sh test.sh
-I am dying
-die status: 0
-SunOS $ echo $?
-0
-
-Ah, no, it looks like the status of the command executed immediately before
-exit is what the trap has access to in $?. Adding a call to false before exit
-in the above script causes the korn scripts to exit with status 1 on IRIX and
-SunOS.
-
-#!/bin/sh
-
-die () {
-    status=$?
-    echo >&2 "die status: $status"
-    exit $status
-}
-
-trap 'die' 0
-
-echo "I am dying"
-false
-exit 1
-
--brandon
+diff --git a/Makefile b/Makefile
+index 53ab4b5..71339e1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -333,7 +333,6 @@ endif
+ export PERL_PATH
+ 
+ LIB_FILE=libgit.a
+-COMPAT_LIB = compat/lib.a
+ XDIFF_LIB=xdiff/lib.a
+ 
+ LIB_H += archive.h
+@@ -1223,12 +1222,6 @@ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+ 
+-$(COMPAT_LIB): $(COMPAT_OBJS)
+-	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(COMPAT_OBJS)
+-
+-git-shell$X: abspath.o ctype.o exec_cmd.o quote.o strbuf.o usage.o wrapper.o shell.o $(COMPAT_LIB)
+-	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(COMPAT_LIB)
+-
+ $(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
+ $(patsubst git-%$X,%.o,$(PROGRAMS)): $(LIB_H) $(wildcard */*.h)
+ builtin-revert.o wt-status.o: wt-status.h
+@@ -1441,7 +1434,7 @@ distclean: clean
+ 
+ clean:
+ 	$(RM) *.o mozilla-sha1/*.o arm/*.o ppc/*.o compat/*.o xdiff/*.o \
+-		$(LIB_FILE) $(XDIFF_LIB) $(COMPAT_LIB)
++		$(LIB_FILE) $(XDIFF_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(BUILT_INS) git$X
+ 	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags cscope*
+diff --git a/shell.c b/shell.c
+index 6a48de0..0f6a727 100644
+--- a/shell.c
++++ b/shell.c
+@@ -3,14 +3,6 @@
+ #include "exec_cmd.h"
+ #include "strbuf.h"
+ 
+-/* Stubs for functions that make no sense for git-shell. These stubs
+- * are provided here to avoid linking in external redundant modules.
+- */
+-void release_pack_memory(size_t need, int fd){}
+-void trace_argv_printf(const char **argv, const char *fmt, ...){}
+-void trace_printf(const char *fmt, ...){}
+-
+-
+ static int do_generic_cmd(const char *me, char *arg)
+ {
+ 	const char *my_argv[4];
+-- 
+1.6.0.6.gc6670b
