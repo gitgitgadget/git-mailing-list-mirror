@@ -1,69 +1,66 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH] Teach "git diff" HTML funcname patterns
-Date: Wed, 20 Aug 2008 19:27:46 +0200
-Message-ID: <200808201927.47099.johan@herland.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: diff --check is stupid about blank lines
+Date: Wed, 20 Aug 2008 13:28:25 -0400
+Message-ID: <20080820172825.GC27773@sigill.intra.peff.net>
+References: <20080820140517.GA1304@atjola.homenet>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 20 19:28:59 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 20 19:29:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVrUR-0000XE-3e
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 19:28:59 +0200
+	id 1KVrUy-0000l8-HF
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 19:29:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750992AbYHTR1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 13:27:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751545AbYHTR1z
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 13:27:55 -0400
-Received: from sam.opera.com ([213.236.208.81]:52937 "EHLO smtp.opera.com"
+	id S1753038AbYHTR22 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Aug 2008 13:28:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753053AbYHTR22
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 13:28:28 -0400
+Received: from peff.net ([208.65.91.99]:3646 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750972AbYHTR1z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 13:27:55 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m7KHRlEO006479
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 20 Aug 2008 17:27:52 GMT
+	id S1753005AbYHTR21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 13:28:27 -0400
+Received: (qmail 25059 invoked by uid 111); 20 Aug 2008 17:28:26 -0000
+Received: from lawn-128-61-25-158.lawn.gatech.edu (HELO sigill.intra.peff.net) (128.61.25.158)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 20 Aug 2008 13:28:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Aug 2008 13:28:25 -0400
 Content-Disposition: inline
+In-Reply-To: <20080820140517.GA1304@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92998>
 
-Finds lines with <h1>..<h6> tags. The pattern is adapted from the ruby one.
+On Wed, Aug 20, 2008 at 04:05:17PM +0200, Bj=C3=B6rn Steinbrink wrote:
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
- Documentation/gitattributes.txt |    2 ++
- diff.c                          |    1 +
- 2 files changed, 3 insertions(+), 0 deletions(-)
+> diff --check triggers not only for blank lines at the end of the file=
+,
+> but also at the end of the changes. That seems broken to me, unless y=
+ou
+> really dislike empty lines.
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index db16b0c..8bb05e6 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -320,6 +320,8 @@ patterns are available:
- 
- - `tex` suitable for source code for LaTeX documents.
- 
-+- `html` suitable for HTML/XHTML documents.
-+
- 
- Performing a three-way merge
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-diff --git a/diff.c b/diff.c
-index a6c1432..13ae85d 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1382,6 +1382,7 @@ static struct builtin_funcname_pattern {
- 	{ "bibtex", "\\(@[a-zA-Z]\\{1,\\}[ \t]*{\\{0,1\\}[ \t]*[^ \t\"@',\\#}{~%]*\\).*$" },
- 	{ "tex", "^\\(\\\\\\(\\(sub\\)*section\\|chapter\\|part\\)\\*\\{0,1\\}{.*\\)$" },
- 	{ "ruby", "^\\s*\\(\\(class\\|module\\|def\\)\\s.*\\)$" },
-+	{ "html", "^\\s*\\(<h[1-6]\\s.*>.*\\)$" },
- };
- 
- static const char *diff_funcname_pattern(struct diff_filespec *one)
--- 
-1.6.0.96.g2fad1
+Hmm, yes, that seems wrong. The problem seems to be the conditional at
+diff.c:1622:
+
+        if ((data.ws_rule & WS_TRAILING_SPACE) &&
+            data.trailing_blanks_start) {
+                fprintf(o->file, "%s:%d: ends with blank lines.\n",
+                        data.filename, data.trailing_blanks_start);
+                data.status =3D 1; /* report errors */
+        }
+
+that should probably be "if we care about trailing space, and the last
+thing we saw was a trailing blank, _and_ the last hunk adds to
+end-of-file, then...". However, I'm not sure what is the best way to ge=
+t
+that information out of xdiff. Is there a "this hunk hits eof" signal
+anywhere? Is there a definitive line count we could use to calculate
+that it is in the chunk of final lines in the file?
+
+-Peff
