@@ -1,126 +1,80 @@
 From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: [EGIT PATCH 2/6] Emphasize that db is a local one in RemoteRefUpdate
-Date: Wed, 20 Aug 2008 04:57:36 +0200
-Message-ID: <1219201060-4307-2-git-send-email-marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 4/6] Fix proposal provider for fetch in RefSpecPanel
+Date: Wed, 20 Aug 2008 04:57:38 +0200
+Message-ID: <1219201060-4307-4-git-send-email-marek.zawirski@gmail.com>
 References: <48AB84A2.7010905@gmail.com>
  <1219201060-4307-1-git-send-email-marek.zawirski@gmail.com>
+ <1219201060-4307-2-git-send-email-marek.zawirski@gmail.com>
+ <1219201060-4307-3-git-send-email-marek.zawirski@gmail.com>
 Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
 To: robin.rosenberg@dewire.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed Aug 20 04:59:08 2008
+X-From: git-owner@vger.kernel.org Wed Aug 20 04:59:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVduY-0001o0-Lj
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 04:59:03 +0200
+	id 1KVduZ-0001o0-W6
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 04:59:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752630AbYHTC5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2008 22:57:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752688AbYHTC5v
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 22:57:51 -0400
-Received: from mu-out-0910.google.com ([209.85.134.187]:32303 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752382AbYHTC5u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2008 22:57:50 -0400
-Received: by mu-out-0910.google.com with SMTP id w8so321027mue.1
-        for <git@vger.kernel.org>; Tue, 19 Aug 2008 19:57:49 -0700 (PDT)
+	id S1752805AbYHTC6C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2008 22:58:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752742AbYHTC6A
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Aug 2008 22:58:00 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:15858 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752805AbYHTC57 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2008 22:57:59 -0400
+Received: by ug-out-1314.google.com with SMTP id c2so647198ugf.37
+        for <git@vger.kernel.org>; Tue, 19 Aug 2008 19:57:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=blNR7hOmvhCjnQ85mIbfD0L/FDtKRy2K5+li30zm42g=;
-        b=Gb/+4mDpS/xLkkaOmSmU0Wq6MjWaP+++t990SzMTRMTkh+oq/6qKo78Cl5YGQspGnZ
-         eAxxmI8oPvLpS9Da/TakvjF1Rr3B72Am7DHPnJW0Z5t4gZjvaXDtF3ieh816TGBgHK7H
-         tlqAQwRuRtWEnBWuqZiQIR2Gju4p/w2iJUtkc=
+        bh=2uTZrVwwE7d/3H61HnnDm8xW5UAn4a1oFlWfazwcSxw=;
+        b=ZoJcnRpjZLN6brEEieXdAJlFn8DYKXY9FtWEqNkVOyDsL/iGFwITTnmLROMIjC/Uc0
+         1eZOUH6q3nEPytz40fmN3zulFeYcDFKUH6m6rLLt4sh0MM31z5SSbJqLt2igTR/ieUlU
+         ie1T7PQ72qboRdB4fhZQUQ36EAO0HnORHQV9g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=xKEw0MdvEbVqVgYFzVgXCk4z/7LhFnnt/tFvBgOZL4Q7P92QCKHKhBzh01rCCkpqEh
-         QjSzA+7xryePH5/Ymbm2wqyJ6xFPnDwFe815YVJbxLBO9ycZXdTi9jtPnjafd03GpnHW
-         C8r/FpAoW4xNRfTQ56mMdD/nAQ2jpSIkBx9B8=
-Received: by 10.102.244.1 with SMTP id r1mr5293220muh.25.1219201069119;
-        Tue, 19 Aug 2008 19:57:49 -0700 (PDT)
+        b=jS2EFuIQLC8E1nB+wuMkyx8BjBstD+5PQBbM2KHIlVbHraze9tsb4HOgwKlpp6LLMy
+         qu3cgBDaTpQRhw1maJJ9sWnd29LI0mN2NLGJT+dFj8QzKVZbrqLsS4S4/7V+96czbBHo
+         CcfF/97sK04tJOA9AG1NJrZaXtF65MJg5Ufv8=
+Received: by 10.103.208.15 with SMTP id k15mr5333825muq.84.1219201078450;
+        Tue, 19 Aug 2008 19:57:58 -0700 (PDT)
 Received: from localhost ( [62.21.19.93])
-        by mx.google.com with ESMTPS id e10sm1371114muf.14.2008.08.19.19.57.47
+        by mx.google.com with ESMTPS id e10sm1367576muf.14.2008.08.19.19.57.56
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 19 Aug 2008 19:57:48 -0700 (PDT)
+        Tue, 19 Aug 2008 19:57:57 -0700 (PDT)
 X-Mailer: git-send-email 1.5.6.3
-In-Reply-To: <1219201060-4307-1-git-send-email-marek.zawirski@gmail.com>
+In-Reply-To: <1219201060-4307-3-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92957>
+
+Proposal provider for destination fields in fetch was inappropriately
+proposing illegal local expression like HEAD^, while we should propose
+there only refs or wildcard expressions.
 
 Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
 ---
- .../spearce/jgit/transport/RemoteRefUpdate.java    |   20 ++++++++++----------
- 1 files changed, 10 insertions(+), 10 deletions(-)
+ .../egit/ui/internal/components/RefSpecPanel.java  |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteRefUpdate.java b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteRefUpdate.java
-index 42588c1..66fe6a1 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteRefUpdate.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteRefUpdate.java
-@@ -133,15 +133,15 @@
- 
- 	private String message;
- 
--	private final Repository db;
-+	private final Repository localDb;
- 
- 	/**
- 	 * Construct remote ref update request by providing an update specification.
- 	 * Object is created with default {@link Status#NOT_ATTEMPTED} status and no
- 	 * message.
--	 *
--	 * @param db
--	 *            repository to push from.
-+	 * 
-+	 * @param localDb
-+	 *            local repository to push from.
- 	 * @param srcRef
- 	 *            source revision - any string resolvable by
- 	 *            {@link Repository#resolve(String)}. This resolves to the new
-@@ -173,26 +173,26 @@
- 	 * @throws IllegalArgumentException
- 	 *             if some required parameter was null
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/components/RefSpecPanel.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/components/RefSpecPanel.java
+index caef4d2..1621434 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/components/RefSpecPanel.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/components/RefSpecPanel.java
+@@ -323,7 +323,7 @@ private static void setControlDecoration(final ControlDecoration control,
  	 */
--	public RemoteRefUpdate(final Repository db, final String srcRef,
-+	public RemoteRefUpdate(final Repository localDb, final String srcRef,
- 			final String remoteName, final boolean forceUpdate,
- 			final String localName, final ObjectId expectedOldObjectId)
- 			throws IOException {
- 		if (remoteName == null)
- 			throw new IllegalArgumentException("Remote name can't be null.");
- 		this.srcRef = srcRef;
--		this.newObjectId = (srcRef == null ? ObjectId.zeroId() : db
-+		this.newObjectId = (srcRef == null ? ObjectId.zeroId() : localDb
- 				.resolve(srcRef));
- 		if (newObjectId == null)
- 			throw new IOException("Source ref " + srcRef
- 					+ " doesn't resolve to any object.");
- 		this.remoteName = remoteName;
- 		this.forceUpdate = forceUpdate;
--		if (localName != null && db != null)
--			trackingRefUpdate = new TrackingRefUpdate(db, localName,
-+		if (localName != null && localDb != null)
-+			trackingRefUpdate = new TrackingRefUpdate(localDb, localName,
- 					remoteName, forceUpdate, newObjectId, "push");
- 		else
- 			trackingRefUpdate = null;
--		this.db = db;
-+		this.localDb = localDb;
- 		this.expectedOldObjectId = expectedOldObjectId;
- 		this.status = Status.NOT_ATTEMPTED;
- 	}
-@@ -215,7 +215,7 @@ public RemoteRefUpdate(final Repository db, final String srcRef,
- 	 */
- 	public RemoteRefUpdate(final RemoteRefUpdate base,
- 			final ObjectId newExpectedOldObjectId) throws IOException {
--		this(base.db, base.srcRef, base.remoteName, base.forceUpdate,
-+		this(base.localDb, base.srcRef, base.remoteName, base.forceUpdate,
- 				(base.trackingRefUpdate == null ? null : base.trackingRefUpdate
- 						.getLocalName()), newExpectedOldObjectId);
- 	}
+ 	public RefSpecPanel(final Composite parent, final boolean pushSpecs) {
+ 		this.pushSpecs = pushSpecs;
+-		this.localProposalProvider = new RefContentProposalProvider(true);
++		this.localProposalProvider = new RefContentProposalProvider(pushSpecs);
+ 		this.remoteProposalProvider = new RefContentProposalProvider(false);
+ 		this.imageRegistry = new ImageRegistry(parent.getDisplay());
+ 
 -- 
 1.5.6.3
