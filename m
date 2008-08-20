@@ -1,79 +1,83 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: Local branch ahead of tracked remote branch but git push claims everything up-to-date
-Date: Wed, 20 Aug 2008 17:01:56 -0400
-Message-ID: <32541b130808201401l2ad105ccnc37acdacd08d4c3a@mail.gmail.com>
-References: <1219263969579-736663.post@n2.nabble.com>
-	 <8585F10E-C33C-481E-B044-A7125F3316F2@web.de>
+From: Michael Dressel <MichaelTiloDressel@t-online.de>
+Subject: Re: [PATCH 2/2] allow '%d' pretty format specifier to show
+ decoration
+Date: Wed, 20 Aug 2008 23:05:43 +0200 (CEST)
+Message-ID: <alpine.LNX.1.10.0808202305230.4170@pollux>
+References: <20080820175325.GD27773@sigill.intra.peff.net> <20080820180034.GB32005@sigill.intra.peff.net> <alpine.LNX.1.10.0808202138340.4070@pollux> <7vzln7phe1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: ir0s <imirene@gmail.com>, git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Andreas_F=E4rber?=" <andreas.faerber@web.de>
-X-From: git-owner@vger.kernel.org Wed Aug 20 23:03:29 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 20 23:07:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVupz-0002bt-FT
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 23:03:27 +0200
+	id 1KVuti-00042J-AM
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 23:07:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755689AbYHTVB7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Aug 2008 17:01:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751520AbYHTVB7
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 17:01:59 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:42095 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751389AbYHTVB5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Aug 2008 17:01:57 -0400
-Received: by gxk9 with SMTP id 9so170955gxk.13
-        for <git@vger.kernel.org>; Wed, 20 Aug 2008 14:01:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=3m/V4TNAhjKTAKnVLY3fdyzY4vd2t+CT9VHHvN5LRcM=;
-        b=sJ3jzdBCZI8nmtYND/or4HUkAe+2Ud44iF98h5r2uIsm008pUOTWrtsW5KLXCrFXPy
-         9bkkUl55dstvRlHl8OLB7Y7ApfeT6R0+/RXthgSEG8LwrtLESifBdOv7bY0jLRFRRqgC
-         R0zz2Md3e18FDwy+ibx3MGAm/MQXM4oQdB3Ls=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=YKamBy1B5rl/AQusOLosCmt03/gpyb3gfeptC3uuvH1M0f57N6bhjmKVlKKVrQs7rP
-         67Vsdwb9ukRDwSSYJ/ahWZcODCin2AJrfME3fseX//rLfvT0qHB160mR5ZWx7RGyQD5R
-         9/F3VCMP+0OYX7HAjGpG9dNwmChjUd6Lm9s6g=
-Received: by 10.150.137.8 with SMTP id k8mr760209ybd.79.1219266116778;
-        Wed, 20 Aug 2008 14:01:56 -0700 (PDT)
-Received: by 10.150.98.19 with HTTP; Wed, 20 Aug 2008 14:01:56 -0700 (PDT)
-In-Reply-To: <8585F10E-C33C-481E-B044-A7125F3316F2@web.de>
-Content-Disposition: inline
+	id S1753395AbYHTVGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 17:06:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753064AbYHTVGO
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 17:06:14 -0400
+Received: from mailout08.t-online.de ([194.25.134.20]:54894 "EHLO
+	mailout08.t-online.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752995AbYHTVGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 17:06:13 -0400
+Received: from fwd31.aul.t-online.de 
+	by mailout08.sul.t-online.de with smtp 
+	id 1KVusH-0004at-03; Wed, 20 Aug 2008 23:05:49 +0200
+Received: from [192.168.2.100] (VOAOQBZZQhYAbOuKg+3dsfON7mo8-UVLNUs8DfsEcn6CMLlYItfpEuQssDqG4Nhwhz@[84.163.223.118]) by fwd31.t-online.de
+	with esmtp id 1KVusE-1kFUgK0; Wed, 20 Aug 2008 23:05:46 +0200
+X-X-Sender: michael@pollux
+In-Reply-To: <7vzln7phe1.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
+X-ID: VOAOQBZZQhYAbOuKg+3dsfON7mo8-UVLNUs8DfsEcn6CMLlYItfpEuQssDqG4Nhwhz
+X-TOI-MSGID: dfd56af3-30be-4c47-9dfa-7eae2dfa3499
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93045>
 
-On Wed, Aug 20, 2008 at 4:40 PM, Andreas F=E4rber <andreas.faerber@web.=
-de> wrote:
-> You need to name the local branch, not the remote one:
+
+
+On Wed, 20 Aug 2008, Junio C Hamano wrote:
+
+> Michael Dressel <MichaelTiloDressel@t-online.de> writes:
 >
-> $ git push origin mybranch
+>> I use it in a script to extract the log title of commits between certain
+>> tags.
 >
-> It should then push to remotebranch.
+> "git shortlog"?
+>
 
-Not only that, but the "ahead of tracked branch" message depends on
-your local copy of the remote branch, not the remote copy of the
-remote branch.  So after pushing, you have to do:
+I use my script to see all the changes (by log titles) between
+the commit (prev) I ran the script the last time and the current commit (curr). Now there may be uninteresting tags and some commits may have more
+than one tag. Merges made before tag B may introduce commits (say c1) that are 
+made before say tag A but with git log prev..curr I may get a list like this
 
-   git fetch origin
+curr (current commit)
+.
+.
+B (latest tag)
+A (previous tag)
+c1 (commit merged some time between A and B. 
+.
+.
+prev (commit when script was run the last time)
 
-I've often wondered if we can't just have push refetch the updated
-remote ref automatically.  It's extremely hard to explain to newbies
-that after a push, the order of refs from newest to oldest is 'origin
-master', 'master', and 'origin/master'.
 
-Have fun,
+Actually I use "git rev-list prev..curr" to get a list  of commits between
+the last time I ran the script and the current head of the branch. Then
+I need the git log --decorate only to get _all_ the tags assigned to a 
+given commit. Git describe     does not give all the tags, as discussed
+earlier. The resulting list of tags assigned to a commit is later
+searched for the tag names I'm interested in. And then I use git log
+again (git log A..B ) to extract the log titles between every two successive
+tags, at this point I may use git shortlog.
 
-Avery
+
+
+Cheers,
+Michael
