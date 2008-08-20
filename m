@@ -1,70 +1,63 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Make reflog query '@{1219188291}' act as '@{2008/08/19
-	16:24:51}'
-Date: Wed, 20 Aug 2008 13:00:26 -0700
-Message-ID: <20080820200026.GK3483@spearce.org>
-References: <20080819234433.GJ24212@spearce.org> <20080820193557.GB16626@blimp.local> <20080820194407.GJ3483@spearce.org> <20080820195401.GD16626@blimp.local>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: diff --check is stupid about blank lines
+Date: Wed, 20 Aug 2008 22:02:01 +0200
+Message-ID: <20080820200201.GA3210@atjola.homenet>
+References: <20080820140517.GA1304@atjola.homenet> <20080820172825.GC27773@sigill.intra.peff.net> <7v7iabsgfk.fsf@gitster.siamese.dyndns.org> <7vskszr0it.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 20 22:01:36 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 20 22:03:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVts3-00035q-RJ
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 22:01:32 +0200
+	id 1KVttf-0003n0-1x
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 22:03:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754052AbYHTUA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 16:00:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754250AbYHTUA2
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 16:00:28 -0400
-Received: from george.spearce.org ([209.20.77.23]:38693 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752980AbYHTUA1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 16:00:27 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id E8E8F38376; Wed, 20 Aug 2008 20:00:26 +0000 (UTC)
+	id S1756369AbYHTUCH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Aug 2008 16:02:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756257AbYHTUCG
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 16:02:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39060 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756082AbYHTUCF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 16:02:05 -0400
+Received: (qmail invoked by alias); 20 Aug 2008 20:02:03 -0000
+Received: from i577B97AF.versanet.de (EHLO atjola.local) [87.123.151.175]
+  by mail.gmx.net (mp018) with SMTP; 20 Aug 2008 22:02:03 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18PCjlrln0P5qsgXd9XVqhceddTd8YBL7784ykRjN
+	YeK/obkEca0LXu
 Content-Disposition: inline
-In-Reply-To: <20080820195401.GD16626@blimp.local>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <7vskszr0it.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93026>
 
-Alex Riesen <raa.lkml@gmail.com> wrote:
-> Shawn O. Pearce, Wed, Aug 20, 2008 21:44:07 +0200:
-> > 
-> > We could pick any number for the limit, just so long as its so
-> > large that the size of the reflog for it to be a valid @{nth}
-> > request would be something like 1 TB, and thus be highly unlikely.
-> > 
-> > I was just trying to be cute by using the original commit timestamp
-> > of Git itself.  Perhaps 12936648 (1TB / 83)?
-> 
-> How about the maximum value the platform's size_t can handle?
+On 2008.08.20 11:42:34 -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> > Instead, data.trailing_blanks_start is supposed to be reset to 0 ev=
+ery
+> > time we see non-blank newline, a copied context line, or new hunk.
+> >
+> > So if this triggers with -U0 I'd understand, but otherwise I do not=
+ see
+> > how.
+>=20
+> Ahhh, what idiot wrote the logic for checking trailing blank lines in
+> checkdiff_consume().
+>=20
+> It does not ask for any context lines.  Sheesh.
+>=20
+> This should fix it.
 
-So on 64 bit platforms we need to wait for another 2.92277266
-x10^10 years before we will ever see a seconds-since-epoch which
-can't possibly be mistaken for a position in the relfog file?
- 
-> Not because it is "highly unlikely", but because you and me frankly
-> have no idea exactly how unlikely for example a "12936648 terabytes" is?
+Thanks, works for me :-)
 
-I have half a brain.  Creating 12 million reflog entries would
-typically require 12 million git-update-ref forks. Anyone who is
-doing that many since reflog was introduced and has not yet truncated
-their reflog _really_ should reconsider what they are using it for.
-
-Evaluating foo@{12936648} will be _horribly_ expensive.  Anyone who
-is waiting for that result and _cares_ about it would have already
-started asking on the list for a reflog which is not based on a
-flat file.  If they have already patched their Git to use something
-else (e.g. gdbm) I have no pity for them when this changes/breaks
-as they clearly have already patched their Git rather heavily.
-
--- 
-Shawn.
+Bj=F6rn
