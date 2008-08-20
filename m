@@ -1,73 +1,60 @@
-From: Michael Dressel <MichaelTiloDressel@t-online.de>
-Subject: Re: [PATCH 2/2] allow '%d' pretty format specifier to show
- decoration
-Date: Wed, 20 Aug 2008 21:51:18 +0200 (CEST)
-Message-ID: <alpine.LNX.1.10.0808202138340.4070@pollux>
-References: <20080820175325.GD27773@sigill.intra.peff.net> <20080820180034.GB32005@sigill.intra.peff.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Make reflog query '@{1219188291}' act as '@{2008/08/19
+	16:24:51}'
+Date: Wed, 20 Aug 2008 21:54:01 +0200
+Message-ID: <20080820195401.GD16626@blimp.local>
+References: <20080819234433.GJ24212@spearce.org> <20080820193557.GB16626@blimp.local> <20080820194407.GJ3483@spearce.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 20 21:53:09 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Aug 20 21:55:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVtjm-0008Fm-5R
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 21:52:58 +0200
+	id 1KVtlw-0000b0-RW
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 21:55:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754267AbYHTTvy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 15:51:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753767AbYHTTvy
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 15:51:54 -0400
-Received: from mailout05.t-online.de ([194.25.134.82]:40790 "EHLO
-	mailout05.t-online.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753380AbYHTTvx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 15:51:53 -0400
-Received: from fwd30.aul.t-online.de 
-	by mailout05.sul.t-online.de with smtp 
-	id 1KVtiW-0006SC-04; Wed, 20 Aug 2008 21:51:40 +0200
-Received: from [192.168.2.100] (Sx2N7+ZQghOwMRYtU76-KKeCQROvg9V+UsM8QYquupkXc-6PqTgquZ3vu2Y6MNPZCv@[84.163.212.83]) by fwd30.t-online.de
-	with esmtp id 1KVtiC-1qWrw00; Wed, 20 Aug 2008 21:51:20 +0200
-X-X-Sender: michael@pollux
-In-Reply-To: <20080820180034.GB32005@sigill.intra.peff.net>
-User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
-X-ID: Sx2N7+ZQghOwMRYtU76-KKeCQROvg9V+UsM8QYquupkXc-6PqTgquZ3vu2Y6MNPZCv
-X-TOI-MSGID: 3f26e033-cd94-43a1-945a-ac3f680f3a06
+	id S1753731AbYHTTyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 15:54:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753929AbYHTTyG
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 15:54:06 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.181]:38175 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753731AbYHTTyF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 15:54:05 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg201f5UW7
+Received: from tigra.home (Faf2f.f.strato-dslnet.de [195.4.175.47])
+	by post.webmailer.de (mrclete mo58) (RZmta 16.47)
+	with ESMTP id p03732k7KIhjQG ; Wed, 20 Aug 2008 21:54:01 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from blimp (unknown [192.168.0.8])
+	by tigra.home (Postfix) with ESMTP id C985E277AE;
+	Wed, 20 Aug 2008 21:54:01 +0200 (CEST)
+Received: by blimp (Postfix, from userid 1000)
+	id B3E4D36D18; Wed, 20 Aug 2008 21:54:01 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080820194407.GJ3483@spearce.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93023>
 
+Shawn O. Pearce, Wed, Aug 20, 2008 21:44:07 +0200:
+> 
+> We could pick any number for the limit, just so long as its so
+> large that the size of the reflog for it to be a valid @{nth}
+> request would be something like 1 TB, and thus be highly unlikely.
+> 
+> I was just trying to be cute by using the original commit timestamp
+> of Git itself.  Perhaps 12936648 (1TB / 83)?
 
-On Wed, 20 Aug 2008, Jeff King wrote:
+How about the maximum value the platform's size_t can handle?
 
-> Previously, specifying
->
->  git log --pretty=format:'%H %s' --decorate
->
-> would calculate decorations, but not show them. You can now
-> do:
->
->  git log --pretty=format:'%H (%d) %s' --decorate
->
-> to see them.
->
-
-Wow that was fast! Thanks for the help.
-
-
-For those who care:
-I use it in a script to extract the log title of commits between certain
-tags. And to compile a simple log history of what has changed between
-tags. It was a bit more tricky than I initially thought it would be,
-because of merges. So what I do basically is to do a git log A..B
-where A and B are two of the tags I found using --decorate. My problem
-was that my script got confused when I had braces in the log title. That was
-why I wanted to use format in the first place. I know there is a web
-interface to git which probably does all that, but I wanted to compile an as 
-simple as possible text file.
-
-Cheers,
-Michael
+Not because it is "highly unlikely", but because you and me frankly
+have no idea exactly how unlikely for example a "12936648 terabytes" is?
