@@ -1,59 +1,57 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Local branch ahead of tracked remote branch but git push
-	claims everything up-to-date
-Date: Wed, 20 Aug 2008 22:37:58 +0200
-Message-ID: <20080820203758.GI16626@blimp.local>
-References: <1219263969579-736663.post@n2.nabble.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT PATCH 2/2] Honor ~/.ssh/config whenever possible during
+	SSH based transport
+Date: Wed, 20 Aug 2008 13:38:18 -0700
+Message-ID: <20080820203818.GL3483@spearce.org>
+References: <1218821705-2631-1-git-send-email-spearce@spearce.org> <1218821705-2631-2-git-send-email-spearce@spearce.org> <200808202234.08348.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: ir0s <imirene@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 20 22:39:08 2008
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Aug 20 22:39:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVuSR-0001gs-Ob
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 22:39:08 +0200
+	id 1KVuSi-0001ni-Qf
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 22:39:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755408AbYHTUiD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 16:38:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755401AbYHTUiB
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 16:38:01 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.181]:14517 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754830AbYHTUiB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 16:38:01 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg201f5UW7
-Received: from tigra.home (Faf2f.f.strato-dslnet.de [195.4.175.47])
-	by post.webmailer.de (mrclete mo54) (RZmta 16.47)
-	with ESMTP id N03540k7KHe3vm ; Wed, 20 Aug 2008 22:37:59 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 15162277AE;
-	Wed, 20 Aug 2008 22:37:59 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id 00AE736D18; Wed, 20 Aug 2008 22:37:58 +0200 (CEST)
+	id S1755420AbYHTUiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 16:38:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755419AbYHTUiT
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 16:38:19 -0400
+Received: from george.spearce.org ([209.20.77.23]:33513 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755401AbYHTUiS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 16:38:18 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 2C20C38375; Wed, 20 Aug 2008 20:38:18 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1219263969579-736663.post@n2.nabble.com>
+In-Reply-To: <200808202234.08348.robin.rosenberg.lists@dewire.com>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93040>
 
-ir0s, Wed, Aug 20, 2008 22:26:09 +0200:
-> $ git push origin remotebranch
-> Everything up-to-date
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> fredagen den 15 augusti 2008 19.35.05 skrev Shawn O. Pearce:
+> > +	private void addIdentity(final File identityFile)
+> > +			throws JSchException {
+> > +		final String path = identityFile.getAbsolutePath();
+> > +		if (loadedIdentities.add(path))
+> > +			provider.getJSch().addIdentity(path);
+> >  	}
+> 
+> Ok, this breaks 3.3 compatibility and I accidentally pushed it to master. Now Marek also
+> has stuff that only works (well) with 3.4 becaujse of bugs in 3.3, that won't be fixed. So maybe
+> we'd better skip 3.3 in order to work faster. I.e. I won't revert this commit, but I am willing to
+> accept a patch to "fix" it in order to prolong 3.3 compatibilty.
 
-Just (assuming that tracking information is correct)
+I agree.  But I'm not going to be supplying that fix myself.  I don't
+want to spend a lot of time messing around with the SSH transport,
+that was just annoying me one morning.
 
-    git push
-
-or (if you want to be absolutely sure, and be able to find and
-understand the fact afterwards in your shells history)
-
-    git push origin HEAD:remotebranch
+-- 
+Shawn.
