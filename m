@@ -1,69 +1,63 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Local branch ahead of tracked remote branch but git push claims
- everything up-to-date
-Date: Wed, 20 Aug 2008 15:46:25 -0700
-Message-ID: <7v4p5fnw3i.fsf@gitster.siamese.dyndns.org>
-References: <1219263969579-736663.post@n2.nabble.com>
- <8585F10E-C33C-481E-B044-A7125F3316F2@web.de>
- <32541b130808201401l2ad105ccnc37acdacd08d4c3a@mail.gmail.com>
- <7vbpznpeup.fsf@gitster.siamese.dyndns.org>
- <32541b130808201422l2b128beer142544ff91de5ca3@mail.gmail.com>
- <alpine.LNX.1.00.0808201808400.19665@iabervon.org>
+Subject: Re: [PATCH] Add hints to revert documentation about other ways to
+ undo changes
+Date: Wed, 20 Aug 2008 16:06:32 -0700
+Message-ID: <7vzln7mglj.fsf@gitster.siamese.dyndns.org>
+References: <7vk5ec7s05.fsf@gitster.siamese.dyndns.org>
+ <1219175431-20730-1-git-send-email-tarmigan+git@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Andreas =?utf-8?Q?F=C3=A4rber?= <andreas.faerber@web.de>,
-	ir0s <imirene@gmail.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Aug 21 00:48:00 2008
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Lea Wiemann <lewiemann@gmail.com>
+To: Tarmigan Casebolt <tarmigan+git@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 01:07:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVwT4-0005Ey-Cd
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 00:47:54 +0200
+	id 1KVwmJ-00030y-Hn
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 01:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754152AbYHTWqi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 18:46:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754074AbYHTWqh
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 18:46:37 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40060 "EHLO
+	id S1754508AbYHTXGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 19:06:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754393AbYHTXGn
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 19:06:43 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51685 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754051AbYHTWqg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 18:46:36 -0400
+	with ESMTP id S1754071AbYHTXGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 19:06:42 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6A78656543;
-	Wed, 20 Aug 2008 18:46:34 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 904AA61225;
+	Wed, 20 Aug 2008 19:06:41 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 6BE9256541; Wed, 20 Aug 2008 18:46:28 -0400 (EDT)
-In-Reply-To: <alpine.LNX.1.00.0808201808400.19665@iabervon.org> (Daniel
- Barkalow's message of "Wed, 20 Aug 2008 18:25:03 -0400 (EDT)")
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 18DE06121F; Wed, 20 Aug 2008 19:06:34 -0400 (EDT)
+In-Reply-To: <1219175431-20730-1-git-send-email-tarmigan+git@gmail.com>
+ (Tarmigan Casebolt's message of "Tue, 19 Aug 2008 12:50:31 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D7096B7A-6F09-11DD-A737-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: A68F4C00-6F0C-11DD-AAE8-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93071>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Tarmigan Casebolt <tarmigan+git@gmail.com> writes:
 
-> That is actually to say that fetch should do it (pull calls fetch for that 
-> part), and I agree with that, assuming you've actually got that fetch 
-> config, of course.
+> Based on its name, people may read the 'git revert' documentation when
+> ...
+>  Documentation/git-revert.txt |    9 +++++++++
+>  1 files changed, 9 insertions(+), 0 deletions(-)
+>
+> diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+> index 98cfa3c..e578edf 100644
+> --- a/Documentation/git-revert.txt
+> +++ b/Documentation/git-revert.txt
+> @@ -15,7 +15,15 @@ Given one existing commit, revert the change the patch introduces, and record a
 
-Hmm, traditionally, an explicit refspec on the command line that does not
-store overrides the configured ones that do store, and I've been using it
-as a feature when I run test fetches.  If I do not like fetched result, I
-can tell the other guy to fix his history and I do not have to contaminate
-the history my tracking ref points at.  IOW, I use my tracking refs not
-just "this is where the guy is", but "this is the last good one I fetched
-from that guy".
+Why do you say you have 7 preimage lines and 15 postimage lines, when the
+diffstat claims you have 9 insertions?
 
-I could be persuaded to use reflog (e.g. "git diff his@{1}..his") and
-manual tagging (i.e. "git tag -f last-good-his his") myself, but this is
-"I'd _tolerate_ such a change myself", certainly not "I am happy with that
-change and I'd help you guys advocate it and try convincing others who
-shared my expectations to switch to reglog and manual tagging."
+Did you hand edit the diff?
