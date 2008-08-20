@@ -1,174 +1,90 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [RFC v2] Git User's Survey 2008
-Date: Wed, 20 Aug 2008 23:18:52 +0200
-Message-ID: <20080820211852.GA27226@leksak.fem-net>
-References: <200807230325.04184.jnareb@gmail.com> <200808200308.26308.jnareb@gmail.com>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: Local branch ahead of tracked remote branch but git push claims everything up-to-date
+Date: Wed, 20 Aug 2008 17:22:05 -0400
+Message-ID: <32541b130808201422l2b128beer142544ff91de5ca3@mail.gmail.com>
+References: <1219263969579-736663.post@n2.nabble.com>
+	 <8585F10E-C33C-481E-B044-A7125F3316F2@web.de>
+	 <32541b130808201401l2ad105ccnc37acdacd08d4c3a@mail.gmail.com>
+	 <7vbpznpeup.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 20 23:20:05 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "=?ISO-8859-1?Q?Andreas_F=E4rber?=" <andreas.faerber@web.de>,
+	ir0s <imirene@gmail.com>, git@vger.kernel.org,
+	"Daniel Barkalow" <barkalow@iabervon.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 20 23:23:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVv62-0008UN-7C
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 23:20:02 +0200
+	id 1KVv96-0001CI-LB
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 23:23:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295AbYHTVS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 17:18:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753086AbYHTVS4
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 17:18:56 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58406 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752565AbYHTVS4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 17:18:56 -0400
-Received: (qmail invoked by alias); 20 Aug 2008 21:18:54 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp016) with SMTP; 20 Aug 2008 23:18:54 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/NGpRYtW3NPoy739blZ4lSvHgFG55Gt5TvLIaLtk
-	dLd2h0gnOhKy4f
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KVv4u-0007Us-Oj; Wed, 20 Aug 2008 23:18:52 +0200
+	id S1752299AbYHTVWJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Aug 2008 17:22:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752958AbYHTVWI
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 17:22:08 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:54298 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752271AbYHTVWG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Aug 2008 17:22:06 -0400
+Received: by gxk9 with SMTP id 9so198424gxk.13
+        for <git@vger.kernel.org>; Wed, 20 Aug 2008 14:22:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=MmTLmLlGPoK4Gjvn0Wrjf1xIJrPXuh1LVNTiSzW2XWo=;
+        b=nzOeiKREAd2eipf5MWXW+66S03F+uQE1A82Ony7ZcUppXCdHV6nrewcO7z3UUa4HJR
+         aB3UfJ5WG9uqimRfzz8YDzoln7/9WnebJ2LmT/N7xmSSSVlp1oBDYZxjYZH926NwJI93
+         pfbSoxjbhTNlVi4WqKlWHdZgQfwEAkn+QBE8E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=qbIN5uWLytU0WxPcO31lWv/BEp4NsuoRBRGJvjaOulCIY5gg8qzjDQD0gW3YMyO40i
+         lu4RuH78SHoSsE2NCF1UOt8IOaD8tMnPK7A97Lugv0T7Khh7t+YqPOR1Q2wzZZLFIDfy
+         VtbJFSWusx5xMTVuoaRbr66aRmNN6ZowCdKFU=
+Received: by 10.151.45.6 with SMTP id x6mr787724ybj.186.1219267325034;
+        Wed, 20 Aug 2008 14:22:05 -0700 (PDT)
+Received: by 10.150.98.19 with HTTP; Wed, 20 Aug 2008 14:22:04 -0700 (PDT)
+In-Reply-To: <7vbpznpeup.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <200808200308.26308.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.47
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93050>
 
-Hi,
-
-Jakub Narebski wrote:
-> This is second revision (version) of proposed questions 
-> for Git User's Survey 2008.
-
-Great!
-
-> By the way, should the survey be divided in pages, or simply use
-> headers to divide survey into sections?
-
-Divided pages have a psychological impact, they don't look much and you
-can say "Almost there!" on each page.
-
-But headers and one-page surveys have a big advantage for users that pay
-for Internet access per time unit: they can go offline, answer the
-questions, and go online again to submit the survey.
-
-So I've scrolled across your test survey on survs.com and I think it
-should be kept on one page. Looks nice and manageable.
-
-> Third, where to send survey to / where to publish information about the 
-> survey?
-
-This question leads me to a question that could be put into the survey:
-
-	Where have you read about this survey? (optional)
-	[Free form]
-
-> Fourth, how long should the survey last?  When sending announcement we 
-> should say where notice about Git User's Survey 2008 should be taken 
-> down.  Last year the survey was meant to take three weeks, but was up 
-> longer.  I'm thinking about having it last a month, or a month and a
-> half, starting from September 1.
-
-And lasting until 2008-10-10?  No, I do not really care.
-
-
-So, some comments on the questions now:
-
-> About you
-> 
->    xx. What country are you in?
-
-"What country do you live in?" perhaps?
-
-> Getting started with GIT
-> 
->    xx. How did you hear about Git?
-
-There is a typo on survs.com (hear_d_).
-Should this by the way be multiple choice?
-I have heard about Git several times before I tried it.
-
-
-
-I will only quote from survs.com now:
-
-> told by friend (word of mouth)
-                 ^^^^^^^^^^^^^^^ ? :) I think this should be removed
-
-> What other SCM did or do you use?
->[..]
->  custom ( ) ( ) ( )
-
-custom?
-
-> 20. Which porcelains / interfaces / implementations do you use?
->  [ ] core-git
-
-Uh, this is ambiguous.  Is this our git or some script on top of git?
-In both cases, this should be clarified.
-
-> 22. Which git web interface do you use for your projects/have installed?
-> (Web interfaces used by git hosting sites do not count[*])
-[...]
-> (*) Unless of cours you are hosting some git hosting site
-             ^^^^^^^^                                      ^
-	     typo, but I'd rather do s/of cours //   and s/$/./ :-)
-
-> 26. How often do you use the following forms of git commands
-> or extra git tools?
+On Wed, Aug 20, 2008 at 5:15 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> "Avery Pennarun" <apenwarr@gmail.com> writes:
 >
->		Never | Rare | Often
-                                     | Not yet, but sounds cool   ;-)
+>> On Wed, Aug 20, 2008 at 4:40 PM, Andreas F=E4rber <andreas.faerber@w=
+eb.de> wrote:
+>>> You need to name the local branch, not the remote one:
+>>>
+>>> $ git push origin mybranch
+>>>
+>>> It should then push to remotebranch.
+>>
+>> Not only that, but the "ahead of tracked branch" message depends on
+>> your local copy of the remote branch, not the remote copy of the
+>> remote branch.
+>
+> I think we have long been doing so.  Daniel, correct me.
 
-No no :-)
+=2E..and I'm dumb.
 
-But I wonder if we could split the "Never" case into several cases with
-reasons like:
- - Do not know.
- - Not yet needed.
- - Other (did not understand; tried but did not work; ...)
+I apologize.  "git pull origin mybranch" does not update
+origin/mybranch.  "git push origin mybranch" does.
 
-But this will perhaps bloat the question even more, so we should keep
-"Never", though I think the reasons could be interesting.
-Could some "Comments" field for question 26 help?
+It could be argued that pull should update the local reference too,
+but that's irrelevant at the moment.
 
+Have fun,
 
-Some other comment: I dislike that there is *one* "Reset" button for
-such matrix questions. But I guess you cannot change that?
-
-> 28. Which of the following features do or did you use?
-
-I think many of the possible replies have been used in several other
-questions before, e.g. in 
- - 21. (gitk, git gui), 
- - 24. (git bundle),
- - 26/27. (git gui, gitk, git stash)
- - ...
-
-But this question still seems to makes sense for:
- [ ] eol conversion (crlf)
- [ ] gitattributes
- [ ] reflog (ref@{23})
- [ ] shallow clone
- [ ] detaching HEAD   <- I think several people could have used that without knowing
- [ ] commit templates
- [ ] integration with IDE/editor
- [ ] non-default hooks
-
-And btw:
-> [ ] working with dirty tree      <- Eh? Is this a feature?
-
-
-Big thanks for your efforts,
-  Stephan
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+Avery
