@@ -1,76 +1,60 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: diff --check is stupid about blank lines
-Date: Wed, 20 Aug 2008 16:05:17 +0200
-Message-ID: <20080820140517.GA1304@atjola.homenet>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT PATCH 00/31] Push GUI, GUI improvements, various jgit
+	stuff
+Date: Wed, 20 Aug 2008 07:13:26 -0700
+Message-ID: <20080820141326.GA3483@spearce.org>
+References: <1219005852-21496-1-git-send-email-marek.zawirski@gmail.com> <20080819175931.GH20947@spearce.org> <200808192121.30372.robin.rosenberg.lists@dewire.com> <48AB84A2.7010905@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 20 16:07:24 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org
+To: Marek Zawirski <marek.zawirski@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 20 16:14:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVoKs-00062D-Bo
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 16:06:54 +0200
+	id 1KVoSK-0000ht-Lo
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 16:14:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751004AbYHTOFX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Aug 2008 10:05:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751102AbYHTOFW
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 10:05:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42484 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751064AbYHTOFV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 10:05:21 -0400
-Received: (qmail invoked by alias); 20 Aug 2008 14:05:18 -0000
-Received: from i577B97AF.versanet.de (EHLO atjola.local) [87.123.151.175]
-  by mail.gmx.net (mp020) with SMTP; 20 Aug 2008 16:05:18 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/E6HFKlRPEVNin5M+yHk7xtPzcacZVjI51ySOGVH
-	Yq8S29dNEXrNJa
+	id S1753596AbYHTON2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 10:13:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753798AbYHTON2
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 10:13:28 -0400
+Received: from george.spearce.org ([209.20.77.23]:45208 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753554AbYHTON1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 10:13:27 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id AE2F938375; Wed, 20 Aug 2008 14:13:26 +0000 (UTC)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+In-Reply-To: <48AB84A2.7010905@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92990>
 
-Hi,
+Marek Zawirski <marek.zawirski@gmail.com> wrote:
+> Actually, I'm now leaving for few days, so I'm sending out just fixes  
+> for issues pointed out by Shawn and found by me in the mean time. I'll  
+> squash these patches with existing commits in push branch, as it is  
+> probably worth nothing to keep this in history.
 
-diff --check triggers not only for blank lines at the end of the file,
-but also at the end of the changes. That seems broken to me, unless you
-really dislike empty lines.
+Thanks.  These fixes look good to me, and they address my immediate
+concerns with the series.
 
-=46or example:
-git (master) $ git diff
-diff --git a/git.c b/git.c
-index 37b1d76..3fa1aeb 100644
---- a/git.c
-+++ b/git.c
-@@ -9,6 +9,8 @@ const char git_usage_string[] =3D
- const char git_more_info_string[] =3D
-        "See 'git help COMMAND' for more information on a specific comm=
-and.";
-=20
-+int new_var =3D 0;
-+
- static int use_pager =3D -1;
- struct pager_config {
-        const char *cmd;
+> BTW, as another developers are getting involved in jgit/egit coding,  
+> maybe we could use (update) some wiki page for marking who is working on  
+> some topic currently? Now it's not obvious for me, and as we're not so  
+> numerous it would be pity to waste our time and do some redundant stuff  
+> one day.
 
-git (master) $ git diff --check
-git.c:13: ends with blank lines.
+I've thought about starting a code.google.com project just to use
+the issue tracking system there.  I'm using an internal tool to
+keep of issues for myself, but that's not fair to the end-users or
+other contributors...
 
-But that blank line was of course intentional.
-
-I'm not quite sure why that happens though. The code in
-checkdiff_consume seems to reset the flag when it sees context lines,
-but apparently that does not work for some reason.
-
-git version 1.6.0.36.g3814c
-
-Bj=F6rn
+-- 
+Shawn.
