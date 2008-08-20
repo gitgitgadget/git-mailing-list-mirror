@@ -1,77 +1,60 @@
-From: "Han-Wen Nienhuys" <hanwenn@gmail.com>
-Subject: git for-each-ref crashes for %(body) with tags
-Date: Wed, 20 Aug 2008 15:28:41 -0300
-Message-ID: <f329bf540808201128r2d21c40cr37eb63a6706ac0aa@mail.gmail.com>
-Reply-To: hanwen@xs4all.nl
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] allow '%d' pretty format specifier to show
+ decoration
+Date: Wed, 20 Aug 2008 11:32:16 -0700
+Message-ID: <7vwsibr0zz.fsf@gitster.siamese.dyndns.org>
+References: <20080820175325.GD27773@sigill.intra.peff.net>
+ <20080820180034.GB32005@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 20 20:30:34 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Aug 20 20:33:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVsRz-0006vT-Ff
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 20:30:31 +0200
+	id 1KVsUw-00083l-SR
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 20:33:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753252AbYHTS2p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 14:28:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751530AbYHTS2o
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 14:28:44 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:51768 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753292AbYHTS2m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 14:28:42 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so268437yxm.1
-        for <git@vger.kernel.org>; Wed, 20 Aug 2008 11:28:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=SeHHYoDRz/VBz3tBqhpPar1g5ha5Sfqn8ha+BiZIkDw=;
-        b=WbdAs3P4te6s7vIh3rah9N20jnaYhKJglht/OO5iSod/9TEhoiosoBHP+NRSHt+a7Y
-         2J0SnDbFHIaxbXr8hMypL2Jwbnhbu3Q6wC+jSQ4jtgIeyV1y1thG1OLQ+CkeHommExnv
-         8uvhxI0HOrCuYQ82f8X+sPsEL4ZQ9oiYszly8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=byAyM6TzH8F+aRiXtDbVpPaU4K7+CK1eFLMxgrQh3xowU/N4ucI7ZjrhM6KXe6egxi
-         h12Xiu+zyimDoKoj/RErg4TU6vgou7uDc590LxbcXm7xpe2L1cigfW3CKS6/4DunopCp
-         NY6OgviTa6JhQG7S09oLvdLRMrgZFPgWjGCv4=
-Received: by 10.114.154.12 with SMTP id b12mr584780wae.153.1219256921230;
-        Wed, 20 Aug 2008 11:28:41 -0700 (PDT)
-Received: by 10.115.109.8 with HTTP; Wed, 20 Aug 2008 11:28:41 -0700 (PDT)
-Content-Disposition: inline
+	id S1751884AbYHTSc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 14:32:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752263AbYHTSc3
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 14:32:29 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41646 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751550AbYHTSc2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 14:32:28 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7A7565AB6A;
+	Wed, 20 Aug 2008 14:32:24 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 4160C5AB68; Wed, 20 Aug 2008 14:32:19 -0400 (EDT)
+In-Reply-To: <20080820180034.GB32005@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 20 Aug 2008 14:00:34 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 555FE720-6EE6-11DD-84DE-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93009>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-see gdb trace below.   Unfortunately, I don't have a repo that I can
-readily share to demonstrate this.
+>     Is it too loose? Perhaps the enclosing parentheses should be
+>     automatic,...
 
-(gdb) r for-each-ref --format '%(body)' refs/tags
-..
+I think so.  The default output should primarily be for humans.
 
-Breakpoint 1, grab_sub_body_contents (val=<value optimized out>,
-deref=0, obj=<value optimized out>, buf=0x8146ad0, sz=161)
-    at builtin-for-each-ref.c:494
-494                             v->s = xstrdup(bodypos);
-(gdb) p bodypos
-$10 = 0x0
+>   - should this turn on --decorate automatically?
 
-(gdb) n
-496                             v->s = xstrdup(subpos);
-(gdb) n
+Oh, absolutely.  If you plan to have different kind of decorations in the
+future, then the logic can be "if there is explicit decoration specified,
+don't do anything, but if there isn't any, turn the default one on."
 
-Program received signal SIGSEGV, Segmentation fault.
-0x4d9ff013 in strlen () from /lib/tls/i686/cmov/libc.so.6
-
--- 
-Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+Also, if it doesn't already, "--pretty=[t]format:" should make sure parent
+rewriting is enabled when %p and %P is used.  I didn't look.
