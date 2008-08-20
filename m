@@ -1,88 +1,90 @@
-From: "Boaz Stuller" <boazstuller@gmail.com>
-Subject: Re: Problem with git-svn
-Date: Wed, 20 Aug 2008 13:45:37 -0400
-Message-ID: <5979e28c0808201045i2c525d7dx7fc8d70a67e9c9ef@mail.gmail.com>
-References: <5979e28c0808190641l343ed48fi75c55f9f0cdb1bcf@mail.gmail.com>
-	 <20080820080528.GA16665@untitled>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH v2] Teach "git diff" HTML funcname patterns
+Date: Wed, 20 Aug 2008 19:49:15 +0200
+Message-ID: <200808201949.15450.johan@herland.net>
+References: <200808201927.47099.johan@herland.net> <20080820172940.GA26411@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Eric Wong" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Aug 20 19:46:47 2008
+Cc: Mike Hommey <mh@glandium.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 20 19:51:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVrlb-0007l1-PK
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 19:46:44 +0200
+	id 1KVrpe-0000yY-VG
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 19:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751496AbYHTRpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 13:45:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750895AbYHTRpi
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 13:45:38 -0400
-Received: from wf-out-1314.google.com ([209.85.200.173]:30333 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751101AbYHTRpi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 13:45:38 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so676906wfd.4
-        for <git@vger.kernel.org>; Wed, 20 Aug 2008 10:45:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=zhul/kR2PAxvsMc5uW1Db/3ilfvr6dMLfI+zrMrdJWE=;
-        b=VicAOBN4N0A7hMA3XZMxd9D2Hh4+fRxvhstXffuxWZKTBa75nV9LwpdA4VDJFs5XC2
-         pZPfoVwid777yRhf/U+PqyCOscrQ5D5shtpBCUYiP6UYOy45CRXJdIUo82NvPgaaW1G9
-         +FQNnw6Ia9s02elXxD45TV9CkeHHd8ZcCplpQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=YUS4jl68KC53LHBDHK9cU9723SuP03a4wZHi2PhUivepDrt9wd1Wme6sgu0RJK/6Xr
-         4a0t04nsu0ITV3dObYqA7pvGKlACDYevWTmfPOCzRjDHKb4cnFdf0C/KWKm4UU0ZO6FX
-         lrHVRED24ggV9nMVoSmL1h03jmohuSvtQrQnE=
-Received: by 10.142.234.16 with SMTP id g16mr116054wfh.274.1219254337422;
-        Wed, 20 Aug 2008 10:45:37 -0700 (PDT)
-Received: by 10.143.165.3 with HTTP; Wed, 20 Aug 2008 10:45:37 -0700 (PDT)
-In-Reply-To: <20080820080528.GA16665@untitled>
+	id S1751004AbYHTRtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 13:49:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751530AbYHTRtv
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 13:49:51 -0400
+Received: from sam.opera.com ([213.236.208.81]:53277 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750880AbYHTRtu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 13:49:50 -0400
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m7KHnFb8007347
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 20 Aug 2008 17:49:20 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080820172940.GA26411@glandium.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93001>
 
-On Wed, Aug 20, 2008 at 4:11 AM, Eric Wong <normalperson@yhbt.net> wrote:
-> Boaz Stuller <boazstuller@gmail.com> wrote:
->> I'm having a problem with git-svn.  I was connecting to a remote svn
->> repository via the svn+ssh:// protocol using an embedded username in
->> the url, i.e svn+ssh://boazstuller@svn.example.com/some/complicated/path.
->>  When I upgraded to 1.6.0, 'git svn dcommit' stopped working and
->> instead kept asking me for a password.   I tracked the problem down to
->> the following commit:
->>
->> commit ba24e7457aa1f958370bbb67dfb97e3ec806fd4a
->> Author: Eric Wong <normalperson@yhbt.net>
->> Date:   Thu Aug 7 02:06:16 2008 -0700
->>     git-svn: add ability to specify --commit-url for dcommit
->>
->> I don't know perl, but the problem seems to be where around line 446,
->> '$gs->full_url' gets changed to  '$url'.  Apparently, $gs->full_url
->> contained the embedded username but $url has it stripped out, i.e
->> svn+ssh://svn.example.com/some/complicated/path , so ssh can't tell
->> what username I'm trying to log in as.
->
-> Hi Boaz, thanks for tracking this down.  The following patch should
-> fix your issue (and another potential one I noticed).
->
-> I've lightly tested it and it appears to work for me.
->
+Finds lines with <h1>..<h6> tags. The pattern is adapted from the ruby one.
 
-I only tested with a couple commits too, but your patch works
-perfectly for me.
+Signed-off-by: Johan Herland <johan@herland.net>
+---
 
-Thanks,
-Bo
+On Wednesday 20 August 2008, Mike Hommey wrote:
+> On Wed, Aug 20, 2008 at 07:27:46PM +0200, Johan Herland wrote:
+> > Finds lines with <h1>..<h6> tags. The pattern is adapted from the
+> > ruby one.
+> Don't you want to catch <H1>...<H6> too ?
+
+Yes. Thanks.
+
+
+Have fun!
+
+...Johan
+
+
+ Documentation/gitattributes.txt |    2 ++
+ diff.c                          |    1 +
+ 2 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index db16b0c..8bb05e6 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -320,6 +320,8 @@ patterns are available:
+ 
+ - `tex` suitable for source code for LaTeX documents.
+ 
++- `html` suitable for HTML/XHTML documents.
++
+ 
+ Performing a three-way merge
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/diff.c b/diff.c
+index a6c1432..9d4b961 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1382,6 +1382,7 @@ static struct builtin_funcname_pattern {
+ 	{ "bibtex", "\\(@[a-zA-Z]\\{1,\\}[ \t]*{\\{0,1\\}[ \t]*[^ \t\"@',\\#}{~%]*\\).*$" },
+ 	{ "tex", "^\\(\\\\\\(\\(sub\\)*section\\|chapter\\|part\\)\\*\\{0,1\\}{.*\\)$" },
+ 	{ "ruby", "^\\s*\\(\\(class\\|module\\|def\\)\\s.*\\)$" },
++	{ "html", "^\\s*\\(<[Hh][1-6]\\s.*>.*\\)$" },
+ };
+ 
+ static const char *diff_funcname_pattern(struct diff_filespec *one)
+-- 
+1.6.0.96.g2fad1
