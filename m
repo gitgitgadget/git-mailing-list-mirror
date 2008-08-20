@@ -1,132 +1,67 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: can't use gitk
-Date: Wed, 20 Aug 2008 11:31:28 +0200
-Message-ID: <48ABE470.7070002@op5.se>
-References: <b8d0e50d0808200145l7ec88fb1p3e551c25f045bed4@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Xin Yang <sissia.yangxin@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 20 11:33:21 2008
+From: Charles O'Farrell <charleso@charleso.org>
+Subject: [JGIT PATCH v2 0/3] Verbase branch command
+Date: Wed, 20 Aug 2008 21:00:38 +1000
+Message-ID: <1219230041-7998-1-git-send-email-charleso@charleso.org>
+Cc: Charles O'Farrell <charleso@charleso.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 20 13:02:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVk3v-0000yE-7L
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 11:33:07 +0200
+	id 1KVlRv-0005a6-Qn
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 13:02:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581AbYHTJbc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 05:31:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751153AbYHTJbc
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 05:31:32 -0400
-Received: from mail.op5.se ([193.201.96.20]:36551 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751901AbYHTJba (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 05:31:30 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 5DC6D1B803DB;
-	Wed, 20 Aug 2008 11:35:28 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BKTbRzYK38UJ; Wed, 20 Aug 2008 11:35:27 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [192.168.1.184])
-	by mail.op5.se (Postfix) with ESMTP id D2EA71B800B0;
-	Wed, 20 Aug 2008 11:35:26 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <b8d0e50d0808200145l7ec88fb1p3e551c25f045bed4@mail.gmail.com>
+	id S1753093AbYHTLAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 07:00:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752875AbYHTLAy
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 07:00:54 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:50318 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752018AbYHTLAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 07:00:53 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so181865yxm.1
+        for <git@vger.kernel.org>; Wed, 20 Aug 2008 04:00:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:sender;
+        bh=Cgk9wjnfeXlsvTRtPcdQFj9uy7TBPn4T2DSdBAPFiWs=;
+        b=Xo6u9+yEzoo3gtC2oVAjiax1kxGBbK7/vFyIlU4HKq/JfWrsz3f/oqUiRES9P4ZgKZ
+         FVqdrY7MUK8bN1B6zPw77I/tFLaXwb5WyGZtBQygN/d4wChW4r3IkOtt4TIRPTErRqCN
+         /0LPFNSXlRA8W3eaNAEzEZXr9c/iYehV+ukLY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:sender;
+        b=agMOE0Y0wTGK4IUXpgsQ9cNK7tRNkQMWdqrIG8DfYYxEJzVQlvzsrNJcl99zVMW9FN
+         F4vtHEGev+qP6tma62TpTyS+PvBq0ywx1qiZkX60MaaNBnFaVbjg/+6/URdVll86Yhe1
+         vDg26OwvSFb4d0LwVpYrJqaPQTAbx+9gzIB2U=
+Received: by 10.114.178.13 with SMTP id a13mr7718928waf.182.1219230052050;
+        Wed, 20 Aug 2008 04:00:52 -0700 (PDT)
+Received: from localhost.localdomain ( [123.200.197.247])
+        by mx.google.com with ESMTPS id n22sm2340253pof.3.2008.08.20.04.00.48
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 20 Aug 2008 04:00:51 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.2.g2ebc0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/92975>
 
-Xin Yang wrote:
-> Hi Andreas Ericsson,
-> 
+Verbose branch listing added for the sake of completeness.
 
-Hi Sissia. I forwarded your email to the git list (git@vger.kernel.org)
-where you can hope someone will have the time and knowledge to help you.
-I'm no gitk or TCL expert, so I wouldn't even know where to start.
+This probably doesn't need a cover letter. The only difference with the
+previous patch is the '/' fix and to add 'final' where safe to do so.
+That is to say I only added final for lines modified by this patch.
 
-For future reference though:
-When you want help with an opensource tool you should look for its
-mailing list before firing off mails to individual contributors. Mostly
-all of us work with opensource on our spare time and we, as individuals,
-hardly ever have neither time nor inclination to answer questions in
-private. When you ask to the mailing list, the question and the answer
-gets stored for all the world to see in the mailing list archives, so
-that people in the future with the same problems you have can find it
-without anyone having to actually spend time on answering it again.
+Charles O'Farrell (3):
+  Extract RefComparator to sort collection of Refs
+  Cleanup of Branch command ready for verbose mode
+  Verbose branch command
 
-For a more exhaustive read on that topic, see
-http://catb.org/~esr/faqs/smart-questions.html. It holds an abundance
-of information valuable to those who need answers for free and gratis.
-
-
-> I got your name from git archives but I still can't sue gitk. I guess
-> there are some environment setup issues.
-> Could you give me some clues?
-> 
-> The GIT version I installed is:
-> git-1.5.3.2.tar.bz2<http://download.chinaunix.net/download.php?id=25039&ResourceID=3744>
-> 
-> The error info I got after running gitk is:
-> Error in startup script: syntax error in expression "$i >= [llength $argv]
-> && $revtreeargs ne {}"
->     while executing
-> "if {$i >= [llength $argv] && $revtreeargs ne {}} {
->     # no -- on command line, but some arguments (other than -d)
->     if {[catch {
->         set f [eval exec ..."
->     (file "/apps/mds_lrt/git/bin/gitk" line 7912)
-> 
-> Here is code beginning from line 7912:
-> if {$i >= [llength $argv] && $revtreeargs ne {}} {
->     # no -- on command line, but some arguments (other than -d)
->     if {[catch {
->         set f [eval exec git rev-parse --no-revs --no-flags $revtreeargs]
->         set cmdline_files [split $f "\n"]
->         set n [llength $cmdline_files]
->         set revtreeargs [lrange $revtreeargs 0 end-$n]
->         # Unfortunately git rev-parse doesn't produce an error when
->         # something is both a revision and a filename.  To be consistent
->         # with git log and git rev-list, check revtreeargs for filenames.
->         foreach arg $revtreeargs {
->             if {[file exists $arg]} {
->                 show_error {} . "Ambiguous argument '$arg': both revision\
->                                  and filename"
->                 exit 1
->             }
->         }
->     } err]} {
->         # unfortunately we get both stdout and stderr in $err,
->         # so look for "fatal:".
->         set i [string first "fatal:" $err]
->         if {$i > 0} {
->             set err [string range $err [expr {$i + 6}] end]
->         }
->         show_error {} . "Bad arguments to gitk:\n$err"
->         exit 1
->     }
-> }
-> 
-> 
-> 
-> 
-> I am looking forward to your reply. :) Thanks a lot.
-> 
-> Sissia
-> 
-
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+ .../src/org/spearce/jgit/pgm/Branch.java           |   61 +++++++++++++----
+ .../src/org/spearce/jgit/lib/RefComparator.java    |   72 ++++++++++++++++++++
+ .../src/org/spearce/jgit/lib/RefWriter.java        |   14 +----
+ 3 files changed, 121 insertions(+), 26 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/lib/RefComparator.java
