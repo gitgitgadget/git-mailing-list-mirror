@@ -1,120 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] allow '%d' pretty format specifier to show decoration
-Date: Wed, 20 Aug 2008 14:00:34 -0400
-Message-ID: <20080820180034.GB32005@sigill.intra.peff.net>
-References: <20080820175325.GD27773@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: diff --check is stupid about blank lines
+Date: Wed, 20 Aug 2008 11:13:35 -0700
+Message-ID: <7v7iabsgfk.fsf@gitster.siamese.dyndns.org>
+References: <20080820140517.GA1304@atjola.homenet>
+ <20080820172825.GC27773@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
-X-From: git-owner@vger.kernel.org Wed Aug 20 20:02:02 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Aug 20 20:14:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVs06-00053f-BZ
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 20:01:42 +0200
+	id 1KVsCp-0001Fn-Mz
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 20:14:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751817AbYHTSAi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 14:00:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751601AbYHTSAi
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 14:00:38 -0400
-Received: from peff.net ([208.65.91.99]:4364 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751103AbYHTSAh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 14:00:37 -0400
-Received: (qmail 25761 invoked by uid 111); 20 Aug 2008 18:00:36 -0000
-Received: from lawn-128-61-25-158.lawn.gatech.edu (HELO sigill.intra.peff.net) (128.61.25.158)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 20 Aug 2008 14:00:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Aug 2008 14:00:34 -0400
-Content-Disposition: inline
-In-Reply-To: <20080820175325.GD27773@sigill.intra.peff.net>
+	id S1751545AbYHTSNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 14:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751805AbYHTSNp
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 14:13:45 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34595 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750972AbYHTSNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 14:13:45 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B50DF5A75E;
+	Wed, 20 Aug 2008 14:13:43 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 1AA5A5A757; Wed, 20 Aug 2008 14:13:37 -0400 (EDT)
+In-Reply-To: <20080820172825.GC27773@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 20 Aug 2008 13:28:25 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B9598964-6EE3-11DD-8D49-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93005>
 
-Previously, specifying
+Jeff King <peff@peff.net> writes:
 
-  git log --pretty=format:'%H %s' --decorate
+> ... The problem seems to be the conditional at
+> diff.c:1622:
+>
+>         if ((data.ws_rule & WS_TRAILING_SPACE) &&
+>             data.trailing_blanks_start) {
+>                 fprintf(o->file, "%s:%d: ends with blank lines.\n",
+>                         data.filename, data.trailing_blanks_start);
+>                 data.status = 1; /* report errors */
+>         }
+>
+> that should probably be "if we care about trailing space, and the last
+> thing we saw was a trailing blank, _and_ the last hunk adds to
+> end-of-file, then...".
 
-would calculate decorations, but not show them. You can now
-do:
+Instead, data.trailing_blanks_start is supposed to be reset to 0 every
+time we see non-blank newline, a copied context line, or new hunk.
 
-  git log --pretty=format:'%H (%d) %s' --decorate
-
-to see them.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-There is a lot of room for discussion here.
-
-For example:
-
-  - what should %d show? Right now it shows each decoration, split by
-    commas. It doesn't show the enclosing parentheses automatically.
-
-    Is this too strict? Should there be some way of pulling out
-    individual decorations from the list, or specifying a different
-    delimiter? If so, probably that should be part of a general
-    improvement in the format expansion macro language.
-
-    Is it too loose? Perhaps the enclosing parentheses should be
-    automatic, so that %d expands to nothing if there is no decoration,
-    or the whole thing otherwise. Right now you are stuck with empty ()
-    if there is no decoration. Alternatively, we could support some kind
-    of conditional expansion in the formatting language (but I don't
-    know how crazy we want to get wit new formatting features).
-
-  - should this turn on --decorate automatically? If you use '%d'
-    without --decorate, you will just get no decorations. I think that
-    makes sense, though, since that opens room for specifying other
-    types of decorations (e.g., there could be a --decorate-tags that
-    only looks at tags).
-
- Documentation/pretty-formats.txt |    1 +
- pretty.c                         |   15 +++++++++++++++
- 2 files changed, 16 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index c11d495..55a5954 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -116,6 +116,7 @@ The placeholders are:
- - '%cr': committer date, relative
- - '%ct': committer date, UNIX timestamp
- - '%ci': committer date, ISO 8601 format
-+- '%d': decoration (if you specified --decorate)
- - '%e': encoding
- - '%s': subject
- - '%b': body
-diff --git a/pretty.c b/pretty.c
-index 33ef34a..00f19e1 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -519,6 +519,21 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 			return 3;
- 		} else
- 			return 0;
-+	case 'd':
-+		{
-+			struct name_decoration *d;
-+			const char *prefix = "";
-+			d = lookup_decoration(&name_decoration,
-+					&commit->object);
-+			while (d) {
-+				strbuf_addstr(sb, prefix);
-+				prefix = ", ";
-+				strbuf_addstr(sb, d->name);
-+				d = d->next;
-+			}
-+		}
-+		return 1;
-+
- 	}
- 
- 	/* these depend on the commit */
--- 
-1.6.0.90.g00a5c.dirty
+So if this triggers with -U0 I'd understand, but otherwise I do not see
+how.
