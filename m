@@ -1,73 +1,63 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: "git-merge": allow fast-forwarding in a stat-dirty tree
-Date: Thu, 21 Aug 2008 00:35:11 +0200
-Message-ID: <20080820223511.GM23800@genesis.frugalware.org>
-References: <1508D1DF-EDE7-4A64-B354-E2F26578E24D@ai.rug.nl> <7v7iabpejv.fsf@gitster.siamese.dyndns.org> <EAFC48F0-5512-4A83-B9B2-44FF53319285@ai.rug.nl> <7vljyrnxt3.fsf_-_@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: diff --check is stupid about blank lines
+Date: Wed, 20 Aug 2008 15:39:25 -0700
+Message-ID: <7v8wurnwf6.fsf@gitster.siamese.dyndns.org>
+References: <20080820140517.GA1304@atjola.homenet>
+ <20080820172825.GC27773@sigill.intra.peff.net>
+ <7v7iabsgfk.fsf@gitster.siamese.dyndns.org>
+ <7vskszr0it.fsf@gitster.siamese.dyndns.org>
+ <20080820222048.GB8137@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="GyRA7555PLgSTuth"
-Cc: Pieter de Bie <pdebie@ai.rug.nl>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 21 00:36:25 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Aug 21 00:40:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVwHw-0002CU-4P
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 00:36:24 +0200
+	id 1KVwM1-0003D3-Gm
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 00:40:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753792AbYHTWfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 18:35:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753761AbYHTWfT
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 18:35:19 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:40370 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753111AbYHTWfS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 18:35:18 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 444D31B24F0;
-	Thu, 21 Aug 2008 00:35:14 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id A72A34465E;
-	Wed, 20 Aug 2008 23:38:29 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id A78F91770019; Thu, 21 Aug 2008 00:35:11 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vljyrnxt3.fsf_-_@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1753798AbYHTWje (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 18:39:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753761AbYHTWje
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 18:39:34 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49745 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753450AbYHTWjd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 18:39:33 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 507E161FA0;
+	Wed, 20 Aug 2008 18:39:32 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 2A68861F9F; Wed, 20 Aug 2008 18:39:27 -0400 (EDT)
+In-Reply-To: <20080820222048.GB8137@coredump.intra.peff.net> (Jeff King's
+ message of "Wed, 20 Aug 2008 18:20:48 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DB7393C6-6F08-11DD-9EA2-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93067>
 
+Jeff King <peff@peff.net> writes:
 
---GyRA7555PLgSTuth
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> On Wed, Aug 20, 2008 at 11:42:34AM -0700, Junio C Hamano wrote:
+>
+>> Ahhh, what idiot wrote the logic for checking trailing blank lines in
+>> checkdiff_consume().
+>> 
+>> It does not ask for any context lines.  Sheesh.
+>> 
+>> This should fix it.
+>
+> Ah, that was much easier than I expected. ;)
+>
+> Maybe this should be squashed in?
 
-On Wed, Aug 20, 2008 at 03:09:28PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
->  	if (read_cache_unmerged())
->  		die("you need to resolve your current index first");
-> +	refresh_cache(REFRESH_QUIET);
-
-I did not realise that we need a refresh_cache() after
-read_cache_unmerged() here, and thus the other refresh_cache() call is
-unnecessary.
-
-Thanks.
-
---GyRA7555PLgSTuth
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkisnB8ACgkQe81tAgORUJam5wCgpEklkUSebDDMbPRYK/AL2KqB
-/w4An1Bma1yONE4gtQ9j+XdBnD68M6Rp
-=TLZK
------END PGP SIGNATURE-----
-
---GyRA7555PLgSTuth--
+Thanks but I've done that myself already.
