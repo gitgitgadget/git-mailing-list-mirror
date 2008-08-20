@@ -1,80 +1,51 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: The state and future of the git/mingw** reposiories?
-Date: Wed, 20 Aug 2008 22:18:35 +0200
-Message-ID: <200808202218.35626.johannes.sixt@telecom.at>
-References: <20080820112309.GH10544@machine.or.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] allow '%d' pretty format specifier to show
+ decoration
+Date: Wed, 20 Aug 2008 13:21:10 -0700
+Message-ID: <7vzln7phe1.fsf@gitster.siamese.dyndns.org>
+References: <20080820175325.GD27773@sigill.intra.peff.net>
+ <20080820180034.GB32005@sigill.intra.peff.net>
+ <alpine.LNX.1.10.0808202138340.4070@pollux>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: msysGit <msysgit@googlegroups.com>, git@vger.kernel.org,
-	prohaska@zib.de, johannes.schindelin@gmx.de
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Aug 20 22:19:54 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Michael Dressel <MichaelTiloDressel@t-online.de>
+X-From: git-owner@vger.kernel.org Wed Aug 20 22:22:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVu9h-0002Od-KG
-	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 22:19:46 +0200
+	id 1KVuCE-0003Ic-Hg
+	for gcvg-git-2@gmane.org; Wed, 20 Aug 2008 22:22:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754040AbYHTUSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 16:18:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753823AbYHTUSl
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 16:18:41 -0400
-Received: from smtp3.srv.eunet.at ([193.154.160.89]:36724 "EHLO
-	smtp3.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753809AbYHTUSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 16:18:41 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp3.srv.eunet.at (Postfix) with ESMTP id C4DD810A710;
-	Wed, 20 Aug 2008 22:18:37 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id D2DB91D38D;
-	Wed, 20 Aug 2008 22:18:36 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080820112309.GH10544@machine.or.cz>
-Content-Disposition: inline
+	id S1752848AbYHTUVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 16:21:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753573AbYHTUVS
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 16:21:18 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38872 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752223AbYHTUVS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 16:21:18 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B250D537D1;
+	Wed, 20 Aug 2008 16:21:16 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 0C15C537D0; Wed, 20 Aug 2008 16:21:12 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.10.0808202138340.4070@pollux> (Michael Dressel's
+ message of "Wed, 20 Aug 2008 21:51:18 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8AE30986-6EF5-11DD-B01A-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93032>
 
-On Mittwoch, 20. August 2008, Petr Baudis wrote:
->   Hi,
->
->   I'm currently doing some MSysGit hacking (mostly git-gui-related) and
-> I'm wondering what should I actually base my work on, considering the
-> statement of 1.6.0 release notes:
->
-> 	Source changes needed for porting to MinGW environment are now
-> 	all in the main git.git codebase.
+Michael Dressel <MichaelTiloDressel@t-online.de> writes:
 
-If all you need is a mostly working git, you can build off of git.git 
-(assuming you have the build environment that msysgit provides).
+> I use it in a script to extract the log title of commits between certain
+> tags.
 
-> However, git diff junio/master...mingw/master shows quite a few
-> differences - is there any plan to merge these?
-
-You see three kinds of differences:
-
-- Changes in the test suite.
-- Perl related changes (most notably, git-add--interactive in git.git does not 
-work on MinGW without these changes).
-- One or two gitk related fixes.
-
-All of them will be sent upstream some day.
-
-If you need one of the areas that these changes touches, then you can work off 
-of mingw.git.
-
-> If so, do you plan to 
-> maintain the mingw fork indefinitely anyway as a staging area for your
-> patches that you plan to push upstream, or is it going to be phased out
-> eventually?
-
-I hope I can reset mingw.git to git.git some day. But I plan to keep it as 
-staging area for patches.
-
--- Hannes
+"git shortlog"?
