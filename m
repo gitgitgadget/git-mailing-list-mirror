@@ -1,89 +1,71 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: Bug/problem with 1.6.0 on UnixWare
-Date: Thu, 21 Aug 2008 13:41:07 +0100
-Message-ID: <e2b179460808210541lfd7dcaeoea8554a2a76f8825@mail.gmail.com>
-References: <alpine.LNX.1.10.0808210522450.24713@xenau.zenez.com>
-	 <e2b179460808210435w31b911a5ie6059b5628db8138@mail.gmail.com>
-	 <alpine.LNX.1.10.0808210610440.29396@xenau.zenez.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] test-lib: do not remove trash_directory if called with
+	--debug
+Date: Thu, 21 Aug 2008 08:55:17 -0400
+Message-ID: <20080821125516.GA22453@coredump.intra.peff.net>
+References: <7vabf7mcpz.fsf@gitster.siamese.dyndns.org> <20080821011811.GA13915@coredump.intra.peff.net> <alpine.DEB.1.00.0808210946280.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vy72qiwc0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Boyd Lynn Gerber" <gerberb@zenez.com>
-X-From: git-owner@vger.kernel.org Thu Aug 21 14:42:24 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 14:56:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KW9UV-0003qB-3M
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 14:42:15 +0200
+	id 1KW9iG-0000xP-FB
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 14:56:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752612AbYHUMlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 08:41:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbYHUMlJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 08:41:09 -0400
-Received: from rv-out-0506.google.com ([209.85.198.233]:51213 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751004AbYHUMlI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 08:41:08 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so922672rvb.1
-        for <git@vger.kernel.org>; Thu, 21 Aug 2008 05:41:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=s/zS7JspsUbJP6Jq3aXD6PC6L5qv6WqcgVBLi/F1F6U=;
-        b=suTpMHuYk7SnucQ6dortoibDaQFkK2wIy2xFo+Pupna1fGQQ2dAJrozKa8W5xMy8Pg
-         Ju8dZNLo5ZuhXXpb6VsEFOcYp1v/NUvJVjrN1b5TWSz5QXJ/AE793SebamjL3EEJElU+
-         O0ugYQ9E3KXnZKYCSJCh4hrLo0pBVkMq8xlKk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=OZRu3Wp1dh1CiFj+VYkx/jFBonTB2iRvLeg6qk2Cka5SL+g6atX+/jTH3hnET5dNf9
-         qgKABn6Nn5hiAu5wxcvIOF5vkTP7v1X5DKDIXDpTerllDrQhLnK9ap3IXuBrbWzBG43N
-         osJDGbiIUjxATvVr/OCTBsn7SCMsBE7HVAbl4=
-Received: by 10.141.83.15 with SMTP id k15mr685145rvl.289.1219322468004;
-        Thu, 21 Aug 2008 05:41:08 -0700 (PDT)
-Received: by 10.141.19.11 with HTTP; Thu, 21 Aug 2008 05:41:07 -0700 (PDT)
-In-Reply-To: <alpine.LNX.1.10.0808210610440.29396@xenau.zenez.com>
+	id S1754761AbYHUMzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 08:55:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754731AbYHUMzV
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 08:55:21 -0400
+Received: from peff.net ([208.65.91.99]:4389 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754409AbYHUMzU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 08:55:20 -0400
+Received: (qmail 4960 invoked by uid 111); 21 Aug 2008 12:55:18 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 21 Aug 2008 08:55:18 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Aug 2008 08:55:17 -0400
 Content-Disposition: inline
+In-Reply-To: <7vy72qiwc0.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93145>
 
-2008/8/21 Boyd Lynn Gerber <gerberb@zenez.com>:
-> Yep, that sounds about right.  It has bitten me on the 12 platforms, I
-> submitted to get git working on them.  I will look at reverting it.
->
-> I just tried to get this working and now I am being flooded with emails
-> from people that are trying git for the first time, and asking...
->
-> How I could your recommend such a broken SCM?  I told them to got back to
-> the 1.5.X but being new to git and then not being able to build and use it
-> is causing a lot of flack.  I am getting emails now about my recommending
-> git, as it is broken.  I should not have announce to the various lists
-> about how great git is and that they should dump their older SCM's in
-> favor of git.  Really bad timing on my part.  I just hope these people
-> will give git an other try.
+On Thu, Aug 21, 2008 at 01:52:31AM -0700, Junio C Hamano wrote:
 
-If it's possible, you might want to look at automatically building and
-running the git testsuite on some or all of your SCO etc platforms.
-You're very welcome to push tags describing the state of the build and
-tests to http://repo.or.cz/w/git/gitbuild.git - there's a few scripts
-there in a side branch.
+> Yeah, I think hooking this with --debug is makes actual sense.  Much saner
+> than changing the behaviour magically with "make -j".
+> 
+> Even though I personally do not particularly like having an _easy_ way to
+> leave the cruft around, I'll apply it if Jeff and other people like this
+> behaviour.
 
-Personally, I'd like it if Junio could check to see if the 'satellite'
-platforms are happily building and passing the last rc before he tags
-a final release (with no additional code changes in it!), but that may
-be too much of the tail wagging the dog.
+I think the workflow you described is probably a better one for adding a
+test, and I'll try to adjust to that. However, I do think Dscho's patch
+makes sense for any time you simply want to look at the output of a
+successful test (e.g., even if you aren't editing it).
 
-Even though 1.6 builds and passes here, I probably won't push it out
-in my environment until 1.6.0.2 or so.
+My only concern with the patch is that it conditionally sets
+$remove_trash; if debug is set, that variable is not set at all. Yet
+later we look at it and "rm -rf" it. Obviously the chances of somebody
+accidentally passing in such a variable are quite low, but style-wise
+(and given that we are calling rm -rf!), I think I would prefer:
 
-Mike
+  if ! test -z "$debug"; then
+    remove_trash="$TEST_DIRECTORY/$test"
+  else
+    remove_trash=
+  fi
+
+And a final comment on leaving cruft around: this is something that
+developers have to deal with _anyway_, when tests fail or when we break
+out of the test scripts with ^C. It eventually gets cleaned when the
+test runs successfully (or one runs "git clean -xd").
+
+-Peff
