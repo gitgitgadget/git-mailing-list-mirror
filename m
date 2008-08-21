@@ -1,75 +1,72 @@
-From: "Peter Waller" <peter.waller@gmail.com>
-Subject: Re: Merging repositories and their histories
-Date: Thu, 21 Aug 2008 16:53:51 -0500
-Message-ID: <d3d284ca0808211453r2e1f1f1ak5e0a0b1ea7329a2@mail.gmail.com>
-References: <19035412.post@talk.nabble.com> <48ADE2A6.2020407@gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit] kha/{safe,experimental} updated
+Date: Thu, 21 Aug 2008 23:16:01 +0100
+Message-ID: <b0943d9e0808211516j4c1f35c0gcbc3374a6b710797@mail.gmail.com>
+References: <20080808082728.GA24017@diana.vm.bytemark.co.uk>
+	 <b0943d9e0808131454p16cb104bs1bcf67a6c660a88a@mail.gmail.com>
+	 <20080817201848.GA10889@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 21 23:54:59 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Samuel Tardieu" <sam@rfc1149.net>,
+	"Daniel White" <daniel@whitehouse.id.au>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 00:17:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWI7N-0005pD-7k
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 23:54:57 +0200
+	id 1KWISv-0004fS-7B
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 00:17:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755721AbYHUVxx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 17:53:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755442AbYHUVxx
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 17:53:53 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:40857 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755400AbYHUVxw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 17:53:52 -0400
-Received: by gxk9 with SMTP id 9so809089gxk.13
-        for <git@vger.kernel.org>; Thu, 21 Aug 2008 14:53:51 -0700 (PDT)
+	id S1756266AbYHUWQG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Aug 2008 18:16:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757624AbYHUWQG
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 18:16:06 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:42886 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756465AbYHUWQD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Aug 2008 18:16:03 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so104907yxm.1
+        for <git@vger.kernel.org>; Thu, 21 Aug 2008 15:16:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
+         :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=uqJtW7iXgs16o1E3SxXMGEeSmOcXMDAaIu87IWYYTFs=;
-        b=TW/JoxJqqZ7fEj7caYxEyWdUYEqWxrCeyIeuWMUcNkEAhI5D1t090uMgm+KkJkyERH
-         Rzp7qG7cUjXKqbGMxtOjT17XbzKuESkSPzye3l5vewyv80YykaDP7XKYX6Re5BatY+Y3
-         1pDojsGOcvbksxC1z0nPgcU/TlLsZgMzqfXGw=
+        bh=CpPTUYCmqnuuHfXZusjvr44iFn7mR4lgWqpqKKRnmME=;
+        b=OlZCJTQ6V8yH1ZKPPOcsqCYVaas19gsAcIrqiFinSCMg5DzZlWXbxKSiPBoZfRmu92
+         dqslQXkODZvl+i8SzSDOE2CSXghjge3LkVQrpTaRcO4xDQ7FrtMKsQNC/LHU3HS6y5kw
+         KFFPvoxIS0HYtn6rd0ZzVTJF0ZJzNtFCfnpQ8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=rvVSHeTWkoAKpvVQyTbYQIWYD4jDQN5KsycVkYflDY++PB9aa71DQOBkJm07zR0prH
-         QIM/WQGFLRvePZwEjxjHfbkvvbqTTAoCccHWjsAnsj13hXa4hqLH/hQbh20bQOLHBjvn
-         ZqlPfd04O+jhRHn8IKt/mQgCMZsAYnWD+y80k=
-Received: by 10.151.12.1 with SMTP id p1mr578822ybi.1.1219355631370;
-        Thu, 21 Aug 2008 14:53:51 -0700 (PDT)
-Received: by 10.151.39.13 with HTTP; Thu, 21 Aug 2008 14:53:51 -0700 (PDT)
-In-Reply-To: <48ADE2A6.2020407@gmail.com>
+        b=je0DTpPetJnySkTT87JSGma7NZ/L6d0RIWs1qvLWp2cVVFc6HWFL2+15Jyuu33J/zQ
+         4ae56RboVnF18kEzm3hxYYuhCmKwMgcP/4KeOGRHfTSfcdKUNrS2X1f8I13ZbV1JnMtA
+         Wg0J4ra7y1avHu7AVze4cHytbFw6ere+2EgBs=
+Received: by 10.114.37.1 with SMTP id k1mr435717wak.44.1219356961890;
+        Thu, 21 Aug 2008 15:16:01 -0700 (PDT)
+Received: by 10.114.193.12 with HTTP; Thu, 21 Aug 2008 15:16:01 -0700 (PDT)
+In-Reply-To: <20080817201848.GA10889@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93219>
 
-TmFiYmxlIGtlcHQgdGVsbGluZyBtZSB0aGF0IG15IHBvc3Qgd2FzIG5vdCBzdWJtaXR0ZWQsIHdo
-aWNoIEkgZm91bmQKdmVyeSBjb25mdXNpbmcsIHNvIEkgZW5kZWQgdXAgdHJ5aW5nIHRvIHJlc3Vi
-bWl0IHRoZSBwb3N0LiBTb3JyeSBmb3IKdGhlIHNwYW0uIFRoaXMgaXMgbm93IHNvcnRlZC4KCkNo
-ZWVycyBmb3IgdGhlIGtlZW4tbmVzcyB0byBoZWxwISA6LSkKCi0gUGV0ZQoKMjAwOC84LzIxIE1h
-cmN1cyBHcmllcCA8bmVvZWluc3RlaW5AZ21haWwuY29tPgo+Cj4gUGV0ZXIgV2FsbGVyIHdyb3Rl
-Ogo+ID4gSSBoYXZlIHRocmVlIHJlcG9zaXRvcmllcywgQSwgQiBhbmQgQy4gSSB3aXNoIHRvIGJy
-aW5nIHRoZW0gdG9nZXRoZXIgdG8gb25seQo+ID4gb25lIHJlcG9zaXRvcnkgKC4pLCB3aGVyZSB0
-aGV5IGFyZSBpbiBhIGRpcmVjdG9yeSBjYWxsZWQgLi9BcmNoaXZlLCBzby4uCj4gPiAuL0FyY2hp
-dmUve0EsQixDfS4gVGhlbiBJIHBsYW4gYXQgYSBsYXRlciBkYXRlIHRvIG1vdmUgZmlsZXMgYXJi
-aXRyYXJpbHkKPiA+IGZyb20gLi9BcmNoaXZlL3tBL0IvQ30vU29tZXRoaW5nIGFuZCBpbnRvIC4v
-U29tZXRoaW5ne0EvQi9DfS4gKEEgbGFtZQo+ID4gZXhhbXBsZSwgYnV0IGlsbHVzdHJhdGVzIHdo
-YXQgSSB3YW50IHRvIGRvKS4KPgo+IFBldGVyIFdhbGxlciBhbHNvIHdyb3RlOgo+ID4gVGhhbmtz
-LCBpdCB3b3JrZWQuCj4gPgo+ID4gMjAwOC84LzE4IEFsZXggUmllc2VuIDxyYWEubGttbEBnbWFp
-bC5jb20+Ogo+ID4gPiA+IFBldGVyIFdhbGxlciwgTW9uLCBBdWcgMTgsIDIwMDggMjA6MTU6NTIg
-KzAyMDA6Cj4gPiA+PiA+PiAyMDA4LzgvMTggQWxleCBSaWVzZW4gPHJhYS5sa21sQGdtYWlsLmNv
-bT4KPiA+ID4+ID4+Cj4gPiA+Pj4gPj4gPiBQZXRlciBXYWxsZXIsIE1vbiwgQXVnIDE4LCAyMDA4
-IDE4OjQ2OjE0ICswMjAwOgo+ID4gPj4+PiA+PiA+ID4KPiA+ID4+Pj4gPj4gPiA+IChUaGUgc2Ft
-ZSB0aGluZyBhcyBhYm92ZSkKPgo+IERpZCBpdCBhY3R1YWxseSBub3Qgd29yaz8KPgo+IC0tCj4g
-TWFyY3VzIEdyaWVwCj4gR1BHIEtleSBJRDogMHg1RTk2ODE1Mgo+IOKAlOKAlAo+IGh0dHA6Ly93
-d3cuYm9vaGF1bnQubmV0Cj4g15DXqi7PiM6/wrQKPgo=
+2008/8/17 Karl Hasselstr=F6m <kha@treskal.com>:
+> On 2008-08-13 22:54:57 +0100, Catalin Marinas wrote:
+>> I'll repost my patches with the new git id format as well
+>
+> Excellent. I was about to merge them a while back, but I noticed you
+> hadn't addressed the latest round of comments then.
+
+I actually decided to commit them since the comments were minor like
+fixing the commit log or using strip_prefix(). I implemented them and
+hopefully haven't forgotten any.
+
+--=20
+Catalin
