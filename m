@@ -1,87 +1,75 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: How can a custom merge tool get access to file shell variables?
-Date: Thu, 21 Aug 2008 23:15:24 +0100
-Message-ID: <20080821221524.GA25429@hashpling.org>
-References: <1219169604.12921.17.camel@kea-nicira-lt.nicira.com> <1219170004.12921.19.camel@kea-nicira-lt.nicira.com> <1219170751.12921.27.camel@kea-nicira-lt.nicira.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Suggestion: "man git clone"
+Date: Thu, 21 Aug 2008 16:07:46 -0700
+Message-ID: <48ADF542.9010105@zytor.com>
+References: <48ACB29C.7000606@zytor.com> <48ADE2FF.4080704@acm.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Keith Amidon <keith@nicira.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 00:41:21 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Federico Lucifredi <flucifredi@acm.org>
+X-From: git-owner@vger.kernel.org Fri Aug 22 01:09:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWIqG-0004sL-15
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 00:41:20 +0200
+	id 1KWJHE-0004eN-51
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 01:09:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759770AbYHUWkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 18:40:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759597AbYHUWkP
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 18:40:15 -0400
-Received: from ptb-relay01.plus.net ([212.159.14.145]:54415 "EHLO
-	ptb-relay01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759568AbYHUWkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 18:40:14 -0400
-X-Greylist: delayed 1486 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Aug 2008 18:40:13 EDT
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by ptb-relay01.plus.net with esmtp (Exim) id 1KWIRB-0002vx-1x; Thu, 21 Aug 2008 23:15:25 +0100
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id m7LMFOJu025854;
-	Thu, 21 Aug 2008 23:15:24 +0100
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id m7LMFOCQ025853;
-	Thu, 21 Aug 2008 23:15:24 +0100
-Content-Disposition: inline
-In-Reply-To: <1219170751.12921.27.camel@kea-nicira-lt.nicira.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: 9ba4390372c9c2fbf5e6cfb71d878cd3
+	id S1759691AbYHUXHu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 19:07:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759669AbYHUXHt
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 19:07:49 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:43185 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758711AbYHUXHt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 19:07:49 -0400
+Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m7LN7lAt005330
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 21 Aug 2008 16:07:47 -0700
+Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
+	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m7LN7l0G028962;
+	Thu, 21 Aug 2008 16:07:47 -0700
+Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
+	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m7LN7ki6025117;
+	Thu, 21 Aug 2008 16:07:46 -0700
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <48ADE2FF.4080704@acm.org>
+X-Virus-Scanned: ClamAV 0.93.3/8069/Thu Aug 21 10:36:55 2008 on terminus.zytor.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93222>
 
-On Tue, Aug 19, 2008 at 11:32:31AM -0700, Keith Amidon wrote:
-> In case anyone is interested, the following does exactly what I want.
-> Hopefully this example will help someone else that wants to do something
-> similar avoid spending time on writing an unnecessary shell script
-> wrapper tool.
+Federico Lucifredi wrote:
+> Hello HP,
+>  I have seen this in (funnily enough) a project I manage myself, which 
+> has subcommands structured similarly to Git.
 > 
-> [mergetool "xxdiff-2way-ignorews"]
->     cmd = xxdiff -w $REMOTE $LOCAL --merged-filename $MERGED
->     trustExitCode = false
+>  I have looked at options, but so far the current behavior (man foo-bar) 
+> seems the best option for foo's subcommand bar. The alternative, also 
+> acceptable, is a large page with subsections for each command. Sections 
+> (man 1) are used for chapter-like page groupings, not for subsections on 
+> a single command - those would have to be implemented as an additional 
+> layer.
 > 
-> I think I was thrown off by the description of mergetool.<name>.cmd in
-> the git-config man page.  While on close reading it is definitely
-> correct, for me at least it seemed natural to assume that the invoked
-> command was supposed to get its information from the environment, not
-> that the command line itself could substitute from the environment.
-> Would an example such as the above in the man page might help direct
-> people toward the best way to do this?
+>  But, as another participant in the thread has commented, that would not 
+> port to other platforms very quickly (although it would get to Linux and 
+> OS-X promptly, and may eventually make its way into other platforms).
 > 
->            --- Keith
+>  I am open to ideas, but so far the two options above are better than 
+> anything else that has been so far suggested...
+> 
 
-Did you also try the git mergetool man page (not that it's much
-better!)?
+One option would be to support "man foo bar" showing the page labelled 
+foo-bar.  That way you'd get at least a modicum of bass-ackwards 
+compatibility.
 
-The point of the custom mergetool patch was to make using a new,
-previously unknown merge tool a 'simple' configuration exercise rather
-than a patch or scripting exercise. At the time, an 'eval' approach
-was the compromise between ease of implementation and preventing
-environmental pollution.
+However, at some point we have to be willing to do things other 
+platforms won't, or we'll never do anything new...
 
-It's not the most beautiful of solutions, especially since escaping
-quotes and spaces in either .gitconfig or in a git config command line
-of something that is later going to be expanded by the shell is
-something of a mind bender.
-
-An example in the documentation would be a really good idea - you are
-not the first person to have asked about how to use the custom merge
-tool feature. I'm feeling a little guilty about not adding my name to
-the man page when I submitted the patch. It's not Ted's fault that the
-custom merge tool section is badly explained; it's mine.
-
--- 
-Charles Bailey
-http://ccgi.hashpling.plus.com/blog/
+	-hpa
