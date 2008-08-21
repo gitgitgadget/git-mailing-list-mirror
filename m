@@ -1,55 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Suggestion: "man git clone"
-Date: Thu, 21 Aug 2008 16:13:07 -0400
-Message-ID: <20080821201307.GC27705@coredump.intra.peff.net>
-References: <48ACB29C.7000606@zytor.com> <48ACB5F4.3000905@sneakemail.com> <48AD99DF.5090802@zytor.com> <32541b130808211007xf295e40l567ecf785a8fca22@mail.gmail.com> <48ADA467.1030407@zytor.com> <20080821173842.GB26920@coredump.intra.peff.net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT PATCH 00/31] Push GUI, GUI improvements, various jgit stuff
+Date: Thu, 21 Aug 2008 22:12:10 +0200
+Message-ID: <200808212212.11184.robin.rosenberg.lists@dewire.com>
+References: <1219005852-21496-1-git-send-email-marek.zawirski@gmail.com> <200808192121.30372.robin.rosenberg.lists@dewire.com> <48AB84A2.7010905@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	=?utf-8?Q?=22Peter_Valdemar_M=C3=B8rch_=28Lists=29=22?= 
-	<4ux6as402@sneakemail.com>, flucifredi@acm.org,
-	Git ML <git@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Thu Aug 21 22:14:27 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Marek Zawirski <marek.zawirski@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 22:15:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWGXw-0001Hd-Lm
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 22:14:17 +0200
+	id 1KWGYh-0001bN-Bw
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 22:15:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754105AbYHUUNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 16:13:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754210AbYHUUNM
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 16:13:12 -0400
-Received: from peff.net ([208.65.91.99]:4220 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754023AbYHUUNL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 16:13:11 -0400
-Received: (qmail 9196 invoked by uid 111); 21 Aug 2008 20:13:08 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 21 Aug 2008 16:13:08 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Aug 2008 16:13:07 -0400
+	id S1754798AbYHUUNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 16:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754781AbYHUUNq
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 16:13:46 -0400
+Received: from av9-1-sn3.vrr.skanova.net ([81.228.9.185]:40503 "EHLO
+	av9-1-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754815AbYHUUNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 16:13:45 -0400
+Received: by av9-1-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id 5D6E137E4F; Thu, 21 Aug 2008 22:13:43 +0200 (CEST)
+Received: from smtp3-2-sn3.vrr.skanova.net (smtp3-2-sn3.vrr.skanova.net [81.228.9.102])
+	by av9-1-sn3.vrr.skanova.net (Postfix) with ESMTP
+	id 451F937E49; Thu, 21 Aug 2008 22:13:43 +0200 (CEST)
+Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp3-2-sn3.vrr.skanova.net (Postfix) with ESMTP id 0292E37E46;
+	Thu, 21 Aug 2008 22:13:42 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <48AB84A2.7010905@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20080821173842.GB26920@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93196>
 
-On Thu, Aug 21, 2008 at 01:38:42PM -0400, Jeff King wrote:
+onsdagen den 20 augusti 2008 04.42.42 skrev Marek Zawirski:
+> Actually, I'm now leaving for few days, so I'm sending out just fixes 
+> for issues pointed out by Shawn and found by me in the mean time. I'll 
+> squash these patches with existing commits in push branch, as it is 
+> probably worth nothing to keep this in history.
 
-> There is some configuration magic about what is a section. Try
-> 
->   perl -pi -e 's/^SECTION.*/$& git/' /etc/manpath.config
-> 
-> That seems to convince my man to look in .../mangit, but I'm having
-> trouble actually getting it to find a page and I don't have time to
-> investigate further now.
+As I'm too eager to get this out (seems to work), I can squash it and
+rearrange the checkbox-related code a little like stealing the icons
+from the Eclipse CVS and grouping the checkbox classes with the
+icons plus a tweak for selecting how the images for the checkbox
+are created.
 
-Ah, OK. My problem was that the pages actually need to be named "am.git",
-etc. But with 'git' in the section field, "man git am" does work.
-Unfortunately, it seems to break "man git". :(
-
--Peff
+-- robin
