@@ -1,66 +1,109 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] allow user aliases for the --author parameter
-Date: Thu, 21 Aug 2008 15:49:47 +0200
-Message-ID: <20080821134946.GR23800@genesis.frugalware.org>
-References: <g8jbvd$18k$1@ger.gmane.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Call Me Gitless
+Date: Thu, 21 Aug 2008 09:58:52 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0808210928010.19665@iabervon.org>
+References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com> <alpine.LNX.1.00.0808181512160.19665@iabervon.org> <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0808181628420.19665@iabervon.org>
+ <7viqtukbec.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="l0l+eSofNeLXHSnY"
-Cc: git@vger.kernel.org
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-X-From: git-owner@vger.kernel.org Thu Aug 21 15:53:59 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Trans <transfire@gmail.com>, Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 16:01:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWAYw-0006U0-J8
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 15:50:55 +0200
+	id 1KWAhj-00028c-1o
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 15:59:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755509AbYHUNtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 09:49:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755392AbYHUNtt
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 09:49:49 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:42560 "EHLO virgo.iok.hu"
+	id S1751594AbYHUN6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 09:58:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751750AbYHUN6y
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 09:58:54 -0400
+Received: from iabervon.org ([66.92.72.58]:50975 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754855AbYHUNts (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 09:49:48 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 9771D1B2506;
-	Thu, 21 Aug 2008 15:49:47 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 7ABC24465E;
-	Thu, 21 Aug 2008 14:52:44 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 1DA3F1770019; Thu, 21 Aug 2008 15:49:47 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <g8jbvd$18k$1@ger.gmane.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1751004AbYHUN6y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 09:58:54 -0400
+Received: (qmail 5330 invoked by uid 1000); 21 Aug 2008 13:58:52 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 21 Aug 2008 13:58:52 -0000
+In-Reply-To: <7viqtukbec.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93149>
 
+On Thu, 21 Aug 2008, Junio C Hamano wrote:
 
---l0l+eSofNeLXHSnY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > On Mon, 18 Aug 2008, Junio C Hamano wrote:
+> > ...
+> >>     If we had a configuration for "index-free" people, that changes the
+> >>     semantics of "git add" to register object name of an empty blob when a
+> >>     new path is added, makes "git add" for existing blobs a no-op, but
+> >>     keeps "git commit -a" and "git commit <paths>" to operate as they
+> >>     currently do, then people with such configuration could:
+> >> 
+> >> 	$ >new-file
+> >>         $ git add new-file
+> >>         $ edit old-file
+> >>         $ edit new-file
+> >>         $ git diff
+> >> 
+> >>     to always see what's the difference from the HEAD is with "git diff",
+> >>     and any of these three:
+> >> 
+> >> 	$ git commit -a
+> >>         $ git commit old-file
+> >>         $ git commit old-file new-file
+> >> 
+> >>     would work as expected by them.  We still need to support the three
+> >>     diff variants for normal git people, but people who do not use index
+> >>     do not have to know the two variants ("git diff" vs "git diff HEAD");
+> >>     such a change could be argued as a "UI improvement" [*1*].
+> >
+> > I think that having the possibility of adding an empty blob (or maybe a 
+> > magical "nothing currently here but git-ls-files includes it") would be 
+> > preferrable to a no-index mode.
+> 
+> I am not sure if you are really saying something different from what I am
+> saying.  We'll see after this three patch series.  The first one is an
+> unrelated bugfix (but the bug won't trigger with existing callers -- only
+> triggered with the added codepath).
 
-On Thu, Aug 21, 2008 at 11:19:41AM +0200, Michael J Gruber <michaeljgruber+gmane@fastmail.fm> wrote:
-> If there's interest in this patch I'll follow up with a documentation patch.
+I see this primarily as something you can use if you're worried about 
+leaving files out of commits. When you create the file, you can use "git 
+add -N" to make sure that it won't get overlooked when you're adding 
+things. If you weren't using the index for anything important, you could 
+just use a normal add, but that would get confusing if you're adding 
+completed changes as well as some half-written version of any file that 
+happens to be new. That is, it'll let you cause "git diff" to report the 
+contents as unstaged changes in your working tree, rather than not 
+reporting it (either because it's not tracked at all, or because the 
+changes are now staged). Then you can decide to stage them.
 
-See http://article.gmane.org/gmane.comp.version-control.git/92913.
+(The thing that I'd ideally like to have different is for:
 
---l0l+eSofNeLXHSnY
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+$ echo "content" > new-name
+$ git add -N new-name
+$ git commit
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Say:
 
-iEYEARECAAYFAkitcnoACgkQe81tAgORUJZ5OACeMNdtP+zA+hqJGa1g3kwXC4CM
-Ib0Ani++IbAXf8BKRUlr4X8/uNoX4Afs
-=gqB0
------END PGP SIGNATURE-----
+# On branch master
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#
+#          added:   new-name
+#
+no changes added to commit (use "git add" and/or "git commit -a")
 
---l0l+eSofNeLXHSnY--
+rather than committing the empty blob. But that's tricky to implement 
+and keep from breaking other stuff and really minor; and the 
+documentation doesn't exclude that being what happens with -N)
+
+	-Daniel
+*This .sig left intentionally blank*
