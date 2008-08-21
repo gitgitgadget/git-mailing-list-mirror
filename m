@@ -1,56 +1,55 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Push over WebDAV and hooks
-Date: Thu, 21 Aug 2008 13:11:26 -0700
-Message-ID: <20080821201126.GY3483@spearce.org>
-References: <g8kgr5$e67$1@ger.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Suggestion: "man git clone"
+Date: Thu, 21 Aug 2008 16:13:07 -0400
+Message-ID: <20080821201307.GC27705@coredump.intra.peff.net>
+References: <48ACB29C.7000606@zytor.com> <48ACB5F4.3000905@sneakemail.com> <48AD99DF.5090802@zytor.com> <32541b130808211007xf295e40l567ecf785a8fca22@mail.gmail.com> <48ADA467.1030407@zytor.com> <20080821173842.GB26920@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Nikolai Prokoschenko <nikolai@prokoschenko.de>
-X-From: git-owner@vger.kernel.org Thu Aug 21 22:12:52 2008
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	=?utf-8?Q?=22Peter_Valdemar_M=C3=B8rch_=28Lists=29=22?= 
+	<4ux6as402@sneakemail.com>, flucifredi@acm.org,
+	Git ML <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 22:14:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWGWZ-0000ku-M8
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 22:12:52 +0200
+	id 1KWGXw-0001Hd-Lm
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 22:14:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754086AbYHUUL2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 16:11:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754063AbYHUUL1
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 16:11:27 -0400
-Received: from george.spearce.org ([209.20.77.23]:40467 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753188AbYHUUL1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 16:11:27 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 5C6DB38375; Thu, 21 Aug 2008 20:11:26 +0000 (UTC)
+	id S1754105AbYHUUNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 16:13:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754210AbYHUUNM
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 16:13:12 -0400
+Received: from peff.net ([208.65.91.99]:4220 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754023AbYHUUNL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 16:13:11 -0400
+Received: (qmail 9196 invoked by uid 111); 21 Aug 2008 20:13:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 21 Aug 2008 16:13:08 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Aug 2008 16:13:07 -0400
 Content-Disposition: inline
-In-Reply-To: <g8kgr5$e67$1@ger.gmane.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <20080821173842.GB26920@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93195>
 
-Nikolai Prokoschenko <nikolai@prokoschenko.de> wrote:
-> I have a (bare) repository on my server. Since I need to access it from  
-> firewalled networks, I can't go with git protocol or SSH; I thought  
-> WebDAV is the way to go. However I've noticed that my hooks are not  
-> executed and could not really think of a way the could ever work, since  
-> WebDAV is essentially a virtual hard drive without any execution  
-> capability. So am I right, hooks aren't supposed to work with WebDAV and  
-> so I'd have to find a way to use SSH or git:// to push changes?
+On Thu, Aug 21, 2008 at 01:38:42PM -0400, Jeff King wrote:
 
-Correct.  Hooks can only be executed if you use SSH or git:// to push
-the changes, as there is no remote execution available via WebDAV.
+> There is some configuration magic about what is a section. Try
+> 
+>   perl -pi -e 's/^SECTION.*/$& git/' /etc/manpath.config
+> 
+> That seems to convince my man to look in .../mangit, but I'm having
+> trouble actually getting it to find a page and I don't have time to
+> investigate further now.
 
-That said if someone was really interested in this they could try
-to make hook CGIs and teach git-http-push how to execute them by
-sending a GET to the proper URL.  But then you are relying on the
-client to honor the hooks, and only newer clients (post that change)
-would support it.
+Ah, OK. My problem was that the pages actually need to be named "am.git",
+etc. But with 'git' in the section field, "man git am" does work.
+Unfortunately, it seems to break "man git". :(
 
--- 
-Shawn.
+-Peff
