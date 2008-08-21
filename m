@@ -1,82 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 4/4] Add getNameString to TreeWalk to get only the last path component
-Date: Thu, 21 Aug 2008 13:57:38 -0700
-Message-ID: <1219352258-15431-4-git-send-email-spearce@spearce.org>
-References: <1219352258-15431-1-git-send-email-spearce@spearce.org>
- <1219352258-15431-2-git-send-email-spearce@spearce.org>
- <1219352258-15431-3-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Aug 21 22:59:14 2008
+From: Jonathan Nieder <jrnieder@uchicago.edu>
+Subject: Re: [PATCH 3/3] git-add --intent-to-add (-N)
+Date: Thu, 21 Aug 2008 16:14:32 -0500 (CDT)
+Message-ID: <Pine.GSO.4.62.0808211608020.26161@harper.uchicago.edu>
+References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com>
+ <alpine.LNX.1.00.0808181512160.19665@iabervon.org> <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0808181628420.19665@iabervon.org> <7viqtukbec.fsf@gitster.siamese.dyndns.org>
+ <7v3akykb96.fsf_-_@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 23:15:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWHFM-0002hz-7c
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 22:59:08 +0200
+	id 1KWHVa-000075-H3
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 23:15:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755098AbYHUU5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 16:57:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755045AbYHUU5p
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 16:57:45 -0400
-Received: from george.spearce.org ([209.20.77.23]:41823 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754721AbYHUU5l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 16:57:41 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id F022C38375; Thu, 21 Aug 2008 20:57:40 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id A2AD338376;
-	Thu, 21 Aug 2008 20:57:39 +0000 (UTC)
-X-Mailer: git-send-email 1.6.0.112.g9c75
-In-Reply-To: <1219352258-15431-3-git-send-email-spearce@spearce.org>
+	id S1753757AbYHUVOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 17:14:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754140AbYHUVOs
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 17:14:48 -0400
+Received: from smtp01.uchicago.edu ([128.135.12.77]:39361 "EHLO
+	smtp01.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752250AbYHUVOs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 17:14:48 -0400
+Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
+	by smtp01.uchicago.edu (8.13.8/8.13.8) with ESMTP id m7LLEWZe006586;
+	Thu, 21 Aug 2008 16:14:32 -0500
+Received: from localhost (jrnieder@localhost)
+	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m7LLEWjC026438;
+	Thu, 21 Aug 2008 16:14:32 -0500 (CDT)
+X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
+In-Reply-To: <7v3akykb96.fsf_-_@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93209>
 
-Some applications may need to see only the name of the current
-entry within its parent tree and not require the full path from
-the root of the repository.
+Hi,
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../src/org/spearce/jgit/treewalk/TreeWalk.java    |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
+Junio C Hamano wrote:
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/TreeWalk.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/TreeWalk.java
-index ef27e4e..53b94d2 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/treewalk/TreeWalk.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/TreeWalk.java
-@@ -548,6 +548,24 @@ public boolean idEqual(final int nthA, final int nthB) {
- 	}
- 
- 	/**
-+	 * Get the current entry's name within its parent tree.
-+	 * <p>
-+	 * This method is not very efficient and is primarily meant for debugging
-+	 * and final output generation. Applications should try to avoid calling it,
-+	 * and if invoked do so only once per interesting entry, where the name is
-+	 * absolutely required for correct function.
-+	 * 
-+	 * @return name of the current entry within the parent tree (or directory).
-+	 *         The name never includes a '/'.
-+	 */
-+	public String getNameString() {
-+		final AbstractTreeIterator t = currentHead;
-+		final int off = t.pathOffset;
-+		final int end = t.pathLen;
-+		return RawParseUtils.decode(Constants.CHARSET, t.path, off, end);
-+	}
-+
-+	/**
- 	 * Get the current entry's complete path.
- 	 * <p>
- 	 * This method is not very efficient and is primarily meant for debugging
--- 
-1.6.0.112.g9c75
+> This adds "--intent-to-add" option to "git add".
+
+I quite like the idea of this patch series.  When I try to test it with
+"git merge jc/ita; make test", t0020-crlf setup fails with
+
+	error: invalid object e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+	error: Error building trees
+	* FAIL 1: setup
+
+This could be me doing something wrong, but I thought you'd like to
+know, anyway.  I'll try to diagnose it tonight.
+
+Regards,
+Jonathan
