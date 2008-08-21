@@ -1,68 +1,98 @@
-From: Eric Raible <raible@gmail.com>
-Subject: Re: git am with MIME
-Date: Thu, 21 Aug 2008 03:34:03 +0000 (UTC)
-Message-ID: <loom.20080821T033231-805@post.gmane.org>
-References: <48AAEBB6.9070306@gmail.com> <20080819170731.GA2424@coredump.intra.peff.net> <20080820195734.GE16626@blimp.local>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: [PATCHv3 1/2] Make xdi_diff_outf interface for running xdiff_outf diffs
+Date: Wed, 20 Aug 2008 22:37:57 -0500
+Message-ID: <20080821033756.GC31114@lavos.net>
+References: <20080814053156.GE4396@lavos.net> <1218692211-26045-1-git-send-email-bdowning@lavos.net> <7v1w0sf7bl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 21 05:35:28 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 05:39:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KW0xJ-00037W-6C
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 05:35:25 +0200
+	id 1KW110-0003qn-Sv
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 05:39:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752879AbYHUDeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 23:34:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752686AbYHUDeU
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 23:34:20 -0400
-Received: from main.gmane.org ([80.91.229.2]:49290 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751477AbYHUDeU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 23:34:20 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KW0wA-00010d-Ds
-	for git@vger.kernel.org; Thu, 21 Aug 2008 03:34:14 +0000
-Received: from adsl-75-24-105-96.dsl.pltn13.sbcglobal.net ([75.24.105.96])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Aug 2008 03:34:14 +0000
-Received: from raible by adsl-75-24-105-96.dsl.pltn13.sbcglobal.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Aug 2008 03:34:14 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 75.24.105.96 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.1) Gecko/2008070208 Firefox/3.0.1)
+	id S1754018AbYHUDiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 23:38:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754507AbYHUDiK
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 23:38:10 -0400
+Received: from qmta10.westchester.pa.mail.comcast.net ([76.96.62.17]:45226
+	"EHLO QMTA10.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753696AbYHUDiJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Aug 2008 23:38:09 -0400
+Received: from OMTA04.westchester.pa.mail.comcast.net ([76.96.62.35])
+	by QMTA10.westchester.pa.mail.comcast.net with comcast
+	id 4fJZ1a0040ldTLk5Are15K; Thu, 21 Aug 2008 03:38:01 +0000
+Received: from mnementh.lavos.net ([98.212.138.194])
+	by OMTA04.westchester.pa.mail.comcast.net with comcast
+	id 4re01a00F4BqYqi3Qre0Tl; Thu, 21 Aug 2008 03:38:01 +0000
+X-Authority-Analysis: v=1.0 c=1 a=YTq5XthBrPEA:10 a=9yyhHhZq3XEA:10
+ a=szu5UreWqKJJ8qMwUbIA:9 a=QVjYIV-9i3zE-QzsRIQmwvQgOocA:4 a=LY0hPdMaydYA:10
+Received: by mnementh.lavos.net (Postfix, from userid 1000)
+	id F3376309F24; Wed, 20 Aug 2008 22:37:57 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <7v1w0sf7bl.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93108>
 
-Alex Riesen <raa.lkml <at> gmail.com> writes:
+On Wed, Aug 13, 2008 at 11:18:22PM -0700, Junio C Hamano wrote:
+> Much nicer.  xdi_diff() is just a performance thing that only kicks in
+> when you are running -U0 diff, so it is unsurprising that you did not see
+> any test failures.
 
-> 
-> Jeff King, Tue, Aug 19, 2008 19:07:31 +0200:
-> > On Tue, Aug 19, 2008 at 05:50:14PM +0200, Lea Wiemann wrote:
-> > @@ -107,7 +107,7 @@ static void handle_from(const struct strbuf *from)
-> >  	el = strcspn(at, " \n\t\r\v\f>");
-> >  	strbuf_reset(&email);
-> >  	strbuf_add(&email, at, el);
-> > -	strbuf_remove(&f, at - f.buf, el + 1);
-> > +	strbuf_remove(&f, at - f.buf, el + (at[el] ? 1 : 0));
-> >  
-> 
->  +	strbuf_remove(&f, at - f.buf, el + !!at[el]);
-> 
-> (Some people'll kill me for that :)
+Interesting point here.  In playing with trying to cache the diff hashes
+to speed up blame, I had to basically disable the xdi_diff tail trimming
+when building the hash the first time, because it needed to see the
+whole file.  In doing this, I discovered that just changing from
+xdi_diff to xdl_diff /does/ change the blame -M -C -C --incremental
+result for my test case.  (Unfortunately, my test case is proprietary
+code...)
 
-And why shouldn't they when:
+Is this expected, or some kind of serious bug with xdi_diff?
 
-	strbuf_remove(&f, at - f.buf, el + (at[el] != 0));
+    :; diff proper-output other-output
+    980c980
+    < dee86dd25736e1778122cfde7d7455a3ef85e37d 173 173 2
+    ---
+    > dee86dd25736e1778122cfde7d7455a3ef85e37d 172 172 3
+    982c982
+    < dee86dd25736e1778122cfde7d7455a3ef85e37d 183 183 2
+    ---
+    > dee86dd25736e1778122cfde7d7455a3ef85e37d 184 184 1
+    1509c1509
+    < c6966941ebfaa1dc9b29489e53d6d7f41e52d357 287 384 1
+    ---
+    > c6966941ebfaa1dc9b29489e53d6d7f41e52d357 284 381 1
+    1511c1511
+    < c6966941ebfaa1dc9b29489e53d6d7f41e52d357 301 399 2
+    ---
+    > c6966941ebfaa1dc9b29489e53d6d7f41e52d357 286 383 2
+    1513c1513
+    < c6966941ebfaa1dc9b29489e53d6d7f41e52d357 304 402 1
+    ---
+    > c6966941ebfaa1dc9b29489e53d6d7f41e52d357 301 399 1
+    1608c1608
+    < ecebfe8121dfd9c5836d47bbeb910fbb8f96f35c 252 381 1
+    ---
+    > ecebfe8121dfd9c5836d47bbeb910fbb8f96f35c 252 385 1
+    1610c1610
+    < ecebfe8121dfd9c5836d47bbeb910fbb8f96f35c 255 383 1
+    ---
+    > ecebfe8121dfd9c5836d47bbeb910fbb8f96f35c 255 400 1
+    1612c1612
+    < ecebfe8121dfd9c5836d47bbeb910fbb8f96f35c 257 385 1
+    ---
+    > ecebfe8121dfd9c5836d47bbeb910fbb8f96f35c 257 402 1
+    1945c1945
+    < a325ab86914b15107bf0211550c7d0568fb0854c 138 172 1
+    ---
+    > a325ab86914b15107bf0211550c7d0568fb0854c 138 183 1
 
-is infinitely better in every possible way? ;)
+-bcd
