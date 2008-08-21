@@ -1,62 +1,75 @@
-From: Neil Roberts <bpeeluk@yahoo.co.uk>
-Subject: [PATCH] config.mak.in: Pass on LDFLAGS from configure
-Date: Thu, 21 Aug 2008 20:38:23 +0100
-Message-ID: <20080821193823.GA13293@janet.wally>
+From: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
+Subject: Re: 1.6.0: where is git-gui?
+Date: Thu, 21 Aug 2008 20:39:15 +0100
+Message-ID: <20080821193915.GK10819@cs-wsok.swansea.ac.uk>
+References: <20080820172038.GD10819@cs-wsok.swansea.ac.uk> <7v3akzpeer.fsf@gitster.siamese.dyndns.org> <86r68i3ct6.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 21 21:39:29 2008
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Aug 21 21:40:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWG0C-0004qE-TC
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 21:39:25 +0200
+	id 1KWG18-00058R-2p
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 21:40:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756222AbYHUTiV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 15:38:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756272AbYHUTiV
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 15:38:21 -0400
-Received: from smtpout.karoo.kcom.com ([212.50.160.34]:57004 "EHLO
-	smtpout.karoo.kcom.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755003AbYHUTiU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 15:38:20 -0400
-X-IronPort-AV: E=Sophos;i="4.32,246,1217804400"; 
-   d="scan'208";a="22550567"
-Received: from unknown (HELO localhost) ([91.84.60.59])
-  by smtpout.karoo.kcom.com with ESMTP; 21 Aug 2008 20:33:49 +0100
+	id S1756260AbYHUTjS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 15:39:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756284AbYHUTjS
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 15:39:18 -0400
+Received: from mhs.swan.ac.uk ([137.44.1.33]:32798 "EHLO mhs.swan.ac.uk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755649AbYHUTjR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 15:39:17 -0400
+Received: from [137.44.2.59] (helo=cs-svr1.swan.ac.uk)
+	by mhs.swan.ac.uk with esmtp (Exim 4.69)
+	(envelope-from <O.Kullmann@swansea.ac.uk>)
+	id 1KWG03-0002DH-Qp; Thu, 21 Aug 2008 20:39:15 +0100
+Received: from cs-wsok.swansea.ac.uk (cs-wsok [137.44.2.227])
+	by cs-svr1.swan.ac.uk (Postfix) with ESMTP id 2D5BFDAF5A;
+	Thu, 21 Aug 2008 20:39:15 +0100 (BST)
+Received: by cs-wsok.swansea.ac.uk (Postfix, from userid 3579)
+	id 1A993741BE; Thu, 21 Aug 2008 20:39:15 +0100 (BST)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <86r68i3ct6.fsf@lola.quinscape.zz>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93190>
 
-The configure script allows you to specify flags to pass to the linker
-step in the LDFLAGS environment variable but this was being ignored in
-the Makefile. Now a make variable gets set to the value passed down
-from the configure script.
+Thanks for the "git gui" info!
 
-Signed-off-by: Neil Roberts <bpeeluk@yahoo.co.uk>
----
+I've read the release notes, but it didn't occur
+to me that "git-gui" is part of "git" --- I assumed
+it would be, like "gitk", a different program (which
+just be chance is using the same naming convention
+like "git-clone" etc.).
 
-I'm sending this again because I am incompetent. Sorry.
+Thanks
 
- config.mak.in |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Oliver
 
-diff --git a/config.mak.in b/config.mak.in
-index b776149..f67d673 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -3,6 +3,7 @@
- 
- CC = @CC@
- CFLAGS = @CFLAGS@
-+LDFLAGS = @LDFLAGS@
- AR = @AR@
- TAR = @TAR@
- #INSTALL = @INSTALL@		# needs install-sh or install.sh in sources
--- 
-1.5.4.3
+
+On Thu, Aug 21, 2008 at 12:03:17PM +0200, David Kastrup wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Oliver Kullmann <O.Kullmann@swansea.ac.uk> writes:
+> >
+> >> apparently git-gui is no longer installed
+> >> when installing git?
+> >
+> > Hint #0. Have you read release notes?
+> 
+> The point of using a GUI is to never have to deal with command lines or
+> other plaintext geek jargon making your eyes glaze over.
+> 
+> SCNR
+> 
+> -- 
+> David Kastrup
+> 
+> --
