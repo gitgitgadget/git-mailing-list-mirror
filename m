@@ -1,98 +1,66 @@
-From: bdowning@lavos.net (Brian Downing)
-Subject: Re: [PATCHv3 1/2] Make xdi_diff_outf interface for running xdiff_outf diffs
-Date: Wed, 20 Aug 2008 22:37:57 -0500
-Message-ID: <20080821033756.GC31114@lavos.net>
-References: <20080814053156.GE4396@lavos.net> <1218692211-26045-1-git-send-email-bdowning@lavos.net> <7v1w0sf7bl.fsf@gitster.siamese.dyndns.org>
+From: Sverre Hvammen Johansen <hvammen@gmail.com>
+Subject: Re: Call Me Gitless
+Date: Thu, 21 Aug 2008 03:40:52 +0000 (UTC)
+Message-ID: <loom.20080821T031647-276@post.gmane.org>
+References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com> <alpine.LNX.1.00.0808181512160.19665@iabervon.org> <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0808181628420.19665@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 21 05:39:15 2008
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 21 05:42:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KW110-0003qn-Sv
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 05:39:15 +0200
+	id 1KW13p-0004MS-7h
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 05:42:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754018AbYHUDiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 23:38:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754507AbYHUDiK
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 23:38:10 -0400
-Received: from qmta10.westchester.pa.mail.comcast.net ([76.96.62.17]:45226
-	"EHLO QMTA10.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753696AbYHUDiJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Aug 2008 23:38:09 -0400
-Received: from OMTA04.westchester.pa.mail.comcast.net ([76.96.62.35])
-	by QMTA10.westchester.pa.mail.comcast.net with comcast
-	id 4fJZ1a0040ldTLk5Are15K; Thu, 21 Aug 2008 03:38:01 +0000
-Received: from mnementh.lavos.net ([98.212.138.194])
-	by OMTA04.westchester.pa.mail.comcast.net with comcast
-	id 4re01a00F4BqYqi3Qre0Tl; Thu, 21 Aug 2008 03:38:01 +0000
-X-Authority-Analysis: v=1.0 c=1 a=YTq5XthBrPEA:10 a=9yyhHhZq3XEA:10
- a=szu5UreWqKJJ8qMwUbIA:9 a=QVjYIV-9i3zE-QzsRIQmwvQgOocA:4 a=LY0hPdMaydYA:10
-Received: by mnementh.lavos.net (Postfix, from userid 1000)
-	id F3376309F24; Wed, 20 Aug 2008 22:37:57 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <7v1w0sf7bl.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.9i
+	id S1752903AbYHUDlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 23:41:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752793AbYHUDlE
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 23:41:04 -0400
+Received: from main.gmane.org ([80.91.229.2]:33841 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751982AbYHUDlC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 23:41:02 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KW12h-0001FO-Ps
+	for git@vger.kernel.org; Thu, 21 Aug 2008 03:41:00 +0000
+Received: from c66-235-35-214.sea2.cablespeed.com ([66.235.35.214])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Aug 2008 03:40:59 +0000
+Received: from hvammen by c66-235-35-214.sea2.cablespeed.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Aug 2008 03:40:59 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 66.235.35.214 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9) Gecko/2008061816 Remi/fc7 Firefox/3.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93109>
 
-On Wed, Aug 13, 2008 at 11:18:22PM -0700, Junio C Hamano wrote:
-> Much nicer.  xdi_diff() is just a performance thing that only kicks in
-> when you are running -U0 diff, so it is unsurprising that you did not see
-> any test failures.
+Daniel Barkalow <barkalow <at> iabervon.org> writes:
+> I think that having the possibility of adding an empty blob (or maybe a 
+> magical "nothing currently here but git-ls-files includes it") would be 
+> preferrable to a no-index mode. That is, the operation that corresponds 
+> most directly to "cvs add <filename>" is "git update-index --cacheinfo 
+> 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 <filename>", which is not 
+> exactly easy to do, and just because a user wants to do this doesn't mean 
+> the user doesn't want to use the index; a user that makes extensive use of 
+> the index is actually more likely to want the state where a file is 
+> tracked but all of the content has not yet been staged.
 
-Interesting point here.  In playing with trying to cache the diff hashes
-to speed up blame, I had to basically disable the xdi_diff tail trimming
-when building the hash the first time, because it needed to see the
-whole file.  In doing this, I discovered that just changing from
-xdi_diff to xdl_diff /does/ change the blame -M -C -C --incremental
-result for my test case.  (Unfortunately, my test case is proprietary
-code...)
+I think it would be more natural if we had two commands for this; 'add' and
+'keep/cache/stage'.  The add command would add the file not the content to the
+index and the keep command would add the content.  We could then have an
+auto-keep option for the add command and an auto-add option for the keep
+command.  By setting both of these options they would give current behaviour for
+add.
 
-Is this expected, or some kind of serious bug with xdi_diff?
-
-    :; diff proper-output other-output
-    980c980
-    < dee86dd25736e1778122cfde7d7455a3ef85e37d 173 173 2
-    ---
-    > dee86dd25736e1778122cfde7d7455a3ef85e37d 172 172 3
-    982c982
-    < dee86dd25736e1778122cfde7d7455a3ef85e37d 183 183 2
-    ---
-    > dee86dd25736e1778122cfde7d7455a3ef85e37d 184 184 1
-    1509c1509
-    < c6966941ebfaa1dc9b29489e53d6d7f41e52d357 287 384 1
-    ---
-    > c6966941ebfaa1dc9b29489e53d6d7f41e52d357 284 381 1
-    1511c1511
-    < c6966941ebfaa1dc9b29489e53d6d7f41e52d357 301 399 2
-    ---
-    > c6966941ebfaa1dc9b29489e53d6d7f41e52d357 286 383 2
-    1513c1513
-    < c6966941ebfaa1dc9b29489e53d6d7f41e52d357 304 402 1
-    ---
-    > c6966941ebfaa1dc9b29489e53d6d7f41e52d357 301 399 1
-    1608c1608
-    < ecebfe8121dfd9c5836d47bbeb910fbb8f96f35c 252 381 1
-    ---
-    > ecebfe8121dfd9c5836d47bbeb910fbb8f96f35c 252 385 1
-    1610c1610
-    < ecebfe8121dfd9c5836d47bbeb910fbb8f96f35c 255 383 1
-    ---
-    > ecebfe8121dfd9c5836d47bbeb910fbb8f96f35c 255 400 1
-    1612c1612
-    < ecebfe8121dfd9c5836d47bbeb910fbb8f96f35c 257 385 1
-    ---
-    > ecebfe8121dfd9c5836d47bbeb910fbb8f96f35c 257 402 1
-    1945c1945
-    < a325ab86914b15107bf0211550c7d0568fb0854c 138 172 1
-    ---
-    > a325ab86914b15107bf0211550c7d0568fb0854c 138 183 1
-
--bcd
+-- 
+Sverre Hvammen Johansen
