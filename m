@@ -1,72 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-submodule.sh - Remove trailing / from URL if found
-Date: Wed, 20 Aug 2008 20:26:41 -0700
-Message-ID: <7vfxozkpzi.fsf@gitster.siamese.dyndns.org>
-References: <7vpro4tjkw.fsf@gitster.siamese.dyndns.org>
- <1219280847-872-1-git-send-email-mlevedahl@gmail.com>
+From: "Dan Hensgen" <dan@methodhead.com>
+Subject: 0001-Detailed-tools-useful-when-resolving-merge-conflicts.patch
+Date: Wed, 20 Aug 2008 23:27:32 -0400
+Message-ID: <8f6a00e30808202027s1d481a01q22c5a7444cd03f80@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 21 05:28:57 2008
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_35953_11425781.1219289252249"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 21 05:29:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KW0qv-0001wc-BC
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 05:28:49 +0200
+	id 1KW0qy-0001wc-50
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 05:28:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759048AbYHUD0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 23:26:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759006AbYHUD0w
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 23:26:52 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38365 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759268AbYHUD0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 23:26:51 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C43166196D;
-	Wed, 20 Aug 2008 23:26:46 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id E6F1A6196C; Wed, 20 Aug 2008 23:26:43 -0400 (EDT)
-In-Reply-To: <1219280847-872-1-git-send-email-mlevedahl@gmail.com> (Mark
- Levedahl's message of "Wed, 20 Aug 2008 21:07:27 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FBFFB8E0-6F30-11DD-A447-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1759335AbYHUD1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 23:27:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758818AbYHUD1e
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 23:27:34 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:15527 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758578AbYHUD1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 23:27:32 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so190267waf.23
+        for <git@vger.kernel.org>; Wed, 20 Aug 2008 20:27:32 -0700 (PDT)
+Received: by 10.115.22.1 with SMTP id z1mr979266wai.99.1219289252249;
+        Wed, 20 Aug 2008 20:27:32 -0700 (PDT)
+Received: by 10.114.57.10 with HTTP; Wed, 20 Aug 2008 20:27:32 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93106>
 
-Mark Levedahl <mlevedahl@gmail.com> writes:
+------=_Part_35953_11425781.1219289252249
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> git clone does not complain if a trailing '/' is included in the origin
-> URL, but doing so causes resolution of a submodule's URL relative to the
-> superproject to fail. Trailing /'s are likely when cloning locally using
-> tab-completion, so the slash may appear in either superproject or
-> submodule URL. So, ignore the trailing slash if it already exists in
-> the superproject's URL, and don't record one for the submodule (which
-> could itself have submodules...).
->
-> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
-> ---
->  git-submodule.sh |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
+Sorry, had trouble with git send-email.
 
-Hmm.  I was sort of hoping to hear "Junio you idiot you do not know what
-you are talking about --- your example of using ".." as relative won't
-happen because of such and such reasons; trust me I know what is going on
-in the vicinity of this code."
+Thanks,
+Dan
 
-And after looking at the callsites of the shell function, I think the
-original can never pass ".." (there are case statements to pass only $url
-that match "./*" or "../*"), so I think both your original and this
-version are safe as long as the part that match the trailing "/*" is
-sane.
+------=_Part_35953_11425781.1219289252249
+Content-Type: application/octet-stream;
+ name=0001-Detailed-tools-useful-when-resolving-merge-conflicts.patch
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fk4t9xkk0
+Content-Disposition: attachment;
+ filename=0001-Detailed-tools-useful-when-resolving-merge-conflicts.patch
 
-So I'll queue your first patch, as it is slightly shorter ;-)
-
-Thanks.
+RnJvbSBiMmNhNTJmOGJhNzBlNjg5Y2Q4ZTk0MjQ3MDc2MjllNGNhMzdmYWIzIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBEYW4gSGVuc2dlbiA8ZGFuQG1hY2Jvb2suZGFuaGVuc2dlbi5j
+b20+CkRhdGU6IFdlZCwgMjAgQXVnIDIwMDggMjM6MTQ6MDYgLTA0MDAKU3ViamVjdDogW1BBVENI
+XSBEZXRhaWxlZCB0b29scyB1c2VmdWwgd2hlbiByZXNvbHZpbmcgbWVyZ2UgY29uZmxpY3RzCgpT
+aWduZWQtb2ZmLWJ5OiBEYW4gSGVuc2dlbiA8ZGFuQG1ldGhvZGhlYWQuY29tPgotLS0KIERvY3Vt
+ZW50YXRpb24vZ2l0LW1lcmdlLnR4dCB8ICAgMjcgKysrKysrKysrKysrKysrKysrKystLS0tLS0t
+CiAxIGZpbGVzIGNoYW5nZWQsIDIwIGluc2VydGlvbnMoKyksIDcgZGVsZXRpb25zKC0pCgpkaWZm
+IC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9naXQtbWVyZ2UudHh0IGIvRG9jdW1lbnRhdGlvbi9naXQt
+bWVyZ2UudHh0CmluZGV4IDE3YTE1YWMuLmJmZjU2YzUgMTAwNjQ0Ci0tLSBhL0RvY3VtZW50YXRp
+b24vZ2l0LW1lcmdlLnR4dAorKysgYi9Eb2N1bWVudGF0aW9uL2dpdC1tZXJnZS50eHQKQEAgLTEy
+NiwxMyArMTI2LDI2IEBAIEFmdGVyIHNlZWluZyBhIGNvbmZsaWN0LCB5b3UgY2FuIGRvIHR3byB0
+aGluZ3M6CiAgICB1cCB3b3JraW5nIHRyZWUgY2hhbmdlcyBtYWRlIGJ5IDIuIGFuZCAzLjsgJ2dp
+dC1yZXNldCAtLWhhcmQnIGNhbgogICAgYmUgdXNlZCBmb3IgdGhpcy4KIAotICogUmVzb2x2ZSB0
+aGUgY29uZmxpY3RzLiAgYGdpdCBkaWZmYCB3b3VsZCByZXBvcnQgb25seSB0aGUKLSAgIGNvbmZs
+aWN0aW5nIHBhdGhzIGJlY2F1c2Ugb2YgdGhlIGFib3ZlIDIuIGFuZCAzLgotICAgRWRpdCB0aGUg
+d29ya2luZyB0cmVlIGZpbGVzIGludG8gYSBkZXNpcmFibGUgc2hhcGUKLSAgICgnZ2l0IG1lcmdl
+dG9vbCcgY2FuIGVhc2UgdGhpcyB0YXNrKSwgJ2dpdC1hZGQnIG9yICdnaXQtcm0nCi0gICB0aGVt
+LCB0byBtYWtlIHRoZSBpbmRleCBmaWxlIGNvbnRhaW4gd2hhdCB0aGUgbWVyZ2UgcmVzdWx0Ci0g
+ICBzaG91bGQgYmUsIGFuZCBydW4gJ2dpdC1jb21taXQnIHRvIGNvbW1pdCB0aGUgcmVzdWx0Lgot
+CisgKiBSZXNvbHZlIHRoZSBjb25mbGljdHMuICBFZGl0IHRoZSB3b3JraW5nIHRyZWUgZmlsZXMg
+aW50byBzaGFwZQorICAgYW5kICdnaXQtYWRkJyB0byB0aGUgaW5kZXguICAnZ2l0LWNvbW1pdCcg
+dG8gc2VhbCB0aGUgZGVhbC4KKworWW91IGNhbiB3b3JrIHRocm91Z2ggY29uZmxpY3Qgd2l0aCBh
+IG51bWJlciBvZiB0b29sczoKKworICogTG9vayBhdCB0aGUgb3JpZ2luYWxzLiAgJ2dpdCBzaG93
+IDoxOmZpbGVuYW1lJyBzaG93cyB0aGUKKyAgIGNvbW1vbiBhbmNlc3RvciwgJ2dpdCBzaG93IDoy
+OmZpbGVuYW1lJyBzaG93cyB0aGUgSEVBRAorICAgdmVyc2lvbiBhbmQgJ2dpdCBzaG93IDozOmZp
+bGVuYW1lJyBzaG93cyB0aGUgcmVtb3RlCisgICB2ZXJzaW9uLgorCisgKiBEaWZmIHRoZSBjb25m
+bGljdHMgYWdhaW5zdCB0aGUgb3JpZ2luYWxzLiAgJ2dpdC1kaWZmIC0tYmFzZScKKyAgIGRpZmZz
+IGFnYWluc3QgdGhlIGNvbW1vbiBhbmNlc3RvciwgJ2dpdC1kaWZmIC0tb3VycycgZGlmZnMKKyAg
+IGFnYWluc3QgdGhlIEhFQUQgdmVyc2lvbiBhbmQgJ2dpdC1kaWZmIC0tdGhlaXJzJyBkaWZmcwor
+ICAgYWdhaW5zdCB0aGUgcmVtb3RlIHZlcnNpb24uCisKKyAqIFVzZSBhIG1lcmdldG9vbC4gICdn
+aXQgZGlmZiBtZXJnZXRvb2wnIHRvIHN0YXJ0IHRoZSBtZXJnZQorICAgcHJvY2Vzcy4gIEZvdXIg
+dmVyc2lvbnMgb2YgYSBjb25mbGljdGVkIGZpbGUgZ2V0IHdyaXR0ZW4gYXMKKyAgIHRoZSBtZXJn
+ZXRvb2wgc3RhcnRzLCBCQVNFLCBMT0NBTCwgUkVNT1RFIGFuZCBCQUNLVVAuCisgICBUaGV5J3Jl
+IGNyZWF0ZWQgZm9yIHRoZSAgbWVyZ2V0b29sLCBidXQgdGhleSdyZSBoYW5keQorICAgYWx0ZXJu
+YXRpdmVzIHRvIHRoZSAnZ2l0IHNob3cgOjE6ZmlsZW5hbWUnIGNvbW1hbmQuCiAKIFNFRSBBTFNP
+CiAtLS0tLS0tLQotLSAKMS41LjYuMgoK
+------=_Part_35953_11425781.1219289252249--
