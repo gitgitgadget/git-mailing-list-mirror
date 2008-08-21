@@ -1,129 +1,183 @@
 From: Brian Downing <bdowning@lavos.net>
-Subject: [PATCH 1/5] Allow alternate "low-level" emit function from xdl_diff
-Date: Thu, 21 Aug 2008 18:21:57 -0500
-Message-ID: <1219360921-28529-2-git-send-email-bdowning@lavos.net>
+Subject: [PATCH 2/5] Bypass textual patch generation and parsing in git blame
+Date: Thu, 21 Aug 2008 18:21:58 -0500
+Message-ID: <1219360921-28529-3-git-send-email-bdowning@lavos.net>
 References: <1219360921-28529-1-git-send-email-bdowning@lavos.net>
+ <1219360921-28529-2-git-send-email-bdowning@lavos.net>
 Cc: git@vger.kernel.org, Brian Downing <bdowning@lavos.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 01:34:01 2008
+X-From: git-owner@vger.kernel.org Fri Aug 22 01:34:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWJfF-0003Ti-2Q
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 01:34:01 +0200
+	id 1KWJfE-0003Ti-8r
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 01:34:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755523AbYHUXct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 19:32:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755357AbYHUXcs
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 19:32:48 -0400
+	id S1754748AbYHUXcq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 19:32:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754615AbYHUXcp
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 19:32:45 -0400
 Received: from mail.somat.com ([63.252.84.66]:50096 "EHLO somat1.somat.local"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754788AbYHUXcq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 19:32:46 -0400
+	id S1754376AbYHUXcn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 19:32:43 -0400
 X-Greylist: delayed 634 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Aug 2008 19:32:39 EDT
 Received: from silvara.lavos.net ([192.168.0.108]) by somat1.somat.local with Microsoft SMTPSVC(5.0.2195.6713);
 	 Thu, 21 Aug 2008 18:22:01 -0500
-Received: (nullmailer pid 28564 invoked by uid 1000);
+Received: (nullmailer pid 28567 invoked by uid 1000);
 	Thu, 21 Aug 2008 23:22:01 -0000
 X-Mailer: git-send-email 1.5.6.1
-In-Reply-To: <1219360921-28529-1-git-send-email-bdowning@lavos.net>
-X-OriginalArrivalTime: 21 Aug 2008 23:22:01.0664 (UTC) FILETIME=[B721C400:01C903E4]
+In-Reply-To: <1219360921-28529-2-git-send-email-bdowning@lavos.net>
+X-OriginalArrivalTime: 21 Aug 2008 23:22:01.0445 (UTC) FILETIME=[B7005950:01C903E4]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93228>
 
-For some users (e.g. git blame), getting textual patch output is just
-extra work, as they can get all the information they need from the low-
-level diff structures.  Allow for an alternate low-level emit function
-to be defined to allow bypassing the textual patch generation; set
-xemitconf_t's emit_func member to enable this.
+This uses the new xdiff emit_func feature to directly generate the
+patch/chunk information from the low-level diff output, rather than
+generating and parsing a patch.  This improves performance considerably
+for certain test cases:
 
-The (void (*)()) type is pretty ugly, but the alternative would be to
-include most of the private xdiff headers in xdiff.h to get the types
-required for the "proper" function prototype.  Also, a (void *) won't
-work, as ANSI C doesn't allow a function pointer to be cast to an
-object pointer.
+:; time git-blame -M -C -C -p --incremental server.c >/dev/null
+Before:
+79.62user 0.10system 1:19.81elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+41189minor)pagefaults 0swaps
+After:
+48.66user 0.08system 0:48.75elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+36961minor)pagefaults 0swaps
 
 Signed-off-by: Brian Downing <bdowning@lavos.net>
 ---
- xdiff/xdiff.h  |    1 +
- xdiff/xdiffi.c |    4 +++-
- xdiff/xemit.c  |    3 +--
- xdiff/xemit.h  |    3 +++
- 4 files changed, 8 insertions(+), 3 deletions(-)
+ builtin-blame.c |   90 +++++++++++++++++++------------------------------------
+ 1 files changed, 31 insertions(+), 59 deletions(-)
 
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 413082e..281fc0b 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -81,6 +81,7 @@ typedef struct s_xdemitconf {
- 	unsigned long flags;
- 	find_func_t find_func;
- 	void *find_func_priv;
-+	void (*emit_func)();
- } xdemitconf_t;
+diff --git a/builtin-blame.c b/builtin-blame.c
+index e4d12de..60f70bf 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -19,6 +19,10 @@
+ #include "string-list.h"
+ #include "mailmap.h"
+ #include "parse-options.h"
++#include "xdiff/xtypes.h"
++#include "xdiff/xdiffi.h"
++#include "xdiff/xemit.h"
++#include "xdiff/xmacros.h"
  
- typedef struct s_bdiffparam {
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 1bad846..9d0324a 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -538,6 +538,8 @@ int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	     xdemitconf_t const *xecfg, xdemitcb_t *ecb) {
- 	xdchange_t *xscr;
- 	xdfenv_t xe;
-+	emit_func_t ef = xecfg->emit_func ?
-+		(emit_func_t)xecfg->emit_func : xdl_emit_diff;
+ static char blame_usage[] = "git blame [options] [rev-opts] [rev] [--] file";
  
- 	if (xdl_do_diff(mf1, mf2, xpp, &xe) < 0) {
+@@ -464,62 +468,36 @@ struct patch {
+ 	int num;
+ };
  
-@@ -551,7 +553,7 @@ int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 		return -1;
- 	}
- 	if (xscr) {
--		if (xdl_emit_diff(&xe, xscr, ecb, xecfg) < 0) {
-+		if (ef(&xe, xscr, ecb, xecfg) < 0) {
+-struct blame_diff_state {
+-	struct patch *ret;
+-	unsigned hunk_post_context;
+-	unsigned hunk_in_pre_context : 1;
+-};
+-
+-static void process_u_diff(void *state_, char *line, unsigned long len)
++static int process_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
++			xdemitconf_t const *xecfg)
+ {
+-	struct blame_diff_state *state = state_;
++	struct patch *patch = ecb->priv;
++	long s1, s2;
++	xdchange_t *xch, *xche;
+ 	struct chunk *chunk;
+-	int off1, off2, len1, len2, num;
  
- 			xdl_free_script(xscr);
- 			xdl_free_env(&xe);
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index d3d9c84..4625c1b 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -27,7 +27,6 @@
+-	num = state->ret->num;
+-	if (len < 4 || line[0] != '@' || line[1] != '@') {
+-		if (state->hunk_in_pre_context && line[0] == ' ')
+-			state->ret->chunks[num - 1].same++;
+-		else {
+-			state->hunk_in_pre_context = 0;
+-			if (line[0] == ' ')
+-				state->hunk_post_context++;
+-			else
+-				state->hunk_post_context = 0;
+-		}
+-		return;
+-	}
++	for (xch = xche = xscr; xch; xch = xche->next) {
++		xche = xdl_get_hunk(xch, xecfg);
  
- static long xdl_get_rec(xdfile_t *xdf, long ri, char const **rec);
- static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *ecb);
--static xdchange_t *xdl_get_hunk(xdchange_t *xscr, xdemitconf_t const *xecfg);
+-	if (num && state->hunk_post_context) {
+-		chunk = &state->ret->chunks[num - 1];
+-		chunk->p_next -= state->hunk_post_context;
+-		chunk->t_next -= state->hunk_post_context;
+-	}
+-	state->ret->num = ++num;
+-	state->ret->chunks = xrealloc(state->ret->chunks,
+-				      sizeof(struct chunk) * num);
+-	chunk = &state->ret->chunks[num - 1];
+-	if (parse_hunk_header(line, len, &off1, &len1, &off2, &len2)) {
+-		state->ret->num--;
+-		return;
+-	}
+-
+-	/* Line numbers in patch output are one based. */
+-	off1--;
+-	off2--;
++		s1 = XDL_MAX(xch->i1 - xecfg->ctxlen, 0);
++		s2 = XDL_MAX(xch->i2 - xecfg->ctxlen, 0);
  
+-	chunk->same = len2 ? off2 : (off2 + 1);
++		++patch->num;
++		patch->chunks = xrealloc(patch->chunks,
++					 sizeof(struct chunk) * patch->num);
++		chunk = &patch->chunks[patch->num - 1];
++		chunk->same = s2 + XDL_MAX(xch->i1 - s1, 0);
++		chunk->p_next = xche->i1 + xche->chg1;
++		chunk->t_next = xche->i2 + xche->chg2;
++	}
  
+-	chunk->p_next = off1 + (len1 ? len1 : 1);
+-	chunk->t_next = chunk->same + len2;
+-	state->hunk_in_pre_context = 1;
+-	state->hunk_post_context = 0;
++	return 0;
+ }
  
-@@ -58,7 +57,7 @@ static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *
-  * Starting at the passed change atom, find the latest change atom to be included
-  * inside the differential hunk according to the specified configuration.
-  */
--static xdchange_t *xdl_get_hunk(xdchange_t *xscr, xdemitconf_t const *xecfg) {
-+xdchange_t *xdl_get_hunk(xdchange_t *xscr, xdemitconf_t const *xecfg) {
- 	xdchange_t *xch, *xchp;
+ static struct patch *compare_buffer(mmfile_t *file_p, mmfile_t *file_o,
+ 				    int context)
+ {
+-	struct blame_diff_state state;
++	struct patch *patch;
+ 	xpparam_t xpp;
+ 	xdemitconf_t xecfg;
+ 	xdemitcb_t ecb;
+@@ -527,20 +505,14 @@ static struct patch *compare_buffer(mmfile_t *file_p, mmfile_t *file_o,
+ 	xpp.flags = xdl_opts;
+ 	memset(&xecfg, 0, sizeof(xecfg));
+ 	xecfg.ctxlen = context;
+-	memset(&state, 0, sizeof(state));
+-	state.ret = xmalloc(sizeof(struct patch));
+-	state.ret->chunks = NULL;
+-	state.ret->num = 0;
+-
+-	xdi_diff_outf(file_p, file_o, process_u_diff, &state, &xpp, &xecfg, &ecb);
++	patch = xmalloc(sizeof(struct patch));
++	patch->chunks = NULL;
++	patch->num = 0;
++	xecfg.emit_func = (void (*)())process_diff;
++	ecb.priv = patch;
++	xdi_diff(file_p, file_o, &xpp, &xecfg, &ecb);
  
- 	for (xchp = xscr, xch = xscr->next; xch; xchp = xch, xch = xch->next)
-diff --git a/xdiff/xemit.h b/xdiff/xemit.h
-index 440a739..c2e2e83 100644
---- a/xdiff/xemit.h
-+++ b/xdiff/xemit.h
-@@ -24,7 +24,10 @@
- #define XEMIT_H
+-	if (state.ret->num) {
+-		struct chunk *chunk;
+-		chunk = &state.ret->chunks[state.ret->num - 1];
+-		chunk->p_next -= state.hunk_post_context;
+-		chunk->t_next -= state.hunk_post_context;
+-	}
+-	return state.ret;
++	return patch;
+ }
  
- 
-+typedef int (*emit_func_t)(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
-+			   xdemitconf_t const *xecfg);
- 
-+xdchange_t *xdl_get_hunk(xdchange_t *xscr, xdemitconf_t const *xecfg);
- int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 		  xdemitconf_t const *xecfg);
- 
+ /*
 -- 
 1.5.6.1
