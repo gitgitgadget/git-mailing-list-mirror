@@ -1,85 +1,94 @@
-From: "Bert Wesarg" <bert.wesarg@googlemail.com>
-Subject: Re: Suggestion: "man git clone"
-Date: Thu, 21 Aug 2008 19:52:15 +0200
-Message-ID: <36ca99e90808211052k5a67b7ccv7031c38d28f75f73@mail.gmail.com>
-References: <48ACB29C.7000606@zytor.com> <48ACB5F4.3000905@sneakemail.com>
-	 <48AD99DF.5090802@zytor.com>
-	 <32541b130808211007xf295e40l567ecf785a8fca22@mail.gmail.com>
-	 <48ADA467.1030407@zytor.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-submodule.sh - Remove trailing / from URL if found
+Date: Thu, 21 Aug 2008 11:00:47 -0700
+Message-ID: <7vej4ii6y8.fsf@gitster.siamese.dyndns.org>
+References: <7vpro4tjkw.fsf@gitster.siamese.dyndns.org>
+ <1219280847-872-1-git-send-email-mlevedahl@gmail.com>
+ <7vfxozkpzi.fsf@gitster.siamese.dyndns.org>
+ <30e4a070808210504l1dd6b491l1d66dcd96a238ebc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Avery Pennarun" <apenwarr@gmail.com>,
-	"=?UTF-8?Q?\"Peter_Valdemar_M=C3=B8rch_(Lists)\"?=" 
-	<4ux6as402@sneakemail.com>, flucifredi@acm.org,
-	"Git ML" <git@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Thu Aug 21 19:57:44 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Mark Levedahl" <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 20:04:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWELZ-00032I-4j
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 19:53:21 +0200
+	id 1KWETw-0007Ew-9g
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 20:02:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263AbYHURwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 13:52:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbYHURwR
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 13:52:17 -0400
-Received: from an-out-0708.google.com ([209.85.132.241]:50592 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751004AbYHURwQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 13:52:16 -0400
-Received: by an-out-0708.google.com with SMTP id d40so13645and.103
-        for <git@vger.kernel.org>; Thu, 21 Aug 2008 10:52:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=gjDl9BDTYZAx5NuLjzal4O3vfSOuIGx4QEg8SsDgls8=;
-        b=tLpaacWU0qZ+P3r92mL+Lf9sBXSGR8UYEC0tZCqc4VTDX6fkGQzYXejTguvWF9AVjp
-         sTh7s0Mox8jHwl/p2QVUF9W6/H+E1P3X/VlmXz1eaQHxBqbnuSnGqJfr0v2SbFm+0Z4w
-         vmAYxLJ3z2BDyMa7NUGKwCgvGL/vSQIb7rw7M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=OL4H90iXGSUeAY4rFCgyh7KA/JVNZ6E49GeNatCarZ4KLoUXe2ByvFgJgKstGO7gy3
-         RlLc/86za/M3rN11lSkp2jo+QPhlXAF38BDPrTXb7KjygyGi0Avpl3BKKFVuSkh3eo9A
-         V8bylVNQN+0dz5InyAK0rmKM2+bL9gm3mBT2o=
-Received: by 10.100.172.16 with SMTP id u16mr119024ane.50.1219341135705;
-        Thu, 21 Aug 2008 10:52:15 -0700 (PDT)
-Received: by 10.70.49.12 with HTTP; Thu, 21 Aug 2008 10:52:15 -0700 (PDT)
-In-Reply-To: <48ADA467.1030407@zytor.com>
-Content-Disposition: inline
+	id S1753145AbYHUSAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 14:00:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753077AbYHUSAz
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 14:00:55 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43069 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752498AbYHUSAy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 14:00:54 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 943DB6290B;
+	Thu, 21 Aug 2008 14:00:53 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 81A3A62908; Thu, 21 Aug 2008 14:00:49 -0400 (EDT)
+In-Reply-To: <30e4a070808210504l1dd6b491l1d66dcd96a238ebc@mail.gmail.com>
+ (Mark Levedahl's message of "Thu, 21 Aug 2008 08:04:34 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 18BAC6EE-6FAB-11DD-8DFD-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93184>
 
-On Thu, Aug 21, 2008 at 19:22, H. Peter Anvin <hpa@zytor.com> wrote:
-> Avery Pennarun wrote:
->>
->> [and I put him back...]
->>
->> Unfortunately what we don't have is a proposal that would work better.
->>  Also, changing the behaviour of 'man' wouldn't work on any platform
->> other than Linux (presumably), which means the git documentation
->> wouldn't be able to rely on that behaviour.
->>
->> Still, in a perfect world, what *should* man do in such a case?
->> Automatically open /usr/man/man1/git/clone.1?
->>
->
-> That would probably be the best option, other options are $MANPATH/man1/git\
-> clone.1 or $MANPATH/mangit/clone.git (I actually tried that on the
-> assumption that it might treat "git" as a section; unfortunately, it didn't
-> work.)
-It works here. I have to add 'git' to the SECTION list in /etc/manpath.config.
+"Mark Levedahl" <mlevedahl@gmail.com> writes:
 
-Bert
+> The problem I'm trying to fix is that a number of folks have
+> superprojects checked out where the recorded origin URL has a trailing
+> /, and a submodule has its origin in a directory sitting right next to
+> the superproject on the server. Thus, we have:
 >
->        -hpa
+>    superproject url = server:/public/super
+>    submodoule url = server:/public/sub1
+>
+> However, in the checked out superproject's .git/config
+> [remote "origin"]
+>    url = server:/public/super/
+>
+> and for similar reasons, the submodule has its URL recorded in .gitmodules as
+> [submodule "sub"]
+>    path = submodule1
+>    url = ../sub1/
+>
+> resolve_relative_url gets the submodule's recorded url as $1, which
+> the caller retrieved from .gitmodules, and retrieves the superprojects
+> origin from .git/config. So in this case resolve_relative_url has
+> that:
+>    url = ../sub1/
+>    remoteurl = server:/public/super/
+>
+> So, without any patch, resolve_relative_url computes the submodule's URL as:
+>    server:/public/super/sub1/
+>
+> with the first patch as:
+>    server:/public/super/sub1
+>
+> and with the second as
+>    server:/public/sub1
+> rather than
+>    server:/public/sub1
+>
+> So, the second patch I sent is the one that fixes the above problem,
+> and I have to say I now forget what the confused state of .gitmodules
+> + .git/config I found on one machine that lead to the first patch as
+> being a correct fix.
+>
+> In summary, it is essential that resolve_relative_url strip the
+> trailing / from the superproject's url before starting, while it is
+> nice but not necessary if it assures that the result does not contain
+> a trailing /.
+
+Well, that is a description worth having in the proposed commit log
+message, isn't it?
