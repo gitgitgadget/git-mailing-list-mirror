@@ -1,95 +1,82 @@
-From: ir0s <imirene@gmail.com>
-Subject: Re: Local branch ahead of tracked remote branch but git push claims
- everything up-to-date
-Date: Thu, 21 Aug 2008 09:55:39 -0700 (PDT)
-Message-ID: <1219337739561-740670.post@n2.nabble.com>
-References: <1219263969579-736663.post@n2.nabble.com> <8585F10E-C33C-481E-B044-A7125F3316F2@web.de> <32541b130808201401l2ad105ccnc37acdacd08d4c3a@mail.gmail.com> <7vbpznpeup.fsf@gitster.siamese.dyndns.org> <32541b130808201422l2b128beer142544ff91de5ca3@mail.gmail.com> <alpine.LNX.1.00.0808201808400.19665@iabervon.org> <7v4p5fnw3i.fsf@gitster.siamese.dyndns.org> <1219332938839-740444.post@n2.nabble.com> <g8k4or$tf$1@ger.gmane.org>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: Suggestion: "man git clone"
+Date: Thu, 21 Aug 2008 13:07:14 -0400
+Message-ID: <32541b130808211007xf295e40l567ecf785a8fca22@mail.gmail.com>
+References: <48ACB29C.7000606@zytor.com> <48ACB5F4.3000905@sneakemail.com>
+	 <48AD99DF.5090802@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 21 18:57:02 2008
+Cc: "=?ISO-8859-1?Q?\"Peter_Valdemar_M=F8rch_(Lists)\"?=" 
+	<4ux6as402@sneakemail.com>, flucifredi@acm.org,
+	"Git ML" <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 19:09:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWDSk-0005S7-TD
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 18:56:43 +0200
+	id 1KWDe5-0001a4-SW
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 19:08:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754326AbYHUQzl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 12:55:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753198AbYHUQzk
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 12:55:40 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:33467 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754046AbYHUQzj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 12:55:39 -0400
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1KWDRj-0001yj-IL
-	for git@vger.kernel.org; Thu, 21 Aug 2008 09:55:39 -0700
-In-Reply-To: <g8k4or$tf$1@ger.gmane.org>
-X-Nabble-From: imirene@gmail.com
+	id S1752085AbYHURHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 13:07:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751837AbYHURHR
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 13:07:17 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:56296 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751500AbYHURHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 13:07:16 -0400
+Received: by gxk9 with SMTP id 9so349260gxk.13
+        for <git@vger.kernel.org>; Thu, 21 Aug 2008 10:07:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=jnwCVcDL2Z38Z91gicBJAva6roWve0f5w2hA2eGex3I=;
+        b=woOcO6Idkd3u/5afW+D5UA2GarKobP8dUWo6E2c1hYN5uiZgh7QFjxdgjUNA8R/OL4
+         rzX8G4TxAGVjdHEV/7dElxPrCsRMIXQAzGPEUuTBB/dXwRvIqM5R3CVoLqGBP5To9A9T
+         yEYWMI1PXCRxHXN5TBku6pytNvb0APRfOsz4E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=scpCJeVf1PmVl9Jup33/VxkpThvmKf4duPjz6Y/EwqsN30Y45i9nTEZb4owVL6BACo
+         yhwhmko96BjlPR4yzNd6fuBmnW7BIbU9nMi+X04qcvy/anxTOOUyPKU/YlgcMM8ETK69
+         SLUCKbv0wGQ5Fg7emvXbueGsWANQfShjUot/w=
+Received: by 10.150.181.11 with SMTP id d11mr80358ybf.217.1219338434199;
+        Thu, 21 Aug 2008 10:07:14 -0700 (PDT)
+Received: by 10.150.98.19 with HTTP; Thu, 21 Aug 2008 10:07:14 -0700 (PDT)
+In-Reply-To: <48AD99DF.5090802@zytor.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93177>
 
+On Thu, Aug 21, 2008 at 12:37 PM, H. Peter Anvin <hpa@zytor.com> wrote:
+> man git clone
+>
+> [...]
+>
+> I doubt you find *anyone* who relies on the current behaviour, so I am
+> suggesting changing man.  That's why the man author was on the recipient
+> list, but you removed it.
+>
 
-Sorry, and one more:
-$ git ls-remote .
-f11c723119cd9938e91e1ed5328ef143fb477f15         HEAD
-138ea08f9680a8def085b793c9cee70eed0e1f3b        refs/heads/master
-75290a081feebcc4265825d017d9af07c7646951        refs/heads/remotebranch
-f11c723119cd9938e91e1ed5328ef143fb477f15         refs/heads/mybranch
-138ea08f9680a8def085b793c9cee70eed0e1f3b        refs/remotes/origin/HEAD
-138ea08f9680a8def085b793c9cee70eed0e1f3b        refs/remotes/origin/master
-75290a081feebcc4265825d017d9af07c7646951       
-refs/remotes/origin/remotebranch
-f11c723119cd9938e91e1ed5328ef143fb477f15        
-refs/remotes/origin/mybranch
+[and I put him back...]
 
-Thank you!!
--Irene
+Unfortunately what we don't have is a proposal that would work better.
+ Also, changing the behaviour of 'man' wouldn't work on any platform
+other than Linux (presumably), which means the git documentation
+wouldn't be able to rely on that behaviour.
 
+Still, in a perfect world, what *should* man do in such a case?
+Automatically open /usr/man/man1/git/clone.1?
 
-Michael J Gruber wrote:
-> 
-> ir0s venit, vidit, dixit 21.08.2008 17:35:
->> Sorry if you get this twice, oddly my first attempt to send this bounced.
->> Thank you for all the good advice however, none of it seemed to resolve
->> my
->> issue.
->> 
->> Attempting to call:
->> $git push origin mybranch
->> 
->> Results in the same message: Everything up to date =/
->> I also tried to call $git fetch origin just in case, and doing a pull
->> doesn't return anything (which makes sense, no one pushed anything to the
->> branch -- although I seem to be the only one with this issue.)
->> 
->> Could my branch have somehow diverged from the origin remotebranch?
->> 
->> -- Irene
-> 
-> What do the following report:
-> 
-> git ls-remote origin
-> git ls-remote .
-> git log --pretty=oneline mybranch...origin/remotebranch
-> 
-> Michael
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-> 
+Thanks,
 
--- 
-View this message in context: http://n2.nabble.com/Local-branch-ahead-of-tracked-remote-branch-but-git-push-claims-everything-up-to-date-tp736663p740670.html
-Sent from the git mailing list archive at Nabble.com.
+Avery
