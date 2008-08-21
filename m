@@ -1,191 +1,77 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: [PATCH] allow user aliases for the --author parameter
-Date: Thu, 21 Aug 2008 11:19:41 +0200
-Message-ID: <g8jbvd$18k$1@ger.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git-aware Issue Tracking?
+Date: Thu, 21 Aug 2008 11:23:25 +0200
+Message-ID: <200808211123.26372.jnareb@gmail.com>
+References: <1219005852-21496-1-git-send-email-marek.zawirski@gmail.com> <m3fxozsepa.fsf@localhost.localdomain> <20080821083042.GA6517@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 21 11:20:59 2008
+Cc: Petr Baudis <pasky@suse.cz>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Marek Zawirski <marek.zawirski@gmail.com>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Aug 21 11:23:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KW6Lh-0005OH-Bg
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 11:20:57 +0200
+	id 1KW6OA-0006Gp-TU
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 11:23:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754767AbYHUJTw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 05:19:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754759AbYHUJTw
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 05:19:52 -0400
-Received: from main.gmane.org ([80.91.229.2]:40440 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753391AbYHUJTu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 05:19:50 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KW6Kb-0005pp-8U
-	for git@vger.kernel.org; Thu, 21 Aug 2008 09:19:49 +0000
-Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Aug 2008 09:19:49 +0000
-Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Aug 2008 09:19:49 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+	id S1752384AbYHUJW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 05:22:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752329AbYHUJW1
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 05:22:27 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:15047 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751716AbYHUJW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 05:22:26 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so520937fgg.17
+        for <git@vger.kernel.org>; Thu, 21 Aug 2008 02:22:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=XiiwcKTKQwYZpn1sjIKkLblxMTvr0tyjRKZH/7hQob0=;
+        b=KU6ayoFXCnJmiDQ+5gCpgxHMS518EOMnusQSScguGq1oCfuckBFIiD+eyDYxZTeZIx
+         N2w+SFg2GRl4mMq010jIE1Tf52ZAVEzIrLIkLiha3QaxzuyW2CMSKLHPF+lqLeX06cgd
+         ACyBU61GoS3WwsYsMeFuWWZxJxOsPlR1Nt4es=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=YsRKeLVoaHWcx+fbVIFswClR9i9JpnQgZRKXzju+4OMkwpxUKlER8KNVSkbXVkTbpG
+         1VC0fzAUW4qL+6HRvGoOpYYxGL2nTRBj3JiwvYHZtheOFnQUh3MZPNKXf/dGUXkWv7Gd
+         miWzA7ycpViROFGcPcQc/SNTqkdztJomKKldM=
+Received: by 10.181.5.1 with SMTP id h1mr698110bki.7.1219310545017;
+        Thu, 21 Aug 2008 02:22:25 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.246.2])
+        by mx.google.com with ESMTPS id g17sm2696914nfd.3.2008.08.21.02.22.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 21 Aug 2008 02:22:23 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080821083042.GA6517@artemis.corp>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93128>
 
-This allows the use of author abbreviations when specifying commit
-authors via the --author option to git commit. "--author=$key" is
-resolved by looking up "user.$key.name" and "user.$key.email" in the
-config.
+On Thu, 21 Aug 2008, Pierre Habouzit wrote:
 
-Signed-off-by: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
----
-In an ideal word, all my collaborators would exchange changes as git 
-patches (or even via pull/push). In the real world, they send new
-versions which I integrate (after dealing with their whitespace and encoding changes...).
-Therefore, being able to say 
-"git commit --author=mickey"
-and having git translate "mickey" into "Mickey Mouse <mickey@ducktown.us>"
-is a real time saver. The patch accomplishes this by reading config keys "user.mickey.name" and "user.mickey.email" when encountering an 
---author argument without "<>".
+> Actually there is a list, bugs-dist@kitenet.net or sth similar where
+> I did it. One should look at the archives of that list. Though it's
+> somehow dead again.
 
-If there's interest in this patch I'll follow up with a documentation patch.
+Archives are at http://kitenet.net/pipermail/dist-bugs/ for what its
+worth (only 39 messages there).
 
-The "--committer" argument to git commit is not treated because I don't
-consider it worthwhile.
-
-Note that the implementation is different from git-svn's author file on
-purpose because it serves a different purpose.
-
-Michael
-
-P.S.: That's my first patch here. Yes, I've read Doc/SubmittingPatches.
-So, if something's wrong, please be gentle but not overly so ;) 
-
- builtin-commit.c |   65 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 64 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 649c8be..d90e2f4 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -53,6 +53,12 @@ static char *author_name, *author_email, *author_date;
- static int all, edit_flag, also, interactive, only, amend, signoff;
- static int quiet, verbose, no_verify, allow_empty;
- static char *untracked_files_arg;
-+struct user {
-+	char *name, *full_name, *email;
-+};
-+static struct user **users;
-+static int users_alloc;
-+static int users_nr;
- /*
-  * The default commit message cleanup mode will remove the lines
-  * beginning with # (shell comments) and leading and trailing
-@@ -406,6 +412,7 @@ static const char sign_off_header[] = "Signed-off-by: ";
- static void determine_author_info(void)
- {
- 	char *name, *email, *date;
-+	int i;
- 
- 	name = getenv("GIT_AUTHOR_NAME");
- 	email = getenv("GIT_AUTHOR_EMAIL");
-@@ -429,10 +436,22 @@ static void determine_author_info(void)
- 		date = xstrndup(rb + 2, eol - (rb + 2));
- 	}
- 
-+	author_date = date;
-+
- 	if (force_author) {
- 		const char *lb = strstr(force_author, " <");
- 		const char *rb = strchr(force_author, '>');
- 
-+		if (!lb && !rb) {
-+			for (i=0; i < users_nr; i++) {
-+				if (!strcmp(force_author, users[i]->name)) {
-+					author_name = users[i]->full_name;
-+					author_email = users[i]->email;
-+					return;
-+				}
-+			}
-+		}
-+
- 		if (!lb || !rb)
- 			die("malformed --author parameter");
- 		name = xstrndup(force_author, lb - force_author);
-@@ -441,7 +460,6 @@ static void determine_author_info(void)
- 
- 	author_name = name;
- 	author_email = email;
--	author_date = date;
- }
- 
- static int prepare_to_commit(const char *index_file, const char *prefix)
-@@ -888,11 +906,56 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
- 	}
- }
- 
-+static struct user *make_user(const char *name, int len)
-+{
-+	struct user *ret;
-+	int i;
-+
-+	for (i = 0; i < users_nr; i++) {
-+		if (len ? (!strncmp(name, users[i]->name, len) &&
-+			   !users[i]->name[len]) :
-+		    !strcmp(name, users[i]->name))
-+			return users[i];
-+	}
-+
-+	ALLOC_GROW(users, users_nr + 1, users_alloc);
-+	ret = xcalloc(1, sizeof(struct user));
-+	users[users_nr++] = ret;
-+	if (len)
-+		ret->name = xstrndup(name, len);
-+	else
-+		ret->name = xstrdup(name);
-+
-+	return ret;
-+}
-+
- static int git_commit_config(const char *k, const char *v, void *cb)
- {
-+	const char *name;
-+	const char *subkey;
-+	struct user *user;
-+
- 	if (!strcmp(k, "commit.template"))
- 		return git_config_string(&template_file, k, v);
- 
-+	if (!prefixcmp(k, "user.")) {
-+		name = k + 5;
-+		subkey = strrchr(name, '.');
-+		if (!subkey)
-+			return 0;
-+		user = make_user(name, subkey - name);
-+		if (!strcmp(subkey, ".name")) {
-+			if (!v)
-+				return config_error_nonbool(k);
-+			user->full_name = xstrdup(v);
-+		} else if (!strcmp(subkey, ".email")) {
-+			if (!v)
-+				return config_error_nonbool(k);
-+			user->email = xstrdup(v);
-+		}
-+		return 0;
-+	}
-+
- 	return git_status_config(k, v, cb);
- }
- 
 -- 
-1.6.0
+Jakub Narebski
+Poland
