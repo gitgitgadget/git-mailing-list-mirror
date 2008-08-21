@@ -1,99 +1,145 @@
-From: Keith Amidon <keith@nicira.com>
-Subject: Re: How can a custom merge tool get access to file shell variables?
-Date: Thu, 21 Aug 2008 16:31:26 -0700
-Organization: Nicira Networks
-Message-ID: <1219361486.16860.50.camel@kea-nicira-lt.nicira.com>
-References: <1219169604.12921.17.camel@kea-nicira-lt.nicira.com>
-	 <1219170004.12921.19.camel@kea-nicira-lt.nicira.com>
-	 <1219170751.12921.27.camel@kea-nicira-lt.nicira.com>
-	 <20080821221524.GA25429@hashpling.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Fri Aug 22 01:32:42 2008
+From: Brian Downing <bdowning@lavos.net>
+Subject: [PATCH 3/5] Always initialize xpparam_t to 0
+Date: Thu, 21 Aug 2008 18:21:59 -0500
+Message-ID: <1219360921-28529-4-git-send-email-bdowning@lavos.net>
+References: <1219360921-28529-1-git-send-email-bdowning@lavos.net>
+ <1219360921-28529-2-git-send-email-bdowning@lavos.net>
+ <1219360921-28529-3-git-send-email-bdowning@lavos.net>
+Cc: git@vger.kernel.org, Brian Downing <bdowning@lavos.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 01:33:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWJds-00035A-6c
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 01:32:36 +0200
+	id 1KWJez-0003Qd-D1
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 01:33:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752299AbYHUXbc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Aug 2008 19:31:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752488AbYHUXbc
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 19:31:32 -0400
-Received: from dime139.dizinc.com ([66.7.205.111]:49056 "EHLO
-	dime139.dizinc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752299AbYHUXbb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Aug 2008 19:31:31 -0400
-Received: from adsl-75-36-168-248.dsl.pltn13.sbcglobal.net ([75.36.168.248]:45431 helo=[192.168.1.16])
-	by dime139.dizinc.com with esmtpsa (SSLv3:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <keith@nicira.com>)
-	id 1KWJck-00070s-GK; Thu, 21 Aug 2008 19:31:27 -0400
-In-Reply-To: <20080821221524.GA25429@hashpling.org>
-X-Mailer: Evolution 2.22.2 
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - dime139.dizinc.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - nicira.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1754438AbYHUXcl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 19:32:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754216AbYHUXcl
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 19:32:41 -0400
+Received: from mail.somat.com ([63.252.84.66]:50096 "EHLO somat1.somat.local"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753661AbYHUXck (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 19:32:40 -0400
+X-Greylist: delayed 634 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Aug 2008 19:32:39 EDT
+Received: from silvara.lavos.net ([192.168.0.108]) by somat1.somat.local with Microsoft SMTPSVC(5.0.2195.6713);
+	 Thu, 21 Aug 2008 18:22:01 -0500
+Received: (nullmailer pid 28569 invoked by uid 1000);
+	Thu, 21 Aug 2008 23:22:01 -0000
+X-Mailer: git-send-email 1.5.6.1
+In-Reply-To: <1219360921-28529-3-git-send-email-bdowning@lavos.net>
+X-OriginalArrivalTime: 21 Aug 2008 23:22:01.0257 (UTC) FILETIME=[B6E3A990:01C903E4]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93226>
 
-=EF=BB=BFHi Charles,
+We're going to be adding some parameters to this, so we can't have
+any uninitialized data in it.
 
-Thanks for your reply to my issue.  To answer your question, I did read
-the git mergetool man page too.  For some reason I felt that the
-information in the git config page was more complete/specific for this
-case.  Anyway, now I understand how it works (and quoting issues I
-haven't had to worry about because I don't have weird filenames aside),
-the setup actually works very nicely.  If you would be interested and
-could provide some guidance on roughly what you would like to see I'd b=
-e
-happy to take a crack at an initial modification to the git mergetool
-man page to include an example similar to mine below with proper quotin=
-g
-so paths with spaces in them work, etc.
+Signed-off-by: Brian Downing <bdowning@lavos.net>
+---
+ builtin-blame.c  |    1 +
+ builtin-rerere.c |    1 +
+ combine-diff.c   |    1 +
+ diff.c           |    5 +++++
+ merge-file.c     |    1 +
+ 5 files changed, 9 insertions(+), 0 deletions(-)
 
-Thanks again for your response and for the excellent work you and
-everyone involved in git development have been doing.
-
-             --- Keith
-
-P.S. -- Sorry if you get two copies Charles.  My previous version of
-this message was rejected by the mailing list because I forgot to send
-w/o HTML.
-
-On Thu, 2008-08-21 at 23:15 +0100, Charles Bailey wrote:
-> Did you also try the git mergetool man page (not that it's much
-> better!)?
->=20
-> The point of the custom mergetool patch was to make using a new,
-> previously unknown merge tool a 'simple' configuration exercise rathe=
-r
-> than a patch or scripting exercise. At the time, an 'eval' approach
-> was the compromise between ease of implementation and preventing
-> environmental pollution.
->=20
-> It's not the most beautiful of solutions, especially since escaping
-> quotes and spaces in either .gitconfig or in a git config command lin=
-e
-> of something that is later going to be expanded by the shell is
-> something of a mind bender.
->=20
-> An example in the documentation would be a really good idea - you are
-> not the first person to have asked about how to use the custom merge
-> tool feature. I'm feeling a little guilty about not adding my name to
-> the man page when I submitted the patch. It's not Ted's fault that th=
-e
-> custom merge tool section is badly explained; it's mine.
->=20
+diff --git a/builtin-blame.c b/builtin-blame.c
+index 60f70bf..66b7d15 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -502,6 +502,7 @@ static struct patch *compare_buffer(mmfile_t *file_p, mmfile_t *file_o,
+ 	xdemitconf_t xecfg;
+ 	xdemitcb_t ecb;
+ 
++	memset(&xpp, 0, sizeof(xpp));
+ 	xpp.flags = xdl_opts;
+ 	memset(&xecfg, 0, sizeof(xecfg));
+ 	xecfg.ctxlen = context;
+diff --git a/builtin-rerere.c b/builtin-rerere.c
+index dd4573f..d4dec6b 100644
+--- a/builtin-rerere.c
++++ b/builtin-rerere.c
+@@ -98,6 +98,7 @@ static int diff_two(const char *file1, const char *label1,
+ 
+ 	printf("--- a/%s\n+++ b/%s\n", label1, label2);
+ 	fflush(stdout);
++	memset(&xpp, 0, sizeof(xpp));
+ 	xpp.flags = XDF_NEED_MINIMAL;
+ 	memset(&xecfg, 0, sizeof(xecfg));
+ 	xecfg.ctxlen = 3;
+diff --git a/combine-diff.c b/combine-diff.c
+index 31ec0c5..70d5aad 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -213,6 +213,7 @@ static void combine_diff(const unsigned char *parent, mmfile_t *result_file,
+ 
+ 	parent_file.ptr = grab_blob(parent, &sz);
+ 	parent_file.size = sz;
++	memset(&xpp, 0, sizeof(xpp));
+ 	xpp.flags = XDF_NEED_MINIMAL;
+ 	memset(&xecfg, 0, sizeof(xecfg));
+ 	memset(&state, 0, sizeof(state));
+diff --git a/diff.c b/diff.c
+index 5923fe2..52346fe 100644
+--- a/diff.c
++++ b/diff.c
+@@ -446,6 +446,7 @@ static void diff_words_show(struct diff_words_data *diff_words)
+ 	mmfile_t minus, plus;
+ 	int i;
+ 
++	memset(&xpp, 0, sizeof(xpp));
+ 	memset(&xecfg, 0, sizeof(xecfg));
+ 	minus.size = diff_words->minus.text.size;
+ 	minus.ptr = xmalloc(minus.size);
+@@ -1508,6 +1509,7 @@ static void builtin_diff(const char *name_a,
+ 		if (!funcname_pattern)
+ 			funcname_pattern = diff_funcname_pattern(two);
+ 
++		memset(&xpp, 0, sizeof(xpp));
+ 		memset(&xecfg, 0, sizeof(xecfg));
+ 		memset(&ecbdata, 0, sizeof(ecbdata));
+ 		ecbdata.label_path = lbl;
+@@ -1581,6 +1583,7 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 		xdemitconf_t xecfg;
+ 		xdemitcb_t ecb;
+ 
++		memset(&xpp, 0, sizeof(xpp));
+ 		memset(&xecfg, 0, sizeof(xecfg));
+ 		xpp.flags = XDF_NEED_MINIMAL | o->xdl_opts;
+ 		xdi_diff_outf(&mf1, &mf2, diffstat_consume, diffstat,
+@@ -1627,6 +1630,7 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
+ 		xdemitconf_t xecfg;
+ 		xdemitcb_t ecb;
+ 
++		memset(&xpp, 0, sizeof(xpp));
+ 		memset(&xecfg, 0, sizeof(xecfg));
+ 		xecfg.ctxlen = 1; /* at least one context line */
+ 		xpp.flags = XDF_NEED_MINIMAL;
+@@ -3072,6 +3076,7 @@ static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1)
+ 		struct diff_filepair *p = q->queue[i];
+ 		int len1, len2;
+ 
++		memset(&xpp, 0, sizeof(xpp));
+ 		memset(&xecfg, 0, sizeof(xecfg));
+ 		if (p->status == 0)
+ 			return error("internal diff status error");
+diff --git a/merge-file.c b/merge-file.c
+index 2a939c9..3120a95 100644
+--- a/merge-file.c
++++ b/merge-file.c
+@@ -61,6 +61,7 @@ static int generate_common_file(mmfile_t *res, mmfile_t *f1, mmfile_t *f2)
+ 	xdemitconf_t xecfg;
+ 	xdemitcb_t ecb;
+ 
++	memset(&xpp, 0, sizeof(xpp));
+ 	xpp.flags = XDF_NEED_MINIMAL;
+ 	memset(&xecfg, 0, sizeof(xecfg));
+ 	xecfg.ctxlen = 3;
+-- 
+1.5.6.1
