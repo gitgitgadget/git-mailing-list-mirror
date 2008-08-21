@@ -1,70 +1,101 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: git am with MIME
-Date: Thu, 21 Aug 2008 09:31:31 +0200
-Message-ID: <81b0412b0808210031l1caec384x8e085acafd413784@mail.gmail.com>
-References: <48AAEBB6.9070306@gmail.com>
-	 <20080819170731.GA2424@coredump.intra.peff.net>
-	 <20080820195734.GE16626@blimp.local>
-	 <loom.20080821T033231-805@post.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] test-lib: do not remove trash_directory if called with
+ --debug
+Date: Thu, 21 Aug 2008 09:49:12 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808210946280.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <7vabf7mcpz.fsf@gitster.siamese.dyndns.org> <20080821011811.GA13915@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Eric Raible" <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 21 09:32:40 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Aug 21 09:45:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KW4et-0000Vz-8Y
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 09:32:39 +0200
+	id 1KW4rD-0003vM-5G
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 09:45:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754920AbYHUHbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 03:31:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755144AbYHUHbe
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 03:31:34 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:34232 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754907AbYHUHbc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 03:31:32 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so211323waf.23
-        for <git@vger.kernel.org>; Thu, 21 Aug 2008 00:31:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=VoGcHIwkSZ7NyeX4tSSN2xhgW8h94zUMVuk4BgxFJ9c=;
-        b=oWGqU3NmZr6xcCKDSrzaeYD7sPdft9+b9VF/RbOjAcNNLEfgSa/4hmcq1VDXTTPUOk
-         4obtnZmpGVH77ZaXzEhJBPh0NUuo/785Ysl5R4kf3Mvy8B4y0Cy+IrVBUnNuQkbJa/Oe
-         8EFX++lCfrpZL0T3oNz7IdRbjdZtit9WziYu8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=dACKbGbXoJU2cac/4h8J6UQyyaTrE9a7JoD3FPR8p0SGfz1Yig9iTTNcvgUZPap9K3
-         w2GdoVaWGtbQTfPCcFnMsVjUhFWAosuyeaKzaL/fakAulaaorVkzMAZg0C/hz6LrBR4G
-         XQAv7s+ZBG43eCDrRLjG/+Hj+pZGHPMnPKXHo=
-Received: by 10.114.161.11 with SMTP id j11mr1089517wae.105.1219303891754;
-        Thu, 21 Aug 2008 00:31:31 -0700 (PDT)
-Received: by 10.114.157.9 with HTTP; Thu, 21 Aug 2008 00:31:31 -0700 (PDT)
-In-Reply-To: <loom.20080821T033231-805@post.gmane.org>
-Content-Disposition: inline
+	id S1753642AbYHUHoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 03:44:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758200AbYHUHoU
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 03:44:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42887 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758138AbYHUHoT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 03:44:19 -0400
+Received: (qmail invoked by alias); 21 Aug 2008 07:44:17 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp062) with SMTP; 21 Aug 2008 09:44:17 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+g0DEypAOgvJMJ74qRSgnUEri19bbDYGec4+P3qZ
+	fWMsyVvETVZMpI
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20080821011811.GA13915@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.49
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93117>
 
-2008/8/21 Eric Raible <raible@gmail.com>:
-> Alex Riesen <raa.lkml <at> gmail.com> writes:
->> (Some people'll kill me for that :)
->
-> And why shouldn't they when:
->
->        strbuf_remove(&f, at - f.buf, el + (at[el] != 0));
->
-> is infinitely better in every possible way? ;)
 
-Because that's just as ugly as "?:", brackets and all
+Sometimes you want to keep the trash directory, even if all tests
+passed.  For example, when extending tests, it comes it quite handy.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+	On Wed, 20 Aug 2008, Jeff King wrote:
+
+	> On Wed, Aug 20, 2008 at 05:30:16PM -0700, Junio C Hamano wrote:
+	> 
+	> > * js/parallel-test (Mon Aug 18 12:25:40 2008 -0400) 4 commits
+	> >  + Update t/.gitignore to ignore all trash directories
+	> >  + Enable parallel tests
+	> >  + tests: Clarify dependencies between tests, 'aggregate-results' and
+	> >    'clean'
+	> >  + t9700: remove useless check
+	> 
+	> I really liked this the first time I ran "make -j4 test". 
+	> However, it now cleans up the trash directory automagically after a 
+	> successful run. This bit me today when I added a test that should
+	> have failed but accidentally passed. I wanted to look at the 
+	> output, but it was gone.
+	> 
+	> Probably it's not worth worrying about, since that is certainly 
+	> the less common case, and I can work around it by editing the passing 
+	> test script to provoke failure. And I can't think of a more sane 
+	> behavior. But I wanted to register my slight "this new thing annoyed 
+	> me" feeling.
+
+	My original patch tried to be clever and _not_ do the automagical 
+	cleanup when run without -j.
+
+	However, this was not liked.
+
+	So I have this in my personal git fork.  Maybe it is good enough 
+	for you?
+
+	(Usage: run sh t0000-bla.sh -i -v -d)
+
+ t/test-lib.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 6212c46..e2b106c 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -491,7 +491,7 @@ fi
+ 
+ # Test repository
+ test="trash directory.$(basename "$0" .sh)"
+-remove_trash="$TEST_DIRECTORY/$test"
++test ! -z "$debug" || remove_trash="$TEST_DIRECTORY/$test"
+ rm -fr "$test" || {
+ 	trap - exit
+ 	echo >&5 "FATAL: Cannot prepare test area"
+-- 
+1.6.0.172.g459f5
