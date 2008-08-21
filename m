@@ -1,89 +1,57 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH] git-submodule.sh - Remove trailing / from URL if found
-Date: Wed, 20 Aug 2008 21:07:27 -0400
-Message-ID: <1219280847-872-1-git-send-email-mlevedahl@gmail.com>
-References: <7vpro4tjkw.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org, Mark Levedahl <mlevedahl@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 21 03:08:39 2008
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Aug 2008, #06; Wed, 20)
+Date: Wed, 20 Aug 2008 21:18:11 -0400
+Message-ID: <20080821011811.GA13915@coredump.intra.peff.net>
+References: <7vabf7mcpz.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 03:19:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KVyfF-0002gG-TY
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 03:08:38 +0200
+	id 1KVypc-0005Ob-0W
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 03:19:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751557AbYHUBHf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 21:07:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbYHUBHe
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 21:07:34 -0400
-Received: from an-out-0708.google.com ([209.85.132.248]:42040 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751004AbYHUBHe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 21:07:34 -0400
-Received: by an-out-0708.google.com with SMTP id d40so116047and.103
-        for <git@vger.kernel.org>; Wed, 20 Aug 2008 18:07:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=8Uf28MteY9ryU0b+8NsSGfjJmL6KkHy7QIy1cxHvuEs=;
-        b=spd483B/enK3XndF1EERHwA5C4fDysmXBlhl8acg+glD9+U8B/6RON5bBj3iCEQRaM
-         jr+DFcPZCX23aWvVT/WYjOzkIZhgYTVrw7vEQJFkZ/rpgW/9yZS7rGPBuqScAD++CpTs
-         Wc97xmqopHFXS4SIjbZaFoSSafH/PAwMXMgP4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=gKJufKOHoEdzh5Ahq51/NqtPPRVB3aS1l8FSSgfZ8XDHApnyNguXqnnYM9mmXDOtnF
-         +AKgrs5Fo9c8WbG7mRfG8y0nwgqtaP4lVCUDUlzeiyxkaXp9nJiXfAXaWkr/6tuP5rrp
-         JpH5Jhpzzb5lu1w0haMXx75rh7Ss98B0BX6Cs=
-Received: by 10.100.112.9 with SMTP id k9mr1124144anc.72.1219280853293;
-        Wed, 20 Aug 2008 18:07:33 -0700 (PDT)
-Received: from localhost.localdomain ( [71.163.41.46])
-        by mx.google.com with ESMTPS id d29sm83501and.12.2008.08.20.18.07.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 20 Aug 2008 18:07:31 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.22.g2957
-In-Reply-To: <7vpro4tjkw.fsf@gitster.siamese.dyndns.org>
+	id S1752098AbYHUBSP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 21:18:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752025AbYHUBSP
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 21:18:15 -0400
+Received: from peff.net ([208.65.91.99]:1547 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751909AbYHUBSO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 21:18:14 -0400
+Received: (qmail 31855 invoked by uid 111); 21 Aug 2008 01:18:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 20 Aug 2008 21:18:12 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Aug 2008 21:18:11 -0400
+Content-Disposition: inline
+In-Reply-To: <7vabf7mcpz.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93082>
 
-git clone does not complain if a trailing '/' is included in the origin
-URL, but doing so causes resolution of a submodule's URL relative to the
-superproject to fail. Trailing /'s are likely when cloning locally using
-tab-completion, so the slash may appear in either superproject or
-submodule URL. So, ignore the trailing slash if it already exists in
-the superproject's URL, and don't record one for the submodule (which
-could itself have submodules...).
+On Wed, Aug 20, 2008 at 05:30:16PM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
----
- git-submodule.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+> * js/parallel-test (Mon Aug 18 12:25:40 2008 -0400) 4 commits
+>  + Update t/.gitignore to ignore all trash directories
+>  + Enable parallel tests
+>  + tests: Clarify dependencies between tests, 'aggregate-results' and
+>    'clean'
+>  + t9700: remove useless check
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index b40f876..e576cd2 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -36,6 +36,7 @@ resolve_relative_url ()
- 	remoteurl=$(git config "remote.$remote.url") ||
- 		die "remote ($remote) does not have a url defined in .git/config"
- 	url="$1"
-+	remoteurl=${remoteurl%/}
- 	while test -n "$url"
- 	do
- 		case "$url" in
-@@ -50,7 +51,7 @@ resolve_relative_url ()
- 			break;;
- 		esac
- 	done
--	echo "$remoteurl/$url"
-+	echo "$remoteurl"/"${url%/}"
- }
- 
- #
--- 
-1.6.0.22.g2957
+I really liked this the first time I ran "make -j4 test". However, it
+now cleans up the trash directory automagically after a successful run.
+This bit me today when I added a test that should have failed but
+accidentally passed. I wanted to look at the output, but it was gone.
+
+Probably it's not worth worrying about, since that is certainly the less
+common case, and I can work around it by editing the passing test script
+to provoke failure. And I can't think of a more sane behavior. But I
+wanted to register my slight "this new thing annoyed me" feeling.
+
+-Peff
