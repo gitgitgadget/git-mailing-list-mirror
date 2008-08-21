@@ -1,77 +1,72 @@
-From: "Mike Gant" <mwgant@gmail.com>
-Subject: Re: [RFC v2] Git User's Survey 2008
-Date: Wed, 20 Aug 2008 21:22:29 -0600
-Message-ID: <8f282e3b0808202022w68fa2ad6s6e07c1d77d5ea139@mail.gmail.com>
-References: <200807230325.04184.jnareb@gmail.com>
-	 <200808200308.26308.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-submodule.sh - Remove trailing / from URL if found
+Date: Wed, 20 Aug 2008 20:26:41 -0700
+Message-ID: <7vfxozkpzi.fsf@gitster.siamese.dyndns.org>
+References: <7vpro4tjkw.fsf@gitster.siamese.dyndns.org>
+ <1219280847-872-1-git-send-email-mlevedahl@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 21 05:23:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 05:28:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KW0m9-0000xg-Pz
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 05:23:54 +0200
+	id 1KW0qv-0001wc-BC
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 05:28:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758685AbYHUDWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2008 23:22:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758192AbYHUDWa
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 23:22:30 -0400
-Received: from rv-out-0506.google.com ([209.85.198.232]:11528 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758676AbYHUDW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2008 23:22:29 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so756546rvb.1
-        for <git@vger.kernel.org>; Wed, 20 Aug 2008 20:22:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=AWTG+AujtP4wOkcAo0JL62JOgaQ0dqhj8KDw5JKDYG0=;
-        b=MX/4utMy8yK1zJQk6yMjiyDKVuIAOdkigdtlTEEBPvgjGhPVFFRtntd9F87gtrMskg
-         Q3g4vlm53eZJ9V1V0BpKuA7Np1QJLVYH42lMc9wWttgm/65z2mS7XJu/8Z6CDZyKXNAY
-         XxFAdhhEI1O6BQV5miyiT+KsMSxME8i8Mibkc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=iMR5aGsbVHrIGnmiz0zCpnPNSyzSzPGaKREMys1xWQKrfzSd9HDeWvNBY1Q4ktmrvk
-         MXgLxgYm2ruh7hR2+weJntrqfINuuSqixdGrAsD8us+ZNCOvuef48WTngq5yICH1wqfx
-         DnVNZjTTrV/oP4Zmfii5SBHrJHasKfCxCQzHc=
-Received: by 10.115.50.5 with SMTP id c5mr978806wak.60.1219288949072;
-        Wed, 20 Aug 2008 20:22:29 -0700 (PDT)
-Received: by 10.115.108.8 with HTTP; Wed, 20 Aug 2008 20:22:29 -0700 (PDT)
-In-Reply-To: <200808200308.26308.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1759048AbYHUD0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2008 23:26:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759006AbYHUD0w
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Aug 2008 23:26:52 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38365 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759268AbYHUD0v (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2008 23:26:51 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C43166196D;
+	Wed, 20 Aug 2008 23:26:46 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id E6F1A6196C; Wed, 20 Aug 2008 23:26:43 -0400 (EDT)
+In-Reply-To: <1219280847-872-1-git-send-email-mlevedahl@gmail.com> (Mark
+ Levedahl's message of "Wed, 20 Aug 2008 21:07:27 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FBFFB8E0-6F30-11DD-A447-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93105>
 
-On Tue, Aug 19, 2008 at 7:08 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> This is second revision (version) of proposed questions
-> for Git User's Survey 2008.
+Mark Levedahl <mlevedahl@gmail.com> writes:
+
+> git clone does not complain if a trailing '/' is included in the origin
+> URL, but doing so causes resolution of a submodule's URL relative to the
+> superproject to fail. Trailing /'s are likely when cloning locally using
+> tab-completion, so the slash may appear in either superproject or
+> submodule URL. So, ignore the trailing slash if it already exists in
+> the superproject's URL, and don't record one for the submodule (which
+> could itself have submodules...).
 >
->
-[snip]
+> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+> ---
+>  git-submodule.sh |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
 
->   xx. Which programming languages you are proficient with?
->       (zero or more: multiple choice)
->     - C, shell, Perl, Python, Tcl/Tk, C++, C#, Java, PHP,
->       Ruby, Emacs Lisp, Common Lisp or Scheme, Visual Basic,
->       Delphi, Assembly, other (please specify), I am not programmer
->     ! C, shell, Perl, Python, Tcl/Tk
->     + First version included only programming languages used
->       by git, and some from contrib area
+Hmm.  I was sort of hoping to hear "Junio you idiot you do not know what
+you are talking about --- your example of using ".." as relative won't
+happen because of such and such reasons; trust me I know what is going on
+in the vicinity of this code."
 
-Please include an "others" selection that will except a comma
-list of languages. I'm an FPGA designer and use Verilog and
-VHDL but I know they wouldn't be a common choice.
+And after looking at the callsites of the shell function, I think the
+original can never pass ".." (there are case statements to pass only $url
+that match "./*" or "../*"), so I think both your original and this
+version are safe as long as the part that match the trailing "/*" is
+sane.
 
-Mike
+So I'll queue your first patch, as it is slightly shorter ;-)
+
+Thanks.
