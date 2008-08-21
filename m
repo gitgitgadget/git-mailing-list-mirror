@@ -1,188 +1,124 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [RFC v2] Git User's Survey 2008
-Date: Thu, 21 Aug 2008 23:26:20 +0200
-Message-ID: <20080821212620.GA9718@leksak.fem-net>
-References: <200807230325.04184.jnareb@gmail.com> <200808200308.26308.jnareb@gmail.com> <20080820211852.GA27226@leksak.fem-net> <200808211311.24600.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: ref markers link to named shortlogs
+Date: Thu, 21 Aug 2008 23:32:05 +0200
+Message-ID: <200808212332.07095.jnareb@gmail.com>
+References: <1219341860-4913-1-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 21 23:27:47 2008
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 23:32:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWHgp-00050Z-6B
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 23:27:31 +0200
+	id 1KWHlD-0006vV-VF
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 23:32:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754651AbYHUV00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 17:26:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754639AbYHUV00
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 17:26:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33655 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754516AbYHUV0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 17:26:23 -0400
-Received: (qmail invoked by alias); 21 Aug 2008 21:26:21 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp050) with SMTP; 21 Aug 2008 23:26:21 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+iDhZzQI2iXtYfXIQQWT4X6skVfkeOWvppuWwBkf
-	ZRejHtqD3RM7Qo
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KWHfg-00037C-Qj; Thu, 21 Aug 2008 23:26:20 +0200
+	id S1755283AbYHUVa7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 17:30:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755272AbYHUVa7
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 17:30:59 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:18574 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755247AbYHUVa6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 17:30:58 -0400
+Received: by ug-out-1314.google.com with SMTP id c2so93001ugf.37
+        for <git@vger.kernel.org>; Thu, 21 Aug 2008 14:30:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=XLZyHRM4NmaWEW87nUYR/fYKbepZv6bZnveumbUy6kU=;
+        b=PM29m2MdYjfKNe257sgCnxMeK8DkrdwsRIlXa8wAVwNYzyaMSf+7UbzpN+3thnoNqx
+         L317C34q+rRvslkPs7x3Ll3IQe99GE690OMSHOTeTcYzOrkHvi8tOHkhS97fpeu2sFVl
+         rM0xB42AOOzgF/P7ze8mtP2l/gm7boxuNETOI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=QdHcbzyTX1AYdjU9GDn62f/QRJCrdp0egZbf370PGd/J5oOTucJ3x7Ofphva1+lC69
+         nbdDfw2JtJ47YVG0/mL3LjOljQQSaBAJEJl+8Mbu42+DUX1c/iRDJZELEdfrIThM86Lr
+         yVDNqVekuLL0WzE2uc7Q7173Xm16doH+DYJHo=
+Received: by 10.66.221.19 with SMTP id t19mr1887189ugg.69.1219354255887;
+        Thu, 21 Aug 2008 14:30:55 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.232.114])
+        by mx.google.com with ESMTPS id 34sm1580614uga.63.2008.08.21.14.30.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 21 Aug 2008 14:30:54 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1219341860-4913-1-git-send-email-giuseppe.bilotta@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <200808211311.24600.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93213>
 
-Hi,
+On Thu, 21 Aug 2008, Giuseppe Bilotta wrote:
 
-Jakub Narebski wrote:
-> > So I've scrolled across your test survey on survs.com and I think it
-> > should be kept on one page. Looks nice and manageable.
+> This patch turns ref markers for tags and heads into links to
+> appropriate views for the ref name. Appropriate changes are made in the
+> CSS to prevent ref markers to be annoyingly blue and underlined.
 > 
-> I also prefer single page surveys; it would be better if this survey
-> was shorter
-[...]
-> but there are so many interesting questions...
+> For all git ref types it's assumed that the preferred view is named like
+> the ref type itself. For commits, we map the view to shortlog.
 
-Yes, there are, but I think the length is ok and all questions are
-optional (should this be mentioned somewhere?), right?
-So there should be no problem.
+NAK.
 
-> (by the way, how long did you took to complete test survey?),
+It is a good idea, but not so good solution.
 
-I filled in some stuff here and there and submitted, but I didn't
-actually complete the survey.
-But I'd say it's manageable within 10 minutes.
+> --- a/gitweb/gitweb.css
+> +++ b/gitweb/gitweb.css
 
-> > This question leads me to a question that could be put into the survey:
-> > 
-> > 	Where have you read about this survey? (optional)
-> > 	[Free form]
-> 
-> But where to add it?  Additionally I'd rather limit free-form questions
-> to absolute minimum.
+> +span.refs span a {
+> +	text-decoration: none;
+> +	color: inherit;
+> +}
 
-If you want to add it nonetheless, then it could be question 60.
+Possible improvement:
 
-> > > What other SCM did or do you use?
-> > >[..]
-> > >  custom ( ) ( ) ( )
-> > 
-> > custom?
-> 
-> I mean here custom, not published (or no longer existing) SCM; something
-> that would be hard to write about.
+We would probably want to make this link discoverable, by adding
+underline on :hover, like for other "hidden links" in gitweb (for
+example in commitdiff view).
 
-This means the difference to "other" is that it is something somebody
-has written for herself (or a company product only used in that
-company) and "other" is some less popular but public SCM?
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 90cd99b..a12ce87 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -1093,10 +1093,14 @@ sub format_log_line_html {
+>  sub format_ref_marker {
+>  	my ($refs, $id) = @_;
+>  	my $markers = '';
+> +	my %view = (
+> +		"commit" => "shortlog",
+> +	);
+>  
+>  	if (defined $refs->{$id}) {
+>  		foreach my $ref (@{$refs->{$id}}) {
+>  			my ($type, $name) = qw();
+> +			my $git_type = git_get_type($ref);
+>  			# e.g. tags/v2.6.11 or heads/next
+>  			if ($ref =~ m!^(.*?)s?/(.*)$!) {
+>  				$type = $1;
 
-I see you've changed it to "custom (non published)". There is a typo:
-s/non /non-/  ;)
+git_get_type calls 'git cat-file -t', so for each ref shown you make
+*additional call* to git command (additional fork).  Not good, especially
+that you can get information if a ref is a tag (indirect reference)
+or not one can get from within git_get_references; which in turn
+uses "git show-refs --dereference" and used to use either 
+"git peek-remote ." or ".git/info/refs" file.  If there is <name>^{},
+then <name> is indirect reference: is a tag.
 
-
-Btw I wonder if people that are very new to git (perhaps started using
-it in 1.6.0) will not know the "SCM" abbreviation. But the possible
-choices should make it clear. (And if not, "Never" to everything will be
-the right choice.)
-
-> > Uh, this is ambiguous.  Is this our git or some script on top of git?
-> > In both cases, this should be clarified.
-> 
-> There is "my own scripts" at the bottom; I mean here using no additional
-> porcelain, no interface on top of git command line.
-
-So just pure, naked git? The real git[tm]^H^H^H^H? ;-)
-Ok, if I had not asked, I wouldn't have checked this option.
-
-> But it is here for completeness only; however if you have some good
-> explanation for "core-git" option I can put it below this question.
-
-I think it should be rephrased by "git" or "git (pure)" or "git (core)".
-But "core-git" really looks like another tool to me.
-
-> > > (*) Unless of cours you are hosting some git hosting site
-> >              ^^^^^^^^                                      ^
-> > 	     typo, but I'd rather do s/of cours //   and s/$/./ :-)
-> 
-> Thanks.  Done.
-
-Now it is:
-> (*) Unless of course you are hosting some git hosting site
-            ^         ^                                     ^
-I like punctuation:
-  (*) Unless, of course, you are hosting some git hosting site.
-
-*nitpick* :-)
-
-> > > 28. Which of the following features do or did you use?
-> > 
-> > I think many of the possible replies have been used in several other
-> > questions before, e.g. in 
-> >  - 21. (gitk, git gui), 
-> >  - 24. (git bundle),
-> >  - 26/27. (git gui, gitk, git stash)
-> >  - ...
-> > 
-> > But this question still seems to makes sense for:
-> >  [ ] eol conversion (crlf)
-> >  [ ] gitattributes
-> >  [ ] reflog (ref@{23})
-> >  [ ] shallow clone
-> >  [ ] detaching HEAD   <- I think several people could have used that without knowing
-> >  [ ] commit templates
-> >  [ ] integration with IDE/editor
-> >  [ ] non-default hooks
-
-No comment here? ;-)
-
-When replying to this question I really felt like having answered all
-that before.
-
-> > And btw:
-> > > [ ] working with dirty tree      <- Eh? Is this a feature?
-> 
-> This is distinguishing feature.  What I mean here that you can use
-> "git add" and "git commit" (not "git commit -a")
-
-Sounds like "Taking advantage of using the index".
-(Yesterday/today/tomorrow I am using SVN in university and I wished so
-much that I had some git or at least git-svn[1] just because of the
-*index*.)
-
-OT Footnote [1]:
- I tried to install git (and git-svn) into $HOME/root ($HOME/root/bin is
- in PATH), but git-svn needs Perl bindings to SVN and they're pain to
- install into $HOME/root from source, because it is in the subversion
- source, and that needs a lot of Apache stuff and other things.
- So does anybody own a quick guide how to get that working without having
- to compile subversion from source (and without having root access, of
- course)?  ... (Some version of subversion is installed, but not the 
- perl modules. Just copying the .pm files did not seem to work.)
-
-> and have some
-> uncommitted changes, like for example change of version in Makefile.
-
-Ok, this is "working with dirty tree", but I nonetheless wonder if this
-is really a feature.
-
-
-Another general comment: Multiple choice question have the disadvantage
-that we cannot distinguish "None" and skipped questions.
-So if this is an issue, I wonder if adding a "None of the above" choice
-could help. But perhaps this is no issue and can be ignored.
-
-Regards,
-  Stephan
+As we display ref markers only for log-like views, marker can be tag
+or can be "lightweight reference" and be only a commit (in theory
+we could show ref markers also for tree and blob items, but it is not
+important now).
 
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+Jakub Narebski
+Poland
