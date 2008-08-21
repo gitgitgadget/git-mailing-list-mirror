@@ -1,117 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 0001-Detailed-tools-useful-when-resolving-merge-conflicts.patch
-Date: Wed, 20 Aug 2008 22:53:27 -0700
-Message-ID: <7vvdxukj6w.fsf@gitster.siamese.dyndns.org>
-References: <8f6a00e30808202027s1d481a01q22c5a7444cd03f80@mail.gmail.com>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: [PATCHv3 1/2] Make xdi_diff_outf interface for running xdiff_outf diffs
+Date: Thu, 21 Aug 2008 01:29:14 -0500
+Message-ID: <20080821062914.GD31114@lavos.net>
+References: <20080814053156.GE4396@lavos.net> <1218692211-26045-1-git-send-email-bdowning@lavos.net> <7v1w0sf7bl.fsf@gitster.siamese.dyndns.org> <20080821033756.GC31114@lavos.net> <7vzln7j5yx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Dan Hensgen" <dan@methodhead.com>
-X-From: git-owner@vger.kernel.org Thu Aug 21 07:54:42 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 08:30:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KW384-0007f8-Rr
-	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 07:54:41 +0200
+	id 1KW3gf-0008Nr-7U
+	for gcvg-git-2@gmane.org; Thu, 21 Aug 2008 08:30:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753016AbYHUFxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 01:53:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752945AbYHUFxg
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 01:53:36 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49111 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751571AbYHUFxf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 01:53:35 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2D49161582;
-	Thu, 21 Aug 2008 01:53:34 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 1DC3B61581; Thu, 21 Aug 2008 01:53:30 -0400 (EDT)
-In-Reply-To: <8f6a00e30808202027s1d481a01q22c5a7444cd03f80@mail.gmail.com>
- (Dan Hensgen's message of "Wed, 20 Aug 2008 23:27:32 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7D9A7E1C-6F45-11DD-90C6-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753565AbYHUG3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 02:29:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753305AbYHUG3U
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 02:29:20 -0400
+Received: from qmta04.westchester.pa.mail.comcast.net ([76.96.62.40]:48745
+	"EHLO QMTA04.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753167AbYHUG3U (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Aug 2008 02:29:20 -0400
+Received: from OMTA09.westchester.pa.mail.comcast.net ([76.96.62.20])
+	by QMTA04.westchester.pa.mail.comcast.net with comcast
+	id 4uMK1a00A0SCNGk54uVFHh; Thu, 21 Aug 2008 06:29:15 +0000
+Received: from mnementh.lavos.net ([98.212.138.194])
+	by OMTA09.westchester.pa.mail.comcast.net with comcast
+	id 4uVE1a0084BqYqi3VuVEMw; Thu, 21 Aug 2008 06:29:15 +0000
+X-Authority-Analysis: v=1.0 c=1 a=YTq5XthBrPEA:10 a=9yyhHhZq3XEA:10
+ a=Ry3rdOmtvG6cgdKy9CsA:9 a=8nghseIXDIo8lApsERs_Uog5xdoA:4 a=LY0hPdMaydYA:10
+Received: by mnementh.lavos.net (Postfix, from userid 1000)
+	id 950FF309F23; Thu, 21 Aug 2008 01:29:14 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <7vzln7j5yx.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93114>
 
-"Dan Hensgen" <dan@methodhead.com> writes:
+On Wed, Aug 20, 2008 at 10:24:22PM -0700, Junio C Hamano wrote:
+> Is the reason why you mention "incremental" specifically because you only
+> tested incremental, or you get identical result in non-incremental mode?
 
-> + * Resolve the conflicts.  Edit the working tree files into shape
-> +   and 'git-add' to the index.  'git-commit' to seal the deal.
+I've only tested incremental at this point.
 
-The documentation assumed the user have experience with the usual conflict
-markers, and a more detailed explanation than what we currently have is
-certainly welcomed.
+> If your material is repetitive, say you have lines "A A A B C A A A" in
+> the parent blob and "A A A B A A A" in the child blob, and you are trying
+> to pass blame on three line block "A A A" at the beginning of the child,
+> we can pass blame to the three lines at the beginning part, or to the end
+> part, without Linus's common tail trimming optimization.  But there is no
+> way it can match the end part with the optimization.
+> 
+> You cannot say one result is more correct than the other --- both are
+> equally correct.  Of course, you could argue that with such a highly
+> repetitive material, it may be better to match closer ones, but it's a
+> judgement call.
 
-I however cannot tell who the intended target audience of your description
-is, from the order of presentation.
+Okay, that makes sense.  Thanks.
 
-If you primarily target newbies and GUI-minded people, I think mergetool
-should be the first one.
-
-On the other hand, for command-line oriented people, you failed to
-describe two more common and useful ways.
-
- - "git diff" itself will show the diff that contains the conflicted part,
-   in a three-way diff format.  For example, if you try to merge c48544e
-   (gitweb: use new Git::Repo API, and add optional caching, 2008-08-18)
-   into c5a00f7 (Merge branch 'master' into next, 2008-08-20), you would
-   see something like this:
-
-   $ git diff
-   diff --cc t/t9500-gitweb-standalone-no-errors.sh
-   index 46ba19b,7f134f5..0000000
-   --- i/t/t9500-gitweb-standalone-no-errors.sh
-   +++ w/t/t9500-gitweb-standalone-no-errors.sh
-   @@@ -54,7 -54,7 +54,11 @@@ gitweb_run () 
-           # written to web server logs, so we are not interested in that:
-           # we are interested only in properly formatted errors/warnings
-           rm -f gitweb.log &&
-   ++<<<<<<< HEAD:t/t9500-gitweb-standalone-no-errors.sh
-    +	perl -- "$TEST_DIRECTORY/../gitweb/gitweb.perl" \
-   ++=======
-   + 	"$PERL_PATH" -- "$TEST_DIRECTORY/../gitweb/gitweb.perl" \
-   ++>>>>>>> lw/gitweb:t/t9500-gitweb-standalone-no-errors.sh
-                   >/dev/null 2>gitweb.log &&
-           if grep -q -s "^[[]" gitweb.log >/dev/null; then false; else true; fi
-  
-   which makes it clear that since the common ancestor, our side (HEAD)
-   added the line that begins with "perl", while the branch you are
-   merging (lw/gitweb) added the line that begins with "$PERL_PATH".  In
-   this case, Lea's change is a pure superset of what our side did, so I'd
-   take the latter half as the resolution.
-
- - "git log --merge -p --left-right <path>" will show the commits on your
-   fork and the other branch that touch the paths involved in the merge,
-   with explanations why each change was made.  The first entry of the
-   output is c48544e (gitweb: use new Git::Repo API, and add optional
-   caching, 2008-08-18) that changes "perl" to "$PERL_PATH" and also
-   introduces "$TEST_DIRECTORY/" by replacing what used to be "$(pwd)",
-   and you can tell it is from Lea's branch by looking at its "commit"
-   line with right-pointing-arrow '>' at the beginning:
-
-   commit >c48544e29a0a9ea2f2b4a601cf4977174b53e803
-   Author: Lea Wiemann <lewiemann@gmail.com>
-   Date:   Mon Aug 18 21:39:49 2008 +0200
-
-   The second entry in the output is bfdbee9 (tests: use $TEST_DIRECTORY
-   to refer to the t/ directory, 2008-08-08) with a left-pointing arrow,
-   which is mine:
-
-   commit <bfdbee98109c5ad2dbbc392e7eed1ae688acc039
-   Author: Junio C Hamano <gitster@pobox.com>
-   Date:   Fri Aug 8 02:26:28 2008 -0700
-
-   that only changes "$(pwd)" to "$TEST_DIRECTORY".  By looking at these
-   two, you can be sure that taking Lea's change as the superset is the
-   right thing to do.
-
-You can of course alternatively look at the original, but I do not think
-that should be taught as the first two suggestions before mergetool, plain
-"git diff" or "git log --merge".
+-bcd
