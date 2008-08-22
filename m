@@ -1,71 +1,83 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
+From: Federico Lucifredi <flucifredi@acm.org>
 Subject: Re: Suggestion: "man git clone"
-Date: Fri, 22 Aug 2008 03:15:15 +0200
-Message-ID: <20080822011515.GY23800@genesis.frugalware.org>
+Date: Thu, 21 Aug 2008 21:19:56 -0400
+Message-ID: <48AE143C.8030704@acm.org>
 References: <48ACB29C.7000606@zytor.com> <48ADE2FF.4080704@acm.org> <48ADF542.9010105@zytor.com> <48AE035C.8000504@acm.org> <20080822004052.GA30476@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="iwjEIfU64POCkTAH"
-Cc: Federico Lucifredi <flucifredi@acm.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 22 03:16:27 2008
+X-From: git-owner@vger.kernel.org Fri Aug 22 03:21:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWLGJ-0003HC-EG
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 03:16:23 +0200
+	id 1KWLKu-0004Rk-WE
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 03:21:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751648AbYHVBPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 21:15:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751978AbYHVBPU
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 21:15:20 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:44321 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751226AbYHVBPT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 21:15:19 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 164FD1B252E;
-	Fri, 22 Aug 2008 03:15:16 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 29C3E4465E;
-	Fri, 22 Aug 2008 02:17:57 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 6CDEE1770019; Fri, 22 Aug 2008 03:15:15 +0200 (CEST)
-Content-Disposition: inline
+	id S1754763AbYHVBUA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 21:20:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755954AbYHVBUA
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 21:20:00 -0400
+Received: from mail1.sea5.speakeasy.net ([69.17.117.3]:58721 "EHLO
+	mail1.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755423AbYHVBT7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 21:19:59 -0400
+Received: (qmail 11153 invoked from network); 22 Aug 2008 01:19:58 -0000
+Received: from unknown (HELO spaceman.local) (federico@[130.57.22.201])
+          (envelope-sender <flucifredi@acm.org>)
+          by mail1.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <peff@peff.net>; 22 Aug 2008 01:19:57 -0000
+User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
 In-Reply-To: <20080822004052.GA30476@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93241>
 
+Jeff King wrote:
+> On Thu, Aug 21, 2008 at 08:07:56PM -0400, Federico Lucifredi wrote:
+> 
+>> I am all for bass-ackwards compatibility, and I think the suggestion of  
+>> going on "man foo bar" :
+>>
+>>  1) look for foo-bar; if success, terminate search
+>>  2) look for foo
+>>  3) look for bar
+>>  ....
+>>
+>> may be acceptable - I don't see drawbacks at a first glance, and it would 
+>> allow for groups of pages to be meaningful.
+> 
+> Well, the drawback is that there exist X-Y such that X and Y both have
+> manpages (e.g., cvs-debc on my debian box). So we are assuming that the
+> risk is acceptably low of somebody asking for "man X Y", wanting two
+> manpages, and that X and Y fit this pattern.
+> 
 
---iwjEIfU64POCkTAH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+That's right.
 
-On Thu, Aug 21, 2008 at 08:40:52PM -0400, Jeff King <peff@peff.net> wrote:
+> Personally I have never ever wanted to see two manpages from one man
+> invocation, so I have no real problem with that assumption.
+> 
+
+I expected as much, and we should have an option to disable the "new" 
+behavior as a safety anyway.
+
+>> Are you willing to put your patch where your mouth is? :-)
+> 
 > I've never looked at man code before, but there seem to be at least two
 > man packages for Linux. My boxes have man-db 2.5.2.
 
-Obviously that's not the one Federico maintains. ;-)
+There are two man packages for linux, man and man-db, the latter being a 
+90's fork that uses Berkeley DB as a backend to speedup man -k searches 
+(it helped back then).
 
-See http://primates.ximian.com/~flucifredi/man/, it's at 1.6f.
-
---iwjEIfU64POCkTAH
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkiuEyMACgkQe81tAgORUJbwggCfRwzAe05j9fr/iZATypsCZvZE
-pusAnRE8EkvFG1st+Wci4IpKVoi5Nfha
-=cNKH
------END PGP SIGNATURE-----
-
---iwjEIfU64POCkTAH--
+  Best -F
+-- 
+_________________________________________
+-- "'Problem' is a bleak word for challenge" - Richard Fish
+(Federico L. Lucifredi) - flucifredi@acm.org
