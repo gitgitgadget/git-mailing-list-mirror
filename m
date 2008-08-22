@@ -1,76 +1,50 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Extend "checkout --track" DWIM to support more cases
-Date: Fri, 22 Aug 2008 14:17:46 -0700
-Message-ID: <7v7ia892bp.fsf@gitster.siamese.dyndns.org>
-References: <20080820185028.GA16626@blimp.local>
- <alpine.DEB.1.00.0808202151320.24820@pacific.mpi-cbg.de.mpi-cbg.de>
- <20080820200440.GF16626@blimp.local>
- <alpine.DEB.1.00.0808202213340.24820@pacific.mpi-cbg.de.mpi-cbg.de>
- <20080820202952.GH16626@blimp.local>
- <7vd4k3nx7m.fsf@gitster.siamese.dyndns.org>
- <20080821172320.GA5119@blimp.local>
- <7vy72pd278.fsf@gitster.siamese.dyndns.org>
- <81b0412b0808220208i5de03604rec37081f0bc1cdd4@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] allow user aliases for the --author parameter
+Date: Fri, 22 Aug 2008 17:19:02 -0400
+Message-ID: <20080822211902.GA31884@coredump.intra.peff.net>
+References: <g8jbvd$18k$1@ger.gmane.org> <20080821200255.GB27705@coredump.intra.peff.net> <48AE786C.20201@fastmail.fm> <20080822165047.GA3339@sigill.intra.peff.net> <7vzln492pc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 23:19:28 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>,
+	Alex Riesen <fork0@users.sourceforge.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 23:20:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWe2T-00006f-Fy
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 23:19:21 +0200
+	id 1KWe3I-0000TA-Ri
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 23:20:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758977AbYHVVR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 17:17:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758963AbYHVVR5
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 17:17:57 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34669 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758945AbYHVVRy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 17:17:54 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id BD41663DC5;
-	Fri, 22 Aug 2008 17:17:53 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 6AC8A63DC3; Fri, 22 Aug 2008 17:17:48 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C882F95E-708F-11DD-B635-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1756367AbYHVVTH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 17:19:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753149AbYHVVTG
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 17:19:06 -0400
+Received: from peff.net ([208.65.91.99]:1283 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755839AbYHVVTF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 17:19:05 -0400
+Received: (qmail 25255 invoked by uid 111); 22 Aug 2008 21:19:03 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 22 Aug 2008 17:19:03 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Aug 2008 17:19:02 -0400
+Content-Disposition: inline
+In-Reply-To: <7vzln492pc.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93372>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+On Fri, Aug 22, 2008 at 02:09:35PM -0700, Junio C Hamano wrote:
 
-> 2008/8/22 Junio C Hamano <gitster@pobox.com>:
->> I however wonder if this is clearer.
->
-> It is :)
->
->>  * "enum branch_track" was unsigned; comparing equality with -1 was Ok but
->>   we couldn't say 0 < opts.track;
->>
->>  * argv[] is an array of constant strings; cannot point into it with
->>   opts.newbranch without making the latter also a constant string.
->
-> Cleanup, but it is unrelated, isn't it?
+> I often use "git who Jeff" alias to fill the recipient of my e-mails with
+> this alias:
+> 
+>     [alias]
+>         who = "!sh -c 'git log -1 --pretty=\"format:%an <%ae>\" --author=\"$1\"' -"
 
-The code did not compile without it for me as I sometimes use -Werror.
+Very clever, I like it. And it also solves the problem I sometimes _do_
+have, which is pulling aliases into my mua from git.
 
->>  * the logic is to strip "refs/" if there is one, "remotes/" if there is
->>   one after that, and then strip one level after that unconditionally.
->>   No need to look explicitly for a slash while doing the first two steps.
->
-> Maybe that should go in documentation instead of the piece I wrote
-
-Oh I think what you wrote is fine.  I tried to be more descriptive than
-simply saying "No need to look explicitly for a slash" while explaining
-the changes.
+-Peff
