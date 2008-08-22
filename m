@@ -1,160 +1,95 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: [PATCH] Don't fail when an existing directory can't be created.
-Date: Fri, 22 Aug 2008 10:08:46 +0200
-Message-ID: <87pro1pj3l.fsf@lysator.liu.se>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t9301-fast-export: move unset of config variable into
+ its own test function
+Date: Fri, 22 Aug 2008 01:18:42 -0700
+Message-ID: <7vbpzlbgyl.fsf@gitster.siamese.dyndns.org>
+References: <7vtzdhkfo2.fsf@gitster.siamese.dyndns.org>
+ <ZdQ6b4vecqtrZ-7Mze6M9UBwrI9qQRUu-BoApXUv0v2zM76stzXd3w@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 22 10:09:59 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Aug 22 10:19:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWRiW-0001cw-0d
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 10:09:56 +0200
+	id 1KWRsD-0004OC-Mj
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 10:19:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752613AbYHVIIw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Aug 2008 04:08:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752333AbYHVIIv
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 04:08:51 -0400
-Received: from mail.lysator.liu.se ([130.236.254.3]:52646 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752277AbYHVIIs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 04:08:48 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 626322235DB0
-	for <git@vger.kernel.org>; Fri, 22 Aug 2008 10:08:47 +0200 (CEST)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 17949-01-88; Fri, 22 Aug 2008 10:08:46 +0200 (CEST)
-Received: from krank (unknown [87.96.142.66])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id CC9F2200B2C3;
-	Fri, 22 Aug 2008 10:08:46 +0200 (CEST)
-Received: by krank (Postfix, from userid 1000)
-	id 76B81E4801A; Fri, 22 Aug 2008 10:08:46 +0200 (CEST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1752824AbYHVISw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 04:18:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752363AbYHVISv
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 04:18:51 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35131 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752697AbYHVISt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 04:18:49 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B6434647F7;
+	Fri, 22 Aug 2008 04:18:47 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id F146C647F6; Fri, 22 Aug 2008 04:18:44 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F1B4A358-7022-11DD-918A-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93272>
 
-This makes it possible to install in a writable directory not owned by
-the current user.
----
- Documentation/Makefile |    8 ++++----
- Makefile               |    4 ++--
- gitk-git/Makefile      |    2 +-
- templates/Makefile     |   10 +++++-----
- 4 files changed, 12 insertions(+), 12 deletions(-)
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-I install git in /usr/local/*, to which I have write permission, but
-I'm not necessarily the owner of. The permissions may look something
-like this:
+> On platforms with a broken iconv it may be necessary to skip the fourth
+> test in this script. Test four sets the i18n.commitencoding config variable.
+> If test four is skipped, then a later unset of the i18n.commitencoding
+> config variable will return a non-zero exit status and cause a test to fail.
+> So move the 'config --unset' into its own test function which allows it to
+> be skipped independently.
 
-  drwxrwxr-x 2 root adm 4096 2008-08-07 17:54 /usr/local/bin/
+I do not know if this is worth it, and I am reasonably sure this is not an
+optimal solution for this particular case.
 
-To do this I set prefix=3D/usr/local and run "make install".
-Unfortunately, this fails miserably because the install rules insist
-on changing the permissions on any directory it installs to to
-755. This of course fails because I'm not the owner. And even if it
-worked, I wouldn't want it to do that.
+Many existing pieces in the test scripts, I even suspect majority of them,
+do depend on earlier piece in the sequence to succeed and try to build on
+top of the state they have left.  In the ideal world, especially when the
+software is young and flaky, perhaps that should not be the case and
+having test pieces that are as independent as each other would be easier
+to fix many tests that do not pass, but these days we expect all tests to
+pass, so running tests has become like reading the error output from
+compilers --- very often, the first error is the only one that counts.
 
-This patch is just a simple fix to make the install not abort when it
-fails to modify the directory permissions, but I have to ask why it
-tries to do this at all? Most other programs I have built and
-installed do not try to do this.
+Even though test-lib.sh does support skipping individual test pieces by
+adding t9301.12 to GIT_TEST_SKIP, it is not very useful in practice with
+the current set of tests, it would involve huge effort to make it reliably
+usable, and individual test pieces in the end result from such an effort
+will have to perform their own set-up from scratch, which would mean the
+test will take even longer to run, to catch occasional breakages.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 7a2130a..e6271d8 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -87,15 +87,15 @@ man7: $(DOC_MAN7)
- info: git.info gitman.info
-=20
- install: man
--	$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
--	$(INSTALL) -d -m 755 $(DESTDIR)$(man5dir)
--	$(INSTALL) -d -m 755 $(DESTDIR)$(man7dir)
-+	-$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
-+	-$(INSTALL) -d -m 755 $(DESTDIR)$(man5dir)
-+	-$(INSTALL) -d -m 755 $(DESTDIR)$(man7dir)
- 	$(INSTALL) -m 644 $(DOC_MAN1) $(DESTDIR)$(man1dir)
- 	$(INSTALL) -m 644 $(DOC_MAN5) $(DESTDIR)$(man5dir)
- 	$(INSTALL) -m 644 $(DOC_MAN7) $(DESTDIR)$(man7dir)
-=20
- install-info: info
--	$(INSTALL) -d -m 755 $(DESTDIR)$(infodir)
-+	-$(INSTALL) -d -m 755 $(DESTDIR)$(infodir)
- 	$(INSTALL) -m 644 git.info gitman.info $(DESTDIR)$(infodir)
- 	if test -r $(DESTDIR)$(infodir)/dir; then \
- 	  $(INSTALL_INFO) --info-dir=3D$(DESTDIR)$(infodir) git.info ;\
-diff --git a/Makefile b/Makefile
-index e8712e0..e6bb411 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1341,8 +1341,8 @@ gitexec_instdir_SQ =3D $(subst ','\'',$(gitexec_i=
-nstdir))
- export gitexec_instdir
-=20
- install: all
--	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
--	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
-+	-$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
-+	-$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
- 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
- 	$(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-upload-arch=
-ive$X '$(DESTDIR_SQ)$(bindir_SQ)'
- 	$(MAKE) -C templates DESTDIR=3D'$(DESTDIR_SQ)' install
-diff --git a/gitk-git/Makefile b/gitk-git/Makefile
-index e1b6045..117b841 100644
---- a/gitk-git/Makefile
-+++ b/gitk-git/Makefile
-@@ -41,7 +41,7 @@ all:: gitk-wish $(ALL_MSGFILES)
-=20
- install:: all
- 	$(INSTALL) -m 755 gitk-wish '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
--	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(msgsdir_SQ)'
-+	-$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(msgsdir_SQ)'
- 	$(foreach p,$(ALL_MSGFILES), $(INSTALL) -m 644 $p '$(DESTDIR_SQ)$(msg=
-sdir_SQ)' &&) true
-=20
- uninstall::
-diff --git a/templates/Makefile b/templates/Makefile
-index 67be379..58f2bdd 100644
---- a/templates/Makefile
-+++ b/templates/Makefile
-@@ -26,10 +26,10 @@ boilerplates.made : $(bpsrc)
- 	$(QUIET)ls *--* 2>/dev/null | \
- 	while read boilerplate; \
- 	do \
--		case "$$boilerplate" in *~) continue ;; esac && \
--		dst=3D`echo "$$boilerplate" | sed -e 's|^this|.|;s|--|/|g'` && \
--		dir=3D`expr "$$dst" : '\(.*\)/'` && \
--		$(INSTALL) -d -m 755 blt/$$dir && \
-+		case "$$boilerplate" in *~) continue ;; esac ; \
-+		dst=3D`echo "$$boilerplate" | sed -e 's|^this|.|;s|--|/|g'` ; \
-+		dir=3D`expr "$$dst" : '\(.*\)/'` ; \
-+		$(INSTALL) -d -m 755 blt/$$dir ; \
- 		case "$$boilerplate" in \
- 		*--) ;; \
- 		*) cp -p $$boilerplate blt/$$dst ;; \
-@@ -46,6 +46,6 @@ clean:
- 	$(RM) -r blt boilerplates.made
-=20
- install: all
--	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(template_instdir_SQ)'
-+	-$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(template_instdir_SQ)'
- 	(cd blt && $(TAR) cf - .) | \
- 	(cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && umask 022 && $(TAR) xf -=
-)
---=20
-1.6.0.rc2.7.gbf8a
+For this particular case, what we are interested in testing is not that
+"config --unset" exits with 0 status.  We are however interested in making
+sure that i18n.commitencoding is not set when the body of #12 runs.
 
+So I think a more appropriate change would be something like this for this
+particular case.
 
---=20
-David K=C3=A5gedal
+ t/t9301-fast-export.sh |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git c/t/t9301-fast-export.sh i/t/t9301-fast-export.sh
+index 3cb9f80..2ce2aff 100755
+--- c/t/t9301-fast-export.sh
++++ i/t/t9301-fast-export.sh
+@@ -190,7 +190,9 @@ export GIT_COMMITTER_NAME='C O Mitter'
+ 
+ test_expect_success 'setup copies' '
+ 
+-	git config --unset i18n.commitencoding &&
++	git config --unset i18n.commitencoding
++
++	test -z $(git config i18n.commitencoding) &&
+ 	git checkout -b copy rein &&
+ 	git mv file file3 &&
+ 	git commit -m move1 &&
