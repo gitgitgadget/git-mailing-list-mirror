@@ -1,58 +1,57 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Completion: add missing '=' for 'diff --diff-filter'
-Date: Fri, 22 Aug 2008 10:27:37 -0700
-Message-ID: <20080822172737.GM3483@spearce.org>
-References: <279b37b20808221025l5e3b1e53gc9aa2d84e5aa6ea3@mail.gmail.com>
+From: Andi Kleen <andi@firstfloor.org>
+Subject: nicer frontend to get rebased tree?
+Date: Fri, 22 Aug 2008 19:46:56 +0200
+Message-ID: <20080822174655.GP23334@one.firstfloor.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 19:28:49 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 22 19:46:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWaRK-0007T6-UP
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 19:28:47 +0200
+	id 1KWahy-00064h-Oa
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 19:45:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752979AbYHVR1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 13:27:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753124AbYHVR1i
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 13:27:38 -0400
-Received: from george.spearce.org ([209.20.77.23]:50457 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752857AbYHVR1i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 13:27:38 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 9810938375; Fri, 22 Aug 2008 17:27:37 +0000 (UTC)
+	id S1754323AbYHVRow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 13:44:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752116AbYHVRow
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 13:44:52 -0400
+Received: from one.firstfloor.org ([213.235.205.2]:49884 "EHLO
+	one.firstfloor.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753120AbYHVRov (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 13:44:51 -0400
+Received: by one.firstfloor.org (Postfix, from userid 503)
+	id 2A97518900B8; Fri, 22 Aug 2008 19:46:56 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <279b37b20808221025l5e3b1e53gc9aa2d84e5aa6ea3@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93333>
 
-Eric Raible <raible@gmail.com> wrote:
-> Signed-off-by: Eric Raible <raible@gmail.com>
 
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+A common use case for git here is to just use it as a code 
+downloader without actually changing anything in the main branch.
 
-> diff --git a/contrib/completion/git-completion.bash
-> b/contrib/completion/git-completion.bash
-> index 158b912..f76545e 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -769,7 +769,7 @@ _git_diff ()
->                 __gitcomp "--cached --stat --numstat --shortstat --summary
->                         --patch-with-stat --name-only --name-status --color
->                         --no-color --color-words --no-renames --check
-> -                       --full-index --binary --abbrev --diff-filter
-> +                       --full-index --binary --abbrev --diff-filter=
->                         --find-copies-harder --pickaxe-all --pickaxe-regex
->                         --text --ignore-space-at-eol --ignore-space-change
->                         --ignore-all-space --exit-code --quiet --ext-diff
+Especially in Linux kernel land there seem to be quite a few tree
+which are frequently rebased, which means that the usual "git pull -u"
+usually leads to conflicts even when one hasn't changed anything
+at all and just wants the latest state of that tree.
+
+I found this initially quite frustrating ("$@#!-git cannot 
+even download new trees"), until I managed to
+script the necessary magic incarnations after some
+documentation study (which are quite a handfull to type manually). 
+
+But I presume that's a reasonable common usage. Would it 
+make sense to have some standard git sub command that does that? 
+("get latest state of remote branch, doing what it takes to get it")
+Or is there already one that I missed?
+
+Thanks,
+-Andi
 
 -- 
-Shawn.
+ak@linux.intel.com
