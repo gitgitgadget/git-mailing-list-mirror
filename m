@@ -1,73 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: docs and completion and dashless commands
-Date: Fri, 22 Aug 2008 14:34:05 -0700
-Message-ID: <7vr68g7n02.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.0.999999.0808221550100.11892@mojave>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Linux 2.6.27-rc3: kernel BUG at mm/vmalloc.c - bisected
+Date: Fri, 22 Aug 2008 23:36:18 +0200
+Message-ID: <20080822213618.GC1598@atjola.homenet>
+References: <48A36838.3050309@hp.com> <20080819124602.9e8e69f7.akpm@linux-foundation.org> <48AEDD3D.4060507@hp.com> <20080822092549.ddcb7e79.akpm@linux-foundation.org> <20080822171651.GP10544@machine.or.cz> <20080822105136.a8432875.akpm@linux-foundation.org> <7v7ia8ahgu.fsf@gitster.siamese.dyndns.org> <20080822141651.fe16ed99.akpm@linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: dherring@ll.mit.edu
-X-From: git-owner@vger.kernel.org Fri Aug 22 23:35:18 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, pasky@suse.cz,
+	Alan.Brunelle@hp.com, linux-kernel@vger.kernel.org,
+	git@vger.kernel.org
+To: Andrew Morton <akpm@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Aug 22 23:37:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWeHt-0006Gh-9i
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 23:35:17 +0200
+	id 1KWeK0-00077Q-9k
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 23:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753765AbYHVVeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 17:34:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752611AbYHVVeM
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 17:34:12 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53910 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753140AbYHVVeM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 17:34:12 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3F50D691D8;
-	Fri, 22 Aug 2008 17:34:10 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 4670A691D5; Fri, 22 Aug 2008 17:34:07 -0400 (EDT)
-In-Reply-To: <alpine.LNX.0.999999.0808221550100.11892@mojave>
- (dherring@ll.mit.edu's message of "Fri, 22 Aug 2008 16:26:32 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0E89B8AA-7092-11DD-8800-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1758285AbYHVVgY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Aug 2008 17:36:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758212AbYHVVgX
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 17:36:23 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51931 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757874AbYHVVgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 17:36:22 -0400
+Received: (qmail invoked by alias); 22 Aug 2008 21:36:20 -0000
+Received: from i577B8611.versanet.de (EHLO atjola.local) [87.123.134.17]
+  by mail.gmx.net (mp042) with SMTP; 22 Aug 2008 23:36:20 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18fLXppQ7gfyXjBb4EuziUcyeByoSM8Hj3bHL7gam
+	r1VY+07ea4yICH
+Content-Disposition: inline
+In-Reply-To: <20080822141651.fe16ed99.akpm@linux-foundation.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93377>
 
-dherring@ll.mit.edu writes:
+On 2008.08.22 14:16:51 -0700, Andrew Morton wrote:
+> It's pretty simple.  If git-bisect tells us that the regression was
+> introduced by a merge commit, we want to perform a bisection within
+> that merge's individual commits.
 
-> First off, I'm not too keen on these dashless commands.
-> - We now have `man git-X` but can't run `git-X`
-> - A separate completion script must be installed for bash
-> - Lose completion for all other shells
-> - History expansion is complicated (e.g. `!git-push` vs `!git push`)
+bisect already did that. It asked for the left side and the right side,
+both were good. What you can still do is creating a _new_ history where
+the commits are not in parallel but linearized, like Jeff described. Bu=
+t
+that's (in general) not a trivial task as you need to reapply individua=
+l
+commit patches which can cause conflicts that were already solved in th=
+e
+existing merges to show up again. Or, it can even produce new conflicts=
+,
+for example when a commit on one side was reverted before the merge
+happened. In that case, you get into a state with changes that were
+never visible before.
 
-Please stop and leave the dead horse lie in piece.  You are more than a
-year too late.
-
-> Anyway, could someone modify INSTALL to mention
-> contrib/completion/git-completion.bash and putting `git --exec-path`
-> in PATH for other shells?
-
-And please nobody waste time on the latter.  "git-foo" form for builtins
-will be removed from the filesystem eventually and at that point:
-
-	#!/bin/sh
-
-	PATH=$(git --exec-path):$PATH
-        .. do its thing ..
-        git-commit -a -m 'funny wrapper created commit'
-
-will _stop_ working.  If somebody is starting a new script there is no
-point using the form only to later update to the dashless form.
-
-> These docs might also instruct users to call
-> git-config and set their global username and email.
-
-Please read the first few paragraphs of gittutorial(7).
+Bj=F6rn
