@@ -1,78 +1,73 @@
-From: Daniel White <daniel@whitehouse.id.au>
-Subject: Re: [StGit] Debian packaging update
-Date: Sat, 23 Aug 2008 01:03:25 +1000
-Message-ID: <20080823010325.33fe9e1c@whitehouse.id.au>
-References: <20080818201036.7c2c00f8@whitehouse.id.au>
-	<b0943d9e0808211535s7b829a13hbf28be8116e856a6@mail.gmail.com>
-	<20080822235154.5e1f979c@whitehouse.id.au>
+From: Derek Fawcus <dfawcus@cisco.com>
+Subject: Re: Suggestion: "man git clone"
+Date: Fri, 22 Aug 2008 16:03:53 +0100
+Message-ID: <20080822150353.GC13490@cisco.com>
+References: <48ACB29C.7000606@zytor.com> <g8m6d1$7nf$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"Karl =?UTF-8?B?SGFzc2Vsc3Ryw7Zt?=" <kha@treskal.com>
-To: "Catalin Marinas" <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 17:06:33 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 22 17:07:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWYCR-0006Tv-KC
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 17:05:52 +0200
+	id 1KWYE4-0007B1-RE
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 17:06:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbYHVPEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 11:04:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751355AbYHVPEJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 11:04:09 -0400
-Received: from smtpgw02.myhostguy.com ([216.10.240.226]:4122 "EHLO
-	smtpgw02.myhostguy.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750998AbYHVPEI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 11:04:08 -0400
-Received: from mx252n.mysite4now.com [216.10.248.252] by smtpgw02.myhostguy.com with SMTP;
-   Fri, 22 Aug 2008 08:03:35 -0700
-Received: from ppp118-208-1-137.lns1.bne1.internode.on.net [118.208.1.137] by mx252n.mysite4now.com with SMTP;
-   Fri, 22 Aug 2008 08:03:27 -0700
-In-Reply-To: <20080822235154.5e1f979c@whitehouse.id.au>
-X-Mailer: Claws Mail 3.5.0 (GTK+ 2.12.11; x86_64-pc-linux-gnu)
+	id S1751530AbYHVPFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 11:05:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751519AbYHVPFw
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 11:05:52 -0400
+Received: from ams-iport-1.cisco.com ([144.254.224.140]:16569 "EHLO
+	ams-iport-1.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751508AbYHVPFw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 11:05:52 -0400
+X-IronPort-AV: E=Sophos;i="4.32,252,1217808000"; 
+   d="scan'208";a="17964769"
+Received: from ams-dkim-2.cisco.com ([144.254.224.139])
+  by ams-iport-1.cisco.com with ESMTP; 22 Aug 2008 15:05:50 +0000
+Received: from ams-core-1.cisco.com (ams-core-1.cisco.com [144.254.224.150])
+	by ams-dkim-2.cisco.com (8.12.11/8.12.11) with ESMTP id m7MF5oYK003686
+	for <git@vger.kernel.org>; Fri, 22 Aug 2008 17:05:50 +0200
+Received: from edi-view2.cisco.com (edi-view2.cisco.com [64.103.71.156])
+	by ams-core-1.cisco.com (8.13.8/8.13.8) with ESMTP id m7MF5oV8011036
+	for <git@vger.kernel.org>; Fri, 22 Aug 2008 15:05:50 GMT
+Received: from dfawcus-laptop (localhost [127.0.0.1]) by edi-view2.cisco.com (8.11.2/CISCO.WS.1.2) with ESMTP id m7MF5nX01237 for <git@vger.kernel.org>; Fri, 22 Aug 2008 16:05:49 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <g8m6d1$7nf$1@ger.gmane.org>
+User-Agent: Mutt/1.4.2.3i
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; l=668; t=1219417550; x=1220281550;
+	c=relaxed/simple; s=amsdkim2001;
+	h=Content-Type:From:Subject:Content-Transfer-Encoding:MIME-Version;
+	d=cisco.com; i=dfawcus@cisco.com;
+	z=From:=20Derek=20Fawcus=20<dfawcus@cisco.com>
+	|Subject:=20Re=3A=20Suggestion=3A=20=22man=20git=20clone=22
+	|Sender:=20;
+	bh=eXuA2OgWEqHDencD+zBzAKtbyQAJYd5dCtmS4/VDIx0=;
+	b=incvwwuHJJmXNLUVmQ9AtaMO2PjoXBe35K/1U7fb92mlqZ70eD3jsmmgD3
+	i0tMu1a39CQ8MGm0GhGGguFb+BFO0VZtWBdz1KzFLXAmQH4xF9VYE0rqy2H/
+	CA5cpDQQaE;
+Authentication-Results: ams-dkim-2; header.From=dfawcus@cisco.com; dkim=pass (
+	sig from cisco.com/amsdkim2001 verified; ); 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93307>
 
-On Fri, 22 Aug 2008 23:51:54 +1000
-Daniel White <daniel@whitehouse.id.au> wrote:
+On Fri, Aug 22, 2008 at 01:02:57PM +0200, Michael J Gruber wrote:
+> I've heard about some other SCMs which have only "scm help bla", so this
+> suggestion would be in-line with common usage. [Not that git would have
+> to learn from other SCM's ;) ]
 
-> On Thu, 21 Aug 2008 23:35:43 +0100
-> "Catalin Marinas" <catalin.marinas@gmail.com> wrote:
-> > 
-> > I'm not that versed in building debian packages but the .changes
-> > file generated is still reported as "i386" rather than "all". Is
-> > this expected?
-> >
-> 
-> I'm seeing the same issue by running dpkg-buildpackage.  However, I
-> tried building other arch-independent packages from source and still
-> got the same problem.  I suspect I might not be using the right set of
-> commands to generate the .changes file.
-> 
-> Since it is now packaged by Debian is it still necessary to be
-> maintaining Debian packaging?
-> 
-> Having a look at the Debian version, they have made quite a few
-> changes against our packaging.  It might be worth getting some
-> patches from them that are not specific to Debian policy (like the
-> setup of bash completion).
-> 
-> Regardless, it might be best to leave commit cf7b0b90 for now.
-> 
-> > Thanks.
-> > 
-> 
+Clearcase - commands such as 'cleartool describe',  man page in ct+describe.1
 
-Not that it probably matters much, but I forgot to sign off on the
-changes.  I've re-pushed the changes.
+Has 'cleartool help describe' (and 'cleartool describe -help') which gives a
+usage summary,  and 'cleartool man describe' (or 'man ct+describe') for the
+man page.
 
-So the commit to ignore would be e4a257f0.
+So basically the same solution,  but a slightly different choice/use for keywords.
 
--- 
-Daniel White
+(and if one has an alias 'ct=cleartool',  it seems to make more sense).
+
+DF
