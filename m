@@ -1,79 +1,71 @@
 From: Andi Kleen <andi@firstfloor.org>
 Subject: Re: nicer frontend to get rebased tree?
-Date: Fri, 22 Aug 2008 20:27:18 +0200
-Message-ID: <20080822182718.GQ23334@one.firstfloor.org>
-References: <20080822174655.GP23334@one.firstfloor.org> <alpine.LFD.1.10.0808221053080.3487@nehalem.linux-foundation.org>
+Date: Fri, 22 Aug 2008 20:31:29 +0200
+Message-ID: <20080822183129.GR23334@one.firstfloor.org>
+References: <20080822174655.GP23334@one.firstfloor.org> <32541b130808221056l75a3fd6bsa6c7933a1c3da60f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Andi Kleen <andi@firstfloor.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Aug 22 20:27:13 2008
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 20:30:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWbLs-0004Ga-K6
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 20:27:13 +0200
+	id 1KWbP4-0005Rs-02
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 20:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752095AbYHVSZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 14:25:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752351AbYHVSZN
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 14:25:13 -0400
-Received: from one.firstfloor.org ([213.235.205.2]:38815 "EHLO
+	id S1754255AbYHVS3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 14:29:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754205AbYHVS3Y
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 14:29:24 -0400
+Received: from one.firstfloor.org ([213.235.205.2]:60615 "EHLO
 	one.firstfloor.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751431AbYHVSZM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 14:25:12 -0400
+	with ESMTP id S1754255AbYHVS3Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 14:29:24 -0400
 Received: by one.firstfloor.org (Postfix, from userid 503)
-	id 15FB718900B8; Fri, 22 Aug 2008 20:27:18 +0200 (CEST)
+	id 78B0D18900B8; Fri, 22 Aug 2008 20:31:29 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0808221053080.3487@nehalem.linux-foundation.org>
+In-Reply-To: <32541b130808221056l75a3fd6bsa6c7933a1c3da60f@mail.gmail.com>
 User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93340>
 
-On Fri, Aug 22, 2008 at 10:55:35AM -0700, Linus Torvalds wrote:
+On Fri, Aug 22, 2008 at 01:56:39PM -0400, Avery Pennarun wrote:
+> On Fri, Aug 22, 2008 at 1:46 PM, Andi Kleen <andi@firstfloor.org> wrote:
+> > But I presume that's a reasonable common usage. Would it
+> > make sense to have some standard git sub command that does that?
+> > ("get latest state of remote branch, doing what it takes to get it")
+> > Or is there already one that I missed?
 > 
+> Isn't that just
 > 
-> On Fri, 22 Aug 2008, Andi Kleen wrote:
-> > 
-> > Especially in Linux kernel land there seem to be quite a few tree
-> > which are frequently rebased, which means that the usual "git pull -u"
-> > usually leads to conflicts even when one hasn't changed anything
-> > at all and just wants the latest state of that tree.
+>     git fetch somewhere branchname
+>     git reset --hard FETCH_HEAD
 > 
-> What drugs are you on?
-> 
-> "git pull" is not "download". It's "download and merge".
+> ?
 
-Well it's in pretty much every tutorial.  And none of them
-said "you have to figure out first if the person maintaining
-the tree ever uses git rebase or not".
+My script right now does.
 
-I also don't know of any good way to detect this. One has
-to just guess and try and error.
+git fetch origin
+git fetch --tags origin
+git remote update
+git checkout master
+git reset --hard origin/master
 
-> 
-> If you just want download, use "git fetch". You should never _ever_ use 
-> "git pull -u", and the docs even tell you so.
+Sure I can continue using the script (until some change breaks it %),
+but I was just asking if that was a common enough operation to deserve
+some better support in standard git. It personally (as a relatively
+inexperienced git user) took me some time to come up with
+this script and I found the original behaviour of git pull on rebased
+trees double-plus unintuitive.
 
-Well git fetch does nothing by itself.
-
-Yes I know it can be done (which I figured out after a extended
-oddysee through git's great documentation), but it's quite complicated 
-and definitely nowhere near intuitive.
-
-> And if you _really_ haven't changed anything, then "git pull" will never 
-> _ever_ generate a conflict, not with -u, not without, not _ever_. 
-
-Sorry that's what I though initially too. But that's wrong.  Just clone
-e.g. linux-next and then try to update it with pull a day later.  
-
-rebase messed this all up majorly.  And people use that unfortunately.
-
-In fact most kernel trees except yours seem to do rebase sooner 
-or later. 
+Just an idea for improvement.
 
 -Andi
+
+-- 
+ak@linux.intel.com
