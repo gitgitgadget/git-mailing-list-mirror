@@ -1,72 +1,59 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Support "core.excludesfile = ~/.gitignore"
-Date: Fri, 22 Aug 2008 14:10:42 -0700
-Message-ID: <7vsksw92nh.fsf@gitster.siamese.dyndns.org>
-References: <quack.20080821T2114.lthvdxtvg7b@roar.cs.berkeley.edu>
+Subject: Re: [PATCH] t9301-fast-export: move unset of config variable into
+ its own test function
+Date: Fri, 22 Aug 2008 14:11:48 -0700
+Message-ID: <7vljyo92ln.fsf@gitster.siamese.dyndns.org>
+References: <7vtzdhkfo2.fsf@gitster.siamese.dyndns.org>
+ <ZdQ6b4vecqtrZ-7Mze6M9UBwrI9qQRUu-BoApXUv0v2zM76stzXd3w@cipher.nrlssc.navy.mil> <7vbpzlbgyl.fsf@gitster.siamese.dyndns.org> <7v7ia9bgqc.fsf@gitster.siamese.dyndns.org> <48AE8093.4070609@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Karl Chen <quarl@cs.berkeley.edu>
-X-From: git-owner@vger.kernel.org Fri Aug 22 23:12:04 2008
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Aug 22 23:13:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWdvE-0005n7-GH
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 23:11:52 +0200
+	id 1KWdwm-0006Gl-Ng
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 23:13:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753077AbYHVVKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 17:10:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753147AbYHVVKs
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 17:10:48 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33922 "EHLO
+	id S1758783AbYHVVL4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 17:11:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758761AbYHVVL4
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 17:11:56 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33993 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753077AbYHVVKr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 17:10:47 -0400
+	with ESMTP id S1758775AbYHVVLz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 17:11:55 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0FA4863D21;
-	Fri, 22 Aug 2008 17:10:47 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5864D63D2A;
+	Fri, 22 Aug 2008 17:11:54 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 40F4463D1F; Fri, 22 Aug 2008 17:10:44 -0400 (EDT)
+ ESMTPSA id 3887163D26; Fri, 22 Aug 2008 17:11:49 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CA2C2150-708E-11DD-A2FC-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F24912C4-708E-11DD-A2FC-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93367>
 
-Karl Chen <quarl@cs.berkeley.edu> writes:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> Another idea is to have a non-absolute path be interpreted
-> relative to the location of .gitconfig.
+> Nice idea. Another class would be the tests that depend on that the
+> filesystem supports symbolic links.
+>
+>> -test_expect_success 'iso-8859-1' '
+>> +test_expect_success I18N 'iso-8859-1' '
+>
+> How do the tests look like if this token is the *last* argument?
 
-If we were to support relative paths, I think it would be useful and
-consistent if a relative path found in ".git/config" is relative to the
-work tree root, in "config" in a bare repository relative to the bare
-repository, and in "$HOME/.gitconfig" relative to $HOME.  I am not sure
-what a relative path in "/etc/gitconfig" should be relative to, though.
+I thought about it but rejected it because it is much easier to spot class
+tokens if it comes immediately after test_expect_xyzzy.
 
-However, this has a technical difficulty.  When configuration values are
-read, the code that knows what the value means does not in general know
-which configuration file is being read from.
-
-> Below is a sample patch that works for me.  We could also use
-> getpwuid(getuid()) instead of getenv("HOME") to be consistent with
-> user_path() but this is simpler and arguably more likely what the
-> user wants when it matters.
-
-It is quite likely that somebody would want you to interpret "~name/" if
-you advertize that you support "~/", so you would need to call getpwuid()
-eventually if you go down this path.  I wonder how this would affect
-Windows folks.
-
-What are the paths valued configuration variables other than excludesfile
-that we would want to support?  There was a topic to allow mail-aliases
-lookup for parameters given to the "--author" option today, and send-email
-takes aliasfile configuration.  Because the latter is a script, we would
-need a "--path" option to "git config" (the idea is similar to existing
-"--bool" option) so that calling scripts can ask the same "magic"
-performed to configuration variables' values before being reported.
+I suspect that certain classes of tests that need to be skipped can be
+autodetected inside test-lib.sh; it would be an independent topic to build
+on top of this.  Your example of 64-bit may be one of them.
