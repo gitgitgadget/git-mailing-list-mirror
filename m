@@ -1,74 +1,110 @@
-From: "Govind Salinas" <govind@sophiasuchtig.com>
-Subject: Problem with --skip and --max-count
-Date: Fri, 22 Aug 2008 10:06:46 -0500
-Message-ID: <5d46db230808220806j21a81864he77a3b05e298ce2b@mail.gmail.com>
+From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+Subject: Re: complex cvs import
+Date: Fri, 22 Aug 2008 17:14:35 +0200
+Message-ID: <g8ml4s$2cd$1@ger.gmane.org>
+References: <48AEBB72.6060209@xmos.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 22 17:08:37 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 22 17:15:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWYF2-0007qw-KY
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 17:07:57 +0200
+	id 1KWYMk-0003Iz-UZ
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 17:15:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751953AbYHVPGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 11:06:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751884AbYHVPGx
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 11:06:53 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:39759 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751817AbYHVPGw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 11:06:52 -0400
-Received: by gxk9 with SMTP id 9so1229616gxk.13
-        for <git@vger.kernel.org>; Fri, 22 Aug 2008 08:06:51 -0700 (PDT)
-Received: by 10.151.153.14 with SMTP id f14mr2014511ybo.29.1219417611476;
-        Fri, 22 Aug 2008 08:06:51 -0700 (PDT)
-Received: by 10.150.12.16 with HTTP; Fri, 22 Aug 2008 08:06:46 -0700 (PDT)
-Content-Disposition: inline
+	id S1751471AbYHVPOv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 11:14:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751375AbYHVPOv
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 11:14:51 -0400
+Received: from main.gmane.org ([80.91.229.2]:60102 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751101AbYHVPOu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 11:14:50 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KWYLd-0001wj-3X
+	for git@vger.kernel.org; Fri, 22 Aug 2008 15:14:45 +0000
+Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 22 Aug 2008 15:14:45 +0000
+Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 22 Aug 2008 15:14:45 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <48AEBB72.6060209@xmos.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93310>
 
-Hey Folks,
+Luis Gutierrez venit, vidit, dixit 22.08.2008 15:13:
+> Hi All,
+> 
+> During the past year or so we have been using a bastardized version of 
+> CVS in which branches were not 'true' cvs branches, but just a copy of 
+> the original data in a different folder. For instance, we would have 
+> something like this:
+> 
+> ProjectX
+>    \---- dev01
+>    |       \... normal cvs data
+>    \---- dev02
+>    |       \... normal cvs data
+>    \---- release01
+>    |       \... normal cvs data
+>    \---- release02
+>            \... normal cvs data
+> 
+> While a timeline of the branches looks like this:
+> 
+>                 /---release01
+> ----dev01------+                /---release02
+>                 \---dev02------+--
+> 
+> Now that we are trying to move to git, and I'm having problems importing 
+> the projects with their full history.
+> 
+> What I have done is use git-cvsimport on each of those branches to 
+> create separate git repositories: dev01, dev02, release01, and release02.
+> 
+> What I was planing on doing next was:
+> (all from the dev01 branch)
+> 1) git branch dev01
+> 2) git checkout -b release01
+> 3) git pull ssh:/..../release01
+> 4) git checkout -b dev02
+> 5) git pull ssh:/..../dev02
+> 6) git checkout -b release02
+> 7) git pull ssh:/..../release02
+> 
+> Now, the problem I'm seeing is that I get hundreds of conflicts when 
+> pulling.
+> 
+> Short from doing a git-mergetool 100's of times, is there a better way 
+> of doing this? One that guarantees I keep the latests version (ie, the 
+> one I'm pulling from).
+> Put in another way, is there a way to let git know that it will not 
+> merge the last version of the files, just the history?
+> 
+> Cheers.
+> 
+> Luis Gutierrez
 
-I have been working on my porcelain, trying to get it semi-polished and
-I noticed that the behavior of --skip and --max-count is not what I expected
-in several cases.
+How about:
 
-For simple output, it works as I think it should, but whenever you are doing
-some kind of filtering or non-standard commit limiting, such as passing
---follow, it does not print out the first X results.  Similarly --skipping the
-number of items that you got back does not put get you to where you left
-off.
+- fetch instead of pull
+- After each fetch, put the fetched thing in a local branch:
+git checkout -b release01 FETCH_HEAD
 
-Basically, I am trying to use --skip and --max-count to do paging, but
-when I add filters, it doesn't work very well.  For example...
+Now you've got local "branches" without a common root.
 
-$ git log --pretty=oneline --follow -- pyrite/git/repository.py | wc -l
-103
+Finally, stitch it together using grafts and filter-branch.
 
-$ git log --pretty=oneline --follow -20 -- pyrite/git/repository.py | wc -l
-2
-
-$ git log --pretty=oneline --follow -20 --skip=20 --
-pyrite/git/repository.py | wc -l
-2
-
-So where I am trying to page by 20, I am only getting a random number of
-commits depending on how many fit the criteria in the window.  I understand
-this is probably by design, but it is not optimal to work with.  I had to
-manually do the skipping and limiting, which would probably have been
-more efficient if it had been done by git.  Would it be possible to get
-git to limit and skip based on the number of results it had returned rather
-than the number of result it had processed?  Even new cmd line args
-would work.
-
-I am using 1.6.0 BTW.
-
-Thanks,
-Govind
+Michael
