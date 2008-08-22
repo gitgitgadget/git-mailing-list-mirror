@@ -1,73 +1,80 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH v4] gitweb: ref markers link to named shortlogs
-Date: Fri, 22 Aug 2008 15:20:31 +0200
-Message-ID: <cb7bb73a0808220620m10245693pabe49993e91cff3d@mail.gmail.com>
-References: <200808221256.21805.jnareb@gmail.com>
-	 <1219408777-13513-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200808221501.54908.jnareb@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [BUG?] 'git verify-pack -v' on multiple packs fails for all but the first pack
+Date: Fri, 22 Aug 2008 15:27:21 +0200
+Message-ID: <200808221527.21971.johan@herland.net>
+References: <200808221439.31219.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 15:21:47 2008
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 22 15:29:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWWa9-0006Qd-VC
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 15:21:38 +0200
+	id 1KWWha-0001Rw-Fp
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 15:29:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752093AbYHVNUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 09:20:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752101AbYHVNUd
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 09:20:33 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:43936 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751560AbYHVNUc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 09:20:32 -0400
-Received: by gxk9 with SMTP id 9so1102037gxk.13
-        for <git@vger.kernel.org>; Fri, 22 Aug 2008 06:20:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=1ifhvwgQYCDVtEvXXD0KScQ8ECsntOf8Utgvr6Y/nTw=;
-        b=AbSIvHfmK+lGgpP8NiZaGPGqVIIeN8ec6h69W6RHOaXjStWjyUiGvkRhjPZQ248ucf
-         CNH0AQLTICOQtxVhDkw/aUGndV2nSeEEHfCXoRQRFzlZUGP8dKg6Na23c97iM831+kNa
-         aXYwG9c6mUCIwdGbePbCfvIgmGZkj5BE6B6Og=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=bHcXasU1Go2YH/g3YHtSmD0+D/fSdzzUjuuZHzNz6LlfZfHW3O903n/uNmxqkF7+ZO
-         pecMFiCvLiBnqJ986/onANzjQIRCGzwDIEFZpy3YcJT/ko5qLHHIrqoZqOPyM13A0VjP
-         mJnPuzZij+2zM/Bd20P5S3x3DbB2ceYl7UfpI=
-Received: by 10.151.98.16 with SMTP id a16mr1795480ybm.202.1219411231740;
-        Fri, 22 Aug 2008 06:20:31 -0700 (PDT)
-Received: by 10.150.155.12 with HTTP; Fri, 22 Aug 2008 06:20:31 -0700 (PDT)
-In-Reply-To: <200808221501.54908.jnareb@gmail.com>
+	id S1751794AbYHVN2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 09:28:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbYHVN2O
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 09:28:14 -0400
+Received: from sam.opera.com ([213.236.208.81]:37017 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751761AbYHVN2O (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 09:28:14 -0400
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m7MDRMkH007567
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 22 Aug 2008 13:27:27 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <200808221439.31219.johan@herland.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93293>
 
-On Fri, Aug 22, 2008 at 3:01 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+On Friday 22 August 2008, Johan Herland wrote:
+> (I don't have time to look into this right now, but will do so later
+> if nobody comes up with a solution in the meantime...)
 >
-> Seems overly complicated.  How about something like this, instead?
-> It simply moves stripping ^{} from refs to format_ref_marker(),
-> and uses "tags/v1.5.0^{}" instead of [ "tags/v1.5.0", 1 ].
+> When running 'git verify-pack -v' on multiple packs (.idx files), it
+> fails for all packs, except the first, with exit code 128, and the
+> following single line:
+>
+> 	fatal: internal error: pack revindex fubar
+>
+> This does not happen when given only a single pack, or when given
+> multiple packs, but without '-v' option.
+>
+> To reproduce, simply do:
+>
+> 	git verify-pack -v .git/objects/pack/*.idx
+>
+> in any repo with more than one pack file.
+>
+> This happens with a fairly current 'next' (1.6.0.96.g2fad1). AFAICS,
+> it also happens in v1.6.0.
 
-My thought was that if the refs stuff was being used for something
-else than format_ref_marker, it would fail more spectacularly due to
-the different kind of values, rather than introducing potentially
-subtle bugs due to the additiona ^{} popping in unexpectedly, but it
-wouldn't be a problem to do it the simple way. Let me clean the patch
-up and resubmit it.
+Bisection point to this commit:
+
+commit 1f5c74f6cf918d317c73b328dcd4cf6f55c44d8a
+Author: Nicolas Pitre <nico@cam.org>
+Date:   Mon Jun 23 21:22:14 2008 -0400
+
+    call init_pack_revindex() lazily
+
+    This makes life much easier for next patch, as well as being more efficient
+    when the revindex is actually not used.
+
+    Signed-off-by: Nicolas Pitre <nico@cam.org>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
 
 -- 
-Giuseppe "Oblomov" Bilotta
+Johan Herland, <johan@herland.net>
+www.herland.net
