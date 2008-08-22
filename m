@@ -1,90 +1,85 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: nicer frontend to get rebased tree?
-Date: Fri, 22 Aug 2008 19:33:18 +0030
-Message-ID: <4d8e3fd30808221203r1630addaodb87c0a8b34f0fd2@mail.gmail.com>
-References: <20080822174655.GP23334@one.firstfloor.org>
-	 <32541b130808221056l75a3fd6bsa6c7933a1c3da60f@mail.gmail.com>
-	 <20080822183129.GR23334@one.firstfloor.org>
+From: "Elijah Newren" <newren@gmail.com>
+Subject: Re: Call Me Gitless
+Date: Fri, 22 Aug 2008 13:10:36 -0600
+Message-ID: <51419b2c0808221210k6e7defdcw3ba9e4ef89e054e7@mail.gmail.com>
+References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com>
+	 <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org>
+	 <905315640808181624w58918a0ao939a3f0462f9dc9e@mail.gmail.com>
+	 <48AA7BE9.4040108@sneakemail.com>
+	 <7vk5edfn6g.fsf@gitster.siamese.dyndns.org>
+	 <ee521d6f0808190157s6a676a75t2ba3ef095f608431@mail.gmail.com>
+	 <vpqk5edid2y.fsf@bauges.imag.fr>
+	 <ee521d6f0808190309n7f0114a6q2e8113238cb2142b@mail.gmail.com>
+	 <48AAAE17.1070800@obry.net> <48AD7895.5010707@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Avery Pennarun" <apenwarr@gmail.com>, git@vger.kernel.org
-To: "Andi Kleen" <andi@firstfloor.org>
-X-From: git-owner@vger.kernel.org Fri Aug 22 21:04:58 2008
+Cc: pascal@obry.net, "Alexander E Genaud" <alex@genaud.net>,
+	"Matthieu Moy" <Matthieu.Moy@imag.fr>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"=?ISO-8859-1?Q?Lists_Peter_Valdemar_M=F8rch?=" 
+	<4ux6as402@sneakemail.com>, git@vger.kernel.org
+To: "Paolo Bonzini" <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Aug 22 21:12:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWbw5-0001e6-2I
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 21:04:37 +0200
+	id 1KWc35-0004Q6-9M
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 21:11:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754596AbYHVTDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 15:03:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753386AbYHVTDW
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 15:03:22 -0400
-Received: from mail-gx0-f29.google.com ([209.85.217.29]:47194 "EHLO
-	mail-gx0-f29.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752106AbYHVTDU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 15:03:20 -0400
-Received: by gxk10 with SMTP id 10so948047gxk.13
-        for <git@vger.kernel.org>; Fri, 22 Aug 2008 12:03:19 -0700 (PDT)
+	id S1755306AbYHVTKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 15:10:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755633AbYHVTKj
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 15:10:39 -0400
+Received: from rv-out-0506.google.com ([209.85.198.239]:2906 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752913AbYHVTKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 15:10:37 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so558835rvb.1
+        for <git@vger.kernel.org>; Fri, 22 Aug 2008 12:10:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=6aRcbBXtbyISjbYcum1ueI/ofcMbqFcH/94R+edv9sM=;
-        b=t+nw5Amv5/ZOm2LQScj4mDXMWTiOaQTKDG1t8fw0eFvWuIt3Xc4zjnLkkR/9oiiVsJ
-         F0xPzmwGGm/Q4IZs9oTDEyfCLca99VGrPg40a6Pq/Uq4hdi0GB8qMq4tqiOfSTF9Ctny
-         rdihJLJcrSLlM2fOolI/nFZU81nphTJjPU/lY=
+        bh=WMfA9Wsm7QMezI6y6/Sd9gtCeuAJlg8RobLsGq7axMY=;
+        b=VQL9QAB9zvDLjKHpyx+pdXEbubTEmG4+xmG5dYYTwdKM8RddRLP27Td5VMd6yRrHz/
+         08s/ANgYQvD4fhIM13AmzrAcAWRlTqFZJRFjJdPUwJ6z5zzaDpi3i3MuxxKSeH1OlWTQ
+         qrAkA3ACsv5Jxletm8f+pzNGH25kYIphdMyUc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=SJIii8MSpXL3ZrM3ZCcw+np7tb6Dt3lansDs2blrUOgqEShR6iXccAIA/c9GIORlcZ
-         p4XBAQx1A9/pSNDaK5xDPko/NF/tLBJhKwEAEEjchsZcVyd/KDhOODy29JTQJDO5FhCX
-         HZ5Ou/FcjB8LzaiyyJvMd2llNnFWM+9gt6BmM=
-Received: by 10.142.132.2 with SMTP id f2mr530075wfd.22.1219431798892;
-        Fri, 22 Aug 2008 12:03:18 -0700 (PDT)
-Received: by 10.142.194.8 with HTTP; Fri, 22 Aug 2008 12:03:18 -0700 (PDT)
-In-Reply-To: <20080822183129.GR23334@one.firstfloor.org>
+        b=J1UdssHS4DoLTubsEZyUSISn1EJwpqjU0hzSl7LnWSNq94tJdrgD7U/izz7JQLSfXT
+         i0s++RddXB9KfKzsY5DJDhdf7jixdtdO4evP5yRHMQ91Z6Exu6fcuKtmdJtbSkfdFd3M
+         s2D2K1JyIHc7m4dGoTqUauEPsxXlc4UE9IUus=
+Received: by 10.141.136.8 with SMTP id o8mr695920rvn.271.1219432236403;
+        Fri, 22 Aug 2008 12:10:36 -0700 (PDT)
+Received: by 10.141.5.11 with HTTP; Fri, 22 Aug 2008 12:10:36 -0700 (PDT)
+In-Reply-To: <48AD7895.5010707@gnu.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93343>
 
-On 8/22/08, Andi Kleen <andi@firstfloor.org> wrote:
-> On Fri, Aug 22, 2008 at 01:56:39PM -0400, Avery Pennarun wrote:
->> On Fri, Aug 22, 2008 at 1:46 PM, Andi Kleen <andi@firstfloor.org> wrote:
->> > But I presume that's a reasonable common usage. Would it
->> > make sense to have some standard git sub command that does that?
->> > ("get latest state of remote branch, doing what it takes to get it")
->> > Or is there already one that I missed?
->>
->> Isn't that just
->>
->>     git fetch somewhere branchname
->>     git reset --hard FETCH_HEAD
->>
->> ?
+On Thu, Aug 21, 2008 at 8:15 AM, Paolo Bonzini <bonzini@gnu.org> wrote:
+> I used to think that the proposal I saw in another git frontend, which is:
 >
-> My script right now does.
+>        git diff --cached -->   git diff --staged
+>        git diff -->            git diff --unstaged
+>        git diff HEAD -->       git diff
 >
-> git fetch origin
-> git fetch --tags origin
-> git remote update
-> git checkout master
-> git reset --hard origin/master
->
+> was a good one, but it is actually not when you start thinking about what to
+> do during a large merge with few conflicts.  In fact, even though I use the
+> index almost exclusively when merging (*), I don't mind the few extra
+> keystrokes.
 
+If you look a little closer, you'll note that the three lines of this
+proposal has an exception specifically for the conflict during merge
+case.   :-)
 
-why the two fetch?
-isn't git remote update sufficient?
-
-ciao,
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
+Elijah
