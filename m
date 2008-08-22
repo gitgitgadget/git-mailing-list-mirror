@@ -1,68 +1,77 @@
-From: Daniel White <daniel@whitehouse.id.au>
-Subject: Re: [StGit] Debian packaging update
-Date: Fri, 22 Aug 2008 23:51:54 +1000
-Message-ID: <20080822235154.5e1f979c@whitehouse.id.au>
-References: <20080818201036.7c2c00f8@whitehouse.id.au>
-	<b0943d9e0808211535s7b829a13hbf28be8116e856a6@mail.gmail.com>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH v4] gitweb: ref markers link to named shortlogs
+Date: Fri, 22 Aug 2008 16:03:41 +0200
+Message-ID: <cb7bb73a0808220703k46c747d3u2e5970da5fafa2be@mail.gmail.com>
+References: <200808221256.21805.jnareb@gmail.com>
+	 <200808221501.54908.jnareb@gmail.com>
+	 <cb7bb73a0808220620m10245693pabe49993e91cff3d@mail.gmail.com>
+	 <200808221542.13227.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"Karl =?UTF-8?B?SGFzc2Vsc3Ryw7Zt?=" <kha@treskal.com>
-To: "Catalin Marinas" <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 15:53:57 2008
+Cc: git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 16:05:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWX5E-000362-4M
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 15:53:44 +0200
+	id 1KWXG4-0007s1-H1
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 16:04:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbYHVNwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 09:52:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752271AbYHVNwk
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 09:52:40 -0400
-Received: from smtpgw02.myhostguy.com ([216.10.240.236]:3592 "EHLO
-	smtpgw02.myhostguy.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752087AbYHVNwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 09:52:40 -0400
-Received: from mx252n.mysite4now.com [216.10.248.252] by smtpgw02.myhostguy.com with SMTP;
-   Fri, 22 Aug 2008 06:52:05 -0700
-Received: from ppp118-208-1-137.lns1.bne1.internode.on.net [118.208.1.137] by mx252n.mysite4now.com with SMTP;
-   Fri, 22 Aug 2008 06:51:56 -0700
-In-Reply-To: <b0943d9e0808211535s7b829a13hbf28be8116e856a6@mail.gmail.com>
-X-Mailer: Claws Mail 3.5.0 (GTK+ 2.12.11; x86_64-pc-linux-gnu)
+	id S1751435AbYHVODs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 10:03:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751034AbYHVODr
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 10:03:47 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:45303 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750926AbYHVODr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 10:03:47 -0400
+Received: by gxk9 with SMTP id 9so1148898gxk.13
+        for <git@vger.kernel.org>; Fri, 22 Aug 2008 07:03:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ddFBB3ynQVw+4IZsqVFgNLbK7hXa456oTiBTIxQoc/k=;
+        b=FrwuVZ74KPk2T2DNSbF0WuU96eDzxcbNP4C+Fup8bE5L3IycDyzZIR5aqKVD/D3ymo
+         4DQu5Lhyv6aZZ1qNwv2JOy0cqAQQMqEmX/U2s6ABJZhfoaXqIOmUhFZmRMNitjxWMdxy
+         GCkCFgCZC4xghJHdMX9M7Wec92ZBfVEjj7kaI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=k768om47eAL93vhf0b9PdMU+cy+0oE5lRummmpEA6X3W6GabAKDM2vGtwYv306/eQa
+         lvVOHs2yUwF2DcVuVvsh6cgZSx5DZ8nJq+aH2x5pEvgxMVuTixttuTGpEV85RbakRwUH
+         7DabO75uqcVrYxNsUIZU6KleZ3XqjF3MhxYHI=
+Received: by 10.150.133.18 with SMTP id g18mr1884180ybd.137.1219413826154;
+        Fri, 22 Aug 2008 07:03:46 -0700 (PDT)
+Received: by 10.150.155.12 with HTTP; Fri, 22 Aug 2008 07:03:41 -0700 (PDT)
+In-Reply-To: <200808221542.13227.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93300>
 
-On Thu, 21 Aug 2008 23:35:43 +0100
-"Catalin Marinas" <catalin.marinas@gmail.com> wrote:
-> 
-> I'm not that versed in building debian packages but the .changes file
-> generated is still reported as "i386" rather than "all". Is this
-> expected?
+On Fri, Aug 22, 2008 at 3:42 PM, Jakub Narebski <jnareb@gmail.com> wrote:
 >
+> This might be good idea, but for the two following reasons: a) it makes
+> code more complicated, b) it is inconsistent, because ref type would
+> be saved in refname then stripped in format_ref_marker, while indirection
+> would be saved in git_get_references; consistent would be
+> ["tags", "v1.5.0", 1].
 
-I'm seeing the same issue by running dpkg-buildpackage.  However, I
-tried building other arch-independent packages from source and still
-got the same problem.  I suspect I might not be using the right set of
-commands to generate the .changes file.
+Ah, I'll keep that in mind for future enhancements.
 
-Since it is now packaged by Debian is it still necessary to be
-maintaining Debian packaging?
+> Thanks for your work on improving gitweb.
 
-Having a look at the Debian version, they have made quite a few changes
-against our packaging.  It might be worth getting some patches from
-them that are not specific to Debian policy (like the setup of bash
-completion).
+My pleasure, I actually have a long list of patches in store and I
+hope to be able to push them through for the next release :)
 
-Regardless, it might be best to leave commit cf7b0b90 for now.
-
-> Thanks.
-> 
 
 -- 
-Daniel White
+Giuseppe "Oblomov" Bilotta
