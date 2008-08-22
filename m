@@ -1,82 +1,88 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+From: A Large Angry SCM <gitzilla@gmail.com>
 Subject: Re: Suggestion: "man git clone"
-Date: Fri, 22 Aug 2008 13:02:57 +0200
-Message-ID: <g8m6d1$7nf$1@ger.gmane.org>
-References: <48ACB29C.7000606@zytor.com>
+Date: Fri, 22 Aug 2008 07:37:52 -0400
+Message-ID: <48AEA510.6040004@gmail.com>
+References: <48ACB29C.7000606@zytor.com> <48ACB5F4.3000905@sneakemail.com> <48AD99DF.5090802@zytor.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 22 13:04:35 2008
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?IlBldGVyIFZhbGRlbWFyIE3DuHJjaCAoTGlzdHMpIg==?= 
+	<4ux6as402@sneakemail.com>, git@vger.kernel.org
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 13:39:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWURJ-0005w6-5f
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 13:04:21 +0200
+	id 1KWUyz-0002lm-P8
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 13:39:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753755AbYHVLDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 07:03:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753551AbYHVLDR
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 07:03:17 -0400
-Received: from main.gmane.org ([80.91.229.2]:56810 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753346AbYHVLDQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 07:03:16 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KWUQ5-000716-JA
-	for git@vger.kernel.org; Fri, 22 Aug 2008 11:03:05 +0000
-Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Aug 2008 11:03:05 +0000
-Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Aug 2008 11:03:05 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <48ACB29C.7000606@zytor.com>
+	id S1752675AbYHVLiF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Aug 2008 07:38:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbYHVLiF
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 07:38:05 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:60544 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752481AbYHVLiD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 07:38:03 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so261977yxm.1
+        for <git@vger.kernel.org>; Fri, 22 Aug 2008 04:38:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=ngmAQBkilqWtNtllds7CQF3JH/ddek5MmhrF/o7TQlk=;
+        b=vQonh4d+sM4lcKJFeDPJviaxDg3wcjrYCoWP4iqN1QavG8L7oQHHog/iPt3OH5748P
+         IAVR4kadq4IuFEJlCjdmkceSkXxyGtutP9n1W6YAMRobZuXyfpKed+ciKaTtGwmgX8AD
+         +bZczFiaGkH/wEsBQZBERuRnMYPsPDi8vp3SY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=wytSiXaI59Ck09ucma9wMLaeW301nWLu4YWIaXmLb0W5eQqFUCpeYEL3lwAOu4WuGL
+         4ITJE6/I3TxJCix+Zpw2PzmtKh3D/yZQNSrrxhERvhj5IjT6hMFKB7hxAM72CWWiii/k
+         hAWcYbiiqo0jOORe0+5mPzn4l43ZbBPECCsxw=
+Received: by 10.150.230.15 with SMTP id c15mr1687056ybh.80.1219405082253;
+        Fri, 22 Aug 2008 04:38:02 -0700 (PDT)
+Received: from ?10.0.0.6? ( [66.177.19.100])
+        by mx.google.com with ESMTPS id 9sm1521278yws.5.2008.08.22.04.37.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 22 Aug 2008 04:38:00 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <48AD99DF.5090802@zytor.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93283>
 
-H. Peter Anvin venit, vidit, dixit 21.08.2008 02:11:
-> Given the recent change of "git-foo" to "git foo", it would be really 
-> nice if one could type, for example:
-> 
-> 	man git clone
-> 
-> and actually get the man page for the git clone command.  There are 
-> quite a few other pieces of software which also could benefit from that 
-> kind of indirection.
-> 
-> Right now the above command shows the man page git(1) followed by 
-> clone(2), which I believe has be classified as utterly useless behaviour...
+H. Peter Anvin wrote:
+> Peter Valdemar M=C3=B8rch (Lists) wrote:
+>>
+>> Sorry man that behaviour is the way "man" works. See "man man".
+>>
+>>   $ git clone --help
+>> or
+>>   $ git help clone
+>>
+>> work right?
+>>
+>> Peter
+>>
+>> P.S: man, there are puns in that...
+>=20
+> I know that that is the way "man" currently works.
+>=20
+> I doubt you find *anyone* who relies on the current behaviour, so I a=
+m=20
+> suggesting changing man.  That's why the man author was on the recipi=
+ent=20
+> list, but you removed it.
 
-The discussion seems to show that altering man and relying on the new
-behaviour is no option, and neither is playing games with man's section
-options.
-
-How about:
-
-- Change all references inside git (warnings etc) from "man git-bla" to
-"git help bla".
-
-- Change all references in the help pages (gitlinks) accordingly.
-
-- Put a warning in the main git man page which redirects the confused
-("If you were looking for the manpage of "git bla" and issued "man git
-bla", please refer to "man git-bla" or "git help bla".'), maybe just
-before the command list there.
-
-This could be supported by an alias mapping "git man" to "git help -m".
-
-I've heard about some other SCMs which have only "scm help bla", so this
-suggestion would be in-line with common usage. [Not that git would have
-to learn from other SCM's ;) ]
-
-Michael
+Actually, the current "man" behavior is very convenient when  you want=20
+to lookup multiple things. And *I* do use that feature.
