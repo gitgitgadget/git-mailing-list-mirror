@@ -1,78 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Linux 2.6.27-rc3: kernel BUG at mm/vmalloc.c - bisected
-Date: Fri, 22 Aug 2008 14:05:21 -0700
-Message-ID: <7v7ia8ahgu.fsf@gitster.siamese.dyndns.org>
-References: <48A36838.3050309@hp.com>
- <20080819124602.9e8e69f7.akpm@linux-foundation.org> <48AEDD3D.4060507@hp.com>
- <20080822092549.ddcb7e79.akpm@linux-foundation.org>
- <20080822171651.GP10544@machine.or.cz>
- <20080822105136.a8432875.akpm@linux-foundation.org>
+Subject: Re: [PATCH] allow user aliases for the --author parameter
+Date: Fri, 22 Aug 2008 14:09:35 -0700
+Message-ID: <7vzln492pc.fsf@gitster.siamese.dyndns.org>
+References: <g8jbvd$18k$1@ger.gmane.org>
+ <20080821200255.GB27705@coredump.intra.peff.net> <48AE786C.20201@fastmail.fm>
+ <20080822165047.GA3339@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Alan.Brunelle@hp.com,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org
-To: Andrew Morton <akpm@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Aug 22 23:06:43 2008
+Cc: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>,
+	Alex Riesen <fork0@users.sourceforge.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 22 23:10:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWdq9-0004L8-NR
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 23:06:38 +0200
+	id 1KWduK-0005TN-5x
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 23:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753042AbYHVVFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 17:05:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751978AbYHVVFc
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 17:05:32 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33121 "EHLO
+	id S1753366AbYHVVJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 17:09:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751958AbYHVVJu
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 17:09:50 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47646 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752684AbYHVVFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 17:05:32 -0400
+	with ESMTP id S1753149AbYHVVJt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 17:09:49 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EF20D63C9F;
-	Fri, 22 Aug 2008 17:05:29 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0836865363;
+	Fri, 22 Aug 2008 17:09:48 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 3B06563C9A; Fri, 22 Aug 2008 17:05:23 -0400 (EDT)
-In-Reply-To: <20080822105136.a8432875.akpm@linux-foundation.org> (Andrew
- Morton's message of "Fri, 22 Aug 2008 10:51:36 -0700")
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3E1E165361; Fri, 22 Aug 2008 17:09:43 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0D2CDF86-708E-11DD-8118-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A6FC6302-708E-11DD-97EB-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93365>
 
-Andrew Morton <akpm@linux-foundation.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Fri, 22 Aug 2008 19:16:51 +0200
-> Petr Baudis <pasky@suse.cz> wrote:
+>> For git commit --author abbreviations at least I would typically need
+>> only very few entries (be it per repo or globally), which means they can
+>> be much shorter (than my mua aliases) in order to be unique, and I don't
+>> really want an extra file for that.
 >
->> On Fri, Aug 22, 2008 at 09:25:49AM -0700, Andrew Morton wrote:
-> ...
->> > urgh, it's irritating when git-bisect directs you to a merge commit - it
->> > hasn't done it for me for ages.
->> 
->> Hmm, but doesn't that happen only when it's actually really the merge
->> commit that introduces the bug? Both parents of the merge commit were
->> marked as good by the user, so...
+> I think this depends on your situation. In your case, it sounds like you
+> want to configure a few names that frequently have --author fields for
+> your specific workflow. For me, even though only 1% of the people in my
+> mua's alias file might send me patches, 99% of the people I would want
+> to use --author on are in my mua's alias file.
 >
-> A merge commit doesn't contain any kernel changes?  It's the individual
-> commits (aka "patches") which were in that merge which broke stuff. 
-> Confused.
->
-> We're trying to dive inside that merge commit to find out which of the
-> real commits caused the regression.
+> So while there are may only be a few needed entries, they are already
+> there for me. Of course, I don't really use --author much, since most
+> people I talk to are already git users. ;) So I am extrapolating a bit.
 
-You may find neither parents were buggy, but the result of the merge is.
+Another potential source of this information is the existing commits.  If
+you are communicating with the same set of people already, you already
+have the information in your repository.  I suspect Michael's "selected
+few co-workers that would comfortably fit in a small list of config
+entries without need for any external text file" use case would be better
+served by an approach to look into existing commits.
 
-A trivial example is when one branch changes the semantics of an existing
-function and converts all the call sites to the updated semantics, while
-the other branch adds a new call site that still relies on the old
-behaviour of that function.  The merge most likely won't textually
-conflict, and neither git merge nor quilt patch would report conflicts,
-but the end result is that the new call site added by the latter branch
-now gets an unexpected outcome from the function and can misbehave.  You
-cannot blame the breakage to either branch for such a breakage.
+I often use "git who Jeff" alias to fill the recipient of my e-mails with
+this alias:
+
+    [alias]
+        who = "!sh -c 'git log -1 --pretty=\"format:%an <%ae>\" --author=\"$1\"' -"
+        one = "!sh -c 'git show -s --pretty=\"format:%h (%s, %ai\" \"$@\" | sed -e \"s/ [012][0-9]:[0-5][0-9]:[0-5][0-9] [-+][0-9][0-9][0-9][0-9]$/)/\"' -"
