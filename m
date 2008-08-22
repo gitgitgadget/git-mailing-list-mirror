@@ -1,73 +1,45 @@
-From: Derek Fawcus <dfawcus@cisco.com>
-Subject: Re: Suggestion: "man git clone"
-Date: Fri, 22 Aug 2008 16:03:53 +0100
-Message-ID: <20080822150353.GC13490@cisco.com>
-References: <48ACB29C.7000606@zytor.com> <g8m6d1$7nf$1@ger.gmane.org>
+From: Brian Ericson <bme@visi.com>
+Subject: teach git diff -v/--invert-match?
+Date: Fri, 22 Aug 2008 09:51:16 -0500
+Message-ID: <48AED264.60600@visi.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 22 17:07:56 2008
+X-From: git-owner@vger.kernel.org Fri Aug 22 17:08:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWYE4-0007B1-RE
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 17:06:57 +0200
+	id 1KWYEU-0007SJ-A2
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 17:07:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751530AbYHVPFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 11:05:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751519AbYHVPFw
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 11:05:52 -0400
-Received: from ams-iport-1.cisco.com ([144.254.224.140]:16569 "EHLO
-	ams-iport-1.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751508AbYHVPFw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 11:05:52 -0400
-X-IronPort-AV: E=Sophos;i="4.32,252,1217808000"; 
-   d="scan'208";a="17964769"
-Received: from ams-dkim-2.cisco.com ([144.254.224.139])
-  by ams-iport-1.cisco.com with ESMTP; 22 Aug 2008 15:05:50 +0000
-Received: from ams-core-1.cisco.com (ams-core-1.cisco.com [144.254.224.150])
-	by ams-dkim-2.cisco.com (8.12.11/8.12.11) with ESMTP id m7MF5oYK003686
-	for <git@vger.kernel.org>; Fri, 22 Aug 2008 17:05:50 +0200
-Received: from edi-view2.cisco.com (edi-view2.cisco.com [64.103.71.156])
-	by ams-core-1.cisco.com (8.13.8/8.13.8) with ESMTP id m7MF5oV8011036
-	for <git@vger.kernel.org>; Fri, 22 Aug 2008 15:05:50 GMT
-Received: from dfawcus-laptop (localhost [127.0.0.1]) by edi-view2.cisco.com (8.11.2/CISCO.WS.1.2) with ESMTP id m7MF5nX01237 for <git@vger.kernel.org>; Fri, 22 Aug 2008 16:05:49 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <g8m6d1$7nf$1@ger.gmane.org>
-User-Agent: Mutt/1.4.2.3i
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; l=668; t=1219417550; x=1220281550;
-	c=relaxed/simple; s=amsdkim2001;
-	h=Content-Type:From:Subject:Content-Transfer-Encoding:MIME-Version;
-	d=cisco.com; i=dfawcus@cisco.com;
-	z=From:=20Derek=20Fawcus=20<dfawcus@cisco.com>
-	|Subject:=20Re=3A=20Suggestion=3A=20=22man=20git=20clone=22
-	|Sender:=20;
-	bh=eXuA2OgWEqHDencD+zBzAKtbyQAJYd5dCtmS4/VDIx0=;
-	b=incvwwuHJJmXNLUVmQ9AtaMO2PjoXBe35K/1U7fb92mlqZ70eD3jsmmgD3
-	i0tMu1a39CQ8MGm0GhGGguFb+BFO0VZtWBdz1KzFLXAmQH4xF9VYE0rqy2H/
-	CA5cpDQQaE;
-Authentication-Results: ams-dkim-2; header.From=dfawcus@cisco.com; dkim=pass (
-	sig from cisco.com/amsdkim2001 verified; ); 
+	id S1751759AbYHVPGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 11:06:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751817AbYHVPGS
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 11:06:18 -0400
+Received: from mailfront1.g2host.com ([208.42.176.212]:34882 "EHLO g2host.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751722AbYHVPGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 11:06:17 -0400
+X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Aug 2008 11:06:17 EDT
+Received: from [209.98.56.25] (account bme@visi.com [209.98.56.25] verified)
+  by mailfront1.g2host.com (CommuniGate Pro SMTP 5.1.16)
+  with ESMTPA id 63692444 for git@vger.kernel.org; Fri, 22 Aug 2008 09:51:16 -0500
+User-Agent: Thunderbird 2.0.0.16 (X11/20080805)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93308>
 
-On Fri, Aug 22, 2008 at 01:02:57PM +0200, Michael J Gruber wrote:
-> I've heard about some other SCMs which have only "scm help bla", so this
-> suggestion would be in-line with common usage. [Not that git would have
-> to learn from other SCM's ;) ]
+I'm wondering what it would take to teach git diff to invert the -S 
+string (like git grep).
 
-Clearcase - commands such as 'cleartool describe',  man page in ct+describe.1
-
-Has 'cleartool help describe' (and 'cleartool describe -help') which gives a
-usage summary,  and 'cleartool man describe' (or 'man ct+describe') for the
-man page.
-
-So basically the same solution,  but a slightly different choice/use for keywords.
-
-(and if one has an alias 'ct=cleartool',  it seems to make more sense).
-
-DF
+I'm finding git diff -S<string> [--pickaxe-regex] to be really useful, 
+but find I have cases where I want to ignore differences.  For example, 
+I might not care if the only changes to a Java file, for example, are 
+related to import statements.  I'd like to be able to do something like 
+"git diff -S'^import' --pickaxe-regex -v".  I'll admit I can get by with 
+something like "git diff -S'^[^i]' --pickaxe-regex", but am pining for 
+-v/--invert-match.
