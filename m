@@ -1,65 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Linux 2.6.27-rc3: kernel BUG at mm/vmalloc.c - bisected
-Date: Fri, 22 Aug 2008 17:21:21 -0400
-Message-ID: <20080822212121.GA31546@coredump.intra.peff.net>
-References: <48A36838.3050309@hp.com> <20080819124602.9e8e69f7.akpm@linux-foundation.org> <48AEDD3D.4060507@hp.com> <20080822092549.ddcb7e79.akpm@linux-foundation.org> <20080822171651.GP10544@machine.or.cz> <20080822105136.a8432875.akpm@linux-foundation.org> <7v7ia8ahgu.fsf@gitster.siamese.dyndns.org> <20080822141651.fe16ed99.akpm@linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: nicer frontend to get rebased tree?
+Date: Fri, 22 Aug 2008 14:23:33 -0700
+Message-ID: <7vvdxs7nhm.fsf@gitster.siamese.dyndns.org>
+References: <20080822174655.GP23334@one.firstfloor.org>
+ <alpine.LFD.1.10.0808221053080.3487@nehalem.linux-foundation.org>
+ <20080822182718.GQ23334@one.firstfloor.org>
+ <alpine.LFD.1.10.0808221233100.3487@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, pasky@suse.cz,
-	Alan.Brunelle@hp.com, linux-kernel@vger.kernel.org,
-	git@vger.kernel.org
-To: Andrew Morton <akpm@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Aug 22 23:22:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Andi Kleen <andi@firstfloor.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Aug 22 23:24:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWe5V-0001Fk-1O
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 23:22:29 +0200
+	id 1KWe7h-00028Y-FL
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 23:24:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754957AbYHVVVY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 17:21:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753203AbYHVVVY
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 17:21:24 -0400
-Received: from peff.net ([208.65.91.99]:1293 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751618AbYHVVVX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 17:21:23 -0400
-Received: (qmail 25432 invoked by uid 111); 22 Aug 2008 21:21:22 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 22 Aug 2008 17:21:22 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Aug 2008 17:21:21 -0400
-Content-Disposition: inline
-In-Reply-To: <20080822141651.fe16ed99.akpm@linux-foundation.org>
+	id S1758835AbYHVVXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 17:23:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758751AbYHVVXk
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 17:23:40 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51288 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758648AbYHVVXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 17:23:39 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BF348690E9;
+	Fri, 22 Aug 2008 17:23:38 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 1ACD5690E8; Fri, 22 Aug 2008 17:23:34 -0400 (EDT)
+In-Reply-To: <alpine.LFD.1.10.0808221233100.3487@nehalem.linux-foundation.org> (Linus
+ Torvalds's message of "Fri, 22 Aug 2008 12:36:58 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 962679BC-7090-11DD-8800-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93374>
 
-On Fri, Aug 22, 2008 at 02:16:51PM -0700, Andrew Morton wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Sure, but
-> 
-> a) whoever added a change like that without also causing the build to
->    break is slappable and
-
-Well, the point is to find out _who_ to slap. ;)
-
-> b) there are now two commits (one in each branch) either one of
->    which, when applied on top of the other branch will introduce the
->    regression.
-> 
->    That's useful infomation, but we don't know how to get
->    git-bisect to give it to us.
+> On Fri, 22 Aug 2008, Andi Kleen wrote:
+>> 
+>> Well git fetch does nothing by itself.
 >
-> It's pretty simple.  If git-bisect tells us that the regression was
-> introduced by a merge commit, we want to perform a bisection within
-> that merge's individual commits.
+> Git fetch does exactly what it should do by itself. 
+>
+> If you think it does "nothing", you're really confused.
+>
+> It updates the "remote" branches - the ones you are downlaoding.
+>
+>> Sorry that's what I though initially too. But that's wrong.  Just clone
+>> e.g. linux-next and then try to update it with pull a day later.  
+>
+> You SHOULD NOT DO THAT!
+>
+> linux-next is not a tree that you can track. It's a tree that you can 
+> fetch _once_ and then throw away.
+>
+> So what you can do is to "fetch" linux-next, and test it. But you MUST 
+> NEVER EVER use it for anything else. You can't do development on it, you 
+> cannot rebase onto it, you can't do _anything_ with it.
 
-I mentioned linearizing the two lines of development in another
-message in this thread. But there are, of course, two linearizations,
-neither of which might be possible to generate automatically, and one
-might give you a better answer than the other.
+Except perhaps if you are maintaining your own set of patches on top of
+"last official release from Linus", you can test merge your changes into
+the tip of linux-next of the day and make sure you are in good shape.
 
--Peff
+Of course you need to discard the test merge after doing so. 
+
+An obvious question I can foresee is "What if I had conflicts in the test
+merge, and have to resolve it to see if my changes still work?  I'd
+want to rebase so that I do not have to resolve the conflict again when
+linux-next matures and gets into Linus's tree.  Now you tell me not to
+rebase onto it.  What should I do?"
+
+My tentative answer is "don't worry, rerere will help you next time", but
+there may be better options.
