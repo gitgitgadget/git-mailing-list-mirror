@@ -1,86 +1,65 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] templates/Makefile: install is unnecessary, just use mkdir
- -p
-Date: Thu, 21 Aug 2008 19:31:50 -0500
-Message-ID: <y-OStBu9jZ4ghBeO7Duf6UrkhSEZFsB9o5V_P-EgCcq3k1diXe1EAA@cipher.nrlssc.navy.mil>
-References: <7vhc9hlwt3.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Suggestion: "man git clone"
+Date: Thu, 21 Aug 2008 20:40:52 -0400
+Message-ID: <20080822004052.GA30476@coredump.intra.peff.net>
+References: <48ACB29C.7000606@zytor.com> <48ADE2FF.4080704@acm.org> <48ADF542.9010105@zytor.com> <48AE035C.8000504@acm.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Gerrit Pape <pape@smarden.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 02:33:11 2008
+Content-Type: text/plain; charset=utf-8
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Federico Lucifredi <flucifredi@acm.org>
+X-From: git-owner@vger.kernel.org Fri Aug 22 02:42:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWKaR-0001gg-4L
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 02:33:07 +0200
+	id 1KWKj2-0003oz-Df
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 02:42:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754004AbYHVAcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2008 20:32:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753471AbYHVAcA
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 20:32:00 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:57215 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753206AbYHVAb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2008 20:31:59 -0400
-Received: by mail.nrlssc.navy.mil id m7M0VpRm006324; Thu, 21 Aug 2008 19:31:51 -0500
-In-Reply-To: <7vhc9hlwt3.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 22 Aug 2008 00:31:50.0834 (UTC) FILETIME=[78126120:01C903EE]
+	id S1754577AbYHVAkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2008 20:40:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754440AbYHVAkz
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Aug 2008 20:40:55 -0400
+Received: from peff.net ([208.65.91.99]:3164 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751826AbYHVAkz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2008 20:40:55 -0400
+Received: (qmail 11148 invoked by uid 111); 22 Aug 2008 00:40:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 21 Aug 2008 20:40:54 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Aug 2008 20:40:52 -0400
+Content-Disposition: inline
+In-Reply-To: <48AE035C.8000504@acm.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93237>
 
-From: Junio C Hamano <gitster@pobox.com>
+On Thu, Aug 21, 2008 at 08:07:56PM -0400, Federico Lucifredi wrote:
 
-The native install on some platforms (namely IRIX 6.5) treats non-absolute
-paths as being relative to the root directory rather than relative to
-the current directory. Work around this by avoiding install in this case
-since it is unnecessary, and instead depend on the local umask setting
-and use mkdir.
+> I am all for bass-ackwards compatibility, and I think the suggestion of  
+> going on "man foo bar" :
+>
+>  1) look for foo-bar; if success, terminate search
+>  2) look for foo
+>  3) look for bar
+>  ....
+>
+> may be acceptable - I don't see drawbacks at a first glance, and it would 
+> allow for groups of pages to be meaningful.
 
-Tested-by: Brandon Casey <casey@nrlssc.navy.mil>
----
+Well, the drawback is that there exist X-Y such that X and Y both have
+manpages (e.g., cvs-debc on my debian box). So we are assuming that the
+risk is acceptably low of somebody asking for "man X Y", wanting two
+manpages, and that X and Y fit this pattern.
 
+Personally I have never ever wanted to see two manpages from one man
+invocation, so I have no real problem with that assumption.
 
-Junio C Hamano wrote:
+> Are you willing to put your patch where your mouth is? :-)
 
-> I do not see absolutely any reason to use install there.
-> 
-> I have to wonder why 9907721 (templates/Makefile: don't depend on local
-> umask setting, 2008-02-28) did not do this instead:
+I've never looked at man code before, but there seem to be at least two
+man packages for Linux. My boxes have man-db 2.5.2.
 
-works for me.
-
--brandon
-
-
- templates/Makefile |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/templates/Makefile b/templates/Makefile
-index cc3fc30..0722a92 100644
---- a/templates/Makefile
-+++ b/templates/Makefile
-@@ -23,13 +23,13 @@ all: boilerplates.made custom
- 
- bpsrc = $(filter-out %~,$(wildcard *--*))
- boilerplates.made : $(bpsrc)
--	$(QUIET)ls *--* 2>/dev/null | \
-+	$(QUIET)umask 022 && ls *--* 2>/dev/null | \
- 	while read boilerplate; \
- 	do \
- 		case "$$boilerplate" in *~) continue ;; esac && \
- 		dst=`echo "$$boilerplate" | sed -e 's|^this|.|;s|--|/|g'` && \
- 		dir=`expr "$$dst" : '\(.*\)/'` && \
--		$(INSTALL) -d -m 755 blt/$$dir && \
-+		mkdir -p blt/$$dir && \
- 		case "$$boilerplate" in \
- 		*--) ;; \
- 		*) cp -p $$boilerplate blt/$$dst ;; \
--- 
-1.6.0.21.g35a2e
+-Peff
