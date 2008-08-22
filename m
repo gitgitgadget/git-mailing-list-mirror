@@ -1,83 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: nicer frontend to get rebased tree?
-Date: Fri, 22 Aug 2008 14:23:33 -0700
-Message-ID: <7vvdxs7nhm.fsf@gitster.siamese.dyndns.org>
-References: <20080822174655.GP23334@one.firstfloor.org>
- <alpine.LFD.1.10.0808221053080.3487@nehalem.linux-foundation.org>
- <20080822182718.GQ23334@one.firstfloor.org>
- <alpine.LFD.1.10.0808221233100.3487@nehalem.linux-foundation.org>
+From: Brian Ericson <bme@visi.com>
+Subject: Re: teach git diff -v/--invert-match?
+Date: Fri, 22 Aug 2008 16:29:31 -0500
+Message-ID: <48AF2FBB.2080401@visi.com>
+References: <48AED264.60600@visi.com> <20080822193947.GA31322@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andi Kleen <andi@firstfloor.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Aug 22 23:24:57 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 22 23:30:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWe7h-00028Y-FL
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 23:24:45 +0200
+	id 1KWeDQ-0004XB-TF
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 23:30:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758835AbYHVVXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 17:23:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758751AbYHVVXk
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 17:23:40 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51288 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758648AbYHVVXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 17:23:39 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BF348690E9;
-	Fri, 22 Aug 2008 17:23:38 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 1ACD5690E8; Fri, 22 Aug 2008 17:23:34 -0400 (EDT)
-In-Reply-To: <alpine.LFD.1.10.0808221233100.3487@nehalem.linux-foundation.org> (Linus
- Torvalds's message of "Fri, 22 Aug 2008 12:36:58 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 962679BC-7090-11DD-8800-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1753767AbYHVV3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 17:29:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752386AbYHVV3g
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 17:29:36 -0400
+Received: from mailfront2.g2host.com ([208.42.176.213]:48553 "EHLO g2host.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753295AbYHVV3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 17:29:35 -0400
+Received: from [209.98.56.25] (account bme@visi.com [209.98.56.25] verified)
+  by mailfront2.g2host.com (CommuniGate Pro SMTP 5.1.16)
+  with ESMTPA id 62156663; Fri, 22 Aug 2008 16:29:34 -0500
+User-Agent: Thunderbird 2.0.0.16 (X11/20080805)
+In-Reply-To: <20080822193947.GA31322@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93375>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+I was just working on a reply to my own email as I realized it was only 
+dumb-luck that
+converted 1200 noisy changes into a couple of dozen.  "-S" matches only 
+the string
+itself, not the line the string resides on.  So, -Sxyz will match if 
+"xyz" itself was
+added or deleted in the diff (if "xyz" is on a line that's changed but 
+did not itself change,
+it won't match).  Funny that I actually knew this -- I use it to look for
+System.out.println additions among other things.
 
-> On Fri, 22 Aug 2008, Andi Kleen wrote:
->> 
->> Well git fetch does nothing by itself.
->
-> Git fetch does exactly what it should do by itself. 
->
-> If you think it does "nothing", you're really confused.
->
-> It updates the "remote" branches - the ones you are downlaoding.
->
->> Sorry that's what I though initially too. But that's wrong.  Just clone
->> e.g. linux-next and then try to update it with pull a day later.  
->
-> You SHOULD NOT DO THAT!
->
-> linux-next is not a tree that you can track. It's a tree that you can 
-> fetch _once_ and then throw away.
->
-> So what you can do is to "fetch" linux-next, and test it. But you MUST 
-> NEVER EVER use it for anything else. You can't do development on it, you 
-> cannot rebase onto it, you can't do _anything_ with it.
+Interestingly, if I wanted to know if an import changed (on top of 
+knowing if imports were
+added or deleted), eg:
+-import foo;
++import bar;
 
-Except perhaps if you are maintaining your own set of patches on top of
-"last official release from Linus", you can test merge your changes into
-the tip of linux-next of the day and make sure you are in good shape.
+I couldn't tell you how to do it.  The string "import" didn't change.  
+I'd've guessed that
+"-S'import.*;' --pickaxe-regex" would have been sufficient, but that 
+doesn't work.
 
-Of course you need to discard the test merge after doing so. 
+Jeff King wrote:
+> On Fri, Aug 22, 2008 at 09:51:16AM -0500, Brian Ericson wrote:
+>
+>   
+>> I'm wondering what it would take to teach git diff to invert the -S  
+>> string (like git grep).
+>>     
+>
+> I think you would have to figure out the desired semantics first.
+>   
+I think mostly what I want is a happy marriage between git diff & git 
+grep so that if the
+changed lines matched (or didn't match) the file would show up (or 
+not).  I'd like to grep
+added and removed lines (the diff itself) for a pattern and either 
+include or exclude the file
+based on matches.
+>   
+>> I'm finding git diff -S<string> [--pickaxe-regex] to be really useful,  
+>> but find I have cases where I want to ignore differences.  For example, I 
+>> might not care if the only changes to a Java file, for example, are  
+>> related to import statements.  I'd like to be able to do something like  
+>> "git diff -S'^import' --pickaxe-regex -v".  I'll admit I can get by with  
+>> something like "git diff -S'^[^i]' --pickaxe-regex", but am pining for  
+>> -v/--invert-match.
+>>     
+>
+> I would have thought "-v" meant "match any changes which do not have
+> this pattern". But you want "match any changes that have any line which
+> does not have this pattern."
+>   
+Right.  Good summary!  It's probably not accurate to use "-S" for my 
+interpretation unless
+--pickaxe-regex behaved more as I outlined above.  It's probably a 
+subtle enough difference
+> IOW, mine would not match any changes which used an import statement,
+> whereas yours would not match any changes which are _only_ import
+> statements.
+>   
+The current behavior seems to work well to answer questions like "has 
+somebody added
+a System.out.println", I'd like it to be able to ignore or consider 
+files based on line changes
+that contain a string where the string itself did not change.
 
-An obvious question I can foresee is "What if I had conflicts in the test
-merge, and have to resolve it to see if my changes still work?  I'd
-want to rebase so that I do not have to resolve the conflict again when
-linux-next matures and gets into Linus's tree.  Now you tell me not to
-rebase onto it.  What should I do?"
-
-My tentative answer is "don't worry, rerere will help you next time", but
-there may be better options.
+> -Peff
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+>
+>   
