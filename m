@@ -1,132 +1,88 @@
-From: Charles O'Farrell <charleso@charleso.org>
-Subject: [JGIT PATCH 4/4] Added extra javadoc for delete to significant RefUpdate results
-Date: Sat, 23 Aug 2008 08:45:47 +1000
-Message-ID: <1219445147-6801-5-git-send-email-charleso@charleso.org>
-References: <1219445147-6801-1-git-send-email-charleso@charleso.org>
- <1219445147-6801-2-git-send-email-charleso@charleso.org>
- <1219445147-6801-3-git-send-email-charleso@charleso.org>
- <1219445147-6801-4-git-send-email-charleso@charleso.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Added details about resolving conflicts
+Date: Fri, 22 Aug 2008 15:49:13 -0700
+Message-ID: <7vtzdc64ye.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Dan Hensgen <dan@methodhead.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 23 00:47:40 2008
+X-From: git-owner@vger.kernel.org Sat Aug 23 00:50:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWfPr-0000Sb-ET
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 00:47:35 +0200
+	id 1KWfSa-0001OM-7p
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 00:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753591AbYHVWqP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 18:46:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753731AbYHVWqO
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 18:46:14 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:5340 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753504AbYHVWqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 18:46:11 -0400
-Received: by py-out-1112.google.com with SMTP id p76so472265pyb.10
-        for <git@vger.kernel.org>; Fri, 22 Aug 2008 15:46:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :message-id:x-mailer:in-reply-to:references:sender;
-        bh=j73WpDYuat0FLTuU/mI4AiOrV/5usF3WL+CDntmb/wg=;
-        b=LuBGqVmfgzZk34MOUcZ8nEvrv5V4amimzlTUzRRnIqNNmRLIvZavLrDmCr+cBRWj8v
-         U6H4gZwbPJhFZTKVNqPn7xhAXSSBCX33of1rpMzwKdk2XhoZ85ExIsKgNnrnE1d9YYsp
-         5s+Jd5OyeEn+0i4NYDxhzYa7qku1BWqOngD4k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:x-mailer:in-reply-to:references
-         :sender;
-        b=wxIogwsjmx+7Tgq9b9Mmd3LRLMAzn5rDlwvbeNRUBXN0TA4aKB0P8zjnOpEcpEBRzc
-         mmVmz8vjnmVYhdDL1kmkl7M3l022s0LHoBI3UyCokQGfFkH0ito9wmvZkMnDRh3B7DCQ
-         VUp5oglUPEd7F9mA/8HPjE8m3apmS0ULl94WI=
-Received: by 10.114.12.9 with SMTP id 9mr1614760wal.121.1219445170550;
-        Fri, 22 Aug 2008 15:46:10 -0700 (PDT)
-Received: from localhost.localdomain ( [123.200.197.247])
-        by mx.google.com with ESMTPS id q18sm3549776pog.13.2008.08.22.15.46.07
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 22 Aug 2008 15:46:09 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.49.gea35
-In-Reply-To: <1219445147-6801-4-git-send-email-charleso@charleso.org>
+	id S1753101AbYHVWtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 18:49:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753470AbYHVWtT
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 18:49:19 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42289 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752363AbYHVWtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 18:49:19 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D340069AA8;
+	Fri, 22 Aug 2008 18:49:17 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 31C9069AA4; Fri, 22 Aug 2008 18:49:15 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8D4853A4-709C-11DD-9CD7-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93390>
 
-Signed-off-by: Charles O'Farrell <charleso@charleso.org>
+From: Dan Hensgen <dan@macbook.danhensgen.com>
+Date: Thu, 21 Aug 2008 23:32:00 -0400
+Subject: [PATCH] Added details about resolving conflicts
+
+Signed-off-by: Dan Hensgen <dan@methodhead.com>
 ---
- .../src/org/spearce/jgit/lib/RefUpdate.java        |   16 ++++++++--------
- 1 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
-index 34a784b..525bb62 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
-@@ -52,11 +52,11 @@
- public class RefUpdate {
- 	/** Status of an update request. */
- 	public static enum Result {
--		/** The ref update has not been attempted by the caller. */
-+		/** The ref update/delete has not been attempted by the caller. */
- 		NOT_ATTEMPTED,
+ * This was sent in private to me by mistake; redistributing it for wider
+   comments.
+
+ Documentation/git-merge.txt |   24 ++++++++++++++++++------
+ 1 files changed, 18 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 17a15ac..685e1fe 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -126,13 +126,25 @@ After seeing a conflict, you can do two things:
+    up working tree changes made by 2. and 3.; 'git-reset --hard' can
+    be used for this.
  
- 		/**
--		 * The ref could not be locked for update.
-+		 * The ref could not be locked for update/delete.
- 		 * <p>
- 		 * This is generally a transient failure and is usually caused by
- 		 * another process trying to access the ref at the same time as this
-@@ -69,12 +69,12 @@
- 		 * Same value already stored.
- 		 * <p>
- 		 * Both the old value and the new value are identical. No change was
--		 * necessary.
-+		 * necessary for an update. For delete the branch is removed.
- 		 */
- 		NO_CHANGE,
+- * Resolve the conflicts.  `git diff` would report only the
+-   conflicting paths because of the above 2. and 3.
+-   Edit the working tree files into a desirable shape
+-   ('git mergetool' can ease this task), 'git-add' or 'git-rm'
+-   them, to make the index file contain what the merge result
+-   should be, and run 'git-commit' to commit the result.
++ * Resolve the conflicts.  Git will mark the conflicts in
++   the working tree.  Edit the files into shape and
++   'git-add' to the index.  'git-commit' to seal the deal.
  
- 		/**
--		 * The ref was created locally.
-+		 * The ref was created locally for an update, but ignored for delete.
- 		 * <p>
- 		 * The ref did not exist when the update started, but it was created
- 		 * successfully with the new value.
-@@ -82,7 +82,7 @@
- 		NEW,
++You can work through the conflict with a number of tools:
++
++ * Use a mergetool.  'git mergetool' to launch a graphical
++   mergetool which will work you through the merge.
++
++ * Look at the diffs.  'git diff' will show a three-way diff,
++   highlighting changes from both the HEAD and remote versions.
++
++ * Look at the diffs on their own. 'git log --merge -p <path>'
++   will show diffs first for the HEAD version and then the
++   remote version.
++
++ * Look at the originals.  'git show :1:filename' shows the
++   common ancestor, 'git show :2:filename' shows the HEAD
++   version and 'git show :3:filename' shows the remote version.
  
- 		/**
--		 * The ref had to be forcefully updated.
-+		 * The ref had to be forcefully updated/deleted.
- 		 * <p>
- 		 * The ref already existed but its old value was not fully merged into
- 		 * the new value. The configuration permitted a forced update to take
-@@ -92,7 +92,7 @@
- 		FORCED,
- 
- 		/**
--		 * The ref was updated in a fast-forward way.
-+		 * The ref was updated/deleted in a fast-forward way.
- 		 * <p>
- 		 * The tracking ref already existed and its old value was fully merged
- 		 * into the new value. No history was made unreachable.
-@@ -104,7 +104,7 @@
- 		 * <p>
- 		 * The tracking ref already existed but its old value was not fully
- 		 * merged into the new value. The configuration did not allow a forced
--		 * update to take place, so ref still contains the old value. No
-+		 * update/delete to take place, so ref still contains the old value. No
- 		 * previous history was lost.
- 		 */
- 		REJECTED,
-@@ -117,7 +117,7 @@
- 		REJECTED_CURRENT_BRANCH,
- 
- 		/**
--		 * The ref was probably not updated because of I/O error.
-+		 * The ref was probably not updated/deleted because of I/O error.
- 		 * <p>
- 		 * Unexpected I/O error occurred when writing new ref. Such error may
- 		 * result in uncertain state, but most probably ref was not updated.
--- 
-1.6.0.49.gea35
+ SEE ALSO
+ --------
