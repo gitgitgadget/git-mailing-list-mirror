@@ -1,80 +1,142 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [BUG?] 'git verify-pack -v' on multiple packs fails for all but the first pack
-Date: Fri, 22 Aug 2008 15:27:21 +0200
-Message-ID: <200808221527.21971.johan@herland.net>
-References: <200808221439.31219.johan@herland.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <gitster@pobox.com>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCH v5] gitweb: ref markers link to named shortlogs
+Date: Fri, 22 Aug 2008 15:29:46 +0200
+Message-ID: <1219411786-14073-1-git-send-email-giuseppe.bilotta@gmail.com>
+References: <200808221501.54908.jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 22 15:29:21 2008
+X-From: git-owner@vger.kernel.org Fri Aug 22 15:30:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWWha-0001Rw-Fp
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 15:29:18 +0200
+	id 1KWWik-0001rf-Bl
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 15:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751794AbYHVN2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 09:28:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbYHVN2O
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 09:28:14 -0400
-Received: from sam.opera.com ([213.236.208.81]:37017 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751761AbYHVN2O (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 09:28:14 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m7MDRMkH007567
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 22 Aug 2008 13:27:27 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <200808221439.31219.johan@herland.net>
-Content-Disposition: inline
+	id S1752112AbYHVN31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 09:29:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbYHVN31
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 09:29:27 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:27182 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751768AbYHVN30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 09:29:26 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so256895fgg.17
+        for <git@vger.kernel.org>; Fri, 22 Aug 2008 06:29:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=fImXjSVjixcempKt9y0HkJTosTavcda1ys1OSDiouPU=;
+        b=MIy63DRsWBhJh7mqTZvJC8Q8gLi5FmNV/he8L2HbxOzC61T52O0ufZi6HJGQX4OdFo
+         ercy5RfmOUzijtfkUiqTCj+g6BVp5/+3cFQkDO5LlpgphG6A5UQ+6syrkBLqTyKLCh11
+         VACWbDMwRuxREbQDShEDpQOWRPDbexE76WYfs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=V4UO9sEOe7p53tcE737qx8Lcmqv/eFdm0qir7drfVY6Y60iV8gIppLwwgq8ebfC9GJ
+         S6lHLDySaEvYB77tj79xDOoKfcfM8WARd4t5/xZqZpBZpd+VZVwagqBAioT0GXcHEn3n
+         1kspGoXuYGHE9lXAwiQZyh4AcN+KYbuqK/aSE=
+Received: by 10.86.90.13 with SMTP id n13mr856105fgb.3.1219411764644;
+        Fri, 22 Aug 2008 06:29:24 -0700 (PDT)
+Received: from localhost ( [78.13.49.52])
+        by mx.google.com with ESMTPS id 12sm1290902fgg.0.2008.08.22.06.29.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 22 Aug 2008 06:29:23 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6.3
+In-Reply-To: <200808221501.54908.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93294>
 
-On Friday 22 August 2008, Johan Herland wrote:
-> (I don't have time to look into this right now, but will do so later
-> if nobody comes up with a solution in the meantime...)
->
-> When running 'git verify-pack -v' on multiple packs (.idx files), it
-> fails for all packs, except the first, with exit code 128, and the
-> following single line:
->
-> 	fatal: internal error: pack revindex fubar
->
-> This does not happen when given only a single pack, or when given
-> multiple packs, but without '-v' option.
->
-> To reproduce, simply do:
->
-> 	git verify-pack -v .git/objects/pack/*.idx
->
-> in any repo with more than one pack file.
->
-> This happens with a fairly current 'next' (1.6.0.96.g2fad1). AFAICS,
-> it also happens in v1.6.0.
+This patch turns ref markers for tags and heads into links to
+appropriate views for the ref name. For annotated tags, we link to the
+tag view, while shortlog is used for anything else.
 
-Bisection point to this commit:
+Appropriate changes are made in the CSS to prevent ref markers from
+being annoyingly blue and underlined, unless hovered. A visual
+indication of the target view difference is also implemented by making
+annotated tags show up in italic.
 
-commit 1f5c74f6cf918d317c73b328dcd4cf6f55c44d8a
-Author: Nicolas Pitre <nico@cam.org>
-Date:   Mon Jun 23 21:22:14 2008 -0400
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
 
-    call init_pack_revindex() lazily
+As suggested by Jakub Narebski, the git_get_references() format
+gets extended to include the final ^{} for tag objects, and the
+name cleanup and indirection detection is moved to format_ref_marker()
 
-    This makes life much easier for next patch, as well as being more efficient
-    when the revindex is actually not used.
+ gitweb/gitweb.css  |   13 +++++++++++++
+ gitweb/gitweb.perl |   16 +++++++++++++---
+ 2 files changed, 26 insertions(+), 3 deletions(-)
 
-    Signed-off-by: Nicolas Pitre <nico@cam.org>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index 5f4a4b8..3e50060 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -491,6 +491,19 @@ span.refs span {
+ 	border-color: #ffccff #ff00ee #ff00ee #ffccff;
+ }
+ 
++span.refs span a {
++	text-decoration: none;
++	color: inherit;
++}
++
++span.refs span a:hover {
++	text-decoration: underline;
++}
++
++span.refs span.indirect {
++	font-style: italic;
++}
++
+ span.refs span.ref {
+ 	background-color: #aaaaff;
+ 	border-color: #ccccff #0033cc #0033cc #ccccff;
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a0d9272..def4136 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1202,7 +1202,11 @@ sub format_ref_marker {
+ 
+ 	if (defined $refs->{$id}) {
+ 		foreach my $ref (@{$refs->{$id}}) {
++			# this code exploits the fact that non-lightweight tags are the
++			# only indirect objects, and that they are the only objects for which
++			# we want to use tag instead of shortlog as action
+ 			my ($type, $name) = qw();
++			my $indirect = ($ref =~ s/\^\{\}$//);
+ 			# e.g. tags/v2.6.11 or heads/next
+ 			if ($ref =~ m!^(.*?)s?/(.*)$!) {
+ 				$type = $1;
+@@ -1212,8 +1216,14 @@ sub format_ref_marker {
+ 				$name = $ref;
+ 			}
+ 
+-			$markers .= " <span class=\"$type\" title=\"$ref\">" .
+-			            esc_html($name) . "</span>";
++			my $class = $type;
++			if ($indirect) {
++				$class .= " indirect";
++			}
++
++			$markers .= " <span class=\"$class\" title=\"$ref\">" .
++				$cgi->a({-href => href(action=>( $indirect ? "tag" : "shortlog"), hash=>$ref)}, $name) .
++				"</span>";
+ 		}
+ 	}
+ 
+@@ -2035,7 +2045,7 @@ sub git_get_references {
+ 
+ 	while (my $line = <$fd>) {
+ 		chomp $line;
+-		if ($line =~ m!^([0-9a-fA-F]{40})\srefs/($type/?[^^]+)!) {
++		if ($line =~ m!^([0-9a-fA-F]{40})\srefs/($type.*)$!) {
+ 			if (defined $refs{$1}) {
+ 				push @{$refs{$1}}, $2;
+ 			} else {
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+1.5.6.3
