@@ -1,114 +1,160 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv3] gitweb: ref markers link to named shortlogs
-Date: Fri, 22 Aug 2008 10:03:51 +0200
-Message-ID: <1219392231-9568-1-git-send-email-giuseppe.bilotta@gmail.com>
-References: <200808212332.07095.jnareb@gmail.com>
-Cc: Petr Baudis <pasky@ucw.cz>, Jakub Narebski <jnareb@gmail.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 22 10:04:42 2008
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: [PATCH] Don't fail when an existing directory can't be created.
+Date: Fri, 22 Aug 2008 10:08:46 +0200
+Message-ID: <87pro1pj3l.fsf@lysator.liu.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 22 10:09:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWRdQ-00009h-Vz
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 10:04:41 +0200
+	id 1KWRiW-0001cw-0d
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 10:09:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752325AbYHVIDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 04:03:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752155AbYHVIDg
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 04:03:36 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:32471 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752058AbYHVIDd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 04:03:33 -0400
-Received: by ug-out-1314.google.com with SMTP id c2so72810ugf.37
-        for <git@vger.kernel.org>; Fri, 22 Aug 2008 01:03:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=LUkayyxYXJVyqCNz0dyKlvSqK/oNES5OZtr4Uxmbgbc=;
-        b=ph8lCSKpWYHDLVUGKG3rZCiLeydNe9kkYTrosQkvIGe5rOCwl2pZRs9vdsVpeNxi+B
-         /qSjUGg6fH3Lk/bkKpg+0MI4g3mu1/CWNE6RzaRbWSMjI8ukV6BLfl4osPv8ApEdo47f
-         VexNlmWgjA/2Ic23i4vn3KL3tx76BklZrGsa8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=BKYlPt6Wjv3v9jvSizPu9u9h3Qp2eYVre5qcFXCjeALhDCI57VSmtJm6FQmPdBW1U/
-         nOkMgmA6nwPiavMf4G++FE0BU1iitn/EgJtnM+3dOrkcf1/yn0whclRYL1Mk5+cn1S2+
-         Hb/CuIhPbu4Zo7UXWVsR3CqKNJV4a62tA90+Y=
-Received: by 10.67.119.8 with SMTP id w8mr2260980ugm.20.1219392211129;
-        Fri, 22 Aug 2008 01:03:31 -0700 (PDT)
-Received: from localhost ( [78.13.49.52])
-        by mx.google.com with ESMTPS id j27sm1376580ugc.7.2008.08.22.01.03.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 22 Aug 2008 01:03:30 -0700 (PDT)
-X-Mailer: git-send-email 1.5.6.3
-In-Reply-To: <200808212332.07095.jnareb@gmail.com>
+	id S1752613AbYHVIIw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Aug 2008 04:08:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752333AbYHVIIv
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 04:08:51 -0400
+Received: from mail.lysator.liu.se ([130.236.254.3]:52646 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752277AbYHVIIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 04:08:48 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id 626322235DB0
+	for <git@vger.kernel.org>; Fri, 22 Aug 2008 10:08:47 +0200 (CEST)
+Received: from mail.lysator.liu.se ([127.0.0.1])
+	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 17949-01-88; Fri, 22 Aug 2008 10:08:46 +0200 (CEST)
+Received: from krank (unknown [87.96.142.66])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id CC9F2200B2C3;
+	Fri, 22 Aug 2008 10:08:46 +0200 (CEST)
+Received: by krank (Postfix, from userid 1000)
+	id 76B81E4801A; Fri, 22 Aug 2008 10:08:46 +0200 (CEST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93271>
 
-This patch turns ref markers into links to appropriate views for the ref
-name, using the full ref name as hash. Appropriate changes are made in
-the CSS to prevent ref markers to be annoyingly blue and underlined,
-unless hovered on.
-
-For all git ref types it's assumed that the preferred view is named like
-the ref type itself. If the corresponding action is not defined,
-shortlog is used.
-
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+This makes it possible to install in a writable directory not owned by
+the current user.
 ---
+ Documentation/Makefile |    8 ++++----
+ Makefile               |    4 ++--
+ gitk-git/Makefile      |    2 +-
+ templates/Makefile     |   10 +++++-----
+ 4 files changed, 12 insertions(+), 12 deletions(-)
 
-Following Jakub Narebski's suggestions, an underlined :hover is
-added for the ref marker css, and we use $type instead of
-$git_type, sparing ourselves a bunch of git calls.
+I install git in /usr/local/*, to which I have write permission, but
+I'm not necessarily the owner of. The permissions may look something
+like this:
 
-An additional change wrt the previous version is that the full ref
-name is used (to link to the correct object when e.g. a head and a
-tag by the same name exist).
+  drwxrwxr-x 2 root adm 4096 2008-08-07 17:54 /usr/local/bin/
 
- gitweb/gitweb.css  |    9 +++++++++
- gitweb/gitweb.perl |    3 ++-
- 2 files changed, 11 insertions(+), 1 deletions(-)
+To do this I set prefix=3D/usr/local and run "make install".
+Unfortunately, this fails miserably because the install rules insist
+on changing the permissions on any directory it installs to to
+755. This of course fails because I'm not the owner. And even if it
+worked, I wouldn't want it to do that.
 
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index aa0eeca..fadce1b 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -481,6 +481,15 @@ span.refs span {
- 	border-color: #ffccff #ff00ee #ff00ee #ffccff;
- }
- 
-+span.refs span a {
-+	text-decoration: none;
-+	color: inherit;
-+}
-+
-+span.refs span a:hover {
-+	text-decoration: underline;
-+}
-+
- span.refs span.ref {
- 	background-color: #aaaaff;
- 	border-color: #ccccff #0033cc #0033cc #ccccff;
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 90cd99b..77b2442 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1107,7 +1107,8 @@ sub format_ref_marker {
- 			}
- 
- 			$markers .= " <span class=\"$type\" title=\"$ref\">" .
--			            esc_html($name) . "</span>";
-+				$cgi->a({-href => href(action=> $actions{$type} || "shortlog", hash=>$ref)}, $name) .
-+				"</span>";
- 		}
- 	}
- 
--- 
-1.5.6.3
+This patch is just a simple fix to make the install not abort when it
+fails to modify the directory permissions, but I have to ask why it
+tries to do this at all? Most other programs I have built and
+installed do not try to do this.
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 7a2130a..e6271d8 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -87,15 +87,15 @@ man7: $(DOC_MAN7)
+ info: git.info gitman.info
+=20
+ install: man
+-	$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
+-	$(INSTALL) -d -m 755 $(DESTDIR)$(man5dir)
+-	$(INSTALL) -d -m 755 $(DESTDIR)$(man7dir)
++	-$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
++	-$(INSTALL) -d -m 755 $(DESTDIR)$(man5dir)
++	-$(INSTALL) -d -m 755 $(DESTDIR)$(man7dir)
+ 	$(INSTALL) -m 644 $(DOC_MAN1) $(DESTDIR)$(man1dir)
+ 	$(INSTALL) -m 644 $(DOC_MAN5) $(DESTDIR)$(man5dir)
+ 	$(INSTALL) -m 644 $(DOC_MAN7) $(DESTDIR)$(man7dir)
+=20
+ install-info: info
+-	$(INSTALL) -d -m 755 $(DESTDIR)$(infodir)
++	-$(INSTALL) -d -m 755 $(DESTDIR)$(infodir)
+ 	$(INSTALL) -m 644 git.info gitman.info $(DESTDIR)$(infodir)
+ 	if test -r $(DESTDIR)$(infodir)/dir; then \
+ 	  $(INSTALL_INFO) --info-dir=3D$(DESTDIR)$(infodir) git.info ;\
+diff --git a/Makefile b/Makefile
+index e8712e0..e6bb411 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1341,8 +1341,8 @@ gitexec_instdir_SQ =3D $(subst ','\'',$(gitexec_i=
+nstdir))
+ export gitexec_instdir
+=20
+ install: all
+-	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
+-	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
++	-$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
++	-$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 	$(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-upload-arch=
+ive$X '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(MAKE) -C templates DESTDIR=3D'$(DESTDIR_SQ)' install
+diff --git a/gitk-git/Makefile b/gitk-git/Makefile
+index e1b6045..117b841 100644
+--- a/gitk-git/Makefile
++++ b/gitk-git/Makefile
+@@ -41,7 +41,7 @@ all:: gitk-wish $(ALL_MSGFILES)
+=20
+ install:: all
+ 	$(INSTALL) -m 755 gitk-wish '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
+-	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(msgsdir_SQ)'
++	-$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(msgsdir_SQ)'
+ 	$(foreach p,$(ALL_MSGFILES), $(INSTALL) -m 644 $p '$(DESTDIR_SQ)$(msg=
+sdir_SQ)' &&) true
+=20
+ uninstall::
+diff --git a/templates/Makefile b/templates/Makefile
+index 67be379..58f2bdd 100644
+--- a/templates/Makefile
++++ b/templates/Makefile
+@@ -26,10 +26,10 @@ boilerplates.made : $(bpsrc)
+ 	$(QUIET)ls *--* 2>/dev/null | \
+ 	while read boilerplate; \
+ 	do \
+-		case "$$boilerplate" in *~) continue ;; esac && \
+-		dst=3D`echo "$$boilerplate" | sed -e 's|^this|.|;s|--|/|g'` && \
+-		dir=3D`expr "$$dst" : '\(.*\)/'` && \
+-		$(INSTALL) -d -m 755 blt/$$dir && \
++		case "$$boilerplate" in *~) continue ;; esac ; \
++		dst=3D`echo "$$boilerplate" | sed -e 's|^this|.|;s|--|/|g'` ; \
++		dir=3D`expr "$$dst" : '\(.*\)/'` ; \
++		$(INSTALL) -d -m 755 blt/$$dir ; \
+ 		case "$$boilerplate" in \
+ 		*--) ;; \
+ 		*) cp -p $$boilerplate blt/$$dst ;; \
+@@ -46,6 +46,6 @@ clean:
+ 	$(RM) -r blt boilerplates.made
+=20
+ install: all
+-	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(template_instdir_SQ)'
++	-$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(template_instdir_SQ)'
+ 	(cd blt && $(TAR) cf - .) | \
+ 	(cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && umask 022 && $(TAR) xf -=
+)
+--=20
+1.6.0.rc2.7.gbf8a
+
+
+--=20
+David K=C3=A5gedal
