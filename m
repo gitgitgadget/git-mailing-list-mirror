@@ -1,93 +1,71 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] discard revindex data when pack list changes
-Date: Fri, 22 Aug 2008 23:57:04 +0200
-Message-ID: <200808222357.04912.johan@herland.net>
-References: <200808221439.31219.johan@herland.net>
- <200808221527.21971.johan@herland.net>
- <alpine.LFD.1.10.0808221540290.1624@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Don't fail when an existing directory can't be created.
+Date: Fri, 22 Aug 2008 15:35:22 -0700
+Message-ID: <7vbpzk7k5x.fsf@gitster.siamese.dyndns.org>
+References: <87pro1pj3l.fsf@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Aug 22 23:59:00 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Sat Aug 23 00:36:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWeep-0007rL-EK
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 23:58:59 +0200
+	id 1KWfFC-0004zg-NL
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 00:36:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756459AbYHVV5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 17:57:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756453AbYHVV5k
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 17:57:40 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:55836 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756459AbYHVV5j (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 17:57:39 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0K6000G1PVNTXC00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 22 Aug 2008 23:57:29 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K600021VVN5O7C0@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 22 Aug 2008 23:57:05 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K600091KVN5HK31@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Fri, 22 Aug 2008 23:57:05 +0200 (CEST)
-In-reply-to: <alpine.LFD.1.10.0808221540290.1624@xanadu.home>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1751611AbYHVWfa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Aug 2008 18:35:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbYHVWfa
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 18:35:30 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44691 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751247AbYHVWf3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Aug 2008 18:35:29 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D02626444F;
+	Fri, 22 Aug 2008 18:35:28 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id ED2136444E; Fri, 22 Aug 2008 18:35:25 -0400 (EDT)
+In-Reply-To: <87pro1pj3l.fsf@lysator.liu.se> (David =?utf-8?Q?K=C3=A5gedal?=
+ =?utf-8?Q?'s?= message of "Fri, 22 Aug 2008 10:08:46 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9F2794B0-709A-11DD-BCB7-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93383>
 
-On Friday 22 August 2008, Nicolas Pitre wrote:
-> This is needed to fix verify-pack -v with multiple pack arguments.
->
-> Also, in theory, revindex data (if any) must be discarded whenever
-> reprepare_packed_git() is called. In practice this is hard to trigger
-> though.
->
-> Signed-off-by: Nicolas Pitre <nico@cam.org>
+David K=C3=A5gedal <davidk@lysator.liu.se> writes:
 
-Tested-by: Johan Herland <johan@herland.net>
+> This makes it possible to install in a writable directory not owned b=
+y
+> the current user.
+> ---
 
-Thanks. Works for me :)
+Sign-off?
 
-Junio: if you added the my testcase, please squash the following into this 
-patch before applying:
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 7a2130a..e6271d8 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -87,15 +87,15 @@ man7: $(DOC_MAN7)
+>  info: git.info gitman.info
+> =20
+>  install: man
+> -	$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
+> -	$(INSTALL) -d -m 755 $(DESTDIR)$(man5dir)
+> -	$(INSTALL) -d -m 755 $(DESTDIR)$(man7dir)
+> +	-$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
+> +	-$(INSTALL) -d -m 755 $(DESTDIR)$(man5dir)
+> +	-$(INSTALL) -d -m 755 $(DESTDIR)$(man7dir)
 
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 339375a..83abe5f 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -186,7 +186,7 @@ test_expect_success \
- 			test-2-${packname_2}.idx \
- 			test-3-${packname_3}.idx'
- 
--test_expect_failure \
-+test_expect_success \
-     'verify pack -v' \
-     'git verify-pack -v	test-1-${packname_1}.idx \
- 			test-2-${packname_2}.idx \
--- 
-1.6.0.96.g2fad1
-
-
-Have fun! :)
-
-...Johan
-
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Makes me wonder what happens if you failed to create the target
+directory.  Is it deemed to be Ok because the later step of installing =
+the
+contents will fail anyway?
