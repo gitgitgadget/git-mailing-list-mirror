@@ -1,59 +1,78 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Gittogether event?
-Date: Fri, 22 Aug 2008 07:44:33 -0700
-Message-ID: <20080822144433.GF3483@spearce.org>
-References: <20080820151031.GD3483@spearce.org> <200808210432.10544.chriscool@tuxfamily.org> <20080821144537.GM3483@spearce.org> <200808220536.15746.chriscool@tuxfamily.org> <7v7ia9d0of.fsf@gitster.siamese.dyndns.org> <20080822143407.GE3483@spearce.org> <32541b130808220739x632d1590v7894b7dfe94c4de@mail.gmail.com>
+From: Daniel White <daniel@whitehouse.id.au>
+Subject: Re: [StGit] Debian packaging update
+Date: Sat, 23 Aug 2008 01:03:25 +1000
+Message-ID: <20080823010325.33fe9e1c@whitehouse.id.au>
+References: <20080818201036.7c2c00f8@whitehouse.id.au>
+	<b0943d9e0808211535s7b829a13hbf28be8116e856a6@mail.gmail.com>
+	<20080822235154.5e1f979c@whitehouse.id.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	"J.H." <warthog19@eaglescrag.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Sam Vilain <sam.vilain@catalyst.net.nz>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 16:45:48 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	"Karl =?UTF-8?B?SGFzc2Vsc3Ryw7Zt?=" <kha@treskal.com>
+To: "Catalin Marinas" <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 17:06:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWXtS-0006y1-B1
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 16:45:38 +0200
+	id 1KWYCR-0006Tv-KC
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 17:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752909AbYHVOoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 10:44:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752825AbYHVOoe
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 10:44:34 -0400
-Received: from george.spearce.org ([209.20.77.23]:38444 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752744AbYHVOoe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 10:44:34 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 4C0D238375; Fri, 22 Aug 2008 14:44:33 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <32541b130808220739x632d1590v7894b7dfe94c4de@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751460AbYHVPEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 11:04:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751355AbYHVPEJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 11:04:09 -0400
+Received: from smtpgw02.myhostguy.com ([216.10.240.226]:4122 "EHLO
+	smtpgw02.myhostguy.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750998AbYHVPEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 11:04:08 -0400
+Received: from mx252n.mysite4now.com [216.10.248.252] by smtpgw02.myhostguy.com with SMTP;
+   Fri, 22 Aug 2008 08:03:35 -0700
+Received: from ppp118-208-1-137.lns1.bne1.internode.on.net [118.208.1.137] by mx252n.mysite4now.com with SMTP;
+   Fri, 22 Aug 2008 08:03:27 -0700
+In-Reply-To: <20080822235154.5e1f979c@whitehouse.id.au>
+X-Mailer: Claws Mail 3.5.0 (GTK+ 2.12.11; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93306>
 
-Avery Pennarun <apenwarr@gmail.com> wrote:
-> On Fri, Aug 22, 2008 at 10:34 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> >        3: What month/year would be best?
-> >                Option list for next 12 months from Oct 08-Oct 09.
-> 
-> This sort of question usually works better if you rephrase it as a
-> multi-select instead of a radio button:
-> 
->      3: In which of the following months would you be able to attend?
-> (check all that apply)
->                 Option list for next 12 months from Oct 08-Oct 09.
+On Fri, 22 Aug 2008 23:51:54 +1000
+Daniel White <daniel@whitehouse.id.au> wrote:
 
-Oy, yes, thanks, that is what I meant to write, but utterly failed
-to convey.
+> On Thu, 21 Aug 2008 23:35:43 +0100
+> "Catalin Marinas" <catalin.marinas@gmail.com> wrote:
+> > 
+> > I'm not that versed in building debian packages but the .changes
+> > file generated is still reported as "i386" rather than "all". Is
+> > this expected?
+> >
+> 
+> I'm seeing the same issue by running dpkg-buildpackage.  However, I
+> tried building other arch-independent packages from source and still
+> got the same problem.  I suspect I might not be using the right set of
+> commands to generate the .changes file.
+> 
+> Since it is now packaged by Debian is it still necessary to be
+> maintaining Debian packaging?
+> 
+> Having a look at the Debian version, they have made quite a few
+> changes against our packaging.  It might be worth getting some
+> patches from them that are not specific to Debian policy (like the
+> setup of bash completion).
+> 
+> Regardless, it might be best to leave commit cf7b0b90 for now.
+> 
+> > Thanks.
+> > 
+> 
+
+Not that it probably matters much, but I forgot to sign off on the
+changes.  I've re-pushed the changes.
+
+So the commit to ignore would be e4a257f0.
 
 -- 
-Shawn.
+Daniel White
