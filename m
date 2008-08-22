@@ -1,66 +1,158 @@
-From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: Re: [PATCH 3/3] git-add --intent-to-add (-N)
-Date: Fri, 22 Aug 2008 00:32:01 -0500 (CDT)
-Message-ID: <Pine.GSO.4.62.0808220015190.11259@harper.uchicago.edu>
-References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com>
- <alpine.LNX.1.00.0808181512160.19665@iabervon.org> <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0808181628420.19665@iabervon.org> <7viqtukbec.fsf@gitster.siamese.dyndns.org>
- <7v3akykb96.fsf_-_@gitster.siamese.dyndns.org>
- <Pine.GSO.4.62.0808211608020.26161@harper.uchicago.edu>
- <Pine.GSO.4.62.0808212304200.9108@harper.uchicago.edu>
- <alpine.LNX.1.00.0808220023170.19665@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Extend "checkout --track" DWIM to support more cases
+Date: Thu, 21 Aug 2008 22:54:35 -0700
+Message-ID: <7vy72pd278.fsf@gitster.siamese.dyndns.org>
+References: <20080820185028.GA16626@blimp.local>
+ <alpine.DEB.1.00.0808202151320.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <20080820200440.GF16626@blimp.local>
+ <alpine.DEB.1.00.0808202213340.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <20080820202952.GH16626@blimp.local>
+ <7vd4k3nx7m.fsf@gitster.siamese.dyndns.org>
+ <20080821172320.GA5119@blimp.local>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Aug 22 07:33:36 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 07:55:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWPHD-0001kS-0E
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 07:33:35 +0200
+	id 1KWPcj-00068K-Cn
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 07:55:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752064AbYHVFc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 01:32:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbYHVFc1
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 01:32:27 -0400
-Received: from smtp02.uchicago.edu ([128.135.12.75]:56876 "EHLO
-	smtp02.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751298AbYHVFc1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 01:32:27 -0400
-Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
-	by smtp02.uchicago.edu (8.13.8/8.13.8) with ESMTP id m7M5W16a006522;
-	Fri, 22 Aug 2008 00:32:01 -0500
-Received: from localhost (jrnieder@localhost)
-	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m7M5W1Rv011702;
-	Fri, 22 Aug 2008 00:32:01 -0500 (CDT)
-X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
-In-Reply-To: <alpine.LNX.1.00.0808220023170.19665@iabervon.org>
+	id S1752274AbYHVFyo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 01:54:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752427AbYHVFyo
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 01:54:44 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34852 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752253AbYHVFyn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 01:54:43 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9EEBA6289F;
+	Fri, 22 Aug 2008 01:54:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 863A26289A; Fri, 22 Aug 2008 01:54:37 -0400 (EDT)
+In-Reply-To: <20080821172320.GA5119@blimp.local> (Alex Riesen's message of
+ "Thu, 21 Aug 2008 19:23:20 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D0D3BEE4-700E-11DD-8FD3-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93255>
 
-Daniel Barkalow wrote:
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-> On Thu, 21 Aug 2008, Jonathan Nieder wrote:
-[...]
-> > 	$ git add -N a
-> > 	$ git commit
-> > 	error: invalid object e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-> > 	error: Error building trees
-> > 
-> > I think the first error comes from update_one, which creates a tree
-> > object from the index.  It is complaining, because after all, that
-> > object is not in any sha1 file.
-> 
-> I think [1/3] was supposed to make this not an issue, with that particular 
-> object being implicitly in all objects databases.
+> The code handles additionally "refs/remotes/<something>/name",
+> "remotes/<something>/name", and "refs/<namespace>/name".
+>
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
+> ...
+> I just have another quiet evening, so I did that. Johannes, I changed
+> your fix a bit: I see that argv[0] is used later (or if I'm blind and
+> it actually isn't, it may be used in future: I have a feeling that
+> builtint-checkout.c will be popular place).
 
-Wait, is [1/3] meant to create that strong of an illusion?  That is,
-should has_sha1_file pretend the object is present, too?
+Thanks; the documentation looks good to me.
 
-Jonathan
+> +		char *argv0 = argv[0];
+> +		if (!argc || !strcmp(argv0, "--"))
+>  			die ("--track needs a branch name");
+> +		slash = strchr(argv0, '/');
+> +		if (slash && !prefixcmp(argv0, "refs/")) {
+> +			argv0 = slash + 1;
+> +			slash = strchr(argv0, '/');
+> +		}
+> +		if (slash && !prefixcmp(argv0, "remotes/"))
+>  			slash = strchr(slash + 1, '/');
+>  		if (!slash || !slash[1])
+>  			die ("Missing branch name; try -b");
+
+I however wonder if this is clearer.
+
+ * "enum branch_track" was unsigned; comparing equality with -1 was Ok but
+   we couldn't say 0 < opts.track;
+
+ * argv[] is an array of constant strings; cannot point into it with
+   opts.newbranch without making the latter also a constant string.
+
+ * the logic is to strip "refs/" if there is one, "remotes/" if there is
+   one after that, and then strip one level after that unconditionally.
+   No need to look explicitly for a slash while doing the first two steps.
+
+ cache.h            |    1 +
+ builtin-checkout.c |   26 +++++++++++++-------------
+ 2 files changed, 14 insertions(+), 13 deletions(-)
+
+diff --git i/cache.h w/cache.h
+index 928ae9f..a097a95 100644
+--- i/cache.h
++++ w/cache.h
+@@ -451,6 +451,7 @@ enum safe_crlf {
+ extern enum safe_crlf safe_crlf;
+ 
+ enum branch_track {
++	BRANCH_TRACK_UNSPECIFIED = -1,
+ 	BRANCH_TRACK_NEVER = 0,
+ 	BRANCH_TRACK_REMOTE,
+ 	BRANCH_TRACK_ALWAYS,
+diff --git i/builtin-checkout.c w/builtin-checkout.c
+index e95eab9..b380ad6 100644
+--- i/builtin-checkout.c
++++ w/builtin-checkout.c
+@@ -157,7 +157,7 @@ struct checkout_opts {
+ 	int force;
+ 	int writeout_error;
+ 
+-	char *new_branch;
++	const char *new_branch;
+ 	int new_branch_log;
+ 	enum branch_track track;
+ };
+@@ -437,27 +437,27 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 
+ 	git_config(git_default_config, NULL);
+ 
+-	opts.track = -1;
++	opts.track = BRANCH_TRACK_UNSPECIFIED;
+ 
+ 	argc = parse_options(argc, argv, options, checkout_usage,
+ 			     PARSE_OPT_KEEP_DASHDASH);
+ 
+ 	/* --track without -b should DWIM */
+-	if (opts.track && opts.track != -1 && !opts.new_branch) {
+-		char *slash;
+-		if (!argc || !strcmp(argv[0], "--"))
++	if (0 < opts.track && !opts.new_branch) {
++		const char *argv0 = argv[0];
++		if (!argc || !strcmp(argv0, "--"))
+ 			die ("--track needs a branch name");
+-		slash = strchr(argv[0], '/');
+-		if (slash && !prefixcmp(argv[0], "refs/"))
+-			slash = strchr(slash + 1, '/');
+-		if (slash && !prefixcmp(argv[0], "remotes/"))
+-			slash = strchr(slash + 1, '/');
+-		if (!slash || !slash[1])
++		if (!prefixcmp(argv0, "refs/"))
++			argv0 += 5;
++		if (!prefixcmp(argv0, "remotes/"))
++			argv0 += 8;
++		argv0 = strchr(argv0, '/');
++		if (!argv0 || !argv0[1])
+ 			die ("Missing branch name; try -b");
+-		opts.new_branch = slash + 1;
++		opts.new_branch = argv0 + 1;
+ 	}
+ 
+-	if (opts.track == -1)
++	if (opts.track == BRANCH_TRACK_UNSPECIFIED)
+ 		opts.track = git_branch_track;
+ 
+ 	if (opts.force && opts.merge)
