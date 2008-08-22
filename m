@@ -1,89 +1,114 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: Bug/problem with 1.6.0 on UnixWare
-Date: Fri, 22 Aug 2008 08:58:39 +0100
-Message-ID: <e2b179460808220058o24f9b15bo74c2abcdd70abaab@mail.gmail.com>
-References: <alpine.LNX.1.10.0808210522450.24713@xenau.zenez.com>
-	 <e2b179460808210435w31b911a5ie6059b5628db8138@mail.gmail.com>
-	 <alpine.LNX.1.10.0808210610440.29396@xenau.zenez.com>
-	 <e2b179460808210541lfd7dcaeoea8554a2a76f8825@mail.gmail.com>
-	 <20080821130816.GB22453@coredump.intra.peff.net>
-	 <e2b179460808210738y9ca6e3fka113128fb1e6e024@mail.gmail.com>
-	 <20080821204522.GA29361@coredump.intra.peff.net>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: [PATCH] git.el: Diff only file at point by default
+Date: Fri, 22 Aug 2008 09:58:42 +0200
+Message-ID: <87vdxtpjkd.fsf@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Boyd Lynn Gerber" <gerberb@zenez.com>,
-	"Git List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 22 10:00:19 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 22 10:00:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWRZB-0007Ps-Li
+	id 1KWRZC-0007Ps-C8
 	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 10:00:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751648AbYHVH6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 03:58:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755400AbYHVH6l
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 03:58:41 -0400
-Received: from rv-out-0506.google.com ([209.85.198.234]:6532 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751648AbYHVH6k (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 03:58:40 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so322059rvb.1
-        for <git@vger.kernel.org>; Fri, 22 Aug 2008 00:58:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=OQAYvSoD94vG9EI1oGFmerGjb7ePr/5oL08F3oaWXLQ=;
-        b=NieczkaJpdiHRC8pi6+ptcuAr1kqsO/nR0aYCCmoXXRyxF00Dzu7KApgtYa/sJnyic
-         XlgvGHqVEyQPKBPpwEZtu6UOL+PE2GSSQVfB81VyV2nyVwEhcHxRe1X+YHENhtex93Nl
-         /jkI3eHwkWHXjZ7Msx4VWbwrMUYlB14QhCMxY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=pqftLk0Pw+dtWqFJC6OXw32ElezZJPMhlYfITo4gYMQKX0airY9YYHSCvwu6L+E4Yp
-         XawITL6Oe0k8I7VHv7exjvU/S3RGZoV3bg+HHUhdA9iCoRT+EQXgsv+t3Cf6k5VZRe4z
-         PGe6WSoFNBpasO3YkxNawxpyRVkMontru8XwU=
-Received: by 10.140.191.14 with SMTP id o14mr393816rvf.78.1219391919834;
-        Fri, 22 Aug 2008 00:58:39 -0700 (PDT)
-Received: by 10.141.19.11 with HTTP; Fri, 22 Aug 2008 00:58:39 -0700 (PDT)
-In-Reply-To: <20080821204522.GA29361@coredump.intra.peff.net>
-Content-Disposition: inline
+	id S1755442AbYHVH6q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Aug 2008 03:58:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752940AbYHVH6p
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 03:58:45 -0400
+Received: from mail.lysator.liu.se ([130.236.254.3]:52585 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755406AbYHVH6o (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 03:58:44 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id 2DD422236DCC
+	for <git@vger.kernel.org>; Fri, 22 Aug 2008 09:58:43 +0200 (CEST)
+Received: from mail.lysator.liu.se ([127.0.0.1])
+	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 18756-01-40; Fri, 22 Aug 2008 09:58:42 +0200 (CEST)
+Received: from krank (unknown [87.96.142.66])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id C16B02235DB0;
+	Fri, 22 Aug 2008 09:58:42 +0200 (CEST)
+Received: by krank (Postfix, from userid 1000)
+	id 78313E4801A; Fri, 22 Aug 2008 09:58:42 +0200 (CEST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93269>
 
-2008/8/21 Jeff King <peff@peff.net>:
-> On Thu, Aug 21, 2008 at 03:38:32PM +0100, Mike Ralphson wrote:
->
->> Great stuff. Though I think it might provoke some patches to improve
->> the display of multiple long tag names for the same commit in gitweb!
->
-> Heh. Can you pass along the final version of your build script? I want
-> to make sure we are doing the same things.
+Use prefix (C-u) to diff all marked files instead.
 
-http://repo.or.cz/w/git/gitbuild.git?a=blob;f=gitbuild.sh;h=d06fbef3c7aa54ea3beab4b3eed4d73387f3b136;hb=2da51f87b94ef564691a656f91b97472bf6d8c53
+Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
+---
+ contrib/emacs/git.el |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
 
-The setting of the PATH and GIT_SKIP_TESTS are obviously env. specific.
+=46or anyone who has used pcvs (or dsvn) this makes much more sense. Th=
+e
+typical usage scenario is that you want to mark the files that are
+relevant, and you do it incrementally by checking if file A is
+relevant and has no strange changes by pressing =3D and then marking it=
+,
+proceeding to check file B by pressing =3D on it and potentially markin=
+g
+it as well and so on.
 
-At the moment there's still a bit of manual faffing around when next
-is rewound after a release.
+The current way that =3D works means that you have to check each file
+first and remember which one you want to mark. Or diff everything and
+then read through the whole diff and find match the output against the
+files to mark. It is possible to do it like that as well, but it is
+much more convenient to do it as described above, and there is a
+strong precedent in emacs frontends to make the diff command only diff
+the current file by default.
 
-> Yes, in theory, last minute code changes could cause a portability
-> breakage. However, any changes from the last -rc to the release version
-> tend to be extremely conservative (as judged by Junio), so in practice
-> I don't think it happens. For example, I think this git-shell bug made
-> it into master over a month before release.
+The old behaviour can be restored by using C-u =3D.
 
-True, this instance isn't a last minute breakage.
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index c30d20a..a3477a4 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -772,6 +772,11 @@ Return the list of files that haven't been handled=
+=2E"
+               (setq file (pop files))
+             (setq node (ewoc-next status node))))))))
+=20
++(defun git-current-file ()
++  "Return the file at point."
++  (unless git-status (error "Not in git-status buffer."))
++  (ewoc-data (ewoc-locate git-status)))
++
+ (defun git-marked-files ()
+   "Return a list of all marked files, or if none a list containing jus=
+t the file at cursor position."
+   (unless git-status (error "Not in git-status buffer."))
+@@ -1138,10 +1143,10 @@ Return the list of files that haven't been hand=
+led."
+   (when (eq (window-buffer) (current-buffer))
+     (shrink-window-if-larger-than-buffer)))
+=20
+-(defun git-diff-file ()
+-  "Diff the marked file(s) against HEAD."
+-  (interactive)
+-  (let ((files (git-marked-files)))
++(defun git-diff-file (arg)
++  "Diff the marked file(s) against HEAD, or the marked files if a pref=
+ix arg is given."
++  (interactive "P")
++  (let ((files (if arg (git-marked-files) (list (git-current-file)))))
+     (git-setup-diff-buffer
+      (apply #'git-run-command-buffer "*git-diff*" "diff-index" "-p" "-=
+M" "HEAD" "--" (git-get-filenames files)))))
+=20
+--=20
+1.6.0.rc2.7.gbf8a
 
-Mike
+
+--=20
+David K=C3=A5gedal
