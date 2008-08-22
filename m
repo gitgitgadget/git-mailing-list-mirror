@@ -1,82 +1,134 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Extend "checkout --track" DWIM to support more cases
-Date: Fri, 22 Aug 2008 11:08:01 +0200
-Message-ID: <81b0412b0808220208i5de03604rec37081f0bc1cdd4@mail.gmail.com>
-References: <20080820185028.GA16626@blimp.local>
-	 <alpine.DEB.1.00.0808202151320.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-	 <20080820200440.GF16626@blimp.local>
-	 <alpine.DEB.1.00.0808202213340.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-	 <20080820202952.GH16626@blimp.local>
-	 <7vd4k3nx7m.fsf@gitster.siamese.dyndns.org>
-	 <20080821172320.GA5119@blimp.local>
-	 <7vy72pd278.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: some questions
+Date: Fri, 22 Aug 2008 02:28:17 -0700 (PDT)
+Message-ID: <m3bpzls8ld.fsf@localhost.localdomain>
+References: <48AE6B41.1070005@jentro.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 11:09:34 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thomas Pasch <thomas.pasch@jentro.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 11:29:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWSdp-00029o-KT
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 11:09:10 +0200
+	id 1KWSxT-0002FS-Bs
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 11:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751103AbYHVJIF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 05:08:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751101AbYHVJIF
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 05:08:05 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:17963 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750998AbYHVJIC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 05:08:02 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so23019ywe.1
-        for <git@vger.kernel.org>; Fri, 22 Aug 2008 02:08:01 -0700 (PDT)
+	id S1755891AbYHVJ2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 05:28:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755348AbYHVJ2X
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 05:28:23 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:43660 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754236AbYHVJ2V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 05:28:21 -0400
+Received: by ug-out-1314.google.com with SMTP id c2so87838ugf.37
+        for <git@vger.kernel.org>; Fri, 22 Aug 2008 02:28:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=VdsWVn7inQNgLRm/IVoGv5GWDe09qGoowePiYHG3F70=;
-        b=HVHVjtn0kPU1nSYbxLJHkHJlZX4234DZqX7xZhMGABBw8znv5flveoXA2KKIDrzj7m
-         voekxXB8inN1QNiloRCHmK5DiyZXg5IkHAF/txjaR6OO/LJB5MSXhN6QzU+hBBnXUCKR
-         aB+2ME8MWaVL4OuDV5tZ0WtH2ee/1LlEpXt08=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=bC5j2K//VgOmGSNqCyd3yG8AbSvtZDvnoDYTviUWM/A=;
+        b=wDjtd4NoYxyaL4KAin3UPyjZbSYAhE1ONSFdXdwpvRUW/gxOQFYR/AEaqaeO8j0+XF
+         x8qEyTGNQpufINqtbjdC+H/GHcR34k+9RM4suOuiOh2wBQFgYqqNdr3cTzAinNvSwuMt
+         X3hNPA25iFk0S9Nr0RKm8Bhq2pezxmcncZE94=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=U7fYlbktkkXD/f5wzXVm9UvFYJyp8ODS6sR3LIUEjAQMbB+MGImfQBlPr7URsvrL6O
-         OuAvhQm8hxyZeXb8irgjfxtQSJpQzgT4nxXXtdSN3JbtC+3aDOkh2txd/v1B5F4hzDpV
-         VOHlOxYSCK0QTfDYhcKHPPThC58Oph7GWp3pw=
-Received: by 10.115.78.1 with SMTP id f1mr730041wal.150.1219396081312;
-        Fri, 22 Aug 2008 02:08:01 -0700 (PDT)
-Received: by 10.114.157.9 with HTTP; Fri, 22 Aug 2008 02:08:01 -0700 (PDT)
-In-Reply-To: <7vy72pd278.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=HdbSxWV4G2tgFyDDLkRl+Urrf8DYSXaO34l6OsyS/u2ZPRyreDsesicJ6Ad456Fzuy
+         LNmdgOnNcuKnp3NI74qiofJb7qQHtXsBXmLwvmzRCsYoomDZv3JJ9yPe88BE5avEXM87
+         DoQYWR0CqA+cjZ6byIKANdbcsgBAyZK4XUQqQ=
+Received: by 10.66.221.19 with SMTP id t19mr2342650ugg.69.1219397298271;
+        Fri, 22 Aug 2008 02:28:18 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.249.91])
+        by mx.google.com with ESMTPS id h1sm835239nfh.19.2008.08.22.02.28.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 22 Aug 2008 02:28:17 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m7M9RhUF003425;
+	Fri, 22 Aug 2008 11:27:53 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m7M9RQk5003418;
+	Fri, 22 Aug 2008 11:27:26 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <48AE6B41.1070005@jentro.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93279>
 
-2008/8/22 Junio C Hamano <gitster@pobox.com>:
-> I however wonder if this is clearer.
+Thomas Pasch <thomas.pasch@jentro.com> writes:
 
-It is :)
+> I try to migrate our old cvs repo to git.
+> However, I still have to following questions
+> that I found difficult to answer with
+> the documentation.
+> 
+> - Is there a way to convert a indexVersion 1
+>   repo to indexVersion 2? (And vice versa?)
 
->  * "enum branch_track" was unsigned; comparing equality with -1 was Ok but
->   we couldn't say 0 < opts.track;
->
->  * argv[] is an array of constant strings; cannot point into it with
->   opts.newbranch without making the latter also a constant string.
+I think the only solution is to simply remove index,
+ensure configuration (pack.indexVersion), and recreate
+it using git-index-pack(1).
+ 
+> - Is there a way to find out if a repository
+>   is indexVersion 1 or indexVersion 2 (from
+>   the pack/index files)?
 
-Cleanup, but it is unrelated, isn't it?
+There is some magic number used to distinguish between
+pack index version 1 and version 2.
 
->  * the logic is to strip "refs/" if there is one, "remotes/" if there is
->   one after that, and then strip one level after that unconditionally.
->   No need to look explicitly for a slash while doing the first two steps.
+See Documentation/technical/pack-format.txt for details.
 
-Maybe that should go in documentation instead of the piece I wrote
+> - http for git seems to be read-only/fetch.
+>   Would it be (theoretically) possible to
+>   support write/push (with WebDAV or so)?
+
+It *is* supported (via https).
+
+There was even attempt to create 'smart' http
+push via web server module or CGI script, but
+IIRC it hit feature freeze and discussion petered
+out, so only parts of it are in 'pu'.
+
+Search for "Add Git-aware CGI for Git-aware smart
+HTTP transport", "More on git over HTTP POST"
+
+  http://thread.gmane.org/gmane.comp.version-control.git/91104
+ 
+> - I do not fully understand the implication
+>   of 'git repack -a' (or 'git repack -A -d').
+>   Is this bad for remote repos that are used
+>   with http? (as '-a' is 'Especially useful when
+>   packing a repository that is used for private
+>   development and there is no need to worry about
+>   people fetching via dumb protocols from it').
+
+Dumb protocols currently _always_ download whole packfiles,
+so if you want to serve dumb protocols you might want to
+offer (also?) smaller packfiles.  You can, for example,
+use .keep files and 'git repack -a' wouldn't matter.
+
+You can try to search archives for "generational packing"
+or something like that...
+
+> - What would be the implication to mount the
+>   git repo with nts (or another remote fs).
+>   Is it save to use such a mounted repo from
+>   more than one computer?
+
+Should work without problems, _unless_ you mean that
+you want to use multiple working directories with single
+repository.  Then there are a couple of thing that you
+have to be beware of (but you can instead use alternates
+mechanism).
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
