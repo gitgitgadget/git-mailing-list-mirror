@@ -1,144 +1,120 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: Re: Local branch ahead of tracked remote branch but git push claims
-   everything up-to-date
-Date: Fri, 22 Aug 2008 16:09:19 +0200
-Message-ID: <g8mhag$i90$1@ger.gmane.org>
-References: <1219263969579-736663.post@n2.nabble.com> <8585F10E-C33C-481E-B044-A7125F3316F2@web.de> <32541b130808201401l2ad105ccnc37acdacd08d4c3a@mail.gmail.com> <7vbpznpeup.fsf@gitster.siamese.dyndns.org> <32541b130808201422l2b128beer142544ff91de5ca3@mail.gmail.com> <alpine.LNX.1.00.0808201808400.19665@iabervon.org> <7v4p5fnw3i.fsf@gitster.siamese.dyndns.org> <1219332938839-740444.post@n2.nabble.com> <g8k4or$tf$1@ger.gmane.org> <1219337620037-740662.post@n2.nabble.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: some questions
+Date: Fri, 22 Aug 2008 07:15:48 -0700
+Message-ID: <20080822141548.GD3483@spearce.org>
+References: <48AE6B41.1070005@jentro.com> <m3bpzls8ld.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 22 16:10:42 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>,
+	Thomas Pasch <thomas.pasch@jentro.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 16:17:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWXLd-0001sj-0c
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 16:10:41 +0200
+	id 1KWXSN-0004TR-Q0
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 16:17:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752751AbYHVOJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 10:09:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752127AbYHVOJh
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 10:09:37 -0400
-Received: from main.gmane.org ([80.91.229.2]:48926 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752730AbYHVOJg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 10:09:36 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KWXKT-0007UF-Qg
-	for git@vger.kernel.org; Fri, 22 Aug 2008 14:09:29 +0000
-Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Aug 2008 14:09:29 +0000
-Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Aug 2008 14:09:29 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <1219337620037-740662.post@n2.nabble.com>
+	id S1751974AbYHVOPt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Aug 2008 10:15:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751677AbYHVOPt
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 10:15:49 -0400
+Received: from george.spearce.org ([209.20.77.23]:56952 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751034AbYHVOPs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 10:15:48 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 25B1038376; Fri, 22 Aug 2008 14:15:48 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <m3bpzls8ld.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93303>
 
-ir0s venit, vidit, dixit 21.08.2008 18:53:
-> Hi Michael,
-> 
-> Here are my results:
-> 
-> $ git ls-remote origin 
-> 138ea08f9680a8def085b793c9cee70eed0e1f3b        HEAD
-> 138ea08f9680a8def085b793c9cee70eed0e1f3b        refs/heads/master
-> 75290a081feebcc4265825d017d9af07c7646951        refs/heads/remotebranch
-> f11c723119cd9938e91e1ed5328ef143fb477f15        refs/heads/mybranch
-> f11c723119cd9938e91e1ed5328ef143fb477f15        refs/heads/groups
-> ...
-> There are a few more
-> 
-> Is it the case that mybranch somehow became a remote branch?
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Thomas Pasch <thomas.pasch@jentro.com> writes:
+>=20
+> > I try to migrate our old cvs repo to git.
+> > However, I still have to following questions
+> > that I found difficult to answer with
+> > the documentation.
+> >=20
+> > - Is there a way to convert a indexVersion 1
+> >   repo to indexVersion 2? (And vice versa?)
+>=20
+> I think the only solution is to simply remove index,
+> ensure configuration (pack.indexVersion), and recreate
+> it using git-index-pack(1).
 
-It means that the repo "origin" has a branch called mybranch. From the
-sha1 and the one in your other mail (git ls-remote .) we see that it is
-identical with your local branch mybranch. It is most certainly the
-result of a command
+Just change pack.indexVersion in .git/config to have the version
+you want and run `git gc` to repack the repository.  If you created
+this repository by cloning another you may need to first delete
+any .keep files:
 
-git push origin mybranch
+	rm -f .git/objects/pack/*.keep
+ =20
+> > - Is there a way to find out if a repository
+> >   is indexVersion 1 or indexVersion 2 (from
+> >   the pack/index files)?
+>=20
+> There is some magic number used to distinguish between
+> pack index version 1 and version 2.
+>=20
+> See Documentation/technical/pack-format.txt for details.
 
-which (in the absence of any relevant lines in .git/config) just
-says that you push that branch into origin with the same name, creating
-a branch there if there's none. You can get rid of it using "git push
-origin :mybranch".
+  for i in .git/objects/pack/pack-*.idx; do
+  dd if=3D$i bs=3D12 count=3D1 | od -c
+  done
 
-What you most probably wanted to do was
+A line like:
 
-git push origin mybranch:remotebranch
+0000000   =EF=BF=BD   t   O   c  \0  \0  \0 002  \0  \0  \0 002
 
-which pushes your mybranch into the remotebranch of the origin repo.
-(You can put this in the config for later pushes, git config
-remote.origin.push mybranch:remotebranch).
+indicates index version 2, as it has the magic byte sequence in
+front of '\xFFt0c'.  Most version 1 indexes will have 2 zeros
+in the first two bytes:
 
-On the other hand:
+0000000  \0  \0  \0  \0  \0  \0  \0 001  \0  \0  \0 003
 
-git push origin
+> > - http for git seems to be read-only/fetch.
+> >   Would it be (theoretically) possible to
+> >   support write/push (with WebDAV or so)?
+>=20
+> It *is* supported (via https).
+>=20
+> There was even attempt to create 'smart' http
+> push via web server module or CGI script, but
+> IIRC it hit feature freeze and discussion petered
+> out, so only parts of it are in 'pu'.
+>=20
+> Search for "Add Git-aware CGI for Git-aware smart
+> HTTP transport", "More on git over HTTP POST"
+>=20
+>   http://thread.gmane.org/gmane.comp.version-control.git/91104
 
-only compares existing branches with matching names, which is why it
-reported "up to date".
+I'm picking this up again and working on it more.  Its not dead.
+ =20
+> > - What would be the implication to mount the
+> >   git repo with nts (or another remote fs).
+> >   Is it save to use such a mounted repo from
+> >   more than one computer?
 
-On yet another hand (I'm losing count):
-When you switch to a tracking branch it is compared to its
-corresponding remote, and your mybranch and origin/remotebranch clearly
-differ:
+I've found that accessing a Git pack file over a network file
+system like NFS or SMB is kinda slow.  The issue is we do many
+reads scattered throughout the file.  Its hard for the client
+to batch up reads and hide the network latency.
 
-> Here are the results for this one: $ git log --pretty=oneline
-> mybranch...origin/remotebranch 
-> f11c723119cd9938e91e1ed5328ef143fb477f15 Merge branch 'remotebranch'
-> of gitosis@sorry.must.obfuscate.url.com:my-repo into mybranch 
-> eb41bd8f4f43d483b4a58bc98386c468bb69173c Ticket #1032 
-> 5e76a7c9bce92519b308c031357794904bf0f4a6 Ticket #1038 
-> cu5ceaf670c83f77c1b48e8d31a23456b744f1af0f Ticket #1044
+You may get better performance by building Git without mmap
+support:
 
-Now, this
+	make NO_MMAP=3D1
 
-> f11c723119cd9938e91e1ed5328ef143fb477f15         HEAD
-> 138ea08f9680a8def085b793c9cee70eed0e1f3b        refs/heads/master
-> 75290a081feebcc4265825d017d9af07c7646951        refs/heads/remotebranch
-> f11c723119cd9938e91e1ed5328ef143fb477f15         refs/heads/mybranch
-> 138ea08f9680a8def085b793c9cee70eed0e1f3b        refs/remotes/origin/HEAD
-> 138ea08f9680a8def085b793c9cee70eed0e1f3b        refs/remotes/origin/master
-> 75290a081feebcc4265825d017d9af07c7646951       
-> refs/remotes/origin/remotebranch
-> f11c723119cd9938e91e1ed5328ef143fb477f15        
-> refs/remotes/origin/mybranch
+but that is going to hurt access to local files.
 
-from your other e-mail shows quite a zoo of branches you have locally
-now. Two of them should probably not be there:
-
-refs/remotes/origin/mybranch is the result of fetching/pulling from
-origin after creating mybranch there by mistake.
-
-refs/heads/remotebranch is a local branch named remotebranch. I don't
-know where it came from, but git revlog may tell you more.
-
-As a word of comfort: I'm quite new to git and find things confusing
-sometimes, myself. But in the end I always found out that thinhs are the
-way they are for a good reason.
-
-You're thinking of "two places" to exchange information for a branch,
-which is natural and confused me first, too. But realise that for a sane
-workflow you need three:
-- remotebranch at the other repo origin,
-- your remotes/origin/remotebranch which pulls from origin's repo, and -
-your local tracking branch mybranch which pulls or rebases from
-remotes/origin/remotebranch at the time of your chosing.
-
-You push from mybranch into the remotebranch of the origin repo.
-That last one is the one that pushed you off ;) Seriously, that last leg
-of the workflow triangle is not setup automatically (because you may not
-have push access).
-
-Cheers,
-Michael
+--=20
+Shawn.
