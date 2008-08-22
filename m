@@ -1,77 +1,109 @@
-From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: Re: [PATCH 3/3] git-add --intent-to-add (-N)
-Date: Fri, 22 Aug 2008 01:38:02 -0500 (CDT)
-Message-ID: <Pine.GSO.4.62.0808220119250.12851@harper.uchicago.edu>
-References: <4b6f054f0808171702q10d89dfey98afa65634d26e91@mail.gmail.com>
- <alpine.LNX.1.00.0808181512160.19665@iabervon.org> <7vfxp2m5w8.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0808181628420.19665@iabervon.org> <7viqtukbec.fsf@gitster.siamese.dyndns.org>
- <7v3akykb96.fsf_-_@gitster.siamese.dyndns.org>
- <Pine.GSO.4.62.0808211608020.26161@harper.uchicago.edu>
- <Pine.GSO.4.62.0808212304200.9108@harper.uchicago.edu>
- <alpine.LNX.1.00.0808220023170.19665@iabervon.org>
- <Pine.GSO.4.62.0808220015190.11259@harper.uchicago.edu>
- <7vtzddd1z5.fsf@gitster.siamese.dyndns.org>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] gitweb: ref markers link to named shortlogs
+Date: Fri, 22 Aug 2008 09:21:55 +0200
+Message-ID: <cb7bb73a0808220021w5d30d3c8i88ad85611035d2c5@mail.gmail.com>
+References: <1219341860-4913-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200808212332.07095.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 08:39:15 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@ucw.cz>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 09:23:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWQIk-0008Jd-MT
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 08:39:15 +0200
+	id 1KWQz7-0002vQ-55
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 09:23:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754277AbYHVGiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 02:38:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754341AbYHVGiJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 02:38:09 -0400
-Received: from smtp00.uchicago.edu ([128.135.12.76]:42309 "EHLO
-	smtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754277AbYHVGiI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 02:38:08 -0400
-Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
-	by smtp00.uchicago.edu (8.13.8/8.13.8) with ESMTP id m7M6c5OK011912;
-	Fri, 22 Aug 2008 01:38:05 -0500
-Received: from localhost (jrnieder@localhost)
-	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m7M6c30F013366;
-	Fri, 22 Aug 2008 01:38:03 -0500 (CDT)
-X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
-In-Reply-To: <7vtzddd1z5.fsf@gitster.siamese.dyndns.org>
+	id S1751149AbYHVHV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 03:21:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751063AbYHVHV5
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 03:21:57 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:29815 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750828AbYHVHV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 03:21:56 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so207832yxm.1
+        for <git@vger.kernel.org>; Fri, 22 Aug 2008 00:21:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=1sEmFRP25wSXxW2+BxFN8besmBJNwT89hUfEwhSOM2I=;
+        b=w796GonHzHFk1UZUm5TT9Xhhzc8wYXL3hY/c1+srziw0a8WI7jzaY+Vw2dG19LPpZR
+         YBkJZd0Lvia13FHS+PvkmTEF1W+FA91PSuQgbjXX08QJhdSCjq7oop8bWFScNsFfAEBE
+         X+j9CzlN/rNsNvIq5TPZ9GPSmCc4LstTARGuA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Zr8Jxgagf1JDHBaj3lMJVh8QfCgReDu787Eu/WTdRRV2pYOY69GtSNIELcqCrVKJAz
+         KLzvHnBkKZbRlQPwgnsw23tp0EHcCEaM4bdIwYlij5URjonJoS0afjwSdNJsZQOb0Evu
+         CXBFmRMb2xkYoe1TTRKEIPZooaFUoZjkimjNw=
+Received: by 10.150.154.6 with SMTP id b6mr1331171ybe.28.1219389715522;
+        Fri, 22 Aug 2008 00:21:55 -0700 (PDT)
+Received: by 10.150.155.12 with HTTP; Fri, 22 Aug 2008 00:21:55 -0700 (PDT)
+In-Reply-To: <200808212332.07095.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93262>
 
-Hi,
+> It is a good idea, but not so good solution.
 
-Junio C Hamano wrote:
+Ok, let's see if I can find a better way to do it 8-)
 
-> Didn't I already tell you that you seem to have picked only one out of
-> _three_ patch series?
+>> --- a/gitweb/gitweb.css
+>> +++ b/gitweb/gitweb.css
+>
+>> +span.refs span a {
+>> +     text-decoration: none;
+>> +     color: inherit;
+>> +}
+>
+> Possible improvement:
+>
+> We would probably want to make this link discoverable, by adding
+> underline on :hover, like for other "hidden links" in gitweb (for
+> example in commitdiff view).
 
-I am using all three patches.  If you try ">a && git add -N a && git
-commit" in an empty repo, you should get the same behavior (I checked
-with commit 038a213^2, which is three commits ahead of master).  And
-yes, I do understand where your suspicion came from.
+Can do that.
 
-But the reason for the behavior is that update_one in cache-tree.c
-contains the test
+>>                       my ($type, $name) = qw();
+>> +                     my $git_type = git_get_type($ref);
+>>                       # e.g. tags/v2.6.11 or heads/next
+>>                       if ($ref =~ m!^(.*?)s?/(.*)$!) {
+>>                               $type = $1;
+>
+> git_get_type calls 'git cat-file -t', so for each ref shown you make
+> *additional call* to git command (additional fork).  Not good, especially
+> that you can get information if a ref is a tag (indirect reference)
+> or not one can get from within git_get_references; which in turn
+> uses "git show-refs --dereference" and used to use either
+> "git peek-remote ." or ".git/info/refs" file.  If there is <name>^{},
+> then <name> is indirect reference: is a tag.
+>
+> As we display ref markers only for log-like views, marker can be tag
+> or can be "lightweight reference" and be only a commit (in theory
+> we could show ref markers also for tree and blob items, but it is not
+> important now).
 
-	if (mode != S_IFGITLINK && !missing_ok && !has_sha1_file(sha1))
+By looking at git_get_reference() what I see is basically the use of
+the same field as $type in format_ref_marker(). I can probably use
+that, although it means that any future extensions to ref marker
+display will need to hack the routine too. (This would mean that the
+patch would be more similar to my original patch
+http://marc.info/?l=git&m=121769155017642&w=2 ).
 
-which fails for the empty blob in a new repo because, as I said, we
-don't have that sha1 file.
+If this is not what you're suggesting, then I'm afraid I don't fully
+grasp your idea.
 
-I still wonder, do we want to pretend we have that object on disk
-and proceed with the commit, or are the hardcoded objects only
-supposed to be sufficient for in-core use?  If the former, I will
-have to make some tests to be comfortable: are the objects properly
-transfered to older clients without the hardcoded objects, etc.  But
-I don't want to bother if that is not the intent.
 
-Hoping that is clearer,
-Jonathan
+-- 
+Giuseppe "Oblomov" Bilotta
