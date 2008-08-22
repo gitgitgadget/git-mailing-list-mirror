@@ -1,120 +1,102 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: some questions
-Date: Fri, 22 Aug 2008 07:15:48 -0700
-Message-ID: <20080822141548.GD3483@spearce.org>
-References: <48AE6B41.1070005@jentro.com> <m3bpzls8ld.fsf@localhost.localdomain>
+Subject: Re: Gittogether event?
+Date: Fri, 22 Aug 2008 07:34:07 -0700
+Message-ID: <20080822143407.GE3483@spearce.org>
+References: <20080820151031.GD3483@spearce.org> <200808210432.10544.chriscool@tuxfamily.org> <20080821144537.GM3483@spearce.org> <200808220536.15746.chriscool@tuxfamily.org> <7v7ia9d0of.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>,
-	Thomas Pasch <thomas.pasch@jentro.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 16:17:55 2008
+Cc: "J.H." <warthog19@eaglescrag.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Sam Vilain <sam.vilain@catalyst.net.nz>,
+	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Aug 22 16:35:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWXSN-0004TR-Q0
-	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 16:17:40 +0200
+	id 1KWXjU-00030y-GV
+	for gcvg-git-2@gmane.org; Fri, 22 Aug 2008 16:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751974AbYHVOPt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Aug 2008 10:15:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751677AbYHVOPt
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 10:15:49 -0400
-Received: from george.spearce.org ([209.20.77.23]:56952 "EHLO
+	id S1752795AbYHVOeL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Aug 2008 10:34:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752825AbYHVOeK
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 10:34:10 -0400
+Received: from george.spearce.org ([209.20.77.23]:39762 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751034AbYHVOPs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 10:15:48 -0400
+	with ESMTP id S1752795AbYHVOeJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 10:34:09 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id 25B1038376; Fri, 22 Aug 2008 14:15:48 +0000 (UTC)
+	id 2733438375; Fri, 22 Aug 2008 14:34:07 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <m3bpzls8ld.fsf@localhost.localdomain>
+In-Reply-To: <7v7ia9d0of.fsf@gitster.siamese.dyndns.org>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93304>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Thomas Pasch <thomas.pasch@jentro.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > Le jeudi 21 ao=C3=BBt 2008, Shawn O. Pearce a =C3=A9crit :
+> >> Christian Couder <chriscool@tuxfamily.org> wrote:
+> >>
+> >> Google has offered to help us organize a Gittogether in Portland
+> >> if we desire.
 >=20
-> > I try to migrate our old cvs repo to git.
-> > However, I still have to following questions
-> > that I found difficult to answer with
-> > the documentation.
-> >=20
-> > - Is there a way to convert a indexVersion 1
-> >   repo to indexVersion 2? (And vice versa?)
->=20
-> I think the only solution is to simply remove index,
-> ensure configuration (pack.indexVersion), and recreate
-> it using git-index-pack(1).
+> > Here are a few question to start the discussion:
+> >
+> > What date would be best?
+> > Who could come?
+> > What needs to be done to organize it?
+> > Who could help organize it?
 
-Just change pack.indexVersion in .git/config to have the version
-you want and run `git gc` to repack the repository.  If you created
-this repository by cloning another you may need to first delete
-any .keep files:
+This smells like a survey to me.  ;-)
 
-	rm -f .git/objects/pack/*.keep
- =20
-> > - Is there a way to find out if a repository
-> >   is indexVersion 1 or indexVersion 2 (from
-> >   the pack/index files)?
->=20
-> There is some magic number used to distinguish between
-> pack index version 1 and version 2.
->=20
-> See Documentation/technical/pack-format.txt for details.
+We should put together something really short, and try to get folks
+to answer it, not just from our developer list, but maybe also our
+user communities.  Maybe something like:
 
-  for i in .git/objects/pack/pack-*.idx; do
-  dd if=3D$i bs=3D12 count=3D1 | od -c
-  done
+	1: Are you interested in attending a Gittogether:
+		[ ] Yes   [ ]  No
 
-A line like:
+		If you answered no, you can give up on the survey now.
 
-0000000   =EF=BF=BD   t   O   c  \0  \0  \0 002  \0  \0  \0 002
+	2: Would you travel to Portland, Oregon for the Gittogether:
+		[ ] Yes   [ ]  No
 
-indicates index version 2, as it has the magic byte sequence in
-front of '\xFFt0c'.  Most version 1 indexes will have 2 zeros
-in the first two bytes:
+	3: What month/year would be best?
+		Option list for next 12 months from Oct 08-Oct 09.
 
-0000000  \0  \0  \0  \0  \0  \0  \0 001  \0  \0  \0 003
+	4: What would you hope to see/accomplish while there?
+		[ ] Instructor-lead Git training
+		[ ] 24 hour hack-a-new-feature contest
+		[ ] ... ?
+		Enter other ideas: [  <big text box thingy>    ]
 
-> > - http for git seems to be read-only/fetch.
-> >   Would it be (theoretically) possible to
-> >   support write/push (with WebDAV or so)?
->=20
-> It *is* supported (via https).
->=20
-> There was even attempt to create 'smart' http
-> push via web server module or CGI script, but
-> IIRC it hit feature freeze and discussion petered
-> out, so only parts of it are in 'pu'.
->=20
-> Search for "Add Git-aware CGI for Git-aware smart
-> HTTP transport", "More on git over HTTP POST"
->=20
->   http://thread.gmane.org/gmane.comp.version-control.git/91104
+	5: Would you volunteer to help organize it?
+=09
+		Trick question.  Email blah@blah to indicate how you can help.
+=20
+> This reminds me...  I'll be offline from 24 or 25 of September for tw=
+o
+> weeks or so, and need to ask somebody most likely Shawn to keep an ey=
+e on
+> the patchflow during that time.
 
-I'm picking this up again and working on it more.  Its not dead.
- =20
-> > - What would be the implication to mount the
-> >   git repo with nts (or another remote fs).
-> >   Is it save to use such a mounted repo from
-> >   more than one computer?
+Enjoy your time away from the keyboard.  I'd be happy to keep a
+patch queue for you to pick up from when you get back.
 
-I've found that accessing a Git pack file over a network file
-system like NFS or SMB is kinda slow.  The issue is we do many
-reads scattered throughout the file.  Its hard for the client
-to batch up reads and hide the network latency.
+> If Git-together happens outside of that, I could join.
 
-You may get better performance by building Git without mmap
-support:
-
-	make NO_MMAP=3D1
-
-but that is going to hurt access to local files.
+I think it would be after that.  I doubt we could put it together
+with <30 days of notice.  Most people who would want to attend need
+to book travel arrangements.  While its possible with 30 days notice
+you can typically get better rates if you have more lead time.
 
 --=20
 Shawn.
