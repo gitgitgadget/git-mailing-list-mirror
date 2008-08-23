@@ -1,59 +1,58 @@
 From: Jonathan del Strother <maillist@steelskies.com>
 Subject: [PATCH] Revert "Convert output messages in merge-recursive to past tense."
-Date: Sat, 23 Aug 2008 13:13:56 +0100
-Message-ID: <1219493636-85340-1-git-send-email-maillist@steelskies.com>
+Date: Sat, 23 Aug 2008 13:14:57 +0100
+Message-ID: <1219493697-85555-1-git-send-email-maillist@steelskies.com>
 References: <1219425524-77545-1-git-send-email-maillist@steelskies.com>
 Cc: spearce@spearce.org,
+	Jonathan del Strother <maillist@steelskies.com>,
 	Jonathan del Strother <jon.delStrother@bestbefore.tv>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 23 14:15:17 2008
+X-From: git-owner@vger.kernel.org Sat Aug 23 14:16:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWs1Q-0004By-3Y
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 14:15:12 +0200
+	id 1KWs2L-0004Xi-9E
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 14:16:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752857AbYHWMOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Aug 2008 08:14:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752787AbYHWMOG
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 08:14:06 -0400
-Received: from wr-out-0506.google.com ([64.233.184.236]:5114 "EHLO
+	id S1752913AbYHWMPG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Aug 2008 08:15:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752958AbYHWMPF
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 08:15:05 -0400
+Received: from wr-out-0506.google.com ([64.233.184.239]:2856 "EHLO
 	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752848AbYHWMOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Aug 2008 08:14:04 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so712848wri.5
-        for <git@vger.kernel.org>; Sat, 23 Aug 2008 05:14:00 -0700 (PDT)
+	with ESMTP id S1752896AbYHWMPE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Aug 2008 08:15:04 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so713093wri.5
+        for <git@vger.kernel.org>; Sat, 23 Aug 2008 05:15:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:sender;
-        bh=peKpqGEy1fBTxZKPtLNn6GQE1kER4gDEJFsfeB2dCCk=;
-        b=s62ANspw3rULzdSdHsM1YRUty4GWTKGwQf9ULVLexaDZEml9ZJAENRW7IfAz2AU4ck
-         U3Jcd5lj2jgvyNjk2OZOJG+ebwaKaHCs7MDq9NeRcuoPOGEaihUctaDZGAxbEE3uOk10
-         VF1ByLJUDSgoAorAmESbzkr/U2sRRsQmo3/CY=
+        bh=tuwrlGTfHouk55VUDLwUIZUQcbOhcujM+83xHsBaYqk=;
+        b=jYeYWinSzwP0qCGPi0ykip16yzv8sJwvd86pzEPgWdNfuYVyd+/4u6Lr8QlFsKct+X
+         Snxi+Puy8nbhvLJR0mCwY1PTANOqbd/5DcnZ23HteKVDXlNVemrAcNJQV2+irD7Kt8oQ
+         QfV31DaSzhjsEpfSbsMb2ED4tqk98MIeFJ3NI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :sender;
-        b=Z6UbiZJrSwe5EWkZ8zRKxAZTqflTgNw0+85OQ8Mo94NYl9Nt1hrrGR2KYMKvPCIWl9
-         dfjQKvQ/mvVNjg8FCos23DlbSzQB8C7KKDhr97yuAk8R0nhQ/omNYB7h/L0/3d0t/VaT
-         zzfpQThkmIM2gI7TXmZcCNI25f1YW+8OGS+Nw=
-Received: by 10.90.70.6 with SMTP id s6mr2821093aga.17.1219493640702;
-        Sat, 23 Aug 2008 05:14:00 -0700 (PDT)
+        b=tabTw0m+DHqox6EFWb5EOSIEGqOiNF6RjtdqwqxRYn12HNwXEN1fyekMDFdyKVMvop
+         /e119zyFE0Pbcg0SXSE1MEffMAyl/tCxSbdtbMf3bC8pNiZhmQi5leW9sHQwFEX+t70I
+         lxSQpirYGslOD6FZi9d85sYF02l+EshrNsbh4=
+Received: by 10.90.29.13 with SMTP id c13mr2811623agc.32.1219493701838;
+        Sat, 23 Aug 2008 05:15:01 -0700 (PDT)
 Received: from localhost ( [89.105.122.147])
-        by mx.google.com with ESMTPS id 71sm3969666wry.16.2008.08.23.05.13.58
+        by mx.google.com with ESMTPS id 43sm3948358wri.27.2008.08.23.05.14.59
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 23 Aug 2008 05:13:59 -0700 (PDT)
+        Sat, 23 Aug 2008 05:15:00 -0700 (PDT)
 X-Mailer: git-send-email 1.6.0.6.gc667.dirty
 In-Reply-To: <1219425524-77545-1-git-send-email-maillist@steelskies.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93460>
-
-From: Jonathan del Strother <jon.delStrother@bestbefore.tv>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93461>
 
 Now that the progress meter is gone, merge messages make more sense when presented in present tense
 
@@ -63,6 +62,8 @@ Signed-off-by: Jonathan del Strother <jon.delStrother@bestbefore.tv>
 ---
 Sorry about that - that's what I get for trying to do things last thing on a friday.
 Adding signed-off, removing the conflict report.
+
+...and trying once more with a non-broken header
 
  builtin-merge-recursive.c |   36 ++++++++++++++++++------------------
  1 files changed, 18 insertions(+), 18 deletions(-)
