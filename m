@@ -1,127 +1,208 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] builtin-merge: fail properly when we are in the middle of a conflicted merge
-Date: Sat, 23 Aug 2008 12:57:51 +0200
-Message-ID: <1219489071-5679-1-git-send-email-vmiklos@frugalware.org>
-References: <7v3akw2jgo.fsf@gitster.siamese.dyndns.org>
-Cc: Paolo Bonzini <bonzini@gnu.org>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 23 12:58:26 2008
+From: Jonathan del Strother <maillist@steelskies.com>
+Subject: [PATCH] Revert "Convert output messages in merge-recursive to past tense."
+Date: Sat, 23 Aug 2008 13:13:56 +0100
+Message-ID: <1219493636-85340-1-git-send-email-maillist@steelskies.com>
+References: <1219425524-77545-1-git-send-email-maillist@steelskies.com>
+Cc: spearce@spearce.org,
+	Jonathan del Strother <jon.delStrother@bestbefore.tv>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 23 14:15:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWqp7-0000KA-5F
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 12:58:25 +0200
+	id 1KWs1Q-0004By-3Y
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 14:15:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752582AbYHWK5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Aug 2008 06:57:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752530AbYHWK5V
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 06:57:21 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:60907 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750819AbYHWK5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Aug 2008 06:57:20 -0400
-Received: from vmobile.example.net (dsl5401CFDD.pool.t-online.hu [84.1.207.221])
-	by yugo.frugalware.org (Postfix) with ESMTP id CF1C01DDC5B;
-	Sat, 23 Aug 2008 12:57:18 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id C7DFC96FA; Sat, 23 Aug 2008 12:57:51 +0200 (CEST)
-X-Mailer: git-send-email 1.6.0.rc3.17.gc14c8.dirty
-In-Reply-To: <7v3akw2jgo.fsf@gitster.siamese.dyndns.org>
+	id S1752857AbYHWMOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Aug 2008 08:14:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752787AbYHWMOG
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 08:14:06 -0400
+Received: from wr-out-0506.google.com ([64.233.184.236]:5114 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752848AbYHWMOE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Aug 2008 08:14:04 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so712848wri.5
+        for <git@vger.kernel.org>; Sat, 23 Aug 2008 05:14:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:sender;
+        bh=peKpqGEy1fBTxZKPtLNn6GQE1kER4gDEJFsfeB2dCCk=;
+        b=s62ANspw3rULzdSdHsM1YRUty4GWTKGwQf9ULVLexaDZEml9ZJAENRW7IfAz2AU4ck
+         U3Jcd5lj2jgvyNjk2OZOJG+ebwaKaHCs7MDq9NeRcuoPOGEaihUctaDZGAxbEE3uOk10
+         VF1ByLJUDSgoAorAmESbzkr/U2sRRsQmo3/CY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :sender;
+        b=Z6UbiZJrSwe5EWkZ8zRKxAZTqflTgNw0+85OQ8Mo94NYl9Nt1hrrGR2KYMKvPCIWl9
+         dfjQKvQ/mvVNjg8FCos23DlbSzQB8C7KKDhr97yuAk8R0nhQ/omNYB7h/L0/3d0t/VaT
+         zzfpQThkmIM2gI7TXmZcCNI25f1YW+8OGS+Nw=
+Received: by 10.90.70.6 with SMTP id s6mr2821093aga.17.1219493640702;
+        Sat, 23 Aug 2008 05:14:00 -0700 (PDT)
+Received: from localhost ( [89.105.122.147])
+        by mx.google.com with ESMTPS id 71sm3969666wry.16.2008.08.23.05.13.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 23 Aug 2008 05:13:59 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.6.gc667.dirty
+In-Reply-To: <1219425524-77545-1-git-send-email-maillist@steelskies.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93460>
 
-Using unmerged_cache() without reading the cache first never will return
-anything. However, if we read the cache early then we have to discard it
-when we want to read it again from the disk.
+From: Jonathan del Strother <jon.delStrother@bestbefore.tv>
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+Now that the progress meter is gone, merge messages make more sense when presented in present tense
+
+This reverts commit 89f40be294363ce4d14ed6931a65561a4e8e9140.
+
+Signed-off-by: Jonathan del Strother <jon.delStrother@bestbefore.tv>
 ---
+Sorry about that - that's what I get for trying to do things last thing on a friday.
+Adding signed-off, removing the conflict report.
 
-On Sat, Aug 23, 2008 at 02:01:43AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> With this, I do not think you would need to keep the read_cache() you
-> added to the beginning of the read_tree_trivial(), for the same reason
-> you
-> are removing read_cache_unmerged() from the beginning of
-> checkout_fast_forward() in this patch.
+ builtin-merge-recursive.c |   36 ++++++++++++++++++------------------
+ 1 files changed, 18 insertions(+), 18 deletions(-)
 
-Right, I removed it as well. Also fixed the testcase (no more new file).
-
- builtin-merge.c            |    7 +++----
- t/t3030-merge-recursive.sh |   11 +++++++++++
- 2 files changed, 14 insertions(+), 4 deletions(-)
-
-diff --git a/builtin-merge.c b/builtin-merge.c
-index dffe4b8..b280444 100644
---- a/builtin-merge.c
-+++ b/builtin-merge.c
-@@ -469,7 +469,6 @@ static int read_tree_trivial(unsigned char *common, unsigned char *head,
- 	struct tree_desc t[MAX_UNPACK_TREES];
- 	struct unpack_trees_options opts;
+diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
+index 43e55bf..dfb363e 100644
+--- a/builtin-merge-recursive.c
++++ b/builtin-merge-recursive.c
+@@ -729,13 +729,13 @@ static void conflict_rename_rename(struct rename *ren1,
+ 	const char *dst_name2 = ren2_dst;
+ 	if (string_list_has_string(&current_directory_set, ren1_dst)) {
+ 		dst_name1 = del[delp++] = unique_path(ren1_dst, branch1);
+-		output(1, "%s is a directory in %s added as %s instead",
++		output(1, "%s is a directory in %s adding as %s instead",
+ 		       ren1_dst, branch2, dst_name1);
+ 		remove_file(0, ren1_dst, 0);
+ 	}
+ 	if (string_list_has_string(&current_directory_set, ren2_dst)) {
+ 		dst_name2 = del[delp++] = unique_path(ren2_dst, branch2);
+-		output(1, "%s is a directory in %s added as %s instead",
++		output(1, "%s is a directory in %s adding as %s instead",
+ 		       ren2_dst, branch1, dst_name2);
+ 		remove_file(0, ren2_dst, 0);
+ 	}
+@@ -760,7 +760,7 @@ static void conflict_rename_dir(struct rename *ren1,
+ 				const char *branch1)
+ {
+ 	char *new_path = unique_path(ren1->pair->two->path, branch1);
+-	output(1, "Renamed %s to %s instead", ren1->pair->one->path, new_path);
++	output(1, "Renaming %s to %s instead", ren1->pair->one->path, new_path);
+ 	remove_file(0, ren1->pair->two->path, 0);
+ 	update_file(0, ren1->pair->two->sha1, ren1->pair->two->mode, new_path);
+ 	free(new_path);
+@@ -773,7 +773,7 @@ static void conflict_rename_rename_2(struct rename *ren1,
+ {
+ 	char *new_path1 = unique_path(ren1->pair->two->path, branch1);
+ 	char *new_path2 = unique_path(ren2->pair->two->path, branch2);
+-	output(1, "Renamed %s to %s and %s to %s instead",
++	output(1, "Renaming %s to %s and %s to %s instead",
+ 	       ren1->pair->one->path, new_path1,
+ 	       ren2->pair->one->path, new_path2);
+ 	remove_file(0, ren1->pair->two->path, 0);
+@@ -887,10 +887,10 @@ static int process_renames(struct string_list *a_renames,
+ 						 branch1,
+ 						 branch2);
+ 				if (mfi.merge || !mfi.clean)
+-					output(1, "Renamed %s->%s", src, ren1_dst);
++					output(1, "Renaming %s->%s", src, ren1_dst);
  
--	read_cache();
- 	memset(&opts, 0, sizeof(opts));
- 	opts.head_idx = 2;
- 	opts.src_index = &the_index;
-@@ -565,8 +564,6 @@ static int checkout_fast_forward(unsigned char *head, unsigned char *remote)
- 	struct dir_struct dir;
- 	struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
+ 				if (mfi.merge)
+-					output(2, "Auto-merged %s", ren1_dst);
++					output(2, "Auto-merging %s", ren1_dst);
  
--	if (read_cache_unmerged())
--		die("you need to resolve your current index first");
- 	refresh_cache(REFRESH_QUIET);
+ 				if (!mfi.clean) {
+ 					output(1, "CONFLICT (content): merge conflict in %s",
+@@ -924,14 +924,14 @@ static int process_renames(struct string_list *a_renames,
  
- 	fd = hold_locked_index(lock_file, 1);
-@@ -746,6 +743,7 @@ static int evaluate_result(void)
- 	int cnt = 0;
- 	struct rev_info rev;
- 
-+	discard_cache();
- 	if (read_cache() < 0)
- 		die("failed to read the cache");
- 
-@@ -779,7 +777,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	struct commit_list **remotes = &remoteheads;
- 
- 	setup_work_tree();
--	if (unmerged_cache())
-+	if (read_cache_unmerged())
- 		die("You are in the middle of a conflicted merge.");
- 
- 	/*
-@@ -1076,6 +1074,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			if (string_list_has_string(&current_directory_set, ren1_dst)) {
+ 				clean_merge = 0;
+-				output(1, "CONFLICT (rename/directory): Renamed %s->%s in %s "
++				output(1, "CONFLICT (rename/directory): Rename %s->%s in %s "
+ 				       " directory %s added in %s",
+ 				       ren1_src, ren1_dst, branch1,
+ 				       ren1_dst, branch2);
+ 				conflict_rename_dir(ren1, branch1);
+ 			} else if (sha_eq(src_other.sha1, null_sha1)) {
+ 				clean_merge = 0;
+-				output(1, "CONFLICT (rename/delete): Renamed %s->%s in %s "
++				output(1, "CONFLICT (rename/delete): Rename %s->%s in %s "
+ 				       "and deleted in %s",
+ 				       ren1_src, ren1_dst, branch1,
+ 				       branch2);
+@@ -940,19 +940,19 @@ static int process_renames(struct string_list *a_renames,
+ 				const char *new_path;
+ 				clean_merge = 0;
+ 				try_merge = 1;
+-				output(1, "CONFLICT (rename/add): Renamed %s->%s in %s. "
++				output(1, "CONFLICT (rename/add): Rename %s->%s in %s. "
+ 				       "%s added in %s",
+ 				       ren1_src, ren1_dst, branch1,
+ 				       ren1_dst, branch2);
+ 				new_path = unique_path(ren1_dst, branch2);
+-				output(1, "Added as %s instead", new_path);
++				output(1, "Adding as %s instead", new_path);
+ 				update_file(0, dst_other.sha1, dst_other.mode, new_path);
+ 			} else if ((item = string_list_lookup(ren1_dst, renames2Dst))) {
+ 				ren2 = item->util;
+ 				clean_merge = 0;
+ 				ren2->processed = 1;
+-				output(1, "CONFLICT (rename/rename): Renamed %s->%s in %s. "
+-				       "Renamed %s->%s in %s",
++				output(1, "CONFLICT (rename/rename): Rename %s->%s in %s. "
++				       "Rename %s->%s in %s",
+ 				       ren1_src, ren1_dst, branch1,
+ 				       ren2->pair->one->path, ren2->pair->two->path, branch2);
+ 				conflict_rename_rename_2(ren1, branch1, ren2, branch2);
+@@ -986,9 +986,9 @@ static int process_renames(struct string_list *a_renames,
+ 					output(3, "Skipped %s (merged same as existing)", ren1_dst);
+ 				else {
+ 					if (mfi.merge || !mfi.clean)
+-						output(1, "Renamed %s => %s", ren1_src, ren1_dst);
++						output(1, "Renaming %s => %s", ren1_src, ren1_dst);
+ 					if (mfi.merge)
+-						output(2, "Auto-merged %s", ren1_dst);
++						output(2, "Auto-merging %s", ren1_dst);
+ 					if (!mfi.clean) {
+ 						output(1, "CONFLICT (rename/modify): Merge conflict in %s",
+ 						       ren1_dst);
+@@ -1039,7 +1039,7 @@ static int process_entry(const char *path, struct stage_data *entry,
+ 			/* Deleted in both or deleted in one and
+ 			 * unchanged in the other */
+ 			if (a_sha)
+-				output(2, "Removed %s", path);
++				output(2, "Removing %s", path);
+ 			/* do not touch working file if it did not exist */
+ 			remove_file(1, path, !a_sha);
+ 		} else {
+@@ -1086,12 +1086,12 @@ static int process_entry(const char *path, struct stage_data *entry,
+ 			const char *new_path = unique_path(path, add_branch);
+ 			clean_merge = 0;
+ 			output(1, "CONFLICT (%s): There is a directory with name %s in %s. "
+-			       "Added %s as %s",
++			       "Adding %s as %s",
+ 			       conf, path, other_branch, path, new_path);
+ 			remove_file(0, path, 0);
+ 			update_file(0, sha, mode, new_path);
+ 		} else {
+-			output(2, "Added %s", path);
++			output(2, "Adding %s", path);
+ 			update_file(1, sha, mode, path);
  		}
- 
- 		/* Automerge succeeded. */
-+		discard_cache();
- 		write_tree_trivial(result_tree);
- 		automerge_was_ok = 1;
- 		break;
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index aff3603..f288015 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -269,6 +269,17 @@ test_expect_success 'merge-recursive result' '
- 
- '
- 
-+test_expect_success 'fail if the index has unresolved entries' '
-+
-+	rm -fr [abcd] &&
-+	git checkout -f "$c1" &&
-+
-+	test_must_fail git merge "$c5" &&
-+	test_must_fail git merge "$c5" 2> out &&
-+	grep "You are in the middle of a conflicted merge" out
-+
-+'
-+
- test_expect_success 'merge-recursive remove conflict' '
- 
- 	rm -fr [abcd] &&
+ 	} else if (a_sha && b_sha) {
+@@ -1105,7 +1105,7 @@ static int process_entry(const char *path, struct stage_data *entry,
+ 			reason = "add/add";
+ 			o_sha = (unsigned char *)null_sha1;
+ 		}
+-		output(2, "Auto-merged %s", path);
++		output(2, "Auto-merging %s", path);
+ 		o.path = a.path = b.path = (char *)path;
+ 		hashcpy(o.sha1, o_sha);
+ 		o.mode = o_mode;
 -- 
-1.6.0.rc3.17.gc14c8.dirty
+1.6.0.6.gc667.dirty
