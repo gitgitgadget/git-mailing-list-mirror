@@ -1,80 +1,66 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [bug] git `next' does not do trivial merges
-Date: Sat, 23 Aug 2008 08:08:39 +0200
-Message-ID: <20080823060839.GB23800@genesis.frugalware.org>
-References: <g8lmpn$jvk$1@ger.gmane.org> <20080822193117.GA6361@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Gittogether event?
+Date: Fri, 22 Aug 2008 23:23:16 -0700
+Message-ID: <7vod3k2qsr.fsf@gitster.siamese.dyndns.org>
+References: <20080820151031.GD3483@spearce.org>
+ <200808210432.10544.chriscool@tuxfamily.org>
+ <20080821144537.GM3483@spearce.org>
+ <200808220536.15746.chriscool@tuxfamily.org>
+ <7v7ia9d0of.fsf@gitster.siamese.dyndns.org>
+ <20080822143407.GE3483@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="E50aLcSU4JxQSj/B"
-Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 23 08:20:58 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	"J.H." <warthog19@eaglescrag.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Sam Vilain <sam.vilain@catalyst.net.nz>,
+	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Aug 23 08:24:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWmUa-0005e6-Uo
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 08:20:57 +0200
+	id 1KWmY8-0006Ja-CW
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 08:24:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751726AbYHWGIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Aug 2008 02:08:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751989AbYHWGIq
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 02:08:46 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:48281 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751665AbYHWGIq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Aug 2008 02:08:46 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 93C611B2533;
-	Sat, 23 Aug 2008 08:08:42 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id A31524465E;
-	Sat, 23 Aug 2008 07:10:42 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id E7C401770015; Sat, 23 Aug 2008 08:08:39 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080822193117.GA6361@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1750933AbYHWGXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Aug 2008 02:23:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750801AbYHWGXb
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 02:23:31 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49266 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1749667AbYHWGXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Aug 2008 02:23:31 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E28C36A391;
+	Sat, 23 Aug 2008 02:23:28 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id BB5916A390; Sat, 23 Aug 2008 02:23:18 -0400 (EDT)
+In-Reply-To: <20080822143407.GE3483@spearce.org> (Shawn O. Pearce's message
+ of "Fri, 22 Aug 2008 07:34:07 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 002E8E8A-70DC-11DD-A858-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93427>
 
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
---E50aLcSU4JxQSj/B
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>> This reminds me...  I'll be offline from 24 or 25 of September for two
+>> weeks or so, and need to ask somebody most likely Shawn to keep an eye on
+>> the patchflow during that time.
+>
+> Enjoy your time away from the keyboard.  I'd be happy to keep a
+> patch queue for you to pick up from when you get back.
 
-On Fri, Aug 22, 2008 at 03:31:17PM -0400, Jeff King <peff@peff.net> wrote:
-> On Fri, Aug 22, 2008 at 08:36:39AM +0200, Paolo Bonzini wrote:
->=20
-> > I had already posted this bug report yesterday but it was hidden in a =
-=20
-> > cover letter at =20
-> > http://permalink.gmane.org/gmane.comp.version-control.git/93143 -- so =
-=20
-> > I'll copy the relevant info here:
->=20
-> Sadly, this bisects to 1c7b76b (Build in merge).
-
-I guessed the bug is in builtin-merge.c::read_tree_trivial(), but I
-don't see how it is different to builtin-read-tree.c::cmd_read_tree(),
-at least the unpack_trees_options struct is the same.
-
-I'm on it..
-
---E50aLcSU4JxQSj/B
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkivqWcACgkQe81tAgORUJavZACgocmeLWHq6GYeFt1fS2PX3+Q4
-B9gAnRHqOPDpb5MIt07yQUbQJK4lrtjz
-=TyNz
------END PGP SIGNATURE-----
-
---E50aLcSU4JxQSj/B--
+Thanks, and thanks again for handling the patchflow last year around the
+same time.  I'll be away for a reason related to the last year's event,
+but at least this year it is scheduled so I can plan ahead.
