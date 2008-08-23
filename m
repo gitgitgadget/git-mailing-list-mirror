@@ -1,88 +1,102 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH 1/2] git-submodule: replace duplicated code with a module_list
- function
-Date: Fri, 22 Aug 2008 20:01:02 -0400
-Message-ID: <48AF533E.9020102@gmail.com>
-References: <edc9ece47ca86c3c3e4265e7f4222c8ea6917461.1219390139.git.davvid@gmail.com> <7vpro064qz.fsf@gitster.siamese.dyndns.org>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: About git pretty
+Date: Sat, 23 Aug 2008 02:03:37 +0200
+Message-ID: <20080823000336.GB14684@leksak.fem-net>
+References: <94a0d4530808221624m26034923pbc1f97cb4c4203d8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 23 02:02:28 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 23 02:04:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWgaG-0001hY-FP
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 02:02:24 +0200
+	id 1KWgcX-0002GV-GH
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 02:04:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754931AbYHWABH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 20:01:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752953AbYHWABH
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 20:01:07 -0400
-Received: from wr-out-0506.google.com ([64.233.184.230]:32341 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753190AbYHWABG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 20:01:06 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so609371wri.5
-        for <git@vger.kernel.org>; Fri, 22 Aug 2008 17:01:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=DoFrgm9gUGO2I2utlzfbzcHzXQ5RhIXL3voLP46bZA0=;
-        b=JSSq2Z+JsmJRhFl+WxeAxidZpD77XP6g/BwaSz+b9tRYxV1+9xl3tP/jetcdiHDLAR
-         I03AZ7JV89EMzC8Y+Pe3J3hBLiOHAAEfi62mU64DQuiV3dDRRySrNWxYAU/1eIc9o28n
-         LbnlvukuvbHC55CZPSdlvtWXWe2uDs0VAs+Pc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=qWBVoeSh+WcVQTevuAYohjQyZrY0aM+nTYDZRhkqunvmooss1fqSbXEpAAhDxGVY0y
-         ctKc1XeqkV4eFgWPxICArACOWoe/mK/wujcQOdqquoGgsWk01ZvTi9x+BqrRIckmzA+A
-         B3MVV8SDkjGtrfrmHDRKJB2jb0LyFpkrQQk/c=
-Received: by 10.90.83.18 with SMTP id g18mr2204998agb.76.1219449665171;
-        Fri, 22 Aug 2008 17:01:05 -0700 (PDT)
-Received: from ?192.168.1.117? ( [71.163.41.46])
-        by mx.google.com with ESMTPS id s40sm1629774hsb.7.2008.08.22.17.01.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 22 Aug 2008 17:01:03 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <7vpro064qz.fsf@gitster.siamese.dyndns.org>
+	id S1755110AbYHWADl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 20:03:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755058AbYHWADl
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 20:03:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40797 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754291AbYHWADk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 20:03:40 -0400
+Received: (qmail invoked by alias); 23 Aug 2008 00:03:38 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp068) with SMTP; 23 Aug 2008 02:03:38 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX18AqvAsAYkAvgulrNTRygChnWaTX2RD9NvQ/rdHiJ
+	SK8FLsGQzDcSdW
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KWgbR-0008Np-1S; Sat, 23 Aug 2008 02:03:37 +0200
+Content-Disposition: inline
+In-Reply-To: <94a0d4530808221624m26034923pbc1f97cb4c4203d8@mail.gmail.com>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93405>
 
-Junio C Hamano wrote:
->>  cmd_foreach()
->>  {
->> -	git ls-files --stage | grep '^160000 ' |
->> +	module_list |
->>     
->
-> Thanks.
->
-> I think the original "foreach" implementation does not pay attention to
-> "$@" not by design but by mistake, and we should pass "$@" here as well.
->
-> Other than that I do not see anything obviously wrong with the patch.
->
-> Mark?
->
->   
+Hi,
 
-Actually, this was by design, not mistake, though we did not discuss 
-this at all. I'm not sure what the semantics would / should be: first of 
-all, some part of "$@" is the command to be executed in each submodule, 
-and as written "$@" in its entirety is what is used. Also, as written 
-and documented, foreach operates in each checked out submodule, not a 
-subset. I guess the basic questions are:
-a)  What specific option or options to git ls-files makes sense here?
-b) How do we distinguish the ls-files options from the command to be 
-executed?
+Felipe Contreras wrote:
+> Hi,
+> 
+> Please read aloud the following commands:
+> git log --pretty=short
+> git log --pretty=full
+> git log --pretty=format:%s
+> 
+> It is just me or 'pretty full' doesn't exactly convey the meaning of
+> the action to execute?
 
-Mark
+But "pretty short" and "pretty format" is. :)
+
+> How about:
+> git log --format=short
+> git log --format=full
+> git log --format=custom:%s
+> 
+> If you like the idea I can work on a patch.
+
+Because --pretty=<format> is an option taken by many git commands including
+git plumbing (e.g. rev-list), many scripts will rely on "--pretty" and they
+all would have to be changed. And --pretty exists since Jan 2005 (see
+9d97aa64).
+
+Also, --format is an option available to git-archive and git-for-each-ref
+with a different intention for each. --pretty exists for several git
+commands with the same intention for all (I think) -- pretty-printing
+commit objects.
+
+And, btw, I also do not think that your idea does really solve the 
+"problem" that it always will make sense when you read it aloud.
+
+Thus it seems that --format has no benefit over --pretty at all. :-)
+
+
+Ahh, another thought:
+If a new git user is looking for an option to _format_ git-log output,
+she will surely search the git-log manual page for the word "format", finding
+
+ 1. --raw
+ 2. --shortstat
+ 3. --abbrev
+ 4. --full-index
+ 5. --pretty
+  STRIKE!
+
+This makes me wonder if it could make sense to move --pretty up in the
+git-log manual page, but I do not think renaming it is worth the
+trouble.
+
+Regards,
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
