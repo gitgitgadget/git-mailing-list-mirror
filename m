@@ -1,89 +1,61 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: Re: About git pretty
-Date: Sat, 23 Aug 2008 01:04:09 +0100
-Message-ID: <e1dab3980808221704h3c713e64n41adc631d7a79601@mail.gmail.com>
-References: <94a0d4530808221624m26034923pbc1f97cb4c4203d8@mail.gmail.com>
-	 <7vd4k062k2.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] git-submodule: replace duplicated code with a
+ module_list function
+Date: Fri, 22 Aug 2008 17:08:42 -0700
+Message-ID: <7v8wuo619x.fsf@gitster.siamese.dyndns.org>
+References: <edc9ece47ca86c3c3e4265e7f4222c8ea6917461.1219390139.git.davvid@gmail.com>
+ <7vpro064qz.fsf@gitster.siamese.dyndns.org> <48AF533E.9020102@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Felipe Contreras" <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 23 02:05:57 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 23 02:09:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWgd1-0002LJ-8P
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 02:05:41 +0200
+	id 1KWghV-0003I0-Ey
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 02:09:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755295AbYHWAEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2008 20:04:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754311AbYHWAEL
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 20:04:11 -0400
-Received: from wf-out-1314.google.com ([209.85.200.168]:54096 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755198AbYHWAEK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2008 20:04:10 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so918546wfd.4
-        for <git@vger.kernel.org>; Fri, 22 Aug 2008 17:04:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=f5rsQMtmmg/EDjKK3HuJxy5ye3KUjRFTiO2W/bwy2oM=;
-        b=eVo2eeKK+TU87oi7VxxHe4ZP5DkNzpIjibxnzCXcmSZZr5JDkjIlgD5Y4thoPaW/PY
-         lFjSrbU0X0S62p9Yz3woILsEJlGa1DIIWHDBAK3s+0ijKqAt1xL+v0EjpUqrZAPF/Frs
-         ha40XI8VHT6BybBtMue0M3xEuIF9T8ZQoCdPs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=C7Ec74eNMZfFNhJw2xtEPTupJVz2yYhrXabmy7zOIyOy0hn26qXoNfRsbXByum0ng3
-         KVmtoyD1XtyZ9cywWIdpN6teRdEZm+JXppBIxy0m8qu3GZvs6NqtyXt0JyjQEjGBcsDx
-         6YGGKUNHL/di+84ruuOrSTGvrY0A4YcZLNzEw=
-Received: by 10.142.240.19 with SMTP id n19mr604902wfh.332.1219449849477;
-        Fri, 22 Aug 2008 17:04:09 -0700 (PDT)
-Received: by 10.142.136.18 with HTTP; Fri, 22 Aug 2008 17:04:09 -0700 (PDT)
-In-Reply-To: <7vd4k062k2.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1755095AbYHWAIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2008 20:08:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754311AbYHWAIt
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Aug 2008 20:08:49 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64164 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755095AbYHWAIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2008 20:08:49 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BCEA36914D;
+	Fri, 22 Aug 2008 20:08:47 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 1F6066914C; Fri, 22 Aug 2008 20:08:43 -0400 (EDT)
+In-Reply-To: <48AF533E.9020102@gmail.com> (Mark Levedahl's message of "Fri,
+ 22 Aug 2008 20:01:02 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A85E2EE2-70A7-11DD-8339-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93407>
 
-On Sat, Aug 23, 2008 at 12:41 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Felipe Contreras" <felipe.contreras@gmail.com> writes:
->> It is just me or 'pretty full' doesn't exactly convey the meaning of
->> the action to execute?
-[snip]
->> If you like the idea I can work on a patch.
->
-> FWIW, I don't like it.
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-It's probably much too late to change conventions given the number of
-deployed scripts, but one of the annoyances for me about git is that a
-lot of the commands/options names are based on what the code does/is
-written rather than relating to what a user who doesn't know or care
-about the inner workings expects as output. For instance, I imagine
-the --pretty gets its name because a pretty printing routine, called
-pretty_print_commit in the code, was written but the name probably
-doesn't make much sense to anyone who's not from a computer science
-background. Likewise the options --hard, --soft and --mixed to git
-reset lack any natural mnemonic structure. (I'm sure one can be
-contrived, but I doubt it'd be particularly natural.) Then there's
-git-fsck and gitk.
+> Actually, this was by design, not mistake, though we did not discuss
+> this at all. I'm not sure what the semantics would / should be: first
+> of all, some part of "$@" is the command to be executed in each
+> submodule, and as written "$@" in its entirety is what is used. Also,
+> as written and documented, foreach operates in each checked out
+> submodule, not a subset. I guess the basic questions are:
+> a)  What specific option or options to git ls-files makes sense here?
+> b) How do we distinguish the ls-files options from the command to be
+> executed?
 
-It's not remotely a big problem but it is something that I'd imagine
-would have been done differently with hindsight.
+Ah, I was blind.  For (a) I do not see any need for "option" but
+pathspecs; and (b) I agree is a real problem.  We of course could do
+something like:
 
--- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-"while having code so boring anyone can maintain it, use Python." --
-attempted insult seen on slashdot
+    $ git submodule foreach -c 'your command here' your pathspec here
