@@ -1,9 +1,9 @@
 From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [PATCH (GITK,GIT-GUI,DOCS) 4/7] git-gui: Support passing blame to a parent commit.
-Date: Sat, 23 Aug 2008 12:30:51 +0400
+Subject: [PATCH (GITK,GIT-GUI,DOCS) 5/7] git-gui: Better positioning in Blame Parent Commit
+Date: Sat, 23 Aug 2008 12:31:35 +0400
 Organization: TEPKOM
-Message-ID: <200808231230.51693.angavrilov@gmail.com>
-References: <200808231225.12596.angavrilov@gmail.com> <200808231230.00397.angavrilov@gmail.com>
+Message-ID: <200808231231.35635.angavrilov@gmail.com>
+References: <200808231225.12596.angavrilov@gmail.com> <200808231230.00397.angavrilov@gmail.com> <200808231230.51693.angavrilov@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="utf-8"
@@ -12,138 +12,146 @@ Cc: Paul Mackerras <paulus@samba.org>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 23 10:32:17 2008
+X-From: git-owner@vger.kernel.org Sat Aug 23 10:32:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWoXd-00040g-G2
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 10:32:13 +0200
+	id 1KWoYJ-0004B0-Qa
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 10:32:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751319AbYHWIbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Aug 2008 04:31:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751668AbYHWIbJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 04:31:09 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:62964 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750865AbYHWIbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Aug 2008 04:31:05 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so464618fgg.17
-        for <git@vger.kernel.org>; Sat, 23 Aug 2008 01:31:04 -0700 (PDT)
+	id S1751668AbYHWIbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Aug 2008 04:31:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751118AbYHWIbv
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 04:31:51 -0400
+Received: from fk-out-0910.google.com ([209.85.128.190]:5175 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751463AbYHWIbt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Aug 2008 04:31:49 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so488567fkq.5
+        for <git@vger.kernel.org>; Sat, 23 Aug 2008 01:31:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:organization:to:subject
          :date:user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=FHbN916gxSgYoebvUvnUrO0WFotMkD04rEYhbVf2WpM=;
-        b=euANvCq0VHzhppUH+Vcx6lRC8YBLKyzkUD0qSfrSdLsDMrWoCd6IScQFcFJadiEmsC
-         5/vA4kk5wAlq9eN1usIlYLZdOEwnsnBKrx2OzmLmECopLC38RbOUtGw4KA7mtadXsTOr
-         axthBH/QG1YRbnNP6cDezXQLZdu9uJQObdgak=
+        bh=vn1lxuDMgisGItWiJAgmQjRorP5+ogbiHV2vp6MlS6I=;
+        b=LwutPcJx9HzvCT0BQM4UA4sovcImAdjqStN1ZoA2E5mgcAEioaEd9ae/qBLk0psB1X
+         zBbFmQjXuYUGsn1DNtKi5dpIVZmBGyJOUj2/my42ku3q/qAL0FHwKJq0FsCqrlLYRjJ3
+         96fC+2tbGFqZgOQmxWS50QZqfnlx40zlGPofw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:organization:to:subject:date:user-agent:cc:references
          :in-reply-to:mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=ENw6QNK7BayP1pew8e4r4q+MomvXXlZCt7/fvulksIRaQhDpt0p3yzcAuNXMcRucJg
-         ZmZpdRuSCGwpIK8TduCvgae/DPjTAJMEYUUucO36AaFOh1bOx59q80V2f2rfvXHcxN4y
-         Iy3d0S47v/l/xrryvtSvak/529tnwg6gdXBDA=
-Received: by 10.180.215.19 with SMTP id n19mr1134669bkg.35.1219480264160;
-        Sat, 23 Aug 2008 01:31:04 -0700 (PDT)
+        b=oeRoewtBtB2l5xkabAas3HSV3MDIXdLuHvqrbWRoUBTAgDhS8mcFEpysKEHBVdy4D4
+         7F9y0ijA+KuelggnhB4ZPuwgR9UgIhM4VKWnpwJJtQdtak/z5zqClQMz6W27Yn43fMJn
+         6InXlqxj61+SVDQWV0QbOE3raOHUlybtzyQQw=
+Received: by 10.180.215.19 with SMTP id n19mr1134866bkg.35.1219480308168;
+        Sat, 23 Aug 2008 01:31:48 -0700 (PDT)
 Received: from desktop2 ( [92.255.85.78])
-        by mx.google.com with ESMTPS id d13sm2029450fka.3.2008.08.23.01.31.03
+        by mx.google.com with ESMTPS id 31sm2014258fkt.19.2008.08.23.01.31.46
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 23 Aug 2008 01:31:03 -0700 (PDT)
+        Sat, 23 Aug 2008 01:31:47 -0700 (PDT)
 User-Agent: KMail/1.9.9
-In-Reply-To: <200808231230.00397.angavrilov@gmail.com>
+In-Reply-To: <200808231230.51693.angavrilov@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93438>
 
-Add a context menu item that switches the view to the
-parent of the commit under cursor. It is useful to see
-how the file looked before the change, and find older
-changes in the same lines.
+Invoke diff-tree between the commit and its parent,
+and use the hunks to fix the target line number,
+accounting for addition and removal of lines.
 
 Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
 ---
- lib/blame.tcl |   48 ++++++++++++++++++++++++++++++++++++++----------
- 1 files changed, 38 insertions(+), 10 deletions(-)
+ lib/blame.tcl |   65 +++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 61 insertions(+), 4 deletions(-)
 
 diff --git a/lib/blame.tcl b/lib/blame.tcl
-index d6c56e8..8b555a1 100644
+index 8b555a1..1be8145 100644
 --- a/lib/blame.tcl
 +++ b/lib/blame.tcl
-@@ -262,6 +262,9 @@ constructor new {i_commit i_path} {
- 	$w.ctxm add command \
- 		-label [mc "Show History Context"] \
- 		-command [cb _gitkcommit]
-+	$w.ctxm add command \
-+		-label [mc "Blame Parent Commit"] \
-+		-command [cb _blameparent]
- 
- 	foreach i $w_columns {
- 		for {set g 0} {$g < [llength $group_colors]} {incr g} {
-@@ -790,19 +793,27 @@ method _load_commit {cur_w cur_d pos} {
- 	set lno [lindex [split [$cur_w index $pos] .] 0]
- 	set dat [lindex $line_data $lno]
+@@ -984,19 +984,76 @@ method _blameparent {} {
+ 	set dat [_get_click_amov_info $this]
  	if {$dat ne {}} {
--		lappend history [list \
--			$commit $path \
--			$highlight_column \
--			$highlight_line \
--			[lindex [$w_file xview] 0] \
--			[lindex [$w_file yview] 0] \
--			]
--		set commit [lindex $dat 0]
--		set path   [lindex $dat 1]
--		_load $this [list [lindex $dat 2]]
-+		_load_new_commit $this  \
-+			[lindex $dat 0] \
-+			[lindex $dat 1] \
-+			[list [lindex $dat 2]]
- 	}
- }
+ 		set cmit [lindex $dat 0]
++		set new_path [lindex $dat 1]
  
-+method _load_new_commit {new_commit new_path jump} {
-+	lappend history [list \
-+		$commit $path \
-+		$highlight_column \
-+		$highlight_line \
-+		[lindex [$w_file xview] 0] \
-+		[lindex [$w_file yview] 0] \
-+		]
-+
-+	set commit $new_commit
-+	set path   $new_path
-+	_load $this $jump
-+}
-+
- method _showcommit {cur_w lno} {
- 	global repo_config
- 	variable active_color
-@@ -969,6 +980,23 @@ method _gitkcommit {} {
- 	}
- }
+ 		if {[catch {set cparent [git rev-parse --verify "$cmit^"]}]} {
+ 			error_popup [strcat [mc "Cannot find parent commit:"] "\n\n$err"]
+ 			return;
+ 		}
  
-+method _blameparent {} {
-+	set dat [_get_click_amov_info $this]
-+	if {$dat ne {}} {
-+		set cmit [lindex $dat 0]
+-		_load_new_commit $this  \
+-			$cparent \
+-			[lindex $dat 1] \
+-			[list [lindex $dat 2]]
++		_kill $this
 +
-+		if {[catch {set cparent [git rev-parse --verify "$cmit^"]}]} {
-+			error_popup [strcat [mc "Cannot find parent commit:"] "\n\n$err"]
-+			return;
++		# Generate a diff between the commit and its parent,
++		# and use the hunks to update the line number.
++		# Request zero context to simplify calculations.
++		if {[catch {set fd [eval git_read diff-tree \
++				--unified=0 $cparent $cmit $new_path]} err]} {
++			$status stop [mc "Unable to display parent"]
++			error_popup [strcat [mc "Error loading diff:"] "\n\n$err"]
++			return
 +		}
 +
-+		_load_new_commit $this  \
-+			$cparent \
-+			[lindex $dat 1] \
-+			[list [lindex $dat 2]]
++		set r_orig_line [lindex $dat 2]
++
++		fconfigure $fd \
++			-blocking 0 \
++			-encoding binary \
++			-translation binary
++		fileevent $fd readable [cb _read_diff_load_commit \
++			$fd $cparent $new_path $r_orig_line]
++		set current_fd $fd
+ 	}
+ }
+ 
++method _read_diff_load_commit {fd cparent new_path tline} {
++	if {$fd ne $current_fd} {
++		catch {close $fd}
++		return
 +	}
-+}
++
++	while {[gets $fd line] >= 0} {
++		if {[regexp {^@@ -(\d+)(,(\d+))? \+(\d+)(,(\d+))? @@} $line line \
++			old_line osz old_size new_line nsz new_size]} {
++
++			if {$osz eq {}} { set old_size 1 }
++			if {$nsz eq {}} { set new_size 1 }
++
++			if {$new_line <= $tline} {
++				if {[expr {$new_line + $new_size}] > $tline} {
++					# Target line within the hunk
++					set line_shift [expr {
++						($new_size-$old_size)*($tline-$new_line)/$new_size
++						}]
++				} else {
++					set line_shift [expr {$new_size-$old_size}]
++				}
++
++				set r_orig_line [expr {$r_orig_line - $line_shift}]
++			}
++		}
++	}
++
++	if {[eof $fd]} {
++		close $fd;
++		set current_fd {}
++
++		_load_new_commit $this  \
++			$cparent        \
++			$new_path       \
++			[list $r_orig_line]
++	}
++} ifdeleted { catch {close $fd} }
 +
  method _show_tooltip {cur_w pos} {
  	if {$tooltip_wm ne {}} {
