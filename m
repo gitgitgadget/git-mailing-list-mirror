@@ -1,9 +1,9 @@
 From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [PATCH (GITK,GIT-GUI,DOCS) 5/7] git-gui: Better positioning in Blame Parent Commit
-Date: Sat, 23 Aug 2008 12:31:35 +0400
+Subject: [PATCH (GITK,GIT-GUI,DOCS) 6/7] git-gui: Allow specifying an initial line for git gui blame.
+Date: Sat, 23 Aug 2008 12:32:20 +0400
 Organization: TEPKOM
-Message-ID: <200808231231.35635.angavrilov@gmail.com>
-References: <200808231225.12596.angavrilov@gmail.com> <200808231230.00397.angavrilov@gmail.com> <200808231230.51693.angavrilov@gmail.com>
+Message-ID: <200808231232.20592.angavrilov@gmail.com>
+References: <200808231225.12596.angavrilov@gmail.com> <200808231230.51693.angavrilov@gmail.com> <200808231231.35635.angavrilov@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="utf-8"
@@ -12,149 +12,149 @@ Cc: Paul Mackerras <paulus@samba.org>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 23 10:32:56 2008
+X-From: git-owner@vger.kernel.org Sat Aug 23 10:33:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWoYJ-0004B0-Qa
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 10:32:56 +0200
+	id 1KWoZ2-0004Ov-SM
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 10:33:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751668AbYHWIbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Aug 2008 04:31:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751118AbYHWIbv
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 04:31:51 -0400
-Received: from fk-out-0910.google.com ([209.85.128.190]:5175 "EHLO
+	id S1752011AbYHWIch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Aug 2008 04:32:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751946AbYHWIcg
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 04:32:36 -0400
+Received: from fk-out-0910.google.com ([209.85.128.188]:8683 "EHLO
 	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751463AbYHWIbt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Aug 2008 04:31:49 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so488567fkq.5
-        for <git@vger.kernel.org>; Sat, 23 Aug 2008 01:31:48 -0700 (PDT)
+	with ESMTP id S1751940AbYHWIce (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Aug 2008 04:32:34 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so488704fkq.5
+        for <git@vger.kernel.org>; Sat, 23 Aug 2008 01:32:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:organization:to:subject
          :date:user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=vn1lxuDMgisGItWiJAgmQjRorP5+ogbiHV2vp6MlS6I=;
-        b=LwutPcJx9HzvCT0BQM4UA4sovcImAdjqStN1ZoA2E5mgcAEioaEd9ae/qBLk0psB1X
-         zBbFmQjXuYUGsn1DNtKi5dpIVZmBGyJOUj2/my42ku3q/qAL0FHwKJq0FsCqrlLYRjJ3
-         96fC+2tbGFqZgOQmxWS50QZqfnlx40zlGPofw=
+        bh=YI0l5Jb8A01iG7dnzzS7WGgBuf20TDti1Vgz+FOp07g=;
+        b=uHTfGW+CfiGoWVH/ghdOHNN90jPd7q6q60mfHoqTP4O5JJ5sfHkZr0wjTCF0trQ0AH
+         pvQHUxTn3nZhTg2bh6hamTPjIOp3vM2kbQ3YPQrJ+yvJamgt90yzDPb8DH8/ZG0/c8Ib
+         neI4QLLbAoqebI63Qa8DVbnze/BTPzfx6N+GQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:organization:to:subject:date:user-agent:cc:references
          :in-reply-to:mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=oeRoewtBtB2l5xkabAas3HSV3MDIXdLuHvqrbWRoUBTAgDhS8mcFEpysKEHBVdy4D4
-         7F9y0ijA+KuelggnhB4ZPuwgR9UgIhM4VKWnpwJJtQdtak/z5zqClQMz6W27Yn43fMJn
-         6InXlqxj61+SVDQWV0QbOE3raOHUlybtzyQQw=
-Received: by 10.180.215.19 with SMTP id n19mr1134866bkg.35.1219480308168;
-        Sat, 23 Aug 2008 01:31:48 -0700 (PDT)
+        b=I33GuuB+s7nTjSkC6s4IkJs7Axs702cIiiJIhwWGsSwklO2qPOlrbvnTBshjW5rED8
+         /pA7aUiwgLHIimnCDEc+fpvIc0jRD00mqM0nkfJa5X5u4oFR3MklkIN9itpcQp5maqP1
+         dDYa5E9hiHN2W0ARCf8oaKgBW/Zzj8KXR57nw=
+Received: by 10.180.254.18 with SMTP id b18mr1131370bki.43.1219480352987;
+        Sat, 23 Aug 2008 01:32:32 -0700 (PDT)
 Received: from desktop2 ( [92.255.85.78])
-        by mx.google.com with ESMTPS id 31sm2014258fkt.19.2008.08.23.01.31.46
+        by mx.google.com with ESMTPS id f31sm2044205fkf.0.2008.08.23.01.32.31
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 23 Aug 2008 01:31:47 -0700 (PDT)
+        Sat, 23 Aug 2008 01:32:32 -0700 (PDT)
 User-Agent: KMail/1.9.9
-In-Reply-To: <200808231230.51693.angavrilov@gmail.com>
+In-Reply-To: <200808231231.35635.angavrilov@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93439>
 
-Invoke diff-tree between the commit and its parent,
-and use the hunks to fix the target line number,
-accounting for addition and removal of lines.
+Add a command-line option to make git gui blame automatically
+scroll to a specific line in the file. Useful for integration
+with other tools.
 
 Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
 ---
- lib/blame.tcl |   65 +++++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 files changed, 61 insertions(+), 4 deletions(-)
+ git-gui.sh      |   13 +++++++++++--
+ lib/blame.tcl   |    4 ++--
+ lib/browser.tcl |    2 +-
+ 3 files changed, 14 insertions(+), 5 deletions(-)
 
+diff --git a/git-gui.sh b/git-gui.sh
+index b8bbcd5..e5ea9a8 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -2282,10 +2282,15 @@ proc usage {} {
+ switch -- $subcommand {
+ browser -
+ blame {
+-	set subcommand_args {rev? path}
++	if {$subcommand eq "blame"} {
++		set subcommand_args {[--line=<num>] rev? path}
++	} else {
++		set subcommand_args {rev? path}
++	}
+ 	if {$argv eq {}} usage
+ 	set head {}
+ 	set path {}
++	set jump_spec {}
+ 	set is_path 0
+ 	foreach a $argv {
+ 		if {$is_path || [file exists $_prefix$a]} {
+@@ -2299,6 +2304,9 @@ blame {
+ 				set path {}
+ 			}
+ 			set is_path 1
++		} elseif {[regexp {^--line=(\d+)$} $a a lnum]} {
++			if {$jump_spec ne {} || $head ne {}} usage
++			set jump_spec [list $lnum]
+ 		} elseif {$head eq {}} {
+ 			if {$head ne {}} usage
+ 			set head $a
+@@ -2330,6 +2338,7 @@ blame {
+ 
+ 	switch -- $subcommand {
+ 	browser {
++		if {$jump_spec ne {}} usage
+ 		if {$head eq {}} {
+ 			if {$path ne {} && [file isdirectory $path]} {
+ 				set head $current_branch
+@@ -2345,7 +2354,7 @@ blame {
+ 			puts stderr [mc "fatal: cannot stat path %s: No such file or directory" $path]
+ 			exit 1
+ 		}
+-		blame::new $head $path
++		blame::new $head $path $jump_spec
+ 	}
+ 	}
+ 	return
 diff --git a/lib/blame.tcl b/lib/blame.tcl
-index 8b555a1..1be8145 100644
+index 1be8145..a75685d 100644
 --- a/lib/blame.tcl
 +++ b/lib/blame.tcl
-@@ -984,19 +984,76 @@ method _blameparent {} {
- 	set dat [_get_click_amov_info $this]
- 	if {$dat ne {}} {
- 		set cmit [lindex $dat 0]
-+		set new_path [lindex $dat 1]
+@@ -58,7 +58,7 @@ field tooltip_t         {} ; # Text widget in $tooltip_wm
+ field tooltip_timer     {} ; # Current timer event for our tooltip
+ field tooltip_commit    {} ; # Commit(s) in tooltip
  
- 		if {[catch {set cparent [git rev-parse --verify "$cmit^"]}]} {
- 			error_popup [strcat [mc "Cannot find parent commit:"] "\n\n$err"]
- 			return;
- 		}
+-constructor new {i_commit i_path} {
++constructor new {i_commit i_path i_jump} {
+ 	global cursor_ptr
+ 	variable active_color
+ 	variable group_colors
+@@ -338,7 +338,7 @@ constructor new {i_commit i_path} {
+ 	wm protocol $top WM_DELETE_WINDOW "destroy $top"
+ 	bind $top <Destroy> [cb _kill]
  
--		_load_new_commit $this  \
--			$cparent \
--			[lindex $dat 1] \
--			[list [lindex $dat 2]]
-+		_kill $this
-+
-+		# Generate a diff between the commit and its parent,
-+		# and use the hunks to update the line number.
-+		# Request zero context to simplify calculations.
-+		if {[catch {set fd [eval git_read diff-tree \
-+				--unified=0 $cparent $cmit $new_path]} err]} {
-+			$status stop [mc "Unable to display parent"]
-+			error_popup [strcat [mc "Error loading diff:"] "\n\n$err"]
-+			return
-+		}
-+
-+		set r_orig_line [lindex $dat 2]
-+
-+		fconfigure $fd \
-+			-blocking 0 \
-+			-encoding binary \
-+			-translation binary
-+		fileevent $fd readable [cb _read_diff_load_commit \
-+			$fd $cparent $new_path $r_orig_line]
-+		set current_fd $fd
- 	}
+-	_load $this {}
++	_load $this $i_jump
  }
  
-+method _read_diff_load_commit {fd cparent new_path tline} {
-+	if {$fd ne $current_fd} {
-+		catch {close $fd}
-+		return
-+	}
-+
-+	while {[gets $fd line] >= 0} {
-+		if {[regexp {^@@ -(\d+)(,(\d+))? \+(\d+)(,(\d+))? @@} $line line \
-+			old_line osz old_size new_line nsz new_size]} {
-+
-+			if {$osz eq {}} { set old_size 1 }
-+			if {$nsz eq {}} { set new_size 1 }
-+
-+			if {$new_line <= $tline} {
-+				if {[expr {$new_line + $new_size}] > $tline} {
-+					# Target line within the hunk
-+					set line_shift [expr {
-+						($new_size-$old_size)*($tline-$new_line)/$new_size
-+						}]
-+				} else {
-+					set line_shift [expr {$new_size-$old_size}]
-+				}
-+
-+				set r_orig_line [expr {$r_orig_line - $line_shift}]
-+			}
-+		}
-+	}
-+
-+	if {[eof $fd]} {
-+		close $fd;
-+		set current_fd {}
-+
-+		_load_new_commit $this  \
-+			$cparent        \
-+			$new_path       \
-+			[list $r_orig_line]
-+	}
-+} ifdeleted { catch {close $fd} }
-+
- method _show_tooltip {cur_w pos} {
- 	if {$tooltip_wm ne {}} {
- 		_open_tooltip $this $cur_w
+ method _kill {} {
+diff --git a/lib/browser.tcl b/lib/browser.tcl
+index ab470d1..0410cc6 100644
+--- a/lib/browser.tcl
++++ b/lib/browser.tcl
+@@ -151,7 +151,7 @@ method _enter {} {
+ 				append p [lindex $n 1]
+ 			}
+ 			append p $name
+-			blame::new $browser_commit $p
++			blame::new $browser_commit $p {}
+ 		}
+ 		}
+ 	}
 -- 
 1.6.0.rc2
