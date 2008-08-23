@@ -1,122 +1,106 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: nicer frontend to get rebased tree?
-Date: Sat, 23 Aug 2008 14:52:37 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0808231440530.3363@nehalem.linux-foundation.org>
-References: <20080822174655.GP23334@one.firstfloor.org>  <m37ia8sv49.fsf@localhost.localdomain>  <20080823071552.GU23334@one.firstfloor.org>  <200808231121.41694.jnareb@gmail.com>  <20080823165350.GY23334@one.firstfloor.org>
- <4d8e3fd30808231404y7293eb56g4fbed5565ab2aa9a@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Makefile: improve customization for supporting HP-UX
+Date: Sun, 24 Aug 2008 00:03:58 +0200
+Message-ID: <20080823220358.GH23800@genesis.frugalware.org>
+References: <1219520484-7712-1-git-send-email-vmiklos@frugalware.org> <20080823200928.GA7185@schiele.dyndns.org> <20080823202601.GF23800@genesis.frugalware.org> <20080823210243.GB7185@schiele.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andi Kleen <andi@firstfloor.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 23 23:53:55 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="vIq7vvlOcsOjFaxi"
+Cc: git@vger.kernel.org
+To: Robert Schiele <rschiele@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 24 00:06:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KX13N-0007zu-Qi
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 23:53:50 +0200
+	id 1KX1EH-0002eM-J4
+	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 00:05:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752888AbYHWVwp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Aug 2008 17:52:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752882AbYHWVwp
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 17:52:45 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:55763 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752289AbYHWVwo (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Aug 2008 17:52:44 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7NLqcWc024501
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 23 Aug 2008 14:52:39 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7NLqbYL002821;
-	Sat, 23 Aug 2008 14:52:37 -0700
-In-Reply-To: <4d8e3fd30808231404y7293eb56g4fbed5565ab2aa9a@mail.gmail.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.429 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751777AbYHWWEA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Aug 2008 18:04:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752799AbYHWWEA
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 18:04:00 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:49968 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751593AbYHWWEA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Aug 2008 18:04:00 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 959EB1B2537;
+	Sun, 24 Aug 2008 00:03:58 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 8D2AB4465E;
+	Sat, 23 Aug 2008 23:05:39 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 23701119003C; Sun, 24 Aug 2008 00:03:58 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080823210243.GB7185@schiele.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93493>
 
 
+--vIq7vvlOcsOjFaxi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, 23 Aug 2008, Paolo Ciarrocchi wrote:
->
-> you got nice and detailed answers,  for example you can track a
-> rebased tree in your working directory using git pull --rebase.
-> What's wrong with that?
+On Sat, Aug 23, 2008 at 11:02:43PM +0200, Robert Schiele <rschiele@gmail.co=
+m> wrote:
+> On Sat, Aug 23, 2008 at 10:26:01PM +0200, Miklos Vajna wrote:
+> > On Sat, Aug 23, 2008 at 10:09:28PM +0200, Robert Schiele <rschiele@gmai=
+l.com> wrote:
+> > > The systems I build on are:
+> > >=20
+> > > 1x HP-UX B.11.11 U 9000/785
+> >=20
+> > This is the same version I'm using at the moment.
+> >=20
+> > The NEEDS_LIBICONV is simple, the linker fails to find iconv symbols:
+> >=20
+> > /usr/ccs/bin/ld: Unsatisfied symbols:
+> >    libiconv (first referenced in libgit.a(utf8.o)) (code)
+> >    libiconv_open (first referenced in libgit.a(utf8.o)) (code)
+> >    libiconv_close (first referenced in libgit.a(utf8.o)) (code)
+> > collect2: ld returned 1 exit status
+> > gmake: *** [git] Error 1
+>=20
+> Huh?  Where does the "lib" prefix come from on your system?  Do you have =
+some
+> custom iconv header file in the way?  On my system I see:
+>=20
+> [13] % nm /usr/lib/libc.2 | grep ^iconv
+> iconv               |   1255080|extern|entry  |
+> iconv               |   1255112|extern|code   |$CODE$
+> iconv_close         |   1254800|extern|entry  |
+> iconv_close         |   1254832|extern|code   |$CODE$
+> iconv_open          |   1255208|extern|entry  |
+> iconv_open          |   1255272|extern|code   |$CODE$
+> [14] %=20
 
-No, you really really cannot do that.
+Ah, OK, that is specific to this machine. If you install the libiconv
+package, then #include <iconv.h> includes /usr/local/include/iconv.h
+where iconv is a define to libiconv. So that is not needed generally,
+thanks for pointing out.
 
-If the _tree_ you are tracking is itself rebasing (not just your own 
-tree), then you cannot and absolutely SHOULD NOT use rebase (not directly, 
-and not with "git pull --rebase".
+> Thus I think the snprintf part of your patch makes sense but the iconv st=
+uff
+> seems to be something flawed on your machine.
 
-Why?
+OK, I'll send a patch with that part only in a bit.
 
-Let's look at what happens. Let's say that your history looks like
+--vIq7vvlOcsOjFaxi
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-	... -> A -> B -> C -> a -> b -> c
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-where the upper-case letters are from the tree you track, and the 
-lower-case letters are the commits you added yourself.
+iEYEARECAAYFAkiwiU4ACgkQe81tAgORUJYalACgpR4zS9ftap3q+wCryy8CRuvW
+M08An2uShmH0PlLSFdy3HU+A3CfeogUo
+=ilCQ
+-----END PGP SIGNATURE-----
 
-Now, let's say that the tree you track gets rebased, and in the process 
-'B' is removed (because it turns out it was buggy), and A and C get 
-modified. What happens?
-
-You now have
-
-	... -> A -> B -> C -> a -> b -> c     <- your branch
-	  \
-	    other stuff -> A' -> C'     <- newly rebased branch
-
-(where "other stuff" is whatever the remote branch was rebased on top 
-of) and when you now try to rebase your stuff on top of the newly rebased 
-branch, you are going to end up trying to rebase all the _old_ commits 
-that weren't even yours (ie it's going to try to rebase A, B and C too!)
-
-And that's not what you want! It will potentially not only generate lots 
-of conflicts (because A' and A aren't the same, and C' and C aren't the 
-same), and it will actually re-insert B - which was buggy - before it 
-finally gets to the commits _you_ actually did (a, b and c).
-
-So no, you canno even sanely rebase on top of another persons rebased 
-tree, because the _other_ person threw away his history, and since you 
-remember their _old_ history, it's basically now you who are in charge of 
-it.
-
-What you can do is to basically do
-
-	git fetch nasty-tree
-	git rebase C.. --onto nasty-tree
-
-ie you can explicitly _tell_ rebase which commits you want to rebase. 
-Obviously, "git rebase --interactive" can help you do this (ie you can get 
-the whole list and edit out all the crud that you know isn't yours).
-
-But this is why working on top of somebody elses tree that gets rebased is 
-so hard. You lose all the history, because the other person basically 
-threw it away and started over.
-
-Don't get me wrong - it's _possible_ to do. See above about how you can 
-pick-and-choose the parts you decide you want to keep (your "own" stuff). 
-
-In fact, we could even do a form of "rebase" that only picks commits that 
-you committed yourself, and call it "git rebase --my-commits nasty-tree", 
-and that would often do the right thing (assuming the source tree only 
-ever rebases its own commits, of course! If it rebases other peoples 
-commits, it's so terminally broken that you should just refuse to work 
-with that tree, and shoot the maintainer)
-
-So we could do more helper functions for this, but the fact is, it's a 
-really broken model. The real fix is to teach people not to rebase.
-
-			Linus
+--vIq7vvlOcsOjFaxi--
