@@ -1,154 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] unpack_trees(): protect the handcrafted in-core index
- from read_cache()
-Date: Sat, 23 Aug 2008 12:57:30 -0700
-Message-ID: <7vbpzjy05x.fsf_-_@gitster.siamese.dyndns.org>
-References: <7v3akw2jgo.fsf@gitster.siamese.dyndns.org>
- <1219489071-5679-1-git-send-email-vmiklos@frugalware.org>
- <7vk5e7y0a0.fsf@gitster.siamese.dyndns.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: nicer frontend to get rebased tree?
+Date: Sat, 23 Aug 2008 22:08:45 +0200
+Message-ID: <20080823200845.GA17374@atjola.homenet>
+References: <20080822174655.GP23334@one.firstfloor.org> <alpine.LFD.1.10.0808221053080.3487@nehalem.linux-foundation.org> <20080822182718.GQ23334@one.firstfloor.org> <alpine.LFD.1.10.0808221233100.3487@nehalem.linux-foundation.org> <20080823071014.GT23334@one.firstfloor.org> <alpine.LFD.1.10.0808230853170.3363@nehalem.linux-foundation.org> <20080823164546.GX23334@one.firstfloor.org> <20080823181827.GA15993@atjola.homenet> <alpine.LFD.1.10.0808231152250.3363@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paolo Bonzini <bonzini@gnu.org>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat Aug 23 21:59:00 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andi Kleen <andi@firstfloor.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Aug 23 22:09:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWzGB-0007cO-DM
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 21:58:55 +0200
+	id 1KWzQo-0002QM-A4
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 22:09:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758624AbYHWT5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Aug 2008 15:57:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758620AbYHWT5j
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 15:57:39 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53915 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758616AbYHWT5h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Aug 2008 15:57:37 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F2FEC6AA8E;
-	Sat, 23 Aug 2008 15:57:36 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 070136AA8D; Sat, 23 Aug 2008 15:57:31 -0400 (EDT)
-In-Reply-To: <7vk5e7y0a0.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 23 Aug 2008 12:55:03 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BBE5FBEC-714D-11DD-A498-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1754180AbYHWUIu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Aug 2008 16:08:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753759AbYHWUIu
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 16:08:50 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56391 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753394AbYHWUIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Aug 2008 16:08:49 -0400
+Received: (qmail invoked by alias); 23 Aug 2008 20:08:47 -0000
+Received: from i577BB1D4.versanet.de (EHLO atjola.local) [87.123.177.212]
+  by mail.gmx.net (mp022) with SMTP; 23 Aug 2008 22:08:47 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19XSVpNuilX+QDbczi3Ma3RroZM1fsHYcSnSwXJ7O
+	QJHnLtrSdy2/Cx
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0808231152250.3363@nehalem.linux-foundation.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93485>
 
-unpack_trees() rebuilds the in-core index from scratch by allocating a new
-structure and finishing it off by copying the built one to the final
-index.
+On 2008.08.23 11:56:27 -0700, Linus Torvalds wrote:
+> On Sat, 23 Aug 2008, Bj=F6rn Steinbrink wrote:
+> > So, how would you make it less obscure and unobvious then the curre=
+nt
+> > method? The current method would be:
+> >=20
+> > git fetch linux-next
+> > git checkout linux-next/whatever
+> >=20
+> > Which seems neither obscure nor unobvious to me...
+>=20
+> One thing that I admit we haven't done is _document_ this in some
+> obvious place.
 
-The resulting in-core index is Ok for most use, but read_cache() does not
-recognize it as such.  The function is meant to be no-op if you already
-have loaded the index, until you call discard_cache().
+One thing I experienced in #git is that people seem to have problems
+understanding remote tracking branches like linux-next/whatever in the
+above example. Quite often, there have been requests like:
 
-This change the way read_cache() detects an already initialized in-core
-index, by introducing an extra bit, and marks the handcrafted in-core
-index as initialized, to avoid this problem.
+ How can I pull into all of my branches at once?
 
-A better fix in the longer term would be to change the read_cache() API so
-that it will always discard and re-read from the on-disk index to avoid
-confusion.  But there are higher level API that have relied on the current
-semantics, and they and their users all need to get converted, which is
-outside the scope of 'maint' track.
+And after some back and forth about pull being fetch+merge and that you
+can only merge into your current branch etc. it usually turns out that
+those folks just have a local branch for each remote tracking branch,
+even if all they want is just the state of the remote tracking branch
+anyway.
 
-An example of such a higher level API is write_cache_as_tree(), which is
-used by git-write-tree as well as later Porcelains like git-merge, revert
-and cherry-pick.  In the longer term, we should remove read_cache() from
-there and add one to cmd_write_tree(); other callers expect that the
-in-core index they prepared is what gets written as a tree so no other
-change is necessary for this particular codepath.
+So they end up doing stuff like:
 
-The original version of this patch marked the index by pointing an
-otherwise wasted malloc'ed memory with o->result.alloc, but this version
-uses Linus's idea to use a new "initialized" bit, which is conceptually
-much cleaner.
+git checkout foo
+git pull
+git checkout my_work_on_top_of_foo
+git rebase foo
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- cache.h                  |    3 ++-
- read-cache.c             |    4 +++-
- t/t7605-merge-resolve.sh |    2 +-
- unpack-trees.c           |    1 +
- 4 files changed, 7 insertions(+), 3 deletions(-)
+Where "foo" is always just fast-forwarded to origin/foo.
 
-diff --git a/cache.h b/cache.h
-index 2475de9..884fae8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -222,7 +222,8 @@ struct index_state {
- 	struct cache_tree *cache_tree;
- 	time_t timestamp;
- 	void *alloc;
--	unsigned name_hash_initialized : 1;
-+	unsigned name_hash_initialized : 1,
-+		 initialized : 1;
- 	struct hash_table name_hash;
- };
- 
-diff --git a/read-cache.c b/read-cache.c
-index 2c03ec3..35fec46 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1155,7 +1155,7 @@ int read_index_from(struct index_state *istate, const char *path)
- 	size_t mmap_size;
- 
- 	errno = EBUSY;
--	if (istate->alloc)
-+	if (istate->initialized)
- 		return istate->cache_nr;
- 
- 	errno = ENOENT;
-@@ -1195,6 +1195,7 @@ int read_index_from(struct index_state *istate, const char *path)
- 	 * index size
- 	 */
- 	istate->alloc = xmalloc(estimate_cache_size(mmap_size, istate->cache_nr));
-+	istate->initialized = 1;
- 
- 	src_offset = sizeof(*hdr);
- 	dst_offset = 0;
-@@ -1247,6 +1248,7 @@ int discard_index(struct index_state *istate)
- 	cache_tree_free(&(istate->cache_tree));
- 	free(istate->alloc);
- 	istate->alloc = NULL;
-+	istate->initialized = 0;
- 
- 	/* no need to throw away allocated active_cache */
- 	return 0;
-diff --git a/t/t7605-merge-resolve.sh b/t/t7605-merge-resolve.sh
-index 5c53608..f1f86dd 100755
---- a/t/t7605-merge-resolve.sh
-+++ b/t/t7605-merge-resolve.sh
-@@ -27,7 +27,7 @@ test_expect_success 'setup' '
- 	git tag c3
- '
- 
--test_expect_failure 'merge c1 to c2' '
-+test_expect_success 'merge c1 to c2' '
- 	git reset --hard c1 &&
- 	git merge -s resolve c2 &&
- 	test "$(git rev-parse c1)" != "$(git rev-parse HEAD)" &&
-diff --git a/unpack-trees.c b/unpack-trees.c
-index cba0aca..ef21c62 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -376,6 +376,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	state.refresh_cache = 1;
- 
- 	memset(&o->result, 0, sizeof(o->result));
-+	o->result.initialized = 1;
- 	if (o->src_index)
- 		o->result.timestamp = o->src_index->timestamp;
- 	o->merge_size = len;
--- 
-1.6.0.51.g078ae
+So I think a major part of the problem is that remote tracking branches
+are not understood or at least not valued enough. Unfortunately, I have
+no real idea how we could improve that.
+
+Once on #git, I explained how branches (ie. the refs in refs/heads) are
+special and that HEAD becomes a symbolic ref when you check them out,
+while it becomes a plain reference to a commit when you check out
+something else (tag, remote tracking branch, commit, whatever). And tha=
+t
+operations like commit dereference HEAD until they find a non-symbolic
+ref and update _that_ ref. I think that explanation worked quite well
+for the person I was talking to and made him realize that you only need
+branches when you really want create your own commits. But OTOH, tellin=
+g
+people that local branches are the actual special case might as well
+confuse the hell out of them (me thinks). And besides that, I'm no good
+at writing "static" documentation anyway.
+
+Bj=F6rn
