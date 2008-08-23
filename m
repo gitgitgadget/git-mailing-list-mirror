@@ -1,97 +1,108 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: nicer frontend to get rebased tree?
-Date: Sat, 23 Aug 2008 22:08:45 +0200
-Message-ID: <20080823200845.GA17374@atjola.homenet>
-References: <20080822174655.GP23334@one.firstfloor.org> <alpine.LFD.1.10.0808221053080.3487@nehalem.linux-foundation.org> <20080822182718.GQ23334@one.firstfloor.org> <alpine.LFD.1.10.0808221233100.3487@nehalem.linux-foundation.org> <20080823071014.GT23334@one.firstfloor.org> <alpine.LFD.1.10.0808230853170.3363@nehalem.linux-foundation.org> <20080823164546.GX23334@one.firstfloor.org> <20080823181827.GA15993@atjola.homenet> <alpine.LFD.1.10.0808231152250.3363@nehalem.linux-foundation.org>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: [PATCH] Makefile: improve customization for supporting HP-UX
+Date: Sat, 23 Aug 2008 22:09:28 +0200
+Message-ID: <20080823200928.GA7185@schiele.dyndns.org>
+References: <1219520484-7712-1-git-send-email-vmiklos@frugalware.org>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andi Kleen <andi@firstfloor.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Aug 23 22:09:57 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="EVF5PPMfhYS0aIcm"
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sat Aug 23 22:10:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWzQo-0002QM-A4
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 22:09:54 +0200
+	id 1KWzRV-0002d5-35
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 22:10:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754180AbYHWUIu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Aug 2008 16:08:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753759AbYHWUIu
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 16:08:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56391 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753394AbYHWUIt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Aug 2008 16:08:49 -0400
-Received: (qmail invoked by alias); 23 Aug 2008 20:08:47 -0000
-Received: from i577BB1D4.versanet.de (EHLO atjola.local) [87.123.177.212]
-  by mail.gmx.net (mp022) with SMTP; 23 Aug 2008 22:08:47 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19XSVpNuilX+QDbczi3Ma3RroZM1fsHYcSnSwXJ7O
-	QJHnLtrSdy2/Cx
+	id S1754444AbYHWUJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Aug 2008 16:09:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754350AbYHWUJd
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 16:09:33 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:14551 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754320AbYHWUJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Aug 2008 16:09:32 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so568783fgg.17
+        for <git@vger.kernel.org>; Sat, 23 Aug 2008 13:09:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent:from:reply-to;
+        bh=P/K4uL5W2O6JTTH9RkQvnUlsqzsFjb2s/A6kbFAiTdQ=;
+        b=CsUGxQSK/ojzmdglZA8KHHo3Iz/JuAIBoEpXC/0Z9qG/Fc1n/9PGoZdY5z5yrCm3dW
+         J/lQDnU9/ysssimWjPvCz6EZOEiYFFi80Ilvi+HdNd4gP7H4PnBl9zwkOnWMZ5PwTM6D
+         QPxsl2EMdKsDxPvapFaWmcGWyv0Eb2SZBasm4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:to:cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=EG+RM3gWdnBO7mdjWcpl9KwMtRytm8eoQibFbmwL+OkqjdCp0Pk0SH/JhzKZqqaSZW
+         Q+Tgx4ZQdKX31r2mP4kyLZL/5MbLDvGXSkV25kzJcrXZSw5/ukenYD5g33MMWcPBC9XD
+         ev5EP3vWROFRqpP0cNGXfOgpVscIrmlIGDoos=
+Received: by 10.86.52.6 with SMTP id z6mr1970364fgz.18.1219522170103;
+        Sat, 23 Aug 2008 13:09:30 -0700 (PDT)
+Received: from sigkill.schiele.dyndns.org ( [91.18.121.169])
+        by mx.google.com with ESMTPS id l19sm2839311fgb.7.2008.08.23.13.09.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 23 Aug 2008 13:09:29 -0700 (PDT)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 748B416052; Sat, 23 Aug 2008 22:09:28 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0808231152250.3363@nehalem.linux-foundation.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+In-Reply-To: <1219520484-7712-1-git-send-email-vmiklos@frugalware.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93486>
 
-On 2008.08.23 11:56:27 -0700, Linus Torvalds wrote:
-> On Sat, 23 Aug 2008, Bj=F6rn Steinbrink wrote:
-> > So, how would you make it less obscure and unobvious then the curre=
-nt
-> > method? The current method would be:
-> >=20
-> > git fetch linux-next
-> > git checkout linux-next/whatever
-> >=20
-> > Which seems neither obscure nor unobvious to me...
->=20
-> One thing that I admit we haven't done is _document_ this in some
-> obvious place.
 
-One thing I experienced in #git is that people seem to have problems
-understanding remote tracking branches like linux-next/whatever in the
-above example. Quite often, there have been requests like:
+--EVF5PPMfhYS0aIcm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- How can I pull into all of my branches at once?
+On Sat, Aug 23, 2008 at 09:41:24PM +0200, Miklos Vajna wrote:
+> Cc'ing Robert, it would be interesting to know how did he succeed to
+> build without this patch.
 
-And after some back and forth about pull being fetch+merge and that you
-can only merge into your current branch etc. it usually turns out that
-those folks just have a local branch for each remote tracking branch,
-even if all they want is just the state of the remote tracking branch
-anyway.
+Well, it just worked though I cannot give a guarantee that there is not a f=
+law
+somewhere in the binaries since these machines are not our main development
+machines and most developers use git itself on another system that shares t=
+he
+same network directory.
 
-So they end up doing stuff like:
+The systems I build on are:
 
-git checkout foo
-git pull
-git checkout my_work_on_top_of_foo
-git rebase foo
+1x HP-UX B.11.11 U 9000/785
+2x HP-UX B.11.23 U ia64
 
-Where "foo" is always just fast-forwarded to origin/foo.
+If you tell us how your specific problem looks like I might have an idea why
+it does not occur to me.
 
-So I think a major part of the problem is that remote tracking branches
-are not understood or at least not valued enough. Unfortunately, I have
-no real idea how we could improve that.
+Robert
 
-Once on #git, I explained how branches (ie. the refs in refs/heads) are
-special and that HEAD becomes a symbolic ref when you check them out,
-while it becomes a plain reference to a commit when you check out
-something else (tag, remote tracking branch, commit, whatever). And tha=
-t
-operations like commit dereference HEAD until they find a non-symbolic
-ref and update _that_ ref. I think that explanation worked quite well
-for the person I was talking to and made him realize that you only need
-branches when you really want create your own commits. But OTOH, tellin=
-g
-people that local branches are the actual special case might as well
-confuse the hell out of them (me thinks). And besides that, I'm no good
-at writing "static" documentation anyway.
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
 
-Bj=F6rn
+"Quidquid latine dictum sit, altum sonatur."
+
+--EVF5PPMfhYS0aIcm
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.4-svn0 (GNU/Linux)
+
+iD8DBQFIsG54xcDFxyGNGNcRAglaAKCwHYtW0YQvpBcrQsvqbLC7B6WwOACeK1jq
+G5aFAgPuPtcGTfsR4sboDwk=
+=4rbt
+-----END PGP SIGNATURE-----
+
+--EVF5PPMfhYS0aIcm--
