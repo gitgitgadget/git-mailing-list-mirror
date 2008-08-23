@@ -1,115 +1,107 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: Gittogether event? (was: GSoC 2008 final evaluations)
-Date: Sat, 23 Aug 2008 07:06:10 +0200
-Message-ID: <200808230706.11192.chriscool@tuxfamily.org>
-References: <20080820151031.GD3483@spearce.org> <200808220536.15746.chriscool@tuxfamily.org> <20080823025030.GB22675@kroah.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [bug] Segfault in git rev-list --first-parent --bisect
+Date: Fri, 22 Aug 2008 22:20:13 -0700
+Message-ID: <7v7ia848aa.fsf@gitster.siamese.dyndns.org>
+References: <32541b130808222020v146e015dm8a98a005ad3e76a7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"J.H." <warthog19@eaglescrag.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Sam Vilain <sam.vilain@catalyst.net.nz>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
-To: Greg KH <greg@kroah.com>
-X-From: git-owner@vger.kernel.org Sat Aug 23 07:03:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git ML" <git@vger.kernel.org>
+To: "Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 23 07:21:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWlHY-0000Or-3M
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 07:03:24 +0200
+	id 1KWlYy-0003ds-Sp
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 07:21:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751101AbYHWFCU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Aug 2008 01:02:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751118AbYHWFCT
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 01:02:19 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:34056 "EHLO smtp6-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750940AbYHWFCT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Aug 2008 01:02:19 -0400
-Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id E5AB419743;
-	Sat, 23 Aug 2008 07:02:16 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id C3E6E196FB;
-	Sat, 23 Aug 2008 07:02:15 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080823025030.GB22675@kroah.com>
-Content-Disposition: inline
+	id S1751831AbYHWFUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Aug 2008 01:20:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbYHWFUU
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 01:20:20 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35698 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751735AbYHWFUU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Aug 2008 01:20:20 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7CFAB6A0B6;
+	Sat, 23 Aug 2008 01:20:18 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 9E5466A0B5; Sat, 23 Aug 2008 01:20:15 -0400 (EDT)
+In-Reply-To: <32541b130808222020v146e015dm8a98a005ad3e76a7@mail.gmail.com>
+ (Avery Pennarun's message of "Fri, 22 Aug 2008 23:20:31 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 2CEAFA20-70D3-11DD-B985-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93420>
 
-Le samedi 23 ao=FBt 2008, Greg KH a =E9crit :
-> On Fri, Aug 22, 2008 at 05:36:15AM +0200, Christian Couder wrote:
-> > Le jeudi 21 ao=FBt 2008, Shawn O. Pearce a =E9crit :
-> > > Christian Couder <chriscool@tuxfamily.org> wrote:
-> > > > I see. In this case perhaps the money can be spend to fund trav=
-el
-> > > > expenses for another event where many of us could meet instead =
-of
-> > > > the mentor summit? It could even be better as Junio and perhaps
-> > > > Linus could be there too.
-> > >
-> > > Google has offered to help us organize a Gittogether in Portland
-> > > if we desire.  Portland was suggested because rumor has it that
-> > > Linus doesn't like to travel.
-> >
-> > Great!
-> >
-> > > I'm not sure how far "offered to help" goes yet.  I can pursure
-> > > that further if we want to put something together.  Really it
-> > > needs to be discussed on the git ML as we'd want as many folks
-> > > from the community to come out if they could.
-> >
-> > Right, so I add the list to CC.
-> >
-> > Here are a few question to start the discussion:
-> >
-> > What date would be best?
-> > Who could come?
-> > What needs to be done to organize it?
-> > Who could help organize it?
->
-> It could be done as part of the Linux Plumbers Conference this Septem=
-ber
-> in Portland where there will be at least one git talk:
-> 	http://linuxplumbersconf.org/
+"Avery Pennarun" <apenwarr@gmail.com> writes:
 
-(You mean the Git Tutorial by Linus:
-=20
-http://linuxplumbersconf.org/program/speakers/getspeaker.php?speaker=3D=
-ltorvalds.txt)
+>     $ git rev-list --first-parent --bisect 5109c91 ^d798a2bfe094
+>     Segmentation fault
 
-So yes it could be part of the Plumbers Conference or just after it.
+Totally untested, usefulness fairly unknown.
 
-If it's part of the Conference, I wonder if people only interested by t=
-he=20
-GitTogether will have to pay the Conference registration fee (300$)?
+ builtin-rev-list.c |   18 ++++++++++++++----
+ 1 files changed, 14 insertions(+), 4 deletions(-)
 
-In Portland, OR there will be:
-
-- September 15(Mon)-16(Tue): Kernel Summit 2008=20
-(https://www.linuxfoundation.org/events/kernel)
-
-- September 17(Wed)-19(Fry): Linux Plumbers Conference
-(http://linuxplumbersconf.org/)
-
-So the GitTogether could perhaps be just after that:
-
-- September 20(Sat)-21(Sun): GitTogether
-
-as some people might just want to come during a weekend and other might=
- want=20
-to come for 5 days or even one full week (if they are invited to the Ke=
-rnel=20
-Summit)?
-
-The main problem is that it's a bit late for this year.
-
-Thanks,
-Christian.
+diff --git c/builtin-rev-list.c w/builtin-rev-list.c
+index 893762c..aab198f 100644
+--- c/builtin-rev-list.c
++++ w/builtin-rev-list.c
+@@ -530,19 +530,23 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 		return best_bisection_sorted(list, nr);
+ }
+ 
++#define BISECT_FIND_ALL 01
++#define BISECT_FIRST_PARENT_ONLY 02
+ static struct commit_list *find_bisection(struct commit_list *list,
+ 					  int *reaches, int *all,
+-					  int find_all)
++					  int flag)
+ {
+ 	int nr, on_list;
+ 	struct commit_list *p, *best, *next, *last;
+ 	int *weights;
++	int find_all = flag & BISECT_FIND_ALL;
++	int first_parent_only = flag & BISECT_FIRST_PARENT_ONLY;
+ 
+ 	show_list("bisection 2 entry", 0, 0, list);
+ 
+ 	/*
+ 	 * Count the number of total and tree-changing items on the
+-	 * list, while reversing the list.
++	 * list, while reversing the list and removing.
+ 	 */
+ 	for (nr = on_list = 0, last = NULL, p = list;
+ 	     p;
+@@ -557,6 +561,8 @@ static struct commit_list *find_bisection(struct commit_list *list,
+ 		if (!(flags & TREESAME))
+ 			nr++;
+ 		on_list++;
++		if (first_parent_only && p->item->parents)
++			p->item->parents->next = NULL;
+ 	}
+ 	list = last;
+ 	show_list("bisection 2 sorted", 0, nr, list);
+@@ -656,9 +662,13 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 
+ 	if (bisect_list) {
+ 		int reaches = reaches, all = all;
++		int flag = 0;
++		if (bisect_find_all)
++			flag |= BISECT_FIND_ALL;
++		if (revs.first_parent_only)
++			flag |= BISECT_FIRST_PARENT_ONLY;
++		revs.commits = find_bisection(revs.commits, &reaches, &all, flag);
+ 
+-		revs.commits = find_bisection(revs.commits, &reaches, &all,
+-					      bisect_find_all);
+ 		if (bisect_show_vars) {
+ 			int cnt;
+ 			char hex[41];
