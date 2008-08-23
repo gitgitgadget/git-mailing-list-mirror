@@ -1,87 +1,131 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 1/5] Allow alternate "low-level" emit function from xdl_diff
-Date: Sat, 23 Aug 2008 10:15:59 +0200
-Message-ID: <48AFC73F.2010100@lsrfire.ath.cx>
-References: <1219360921-28529-1-git-send-email-bdowning@lavos.net> <1219360921-28529-2-git-send-email-bdowning@lavos.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Sat Aug 23 10:17:12 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] builtin-merge: fail properly when we are in the middle of a conflicted merge
+Date: Sat, 23 Aug 2008 10:17:02 +0200
+Message-ID: <1219479422-29148-1-git-send-email-vmiklos@frugalware.org>
+References: <1219479293-29111-1-git-send-email-vmiklos@frugalware.org>
+Cc: Paolo Bonzini <bonzini@gnu.org>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 23 10:17:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWoJ4-0000nc-FX
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 10:17:10 +0200
+	id 1KWoJW-0000ux-Rc
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 10:17:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752146AbYHWIQG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Aug 2008 04:16:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752149AbYHWIQG
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 04:16:06 -0400
-Received: from india601.server4you.de ([85.25.151.105]:41712 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751745AbYHWIQE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Aug 2008 04:16:04 -0400
-Received: from [10.0.1.200] (p57B7B8F9.dip.t-dialin.net [87.183.184.249])
-	by india601.server4you.de (Postfix) with ESMTPSA id 4A9762F8048;
-	Sat, 23 Aug 2008 10:16:01 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <1219360921-28529-2-git-send-email-bdowning@lavos.net>
+	id S1752215AbYHWIQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Aug 2008 04:16:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752206AbYHWIQe
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 04:16:34 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:55041 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752186AbYHWIQb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Aug 2008 04:16:31 -0400
+Received: from vmobile.example.net (dsl5401CFDD.pool.t-online.hu [84.1.207.221])
+	by yugo.frugalware.org (Postfix) with ESMTP id 11CDA1DDC5B;
+	Sat, 23 Aug 2008 10:16:29 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 8D76C96FA; Sat, 23 Aug 2008 10:17:02 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.rc3.17.gc14c8.dirty
+In-Reply-To: <1219479293-29111-1-git-send-email-vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93432>
 
-Brian Downing schrieb:
-> For some users (e.g. git blame), getting textual patch output is just
-> extra work, as they can get all the information they need from the lo=
-w-
-> level diff structures.  Allow for an alternate low-level emit functio=
-n
-> to be defined to allow bypassing the textual patch generation; set
-> xemitconf_t's emit_func member to enable this.
->=20
-> The (void (*)()) type is pretty ugly, but the alternative would be to
-> include most of the private xdiff headers in xdiff.h to get the types
-> required for the "proper" function prototype.  Also, a (void *) won't
-> work, as ANSI C doesn't allow a function pointer to be cast to an
-> object pointer.
+Using unmerged_cache() without reading the cache first never will return
+anything. However, if we read the cache early then we have to discard it
+when we want to read it again from the disk.
 
-Could we move more code into the library code to avoid that ugliness?
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-AFAICS, compare_buffer() builds a struct patch with an array of
-struct chunks, whose members are then fed one by one into either
-blame_chunk() or handle_split().  Could we avoid the allocation
-altogether by using a different interface?
+The code part is pretty much from you, I wanted to add your signoff, but
+then realized that you'll do it anyway. ;-)
 
-E.g. have a callback like this:
+ builtin-merge.c        |    6 +++---
+ t/t7608-merge-dirty.sh |   33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 3 deletions(-)
+ create mode 100755 t/t7608-merge-dirty.sh
 
-	static void handle_split_cb(long same, long p_next, long t_next,
-			void *data)
-	{
-		struct chunk_cb_data *d =3D data;
-		handle_split(d->sb, d->ent, d->tlno, d->plno, same,
-				d->parent, d->split);
-		d->plno =3D p_next;
-		d->tlno =3D t_next;
-	}
-
-And use it like this:
-
-	struct chunk_cb_data d =3D {sb, ent, 0, 0, parent, split};
-        xpparam_t xpp;
-        xdemitconf_t xecfg;
-
-        xpp.flags =3D xdl_opts;
-        memset(&xecfg, 0, sizeof(xecfg));
-        xecfg.ctxlen =3D context;
-	xdi_diff_chunks(file_p, file_o, &xpp, &xecfg, handle_split_cb, &d);
-        handle_split(sb, ent, d.tlno, d.plno, ent->num_lines,
-			parent, split);
-
-Makes sense?
-
-Ren=E9
+diff --git a/builtin-merge.c b/builtin-merge.c
+index dffe4b8..71bd13b 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -565,8 +565,6 @@ static int checkout_fast_forward(unsigned char *head, unsigned char *remote)
+ 	struct dir_struct dir;
+ 	struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
+ 
+-	if (read_cache_unmerged())
+-		die("you need to resolve your current index first");
+ 	refresh_cache(REFRESH_QUIET);
+ 
+ 	fd = hold_locked_index(lock_file, 1);
+@@ -746,6 +744,7 @@ static int evaluate_result(void)
+ 	int cnt = 0;
+ 	struct rev_info rev;
+ 
++	discard_cache();
+ 	if (read_cache() < 0)
+ 		die("failed to read the cache");
+ 
+@@ -779,7 +778,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	struct commit_list **remotes = &remoteheads;
+ 
+ 	setup_work_tree();
+-	if (unmerged_cache())
++	if (read_cache_unmerged())
+ 		die("You are in the middle of a conflicted merge.");
+ 
+ 	/*
+@@ -1076,6 +1075,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		}
+ 
+ 		/* Automerge succeeded. */
++		discard_cache();
+ 		write_tree_trivial(result_tree);
+ 		automerge_was_ok = 1;
+ 		break;
+diff --git a/t/t7608-merge-dirty.sh b/t/t7608-merge-dirty.sh
+new file mode 100755
+index 0000000..fb567f6
+--- /dev/null
++++ b/t/t7608-merge-dirty.sh
+@@ -0,0 +1,33 @@
++#!/bin/sh
++
++test_description='git-merge
++
++Merge should fail if the index has unresolved entries.'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo a > a &&
++	git add a &&
++	git commit -m a &&
++	git tag a &&
++	git checkout -b branch1
++	echo b > a &&
++	git add a &&
++	git commit -m b &&
++	git tag b
++	git checkout -b branch2 HEAD~1
++	echo c > a &&
++	git add a &&
++	git commit -m c &&
++	git tag c
++'
++
++test_expect_success 'in-index merge' '
++	git checkout branch1 &&
++	test_must_fail git merge branch2 &&
++	test_must_fail git merge branch2 2> out &&
++	grep "You are in the middle of a conflicted merge" out
++'
++
++test_done
+-- 
+1.6.0.rc3.17.gc14c8.dirty
