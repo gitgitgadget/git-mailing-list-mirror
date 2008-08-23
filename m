@@ -1,67 +1,75 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH] Don't fail when an existing directory can't be created.
-Date: Sat, 23 Aug 2008 16:29:27 +0200
-Message-ID: <87prnzoldk.fsf@lysator.liu.se>
-References: <87pro1pj3l.fsf@lysator.liu.se>
-	<7vbpzk7k5x.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: nicer frontend to get rebased tree?
+Date: Sat, 23 Aug 2008 08:55:55 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0808230853170.3363@nehalem.linux-foundation.org>
+References: <20080822174655.GP23334@one.firstfloor.org> <alpine.LFD.1.10.0808221053080.3487@nehalem.linux-foundation.org> <20080822182718.GQ23334@one.firstfloor.org> <alpine.LFD.1.10.0808221233100.3487@nehalem.linux-foundation.org>
+ <20080823071014.GT23334@one.firstfloor.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 23 16:34:51 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Andi Kleen <andi@firstfloor.org>
+X-From: git-owner@vger.kernel.org Sat Aug 23 17:57:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWuCW-0001Pa-04
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 16:34:48 +0200
+	id 1KWvUC-0002hc-Ko
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 17:57:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751889AbYHWO3a convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Aug 2008 10:29:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbYHWO3a
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 10:29:30 -0400
-Received: from mail.lysator.liu.se ([130.236.254.3]:37560 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751801AbYHWO33 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Aug 2008 10:29:29 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 79532227F1CB;
-	Sat, 23 Aug 2008 16:29:28 +0200 (CEST)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 09882-01-79; Sat, 23 Aug 2008 16:29:28 +0200 (CEST)
-Received: from krank (unknown [87.96.142.66])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 2878A227F1C9;
-	Sat, 23 Aug 2008 16:29:28 +0200 (CEST)
-Received: by krank (Postfix, from userid 1000)
-	id C7D2A7B4039; Sat, 23 Aug 2008 16:29:27 +0200 (CEST)
-In-Reply-To: <7vbpzk7k5x.fsf@gitster.siamese.dyndns.org> (Junio C Hamano's message of "Fri\, 22 Aug 2008 15\:35\:22 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1752569AbYHWP4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Aug 2008 11:56:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752413AbYHWP4D
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 11:56:03 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:43739 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751136AbYHWP4B (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Aug 2008 11:56:01 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7NFtuFK004216
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 23 Aug 2008 08:55:57 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7NFttWU022558;
+	Sat, 23 Aug 2008 08:55:55 -0700
+In-Reply-To: <20080823071014.GT23334@one.firstfloor.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.429 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93463>
 
-[this is a resend, since the first one didn't reach the list]
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+On Sat, 23 Aug 2008, Andi Kleen wrote:
 >
->> This makes it possible to install in a writable directory not owned =
-by
->> the current user.
->> ---
->
-> Sign-off?
+> > Exactly. Don't rebase. And don't base your development on somebody who 
+> > does.
+> 
+> That's pretty much impossible in the current state of Linux development
+> as far as I know.
 
-I can sign it off, but I was more expecting to start a discussions, I s=
-uppose.
+Note that the "don't rebase" (as usual) only concerns your published tree. 
+You can certainly rebase non-published stuff.
 
---=20
-David K=C3=A5gedal
+As to the "don't base your development on somebody who does" - base your 
+development either on my tree (I don't rebase) or talk to the d*ck-head 
+that you _want_ to work with, but who rebases.
+
+> > Remember how I told you that you should never rebase?
+> 
+> I suspect your recommendation does not match real world git use.
+
+A lot of the trees don't rebase. The rest of the trees may not realize 
+that somebody wants to work on top of them.
+
+And linux-next has _never_ been appropriate as a development base for 
+other reasons, so forget about linux-next. It's to find merge conflicts 
+and possibly boot/test failures of the trees it contains, not for anything 
+else.
+
+			Linus
