@@ -1,77 +1,71 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: nicer frontend to get rebased tree?
-Date: Sat, 23 Aug 2008 11:24:52 +0200
-Message-ID: <48AFD764.7010605@gnu.org>
-References: <20080822174655.GP23334@one.firstfloor.org> <alpine.LFD.1.10.0808221053080.3487@nehalem.linux-foundation.org> <20080822182718.GQ23334@one.firstfloor.org> <alpine.LFD.1.10.0808221233100.3487@nehalem.linux-foundation.org> <20080823071014.GT23334@one.firstfloor.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-merge: fail properly when we are in the middle
+ of a conflicted merge
+Date: Sat, 23 Aug 2008 02:50:25 -0700
+Message-ID: <7vljyo12n2.fsf@gitster.siamese.dyndns.org>
+References: <1219479293-29111-1-git-send-email-vmiklos@frugalware.org>
+ <1219479422-29148-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Andi Kleen <andi@firstfloor.org>
-X-From: git-owner@vger.kernel.org Sat Aug 23 11:26:04 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Paolo Bonzini <bonzini@gnu.org>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sat Aug 23 11:51:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KWpNi-0001oS-C7
-	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 11:26:02 +0200
+	id 1KWpmV-0000Ev-EO
+	for gcvg-git-2@gmane.org; Sat, 23 Aug 2008 11:51:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752418AbYHWJY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Aug 2008 05:24:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752414AbYHWJY5
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 05:24:57 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:15271 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752409AbYHWJY4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Aug 2008 05:24:56 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so472663fgg.17
-        for <git@vger.kernel.org>; Sat, 23 Aug 2008 02:24:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding:sender;
-        bh=HqO084vSzOx2oDuNzbJcxcrUiRphNFvDLQb0J1KqOuA=;
-        b=MElYpqG9TrASNJifcGmSIRLrfO6ZlmmZqrnrR52B7zSF/LooWXtw7PgEvgCVR1REQ9
-         1kiD+4t5BLWPqu2vYs04Ms0Bu/JEGNDe9r5X2EAgSNHqQV3UXcBiuzxEzk2DyMeTRUru
-         cyG9pvhpPgURJ2Trn0c1DczqtsPCnwGEmuM+w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :sender;
-        b=AZQ7UsUDKZLP4A8ebMDWasVlxDShJAd8MvPTp7U6RMwuP96cdGjCnDRj0c/SezCvjT
-         TcKgYcQHOtu+0zDPM33W2s4Lwjs55IpWNCuPzgol1Yrc/iiJ/f82PfHukzYizuFnort1
-         Pxacb6SgXaR++oscwaKt6teoL93oi8PMKigBw=
-Received: by 10.86.63.19 with SMTP id l19mr1536045fga.77.1219483495639;
-        Sat, 23 Aug 2008 02:24:55 -0700 (PDT)
-Received: from scientist-2.lan ( [213.140.22.65])
-        by mx.google.com with ESMTPS id e20sm2263766fga.1.2008.08.23.02.24.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 23 Aug 2008 02:24:54 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
-In-Reply-To: <20080823071014.GT23334@one.firstfloor.org>
+	id S1752249AbYHWJuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Aug 2008 05:50:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752273AbYHWJuf
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Aug 2008 05:50:35 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46660 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752238AbYHWJue (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Aug 2008 05:50:34 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B8350642E6;
+	Sat, 23 Aug 2008 05:50:32 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 7E221642DF; Sat, 23 Aug 2008 05:50:26 -0400 (EDT)
+In-Reply-To: <1219479422-29148-1-git-send-email-vmiklos@frugalware.org>
+ (Miklos Vajna's message of "Sat, 23 Aug 2008 10:17:02 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: ED535760-70F8-11DD-AA19-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93452>
 
-Andi Kleen wrote:
->> Exactly. Don't rebase. And don't base your development on somebody who 
->> does.
-> 
-> That's pretty much impossible in the current state of Linux development
-> as far as I know.
-> 
->> Remember how I told you that you should never rebase?
-> 
-> I suspect your recommendation does not match real world git use.
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-I think if you have to rebase often, you're actually better off using
-stgit (patch queues is what the mercurial folks use instead of
-often-rebased local branches).
+> Using unmerged_cache() without reading the cache first never will return
+> anything. However, if we read the cache early then we have to discard it
+> when we want to read it again from the disk.
 
-Disclaimer: I am not an stgit user myself.
+I do not think the fix is correct with or without this one.  You are
+writing a wrong index and recording a wrong tree object in the commit.
 
-Paolo
+I have a two-liner fix for the issue I am testing right now.
+
+diff --git c/t/t7605-merge-resolve.sh w/t/t7605-merge-resolve.sh
+index ee21a10..a251dac 100755
+--- c/t/t7605-merge-resolve.sh
++++ w/t/t7605-merge-resolve.sh
+@@ -36,7 +36,9 @@ test_expect_success 'merge c1 to c2' '
+ 	git diff --exit-code &&
+ 	test -f c0.c &&
+ 	test -f c1.c &&
+-	test -f c2.c
++	test -f c2.c &&
++	test 3 = $(git ls-tree -r HEAD | wc -l) &&
++	test 2 = $(git ls-files)
+ '
+ 
+ test_expect_success 'merge c2 to c3 (fails)' '
