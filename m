@@ -1,53 +1,59 @@
 From: Simon Hausmann <simon@lst.de>
 Subject: [PATCH] Clean up the git-p4 documentation
-Date: Sun, 24 Aug 2008 16:06:39 +0200
-Message-ID: <200808241606.39937.simon@lst.de>
+Date: Sun, 24 Aug 2008 16:12:23 +0200
+Message-ID: <200808241612.23917.simon@lst.de>
+References: <200808241606.39937.simon@lst.de>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="us-ascii"
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 24 16:07:57 2008
+X-From: git-owner@vger.kernel.org Sun Aug 24 16:13:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXGG2-0003xL-G8
-	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 16:07:55 +0200
+	id 1KXGLU-0005iO-MK
+	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 16:13:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751370AbYHXOGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2008 10:06:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751328AbYHXOGr
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 10:06:47 -0400
-Received: from hoat.troll.no ([62.70.27.150]:40715 "EHLO hoat.troll.no"
+	id S1751238AbYHXOM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2008 10:12:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751268AbYHXOM1
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 10:12:27 -0400
+Received: from hoat.troll.no ([62.70.27.150]:51801 "EHLO hoat.troll.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751268AbYHXOGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2008 10:06:46 -0400
+	id S1751010AbYHXOM0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2008 10:12:26 -0400
 Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id C055720A54;
-	Sun, 24 Aug 2008 16:06:40 +0200 (CEST)
+	by hoat.troll.no (Postfix) with SMTP id 91E13209EF;
+	Sun, 24 Aug 2008 16:12:25 +0200 (CEST)
 Received: from rani.localnet (unknown [172.20.1.59])
-	by hoat.troll.no (Postfix) with ESMTP id 93DD32015A;
-	Sun, 24 Aug 2008 16:06:40 +0200 (CEST)
+	by hoat.troll.no (Postfix) with ESMTP id 7425120A54;
+	Sun, 24 Aug 2008 16:12:25 +0200 (CEST)
 User-Agent: KMail/1.10.0 (Linux/2.6.26-5-generic; KDE/4.1.0; i686; ; )
+In-Reply-To: <200808241606.39937.simon@lst.de>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93531>
 
 This patch massages the documentation a bit for improved readability and cleans
 it up from outdated options/commands.
 
 Signed-off-by: Simon Hausmann <simon@lst.de>
 ---
- contrib/fast-import/git-p4.txt |   77 ++++++++++++++++++---------------------
- 1 files changed, 36 insertions(+), 41 deletions(-)
+
+Whoops, sorry, the previous email/patch had conflicts against master. Please
+use one instead, thanks :)
+
+ contrib/fast-import/git-p4.txt |   69 ++++++++++++++++++++++------------------
+ 1 files changed, 38 insertions(+), 31 deletions(-)
 
 diff --git a/contrib/fast-import/git-p4.txt b/contrib/fast-import/git-p4.txt
-index b16a838..5c70f16 100644
+index ac551d4..49b3359 100644
 --- a/contrib/fast-import/git-p4.txt
 +++ b/contrib/fast-import/git-p4.txt
 @@ -3,14 +3,16 @@ git-p4 - Perforce <-> Git converter using git-fast-import
@@ -95,7 +101,7 @@ index b16a838..5c70f16 100644
  
    git-p4 clone //depot/project/main@all myproject
  
-@@ -37,43 +46,40 @@ If you want more control you can also use the git-p4 sync command directly:
+@@ -37,31 +46,40 @@ If you want more control you can also use the git-p4 sync command directly:
  
  This will import the current head revision of the specified depot path into a
  "remotes/p4/master" branch of your git repository. You can use the
@@ -133,30 +139,20 @@ index b16a838..5c70f16 100644
 -incremental import creates through the use of git-fast-import.
 +Advanced Setup
 +==============
- 
++
 +Suppose you have a periodically updated git repository somewhere, containing a
 +complete import of a Perforce project. This repository can be cloned and used
 +with git-p4. When updating the cloned repository with the "sync" command,
 +git-p4 will try to fetch changes from the original repository first. The git
 +protocol used with this is usually faster than importing from Perforce
 +directly.
- 
--A useful setup may be that you have a periodically updated git repository
--somewhere that contains a complete import of a Perforce project. That git
--repository can be used to clone the working repository from and one would
--import from Perforce directly after cloning using git-p4. If the connection to
--the Perforce server is slow and the working repository hasn't been synced for a
--while it may be desirable to fetch changes from the origin git repository using
--the efficient git protocol. git-p4 supports this setup by calling "git fetch origin"
--by default if there is an origin branch. You can disable this using
--
--  git config git-p4.syncFromOrigin false
++
 +This behaviour can be disabled by setting the "git-p4.syncFromOrigin" git
 +configuration variable to "false".
  
  Updating
  ========
-@@ -91,7 +97,7 @@ Submitting
+@@ -79,7 +97,7 @@ Submitting
  ==========
  
  git-p4 has support for submitting changes from a git repository back to the
@@ -165,7 +161,7 @@ index b16a838..5c70f16 100644
  repository. To submit all changes that are in the current git branch but not in
  the "p4" branch (or "origin" if "p4" doesn't exist) simply call
  
-@@ -109,17 +115,6 @@ continue importing the remaining changes with
+@@ -97,17 +115,6 @@ continue importing the remaining changes with
  
    git-p4 submit --continue
  
