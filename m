@@ -1,87 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] daemon.c: make sure kill_some_child() really kills
- somebody
-Date: Sun, 24 Aug 2008 13:33:11 -0700
-Message-ID: <7vk5e6kvaw.fsf_-_@gitster.siamese.dyndns.org>
-References: <7v1w0ft750.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0808241955550.24820@pacific.mpi-cbg.de.mpi-cbg.de>
- <7vd4jymdfn.fsf@gitster.siamese.dyndns.org>
- <7vwsi6kvow.fsf@gitster.siamese.dyndns.org>
+From: Tommi Virtanen <tv@eagain.net>
+Subject: [PATCH] "git shell" won't work, need "git-shell"
+Date: Sun, 24 Aug 2008 23:23:25 +0300
+Message-ID: <20080824202325.GA14930@eagain.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: "Stephen R. van den Berg" <srb@cuci.nl>
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sun Aug 24 22:35:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXMIm-0002aP-4e
-	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 22:35:08 +0200
+	id 1KXMIm-0002aP-Sx
+	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 22:35:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884AbYHXUdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2008 16:33:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752470AbYHXUdT
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 16:33:19 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43870 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750909AbYHXUdS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2008 16:33:18 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id F261266C21;
-	Sun, 24 Aug 2008 16:33:17 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C4D8D66C1F; Sun, 24 Aug 2008 16:33:13 -0400 (EDT)
-In-Reply-To: <7vwsi6kvow.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 24 Aug 2008 13:24:47 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E2729896-721B-11DD-9435-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752846AbYHXUeB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2008 16:34:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752713AbYHXUeB
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 16:34:01 -0400
+Received: from eagain.net ([208.78.102.120]:57556 "EHLO eagain.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752599AbYHXUeA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2008 16:34:00 -0400
+X-Greylist: delayed 632 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Aug 2008 16:34:00 EDT
+Received: from musti.eagain.net (a91-156-122-108.elisa-laajakaista.fi [91.156.122.108])
+	by eagain.net (Postfix) with ESMTPS id F31391EC039;
+	Sun, 24 Aug 2008 20:23:26 +0000 (UTC)
+Received: by musti.eagain.net (Postfix, from userid 1000)
+	id 3FB3B508695; Sun, 24 Aug 2008 23:23:25 +0300 (EEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93562>
 
-We used to kill nobody if there is no existing connection from the same
-address the new connection we are trying to handle, and dropped the new
-connection.  Make sure we at least kill one.
+>From 8e7935231e8a91d470b3a4a2310803031ef49fc4 Mon Sep 17 00:00:00 2001
+From: Tommi Virtanen <tv@eagain.net>
+Date: Sun, 24 Aug 2008 23:20:33 +0300
+Subject: [PATCH] Install git-shell in bindir, again.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+/etc/passwd shell field must be something execable, you can't enter
+"/usr/bin/git shell" there. git-shell must be present as a separate
+executable, or it is useless.
+
+Signed-off-by: Tommi Virtanen <tv@eagain.net>
 ---
- * I am not sure about this one, but it may be more in spirit with the old
-   behaviour that made sure at max connection limit we killed some to
-   handle new ones.
 
-   Actually I do think this is probably a bad idea.  What we really want
-   to do is to detect an old one that is not making any progress instead.
-   "old" we can detect by looking at its position in the queue (or we
-   could even add an explicit timestamp to the child structure), but it is
-   harder to measure "not making any progress", especially without going
-   too platform specific, e.g. monitoring rusage or somesuch, which we
-   would want to avoid.
+Hi. Recent changes moved away from "git-foo" to "git foo", except for
+some commands that needed backwards compatibility. However, git-shell
+as a separate binary was removed. I hope you will reinstante git-shell
+as a publicly visible binary in bin. Here's why:
 
- daemon.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+The shell field in /etc/passwd is *exec*ed, not interpreted via sh -c
+or some such. For example, source of Debian's shadow, containing
+/bin/login:
 
-diff --git a/daemon.c b/daemon.c
-index 8d2755a..a0d8f65 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -641,8 +641,11 @@ static void kill_some_child(void)
- 		if (!memcmp(&blanket->address, &next->address,
- 			    sizeof(next->address))) {
- 			kill(blanket->pid, SIGTERM);
--			break;
-+			return;
- 		}
-+
-+	/* Nobody from the same address?  Kill the youngest one, then. */
-+	kill(firstborn->pid, SIGTERM);
- }
- 
- static void check_dead_children(void)
+libmisc/shell.c:80:	execle (file, arg, (char *) 0, envp);
+
+I also tested this for real, and having a
+
+test:x:1001:1001:,,,:/home/test:/usr/bin/git-shell
+
+line works, and
+
+test:x:1001:1001:,,,:/home/test:/usr/bin/git shell
+
+just makes ssh loop asking for a password, logging
+
+"User test not allowed because shell /usr/bin/git shell does not exist"
+
+So, as far as I understand, as it currently is, "git shell" is utterly
+useless for what it was meant to do. Restoring "git-shell" will fix
+it.
+
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 53ab4b5..24d5809 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1351,7 +1351,7 @@ install: all
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+-	$(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-upload-archive$X '$(DESTDIR_SQ)$(bindir_SQ)'
++	$(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-upload-archive$X git-shell$X '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
+ 	$(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
+ ifndef NO_TCLTK
 -- 
-1.6.0.129.ge10d2
+1.6.0.2.g2ebc0.dirty
+
+-- 
+:(){ :|:&};:
