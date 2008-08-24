@@ -1,85 +1,139 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH 3/3] git-submodule: add "sync" command
-Date: Sun, 24 Aug 2008 17:29:48 -0400
-Message-ID: <48B1D2CC.7000200@gmail.com>
-References: <1219598500-8334-1-git-send-email-davvid@gmail.com> <e21617f50ffaae98ab73fa364e40440397bcbe33.1219598198.git.davvid@gmail.com> <341166c1e31ba26c4e8e48cd7cf9ce12a9f745b9.1219598198.git.davvid@gmail.com> <23327a679798d19dc52a27c55a58c5b8c9ebe945.1219598198.git.davvid@gmail.com> <7vwsi6meas.fsf@gitster.siamese.dyndns.org>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [RFC v2] Git User's Survey 2008
+Date: Sun, 24 Aug 2008 23:36:34 +0200
+Message-ID: <20080824213634.GA16753@leksak.fem-net>
+References: <200807230325.04184.jnareb@gmail.com> <200808200308.26308.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 24 23:30:59 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 24 23:37:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXNAm-0000sE-Qq
-	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 23:30:57 +0200
+	id 1KXNHS-0002lJ-5Z
+	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 23:37:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752713AbYHXV3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2008 17:29:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753072AbYHXV3w
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 17:29:52 -0400
-Received: from an-out-0708.google.com ([209.85.132.240]:32822 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750909AbYHXV3w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2008 17:29:52 -0400
-Received: by an-out-0708.google.com with SMTP id d40so188582and.103
-        for <git@vger.kernel.org>; Sun, 24 Aug 2008 14:29:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=y8MLr58B41yhJeJ02uNvENjTPjOKMNy8h+1PFpoZCFY=;
-        b=hSNlfBbE/y3WVVQPgRO5KyXYQrQIhIs4Mg22x++bjFThxddOw0wIghmH494091RhHO
-         INdA4wTQ9P9R3hLsHOJBUo+1aeJ8ObJsQQWtK22ft0T4vp+PXVxPiZG0/cYfNZytk5Lp
-         99DlcBDWmA7NuFDAqwddsIp0Nl7oOZkhIk0OM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=SP53OvHkML0momJP3sYWUFl7xSyea0KNd70zo39dbkqHkGCzBMEdtsACINi7sKWO1q
-         xEXq6J/eSp/J8TBrM8u0OETi+YTfBBDQG03fEGh4WmtfpWJsu77hCOll0G0V3rK1iY7r
-         jSASCloyVeI0Ez5nrAe1jdKdrVVqYF4AJmroo=
-Received: by 10.100.144.11 with SMTP id r11mr3253473and.52.1219613391058;
-        Sun, 24 Aug 2008 14:29:51 -0700 (PDT)
-Received: from ?192.168.1.117? ( [71.163.41.46])
-        by mx.google.com with ESMTPS id c23sm5794178ana.18.2008.08.24.14.29.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 24 Aug 2008 14:29:50 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <7vwsi6meas.fsf@gitster.siamese.dyndns.org>
+	id S1753143AbYHXVgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2008 17:36:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753126AbYHXVgn
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 17:36:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44933 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750909AbYHXVgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2008 17:36:42 -0400
+Received: (qmail invoked by alias); 24 Aug 2008 21:36:40 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp048) with SMTP; 24 Aug 2008 23:36:40 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+Di/EtZ7WDW1dNNUycYGvvnnYg2FTGtArh4tHOeH
+	W1n61Hc+7CUEHF
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KXNGE-0006rM-QE; Sun, 24 Aug 2008 23:36:34 +0200
+Content-Disposition: inline
+In-Reply-To: <200808200308.26308.jnareb@gmail.com>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93568>
 
-Junio C Hamano wrote:
-> I am not sure about the way you determine $remote.  When the HEAD in the
-> submodule repository is detached by prior "git submodule update", this
-> will fall back to the default "origin" --- is it a good behaviour?
->
-> This is not an objection; I am merely wondering if that fallback is
-> sensible, or if people who are interested in submodules can suggest better
-> alternatives.
->
->   
-I think it makes sense to split submodules into two categories, name 
-them what you will, but the discernible difference is whether they are 
-defined using relative or absolute urls.
+Hi again,
 
-1) relative url - this should *always* fetch / pull from a url relative 
-to the superproject's url. Overriding not possible (except by recording 
-an absolute url). The idea is these submodules are closely related to 
-the superproject, and the use of a relative url is a positive 
-declaration that "I will maintain this 'forest' of git trees as a unit".
-2) absolute url - use .gitmodules entry as the initial hint, allow 
-overrides in .git/config, such a submodule is maintained separately.
+> 8.  Which Git version(s) are you using? 
+>  [ ] pre 1.3
+>  [ ] 1.3.x
+...
+>  [ ] master
+>  [ ] next
 
-If we could reach some such agreement as above, we might begin to make 
-some progress on what role the porcelain has in maintaining a 'forest' 
-of git projects as a superproject and submodules.
+I wonder if people who do not know about master/next being git.git
+branches may do "[X] next" because they think they will use the next
+version available.
 
-Mark
+So could you write "master branch of official git repository" and the
+same for "next"?
+
+> 12. What other SCM did or do you use?
+...
+> By "custom (non-published)" it is meant here version control system
+> which was not released to the public, for example something written
+> for yourself, or internal company project used only in company.
+
+Better:
+ "custom (non-published)" means a version control system which has
+ not been released to the public, for example, something written for
+ yourself or your company only.
+
+And I am unsure if "SCM" is better than "version control system"
+in this sentence, but I do not think this is really important.
+
+> 16. I use Git for (check all that apply):
+...
+> Note that above choices are neither orthogonal nor exclusive.
+> You might want to check multiple answers wven for single repository.
+                                           ^^^^^^^^^ "even for a"
+
+> 17. How do you obtain Git?
+...
+>  [ ] pull form main repository
+            ^^^^ from
+
+> Explanation: binary package covers pre-compiled binary; source script
+> is meant to cover installation in source-based distributions, like
+> 'emerge' in Gentoo.
+
+"pre-compiled binary (e.g. from rpm or deb archives)"
+
+Right?
+I think naming two popular package formats of distributors should people
+help to get the point.
+
+> 29. Which of the following features do or did you use?
+
+I still dislike that there are a lot of choices that generate redundancy
+to other questions.
+On the other hand, scientific surveys always contain (hidden) redundancy
+to ensure that the test person gives sane answers.
+
+> 59. Should Git User's Survey be repeated next year?
+  
+>  ( ) Yes
+>  ( ) No
+>  ( ) no opinion
+> Reset
+
+I wonder if the "no opinion" choice is not needed because there is the
+"Reset" button.
+
+
+Apropos!
+
+Is it possible to add a header text?
+
+I'd like that there are three things being clarified at the beginning of
+the survey page:
+
+ * The survey is anonymous, but all information that the users provide will
+   be publicly available on the wiki.
+
+ * The users may skip questions as they like.
+
+ * The user needs JavaScript to submit the survey.
+
+I btw do not like the last fact, but since most users nowadays have
+JavaScript activated, it may not be that bad.
+
+Also, I still do not get a succesful message after submitting, but that
+may be related to the channel (test), if you have configured it like
+that. Have you? ;)
+
+Regards,
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
