@@ -1,171 +1,99 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v3] git-submodule: add "sync" command
-Date: Sun, 24 Aug 2008 12:43:37 -0700
-Message-ID: <ebeb5aba6f679e1259a011bcc245bd723c6cf8d1.1219606749.git.davvid@gmail.com>
-References: <7vwsi6meas.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Aug 24 21:52:49 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Aug 2008, #07; Sat, 23)
+Date: Sun, 24 Aug 2008 13:24:47 -0700
+Message-ID: <7vwsi6kvow.fsf@gitster.siamese.dyndns.org>
+References: <7v1w0ft750.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0808241955550.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <7vd4jymdfn.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Sun Aug 24 22:26:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXLdl-0000pZ-3W
-	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 21:52:45 +0200
+	id 1KXMAJ-0000bb-Ip
+	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 22:26:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753052AbYHXTvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2008 15:51:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753049AbYHXTvd
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 15:51:33 -0400
-Received: from rv-out-0506.google.com ([209.85.198.231]:38820 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752964AbYHXTvc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2008 15:51:32 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1328619rvb.1
-        for <git@vger.kernel.org>; Sun, 24 Aug 2008 12:51:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=IQGUD4slEAgIhACgrO2eG+LdB0yMFBKGlaGJAQ9Npvg=;
-        b=Ph8NXB0u+E4efqwFoM5hGojTLG6Iw1SpxyRWIFo5gLfz9+HiS8oMmdDwxSk7Mqpr+Q
-         mfEF/nJSmDQmHhm83V1+MTuKpP+4t+mdj8QcPT99IZG1IgZn0xsOMbEH2PowyOr1y6s/
-         d6ftsnWOmFXxzQnhyx7TknGszVsw3cJUzhQEM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=VZBvKlmy6V/586RlIwg3RFbjDglyMJXpRfGdsH+Pqgiq2t8GCy3nEEkh+7ZHm0MA2b
-         u5K0VoKFg6h46cpiIO3SPlaziqUu3LtxpnhEaIULqbCXQ9973yvdwePJgP+BHnfVoD6Z
-         FgFBnBTSgiwmBcDTAWeXzD/sRYOckoFV2yz3M=
-Received: by 10.141.176.4 with SMTP id d4mr1749487rvp.14.1219607492152;
-        Sun, 24 Aug 2008 12:51:32 -0700 (PDT)
-Received: from localhost ( [208.106.56.2])
-        by mx.google.com with ESMTPS id f42sm6242984rvb.6.2008.08.24.12.51.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 24 Aug 2008 12:51:31 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.106.gd6096
-In-Reply-To: <7vwsi6meas.fsf@gitster.siamese.dyndns.org>
+	id S1753044AbYHXUY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2008 16:24:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753295AbYHXUY4
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 16:24:56 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43398 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752599AbYHXUY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2008 16:24:56 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0FEB166BB4;
+	Sun, 24 Aug 2008 16:24:55 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 4537C66BB2; Sun, 24 Aug 2008 16:24:50 -0400 (EDT)
+In-Reply-To: <7vd4jymdfn.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 24 Aug 2008 12:16:12 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B6AB0104-721A-11DD-9435-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93558>
 
-When a submodule's URL changes upstream, existing submodules
-will be out of sync since their remote."$origin".url will still
-be set to the old value.
+Junio C Hamano <gitster@pobox.com> writes:
 
-This adds a "git submodule sync" command that reads submodules'
-URLs from .gitmodules and updates them accordingly.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>>> * sb/daemon (Thu Aug 14 20:02:20 2008 +0200) 4 commits
+>>>  - git-daemon: rewrite kindergarden, new option --max-connections
+>>>  - git-daemon: Simplify dead-children reaping logic
+>>>  - git-daemon: use LOG_PID, simplify logging code
+>>>  - git-daemon: call logerror() instead of error()
+>>> 
+>>> Can somebody who actually runs the daemon standalone comment on this 
+>>> one?
+>>
+>> I am somewhat uneasy about running my production machine with these 
+>> changes, since the last commit (the one introducing a kindergarden with 
+>> cradles) is too unobvious for me.
+>
+> Well, I didn't ask anybody to _run_ it.
+>
+> I asked people who care about their daemons to comment on the change, so
+> that if there are any issues in the code that I didn't see, the breakage
+> gets caught before it propagates to their daemons they build from 'next'
+> or 'master'.
+>
+> Having said that, I do agree that the kindergarden change is very involved
+> (it removes more code than it adds --- the reduction of lines is somewhat
+> inflated because quite a lot of comments that have become stale gets
+> removed by the patch).
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
+Ok, so I looked at the patch again (sorry, Stephen, for keeping this in a
+limbo for very long).
 
-This uses get_default_remote() per Mark's latest update.
+First of all, I have to say that I think this patch is reasonably well
+done.  I do see an unnecessary check of xcalloc() return value and some
+style differences from what git uses, but that is only an indication of
+the author not very familiar with git code, and every other aspect of the
+change shows that this is quite competently done.  The list traversal with
+cradle/blanket/newborn, except using perhaps too cute names for some
+people's tastes, makes sense.
 
- Documentation/git-submodule.txt |    9 +++++++
- git-submodule.sh                |   48 +++++++++++++++++++++++++++++++++++++-
- 2 files changed, 55 insertions(+), 2 deletions(-)
+I however do have one issue with the logic, though.
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index abbd5b7..babaa9b 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -15,6 +15,7 @@ SYNOPSIS
- 'git submodule' [--quiet] update [--init] [--] [<path>...]
- 'git submodule' [--quiet] summary [--summary-limit <n>] [commit] [--] [<path>...]
- 'git submodule' [--quiet] foreach <command>
-+'git submodule' [--quiet] sync [--] [<path>...]
- 
- 
- DESCRIPTION
-@@ -139,6 +140,14 @@ foreach::
- As an example, "git submodule foreach 'echo $path `git rev-parse HEAD`' will
- show the path and currently checked out commit for each submodule.
- 
-+sync::
-+	Synchronizes submodules' remote URL configuration setting
-+	to the value specified in .gitmodules.  This is useful when
-+	submodule URLs change upstream and you need to update your local
-+	repositories accordingly.
-++
-+"git submodule sync" synchronizes all submodules while
-+"git submodule sync -- A" synchronizes submodule "A" only.
- 
- OPTIONS
- -------
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 59fe7b3..4a95035 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -6,7 +6,7 @@
- 
- USAGE="[--quiet] [--cached] \
- [add <repo> [-b branch] <path>]|[status|init|update [-i|--init]|summary [-n|--summary-limit <n>] [<commit>]] \
--[--] [<path>...]|[foreach <command>]"
-+[--] [<path>...]|[foreach <command>]|[sync [--] [<path>...]]"
- OPTIONS_SPEC=
- . git-sh-setup
- . git-parse-remote
-@@ -601,6 +601,50 @@ cmd_status()
- 		fi
- 	done
- }
-+#
-+# Sync remote urls for submodules
-+# This makes the value for remote.$remote.url match the value
-+# specified in .gitmodules.
-+#
-+cmd_sync()
-+{
-+	while test $# -ne 0
-+	do
-+		case "$1" in
-+		-q|--quiet)
-+			quiet=1
-+			shift
-+			;;
-+		--)
-+			shift
-+			break
-+			;;
-+		-*)
-+			usage
-+			;;
-+		*)
-+			break
-+			;;
-+		esac
-+	done
-+	cd_to_toplevel
-+	module_list "$@" |
-+	while read mode sha1 stage path
-+	do
-+		name=$(module_name "$path")
-+		url=$(git config -f .gitmodules --get submodule."$name".url)
-+		if test -e "$path"/.git
-+		then
-+		(
-+			unset GIT_DIR
-+			cd "$path"
-+			remote=$(get_default_remote)
-+			say "Synchronizing submodule url for '$name'"
-+			git config remote."$remote".url "$url"
-+		)
-+		fi
-+	done
-+}
- 
- # This loop parses the command line arguments to find the
- # subcommand name to dispatch.  Parsing of the subcommand specific
-@@ -611,7 +655,7 @@ cmd_status()
- while test $# != 0 && test -z "$command"
- do
- 	case "$1" in
--	add | foreach | init | update | status | summary)
-+	add | foreach | init | update | status | summary | sync)
- 		command=$1
- 		;;
- 	-q|--quiet)
--- 
-1.6.0.106.gd6096
+It seems that kill_some_child() will not kill anything if nobody else is
+coming from the same address, while the old code did kill some.  Is this
+intended?
+
+By the way, add_child() compares the whole "struct sockaddr_storage" in
+order to queue the newborn in front of an existing connection from the
+same address, and kill_some_child() takes advanrage of this to kill the
+newest connection ("We kill the newest" comment should probably be moved
+to add_child() to describe why the queuing is done this way).  If you
+simplify add_child() to queue the newborn always at the front of the list,
+your kill_some_child() will continue to do so, so I do not see the point
+of the loop in add_child().  Am I mistaken?
