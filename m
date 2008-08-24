@@ -1,72 +1,87 @@
-From: Lea Wiemann <lewiemann@gmail.com>
-Subject: Re: [PATCH] gitweb: ref markers link to named shortlogs
-Date: Sun, 24 Aug 2008 21:30:58 +0200
-Message-ID: <48B1B6F2.5050301@gmail.com>
-References: <1219341860-4913-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 3/3] git-submodule: add "sync" command
+Date: Sun, 24 Aug 2008 12:23:44 -0700
+Message-ID: <20080824192343.GA22134@gmail.com>
+References: <1219598500-8334-1-git-send-email-davvid@gmail.com> <e21617f50ffaae98ab73fa364e40440397bcbe33.1219598198.git.davvid@gmail.com> <341166c1e31ba26c4e8e48cd7cf9ce12a9f745b9.1219598198.git.davvid@gmail.com> <23327a679798d19dc52a27c55a58c5b8c9ebe945.1219598198.git.davvid@gmail.com> <7vwsi6meas.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 24 21:32:05 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: mlevedahl@gmail.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 24 21:32:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXLJk-00042o-KL
-	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 21:32:05 +0200
+	id 1KXLKS-0004Do-46
+	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 21:32:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753128AbYHXTbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2008 15:31:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753145AbYHXTbA
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 15:31:00 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:63002 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753089AbYHXTa7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2008 15:30:59 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so773477fgg.17
-        for <git@vger.kernel.org>; Sun, 24 Aug 2008 12:30:58 -0700 (PDT)
+	id S1753123AbYHXTbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2008 15:31:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753056AbYHXTbo
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 15:31:44 -0400
+Received: from rv-out-0506.google.com ([209.85.198.235]:34526 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752709AbYHXTbn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2008 15:31:43 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1324096rvb.1
+        for <git@vger.kernel.org>; Sun, 24 Aug 2008 12:31:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:from;
-        bh=/c3iMaO/KX7bYwFStnajAzqSz/4kDxV2cl9fXXqo4gw=;
-        b=Ipai57pYh0I3jjeVvaXOQs08bPkq4Oqd6A9ikdMeUHDWXGyeUUjjyPbkHNevl0Zkh2
-         Q84pz5DtS+l+H8AYOjnyrOjSDQJWa+fRFXKdk9Li5tSU3R5lfHXmIHyqOODzxOU6Zhcm
-         9zZCYnka2eqqqxQXElAzIz9C2xT2s8QZm3HnY=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=HEzvtz4dSA0QIh/Gt4ccjXyLtuThnFcIgoKnZJd2sC0=;
+        b=j/LMBI56ocpdrrbwFHDxzKG/DSc024D7GXR9wYdFQ8mG17BYid+8YOZK8lBWwm4gyt
+         8QP16R95+Ee0dCT8Y9/djmyrXmEdL+RgM6fT86onD6xO41xk0S6HqOwfuc5K/imu5w3p
+         G2x3bBru486RRPChTHnOTUR61FSzVNDnsJM7c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:from;
-        b=euEqCSxn9GLG0moGbZyc9ENJ1VDr6brk1MlYz2PTJAJDpphBjcBZ/0XEoHPI8Yugq8
-         3FDE0P4v59SUNm9wuevWfF2oZ12cxdHGgS6EWEqsZ9x1hgDpuwSCI92C/GKCUcYMpny8
-         5ILKmw6k8LY19kHJp51AlT9837M1NNDUC5eE0=
-Received: by 10.86.52.6 with SMTP id z6mr2711782fgz.48.1219606258157;
-        Sun, 24 Aug 2008 12:30:58 -0700 (PDT)
-Received: from ?172.16.30.128? ( [91.33.227.8])
-        by mx.google.com with ESMTPS id 4sm4503547fge.8.2008.08.24.12.30.55
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 24 Aug 2008 12:30:56 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080707 Thunderbird/2.0.0.16 Mnenhy/0.7.5.666
-In-Reply-To: <1219341860-4913-1-git-send-email-giuseppe.bilotta@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Ydn2vQTG6nBPHMQmdptOCwTdWT2NJ/QtlUVxVd4vRA9eIx5nYqvN5pEXfokOIMwZm+
+         BGU/3jT5BCtctXu2IgsZeFfFo8dUTX1roHyxqOnlnb5XDLf77JO+/eA+di5Ze+6aiX5K
+         /kROLnG5w6nsoaz3zeWTNkTUw6P2l9hO/2ZXA=
+Received: by 10.140.132.8 with SMTP id f8mr1721682rvd.206.1219606301773;
+        Sun, 24 Aug 2008 12:31:41 -0700 (PDT)
+Received: from gmail.com ( [208.106.56.2])
+        by mx.google.com with ESMTPS id k2sm6013868rvb.1.2008.08.24.12.31.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 24 Aug 2008 12:31:41 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vwsi6meas.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93554>
 
-Giuseppe Bilotta wrote:
-> +			my $git_type = git_get_type($ref);
-> [...]
-> +				$cgi->a({-href => href(action=>$view{$git_type} || $git_type, hash=>$name)}, $name) .
+On  0, Junio C Hamano <gitster@pobox.com> wrote:
+> David Aguilar <davvid@gmail.com> writes:
+> > +		(
+> > +			unset GIT_DIR
+> > +			cd "$path"
+> > +			remote=$(get_remote)
+> > +			say "Synchronizing submodule url for '$name'"
+> > +			git config remote."$remote".url "$url"
+> 
+> I am not sure about the way you determine $remote.  When the HEAD in the
+> submodule repository is detached by prior "git submodule update", this
+> will fall back to the default "origin" --- is it a good behaviour?
+> 
+> This is not an objection; I am merely wondering if that fallback is
+> sensible, or if people who are interested in submodules can suggest better
+> alternatives.
 
-Since some of this thread seems to be about performance, you might just
-make this a link to action => 'object' (and save the git_get_type call)
-and let gitweb Do The Right Thing when the link is followed.
 
-[Disclaimer: Haven't read the whole thread, and haven't checked if
-action=object is actually doing the right thing here.]
+This is true.  I recall there was a lengthy thread a while
+back about how "origin" might not always be what you'd want
+when cloning a repo.  I'll address your comments, use
+Mark's get_default_remote, and resend.  I have a feeling that
+addressing the use of remote names in submodules is beyond
+the scope of this patch for now since it seems like we'd need
+that info stored somewhere in a superproject gitfile.
 
--- Lea
+-- 
+
+	David
