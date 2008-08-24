@@ -1,79 +1,59 @@
-From: Jonathan Nieder <jrnieder@uchicago.edu>
-Subject: [PATCH] Documentation: clarify pager.<cmd> configuration
-Date: Sun, 24 Aug 2008 00:38:06 -0500 (CDT)
-Message-ID: <Pine.GSO.4.62.0808240028450.28567@harper.uchicago.edu>
-References: <1219407912-32085-1-git-send-email-mail@cup.kalibalik.dk>
- <7vvdxs2t03.fsf@gitster.siamese.dyndns.org> <87k5e8i18c.fsf@cup.kalibalik.dk>
- <Pine.GSO.4.62.0808240019050.28567@harper.uchicago.edu>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: [PATCH 1/5] Allow alternate "low-level" emit function from xdl_diff
+Date: Sun, 24 Aug 2008 03:12:54 -0500
+Message-ID: <20080824081254.GI31114@lavos.net>
+References: <1219360921-28529-1-git-send-email-bdowning@lavos.net> <1219360921-28529-2-git-send-email-bdowning@lavos.net> <48AFC73F.2010100@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Anders Melchiorsen <mail@cup.kalibalik.dk>
-X-From: git-owner@vger.kernel.org Sun Aug 24 07:39:19 2008
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Aug 24 10:14:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KX8Jp-0001um-Ah
-	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 07:39:17 +0200
+	id 1KXAje-0005FF-Os
+	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 10:14:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751750AbYHXFiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2008 01:38:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbYHXFiL
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 01:38:11 -0400
-Received: from smtp02.uchicago.edu ([128.135.12.75]:41627 "EHLO
-	smtp02.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751705AbYHXFiL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2008 01:38:11 -0400
-Received: from harper.uchicago.edu (harper.uchicago.edu [128.135.12.7])
-	by smtp02.uchicago.edu (8.13.8/8.13.8) with ESMTP id m7O5c7Dd013132;
-	Sun, 24 Aug 2008 00:38:07 -0500
-Received: from localhost (jrnieder@localhost)
-	by harper.uchicago.edu (8.12.10/8.12.10) with ESMTP id m7O5c6O5028972;
-	Sun, 24 Aug 2008 00:38:06 -0500 (CDT)
-X-Authentication-Warning: harper.uchicago.edu: jrnieder owned process doing -bs
-In-Reply-To: <Pine.GSO.4.62.0808240019050.28567@harper.uchicago.edu>
+	id S1752426AbYHXINB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Aug 2008 04:13:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752431AbYHXINB
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 04:13:01 -0400
+Received: from qmta04.westchester.pa.mail.comcast.net ([76.96.62.40]:35658
+	"EHLO QMTA04.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752422AbYHXINA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Aug 2008 04:13:00 -0400
+Received: from OMTA02.westchester.pa.mail.comcast.net ([76.96.62.19])
+	by QMTA04.westchester.pa.mail.comcast.net with comcast
+	id 68Cv1a0020QuhwU548Cvbw; Sun, 24 Aug 2008 08:12:55 +0000
+Received: from mnementh.lavos.net ([98.212.138.194])
+	by OMTA02.westchester.pa.mail.comcast.net with comcast
+	id 68Cu1a0044BqYqi3N8Cu3T; Sun, 24 Aug 2008 08:12:55 +0000
+X-Authority-Analysis: v=1.0 c=1 a=zlwB17LTd-8A:10 a=KdOwoapOtMEA:10
+ a=D4u4CS71Ku_-nJbAVaIA:9 a=Gmtp1IS3VnSbDtZWygocz2dmBTgA:4 a=LY0hPdMaydYA:10
+Received: by mnementh.lavos.net (Postfix, from userid 1000)
+	id 6FD22309F23; Sun, 24 Aug 2008 03:12:54 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <48AFC73F.2010100@lsrfire.ath.cx>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93520>
 
-It was not obvious from the text that pager.<cmd> is a boolean
-setting.
+On Sat, Aug 23, 2008 at 10:15:59AM +0200, Ren=E9 Scharfe wrote:
+> Could we move more code into the library code to avoid that ugliness?
+>=20
+> AFAICS, compare_buffer() builds a struct patch with an array of
+> struct chunks, whose members are then fed one by one into either
+> blame_chunk() or handle_split().  Could we avoid the allocation
+> altogether by using a different interface?
 
-While we're changing the description, make some other
-improvements: lest we forget and fret, clarify that -p and
-pager.<cmd> do not kick in when stdout is not a tty; point to
-related core.pager and GIT_PAGER settings; use renamed --paginate
-option.
+Thanks, I think this is a good idea.  I'll try to work up something lik=
+e
+this, but it may be a few days before I have any appreciable hacking
+time to do so.
 
-Signed-off-by: Jonathan Nieder <jrnieder@uchicago.edu>
----
- This is not related to the core.pager documentation patch I just
- sent; it just caught my eye as I was reading over the file.
-
- Documentation/config.txt |    8 +++++---
- 1 files changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 88638f7..b12e695 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -988,9 +988,11 @@ pack.packSizeLimit::
- 	linkgit:git-repack[1].
- 
- pager.<cmd>::
--	Allows to set your own pager preferences for each command, overriding
--	the default. If `\--pager` or `\--no-pager` is specified on the command
--	line, it takes precedence over this option.
-+	Allows turning on or off pagination of the output of a
-+	particular git subcommand when outputing to a tty.  If
-+	`\--paginate` or `\--no-pager` is specified on the command line,
-+	it takes precedence over this option.  To disable pagination for
-+	all commands, set `core.pager` or 'GIT_PAGER' to "`cat`".
- 
- pull.octopus::
- 	The default merge strategy to use when pulling multiple branches
--- 
-1.6.0.481.g9ef3
+-bcd=20
