@@ -1,79 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Maintaining "needswork" section of "What's (not) cooking"
-Date: Sat, 23 Aug 2008 21:00:47 -0700
-Message-ID: <7vej4frrio.fsf@gitster.siamese.dyndns.org>
-References: <7v1w0ft750.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Sat, 23 Aug 2008 21:23:42 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0808232120420.3363@nehalem.linux-foundation.org>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 24 06:04:01 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, users@kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 24 06:28:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KX6pa-0002KK-W6
-	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 06:03:59 +0200
+	id 1KX7DD-0006in-R9
+	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 06:28:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750934AbYHXEAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2008 00:00:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750884AbYHXEAx
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 00:00:53 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36986 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750776AbYHXEAw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2008 00:00:52 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A2E8F65F4B;
-	Sun, 24 Aug 2008 00:00:51 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 08EF665F4A; Sun, 24 Aug 2008 00:00:49 -0400 (EDT)
-In-Reply-To: <7v1w0ft750.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 23 Aug 2008 20:38:03 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3E127710-7191-11DD-B97A-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1750900AbYHXEX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2008 00:23:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750776AbYHXEX6
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 00:23:58 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:59701 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750759AbYHXEX5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Aug 2008 00:23:57 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7O4Nhch018946
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 23 Aug 2008 21:23:44 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7O4Ngxd015498;
+	Sat, 23 Aug 2008 21:23:42 -0700
+In-Reply-To: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.929 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93515>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Here is a list of issues/topics we saw on the mailing list but haven't
-> resulted in anything queuable in 'pu' yet.  They need further work by
-> interested parties:
-> ...
-> [Stalled -- Needs Action to Proceed (or to be dropped)]
-> ...
 
-I am still experimenting with my own workflow with these parts.
+On Sat, 23 Aug 2008, Junio C Hamano wrote:
+> 
+> There is one alternative, and one augmentation:
+> 
+>  (A) We do not do anything.
+> 
+>  (B) In addition to the main transition plan, outside git, prepare an
+>      optional "git-old-style" package that installs many "git-foo"
+>      wrappers in $PATH (i.e. /usr/bin).  Each of them exec "git foo".
+>      People who like the dashed form can keep typing "git-foo", even
+>      though that will cost them two exec()s.
 
-With more people on the list sending patches recently, I still have enough
-mental bandwidth to reject the initial rounds with comments/suggestions
-for improvements, but I do not think it is realistic to expect me to keep
-track of all of their progress on re-submission of improvements anymore (I
-used to prod people privately asking how much they are making progress
-after not hearing from people who received review comments).
+I actually suspect that (A) is fine.
 
-It is a large loss for all of us when people do not come back with updated
-patches after receiving review comments.  Lost are their good idea based
-on the real world needs.  Time other people have volunteered to review
-their initial submissions are also wasted when that happens.
+I suggested removing the "git-xyzzy" hardlinks entirely, but that was just 
+because I didn't think anybody wanted them.
 
-I however do not intend to lower the patch acceptance standards.  It is
-not a workable approach to accept many new features implemented in a
-substandard way or designed incoherently, expecting they will eventually
-be cleaned up in-tree.  Nobody will clean anything up after it is merged,
-and when we give something to the end users, it becomes harder to change
-its behaviour.
+But given that with the 1.6.0 model you can always just do
 
-If a few people can volunteer to maintain a list that looks like the above
-(not-quite) quoted ones, we may be able to give people more incentive to
-keep polishing their patches in response to the reviews they received.
-Other people can also offer help in topics they are interested in, and we
-may see more topics through their completion as the result.
+	PATH="PATH:$(git --exec-path)"
 
-Thoughts?
-.
+in your .bashrc or similar to get the git-xyzzy form, and given that 
+clearly some people like using them, there's really no downside to keeping 
+them.
+
+I _would_ suggest against putting them in /usr/bin, even as a 
+"compatibility plan". Just expose them to people who want them, who can 
+really quite easily do the above PATH setting.
+
+		Linus
