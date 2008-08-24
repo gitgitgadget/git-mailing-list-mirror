@@ -1,105 +1,188 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: Re: [PATCH (BUGFIX)] Respect core.autocrlf in combined diff
-Date: Sun, 24 Aug 2008 13:21:57 +0400
-Organization: TEPKOM
-Message-ID: <200808241321.58791.angavrilov@gmail.com>
-References: <200808232321.21795.angavrilov@gmail.com> <7vy72nurw0.fsf@gitster.siamese.dyndns.org>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: [RFC] Using git-p4 on project with branches
+Date: Sun, 24 Aug 2008 12:36:32 +0200
+Message-ID: <200808241236.38387.simon@lst.de>
+References: <1a6be5fa0808180226h79eebf46yad9174b1518d4eed@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: multipart/signed;
+  boundary="nextPart1822402.u6dpi6YMtB";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 24 11:23:39 2008
+To: "Tor Arvid Lund" <torarvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 24 12:38:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXBof-00038l-1S
-	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 11:23:21 +0200
+	id 1KXCyw-0004Cd-Ma
+	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 12:38:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752693AbYHXJWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2008 05:22:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752643AbYHXJWP
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 05:22:15 -0400
-Received: from fk-out-0910.google.com ([209.85.128.185]:61771 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752629AbYHXJWO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2008 05:22:14 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so731634fkq.5
-        for <git@vger.kernel.org>; Sun, 24 Aug 2008 02:22:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=9xdIiNvwIY/Xt4lyHzaJt0q08UuZmq+ksdA4mZz8vFE=;
-        b=jRBOD5H6TgEpqshMGLmWCsoCfQFlnq0sYeuf5B9OfafbdHSOSqVnbzbZa2Md8kOZ3O
-         0Rz7uv039SMmmcUQqhsodRwZSH712/JVguK+iz46swAYtcXc5QsayzBa9FaGJz7/ZGGN
-         8c+L14QqF8Yfa8d4tQ6SYfVPUJ4G7aeCfxQj8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=ey7de4YqPjA1hFgg4cyAUzd7nPbJ3cg/dSFVvTz4olXQL3KL0Fn+NZ7jP5syczSk54
-         T8B/0mOacdRi/MFMRNtImloQ+2qh17alEoYBV0+XIum9/YmReEwRQKnIK0V1VbkWeZ07
-         20T/QuB4GTJxJYplYHxP/w045S85P2t0m1Pos=
-Received: by 10.181.27.7 with SMTP id e7mr1586740bkj.17.1219569732267;
-        Sun, 24 Aug 2008 02:22:12 -0700 (PDT)
-Received: from desktop2 ( [92.255.85.78])
-        by mx.google.com with ESMTPS id k29sm3133455fkk.2.2008.08.24.02.22.11
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 24 Aug 2008 02:22:11 -0700 (PDT)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vy72nurw0.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752643AbYHXKg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2008 06:36:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752722AbYHXKg4
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 06:36:56 -0400
+Received: from hoat.troll.no ([62.70.27.150]:51066 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752698AbYHXKgz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2008 06:36:55 -0400
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id BEA4C20A4D;
+	Sun, 24 Aug 2008 12:36:49 +0200 (CEST)
+Received: from rani.localnet (unknown [172.20.1.59])
+	by hoat.troll.no (Postfix) with ESMTP id 25EEF209F1;
+	Sun, 24 Aug 2008 12:36:47 +0200 (CEST)
+User-Agent: KMail/1.10.0 (Linux/2.6.26-5-generic; KDE/4.1.0; i686; ; )
+In-Reply-To: <1a6be5fa0808180226h79eebf46yad9174b1518d4eed@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93526>
 
-On Sunday 24 August 2008 05:24:31 Junio C Hamano wrote:
-> Alexander Gavrilov <angavrilov@gmail.com> writes:
-> 
-> > 		...
-> > 		git commit -m aaa
-> > 		git config core.autocrlf true
-> > 		git merge b
-> >
-> > 	Then look at the output of git diff.
-> 
-> Come to think of it, this test sequence is totally bogus, isn't it?
-> 
-> After making the "aaa" commit, you change core.autocrlf setting, which
-> means that at that point your work tree is invalid and needs to be checked
-> out with the right crlf.
-> 
+--nextPart1822402.u6dpi6YMtB
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Yes, it is more correct to reset after changing that parameter, but since
-merge overwrites the file anyway, I took a shortcut. I first noticed the
-problem on Windows, where autocrlf was turned on from the beginning.
+On Monday 18 August 2008 11:26:27 Tor Arvid Lund wrote:
+> Hi!
+>
+> I really appreciate the work that is done with allowing us poor souls
+> stuck with perforce at work to use git via git-p4. But I'm wondering
+> how to make it work when there are several branches on the perforce
+> server.
+>
+> Say, for instance, that I have this setup:
+>
+> //depot/old/path/to/projectX
+> //depot/new/path/to/projectX_Devel_Branch
+> //depot/new/path/to/projectX_Release_1.2_Branch
+> //depot/new/path/to/projectOther
+>
+> It would be really nice, if I were able to make a projectX.git
+> repository with the 'old', 'devel' and '1.2' branches. It seems that
+> the --detect-branches argument to P4Sync wants me to enter
+> //depot/new/path/to as the root path, and detect p4 branchspecs from
+> there. That works poorly for me, since it would also include
+> projectOther, which I don't want. It would also not include the 'old'
+> branch.
+>
+> I have looked briefly at the git-p4 code, but don't know it very well
+> yet. Anyway, I suspect this functionality is not implemented... I
+> might try to do this myself, and if anybody has ideas on how to get
+> started, it would be much appreciated.
+
+I can try to explain the way we import multiple branches into one git=20
+repository where I work. Our setup is based on a few assumptions on the lay=
+out=20
+of the perforce depot.
+
+The components in our depot paths begin with the project, followed by the n=
+ame=20
+of the branch:
+
+//depot/project/main
+//depot/project/4.4
+//depot/project/4.4.1
+//depot/project/4.5
+//depot/project/research/foobar
+
+4.4 is branched off of main, 4.4.1 is branched off of 4.4, 4.5 and=20
+research/foobar are branched off of main again.
+
+Based on this structure we also have branch mappings stored on the perforce=
+=20
+server. They were originally introduced for convenience being able to run p=
+4=20
+integrate with few arguments. Now they are also used for the git import:
+
+4.4branch:
+
+//depot/project/main/...    //depot/project/4.4/...
+
+(same for 4.5, 4.4.1, etc.)
+
+Based on this git-p4 imports changes:
+
+1) git-p4 is aware of //depot/project as general prefix for all branches.
+
+2) Based on the p4 branch mappings retrieved from the server it is easy to=
+=20
+determine that the 'research/foobar' component in the=20
+//depot/project/research/foobar/somedir/somefile.c path of a file change=20
+represents the name of the branch.
+
+3) Based on the branch mapping git-p4 knows that for example 4.4 is based o=
+n=20
+main. When the first change in the 4.4 branch is imported git-p4 assumes th=
+at=20
+last change number in //depot/qt/main that is less than $currentChangeNumber
+represents the "parent" of the branch.
+
+This approach has served us quite well, and I like that that doesn't requir=
+e=20
+any separate configuration files or extra state information. However I=20
+understand that it requires discipline on the use of Perforce and the way=20
+projects are branched.
+
+=46rom your description I understand that you are using a very different=20
+structure. I think what may work well for you would be an approach where yo=
+u=20
+specify a mapping from depot path to git branch manually in a configuration=
+=20
+file, and changes git-p4 to read such a file.
+
+> To support submitting changelists back to perforce, it would probably
+> need some configuration (to determine which path to submit to in
+> perforce)... Like:
+>
+> [git-p4 "branches"]
+>         old =3D //depot/old/path/to/projectX
+>         devel =3D //depot/new/path/to/projectX_Devel_Branch
+>         1.2 =3D //depot/new/path/to/projectX_Release_1.2_Branch
+>
+> Well, I guess I'm just wondering if this is something anybody but me
+> would like to have? Or if there is another/better way to go about
+> doing it...
+
+Submitting changes back to Perforce with git-p4 submit is actually a very=20
+simple thing, and thanks to Perforce's knowledge of everything on the clien=
+t=20
+side there is no need to set up any configuration.
+
+1) Based on the [git-p4: depot-paths...] field in the commit log it is easy=
+ to=20
+determine the depot path.
+2) Using the p4 where command git-p4 can find out where in your p4 client v=
+iew=20
+the branch resides.
+3) Changes are applied in that checkout (along with p4 edit commands) and t=
+he=20
+change can be submitted to perforce.
+4) Afterwards an import from Perforce is started and the changes just=20
+submitted appear in the import with the same patch-ids as the local commits=
+,=20
+so git rebase will replace your local commits with the imported changes.
 
 
-By the way, am I right that currently the only way to get properly CRLFed
-versions of all stages is to do something like this:
-
-mv -f $path "$path.BACKUP"
-git checkout-index -f --stage=1 $path
-mv -f $path "$path.BASE"
-git checkout-index -f --stage=2 $path
-mv -f $path "$path.LOCAL"
-git checkout-index -f --stage=3 $path
-mv -f $path "$path.REMOTE"
-cp -f "$path.BACKUP" $path
+I hope this helps a bit with the git-p4 understanding :)
 
 
-git-mergetool does it like this, but it produces LF files:
+Simon
 
-    base_present   && git cat-file blob ":1:$prefix$MERGED" >"$BASE" 2>/dev/null
-    local_present  && git cat-file blob ":2:$prefix$MERGED" >"$LOCAL" 2>/dev/null
-    remote_present && git cat-file blob ":3:$prefix$MERGED" >"$REMOTE" 2>/dev/null
+--nextPart1822402.u6dpi6YMtB
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-Alexander
+iD8DBQBIsTm2WXvMThJCpvIRAoNHAKCkX1XTWvJY94pvmfiJU+5JY1tEZQCgwBSV
+BECs3u97Pa8BjbIdHvVj56o=
+=rQP/
+-----END PGP SIGNATURE-----
+
+--nextPart1822402.u6dpi6YMtB--
