@@ -1,59 +1,96 @@
-From: bdowning@lavos.net (Brian Downing)
-Subject: Re: [PATCH 1/5] Allow alternate "low-level" emit function from xdl_diff
-Date: Sun, 24 Aug 2008 03:12:54 -0500
-Message-ID: <20080824081254.GI31114@lavos.net>
-References: <1219360921-28529-1-git-send-email-bdowning@lavos.net> <1219360921-28529-2-git-send-email-bdowning@lavos.net> <48AFC73F.2010100@lsrfire.ath.cx>
+From: Karl Chen <quarl@cs.berkeley.edu>
+Subject: Re: [PATCH] Support "core.excludesfile = ~/.gitignore"
+Date: Sun, 24 Aug 2008 01:40:41 -0700
+Message-ID: <quack.20080824T0140.lth3aku956e@roar.cs.berkeley.edu>
+References: <quack.20080821T2114.lthvdxtvg7b@roar.cs.berkeley.edu>
+	<7vsksw92nh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Aug 24 10:14:07 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 24 10:41:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXAje-0005FF-Os
-	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 10:14:07 +0200
+	id 1KXBAX-0001xl-Si
+	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 10:41:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752426AbYHXINB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Aug 2008 04:13:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752431AbYHXINB
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 04:13:01 -0400
-Received: from qmta04.westchester.pa.mail.comcast.net ([76.96.62.40]:35658
-	"EHLO QMTA04.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752422AbYHXINA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Aug 2008 04:13:00 -0400
-Received: from OMTA02.westchester.pa.mail.comcast.net ([76.96.62.19])
-	by QMTA04.westchester.pa.mail.comcast.net with comcast
-	id 68Cv1a0020QuhwU548Cvbw; Sun, 24 Aug 2008 08:12:55 +0000
-Received: from mnementh.lavos.net ([98.212.138.194])
-	by OMTA02.westchester.pa.mail.comcast.net with comcast
-	id 68Cu1a0044BqYqi3N8Cu3T; Sun, 24 Aug 2008 08:12:55 +0000
-X-Authority-Analysis: v=1.0 c=1 a=zlwB17LTd-8A:10 a=KdOwoapOtMEA:10
- a=D4u4CS71Ku_-nJbAVaIA:9 a=Gmtp1IS3VnSbDtZWygocz2dmBTgA:4 a=LY0hPdMaydYA:10
-Received: by mnementh.lavos.net (Postfix, from userid 1000)
-	id 6FD22309F23; Sun, 24 Aug 2008 03:12:54 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <48AFC73F.2010100@lsrfire.ath.cx>
-User-Agent: Mutt/1.5.9i
+	id S1752516AbYHXIkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2008 04:40:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752462AbYHXIkq
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 04:40:46 -0400
+Received: from roar.CS.Berkeley.EDU ([128.32.36.242]:52944 "EHLO
+	roar.quarl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752062AbYHXIkn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2008 04:40:43 -0400
+Received: by roar.quarl.org (Postfix, from userid 18378)
+	id B44A834567; Sun, 24 Aug 2008 01:40:41 -0700 (PDT)
+X-Quack-Archive: 1
+In-Reply-To: <7vsksw92nh.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 22 Aug 2008 14\:10\:42 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93521>
 
-On Sat, Aug 23, 2008 at 10:15:59AM +0200, Ren=E9 Scharfe wrote:
-> Could we move more code into the library code to avoid that ugliness?
->=20
-> AFAICS, compare_buffer() builds a struct patch with an array of
-> struct chunks, whose members are then fed one by one into either
-> blame_chunk() or handle_split().  Could we avoid the allocation
-> altogether by using a different interface?
+>>>>> On 2008-08-22 14:10 PDT, Junio C Hamano writes:
 
-Thanks, I think this is a good idea.  I'll try to work up something lik=
-e
-this, but it may be a few days before I have any appreciable hacking
-time to do so.
+    Junio> Karl Chen <quarl@cs.berkeley.edu> writes:
+    >> Another idea is to have a non-absolute path be interpreted
+    >> relative to the location of .gitconfig.
 
--bcd=20
+    Junio> If we were to support relative paths, I think it would
+    Junio> be useful and consistent if a relative path found in
+    Junio> ".git/config" is relative to the work tree root, in
+    Junio> "config" in a bare repository relative to the bare
+    Junio> repository, and in "$HOME/.gitconfig" relative to
+    Junio> $HOME.
+
+Makes sense to support it everywhere.  For .git/config, isn't it
+more consistent for it to be relative to .git?
+
+    Junio> I am not sure what a relative path in "/etc/gitconfig"
+    Junio> should be relative to, though.
+
+Why not just relative to the location of that file?  Normally
+/etc, but if some distro customizes the location of /etc/gitconfig
+(/etc/git/config), or on non-Linux/posix systems it's somewhere
+else, or git is installed in /usr/local or /opt or $HOME, then
+it's still relative to the location of system gitconfig.
+
+    Junio> However, this has a technical difficulty.  When
+    Junio> configuration values are read, the code that knows what
+    Junio> the value means does not in general know which
+    Junio> configuration file is being read from.
+
+Sounds like a refactoring issue.
+
+    Junio> It is quite likely that somebody would want you to
+    Junio> interpret "~name/" if you advertize that you support
+    Junio> "~/", so you would need to call getpwuid() eventually
+    Junio> if you go down this path.  I wonder how this would
+    Junio> affect Windows folks.
+
+I would be happy either way.  Though since git uses getenv("HOME")
+to find ~/.gitconfig, I can see arguments for looking for the
+ignore file there also, in case it's different.
+
+    Junio> we would need a "--path" option to "git config" (the
+    Junio> idea is similar to existing "--bool" option) so that
+    Junio> calling scripts can ask the same "magic" performed to
+    Junio> configuration variables' values before being reported.
+
+Sounds fine.
+
+So, being new to git development, am I correctly assessing your
+response as "with refinement this can be included in git"?
+
+Relative paths and ~ (and $HOME) are all mutually compatible so
+they could all be implemented.  If $HOME were supported directly
+(either just "$HOME" or parsing all $ENVVARS) then it'd be easier
+to decide to use getpwuid for ~.  Personally I'd use: 1) relative
+path, 2) $HOME (as "~" or "$HOME"), 3) getpwuid (as "~")
+
+Karl
