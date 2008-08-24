@@ -1,45 +1,47 @@
-From: =?UTF-8?B?0KHQtdGA0LPQtdC5INCo0LDRgNGL0LHQuNC9?= 
-	<nazgul@school9.perm.ru>
-Subject: pre-commit hook, non-zero exit status and dangling objects
-Date: Sun, 24 Aug 2008 16:57:52 +0600
-Message-ID: <48B13EB0.8050704@school9.perm.ru>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Has the git shell revert been done so master should work?
+Date: Sun, 24 Aug 2008 07:02:38 -0600
+Message-ID: <alpine.LNX.1.10.0808240659350.16122@xenau.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 24 12:48:33 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 24 15:05:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXD96-0006Cr-ER
-	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 12:48:32 +0200
+	id 1KXFHq-0005yW-2k
+	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 15:05:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752928AbYHXKqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2008 06:46:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752786AbYHXKqf
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 06:46:35 -0400
-Received: from school9.pstu.ru ([195.19.164.124]:34482 "EHLO school9.perm.ru"
+	id S1753364AbYHXNCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2008 09:02:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753331AbYHXNCk
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 09:02:40 -0400
+Received: from zenez.com ([166.70.62.2]:15630 "EHLO xenau.zenez.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752722AbYHXKqe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2008 06:46:34 -0400
-Received: (qmail 24513 invoked by uid 1008); 24 Aug 2008 16:11:13 +0600
-Received: from homeuser215-54.ccl.perm.ru (HELO ?192.168.1.127?) (nazgul@school9.perm.ru@89.148.215.54)
-  by school9.perm.ru with SMTP; 24 Aug 2008 16:11:13 +0600
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+	id S1753363AbYHXNCk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2008 09:02:40 -0400
+Received: by xenau.zenez.com (Postfix, from userid 1000)
+	id 2917AB957F; Sun, 24 Aug 2008 07:02:39 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by xenau.zenez.com (Postfix) with ESMTP id 145E5B9576
+	for <git@vger.kernel.org>; Sun, 24 Aug 2008 07:02:39 -0600 (MDT)
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93528>
 
-Hi,
+Hello,
 
-After pre-commit returned non-zero status, I could see new dangling 
-objects in my repo. I think it's not normal, because pre-commit is often 
-used for checking formation of source files and after changing this 
-files, hash of object will be also changed and even after successfull 
-commit dangling object will be still alive.
+I just did a clean clone of git git and, I am still seeing failures on all 
+platforms I made work.  Has the git shell bug been reverted?  What should 
+I do to get this working again on the 12 platforms?  Do I need to submit a 
+patch that reverts the patch that caused all this?
+
+Thanks,
 
 --
-With best regards, Sergey I. Sharybin
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
