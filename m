@@ -1,139 +1,74 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [RFC v2] Git User's Survey 2008
-Date: Sun, 24 Aug 2008 23:36:34 +0200
-Message-ID: <20080824213634.GA16753@leksak.fem-net>
-References: <200807230325.04184.jnareb@gmail.com> <200808200308.26308.jnareb@gmail.com>
+From: Joe Perches <joe@perches.com>
+Subject: Re: [PATCH] git-apply - Add --include=PATH
+Date: Sun, 24 Aug 2008 14:57:43 -0700
+Message-ID: <1219615063.18365.141.camel@localhost>
+References: <1219523869.18365.106.camel@localhost>
+	 <7viqtrw7up.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 24 23:37:53 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 24 23:58:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXNHS-0002lJ-5Z
-	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 23:37:50 +0200
+	id 1KXNbs-00084w-BU
+	for gcvg-git-2@gmane.org; Sun, 24 Aug 2008 23:58:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753143AbYHXVgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2008 17:36:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753126AbYHXVgn
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 17:36:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44933 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750909AbYHXVgm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2008 17:36:42 -0400
-Received: (qmail invoked by alias); 24 Aug 2008 21:36:40 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp048) with SMTP; 24 Aug 2008 23:36:40 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+Di/EtZ7WDW1dNNUycYGvvnnYg2FTGtArh4tHOeH
-	W1n61Hc+7CUEHF
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1KXNGE-0006rM-QE; Sun, 24 Aug 2008 23:36:34 +0200
-Content-Disposition: inline
-In-Reply-To: <200808200308.26308.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+	id S1753160AbYHXV5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2008 17:57:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753137AbYHXV5w
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 17:57:52 -0400
+Received: from 136-022.dsl.LABridge.com ([206.117.136.22]:1445 "EHLO
+	mail.perches.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753126AbYHXV5v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2008 17:57:51 -0400
+Received: from [192.168.1.128] ([192.168.1.128])
+	by mail.perches.com (8.9.3/8.9.3) with ESMTP id OAA01152;
+	Sun, 24 Aug 2008 14:47:39 -0700
+In-Reply-To: <7viqtrw7up.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.12.3-1.3mdv2008.0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93569>
 
-Hi again,
+On Sat, 2008-08-23 at 17:54 -0700, Junio C Hamano wrote:
+> Joe Perches <joe@perches.com> writes:
+> > Add similar capability to --exclude=
+> > Allows selection of files to patch from a
+> > large patchset.
+> Thanks; I don't see anything fundamentally wrong with what this patch
+> tries to achieve.
+> 
+> > @@ -2996,10 +2996,16 @@ static struct excludes {
+> >  	const char *path;
+> >  } *excludes;
+> >  
+> > +static struct includes {
+> > +	struct includes *next;
+> > +	const char *path;
+> > +} *includes;
+> 
+> Now this is ugly.  You can just add a new variable "*includes" that is of
+> exactly the same type as existing "*excludes" without introducing a new
+> type.
 
-> 8.  Which Git version(s) are you using? 
->  [ ] pre 1.3
->  [ ] 1.3.x
-...
->  [ ] master
->  [ ] next
+Yes, it's slightly ugly, but it was less work and much easier for
+a human to parse.  I also didn't want to use "struct excludes"
+for includes which I thought even uglier.
 
-I wonder if people who do not know about master/next being git.git
-branches may do "[X] next" because they think they will use the next
-version available.
+> You should then find it disturbing that the shared type is still called
+> "struct excludes" even though it is now used for things you would want to
+> include.  You are right.  You can then either rename it to a more neutral
+> name, or (even better) use an existing type, such as "string_list".
 
-So could you write "master branch of official git repository" and the
-same for "next"?
+I'm on holiday for a few days, but I'll submit 2 patches later:
 
-> 12. What other SCM did or do you use?
-...
-> By "custom (non-published)" it is meant here version control system
-> which was not released to the public, for example something written
-> for yourself, or internal company project used only in company.
+1. Rename struct excludes to struct path_list
+2. Add --includes
 
-Better:
- "custom (non-published)" means a version control system which has
- not been released to the public, for example, something written for
- yourself or your company only.
-
-And I am unsure if "SCM" is better than "version control system"
-in this sentence, but I do not think this is really important.
-
-> 16. I use Git for (check all that apply):
-...
-> Note that above choices are neither orthogonal nor exclusive.
-> You might want to check multiple answers wven for single repository.
-                                           ^^^^^^^^^ "even for a"
-
-> 17. How do you obtain Git?
-...
->  [ ] pull form main repository
-            ^^^^ from
-
-> Explanation: binary package covers pre-compiled binary; source script
-> is meant to cover installation in source-based distributions, like
-> 'emerge' in Gentoo.
-
-"pre-compiled binary (e.g. from rpm or deb archives)"
-
-Right?
-I think naming two popular package formats of distributors should people
-help to get the point.
-
-> 29. Which of the following features do or did you use?
-
-I still dislike that there are a lot of choices that generate redundancy
-to other questions.
-On the other hand, scientific surveys always contain (hidden) redundancy
-to ensure that the test person gives sane answers.
-
-> 59. Should Git User's Survey be repeated next year?
-  
->  ( ) Yes
->  ( ) No
->  ( ) no opinion
-> Reset
-
-I wonder if the "no opinion" choice is not needed because there is the
-"Reset" button.
-
-
-Apropos!
-
-Is it possible to add a header text?
-
-I'd like that there are three things being clarified at the beginning of
-the survey page:
-
- * The survey is anonymous, but all information that the users provide will
-   be publicly available on the wiki.
-
- * The users may skip questions as they like.
-
- * The user needs JavaScript to submit the survey.
-
-I btw do not like the last fact, but since most users nowadays have
-JavaScript activated, it may not be that bad.
-
-Also, I still do not get a succesful message after submitting, but that
-may be related to the channel (test), if you have configured it like
-that. Have you? ;)
-
-Regards,
-  Stephan
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+cheers, Joe
