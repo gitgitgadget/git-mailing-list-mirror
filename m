@@ -1,184 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-apply - Add --include=PATH
-Date: Mon, 25 Aug 2008 01:05:31 -0700
-Message-ID: <7vhc99h644.fsf@gitster.siamese.dyndns.org>
-References: <1219523869.18365.106.camel@localhost>
- <7viqtrw7up.fsf@gitster.siamese.dyndns.org>
- <1219615063.18365.141.camel@localhost>
+From: Karl Chen <quarl@cs.berkeley.edu>
+Subject: [PATCH] Fix start_command() pipe bug when stdin is closed.
+Date: Mon, 25 Aug 2008 01:28:19 -0700
+Message-ID: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Joe Perches <joe@perches.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 10:06:50 2008
+To: Git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 25 10:29:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXX66-0001PW-1y
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 10:06:46 +0200
+	id 1KXXS0-0007CO-Pe
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 10:29:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753829AbYHYIFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 04:05:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753808AbYHYIFk
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 04:05:40 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47329 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753720AbYHYIFj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 04:05:39 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1D91B67D84;
-	Mon, 25 Aug 2008 04:05:38 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 76DA467D83; Mon, 25 Aug 2008 04:05:34 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9A4B0614-727C-11DD-A5E9-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753543AbYHYI2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 04:28:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753554AbYHYI2U
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 04:28:20 -0400
+Received: from roar.CS.Berkeley.EDU ([128.32.36.242]:57313 "EHLO
+	roar.quarl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752957AbYHYI2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 04:28:20 -0400
+Received: by roar.quarl.org (Postfix, from userid 18378)
+	id DD3AE345F1; Mon, 25 Aug 2008 01:28:19 -0700 (PDT)
+X-Quack-Archive: 1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93605>
 
-Joe Perches <joe@perches.com> writes:
 
->> > @@ -2996,10 +2996,16 @@ static struct excludes {
->> >  	const char *path;
->> >  } *excludes;
->> >  
->> > +static struct includes {
->> > +	struct includes *next;
->> > +	const char *path;
->> > +} *includes;
->> 
->> Now this is ugly.  You can just add a new variable "*includes" that is of
->> exactly the same type as existing "*excludes" without introducing a new
->> type.
->
-> Yes, it's slightly ugly, but it was less work and much easier for
-> a human to parse.
+I ran into what I think is a bug:
+    sh$ git fetch 0<&-
 
-Another consideration is what should happen when you give contradicting
-excludes and includes list.  For example, it is very plausible you might
-want to say "apply to all but header files, except that you want the part
-to one specific header file to also get applied).  Something like:
+(i.e. run git-fetch with stdin closed.)
+It aborts with:
+    fatal: read error (Bad file descriptor)
 
-    $ git apply --include='specific-one.h' --exclude='*.h' --include='*' <patch
+I think the problem arises from the use of dup2+close in
+start_command().  It wants to rename a pipe file descriptor to 0,
+so it does
+    dup2(from, to);
+    close(from);
 
-It is easy to declare that all the exclude patterns are processed and used
-to reject paths, and then only after that include patterns, if any, are
-used to limit the remainder.  But that is describing how the code does it,
-and may not match what the users expect.  For example, the users would
-expect:
+... but in this case from == to == 0, so 
+    dup2(0, 0);
+    close(0);
+just ends up closing the pipe.
 
-    $ git apply --include='specific-one.h' --exclude='s*' <patch
+The patch below fixes the problem for me.
 
-to apply the part for "specific-one.h" but no other paths that begin with "s".
-However, that is not what happens.
 
-It would be much easier to explain to the end users if the rule were that
-include and exclude patterns are examined in the order they are specified
-on the command line, and the first match determines the each path's fate.
+>From 78446c82131a5ca7f22f92bc32d7f3036bba9629 Mon Sep 17 00:00:00 2001
+From: Karl Chen <quarl@quarl.org>
+Date: Mon, 25 Aug 2008 01:09:08 -0700
+Subject: [PATCH] Fix start_command() pipe bug when stdin is closed.
 
-In order to support that, you do not want two separate lists.  Instead,
-you would want to keep a single "static struct string_list limit_by_name",
-append both excluded and included items to the list as you encounter with
-string_list_append(), but in such a way that you can distinguish which one
-is which later.  Also remember if you have seen any included item.
+When intending to rename a fd to 0, if the fd is already 0, then do nothing,
+instead of dup2(0,0); close(0);
 
-Then your use_patch() would:
+The problematic behavior could be seen thus: git-fetch 0<&-
 
- * first check and ignore patches about paths outside of the prefix if any
-   is specified via --directory;
+Signed-off-by: Karl Chen <quarl@quarl.org>
 
- * loop over the limit_by_name.items[] array, checking the path with each
-   element in it with fnmatch().  If you find a match, then you know if it
-   is excluded (return 0) or included (return 1);
+---
+ run-command.c |   29 +++++++++++++++++------------
+ 1 files changed, 17 insertions(+), 12 deletions(-)
 
- * if no patterns match, return 1 (i.e. modify this path) if you did not
-   see any "include" pattern.  If you had any "include" pattern on the
-   command line, return 0 (i.e. do not modify this path).
-
-Perhaps something like this, but I did not test it.
-
- builtin-apply.c |   48 +++++++++++++++++++++++++++++++++---------------
- 1 files changed, 33 insertions(+), 15 deletions(-)
-
-diff --git c/builtin-apply.c w/builtin-apply.c
-index 2216a0b..967ebec 100644
---- c/builtin-apply.c
-+++ w/builtin-apply.c
-@@ -2991,29 +2991,45 @@ static int write_out_results(struct patch *list, int skipped_patch)
- 
- static struct lock_file lock_file;
- 
--static struct excludes {
--	struct excludes *next;
--	const char *path;
--} *excludes;
-+static struct string_list limit_by_name;
-+static int has_include;
-+static void add_name_limit(const char *name, int exclude)
-+{
-+	struct string_list_item *it;
-+
-+	it = string_list_append(name, &limit_by_name);
-+	it->util = exclude ? NULL : (void *) 1;
-+}
- 
- static int use_patch(struct patch *p)
- {
- 	const char *pathname = p->new_name ? p->new_name : p->old_name;
--	struct excludes *x = excludes;
--	while (x) {
--		if (fnmatch(x->path, pathname, 0) == 0)
--			return 0;
--		x = x->next;
--	}
-+	int i;
-+
-+	/* Paths outside are not touched regardless of "--include" */
- 	if (0 < prefix_length) {
- 		int pathlen = strlen(pathname);
- 		if (pathlen <= prefix_length ||
- 		    memcmp(prefix, pathname, prefix_length))
- 			return 0;
- 	}
--	return 1;
-+
-+	/* See if it matches any of exclude/include rule */
-+	for (i = 0; i < limit_by_name.nr; i++) {
-+		struct string_list_item *it = &limit_by_name.items[i];
-+		if (!fnmatch(it->string, pathname, 0))
-+			return (it->util != NULL);
-+	}
-+
-+	/*
-+	 * If we had any include, a path that does not match any rule is
-+	 * not used.  Otherwise, we saw bunch of exclude rules (or none)
-+	 * and such a path is used.
-+	 */
-+	return !has_include;
+diff --git a/run-command.c b/run-command.c
+index caab374..b4bd80f 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -8,11 +8,18 @@ static inline void close_pair(int fd[2])
+ 	close(fd[1]);
  }
  
++static inline void rename_fd(int from, int to)
++{
++	if (from != to) {
++		dup2(from, to);
++		close(from);
++	}
++}
 +
- static void prefix_one(char **name)
+ static inline void dup_devnull(int to)
  {
- 	char *old_name = *name;
-@@ -3154,10 +3170,12 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
- 			continue;
+ 	int fd = open("/dev/null", O_RDWR);
+-	dup2(fd, to);
+-	close(fd);
++	rename_fd(fd, to);
+ }
+ 
+ int start_command(struct child_process *cmd)
+@@ -74,18 +81,17 @@ int start_command(struct child_process *cmd)
+ 		if (cmd->no_stdin)
+ 			dup_devnull(0);
+ 		else if (need_in) {
+-			dup2(fdin[0], 0);
+-			close_pair(fdin);
++			rename_fd(fdin[0], 0);
++			close(fdin[1]);
+ 		} else if (cmd->in) {
+-			dup2(cmd->in, 0);
+-			close(cmd->in);
++			rename_fd(cmd->in, 0);
  		}
- 		if (!prefixcmp(arg, "--exclude=")) {
--			struct excludes *x = xmalloc(sizeof(*x));
--			x->path = arg + 10;
--			x->next = excludes;
--			excludes = x;
-+			add_name_limit(arg + 10, 1);
-+			continue;
-+		}
-+		if (!prefixcmp(arg, "--include=")) {
-+			add_name_limit(arg + 10, 0);
-+			has_include = 1;
- 			continue;
+ 
+ 		if (cmd->no_stderr)
+ 			dup_devnull(2);
+ 		else if (need_err) {
+-			dup2(fderr[1], 2);
+-			close_pair(fderr);
++			rename_fd(fderr[1], 2);
++			close(fderr[0]);
  		}
- 		if (!prefixcmp(arg, "-p")) {
+ 
+ 		if (cmd->no_stdout)
+@@ -93,11 +99,10 @@ int start_command(struct child_process *cmd)
+ 		else if (cmd->stdout_to_stderr)
+ 			dup2(2, 1);
+ 		else if (need_out) {
+-			dup2(fdout[1], 1);
+-			close_pair(fdout);
++			rename_fd(fdout[1], 1);
++			close(fdout[0]);
+ 		} else if (cmd->out > 1) {
+-			dup2(cmd->out, 1);
+-			close(cmd->out);
++			rename_fd(cmd->out, 1);
+ 		}
+ 
+ 		if (cmd->dir && chdir(cmd->dir))
+-- 
+1.5.6.2
