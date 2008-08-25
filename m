@@ -1,107 +1,64 @@
-From: "Felipe Contreras" <felipe.contreras@gmail.com>
-Subject: Re: [RFC] mtn to git conversion script
-Date: Mon, 25 Aug 2008 23:47:53 +0300
-Message-ID: <94a0d4530808251347g4d6246bv7ebd5cc86294dd05@mail.gmail.com>
-References: <94a0d4530808240218j4bedbe3di99303da9addc93a4@mail.gmail.com>
-	 <20080825163530.GJ31114@lavos.net>
+From: Tommi Virtanen <tv@eagain.net>
+Subject: Re: [PATCH 2/2] git wrapper: execute git-shell when argv[1] is '-c'
+Date: Tue, 26 Aug 2008 00:03:45 +0300
+Message-ID: <20080825210345.GE14930@eagain.net>
+References: <7vbpzikt4b.fsf@gitster.siamese.dyndns.org> <20080824222534.GC14930@eagain.net> <alpine.DEB.1.00.0808251235430.24820@pacific.mpi-cbg.de.mpi-cbg.de> <48B29B2A.6000802@gnu.org> <alpine.DEB.1.00.0808251955490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <237967ef0808251125q3e50fa04wf0e97ff29298bef2@mail.gmail.com> <alpine.DEB.1.00.0808252206150.24820@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808252225520.24820@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808252248150.24820@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808252251450.24820@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, monotone-devel@nongnu.org
-To: "Brian Downing" <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Mon Aug 25 22:49:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Mikael Magnusson <mikachu@gmail.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 25 23:04:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXizj-0000Wh-SQ
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 22:49:00 +0200
+	id 1KXjF8-0004MU-U8
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 23:04:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753359AbYHYUrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 16:47:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753342AbYHYUrz
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 16:47:55 -0400
-Received: from rv-out-0506.google.com ([209.85.198.234]:23268 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753335AbYHYUry (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 16:47:54 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1792211rvb.1
-        for <git@vger.kernel.org>; Mon, 25 Aug 2008 13:47:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=sgxRIBu50h5yBXX51naUXVHU/oRM9vjLj9CCW14wa/A=;
-        b=C8WCURqi33HPWOcd300kYHh6vlmafAAxeMZKeJLa5rp8ayJX7BFSmazXIlVzqSIToj
-         dWDlWau3ekh2UgX8VVUDFBHRxmm/o/002eFTeW78NYozascNCkArefM0WwCkOhfuq9FM
-         1xw3/XLI0XpaH/JirNMwxTReYlsNQWk+IIK7o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=wfQF0PqLJkSI0nZNMyRtz02Tr4G9SOwAmdZOnaCQOBLMBNO0XXXLHEaQi/tCYGkgix
-         zIDeGhDjkbQzyEcensiPVXZXNizFzA2HSFkKEh3Gq8U6vWnJ0UegIVJQh6s7eyaE6q5G
-         GhMbS7ZzNxhBAKhdktkeeOqr8oLgDnp7L5DU4=
-Received: by 10.141.74.18 with SMTP id b18mr2393429rvl.80.1219697273655;
-        Mon, 25 Aug 2008 13:47:53 -0700 (PDT)
-Received: by 10.140.166.19 with HTTP; Mon, 25 Aug 2008 13:47:53 -0700 (PDT)
-In-Reply-To: <20080825163530.GJ31114@lavos.net>
+	id S1753474AbYHYVDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 17:03:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753428AbYHYVDu
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 17:03:50 -0400
+Received: from eagain.net ([208.78.102.120]:36328 "EHLO eagain.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753380AbYHYVDt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 17:03:49 -0400
+Received: from musti.eagain.net (a91-156-122-108.elisa-laajakaista.fi [91.156.122.108])
+	by eagain.net (Postfix) with ESMTPS id 344071EC45F;
+	Mon, 25 Aug 2008 21:03:48 +0000 (UTC)
+Received: by musti.eagain.net (Postfix, from userid 1000)
+	id 0FB00870003; Tue, 26 Aug 2008 00:03:45 +0300 (EEST)
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mikael Magnusson <mikachu@gmail.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Paolo Bonzini <bonzini@gnu.org>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0808252251450.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93676>
 
-On Mon, Aug 25, 2008 at 7:35 PM, Brian Downing <bdowning@lavos.net> wrote:
-> On Sun, Aug 24, 2008 at 12:18:50PM +0300, Felipe Contreras wrote:
->> I developed a script that converts a monotone repository into a git
->> one (exact clone), I want to contribute it so everybody can use it.
->>
->> This is the gist of the script:
->>
->> mtn update --revision #{@id} --reallyquiet
->> git ls-files --modified --others --exclude-standard -z | git
->> update-index --add --remove -z --stdin
->> git write-tree
->> git write-raw < /tmp/commit.txt
->> git update-ref refs/mtn/#{@id} #{@git_id}
->>
->> branches.each do |e|
->>     git update-ref refs/heads/#{e} #{@git_id}
->> end
->
-> You definitely want to use fast-import, but you probably want to do
-> something a lot closer to fast-export for monotone (read: use its
-> automate stdio interface and avoid expensive calls).
->
-> Here's a simple monotone to git converter I wrote.  You'll need the
-> Monotone::AutomateStdio perl module to use it (which I think I got it
-> from monotone's net.venge.monotone.contrib.lib.automate-stdio branch).
-> It is very fast; it can convert the OpenEmbedded repo in something like
-> 5-10 minutes on my machine.
+On Mon, Aug 25, 2008 at 10:52:46PM +0200, Johannes Schindelin wrote:
+> When a program is called via ssh's '-c' option, the login shell is called 
+> on the remote computer, with the given arguments.  In the case that Git 
+> was specified as login shell in /etc/passwd, Git used to complain that it 
+> does not know the '-c' option and die.
+> 
+> This commit assumes that '-c' indicates that Git was specified as
+> a login shell, and hands off to git-shell.
+> 
+> Noticed by Tommi Virtanen.
 
-Interesting, how many commits?
-
-> Note that for monotone export to go fast you absolutely /must/ avoid the
-> get_manifest operation.  In my converter I use the revision information
-> directly.  Getting the renames right with this is a little tricky; IIRC,
-> the ordering that works is:
->
-> * Rename all renamed files, innermost files first, to temporary names.
-> * Delete all deleted files, innermost first.
-> * Rename all temporary names to permanent names, outermost first.
-> * Add all new/modified files.
->
-> Conveniently, all of the above can be done by directly emitting
-> fast-import commands, so you don't have to keep track of trees directly.
-> (With one exception, which I'll elaborate on in a different email.)
-
-I guess I haven't stumbled upon that problem yet =/
-
-Best regards.
+My imagination is insufficient in coming up with an uglier kludge, and
+I sincerely hope my name isn't associated with this in any way.
 
 -- 
-Felipe Contreras
+:(){ :|:&};:
