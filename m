@@ -1,160 +1,85 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH v2] fix start_command() bug when stdin is closed
-Date: Mon, 25 Aug 2008 14:00:35 +0200
-Message-ID: <E1KXawS-0001gg-Ty@fencepost.gnu.org>
-References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu> <48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org>
-Cc: Karl Chen <quarl@cs.berkeley.edu>,
-	Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Aug 25 14:15:50 2008
+From: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Mon, 25 Aug 2008 14:17:44 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0808251415010.3893@vixen.sonytel.be>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>
+ <1219664940.9583.42.camel@pmac.infradead.org>
+Mime-Version: 1.0
+Content-Type: MULTIPART/MIXED; BOUNDARY="-584349381-1218310624-1219666664=:3893"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	users@kernel.org
+To: David Woodhouse <dwmw2@infradead.org>
+X-From: git-owner@vger.kernel.org Mon Aug 25 14:19:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXayv-0003Iz-BS
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 14:15:37 +0200
+	id 1KXb23-0004Qe-3n
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 14:18:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752895AbYHYMOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 08:14:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753144AbYHYMOd
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 08:14:33 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:57578 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752889AbYHYMOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 08:14:32 -0400
-Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
-	(envelope-from <bonzini@gnu.org>)
-	id 1KXawS-0001gg-Ty; Mon, 25 Aug 2008 08:13:04 -0400
+	id S1754134AbYHYMRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 08:17:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753810AbYHYMRq
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 08:17:46 -0400
+Received: from vervifontaine.sonytel.be ([80.88.33.193]:46414 "EHLO
+	vervifontaine.sonycom.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753434AbYHYMRp (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Aug 2008 08:17:45 -0400
+Received: from vixen.sonytel.be (piraat.sonytel.be [43.221.60.197])
+	by vervifontaine.sonycom.com (Postfix) with ESMTP id 3012758AE0;
+	Mon, 25 Aug 2008 14:17:44 +0200 (MEST)
+In-Reply-To: <1219664940.9583.42.camel@pmac.infradead.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93615>
 
-There is a problem in the use of dup2+close in start_command()
-when one or more of file descriptors 0/1/2 are closed.  In order
-to rename a pipe file descriptor to 0, it does
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-    dup2(from, 0);
-    close(from);
+---584349381-1218310624-1219666664=:3893
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-... but if stdin was closed (for example) from == 0, so that
+On Mon, 25 Aug 2008, David Woodhouse wrote:
+> On Sat, 2008-08-23 at 20:33 -0700, Junio C Hamano wrote:
+> > There is one alternative, and one augmentation:
+> > 
+> >  (A) We do not do anything.
+> > 
+> >  (B) In addition to the main transition plan, outside git, prepare an
+> >      optional "git-old-style" package that installs many "git-foo"
+> >      wrappers in $PATH (i.e. /usr/bin).  Each of them exec "git foo".
+> >      People who like the dashed form can keep typing "git-foo", even
+> >      though that will cost them two exec()s.
+> 
+>   (C) Just don't do it. Leave the git-foo commands as they were. They
+>       weren't actually hurting anyone, and you don't actually _gain_
+>       anything by removing them. For those occasional nutters who
+>       _really_ care about the size of /usr/bin, give them the _option_
+>       of a 'make install' without installing the aliases.
 
-    dup2(0, 0);
-    close(0);
+Acked-by: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
 
-just ends up closing the pipe.  This patch fixes it by opening all of
-the "low" descriptors to /dev/null.
+BTW, now we have man pages for deprecated commands that are not in the default
+PATH, which are showing examples for deprecated commands that are not in the
+default PATH?
 
-In most cases this patch will not cause any additional system calls;
-actually by reusing the /dev/null descriptor when possible (instead
-of opening a fresh one in dup_devnull) it may even save a handful in
-some cases. :-)
+With kind regards,
 
-Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
----
- run-command.c |   35 ++++++++++++++++++++++-------------
- 1 files changed, 22 insertions(+), 13 deletions(-)
+Geert Uytterhoeven
+Software Architect
 
-diff --git a/run-command.c b/run-command.c
-index caab374..4619494 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -2,25 +2,34 @@
- #include "run-command.h"
- #include "exec_cmd.h"
- 
-+static int devnull_fd = -1;
-+
- static inline void close_pair(int fd[2])
- {
- 	close(fd[0]);
- 	close(fd[1]);
- }
- 
--static inline void dup_devnull(int to)
--{
--	int fd = open("/dev/null", O_RDWR);
--	dup2(fd, to);
--	close(fd);
--}
--
- int start_command(struct child_process *cmd)
- {
- 	int need_in, need_out, need_err;
- 	int fdin[2], fdout[2], fderr[2];
- 
- 	/*
-+	 * Make sure that all file descriptors <= 2 are open, otherwise we
-+	 * mess them up when dup'ing pipes onto stdin/stdout/stderr.  Since
-+	 * we are at it, open a file descriptor on /dev/null to use it later.
-+	 */
-+	if (devnull_fd == -1)
-+	  {
-+	    devnull_fd = open("/dev/null", O_RDWR);
-+	    while (devnull_fd >= 0 && devnull_fd <= 2)
-+	      devnull_fd = dup(devnull_fd);
-+	    if (devnull_fd == -1)
-+	      die("opening /dev/null failed (%s)", strerror(errno));
-+	  }
-+
-+	/*
- 	 * In case of errors we must keep the promise to close FDs
- 	 * that have been passed in via ->in and ->out.
- 	 */
-@@ -72,7 +81,7 @@ int start_command(struct child_process *cmd)
- 	cmd->pid = fork();
- 	if (!cmd->pid) {
- 		if (cmd->no_stdin)
--			dup_devnull(0);
-+			dup2(devnull_fd, 0);
- 		else if (need_in) {
- 			dup2(fdin[0], 0);
- 			close_pair(fdin);
-@@ -82,14 +91,14 @@ int start_command(struct child_process *cmd)
- 		}
- 
- 		if (cmd->no_stderr)
--			dup_devnull(2);
-+			dup2(devnull_fd, 2);
- 		else if (need_err) {
- 			dup2(fderr[1], 2);
- 			close_pair(fderr);
- 		}
- 
- 		if (cmd->no_stdout)
--			dup_devnull(1);
-+			dup2(devnull_fd, 1);
- 		else if (cmd->stdout_to_stderr)
- 			dup2(2, 1);
- 		else if (need_out) {
-@@ -127,7 +136,7 @@ int start_command(struct child_process *cmd)
- 
- 	if (cmd->no_stdin) {
- 		s0 = dup(0);
--		dup_devnull(0);
-+		dup2(devnull_fd, 0);
- 	} else if (need_in) {
- 		s0 = dup(0);
- 		dup2(fdin[0], 0);
-@@ -138,7 +147,7 @@ int start_command(struct child_process *cmd)
- 
- 	if (cmd->no_stderr) {
- 		s2 = dup(2);
--		dup_devnull(2);
-+		dup2(devnull_fd, 2);
- 	} else if (need_err) {
- 		s2 = dup(2);
- 		dup2(fderr[1], 2);
-@@ -146,7 +155,7 @@ int start_command(struct child_process *cmd)
- 
- 	if (cmd->no_stdout) {
- 		s1 = dup(1);
--		dup_devnull(1);
-+		dup2(devnull_fd, 1);
- 	} else if (cmd->stdout_to_stderr) {
- 		s1 = dup(1);
- 		dup2(2, 1);
--- 
-1.5.5
+Sony Techsoft Centre Europe
+The Corporate Village · Da Vincilaan 7-D1 · B-1935 Zaventem · Belgium
+
+Phone:    +32 (0)2 700 8453
+Fax:      +32 (0)2 700 8622
+E-mail:   Geert.Uytterhoeven@sonycom.com
+Internet: http://www.sony-europe.com/
+
+A division of Sony Europe (Belgium) N.V.
+VAT BE 0413.825.160 · RPR Brussels
+Fortis · BIC GEBABEBB · IBAN BE41293037680010
+---584349381-1218310624-1219666664=:3893--
