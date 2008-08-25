@@ -1,61 +1,61 @@
-From: "Sky Patrick" <patricksky852@gmail.com>
-Subject: Is there have development library or API for git ?
-Date: Mon, 25 Aug 2008 12:09:46 +0800
-Message-ID: <976e6d070808242109s53af2624td45dbb936ca25896@mail.gmail.com>
-References: <976e6d070808242025n24b282dei5c79b4c9bf2e390e@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5] gitweb: ref markers link to named shortlogs
+Date: Sun, 24 Aug 2008 21:11:35 -0700
+Message-ID: <7vvdxpivig.fsf@gitster.siamese.dyndns.org>
+References: <200808221501.54908.jnareb@gmail.com>
+ <200808250153.31697.jnareb@gmail.com>
+ <20080825020502.GQ23800@genesis.frugalware.org>
+ <200808250444.23305.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 25 06:10:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 25 06:12:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXTPn-0003Mo-J4
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 06:10:52 +0200
+	id 1KXTRh-0003fp-7G
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 06:12:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750866AbYHYEJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 00:09:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750765AbYHYEJr
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 00:09:47 -0400
-Received: from wf-out-1314.google.com ([209.85.200.168]:32969 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750734AbYHYEJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 00:09:46 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so1714291wfd.4
-        for <git@vger.kernel.org>; Sun, 24 Aug 2008 21:09:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=k0312/X0PUbBeGg2O81AlGNdjL0AHg/UJWJNYML+9mk=;
-        b=yBsIJYbSEHTujZZS9ATqFB3PiLOy9C60DSTok7uOhUrqAnTnDHWy0hjLKvH5ZdZdx+
-         nEdxVJWF+qx7vffDQbrwwjWo6+JbEM0x6XwR9jpALWh28lCbDHluShvkzkgMziBFUFRM
-         2cpVY2+/Hr2vurHF0zx2M3JCicZNZrSsYR3g0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Q0NvcSbKYMsA/6jmXgdo76J8I/mAMDiXGHj8V5Uq0cWKucgY1RthrmLqNiYlK37pZX
-         xy5XmaLLJnRnkUmLzL2AKRYlDCe91eswDgLzyhADVXrpfHcZFHttpAuACSFX6f6RgCHP
-         gA14rCVixnbjmX7wzlyxKhRXf2DpWW07rkH6M=
-Received: by 10.142.218.4 with SMTP id q4mr1363203wfg.273.1219637386167;
-        Sun, 24 Aug 2008 21:09:46 -0700 (PDT)
-Received: by 10.142.180.20 with HTTP; Sun, 24 Aug 2008 21:09:46 -0700 (PDT)
-In-Reply-To: <976e6d070808242025n24b282dei5c79b4c9bf2e390e@mail.gmail.com>
-Content-Disposition: inline
+	id S1750945AbYHYELp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 00:11:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750772AbYHYELp
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 00:11:45 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44496 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750701AbYHYELp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 00:11:45 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E612667092;
+	Mon, 25 Aug 2008 00:11:43 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id C0ED067091; Mon, 25 Aug 2008 00:11:38 -0400 (EDT)
+In-Reply-To: <200808250444.23305.jnareb@gmail.com> (Jakub Narebski's message
+ of "Mon, 25 Aug 2008 04:44:22 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: ED43EDE8-725B-11DD-951F-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93591>
 
-Hi,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Is there have development library or API for git ? Thank ~
+> +                     $markers .= " <span class=\"$class\" title=\"$ref\">" .
+> +                             $cgi->a({-href => href(action=>( $indirect ? "tag" : "shortlog"),
+> +                                                    hash=>"refs/$ref")}, $name) .
+> +                             "</span>";
+>
+> or equivalent (not stripping "refs/" in git_get_references).
 
-Regards,
-Patrick
+If you mean by "hash => $it", I think it is only used as the URL the
+anchor points at, and it is much more preferable to use the canonical
+form.  "...?h=refs/heads/master" and "...h=heads/master" might produce the
+same output, but then it is better for smart caching layer if you always
+used canonical form, isn't it?
