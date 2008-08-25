@@ -1,87 +1,160 @@
 From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH] Fix start_command() pipe bug when stdin is closed.
-Date: Mon, 25 Aug 2008 13:49:38 +0200
-Message-ID: <48B29C52.8040901@gnu.org>
-References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu> <48B28CF8.2060306@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH v2] fix start_command() bug when stdin is closed
+Date: Mon, 25 Aug 2008 14:00:35 +0200
+Message-ID: <E1KXawS-0001gg-Ty@fencepost.gnu.org>
+References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu> <48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org>
 Cc: Karl Chen <quarl@cs.berkeley.edu>,
 	Git mailing list <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Aug 25 13:50:54 2008
+X-From: git-owner@vger.kernel.org Mon Aug 25 14:15:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXaat-0003r5-Gf
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 13:50:47 +0200
+	id 1KXayv-0003Iz-BS
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 14:15:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754045AbYHYLtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 07:49:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754008AbYHYLtn
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 07:49:43 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:57000 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753951AbYHYLtm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 07:49:42 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so953717fgg.17
-        for <git@vger.kernel.org>; Mon, 25 Aug 2008 04:49:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding:sender;
-        bh=IashY2gxZO1Iqw6wsezH34Ejd35xhi+ndcwMUPlcU9k=;
-        b=ckInpyABKJ/VUdaVUfmyq+OJnWexTbeeXoEkRJcOzPK3RJfLdxcp+NzvhHRa10sV0x
-         z+n4pd7LKKwCThjfLhup1Mw5Wi9/PIX1C61/r10C6vMvyRw9S9BDR3BlOsvrvPPTpTn5
-         LgqH05Gm51nCZ1lyWb3zXogTHaLkvZmBMsJjs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :sender;
-        b=QUR/aw5CL3MviqJyYVSzwQDJ84SYiNyLlpY9+vS6bPPNkTiSVeL2fGchBjgrQHh8Rf
-         MzoaXbY141BCJT/VmtpkNVlzf5u0q++BztZ2/FoxwHJW7DTPK9Igf3jUcnFIfKxTWkJx
-         olweDuTADppnpts6QKUMKCGPiemGgeAwkNjhs=
-Received: by 10.86.74.15 with SMTP id w15mr3272447fga.42.1219664981069;
-        Mon, 25 Aug 2008 04:49:41 -0700 (PDT)
-Received: from scientist-2.mobile.usilu.net ( [195.176.179.202])
-        by mx.google.com with ESMTPS id 4sm1145329fge.8.2008.08.25.04.49.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 25 Aug 2008 04:49:40 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
-In-Reply-To: <48B28CF8.2060306@viscovery.net>
+	id S1752895AbYHYMOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 08:14:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753144AbYHYMOd
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 08:14:33 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:57578 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752889AbYHYMOc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 08:14:32 -0400
+Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
+	(envelope-from <bonzini@gnu.org>)
+	id 1KXawS-0001gg-Ty; Mon, 25 Aug 2008 08:13:04 -0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93614>
 
+There is a problem in the use of dup2+close in start_command()
+when one or more of file descriptors 0/1/2 are closed.  In order
+to rename a pipe file descriptor to 0, it does
 
-> While I do see that there is a problem, it is only half of the story, and
-> your patch addresses only this half.
-> 
-> What if stdout is closed, too? Then the ends of the first allocated pipe
-> would go to fds 0 and  1, and then the pipe end at 1 would be closed by a
-> subsequent dup2(xxx, 1).
+    dup2(from, 0);
+    close(from);
 
-What about opening files (in start_command, protected by a loop that run
-only once, or on startup) until you get a descriptor that is > 2?  Like
-this:
+... but if stdin was closed (for example) from == 0, so that
 
-  static int low_fds_reserved;
-  if (!low_fds_reserved)
-    {
-      int fd = open("/dev/null", O_RDWR);
-      while (fd >= 0 && fd <= 2)
-        fd = dup (fd);
-      if (fd != -1)
-        close (fd);
-      else
-        perror ("start_command");
-      low_fds_reserved = 1;
-    }
+    dup2(0, 0);
+    close(0);
 
-Paolo
+just ends up closing the pipe.  This patch fixes it by opening all of
+the "low" descriptors to /dev/null.
+
+In most cases this patch will not cause any additional system calls;
+actually by reusing the /dev/null descriptor when possible (instead
+of opening a fresh one in dup_devnull) it may even save a handful in
+some cases. :-)
+
+Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
+---
+ run-command.c |   35 ++++++++++++++++++++++-------------
+ 1 files changed, 22 insertions(+), 13 deletions(-)
+
+diff --git a/run-command.c b/run-command.c
+index caab374..4619494 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -2,25 +2,34 @@
+ #include "run-command.h"
+ #include "exec_cmd.h"
+ 
++static int devnull_fd = -1;
++
+ static inline void close_pair(int fd[2])
+ {
+ 	close(fd[0]);
+ 	close(fd[1]);
+ }
+ 
+-static inline void dup_devnull(int to)
+-{
+-	int fd = open("/dev/null", O_RDWR);
+-	dup2(fd, to);
+-	close(fd);
+-}
+-
+ int start_command(struct child_process *cmd)
+ {
+ 	int need_in, need_out, need_err;
+ 	int fdin[2], fdout[2], fderr[2];
+ 
+ 	/*
++	 * Make sure that all file descriptors <= 2 are open, otherwise we
++	 * mess them up when dup'ing pipes onto stdin/stdout/stderr.  Since
++	 * we are at it, open a file descriptor on /dev/null to use it later.
++	 */
++	if (devnull_fd == -1)
++	  {
++	    devnull_fd = open("/dev/null", O_RDWR);
++	    while (devnull_fd >= 0 && devnull_fd <= 2)
++	      devnull_fd = dup(devnull_fd);
++	    if (devnull_fd == -1)
++	      die("opening /dev/null failed (%s)", strerror(errno));
++	  }
++
++	/*
+ 	 * In case of errors we must keep the promise to close FDs
+ 	 * that have been passed in via ->in and ->out.
+ 	 */
+@@ -72,7 +81,7 @@ int start_command(struct child_process *cmd)
+ 	cmd->pid = fork();
+ 	if (!cmd->pid) {
+ 		if (cmd->no_stdin)
+-			dup_devnull(0);
++			dup2(devnull_fd, 0);
+ 		else if (need_in) {
+ 			dup2(fdin[0], 0);
+ 			close_pair(fdin);
+@@ -82,14 +91,14 @@ int start_command(struct child_process *cmd)
+ 		}
+ 
+ 		if (cmd->no_stderr)
+-			dup_devnull(2);
++			dup2(devnull_fd, 2);
+ 		else if (need_err) {
+ 			dup2(fderr[1], 2);
+ 			close_pair(fderr);
+ 		}
+ 
+ 		if (cmd->no_stdout)
+-			dup_devnull(1);
++			dup2(devnull_fd, 1);
+ 		else if (cmd->stdout_to_stderr)
+ 			dup2(2, 1);
+ 		else if (need_out) {
+@@ -127,7 +136,7 @@ int start_command(struct child_process *cmd)
+ 
+ 	if (cmd->no_stdin) {
+ 		s0 = dup(0);
+-		dup_devnull(0);
++		dup2(devnull_fd, 0);
+ 	} else if (need_in) {
+ 		s0 = dup(0);
+ 		dup2(fdin[0], 0);
+@@ -138,7 +147,7 @@ int start_command(struct child_process *cmd)
+ 
+ 	if (cmd->no_stderr) {
+ 		s2 = dup(2);
+-		dup_devnull(2);
++		dup2(devnull_fd, 2);
+ 	} else if (need_err) {
+ 		s2 = dup(2);
+ 		dup2(fderr[1], 2);
+@@ -146,7 +155,7 @@ int start_command(struct child_process *cmd)
+ 
+ 	if (cmd->no_stdout) {
+ 		s1 = dup(1);
+-		dup_devnull(1);
++		dup2(devnull_fd, 1);
+ 	} else if (cmd->stdout_to_stderr) {
+ 		s1 = dup(1);
+ 		dup2(2, 1);
+-- 
+1.5.5
