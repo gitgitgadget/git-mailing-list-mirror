@@ -1,101 +1,262 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge-recursive: introduce merge_options
-Date: Sun, 24 Aug 2008 23:06:06 -0700
-Message-ID: <7v7ia5iq7l.fsf@gitster.siamese.dyndns.org>
-References: <1219628677-23903-1-git-send-email-vmiklos@frugalware.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] fix "git log -i --grep"
+Date: Mon, 25 Aug 2008 02:15:05 -0400
+Message-ID: <20080825061504.GA9313@coredump.intra.peff.net>
+References: <g8jbvd$18k$1@ger.gmane.org> <20080821200255.GB27705@coredump.intra.peff.net> <48AE786C.20201@fastmail.fm> <20080822165047.GA3339@sigill.intra.peff.net> <7vzln492pc.fsf@gitster.siamese.dyndns.org> <20080825013837.GA17201@coredump.intra.peff.net> <7vmyj1isot.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Mon Aug 25 08:07:21 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 25 08:16:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXVEX-0006FA-6T
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 08:07:21 +0200
+	id 1KXVNC-0008Oz-5e
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 08:16:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751281AbYHYGGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 02:06:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750872AbYHYGGO
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 02:06:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55882 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750769AbYHYGGN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 02:06:13 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D10AF6EA77;
-	Mon, 25 Aug 2008 02:06:12 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0A5E76EA75; Mon, 25 Aug 2008 02:06:08 -0400 (EDT)
-In-Reply-To: <1219628677-23903-1-git-send-email-vmiklos@frugalware.org>
- (Miklos Vajna's message of "Mon, 25 Aug 2008 03:44:37 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EB75AF5A-726B-11DD-BA21-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1751217AbYHYGPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 02:15:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750769AbYHYGPJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 02:15:09 -0400
+Received: from peff.net ([208.65.91.99]:1504 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750734AbYHYGPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 02:15:08 -0400
+Received: (qmail 17944 invoked by uid 111); 25 Aug 2008 06:15:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 25 Aug 2008 02:15:06 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Aug 2008 02:15:05 -0400
+Content-Disposition: inline
+In-Reply-To: <7vmyj1isot.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93601>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+On Sun, Aug 24, 2008 at 10:12:34PM -0700, Junio C Hamano wrote:
 
-> 1) This applies on top of 1c868d4 (merge-recursive.c: Add more generic
-> merge_recursive_generic()). I can rebase this (along with 1c868d4 and
-> 1c868d4^) on top of current master, if this is a problem.
+> My sed is non POSIX in a good sense and does not have problem handing such
+> an input, and my use case is to say "\C-u \M-! git who Jeff <ENTER>" while
+> typing e-mail message, and I do _not_ want an extra newline after the
+> input.  That is why I use format: (not tformat:) there.
 
-It probably is cleaner to treat this as a fresh topic from scratch on top
-of 'master', as we do not have anything outstanding in 'next' around this
-area.
+Ah. I would have expected whatever you pulled the output into to eat the
+newline. But there is no point in nitpicking, as this is a personal
+alias. Mine uses tformat. :)
 
-> 2) I know that this patch is huge, but we want to have the verbosity
-> flag in merge_options, so it has to be passed as an argument in many
-> places.
+> > The fix is to allocate the grep_filter member whenever we
+> > get _any_ grep information, be it actual filters or just
+> > flags. Thus checking for non-NULL revs->grep_filter is no
+> > longer sufficient to know that we have patterns; in
+> > commit_match we must actually check that the pattern list is
+> > not empty.
+> 
+> Well spotted, and thanks for the fix.
 
-Size of the patch that results purely from addition of the merge_options
-parameter from top to bottom does not bother me too much.  The look quite
-straightforward conversions, and getting rid of these many global
-variables is a major step in the right direction.
+Actually, there is one spot missing from my previous patch. Rev-list
+sets "save_commit_buffer" based on the value of grep_filter. So it must
+also check grep_filter->pattern_list.
 
-It might however be a good idea to consistently have this at the same
-place (either the beginning or at the end) of the parameter list of
-functions that take one.
+> As you suggested, making the grep option structure embedded in rev_info
+> may not be a bad idea.  We used to keep track of the sub-options
+> separately while we encounter, and updated grep_filter at the end of the
+> loop, but the conversion to use parse-options broke it.
 
-> @@ -1273,10 +1268,11 @@ int merge_recursive(struct commit *h1,
->  		 * "conflicts" were already resolved.
->  		 */
->  		discard_cache();
-> -		merge_recursive(merged_common_ancestors, iter->item,
-> -				"Temporary merge branch 1",
-> -				"Temporary merge branch 2",
-> -				NULL,
-> +		memcpy(&opts, o, sizeof(struct merge_options));
-> +		opts.branch1 = "Temporary merge branch 1";
-> +		opts.branch2 = "Temporary merge branch 2";
-> +		merge_recursive(&opts, merged_common_ancestors,
-> +				iter->item, NULL,
->  				&merged_common_ancestors);
->  		call_depth--;
+I worked up this patch, and it is below. However, I think it may not be
+a good idea, because...
 
-After suggesting to keep label in merge_options, I was wondering how this
-part should be handled the best.  An alternative would be not to do copy
-the structure but stash away only branch1 and branch2 members before
-making the recursive call and restore them after it returns, like this:
+> The only issue I still have, which I suspect your fix has made it easier
+> to address, is to complain if sub-options to grep like -i and -E are given
+> without --grep.  That's not something v1.5.6 series did, though.
 
-		const char *saved_b1, *saved_b2;
-		...
-		saved_b1 = o->branch1;
-		saved_b2 = o->branch2;
-		o->branch1 = "Temporary merge branch 1";
-		o->branch2 = "Temporary merge branch 2";
-		merge_recursive(o, ...);
-		o->branch1 = saved_b1;
-		o->branch2 = saved_b2;
-		call_depth--;
-		...
-		
-This might be better in the longer run, as we may want to pass *back*
-status from merge_recursive() to the caller in fields of merge_options in
-the future.
+This is trivial with my first patch, but not with the second. With
+grep_filter kept as a pointer, we know that if the pointer is non-NULL
+but there are no patterns, then the user asked for grep options but
+never --grep.
+
+I guess this might be a helpful thing for some users, but I wonder if it
+is being too unpredictable for script usage. I.e., a script like:
+
+  git log -E `for i in "$@"; do echo --author=$i`
+
+Anyway, the non-allocating patch is below. Aside from the test case, it
+deletes more lines than it adds, which is always nice.
+
+-- >8 --
+fix "git log -i --grep"
+
+This has been broken in v1.6.0 due to the reorganization of
+the revision option parsing code. The "-i" is completely
+ignored, but works fine in "git log --grep -i".
+
+What happens is that the code for "-i" looks for
+revs->grep_filter; if it is NULL, we do nothing, since there
+are no grep filters. But that is obviously not correct,
+since we want it to influence the later --grep option. Doing
+it the other way around works, since "-i" just impacts the
+existing grep_filter option.
+
+Instead, we now always initialize the grep_filter member and
+just fill in options and patterns as we get them. This means
+that we can no longer check grep_filter for NULL, but
+instead must check the pattern list to see if we have any
+actual patterns.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin-rev-list.c |    3 ++-
+ revision.c         |   34 ++++++++++++----------------------
+ revision.h         |    3 ++-
+ t/t4202-log.sh     |   22 ++++++++++++++++++++++
+ 4 files changed, 38 insertions(+), 24 deletions(-)
+
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 893762c..c023003 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -645,7 +645,8 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	    revs.diff)
+ 		usage(rev_list_usage);
+ 
+-	save_commit_buffer = revs.verbose_header || revs.grep_filter;
++	save_commit_buffer = revs.verbose_header ||
++		revs.grep_filter.pattern_list;
+ 	if (bisect_list)
+ 		revs.limited = 1;
+ 
+diff --git a/revision.c b/revision.c
+index e75079a..36291b6 100644
+--- a/revision.c
++++ b/revision.c
+@@ -782,6 +782,10 @@ void init_revisions(struct rev_info *revs, const char *prefix)
+ 
+ 	revs->commit_format = CMIT_FMT_DEFAULT;
+ 
++	revs->grep_filter.status_only = 1;
++	revs->grep_filter.pattern_tail = &(revs->grep_filter.pattern_list);
++	revs->grep_filter.regflags = REG_NEWLINE;
++
+ 	diff_setup(&revs->diffopt);
+ 	if (prefix && !revs->diffopt.prefix) {
+ 		revs->diffopt.prefix = prefix;
+@@ -946,15 +950,7 @@ void read_revisions_from_stdin(struct rev_info *revs)
+ 
+ static void add_grep(struct rev_info *revs, const char *ptn, enum grep_pat_token what)
+ {
+-	if (!revs->grep_filter) {
+-		struct grep_opt *opt = xcalloc(1, sizeof(*opt));
+-		opt->status_only = 1;
+-		opt->pattern_tail = &(opt->pattern_list);
+-		opt->regflags = REG_NEWLINE;
+-		revs->grep_filter = opt;
+-	}
+-	append_grep_pattern(revs->grep_filter, ptn,
+-			    "command line", 0, what);
++	append_grep_pattern(&revs->grep_filter, ptn, "command line", 0, what);
+ }
+ 
+ static void add_header_grep(struct rev_info *revs, const char *field, const char *pattern)
+@@ -1164,17 +1160,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if (!prefixcmp(arg, "--grep=")) {
+ 		add_message_grep(revs, arg+7);
+ 	} else if (!strcmp(arg, "--extended-regexp") || !strcmp(arg, "-E")) {
+-		if (revs->grep_filter)
+-			revs->grep_filter->regflags |= REG_EXTENDED;
++		revs->grep_filter.regflags |= REG_EXTENDED;
+ 	} else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i")) {
+-		if (revs->grep_filter)
+-			revs->grep_filter->regflags |= REG_ICASE;
++		revs->grep_filter.regflags |= REG_ICASE;
+ 	} else if (!strcmp(arg, "--fixed-strings") || !strcmp(arg, "-F")) {
+-		if (revs->grep_filter)
+-			revs->grep_filter->fixed = 1;
++		revs->grep_filter.fixed = 1;
+ 	} else if (!strcmp(arg, "--all-match")) {
+-		if (revs->grep_filter)
+-			revs->grep_filter->all_match = 1;
++		revs->grep_filter.all_match = 1;
+ 	} else if (!prefixcmp(arg, "--encoding=")) {
+ 		arg += 11;
+ 		if (strcmp(arg, "none"))
+@@ -1349,9 +1341,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 	if (diff_setup_done(&revs->diffopt) < 0)
+ 		die("diff_setup_done failed");
+ 
+-	if (revs->grep_filter) {
+-		compile_grep_patterns(revs->grep_filter);
+-	}
++	compile_grep_patterns(&revs->grep_filter);
+ 
+ 	if (revs->reverse && revs->reflog_info)
+ 		die("cannot combine --reverse with --walk-reflogs");
+@@ -1492,9 +1482,9 @@ static int rewrite_parents(struct rev_info *revs, struct commit *commit)
+ 
+ static int commit_match(struct commit *commit, struct rev_info *opt)
+ {
+-	if (!opt->grep_filter)
++	if (!opt->grep_filter.pattern_list)
+ 		return 1;
+-	return grep_buffer(opt->grep_filter,
++	return grep_buffer(&opt->grep_filter,
+ 			   NULL, /* we say nothing, not even filename */
+ 			   commit->buffer, strlen(commit->buffer));
+ }
+diff --git a/revision.h b/revision.h
+index 1b04566..91f1944 100644
+--- a/revision.h
++++ b/revision.h
+@@ -2,6 +2,7 @@
+ #define REVISION_H
+ 
+ #include "parse-options.h"
++#include "grep.h"
+ 
+ #define SEEN		(1u<<0)
+ #define UNINTERESTING   (1u<<1)
+@@ -92,7 +93,7 @@ struct rev_info {
+ 	int		show_log_size;
+ 
+ 	/* Filter by commit log message */
+-	struct grep_opt	*grep_filter;
++	struct grep_opt	grep_filter;
+ 
+ 	/* Display history graph */
+ 	struct git_graph *graph;
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 4c8af45..0ab925c 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -69,7 +69,29 @@ test_expect_success 'diff-filter=D' '
+ 
+ '
+ 
++test_expect_success 'setup case sensitivity tests' '
++	echo case >one &&
++	test_tick &&
++	git commit -a -m Second
++'
++
++test_expect_success 'log --grep' '
++	echo second >expect &&
++	git log -1 --pretty="tformat:%s" --grep=sec >actual &&
++	test_cmp expect actual
++'
+ 
++test_expect_success 'log -i --grep' '
++	echo Second >expect &&
++	git log -1 --pretty="tformat:%s" -i --grep=sec >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'log --grep -i' '
++	echo Second >expect &&
++	git log -1 --pretty="tformat:%s" --grep=sec -i >actual &&
++	test_cmp expect actual
++'
+ 
+ test_done
+ 
+-- 
+1.6.0.150.gc3242.dirty
