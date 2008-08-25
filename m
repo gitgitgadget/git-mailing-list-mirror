@@ -1,95 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v5] gitweb: ref markers link to named shortlogs
-Date: Mon, 25 Aug 2008 04:44:22 +0200
-Message-ID: <200808250444.23305.jnareb@gmail.com>
-References: <200808221501.54908.jnareb@gmail.com> <200808250153.31697.jnareb@gmail.com> <20080825020502.GQ23800@genesis.frugalware.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Dropping core.worktree and GIT_WORK_TREE support
+Date: Sun, 24 Aug 2008 20:05:03 -0700
+Message-ID: <7v1w0dkd5s.fsf@gitster.siamese.dyndns.org>
+References: <quack.20080821T2114.lthvdxtvg7b@roar.cs.berkeley.edu>
+ <7vsksw92nh.fsf@gitster.siamese.dyndns.org>
+ <quack.20080824T0140.lth3aku956e@roar.cs.berkeley.edu>
+ <7vprnyqo59.fsf@gitster.siamese.dyndns.org>
+ <20080824220854.GA27299@coredump.intra.peff.net>
+ <7vzln2j9y2.fsf@gitster.siamese.dyndns.org>
+ <20080824231343.GC27619@coredump.intra.peff.net>
+ <7vhc9aj82i.fsf@gitster.siamese.dyndns.org>
+ <20080824235124.GA28248@coredump.intra.peff.net>
+ <7v7ia6j5q9.fsf_-_@gitster.siamese.dyndns.org>
+ <20080825020054.GP23800@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Karl Chen <quarl@cs.berkeley.edu>,
+	git@vger.kernel.org
 To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Mon Aug 25 04:45:40 2008
+X-From: git-owner@vger.kernel.org Mon Aug 25 05:06:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXS5L-0005rS-Ug
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 04:45:40 +0200
+	id 1KXSPL-0000av-1R
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 05:06:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752083AbYHYCob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2008 22:44:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbYHYCob
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 22:44:31 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:60817 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750801AbYHYCoa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2008 22:44:30 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so146810eyi.37
-        for <git@vger.kernel.org>; Sun, 24 Aug 2008 19:44:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=pZbIx3wJsqa5wR8fj9mZ3JMcZLBPkZArbmtQnxsG2w4=;
-        b=e0r7xs4DHVULcKSdSIDziSrzNW2KWsKAens1nyDYfvVvwdWpr5FPVKWKXtLZ7KkKZh
-         HCotTSj1BGy2xFko2S2EAdVNXZYRaaQw5W+ZvEw5VGVwTIb2f9I9fczVh9KGYhrCTeSw
-         M8Waw+64hqiIKPfdDddmMqRA/tzGkjZNQUuM4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=YZ/cc1FnfWqdq6CBVUBqwK2pp+uDaBv9wOSl0q7jJYZBfs05YDiIvuKuifiCjWQTdV
-         CqeXew8GjdZeJgfadNqLH09KZXV0OkhpeZZphZnR6W3sy/mnf0SYoy/xPtid3PfdHKER
-         lnYW7/cKB5gJ2sH7eCo35rMjN7cyGj4DmKnIo=
-Received: by 10.210.71.12 with SMTP id t12mr5903564eba.36.1219632269282;
-        Sun, 24 Aug 2008 19:44:29 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.234.185])
-        by mx.google.com with ESMTPS id c22sm3712701ika.1.2008.08.24.19.44.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 24 Aug 2008 19:44:28 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080825020502.GQ23800@genesis.frugalware.org>
-Content-Disposition: inline
+	id S1753339AbYHYDFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2008 23:05:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753327AbYHYDFN
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 23:05:13 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56392 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753256AbYHYDFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2008 23:05:12 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 903436E32C;
+	Sun, 24 Aug 2008 23:05:10 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 865036E32A; Sun, 24 Aug 2008 23:05:05 -0400 (EDT)
+In-Reply-To: <20080825020054.GP23800@genesis.frugalware.org> (Miklos Vajna's
+ message of "Mon, 25 Aug 2008 04:00:54 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A10BA690-7252-11DD-912F-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93589>
 
-Miklos Vajna wrote:
-> On Mon, Aug 25, 2008 at 01:53:30AM +0200, Jakub Narebski <jnareb@gmail.com> wrote:
-> >
-> > We strip leading "refs/" in git_get_references(), so $ref does not
-> > contain it. I'm not sure of one has to use refs/heads/aaa and refs/tags/aaa
-> > to distinguish between tag and head with the same name, or heads/aaa and
-> > tags/aaa is enough.
-> 
-> You can have both heads/master and refs/heads/master, then heads/master
-> is ambiguous.
-> 
-> Given that git fsck will not barf on such a configuration, I think
-> gitweb should handle such a case as well.
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-What I wanted to say was that I am not sure if current
+> On Sun, Aug 24, 2008 at 05:30:54PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+>> Heh, if we are to do the attention-getter, let's do so more strongly ;-)
+>
+> Does this include removing of --work-tree as well?
+>
+> The git backend of Pootle (http://translate.sourceforge.net/wiki/) uses
+> it.
 
-+                     $markers .= " <span class=\"$class\" title=\"$ref\">" .
-+                             $cgi->a({-href => href(action=>( $indirect ? "tag" : "shortlog"),
-+                                                    hash=>$ref)}, $name) .
-+                             "</span>";
+Interesting.  Does it use it because it can (meaning, --work-tree is
+supposed to work), or because --work-tree is the cleanest way to do what
+it wants to do (if the feature worked properly, that is, which is not the
+case)?
 
-is enough, or should gitweb use
+> Also, here is a question:
+>
+> $ git --git-dir git/.git --work-tree git diff --stat|tail -n 1
+>  1443 files changed, 0 insertions(+), 299668 deletions(-)
+>
+> So, it's like it thinks every file is removed.
+>
+> But then:
+>
+> $ cd git
+> $ git diff --stat|wc -l
+> 0
+>
+> is this a bug, or a user error?
 
-+                     $markers .= " <span class=\"$class\" title=\"$ref\">" .
-+                             $cgi->a({-href => href(action=>( $indirect ? "tag" : "shortlog"),
-+                                                    hash=>"refs/$ref")}, $name) .
-+                             "</span>";
-
-or equivalent (not stripping "refs/" in git_get_references).
-
-P.S. We are interested _only_ in refs shown by git-show-ref.
--- 
-Jakub Narebski
-Poland
+I  think it is among the many other things that falls into "the two
+attempts still haven't resolved" category.
