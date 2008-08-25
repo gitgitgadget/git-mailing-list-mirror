@@ -1,87 +1,54 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v5] gitweb: ref markers link to named shortlogs
-Date: Mon, 25 Aug 2008 01:53:30 +0200
-Message-ID: <200808250153.31697.jnareb@gmail.com>
-References: <200808221501.54908.jnareb@gmail.com> <1219411786-14073-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Has the git shell revert been done so master should work?
+Date: Sun, 24 Aug 2008 17:27:47 -0700
+Message-ID: <7vd4jyj5vg.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.10.0808240659350.16122@xenau.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 01:54:44 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Boyd Lynn Gerber <gerberb@zenez.com>
+X-From: git-owner@vger.kernel.org Mon Aug 25 02:30:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXPPv-00085x-7u
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 01:54:43 +0200
+	id 1KXPyE-00065y-3M
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 02:30:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752832AbYHXXxj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2008 19:53:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752895AbYHXXxj
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 19:53:39 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:63453 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750909AbYHXXxi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2008 19:53:38 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so620394nfc.21
-        for <git@vger.kernel.org>; Sun, 24 Aug 2008 16:53:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=kcekgpNW/vqf+yUIvvIIP4H04RbnfQ1hnocWN9zJJq0=;
-        b=FKRQQjCUf669HtFV+zXdS7rLT/v+jvzc6DlxRILbvo2z15FkArhGSLxIYWNd1U5Puy
-         f8YC1WCfiTRUNEyZ8foSKWGZep2h628U1snLLMy3RuzwTJc/9Bkj5jR1fDAVA3RAB9ck
-         y0MYnp1OWBhBaxlJUPGcbDHJIiAlu0D5TBTWk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=tCZYCJqfaV/KWrQet91ABUaMidrqsjXSePaaO65pZTsm57bZqPeTnU6+4ZslyjS7Po
-         ppYDJTbftH6S2oYRjCVBG0erMtzaoLvstt7Ls6X54Msa+BmnYlOMHadnva+t4zYjXdPM
-         aUdPUuU8TrlN74eSCfJraPGkPeQDfnpKkVQaU=
-Received: by 10.210.27.20 with SMTP id a20mr5642779eba.157.1219622017268;
-        Sun, 24 Aug 2008 16:53:37 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.234.185])
-        by mx.google.com with ESMTPS id 3sm4334473eyi.5.2008.08.24.16.53.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 24 Aug 2008 16:53:36 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1219411786-14073-1-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+	id S1751828AbYHYA1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2008 20:27:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751805AbYHYA1y
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 20:27:54 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48842 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751665AbYHYA1y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2008 20:27:54 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id ECD3266D73;
+	Sun, 24 Aug 2008 20:27:52 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 226DA66D72; Sun, 24 Aug 2008 20:27:49 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.10.0808240659350.16122@xenau.zenez.com> (Boyd Lynn
+ Gerber's message of "Sun, 24 Aug 2008 07:02:38 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A7C9B974-723C-11DD-9385-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93578>
 
-On Fri, 22 Aug 2008, Giuseppe Bilotta wrote:
+Boyd Lynn Gerber <gerberb@zenez.com> writes:
 
-> This patch turns ref markers for tags and heads into links to
-> appropriate views for the ref name. For annotated tags, we link to the
-> tag view, while shortlog is used for anything else.
-> 
-> Appropriate changes are made in the CSS to prevent ref markers from
-> being annoyingly blue and underlined, unless hovered. A visual
-> indication of the target view difference is also implemented by making
-> annotated tags show up in italic.
+> I just did a clean clone of git git and, I am still seeing failures on all 
+> platforms I made work.
 
-Nice. I like it (read: Ack), with the following caveat
+I've been waiting to hear from you for a success/failure report since you
+were suggested to try the workaround that was queued in 'next' for the
+first time (I think it was Mike Ralphson on Thu 21st), before moving it to
+'master', as platforms with sane linkers do not seem to need it.
 
-> +			$markers .= " <span class=\"$class\" title=\"$ref\">" .
-> +				$cgi->a({-href => href(action=>( $indirect ? "tag" : "shortlog"), hash=>$ref)}, $name) .
-> +				"</span>";
-
-We strip leading "refs/" in git_get_references(), so $ref does not
-contain it. I'm not sure of one has to use refs/heads/aaa and refs/tags/aaa
-to distinguish between tag and head with the same name, or heads/aaa and
-tags/aaa is enough.
-
-Also, the above line is bit long.
--- 
-Jakub Narebski
-Poland
+I see Jeff again suggested you to try cherry-picking the workaround today.
+Did it work for you?
