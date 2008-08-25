@@ -1,85 +1,63 @@
-From: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Mon, 25 Aug 2008 14:17:44 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0808251415010.3893@vixen.sonytel.be>
-References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>
- <1219664940.9583.42.camel@pmac.infradead.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Suggestion: "man git clone"
+Date: Mon, 25 Aug 2008 14:38:58 +0200
+Message-ID: <vpqk5e52rrx.fsf@bauges.imag.fr>
+References: <48ACB29C.7000606@zytor.com> <g8m6d1$7nf$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-584349381-1218310624-1219666664=:3893"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	users@kernel.org
-To: David Woodhouse <dwmw2@infradead.org>
-X-From: git-owner@vger.kernel.org Mon Aug 25 14:19:06 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+X-From: git-owner@vger.kernel.org Mon Aug 25 14:42:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXb23-0004Qe-3n
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 14:18:51 +0200
+	id 1KXbOO-0003HW-Ko
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 14:41:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754134AbYHYMRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 08:17:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753810AbYHYMRq
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 08:17:46 -0400
-Received: from vervifontaine.sonytel.be ([80.88.33.193]:46414 "EHLO
-	vervifontaine.sonycom.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753434AbYHYMRp (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Aug 2008 08:17:45 -0400
-Received: from vixen.sonytel.be (piraat.sonytel.be [43.221.60.197])
-	by vervifontaine.sonycom.com (Postfix) with ESMTP id 3012758AE0;
-	Mon, 25 Aug 2008 14:17:44 +0200 (MEST)
-In-Reply-To: <1219664940.9583.42.camel@pmac.infradead.org>
+	id S1753573AbYHYMkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 08:40:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753601AbYHYMkt
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 08:40:49 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:64091 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753566AbYHYMkt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 08:40:49 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m7PCd4ej000537;
+	Mon, 25 Aug 2008 14:39:08 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1KXbLW-0008WL-J3; Mon, 25 Aug 2008 14:38:58 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1KXbLW-0001re-GS; Mon, 25 Aug 2008 14:38:58 +0200
+In-Reply-To: <g8m6d1$7nf$1@ger.gmane.org> (Michael J. Gruber's message of "Fri\, 22 Aug 2008 13\:02\:57 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Mon, 25 Aug 2008 14:39:08 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93616>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Michael J Gruber <michaeljgruber+gmane@fastmail.fm> writes:
 
----584349381-1218310624-1219666664=:3893
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+> I've heard about some other SCMs which have only "scm help bla", so this
+> suggestion would be in-line with common usage. [Not that git would have
+> to learn from other SCM's ;) ]
 
-On Mon, 25 Aug 2008, David Woodhouse wrote:
-> On Sat, 2008-08-23 at 20:33 -0700, Junio C Hamano wrote:
-> > There is one alternative, and one augmentation:
-> > 
-> >  (A) We do not do anything.
-> > 
-> >  (B) In addition to the main transition plan, outside git, prepare an
-> >      optional "git-old-style" package that installs many "git-foo"
-> >      wrappers in $PATH (i.e. /usr/bin).  Each of them exec "git foo".
-> >      People who like the dashed form can keep typing "git-foo", even
-> >      though that will cost them two exec()s.
-> 
->   (C) Just don't do it. Leave the git-foo commands as they were. They
->       weren't actually hurting anyone, and you don't actually _gain_
->       anything by removing them. For those occasional nutters who
->       _really_ care about the size of /usr/bin, give them the _option_
->       of a 'make install' without installing the aliases.
+OTOH, I like the fact that the manpages be browsable with man. As an
+Emacs user, I often do M-x man RET git-whatever RET, other people can
+enjoy their favorite man reader.
 
-Acked-by: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+If git starts hiding that "man" stuff to the user, (s)he may just fail
+to notice that it is possible.
 
-BTW, now we have man pages for deprecated commands that are not in the default
-PATH, which are showing examples for deprecated commands that are not in the
-default PATH?
-
-With kind regards,
-
-Geert Uytterhoeven
-Software Architect
-
-Sony Techsoft Centre Europe
-The Corporate Village · Da Vincilaan 7-D1 · B-1935 Zaventem · Belgium
-
-Phone:    +32 (0)2 700 8453
-Fax:      +32 (0)2 700 8622
-E-mail:   Geert.Uytterhoeven@sonycom.com
-Internet: http://www.sony-europe.com/
-
-A division of Sony Europe (Belgium) N.V.
-VAT BE 0413.825.160 · RPR Brussels
-Fortis · BIC GEBABEBB · IBAN BE41293037680010
----584349381-1218310624-1219666664=:3893--
+-- 
+Matthieu
