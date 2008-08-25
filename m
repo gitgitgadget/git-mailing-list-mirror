@@ -1,77 +1,64 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: "failed to read delta base object at..."
-Date: Mon, 25 Aug 2008 18:13:21 -0400
-Message-ID: <20080825221321.GL2213@fieldses.org>
-References: <20080825164602.GA2213@fieldses.org> <alpine.LFD.1.10.0808251153210.3363@nehalem.linux-foundation.org> <20080825213104.GI2213@fieldses.org> <alpine.LFD.1.10.0808251435540.3363@nehalem.linux-foundation.org>
+From: Tommi Virtanen <tv@eagain.net>
+Subject: Re: [PATCH 2/2] git wrapper: execute git-shell when argv[1] is '-c'
+Date: Tue, 26 Aug 2008 01:20:02 +0300
+Message-ID: <20080825222002.GF14930@eagain.net>
+References: <alpine.DEB.1.00.0808251235430.24820@pacific.mpi-cbg.de.mpi-cbg.de> <48B29B2A.6000802@gnu.org> <alpine.DEB.1.00.0808251955490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <237967ef0808251125q3e50fa04wf0e97ff29298bef2@mail.gmail.com> <alpine.DEB.1.00.0808252206150.24820@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808252225520.24820@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808252248150.24820@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808252251450.24820@pacific.mpi-cbg.de.mpi-cbg.de> <20080825210345.GE14930@eagain.net> <alpine.DEB.1.00.0808260001390.24820@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Aug 26 00:14:29 2008
+Cc: Mikael Magnusson <mikachu@gmail.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 26 00:21:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXkKS-0004ih-EV
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 00:14:28 +0200
+	id 1KXkQw-000696-SF
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 00:21:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753516AbYHYWNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 18:13:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753472AbYHYWNX
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 18:13:23 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:47530 "EHLO fieldses.org"
+	id S1753495AbYHYWUG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 18:20:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753417AbYHYWUG
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 18:20:06 -0400
+Received: from eagain.net ([208.78.102.120]:36668 "EHLO eagain.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753417AbYHYWNW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 18:13:22 -0400
-Received: from bfields by fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1KXkJN-0002ax-Bu; Mon, 25 Aug 2008 18:13:21 -0400
+	id S1753243AbYHYWUF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 18:20:05 -0400
+Received: from musti.eagain.net (a91-156-122-108.elisa-laajakaista.fi [91.156.122.108])
+	by eagain.net (Postfix) with ESMTPS id 525161EC623;
+	Mon, 25 Aug 2008 22:20:04 +0000 (UTC)
+Received: by musti.eagain.net (Postfix, from userid 1000)
+	id 77180870003; Tue, 26 Aug 2008 01:20:02 +0300 (EEST)
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mikael Magnusson <mikachu@gmail.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Paolo Bonzini <bonzini@gnu.org>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0808251435540.3363@nehalem.linux-foundation.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <alpine.DEB.1.00.0808260001390.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93692>
 
-On Mon, Aug 25, 2008 at 02:37:39PM -0700, Linus Torvalds wrote:
+On Tue, Aug 26, 2008 at 12:05:21AM +0200, Johannes Schindelin wrote:
+> I do disagree with you that it is a kludge though.  I think it makes 
+> complete sense to add this to Documentation/git.txt in addition to other 
+> documentation that is lacking from my patch, though:
 > 
-> 
-> On Mon, 25 Aug 2008, J. Bruce Fields wrote:
-> > 
-> > OK.  I seem to recall these pack files are created with something like
-> > 
-> > 	open
-> > 	write
-> > 	sync
-> > 	close
-> > 	rename
-> > 
-> > ? 
-> 
-> Yes. We're trying to be _extremely_ safe and only do things that should 
-> work for everything.
-> 
-> > This is just ext3 with data=writeback on a local laptop disk,
-> > ubuntu's 2.6.24-21-generic.  Would it be any use trying to look more
-> > closely at the pack in connection for any hints?
-> 
-> You still have the packfile that caused problems available somewhere? If 
-> so, absolutely yes. If you have the corrupt pack, please make it 
-> available.
-> 
-> > (But with my git repo back I'm happy enough to just forget this for now
-> > if there's not anything obvious to try.)
-> 
-> With the actual corrupt pack, we can make a fairly intelligent guess about 
-> exactly what the corruption was. Was it a flipped bit, or what? So if you 
-> have it, please do send it over.
+> -- snip --
+> -c <command>::
+> 	execute <command> in git-shell.
+> -- snap --
 
-OK!  It's in:
+All I'm going to say is that that's not the way you build trustable
+software. You take a minimal interface and restrict untrusted users to
+that, you don't add a feature to the widest possible interface..
 
-	http://www.citi.umich.edu/u/bfields/bad-pack/
-
-I assume the .idx file isn't interesting, but it's there anyway in case.
-
---b.
+-- 
+:(){ :|:&};:
