@@ -1,174 +1,126 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH v2 properly indented] fix start_command() bug when stdin is closed
-Date: Mon, 25 Aug 2008 15:37:35 +0200
-Message-ID: <E1KXcH3-0000zJ-0m@fencepost.gnu.org>
-References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu> <48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org> <E1KXawS-0001gg-Ty@fencepost.gnu.org> <48B2AFC2.20901@viscovery.net>
-Cc: Karl Chen <quarl@cs.berkeley.edu>,
-	Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Aug 25 15:42:48 2008
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: Dropping core.worktree and GIT_WORK_TREE support
+Date: Mon, 25 Aug 2008 20:52:11 +0700
+Message-ID: <fcaeb9bf0808250652p3d0f483dt714cd68d3122d7c9@mail.gmail.com>
+References: <quack.20080824T0140.lth3aku956e@roar.cs.berkeley.edu>
+	 <20080824220854.GA27299@coredump.intra.peff.net>
+	 <7vzln2j9y2.fsf@gitster.siamese.dyndns.org>
+	 <20080824231343.GC27619@coredump.intra.peff.net>
+	 <7vhc9aj82i.fsf@gitster.siamese.dyndns.org>
+	 <20080824235124.GA28248@coredump.intra.peff.net>
+	 <7v7ia6j5q9.fsf_-_@gitster.siamese.dyndns.org>
+	 <20080825020054.GP23800@genesis.frugalware.org>
+	 <7v1w0dkd5s.fsf@gitster.siamese.dyndns.org>
+	 <20080825125205.GB23800@genesis.frugalware.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
+	"Karl Chen" <quarl@cs.berkeley.edu>, git@vger.kernel.org
+To: "Miklos Vajna" <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Mon Aug 25 15:55:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXcKU-0007iX-Av
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 15:41:58 +0200
+	id 1KXcVS-0002uN-32
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 15:53:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756866AbYHYNj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 09:39:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754618AbYHYNj6
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 09:39:58 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:34490 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756851AbYHYNj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 09:39:57 -0400
-Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
-	(envelope-from <bonzini@gnu.org>)
-	id 1KXcH3-0000zJ-0m; Mon, 25 Aug 2008 09:38:25 -0400
+	id S1754062AbYHYNwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 09:52:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753810AbYHYNwO
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 09:52:14 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:32534 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754015AbYHYNwN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 09:52:13 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so980374fgg.17
+        for <git@vger.kernel.org>; Mon, 25 Aug 2008 06:52:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Ziw9jyhMjog0a/ijM3XR5J6tW/hpEAZwPJEkd8E6aNE=;
+        b=JjsSptWpmJm50wLxUpvMLZdKAfb/xx0E4O4SG7e7l3dYUGR3oh8RcwiWU7qiDGpgck
+         UWv1cdmFDxw0ja8Pgf8PqBA7kvPCG2RJnFwrwpribXbztHm/3W9w5xq0bjzQGSv5g7mJ
+         dZLViCQnK3mHt6Ur6ylmdI6DB9OqrgwqqLm+4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=I0mngrBt2QFRR+aX9MMlLAS+ueoWonRJKAheE5JRrNAXCcQ9uQ9jpYacz49wo5MXQm
+         Y/x9esT041pbIOLHbl/FrYWVR1VC7YdGvAdy4Rmtx1OPBNSE1INwTb0omRhJX9DHtXQ9
+         itXbRCaP/bR4ptXhRpO1ie+EJt0V7eJ9f7GX0=
+Received: by 10.86.92.7 with SMTP id p7mr3355801fgb.72.1219672331560;
+        Mon, 25 Aug 2008 06:52:11 -0700 (PDT)
+Received: by 10.86.93.13 with HTTP; Mon, 25 Aug 2008 06:52:11 -0700 (PDT)
+In-Reply-To: <20080825125205.GB23800@genesis.frugalware.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93624>
 
-Karl Chen pointed out a problem in the use of dup2+close in
-start_command() when one or more of file descriptors 0/1/2 are closed.
-In order to rename a pipe file descriptor to 0, it does
+On 8/25/08, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> On Sun, Aug 24, 2008 at 08:05:03PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+>  > > Does this include removing of --work-tree as well?
+>  > >
+>  > > The git backend of Pootle (http://translate.sourceforge.net/wiki/) uses
+>  > > it.
+>  >
+>  > Interesting.  Does it use it because it can (meaning, --work-tree is
+>  > supposed to work), or because --work-tree is the cleanest way to do what
+>  > it wants to do (if the feature worked properly, that is, which is not the
+>  > case)?
+>
+>
+> It's like:
+>
+>  The current working directory is like
+>  /usr/lib/python2.5/site-packages/Pootle. The git repository is under
+>  /some/other/path/outside/usr.
+>
+>  Then Pootle has two possibilities:
+>
+>  1) save the current directory, change to /some/other, execute git, and
+>  change the directory back
+>
+>  2) use git --work-tree / --git-dir
+>
+>  I guess the second form is more elegant. Of course if it is decided that
+>  this option will be removed then the old form can be still used, but I
+>  think that would be a step back.
+>
+>
+>  > > Also, here is a question:
+>  > >
+>  > > $ git --git-dir git/.git --work-tree git diff --stat|tail -n 1
+>  > >  1443 files changed, 0 insertions(+), 299668 deletions(-)
+>  > >
+>  > > So, it's like it thinks every file is removed.
+>  > >
+>  > > But then:
+>  > >
+>  > > $ cd git
+>  > > $ git diff --stat|wc -l
+>  > > 0
+>  > >
+>  > > is this a bug, or a user error?
+>  >
+>  > I  think it is among the many other things that falls into "the two
+>  > attempts still haven't resolved" category.
+>
+>
+> I'm unfamiliar with this part of the codebase, so in case somebody other
+>  could look at it, that would be great, but I'm happy with write a
+>  testcase for it. (Or in case nobody cares, I can try to fix it, but that
+>  may take a bit more time.)
 
-    dup2(from, 0);
-    close(from);
-
-... but if stdin was closed (for example) from == 0, so that
-
-    dup2(0, 0);
-    close(0);
-
-just ends up closing the pipe.  This patch fixes it by opening all of
-the "low" descriptors to /dev/null.
-
-In most cases this patch will not cause any additional system calls;
-actually by reusing the /dev/null descriptor when possible (instead
-of opening a fresh one in dup_devnull) it may even save a handful in
-some cases. :-)
-
-Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
-Acknowledged-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- run-command.c |   35 ++++++++++++++++++++++-------------
- 1 files changed, 22 insertions(+), 13 deletions(-)
-
-	> "Karl Chen pointed out a problem..." (just to give due credit).
-
-	Of course.
-
-	> Except for the insane GNU style indentation  ;-)
-
-	*blush* -- both problems deriving from too hasty e-mail cut&paste.
-
-	> this makes a lot of sense. [...] MINGW32 [...] pass the test suite.
-
-	Thanks, also for testing Windows.
-
-	Paolo
-
-diff --git a/run-command.c b/run-command.c
-index caab374..4619494 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -2,25 +2,33 @@
- #include "run-command.h"
- #include "exec_cmd.h"
- 
-+static int devnull_fd = -1;
-+
- static inline void close_pair(int fd[2])
- {
- 	close(fd[0]);
- 	close(fd[1]);
- }
- 
--static inline void dup_devnull(int to)
--{
--	int fd = open("/dev/null", O_RDWR);
--	dup2(fd, to);
--	close(fd);
--}
--
- int start_command(struct child_process *cmd)
- {
- 	int need_in, need_out, need_err;
- 	int fdin[2], fdout[2], fderr[2];
- 
- 	/*
-+	 * Make sure that all file descriptors <= 2 are open, otherwise we
-+	 * mess them up when dup'ing pipes onto stdin/stdout/stderr.  Since
-+	 * we are at it, save a file descriptor on /dev/null to use it later.
-+	 */
-+	if (devnull_fd == -1) {
-+		devnull_fd = open("/dev/null", O_RDWR);
-+		while (devnull_fd >= 0 && devnull_fd <= 2)
-+			devnull_fd = dup(devnull_fd);
-+		if (devnull_fd == -1)
-+			die("opening /dev/null failed (%s)", strerror(errno));
-+	}
-+
-+	/*
- 	 * In case of errors we must keep the promise to close FDs
- 	 * that have been passed in via ->in and ->out.
- 	 */
-@@ -72,7 +81,7 @@ int start_command(struct child_process *cmd)
- 	cmd->pid = fork();
- 	if (!cmd->pid) {
- 		if (cmd->no_stdin)
--			dup_devnull(0);
-+			dup2(devnull_fd, 0);
- 		else if (need_in) {
- 			dup2(fdin[0], 0);
- 			close_pair(fdin);
-@@ -82,14 +91,14 @@ int start_command(struct child_process *cmd)
- 		}
- 
- 		if (cmd->no_stderr)
--			dup_devnull(2);
-+			dup2(devnull_fd, 2);
- 		else if (need_err) {
- 			dup2(fderr[1], 2);
- 			close_pair(fderr);
- 		}
- 
- 		if (cmd->no_stdout)
--			dup_devnull(1);
-+			dup2(devnull_fd, 1);
- 		else if (cmd->stdout_to_stderr)
- 			dup2(2, 1);
- 		else if (need_out) {
-@@ -127,7 +136,7 @@ int start_command(struct child_process *cmd)
- 
- 	if (cmd->no_stdin) {
- 		s0 = dup(0);
--		dup_devnull(0);
-+		dup2(devnull_fd, 0);
- 	} else if (need_in) {
- 		s0 = dup(0);
- 		dup2(fdin[0], 0);
-@@ -138,7 +147,7 @@ int start_command(struct child_process *cmd)
- 
- 	if (cmd->no_stderr) {
- 		s2 = dup(2);
--		dup_devnull(2);
-+		dup2(devnull_fd, 2);
- 	} else if (need_err) {
- 		s2 = dup(2);
- 		dup2(fderr[1], 2);
-@@ -146,7 +155,7 @@ int start_command(struct child_process *cmd)
- 
- 	if (cmd->no_stdout) {
- 		s1 = dup(1);
--		dup_devnull(1);
-+		dup2(devnull_fd, 1);
- 	} else if (cmd->stdout_to_stderr) {
- 		s1 = dup(1);
- 		dup2(2, 1);
+Because "git diff" did not call setup_work_tree(). The same happens
+for "git diff-index" that someone reported recently. IIRC "git
+diff-files" has the same problem.
 -- 
-1.5.5
+Duy
