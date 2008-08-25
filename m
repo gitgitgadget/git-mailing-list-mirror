@@ -1,74 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add a reference to gitk localbranc remote/branch in
- gittutorial
-Date: Mon, 25 Aug 2008 14:53:48 -0700
-Message-ID: <7v63pog3rn.fsf@gitster.siamese.dyndns.org>
-References: <20080825215023.11822a20@paolo-desktop>
- <loom.20080825T200956-169@post.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] git wrapper: execute git-shell when argv[1] is
+ '-c'
+Date: Tue, 26 Aug 2008 00:05:21 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808260001390.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <7vbpzikt4b.fsf@gitster.siamese.dyndns.org> <20080824222534.GC14930@eagain.net> <alpine.DEB.1.00.0808251235430.24820@pacific.mpi-cbg.de.mpi-cbg.de> <48B29B2A.6000802@gnu.org> <alpine.DEB.1.00.0808251955490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <237967ef0808251125q3e50fa04wf0e97ff29298bef2@mail.gmail.com> <alpine.DEB.1.00.0808252206150.24820@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808252225520.24820@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808252248150.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <alpine.DEB.1.00.0808252251450.24820@pacific.mpi-cbg.de.mpi-cbg.de> <20080825210345.GE14930@eagain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 23:55:04 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mikael Magnusson <mikachu@gmail.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Tommi Virtanen <tv@eagain.net>
+X-From: git-owner@vger.kernel.org Tue Aug 26 00:01:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXk1c-0000Fh-Iz
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 23:55:01 +0200
+	id 1KXk7p-0001g1-E4
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 00:01:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753140AbYHYVx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 17:53:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752306AbYHYVx4
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 17:53:56 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47866 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750750AbYHYVx4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 17:53:56 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2BFE968170;
-	Mon, 25 Aug 2008 17:53:55 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 1912868166; Mon, 25 Aug 2008 17:53:49 -0400 (EDT)
-In-Reply-To: <loom.20080825T200956-169@post.gmane.org> (Eric Raible's message
- of "Mon, 25 Aug 2008 20:12:03 +0000 (UTC)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 500CA214-72F0-11DD-B48B-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752515AbYHYWAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 18:00:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753203AbYHYWAU
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 18:00:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44283 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752306AbYHYWAT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 18:00:19 -0400
+Received: (qmail invoked by alias); 25 Aug 2008 22:00:17 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp036) with SMTP; 26 Aug 2008 00:00:17 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/F88NexNrFV05hjLom8+s47FUMnvxrkY/FMNkIIN
+	ogKj2zvSmCX63M
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20080825210345.GE14930@eagain.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93688>
 
-Eric Raible <raible@gmail.com> writes:
+Hi,
 
-> Paolo Ciarrocchi <paolo.ciarrocchi <at> gmail.com> writes:
->
->> +Alice can also use gitk to browse that Bob did:
->
-> s/that/what/ ?
->
->> +------------------------------------------------
->> +alice$ gitk master origin/master
->> +------------------------------------------------
->
-> I think that you meant:
->
-> alice$ gitk master..origin/master
+On Tue, 26 Aug 2008, Tommi Virtanen wrote:
 
+> On Mon, Aug 25, 2008 at 10:52:46PM +0200, Johannes Schindelin wrote:
+> > When a program is called via ssh's '-c' option, the login shell is called 
+> > on the remote computer, with the given arguments.  In the case that Git 
+> > was specified as login shell in /etc/passwd, Git used to complain that it 
+> > does not know the '-c' option and die.
+> > 
+> > This commit assumes that '-c' indicates that Git was specified as
+> > a login shell, and hands off to git-shell.
+> > 
+> > Noticed by Tommi Virtanen.
+> 
+> My imagination is insufficient in coming up with an uglier kludge, and
+> I sincerely hope my name isn't associated with this in any way.
 
-I'd suggest rewording the explanation to have Alice "compare what both of
-them did", not just "browse what Bob did".
+I have no problems deleting your name from the commit message.  None at 
+all.  Even if you actually did notice the issue.
 
-And for that purpose, I think the original form used by Paolo's patch is
-the most appropriate here in an early part of the tutorial, as it teaches
-how to view full histories leading to the tips of these two branches.
+I do disagree with you that it is a kludge though.  I think it makes 
+complete sense to add this to Documentation/git.txt in addition to other 
+documentation that is lacking from my patch, though:
 
-Earlier in the tutorial sequence we teach "gitk" without any parameter to
-view the history of the current branch, and here the user learns one new
-thing, to view more than just the current branch.
+-- snip --
+-c <command>::
+	execute <command> in git-shell.
+-- snap --
 
-Limiting the output with "..origin/master" (or "...origin/master") can be
-taught after demonstrating this most basic form.
+Ciao,
+Dscho
