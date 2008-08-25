@@ -1,75 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Dropping core.worktree and GIT_WORK_TREE support (was Re: limiting
- relationship of git dir and worktree)
-Date: Sun, 24 Aug 2008 17:30:54 -0700
-Message-ID: <7v7ia6j5q9.fsf_-_@gitster.siamese.dyndns.org>
-References: <quack.20080821T2114.lthvdxtvg7b@roar.cs.berkeley.edu>
- <7vsksw92nh.fsf@gitster.siamese.dyndns.org>
- <quack.20080824T0140.lth3aku956e@roar.cs.berkeley.edu>
- <7vprnyqo59.fsf@gitster.siamese.dyndns.org>
- <20080824220854.GA27299@coredump.intra.peff.net>
- <7vzln2j9y2.fsf@gitster.siamese.dyndns.org>
- <20080824231343.GC27619@coredump.intra.peff.net>
- <7vhc9aj82i.fsf@gitster.siamese.dyndns.org>
- <20080824235124.GA28248@coredump.intra.peff.net>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Subject: Re: [RFC] mtn to git conversion script
+Date: Mon, 25 Aug 2008 03:45:11 +0300
+Message-ID: <94a0d4530808241745r3f2bdb56q9cfa8bc61f79223e@mail.gmail.com>
+References: <94a0d4530808240218j4bedbe3di99303da9addc93a4@mail.gmail.com>
+	<20080824131405.GJ23800@genesis.frugalware.org>
+	<94a0d4530808241133n5cc9f17arc79a1a5013187869@mail.gmail.com>
+	<20080824224658.GA16590@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Karl Chen <quarl@cs.berkeley.edu>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 25 02:32:13 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: monotone-devel@nongnu.org, Miklos Vajna <vmiklos@frugalware.org>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org Mon Aug 25 02:46:21 2008
+Return-path: <monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org>
+Envelope-to: gcvmd-monotone-devel@m.gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXQ0B-0006W3-I9
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 02:32:11 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752753AbYHYAbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2008 20:31:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752791AbYHYAbF
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 20:31:05 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49080 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751731AbYHYAbD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2008 20:31:03 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E82B766DB0;
-	Sun, 24 Aug 2008 20:31:00 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id E31E066DAF; Sun, 24 Aug 2008 20:30:56 -0400 (EDT)
-In-Reply-To: <20080824235124.GA28248@coredump.intra.peff.net> (Jeff King's
- message of "Sun, 24 Aug 2008 19:51:25 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 17D36ADA-723D-11DD-8E38-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93579>
+	id 1KXQDr-00009V-Hy
+	for gcvmd-monotone-devel@m.gmane.org; Mon, 25 Aug 2008 02:46:19 +0200
+Received: from localhost ([127.0.0.1]:51032 helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1KXQCt-0004Pv-Bb
+	for gcvmd-monotone-devel@m.gmane.org; Sun, 24 Aug 2008 20:45:19 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1KXQCp-0004Pc-UL
+	for monotone-devel@nongnu.org; Sun, 24 Aug 2008 20:45:15 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1KXQCn-0004OW-IK
+	for monotone-devel@nongnu.org; Sun, 24 Aug 2008 20:45:14 -0400
+Received: from [199.232.76.173] (port=59489 helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1KXQCn-0004OK-CQ
+	for monotone-devel@nongnu.org; Sun, 24 Aug 2008 20:45:13 -0400
+Received: from rv-out-0708.google.com ([209.85.198.242]:28817)
+	by monty-python.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <felipe.contreras@gmail.com>) id 1KXQCn-0001qI-5z
+	for monotone-devel@nongnu.org; Sun, 24 Aug 2008 20:45:13 -0400
+Received: by rv-out-0708.google.com with SMTP id f25so1105821rvb.22
+	for <monotone-devel@nongnu.org>; Sun, 24 Aug 2008 17:45:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma;
+	h=domainkey-signature:received:received:message-id:date:from:to
+	:subject:cc:in-reply-to:mime-version:content-type
+	:content-transfer-encoding:content-disposition:references;
+	bh=6eOIxaSSon6haGUGnEsb7hDxkbW31PNwgyCHiyZfROA=;
+	b=qrXWrg7BVTIrJ0pTZREXi5r/RCtt/Xe+sIdXbQA8Zf/xXAcu9dHmVfmZx8GW6L4e2a
+	k9rFRh5x0rcDiMK3OMWozDfFIzXaUTmCKBqlX8f5iTAEOLVl6prYSMpL320Z8n40oIrC
+	w0jl+eycZCEwdjr7j6XTxho2vfglU1+4mLCgI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma;
+	h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+	:content-type:content-transfer-encoding:content-disposition
+	:references;
+	b=p8ZHE22jENrRZ606DOXxSt+cEzRzXKdJ8NP/AXccEohqlD50hxRaBtsRmTKeqTReAE
+	d2q8DR2fJ4v6l6rbYJw39lP+/jfbKYfZrQ+8HkjG2tiz8wVQ2FoxDRgQCQ5J9E+t30+N
+	WwAAIiEmwQm4Mt47wXBeHK9sm6uKGSzDe5n+E=
+Received: by 10.141.212.5 with SMTP id o5mr1841431rvq.20.1219625111387;
+	Sun, 24 Aug 2008 17:45:11 -0700 (PDT)
+Received: by 10.140.166.19 with HTTP; Sun, 24 Aug 2008 17:45:11 -0700 (PDT)
+In-Reply-To: <20080824224658.GA16590@spearce.org>
+Content-Disposition: inline
+X-detected-kernel: by monty-python.gnu.org: Linux 2.6 (newer, 2)
+X-BeenThere: monotone-devel@nongnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: developer discussion for monotone <monotone-devel.nongnu.org>
+List-Unsubscribe: <http://lists.nongnu.org/mailman/listinfo/monotone-devel>,
+	<mailto:monotone-devel-request@nongnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/monotone-devel>
+List-Post: <mailto:monotone-devel@nongnu.org>
+List-Help: <mailto:monotone-devel-request@nongnu.org?subject=help>
+List-Subscribe: <http://lists.nongnu.org/mailman/listinfo/monotone-devel>,
+	<mailto:monotone-devel-request@nongnu.org?subject=subscribe>
+Sender: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org
+Errors-To: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93580>
 
-Jeff King <peff@peff.net> writes:
-
-> On Sun, Aug 24, 2008 at 04:40:21PM -0700, Junio C Hamano wrote:
+On Mon, Aug 25, 2008 at 1:46 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> wrote:
+>> On Sun, Aug 24, 2008 at 4:14 PM, Miklos Vajna <vmiklos@frugalware.org> wrote:
+>> > On Sun, Aug 24, 2008 at 12:18:50PM +0300, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+>> >> What do you think? Does it makes sense to have a 'write-raw' command?
+>> >> Or should I somehow use 'fast-import'?
+>> >
+>> > Yes, you should. ;-)
+>> >
+>> > The syntax of it is not so hard, see for example 'git fast-export
+>> > HEAD~2..' on a git repo and you'll see.
+>> >
+>> > This should help a lot if you are like me, who likes to learn from
+>> > examples.
+>>
+>> Is it possible to create a fast-import from the index? I realize this
+>> is not the best thing to do, but for now I would like to do that.
 >
->> Judging from the occasional "I tried core.worktree but it does not work in
->> this and that situations" I see here and on #git, my impression is that
->> new people try it, saying "git is cool -- unlike cvs that sprinkles those
->> ugly CVS directories all over the place, it only contaminates my work tree
->> with a single directory '.git' and nothing else.  Ah, wait --- what's this
->> core.worktree thing?  Can I get rid of that last one as well?  That sounds
->> even cooler".
->> 
->> IOW, I do not think it is really _needed_ per-se as a feature, but it was
->> done because it was thought to be doable, which unfortunately turned out
->> to involve hair-pulling complexity that the two attempts that led to the
->> current code still haven't resolved.
->> 
->> I really wish we do not have to worry about that anymore.
->
-> Well, as a non-user of this feature, I certainly have no argument
-> against taking it out. Maybe the subject line will pull some other
-> people into the discussion.
+> No, fast-import uses its own internal structure and avoids the
+> index file.
 
-Heh, if we are to do the attention-getter, let's do so more strongly ;-)
+Yeah, I knew that, but wanted to just replace the 'write-raw' command.
+To avoid doing unnecessary changes.
+
+> Also, look at `git-hash-objects -w` as a replacement for your
+> git-write-raw tool if you aren't going to use git-fast-import.
+
+Awesome, but I just did it properly :)
+
+A few comments regarding fast-import:
+
+Why the distinction between 'from' and 'merge'? Doesn't it make more
+sense to use 'parent' for both?
+
+I'm doing: commit refs/mtn/d137c7046bae7e4a0144fee82bfce8061f61e3b3
+
+So I was expecing this to work:
+from mtn/d137c7046bae7e4a0144fee82bfce8061f61e3b3
+
+But it didn't, probably because the commit hasn't actually been
+committed. Wouldn't it make sense to store it as a temporal commit so
+my script doesn't have to deal with that?
+
+Anyway, very nice tool. It's going much faster (1h) compared to before (1 day).
+
+Best regards.
+
+-- 
+Felipe Contreras
