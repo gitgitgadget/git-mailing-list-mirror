@@ -1,81 +1,77 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Dropping core.worktree and GIT_WORK_TREE support
-Date: Mon, 25 Aug 2008 23:37:48 +0200
-Message-ID: <20080825213748.GJ23800@genesis.frugalware.org>
-References: <20080824220854.GA27299@coredump.intra.peff.net> <7vzln2j9y2.fsf@gitster.siamese.dyndns.org> <20080824231343.GC27619@coredump.intra.peff.net> <7vhc9aj82i.fsf@gitster.siamese.dyndns.org> <20080824235124.GA28248@coredump.intra.peff.net> <7v7ia6j5q9.fsf_-_@gitster.siamese.dyndns.org> <20080825020054.GP23800@genesis.frugalware.org> <7v1w0dkd5s.fsf@gitster.siamese.dyndns.org> <20080825125205.GB23800@genesis.frugalware.org> <7vk5e4g58t.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: "failed to read delta base object at..."
+Date: Mon, 25 Aug 2008 14:37:39 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0808251435540.3363@nehalem.linux-foundation.org>
+References: <20080825164602.GA2213@fieldses.org> <alpine.LFD.1.10.0808251153210.3363@nehalem.linux-foundation.org> <20080825213104.GI2213@fieldses.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="J2gmp4rkCNM7tuNW"
-Cc: Jeff King <peff@peff.net>, Karl Chen <quarl@cs.berkeley.edu>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 23:39:22 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Mon Aug 25 23:39:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXjmP-0004Uw-CG
+	id 1KXjmO-0004Uw-ND
 	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 23:39:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753275AbYHYVhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 17:37:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753274AbYHYVhz
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 17:37:55 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:55160 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753243AbYHYVhy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 17:37:54 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 2637B1B2503;
-	Mon, 25 Aug 2008 23:37:53 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 269984465E;
-	Mon, 25 Aug 2008 22:38:26 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id A87431788129; Mon, 25 Aug 2008 23:37:48 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vk5e4g58t.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1752898AbYHYVhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 17:37:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753243AbYHYVhu
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 17:37:50 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:33703 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752898AbYHYVht (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Aug 2008 17:37:49 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7PLbdGJ020199
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 25 Aug 2008 14:37:40 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7PLbdU4006325;
+	Mon, 25 Aug 2008 14:37:39 -0700
+In-Reply-To: <20080825213104.GI2213@fieldses.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.427 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93686>
 
 
---J2gmp4rkCNM7tuNW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Mon, Aug 25, 2008 at 02:21:54PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> The real question was about if/why that git repository _has to be_ outside
-> of /usr/lib/*/Pootle/.  Is that because --work-tree, if worked properly,
-> would have allowed it to be, or is that because for some external reason
-> you are not allowed to have .git under /usr/lib/*/Pootle/ directory?
+On Mon, 25 Aug 2008, J. Bruce Fields wrote:
+> 
+> OK.  I seem to recall these pack files are created with something like
+> 
+> 	open
+> 	write
+> 	sync
+> 	close
+> 	rename
+> 
+> ? 
 
-I'm not 100% sure, but I think the reason is that Pootle runs as the
-user 'pootle' which has write access to some /var/pootle or /home/pootle
-dir, but has no write access to /usr/lib/*/Pootle/.
+Yes. We're trying to be _extremely_ safe and only do things that should 
+work for everything.
 
-> If the latter, that shows the real requirement to keep supporting it as a
-> feature, and issues around it need to be fixed.  Otherwise, i.e. if it
-> does not require use of --work-tree but it uses it only because it could,
-> that gives us less incentive to keep --work-tree as a feature.
+> This is just ext3 with data=writeback on a local laptop disk,
+> ubuntu's 2.6.24-21-generic.  Would it be any use trying to look more
+> closely at the pack in connection for any hints?
 
-I think this is the latter, though as I mentioned previously - it can be
-still worked around by a "cd /other/path; git <command>; cd -" (speaking
-in shell commands), so it is not a "must", it would be just ugly IMHO.
+You still have the packfile that caused problems available somewhere? If 
+so, absolutely yes. If you have the corrupt pack, please make it 
+available.
 
---J2gmp4rkCNM7tuNW
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> (But with my git repo back I'm happy enough to just forget this for now
+> if there's not anything obvious to try.)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+With the actual corrupt pack, we can make a fairly intelligent guess about 
+exactly what the corruption was. Was it a flipped bit, or what? So if you 
+have it, please do send it over.
 
-iEYEARECAAYFAkizJiwACgkQe81tAgORUJY4QACaAxuINcqW6kCyFZ3LP6hpdpAJ
-GQMAnAxF8tSot1D7cooK9HyZ0iLjdOQW
-=mXsk
------END PGP SIGNATURE-----
-
---J2gmp4rkCNM7tuNW--
+			Linus
