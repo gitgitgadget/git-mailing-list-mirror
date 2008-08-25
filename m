@@ -1,83 +1,78 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: [PATCH] Add a reference to gitk localbranc remote/branch in gittutorial
-Date: Mon, 25 Aug 2008 22:33:56 +0200
-Message-ID: <4d8e3fd30808251333p1e49b9dan2a6e74ee4f7facb1@mail.gmail.com>
-References: <20080825215023.11822a20@paolo-desktop>
-	 <loom.20080825T200956-169@post.gmane.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] "git shell" won't work, need "git-shell"
+Date: Mon, 25 Aug 2008 22:40:23 +0200
+Organization: glandium.org
+Message-ID: <20080825204023.GA10280@glandium.org>
+References: <20080824202325.GA14930@eagain.net> <7vfxoukv56.fsf@gitster.siamese.dyndns.org> <20080824203825.GB14930@eagain.net> <7vbpzikt4b.fsf@gitster.siamese.dyndns.org> <20080825170816.GQ10544@machine.or.cz> <37fcd2780808251020j1ef51b38h7c6d6e8f050a92ce@mail.gmail.com> <alpine.DEB.1.00.0808252015080.24820@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Eric Raible" <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 22:35:09 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>,
+	Tommi Virtanen <tv@eagain.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 25 22:41:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXimE-0004Ro-R1
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 22:35:03 +0200
+	id 1KXisk-0006ZU-M9
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 22:41:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752924AbYHYUd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 16:33:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753152AbYHYUd5
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 16:33:57 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:50905 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752308AbYHYUd4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 16:33:56 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so2011245wfd.4
-        for <git@vger.kernel.org>; Mon, 25 Aug 2008 13:33:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=GM6hV4LTsMScpeEdOk7a7fKHg4k74IwivyZ+z0t9b7w=;
-        b=ekWwCHt0MnI4QvISzidNAn0VXkgfSftLTysbcBkMECptMUcrfde1o5F2XPSjF59MnO
-         jqfUX/hwTQU4mJkRiTS0wg5wrr6CSRGMJIBbroi6CShwUc8yX2/bHM6kdybgtzdzSdXH
-         UEAlGd0CmBxkcLSAY/dGceo00PDbrr3AOU+BI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=A6QD+23pQCWpuGA6WUd5DhthIJQF6EtD/CwVCsfFLKbw2mgnEl6qdpsZ5JqF01XhQC
-         JUGy+pqbo85+GFH0RpPn909OU7fOBx7raikoZSrr31PeL+AmpA8/0b2D3FUi8tiQNOzw
-         64iT3Sx7rRpW0WWGT+3b7vgnpm75lL6nMTLd0=
-Received: by 10.142.139.14 with SMTP id m14mr1690239wfd.207.1219696436325;
-        Mon, 25 Aug 2008 13:33:56 -0700 (PDT)
-Received: by 10.142.194.8 with HTTP; Mon, 25 Aug 2008 13:33:56 -0700 (PDT)
-In-Reply-To: <loom.20080825T200956-169@post.gmane.org>
+	id S1751808AbYHYUkm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 16:40:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752528AbYHYUkm
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 16:40:42 -0400
+Received: from vuizook.err.no ([194.24.252.247]:44398 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751598AbYHYUkl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 16:40:41 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1KXirQ-0005ws-Bs; Mon, 25 Aug 2008 22:40:30 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1KXirP-0002hI-CB; Mon, 25 Aug 2008 22:40:23 +0200
 Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0808252015080.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93671>
 
-On Mon, Aug 25, 2008 at 10:12 PM, Eric Raible <raible@gmail.com> wrote:
-> Paolo Ciarrocchi <paolo.ciarrocchi <at> gmail.com> writes:
->
->> +Alice can also use gitk to browse that Bob did:
->
-> s/that/what/ ?
+On Mon, Aug 25, 2008 at 08:17:12PM +0200, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 25 Aug 2008, Dmitry Potapov wrote:
+> 
+> > On Mon, Aug 25, 2008 at 9:08 PM, Petr Baudis <pasky@suse.cz> wrote:
+> > >
+> > > Can we agree that direct calls of libexec stuff should never be part 
+> > > of the "official" interface (i.e. not workarounds for deprecated 
+> > > usage)?
+> > 
+> > Agreed. It looks somewhat strange to type the libexec path in 
+> > /etc/passwd.
+> 
+> FWIW I do not agree.  IMNHO libexec/ is just a way to organize executable 
+> parts of any software package that are usually not called from the command 
+> line.  And a login shell qualifies for that.
+> 
+> > > Considering that calling the git-shell executable directly is the 
+> > > _only_ sensible way of using this interface, it should follow that it 
+> > > has to be in /usr/bin, no matter if users type this command or not.
+> > 
+> > Perhaps, /usr/sbin would be a better place, as it is intended only for 
+> > system administration binaries.
+> 
+> Does it not strike you as odd, then, that "sh" -- by far the most common 
+> login shell -- does not live in /usr/sbin/?
 
-Yes!
+But nologin is in /usr/sbin.
 
->> +------------------------------------------------
->> +alice$ gitk master origin/master
->> +------------------------------------------------
->
-> I think that you meant:
->
-> alice$ gitk master..origin/master
->
-> right?
-
-Well, I thought gitk master origin/master would be sufficient.
-Guess I'm wrong...
-
-Cheers,
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
+Mike
