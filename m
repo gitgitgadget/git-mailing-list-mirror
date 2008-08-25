@@ -1,109 +1,77 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: [PATCH] Add a reference to gitk localbranc remote/branch in gittutorial
-Date: Mon, 25 Aug 2008 22:42:44 +0030
-Message-ID: <4d8e3fd30808251512x126502bj5f154b58d7ae51a2@mail.gmail.com>
-References: <20080825215023.11822a20@paolo-desktop>
-	 <loom.20080825T200956-169@post.gmane.org>
-	 <7v63pog3rn.fsf@gitster.siamese.dyndns.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: "failed to read delta base object at..."
+Date: Mon, 25 Aug 2008 18:13:21 -0400
+Message-ID: <20080825221321.GL2213@fieldses.org>
+References: <20080825164602.GA2213@fieldses.org> <alpine.LFD.1.10.0808251153210.3363@nehalem.linux-foundation.org> <20080825213104.GI2213@fieldses.org> <alpine.LFD.1.10.0808251435540.3363@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Eric Raible" <raible@gmail.com>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 00:13:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Aug 26 00:14:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXkJt-0004bj-Kb
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 00:13:54 +0200
+	id 1KXkKS-0004ih-EV
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 00:14:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753342AbYHYWMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 18:12:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753705AbYHYWMs
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 18:12:48 -0400
-Received: from qb-out-0506.google.com ([72.14.204.224]:46140 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751679AbYHYWMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 18:12:47 -0400
-Received: by qb-out-0506.google.com with SMTP id a16so2865549qbd.17
-        for <git@vger.kernel.org>; Mon, 25 Aug 2008 15:12:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Qq9kMUq8F2r/rN7hDDIFIX4hUlO8l4+1hhN5GSvy5GM=;
-        b=xNgEBbcfoziuqOzOn7cyE0oCHOVTcVQBb8YFTnXUb0Bl9XAkHxsxL7UInaG1aEC8LE
-         qq4a0NJK0YXUdMTUWvNCLrzQGFC9Ns8htpRLVff6a2ErQ1W4Qu/I9/MdfXjaF7fp0B6P
-         AoSJNnmNC3NnctW+cHFsHqXlgfYgDzuyO8U0A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=DJtDMV/AAY5uimu5gYPs+qkVHqqI0IBIF8C6Sq+MCVJISU961kEpFhu2DbPM4fTSkB
-         1FoemEh2wkmy1YGWXP/ExW6Ad3TWelMSDGKK17kBhohm2qQxB5v38dW7wYuCzv5EGoCt
-         dWjcEgex15oQ41GW1qbjwbOc2paVaimwCCEz8=
-Received: by 10.114.177.1 with SMTP id z1mr4040541wae.37.1219702364509;
-        Mon, 25 Aug 2008 15:12:44 -0700 (PDT)
-Received: by 10.114.135.2 with HTTP; Mon, 25 Aug 2008 15:12:44 -0700 (PDT)
-In-Reply-To: <7v63pog3rn.fsf@gitster.siamese.dyndns.org>
+	id S1753516AbYHYWNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 18:13:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753472AbYHYWNX
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 18:13:23 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:47530 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753417AbYHYWNW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 18:13:22 -0400
+Received: from bfields by fieldses.org with local (Exim 4.69)
+	(envelope-from <bfields@fieldses.org>)
+	id 1KXkJN-0002ax-Bu; Mon, 25 Aug 2008 18:13:21 -0400
 Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0808251435540.3363@nehalem.linux-foundation.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93691>
 
-On 8/25/08, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Raible <raible@gmail.com> writes:
->
->> Paolo Ciarrocchi <paolo.ciarrocchi <at> gmail.com> writes:
->>
->>> +Alice can also use gitk to browse that Bob did:
->>
->> s/that/what/ ?
->>
->>> +------------------------------------------------
->>> +alice$ gitk master origin/master
->>> +------------------------------------------------
->>
->> I think that you meant:
->>
->> alice$ gitk master..origin/master
->
->
-> I'd suggest rewording the explanation to have Alice "compare what both of
-> them did", not just "browse what Bob did".
+On Mon, Aug 25, 2008 at 02:37:39PM -0700, Linus Torvalds wrote:
+> 
+> 
+> On Mon, 25 Aug 2008, J. Bruce Fields wrote:
+> > 
+> > OK.  I seem to recall these pack files are created with something like
+> > 
+> > 	open
+> > 	write
+> > 	sync
+> > 	close
+> > 	rename
+> > 
+> > ? 
+> 
+> Yes. We're trying to be _extremely_ safe and only do things that should 
+> work for everything.
+> 
+> > This is just ext3 with data=writeback on a local laptop disk,
+> > ubuntu's 2.6.24-21-generic.  Would it be any use trying to look more
+> > closely at the pack in connection for any hints?
+> 
+> You still have the packfile that caused problems available somewhere? If 
+> so, absolutely yes. If you have the corrupt pack, please make it 
+> available.
+> 
+> > (But with my git repo back I'm happy enough to just forget this for now
+> > if there's not anything obvious to try.)
+> 
+> With the actual corrupt pack, we can make a fairly intelligent guess about 
+> exactly what the corruption was. Was it a flipped bit, or what? So if you 
+> have it, please do send it over.
 
-yes, what i wrote was unclear. I managed to confuse myself too :-)
+OK!  It's in:
 
-> And for that purpose, I think the original form used by Paolo's patch is
-> the most appropriate here in an early part of the tutorial, as it teaches
-> how to view full histories leading to the tips of these two branches.
+	http://www.citi.umich.edu/u/bfields/bad-pack/
 
-well, it might be a good idea to mention both.
+I assume the .idx file isn't interesting, but it's there anyway in case.
 
-do you think we should add a note about git log --graph as well?
-
-> Earlier in the tutorial sequence we teach "gitk" without any parameter to
-> view the history of the current branch, and here the user learns one new
-> thing, to view more than just the current branch.
-
-i think we should use the nice gitk output in other sections of the
-document as well, i'll send some more patches.
-
-> Limiting the output with "..origin/master" (or "...origin/master") can be
-> taught after demonstrating this most basic form.
-
-
-what wording would you use to clearly explain the difference between
-..origin/master and ...origin/master ?
-
-anyway, thanks for the commentr. I'll send a new patch in 24 hours.
-
-ciao,
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
+--b.
