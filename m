@@ -1,69 +1,63 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH] git.el: Diff only file at point by default
-Date: Mon, 25 Aug 2008 11:30:03 +0200
-Message-ID: <87bpzh8msk.fsf@wine.dyndns.org>
-References: <87vdxtpjkd.fsf@lysator.liu.se>
-	<7v3akvw7gz.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] "git shell" won't work, need "git-shell"
+Date: Mon, 25 Aug 2008 12:37:12 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808251235430.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <20080824202325.GA14930@eagain.net> <7vfxoukv56.fsf@gitster.siamese.dyndns.org> <20080824203825.GB14930@eagain.net> <7vbpzikt4b.fsf@gitster.siamese.dyndns.org> <20080824222534.GC14930@eagain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 11:54:33 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Tommi Virtanen <tv@eagain.net>
+X-From: git-owner@vger.kernel.org Mon Aug 25 12:33:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXYmN-0005cJ-RH
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 11:54:32 +0200
+	id 1KXZNt-0004Ie-50
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 12:33:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752585AbYHYJx2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Aug 2008 05:53:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752615AbYHYJx2
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 05:53:28 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:42246 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751743AbYHYJx1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Aug 2008 05:53:27 -0400
-X-Greylist: delayed 1391 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Aug 2008 05:53:27 EDT
-Received: from adsl-62-167-36-68.adslplus.ch ([62.167.36.68] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1KXYOj-00088A-Uy; Mon, 25 Aug 2008 04:30:14 -0500
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id A764A1E716B; Mon, 25 Aug 2008 11:30:03 +0200 (CEST)
-In-Reply-To: <7v3akvw7gz.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sat, 23 Aug 2008 18:02:36 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-X-Spam-Score: -3.0
+	id S1753237AbYHYKcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 06:32:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753002AbYHYKcM
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 06:32:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52812 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752863AbYHYKcM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 06:32:12 -0400
+Received: (qmail invoked by alias); 25 Aug 2008 10:32:10 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 25 Aug 2008 12:32:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX184IZsJka84oSb6X/D1desXfrOOlMTrVTCY0FiEsY
+	mrhsxDagwuyywc
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20080824222534.GC14930@eagain.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93609>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
->
->> Use prefix (C-u) to diff all marked files instead.
->>
->> Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
->> ---
->>  contrib/emacs/git.el |   13 +++++++++----
->>  1 files changed, 9 insertions(+), 4 deletions(-)
->>
->> For anyone who has used pcvs (or dsvn) this makes much more sense. T=
-he
->
-> Looks sensible to me; Alexandre?
+On Mon, 25 Aug 2008, Tommi Virtanen wrote:
 
-Looks OK to me, but I think you should apply the same treatment to all
-the other diff functions. Also the documentation string needs a bit mor=
-e
-work.
+> On Sun, Aug 24, 2008 at 02:20:20PM -0700, Junio C Hamano wrote:
+> > I do not have particular preference either way.  What people wanted was to
+> > have smaller number of git-foo on $PATH, and especially as "git-shell" is
+> > not something people would be typing from their command line, so I dunno.
+> 
+> That's true, but I kinda think libexec is something only used
+> *internally*, and you can't claim /etc/passwd to be internal to git..
+> 
+> At the minimum, git-shell(1) should explain that one needs to use the
+> libexec path.
 
---=20
-Alexandre Julliard
-julliard@winehq.org
+Or maybe the real issue can be fixed?  Namely that your configuration does 
+not work?  That would involve you actually finding out what's happening, 
+though.
+
+Ciao,
+Dscho
