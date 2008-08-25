@@ -1,74 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Aug 2008, #07; Sat, 23)
-Date: Mon, 25 Aug 2008 13:19:22 -0700
-Message-ID: <7vtzd8g851.fsf@gitster.siamese.dyndns.org>
-References: <7v1w0ft750.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0808241955550.24820@pacific.mpi-cbg.de.mpi-cbg.de>
- <7vd4jymdfn.fsf@gitster.siamese.dyndns.org>
- <7vwsi6kvow.fsf@gitster.siamese.dyndns.org> <20080825163203.GD22184@cuci.nl>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] "git shell" won't work, need "git-shell"
+Date: Mon, 25 Aug 2008 22:28:55 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808252225520.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <20080824202325.GA14930@eagain.net>  <7vfxoukv56.fsf@gitster.siamese.dyndns.org>  <20080824203825.GB14930@eagain.net>  <7vbpzikt4b.fsf@gitster.siamese.dyndns.org>  <20080824222534.GC14930@eagain.net>  <alpine.DEB.1.00.0808251235430.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+  <48B29B2A.6000802@gnu.org>  <alpine.DEB.1.00.0808251955490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <237967ef0808251125q3e50fa04wf0e97ff29298bef2@mail.gmail.com> <alpine.DEB.1.00.0808252206150.24820@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Mon Aug 25 22:21:43 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Paolo Bonzini <bonzini@gnu.org>, Tommi Virtanen <tv@eagain.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mikael Magnusson <mikachu@gmail.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Mon Aug 25 22:25:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXiZJ-00009l-Rt
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 22:21:42 +0200
+	id 1KXicV-0001B7-UV
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 22:25:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753797AbYHYUTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 16:19:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753486AbYHYUTo
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 16:19:44 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51166 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753667AbYHYUTn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 16:19:43 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2A04B5334B;
-	Mon, 25 Aug 2008 16:19:40 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 2661853349; Mon, 25 Aug 2008 16:19:35 -0400 (EDT)
-In-Reply-To: <20080825163203.GD22184@cuci.nl> (Stephen R. van den Berg's
- message of "Mon, 25 Aug 2008 18:32:03 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 25665922-72E3-11DD-B793-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1753107AbYHYUXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 16:23:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753152AbYHYUXz
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 16:23:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43607 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752308AbYHYUXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 16:23:54 -0400
+Received: (qmail invoked by alias); 25 Aug 2008 20:23:52 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp030) with SMTP; 25 Aug 2008 22:23:52 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19oJpI6l4RovtyXrzDiR1j7GPm4Vgcimy7Cj7O6UX
+	saIQkjf4sY0WFG
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <alpine.DEB.1.00.0808252206150.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93667>
 
-"Stephen R. van den Berg" <srb@cuci.nl> writes:
+Hi,
 
-> Junio C Hamano wrote:
-> ...
->>It seems that kill_some_child() will not kill anything if nobody else is
->>coming from the same address, while the old code did kill some.  Is this
->>intended?
->
-> This is intended.
-> ...
->>...  If you
->>simplify add_child() to queue the newborn always at the front of the list,
->>your kill_some_child() will continue to do so, so I do not see the point
->>of the loop in add_child().  Am I mistaken?
-> ...
-> You are mistaken.
-> The point is that we need to find out *duplicate* IP-adresses.
+On Mon, 25 Aug 2008, Johannes Schindelin wrote:
 
-Lightbulb goes on on both counts.  Thanks.
+> On Mon, 25 Aug 2008, Mikael Magnusson wrote:
+> 
+> > 2008/8/25 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> >
+> > > On Mon, 25 Aug 2008, Paolo Bonzini wrote:
+> > >
+> > >> > That would involve you actually finding out what's happening, 
+> > >> > though.
+> > >>
+> > >> He said so:
+> > >>
+> > >> > test:x:1001:1001:,,,:/home/test:/usr/bin/git shell
+> > >> >
+> > >> > just makes ssh loop asking for a password, logging
+> > >> >
+> > >> > "User test not allowed because shell /usr/bin/git shell does not 
+> > >> > exist"
+> > >
+> > > Okay, so this means that you cannot pass arguments to the login shell. 
+> > > Makes me wonder... I had the impression that bash was called with 
+> > > --login.
+> > 
+> > When you login, a '-' is prepended in argv[0], ie, bash checks if it's 
+> > called "-bash". This is documented in man bash, but I couldn't find it 
+> > in man login or man agetty, not sure where else it might be written 
+> > down.
+> 
+> Thanks!
+> 
+> So does this mean that we could check in git.c if there is a leading "-" 
+> in argv[0]?  If so, then the builtin git-shell should be called by 
+> default.
+> 
+> At least I do not expect many instances of git being called with argv[0] 
+> starting with a "-"... :-)
 
-> Shall I incorporate your suggested changes (as far as I consider them ok)
-> into my patches and resubmit them?
+Oh, well.  I just tested again, and slapped my head when it did not work, 
+remembering that we do _not_ call Git as a login shell.  Instead, we call 
+ssh with the "-c" option, which just passes it to the shell.  
+Consequently, argv[0] does not get a "-" prepended.
 
-I think your response makes the only remaining is the style fixup, which
-was my [1/3] from yesterday, so I think we are Ok with what already we
-have.
+I seem to remember that Hannes had some code to support "-c" as an 
+indicator that Git should execute git-shell, but I just might have dreamt 
+that, too.
 
-Thanks.
+Ciao,
+Dscho
