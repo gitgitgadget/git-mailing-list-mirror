@@ -1,115 +1,79 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Dropping core.worktree and GIT_WORK_TREE support
-Date: Mon, 25 Aug 2008 14:52:05 +0200
-Message-ID: <20080825125205.GB23800@genesis.frugalware.org>
-References: <quack.20080824T0140.lth3aku956e@roar.cs.berkeley.edu> <7vprnyqo59.fsf@gitster.siamese.dyndns.org> <20080824220854.GA27299@coredump.intra.peff.net> <7vzln2j9y2.fsf@gitster.siamese.dyndns.org> <20080824231343.GC27619@coredump.intra.peff.net> <7vhc9aj82i.fsf@gitster.siamese.dyndns.org> <20080824235124.GA28248@coredump.intra.peff.net> <7v7ia6j5q9.fsf_-_@gitster.siamese.dyndns.org> <20080825020054.GP23800@genesis.frugalware.org> <7v1w0dkd5s.fsf@gitster.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2] fix start_command() bug when stdin is closed
+Date: Mon, 25 Aug 2008 15:12:34 +0200
+Message-ID: <48B2AFC2.20901@viscovery.net>
+References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu> <48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org> <E1KXawS-0001gg-Ty@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="PETIzWh8d1Msfd+P"
-Cc: Jeff King <peff@peff.net>, Karl Chen <quarl@cs.berkeley.edu>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 14:57:13 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Karl Chen <quarl@cs.berkeley.edu>,
+	Git mailing list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Aug 25 15:16:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXbZL-0007HJ-9y
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 14:53:15 +0200
+	id 1KXbt9-00062J-Ar
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 15:13:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753904AbYHYMwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 08:52:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753825AbYHYMwJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 08:52:09 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:54185 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753813AbYHYMwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 08:52:08 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id E4D731B2503;
-	Mon, 25 Aug 2008 14:52:05 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id A35084465E;
-	Mon, 25 Aug 2008 13:52:54 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 8EA3B1788129; Mon, 25 Aug 2008 14:52:05 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7v1w0dkd5s.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1753665AbYHYNMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 09:12:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753462AbYHYNMi
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 09:12:38 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:16129 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753434AbYHYNMi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 09:12:38 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KXbs3-0000xF-5l; Mon, 25 Aug 2008 15:12:35 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id D19684FB; Mon, 25 Aug 2008 15:12:34 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <E1KXawS-0001gg-Ty@fencepost.gnu.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93619>
 
+Paolo Bonzini schrieb:
+> There is a problem in the use of dup2+close in start_command()
+> when one or more of file descriptors 0/1/2 are closed.
 
---PETIzWh8d1Msfd+P
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+"Karl Chen pointed out a problem..." (just to give due credit).
 
-On Sun, Aug 24, 2008 at 08:05:03PM -0700, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> > Does this include removing of --work-tree as well?
-> >
-> > The git backend of Pootle (http://translate.sourceforge.net/wiki/) uses
-> > it.
->=20
-> Interesting.  Does it use it because it can (meaning, --work-tree is
-> supposed to work), or because --work-tree is the cleanest way to do what
-> it wants to do (if the feature worked properly, that is, which is not the
-> case)?
+>  int start_command(struct child_process *cmd)
+>  {
+>  	int need_in, need_out, need_err;
+>  	int fdin[2], fdout[2], fderr[2];
+>  
+>  	/*
+> +	 * Make sure that all file descriptors <= 2 are open, otherwise we
+> +	 * mess them up when dup'ing pipes onto stdin/stdout/stderr.  Since
+> +	 * we are at it, open a file descriptor on /dev/null to use it later.
+> +	 */
+> +	if (devnull_fd == -1)
+> +	  {
+> +	    devnull_fd = open("/dev/null", O_RDWR);
+> +	    while (devnull_fd >= 0 && devnull_fd <= 2)
+> +	      devnull_fd = dup(devnull_fd);
+> +	    if (devnull_fd == -1)
+> +	      die("opening /dev/null failed (%s)", strerror(errno));
+> +	  }
 
-It's like:
+Except for the insane GNU style indentation ;-) this makes a lot of sense.
 
-The current working directory is like
-/usr/lib/python2.5/site-packages/Pootle. The git repository is under
-/some/other/path/outside/usr.
+Acked-by: Johannes Sixt <johannes.sixt@telecom.at>
 
-Then Pootle has two possibilities:
+The changes to the MINGW32 section are good (they pass the test suite).
+Thanks for taking care of that.
 
-1) save the current directory, change to /some/other, execute git, and
-change the directory back
-
-2) use git --work-tree / --git-dir
-
-I guess the second form is more elegant. Of course if it is decided that
-this option will be removed then the old form can be still used, but I
-think that would be a step back.
-
-> > Also, here is a question:
-> >
-> > $ git --git-dir git/.git --work-tree git diff --stat|tail -n 1
-> >  1443 files changed, 0 insertions(+), 299668 deletions(-)
-> >
-> > So, it's like it thinks every file is removed.
-> >
-> > But then:
-> >
-> > $ cd git
-> > $ git diff --stat|wc -l
-> > 0
-> >
-> > is this a bug, or a user error?
->=20
-> I  think it is among the many other things that falls into "the two
-> attempts still haven't resolved" category.
-
-I'm unfamiliar with this part of the codebase, so in case somebody other
-could look at it, that would be great, but I'm happy with write a
-testcase for it. (Or in case nobody cares, I can try to fix it, but that
-may take a bit more time.)
-
---PETIzWh8d1Msfd+P
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkiyqvUACgkQe81tAgORUJaMtgCaA3BoCKzlSDpekrWzK1YU6TRR
-J2kAn3sQXqX0BhasHtMQA4aW63raUUQc
-=8mPp
------END PGP SIGNATURE-----
-
---PETIzWh8d1Msfd+P--
+-- Hannes
