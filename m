@@ -1,79 +1,80 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] fix start_command() bug when stdin is closed
-Date: Mon, 25 Aug 2008 15:12:34 +0200
-Message-ID: <48B2AFC2.20901@viscovery.net>
-References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu> <48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org> <E1KXawS-0001gg-Ty@fencepost.gnu.org>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [PATCH] git.el: Diff only file at point by default
+Date: Mon, 25 Aug 2008 15:21:40 +0200
+Message-ID: <873aktnsbf.fsf@lysator.liu.se>
+References: <87vdxtpjkd.fsf@lysator.liu.se>
+	<7v3akvw7gz.fsf@gitster.siamese.dyndns.org>
+	<87bpzh8msk.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Karl Chen <quarl@cs.berkeley.edu>,
-	Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Aug 25 15:16:20 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Alexandre Julliard <julliard@winehq.org>
+X-From: git-owner@vger.kernel.org Mon Aug 25 15:25:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXbt9-00062J-Ar
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 15:13:43 +0200
+	id 1KXc1u-0000uE-SY
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 15:22:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753665AbYHYNMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 09:12:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753462AbYHYNMi
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 09:12:38 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:16129 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753434AbYHYNMi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 09:12:38 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KXbs3-0000xF-5l; Mon, 25 Aug 2008 15:12:35 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id D19684FB; Mon, 25 Aug 2008 15:12:34 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <E1KXawS-0001gg-Ty@fencepost.gnu.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753779AbYHYNVn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Aug 2008 09:21:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753834AbYHYNVn
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 09:21:43 -0400
+Received: from mail.lysator.liu.se ([130.236.254.3]:53800 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753763AbYHYNVm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 09:21:42 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id 8996622D4080;
+	Mon, 25 Aug 2008 15:21:41 +0200 (CEST)
+Received: from mail.lysator.liu.se ([127.0.0.1])
+	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 21843-01-26; Mon, 25 Aug 2008 15:21:41 +0200 (CEST)
+Received: from krank (unknown [87.96.142.66])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 284832013C8A;
+	Mon, 25 Aug 2008 15:21:41 +0200 (CEST)
+Received: by krank (Postfix, from userid 1000)
+	id A824B7B4039; Mon, 25 Aug 2008 15:21:40 +0200 (CEST)
+In-Reply-To: <87bpzh8msk.fsf@wine.dyndns.org> (Alexandre Julliard's message of "Mon\, 25 Aug 2008 11\:30\:03 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93620>
 
-Paolo Bonzini schrieb:
-> There is a problem in the use of dup2+close in start_command()
-> when one or more of file descriptors 0/1/2 are closed.
+Alexandre Julliard <julliard@winehq.org> writes:
 
-"Karl Chen pointed out a problem..." (just to give due credit).
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+>>
+>>> Use prefix (C-u) to diff all marked files instead.
+>>>
+>>> Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
+>>> ---
+>>>  contrib/emacs/git.el |   13 +++++++++----
+>>>  1 files changed, 9 insertions(+), 4 deletions(-)
+>>>
+>>> For anyone who has used pcvs (or dsvn) this makes much more sense. =
+The
+>>
+>> Looks sensible to me; Alexandre?
+>
+> Looks OK to me, but I think you should apply the same treatment to al=
+l
+> the other diff functions. Also the documentation string needs a bit m=
+ore
+> work.
 
->  int start_command(struct child_process *cmd)
->  {
->  	int need_in, need_out, need_err;
->  	int fdin[2], fdout[2], fderr[2];
->  
->  	/*
-> +	 * Make sure that all file descriptors <= 2 are open, otherwise we
-> +	 * mess them up when dup'ing pipes onto stdin/stdout/stderr.  Since
-> +	 * we are at it, open a file descriptor on /dev/null to use it later.
-> +	 */
-> +	if (devnull_fd == -1)
-> +	  {
-> +	    devnull_fd = open("/dev/null", O_RDWR);
-> +	    while (devnull_fd >= 0 && devnull_fd <= 2)
-> +	      devnull_fd = dup(devnull_fd);
-> +	    if (devnull_fd == -1)
-> +	      die("opening /dev/null failed (%s)", strerror(errno));
-> +	  }
+It's the only one I use, so I didn't think about any other diff
+commands. But I'll have a look.
 
-Except for the insane GNU style indentation ;-) this makes a lot of sense.
-
-Acked-by: Johannes Sixt <johannes.sixt@telecom.at>
-
-The changes to the MINGW32 section are good (they pass the test suite).
-Thanks for taking care of that.
-
--- Hannes
+--=20
+David K=C3=A5gedal
