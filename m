@@ -1,76 +1,54 @@
-From: "Dmitry Potapov" <dpotapov@gmail.com>
+From: Tommi Virtanen <tv@eagain.net>
 Subject: Re: [PATCH] "git shell" won't work, need "git-shell"
-Date: Mon, 25 Aug 2008 21:20:38 +0400
-Message-ID: <37fcd2780808251020j1ef51b38h7c6d6e8f050a92ce@mail.gmail.com>
-References: <20080824202325.GA14930@eagain.net>
-	 <7vfxoukv56.fsf@gitster.siamese.dyndns.org>
-	 <20080824203825.GB14930@eagain.net>
-	 <7vbpzikt4b.fsf@gitster.siamese.dyndns.org>
-	 <20080825170816.GQ10544@machine.or.cz>
+Date: Mon, 25 Aug 2008 20:26:30 +0300
+Message-ID: <20080825172630.GH23582@eagain.net>
+References: <20080824202325.GA14930@eagain.net> <7vfxoukv56.fsf@gitster.siamese.dyndns.org> <20080824203825.GB14930@eagain.net> <7vbpzikt4b.fsf@gitster.siamese.dyndns.org> <20080825170816.GQ10544@machine.or.cz> <37fcd2780808251020j1ef51b38h7c6d6e8f050a92ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Tommi Virtanen" <tv@eagain.net>, git@vger.kernel.org
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Aug 25 19:21:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 25 19:27:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXflA-0005nI-QZ
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 19:21:45 +0200
+	id 1KXfqr-0007Ty-OX
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 19:27:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773AbYHYRUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 13:20:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753911AbYHYRUk
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 13:20:40 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:52377 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753704AbYHYRUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 13:20:39 -0400
-Received: by gxk9 with SMTP id 9so2415318gxk.13
-        for <git@vger.kernel.org>; Mon, 25 Aug 2008 10:20:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=yk3iRViusMnPFjZCvkVfTKJpQIrizE40SpUKzCySM2M=;
-        b=oxcBvS75rUtc8x03JRM/jBrxbuNhFQ0LwqdCz8o7+LvxIxcTQRdiYYmUOIukARlG2S
-         uXXMxq8yh1RphNurEvgHj3LfnqL59PLZtWujOhXlPXDQFRU5C46NSBuqO7edxH4S8t9r
-         jiwsokuzmoDSlJ588UtFkwVVocaIrT/y7Yw7M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=jI7IjgUhuf7WouImYrHl8WPpiPrJ4N/XgANROFpGB+MAZU7cHHtHe61otw62Ol+BZI
-         mT0R6LdJK7WMpwOEXJX8Fkxk+L2vPjKy2ImqXwp52VqvTScRO726Pa1pCWVcnun4hiDE
-         WNxjJLAgp0Dvs9yZtD9tdWznQvydBUqEQSG4A=
-Received: by 10.142.222.21 with SMTP id u21mr1613542wfg.244.1219684838367;
-        Mon, 25 Aug 2008 10:20:38 -0700 (PDT)
-Received: by 10.142.106.16 with HTTP; Mon, 25 Aug 2008 10:20:38 -0700 (PDT)
-In-Reply-To: <20080825170816.GQ10544@machine.or.cz>
+	id S1754052AbYHYR0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 13:26:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754133AbYHYR0d
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 13:26:33 -0400
+Received: from eagain.net ([208.78.102.120]:33597 "EHLO eagain.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753704AbYHYR0c (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 13:26:32 -0400
+Received: from musti.eagain.net (a91-156-122-108.elisa-laajakaista.fi [91.156.122.108])
+	by eagain.net (Postfix) with ESMTPS id D86AC1EC039;
+	Mon, 25 Aug 2008 17:26:31 +0000 (UTC)
+Received: by musti.eagain.net (Postfix, from userid 1000)
+	id 6501F508043; Mon, 25 Aug 2008 20:26:30 +0300 (EEST)
+Mail-Followup-To: Dmitry Potapov <dpotapov@gmail.com>,
+	Petr Baudis <pasky@suse.cz>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <37fcd2780808251020j1ef51b38h7c6d6e8f050a92ce@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93646>
 
-On Mon, Aug 25, 2008 at 9:08 PM, Petr Baudis <pasky@suse.cz> wrote:
->
-> Can we agree that direct calls of libexec stuff should never be part of
-> the "official" interface (i.e. not workarounds for deprecated usage)?
+On Mon, Aug 25, 2008 at 09:20:38PM +0400, Dmitry Potapov wrote:
+> Perhaps, /usr/sbin would be a better place, as it is intended only for
+> system administration binaries.
 
-Agreed. It looks somewhat strange to type the libexec path in /etc/passwd.
+I'd argue that git-shell isn't *exclusively* for root, which is the
+criteria for sbin. It's pretty easy to imagine a user setting up their
+own ~/.ssh/authorized_keys with a special passphraseless key that
+can only do git operations.
 
-> Considering that calling the git-shell executable directly is the _only_
-> sensible way of using this interface, it should follow that it has to be
-> in /usr/bin, no matter if users type this command or not.
-
-Perhaps, /usr/sbin would be a better place, as it is intended only for
-system administration binaries.
-
-Dmitry
+-- 
+:(){ :|:&};:
