@@ -1,86 +1,143 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: "failed to read delta base object at..."
-Date: Mon, 25 Aug 2008 17:31:04 -0400
-Message-ID: <20080825213104.GI2213@fieldses.org>
-References: <20080825164602.GA2213@fieldses.org> <alpine.LFD.1.10.0808251153210.3363@nehalem.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: always provide a fallback when hardlinks fail
+Date: Mon, 25 Aug 2008 14:36:20 -0700
+Message-ID: <7vej4cg4kr.fsf@gitster.siamese.dyndns.org>
+References: <0EFF470D-341A-4619-910A-0F9C663D0B51@web.de>
+ <7vljyv6gyo.fsf@gitster.siamese.dyndns.org>
+ <D4374620-C6D8-4CB3-8A7D-C5449BB8E8D1@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Aug 25 23:32:24 2008
+To: Andreas =?utf-8?Q?F=C3=A4rber?= <andreas.faerber@web.de>
+X-From: git-owner@vger.kernel.org Mon Aug 25 23:37:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXjfb-0002Xk-3m
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 23:32:15 +0200
+	id 1KXjkj-0003vG-7Y
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 23:37:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750960AbYHYVbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 17:31:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751512AbYHYVbI
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 17:31:08 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:44293 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752176AbYHYVbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 17:31:07 -0400
-Received: from bfields by fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1KXjeS-0002KA-Sq; Mon, 25 Aug 2008 17:31:04 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0808251153210.3363@nehalem.linux-foundation.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752879AbYHYVg2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Aug 2008 17:36:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752515AbYHYVg2
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 17:36:28 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41236 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751512AbYHYVg2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Aug 2008 17:36:28 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6F1225535A;
+	Mon, 25 Aug 2008 17:36:26 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 631DB55350; Mon, 25 Aug 2008 17:36:23 -0400 (EDT)
+In-Reply-To: <D4374620-C6D8-4CB3-8A7D-C5449BB8E8D1@web.de> (Andreas
+ =?utf-8?Q?F=C3=A4rber's?= message of "Mon, 25 Aug 2008 17:42:21 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DEF57936-72ED-11DD-BFD1-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93684>
 
-Thanks to you and Nicolas for the responses.
+Andreas F=C3=A4rber <andreas.faerber@web.de> writes:
 
-On Mon, Aug 25, 2008 at 12:01:42PM -0700, Linus Torvalds wrote:
-> On Mon, 25 Aug 2008, J. Bruce Fields wrote:
-> >
-> > Today I got this:
-> > 
-> > fatal: failed to read delta base object at 3025976 from
-> > /home/bfields/local/linux-2.6/.git/objects/pack/pack-f7261d96cf1161b1b0a1593f673a67d0f2469e9b.pack
-> 
-> This is almost certainly due to some corruption. Basically, the call to 
-> "cache_or_unpack_entry()" failed, which in turn is because 
-> 'unpack_entry()' will have failed. 
-> 
-> And since you didn't see any other error, that failure is almost certainly 
-> due to unpack_compressed_entry() having failed. We don't print out _why_ 
-> (which is a bit sad), but the only thing that unpack_compressed_entry() 
-> does is to just "inflate()" the data at that offset.
-> 
-> So it probably got a zlib data error, or an adler32 crc failure.
-> 
-> > This has happened once before recently, I believe with a pack that had
-> > just been created on a recent fetch.  (If I remember correctly, this was
-> > soon after a failed suspend/resume cycle that might have interrupted an
-> > in-progress fetch; could that possible explain the error?)  In that case
-> > I reset origin/master, deleted a tag or two, and fetched, and the
-> > problem seemed to be fixed.
-> 
-> An interrupted fetch shouldn't have caused this, it really should only 
-> happen if you have some actual filesystem data error. Something didn't get 
-> written back correctly, or the page cache isn't coherent (or it got 
-> corrupted by something else like a wild kernel pointer, of course).
+> From: Andreas Faerber <andreas.faerber@web.de>
+> Date: Mon, 25 Aug 2008 17:33:03 +0200
+> Subject: [PATCH] Makefile: always provide a fallback when hardlinks f=
+ail
+>
+> We make hardlinks from "git" to "git-<cmd>" built-ins and have been
+> careful to avoid cross-device links when linking "git-<cmd>" to
+> gitexecdir.
+>
+> However, we were not prepared to deal with a build directory that is
+> incapable of making hard links within itself. This patch corrects it.
+>
+> Instead of temporarily linking "git" to gitexecdir, directly link "gi=
+t-
+> add", falling back to "cp". Try hardlinking that as "git-<cmd>", fall=
+ing
+> back to symlinks or "cp" on error.
+>
+> While at it, avoid 100+ error messages from hardlink failures when we
+> are going to fall back to symlinks or "cp" by redirecting the standar=
+d
+> error to /dev/null.
+>
+> Signed-off-by: Andreas F=C3=A4rber <andreas.faerber@web.de>
+> ---
+>  Makefile |   22 +++++++++++-----------
+>  1 files changed, 11 insertions(+), 11 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 7a6cbb6..fb4863c 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1110,7 +1110,10 @@ help.o: help.c common-cmds.h GIT-CFLAGS
+>  		'-DGIT_INFO_PATH=3D"$(infodir_SQ)"' $<
+>
+>  $(BUILT_INS): git$X
+> -	$(QUIET_BUILT_IN)$(RM) $@ && ln git$X $@
+> +	$(QUIET_BUILT_IN)$(RM) $@ && \
+> +	ln git$X $@ 2>/dev/null || \
+> +	ln -s git$X $@ 2>/dev/null || \
+> +	cp git$X $@
 
-OK.  I seem to recall these pack files are created with something like
+Ok.
 
-	open
-	write
-	sync
-	close
-	rename
+>
+>  common-cmds.h: ./generate-cmdlist.sh command-list.txt
+>
+> @@ -1371,16 +1374,13 @@ ifneq (,$X)
+>  endif
+>  	bindir=3D$$(cd '$(DESTDIR_SQ)$(bindir_SQ)' && pwd) && \
+>  	execdir=3D$$(cd '$(DESTDIR_SQ)$(gitexec_instdir_SQ)' && pwd) && \
+> -	if test "z$$bindir" !=3D "z$$execdir"; \
+> -	then \
+> -		ln -f "$$bindir/git$X" "$$execdir/git$X" || \
+> -		cp "$$bindir/git$X" "$$execdir/git$X"; \
+> -	fi && \
+> -	{ $(foreach p,$(BUILT_INS), $(RM) "$$execdir/$p" && ln
+> "$$execdir/git
+> $X" "$$execdir/$p" ;) } && \
+> -	if test "z$$bindir" !=3D "z$$execdir"; \
+> -	then \
+> -		$(RM) "$$execdir/git$X"; \
+> -	fi && \
 
-?  This is just ext3 with data=writeback on a local laptop disk,
-ubuntu's 2.6.24-21-generic.  Would it be any use trying to look more
-closely at the pack in connection for any hints?
+(mental note while reviewing the change) Outside context before this pa=
+rt
+we have installed "git$X" to $$bindir, and removed leftover "git-foo"
+without .exe on the platform where X=3D.exe.
 
-(But with my git repo back I'm happy enough to just forget this for now
-if there's not anything obvious to try.)
+> +	{ $(RM) "$$execdir/git-add$X" && \
+> +		ln git-add$X "$$execdir/git-add$X" 2>/dev/null || \
+> +		cp git-add$X "$$execdir/git-add$X"; } && \
 
---b.
+(mental note while reviewing the change) First, we install git-add$X to
+$$execdir, either hardlink or copy.
+
+> +	{ $(foreach p,$(patsubst git-add,,$(BUILT_INS)), $(RM)
+> "$$execdir/
+> $p" && \
+> +		ln "$$execdir/git-add$X" "$$execdir/$p" 2>/dev/null || \
+> +		ln -s "$$execdir/git-add$X" "$$execdir/$p" 2>/dev/null || \
+> +		cp "$$execdir/git-add$X" "$$execdir/$p" || exit;) } && \
+
+    Nits.
+
+    * Line-wrapped;
+    * $(patsubst) is probably $(filter-out);
+
+(mental note while reviewing the change) Then we install the rest by
+linking, symlinking or copying git-add$X.
+
+We might want to do the "symlinking" to $$bindir/git$X instead, but oth=
+er
+than that (and above two minor nits), this looks pretty good.
+
+Thanks, will try and apply.
