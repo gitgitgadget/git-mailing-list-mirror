@@ -1,72 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Gittogether event?
-Date: Mon, 25 Aug 2008 22:38:07 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808252234410.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <20080820151031.GD3483@spearce.org> <7v7ia9d0of.fsf@gitster.siamese.dyndns.org> <20080822143407.GE3483@spearce.org> <200808252115.09916.chriscool@tuxfamily.org> <20080825192327.GB26523@spearce.org>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: [PATCH] Add a reference to gitk localbranc remote/branch in gittutorial
+Date: Mon, 25 Aug 2008 22:33:56 +0200
+Message-ID: <4d8e3fd30808251333p1e49b9dan2a6e74ee4f7facb1@mail.gmail.com>
+References: <20080825215023.11822a20@paolo-desktop>
+	 <loom.20080825T200956-169@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"J.H." <warthog19@eaglescrag.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Sam Vilain <sam.vilain@catalyst.net.nz>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Aug 25 22:34:23 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Eric Raible" <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 25 22:35:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXilX-0004BZ-Eq
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 22:34:19 +0200
+	id 1KXimE-0004Ro-R1
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 22:35:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753132AbYHYUdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 16:33:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752308AbYHYUdJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 16:33:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44010 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751820AbYHYUdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 16:33:08 -0400
-Received: (qmail invoked by alias); 25 Aug 2008 20:33:05 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp063) with SMTP; 25 Aug 2008 22:33:05 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18FJpcQlCcFTlFnvAYKBLciKGjCoVHIBtmSERRzSL
-	8JAj9BzIcyny3w
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <20080825192327.GB26523@spearce.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1752924AbYHYUd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 16:33:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753152AbYHYUd5
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 16:33:57 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:50905 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752308AbYHYUd4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 16:33:56 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so2011245wfd.4
+        for <git@vger.kernel.org>; Mon, 25 Aug 2008 13:33:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=GM6hV4LTsMScpeEdOk7a7fKHg4k74IwivyZ+z0t9b7w=;
+        b=ekWwCHt0MnI4QvISzidNAn0VXkgfSftLTysbcBkMECptMUcrfde1o5F2XPSjF59MnO
+         jqfUX/hwTQU4mJkRiTS0wg5wrr6CSRGMJIBbroi6CShwUc8yX2/bHM6kdybgtzdzSdXH
+         UEAlGd0CmBxkcLSAY/dGceo00PDbrr3AOU+BI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=A6QD+23pQCWpuGA6WUd5DhthIJQF6EtD/CwVCsfFLKbw2mgnEl6qdpsZ5JqF01XhQC
+         JUGy+pqbo85+GFH0RpPn909OU7fOBx7raikoZSrr31PeL+AmpA8/0b2D3FUi8tiQNOzw
+         64iT3Sx7rRpW0WWGT+3b7vgnpm75lL6nMTLd0=
+Received: by 10.142.139.14 with SMTP id m14mr1690239wfd.207.1219696436325;
+        Mon, 25 Aug 2008 13:33:56 -0700 (PDT)
+Received: by 10.142.194.8 with HTTP; Mon, 25 Aug 2008 13:33:56 -0700 (PDT)
+In-Reply-To: <loom.20080825T200956-169@post.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93670>
 
-Hi,
-
-On Mon, 25 Aug 2008, Shawn O. Pearce wrote:
-
-> Christian Couder <chriscool@tuxfamily.org> wrote:
+On Mon, Aug 25, 2008 at 10:12 PM, Eric Raible <raible@gmail.com> wrote:
+> Paolo Ciarrocchi <paolo.ciarrocchi <at> gmail.com> writes:
 >
-> > - a few hours long hacking: we try to implement solutions for problems 
-> >   related to the previous discussion.
-> 
-> This is an interesting idea.  I like it.
+>> +Alice can also use gitk to browse that Bob did:
+>
+> s/that/what/ ?
 
-This is called a hackathon, and I had the pleasure of attending three of 
-them.  It is an extremely productive time, although you have to prepare to 
-fall into a black hole after them, when all the fun suddenly stops.
+Yes!
 
-As for dates: I am pretty free.  However, I kind of hoped to pre-/append 
-it to the GSoC summit, since I cannot afford to pay the flight, but I 
-could afford to pay the difference to wherever else than Mountain View the 
-Gitogether would take place.
+>> +------------------------------------------------
+>> +alice$ gitk master origin/master
+>> +------------------------------------------------
+>
+> I think that you meant:
+>
+> alice$ gitk master..origin/master
+>
+> right?
 
-All this, of course, provided that Google invites us, and that I am 
-actually one of the few lucky mentors being allowed to come.
+Well, I thought gitk master origin/master would be sufficient.
+Guess I'm wrong...
 
-Ciao,
-Dscho
+Cheers,
+-- 
+Paolo
+http://paolo.ciarrocchi.googlepages.com/
