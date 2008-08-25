@@ -1,80 +1,72 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH] git.el: Diff only file at point by default
-Date: Mon, 25 Aug 2008 15:21:40 +0200
-Message-ID: <873aktnsbf.fsf@lysator.liu.se>
-References: <87vdxtpjkd.fsf@lysator.liu.se>
-	<7v3akvw7gz.fsf@gitster.siamese.dyndns.org>
-	<87bpzh8msk.fsf@wine.dyndns.org>
+From: Ben Collins <ben.collins@canonical.com>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Mon, 25 Aug 2008 09:22:35 -0400
+Organization: Canonical, Ltd.
+Message-ID: <48B2B21B.1080203@canonical.com>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org> <1219664940.9583.42.camel@pmac.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Mon Aug 25 15:25:03 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	users@kernel.org
+To: David Woodhouse <dwmw2@infradead.org>
+X-From: git-owner@vger.kernel.org Mon Aug 25 15:25:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXc1u-0000uE-SY
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 15:22:47 +0200
+	id 1KXc2r-0001Jd-0w
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 15:23:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753779AbYHYNVn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Aug 2008 09:21:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753834AbYHYNVn
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 09:21:43 -0400
-Received: from mail.lysator.liu.se ([130.236.254.3]:53800 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753763AbYHYNVm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 09:21:42 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 8996622D4080;
-	Mon, 25 Aug 2008 15:21:41 +0200 (CEST)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 21843-01-26; Mon, 25 Aug 2008 15:21:41 +0200 (CEST)
-Received: from krank (unknown [87.96.142.66])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 284832013C8A;
-	Mon, 25 Aug 2008 15:21:41 +0200 (CEST)
-Received: by krank (Postfix, from userid 1000)
-	id A824B7B4039; Mon, 25 Aug 2008 15:21:40 +0200 (CEST)
-In-Reply-To: <87bpzh8msk.fsf@wine.dyndns.org> (Alexandre Julliard's message of "Mon\, 25 Aug 2008 11\:30\:03 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1753871AbYHYNWl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 09:22:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753982AbYHYNWl
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 09:22:41 -0400
+Received: from adelie.canonical.com ([91.189.90.139]:51631 "EHLO
+	adelie.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753720AbYHYNWk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 09:22:40 -0400
+Received: from hutte.canonical.com ([91.189.90.181])
+	by adelie.canonical.com with esmtp (Exim 4.60 #1 (Debian))
+	id 1KXc1j-00087e-5w; Mon, 25 Aug 2008 14:22:35 +0100
+Received: from collinsap1.phunnypharm.org ([67.97.251.10] helo=[192.168.1.187])
+	by hutte.canonical.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60)
+	(envelope-from <ben.collins@canonical.com>)
+	id 1KXc1i-0001IR-W5; Mon, 25 Aug 2008 14:22:35 +0100
+User-Agent: Thunderbird 2.0.0.16 (X11/20080725)
+In-Reply-To: <1219664940.9583.42.camel@pmac.infradead.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93621>
 
-Alexandre Julliard <julliard@winehq.org> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+David Woodhouse wrote:
+> On Sat, 2008-08-23 at 20:33 -0700, Junio C Hamano wrote:
+>> There is one alternative, and one augmentation:
 >>
->>> Use prefix (C-u) to diff all marked files instead.
->>>
->>> Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
->>> ---
->>>  contrib/emacs/git.el |   13 +++++++++----
->>>  1 files changed, 9 insertions(+), 4 deletions(-)
->>>
->>> For anyone who has used pcvs (or dsvn) this makes much more sense. =
-The
+>>  (A) We do not do anything.
 >>
->> Looks sensible to me; Alexandre?
->
-> Looks OK to me, but I think you should apply the same treatment to al=
-l
-> the other diff functions. Also the documentation string needs a bit m=
-ore
-> work.
+>>  (B) In addition to the main transition plan, outside git, prepare an
+>>      optional "git-old-style" package that installs many "git-foo"
+>>      wrappers in $PATH (i.e. /usr/bin).  Each of them exec "git foo".
+>>      People who like the dashed form can keep typing "git-foo", even
+>>      though that will cost them two exec()s.
+> 
+>   (C) Just don't do it. Leave the git-foo commands as they were. They
+>       weren't actually hurting anyone, and you don't actually _gain_
+>       anything by removing them. For those occasional nutters who
+>       _really_ care about the size of /usr/bin, give them the _option_
+>       of a 'make install' without installing the aliases.
+> 
+> (Oh look, my /usr/bin has 3806 files in it. And except when I
+> accidentally point the $%#@&! GNOME file dialog box at it, I don't
+> _care_.)
+> 
 
-It's the only one I use, so I didn't think about any other diff
-commands. But I'll have a look.
+I'll second that. I've not heard a good argument against the git-foo 
+commands. If they were going to be deprecated, it should have actually 
+happened a long time ago.
 
---=20
-David K=C3=A5gedal
+-- BenC, late to the discussion as usual
