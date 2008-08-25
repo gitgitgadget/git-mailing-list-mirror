@@ -1,77 +1,125 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "failed to read delta base object at..."
-Date: Mon, 25 Aug 2008 12:01:42 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0808251153210.3363@nehalem.linux-foundation.org>
-References: <20080825164602.GA2213@fieldses.org>
+From: Karl Chen <quarl@cs.berkeley.edu>
+Subject: [PATCH v2] Support "core.excludesfile = ~/.gitignore"
+Date: Mon, 25 Aug 2008 12:07:15 -0700
+Message-ID: <quack.20080825T1207.lthk5e46hi4_-_@roar.cs.berkeley.edu>
+References: <quack.20080821T2114.lthvdxtvg7b@roar.cs.berkeley.edu>
+	<7vsksw92nh.fsf@gitster.siamese.dyndns.org>
+	<quack.20080824T0140.lth3aku956e@roar.cs.berkeley.edu>
+	<7vprnyqo59.fsf@gitster.siamese.dyndns.org>
+	<20080824220854.GA27299@coredump.intra.peff.net>
+	<7vzln2j9y2.fsf@gitster.siamese.dyndns.org>
+	<20080824231343.GC27619@coredump.intra.peff.net>
+	<7vhc9aj82i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Mon Aug 25 21:03:37 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 25 21:08:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXhLO-0000FX-Cj
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 21:03:14 +0200
+	id 1KXhQO-0001zM-PY
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 21:08:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754949AbYHYTBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 15:01:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754995AbYHYTBy
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 15:01:54 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:50896 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753562AbYHYTBx (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Aug 2008 15:01:53 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7PJ1h7D007997
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 25 Aug 2008 12:01:44 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7PJ1gTu032482;
-	Mon, 25 Aug 2008 12:01:43 -0700
-In-Reply-To: <20080825164602.GA2213@fieldses.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.427 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753957AbYHYTHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 15:07:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753562AbYHYTHR
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 15:07:17 -0400
+Received: from roar.CS.Berkeley.EDU ([128.32.36.242]:55816 "EHLO
+	roar.quarl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752135AbYHYTHP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 15:07:15 -0400
+Received: by roar.quarl.org (Postfix, from userid 18378)
+	id 7474C34452; Mon, 25 Aug 2008 12:07:15 -0700 (PDT)
+X-Quack-Archive: 1
+In-Reply-To: <7vhc9aj82i.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Sun\, 24 Aug 2008 16\:40\:21 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93657>
 
 
+The config variable core.excludesfile is parsed to substitute ~ and ~user with
+getpw entries.
 
-On Mon, 25 Aug 2008, J. Bruce Fields wrote:
->
-> Today I got this:
-> 
-> fatal: failed to read delta base object at 3025976 from
-> /home/bfields/local/linux-2.6/.git/objects/pack/pack-f7261d96cf1161b1b0a1593f673a67d0f2469e9b.pack
+Signed-off-by: Karl Chen <quarl@quarl.org>
+---
+ config.c |   41 +++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 39 insertions(+), 2 deletions(-)
 
-This is almost certainly due to some corruption. Basically, the call to 
-"cache_or_unpack_entry()" failed, which in turn is because 
-'unpack_entry()' will have failed. 
 
-And since you didn't see any other error, that failure is almost certainly 
-due to unpack_compressed_entry() having failed. We don't print out _why_ 
-(which is a bit sad), but the only thing that unpack_compressed_entry() 
-does is to just "inflate()" the data at that offset.
+Based on the discussion it sounds like there are complications to
+supporting relative paths (due to worktree config), and "$HOME"
+(when generalized, due to bootstrapping issues with $GIT_*).
 
-So it probably got a zlib data error, or an adler32 crc failure.
+Since ~ and ~user are orthogonal to these, can I suggest going
+forward with this, without blocking on those two?
 
-> This has happened once before recently, I believe with a pack that had
-> just been created on a recent fetch.  (If I remember correctly, this was
-> soon after a failed suspend/resume cycle that might have interrupted an
-> in-progress fetch; could that possible explain the error?)  In that case
-> I reset origin/master, deleted a tag or two, and fetched, and the
-> problem seemed to be fixed.
+I have reworked the patch to use getpw to support ~user.  $HOME
+can eventually be supported via $ENVVARs.
 
-An interrupted fetch shouldn't have caused this, it really should only 
-happen if you have some actual filesystem data error. Something didn't get 
-written back correctly, or the page cache isn't coherent (or it got 
-corrupted by something else like a wild kernel pointer, of course).
 
-			Linus
+diff --git a/config.c b/config.c
+index 53f04a0..6a83c64 100644
+--- a/config.c
++++ b/config.c
+@@ -334,6 +334,42 @@ int git_config_string(const char **dest, const char *var, const char *value)
+ 	return 0;
+ }
+ 
++/*
++ * Expand ~ and ~user.  Returns a newly malloced string.  (If input does not
++ * start with "~", equivalent to xstrdup.)
++ */
++static char *expand_userdir(const char *value) {
++	if (value[0] == '~') {
++		struct passwd *pw;
++		char *expanded_dir;
++		const char *slash = strchr(value+1, '/');
++		const char *after_username = slash ? slash : value+strlen(value);
++		if (after_username == value+1) {
++			pw = getpwuid(getuid());
++			if (!pw) die("You don't exist!");
++		} else {
++			char save = *after_username;
++			*(char*)after_username = '\0';
++			pw = getpwnam(value+1);
++			if (!pw) die("No such user: '%s'", value+1);
++			*(char*)after_username = save;
++		}
++		expanded_dir = xmalloc(strlen(pw->pw_dir) + strlen(after_username) + 1);
++		strcpy(expanded_dir, pw->pw_dir);
++		strcat(expanded_dir, after_username);
++		return expanded_dir;
++	} else {
++		return xstrdup(value);
++	}
++}
++
++int git_config_userdir(const char **dest, const char *var, const char *value) {
++	if (!value)
++		return config_error_nonbool(var);
++	*dest = expand_userdir(value);
++	return 0;
++}
++
+ static int git_default_core_config(const char *var, const char *value)
+ {
+ 	/* This needs a better name */
+@@ -456,8 +492,9 @@ static int git_default_core_config(const char *var, const char *value)
+ 	if (!strcmp(var, "core.editor"))
+ 		return git_config_string(&editor_program, var, value);
+ 
+-	if (!strcmp(var, "core.excludesfile"))
+-		return git_config_string(&excludes_file, var, value);
++	if (!strcmp(var, "core.excludesfile")) {
++		return git_config_userdir(&excludes_file, var, value);
++	}
+ 
+ 	if (!strcmp(var, "core.whitespace")) {
+ 		if (!value)
+-- 
+1.5.6.2
