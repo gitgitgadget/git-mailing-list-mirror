@@ -1,77 +1,66 @@
-From: bdowning@lavos.net (Brian Downing)
-Subject: Re: [RFC] mtn to git conversion script
-Date: Mon, 25 Aug 2008 11:41:53 -0500
-Message-ID: <20080825164153.GK31114@lavos.net>
-References: <94a0d4530808240218j4bedbe3di99303da9addc93a4@mail.gmail.com> <20080825163530.GJ31114@lavos.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] "git shell" won't work, need "git-shell"
+Date: Mon, 25 Aug 2008 19:08:16 +0200
+Message-ID: <20080825170816.GQ10544@machine.or.cz>
+References: <20080824202325.GA14930@eagain.net> <7vfxoukv56.fsf@gitster.siamese.dyndns.org> <20080824203825.GB14930@eagain.net> <7vbpzikt4b.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	monotone-devel@nongnu.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 18:48:55 2008
+Cc: Tommi Virtanen <tv@eagain.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 25 19:10:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXfF8-0001nb-Pe
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 18:48:39 +0200
+	id 1KXfZH-0002Na-Mt
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 19:09:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754082AbYHYQrf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 12:47:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754070AbYHYQre
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 12:47:34 -0400
-Received: from qmta08.emeryville.ca.mail.comcast.net ([76.96.30.80]:46512 "EHLO
-	QMTA08.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753129AbYHYQre (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Aug 2008 12:47:34 -0400
-X-Greylist: delayed 336 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Aug 2008 12:47:34 EDT
-Received: from OMTA06.emeryville.ca.mail.comcast.net ([76.96.30.51])
-	by QMTA08.emeryville.ca.mail.comcast.net with comcast
-	id 6aby1a00716AWCUA8ghwvg; Mon, 25 Aug 2008 16:41:57 +0000
-Received: from mnementh.lavos.net ([98.212.138.194])
-	by OMTA06.emeryville.ca.mail.comcast.net with comcast
-	id 6ghu1a0014BqYqi8Sghu4N; Mon, 25 Aug 2008 16:41:55 +0000
-X-Authority-Analysis: v=1.0 c=1 a=powJzsOIrdUA:10 a=fa_nisRKZzn3U46LdqMA:9
- a=ltB3YH_2cWFKkBToJSGFvPOukIMA:4 a=LY0hPdMaydYA:10
-Received: by mnementh.lavos.net (Postfix, from userid 1000)
-	id B4EE4309F23; Mon, 25 Aug 2008 11:41:53 -0500 (CDT)
+	id S1754084AbYHYRIV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 13:08:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754075AbYHYRIV
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 13:08:21 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:49199 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753947AbYHYRIV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 13:08:21 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id EEDE73939B47; Mon, 25 Aug 2008 19:08:16 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080825163530.GJ31114@lavos.net>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7vbpzikt4b.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93643>
 
-On Mon, Aug 25, 2008 at 11:35:31AM -0500, Brian Downing wrote:
-> Note that for monotone export to go fast you absolutely /must/ avoid the
-> get_manifest operation.  In my converter I use the revision information
-> directly.  Getting the renames right with this is a little tricky; IIRC,
-> the ordering that works is:
+On Sun, Aug 24, 2008 at 02:20:20PM -0700, Junio C Hamano wrote:
+> Tommi Virtanen <tv@eagain.net> writes:
 > 
-> * Rename all renamed files, innermost files first, to temporary names.
-> * Delete all deleted files, innermost first.
-> * Rename all temporary names to permanent names, outermost first.
-> * Add all new/modified files.
+> > On Sun, Aug 24, 2008 at 01:36:37PM -0700, Junio C Hamano wrote:
+> >> Of course it would.  Does using /usr/libexec/git-core/git-shell work?
+> >
+> > It would, but do you really want people using that?
 > 
-> Conveniently, all of the above can be done by directly emitting
-> fast-import commands, so you don't have to keep track of trees directly.
-> (With one exception, which I'll elaborate on in a different email.)
+> I do not have particular preference either way.  What people wanted was to
+> have smaller number of git-foo on $PATH, and especially as "git-shell" is
+> not something people would be typing from their command line, so I dunno.
 
-The exception is one commit in monotone's repository.  There was
-actually a commit that did:
+Can we agree that direct calls of libexec stuff should never be part of
+the "official" interface (i.e. not workarounds for deprecated usage)?
+Considering that calling the git-shell executable directly is the _only_
+sensible way of using this interface, it should follow that it has to be
+in /usr/bin, no matter if users type this command or not.
 
-    rename '/' '/something'
-    add '/other'
+(I'm actually a little confused that you bring up the "typing from their
+command line" aspect at all, since that never seemed to be relevant
+criterium. People type the commit command all the time, yet we do not
+install git-commit. Typing the three git-* commands we do install -
+git-receive-pack, git-upload-pack and git-upload-archive - should be on
+the other hand pretty rare occasion. About gitk, well, 'git k' would
+just look silly, I guess. ;-)
 
-Monotone can apparently handle that, but git fast-import cannot, last I
-checked.  One would have to "know" what all the files were and recreate
-them by hand, which was what fast-import's move/copy commands were
-supposed to avoid.
-
-Obviously this use case is not too important to me, as patches have not
-been forthcoming to fix this, but I figured I'd mention it in case it's
-important to somebody else.
-
--bcd
+-- 
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
