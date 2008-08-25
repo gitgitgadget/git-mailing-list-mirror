@@ -1,80 +1,93 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT PATCH 00/31] Push GUI, GUI improvements, various jgit
-	stuff
-Date: Mon, 25 Aug 2008 07:24:17 -0700
-Message-ID: <20080825142417.GC25654@spearce.org>
-References: <1219005852-21496-1-git-send-email-marek.zawirski@gmail.com> <20080819175931.GH20947@spearce.org> <200808192121.30372.robin.rosenberg.lists@dewire.com> <48AB84A2.7010905@gmail.com> <20080820141326.GA3483@spearce.org> <48B2BAD1.5030909@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org
-To: Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 16:34:27 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] git diff/diff-index/diff-files: call setup_work_tree()
+Date: Mon, 25 Aug 2008 16:43:03 +0200
+Message-ID: <1219675383-1717-1-git-send-email-vmiklos@frugalware.org>
+References: <fcaeb9bf0808250652p3d0f483dt714cd68d3122d7c9@mail.gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Karl Chen <quarl@cs.berkeley.edu>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 25 16:43:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXd0g-00058f-Do
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 16:25:34 +0200
+	id 1KXdIA-0003v7-86
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 16:43:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753748AbYHYOYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 10:24:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755617AbYHYOYS
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 10:24:18 -0400
-Received: from george.spearce.org ([209.20.77.23]:39320 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753654AbYHYOYR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 10:24:17 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 3A73F38375; Mon, 25 Aug 2008 14:24:17 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <48B2BAD1.5030909@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753918AbYHYOmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 10:42:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753825AbYHYOmc
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 10:42:32 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:51571 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753918AbYHYOmc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 10:42:32 -0400
+Received: from vmobile.example.net (dhcp-116.st.wlan.bme.hu [152.66.147.116])
+	by yugo.frugalware.org (Postfix) with ESMTP id DBFD41DDC5C;
+	Mon, 25 Aug 2008 16:42:30 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 78F2396F8; Mon, 25 Aug 2008 16:43:03 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.rc3.17.gc14c8.dirty
+In-Reply-To: <fcaeb9bf0808250652p3d0f483dt714cd68d3122d7c9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93630>
 
-Marek Zawirski <marek.zawirski@gmail.com> wrote:
-> Shawn O. Pearce wrote:
->>
->> I've thought about starting a code.google.com project just to use
->> the issue tracking system there.
->
-> That seems to be nice idea.
-> The only downside I see is that using code.coogle.com with Mylyn may be  
-> hard[1]. As if we start to use issues system, it may be nice opportunity  
-> to start using Mylyn - if anybody want to?
->
-> [1] http://www.jroller.com/alexRuiz/entry/using_mylyn_with_google_code
+This makes it possible to use git diff when we are outside the repo but
+--work-tree and --git-dir is used.
 
-A comment there suggests its gotten slightly better:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-Posted by Christopher Barber on July 17, 2008 at 02:26 PM PDT:
-> There was a regression introduced in the 3.0 version of mylyn,
-> but it has been fixed in 3.0.1, which was just released.
-> 
-> Also, since Google Code now supports csv output, you are probably
-> better off changing your Query URL to:
-> 
-> ${serverUrl}/csv?can=1&colspec=ID+Status+Type+Owner+Summary
-> 
-> and your Query Pattern to:
-> 
-> "({Id}[0-9]+?)","({Status}.+?)","({Type}.+?)","({Owner}.+?)","({Description}.+?)"\n
-> 
-> This should provide a faster sync, since it minimizes the amount
-> of bytes downloaded.
+On Mon, Aug 25, 2008 at 08:52:11PM +0700, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> Because "git diff" did not call setup_work_tree(). The same happens
+> for "git diff-index" that someone reported recently. IIRC "git
+> diff-files" has the same problem.
 
-I may give it a try later today.
+Thanks, that was the problem.
 
-I also know some of the folks behind code.google.com.  I can poke
-them to see if Mylyn support is going to be coming along in the
-near future.  Google uses Eclipse a lot internally, and we have
-a number of open source projects using code.google.com as their
-hosting/issue tracking, and Eclipse as their IDE.  We probably
-should be making the issue tracking product more accessible to IDEs.
+ builtin-diff-files.c |    1 +
+ builtin-diff-index.c |    1 +
+ builtin-diff.c       |    1 +
+ 3 files changed, 3 insertions(+), 0 deletions(-)
 
+diff --git a/builtin-diff-files.c b/builtin-diff-files.c
+index 9bf10bb..4802e00 100644
+--- a/builtin-diff-files.c
++++ b/builtin-diff-files.c
+@@ -19,6 +19,7 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
+ 	int result;
+ 	unsigned options = 0;
+ 
++	setup_work_tree();
+ 	init_revisions(&rev, prefix);
+ 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+ 	rev.abbrev = 0;
+diff --git a/builtin-diff-index.c b/builtin-diff-index.c
+index 17d851b..b8e0656 100644
+--- a/builtin-diff-index.c
++++ b/builtin-diff-index.c
+@@ -16,6 +16,7 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
+ 	int i;
+ 	int result;
+ 
++	setup_work_tree();
+ 	init_revisions(&rev, prefix);
+ 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+ 	rev.abbrev = 0;
+diff --git a/builtin-diff.c b/builtin-diff.c
+index 7ffea97..86f9255 100644
+--- a/builtin-diff.c
++++ b/builtin-diff.c
+@@ -244,6 +244,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	int nongit;
+ 	int result = 0;
+ 
++	setup_work_tree();
+ 	/*
+ 	 * We could get N tree-ish in the rev.pending_objects list.
+ 	 * Also there could be M blobs there, and P pathspecs.
 -- 
-Shawn.
+1.6.0.rc3.17.gc14c8.dirty
