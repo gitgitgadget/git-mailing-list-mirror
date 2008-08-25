@@ -1,78 +1,184 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fix "git log -i --grep"
-Date: Sun, 24 Aug 2008 23:27:24 -0700
-Message-ID: <7vzln1hann.fsf@gitster.siamese.dyndns.org>
-References: <g8jbvd$18k$1@ger.gmane.org>
- <20080821200255.GB27705@coredump.intra.peff.net> <48AE786C.20201@fastmail.fm>
- <20080822165047.GA3339@sigill.intra.peff.net>
- <7vzln492pc.fsf@gitster.siamese.dyndns.org>
- <20080825013837.GA17201@coredump.intra.peff.net>
- <7vmyj1isot.fsf@gitster.siamese.dyndns.org>
- <20080825061504.GA9313@coredump.intra.peff.net>
+Subject: Re: [PATCH] git-apply - Add --include=PATH
+Date: Mon, 25 Aug 2008 01:05:31 -0700
+Message-ID: <7vhc99h644.fsf@gitster.siamese.dyndns.org>
+References: <1219523869.18365.106.camel@localhost>
+ <7viqtrw7up.fsf@gitster.siamese.dyndns.org>
+ <1219615063.18365.141.camel@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 25 08:28:37 2008
+To: Joe Perches <joe@perches.com>
+X-From: git-owner@vger.kernel.org Mon Aug 25 10:06:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXVZ6-0002JN-Bk
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 08:28:36 +0200
+	id 1KXX66-0001PW-1y
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 10:06:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751573AbYHYG1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 02:27:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751528AbYHYG1a
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 02:27:30 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64290 "EHLO
+	id S1753829AbYHYIFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 04:05:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753808AbYHYIFk
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 04:05:40 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47329 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751441AbYHYG1a (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 02:27:30 -0400
+	with ESMTP id S1753720AbYHYIFj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 04:05:39 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0353F6EC7E;
-	Mon, 25 Aug 2008 02:27:29 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1D91B67D84;
+	Mon, 25 Aug 2008 04:05:38 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 6910F6EC7D; Mon, 25 Aug 2008 02:27:26 -0400 (EDT)
-In-Reply-To: <20080825061504.GA9313@coredump.intra.peff.net> (Jeff King's
- message of "Mon, 25 Aug 2008 02:15:05 -0400")
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 76DA467D83; Mon, 25 Aug 2008 04:05:34 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E41C3424-726E-11DD-BE5F-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 9A4B0614-727C-11DD-A5E9-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93604>
 
-Jeff King <peff@peff.net> writes:
+Joe Perches <joe@perches.com> writes:
 
-> I worked up this patch, and it is below. However, I think it may not be
-> a good idea, because...
+>> > @@ -2996,10 +2996,16 @@ static struct excludes {
+>> >  	const char *path;
+>> >  } *excludes;
+>> >  
+>> > +static struct includes {
+>> > +	struct includes *next;
+>> > +	const char *path;
+>> > +} *includes;
+>> 
+>> Now this is ugly.  You can just add a new variable "*includes" that is of
+>> exactly the same type as existing "*excludes" without introducing a new
+>> type.
 >
->> The only issue I still have, which I suspect your fix has made it easier
->> to address, is to complain if sub-options to grep like -i and -E are given
->> without --grep.  That's not something v1.5.6 series did, though.
->
-> This is trivial with my first patch, but not with the second. With
-> grep_filter kept as a pointer, we know that if the pointer is non-NULL
-> but there are no patterns, then the user asked for grep options but
-> never --grep.
+> Yes, it's slightly ugly, but it was less work and much easier for
+> a human to parse.
 
-Hmm, that's true --- instead you would need to introduce a new flag in
-rev_info that records if you saw any grep sub-options, if we want to check
-this condition.
+Another consideration is what should happen when you give contradicting
+excludes and includes list.  For example, it is very plausible you might
+want to say "apply to all but header files, except that you want the part
+to one specific header file to also get applied).  Something like:
 
-> I guess this might be a helpful thing for some users, but I wonder if it
-> is being too unpredictable for script usage. I.e., a script like:
->
->   git log -E `for i in "$@"; do echo --author=$i`
+    $ git apply --include='specific-one.h' --exclude='*.h' --include='*' <patch
 
-Ok, that's true, so let's not worry about making "log -i without --grep"
-an error.
+It is easy to declare that all the exclude patterns are processed and used
+to reject paths, and then only after that include patterns, if any, are
+used to limit the remainder.  But that is describing how the code does it,
+and may not match what the users expect.  For example, the users would
+expect:
 
-> Anyway, the non-allocating patch is below. Aside from the test case, it
-> deletes more lines than it adds, which is always nice.
+    $ git apply --include='specific-one.h' --exclude='s*' <patch
 
-Yeah, thanks.
+to apply the part for "specific-one.h" but no other paths that begin with "s".
+However, that is not what happens.
+
+It would be much easier to explain to the end users if the rule were that
+include and exclude patterns are examined in the order they are specified
+on the command line, and the first match determines the each path's fate.
+
+In order to support that, you do not want two separate lists.  Instead,
+you would want to keep a single "static struct string_list limit_by_name",
+append both excluded and included items to the list as you encounter with
+string_list_append(), but in such a way that you can distinguish which one
+is which later.  Also remember if you have seen any included item.
+
+Then your use_patch() would:
+
+ * first check and ignore patches about paths outside of the prefix if any
+   is specified via --directory;
+
+ * loop over the limit_by_name.items[] array, checking the path with each
+   element in it with fnmatch().  If you find a match, then you know if it
+   is excluded (return 0) or included (return 1);
+
+ * if no patterns match, return 1 (i.e. modify this path) if you did not
+   see any "include" pattern.  If you had any "include" pattern on the
+   command line, return 0 (i.e. do not modify this path).
+
+Perhaps something like this, but I did not test it.
+
+ builtin-apply.c |   48 +++++++++++++++++++++++++++++++++---------------
+ 1 files changed, 33 insertions(+), 15 deletions(-)
+
+diff --git c/builtin-apply.c w/builtin-apply.c
+index 2216a0b..967ebec 100644
+--- c/builtin-apply.c
++++ w/builtin-apply.c
+@@ -2991,29 +2991,45 @@ static int write_out_results(struct patch *list, int skipped_patch)
+ 
+ static struct lock_file lock_file;
+ 
+-static struct excludes {
+-	struct excludes *next;
+-	const char *path;
+-} *excludes;
++static struct string_list limit_by_name;
++static int has_include;
++static void add_name_limit(const char *name, int exclude)
++{
++	struct string_list_item *it;
++
++	it = string_list_append(name, &limit_by_name);
++	it->util = exclude ? NULL : (void *) 1;
++}
+ 
+ static int use_patch(struct patch *p)
+ {
+ 	const char *pathname = p->new_name ? p->new_name : p->old_name;
+-	struct excludes *x = excludes;
+-	while (x) {
+-		if (fnmatch(x->path, pathname, 0) == 0)
+-			return 0;
+-		x = x->next;
+-	}
++	int i;
++
++	/* Paths outside are not touched regardless of "--include" */
+ 	if (0 < prefix_length) {
+ 		int pathlen = strlen(pathname);
+ 		if (pathlen <= prefix_length ||
+ 		    memcmp(prefix, pathname, prefix_length))
+ 			return 0;
+ 	}
+-	return 1;
++
++	/* See if it matches any of exclude/include rule */
++	for (i = 0; i < limit_by_name.nr; i++) {
++		struct string_list_item *it = &limit_by_name.items[i];
++		if (!fnmatch(it->string, pathname, 0))
++			return (it->util != NULL);
++	}
++
++	/*
++	 * If we had any include, a path that does not match any rule is
++	 * not used.  Otherwise, we saw bunch of exclude rules (or none)
++	 * and such a path is used.
++	 */
++	return !has_include;
+ }
+ 
++
+ static void prefix_one(char **name)
+ {
+ 	char *old_name = *name;
+@@ -3154,10 +3170,12 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
+ 			continue;
+ 		}
+ 		if (!prefixcmp(arg, "--exclude=")) {
+-			struct excludes *x = xmalloc(sizeof(*x));
+-			x->path = arg + 10;
+-			x->next = excludes;
+-			excludes = x;
++			add_name_limit(arg + 10, 1);
++			continue;
++		}
++		if (!prefixcmp(arg, "--include=")) {
++			add_name_limit(arg + 10, 0);
++			has_include = 1;
+ 			continue;
+ 		}
+ 		if (!prefixcmp(arg, "-p")) {
