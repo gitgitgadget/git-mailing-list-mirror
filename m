@@ -1,63 +1,47 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Suggestion: "man git clone"
-Date: Mon, 25 Aug 2008 14:38:58 +0200
-Message-ID: <vpqk5e52rrx.fsf@bauges.imag.fr>
-References: <48ACB29C.7000606@zytor.com> <g8m6d1$7nf$1@ger.gmane.org>
+From: Andi Kleen <andi@firstfloor.org>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Mon, 25 Aug 2008 14:43:41 +0200
+Message-ID: <20080825124341.GD26610@one.firstfloor.org>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org> <1219664940.9583.42.camel@pmac.infradead.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-X-From: git-owner@vger.kernel.org Mon Aug 25 14:42:32 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	users@kernel.org
+To: David Woodhouse <dwmw2@infradead.org>
+X-From: git-owner@vger.kernel.org Mon Aug 25 14:43:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXbOO-0003HW-Ko
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 14:41:57 +0200
+	id 1KXbOw-0003Sm-Qx
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 14:42:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753573AbYHYMkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 08:40:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753601AbYHYMkt
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 08:40:49 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:64091 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753566AbYHYMkt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 08:40:49 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m7PCd4ej000537;
-	Mon, 25 Aug 2008 14:39:08 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KXbLW-0008WL-J3; Mon, 25 Aug 2008 14:38:58 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KXbLW-0001re-GS; Mon, 25 Aug 2008 14:38:58 +0200
-In-Reply-To: <g8m6d1$7nf$1@ger.gmane.org> (Michael J. Gruber's message of "Fri\, 22 Aug 2008 13\:02\:57 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Mon, 25 Aug 2008 14:39:08 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1756082AbYHYMlX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 08:41:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756065AbYHYMlX
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 08:41:23 -0400
+Received: from one.firstfloor.org ([213.235.205.2]:34853 "EHLO
+	one.firstfloor.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756003AbYHYMlW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 08:41:22 -0400
+Received: by one.firstfloor.org (Postfix, from userid 503)
+	id 9A7141AD0020; Mon, 25 Aug 2008 14:43:41 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1219664940.9583.42.camel@pmac.infradead.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93617>
 
-Michael J Gruber <michaeljgruber+gmane@fastmail.fm> writes:
+>   (C) Just don't do it. Leave the git-foo commands as they were. They
+>       weren't actually hurting anyone, and you don't actually _gain_
+>       anything by removing them. For those occasional nutters who
+>       _really_ care about the size of /usr/bin, give them the _option_
+>       of a 'make install' without installing the aliases.
 
-> I've heard about some other SCMs which have only "scm help bla", so this
-> suggestion would be in-line with common usage. [Not that git would have
-> to learn from other SCM's ;) ]
+(Ca) Only leave the widely used commands in $PATH and remove the ones
+which are mostly used by internal scripts only.
 
-OTOH, I like the fact that the manpages be browsable with man. As an
-Emacs user, I often do M-x man RET git-whatever RET, other people can
-enjoy their favorite man reader.
-
-If git starts hiding that "man" stuff to the user, (s)he may just fail
-to notice that it is possible.
-
--- 
-Matthieu
+-Andi
