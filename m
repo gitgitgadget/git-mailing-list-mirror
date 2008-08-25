@@ -1,126 +1,81 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: Dropping core.worktree and GIT_WORK_TREE support
-Date: Mon, 25 Aug 2008 20:52:11 +0700
-Message-ID: <fcaeb9bf0808250652p3d0f483dt714cd68d3122d7c9@mail.gmail.com>
-References: <quack.20080824T0140.lth3aku956e@roar.cs.berkeley.edu>
-	 <20080824220854.GA27299@coredump.intra.peff.net>
-	 <7vzln2j9y2.fsf@gitster.siamese.dyndns.org>
-	 <20080824231343.GC27619@coredump.intra.peff.net>
-	 <7vhc9aj82i.fsf@gitster.siamese.dyndns.org>
-	 <20080824235124.GA28248@coredump.intra.peff.net>
-	 <7v7ia6j5q9.fsf_-_@gitster.siamese.dyndns.org>
-	 <20080825020054.GP23800@genesis.frugalware.org>
-	 <7v1w0dkd5s.fsf@gitster.siamese.dyndns.org>
-	 <20080825125205.GB23800@genesis.frugalware.org>
+From: Marek Zawirski <marek.zawirski@gmail.com>
+Subject: Re: [EGIT PATCH 00/31] Push GUI, GUI improvements, various jgit stuff
+Date: Mon, 25 Aug 2008 15:59:45 +0200
+Message-ID: <48B2BAD1.5030909@gmail.com>
+References: <1219005852-21496-1-git-send-email-marek.zawirski@gmail.com> <20080819175931.GH20947@spearce.org> <200808192121.30372.robin.rosenberg.lists@dewire.com> <48AB84A2.7010905@gmail.com> <20080820141326.GA3483@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
-	"Karl Chen" <quarl@cs.berkeley.edu>, git@vger.kernel.org
-To: "Miklos Vajna" <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Mon Aug 25 15:55:12 2008
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Aug 25 16:02:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXcVS-0002uN-32
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 15:53:18 +0200
+	id 1KXcct-0005Pu-Qj
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 16:01:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754062AbYHYNwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 09:52:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753810AbYHYNwO
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 09:52:14 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:32534 "EHLO
+	id S1755471AbYHYN7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 09:59:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755388AbYHYN7u
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 09:59:50 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:35047 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754015AbYHYNwN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 09:52:13 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so980374fgg.17
-        for <git@vger.kernel.org>; Mon, 25 Aug 2008 06:52:11 -0700 (PDT)
+	with ESMTP id S1755245AbYHYN7t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 09:59:49 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so982116fgg.17
+        for <git@vger.kernel.org>; Mon, 25 Aug 2008 06:59:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Ziw9jyhMjog0a/ijM3XR5J6tW/hpEAZwPJEkd8E6aNE=;
-        b=JjsSptWpmJm50wLxUpvMLZdKAfb/xx0E4O4SG7e7l3dYUGR3oh8RcwiWU7qiDGpgck
-         UWv1cdmFDxw0ja8Pgf8PqBA7kvPCG2RJnFwrwpribXbztHm/3W9w5xq0bjzQGSv5g7mJ
-         dZLViCQnK3mHt6Ur6ylmdI6DB9OqrgwqqLm+4=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=Pu5ojP+j2AGRXawWx1SmUKfW+Z68NmK50M2EbHqVcGs=;
+        b=h44iYd1818H15eE2YyqT1N4z7ZBz/nIJIA1uO+X8zz2WfGXWoM66i/Kb1DwJgwYxkK
+         4U7SQAJ5Tl2Bvr0iAfCktn9u0Srl6EZDHC0s7ehgnj6uoL4cfgz53hv1XU1miNqJtOij
+         MSklJNyyjXmzQaP84MQ/t8CDloA8hgutWRJLA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=I0mngrBt2QFRR+aX9MMlLAS+ueoWonRJKAheE5JRrNAXCcQ9uQ9jpYacz49wo5MXQm
-         Y/x9esT041pbIOLHbl/FrYWVR1VC7YdGvAdy4Rmtx1OPBNSE1INwTb0omRhJX9DHtXQ9
-         itXbRCaP/bR4ptXhRpO1ie+EJt0V7eJ9f7GX0=
-Received: by 10.86.92.7 with SMTP id p7mr3355801fgb.72.1219672331560;
-        Mon, 25 Aug 2008 06:52:11 -0700 (PDT)
-Received: by 10.86.93.13 with HTTP; Mon, 25 Aug 2008 06:52:11 -0700 (PDT)
-In-Reply-To: <20080825125205.GB23800@genesis.frugalware.org>
-Content-Disposition: inline
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=FIJ76FDvB4Rp3UTRNexTcDNXb/8NfM8zfCeVyrhy4V4u+5tV/Rl59vYfyvuA7Jt/IE
+         9CwRb9gnIHAySYUNiTmDmfxqzssYfDu+LhJ2EbqI6bGMyJb14xNLpAThXtR3Q2ynNN5r
+         WUyREjyEvuCjJFIZjXKvy5YI8gg36PLlQiXrI=
+Received: by 10.86.82.6 with SMTP id f6mr3374407fgb.38.1219672788787;
+        Mon, 25 Aug 2008 06:59:48 -0700 (PDT)
+Received: from ?62.21.4.140? ( [62.21.4.140])
+        by mx.google.com with ESMTPS id l12sm5472390fgb.6.2008.08.25.06.59.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 25 Aug 2008 06:59:48 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080702 Iceape/1.1.11 (Debian-1.1.11-1)
+In-Reply-To: <20080820141326.GA3483@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93625>
 
-On 8/25/08, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> On Sun, Aug 24, 2008 at 08:05:03PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
->  > > Does this include removing of --work-tree as well?
->  > >
->  > > The git backend of Pootle (http://translate.sourceforge.net/wiki/) uses
->  > > it.
->  >
->  > Interesting.  Does it use it because it can (meaning, --work-tree is
->  > supposed to work), or because --work-tree is the cleanest way to do what
->  > it wants to do (if the feature worked properly, that is, which is not the
->  > case)?
->
->
-> It's like:
->
->  The current working directory is like
->  /usr/lib/python2.5/site-packages/Pootle. The git repository is under
->  /some/other/path/outside/usr.
->
->  Then Pootle has two possibilities:
->
->  1) save the current directory, change to /some/other, execute git, and
->  change the directory back
->
->  2) use git --work-tree / --git-dir
->
->  I guess the second form is more elegant. Of course if it is decided that
->  this option will be removed then the old form can be still used, but I
->  think that would be a step back.
->
->
->  > > Also, here is a question:
->  > >
->  > > $ git --git-dir git/.git --work-tree git diff --stat|tail -n 1
->  > >  1443 files changed, 0 insertions(+), 299668 deletions(-)
->  > >
->  > > So, it's like it thinks every file is removed.
->  > >
->  > > But then:
->  > >
->  > > $ cd git
->  > > $ git diff --stat|wc -l
->  > > 0
->  > >
->  > > is this a bug, or a user error?
->  >
->  > I  think it is among the many other things that falls into "the two
->  > attempts still haven't resolved" category.
->
->
-> I'm unfamiliar with this part of the codebase, so in case somebody other
->  could look at it, that would be great, but I'm happy with write a
->  testcase for it. (Or in case nobody cares, I can try to fix it, but that
->  may take a bit more time.)
+Shawn O. Pearce wrote:
+>> BTW, as another developers are getting involved in jgit/egit coding,  
+>> maybe we could use (update) some wiki page for marking who is working on  
+>> some topic currently? Now it's not obvious for me, and as we're not so  
+>> numerous it would be pity to waste our time and do some redundant stuff  
+>> one day.
+> 
+> I've thought about starting a code.google.com project just to use
+> the issue tracking system there.  I'm using an internal tool to
+> keep of issues for myself, but that's not fair to the end-users or
+> other contributors...
 
-Because "git diff" did not call setup_work_tree(). The same happens
-for "git diff-index" that someone reported recently. IIRC "git
-diff-files" has the same problem.
+That seems to be nice idea.
+The only downside I see is that using code.coogle.com with Mylyn may be 
+hard[1]. As if we start to use issues system, it may be nice opportunity 
+to start using Mylyn - if anybody want to?
+
+[1] http://www.jroller.com/alexRuiz/entry/using_mylyn_with_google_code
+
 -- 
-Duy
+Marek Zawirski [zawir]
+marek.zawirski@gmail.com
