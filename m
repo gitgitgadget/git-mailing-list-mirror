@@ -1,73 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5] gitweb: ref markers link to named shortlogs
-Date: Mon, 25 Aug 2008 12:48:09 -0700
-Message-ID: <7vzln0g9l2.fsf@gitster.siamese.dyndns.org>
-References: <200808221501.54908.jnareb@gmail.com>
- <200808250444.23305.jnareb@gmail.com>
- <7vvdxpivig.fsf@gitster.siamese.dyndns.org>
- <200808252042.29171.jnareb@gmail.com>
+From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Subject: [PATCH] Add a reference to gitk localbranc remote/branch in
+ gittutorial
+Date: Mon, 25 Aug 2008 21:50:23 +0200
+Message-ID: <20080825215023.11822a20@paolo-desktop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 21:49:38 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Aug 25 21:51:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXi4F-0006jl-GI
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 21:49:35 +0200
+	id 1KXi6B-0007K6-9S
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 21:51:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755022AbYHYTsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 15:48:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754413AbYHYTsa
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 15:48:30 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50918 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753905AbYHYTs3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 15:48:29 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5942E6721E;
-	Mon, 25 Aug 2008 15:48:25 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 209D867215; Mon, 25 Aug 2008 15:48:12 -0400 (EDT)
-In-Reply-To: <200808252042.29171.jnareb@gmail.com> (Jakub Narebski's message
- of "Mon, 25 Aug 2008 20:42:24 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C7EA8150-72DE-11DD-AC3B-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1754386AbYHYTub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 15:50:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754409AbYHYTub
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 15:50:31 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:9176 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754376AbYHYTua (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 15:50:30 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so130568ywe.1
+        for <git@vger.kernel.org>; Mon, 25 Aug 2008 12:50:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=2SeBJABzOCX4FZemaALcptKoSlsHrJWw9tYr3Yz7yIo=;
+        b=VwgvralzPoR77BiC7TRmoNSkKs96qz7SQLQCd5CE57or673PQJwDUJtnNDqzNHJ/sH
+         HHn1VkDIoh5+DJxUGTctbfsYUMOW1nKEgp5M5LdSV51QwJby5FcjJkCFwt5FBNzZb4c2
+         MazrLXeApc1r6Ey4GcnI+U8ZdPlEf4hNQWEs4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        b=GuvCvV52fGAFGX0jc/pe3HPV9HrFoliRFuC8v/YRkNmc/0FH2t1H5hI98+t704GSJ5
+         ukFoZFhM3M7sVZkJbRubgecw8jKOWl3rcseZhKGS3nS/DNaOGHw7HexsPOcXejpDpkA1
+         lpYdck6Zzs1/qOnTgmRkUFK41giM4vTf3ssjY=
+Received: by 10.103.18.19 with SMTP id v19mr3134602mui.123.1219693828094;
+        Mon, 25 Aug 2008 12:50:28 -0700 (PDT)
+Received: from paolo-desktop ( [87.13.81.169])
+        by mx.google.com with ESMTPS id w5sm28210288mue.10.2008.08.25.12.50.25
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 25 Aug 2008 12:50:26 -0700 (PDT)
+X-Mailer: Sylpheed-Claws 1.0.5 (GTK+ 1.2.10; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93663>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi all,
+I think it's worth to mention that a user can issue the command:
 
-> On Mon, 25 Aug 2008, Junio C Hamano wrote:
->> Jakub Narebski <jnareb@gmail.com> writes:
->> 
->> > +                     $markers .= " <span class=\"$class\" title=\"$ref\">" .
->> > +                             $cgi->a({-href => href(action=>( $indirect ? "tag" : "shortlog"),
->> > +                                                    hash=>"refs/$ref")}, $name) .
->> > +                             "</span>";
->> >
->> > or equivalent (not stripping "refs/" in git_get_references).
->> 
->> If you mean by "hash => $it", I think it is only used as the URL the
->> anchor points at, and it is much more preferable to use the canonical
->> form.  "...?h=refs/heads/master" and "...h=heads/master" might produce the
->> same output, but then it is better for smart caching layer if you always
->> used canonical form, isn't it?
->
-> Will you do the change, or do you need resend from Giuseppe?
->
-> I like the feature that this patch introduces, and this time I don't
-> have any reservations to the code. So, FWIW, Ack from me.
+	$gitk local remote/branch
 
-I could do it, but my preference is for somebody I trust to resend with
-appropriate Ack lines so that I can just run "git am" on the message
-without editing.
+to browse what he/she just fetched from the remote branch.
+
+Thanks to a few guys on the #git channel!
+
+
+Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+---
+ Documentation/gittutorial.txt |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
+index 48d1454..1407973 100644
+--- a/Documentation/gittutorial.txt
++++ b/Documentation/gittutorial.txt
+@@ -326,6 +326,12 @@ alice$ git log -p ..FETCH_HEAD
+ 
+ This operation is safe even if Alice has uncommitted local changes.
+ 
++Alice can also use gitk to browse that Bob did:
++
++------------------------------------------------
++alice$ gitk master origin/master
++------------------------------------------------
++
+ After inspecting what Bob did, if there is nothing urgent, Alice may
+ decide to continue working without pulling from Bob.  If Bob's history
+ does have something Alice would immediately need, Alice may choose to
+-- 
+1.6.0.2.g2ebc0.dirty
