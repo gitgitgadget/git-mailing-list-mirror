@@ -1,125 +1,193 @@
-From: "Felipe Contreras" <felipe.contreras@gmail.com>
-Subject: Re: [RFC] mtn to git conversion script
-Date: Mon, 25 Aug 2008 03:45:11 +0300
-Message-ID: <94a0d4530808241745r3f2bdb56q9cfa8bc61f79223e@mail.gmail.com>
-References: <94a0d4530808240218j4bedbe3di99303da9addc93a4@mail.gmail.com>
-	<20080824131405.GJ23800@genesis.frugalware.org>
-	<94a0d4530808241133n5cc9f17arc79a1a5013187869@mail.gmail.com>
-	<20080824224658.GA16590@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC v2] Git User's Survey 2008
+Date: Mon, 25 Aug 2008 02:41:37 +0200
+Message-ID: <200808250241.40407.jnareb@gmail.com>
+References: <200807230325.04184.jnareb@gmail.com> <200808200308.26308.jnareb@gmail.com> <20080824213634.GA16753@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: monotone-devel@nongnu.org, Miklos Vajna <vmiklos@frugalware.org>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org Mon Aug 25 02:46:21 2008
-Return-path: <monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org>
-Envelope-to: gcvmd-monotone-devel@m.gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Mon Aug 25 02:46:27 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXQDr-00009V-Hy
-	for gcvmd-monotone-devel@m.gmane.org; Mon, 25 Aug 2008 02:46:19 +0200
-Received: from localhost ([127.0.0.1]:51032 helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1KXQCt-0004Pv-Bb
-	for gcvmd-monotone-devel@m.gmane.org; Sun, 24 Aug 2008 20:45:19 -0400
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1KXQCp-0004Pc-UL
-	for monotone-devel@nongnu.org; Sun, 24 Aug 2008 20:45:15 -0400
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1KXQCn-0004OW-IK
-	for monotone-devel@nongnu.org; Sun, 24 Aug 2008 20:45:14 -0400
-Received: from [199.232.76.173] (port=59489 helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1KXQCn-0004OK-CQ
-	for monotone-devel@nongnu.org; Sun, 24 Aug 2008 20:45:13 -0400
-Received: from rv-out-0708.google.com ([209.85.198.242]:28817)
-	by monty-python.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <felipe.contreras@gmail.com>) id 1KXQCn-0001qI-5z
-	for monotone-devel@nongnu.org; Sun, 24 Aug 2008 20:45:13 -0400
-Received: by rv-out-0708.google.com with SMTP id f25so1105821rvb.22
-	for <monotone-devel@nongnu.org>; Sun, 24 Aug 2008 17:45:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma;
-	h=domainkey-signature:received:received:message-id:date:from:to
-	:subject:cc:in-reply-to:mime-version:content-type
-	:content-transfer-encoding:content-disposition:references;
-	bh=6eOIxaSSon6haGUGnEsb7hDxkbW31PNwgyCHiyZfROA=;
-	b=qrXWrg7BVTIrJ0pTZREXi5r/RCtt/Xe+sIdXbQA8Zf/xXAcu9dHmVfmZx8GW6L4e2a
-	k9rFRh5x0rcDiMK3OMWozDfFIzXaUTmCKBqlX8f5iTAEOLVl6prYSMpL320Z8n40oIrC
-	w0jl+eycZCEwdjr7j6XTxho2vfglU1+4mLCgI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma;
-	h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-	:content-type:content-transfer-encoding:content-disposition
-	:references;
-	b=p8ZHE22jENrRZ606DOXxSt+cEzRzXKdJ8NP/AXccEohqlD50hxRaBtsRmTKeqTReAE
-	d2q8DR2fJ4v6l6rbYJw39lP+/jfbKYfZrQ+8HkjG2tiz8wVQ2FoxDRgQCQ5J9E+t30+N
-	WwAAIiEmwQm4Mt47wXBeHK9sm6uKGSzDe5n+E=
-Received: by 10.141.212.5 with SMTP id o5mr1841431rvq.20.1219625111387;
-	Sun, 24 Aug 2008 17:45:11 -0700 (PDT)
-Received: by 10.140.166.19 with HTTP; Sun, 24 Aug 2008 17:45:11 -0700 (PDT)
-In-Reply-To: <20080824224658.GA16590@spearce.org>
+	id 1KXQDx-0000Aj-Ce
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 02:46:25 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751747AbYHYAlp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Aug 2008 20:41:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751665AbYHYAlp
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Aug 2008 20:41:45 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:33902 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751355AbYHYAlo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2008 20:41:44 -0400
+Received: by ug-out-1314.google.com with SMTP id c2so439252ugf.37
+        for <git@vger.kernel.org>; Sun, 24 Aug 2008 17:41:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=omlmVQZzRbBiARjMKzHm22roxxao9uoD+egPFFsRNno=;
+        b=tieiGGrRiz+jykKag7d00xVkcQ85+AGQV5RYLzunfEMQ23+B8O7HNczqNc2LXR5ROj
+         Wk4BqNQD/fK2jj9hAYD/V+rS6Jek0NuXquoLLI2v6cGXvSgLFcmPbhOuyPUFoxVQuAPa
+         aHfM6gYIfUPLl1CuS/08gDduPZRUvuD52ugAk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=HH/f+YWWt5l23A65AcWjpGdg3Ax43Ct7Y8qu/G87724Pmteiqp+RlqA7JKgypNe40O
+         Qr09w7TfGg8XVN/8r8Fi9U7tBxE4XtB9ArsYFtsh63RIdg9a6MYwv2gpwHzeFjFXUj+H
+         CEF4cjLdXYYvrnwbm21sWZNHrkd5ZP1GCLfE4=
+Received: by 10.66.236.16 with SMTP id j16mr1876673ugh.31.1219624901883;
+        Sun, 24 Aug 2008 17:41:41 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.234.185])
+        by mx.google.com with ESMTPS id i39sm6536281ugd.47.2008.08.24.17.41.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 24 Aug 2008 17:41:40 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20080824213634.GA16753@leksak.fem-net>
 Content-Disposition: inline
-X-detected-kernel: by monty-python.gnu.org: Linux 2.6 (newer, 2)
-X-BeenThere: monotone-devel@nongnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: developer discussion for monotone <monotone-devel.nongnu.org>
-List-Unsubscribe: <http://lists.nongnu.org/mailman/listinfo/monotone-devel>,
-	<mailto:monotone-devel-request@nongnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/monotone-devel>
-List-Post: <mailto:monotone-devel@nongnu.org>
-List-Help: <mailto:monotone-devel-request@nongnu.org?subject=help>
-List-Subscribe: <http://lists.nongnu.org/mailman/listinfo/monotone-devel>,
-	<mailto:monotone-devel-request@nongnu.org?subject=subscribe>
-Sender: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org
-Errors-To: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93580>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93581>
 
-On Mon, Aug 25, 2008 at 1:46 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> wrote:
->> On Sun, Aug 24, 2008 at 4:14 PM, Miklos Vajna <vmiklos@frugalware.org> wrote:
->> > On Sun, Aug 24, 2008 at 12:18:50PM +0300, Felipe Contreras <felipe.contreras@gmail.com> wrote:
->> >> What do you think? Does it makes sense to have a 'write-raw' command?
->> >> Or should I somehow use 'fast-import'?
->> >
->> > Yes, you should. ;-)
->> >
->> > The syntax of it is not so hard, see for example 'git fast-export
->> > HEAD~2..' on a git repo and you'll see.
->> >
->> > This should help a lot if you are like me, who likes to learn from
->> > examples.
->>
->> Is it possible to create a fast-import from the index? I realize this
->> is not the best thing to do, but for now I would like to do that.
->
-> No, fast-import uses its own internal structure and avoids the
-> index file.
+On Sun, 24 Aug 2008, Stephan Beyer napisa=B3:
+> Hi again,
+>=20
+> > 8.  Which Git version(s) are you using?=20
+> >  [ ] pre 1.3
+> >  [ ] 1.3.x
+> ...
+> >  [ ] master
+> >  [ ] next
+>=20
+> I wonder if people who do not know about master/next being git.git
+> branches may do "[X] next" because they think they will use the next
+> version available.
+>=20
+> So could you write "master branch of official git repository" and the
+> same for "next"?
 
-Yeah, I knew that, but wanted to just replace the 'write-raw' command.
-To avoid doing unnecessary changes.
+Thanks. I've added this.
 
-> Also, look at `git-hash-objects -w` as a replacement for your
-> git-write-raw tool if you aren't going to use git-fast-import.
+> > 12. What other SCM did or do you use?
+> ...
+> > By "custom (non-published)" it is meant here version control system
+> > which was not released to the public, for example something written
+> > for yourself, or internal company project used only in company.
+>=20
+> Better:
+>  "custom (non-published)" means a version control system which has
+>  not been released to the public, for example, something written for
+>  yourself or your company only.
 
-Awesome, but I just did it properly :)
+Thank you, that is much better.
 
-A few comments regarding fast-import:
+> And I am unsure if "SCM" is better than "version control system"
+> in this sentence, but I do not think this is really important.
 
-Why the distinction between 'from' and 'merge'? Doesn't it make more
-sense to use 'parent' for both?
+Hmmm...
 
-I'm doing: commit refs/mtn/d137c7046bae7e4a0144fee82bfce8061f61e3b3
+> > 16. I use Git for (check all that apply):
+> ...
+> > Note that above choices are neither orthogonal nor exclusive.
+> > You might want to check multiple answers wven for single repository=
+=2E
+>                                            ^^^^^^^^^ "even for a"
+>=20
 
-So I was expecing this to work:
-from mtn/d137c7046bae7e4a0144fee82bfce8061f61e3b3
+Corrected. Thanks.
 
-But it didn't, probably because the commit hasn't actually been
-committed. Wouldn't it make sense to store it as a temporal commit so
-my script doesn't have to deal with that?
+> > 17. How do you obtain Git?
+> ...
+> >  [ ] pull form main repository
+>             ^^^^ from
 
-Anyway, very nice tool. It's going much faster (1h) compared to before (1 day).
+Corrected. Thanks.
+=20
+> > Explanation: binary package covers pre-compiled binary; source scri=
+pt
+> > is meant to cover installation in source-based distributions, like
+> > 'emerge' in Gentoo.
+>=20
+> "pre-compiled binary (e.g. from rpm or deb archives)"
 
-Best regards.
+Thanks, added.
 
--- 
-Felipe Contreras
+> > 59. Should Git User's Survey be repeated next year?
+>  =20
+> >  ( ) Yes
+> >  ( ) No
+> >  ( ) no opinion
+> > Reset
+>=20
+> I wonder if the "no opinion" choice is not needed because there is th=
+e
+> "Reset" button.
+>=20
+>=20
+> Apropos!
+>=20
+> Is it possible to add a header text?
+
+It is possible.
+=20
+> I'd like that there are three things being clarified at the beginning=
+ of
+> the survey page:
+>=20
+>  * The survey is anonymous, but all information that the users provid=
+e will
+>    be publicly available on the wiki.
+>=20
+>  * The users may skip questions as they like.
+>=20
+>  * The user needs JavaScript to submit the survey.
+
+Thanks for reminding this. I have added this to survey.
+
+> I btw do not like the last fact, but since most users nowadays have
+> JavaScript activated, it may not be that bad.
+
+=46**k. I didn't notice this soon enough, and now I'd rather not re-ent=
+er
+all 60 questions. I have sent feedback that requiring JavaScript to be
+able to submit survey is strange.
+
+Survs.com came recommended here on this mailing list. I have chosen it
+over editing old www.survey.net.nz because it had "other (please specif=
+y)"
+for both single answer (radio button) and multiple choice (checkbox)
+question; later also because of the "matrix" questions. I didn't realiz=
+e
+that it requires JavaScript to submit... perhaps this would get correct=
+ed
+before starting point for Git User's Survey 2008 (1 September, or later=
+).
+
+> Also, I still do not get a succesful message after submitting, but th=
+at
+> may be related to the channel (test), if you have configured it like
+> that. Have you? ;)
+
+Yes, that depends on channel configuration, and I have forgot to add it
+for this channel.
+
+Thanks again for checking this survey, and for your comments.
+
+BTW. here is analysis of 'test' channel (note that some questions, and
+some possible answers, were added after starting 'test' channel):
+
+  http://www.survs.com/app/4/wo/Y03N37u4Ou5p9SmoNrc5f0/0.0.33.1.1.1.1.5=
+=2E1.1.0.1.1.7.11.0.1.0.13.1.1
+
+--=20
+Jakub Narebski
+Poland
