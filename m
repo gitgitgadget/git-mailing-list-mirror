@@ -1,87 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v5] gitweb: ref markers link to named shortlogs
-Date: Mon, 25 Aug 2008 20:42:24 +0200
-Message-ID: <200808252042.29171.jnareb@gmail.com>
-References: <200808221501.54908.jnareb@gmail.com> <200808250444.23305.jnareb@gmail.com> <7vvdxpivig.fsf@gitster.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: "failed to read delta base object at..."
+Date: Mon, 25 Aug 2008 14:58:05 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0808251445090.1624@xanadu.home>
+References: <20080825164602.GA2213@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 20:43:49 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Mon Aug 25 21:01:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXh2Z-0003Le-GY
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 20:43:47 +0200
+	id 1KXhIQ-0007bd-0x
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 21:00:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754096AbYHYSmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 14:42:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754070AbYHYSmm
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 14:42:42 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:6567 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750769AbYHYSmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 14:42:42 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so793649nfc.21
-        for <git@vger.kernel.org>; Mon, 25 Aug 2008 11:42:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=IlCZZoyXtspJzDBi2kYwRoNHi7dXI1SBp697Uu/QPpM=;
-        b=iIGcgrAciezxj4jS027Cg+vPYVLbqgy2s/onSLNx1bcFw75Z89bNMTlWJZrFI82CFK
-         8IEKrssXp+n389EOJH80cn4qhsBsqSpnsQ/bnTMWWBVxYpt2b/QDZ/cD2WwMcPLmLbBO
-         pFeQOEdOyf5eCJ26PSE9qDckl18UsIHIqA1NI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=DRBH0WIdeUWIXtWsQ5Nj19K6Ox8ZlzBhm7dgv0ZPEByeAQIvp5g3PeYgJ2A/zNpu7u
-         IMOmbGs3w2dSPSuIIFCW1KwxumaTqpudy7IpZLZQ4M6/LvROPBVi/yBuWLXLxeGXDUwm
-         HdyLF8m3/kPjWctmdfI3xKoed0kAQu7ruy+iA=
-Received: by 10.210.76.12 with SMTP id y12mr7014581eba.151.1219689756272;
-        Mon, 25 Aug 2008 11:42:36 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.216.72])
-        by mx.google.com with ESMTPS id z34sm4453139ikz.9.2008.08.25.11.42.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 25 Aug 2008 11:42:34 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vvdxpivig.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754740AbYHYS6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 14:58:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753957AbYHYS6n
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 14:58:43 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:32468 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753869AbYHYS6n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 14:58:43 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K66006267CTQY52@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 25 Aug 2008 14:58:06 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20080825164602.GA2213@fieldses.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93655>
 
-On Mon, 25 Aug 2008, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+On Mon, 25 Aug 2008, J. Bruce Fields wrote:
+
+> Today I got this:
 > 
-> > +                     $markers .= " <span class=\"$class\" title=\"$ref\">" .
-> > +                             $cgi->a({-href => href(action=>( $indirect ? "tag" : "shortlog"),
-> > +                                                    hash=>"refs/$ref")}, $name) .
-> > +                             "</span>";
-> >
-> > or equivalent (not stripping "refs/" in git_get_references).
+> fatal: failed to read delta base object at 3025976 from
+> /home/bfields/local/linux-2.6/.git/objects/pack/pack-f7261d96cf1161b1b0a1593f673a67d0f2469e9b.pack
 > 
-> If you mean by "hash => $it", I think it is only used as the URL the
-> anchor points at, and it is much more preferable to use the canonical
-> form.  "...?h=refs/heads/master" and "...h=heads/master" might produce the
-> same output, but then it is better for smart caching layer if you always
-> used canonical form, isn't it?
+> This has happened once before recently, I believe with a pack that had
+> just been created on a recent fetch.  (If I remember correctly, this was
+> soon after a failed suspend/resume cycle that might have interrupted an
+> in-progress fetch; could that possible explain the error?)  In that case
+> I reset origin/master, deleted a tag or two, and fetched, and the
+> problem seemed to be fixed.
 
-Will you do the change, or do you need resend from Giuseppe?
+The above error is indicative of a corrupted pack on disk.  To confirm 
+it you could use 'git verify-pack' with the given pack file.
 
-I like the feature that this patch introduces, and this time I don't
-have any reservations to the code. So, FWIW, Ack from me.
+With a sufficiently recent git, you only need to copy over another pack 
+containing the corrupted object, or the object itself in loose form, 
+into your object store to "fix" it.
 
--- 
-Jakub Narebski
-Poland
+As to the source of disk corruptions... that's up to you to find the 
+cause amongst many (including a failed suspend).
+
+
+Nicolas
