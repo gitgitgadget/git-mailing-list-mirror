@@ -1,136 +1,128 @@
-From: Karl Chen <quarl@cs.berkeley.edu>
-Subject: [PATCH] Fix start_command() pipe bug when stdin is closed.
-Date: Mon, 25 Aug 2008 01:28:19 -0700
-Message-ID: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: nicer frontend to get rebased tree?
+Date: Mon, 25 Aug 2008 11:36:45 +0200
+Message-ID: <20080825093645.GA7741@elte.hu>
+References: <20080822174655.GP23334@one.firstfloor.org> <alpine.LFD.1.10.0808221053080.3487@nehalem.linux-foundation.org> <20080822182718.GQ23334@one.firstfloor.org> <alpine.LFD.1.10.0808221233100.3487@nehalem.linux-foundation.org> <20080823071014.GT23334@one.firstfloor.org> <alpine.LFD.1.10.0808230853170.3363@nehalem.linux-foundation.org> <20080823164546.GX23334@one.firstfloor.org> <alpine.LFD.1.10.0808231054400.3363@nehalem.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 25 10:29:25 2008
+Cc: Andi Kleen <andi@firstfloor.org>, git@vger.kernel.org,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"H. Peter Anvin" <hpa@zytor.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Aug 25 11:38:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXXS0-0007CO-Pe
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 10:29:25 +0200
+	id 1KXYWU-0000IC-Ck
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 11:38:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753543AbYHYI2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 04:28:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753554AbYHYI2U
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 04:28:20 -0400
-Received: from roar.CS.Berkeley.EDU ([128.32.36.242]:57313 "EHLO
-	roar.quarl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752957AbYHYI2U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 04:28:20 -0400
-Received: by roar.quarl.org (Postfix, from userid 18378)
-	id DD3AE345F1; Mon, 25 Aug 2008 01:28:19 -0700 (PDT)
-X-Quack-Archive: 1
+	id S1754212AbYHYJhA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 05:37:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754199AbYHYJhA
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 05:37:00 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:46955 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753833AbYHYJg7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 05:36:59 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1KXYVE-0006zu-Ou
+	from <mingo@elte.hu>; Mon, 25 Aug 2008 11:36:54 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 765213E2192; Mon, 25 Aug 2008 11:36:43 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0808231054400.3363@nehalem.linux-foundation.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93605>
 
 
-I ran into what I think is a bug:
-    sh$ git fetch 0<&-
+* Linus Torvalds <torvalds@linux-foundation.org> wrote:
 
-(i.e. run git-fetch with stdin closed.)
-It aborts with:
-    fatal: read error (Bad file descriptor)
+> On Sat, 23 Aug 2008, Andi Kleen wrote:
+> > > 
+> > > A lot of the trees don't rebase. The rest of the trees may not realize 
+> > 
+> > That's not my experience, sorry (even on other other trees than linux-next,
+> > linux-next was just an example).  e.g. the original ACPI tree did it,
+> > the x86 tree jungle does it, most of the other architecture trees do it,
 
-I think the problem arises from the use of dup2+close in
-start_command().  It wants to rename a pipe file descriptor to 0,
-so it does
-    dup2(from, to);
-    close(from);
+[ thanks for the lovely charecterisation of -tip, it's appreciated.
+  </sarcasm> ]
 
-... but in this case from == to == 0, so 
-    dup2(0, 0);
-    close(0);
-just ends up closing the pipe.
+> > the networking tree does it. etc.etc.
+> 
+> So _complain_ to those people. Tell them that they are making your 
+> life harder. Let them know.
+> 
+> I sure as hell let people know when they are making _my_ life harder. 
+> It has helped. The networking tree stopped rebasing, and the x86 tree 
+> doesn't do it for the topic branches (although I think it re-creates 
+> the "common" branches all the time, kind of like linux-next).
 
-The patch below fixes the problem for me.
+Correct - we keep all topic branches append-only. (We rebase a topic 
+only in exceptional cases: if there's a complete restart from scratch, 
+when the history is so messy or uninteresting that no-one would care 
+about it.)
 
+And we do more than that: even tip/master is becoming more and more 
+append-only. We are set up in a way that makes rebasing of a topic 
+branch painful for _us_ integrators already. That is because tip/master 
+is a "consumer" of all the topic trees, in form of 'delta-integration', 
+which just merges all updated topic branches ontop of tip/master.
 
->From 78446c82131a5ca7f22f92bc32d7f3036bba9629 Mon Sep 17 00:00:00 2001
-From: Karl Chen <quarl@quarl.org>
-Date: Mon, 25 Aug 2008 01:09:08 -0700
-Subject: [PATCH] Fix start_command() pipe bug when stdin is closed.
+If a topic tree is rebased, we feel the pain in tip/master: no easy 
+delta-integration run is possible anymore, we get a ton of conflicts due 
+to the changed sha1's and due to the slightly changed content and the 
+whole topic tree has to be undone and re-merged. It's also harder to 
+track changes and it's harder to trust the quality of a stream of 
+changes if they get rebased - etc.
 
-When intending to rename a fd to 0, if the fd is already 0, then do nothing,
-instead of dup2(0,0); close(0);
+Alas, we dont rebase when we can avoid it.
 
-The problematic behavior could be seen thus: git-fetch 0<&-
+We periodically 'reintegrate' the whole thing to create the linux-next 
+output branches and to get rid of the uninteresting hundreds of 
+criss-cross merges, but that's on a relatively slow scale of 1-2 weeks.
 
-Signed-off-by: Karl Chen <quarl@quarl.org>
+( which is still too frequent for this to be truly append-only, but
+  dependable enough for short-term development and obviously good for
+  testing and regression-bisection activities. )
 
----
- run-command.c |   29 +++++++++++++++++------------
- 1 files changed, 17 insertions(+), 12 deletions(-)
+When people ask me "what should I use for development, tip/master?", i 
+suggest them to use -git or a specific topic branch they are interested 
+in. (and each topic branch is based on upstream -git as well.)
 
-diff --git a/run-command.c b/run-command.c
-index caab374..b4bd80f 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -8,11 +8,18 @@ static inline void close_pair(int fd[2])
- 	close(fd[1]);
- }
- 
-+static inline void rename_fd(int from, int to)
-+{
-+	if (from != to) {
-+		dup2(from, to);
-+		close(from);
-+	}
-+}
-+
- static inline void dup_devnull(int to)
- {
- 	int fd = open("/dev/null", O_RDWR);
--	dup2(fd, to);
--	close(fd);
-+	rename_fd(fd, to);
- }
- 
- int start_command(struct child_process *cmd)
-@@ -74,18 +81,17 @@ int start_command(struct child_process *cmd)
- 		if (cmd->no_stdin)
- 			dup_devnull(0);
- 		else if (need_in) {
--			dup2(fdin[0], 0);
--			close_pair(fdin);
-+			rename_fd(fdin[0], 0);
-+			close(fdin[1]);
- 		} else if (cmd->in) {
--			dup2(cmd->in, 0);
--			close(cmd->in);
-+			rename_fd(cmd->in, 0);
- 		}
- 
- 		if (cmd->no_stderr)
- 			dup_devnull(2);
- 		else if (need_err) {
--			dup2(fderr[1], 2);
--			close_pair(fderr);
-+			rename_fd(fderr[1], 2);
-+			close(fderr[0]);
- 		}
- 
- 		if (cmd->no_stdout)
-@@ -93,11 +99,10 @@ int start_command(struct child_process *cmd)
- 		else if (cmd->stdout_to_stderr)
- 			dup2(2, 1);
- 		else if (need_out) {
--			dup2(fdout[1], 1);
--			close_pair(fdout);
-+			rename_fd(fdout[1], 1);
-+			close(fdout[0]);
- 		} else if (cmd->out > 1) {
--			dup2(cmd->out, 1);
--			close(cmd->out);
-+			rename_fd(cmd->out, 1);
- 		}
- 
- 		if (cmd->dir && chdir(cmd->dir))
--- 
-1.5.6.2
+Sometimes if they are working in an area where there's known overlap 
+with multiple topics, people will send patches/pull-requests against 
+tip/master. In that case we maintainers sort those out and 'spread' them 
+into individual topic branches - i.e. turn them into an append-only flow 
+of changes.
+
+But arch/x86 development is also a bit special: in the past year it has 
+gathered almost as many developers and per kernel cycle commits as the 
+networking tree, but compressed into a highly critical and hard to 
+debug/test ~190 KLOC codebase.
+
+The networking tree is an order of magnitude larger at 1.5 MLOC, which 
+makes it statistically a lot less likely that commits would overlap in 
+it - and makes it far more feasible to handle conflicts in the simplest 
+and most robust way: by doing hierarchical maintenance with strict 
+boundaries and thus _avoiding_ conflicts.
+
+Hence we've set up the x86 tree as this 'forest of 160+ trees' which 
+topic trees iteract with each other intelligently and which get 
+integrated into a single "kitchen sink" test branch, tip/master.
+
+	Ingo
