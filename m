@@ -1,54 +1,74 @@
-From: Tommi Virtanen <tv@eagain.net>
-Subject: Re: [PATCH] "git shell" won't work, need "git-shell"
-Date: Mon, 25 Aug 2008 20:26:30 +0300
-Message-ID: <20080825172630.GH23582@eagain.net>
-References: <20080824202325.GA14930@eagain.net> <7vfxoukv56.fsf@gitster.siamese.dyndns.org> <20080824203825.GB14930@eagain.net> <7vbpzikt4b.fsf@gitster.siamese.dyndns.org> <20080825170816.GQ10544@machine.or.cz> <37fcd2780808251020j1ef51b38h7c6d6e8f050a92ce@mail.gmail.com>
+From: Guido Ostkamp <git@ostkamp.fastmail.fm>
+Subject: Git book questions
+Date: Mon, 25 Aug 2008 19:46:40 +0200 (CEST)
+Message-ID: <alpine.LSU.1.999.0808251934500.5070@bianca.dialin.t-online.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 19:27:40 2008
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 25 19:48:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXfqr-0007Ty-OX
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 19:27:38 +0200
+	id 1KXgAV-0004P5-9c
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 19:47:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754052AbYHYR0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 13:26:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754133AbYHYR0d
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 13:26:33 -0400
-Received: from eagain.net ([208.78.102.120]:33597 "EHLO eagain.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753704AbYHYR0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 13:26:32 -0400
-Received: from musti.eagain.net (a91-156-122-108.elisa-laajakaista.fi [91.156.122.108])
-	by eagain.net (Postfix) with ESMTPS id D86AC1EC039;
-	Mon, 25 Aug 2008 17:26:31 +0000 (UTC)
-Received: by musti.eagain.net (Postfix, from userid 1000)
-	id 6501F508043; Mon, 25 Aug 2008 20:26:30 +0300 (EEST)
-Mail-Followup-To: Dmitry Potapov <dpotapov@gmail.com>,
-	Petr Baudis <pasky@suse.cz>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <37fcd2780808251020j1ef51b38h7c6d6e8f050a92ce@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754075AbYHYRqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 13:46:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753925AbYHYRqq
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 13:46:46 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:46534 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753911AbYHYRqq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Aug 2008 13:46:46 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id A94D415AFAA
+	for <git@vger.kernel.org>; Mon, 25 Aug 2008 13:46:45 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 25 Aug 2008 13:46:45 -0400
+X-Sasl-enc: FgCfkLo0xEMMChNX/WMlnFc/2hrvixeZ2oDzqUNRgbVX 1219686404
+Received: from [192.168.2.100] (p549A526A.dip.t-dialin.net [84.154.82.106])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id BC177291E8
+	for <git@vger.kernel.org>; Mon, 25 Aug 2008 13:46:44 -0400 (EDT)
+User-Agent: Alpine 1.999 (LSU 1155 2008-08-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93647>
 
-On Mon, Aug 25, 2008 at 09:20:38PM +0400, Dmitry Potapov wrote:
-> Perhaps, /usr/sbin would be a better place, as it is intended only for
-> system administration binaries.
+Hello,
 
-I'd argue that git-shell isn't *exclusively* for root, which is the
-criteria for sbin. It's pretty easy to imagine a user setting up their
-own ~/.ssh/authorized_keys with a special passphraseless key that
-can only do git operations.
+I'm searching for books about Git and found the following ones:
 
--- 
-:(){ :|:&};:
+1. "Pragmatic Version Control Using Git"
+<http://www.pragprog.com/titles/tsgit/pragmatic-version-control-using-git>
+
+2. "Git Internals"
+<http://peepcode.com/products/git-internals-pdf>
+
+
+Unfortunately I could not find out, whether the "undoing" of Git Actions 
+is fully covered in those (in my mind this belongs to everyday actions).
+
+I'm thinking of
+
+* undoing git add / rm / mv
+* undoing local changes
+* undoing committed changes
+
+which I found less intuitive looking at the Git commands ('git reset', 
+'git revert' might not do what a beginner expects or multiple actions 
+might be necessary).
+
+If somebody of you owns a copy of the above mentioned books could you 
+please kindly let me know whether the topics are covered in detail?
+
+I would also appreciate review comments or hints to other books, if you 
+have any.
+
+Thanks in advance for your help.
+
+Regards
+
+Guido
