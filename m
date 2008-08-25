@@ -1,100 +1,87 @@
-From: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
-Subject: Re: strange temporary pull-errors
-Date: Mon, 25 Aug 2008 19:38:10 +0100
-Message-ID: <20080825183810.GL7592@cs-wsok.swansea.ac.uk>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v5] gitweb: ref markers link to named shortlogs
+Date: Mon, 25 Aug 2008 20:42:24 +0200
+Message-ID: <200808252042.29171.jnareb@gmail.com>
+References: <200808221501.54908.jnareb@gmail.com> <200808250444.23305.jnareb@gmail.com> <7vvdxpivig.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 25 20:39:25 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 25 20:43:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXgyE-0002Ga-KD
-	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 20:39:19 +0200
+	id 1KXh2Z-0003Le-GY
+	for gcvg-git-2@gmane.org; Mon, 25 Aug 2008 20:43:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751285AbYHYSiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 14:38:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbYHYSiM
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 14:38:12 -0400
-Received: from mhs.swan.ac.uk ([137.44.1.33]:39550 "EHLO mhs.swan.ac.uk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750769AbYHYSiM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 14:38:12 -0400
-Received: from [137.44.2.59] (helo=cs-svr1.swan.ac.uk)
-	by mhs.swan.ac.uk with esmtp (Exim 4.69)
-	(envelope-from <O.Kullmann@swansea.ac.uk>)
-	id 1KXgx8-0005V1-VD; Mon, 25 Aug 2008 19:38:10 +0100
-Received: from cs-wsok.swansea.ac.uk (cs-wsok [137.44.2.227])
-	by cs-svr1.swan.ac.uk (Postfix) with ESMTP id B4D6DDAE92;
-	Mon, 25 Aug 2008 19:38:10 +0100 (BST)
-Received: by cs-wsok.swansea.ac.uk (Postfix, from userid 3579)
-	id 89A20741BE; Mon, 25 Aug 2008 19:38:10 +0100 (BST)
+	id S1754096AbYHYSmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 14:42:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754070AbYHYSmm
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 14:42:42 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:6567 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750769AbYHYSmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 14:42:42 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so793649nfc.21
+        for <git@vger.kernel.org>; Mon, 25 Aug 2008 11:42:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=IlCZZoyXtspJzDBi2kYwRoNHi7dXI1SBp697Uu/QPpM=;
+        b=iIGcgrAciezxj4jS027Cg+vPYVLbqgy2s/onSLNx1bcFw75Z89bNMTlWJZrFI82CFK
+         8IEKrssXp+n389EOJH80cn4qhsBsqSpnsQ/bnTMWWBVxYpt2b/QDZ/cD2WwMcPLmLbBO
+         pFeQOEdOyf5eCJ26PSE9qDckl18UsIHIqA1NI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=DRBH0WIdeUWIXtWsQ5Nj19K6Ox8ZlzBhm7dgv0ZPEByeAQIvp5g3PeYgJ2A/zNpu7u
+         IMOmbGs3w2dSPSuIIFCW1KwxumaTqpudy7IpZLZQ4M6/LvROPBVi/yBuWLXLxeGXDUwm
+         HdyLF8m3/kPjWctmdfI3xKoed0kAQu7ruy+iA=
+Received: by 10.210.76.12 with SMTP id y12mr7014581eba.151.1219689756272;
+        Mon, 25 Aug 2008 11:42:36 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.216.72])
+        by mx.google.com with ESMTPS id z34sm4453139ikz.9.2008.08.25.11.42.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 25 Aug 2008 11:42:34 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vvdxpivig.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93654>
 
-Hi,
-
-----------------------------------------
-
-From: Thomas Rast <trast <at> student.ethz.ch>
- Subject: Re: strange temporary pull-errors
- Newsgroups: gmane.comp.version-control.git
- Date: 2008-08-23 08:44:45 GMT (2 days, 5 hours and 14 minutes ago)
-Oliver Kullmann wrote:
+On Mon, 25 Aug 2008, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
 > 
-> > git pull
-[...]
-> error: Entry 'Buildsystem/Configuration/Html/local_html.mak' not uptodate. Cannot merge.
-[...]
-> > git status
-[...]
-> nothing to commit (working directory clean)
-> > git pull
-[succeeds]
-> There is nothing special going out, the simple pull should succeed, but
-> I have to try several times; don't know whether the "git status" is
-> instrumental here or not --- will try the next time.
+> > +                     $markers .= " <span class=\"$class\" title=\"$ref\">" .
+> > +                             $cgi->a({-href => href(action=>( $indirect ? "tag" : "shortlog"),
+> > +                                                    hash=>"refs/$ref")}, $name) .
+> > +                             "</span>";
+> >
+> > or equivalent (not stripping "refs/" in git_get_references).
+> 
+> If you mean by "hash => $it", I think it is only used as the URL the
+> anchor points at, and it is much more preferable to use the canonical
+> form.  "...?h=refs/heads/master" and "...h=heads/master" might produce the
+> same output, but then it is better for smart caching layer if you always
+> used canonical form, isn't it?
 
-Saying 'git status' refreshes the index.  If you have touched (updated
-mtime) local_html.mak without making any changes, 'git merge' just
-compared the mtime and considered the file changed.  But 'git status'
-actually compares the contents and finds it has not been changed.  I
-don't know whether 1.6 (most likely builtin-merge) changed behaviour
-in this respect, maybe you could try with an older version too.
+Will you do the change, or do you need resend from Giuseppe?
 
-There are other cases where you need a refresh, for example if you
-have made a copy of a git-tracked directory with 'cp -r'.
+I like the feature that this patch introduces, and this time I don't
+have any reservations to the code. So, FWIW, Ack from me.
 
-------------------------------------------
-
-More precisely:
-
-1) First, repository B pulls from A.
-2) Then I change B.
-3) Then repository A wants to pull from B.
-There the error occurs --- the files changed
-in B are claimed not to be up-to-date in A!
-Obviously!
-
-This looks like a clear git-bug to me: And with 1.5.6.5
-this doesn't happen (the second pull just goes through).
-
-It must be something different than you are describing,
-since at step 3 repository A is still unchanged, and the error
-(like with local_html.mak above) occurs with a file which just
-should be updated. Though, after executing "git status",
-the pull becomes enabled, so I must have something to do
-with the index.
-
-Oliver
-
-P.S. I wonder how one is supposed to reply to an e-mail one (only)
-finds in http://article.gmane.org/gmane.comp.version-control.git/ ?
-Above I just copy-and-pasted it from the web-page, but this is rather
-tedious?
+-- 
+Jakub Narebski
+Poland
