@@ -1,57 +1,53 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+From: Jean Delvare <khali@linux-fr.org>
 Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Tue, 26 Aug 2008 12:17:35 -0400
-Message-ID: <1219767455.5493.4.camel@gaara.bos.redhat.com>
+Date: Tue, 26 Aug 2008 18:23:49 +0200
+Message-ID: <20080826182349.0a1a75e2@hyperion.delvare>
 References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>
-	 <1219664940.9583.42.camel@pmac.infradead.org>
-	 <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-	 <7vy72kek6y.fsf@gitster.siamese.dyndns.org>
-	 <20080826145719.GB5046@coredump.intra.peff.net>
-	 <1219764860.4471.13.camel@gaara.bos.redhat.com>
-	 <1219766398.7107.87.camel@pmac.infradead.org>
+	<1219664940.9583.42.camel@pmac.infradead.org>
+	<alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+	<7vy72kek6y.fsf@gitster.siamese.dyndns.org>
+	<20080826145719.GB5046@coredump.intra.peff.net>
+	<1219764860.4471.13.camel@gaara.bos.redhat.com>
+	<1219766398.7107.87.camel@pmac.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+Cc: Kristian =?ISO-8859-1?B?SPhnc2Jlcmc=?= <krh@redhat.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, users@kernel.org
+	Junio C Hamano <gitster@pobox.com>, users@kernel.org
 To: David Woodhouse <dwmw2@infradead.org>
-X-From: git-owner@vger.kernel.org Tue Aug 26 18:20:43 2008
+X-From: git-owner@vger.kernel.org Tue Aug 26 18:25:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY1HX-0008Ho-BN
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 18:20:35 +0200
+	id 1KY1MR-0001V9-F7
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 18:25:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752458AbYHZQTb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Aug 2008 12:19:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754250AbYHZQTb
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 12:19:31 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:51064 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752303AbYHZQTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 12:19:30 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m7QGHcSZ022090;
-	Tue, 26 Aug 2008 12:17:38 -0400
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m7QGHbb5016382;
-	Tue, 26 Aug 2008 12:17:37 -0400
-Received: from [10.16.3.198] (dhcp-100-3-198.bos.redhat.com [10.16.3.198])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m7QGHaNA008785;
-	Tue, 26 Aug 2008 12:17:36 -0400
+	id S1756621AbYHZQYQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Aug 2008 12:24:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756171AbYHZQYP
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 12:24:15 -0400
+Received: from zone0.gcu-squad.org ([212.85.147.21]:12752 "EHLO
+	services.gcu-squad.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756149AbYHZQYP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Aug 2008 12:24:15 -0400
+Received: from jdelvare.pck.nerim.net ([62.212.121.182] helo=hyperion.delvare)
+	by services.gcu-squad.org (GCU Mailer Daemon) with esmtpsa id 1KY2Jp-0001D8-Ev
+	(TLSv1:AES256-SHA:256)
+	(envelope-from <khali@linux-fr.org>)
+	; Tue, 26 Aug 2008 19:27:01 +0200
 In-Reply-To: <1219766398.7107.87.camel@pmac.infradead.org>
-X-Mailer: Evolution 2.23.6 (2.23.6-1.fc10) 
-X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
+X-Mailer: Claws Mail 3.5.0 (GTK+ 2.10.6; x86_64-suse-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93756>
 
-On Tue, 2008-08-26 at 16:59 +0100, David Woodhouse wrote:
-> On Tue, 2008-08-26 at 11:34 -0400, Kristian H=C3=B8gsberg wrote:
+On Tue, 26 Aug 2008 16:59:58 +0100, David Woodhouse wrote:
+> On Tue, 2008-08-26 at 11:34 -0400, Kristian H=F8gsberg wrote:
 > > It's pretty normal to see opponents of a decision like this complai=
 n
 > > loudly when it lands on their system, whereas the silent majority i=
@@ -69,9 +65,32 @@ ent
 > supposed to actually point out a tangible benefit which is achieved b=
 y
 > breaking compatibility like this.
+>=20
+> And no, reducing the size of /usr/bin by a tiny fraction isn't really=
+ a
+> worthwhile benefit -- in reality, the 'silent majority' really couldn=
+'t
+> give a monkey's left testicle about that, and breakage caused by the
+> gratuitous change _far_ outweighs any minuscule improvement.
 
-Oh get off your high horse, this entire thread is pretty much all
-bullshit and emotions.  Not every arbitrary decision deserves to be set
-in stone and be defended under the banner of backwards compatibility.
+Reducing /usr/bin in size was totally worthwhile. Maybe not to you, but
+to the silent majority I am a proud member of, it was. (I'm not saying
+that the path that was taken to get there was optimal, just that the
+goal was sound.)
 
-Kristian
+I just can't think of any other tool which installs over 100 binaries
+(or scripts, that's the same) in /usr/bin. Can you? This is simply
+insane. If all tools did what git did, you'd have maybe 100,000 files
+in /usr/bin (that is, if your filesystem supports that) and your system
+would be pretty slow. So I'm very glad to see git come back to reason.
+If nothing else, just so that other tool authors don't think it's the
+right way to do it.
+
+> It's particularly silly because we could have just made these aliases
+> optional but present by default, so those few nutters who _really_ sp=
+end
+> their days worrying about such stuff can do without them.
+
+
+--=20
+Jean Delvare
