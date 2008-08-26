@@ -1,71 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] be paranoid about closed stdin/stdout/stderr
-Date: Tue, 26 Aug 2008 15:42:51 -0700
-Message-ID: <7vabez2yac.fsf@gitster.siamese.dyndns.org>
-References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu>
- <48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org>
- <E1KXawS-0001gg-Ty@fencepost.gnu.org> <48B2AFC2.20901@viscovery.net>
- <7vbpzgb94q.fsf@gitster.siamese.dyndns.org>
- <E1KXsL9-0004ef-Co@fencepost.gnu.org> <48B3A948.3080800@viscovery.net>
- <7vsksrad7o.fsf@gitster.siamese.dyndns.org> <48B44C61.2020206@gnu.org>
+From: "Weyert de Boer" <weyert@gmail.com>
+Subject: Problems with importing Adobe Opensource SVN repos
+Date: Wed, 27 Aug 2008 00:48:52 +0200
+Message-ID: <c7d83d0d0808261548o1614b025i80f4ce34f0b161cf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Karl Chen <quarl@cs.berkeley.edu>,
-	Git mailing list <git@vger.kernel.org>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Aug 27 00:44:25 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 27 00:49:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY7Gq-00060R-KX
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 00:44:17 +0200
+	id 1KY7ML-0008DZ-VF
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 00:49:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751874AbYHZWnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 18:43:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751755AbYHZWnJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 18:43:09 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33770 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751297AbYHZWnI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 18:43:08 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5F6945CD61;
-	Tue, 26 Aug 2008 18:43:02 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 61D1B5CD60; Tue, 26 Aug 2008 18:42:55 -0400 (EDT)
-In-Reply-To: <48B44C61.2020206@gnu.org> (Paolo Bonzini's message of "Tue, 26
- Aug 2008 20:33:05 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 57223E30-73C0-11DD-82E9-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1751720AbYHZWsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 18:48:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751573AbYHZWsx
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 18:48:53 -0400
+Received: from rv-out-0506.google.com ([209.85.198.228]:32463 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751239AbYHZWsx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 18:48:53 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so2347245rvb.1
+        for <git@vger.kernel.org>; Tue, 26 Aug 2008 15:48:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=TS3GGGQOa6XhDp2TRkMLObTxwzU5j/pD4f2VhlFZ+Oc=;
+        b=rlbZf3G2+DHs94XL3fr1LNCZEZhfr89eUrcVmUHbBGnauB1Tb01/qJQnmmh0Kwl2LP
+         ZUg5mzPpiW9HRtqHri93qU61VLHRlL9jY+4k8y7xgml+WOxlUIJJt7I+Bj+/zJXOSdzo
+         keHNReFKFQl1HD3pn9uBFwQ7sEBIXilEFrRF4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=VUq35jUZE9bCBFFzNjE8B7H27JgMIWvbEvxe8tZqg5tD4VH+iUu2mm8RifrMIpq1jp
+         WKcklyHqiQNBAYxrszLX8/D/4PrGEfCCA8xv2bndpLqIsllDlbwDUGELKApIZ7KYJfEP
+         4+RWd1o6gX8XrRMqYcejzf331uA7RdEa+z6oY=
+Received: by 10.141.29.18 with SMTP id g18mr3166661rvj.162.1219790932720;
+        Tue, 26 Aug 2008 15:48:52 -0700 (PDT)
+Received: by 10.140.203.3 with HTTP; Tue, 26 Aug 2008 15:48:52 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93830>
 
-Paolo Bonzini <bonzini@gnu.org> writes:
+Hello!
 
-> Junio C Hamano wrote:
->> Johannes Sixt <j.sixt@viscovery.net> writes:
->> 
->>> Paolo Bonzini schrieb:
->>>> +	/*
->>>> +	 * Always open file descriptors 0/1/2 to avoid clobbering files
->>>> +	 * in die().  It also avoids not messing up when the pipes are
->>>> +	 * dup'ed onto stdin/stdout/stderr in the child processes we spawn.
->>>> +	 */
->>> I see your point, but I don't have an opinion whether this stretch is
->>> necessary.
->> 
->> This is going too far.  Have you seen any other sane program that do this?
->
-> Busybox.  But it runs setuid, as Steven pointed out.
->
-> I say it's all (i.e. be this paranoid), or nothing.
+I am trying to import some SVN repositories available at Adobe
+Opensource. Mainly I am trying to import the
+repo of Flex. Only I am having trouble to get it imported into GIT.
+The problem is that it keeps asking for the authentication
+credentials.
 
-I tend to agree, and I think what Stephen R. van den Berg said earlier in
-the thread makes perfect sense.
+I have tried the following commands:
+
+git svn clone --stdlayout http://opensource.adobe.com/svn/opensource/flex/sdk
+
+and
+
+git svn clone --stdlayout http://opensource.adobe.com/svn/opensource/cairngorm
+
+The results I am getting are as follows:
+
+git svn clone --stdlayout http://opensource.adobe.com/svn/opensource/flex/sdk
+Authentication realm: <http://opensource.adobe.com:80> Opensource
+Subversion Repository
+Password for 'albinotreefrog':
+
+This keeps occurring until you cancel the command.
+
+The information about the Flex SDK repo can be found at:
+http://opensource.adobe.com/wiki/display/flexsdk/Get+Source+Code
+
+Anyone happen to know what I am doing wrong?
+
+Thanks in advance,
+
+Weyert de Boer
