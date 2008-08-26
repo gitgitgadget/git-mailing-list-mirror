@@ -1,92 +1,99 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] bash completion: Hide more plumbing commands
-Date: Tue, 26 Aug 2008 10:43:02 -0700 (PDT)
-Message-ID: <m3tzd7r7tr.fsf@localhost.localdomain>
-References: <20080826171012.GO10360@machine.or.cz>
-	<20080826171144.21328.82727.stgit@localhost>
-	<20080826172410.GJ26523@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git wrapper: execute git-shell when argv[1] is '-c'
+Date: Tue, 26 Aug 2008 10:43:40 -0700
+Message-ID: <7vod3facz7.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0808251235430.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <48B29B2A.6000802@gnu.org>
+ <alpine.DEB.1.00.0808251955490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <237967ef0808251125q3e50fa04wf0e97ff29298bef2@mail.gmail.com>
+ <alpine.DEB.1.00.0808252206150.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <alpine.DEB.1.00.0808252225520.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <alpine.DEB.1.00.0808252248150.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <alpine.DEB.1.00.0808252251450.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <20080825210345.GE14930@eagain.net>
+ <alpine.DEB.1.00.0808260001390.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <20080825222002.GF14930@eagain.net>
+ <alpine.DEB.1.00.0808260249090.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <vpqy72ktgg7.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
-	gitster@pobox.com, andi@firstfloor.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Aug 26 19:44:25 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Tommi Virtanen <tv@eagain.net>,
+	Mikael Magnusson <mikachu@gmail.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Aug 26 19:45:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY2aR-0008Hx-Of
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 19:44:12 +0200
+	id 1KY2bC-000088-AL
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 19:44:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756496AbYHZRnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 13:43:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754877AbYHZRnG
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 13:43:06 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:61827 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754093AbYHZRnF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 13:43:05 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so337767eyi.37
-        for <git@vger.kernel.org>; Tue, 26 Aug 2008 10:43:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=wM1pZZDPKtdZYPQ+TryRy8QBlXNdtfyYQ66/95yZxoc=;
-        b=H1b2DsjqvBftpzmj0cJuxw5xsOrtvQExY7yLTDWBd6ET4zc1MZGrh2b/2Gs07mOJJp
-         C6rLO+tXf+7xOe306dVKTiRBklkJJAUgSCv9x6d7OmNAhE1Y4wEy1NJaVm2PjXOAF2WH
-         rWohf0T8efoFoWXUj77Nw+s0OIOb1M4UEcJuc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=n0EBUFTyqUZaf+SV7d0xlTrhNo2ix24sU0qli2JhG1fZ2+AvqbVVXTMJ1r6VQp3e7x
-         OfSkbAIBA+nyCLBBv+oFOXiFlfkzOtgnB/PJGGLfiaNz38WjjWH3HqJ3gsu0hVbX2edh
-         8TcUMrt4nshOP5ICKEcGHBx5Q/6pGC04k9EO8=
-Received: by 10.210.124.8 with SMTP id w8mr8707974ebc.194.1219772583506;
-        Tue, 26 Aug 2008 10:43:03 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.254.77])
-        by mx.google.com with ESMTPS id z37sm5585795ikz.6.2008.08.26.10.43.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 26 Aug 2008 10:43:02 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m7QHgxA5005587;
-	Tue, 26 Aug 2008 19:43:00 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m7QHgudn005584;
-	Tue, 26 Aug 2008 19:42:56 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080826172410.GJ26523@spearce.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1756971AbYHZRny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 13:43:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756686AbYHZRny
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 13:43:54 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57121 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756639AbYHZRnx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 13:43:53 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9C0F368B41;
+	Tue, 26 Aug 2008 13:43:51 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id A1BF468B3F; Tue, 26 Aug 2008 13:43:42 -0400 (EDT)
+In-Reply-To: <vpqy72ktgg7.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Tue, 26 Aug 2008 08:53:44 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8BA35CCC-7396-11DD-B438-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93784>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> Petr Baudis <pasky@suse.cz> wrote:
-> > git <tab><tab> still shows way too many commands, some of them
-> > are clearly plumbing. This patch hides the plumbing commands
-> > liberally (that is, in special cases, users still might want to
-> > call one of the hidden commands, a *normal* workflow should never
-> > involve these, though - and if it does, we have a UI problem anyway).
-> > 
-> > Signed-off-by: Petr Baudis <pasky@suse.cz>
-> 
-> Acked-by: Shawn O. Pearce <spearce@spearce.org>
-> 
-> Though I use git ls-remote at least once every other day to see
-> what branches are available on my egit/spearce.git fork.  Its ok,
-> I guess I can type a few extra characters...
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>> On Tue, 26 Aug 2008, Tommi Virtanen wrote:
+>>
+>>> All I'm going to say is that that's not the way you build trustable 
+>>> software. You take a minimal interface and restrict untrusted users to 
+>>> that, you don't add a feature to the widest possible interface..
+>>
+>> I do not get your point.
+>
+> With your patch, AAUI, one would put /usr/bin/git as a shell in
+> passwd....
 
-One would think that one can use "git remote show <remote>" instead of
-"git ls-remote <remote>", but I'm not sure if it does show also
-_untracked_ remote branches.
+Well, it was sheer stupidity of mine.
 
+Let's stop this and apply this patch instead.  The patch text is obvious
+so I won't quote.
+
+-- * --
+From: Junio C Hamano <gitster@pobox.com>
+Date: Mon, 25 Aug 2008 22:39:17 -0700
+Subject: [PATCH] Revert "Build-in "git-shell""
+
+This reverts commit daa0cc9a92c9c2c714aa5f7da6d0ff65b93e0698.
+It was a stupid idea to do this; when run as a log-in shell,
+it is spawned with argv[0] set to "-git-shell", so the usual
+name-based dispatch would not work to begin with.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+ Makefile        |    2 +-
+ builtin-shell.c |   90 -------------------------------------------------------
+ builtin.h       |    1 -
+ git.c           |    1 -
+ shell.c         |   89 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 90 insertions(+), 93 deletions(-)
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.6.0.1.113.g0a79b
