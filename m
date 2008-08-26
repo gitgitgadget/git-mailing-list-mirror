@@ -1,70 +1,73 @@
-From: Jason McMullan <jason.mcmullan@gmail.com>
-Subject: Re: "failed to read delta base object at..."
-Date: Tue, 26 Aug 2008 17:01:58 -0400
-Message-ID: <48B46F46.9090302@gmail.com>
-References: <20080825164602.GA2213@fieldses.org> <alpine.LFD.1.10.0808251153210.3363@nehalem.linux-foundation.org> <20080825213104.GI2213@fieldses.org> <alpine.LFD.1.10.0808251435540.3363@nehalem.linux-foundation.org> <20080825221321.GL2213@fieldses.org> <alpine.LFD.1.10.0808251616240.3363@nehalem.linux-foundation.org> <48B46B04.70102@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Tue, 26 Aug 2008 17:03:19 -0400
+Message-ID: <20080826210318.GA6305@coredump.intra.peff.net>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org> <1219664940.9583.42.camel@pmac.infradead.org> <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vy72kek6y.fsf@gitster.siamese.dyndns.org> <20080826145719.GB5046@coredump.intra.peff.net> <7vr68b8q9p.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: bfields@fieldses.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 26 23:03:35 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org,
+	users@kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 26 23:04:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY5h5-0000ZU-TP
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 23:03:16 +0200
+	id 1KY5iE-0000x2-69
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 23:04:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751364AbYHZVCK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Aug 2008 17:02:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751285AbYHZVCJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 17:02:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:56020 "EHLO ciao.gmane.org"
+	id S1751816AbYHZVDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 17:03:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbYHZVDW
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 17:03:22 -0400
+Received: from peff.net ([208.65.91.99]:1157 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751250AbYHZVCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 17:02:07 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KY5fx-0006ub-W4
-	for git@vger.kernel.org; Tue, 26 Aug 2008 21:02:06 +0000
-Received: from 209.195.169.219 ([209.195.169.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Aug 2008 21:02:05 +0000
-Received: from jason.mcmullan by 209.195.169.219 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Aug 2008 21:02:05 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 209.195.169.219
-User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <48B46B04.70102@gmail.com>
+	id S1751389AbYHZVDV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 17:03:21 -0400
+Received: (qmail 1932 invoked by uid 111); 26 Aug 2008 21:03:20 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 26 Aug 2008 17:03:20 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Aug 2008 17:03:19 -0400
+Content-Disposition: inline
+In-Reply-To: <7vr68b8q9p.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93821>
 
-Jason McMullan wrote:
->=20
-> Was this pack created on a journaled file system? Reiserfs? Ext3?
->=20
-> If there's journal corruption in a commonly used filesystem,
-> That Would Be Bad.
+On Tue, Aug 26, 2008 at 01:39:30PM -0700, Junio C Hamano wrote:
 
-In private mail, it was indicated that this was an ext3 with the
-data=3Dwriteback option. From mount(1), man page, ext3 section:
+> But I can't.  People who complain _now_ just annoy me even more.  Why
+> weren't you defending the backward compatibility with me, which you seem
+> to value it so much, perhaps even more than I did back then?  Why are you
+> wasting our time bringing it up again, instead of joining the discussion
+> when it _mattered_ back then?
 
-    writeback
-       Data ordering is not preserved - data may be written into
-       the main file system after its metadata has been  commit=E2=80=90
-       ted  to the journal.  This is rumoured to be the highest-
-       throughput option.  It guarantees  internal  file  system
-       integrity,  however  it  can  allow old data to appear in
-       files after a crash and journal recovery.
+Yes, I was hoping my message would help provoke them to say "here is why
+I did not do it back then, and why this should be revisited now". But
+all it seems to have done is bring up more arguments that should have
+been given back then. So for that I apologize, since I know that is
+exactly what you did not want to read. ;)
 
-All bets are off when data=3Dwriteback.
+> Read the subject line again, and notice that we are not talking about
+> /usr/bin vs /usr/libexec/git-core; the request-for-discussion was about
+> removing "git-add" and friends from /usr/libexec/git-core/, so that we do
+> not have to even have these many hardlinks there.  Except for Linus (and
+> obviously myself who started the thread), I saw nobody expressed any
+> opinion on it.
 
+I was slightly negative on the change at the time of "/usr/bin vs
+/usr/libexec/git-core" and I planned to put "git --exec-path" in my
+PATH. But I gave the new way a try, and I have not been very bothered.
+So let me say that I really don't care much what happens with libexec,
+and you can hold me to that when the next flame-war breaks out if such a
+change is implemented. Now you have three opinions. :)
 
-- Jason McMullan
+I really was just concerned that we are rejecting legitimate, popular
+concerns because of a grumpy "you missed the deadline" stance, when
+perhaps there is a good reason (which I am still waiting to hear) that
+those concerns missed the deadline.
+
+-Peff
