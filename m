@@ -1,53 +1,60 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Tue, 26 Aug 2008 22:11:40 +0300
-Message-ID: <20080826191140.GA19785@mithlond.arda.local>
-References: <1219664940.9583.42.camel@pmac.infradead.org> <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vy72kek6y.fsf@gitster.siamese.dyndns.org> <20080826145719.GB5046@coredump.intra.peff.net> <1219764860.4471.13.camel@gaara.bos.redhat.com> <1219766398.7107.87.camel@pmac.infradead.org> <alpine.LFD.1.10.0808260959000.3363@nehalem.linux-foundation.org> <20080826180926.GA25711@isilmar.linta.de> <alpine.LFD.1.10.0808261114070.3363@nehalem.linux-foundation.org> <20080826185548.GA7559@hera.kernel.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] bash completion: Hide more plumbing commands
+Date: Tue, 26 Aug 2008 15:23:53 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0808261517200.19665@iabervon.org>
+References: <20080826171012.GO10360@machine.or.cz> <20080826171144.21328.82727.stgit@localhost> <20080826172410.GJ26523@spearce.org> <7v1w0bab1c.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0808261455010.19665@iabervon.org>
+ <20080826190752.GM26523@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
-	Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	users@kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
-To: Al Viro <viro@hera.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 26 21:14:26 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
+	git@vger.kernel.org, andi@firstfloor.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Aug 26 21:25:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY3zk-0006hj-CC
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 21:14:24 +0200
+	id 1KY4A0-0001PR-91
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 21:25:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758969AbYHZTM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 15:12:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758791AbYHZTM6
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 15:12:58 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:43288 "EHLO jenni1.inet.fi"
+	id S1757560AbYHZTXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 15:23:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757458AbYHZTXz
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 15:23:55 -0400
+Received: from iabervon.org ([66.92.72.58]:47565 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753956AbYHZTM5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 15:12:57 -0400
-Received: from mithlond.arda.local (80.220.180.181) by jenni1.inet.fi (8.5.014)
-        id 488F1534013E1BE8; Tue, 26 Aug 2008 22:11:44 +0300
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1KY3x6-0005GZ-Tq; Tue, 26 Aug 2008 22:11:40 +0300
-Content-Disposition: inline
-In-Reply-To: <20080826185548.GA7559@hera.kernel.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753956AbYHZTXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 15:23:54 -0400
+Received: (qmail 7242 invoked by uid 1000); 26 Aug 2008 19:23:53 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 26 Aug 2008 19:23:53 -0000
+In-Reply-To: <20080826190752.GM26523@spearce.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93803>
 
-Al Viro wrote (2008-08-26 18:55 +0000):
+On Tue, 26 Aug 2008, Shawn O. Pearce wrote:
 
-> Well, to be fair, "man git-add for git add is rather unconventional" is
-> a valid point...
+> Daniel Barkalow <barkalow@iabervon.org> wrote:
+> > On Tue, 26 Aug 2008, Junio C Hamano wrote:
+> > > 
+> > > Unless/until we have an easy way to obtain the information "git-ls-files
+> > > -u" gives during conflict resolution, ls-files should stay on the list of
+> > > commonly used commands.
+> > 
+> > Doesn't "git status" tell you that? Or do you want the extra info from the 
+> > implicit --stage?
+> 
+> I think he doesn't want to see the other files that are already
+> merged successfully.  git status shows them, git ls-files -u
+> does not.
 
-True. I'd say that for people familiar with other VCS/SCM tools the 
-"$VCS help add" is probably the primary help interface. It works with 
-many tools - git, hg, svn and bzr at least.
+I think it might make sense to support "git status --unmerged" or 
+something like that, where it filters the output by the tags it would 
+show.
+
+	-Daniel
+*This .sig left intentionally blank*
