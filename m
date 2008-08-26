@@ -1,53 +1,46 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH (GITK,GIT-GUI,DOCS) 2/7] gitk: Support calling git gui blame from gitk.
-Date: Tue, 26 Aug 2008 20:27:39 +1000
-Message-ID: <18611.55963.306938.896762@cargo.ozlabs.ibm.com>
-References: <200808231225.12596.angavrilov@gmail.com>
-	<200808231227.45013.angavrilov@gmail.com>
-	<200808231229.09191.angavrilov@gmail.com>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Feature request: git-svn dcommit should send deltas upstream
+Date: Tue, 26 Aug 2008 12:54:36 +0200
+Message-ID: <87myj0f3mb.fsf@mid.deneb.enyo.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Alexander Gavrilov <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 13:17:15 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 26 13:24:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXwXq-0001g2-G2
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 13:17:06 +0200
+	id 1KXwez-00040E-UN
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 13:24:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757356AbYHZLP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 07:15:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757504AbYHZLP7
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 07:15:59 -0400
-Received: from ozlabs.org ([203.10.76.45]:47036 "EHLO ozlabs.org"
+	id S1751936AbYHZLXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 07:23:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbYHZLXZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 07:23:25 -0400
+Received: from mail.enyo.de ([212.9.189.167]:43201 "EHLO mail.enyo.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757125AbYHZLP6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 07:15:58 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 307E4DDF03; Tue, 26 Aug 2008 21:15:56 +1000 (EST)
-In-Reply-To: <200808231229.09191.angavrilov@gmail.com>
-X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
+	id S1751686AbYHZLXY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 07:23:24 -0400
+X-Greylist: delayed 1727 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Aug 2008 07:23:24 EDT
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
+	by mail.enyo.de with esmtp id 1KXwC4-0007LX-Cw
+	for git@vger.kernel.org; Tue, 26 Aug 2008 12:54:36 +0200
+Received: from fw by deneb.enyo.de with local (Exim 4.69)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1KXwC4-0003nY-25
+	for git@vger.kernel.org; Tue, 26 Aug 2008 12:54:36 +0200
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93736>
 
-Alexander Gavrilov writes:
+Looking at my network traffic and the Perl code, it seems to me that
+git-svn fails to create a diff (delta) before sending data to the
+server.  As a result, a few changes in a multi-megabyte file lead to a
+large upload (similar to the situation with CVS).  git-svn should be
+able to compute this diff in all cases because it has got an up-to-date
+copy of the current revision in the Subversion repository.
 
-> Add a new item to the file list popup menu, that
-> calls git gui blame for the selected file, starting
-> with the first parent of the current commit.
-
-Also applied, also with some edits to the description.
-
-> +    $flist_menu add command -label [mc "Blame parent commit"] \
-> +        -command {external_blame 1}
-
-Why the parent commit rather than the current commit?
-
-Paul.
+As far as I can tell, this can't be fixed with a one-liner; some handles
+need to be passed down to the code that actually handles the upload.
