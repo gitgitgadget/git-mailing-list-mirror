@@ -1,151 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git-aware HTTP transport
-Date: Tue, 26 Aug 2008 10:26:48 -0700
-Message-ID: <20080826172648.GK26523@spearce.org>
-References: <20080826012643.GD26523@spearce.org> <48B36BCA.8060103@zytor.com> <20080826145857.GF26523@spearce.org> <48B4303C.3080409@zytor.com>
+From: Bruce Stephens <bruce.stephens@isode.com>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Tue, 26 Aug 2008 18:29:03 +0100
+Message-ID: <80myizelcw.fsf@tiny.isode.net>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>
+            <1219664940.9583.42.camel@pmac.infradead.org>
+            <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+            <7vy72kek6y.fsf@gitster.siamese.dyndns.org>
+            <20080826145719.GB5046@coredump.intra.peff.net>
+            <1219764860.4471.13.camel@gaara.bos.redhat.com>
+            <1219766398.7107.87.camel@pmac.infradead.org>
+            <alpine.LFD.1.10.0808260959000.3363@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 19:27:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: David Woodhouse <dwmw2@infradead.org>,
+	Kristian =?iso-8859-1?Q?H=F8gs?= =?iso-8859-1?Q?berg?= 
+	<krh@redhat.com>, Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, users@kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Aug 26 19:30:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY2Kg-0003Jl-GZ
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 19:27:54 +0200
+	id 1KY2Mv-00040B-3V
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 19:30:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755899AbYHZR0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 13:26:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755300AbYHZR0t
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 13:26:49 -0400
-Received: from george.spearce.org ([209.20.77.23]:58802 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753489AbYHZR0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 13:26:48 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 2F2AA38375; Tue, 26 Aug 2008 17:26:48 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <48B4303C.3080409@zytor.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1756812AbYHZR3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 13:29:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756639AbYHZR3I
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 13:29:08 -0400
+Received: from rufus.isode.com ([62.3.217.251]:55389 "EHLO rufus.isode.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756337AbYHZR3H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 13:29:07 -0400
+Received: from tiny.isode.net (shiny.isode.com [62.3.217.250]) 
+          by rufus.isode.com (smtp internal) via TCP with SMTP 
+          id <SLQ9XwBnext3@rufus.isode.com>; Tue, 26 Aug 2008 18:29:03 +0100
+Received: by tiny.isode.net (sSMTP sendmail emulation);
+          Tue, 26 Aug 2008 18:29:03 +0100
+X-Hashcash: 1:20:080826:torvalds@linux-foundation.org::Gpv9wBaM1O5By6yS:0000000000000000000000000000000001ED
+X-Hashcash: 1:20:080826:dwmw2@infradead.org::ckhVHfPrDDLYmx6o:0000000000000000000000000000000000000000001yRa
+X-Hashcash: 1:20:080826:krh@redhat.com::dLUqfeiI2ulzs/Vo:00024ee
+X-Hashcash: 1:20:080826:peff@peff.net::50kvqJ4frkpgiG41:00000Ijt
+X-Hashcash: 1:20:080826:git@vger.kernel.org::1V7kk1sJJvKZZqwW:00000000000000000000000000000000000000000001XP
+X-Hashcash: 1:20:080826:johannes.schindelin@gmx.de::8RTELO+cYiTOvVP6:000000000000000000000000000000000005enT
+X-Hashcash: 1:20:080826:gitster@pobox.com::6Po/rhRXBcvGs5rr:0000000000000000000000000000000000000000000035O0
+X-Hashcash: 1:20:080826:users@kernel.org::sJ0TdiI/HmTUJ3LS:00Ts9
+In-Reply-To: <alpine.LFD.1.10.0808260959000.3363@nehalem.linux-foundation.org> (Linus Torvalds's message of "Tue\, 26 Aug 2008 10\:03\:25 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93776>
 
-"H. Peter Anvin" <hpa@zytor.com> wrote:
-> Shawn O. Pearce wrote:
->>
->> Hmm.  I'm actually thinking the exact opposite here.  My rationale
->> for putting the response as a standard HTTP 302/303 style redirect
->> is to permit hardware load balancers [...]
->> to implement simple load balancing with a HTTP redirect.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+
+[...]
+
+> In case you wonder, the upside is:
 >
-> No, you're thinking backwards.  What you want is the standard HTTP  
-> redirect load balancing to take effect *before* the initial request is  
-> serviced.
-...
-> Please keep in mind I'm not talking hypotheticals at all.  What you have  
-> proposed is actually a lot uglier for kernel.org to implement, simply  
-> because we try to stay with strict IP-based vhosting
+>  - new people don't even learn the mistakes
+>
+>  - the people who _did_ complain are happier
+>
+>  - this model allows a per-user-preference model even on the same machine 
+>    (ie even on something like master.kernel.org, everybody can choose 
+>    _individually_ whether they want to see 'git-xyzzy' or not!)
 
-Discard my prior patch from today.
+And
 
-This is a patch to last night's full document edition
-(http://article.gmane.org/gmane.comp.version-control.git/93704)
-and addresses only the issue of redirects.
+  - it means git aliases have the same form as builtins
 
---8<--
-diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
-index 99d7623..99dc88d 100644
---- a/Documentation/technical/http-protocol.txt
-+++ b/Documentation/technical/http-protocol.txt
-@@ -43,14 +43,34 @@ All requests/responses use "application/x-git" as the content type.
- Action specific subtypes are specified by the parameter "service",
- e.g. "application/x-git; service=upload-pack".
- 
-+HTTP Redirects
-+--------------
-+
-+If a POST request results in an HTTP 302 or 303 redirect response
-+clients should retry the request by updating the URL and POSTing
-+the same request to the new location.  Subsequent requests should
-+still be sent to the original URL.
-+
- Detecting Smart Servers
- -----------------------
- 
- HTTP clients can detect a smart Git-aware server by sending
- a request to service "show-ref".
- 
--A Git-aware server will respond with a valid response (see below).
--A dumb server should respond with an error message. 
-+A Git-aware server will respond with a valid response.  Clients
-+must check the following properties to prevent being fooled by
-+misconfigured servers:
-+
-+  * HTTP status code is 200.
-+  * Content-Type is "application/x-git; service=show-ref"
-+  * The body can be parsed without errors.  The length of
-+    each pkt-line must be 4 valid hex digits.
-+
-+A dumb server will respond with a non-200 HTTP status code.
-+A misconfigured server may respond with a normal 200 status
-+code, but an incorrect content type, or an invalid leading
-+4 byte sequence for a pkt-line (e.g. "<htm" or "<!DO" are
-+not valid lengths).
- 
- Service show-ref
- ----------------
-@@ -62,15 +82,46 @@ Content-Type: application/x-git; service=show-ref
- 
- The request is an empty body.
- 
--The response is a sequence of refs, one per Git packet line.
--The final packet line has a length of 0 to indicate the end.
-+The response is a pkt-line with "refs", followed by zero
-+or more ref pkt-lines ("$id $name"), and a final pkt-line
-+with a length of 0:
- 
-+	S: 0009refs
- 	S: 003295dcfa3633004da0049d3d0fa03f80589cbcaf31 HEAD
- 	S: 003e95dcfa3633004da0049d3d0fa03f80589cbcaf31 refs/heads/maint
- 	S: 003fd049f6c27a2244e12041955e262a404c7faba355 refs/heads/master
- 	S: 003b2cb58b79488a98d2721cea644875a8dd0026b115 refs/heads/pu
- 	S: 0000
- 
-+The response may begin with an optional redirect to a new service
-+URL for the repository:
-+
-+	S: 0028redirect http://s1.example.com/git/
-+	S: 0009refs
-+	S: 003295dcfa3633004da0049d3d0fa03f80589cbcaf31 HEAD
-+	S: 003fd049f6c27a2244e12041955e262a404c7faba355 refs/heads/master
-+	S: 0000
-+
-+or be composed of only a redirect:
-+
-+	S: 0028redirect http://s1.example.com/git/
-+	S: 0000
-+
-+If a redirect is returned the client should update itself
-+to use the new URL as the location for future requests.
-+A server may use the redirect to request that the client
-+"pin" itself to a particular server for the remainder of
-+the current transaction.
-+
-+The URL listed in any redirect should be the base URL
-+without any query args.  The client will automatically
-+append "/backend.git-http/$service" as it makes each
-+future request.
-+
-+If no "refs" line was received in the response, but
-+a "redirect" was received, the client should retry
-+its request at the new location before giving up.
-+
- Service upload-pack
- -------------------
- 
--- 
-Shawn.
+  - it means git on Windows has the same interface
+
+(Arguably the latter point ought to be "forces Unix users to use the
+same interface as on Windows", but the git-foo forms have been
+deprecated on all platforms for a while.  Making Unix and Windows the
+same seems a worthwhile goal, though presumably it's irrelevant for
+linux kernel people.)
