@@ -1,97 +1,76 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH] gitweb: ref markers link to named shortlogs
-Date: Tue, 26 Aug 2008 12:58:29 +0200
-Message-ID: <cb7bb73a0808260358o41a04a9ara701e6c726cf2298@mail.gmail.com>
-References: <1219341860-4913-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200808242237.53953.jnareb@gmail.com>
-	 <cb7bb73a0808251628q6af52292sc296fb63565b6eaa@mail.gmail.com>
-	 <200808261015.37023.jnareb@gmail.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Tue, 26 Aug 2008 07:12:23 -0400
+Message-ID: <48B3E517.2040409@gmail.com>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>	<1219664940.9583.42.camel@pmac.infradead.org>	<48B3715D.7020608@gmail.com> <20080826091701.2e4e3ff4@hyperion.delvare>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Lea Wiemann" <lewiemann@gmail.com>, git@vger.kernel.org,
-	"Petr Baudis" <pasky@ucw.cz>, "Junio C Hamano" <gitster@pobox.com>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 12:59:35 2008
+Cc: David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, users@kernel.org
+To: Jean Delvare <khali@linux-fr.org>
+X-From: git-owner@vger.kernel.org Tue Aug 26 13:13:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXwGq-0004Sw-PI
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 12:59:33 +0200
+	id 1KXwUO-0000kQ-P2
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 13:13:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754138AbYHZK6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 06:58:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754165AbYHZK6a
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 06:58:30 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:40503 "EHLO
+	id S1756641AbYHZLM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 07:12:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756609AbYHZLM2
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 07:12:28 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:45903 "EHLO
 	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753924AbYHZK6a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 06:58:30 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so1110466yxm.1
-        for <git@vger.kernel.org>; Tue, 26 Aug 2008 03:58:29 -0700 (PDT)
+	with ESMTP id S1755213AbYHZLM1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 07:12:27 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so1113101yxm.1
+        for <git@vger.kernel.org>; Tue, 26 Aug 2008 04:12:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=50vN40Kw+fLAB4MOR3Vw2Ku/lKZrBhC9HE2rnTev6ug=;
-        b=nuUGN5OKUS5itRBRm0T9LiYykJjwckkUxQam2FSRbgKvgTxDUQJwtDvFfC4CcvI9Ds
-         HAfSIjN/R7VBoGMj3vcU8WdVwwmVUkxDS/yiWE3a1nlGdI1vb7vSJkz9c32BBpTxX1dC
-         LdTBN2vlAcjJjNue+fZLpnfAKznihv8P8O7Co=
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=XXPxsQIO6dfqPaH/DiPM4Zg5QWBn42HKi8EafUZCVXE=;
+        b=T7oCEbG2uBzFR1a6jwkkmOfYgZJMbqGCU0A2HMp7fGbrHfsoV4CRSJtNJ7xoueDIGb
+         V1XEdfz+qf28uf9UgCgiw3Kr1Ksw291r7Z60cLkxSPEmTvHn3MfW5gdK0UMzFcnSRU9h
+         k6AP1joTvfoEPUDXLKKoNyL+mtKdsaSCHv5KQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Ds+AWvEKn++dUMWD9rYwxj3DjRZl3yO8KCPV5DB+hx68Y53UAzSZhTOIWdaA+W3vYp
-         Ia+XxKNNSVTjifApGnImaE5KrF3HvK2MM+LwqnOUnJM3P66n7C/uQ63p0qfK8DXHFV5n
-         TW7XDTc4l56xHxJzkYCMK/o54nr+G9dfNec1k=
-Received: by 10.151.156.12 with SMTP id i12mr8990200ybo.182.1219748309071;
-        Tue, 26 Aug 2008 03:58:29 -0700 (PDT)
-Received: by 10.150.145.2 with HTTP; Tue, 26 Aug 2008 03:58:29 -0700 (PDT)
-In-Reply-To: <200808261015.37023.jnareb@gmail.com>
-Content-Disposition: inline
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=dNnvQOd0c2nRPqcP7f+LmHlE2wOuwl0inHBx8Ni4Yg0640hO49Gr93FHhxwXQVhunA
+         cK2F9saBrbj3KKQTL8CjxiHGxfJreufkzlvVcOQOAvoWlnOUOsNinaOXcevM1rV0pUCC
+         B7R4NGiJDTPkUD8N7hU5nnfHItZL8iFFxlYiw=
+Received: by 10.150.51.6 with SMTP id y6mr8980406yby.222.1219749146379;
+        Tue, 26 Aug 2008 04:12:26 -0700 (PDT)
+Received: from ?10.0.0.6? ( [66.177.19.100])
+        by mx.google.com with ESMTPS id q26sm6687623ele.8.2008.08.26.04.12.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 26 Aug 2008 04:12:25 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <20080826091701.2e4e3ff4@hyperion.delvare>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93733>
 
-On Tue, Aug 26, 2008 at 10:15 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> BTW. one thing that can be done is consolidation of "guessing action"
-> code: it is done by simply calculating what is to put in $action during
-> dispatch, or is done in 'object' view to calculate redirect URL with
-> proper action.  I have tried to bring them together, but patches were
-> I think lost in the noise.
+Jean Delvare wrote:
+> On Mon, 25 Aug 2008 22:58:37 -0400, A Large Angry SCM wrote:
+>> David Woodhouse wrote:
+>>>   (C) Just don't do it. Leave the git-foo commands as they were. They
+>>>       weren't actually hurting anyone, and you don't actually _gain_
+>>>       anything by removing them. For those occasional nutters who
+>>>       _really_ care about the size of /usr/bin, give them the _option_
+>>>       of a 'make install' without installing the aliases.
+>> Acked-by: A Large Angry SCM <gitzilla@gmail.com>
+> 
+> Such statements from anonymous people have zero value, sorry.
+> 
 
-Ah, but the problem is that guessing the action based on the object
-sometimes depends on the context: for some cases the 'commit' action
-is the correct one for commits, in other cases shortlog is preferred.
-This is why I introduced the %views hash in some of my patches.
-
-> IMHO v5 with small change making refs canonical (hash=>"refs/$ref")
-> is preferred way to do this.  You can send v6 patch or I can send
-> it (I planned doing this today).
-
-I can do it, no problem.
-
-> First, the great problem with gitweb patches as of today is if Lea
-> Google Summer of Code 2008 work on gitweb caching would be accepted
-> (merged in) into git repository; I pretty much think that any gitweb
-> improvements would be "incompatibile" (read: causing conflicts) with
-> 'gitweb caching' patch covering such large parts of code... but
-> I might be mistaken about that.
-
-That's ok, I can wait for Lea's code to get into the repo, so I can
-work on the conflicts myself. I'm not sure what parts of the code she
-touches though, so for some things it might be easy (the pathinfo
-stuff, for example). Other features such as my allheads thing would
-probably need to be reworked for caching.
-
-> Thank you for contributing to gitweb...
-
-My pleasure.
-
--- 
-Giuseppe "Oblomov" Bilotta
+Do some research; I haven't been anonymous since 2005.
