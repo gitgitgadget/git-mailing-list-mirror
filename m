@@ -1,236 +1,182 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: [PATCH v2] allow user aliases for the --author parameter
-Date: Tue, 26 Aug 2008 10:02:56 +0200
-Message-ID: <48B3B8B0.4020609@fastmail.fm>
-References: <g8jbvd$18k$1@ger.gmane.org> <20080821200255.GB27705@coredump.intra.peff.net> <48AE786C.20201@fastmail.fm> <20080822165047.GA3339@sigill.intra.peff.net> <7vzln492pc.fsf@gitster.siamese.dyndns.org> <20080822211902.GA31884@coredump.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: ref markers link to named shortlogs
+Date: Tue, 26 Aug 2008 10:15:35 +0200
+Message-ID: <200808261015.37023.jnareb@gmail.com>
+References: <1219341860-4913-1-git-send-email-giuseppe.bilotta@gmail.com> <200808242237.53953.jnareb@gmail.com> <cb7bb73a0808251628q6af52292sc296fb63565b6eaa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 26 10:04:20 2008
+Cc: "Lea Wiemann" <lewiemann@gmail.com>, git@vger.kernel.org,
+	"Petr Baudis" <pasky@ucw.cz>, "Junio C Hamano" <gitster@pobox.com>
+To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 26 10:19:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXtXH-000837-Js
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 10:04:20 +0200
+	id 1KXtjQ-0003L9-5l
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 10:16:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752100AbYHZIDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 04:03:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752089AbYHZIDO
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 04:03:14 -0400
-Received: from main.gmane.org ([80.91.229.2]:34681 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751822AbYHZIDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 04:03:11 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KXtW8-0003ZZ-S6
-	for git@vger.kernel.org; Tue, 26 Aug 2008 08:03:09 +0000
-Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Aug 2008 08:03:08 +0000
-Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Aug 2008 08:03:08 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <20080822211902.GA31884@coredump.intra.peff.net>
+	id S1752779AbYHZIPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 04:15:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752737AbYHZIPq
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 04:15:46 -0400
+Received: from ey-out-2122.google.com ([74.125.78.25]:33525 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752632AbYHZIPp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 04:15:45 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so258047eyi.37
+        for <git@vger.kernel.org>; Tue, 26 Aug 2008 01:15:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=bgGD3e4IBpABX6KTcMkcJzqiQunbSmn84zRuH6Ld+Zg=;
+        b=i4ufEwZLIC7sDcn07XyYCZCf9Eu35RCCKhD8h+BycFnrGWj+EqM2Y6xXdn78fmN5LE
+         +VsLxG9pErrKLlLKtvIEUJhDIU/c4Mk72M5g1vvsQVHWOVQCSkXy/+62UHY7XcZQe1bp
+         d8Sd90GjKlJYL/ih/vfn2RzVILVchjjOcxHuM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=oVZwdXrbas6hy6DTAmhv2YkzNONriXPD+weRUOgIK5ct6K8BxWccv6b7UvYe/E61a1
+         ozT8tpVrAbMF2M67UkaxmEAPH14t5ARgF8hPzU2FKRs51JBxO0nR/zZgyM/a7qik8Vqf
+         d86TjxqSa2Y7Ox0cjq0eSO7gl4I+vh40tDQwo=
+Received: by 10.210.23.3 with SMTP id 3mr4233241ebw.41.1219738543601;
+        Tue, 26 Aug 2008 01:15:43 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.254.77])
+        by mx.google.com with ESMTPS id 10sm6119515eyd.6.2008.08.26.01.15.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 26 Aug 2008 01:15:42 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <cb7bb73a0808251628q6af52292sc296fb63565b6eaa@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93724>
 
-This allows the use of author abbreviations when specifying commit
-authors via the --author option to git commit. "--author=$key" is
-resolved by looking up "user.$key.name" and "user.$key.email" in the
-config.
+On Tue, 26 August 2008, Giuseppe Bilotta wrote:
+> On Sun, Aug 24, 2008 at 10:37 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+>> Lea Wiemann wrote:
+>>> Giuseppe Bilotta wrote:
+>>>> +                   my $git_type = git_get_type($ref);
+>>>> [...]
+>>>> +                           $cgi->a({-href => href(action=>$view{$git_type} || $git_type, hash=>$name)}, $name) .
+>>>
+>>> Since some of this thread seems to be about performance, you might just
+>>> make this a link to action => 'object' (and save the git_get_type call)
+>>> and let gitweb Do The Right Thing when the link is followed.
+>>>
+>>> [Disclaimer: Haven't read the whole thread, and haven't checked if
+>>> action=object is actually doing the right thing here.]
+>>
+>> First, only the first patch (and perhaps second) called git_get_type;
+>> v4 and v5 do not.  Second, link to 'object' action would not do the
+>> right thing; we want either 'shortlog' or 'tag' view, not 'commit'
+>> or 'tag' view.
+>>
+>> What this patch does is making ref markers in the log-like views, and
+>> in the commit subject line headers in other view be "hidden links" to
+>> either 'shortlog' (in the case of ref being head/branch, or lightweight
+>> tag), or to 'tag' view in the case of annotated tag.  We rely on the
+>> fact that we know what type of object refs points to (currently it is
+>> only 'commit', which might change, but the fact that we know type of
+>> object for which we show marker would not change), and the fact that
+>> tags point to given object only indirectly, and only tags can point
+>> indirectly (^{} suffix in "git show-ref --dereference", and
+>> "git ls-remote .", and $GIT_DIR/info/refs).
+> 
+> However, Lea's idea has its own merit. I hacked up a patch series that
+> implements a git_marker_view() function (or fucntion as the shortlog
+> says 8-P) and *that* one is used for ref markers, you can see it (3
+> patches) here: http://git.oblomov.eu/git/shortlog/heads/gitweb/shortlog..heads/gitweb/refmark
+> [it's on top of other stuff but it's actually independent from the
+> other stuff].
+> 
+> The advantage of this approach is that you actually it's more flexible
+> in case future expansions lead to other differences in object vs
+> marker view (currently the only difference is commit => shortlog):
+> such differences just need to be added to the appropriate %views hash.
+> 
+> The disadvantage is that we don't care about the difference between
+> lightweight and annotated tags, so there is no more visual difference
+> about it, something which patch v5 does. This could of course be
+> addressed separately as needed.
 
-In an ideal word, all my collaborators would exchange changes as git
-patches (or even via pull/push). In the real world, they send new
-versions which I integrate (after dealing with their whitespace and
-encoding changes...). Therefore, being able to say "git commit
---author=mickey" and having git translate "mickey" into "Mickey Mouse
-<mickey@ducktown.us>" is a real time saver. The patch accomplishes
-this by reading config keys "user.mickey.name" and "user.mickey.email"
-when encountering an --author argument without "<>".
+NAK. For me using 'objectview' action, i.e. deciding on action based
+on the type of object, it is a bad idea. Let me explain in more detail.
 
-Signed-off-by: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
----
+First, I pretty much think that user would want to know if clicking
+on ref marker would lead him/her to 'tag' view, or to 'shortlog' view.
+So having visual difference is something that we want to have.  And
+if we do that when generating link, why not go one extra step and
+in addition to visual difference also use different action in link?
 
-I tried to apply everything I've learned from this thread:
-- Justification in commit message rather than cover
-- minor style adjustments
-- xstrdup two more strings to spare future leakage cleanup-a-thons a few
-  unpleasant surprises
-- comes with documentation patch now
 
-I think the relation to and distinction from "git-svn -A" and ".mailmap"
-has become clear through the discussion (should a summary go in the commit
-message?).
-I really like Junio's alias (git who). It's certainly helpful. For the
-case of "git commit --author key" I think we should not simply go by the
-first, possibly non-unique match returned by "git show". Also, being able
-to say "git commit --author=nitpicker" may make some days brighter ;)
+Second, for me the whole idea of deciding on action based on the type
+of object, either via 'object' view/action or via actionless gitweb URL
+is either necessary evil or a tradeoff.  We use it because of the
+following issues:
 
- Documentation/config.txt     |    8 +++++
- Documentation/git-commit.txt |    5 ++-
- builtin-commit.c             |   67 +++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 78 insertions(+), 2 deletions(-)
+ * Calculating proper action during link generation via git_get_type()
+   is costly; it is additional fork (this can be avoided by using
+   'reuse connection' get type from Lea gitweb caching work), extra
+   CPU load, and extra I/O hit.  If it *cannot be avoided* (which is
+   not the case of ref markers links) it is better to defer this cost
+   till user actually follows the link.  This feature is used for
+   sha-1 committags (turning something that looks like sha-1 into
+   gitweb hyperlink) and for links to symbolic links targets in 'tree'
+   view (where link target can not exist - dangling symlink, or can
+   lead to file or directory).
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 9020675..9bea3a3 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1107,6 +1107,14 @@ user.signingkey::
- 	unchanged to gpg's --local-user parameter, so you may specify a key
- 	using any method that gpg supports.
+   (That is necessary evil part).
+
+ * Guessing action based on type of objects allows gitweb to be more
+   robust, support URL editing/mangling more easily, and aid the
+   creation of shortcuts to git repositories (e.g. in bugtracker)
+   more easily (see commit 7f9778b19b07601ae81).  Currently it is
+   done in dispatch phase, and does not do redirection.
+
+   (That is tradeoff: more robust and extra feature for extra get type).
+
+BTW. one thing that can be done is consolidation of "guessing action"
+code: it is done by simply calculating what is to put in $action during
+dispatch, or is done in 'object' view to calculate redirect URL with
+proper action.  I have tried to bring them together, but patches were
+I think lost in the noise.
+
+> So, should I resend v5 with the small change about refs canonical
+> form, or is somebody else doing it? Or is the new idea as implemented
+> in the above mentioned changeset preferrable? Should I send that
+> patches to the mailing list?
+
+IMHO v5 with small change making refs canonical (hash=>"refs/$ref")
+is preferred way to do this.  You can send v6 patch or I can send
+it (I planned doing this today).
  
-+user.<author>.email::
-+	The email address to be recorded in a newly created commit if you
-+	specify the option \--author=<author> to linkgit:git-commit[1].
-+
-+user.<author>.name::
-+	The full name to be recorded in a newly created commit if you
-+	specify the option \--author=<author> to linkgit:git-commit[1].
-+
- imap::
- 	The configuration variables in the 'imap' section are described
- 	in linkgit:git-imap-send[1].
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 0e25bb8..1685cf6 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -76,7 +76,10 @@ OPTIONS
- 
- --author=<author>::
- 	Override the author name used in the commit.  Use
--	`A U Thor <author@example.com>` format.
-+	`A U Thor <author@example.com>` format. Alternatively, if
-+	<author> does not contain `<>` then the configuration
-+	variables `user.<author>.name` and `user.<author>.email`
-+	are used if present (see linkgit:git-config[1]).
- 
- -m <msg>::
- --message=<msg>::
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 649c8be..c36e60f 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -53,6 +53,14 @@ static char *author_name, *author_email, *author_date;
- static int all, edit_flag, also, interactive, only, amend, signoff;
- static int quiet, verbose, no_verify, allow_empty;
- static char *untracked_files_arg;
-+struct user {
-+	char *name;
-+	char *full_name;
-+	char *email;
-+};
-+static struct user **users;
-+static int users_alloc;
-+static int users_nr;
- /*
-  * The default commit message cleanup mode will remove the lines
-  * beginning with # (shell comments) and leading and trailing
-@@ -406,6 +414,7 @@ static const char sign_off_header[] = "Signed-off-by: ";
- static void determine_author_info(void)
- {
- 	char *name, *email, *date;
-+	int i;
- 
- 	name = getenv("GIT_AUTHOR_NAME");
- 	email = getenv("GIT_AUTHOR_EMAIL");
-@@ -429,10 +438,22 @@ static void determine_author_info(void)
- 		date = xstrndup(rb + 2, eol - (rb + 2));
- 	}
- 
-+	author_date = date;
-+
- 	if (force_author) {
- 		const char *lb = strstr(force_author, " <");
- 		const char *rb = strchr(force_author, '>');
- 
-+		if (!lb && !rb) {
-+			for (i = 0; i < users_nr; i++) {
-+				if (!strcmp(force_author, users[i]->name)) {
-+					author_name = xstrdup(users[i]->full_name);
-+					author_email = xstrdup(users[i]->email);
-+					return;
-+				}
-+			}
-+		}
-+
- 		if (!lb || !rb)
- 			die("malformed --author parameter");
- 		name = xstrndup(force_author, lb - force_author);
-@@ -441,7 +462,6 @@ static void determine_author_info(void)
- 
- 	author_name = name;
- 	author_email = email;
--	author_date = date;
- }
- 
- static int prepare_to_commit(const char *index_file, const char *prefix)
-@@ -888,11 +908,56 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
- 	}
- }
- 
-+static struct user *make_user(const char *name, int len)
-+{
-+	struct user *ret;
-+	int i;
-+
-+	for (i = 0; i < users_nr; i++) {
-+		if (len ? (!strncmp(name, users[i]->name, len) &&
-+			   !users[i]->name[len]) :
-+		    !strcmp(name, users[i]->name))
-+			return users[i];
-+	}
-+
-+	ALLOC_GROW(users, users_nr + 1, users_alloc);
-+	ret = xcalloc(1, sizeof(struct user));
-+	users[users_nr++] = ret;
-+	if (len)
-+		ret->name = xstrndup(name, len);
-+	else
-+		ret->name = xstrdup(name);
-+
-+	return ret;
-+}
-+
- static int git_commit_config(const char *k, const char *v, void *cb)
- {
-+	const char *name;
-+	const char *subkey;
-+	struct user *user;
-+
- 	if (!strcmp(k, "commit.template"))
- 		return git_config_string(&template_file, k, v);
- 
-+	if (!prefixcmp(k, "user.")) {
-+		name = k + 5;
-+		subkey = strrchr(name, '.');
-+		if (!subkey)
-+			return 0;
-+		user = make_user(name, subkey - name);
-+		if (!strcmp(subkey, ".name")) {
-+			if (!v)
-+				return config_error_nonbool(k);
-+			user->full_name = xstrdup(v);
-+		} else if (!strcmp(subkey, ".email")) {
-+			if (!v)
-+				return config_error_nonbool(k);
-+			user->email = xstrdup(v);
-+		}
-+		return 0;
-+	}
-+
- 	return git_status_config(k, v, cb);
- }
- 
+> Let me know, I've got plenty more stuff ready for gitweb and I'm eager
+> to see them accepted upstream 8-D
+
+First, the great problem with gitweb patches as of today is if Lea
+Google Summer of Code 2008 work on gitweb caching would be accepted
+(merged in) into git repository; I pretty much think that any gitweb
+improvements would be "incompatibile" (read: causing conflicts) with
+'gitweb caching' patch covering such large parts of code... but
+I might be mistaken about that.
+
+Second, I have planned on sending "gitweb TODO and wishlist", or 
+"what's cooking in gitweb", with links to threads on git mailing
+list, and sometimes explanation why some feature should wait on
+infrastructure improvements, such as consolidating log-like views
+code.
+
+
+Thank you for contributing to gitweb...
 -- 
-1.6.0
+Jakub Narebski
+Poland
