@@ -1,98 +1,77 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git-aware HTTP transport
-Date: Tue, 26 Aug 2008 09:14:25 -0700
-Message-ID: <20080826161425.GG26523@spearce.org>
-References: <20080826012643.GD26523@spearce.org> <48B36BCA.8060103@zytor.com> <20080826145857.GF26523@spearce.org>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Tue, 26 Aug 2008 12:17:35 -0400
+Message-ID: <1219767455.5493.4.camel@gaara.bos.redhat.com>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>
+	 <1219664940.9583.42.camel@pmac.infradead.org>
+	 <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+	 <7vy72kek6y.fsf@gitster.siamese.dyndns.org>
+	 <20080826145719.GB5046@coredump.intra.peff.net>
+	 <1219764860.4471.13.camel@gaara.bos.redhat.com>
+	 <1219766398.7107.87.camel@pmac.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 18:16:09 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, users@kernel.org
+To: David Woodhouse <dwmw2@infradead.org>
+X-From: git-owner@vger.kernel.org Tue Aug 26 18:20:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY1D6-0006ac-GR
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 18:16:00 +0200
+	id 1KY1HX-0008Ho-BN
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 18:20:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758169AbYHZQO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 12:14:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758121AbYHZQO1
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 12:14:27 -0400
-Received: from george.spearce.org ([209.20.77.23]:54802 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752555AbYHZQO0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 12:14:26 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id C945538375; Tue, 26 Aug 2008 16:14:25 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20080826145857.GF26523@spearce.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752458AbYHZQTb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Aug 2008 12:19:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754250AbYHZQTb
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 12:19:31 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:51064 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752303AbYHZQTa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 12:19:30 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m7QGHcSZ022090;
+	Tue, 26 Aug 2008 12:17:38 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m7QGHbb5016382;
+	Tue, 26 Aug 2008 12:17:37 -0400
+Received: from [10.16.3.198] (dhcp-100-3-198.bos.redhat.com [10.16.3.198])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m7QGHaNA008785;
+	Tue, 26 Aug 2008 12:17:36 -0400
+In-Reply-To: <1219766398.7107.87.camel@pmac.infradead.org>
+X-Mailer: Evolution 2.23.6 (2.23.6-1.fc10) 
+X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93755>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> "H. Peter Anvin" <hpa@zytor.com> wrote:
-> >
-> > I actually suggest embedding the forwarding URL into an ordinary  
-> > payload.  Instead of a HEAD request here, then do a GET (or, even  
-> > better, POST) and get the redirected URL in return.
-> 
-> Hmm.  I'm actually thinking the exact opposite here.
+On Tue, 2008-08-26 at 16:59 +0100, David Woodhouse wrote:
+> On Tue, 2008-08-26 at 11:34 -0400, Kristian H=C3=B8gsberg wrote:
+> > It's pretty normal to see opponents of a decision like this complai=
+n
+> > loudly when it lands on their system, whereas the silent majority i=
+n
+> > favour will be happy to see the change finally implemented but relu=
+ctant
+> > to stir up the discussion again.
+> >=20
+> > I don't think new arguments are brought to the discussion, just new
+> > people, who are temporarily inconvened by a change towards sanity.
+>=20
+> Nice emotive response, especially the subtle but unsubstantiated 'sil=
+ent
+> majority in favour' bit -- but you forgot the part where you were
+> supposed to actually point out a tangible benefit which is achieved b=
+y
+> breaking compatibility like this.
 
-Here's the delta from the last draft I emailed.  Its basically just
-about this redirect stuff.
+Oh get off your high horse, this entire thread is pretty much all
+bullshit and emotions.  Not every arbitrary decision deserves to be set
+in stone and be defended under the banner of backwards compatibility.
 
-diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
-index 99d7623..a3f7379 100644
---- a/Documentation/technical/http-protocol.txt
-+++ b/Documentation/technical/http-protocol.txt
-@@ -43,14 +43,40 @@ All requests/responses use "application/x-git" as the content type.
- Action specific subtypes are specified by the parameter "service",
- e.g. "application/x-git; service=upload-pack".
- 
-+Redirects
-+---------
-+
-+If a POST request results in an HTTP 302 or 303 redirect response
-+clients should retry the request by updating the URL and POSTing
-+the request to the new location.
-+
-+If the new request is successful clients should trim off the
-+trailing "/backend.git/$service" portion of the new loaction
-+and use the remainder as the base URL for future requests in
-+the same transaction.
-+
-+This redirection permits Apache's mod_rewrite (and many other
-+servers) to implement a form of round-robin load balancing by
-+redirecting all requests to a generic host to a specific host.
-+
- Detecting Smart Servers
- -----------------------
- 
- HTTP clients can detect a smart Git-aware server by sending
- a request to service "show-ref".
- 
--A Git-aware server will respond with a valid response (see below).
--A dumb server should respond with an error message. 
-+A Git-aware server will respond with a valid response.  Clients
-+must check the following properties to prevent being fooled by
-+misconfigured servers:
-+
-+  * HTTP status code is 200.
-+  * Content-Type is "application/x-git; service=show-ref"
-+  * The body can be parsed without errors.  The length of
-+    each pkt-line must be 4 valid hex digits.
-+
-+A dumb server will respond with a non-200 HTTP status code.
-+A misconfigured server may respond with a normal 200 status
-+code, but an incorrect content type.
- 
- Service show-ref
- ----------------
-
--- 
-Shawn.
+Kristian
