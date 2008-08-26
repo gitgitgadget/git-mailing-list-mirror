@@ -1,111 +1,73 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: Gittogether event?
-Date: Tue, 26 Aug 2008 22:48:59 +0200
-Message-ID: <200808262248.59417.chriscool@tuxfamily.org>
-References: <20080820151031.GD3483@spearce.org> <20080822143407.GE3483@spearce.org> <1219725047.11792.81.camel@maia.lan>
+From: Jason McMullan <jason.mcmullan@gmail.com>
+Subject: Re: "failed to read delta base object at..."
+Date: Tue, 26 Aug 2008 16:43:48 -0400
+Message-ID: <48B46B04.70102@gmail.com>
+References: <20080825164602.GA2213@fieldses.org> <alpine.LFD.1.10.0808251153210.3363@nehalem.linux-foundation.org> <20080825213104.GI2213@fieldses.org> <alpine.LFD.1.10.0808251435540.3363@nehalem.linux-foundation.org> <20080825221321.GL2213@fieldses.org> <alpine.LFD.1.10.0808251616240.3363@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"J.H." <warthog19@eaglescrag.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
-To: Sam Vilain <sam.vilain@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Tue Aug 26 22:46:29 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: bfields@fieldses.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 26 22:51:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY5Qo-0003SK-1h
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 22:46:26 +0200
+	id 1KY5VP-0004q2-H3
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 22:51:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752454AbYHZUpQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Aug 2008 16:45:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752138AbYHZUpQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 16:45:16 -0400
-Received: from smtp8-g19.free.fr ([212.27.42.65]:43570 "EHLO smtp8-g19.free.fr"
+	id S1751611AbYHZUuG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 16:50:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751770AbYHZUuG
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 16:50:06 -0400
+Received: from main.gmane.org ([80.91.229.2]:35791 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751898AbYHZUpO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Aug 2008 16:45:14 -0400
-Received: from smtp8-g19.free.fr (localhost [127.0.0.1])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id C14F232A98B;
-	Tue, 26 Aug 2008 22:45:11 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id F1CA832A8B0;
-	Tue, 26 Aug 2008 22:45:10 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <1219725047.11792.81.camel@maia.lan>
-Content-Disposition: inline
+	id S1751567AbYHZUuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 16:50:05 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1KY5UI-0006Jr-WA
+	for git@vger.kernel.org; Tue, 26 Aug 2008 20:50:03 +0000
+Received: from 209.195.169.219 ([209.195.169.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 26 Aug 2008 20:50:02 +0000
+Received: from jason.mcmullan by 209.195.169.219 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 26 Aug 2008 20:50:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 209.195.169.219
+User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <alpine.LFD.1.10.0808251616240.3363@nehalem.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93816>
 
-Le mardi 26 ao=FBt 2008, Sam Vilain a =E9crit :
-> Figure I may as well answer this, given it's addressed to me :)
+Linus Torvalds wrote:
+> So the corrupt data looks like
+> 
+> [snip]
+> 
+> And as far as I can tell, that's the _only_ corruption in the whole file, 
+> but I didn't really double-check.
+> 
+> Does anybody see a pattern?
+> 
 
-Yes, thank you very much for your answer :-)
-By the way David and Daniel, are you interested by a GitTogether or by =
-the=20
-GSoC Summit?
+Was this pack created on a journaled file system? Reiserfs? Ext3?
 
-> On Fri, 2008-08-22 at 07:34 -0700, Shawn O. Pearce wrote:
-> > 	1: Are you interested in attending a Gittogether:
-> > 		[ ] Yes   [ ]  No
->
-> Yes, but happy to participate in technical events via telemetry.
+If there's journal corruption in a commonly used filesystem,
+That Would Be Bad.
 
-=46rom below in your email it seems you mean video conference.
-Are there other people interested by an event via video conference?
+I would suspect the Reiserfs 'file tail' behavour and journalling
+have something to do with it, only because I still use and like
+ReiserV3+LVM (dynamic grow and offline shrink baby!).
 
-> > 	2: Would you travel to Portland, Oregon for the Gittogether:
-> > 		[ ] Yes   [ ]  No
->
-> Sure, but only if several people thought it would be worth blowing US
-> $1400 of community funds on my ticket ... that's what it costs to get
-> across the Pacific!
+Only something like silently knifing files in the back would cause me
+to leave my beloved RedrumFS.
 
-Maybe you can go to the GCoC Mentor Summit and Google will pay your tic=
-ket?
-Are you interested in going to the Mentor Summit?
+Which I probably should. Eventually. Once ZFS changes it's license. HA!
 
-> > 	3: What month/year would be best?
-> > 		Option list for next 12 months from Oct 08-Oct 09.
->
-> The summit time is actually quite good for me.
->
-> > 	4: What would you hope to see/accomplish while there?
-> > 		[ ] Instructor-lead Git training
-> > 		[ ] 24 hour hack-a-new-feature contest
-> > 		[ ] ... ?
-> > 		Enter other ideas: [  <big text box thingy>    ]
->
-> The main reason I'd be interested in joining would be to talk to peop=
-le
-> about the gittorrent project, or any other similar "cloud computing"
-> over git ideas.  There was a bit of difference of opinions, and some
-> divergence of ideas that was possibly avoidable.  It would be good to
-> "crack out" the concepts with a group of people "in person".  I'm pre=
-tty
-> sure there's already a videoconference setup at Catalyst, or if not
-> there could be one jimmied up easily enough.  So that might be a nice
-> cheap thing to do - I can give a 30 minute overview of the technology=
-,
-> and hopefully participate in group discussion for another 30 minutes =
-(or
-> as long as people are interested in the discussion really).
->
-> Of course I'd equally like to meet people... that's all good and
-> fun :-).  And I've got connections in Portland as well.  I just think
-> it's probably not the best use of community funds.
->
-> > 	5: Would you volunteer to help organize it?
->
-> I'd volunteer for anything, but you'd better turn it down I'd be
-> hopeless ;-).
-
-Thanks anyway ;-)
-Christian.
+- Jason McMullan
