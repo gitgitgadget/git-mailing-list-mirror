@@ -1,72 +1,86 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git-aware HTTP transport
-Date: Tue, 26 Aug 2008 07:58:57 -0700
-Message-ID: <20080826145857.GF26523@spearce.org>
-References: <20080826012643.GD26523@spearce.org> <48B36BCA.8060103@zytor.com>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Tue, 26 Aug 2008 11:34:20 -0400
+Message-ID: <1219764860.4471.13.camel@gaara.bos.redhat.com>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>
+	 <1219664940.9583.42.camel@pmac.infradead.org>
+	 <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+	 <7vy72kek6y.fsf@gitster.siamese.dyndns.org>
+	 <20080826145719.GB5046@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 17:00:41 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org,
+	users@kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 26 17:52:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY02B-0004O4-49
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 17:00:39 +0200
+	id 1KY0pK-00068L-UN
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 17:51:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754479AbYHZO67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 10:58:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755496AbYHZO67
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 10:58:59 -0400
-Received: from george.spearce.org ([209.20.77.23]:36504 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754436AbYHZO66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 10:58:58 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 9862B38375; Tue, 26 Aug 2008 14:58:57 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <48B36BCA.8060103@zytor.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754775AbYHZPuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 11:50:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754436AbYHZPuV
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 11:50:21 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:39965 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754338AbYHZPuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 11:50:20 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m7QFYMor001555;
+	Tue, 26 Aug 2008 11:34:22 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m7QFYMPq025542;
+	Tue, 26 Aug 2008 11:34:22 -0400
+Received: from [10.16.3.198] (dhcp-100-3-198.bos.redhat.com [10.16.3.198])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m7QFYLV0004207;
+	Tue, 26 Aug 2008 11:34:21 -0400
+In-Reply-To: <20080826145719.GB5046@coredump.intra.peff.net>
+X-Mailer: Evolution 2.23.6 (2.23.6-1.fc10) 
+X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93751>
 
-"H. Peter Anvin" <hpa@zytor.com> wrote:
->> Detecting Smart Servers
->> -----------------------
->>
->> HTTP clients can detect a smart Git-aware server by HEADing
->> $repo/backend.git-http and looking for a 302 redirect to the
->> repository's smart service URL:
-...
->> All subsequent communcation for this transaction is done through
->> the smart service URL ($ssurl), not the original URL.
->
-> I actually suggest embedding the forwarding URL into an ordinary  
-> payload.  Instead of a HEAD request here, then do a GET (or, even  
-> better, POST) and get the redirected URL in return.
->
-> Why?  Because it's common enough to redirect entire trees, and use of  
-> HTTP-layer redirections here is an unnecessary layering violation.
+On Tue, 2008-08-26 at 10:57 -0400, Jeff King wrote:
+> On Mon, Aug 25, 2008 at 04:41:57PM -0700, Junio C Hamano wrote:
+> 
+> > > Umm.  What exactly makes you feel you should ignore the discussions we had 
+> > > around the issues on the git and msysgit mailing list?
+> > 
+> > Well, this was partly my fault, as I did not make it clear in this part
+> > that beating the horse that has been dead for two years is not a
+> > productive way to spend out time.  I however did, in the part David did
+> > not quote, try to make it clear:
+> > 
+> >   That's all history now anyway.  We should try to do better the next time,
+> >   which is much more important, and that is the topic of this message.
+> 
+> I don't want to stir up this discussion too much; I am sure you have
+> many more important things to be working on. But I did want to make one
+> observation.
+> 
+> One side of the argument, I see a lot of "I would prefer it this way."
+> And on the other side I see a lot of "this discussion is already
+> history" and "but I do not care personally that much."
+> 
+> It makes me wonder why nobody has said "no, really, I prefer it without
+> the programs in /bin." Are they simply confident that the decision has
+> been made, and don't feel the need to say something?
 
-Hmm.  I'm actually thinking the exact opposite here.  My rationale
-for putting the response as a standard HTTP 302/303 style redirect
-is to permit hardware load balancers or Apache mod_rewrite rules
-to implement simple load balancing with a HTTP redirect.
+It's pretty normal to see opponents of a decision like this complain
+loudly when it lands on their system, whereas the silent majority in
+favour will be happy to see the change finally implemented but reluctant
+to stir up the discussion again.
 
-If we embed the redirect URL into the payload then configuring that
-will become a lot more complex.  At the minimum you may have to
-make up a dummy file for each server (holding the response payload)
-then then let mod_rewrite rewrite the request internally to make
-Apache serve that file.  Ugly.
+I don't think new arguments are brought to the discussion, just new
+people, who are temporarily inconvened by a change towards sanity.
 
-> If you insist on using a HTTP status code, I would claim that 303 is a  
-> better status code.
-
-Ok.
-
--- 
-Shawn.
+Kristian
