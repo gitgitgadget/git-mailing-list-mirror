@@ -1,59 +1,71 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Git-aware HTTP transport
-Date: Tue, 26 Aug 2008 15:38:48 -0700
-Message-ID: <48B485F8.5030109@zytor.com>
-References: <20080826012643.GD26523@spearce.org> <48B36BCA.8060103@zytor.com> <20080826145857.GF26523@spearce.org> <48B4303C.3080409@zytor.com> <20080826172648.GK26523@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] be paranoid about closed stdin/stdout/stderr
+Date: Tue, 26 Aug 2008 15:42:51 -0700
+Message-ID: <7vabez2yac.fsf@gitster.siamese.dyndns.org>
+References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu>
+ <48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org>
+ <E1KXawS-0001gg-Ty@fencepost.gnu.org> <48B2AFC2.20901@viscovery.net>
+ <7vbpzgb94q.fsf@gitster.siamese.dyndns.org>
+ <E1KXsL9-0004ef-Co@fencepost.gnu.org> <48B3A948.3080800@viscovery.net>
+ <7vsksrad7o.fsf@gitster.siamese.dyndns.org> <48B44C61.2020206@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Aug 27 00:40:02 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Karl Chen <quarl@cs.berkeley.edu>,
+	Git mailing list <git@vger.kernel.org>
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Aug 27 00:44:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY7Cj-0004eu-Dh
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 00:40:01 +0200
+	id 1KY7Gq-00060R-KX
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 00:44:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751395AbYHZWi5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 18:38:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751375AbYHZWi4
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 18:38:56 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:55299 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751297AbYHZWi4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 18:38:56 -0400
-Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m7QMcsL1024517
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 26 Aug 2008 15:38:54 -0700
-Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
-	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m7QMcsP4010976;
-	Tue, 26 Aug 2008 15:38:54 -0700
-Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
-	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m7QMcmV3006426;
-	Tue, 26 Aug 2008 15:38:48 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <20080826172648.GK26523@spearce.org>
-X-Virus-Scanned: ClamAV 0.93.3/8095/Tue Aug 26 14:06:44 2008 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1751874AbYHZWnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 18:43:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751755AbYHZWnJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 18:43:09 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33770 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751297AbYHZWnI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 18:43:08 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5F6945CD61;
+	Tue, 26 Aug 2008 18:43:02 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 61D1B5CD60; Tue, 26 Aug 2008 18:42:55 -0400 (EDT)
+In-Reply-To: <48B44C61.2020206@gnu.org> (Paolo Bonzini's message of "Tue, 26
+ Aug 2008 20:33:05 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 57223E30-73C0-11DD-82E9-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93829>
 
-Shawn O. Pearce wrote:
-> 
-> Discard my prior patch from today.
-> 
-> This is a patch to last night's full document edition
-> (http://article.gmane.org/gmane.comp.version-control.git/93704)
-> and addresses only the issue of redirects.
-> 
+Paolo Bonzini <bonzini@gnu.org> writes:
 
-Looks great to me.
+> Junio C Hamano wrote:
+>> Johannes Sixt <j.sixt@viscovery.net> writes:
+>> 
+>>> Paolo Bonzini schrieb:
+>>>> +	/*
+>>>> +	 * Always open file descriptors 0/1/2 to avoid clobbering files
+>>>> +	 * in die().  It also avoids not messing up when the pipes are
+>>>> +	 * dup'ed onto stdin/stdout/stderr in the child processes we spawn.
+>>>> +	 */
+>>> I see your point, but I don't have an opinion whether this stretch is
+>>> necessary.
+>> 
+>> This is going too far.  Have you seen any other sane program that do this?
+>
+> Busybox.  But it runs setuid, as Steven pointed out.
+>
+> I say it's all (i.e. be this paranoid), or nothing.
 
-	-hpa
+I tend to agree, and I think what Stephen R. van den Berg said earlier in
+the thread makes perfect sense.
