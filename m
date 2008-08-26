@@ -1,134 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add a reference to gitk localbranc remote/branch in
- gittutorial
-Date: Mon, 25 Aug 2008 17:29:19 -0700
-Message-ID: <7vy72kbov4.fsf@gitster.siamese.dyndns.org>
-References: <20080825215023.11822a20@paolo-desktop>
- <loom.20080825T200956-169@post.gmane.org>
- <7v63pog3rn.fsf@gitster.siamese.dyndns.org>
- <4d8e3fd30808251512x126502bj5f154b58d7ae51a2@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] git wrapper: execute git-shell when argv[1] is
+ '-c'
+Date: Tue, 26 Aug 2008 02:52:35 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808260249090.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <alpine.DEB.1.00.0808251235430.24820@pacific.mpi-cbg.de.mpi-cbg.de> <48B29B2A.6000802@gnu.org> <alpine.DEB.1.00.0808251955490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <237967ef0808251125q3e50fa04wf0e97ff29298bef2@mail.gmail.com>
+ <alpine.DEB.1.00.0808252206150.24820@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808252225520.24820@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808252248150.24820@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.DEB.1.00.0808252251450.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <20080825210345.GE14930@eagain.net> <alpine.DEB.1.00.0808260001390.24820@pacific.mpi-cbg.de.mpi-cbg.de> <20080825222002.GF14930@eagain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Eric Raible" <raible@gmail.com>, git@vger.kernel.org
-To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 02:30:59 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mikael Magnusson <mikachu@gmail.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Tommi Virtanen <tv@eagain.net>
+X-From: git-owner@vger.kernel.org Tue Aug 26 02:48:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXmSY-0004xM-Qz
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 02:30:59 +0200
+	id 1KXmjl-0007bq-CF
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 02:48:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752131AbYHZA33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 20:29:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752308AbYHZA33
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 20:29:29 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49149 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751698AbYHZA32 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 20:29:28 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6FE4E68F42;
-	Mon, 25 Aug 2008 20:29:26 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 01B5968F3F; Mon, 25 Aug 2008 20:29:20 -0400 (EDT)
-In-Reply-To: <4d8e3fd30808251512x126502bj5f154b58d7ae51a2@mail.gmail.com>
- (Paolo Ciarrocchi's message of "Mon, 25 Aug 2008 22:42:44 +0030")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 09ECA46C-7306-11DD-9B4B-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753064AbYHZAre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2008 20:47:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752920AbYHZAre
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 20:47:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50975 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752835AbYHZAre (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2008 20:47:34 -0400
+Received: (qmail invoked by alias); 26 Aug 2008 00:47:31 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp058) with SMTP; 26 Aug 2008 02:47:31 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18UFKlJHkkUmPY5OmfVssxF1BS4eSKofAmNVhW6Qa
+	jeuVJHNEPm/QPK
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20080825222002.GF14930@eagain.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93698>
 
-"Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com> writes:
+Hi,
 
-> On 8/25/08, Junio C Hamano <gitster@pobox.com> wrote:
->> Eric Raible <raible@gmail.com> writes:
->>
->>> Paolo Ciarrocchi <paolo.ciarrocchi <at> gmail.com> writes:
->>>
->>>> +Alice can also use gitk to browse that Bob did:
->>>
->>> s/that/what/ ?
->>>
->>>> +------------------------------------------------
->>>> +alice$ gitk master origin/master
->>>> +------------------------------------------------
->>>
->>> I think that you meant:
->>>
->>> alice$ gitk master..origin/master
->>
->> I'd suggest rewording the explanation to have Alice "compare what both of
->> them did", not just "browse what Bob did".
-> ...
->> And for that purpose, I think the original form used by Paolo's patch is
->> the most appropriate here in an early part of the tutorial, as it teaches
->> how to view full histories leading to the tips of these two branches.
->
-> well, it might be a good idea to mention both.
->
-> do you think we should add a note about git log --graph as well?
+On Tue, 26 Aug 2008, Tommi Virtanen wrote:
 
-"Probably yes" and "not here".
+> On Tue, Aug 26, 2008 at 12:05:21AM +0200, Johannes Schindelin wrote:
+> > I do disagree with you that it is a kludge though.  I think it makes 
+> > complete sense to add this to Documentation/git.txt in addition to 
+> > other documentation that is lacking from my patch, though:
+> > 
+> > -- snip --
+> > -c <command>::
+> > 	execute <command> in git-shell.
+> > -- snap --
+> 
+> All I'm going to say is that that's not the way you build trustable 
+> software. You take a minimal interface and restrict untrusted users to 
+> that, you don't add a feature to the widest possible interface..
 
->> Earlier in the tutorial sequence we teach "gitk" without any parameter to
->> view the history of the current branch, and here the user learns one new
->> thing, to view more than just the current branch.
-> ...
->> Limiting the output with "..origin/master" (or "...origin/master") can be
->> taught after demonstrating this most basic form.
+I do not get your point.
 
-With the existing flow, I would actually suggest you not to use
-origin/master at all.  The example before you inserted your changes does
-not update origin/master.
+But then, I think I start not to care anymore, as I think your reasoning 
+is bogus.  "widest possible interface", "trustable software", etc.  Sounds 
+pretty buzzy-wordy to me.
 
-	Alice can use gitk to compare what both of them did:
+Yeah, you would need to audit it.  Maybe you would even have to check for 
+"*argv[0] == '-'" and set argv[0] to "git-shell" if so.  But buzz-wording 
+just makes me go away and not listen anymore.
 
-	$ gitk HEAD FETCH_HEAD
-
-then teach the limiting:
-
-	Notice unlike the earlier example that you used gitk to view the
-	history leading to current status, this shows both histories
-	leading to Alice's current state (HEAD) and the state you just
-	fetched from Bob (FETCH_HEAD).  You can limit what is shown by
-	using revision range notation:
-
-        $ gitk HEAD..FETCH_HEAD
-
-	Two commits written with two dots in between means "show
-	everything that is reachable from the latter but excluding
-	anything that is reachable from the former".  Alice already knows
-	what she did well, as well as what she and Bob started working on,
-	and she is only interested in what Bob did since their histories
-	forked, working independently.
-
-	By the way, the notation "git log -p ..FETCH_HEAD" you saw
-	earlier is a short-hand for "git log -p HEAD..FETCH_HEAD".  HEAD,
-	that means your current state, can be dropped on either side of
-	the two-dot range notation.
-
-It might be better to remove the last paragraph, and instead explain the
-meaning of "..FETCH_HEAD" notation immediately after "git log -p" was used
-to "fetch-review-but-not-integrate" description (i.e. before the part your
-patch touched).
-
-If you want to, you can also teach three-dot form after showing how to use
-the two-dot form.
-
-	Alice may want to view what both of them did since they forked.
-	She can use three-dot form instead of the two-dot form:
-
-        $ gitk HEAD...FETCH_HEAD
-
-	This means "show everything that is reachable from either one, but
-	exclude anything that is reachable from both of them".
-
-	Again, note that these range notation can be used with both gitk
-	and "git log".
+Whatever,
+Dscho
