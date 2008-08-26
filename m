@@ -1,65 +1,87 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Tue, 26 Aug 2008 18:25:13 +0200
-Message-ID: <20080826162513.GR10544@machine.or.cz>
-References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org> <1219664940.9583.42.camel@pmac.infradead.org> <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vy72kek6y.fsf@gitster.siamese.dyndns.org> <20080826145719.GB5046@coredump.intra.peff.net> <1219764860.4471.13.camel@gaara.bos.redhat.com> <1219766398.7107.87.camel@pmac.infradead.org> <1f6632e50808260904t6bea0be5kc69342917e3db97@mail.gmail.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Git-aware HTTP transport
+Date: Tue, 26 Aug 2008 09:33:00 -0700
+Message-ID: <48B4303C.3080409@zytor.com>
+References: <20080826012643.GD26523@spearce.org> <48B36BCA.8060103@zytor.com> <20080826145857.GF26523@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Woodhouse <dwmw2@infradead.org>,
-	Kristian H??gsberg <krh@redhat.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, users@kernel.org
-To: Matthias Kestenholz <mk@spinlock.ch>
-X-From: git-owner@vger.kernel.org Tue Aug 26 18:26:29 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Aug 26 18:34:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY1N8-0001gV-7D
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 18:26:22 +0200
+	id 1KY1Un-00046Z-17
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 18:34:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754338AbYHZQZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 12:25:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756032AbYHZQZQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 12:25:16 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:42375 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754329AbYHZQZP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 12:25:15 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 88F6B3939B52; Tue, 26 Aug 2008 18:25:13 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1f6632e50808260904t6bea0be5kc69342917e3db97@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1754322AbYHZQdM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 12:33:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753716AbYHZQdM
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 12:33:12 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:57887 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752642AbYHZQdM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 12:33:12 -0400
+Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m7QGX7o0018523
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 26 Aug 2008 09:33:07 -0700
+Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
+	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m7QGX7jm009345;
+	Tue, 26 Aug 2008 09:33:07 -0700
+Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
+	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m7QGX01Z000468;
+	Tue, 26 Aug 2008 09:33:01 -0700
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <20080826145857.GF26523@spearce.org>
+X-Virus-Scanned: ClamAV 0.93.3/8091/Tue Aug 26 08:26:20 2008 on terminus.zytor.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93758>
 
-On Tue, Aug 26, 2008 at 06:04:00PM +0200, Matthias Kestenholz wrote:
-> Correct, but there is a benefit. Imagine a new user:
+Shawn O. Pearce wrote:
 > 
-> git-<tab><tab> ... what? 140-something commands? I'll better start looking
-> for alternatives _right now_!
+> Hmm.  I'm actually thinking the exact opposite here.  My rationale
+> for putting the response as a standard HTTP 302/303 style redirect
+> is to permit hardware load balancers or Apache mod_rewrite rules
+> to implement simple load balancing with a HTTP redirect.
+> 
+> If we embed the redirect URL into the payload then configuring that
+> will become a lot more complex.  At the minimum you may have to
+> make up a dummy file for each server (holding the response payload)
+> then then let mod_rewrite rewrite the request internally to make
+> Apache serve that file.  Ugly.
+> 
 
-Actually, this is the only realistic argument I can remember at all.
-Are there any others? I couldn't come up with any - but I didn't do much
-history digging: others seem to be equally in dark, though.
+No, you're thinking backwards.  What you want is the standard HTTP 
+redirect load balancing to take effect *before* the initial request is 
+serviced.  The front-end load balancer will take effect on the initial 
+request, and then redirect the request to a node (via a 302 reply.)  The 
+target node then sends a self-referencing URL to keep the service local, 
+if that is desired -- otherwise it doesn't.
 
-(And I'm not saying this one is not important; it's apparently a
-significant "P.R." issue. But is just this _the_ official rationale?)
+Again, the 300-class redirect is treated as a part of the HTTP transport 
+in this case; it doesn't have to be visible to the RPC layer.  However, 
+in order to maintain the integrity of an interchange, we do need an 
+additional level of redirection visible to the RPC layer.
 
-> Having a cluttered namespace is never a good thing. It means that it's
-> less obvious which commands you are supposed to use etc.
+> If we embed the redirect URL into the payload then configuring that
+> will become a lot more complex.  At the minimum you may have to
+> make up a dummy file for each server (holding the response payload)
+> then then let mod_rewrite rewrite the request internally to make
+> Apache serve that file.  Ugly.
 
-This is not much of a valid argument; you could install the same set of
-commands to /usr/bin that you are offering in the bash autocompletion.
-(With the catch that this might break peoples scripts in a subtler way
-than just removing all of them.)
+A very simple CGI/PHP script will do this, and it's really very very 
+trivial to set up.
 
--- 
-				Petr "Pasky" Baudis
-The next generation of interesting software will be done
-on the Macintosh, not the IBM PC.  -- Bill Gates
+Please keep in mind I'm not talking hypotheticals at all.  What you have 
+proposed is actually a lot uglier for kernel.org to implement, simply 
+because we try to stay with strict IP-based vhosting
+
+	-hpa
