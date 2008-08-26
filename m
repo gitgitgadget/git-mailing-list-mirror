@@ -1,68 +1,75 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] bash completion: Hide more plumbing commands
-Date: Tue, 26 Aug 2008 15:04:12 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0808261455010.19665@iabervon.org>
-References: <20080826171012.GO10360@machine.or.cz> <20080826171144.21328.82727.stgit@localhost> <20080826172410.GJ26523@spearce.org> <7v1w0bab1c.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Tue, 26 Aug 2008 12:04:51 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0808261202280.3363@nehalem.linux-foundation.org>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org> <1219664940.9583.42.camel@pmac.infradead.org> <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vy72kek6y.fsf@gitster.siamese.dyndns.org> <20080826145719.GB5046@coredump.intra.peff.net>
+ <1219764860.4471.13.camel@gaara.bos.redhat.com> <1219766398.7107.87.camel@pmac.infradead.org> <alpine.LFD.1.10.0808260959000.3363@nehalem.linux-foundation.org> <20080826180926.GA25711@isilmar.linta.de> <alpine.LFD.1.10.0808261114070.3363@nehalem.linux-foundation.org>
+ <20080826185548.GA7559@hera.kernel.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
-	andi@firstfloor.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 21:07:49 2008
+Cc: Dominik Brodowski <linux@dominikbrodowski.net>,
+	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	users@kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Al Viro <viro@hera.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 26 21:08:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY3rs-0003SX-NO
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 21:06:17 +0200
+	id 1KY3t7-000453-S5
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 21:07:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760405AbYHZTEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 15:04:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760140AbYHZTEP
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 15:04:15 -0400
-Received: from iabervon.org ([66.92.72.58]:50289 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759768AbYHZTEO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 15:04:14 -0400
-Received: (qmail 5822 invoked by uid 1000); 26 Aug 2008 19:04:12 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 26 Aug 2008 19:04:12 -0000
-In-Reply-To: <7v1w0bab1c.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1758663AbYHZTF7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 15:05:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759348AbYHZTF7
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 15:05:59 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:58880 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758445AbYHZTF6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Aug 2008 15:05:58 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7QJ4qSR001205
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 26 Aug 2008 12:04:53 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7QJ4pY2022402;
+	Tue, 26 Aug 2008 12:04:51 -0700
+In-Reply-To: <20080826185548.GA7559@hera.kernel.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.928 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93800>
 
-On Tue, 26 Aug 2008, Junio C Hamano wrote:
 
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
+
+On Tue, 26 Aug 2008, Al Viro wrote:
 > 
-> > Petr Baudis <pasky@suse.cz> wrote:
-> >> git <tab><tab> still shows way too many commands, some of them
-> >> are clearly plumbing. This patch hides the plumbing commands
-> >> liberally (that is, in special cases, users still might want to
-> >> call one of the hidden commands, a *normal* workflow should never
-> >> involve these, though - and if it does, we have a UI problem anyway).
-> >> 
-> >> Signed-off-by: Petr Baudis <pasky@suse.cz>
-> >
-> > Acked-by: Shawn O. Pearce <spearce@spearce.org>
-> >
-> > Though I use git ls-remote at least once every other day to see
-> > what branches are available on my egit/spearce.git fork.  Its ok,
-> > I guess I can type a few extra characters...
-> 
-> Revision-requested-by: me
-> 
-> Unless/until we have an easy way to obtain the information "git-ls-files
-> -u" gives during conflict resolution, ls-files should stay on the list of
-> commonly used commands.
+> Well, to be fair, "man git-add for git add is rather unconventional" is
+> a valid point...
 
-Doesn't "git status" tell you that? Or do you want the extra info from the 
-implicit --stage?
+On the other hand:
 
-	-Daniel
-*This .sig left intentionally blank*
+ - "man" simply cannot currently handle "man git add", even though there's 
+   been some noise to teach it.
+
+ - you can use "git help add" instead, since git itself does understand 
+   this. It will just go "man git-add" for you, so that your fingers don't 
+   have to type that dash ;)
+
+> FWIW, personally I couldn't care less as long as manpages *are* there and
+> we do not end up with something like "oh, just use info / html / some other
+> weird crap; manpages are not suitable(tm), dontcha know"
+
+I don't think _that_ is going to happen. You're not the only one who wants 
+man-pages.
+
+		Linus
