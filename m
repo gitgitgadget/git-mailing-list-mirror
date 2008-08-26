@@ -1,71 +1,78 @@
-From: david@lang.hm
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: Git-aware HTTP transport
-Date: Mon, 25 Aug 2008 20:59:33 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0808252052350.29665@asgard.lang.hm>
+Date: Mon, 25 Aug 2008 21:14:56 -0700
+Message-ID: <48B38340.8050504@zytor.com>
 References: <20080826012643.GD26523@spearce.org> <48B36BCA.8060103@zytor.com> <20080826034544.GA32334@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Aug 26 06:00:18 2008
+X-From: git-owner@vger.kernel.org Tue Aug 26 06:16:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KXpj6-0007li-0D
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 06:00:16 +0200
+	id 1KXpyU-0001jd-RU
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 06:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753961AbYHZD7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2008 23:59:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753959AbYHZD7I
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Aug 2008 23:59:08 -0400
-Received: from mail.lang.hm ([64.81.33.126]:38470 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753844AbYHZD7H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2008 23:59:07 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m7Q3x4pM017925;
-	Mon, 25 Aug 2008 20:59:04 -0700
-X-X-Sender: dlang@asgard.lang.hm
+	id S1750771AbYHZEO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 00:14:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750760AbYHZEO7
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 00:14:59 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:37780 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750719AbYHZEO6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 00:14:58 -0400
+Received: from [172.27.2.85] (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m7Q4EuZ0024037
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 25 Aug 2008 21:14:57 -0700
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
 In-Reply-To: <20080826034544.GA32334@spearce.org>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+X-Virus-Scanned: ClamAV 0.93.3/8089/Mon Aug 25 17:28:51 2008 on terminus.zytor.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93706>
 
-On Mon, 25 Aug 2008, Shawn O. Pearce wrote:
+Shawn O. Pearce wrote:
+> 
+> So I think the cost may actually break even with a stateful protocol
+> if we imagine that the server is actually a farm of systems and
+> simple round-robin load-balancing is being done in front of the
+> Git-aware server.
+> 
+> I'd really like to keep the protocol stateless on the server side, as
+> this makes it easier to embed into certain commerical server farms.
+> 
 
-> "H. Peter Anvin" <hpa@zytor.com> wrote:
->> So don't implement things as GET requests unless you genuinely can deal
->> with the request being cached.  Using POST requests throughout seems
->> like a safer bet to me; on the other hand, since the only use of GET is
->> obtaining a list of refs the worst thing that can happen, I presume, is
->> additional latency for the user behind the proxy.
->
-> This is a good point.  There is probably not any reason to cache the
-> refs content if we don't also support caching the pack files.  So in
-> this latest draft I have moved the ref listing to also be a POST.
+Indeed.  It was a question, not a statement of any sort.  I was curious 
+about the answer.
 
-on the other hand, it would be a good thing if pack files could be cached.
+I really like the new draft, with the one consideration below.
 
-in a peer-peer git environment the cache would not be used very much, but 
-when you have a large number of people tracking a central repository (or 
-even a pseudo-central one like the kernel) you have a lot of people 
-upgrading from one point to the next point.
+> 
+> HTTP Transport
+> --------------
+> 
+> All requests are encoded as HTTP POST requests to the smart service
+> URL, "$url/backend.git-http/$service".
+> 
+> All responses are encoded as 200 Ok responses, even if the server
+> side has "failed" the request.  Service specific success/failure
+> codes are embedded in the content.
+> 
 
-and for cloneing (and especially thing like linux-next where you 
-essentially re-clone daily) letting the pack get cached is probably a very 
-good thing.
+I still would like to have an indirection step at the start, in order to 
+keep a single client on a server in the case of skew.  I suggest simply 
+do it as HTTP POST $url/backend.git-http, empty body, and return a URL 
+prefix to use for the remainder of the session.  That way a server who 
+wants a stateful setup can return a URL which contains a session cookie; 
+others can return a URL containing a target server, and finally others 
+can simply return the requesting URL.
 
-I know it would be another round-trip, but how painful would it be to 
-compute what the contents of a pack would be (what objects would be in it, 
-not calculating the deltas nessasary for a full pack file), and return 
-that to the client so that the client could do a GET for the pack itself.
-
-if that exact pack happens to be in the cache, great, if not the server 
-takes the data from the client and creates a pack file with those objects 
-in it.
-
-David Lang
+	-hpa
