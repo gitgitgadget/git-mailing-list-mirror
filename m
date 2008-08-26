@@ -1,104 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] bash completion: Hide more plumbing commands
-Date: Tue, 26 Aug 2008 10:24:10 -0700
-Message-ID: <20080826172410.GJ26523@spearce.org>
-References: <20080826171012.GO10360@machine.or.cz> <20080826171144.21328.82727.stgit@localhost>
+From: Andi Kleen <andi@firstfloor.org>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Tue, 26 Aug 2008 19:27:42 +0200
+Message-ID: <20080826172742.GN26610@one.firstfloor.org>
+References: <1219664940.9583.42.camel@pmac.infradead.org> <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vy72kek6y.fsf@gitster.siamese.dyndns.org> <20080826145719.GB5046@coredump.intra.peff.net> <1219764860.4471.13.camel@gaara.bos.redhat.com> <1219766398.7107.87.camel@pmac.infradead.org> <1f6632e50808260904t6bea0be5kc69342917e3db97@mail.gmail.com> <20080826162513.GR10544@machine.or.cz> <20080826164526.GM26610@one.firstfloor.org> <alpine.LFD.1.10.0808261004150.3363@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com, andi@firstfloor.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Aug 26 19:25:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Andi Kleen <andi@firstfloor.org>, Petr Baudis <pasky@suse.cz>,
+	Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	users@kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Aug 26 19:26:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY2ID-0002Xp-1H
-	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 19:25:21 +0200
+	id 1KY2JD-0002re-9A
+	for gcvg-git-2@gmane.org; Tue, 26 Aug 2008 19:26:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756599AbYHZRYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 13:24:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753489AbYHZRYM
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 13:24:12 -0400
-Received: from george.spearce.org ([209.20.77.23]:58797 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754664AbYHZRYM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 13:24:12 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 0A48738375; Tue, 26 Aug 2008 17:24:10 +0000 (UTC)
+	id S1754165AbYHZRZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 13:25:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753489AbYHZRZS
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 13:25:18 -0400
+Received: from one.firstfloor.org ([213.235.205.2]:55201 "EHLO
+	one.firstfloor.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750755AbYHZRZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 13:25:17 -0400
+Received: by one.firstfloor.org (Postfix, from userid 503)
+	id 8820D1B90084; Tue, 26 Aug 2008 19:27:42 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080826171144.21328.82727.stgit@localhost>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <alpine.LFD.1.10.0808261004150.3363@nehalem.linux-foundation.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93774>
 
-Petr Baudis <pasky@suse.cz> wrote:
-> git <tab><tab> still shows way too many commands, some of them
-> are clearly plumbing. This patch hides the plumbing commands
-> liberally (that is, in special cases, users still might want to
-> call one of the hidden commands, a *normal* workflow should never
-> involve these, though - and if it does, we have a UI problem anyway).
+> When you do
 > 
-> Signed-off-by: Petr Baudis <pasky@suse.cz>
+> 	ls<space><tab><tab>
 
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+Actually do ls --<tab><tab> and you can well be scared too. 
+Perhaps it's not quite git class yet, but it's working on it.
+I could imagine some Unix newbie be scared about that.
 
-Though I use git ls-remote at least once every other day to see
-what branches are available on my egit/spearce.git fork.  Its ok,
-I guess I can type a few extra characters...
+["Quick: mention the two characters not used as ls short options yet"]
 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 89858c2..773d64b 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -386,7 +386,9 @@ __git_porcelain_commands ()
->  		cat-file)         : plumbing;;
->  		check-attr)       : plumbing;;
->  		check-ref-format) : plumbing;;
-> +		checkout-index)   : plumbing;;
->  		commit-tree)      : plumbing;;
-> +		count-objects)    : plumbing;;
->  		cvsexportcommit)  : export;;
->  		cvsimport)        : import;;
->  		cvsserver)        : daemon;;
-> @@ -395,6 +397,7 @@ __git_porcelain_commands ()
->  		diff-index)       : plumbing;;
->  		diff-tree)        : plumbing;;
->  		fast-import)      : import;;
-> +		fast-export)      : export;;
->  		fsck-objects)     : plumbing;;
->  		fetch-pack)       : plumbing;;
->  		fmt-merge-msg)    : plumbing;;
-> @@ -404,6 +407,10 @@ __git_porcelain_commands ()
->  		index-pack)       : plumbing;;
->  		init-db)          : deprecated;;
->  		local-fetch)      : plumbing;;
-> +		lost-found)       : deprecated;;
-> +		ls-files)         : plumbing;;
-> +		ls-remote)        : plumbing;;
-> +		ls-tree)          : plumbing;;
->  		mailinfo)         : plumbing;;
->  		mailsplit)        : plumbing;;
->  		merge-*)          : plumbing;;
-> @@ -428,6 +435,7 @@ __git_porcelain_commands ()
->  		runstatus)        : plumbing;;
->  		sh-setup)         : internal;;
->  		shell)            : daemon;;
-> +		show-ref)         : plumbing;;
->  		send-pack)        : plumbing;;
->  		show-index)       : plumbing;;
->  		ssh-*)            : transport;;
-> @@ -442,6 +450,8 @@ __git_porcelain_commands ()
->  		upload-archive)   : plumbing;;
->  		upload-pack)      : plumbing;;
->  		write-tree)       : plumbing;;
-> +		var)              : plumbing;;
-> +		verify-pack)      : plumbing;;
->  		verify-tag)       : plumbing;;
->  		*) echo $i;;
->  		esac
+> 
+> and it says
+> 
+> 	Display all 122 possibilities? (y or n)
+> 
+> (yeah, my home directory is a mess)
 
--- 
-Shawn.
+It's quite tidy in fact :)
+
+% ls <tab><tab>
+Display all 584 possibilities? (y or n)
+
+> 120-something commands? etc etc".
+
+I was assuming someone thinking about using git. At some point
+they will do the git<space><tab><tab> thing and be scared away.
+
+Ok maybe it's not the first action, but it's likely in the first 10 
+minutes; more or less once they discover that git has sub commands.
+
+Anyways the real solution to that is either having less commands
+or hiding the internal ones better. I think both would be fine,
+but once that is done and there's a slimmed down non scary list,
+there's no reason to not put the remaining non internal ones back 
+into $PATH isn't it?
+
+-Andi
