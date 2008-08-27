@@ -1,60 +1,59 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] allow user aliases for the --author parameter
-Date: Tue, 26 Aug 2008 20:19:45 -0400
-Message-ID: <20080827001944.GA7347@coredump.intra.peff.net>
-References: <g8jbvd$18k$1@ger.gmane.org> <20080821200255.GB27705@coredump.intra.peff.net> <48AE786C.20201@fastmail.fm> <20080822165047.GA3339@sigill.intra.peff.net> <7vzln492pc.fsf@gitster.siamese.dyndns.org> <20080822211902.GA31884@coredump.intra.peff.net> <48B3B8B0.4020609@fastmail.fm> <7vsksr1hgt.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH v2] Support "core.excludesfile = ~/.gitignore"
+Date: Tue, 26 Aug 2008 20:25:06 -0400
+Message-ID: <20080827002506.GB7347@coredump.intra.peff.net>
+References: <quack.20080821T2114.lthvdxtvg7b@roar.cs.berkeley.edu> <7vsksw92nh.fsf@gitster.siamese.dyndns.org> <quack.20080824T0140.lth3aku956e@roar.cs.berkeley.edu> <7vprnyqo59.fsf@gitster.siamese.dyndns.org> <20080824220854.GA27299@coredump.intra.peff.net> <7vzln2j9y2.fsf@gitster.siamese.dyndns.org> <20080824231343.GC27619@coredump.intra.peff.net> <7vhc9aj82i.fsf@gitster.siamese.dyndns.org> <quack.20080825T1207.lthk5e46hi4_-_@roar.cs.berkeley.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 27 02:20:53 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Karl Chen <quarl@cs.berkeley.edu>
+X-From: git-owner@vger.kernel.org Wed Aug 27 02:26:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY8mJ-0002wd-EP
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 02:20:51 +0200
+	id 1KY8rY-00043P-UG
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 02:26:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752274AbYH0ATr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 20:19:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752345AbYH0ATr
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 20:19:47 -0400
-Received: from peff.net ([208.65.91.99]:3437 "EHLO peff.net"
+	id S1753035AbYH0AZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 20:25:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752433AbYH0AZJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 20:25:09 -0400
+Received: from peff.net ([208.65.91.99]:3500 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752207AbYH0ATr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 20:19:47 -0400
-Received: (qmail 3115 invoked by uid 111); 27 Aug 2008 00:19:46 -0000
+	id S1753987AbYH0AZI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 20:25:08 -0400
+Received: (qmail 3149 invoked by uid 111); 27 Aug 2008 00:25:07 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 26 Aug 2008 20:19:46 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Aug 2008 20:19:45 -0400
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 26 Aug 2008 20:25:07 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Aug 2008 20:25:06 -0400
 Content-Disposition: inline
-In-Reply-To: <7vsksr1hgt.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <quack.20080825T1207.lthk5e46hi4_-_@roar.cs.berkeley.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93840>
 
-On Tue, Aug 26, 2008 at 04:31:30PM -0700, Junio C Hamano wrote:
+On Mon, Aug 25, 2008 at 12:07:15PM -0700, Karl Chen wrote:
 
-> > This allows the use of author abbreviations when specifying commit
-> > authors via the --author option to git commit. "--author=$key" is
-> > resolved by looking up "user.$key.name" and "user.$key.email" in the
-> > config.
-> 
-> Maybe it is just me, but I am hesitant about the contamination of user.*
-> configuration namespace.  This patch as a general solution does not scale
-> well, once you start working with more than a few dozen people.
+> Based on the discussion it sounds like there are complications to
+> supporting relative paths (due to worktree config), and "$HOME"
+> (when generalized, due to bootstrapping issues with $GIT_*).
 
-It is not just you. I think this version of the patch is much improved,
-but I am still against user.$key.*. At the very least, it needs its own
-namespace.
+I think that is fine for now. One other simple possibility would be to
+expand _just_ $HOME, and then if we later decided to do all environment
+variables it would naturally encompass that. However, we might want to
+support "~" then anyway, so I think doing "~" first is fine.
 
-I think if somebody cares, reading external files of various formats
-would be nice (and a simple "alias, space, expansion, newline" format
-could be introduced), but since I am not volunteering to implement that,
-this even simpler implementation is acceptable to me, as long as it is
-user.alias.$key.* or similar.
+However, there are two problems with the patch:
+
+  1. It should probably re-use path.c:user_path, as Johannes mentioned.
+
+  2. There is no documentation update.
+
+Also, are there any other config variables which would benefit from this
+substitution (I can't think of any off-hand, but there are quite a few I
+don't use).
 
 -Peff
