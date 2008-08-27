@@ -1,98 +1,48 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [egit PATCH] avoiding output in the error log
-Date: Wed, 27 Aug 2008 22:28:06 +0200
-Message-ID: <200808272228.07060.robin.rosenberg.lists@dewire.com>
-References: <218798.11648.bm@omp221.mail.ukl.yahoo.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-shortlog hangs on bare repo without --bare option
+Date: Wed, 27 Aug 2008 13:32:31 -0700
+Message-ID: <7vtzd6nqqo.fsf@gitster.siamese.dyndns.org>
+References: <20080827195233.GA2477@garry-thinkpad.arpnetworks.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, spearce@spearce.org
-To: robert_no.spam_m@yahoo.fr
-X-From: git-owner@vger.kernel.org Wed Aug 27 22:31:25 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Garry Dolley <gdolley@arpnetworks.com>
+X-From: git-owner@vger.kernel.org Wed Aug 27 22:33:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYRfo-0000zJ-41
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 22:31:24 +0200
+	id 1KYRi8-0001n9-2W
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 22:33:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752683AbYH0UaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 16:30:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751801AbYH0UaM
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 16:30:12 -0400
-Received: from av12-2-sn2.hy.skanova.net ([81.228.8.186]:51231 "EHLO
-	av12-2-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752604AbYH0UaL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 16:30:11 -0400
-Received: by av12-2-sn2.hy.skanova.net (Postfix, from userid 502)
-	id CA39F380FA; Wed, 27 Aug 2008 22:30:09 +0200 (CEST)
-Received: from smtp4-1-sn2.hy.skanova.net (smtp4-1-sn2.hy.skanova.net [81.228.8.92])
-	by av12-2-sn2.hy.skanova.net (Postfix) with ESMTP
-	id B2BE4380E9; Wed, 27 Aug 2008 22:30:09 +0200 (CEST)
-Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
-	by smtp4-1-sn2.hy.skanova.net (Postfix) with ESMTP id 764B237E45;
-	Wed, 27 Aug 2008 22:30:09 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <218798.11648.bm@omp221.mail.ukl.yahoo.com>
-Content-Disposition: inline
+	id S1752751AbYH0Uck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 16:32:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752286AbYH0Ucj
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 16:32:39 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33414 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752233AbYH0Uch (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 16:32:37 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 795086A894;
+	Wed, 27 Aug 2008 16:32:36 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id C34376A893; Wed, 27 Aug 2008 16:32:33 -0400 (EDT)
+In-Reply-To: <20080827195233.GA2477@garry-thinkpad.arpnetworks.com> (Garry
+ Dolley's message of "Wed, 27 Aug 2008 12:52:33 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 48F40C5A-7477-11DD-BD2D-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93944>
 
-onsdagen den 27 augusti 2008 11.34.33 skrev robert_no.spam_m@yahoo.fr:
-> Hi,this is a patch for egit. The purpose of the patch
-> is to avoid a lot of output in the error log.
+Garry Dolley <gdolley@arpnetworks.com> writes:
 
-Welcome Robert!
+> [garry@garry-thinkpad] ~/dev/ebay4r-bare (master) $ git shortlog -e -s
+> <hang>                                                                   <----- *** It hangs here ***
 
-> 
-> From 6f7be5d1a41d356a9b558ac81722e959095ff04d Mon Sep 17 00:00:00 2001
-> From: robert <robert_no.spam_m@yahoo.fr>
-> Date: Mon, 25 Aug 2008 20:42:39 +0200
-> Subject: [PATCH] Checks added to avoid a lot of entries in the log
-> 
-> * IResource.exists() must be checked before calling setProperty on it.
-> * getActiveDecorator() was returning null in some case.
-> ---
->  .../internal/decorators/GitResourceDecorator.java  |   10 +++++++---
->  1 files changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
-> index 5857eaf..7c10ec6 100644
-> --- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
-> +++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
-> @@ -143,7 +143,9 @@ if (resources.size() > 0)
->  					try {
->  						m.accept(new IResourceVisitor() {
->  							public boolean visit(IResource resource) throws CoreException {
-> -								getActiveDecorator().clearDecorationState(resource);
-> +								GitResourceDecorator decorator = getActiveDecorator();
-> +								if (decorator != null)
-> +									decorator.clearDecorationState(resource);
-
-When doest his happen?
-
->  								return true;
->  							}
->  						},
-> @@ -197,8 +199,10 @@ synchronized (resources) {
->  	} // End ResCL
->  
->  	void clearDecorationState(IResource r) throws CoreException {
-> -		r.setSessionProperty(GITFOLDERDIRTYSTATEPROPERTY, null);
-> -		fireLabelProviderChanged(new LabelProviderChangedEvent(this, r));
-> +		if (r.exists()) {
-> +			r.setSessionProperty(GITFOLDERDIRTYSTATEPROPERTY, null);
-> +			fireLabelProviderChanged(new LabelProviderChangedEvent(this, r));
-> +		}
-
-Shawn, you removed the test from the code in 4a230ea1. Perhaps you could care to
-comment on this patch to restore the test, though slightly different.
-
-		if (r.isAccessible())
-			r.setSessionProperty(GITFOLDERDIRTYSTATEPROPERTY, null);
-
--- robin
+Tryp typing ^D here.  I think it is operating in the filter mode.
