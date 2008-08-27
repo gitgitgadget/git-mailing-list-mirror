@@ -1,68 +1,93 @@
-From: Stefan Richter <stefanr@s5r6.in-berlin.de>
+From: Perry Wagle <wagle@cs.indiana.edu>
 Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Thu, 28 Aug 2008 01:53:50 +0200
-Message-ID: <48B5E90E.3000601@s5r6.in-berlin.de>
-References: <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>	<7vy72kek6y.fsf@gitster.siamese.dyndns.org>	<20080826145719.GB5046@coredump.intra.peff.net>	<1219764860.4471.13.camel@gaara.bos.redhat.com>	<1219766398.7107.87.camel@pmac.infradead.org>	<alpine.LFD.1.10.0808260959000.3363@nehalem.linux-foundation.org>	<20080826180926.GA25711@isilmar.linta.de>	<alpine.LFD.1.10.0808261114070.3363@nehalem.linux-foundation.org>	<23DFA9EC-9523-4179-BA3C-ACBDB82953DF@cs.indiana.edu>	<alpine.DEB.1.10.0808271126190.10784@gandalf.stny.rr.com> <20080827230903.GB11005@flint.arm.linux.org.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Date: Wed, 27 Aug 2008 16:53:58 -0700
+Message-ID: <F86A1E37-8015-41B5-A462-F044B8D1C2B1@cs.indiana.edu>
+References: <20080826164526.GM26610@one.firstfloor.org> <48B5098E.748.A598B62@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de> <B83CC7EA-C77E-45CA-B9C5-FC81A8C0C9A5@cs.indiana.edu> <20080827195019.GA9962@sigill.intra.peff.net> <38B725C0-40C3-496C-AAD4-4EA65E3085F5@cs.indiana.edu> <48B5BC5F.4070209@kernel.org> <alpine.DEB.1.10.0808271717190.19923@gandalf.stny.rr.com> <7vd4jukphm.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v928.1)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
 Cc: Steven Rostedt <rostedt@goodmis.org>,
-	=?ISO-8859-1?Q?Kristian_H=F8g?= =?ISO-8859-1?Q?sberg?= 
-	<krh@redhat.com>, Linus Torvalds <torvalds@linux-foundation.org>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
-	users@kernel.org, Jeff King <peff@peff.net>,
-	Perry Wagle <wagle@cs.indiana.edu>,
+	"H. Peter Anvin" <hpa@kernel.org>,
+	Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
+	users@kernel.org, Jeff King <peff@peff.net>,
+	Andi Kleen <andi@firstfloor.org>,
 	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
-To: Russell King <rmk@arm.linux.org.uk>
-X-From: git-owner@vger.kernel.org Thu Aug 28 01:56:14 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 01:56:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYUs0-0005NK-BG
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 01:56:12 +0200
+	id 1KYUsF-0005SX-Oe
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 01:56:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753929AbYH0XzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 19:55:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbYH0XzH
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 19:55:07 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:49903 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751346AbYH0XzG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 19:55:06 -0400
-X-Envelope-From: stefanr@s5r6.in-berlin.de
-Received: from [192.168.0.42] ([83.221.231.7])
+	id S1754794AbYH0XzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 19:55:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754454AbYH0XzV
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 19:55:21 -0400
+Received: from newman.cs.indiana.edu ([129.79.247.4]:46325 "EHLO
+	newman.cs.indiana.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752152AbYH0XzU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 19:55:20 -0400
+Received: from smtp.cs.indiana.edu (smtp.cs.indiana.edu [129.79.247.7])
+	by newman.cs.indiana.edu (8.13.1/8.13.1/IUCS_2.87) with ESMTP id m7RNs6lr028691;
+	Wed, 27 Aug 2008 19:54:07 -0400
+Received: from dhcp-2.metabiology.com (pool-96-253-170-5.ptldor.fios.verizon.net [96.253.170.5])
 	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m7RNrt2s025161
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 28 Aug 2008 01:53:56 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080722 SeaMonkey/1.1.11
-In-Reply-To: <20080827230903.GB11005@flint.arm.linux.org.uk>
-X-Enigmail-Version: 0.95.6
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	by rage.cs.indiana.edu (8.13.1/8.13.1/IUCS_SMTP_Alternate_Port_1.4) with ESMTP id m7RNrxP6023133
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 27 Aug 2008 19:54:03 -0400
+In-Reply-To: <7vd4jukphm.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.928.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93993>
 
-Russell King wrote:
-> And no warnings before hand that the commands you were using were
-> deprecated.
 
-(a) They weren't deprecated, they were moved into a different directory.
+On Aug 27, 2008, at 4:27 PM, Junio C Hamano wrote:
 
-(b) There have been several announcements of the 1.6.0 prereleases and 
-the 1.6.0 release crossposted.  Of course somebody forgot to tell you 
-what you will learn from these release notes.  Unfair.
+> Steven Rostedt <rostedt@goodmis.org> writes:
+>
+>> Yes, they are all a bunch of Nazi git fanatics, that Hitler himself  
+>> would
+>> have used the space version of git. He sent the Jews off to the
+>> concentration camps because they insisted on using the dashes.
+>>
+>> There, we have a Hitler reference.
+>>
+>> CAN WE PLEASE LET THIS THREAD DIE!
+>
+> Yeah, I second this.
+>
+> The primary topic has already settled, and we will keep git-foo in  
+> libexec
+> even for built-ins.
+>
+> This offtopic tangent that shouldn't even have started from the  
+> beginning
+> must die now.  It outlived its usefulness even as a place for people  
+> to
+> vent.
 
-(c) There do happen unannounced software updates on shell servers over 
-which you don't have control.  Ask for your money back.
+I suggested that git<DASH><TAB> used to give the same 143 completions  
+that git<SPACE><TAB> would now.  This meant that making any arguments  
+that the number was off-putting to newbies did not apply, since you  
+had a same number (143)  either way.  Putting stuff in libexec does  
+not change the above observation in any fashion.
 
-(d) "-" -> " "?  Molehill.
--- 
-Stefan Richter
--=====-==--- =--- ===--
-http://arcgraph.de/sr/
+A response to my observation was that "not everything will show up in  
+the latter completion".  I balked at that as it distorted the truth.   
+If this distortion would actually take place then I have a real  
+complaint.  Not a tangent.
+
+But as long as git<DASH><TAB> does the *same* thing as  
+git<SPACE><TAB>, I really do not see why you had to go break my  
+scripts on a *minor* revision for what amounts to no reason as all.
+
+Shells *hash* the PATH, so there is no "linear list" issue, and you  
+have the *same* behavior for <TAB> completion both ways.
