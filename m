@@ -1,69 +1,77 @@
-From: "H. Peter Anvin" <hpa@kernel.org>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Wed, 27 Aug 2008 00:59:01 -0700
-Organization: Linux Kernel Organization, Inc.
-Message-ID: <48B50945.7020709@kernel.org>
-References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>,	<20080826162513.GR10544@machine.or.cz>,	<20080826164526.GM26610@one.firstfloor.org> <48B5098E.748.A598B62@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH] be paranoid about closed stdin/stdout/stderr
+Date: Wed, 27 Aug 2008 10:20:23 +0200
+Message-ID: <48B50E47.3010402@gnu.org>
+References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu> <48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org> <E1KXawS-0001gg-Ty@fencepost.gnu.org> <48B2AFC2.20901@viscovery.net> <7vbpzgb94q.fsf@gitster.siamese.dyndns.org> <E1KXsL9-0004ef-Co@fencepost.gnu.org> <48B3A948.3080800@viscovery.net> <7vsksrad7o.fsf@gitster.siamese.dyndns.org> <48B44C61.2020206@gnu.org> <48B4F5C4.9020404@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Andi Kleen <andi@firstfloor.org>,
-	Kristian H??gsberg <krh@redhat.com>,
-	Matthias Kestenholz <mk@spinlock.ch>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	users@kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
-To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>
-X-From: git-owner@vger.kernel.org Wed Aug 27 10:04:56 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Karl Chen <quarl@cs.berkeley.edu>,
+	Git mailing list <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Aug 27 10:21:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYG17-0000Bl-Sk
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 10:04:38 +0200
+	id 1KYGHi-0005T4-4F
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 10:21:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753156AbYH0IDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 04:03:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753108AbYH0IDc
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 04:03:32 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:42797 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754226AbYH0ID3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 04:03:29 -0400
-Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m7R7xCZL024858
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 Aug 2008 00:59:13 -0700
-Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
-	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m7R7xC2q014034;
-	Wed, 27 Aug 2008 00:59:12 -0700
-Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
-	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m7R7x1aK012288;
-	Wed, 27 Aug 2008 00:59:03 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <48B5098E.748.A598B62@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
-X-Virus-Scanned: ClamAV 0.93.3/8096/Tue Aug 26 17:21:28 2008 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1754762AbYH0IUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 04:20:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754754AbYH0IUb
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 04:20:31 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:30685 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754735AbYH0IU2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 04:20:28 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1499173fgg.17
+        for <git@vger.kernel.org>; Wed, 27 Aug 2008 01:20:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=Jq9N8dLCUpquE2IXWtUGNpSqo1fR9zzoXF2zTo7tsLc=;
+        b=aLe0rMXJrFTgpyfNn9c2OKIol7gXLPbJmn0kE/qNQ7miqaUIQ6XW6pm8XcQ1Pl2rUF
+         FM6YUR+7eM88SFthrIvOcOVi+GfIUtkdVxE72DpBuSTEB1lszL8L1Fp02CAtlfkJRr2G
+         p2WsW83Hj8y98hUNPSTaMlInq23VIpJZth1tE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=AxE3qIRLYp24edNQVjiOwLZmTHSS6vyZaDkLW0RK8Y/zXC9KCsGqzbf5d4rap/Z5bO
+         +O/AP+upOGR3O/K8SzfMEDse2A9MbIexQx+pTo0qwiqyFkQl3fvSSfJbn0USJHfqxMYH
+         q9Qo7790NyFr3uVd09IXj2TpsZUdDv72JQmHc=
+Received: by 10.86.82.16 with SMTP id f16mr5129805fgb.9.1219825226863;
+        Wed, 27 Aug 2008 01:20:26 -0700 (PDT)
+Received: from scientist-2.mobile.usilu.net ( [195.176.179.202])
+        by mx.google.com with ESMTPS id 4sm3469165fgg.4.2008.08.27.01.20.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 27 Aug 2008 01:20:25 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
+In-Reply-To: <48B4F5C4.9020404@viscovery.net>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93871>
 
-Ulrich Windl wrote:
+
+>> Busybox.  But it runs setuid, as Steven pointed out.
 > 
-> In HP-UX many commands (or "subsystems") use /opt/<subsys>/{bin,sbin} to place 
-> their binaries. PATH usually does not contain all of them. That's against Linux 
-> philosophy I think, and I really don't like huge PATHs, but it may be one solution 
-> to reduce the size of linear lists. It won't help against the git<TAB><TAB> issue 
-> directly, however.
-> 
+> I straced tee (it was the only tool I found that opens files for writing
+> without also opening some for reading). If one of 0,1,2 is closed, it
+> *does* dup() the fd that it is going to write.
 
-/opt is part of the Filesystem Hierarchy Standard which defines layouts 
-on Linux systems.  It is generally not used for binaries included in 
-distributions or otherwise managed via distribution package managers, 
-however.
+To be precise, it does a blind "dup2 (fd, 3)" and goes on with file
+descriptor 3.
 
-	-hpa
+open("foo", O_WRONLY|O_CREAT|O_TRUNC|O_LARGEFILE, 0666) = 0
+fcntl64(0, F_DUPFD, 3)                  = 3
+close(0)                                = 0
+
+Paolo
