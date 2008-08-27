@@ -1,75 +1,55 @@
-From: David Soria Parra <sn_@gmx.net>
-Subject: [PATCH 2/2] Improve portability: Avoid SS constant as it is already defined
-Date: Wed, 27 Aug 2008 19:39:03 +0200
-Message-ID: <1219858743-4476-3-git-send-email-sn_@gmx.net>
-References: <1219858743-4476-1-git-send-email-sn_@gmx.net>
- <1219858743-4476-2-git-send-email-sn_@gmx.net>
-Cc: David Soria Parra <dsp@php.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 27 19:40:27 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] git-submodule: add "sync" command
+Date: Wed, 27 Aug 2008 10:39:27 -0700
+Message-ID: <7vabeyqrw0.fsf@gitster.siamese.dyndns.org>
+References: <20080827084302.GB1422@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 27 19:40:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYP0D-0007ze-7q
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 19:40:17 +0200
+	id 1KYP0c-00087r-4Q
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 19:40:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751755AbYH0RjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 13:39:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752048AbYH0RjK
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 13:39:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49412 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751641AbYH0RjH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 13:39:07 -0400
-Received: (qmail invoked by alias); 27 Aug 2008 17:39:04 -0000
-Received: from p57AEDFED.dip.t-dialin.net (EHLO localhost.localdomain) [87.174.223.237]
-  by mail.gmx.net (mp038) with SMTP; 27 Aug 2008 19:39:04 +0200
-X-Authenticated: #4427663
-X-Provags-ID: V01U2FsdGVkX19gguQNd/RgTnQLCPNqPgr6f+PF7GrfsH88mv3RmL
-	Q5AfgcDJlG6cdl
-X-Mailer: git-send-email 1.6.0.174.gd789c
-In-Reply-To: <1219858743-4476-2-git-send-email-sn_@gmx.net>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1752218AbYH0Rjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 13:39:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752190AbYH0Rje
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 13:39:34 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58295 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752048AbYH0Rje (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 13:39:34 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 774E062B72;
+	Wed, 27 Aug 2008 13:39:33 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 9016462B71; Wed, 27 Aug 2008 13:39:29 -0400 (EDT)
+In-Reply-To: <20080827084302.GB1422@gmail.com> (David Aguilar's message of
+ "Wed, 27 Aug 2008 01:43:03 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1C3258D8-745F-11DD-8D0F-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93908>
 
-From: David Soria Parra <dsp@php.net>
+David Aguilar <davvid@gmail.com> writes:
 
-Constants that have the names of CPU registers are already defined
-in OpenSolaris's sys/regset.h. This causes a warning as we try to
-(re)define SS in ctype.c. So we just use another name.
+> I'm just checking up on the status of this patch:
+> http://thread.gmane.org/gmane.comp.version-control.git/93535/focus=93557
+>
+> I believe v3 addressed all of your comments from that thread.
+> Let me know if there's anything else I should consider.
 
-Signed-off-by: David Soria Parra <dsp@php.net>
----
- ctype.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+I didn't find anything wrong in there and already have a topic for it, but
+ran out of time merging it to even 'pu' last night which was not my git
+day.
 
-diff --git a/ctype.c b/ctype.c
-index ee06eb7..6ed2ba2 100644
---- a/ctype.c
-+++ b/ctype.c
-@@ -5,14 +5,14 @@
-  */
- #include "cache.h"
- 
--#define SS GIT_SPACE
-+#define SP GIT_SPACE
- #define AA GIT_ALPHA
- #define DD GIT_DIGIT
- 
- unsigned char sane_ctype[256] = {
--	 0,  0,  0,  0,  0,  0,  0,  0,  0, SS, SS,  0,  0, SS,  0,  0,		/* 0-15 */
-+	 0,  0,  0,  0,  0,  0,  0,  0,  0, SP, SP,  0,  0, SP,  0,  0,		/* 0-15 */
- 	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,		/* 16-15 */
--	SS,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,		/* 32-15 */
-+	SP,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,		/* 32-15 */
- 	DD, DD, DD, DD, DD, DD, DD, DD, DD, DD,  0,  0,  0,  0,  0,  0,		/* 48-15 */
- 	 0, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA,		/* 64-15 */
- 	AA, AA, AA, AA, AA, AA, AA, AA, AA, AA, AA,  0,  0,  0,  0,  0,		/* 80-15 */
--- 
-1.6.0.174.gd789c
+Will most likely appear in 'next' by the end of today, but no promises.
