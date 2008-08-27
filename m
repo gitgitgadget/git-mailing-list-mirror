@@ -1,65 +1,59 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [EGIT PATCH 0/6] Fetch UI, minor improvements/fixes
-Date: Wed, 27 Aug 2008 21:48:02 +0200
-Message-ID: <200808272148.02345.robin.rosenberg.lists@dewire.com>
-References: <1219862506-11075-1-git-send-email-marek.zawirski@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Wed, 27 Aug 2008 15:50:19 -0400
+Message-ID: <20080827195019.GA9962@sigill.intra.peff.net>
+References: <20080826164526.GM26610@one.firstfloor.org> <48B5098E.748.A598B62@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de> <B83CC7EA-C77E-45CA-B9C5-FC81A8C0C9A5@cs.indiana.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: spearce@spearce.org, git@vger.kernel.org
-To: Marek Zawirski <marek.zawirski@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 27 21:51:15 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>,
+	Andi Kleen <andi@firstfloor.org>,
+	Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	users@kernel.org, Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Perry Wagle <wagle@cs.indiana.edu>
+X-From: git-owner@vger.kernel.org Wed Aug 27 21:51:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYR2u-0003xn-8w
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 21:51:12 +0200
+	id 1KYR3A-00044O-Uz
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 21:51:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751186AbYH0TuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 15:50:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751153AbYH0TuH
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 15:50:07 -0400
-Received: from av8-2-sn3.vrr.skanova.net ([81.228.9.184]:45950 "EHLO
-	av8-2-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750816AbYH0TuG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 15:50:06 -0400
-Received: by av8-2-sn3.vrr.skanova.net (Postfix, from userid 502)
-	id 36B783A310; Wed, 27 Aug 2008 21:50:05 +0200 (CEST)
-Received: from smtp3-1-sn3.vrr.skanova.net (smtp3-1-sn3.vrr.skanova.net [81.228.9.101])
-	by av8-2-sn3.vrr.skanova.net (Postfix) with ESMTP
-	id 067693A302; Wed, 27 Aug 2008 21:50:05 +0200 (CEST)
-Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
-	by smtp3-1-sn3.vrr.skanova.net (Postfix) with ESMTP id 886A237E4A;
-	Wed, 27 Aug 2008 21:50:04 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <1219862506-11075-1-git-send-email-marek.zawirski@gmail.com>
+	id S1751153AbYH0TuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 15:50:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751247AbYH0TuX
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 15:50:23 -0400
+Received: from peff.net ([208.65.91.99]:2035 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750990AbYH0TuW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 15:50:22 -0400
+Received: (qmail 15709 invoked by uid 111); 27 Aug 2008 19:50:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 27 Aug 2008 15:50:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Aug 2008 15:50:19 -0400
 Content-Disposition: inline
+In-Reply-To: <B83CC7EA-C77E-45CA-B9C5-FC81A8C0C9A5@cs.indiana.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93934>
 
-onsdagen den 27 augusti 2008 20.41.40 skrev Marek Zawirski:
-> Simple fetch UI - made smiliar as push UI: no surprise, the same
-> components are used, code is analogous.
-> 
-> We can later decide to switch to some more complex result displaying
-> component, like common Transport View as suggested by Shawn. Anyway,
-> now we have working UI for push and fetch, and other signifficant
-> changes were introduced in both jgit and egit in the mean 
-> isn't that right time to release next version?
+On Wed, Aug 27, 2008 at 12:43:23PM -0700, Perry Wagle wrote:
 
-Indeed, this is the missing piece for a coherent version.  I'll have yet to
-review the stuff, but I have great confidence in your work.
-> 
-> OT(?): The only strange thing I observe now is how "refresh" resources
-> works in egit (master), but maybe I'll open new issues for that.
+> Doing git-<tab> was shocking to me at first, but it also showed me a list 
+> of commands for me to learn.
+>
+> Now I guess that when everything's fixed up, I'll have to put in a space 
+> instead of a dash to get exactly the same thing.
+>
+> What difference did changing the dash to a space make?
 
-We might have bugs there.... Or actually, I *know* we have bugs including
-lockups. But I can consider bumping the version anyway by next weekend, since
-automatic refresh can be disabled. That'll leave us some time for things to cook.
+Did you miss the part of the thread about how it's not exactly the same
+thing, but rather substantially fewer commands (and there is even
+additional discussion about _which_ commands)?
 
--- robin
+-Peff
