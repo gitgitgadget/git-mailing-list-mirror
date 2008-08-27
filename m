@@ -1,93 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] allow user aliases for the --author parameter
-Date: Wed, 27 Aug 2008 08:40:10 -0400
-Message-ID: <20080827124010.GA13094@coredump.intra.peff.net>
-References: <20080821200255.GB27705@coredump.intra.peff.net> <48AE786C.20201@fastmail.fm> <20080822165047.GA3339@sigill.intra.peff.net> <7vzln492pc.fsf@gitster.siamese.dyndns.org> <20080822211902.GA31884@coredump.intra.peff.net> <48B3B8B0.4020609@fastmail.fm> <7vsksr1hgt.fsf@gitster.siamese.dyndns.org> <20080827001944.GA7347@coredump.intra.peff.net> <7v7ia3rnnq.fsf@gitster.siamese.dyndns.org> <48B52037.7030405@fastmail.fm>
+From: "H. Peter Anvin" <hpa@kernel.org>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Wed, 27 Aug 2008 07:49:31 -0700
+Organization: Linux Kernel Organization, Inc.
+Message-ID: <48B5697B.3030405@kernel.org>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>	<1219664940.9583.42.camel@pmac.infradead.org>	<alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>	<7vy72kek6y.fsf@gitster.siamese.dyndns.org>	<20080826145719.GB5046@coredump.intra.peff.net>	<7vr68b8q9p.fsf@gitster.siamese.dyndns.org>	<20080826210318.GA6305@coredump.intra.peff.net> <76718490808261924j1ddae535tdfb671dd9d3298aa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-X-From: git-owner@vger.kernel.org Wed Aug 27 14:41:19 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	David Woodhouse <dwmw2@infradead.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, users@kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 27 16:54:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYKKt-00034B-2o
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 14:41:19 +0200
+	id 1KYMPu-0005cd-BK
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 16:54:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754281AbYH0MkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 08:40:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754176AbYH0MkN
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 08:40:13 -0400
-Received: from peff.net ([208.65.91.99]:2016 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754120AbYH0MkM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 08:40:12 -0400
-Received: (qmail 12012 invoked by uid 111); 27 Aug 2008 12:40:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 27 Aug 2008 08:40:11 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Aug 2008 08:40:10 -0400
-Content-Disposition: inline
-In-Reply-To: <48B52037.7030405@fastmail.fm>
+	id S1754451AbYH0Oxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 10:53:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754364AbYH0Oxc
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 10:53:32 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:32857 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753960AbYH0Oxb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 10:53:31 -0400
+Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m7REncLo030081
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 27 Aug 2008 07:49:39 -0700
+Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
+	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m7REncnF017101;
+	Wed, 27 Aug 2008 07:49:38 -0700
+Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
+	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m7REnVww017061;
+	Wed, 27 Aug 2008 07:49:32 -0700
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <76718490808261924j1ddae535tdfb671dd9d3298aa@mail.gmail.com>
+X-Virus-Scanned: ClamAV 0.93.3/8098/Wed Aug 27 03:36:31 2008 on terminus.zytor.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93892>
 
-[resend, copy git list. Gah, Michael there is something about your
-messages that causes me to keep dropping the git list when I reply. It
-looks like maybe you send one message to the author without git@vger
-cc'd, and then you send a different one 'to' the git list without the
-original 'from' in the cc?]
+Jay Soffian wrote:
+> On Tue, Aug 26, 2008 at 5:03 PM, Jeff King <peff@peff.net> wrote:
+>> I was slightly negative on the change at the time of "/usr/bin vs
+>> /usr/libexec/git-core" and I planned to put "git --exec-path" in my
+>> PATH. But I gave the new way a try, and I have not been very bothered.
+>> So let me say that I really don't care much what happens with libexec,
+>> and you can hold me to that when the next flame-war breaks out if such a
+>> change is implemented. Now you have three opinions. :)
+> 
+> +1 on removing the links and I will say this: this change finally
+> motivated me to switch my login shell from tcsh (12 years I've been
+> using it!) to bash so I could use the completions and I'm happier for
+> it. So thank you git. :-)
+> 
 
-On Wed, Aug 27, 2008 at 11:36:55AM +0200, Michael J Gruber wrote:
+Speaking as a tcsh user, I'm not switching until bash gets the 
+equivalent functionality as tcsh aliases, in particular the ability to 
+selectively disable wildcard expansion on a command-by-command basis.
 
-> I don't see a namespace problem as long as nobody uses "name" or "email"
-> as $key.
-
-It also ties our hands for putting more things in user.* later, since
-now we will hurt users who have put their arbitrary aliases in user.*
-(and who will rightly complain when we break their config).
-
-> That said I'd suggest useralias.$key.{name,email} then which gives a
-> cleaner separation and leaves the possibility to
-
-I would be fine with that. Though I do think Junio's "automatic" version
-is even nicer.
-
-> - use the alias for other cases than --author - use other fields than
-> name, email
-
-I think the big user would be send-email; I don't know if that will ever
-get converted to C, though.
-
-> People who don't use this feature don't have any entries and don't pay
-> anything.
-> People who use this feature and have a moderate number of entries don't
-> pay a recognizable price.
-> People who use this feature and have a vast amount of entries should be
-> told to implement an alias file parser ;)
-
-This I agree with. :)
-
-> I'd be happy with that approach as well for my use case. In general it
-> may suffer from the uniqueness problem: If there's a recent commit
-> authored by "Michael@Jeff.com" your "--author=Jeff" will resolve
-> differently from yesterday, and you won't even notice (not even commit
-> -v tells you). [ A typo is punished by a search through all commits;
-> that's fine.]
-
-The commit message template should say:
-
-  Author: A U Thor <author@example.com>
-
-but of course you won't see that if you are using "-m".
-
-I wonder if there is a good way to warn that we have multiple matches.
-Of course we expect many _exact_ matches if the author has multiple
-commits, but we could look for distinct matches. However, even that will
-turn up false positives, since some authors have multiple email
-addresses.
-
--Peff
+	-hpa
