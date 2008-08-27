@@ -1,67 +1,88 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: [Announce] GitX v0.1: Gitk clone for OS X
-Date: Thu, 28 Aug 2008 01:17:04 +0200
-Message-ID: <897232BD-AC68-4BA9-A549-A18C51BC9CD5@ai.rug.nl>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Subject: Re: Planet Git
+Date: Thu, 28 Aug 2008 02:23:53 +0300
+Message-ID: <94a0d4530808271623j3d508ddeuf8f68506308c80a6@mail.gmail.com>
+References: <94a0d4530808271049y3ec34759pb2572180fb958dd0@mail.gmail.com>
+	 <87od3egx43.fsf@gmx.net>
+	 <94a0d4530808271522m6aa36989leba92edc0a503b16@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 28 01:19:07 2008
+Cc: "Git Mailinglist" <git@vger.kernel.org>
+To: "David Soria Parra" <sn_@gmx.net>
+X-From: git-owner@vger.kernel.org Thu Aug 28 01:25:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYUHK-00045M-Cs
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 01:18:18 +0200
+	id 1KYUNz-0006SB-Bq
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 01:25:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754088AbYH0XRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 19:17:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754073AbYH0XRN
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 19:17:13 -0400
-Received: from frim.nl ([87.230.85.232]:40376 "EHLO
-	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753848AbYH0XRN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Aug 2008 19:17:13 -0400
-Received: from s5591931c.adsl.wanadoo.nl ([85.145.147.28] helo=[192.168.1.11])
-	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <pdebie@ai.rug.nl>)
-	id 1KYUGF-0002aW-9N
-	for git@vger.kernel.org; Thu, 28 Aug 2008 01:17:11 +0200
-X-Mailer: Apple Mail (2.926)
+	id S1754073AbYH0XXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 19:23:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753563AbYH0XXy
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 19:23:54 -0400
+Received: from rv-out-0506.google.com ([209.85.198.239]:33076 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753149AbYH0XXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 19:23:53 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so92449rvb.1
+        for <git@vger.kernel.org>; Wed, 27 Aug 2008 16:23:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ZIzNOFXrHgwV1OKw5+iq9eW4XMlczk1p03FEEaImxqw=;
+        b=cFGGKIMjBITLhesnTVEYcLjB0B31r6CC6ltocBSwC8huqfrELkD6qQbTJxxCm+lsMq
+         k82mFErcg8AJYpSkDtGGbB5XUABdDpSl6TMAm6PgZ+046u0iaHtIk5K77vqlZeVRSz3R
+         1LIniU1sGQ2An2FZ6hdz7/160tul61ChzwkqY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=QQqklCg/z7KpnGsnpM9i60qYg++Ojsor/6tUuZnARyeQ5t8ZnDnfY2tS474TkmmBn6
+         HgEIgy7S7HVwYZSFye8mig1de1jLO5sxL/N30LjcxBUoZ7cVMcND17ZcvFZFjkbjt9vB
+         6QR8/4GHS81wQEKcUHjVyz6XFmmVrJi0Uy0GM=
+Received: by 10.140.148.3 with SMTP id v3mr359567rvd.57.1219879433458;
+        Wed, 27 Aug 2008 16:23:53 -0700 (PDT)
+Received: by 10.140.166.19 with HTTP; Wed, 27 Aug 2008 16:23:53 -0700 (PDT)
+In-Reply-To: <94a0d4530808271522m6aa36989leba92edc0a503b16@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93981>
 
-Hi All,
+On Thu, Aug 28, 2008 at 1:22 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Wed, Aug 27, 2008 at 8:56 PM, David Soria Parra <sn_@gmx.net> wrote:
+>> "Felipe Contreras" <felipe.contreras@gmail.com> writes:
+>>
+>>> Hi there,
+>>>
+>>> What about a planet for git? Maybe an official blog too.
+>>>
+>>> I've been following delicious.com tags for git [1] and there's many
+>>> people blogging about git with very interesting posts. I think the
+>>> content should be git-specific, unlike other planets where people blog
+>>> about their lives and what not. But that's only my opinion.
+>>
+>> sounds nice, just set up a box and annouce it.
+>
+> I don't have one. If I can get access to one I could do it.
 
-I just wanted to let you know that GitX has recently reached its first  
-tagged release.
+Actually, since wordpress already provides hosting I tried creating a
+blog there.
 
-GitX is a gitk clone aiming to provide a more native interface to OS X  
-users with OS X-only features.
+I tried git.wordpress.com but a minimum of 4 characters is required,
+alphanum. So I got http://gitlog.wordpress.com/.
 
-Current features include:
+Is that ok? Or are there recommendations for something different?
 
-* Show pretty information for any revision
-* Fast
-* Nice Aqua Document-based interface
-* Quickly search for any commit subject / author
-* Explore the tree of any revision
-* QuickLook any file in any revision
-* Double click any file or directory in a tree to open that version
-* Similarly, you can drag a part of a tree on to your desktop
+Best regards.
 
-GitX currently has it's homepage hosted at github. To view it, go to
-
-	http://github.com/pieter/gitx/wikis
-
-You can download the latest stable release from
-
-	http://frim.frim.nl/GitXStable.app.zip
-
-Thanks,
-
-Pieter
+-- 
+Felipe Contreras
