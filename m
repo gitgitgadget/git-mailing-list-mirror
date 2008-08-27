@@ -1,106 +1,98 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: Re: newbie question about git push
-Date: Wed, 27 Aug 2008 18:06:00 +0200
-Message-ID: <g93u19$b0u$1@ger.gmane.org>
-References: <48B574B0.4030607@boboco.ie>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: "failed to read delta base object at..."
+Date: Wed, 27 Aug 2008 10:05:54 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0808270937340.3363@nehalem.linux-foundation.org>
+References: <20080825164602.GA2213@fieldses.org> <alpine.LFD.1.10.0808251153210.3363@nehalem.linux-foundation.org> <20080825213104.GI2213@fieldses.org> <alpine.LFD.1.10.0808251435540.3363@nehalem.linux-foundation.org> <20080825221321.GL2213@fieldses.org>
+ <alpine.LFD.1.10.0808251616240.3363@nehalem.linux-foundation.org> <48B46B04.70102@gmail.com> <48B46F46.9090302@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 27 18:07:45 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, bfields@fieldses.org
+To: Jason McMullan <jason.mcmullan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 27 19:08:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYNYM-0003st-7W
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 18:07:26 +0200
+	id 1KYOUW-0003l0-QV
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 19:07:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753849AbYH0QGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 12:06:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754556AbYH0QGV
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 12:06:21 -0400
-Received: from main.gmane.org ([80.91.229.2]:55183 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754564AbYH0QGU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 12:06:20 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KYNXA-000766-TQ
-	for git@vger.kernel.org; Wed, 27 Aug 2008 16:06:12 +0000
-Received: from whitehead.math.tu-clausthal.de ([139.174.44.12])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 27 Aug 2008 16:06:12 +0000
-Received: from michaeljgruber+gmane by whitehead.math.tu-clausthal.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 27 Aug 2008 16:06:12 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: whitehead.math.tu-clausthal.de
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <48B574B0.4030607@boboco.ie>
+	id S1751435AbYH0RGK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 13:06:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751346AbYH0RGJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 13:06:09 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:39843 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751285AbYH0RGI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Aug 2008 13:06:08 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7RH5sAJ024910
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 27 Aug 2008 10:05:55 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7RH5ssX012553;
+	Wed, 27 Aug 2008 10:05:54 -0700
+In-Reply-To: <48B46F46.9090302@gmail.com>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.429 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93900>
 
-Eric Bowman venit, vidit, dixit 27.08.2008 17:37:
-> Hi,
-> 
-> Apologies in advance if this has been covered before ... I've been 
-> wading through the archives a bit and couldn't find anything that seemed 
-> to address this basic question.
-> 
-> I have a bunch of machines I use for development, but only one of them 
-> is allowed to connect via vpn to where the subversion repository lives, 
-> so I'm using git-svn to make things a little easier.
-> 
-> I've got one machine, itchy, where I've done a git svn clone operation.  
-> I do a fair amount of development work there, and typically I just work 
-> on the master branch, and periodically commit back to svn using git svn 
-> dcommit.
-> 
-> I've cloned the repository on itchy on a few other machines I 
-> occasionally use, and I'm able to push new revisions from itchy with no 
-> surprises, and I can pull revisions back to itchy ok with no surprises.
-> 
-> Where things get a weird is when I push a revision back to itchy from 
-> one of my other clones.  I feel like I must be missing some fundamental 
-> concept, and I'm wondering if someone can help.
-> 
-> Suppose I make a change on another machine commit that change, then push 
-> it back to itchy:
-> 
-> git commit -as
-> git push origin master
-> 
-> This works ok, and I can then git svn dcommit that change back to the 
-> svn.  But I have a hard time getting that change to show up in the 
-> sandbox I have on itchy.
-> 
-> When I go back to itchy after pushing from a satellite, git thinks that 
-> the old revision of the file I modified on another machine, has been 
-> modified locally; it doesn't see that the local copy is out of data and 
-> this new revision needs to be merged.  But I can't figure out how to get 
-> git to do that; the only things that seem to work are fairly drastic 
-> measures,  like "git reset --hard" or by stashing and then deleting the 
-> stash. Either seems terribly error prone.
-> 
-> I'm starting to think that I should clone the repo I cloned from svn for 
-> doing development work on itchy, but this seems kind of wasteful.  Am I 
-> missing some fundamental concept?
-> 
-> Many thanks for any thoughts.
-> 
-> cheers,
-> Eric
 
-I don't think I understand your situation completely. But could it be
-that when you push from satellite to itchy you push into a branch which
-is checked out? Most probably, because you seem to push master to
-master. You can't merge on push because there may be conflicts.
 
-That setup is generally not a good idea, for the reasons you've
-experienced. You may want to pull from itchy instead.
+On Tue, 26 Aug 2008, Jason McMullan wrote:
+> 
+> All bets are off when data=writeback.
 
-Michael
+Not the way git writes pack-files. It does a fsync() before moving them 
+into place (at least newer git versions do), so the data is stable.
+
+I do worry about wild pointers. I can't recognize the data, and it 
+definitely doesn't look like any git internal data structures, but 16-bit 
+data _is_ what zlib internally uses for things like the decoding tables. 
+
+So if there is some use-after-free issue, I could imagine things like this 
+happening inside of git. People do occasionally run valgrind on git, 
+though, and it's been clean in the past, but I don't know if that has ever 
+been done on the threaded packing, for example.
+
+For example, the corrupting data had patterns like this:
+
+	00 f8 bf fe 6b 57 fe ff 55 57 fe ff 97 57 fe ff
+
+where the pattern _could_ be something like
+
+	{ 00 f8 febf },
+	{ 6b 57 fffe },
+	{ 55 57 fffe },
+	{ 97 57 fffe },
+
+assuming that the "fe ff" pattern really is meaningful and is a 16-bit 
+little-endian word.
+
+And the thign is, zlib "code" tables look exactly like that:
+
+	typedef struct {
+	    unsigned char op;           /* operation, extra bits, table bits */
+	    unsigned char bits;         /* bits in this part of the code */
+	    unsigned short val;         /* offset in table or code value */
+	} code;
+
+	/* op values as set by inflate_table():
+	    00000000 - literal
+	    0000tttt - table link, tttt != 0 is the number of table index bits
+	    0001eeee - length or distance, eeee is the number of extra bits
+	    01100000 - end of block
+	    01000000 - invalid code
+	 */
+
+but those particular op/val things don't make sense in that context 
+either. But I don't know zlib that well, maybe the deflate routines use 
+some other model.
+
+			Linus
