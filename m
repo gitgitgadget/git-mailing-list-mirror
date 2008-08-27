@@ -1,109 +1,88 @@
 From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: [EGIT PATCH 5/6] Rename ResultDialog to PushResultDialog
-Date: Wed, 27 Aug 2008 20:41:45 +0200
-Message-ID: <1219862506-11075-6-git-send-email-marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 2/6] Fix RefSpecPanel to not display mode column in fetch version
+Date: Wed, 27 Aug 2008 20:41:42 +0200
+Message-ID: <1219862506-11075-3-git-send-email-marek.zawirski@gmail.com>
 References: <1219862506-11075-1-git-send-email-marek.zawirski@gmail.com>
  <1219862506-11075-2-git-send-email-marek.zawirski@gmail.com>
- <1219862506-11075-3-git-send-email-marek.zawirski@gmail.com>
- <1219862506-11075-4-git-send-email-marek.zawirski@gmail.com>
- <1219862506-11075-5-git-send-email-marek.zawirski@gmail.com>
 Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
 To: robin.rosenberg@dewire.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed Aug 27 20:43:33 2008
+X-From: git-owner@vger.kernel.org Wed Aug 27 20:43:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYPzL-0005iW-S3
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 20:43:28 +0200
+	id 1KYPzO-0005iW-HX
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 20:43:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753847AbYH0SmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 14:42:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753572AbYH0SmK
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 14:42:10 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:64959 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753089AbYH0SmH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 14:42:07 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so199790ywe.1
-        for <git@vger.kernel.org>; Wed, 27 Aug 2008 11:42:07 -0700 (PDT)
+	id S1752631AbYH0SmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 14:42:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752793AbYH0SmE
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 14:42:04 -0400
+Received: from gv-out-0910.google.com ([216.239.58.189]:36375 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752361AbYH0Sl6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 14:41:58 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so522214gvc.37
+        for <git@vger.kernel.org>; Wed, 27 Aug 2008 11:41:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=gzKPULhipvw4RUkrpqw0m0oXaFSuacyIznO3iHMUrlU=;
-        b=Z39N2ZstB5DSSu2D7od7RihAKWj9+1aTBUyejunEFYluIHxJqi6fmB+qE7dV3NNOHO
-         MBnIHb9sXtoRp67MxMCA+zA52zqS9xNOa5Qr/t3TT10TgBwRjeHLbZ7ooS5ddBPb+jR2
-         EwISPwhDiA/DzHckuwXqxdMNnIxSEXOaZz318=
+        bh=cvpel/WNPORlEfOfTvJRL20fDi1yM/Ubk3vChqLvi5g=;
+        b=P4mR71w9b2xG5kndDl4xC0d18SLxDoNkm9WJ+8l7loXEd/EiTmena5eCOtnWlR/l8F
+         kTMxfOja0TKaURVRygA0qqryBJ692l6DNGPJws50X7PSJrnoujj9OxcUxSqUmZ+h3qaD
+         woM+1MLDVf8kA079NAzm5NvTkkuc0q8cD8/Tc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ZyiQIWCjPtHBMVIFuMCMjTkewTC4PYaLAs5ZGaLiHpjd+wbnb1tz38YgSHt+YAV3jG
-         VlyI6FoxdNifAUsDtRJhLLnjKUbP9FAPGATVwIi1OW8fBnFtWCi0vLUBgHMOlSU4OmNv
-         JYXBT7ATgE2DOc3HqvSLSKCzUIsKWjWWLU6kI=
-Received: by 10.103.168.5 with SMTP id v5mr206617muo.35.1219862525824;
-        Wed, 27 Aug 2008 11:42:05 -0700 (PDT)
+        b=JkDZ926rM1bAm8xG/NS4VT2Dth8vh5cUuGEpWXouw3EgLzVlbmQ9jW5SRSt3ZU1sbi
+         DxbnpT0Os7H9DPMqZuUlznUZyZOVttA1sDPlXOt4UypjRYKOu/YWNJa55o9M0S+SjkaR
+         B2KXou5ZXZEysXJ3+N9PsPSusFCin+2LXTmw4=
+Received: by 10.103.176.20 with SMTP id d20mr173531mup.136.1219862516952;
+        Wed, 27 Aug 2008 11:41:56 -0700 (PDT)
 Received: from localhost ( [62.21.4.140])
-        by mx.google.com with ESMTPS id u9sm42319218muf.9.2008.08.27.11.42.04
+        by mx.google.com with ESMTPS id j10sm11072170mue.17.2008.08.27.11.41.55
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 27 Aug 2008 11:42:05 -0700 (PDT)
+        Wed, 27 Aug 2008 11:41:56 -0700 (PDT)
 X-Mailer: git-send-email 1.5.6.3
-In-Reply-To: <1219862506-11075-5-git-send-email-marek.zawirski@gmail.com>
+In-Reply-To: <1219862506-11075-2-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93921>
 
-Let's avoid ambiguity in UIText and other places when we also use
-FetchResultDialog.
+"Delete" mode is valid only for push, we need only "update/create"
+mode for fetch, so there is no need to display this column here.
 
 Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
 ---
- .../{ResultDialog.java => PushResultDialog.java}   |    4 ++--
- .../spearce/egit/ui/internal/push/PushWizard.java  |    5 +++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
- rename org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/{ResultDialog.java => PushResultDialog.java} (95%)
+ .../egit/ui/internal/components/RefSpecPanel.java  |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/ResultDialog.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/PushResultDialog.java
-similarity index 95%
-rename from org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/ResultDialog.java
-rename to org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/PushResultDialog.java
-index 920494f..bace9ad 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/ResultDialog.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/PushResultDialog.java
-@@ -20,14 +20,14 @@
- import org.spearce.egit.ui.UIText;
- import org.spearce.jgit.lib.Repository;
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/components/RefSpecPanel.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/components/RefSpecPanel.java
+index 34d37fd..de82480 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/components/RefSpecPanel.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/components/RefSpecPanel.java
+@@ -951,7 +951,8 @@ private void createTableColumns(final Composite tablePanel) {
+ 		tablePanel.setLayout(columnLayout);
  
--class ResultDialog extends Dialog {
-+class PushResultDialog extends Dialog {
- 	private final Repository localDb;
+ 		createDummyColumn(columnLayout);
+-		createModeColumn(columnLayout);
++		if (pushSpecs)
++			createModeColumn(columnLayout);
+ 		createSrcColumn(columnLayout);
+ 		createDstColumn(columnLayout);
+ 		createForceColumn(columnLayout);
+@@ -1277,7 +1278,8 @@ private TableViewerColumn createColumn(
+ 	}
  
- 	private final PushOperationResult result;
- 
- 	private final String destinationString;
- 
--	ResultDialog(final Shell parentShell, final Repository localDb,
-+	PushResultDialog(final Shell parentShell, final Repository localDb,
- 			final PushOperationResult result, final String destinationString) {
- 		super(parentShell);
- 		setShellStyle(getShellStyle() | SWT.RESIZE);
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/PushWizard.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/PushWizard.java
-index a5c6339..b2ef5ae 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/PushWizard.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/PushWizard.java
-@@ -238,8 +238,9 @@ protected IStatus run(final IProgressMonitor monitor) {
- 							public void run() {
- 								final Shell shell = PlatformUI.getWorkbench()
- 										.getActiveWorkbenchWindow().getShell();
--								final Dialog dialog = new ResultDialog(shell,
--										localDb, result, destinationString);
-+								final Dialog dialog = new PushResultDialog(
-+										shell, localDb, result,
-+										destinationString);
- 								dialog.open();
- 							}
- 						});
+ 	private void createCellEditors(final Table table) {
+-		modeCellEditor = new CheckboxCellEditor(table);
++		if (pushSpecs)
++			modeCellEditor = new CheckboxCellEditor(table);
+ 		localRefCellEditor = createLocalRefCellEditor(table);
+ 		remoteRefCellEditor = createRemoteRefCellEditor(table);
+ 		forceUpdateCellEditor = new CheckboxCellEditor(table);
 -- 
 1.5.6.3
