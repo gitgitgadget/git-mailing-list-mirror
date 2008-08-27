@@ -1,79 +1,104 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Wed, 27 Aug 2008 14:23:24 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0808271420210.3363@nehalem.linux-foundation.org>
-References: <1219764860.4471.13.camel@gaara.bos.redhat.com> <1219766398.7107.87.camel@pmac.infradead.org> <1f6632e50808260904t6bea0be5kc69342917e3db97@mail.gmail.com> <20080826162513.GR10544@machine.or.cz> <20080826164526.GM26610@one.firstfloor.org>
- <20080826171012.GO10360@machine.or.cz> <20080826171255.GI26523@spearce.org> <20080826171623.GE5318@coredump.intra.peff.net> <20080826210631.GC3812@1wt.eu> <48B5B7F3.4080803@pobox.com> <20080827202707.GA25233@coredump.intra.peff.net>
- <48B5BB35.8090606@pobox.com>
+From: issackelly <issac@servee.com>
+Subject: Sample Workflow Help
+Date: Wed, 27 Aug 2008 14:27:15 -0700 (PDT)
+Message-ID: <19190079.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Kristian H??gsberg <krh@redhat.com>,
-	Matthias Kestenholz <mk@spinlock.ch>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	users@kernel.org, Andi Kleen <andi@firstfloor.org>,
-	Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Willy Tarreau <w@1wt.eu>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff Garzik <jgarzik@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 27 23:26:33 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 27 23:28:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYSX5-0002hF-5t
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 23:26:27 +0200
+	id 1KYSYv-0003F8-D2
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 23:28:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752710AbYH0VZV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 17:25:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751296AbYH0VZV
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 17:25:21 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:35028 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752549AbYH0VZU (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Aug 2008 17:25:20 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7RLNPtB019037
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 Aug 2008 14:23:26 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7RLNORx023189;
-	Wed, 27 Aug 2008 14:23:25 -0700
-In-Reply-To: <48B5BB35.8090606@pobox.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.929 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751714AbYH0V1Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 17:27:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751475AbYH0V1Q
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 17:27:16 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:44105 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750784AbYH0V1P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 17:27:15 -0400
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1KYSXr-00038Q-76
+	for git@vger.kernel.org; Wed, 27 Aug 2008 14:27:15 -0700
+X-Nabble-From: issac@servee.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93957>
 
 
+I'm new to git.  I need some help refactoring my workflow.
 
-On Wed, 27 Aug 2008, Jeff Garzik wrote:
-> 
-> I use it to spit out a patch for a specific commit:
-> 
-> 	git-diff-tree -p $COMMIT
+Here is my setup.
 
-Use
+There are three of us working on one server, each with individual
+repositories (clones) on the server (this is important because our test
+environment can't work from branches, it needs to work from actual files)
 
-	git show $COMMIT
+so, there is the 1_1 folder (main repo)
+1_1issac for me
+1_1kasey and 1_1josh
 
-instead, which is shorter and gives you the log too, and uses a pager by 
-default. And defaults to HEAD, so you don't even need to say $COMMIT if 
-you want to see the top one. IOW, much nicer is so many ways.
+So, here is my sample workflow
 
-Yeah, the "much nicer" obviously does mean "different". If you _rely_ on 
-the fact that you don't get a pager (you just want to scroll youself), or 
-you really don't want to see what the commit message was all about, then 
-'git diff-tree' is obviously "better".
+--Begin doc
 
-But at least personally, I really don't know when I last wanted to have 
-anything else than 'git show' for showing a commit.
+I'm Issac.  I'm working on some calendar code, on my mac, it's at
+~/1_1issac/admin/pageType/calendar/admin.php (this is a clone of my
+repository)
 
-			Linus
+I've made some local edits, to put it on the server I now do this (on my
+local terminal)
+
+    cd ~/1_1issac #my root directory
+
+    git commit -a #find all of my changes and commit them to the local
+repository
+
+    git push ssh://<server>/<repoDir>/1_1issac
+
+Now, I've made a new icon at /admin/pageType/calendar/icon.png
+
+git add admin/pageType/calendar/icon.png
+
+git commit -a
+
+git push ssh://<server>/<repoDir>/1_1issac
+
+I e-mail kasey "Kasey, I've put a temp icon in the 1_1issac folder under
+admin/pageType/calendar/icon.png could you give me a better one?"
+
+He does, first he jumps on the server and updates his current working files
+with the things that I'm working on:
+
+ssh <server>
+cd <repoDir>/1_1kasey
+git pull ../1_1issac
+exit
+# your back to your regular environment now
+cd <wherever the stuff you normally work on it>
+
+git pull ssh://<server>/<repoDir>/1_1kasey
+
+#edit my crapy paint drawing
+
+git commit -a
+
+git push ssh://<server>/<repoDir>/1_1kasey
+
+--end
+
+Please tell me what I'm doing wrong (if anything) and what I could be doing
+better.  I've been using git for about two days, and I'm trying to teach my
+team to as well.
+-- 
+View this message in context: http://www.nabble.com/Sample-Workflow-Help-tp19190079p19190079.html
+Sent from the git mailing list archive at Nabble.com.
