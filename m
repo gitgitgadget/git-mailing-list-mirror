@@ -1,101 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-shortlog hangs on bare repo without --bare option
-Date: Wed, 27 Aug 2008 15:41:26 -0700
-Message-ID: <7vod3em67d.fsf@gitster.siamese.dyndns.org>
-References: <20080827195233.GA2477@garry-thinkpad.arpnetworks.com>
- <48B5C9E4.4030807@lsrfire.ath.cx> <7vvdxmm78o.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Garry Dolley <gdolley@arpnetworks.com>, git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu Aug 28 00:42:53 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 2/2] pgm.push: Ensure SSH connections are closed
+Date: Wed, 27 Aug 2008 16:02:06 -0700
+Message-ID: <1219878126-18622-2-git-send-email-spearce@spearce.org>
+References: <1219878126-18622-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 01:03:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYTiq-000372-Ku
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 00:42:41 +0200
+	id 1KYU2v-00085z-8D
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 01:03:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755976AbYH0Wlf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Aug 2008 18:41:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755973AbYH0Wlf
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 18:41:35 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44306 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753439AbYH0Wle convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Aug 2008 18:41:34 -0400
+	id S1753882AbYH0XCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 19:02:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753920AbYH0XCL
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 19:02:11 -0400
+Received: from george.spearce.org ([209.20.77.23]:55164 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753848AbYH0XCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 19:02:08 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 8E08F38378; Wed, 27 Aug 2008 23:02:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2F7D16485F;
-	Wed, 27 Aug 2008 18:41:33 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 69A0B6485E; Wed, 27 Aug 2008 18:41:29 -0400 (EDT)
-In-Reply-To: <7vvdxmm78o.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 27 Aug 2008 15:19:03 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4C621A14-7489-11DD-A957-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	by george.spearce.org (Postfix) with ESMTP id 19A3138375;
+	Wed, 27 Aug 2008 23:02:07 +0000 (UTC)
+X-Mailer: git-send-email 1.6.0.174.gd789c
+In-Reply-To: <1219878126-18622-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93975>
 
-Junio C Hamano <gitster@pobox.com> writes:
+If we don't close the transport when we are done with it
+the SSH session stored within the Transport will still be
+opened to the remote side.  JSch may have created one or
+more background user threads to handle that connection,
+which means the JVM won't terminate cleanly when we are
+done with our work.
 
-> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->
->> Garry Dolley schrieb:
->>> I didn't see this happen with git 1.5.x, but if you do git-shortlog=
- on a bare=20
->>> repo, without specifying --bare, the command will seemingly hang in=
-definitely.
->>
->> FWIW, I tried git 1.5.0 and it hangs, too.  Which exact version did =
-work
->> for you?  Could you, based on it, bisect the commit that introduced =
-this
->> behaviour?
->>
->> As a workaround, you can use "git log | git shortlog".
->
-> It is not a workaround.  Shortlog can work as a filter to "git log", =
-but
-> if you give revs to work on, e.g. "git shortlog -s -n v1.5.6.5.." or =
-"git
-> shortlog HEAD", it can generate the log and feed to itself.
->
-> Somehow it (perhaps incorrectly, I did not look at the command line i=
-nput)
-> judging that your command line is telling it not to do the log genera=
-tion
-> itself but instead you will feed the log from its standard input, whi=
-ch
-> happens to be your terminal.  So another workaround would be to type =
-the
-> series of log messages ;-)
+We must close each and every transport we opened.
 
-And I think this is related to the complexity that snuck in when worktr=
-ee
-feature was added to the setup sequence.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../src/org/spearce/jgit/pgm/Push.java             |   24 ++++++++++++-------
+ 1 files changed, 15 insertions(+), 9 deletions(-)
 
-Untested, but I think this would help.
-
- setup.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git c/setup.c w/setup.c
-index 6cf9094..296f712 100644
---- c/setup.c
-+++ w/setup.c
-@@ -461,7 +461,7 @@ const char *setup_git_directory_gently(int *nongit_=
-ok)
- 			inside_git_dir =3D 1;
- 			if (!work_tree_env)
- 				inside_work_tree =3D 0;
--			setenv(GIT_DIR_ENVIRONMENT, ".", 1);
-+			set_git_dir(".");
- 			check_repository_format_gently(nongit_ok);
- 			return NULL;
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Push.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Push.java
+index f53f2fe..53ad080 100644
+--- a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Push.java
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Push.java
+@@ -50,6 +50,7 @@
+ import org.spearce.jgit.transport.RefSpec;
+ import org.spearce.jgit.transport.RemoteRefUpdate;
+ import org.spearce.jgit.transport.Transport;
++import org.spearce.jgit.transport.URIish;
+ import org.spearce.jgit.transport.RemoteRefUpdate.Status;
+ 
+ @Command(common = true, usage = "Update remote repository from local refs")
+@@ -111,13 +112,18 @@ protected void run() throws Exception {
+ 			final Collection<RemoteRefUpdate> toPush = transport
+ 					.findRemoteRefUpdatesFor(refSpecs);
+ 
+-			final PushResult result = transport.push(new TextProgressMonitor(),
+-					toPush);
+-			printPushResult(transport, result);
++			final URIish uri = transport.getURI();
++			final PushResult result;
++			try {
++				result = transport.push(new TextProgressMonitor(), toPush);
++			} finally {
++				transport.close();
++			}
++			printPushResult(uri, result);
  		}
+ 	}
+ 
+-	private void printPushResult(final Transport transport,
++	private void printPushResult(final URIish uri,
+ 			final PushResult result) {
+ 		shownURI = false;
+ 		boolean everythingUpToDate = true;
+@@ -126,7 +132,7 @@ private void printPushResult(final Transport transport,
+ 		for (final RemoteRefUpdate rru : result.getRemoteUpdates()) {
+ 			if (rru.getStatus() == Status.UP_TO_DATE) {
+ 				if (verbose)
+-					printRefUpdateResult(transport, result, rru);
++					printRefUpdateResult(uri, result, rru);
+ 			} else
+ 				everythingUpToDate = false;
+ 		}
+@@ -134,25 +140,25 @@ private void printPushResult(final Transport transport,
+ 		for (final RemoteRefUpdate rru : result.getRemoteUpdates()) {
+ 			// ...then successful updates...
+ 			if (rru.getStatus() == Status.OK)
+-				printRefUpdateResult(transport, result, rru);
++				printRefUpdateResult(uri, result, rru);
+ 		}
+ 
+ 		for (final RemoteRefUpdate rru : result.getRemoteUpdates()) {
+ 			// ...finally, others (problematic)
+ 			if (rru.getStatus() != Status.OK
+ 					&& rru.getStatus() != Status.UP_TO_DATE)
+-				printRefUpdateResult(transport, result, rru);
++				printRefUpdateResult(uri, result, rru);
+ 		}
+ 
+ 		if (everythingUpToDate)
+ 			out.println("Everything up-to-date");
+ 	}
+ 
+-	private void printRefUpdateResult(final Transport transport,
++	private void printRefUpdateResult(final URIish uri,
+ 			final PushResult result, final RemoteRefUpdate rru) {
+ 		if (!shownURI) {
+ 			shownURI = true;
+-			out.format("To %s\n", transport.getURI());
++			out.format("To %s\n", uri);
+ 		}
+ 
+ 		final String remoteName = rru.getRemoteName();
+-- 
+1.6.0.174.gd789c
