@@ -1,72 +1,70 @@
-From: Perry Wagle <wagle@cs.indiana.edu>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Wed, 27 Aug 2008 12:54:56 -0700
-Message-ID: <38B725C0-40C3-496C-AAD4-4EA65E3085F5@cs.indiana.edu>
-References: <20080826164526.GM26610@one.firstfloor.org> <48B5098E.748.A598B62@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de> <B83CC7EA-C77E-45CA-B9C5-FC81A8C0C9A5@cs.indiana.edu> <20080827195019.GA9962@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v928.1)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>,
-	Andi Kleen <andi@firstfloor.org>,
-	Kristian H??gsberg <krh@redhat.com>,
-	Matthias Kestenholz <mk@spinlock.ch>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	users@kernel.org, Junio C Hamano <gitster@pobox.com>,
-	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 27 21:57:24 2008
+From: Garry Dolley <gdolley@arpnetworks.com>
+Subject: git-shortlog hangs on bare repo without --bare option
+Date: Wed, 27 Aug 2008 12:52:33 -0700
+Message-ID: <20080827195233.GA2477@garry-thinkpad.arpnetworks.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 27 22:00:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYR8k-0005sY-QY
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 21:57:15 +0200
+	id 1KYRBi-0006vj-Ph
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 22:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750833AbYH0T4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 15:56:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750816AbYH0T4J
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 15:56:09 -0400
-Received: from newman.cs.indiana.edu ([129.79.247.4]:34688 "EHLO
-	newman.cs.indiana.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750765AbYH0T4I (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 15:56:08 -0400
-Received: from smtp.cs.indiana.edu (smtp.cs.indiana.edu [129.79.247.7])
-	by newman.cs.indiana.edu (8.13.1/8.13.1/IUCS_2.87) with ESMTP id m7RJt2oW005734;
-	Wed, 27 Aug 2008 15:55:03 -0400
-Received: from dhcp-2.metabiology.com (pool-96-253-170-5.ptldor.fios.verizon.net [96.253.170.5])
-	(authenticated bits=0)
-	by rage.cs.indiana.edu (8.13.1/8.13.1/IUCS_SMTP_Alternate_Port_1.4) with ESMTP id m7RJsvlb020016
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 27 Aug 2008 15:55:01 -0400
-In-Reply-To: <20080827195019.GA9962@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.928.1)
+	id S1751072AbYH0T7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 15:59:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750933AbYH0T7O
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 15:59:14 -0400
+Received: from mail.arpnetworks.com ([205.134.237.79]:42292 "HELO
+	penguin.filetron.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1750811AbYH0T7N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 15:59:13 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Aug 2008 15:59:13 EDT
+Received: (qmail 16003 invoked from network); 27 Aug 2008 19:50:48 -0000
+Received: from unknown (HELO garry-thinkpad.arpnetworks.com) (gdolley@arpnetworks.com@205.134.237.48)
+  by mail.arpnetworks.com with SMTP; 27 Aug 2008 19:50:48 -0000
+Content-Disposition: inline
+X-PGP-Key: http://scie.nti.st/pubkey.asc
+X-PGP-Fingerprint: A4C2 A268 0A00 1C26 94BC  9690 4255 E69B F65A 9900
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93936>
+
+I didn't see this happen with git 1.5.x, but if you do git-shortlog on a bare 
+repo, without specifying --bare, the command will seemingly hang indefinitely.
+
+Here's my output:
+
+[garry@garry-thinkpad] ~/dev (master) $ cd ebay4r/                       <----- Repo with working tree (non-bare)
+[garry@garry-thinkpad] ~/dev/ebay4r (master) $ git shortlog -e -s
+   130  Garry Dolley <gdolley@arpnetworks.com>
+[garry@garry-thinkpad] ~/dev/ebay4r (master) $ cd ..
+[garry@garry-thinkpad] ~/dev (master) $ git clone --mirror ebay4r/ ebay4r-bare
+Initialized empty Git repository in /home/garry/dev/ebay4r-bare/
+[garry@garry-thinkpad] ~/dev (master) $ cd ebay4r-bare/
+[garry@garry-thinkpad] ~/dev/ebay4r-bare (master) $ git shortlog -e -s
+<hang>                                                                   <----- *** It hangs here ***
+
+[garry@garry-thinkpad] ~/dev/ebay4r-bare (master) $ git --bare shortlog -e -s
+   130  Garry Dolley <gdolley@arpnetworks.com>
+[garry@garry-thinkpad] ~/dev/ebay4r-bare (master) $ 
 
 
-On Aug 27, 2008, at 12:50 PM, Jeff King wrote:
+If newlines break this output in your reader, you can also view it 
+here: http://pastie.org/261134
 
-> On Wed, Aug 27, 2008 at 12:43:23PM -0700, Perry Wagle wrote:
->
->> Doing git-<tab> was shocking to me at first, but it also showed me  
->> a list
->> of commands for me to learn.
->>
->> Now I guess that when everything's fixed up, I'll have to put in a  
->> space
->> instead of a dash to get exactly the same thing.
->>
->> What difference did changing the dash to a space make?
->
-> Did you miss the part of the thread about how it's not exactly the  
-> same
-> thing, but rather substantially fewer commands (and there is even
-> additional discussion about _which_ commands)?
+I'm using git 1.6.0.1
 
-I guess I did.  Being an optimist, I wouldn't expect the tab  
-completion to *lie* and leave things out.
+Is this a bug?
 
--- Perry
+-- 
+Garry Dolley
+ARP Networks, Inc.
+818-206-0181
+Los Angeles County REACT, Unit 336
+WQGK336
