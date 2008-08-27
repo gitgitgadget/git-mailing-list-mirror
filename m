@@ -1,180 +1,80 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 2/2] Check for top == head at the start of every
-	transaction
-Date: Thu, 28 Aug 2008 00:06:57 +0200
-Message-ID: <20080827220657.3607.88972.stgit@yoghurt>
-References: <20080827220606.3607.17134.stgit@yoghurt>
+From: Garry Dolley <gdolley@arpnetworks.com>
+Subject: Re: git-shortlog hangs on bare repo without --bare option
+Date: Wed, 27 Aug 2008 15:15:45 -0700
+Message-ID: <20080827221544.GA12459@garry-thinkpad.arpnetworks.com>
+References: <20080827195233.GA2477@garry-thinkpad.arpnetworks.com> <48B5C9E4.4030807@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Erik Sandberg <mandolaerik@gmail.com>, git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 00:08:36 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ren?? Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu Aug 28 00:17:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYTBs-00074M-5X
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 00:08:36 +0200
+	id 1KYTJr-0001m6-6I
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 00:16:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754388AbYH0WHJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Aug 2008 18:07:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756135AbYH0WHI
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 18:07:08 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1281 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753925AbYH0WHD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 18:07:03 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1KYTVq-0007lx-00; Wed, 27 Aug 2008 23:29:15 +0100
-In-Reply-To: <20080827220606.3607.17134.stgit@yoghurt>
-User-Agent: StGIT/0.14.3.232.g9dfa
+	id S1753128AbYH0WPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 18:15:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbYH0WPq
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 18:15:46 -0400
+Received: from mail.arpnetworks.com ([205.134.237.79]:51709 "HELO
+	penguin.filetron.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1752495AbYH0WPp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 18:15:45 -0400
+Received: (qmail 21225 invoked from network); 27 Aug 2008 22:14:01 -0000
+Received: from unknown (HELO garry-thinkpad.arpnetworks.com) (gdolley@arpnetworks.com@205.134.237.48)
+  by mail.arpnetworks.com with SMTP; 27 Aug 2008 22:14:01 -0000
+Content-Disposition: inline
+In-Reply-To: <48B5C9E4.4030807@lsrfire.ath.cx>
+X-PGP-Key: http://scie.nti.st/pubkey.asc
+X-PGP-Fingerprint: A4C2 A268 0A00 1C26 94BC  9690 4255 E69B F65A 9900
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93967>
 
-We used to check it in the run() method, but that's sometimes too
-late: for example, it causes stg coalesce to ask for a commit message
-_before_ the check, resulting in a lost commit message if the check
-fails.
+On Wed, Aug 27, 2008 at 11:40:52PM +0200, Ren?? Scharfe wrote:
+> Garry Dolley schrieb:
+> > I didn't see this happen with git 1.5.x, but if you do git-shortlog on a bare 
+> > repo, without specifying --bare, the command will seemingly hang indefinitely.
+> 
+> FWIW, I tried git 1.5.0 and it hangs, too.  Which exact version did work
+> for you?  Could you, based on it, bisect the commit that introduced this
+> behaviour?
 
-As before, the check can be disabled for the few commands that need
-it.
+I just tried it with 1.5.6.2, and it hung.  Unfortunately, I had
+several versions of git inside my ~/src as I upgraded over the
+months, and just last week I decided to blow away the old ones, so I
+don't know what version it was that I saw this work. :(
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+Either way, it's too big a deal, I just wanted to point out what I
+saw.
 
----
+If it helps, this is the last few lines of strace before it hangs:
 
- stgit/commands/redo.py     |    3 ++-
- stgit/commands/reset.py    |    3 ++-
- stgit/commands/uncommit.py |    3 ++-
- stgit/commands/undo.py     |    3 ++-
- stgit/lib/transaction.py   |   11 ++++++++---
- t/t2600-coalesce.sh        |    2 +-
- 6 files changed, 17 insertions(+), 8 deletions(-)
+stat(".git", 0x7fff6e44dd90)            = -1 ENOENT (No such file or directory)
+open(".git/config", O_RDONLY)           = -1 ENOENT (No such file or directory)
+pipe([3, 4])                            = 0
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7f7a6642d790) = 12674
+dup2(3, 0)                              = 0
+close(3)                                = 0
+close(4)                                = 0
+select(1, [0], NULL, [0], NULL
 
+So looks like it is waiting to be fed some input?  It's hungry :)
 
-diff --git a/stgit/commands/redo.py b/stgit/commands/redo.py
-index a1075ec..97b7edc 100644
---- a/stgit/commands/redo.py
-+++ b/stgit/commands/redo.py
-@@ -44,7 +44,8 @@ def func(parser, options, args):
-         raise common.CmdException('Bad number of undos to redo')
-     state =3D log.undo_state(stack, -options.number)
-     trans =3D transaction.StackTransaction(stack, 'redo %d' % options.=
-number,
--                                         discard_changes =3D options.h=
-ard)
-+                                         discard_changes =3D options.h=
-ard,
-+                                         allow_bad_head =3D True)
-     try:
-         log.reset_stack(trans, stack.repository.default_iw, state)
-     except transaction.TransactionHalted:
-diff --git a/stgit/commands/reset.py b/stgit/commands/reset.py
-index 2499b26..d79ce70 100644
---- a/stgit/commands/reset.py
-+++ b/stgit/commands/reset.py
-@@ -56,7 +56,8 @@ def func(parser, options, args):
-     else:
-         raise common.CmdException('Wrong number of arguments')
-     trans =3D transaction.StackTransaction(stack, 'reset',
--                                         discard_changes =3D options.h=
-ard)
-+                                         discard_changes =3D options.h=
-ard,
-+                                         allow_bad_head =3D True)
-     try:
-         if patches:
-             log.reset_stack_partially(trans, stack.repository.default_=
-iw,
-diff --git a/stgit/commands/uncommit.py b/stgit/commands/uncommit.py
-index c21306b..3ffdc1e 100644
---- a/stgit/commands/uncommit.py
-+++ b/stgit/commands/uncommit.py
-@@ -132,7 +132,8 @@ def func(parser, options, args):
-         patchnames.reverse()
-=20
-     trans =3D transaction.StackTransaction(stack, 'uncommit',
--                                         allow_conflicts =3D True)
-+                                         allow_conflicts =3D True,
-+                                         allow_bad_head =3D True)
-     for commit, pn in zip(commits, patchnames):
-         trans.patches[pn] =3D commit
-     trans.applied =3D list(reversed(patchnames)) + trans.applied
-diff --git a/stgit/commands/undo.py b/stgit/commands/undo.py
-index 58f1da6..a9cee3a 100644
---- a/stgit/commands/undo.py
-+++ b/stgit/commands/undo.py
-@@ -41,7 +41,8 @@ def func(parser, options, args):
-         raise common.CmdException('Bad number of commands to undo')
-     state =3D log.undo_state(stack, options.number)
-     trans =3D transaction.StackTransaction(stack, 'undo %d' % options.=
-number,
--                                         discard_changes =3D options.h=
-ard)
-+                                         discard_changes =3D options.h=
-ard,
-+                                         allow_bad_head =3D True)
-     try:
-         log.reset_stack(trans, stack.repository.default_iw, state)
-     except transaction.TransactionHalted:
-diff --git a/stgit/lib/transaction.py b/stgit/lib/transaction.py
-index 7c7139c..c6e2db3 100644
---- a/stgit/lib/transaction.py
-+++ b/stgit/lib/transaction.py
-@@ -75,7 +75,7 @@ class StackTransaction(object):
-       your refs and index+worktree, or fail without having done
-       anything."""
-     def __init__(self, stack, msg, discard_changes =3D False,
--                 allow_conflicts =3D False):
-+                 allow_conflicts =3D False, allow_bad_head =3D False):
-         """Create a new L{StackTransaction}.
-=20
-         @param discard_changes: Discard any changes in index+worktree
-@@ -99,6 +99,8 @@ class StackTransaction(object):
-         else:
-             self.__allow_conflicts =3D allow_conflicts
-         self.__temp_index =3D self.temp_index_tree =3D None
-+        if not allow_bad_head:
-+            self.__assert_head_top_equal()
-     stack =3D property(lambda self: self.__stack)
-     patches =3D property(lambda self: self.__patches)
-     def __set_applied(self, val):
-@@ -137,13 +139,16 @@ class StackTransaction(object):
-     def __set_head(self, val):
-         self.__bad_head =3D val
-     head =3D property(__get_head, __set_head)
--    def __checkout(self, tree, iw, allow_bad_head):
--        if not (allow_bad_head or self.__stack.head_top_equal()):
-+    def __assert_head_top_equal(self):
-+        if not self.__stack.head_top_equal():
-             out.error(
-                 'HEAD and top are not the same.',
-                 'This can happen if you modify a branch with git.',
-                 '"stg repair --help" explains more about what to do ne=
-xt.')
-             self.__abort()
-+    def __checkout(self, tree, iw, allow_bad_head):
-+        if not allow_bad_head:
-+            self.__assert_head_top_equal()
-         if self.__current_tree =3D=3D tree and not self.__discard_chan=
-ges:
-             # No tree change, but we still want to make sure that
-             # there are no unresolved conflicts. Conflicts
-diff --git a/t/t2600-coalesce.sh b/t/t2600-coalesce.sh
-index 33c073d..9a043fd 100755
---- a/t/t2600-coalesce.sh
-+++ b/t/t2600-coalesce.sh
-@@ -33,7 +33,7 @@ cat > editor <<EOF
- echo "Editor was invoked" | tee editor-invoked
- EOF
- chmod a+x editor
--test_expect_failure 'Coalesce with top !=3D head' '
-+test_expect_success 'Coalesce with top !=3D head' '
-     echo blahonga >> foo.txt &&
-     git commit -a -m "a new commit" &&
-     EDITOR=3D./editor command_error stg coalesce --name=3Dr0 p0 q1 &&
+> As a workaround, you can use "git log | git shortlog".
+
+Also, 'git --bare shortlog' works too.
+
+-- 
+Garry Dolley
+http://scie.nti.st
+ARP Networks, Inc.
+818-206-0181
+Los Angeles County REACT, Unit 336
+WQGK336
