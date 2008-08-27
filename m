@@ -1,75 +1,67 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] be paranoid about closed stdin/stdout/stderr
-Date: Wed, 27 Aug 2008 08:35:48 +0200
-Message-ID: <48B4F5C4.9020404@viscovery.net>
-References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu> <48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org> <E1KXawS-0001gg-Ty@fencepost.gnu.org> <48B2AFC2.20901@viscovery.net> <7vbpzgb94q.fsf@gitster.siamese.dyndns.org> <E1KXsL9-0004ef-Co@fencepost.gnu.org> <48B3A948.3080800@viscovery.net> <7vsksrad7o.fsf@gitster.siamese.dyndns.org> <48B44C61.2020206@gnu.org>
+From: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Wed, 27 Aug 2008 08:04:23 +0200
+Organization: Universitaetsklinikum Regensburg
+Message-ID: <48B50A84.29823.A5D4BB6@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+References: <1219664940.9583.42.camel@pmac.infradead.org>, <alpine.LFD.1.10.0808261004150.3363@nehalem.linux-foundation.org>, <20080826172742.GN26610@one.firstfloor.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Karl Chen <quarl@cs.berkeley.edu>,
-	Git mailing list <git@vger.kernel.org>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Aug 27 08:37:20 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	users@kernel.org, Jeff King <peff@peff.net>,
+	Andi Kleen <andi@firstfloor.org>, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Andi Kleen <andi@firstfloor.org>
+X-From: git-owner@vger.kernel.org Wed Aug 27 08:37:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYEed-0002Lv-Gh
+	id 1KYEec-0002Lv-Rl
 	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 08:37:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754646AbYH0Gfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 02:35:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753365AbYH0Gfy
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 02:35:54 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:19445 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754637AbYH0Gfx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 02:35:53 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KYEdA-0004wo-RO; Wed, 27 Aug 2008 08:35:49 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 71B636B7; Wed, 27 Aug 2008 08:35:48 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <48B44C61.2020206@gnu.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754617AbYH0Gfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 02:35:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754614AbYH0Gfu
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 02:35:50 -0400
+Received: from rrzd4.rz.uni-regensburg.de ([194.94.155.49]:1818 "EHLO
+	rrzd4.rz.uni-regensburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754601AbYH0Gft (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Aug 2008 02:35:49 -0400
+Received: from rrzd4.rz.uni-regensburg.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 0CA3B125C;
+	Wed, 27 Aug 2008 08:04:58 +0200 (CEST)
+Received: from mailgate.dvm.klinik.uni-regensburg.de (kgate2.klinik.uni-regensburg.de [132.199.176.19])
+	by rrzd4.rz.uni-regensburg.de (Postfix) with ESMTP id 2862231DA;
+	Wed, 27 Aug 2008 08:04:56 +0200 (CEST)
+Received: from rkdvmks1.ngate.uni-regensburg.de (rkdvmks1.dvm.klinik.uni-regensburg.de [132.199.176.1])
+	by mailgate.dvm.klinik.uni-regensburg.de (8.13.6/8.13.6/20060824MT-1) with ESMTP id m7R64miU019470;
+	Wed, 27 Aug 2008 08:04:48 +0200
+Received: from RKDVMKS1/SpoolDir by rkdvmks1.ngate.uni-regensburg.de (Mercury 1.48);
+    27 Aug 08 08:04:49 +0200
+Received: from SpoolDir by RKDVMKS1 (Mercury 1.48); 27 Aug 08 08:04:31 +0200
+In-reply-to: <20080826172742.GN26610@one.firstfloor.org>
+X-mailer: Pegasus Mail for Windows (4.41)
+Content-description: Mail message body
+X-Content-Conformance: HerringScan-0.27/Sophos-P=4.29.0+V=4.29+U=2.07.201+R=05 May 2008+T=405404@20080827.055307Z
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93861>
 
-Paolo Bonzini schrieb:
-> Junio C Hamano wrote:
->> Johannes Sixt <j.sixt@viscovery.net> writes:
->>
->>> Paolo Bonzini schrieb:
->>>> +	/*
->>>> +	 * Always open file descriptors 0/1/2 to avoid clobbering files
->>>> +	 * in die().  It also avoids not messing up when the pipes are
->>>> +	 * dup'ed onto stdin/stdout/stderr in the child processes we spawn.
->>>> +	 */
->>> I see your point, but I don't have an opinion whether this stretch is
->>> necessary.
->> This is going too far.  Have you seen any other sane program that do this?
-> 
-> Busybox.  But it runs setuid, as Steven pointed out.
+On 26 Aug 2008 at 19:27, Andi Kleen wrote:
 
-I straced tee (it was the only tool I found that opens files for writing
-without also opening some for reading). If one of 0,1,2 is closed, it
-*does* dup() the fd that it is going to write.
+[...]
+> I was assuming someone thinking about using git. At some point
+> they will do the git<space><tab><tab> thing and be scared away.
+[...]
 
-Don't you now feel like Reg in "Life of Brian":
+Hi!
 
-"All right, but apart from the sanitation, the medicine, education, wine,
-public order, irrigation, roads, a fresh water system, and public health,
-what have the Romans ever done for us?"
+Honestly I think, the user will type "git<ENTER>" first.
 
-;)
-
--- Hannes
+Ulrich
