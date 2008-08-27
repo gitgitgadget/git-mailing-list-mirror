@@ -1,60 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Are these bugs?
-Date: Wed, 27 Aug 2008 16:47:03 -0700
-Message-ID: <7v1w0akolk.fsf@gitster.siamese.dyndns.org>
-References: <76718490808271636i4de8f385pdaeb1672f06a00d7@mail.gmail.com>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Wed, 27 Aug 2008 19:49:54 -0400
+Message-ID: <48B5E822.1020901@pobox.com>
+References: <1219764860.4471.13.camel@gaara.bos.redhat.com> <1219766398.7107.87.camel@pmac.infradead.org> <1f6632e50808260904t6bea0be5kc69342917e3db97@mail.gmail.com> <20080826162513.GR10544@machine.or.cz> <20080826164526.GM26610@one.firstfloor.org> <20080826171012.GO10360@machine.or.cz> <20080826171255.GI26523@spearce.org> <20080826171623.GE5318@coredump.intra.peff.net> <20080826210631.GC3812@1wt.eu> <48B5B7F3.4080803@pobox.com> <20080827202707.GA25233@coredump.intra.peff.net> <48B5BB35.8090606@pobox.com> <alpine.LFD.1.10.0808271420210.3363@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git List" <git@vger.kernel.org>
-To: "Jay Soffian" <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 01:48:16 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	users@kernel.org, Andi Kleen <andi@firstfloor.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Willy Tarreau <w@1wt.eu>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 28 01:52:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYUkJ-0003Yu-VQ
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 01:48:16 +0200
+	id 1KYUnx-0004NK-Nc
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 01:52:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753960AbYH0XrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 19:47:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756752AbYH0XrK
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 19:47:10 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42620 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756715AbYH0XrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 19:47:09 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5EA086AA31;
-	Wed, 27 Aug 2008 19:47:08 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7E0276AA30; Wed, 27 Aug 2008 19:47:05 -0400 (EDT)
-In-Reply-To: <76718490808271636i4de8f385pdaeb1672f06a00d7@mail.gmail.com>
- (Jay Soffian's message of "Wed, 27 Aug 2008 19:36:47 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 75F0043C-7492-11DD-8648-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1755346AbYH0Xui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 19:50:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754764AbYH0Xui
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 19:50:38 -0400
+Received: from srv5.dvmed.net ([207.36.208.214]:50059 "EHLO mail.dvmed.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754593AbYH0Xuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 19:50:37 -0400
+Received: from cpe-069-134-153-115.nc.res.rr.com ([69.134.153.115] helo=core.yyz.us)
+	by mail.dvmed.net with esmtpsa (Exim 4.69 #1 (Red Hat Linux))
+	id 1KYUlw-0007Qu-H5; Wed, 27 Aug 2008 23:49:59 +0000
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <alpine.LFD.1.10.0808271420210.3363@nehalem.linux-foundation.org>
+X-Spam-Score: -4.4 (----)
+X-Spam-Report: SpamAssassin version 3.2.5 on srv5.dvmed.net summary:
+	Content analysis details:   (-4.4 points, 5.0 required)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93991>
 
-"Jay Soffian" <jaysoffian@gmail.com> writes:
+Linus Torvalds wrote:
+> 
+> On Wed, 27 Aug 2008, Jeff Garzik wrote:
+>> I use it to spit out a patch for a specific commit:
+>>
+>> 	git-diff-tree -p $COMMIT
+> 
+> Use
+> 
+> 	git show $COMMIT
+> 
+> instead, which is shorter and gives you the log too, and uses a pager by 
+> default. And defaults to HEAD, so you don't even need to say $COMMIT if 
+> you want to see the top one. IOW, much nicer is so many ways.
+> 
+> Yeah, the "much nicer" obviously does mean "different". If you _rely_ on 
+> the fact that you don't get a pager (you just want to scroll youself), or 
+> you really don't want to see what the commit message was all about, then 
+> 'git diff-tree' is obviously "better".
 
-> I understand why "git reset" failed, but at best the error message is
-> confusing to a new user.
+'git show' is quite sufficient, as long as I can pipe its output into 
+patch(1) or write it to a foo.patch file, which appears to be the case.
 
-This is in "patches welcome" category.
+git-diff-tree -p was from the old days; I readily admit being a git 
+old-timer :)
 
-> 2. "git add --ignore-errors" doesn't work with ignored files:
->
-> $ git add --ignore-errors foo bar
+Anything that reduces my typing is great, and 'git show' is certainly an 
+improvement in that regard.
 
-The option, IIRC, is more about filesystem errors (failure to read), not
-about safety against user errors (specifying otherwise ignored paths).
-
-If you are automating something that uses xargs to drive addition to the
-index, and the feeder to xargs knows better than .gitignore files, then
-probably your script should be using '-f' unconditionally.  So I do not
-see why you would think #2 could be a bug.
+	Jeff, typing with a sprained finger (puppies can be a handful)
