@@ -1,87 +1,76 @@
-From: "Imran M Yousuf" <imyousuf@gmail.com>
-Subject: Re: Git-aware HTTP transport
-Date: Wed, 27 Aug 2008 08:51:20 +0600
-Message-ID: <7bfdc29a0808261951t59af433bkefa77ef8c370ecbd@mail.gmail.com>
-References: <20080826012643.GD26523@spearce.org> <48B36BCA.8060103@zytor.com>
-	 <20080826145857.GF26523@spearce.org> <48B4303C.3080409@zytor.com>
-	 <20080826172648.GK26523@spearce.org> <48B485F8.5030109@zytor.com>
+From: Karl Chen <quarl@cs.berkeley.edu>
+Subject: Re: [PATCH] be paranoid about closed stdin/stdout/stderr
+Date: Tue, 26 Aug 2008 20:05:35 -0700
+Message-ID: <quack.20080826T2005.lthzlmz2m4g@roar.cs.berkeley.edu>
+References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu>
+	<48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org>
+	<E1KXawS-0001gg-Ty@fencepost.gnu.org> <48B2AFC2.20901@viscovery.net>
+	<7vbpzgb94q.fsf@gitster.siamese.dyndns.org>
+	<E1KXsL9-0004ef-Co@fencepost.gnu.org> <48B3A948.3080800@viscovery.net>
+	<7vsksrad7o.fsf@gitster.siamese.dyndns.org> <48B44C61.2020206@gnu.org>
+	<7vabez2yac.fsf@gitster.siamese.dyndns.org>
+	<7v3akr2xa3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Wed Aug 27 04:52:27 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Paolo Bonzini <bonzini@gnu.org>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Git mailing list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 27 05:06:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYB90-00016v-8J
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 04:52:26 +0200
+	id 1KYBMs-0003WI-Kj
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 05:06:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752192AbYH0CvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 22:51:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752147AbYH0CvW
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 22:51:22 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:52900 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752144AbYH0CvV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 22:51:21 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so1234729yxm.1
-        for <git@vger.kernel.org>; Tue, 26 Aug 2008 19:51:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=OaDYdIOAt5Hz7rqJcyuwiskurP2os+oeQr+wEPr+gmQ=;
-        b=t4N6dkm0ZiI0Qa6Ulhjpxu+fWiuLGfnjaoAZaAIGAAZ5xNNwaNhLTWqjmjfBleVM1J
-         9r3ipDsq1lhxmyWYASA1ZldmjA3gJLzgWN0Te46rM9mv5kBOdN8Cl6S6J322OjjQvu8O
-         T4DCdJ1neW97V2qv5zmWV4AssRaYBUS1mk57c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=FUNnIatTgV068gaZzJb/YNb3/yO1xVGm9iIUsRmwK/pr92MOJYTFWg+ZvqVvH+wXWv
-         D2jmpY9u2KgI+4Y/HEKoaOk4GuJrgtIHH5LxhndR0JvcjnoUhEjrfPEX6qPG4gYPPeej
-         jJPibR8Y0r7EDxUzaPntn0XTYI1eihP0DtRHQ=
-Received: by 10.150.12.10 with SMTP id 10mr10293839ybl.214.1219805480338;
-        Tue, 26 Aug 2008 19:51:20 -0700 (PDT)
-Received: by 10.150.225.1 with HTTP; Tue, 26 Aug 2008 19:51:20 -0700 (PDT)
-In-Reply-To: <48B485F8.5030109@zytor.com>
-Content-Disposition: inline
+	id S1752608AbYH0DFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 23:05:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752606AbYH0DFl
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 23:05:41 -0400
+Received: from roar.CS.Berkeley.EDU ([128.32.36.242]:42952 "EHLO
+	roar.quarl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752584AbYH0DFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 23:05:40 -0400
+Received: by roar.quarl.org (Postfix, from userid 18378)
+	id EBB2634599; Tue, 26 Aug 2008 20:05:35 -0700 (PDT)
+X-Quack-Archive: 1
+In-Reply-To: <7v3akr2xa3.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Tue\, 26 Aug 2008 16\:04\:36 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93847>
 
-On Wed, Aug 27, 2008 at 4:38 AM, H. Peter Anvin <hpa@zytor.com> wrote:
-> Shawn O. Pearce wrote:
->>
->> Discard my prior patch from today.
->>
->> This is a patch to last night's full document edition
->> (http://article.gmane.org/gmane.comp.version-control.git/93704)
->> and addresses only the issue of redirects.
->>
->
-> Looks great to me.
+>>>>> On 2008-08-26 16:04 PDT, Junio C Hamano writes:
 
-This looks really good! The redirect idea just seems cool!
+    Junio> I think
 
-- Imran
+    Junio> 	$ git fetch 0<&-
 
->
->        -hpa
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+    Junio> from the command line is a mere user stupidity.
 
--- 
-Imran M Yousuf
-Email: imran@smartitengineering.com
-Blog: http://imyousuf-tech.blogs.smartitengineering.com/
-Mobile: +880-1711402557
+    Junio> On the other hand, if a cron/at job that contains "git
+    Junio> fetch" is launched in an environment with fd#0 (or #1
+    Junio> or #2 for that matter) closed, it would certainly be
+    Junio> problematic.  It can easily be worked around by
+    Junio> redirecting file descriptors appropriately in the
+    Junio> script that is launched, though.
+
+I agree command-line 'git fetch 0<&-' is silly.  The example I
+gave was minimized to show the symptom.  I ran across this with a
+more complicated cron-ish setup that closes stdin.  I actually had
+to look up the shell syntax for closing file descriptors.
+
+Yes, I can work around this issue with sh -c 'git fetch
+0</dev/null', and maybe it shouldn't close(0) in the first place.
+But I don't see the harm in being safe.  It's one less potential
+surprise for users.  This is the first program I've encountered
+that broke due to stdin being closed, and it took debugging to
+figure out that was the reason.
+
+Re security, it's actually a good idea to be safe early on if it
+could ever become an issue.  I keep /etc on my systems in version
+control, and I've worked in production environments where some
+users have access only via version control commands.
