@@ -1,60 +1,60 @@
-From: Matthew Wilcox <matthew@wil.cx>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Tue, 26 Aug 2008 18:17:05 -0600
-Message-ID: <20080827001705.GG23698@parisc-linux.org>
-References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org> <1219664940.9583.42.camel@pmac.infradead.org> <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vy72kek6y.fsf@gitster.siamese.dyndns.org> <20080826145719.GB5046@coredump.intra.peff.net> <7vr68b8q9p.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] allow user aliases for the --author parameter
+Date: Tue, 26 Aug 2008 20:19:45 -0400
+Message-ID: <20080827001944.GA7347@coredump.intra.peff.net>
+References: <g8jbvd$18k$1@ger.gmane.org> <20080821200255.GB27705@coredump.intra.peff.net> <48AE786C.20201@fastmail.fm> <20080822165047.GA3339@sigill.intra.peff.net> <7vzln492pc.fsf@gitster.siamese.dyndns.org> <20080822211902.GA31884@coredump.intra.peff.net> <48B3B8B0.4020609@fastmail.fm> <7vsksr1hgt.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, David Woodhouse <dwmw2@infradead.org>,
-	git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	users@kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 27 02:19:25 2008
+X-From: git-owner@vger.kernel.org Wed Aug 27 02:20:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KY8kp-0002eN-EG
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 02:19:19 +0200
+	id 1KY8mJ-0002wd-EP
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 02:20:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752206AbYH0ASO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2008 20:18:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751887AbYH0ASO
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 20:18:14 -0400
-Received: from palinux.external.hp.com ([192.25.206.14]:58216 "EHLO
-	mail.parisc-linux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751346AbYH0ASO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2008 20:18:14 -0400
-Received: by mail.parisc-linux.org (Postfix, from userid 26919)
-	id F4098494005; Tue, 26 Aug 2008 18:17:05 -0600 (MDT)
+	id S1752274AbYH0ATr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2008 20:19:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752345AbYH0ATr
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Aug 2008 20:19:47 -0400
+Received: from peff.net ([208.65.91.99]:3437 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752207AbYH0ATr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2008 20:19:47 -0400
+Received: (qmail 3115 invoked by uid 111); 27 Aug 2008 00:19:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 26 Aug 2008 20:19:46 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Aug 2008 20:19:45 -0400
 Content-Disposition: inline
-In-Reply-To: <7vr68b8q9p.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <7vsksr1hgt.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93839>
 
-On Tue, Aug 26, 2008 at 01:39:30PM -0700, Junio C Hamano wrote:
-> When I hear something like what David Woodhouse said in this thread, I
-> should be feeling "People -- those of you who claimed to be the silent
-> majority -- see, I told you so!  This is a very bad move".
+On Tue, Aug 26, 2008 at 04:31:30PM -0700, Junio C Hamano wrote:
+
+> > This allows the use of author abbreviations when specifying commit
+> > authors via the --author option to git commit. "--author=$key" is
+> > resolved by looking up "user.$key.name" and "user.$key.email" in the
+> > config.
 > 
-> But I can't.  People who complain _now_ just annoy me even more.  Why
-> weren't you defending the backward compatibility with me, which you seem
-> to value it so much, perhaps even more than I did back then?  Why are you
-> wasting our time bringing it up again, instead of joining the discussion
-> when it _mattered_ back then?
+> Maybe it is just me, but I am hesitant about the contamination of user.*
+> configuration namespace.  This patch as a general solution does not scale
+> well, once you start working with more than a few dozen people.
 
-We didn't know the conversation was going on.  Why should we?  We only
-use the tool, not develop it.  I'm also not on the mailing lists for
-mutt, vim, gcc, binutils, openssh, grep, xchat, mozilla, gnome, xpdf or
-any of the dozens of other programs I use on a daily basis.
+It is not just you. I think this version of the patch is much improved,
+but I am still against user.$key.*. At the very least, it needs its own
+namespace.
 
--- 
-Matthew Wilcox				Intel Open Source Technology Centre
-"Bill, look, we understand that you're interested in selling us this
-operating system, but compare it to ours.  We can't possibly take such
-a retrograde step."
+I think if somebody cares, reading external files of various formats
+would be nice (and a simple "alias, space, expansion, newline" format
+could be introduced), but since I am not volunteering to implement that,
+this even simpler implementation is acceptable to me, as long as it is
+user.alias.$key.* or similar.
+
+-Peff
