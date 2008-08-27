@@ -1,54 +1,71 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [PATCH v4] make git-shell paranoid about closed stdin/stdout/stderr
-Date: Wed, 27 Aug 2008 19:22:06 +0200
-Message-ID: <20080827172206.GA27450@cuci.nl>
-References: <E1KXawS-0001gg-Ty@fencepost.gnu.org> <48B2AFC2.20901@viscovery.net> <7vbpzgb94q.fsf@gitster.siamese.dyndns.org> <E1KXsL9-0004ef-Co@fencepost.gnu.org> <48B3A948.3080800@viscovery.net> <20080826074044.GA22694@cuci.nl> <32541b130808262201v4d7c1aa5r781720a80b79fcd0@mail.gmail.com> <20080827091800.GB484@cuci.nl> <48B54A3D.3080708@gnu.org> <E1KYMtm-0007Cd-Gt@fencepost.gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] be paranoid about closed stdin/stdout/stderr
+Date: Wed, 27 Aug 2008 10:27:13 -0700
+Message-ID: <7vej4aqsge.fsf@gitster.siamese.dyndns.org>
+References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu>
+ <48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org>
+ <E1KXawS-0001gg-Ty@fencepost.gnu.org> <48B2AFC2.20901@viscovery.net>
+ <7vbpzgb94q.fsf@gitster.siamese.dyndns.org>
+ <E1KXsL9-0004ef-Co@fencepost.gnu.org> <48B3A948.3080800@viscovery.net>
+ <20080826074044.GA22694@cuci.nl>
+ <32541b130808262201v4d7c1aa5r781720a80b79fcd0@mail.gmail.com>
+ <20080827091800.GB484@cuci.nl> <48B54A3D.3080708@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, quarl@cs.berkeley.edu, gitster@pobox.com,
-	j.sixt@viscovery.net
+Cc: "Stephen R. van den Berg" <srb@cuci.nl>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Karl Chen <quarl@cs.berkeley.edu>,
+	Git mailing list <git@vger.kernel.org>
 To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Aug 27 19:23:21 2008
+X-From: git-owner@vger.kernel.org Wed Aug 27 19:28:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYOji-0001mQ-6v
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 19:23:14 +0200
+	id 1KYOor-0003x5-BK
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 19:28:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750965AbYH0RWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 13:22:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbYH0RWJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 13:22:09 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:34049 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750903AbYH0RWI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 13:22:08 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 993715465; Wed, 27 Aug 2008 19:22:06 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <E1KYMtm-0007Cd-Gt@fencepost.gnu.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753011AbYH0R11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 13:27:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752934AbYH0R11
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 13:27:27 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56484 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752677AbYH0R10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 13:27:26 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 21A596A6DC;
+	Wed, 27 Aug 2008 13:27:25 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 7C3246A6D8; Wed, 27 Aug 2008 13:27:16 -0400 (EDT)
+In-Reply-To: <48B54A3D.3080708@gnu.org> (Paolo Bonzini's message of "Wed, 27
+ Aug 2008 14:36:13 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6A11388C-745D-11DD-BECC-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93904>
 
-Paolo Bonzini wrote:
->Fixing this in git was considered to be overkill, so this patch works
->around it only for git-shell.  The fix is simply to open all the "low"
->descriptors to /dev/null in main.
+Paolo Bonzini <bonzini@gnu.org> writes:
 
-Since git-shell is not setuid, this strictly is not necessary, however,
-I concur that git-shell is potentially started in a partially broken
-environment which is not always easily fixable by the user.
-And since git-shell needs to sanitise the filedescriptors anyway before
-launching other programs, it might as well cleanup at startup if needed.
+>>> But it's harmless to have both.
+>> 
+>> Considering the fact that daemon authors might not get pointed at their
+>> mistakes as soon as possible, it is harmful to try and hide those facts.
+>
+> Agree.  OTOH what about opening fd's 0/1/2 to /dev/null only in
+> git-shell.c, now that it's not a builtin anymore?
 
-Acked-by: Stephen R. van den Berg <srb@cuci.nl>
--- 
-Sincerely,
-           Stephen R. van den Berg.
-"First, God created idiots.  That was just for practice.
- Then he created school boards."  --  Mark Twain
+Hmm, why git-shell?
+
+It is either run by ssh (via command="" option in authorized_keys file),
+by init/login (if in /etc/passwd), or by gitosis (and its equivalent).
+
+Wouldn't these callers already give it a sane environment (and if a
+lookalike to gitosis forgets to do so, wouldn't Stephen's argument not to
+hide the issue from the daemon writers apply)?
