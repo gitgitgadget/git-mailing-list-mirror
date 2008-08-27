@@ -1,171 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git.el: Diff only file at point by default
-Date: Wed, 27 Aug 2008 12:36:50 -0700
-Message-ID: <7v63pmp7vx.fsf@gitster.siamese.dyndns.org>
-References: <87vdxtpjkd.fsf@lysator.liu.se>
- <7v3akvw7gz.fsf@gitster.siamese.dyndns.org> <87bpzh8msk.fsf@wine.dyndns.org>
- <873aktnsbf.fsf@lysator.liu.se> <871w0bmn6w.fsf@lysator.liu.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alexandre Julliard <julliard@winehq.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Wed Aug 27 21:38:08 2008
+From: Perry Wagle <wagle@cs.indiana.edu>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Wed, 27 Aug 2008 12:43:23 -0700
+Message-ID: <B83CC7EA-C77E-45CA-B9C5-FC81A8C0C9A5@cs.indiana.edu>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>, <20080826162513.GR10544@machine.or.cz>, <20080826164526.GM26610@one.firstfloor.org> <48B5098E.748.A598B62@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+Mime-Version: 1.0 (Apple Message framework v928.1)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Andi Kleen <andi@firstfloor.org>,
+	Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	users@kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
+X-From: git-owner@vger.kernel.org Wed Aug 27 21:46:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYQqD-0008N8-UB
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 21:38:06 +0200
+	id 1KYQyJ-0002SA-05
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 21:46:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752851AbYH0Tg7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Aug 2008 15:36:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752809AbYH0Tg7
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 15:36:59 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34099 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752607AbYH0Tg6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Aug 2008 15:36:58 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C7AA363637;
-	Wed, 27 Aug 2008 15:36:57 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8F10163636; Wed, 27 Aug 2008 15:36:53 -0400 (EDT)
-In-Reply-To: <871w0bmn6w.fsf@lysator.liu.se> (David =?utf-8?Q?K=C3=A5gedal?=
- =?utf-8?Q?'s?= message of "Wed, 27 Aug 2008 00:22:15 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 82F16612-746F-11DD-8D81-B29498D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1750903AbYH0Tox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 15:44:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750990AbYH0Tox
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 15:44:53 -0400
+Received: from newman.cs.indiana.edu ([129.79.247.4]:33955 "EHLO
+	newman.cs.indiana.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750778AbYH0Tow (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 15:44:52 -0400
+Received: from smtp.cs.indiana.edu (smtp.cs.indiana.edu [129.79.247.7])
+	by newman.cs.indiana.edu (8.13.1/8.13.1/IUCS_2.87) with ESMTP id m7RJhWME004624;
+	Wed, 27 Aug 2008 15:43:33 -0400
+Received: from dhcp-2.metabiology.com (pool-96-253-170-5.ptldor.fios.verizon.net [96.253.170.5])
+	(authenticated bits=0)
+	by rage.cs.indiana.edu (8.13.1/8.13.1/IUCS_SMTP_Alternate_Port_1.4) with ESMTP id m7RJhOdl019884
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 27 Aug 2008 15:43:28 -0400
+In-Reply-To: <48B5098E.748.A598B62@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+X-Mailer: Apple Mail (2.928.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93931>
 
-David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+On Aug 26, 2008, at 11:00 PM, Ulrich Windl wrote:
+> On 26 Aug 2008 at 18:45, Andi Kleen wrote:
+>> git<space><tab><tab>.... what? 140-something commands? etc.etc.
+> Whether files in /usr/bin, or command completions: Long linear lists  
+> are a thing
+> humans don't like.
 
-> Use prefix (C-u) to diff all marked files.
->
-> Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
-> ---
->  contrib/emacs/git.el |   62 +++++++++++++++++++++++++++++-----------=
-----------
->  1 files changed, 36 insertions(+), 26 deletions(-)
->
-> Here is an updated patch that udpate the stage diff commands as
-> well. It doesn't touch git-diff-file-merge-head since that already
-> uses prefix arguments. Don't know if there is a solution to that.
+Bash and other shells use hash tables to store the commands in the PATH.
 
-Yeah, me neither.  But otherwise looks quite straightforward conversion=
- to
-me.  Alexandre?
+Doing git-<tab> was shocking to me at first, but it also showed me a  
+list of commands for me to learn.
 
-> diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-> index c1cf1cb..de9d0f4 100644
-> --- a/contrib/emacs/git.el
-> +++ b/contrib/emacs/git.el
-> @@ -771,6 +771,11 @@ Return the list of files that haven't been handl=
-ed."
->                (setq file (pop files))
->              (setq node (ewoc-next status node))))))))
-> =20
-> +(defun git-current-file ()
-> +  "Return the file at point."
-> +  (unless git-status (error "Not in git-status buffer."))
-> +  (ewoc-data (ewoc-locate git-status)))
-> +
->  (defun git-marked-files ()
->    "Return a list of all marked files, or if none a list containing j=
-ust the file at cursor position."
->    (unless git-status (error "Not in git-status buffer."))
-> @@ -1137,10 +1142,11 @@ Return the list of files that haven't been ha=
-ndled."
->    (when (eq (window-buffer) (current-buffer))
->      (shrink-window-if-larger-than-buffer)))
-> =20
-> -(defun git-diff-file ()
-> -  "Diff the marked file(s) against HEAD."
-> -  (interactive)
-> -  (let ((files (git-marked-files)))
-> +(defun git-diff-file (arg)
-> +  "Diff the current file against HEAD.
-> +With a prefix arg, diff the marked files instead."
-> +  (interactive "P")
-> +  (let ((files (if arg (git-marked-files) (list (git-current-file)))=
-))
->      (git-setup-diff-buffer
->       (apply #'git-run-command-buffer "*git-diff*" "diff-index" "-p" =
-"-M" "HEAD" "--" (git-get-filenames files)))))
-> =20
-> @@ -1154,31 +1160,35 @@ Return the list of files that haven't been ha=
-ndled."
->       (apply #'git-run-command-buffer "*git-diff*" "diff-index" "-p" =
-"-M"
->              (or (nth (1- arg) merge-heads) "HEAD") "--" (git-get-fil=
-enames files)))))
-> =20
-> -(defun git-diff-unmerged-file (stage)
-> -  "Diff the marked unmerged file(s) against the specified stage."
-> -  (let ((files (git-marked-files)))
-> +(defun git-diff-unmerged-file (stage arg)
-> +  "Diff the files against the specified stage."
-> +  (let ((files (if arg (git-marked-files) (list (git-current-file)))=
-))
->      (git-setup-diff-buffer
->       (apply #'git-run-command-buffer "*git-diff*" "diff-files" "-p" =
-stage "--" (git-get-filenames files)))))
-> =20
-> -(defun git-diff-file-base ()
-> -  "Diff the marked unmerged file(s) against the common base file."
-> -  (interactive)
-> -  (git-diff-unmerged-file "-1"))
-> -
-> -(defun git-diff-file-mine ()
-> -  "Diff the marked unmerged file(s) against my pre-merge version."
-> -  (interactive)
-> -  (git-diff-unmerged-file "-2"))
-> -
-> -(defun git-diff-file-other ()
-> -  "Diff the marked unmerged file(s) against the other's pre-merge ve=
-rsion."
-> -  (interactive)
-> -  (git-diff-unmerged-file "-3"))
-> -
-> -(defun git-diff-file-combined ()
-> -  "Do a combined diff of the marked unmerged file(s)."
-> -  (interactive)
-> -  (git-diff-unmerged-file "-c"))
-> +(defun git-diff-file-base (arg)
-> +  "Diff the current file against the common base file.
-> +With a prefix arg, diff the marked files instead."
-> +  (interactive "P")
-> +  (git-diff-unmerged-file "-1" arg))
-> +
-> +(defun git-diff-file-mine (arg)
-> +  "Diff the current file against my pre-merge version.
-> +With a prefix arg, diff the marked files instead."
-> +  (interactive "P")
-> +  (git-diff-unmerged-file "-2" arg))
-> +
-> +(defun git-diff-file-other (arg)
-> +  "Diff the current file against the other's pre-merge version.
-> +With a prefix arg, diff the marked files instead."
-> +  (interactive "P")
-> +  (git-diff-unmerged-file "-3" arg))
-> +
-> +(defun git-diff-file-combined (arg)
-> +  "Do a combined diff of the marked unmerged file(s).
-> +With a prefix arg, diff the marked files instead."
-> +  (interactive "P")
-> +  (git-diff-unmerged-file "-c" arg))
-> =20
->  (defun git-diff-file-idiff ()
->    "Perform an interactive diff on the current file."
-> --=20
-> 1.6.0.rc2.7.gbf8a
->
->
-> --=20
-> David K=C3=A5gedal
+Now I guess that when everything's fixed up, I'll have to put in a  
+space instead of a dash to get exactly the same thing.
+
+What difference did changing the dash to a space make?
+
+-- Perry
