@@ -1,71 +1,104 @@
-From: "H. Peter Anvin" <hpa@kernel.org>
+From: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
 Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Wed, 27 Aug 2008 07:49:31 -0700
-Organization: Linux Kernel Organization, Inc.
-Message-ID: <48B5697B.3030405@kernel.org>
-References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>	<1219664940.9583.42.camel@pmac.infradead.org>	<alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>	<7vy72kek6y.fsf@gitster.siamese.dyndns.org>	<20080826145719.GB5046@coredump.intra.peff.net>	<7vr68b8q9p.fsf@gitster.siamese.dyndns.org>	<20080826210318.GA6305@coredump.intra.peff.net> <76718490808261924j1ddae535tdfb671dd9d3298aa@mail.gmail.com>
+Date: Wed, 27 Aug 2008 17:14:36 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0808271710480.22151@vixen.sonytel.be>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>
+ <1219664940.9583.42.camel@pmac.infradead.org>
+ <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+ <7vy72kek6y.fsf@gitster.siamese.dyndns.org> <20080826145719.GB5046@coredump.intra.peff.net>
+ <1219764860.4471.13.camel@gaara.bos.redhat.com> <1219766398.7107.87.camel@pmac.infradead.org>
+ <20080826182349.0a1a75e2@hyperion.delvare> <s5hvdxnlnzi.wl%tiwai@suse.de>
+ <20080826192039.5ffa6eec@hyperion.delvare> <48B50574.6020502@op5.se>
+ <20080827102131.49e018ee@hyperion.delvare>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	David Woodhouse <dwmw2@infradead.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, users@kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 27 16:54:42 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="-584349381-863095853-1219850076=:22151"
+Cc: Andreas Ericsson <ae@op5.se>, Jeff King <peff@peff.net>,
+	Takashi Iwai <tiwai@suse.de>,
+	Schindelin <Johannes.Schindelin@gmx.de>, users@kernel.org,
+	Johannes@hera.kernel.org,
+	Kristian =?ISO-8859-1?B?SPhnc2Jlcmc=?= <krh@redhat.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Jean Delvare <khali@linux-fr.org>
+X-From: git-owner@vger.kernel.org Wed Aug 27 17:17:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYMPu-0005cd-BK
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 16:54:38 +0200
+	id 1KYMkL-0006MB-FT
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 17:15:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754451AbYH0Oxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 10:53:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754364AbYH0Oxc
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 10:53:32 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:32857 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753960AbYH0Oxb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 10:53:31 -0400
-Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m7REncLo030081
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 Aug 2008 07:49:39 -0700
-Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
-	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m7REncnF017101;
-	Wed, 27 Aug 2008 07:49:38 -0700
-Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
-	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m7REnVww017061;
-	Wed, 27 Aug 2008 07:49:32 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <76718490808261924j1ddae535tdfb671dd9d3298aa@mail.gmail.com>
-X-Virus-Scanned: ClamAV 0.93.3/8098/Wed Aug 27 03:36:31 2008 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1753225AbYH0POj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 11:14:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752967AbYH0POj
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 11:14:39 -0400
+Received: from vervifontaine.sonytel.be ([80.88.33.193]:60137 "EHLO
+	vervifontaine.sonycom.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752724AbYH0POi (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Aug 2008 11:14:38 -0400
+Received: from vixen.sonytel.be (piraat.sonytel.be [43.221.60.197])
+	by vervifontaine.sonycom.com (Postfix) with ESMTP id 8374358AD0;
+	Wed, 27 Aug 2008 17:14:36 +0200 (MEST)
+In-Reply-To: <20080827102131.49e018ee@hyperion.delvare>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93893>
 
-Jay Soffian wrote:
-> On Tue, Aug 26, 2008 at 5:03 PM, Jeff King <peff@peff.net> wrote:
->> I was slightly negative on the change at the time of "/usr/bin vs
->> /usr/libexec/git-core" and I planned to put "git --exec-path" in my
->> PATH. But I gave the new way a try, and I have not been very bothered.
->> So let me say that I really don't care much what happens with libexec,
->> and you can hold me to that when the next flame-war breaks out if such a
->> change is implemented. Now you have three opinions. :)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+---584349381-863095853-1219850076=:22151
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+On Wed, 27 Aug 2008, Jean Delvare wrote:
+> On Wed, 27 Aug 2008 09:42:44 +0200, Andreas Ericsson wrote:
+> > Jean Delvare wrote:
+> > > On Tue, 26 Aug 2008 18:50:25 +0200, Takashi Iwai wrote:
+> > >> netpbm has almost 300 in /usr/bin.
+> > > 
+> > > Ouch. (I guess I shouldn't have asked.)
+> > > 
+> > > Does netpbm do anything convert (ImageMagick) doesn't? I'd be happy to
+> > > get rid of netpbm.
+> > 
+> > netpbm-progs (the rpm containing all the 320 programs in /usr/bin) is
+> > required for xmlto to function properly, which in turn is necessary
+> > to build the git documentation.
+> > 
+> > This is on Fedora 9, btw.
 > 
-> +1 on removing the links and I will say this: this change finally
-> motivated me to switch my login shell from tcsh (12 years I've been
-> using it!) to bash so I could use the completions and I'm happier for
-> it. So thank you git. :-)
-> 
+> On openSuse systems it is required by sax2-gui only. But just because
+> it is used by these 2 packages doesn't mean that ImageMagick's convert
+> can't be used instead. Someone would need to check what exactly xmlto
+> and sax2-gui use in netpbm and whether convert could be used instead.
+> I'd do if I only I had the time... :/
 
-Speaking as a tcsh user, I'm not switching until bash gets the 
-equivalent functionality as tcsh aliases, in particular the ability to 
-selectively disable wildcard expansion on a command-by-command basis.
+Great, let's start a witch (nazi? ;-) hunt on any package installing more than
+$n binaries in /usr/bin, and any packages depending on it...
 
-	-hpa
+Get used to the `choice' you and I have between netpbm and ImageMagick (and
+whatever other image manipulation tool), just like the choice between
+`git<space><subcmd>' and `git-<subcmd>'.
+
+Now, let's get back to topic...
+
+With kind regards,
+
+Geert Uytterhoeven
+Software Architect
+
+Sony Techsoft Centre Europe
+The Corporate Village · Da Vincilaan 7-D1 · B-1935 Zaventem · Belgium
+
+Phone:    +32 (0)2 700 8453
+Fax:      +32 (0)2 700 8622
+E-mail:   Geert.Uytterhoeven@sonycom.com
+Internet: http://www.sony-europe.com/
+
+A division of Sony Europe (Belgium) N.V.
+VAT BE 0413.825.160 · RPR Brussels
+Fortis · BIC GEBABEBB · IBAN BE41293037680010
+---584349381-863095853-1219850076=:22151--
