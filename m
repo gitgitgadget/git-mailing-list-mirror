@@ -1,74 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] allow user aliases for the --author parameter
-Date: Wed, 27 Aug 2008 08:29:54 -0400
-Message-ID: <20080827122954.GA11986@coredump.intra.peff.net>
-References: <g8jbvd$18k$1@ger.gmane.org> <20080821200255.GB27705@coredump.intra.peff.net> <48AE786C.20201@fastmail.fm> <20080822165047.GA3339@sigill.intra.peff.net> <7vzln492pc.fsf@gitster.siamese.dyndns.org> <20080822211902.GA31884@coredump.intra.peff.net> <48B3B8B0.4020609@fastmail.fm> <7vsksr1hgt.fsf@gitster.siamese.dyndns.org> <20080827001944.GA7347@coredump.intra.peff.net> <7v7ia3rnnq.fsf@gitster.siamese.dyndns.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH] be paranoid about closed stdin/stdout/stderr
+Date: Wed, 27 Aug 2008 14:36:13 +0200
+Message-ID: <48B54A3D.3080708@gnu.org>
+References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu> <48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org> <E1KXawS-0001gg-Ty@fencepost.gnu.org> <48B2AFC2.20901@viscovery.net> <7vbpzgb94q.fsf@gitster.siamese.dyndns.org> <E1KXsL9-0004ef-Co@fencepost.gnu.org> <48B3A948.3080800@viscovery.net> <20080826074044.GA22694@cuci.nl> <32541b130808262201v4d7c1aa5r781720a80b79fcd0@mail.gmail.com> <20080827091800.GB484@cuci.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 27 14:31:05 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Karl Chen <quarl@cs.berkeley.edu>,
+	Git mailing list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Wed Aug 27 14:37:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYKAy-0008JT-4J
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 14:31:04 +0200
+	id 1KYKHQ-0001wM-T9
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 14:37:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754406AbYH0M35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 08:29:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754152AbYH0M35
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 08:29:57 -0400
-Received: from peff.net ([208.65.91.99]:3627 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754150AbYH0M35 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 08:29:57 -0400
-Received: (qmail 11947 invoked by uid 111); 27 Aug 2008 12:29:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 27 Aug 2008 08:29:56 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Aug 2008 08:29:54 -0400
-Content-Disposition: inline
-In-Reply-To: <7v7ia3rnnq.fsf@gitster.siamese.dyndns.org>
+	id S1754150AbYH0MgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 08:36:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753767AbYH0MgS
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 08:36:18 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:47278 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754176AbYH0MgR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 08:36:17 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1545422fgg.17
+        for <git@vger.kernel.org>; Wed, 27 Aug 2008 05:36:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding:sender;
+        bh=OSZ2cwkvT587d91jd3rNIYUPx7aIm2URnMljszIrvb8=;
+        b=RBEC84hQAAa2RbZgDXzLyDZWYyPHXDpvU2HnveFoaRMwodIDINX4NmYWjyIxCM511A
+         XHjo8NLoZ+eZrhvqiZXHW98X4dJb+C/Ocs8vvXrESTo6Hy85t4LWT8HLxU82ovYL3/Su
+         Lgybu2bd4CMz5uGT/+ZrcK4jfNIZwHbBIfOeU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :sender;
+        b=LIJFndQ2FE8SRjXZcE/AVR7HzwxJgopLNAOgAIkAEobERW/qT5BAmRRVDnzsJvDwPw
+         nOLbzGPk7/5ZYC+iJ4sSajeUv3Iydbk89lbIJowEldEkj3g5QWRCtvklo6SL2qZu2S3j
+         UxpVIQAYxqOY28ZJkoWFm5MqPr6MoaNDN3/1I=
+Received: by 10.86.23.17 with SMTP id 17mr19504fgw.44.1219840576236;
+        Wed, 27 Aug 2008 05:36:16 -0700 (PDT)
+Received: from scientist-2.mobile.usilu.net ( [195.176.179.202])
+        by mx.google.com with ESMTPS id e20sm7387243fga.1.2008.08.27.05.36.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 27 Aug 2008 05:36:15 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
+In-Reply-To: <20080827091800.GB484@cuci.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93890>
 
-On Tue, Aug 26, 2008 at 11:13:13PM -0700, Junio C Hamano wrote:
 
-> > It is not just you. I think this version of the patch is much improved,
-> > but I am still against user.$key.*. At the very least, it needs its own
-> > namespace.
+>> But it's harmless to have both.
 > 
-> It's not just that.  Having many of these in .git/config will slow down
-> any unrelated thing that needs to read from config.
+> Considering the fact that daemon authors might not get pointed at their
+> mistakes as soon as possible, it is harmful to try and hide those facts.
 
-Sure, it can, but so can putting a lot of branch info in your config. My
-thinking was that this covers the "I just want to put in a few entries
-easily" use case. If somebody wants to do something _big_, then that is
-time for the external format.
+Agree.  OTOH what about opening fd's 0/1/2 to /dev/null only in
+git-shell.c, now that it's not a builtin anymore?
 
-But then we have two formats which we must support forever, which is
-maybe a bad thing.
+Maybe it does not fix Karl's use case, but it seems sensible to me.
 
-> I am not married to the "reuse existing information" idea, but doing it
-> the way this sample patch does at least makes only people who uses this
-> feature to pay the price and only when they use it.
-
-Actually, I like this quite a bit. Almost by definition, the information
-is already here (and if it isn't, it is because it is the first time
-this person is an author, so you would have to end up typing it once
-_anyway_).
-
-My only complaint is:
-
-> +	strbuf_addf(&buf, "--author=%s", name);
-> +	av[++ac] = "--all";
-> +	av[++ac] = buf.buf;
-> +	av[++ac] = NULL;
-
-I am too lazy to hit "shift", so I would use "-i".
-
--Peff
+Paolo
