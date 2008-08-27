@@ -1,74 +1,85 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH] be paranoid about closed stdin/stdout/stderr
-Date: Wed, 27 Aug 2008 06:38:24 +0200
-Message-ID: <48B4DA40.1040406@gnu.org>
-References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu>	<48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org>	<E1KXawS-0001gg-Ty@fencepost.gnu.org> <48B2AFC2.20901@viscovery.net>	<7vbpzgb94q.fsf@gitster.siamese.dyndns.org>	<E1KXsL9-0004ef-Co@fencepost.gnu.org> <48B3A948.3080800@viscovery.net>	<7vsksrad7o.fsf@gitster.siamese.dyndns.org> <48B44C61.2020206@gnu.org>	<7vabez2yac.fsf@gitster.siamese.dyndns.org>	<7v3akr2xa3.fsf@gitster.siamese.dyndns.org> <quack.20080826T2005.lthzlmz2m4g@roar.cs.berkeley.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Support "core.excludesfile = ~/.gitignore"
+Date: Tue, 26 Aug 2008 21:50:08 -0700
+Message-ID: <7vabezt62n.fsf@gitster.siamese.dyndns.org>
+References: <quack.20080821T2114.lthvdxtvg7b@roar.cs.berkeley.edu>
+ <7vsksw92nh.fsf@gitster.siamese.dyndns.org>
+ <quack.20080824T0140.lth3aku956e@roar.cs.berkeley.edu>
+ <7vprnyqo59.fsf@gitster.siamese.dyndns.org>
+ <20080824220854.GA27299@coredump.intra.peff.net>
+ <7vzln2j9y2.fsf@gitster.siamese.dyndns.org>
+ <20080824231343.GC27619@coredump.intra.peff.net>
+ <7vhc9aj82i.fsf@gitster.siamese.dyndns.org>
+ <quack.20080825T1207.lthk5e46hi4_-_@roar.cs.berkeley.edu>
+ <20080827002506.GB7347@coredump.intra.peff.net>
+ <quack.20080826T2018.lthr68b2ljc@roar.cs.berkeley.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Karl Chen <quarl@cs.berkeley.edu>
-X-From: git-owner@vger.kernel.org Wed Aug 27 06:40:40 2008
+X-From: git-owner@vger.kernel.org Wed Aug 27 06:51:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYCpj-00049b-Pa
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 06:40:40 +0200
+	id 1KYD06-0005sB-TD
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 06:51:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750912AbYH0Eib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 00:38:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750845AbYH0Eib
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 00:38:31 -0400
-Received: from qb-out-0506.google.com ([72.14.204.226]:39894 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750802AbYH0Eia (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 00:38:30 -0400
-Received: by qb-out-0506.google.com with SMTP id f11so218392qba.17
-        for <git@vger.kernel.org>; Tue, 26 Aug 2008 21:38:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=wAvyi+iDwnN6YOR47utv7K6gd3OdmCMEsVuhyuzCUv0=;
-        b=J4VSEUapmww2uAdt3Y23quwKvqbvbKK9dQbiMquIrfbTWpzxzdBzaeX3kWq3lWAYgG
-         iVH8iOGOnkbRcTxfrZGWIeC3sfeWmciaL0M2KiQKa87gnlZDsqENj9vqpbYaUPA3S8XA
-         K1jmu17zeH/2C7233hE+jaTQumqQxG2vP8t+o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding:sender;
-        b=WoTPAbiNP43xriIpP8Z075lKBAHGtMXp1a6veBF+yuvWazKUFZSs6Aup3USY2NHh9R
-         1StR/st5rJGw8DNtwEBbf7p+nXzOlYUhp60LkWOFOhPW+MrA8Pf5LMYdxHG4JfuuGhdS
-         c9tuTQk0Ew/WU6L1K3WuNnXQFt7oZcLT1CeJ4=
-Received: by 10.103.229.19 with SMTP id g19mr4325201mur.19.1219811909166;
-        Tue, 26 Aug 2008 21:38:29 -0700 (PDT)
-Received: from scientist-2.lan ( [213.140.22.65])
-        by mx.google.com with ESMTPS id w5sm37771178mue.10.2008.08.26.21.38.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 26 Aug 2008 21:38:27 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
-In-Reply-To: <quack.20080826T2005.lthzlmz2m4g@roar.cs.berkeley.edu>
-X-Enigmail-Version: 0.95.7
+	id S1751236AbYH0EuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 00:50:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751257AbYH0EuS
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 00:50:18 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58088 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751012AbYH0EuR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 00:50:17 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0285E69837;
+	Wed, 27 Aug 2008 00:50:16 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 9F6BE69835; Wed, 27 Aug 2008 00:50:11 -0400 (EDT)
+In-Reply-To: <quack.20080826T2018.lthr68b2ljc@roar.cs.berkeley.edu> (Karl
+ Chen's message of "Tue, 26 Aug 2008 20:18:15 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A43287A6-73F3-11DD-91FF-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93853>
 
+Karl Chen <quarl@cs.berkeley.edu> writes:
 
-> Yes, I can work around this issue with sh -c 'git fetch
-> 0</dev/null', and maybe it shouldn't close(0) in the first place.
-> But I don't see the harm in being safe.  It's one less potential
-> surprise for users.  This is the first program I've encountered
-> that broke due to stdin being closed
+>>>>>> On 2008-08-26 17:25 PDT, Jeff King writes:
+>
+>     Jeff>   2. There is no documentation update.
+>
+> Relative paths and $ENVVARS would need explanation; not sure what
+> needs to be said about ~user since the new behavior is what people
+> expect to just work.  Would it go in git-config.txt if something
+> were added?
 
-Not really.  I suspect every program that uses pipe/dup to fork a child
-could be wrong (the only one I ever wrote breaks), and I wonder if the
-higher-level popen(3) interface works properly.
+Traditionally, we never has interpret ~/ or ~user/.  Users expected that
+they need to spell it like:
 
-Paolo
+        [core]
+                excludesfile = "/home/joe/.my-ignore-pattern"
+
+Especially since this is called "variables", it is natural, without
+explanation, to expect this not to work, just like this use of a variable
+won't work:
+
+        $ EDITOR='~/bin/editor' ;# notice the single quote
+        $ export EDITOR;
+        $ git commit -a
+        fatal: exec ~/bin/editor failed.
+
+Your patch improves the situation and now allow:
+
+        [core]
+                excludesfile = "~/.my-ignore-pattern" 
+
+If you do not document that it is now possible for this particular
+configuration variable, the users will never know.
