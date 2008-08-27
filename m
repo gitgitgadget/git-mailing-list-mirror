@@ -1,104 +1,68 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Wed, 27 Aug 2008 10:32:51 +0200
-Message-ID: <48B51133.1030400@op5.se>
-References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>	<1219664940.9583.42.camel@pmac.infradead.org>	<alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>	<7vy72kek6y.fsf@gitster.siamese.dyndns.org>	<20080826145719.GB5046@coredump.intra.peff.net>	<1219764860.4471.13.camel@gaara.bos.redhat.com>	<1219766398.7107.87.camel@pmac.infradead.org> <20080826182349.0a1a75e2@hyperion.delvare> <48B46443.6000800@kernel.org>
+From: Daniel White <daniel@whitehouse.id.au>
+Subject: Re: SPAM-LOW:  Re: [StGit PATCH] Remove dashed form of git command
+ still in comment
+Date: Wed, 27 Aug 2008 18:37:43 +1000
+Message-ID: <20080827183743.5bea50ac@whitehouse.id.au>
+References: <20080827002827.14720.45394.stgit@yoghurt>
+	<20080827163811.6e726491@whitehouse.id.au>
+	<20080827075157.GA14222@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jean Delvare <khali@linux-fr.org>,
-	David Woodhouse <dwmw2@infradead.org>,
-	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	users@kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "H. Peter Anvin" <hpa@kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 27 10:33:55 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Karl =?UTF-8?B?SGFzc2Vsc3Ryw7Zt?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Wed Aug 27 10:47:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYGTS-0000K6-Db
-	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 10:33:54 +0200
+	id 1KYGgm-00050N-H5
+	for gcvg-git-2@gmane.org; Wed, 27 Aug 2008 10:47:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752885AbYH0Ict (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 04:32:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752903AbYH0Ict
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 04:32:49 -0400
-Received: from mail.op5.se ([193.201.96.20]:52755 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752876AbYH0Ics (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 04:32:48 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 09DC01B80087;
-	Wed, 27 Aug 2008 10:37:31 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Bv4C89ZcrDia; Wed, 27 Aug 2008 10:37:29 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [192.168.1.184])
-	by mail.op5.se (Postfix) with ESMTP id AAF091B8004E;
-	Wed, 27 Aug 2008 10:37:29 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <48B46443.6000800@kernel.org>
+	id S1753339AbYH0Iqc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Aug 2008 04:46:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752741AbYH0Iqc
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 04:46:32 -0400
+Received: from smtpgw02.myhostguy.com ([216.10.240.252]:3111 "EHLO
+	smtpgw02.myhostguy.com" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753243AbYH0Iqb convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 04:46:31 -0400
+Received: from mx252n.mysite4now.com [216.10.248.252] by smtpgw02.myhostguy.com with SMTP;
+   Wed, 27 Aug 2008 01:46:16 -0700
+Received: from ppp118-208-103-94.lns3.bne4.internode.on.net [118.208.103.94] by mx252n.mysite4now.com with SMTP;
+   Wed, 27 Aug 2008 01:45:43 -0700
+In-Reply-To: <20080827075157.GA14222@diana.vm.bytemark.co.uk>
+X-Mailer: Claws Mail 3.5.0 (GTK+ 2.12.11; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93875>
 
-H. Peter Anvin wrote:
-> Jean Delvare wrote:
->>
->> Reducing /usr/bin in size was totally worthwhile. Maybe not to you, but
->> to the silent majority I am a proud member of, it was. (I'm not saying
->> that the path that was taken to get there was optimal, just that the
->> goal was sound.)
->>
-> 
-> You keep trying to use the Nixon argument ("silent majority.")  You *do* 
-> know that it was a rhetorical device used by Nixon's speechwriters to 
-> push ahead with policies despite compact opposition, don't you?
-> 
-> As far as I can tell, most of the arguments in favour came from fanbois 
-> of $OTHER_SCM which went along the lines of "why does git need all this 
-> stuff in /usr/bin, when $OTHER_SCM doesn't?"  It had nothing to do with 
-> reality, of course; it was just a difference between git and $OTHER_SCM 
-> which they choose to pick on.
-> 
+On Wed, 27 Aug 2008 09:51:57 +0200
+Karl Hasselstr=C3=B6m <kha@treskal.com> wrote:
 
-Well, some new users both here and on #git have been slightly bewildered
-about the number of commands the default bash-completion show when typing
-git<tab><tab>. If anything, the move is long overdue, or should have
-waited until 2.0 where people would expect to have to re-learn quite a lot.
+> On 2008-08-27 16:38:11 +1000, Daniel White wrote:
+>=20
+> > If this hasn't been pushed out yet, just squash into your patch.
+>=20
+> Thanks, but this applies only to the master branch, so it's the merge
+> I'd have to squash it into in that case. But merges really shouldn't
+> contain too much new material, so this probably deserves to be a
+> commit of its own.
+>=20
 
-There were, initially, two drawbacks with having the git-<commands> outside
-the users $PATH. The first was performance when used from scripts, which
-was addressed in November 2005 when the git wrapper was rewritten in C,
-prior to the 1.0 release.
-The second is the shell-completion, which was added in September 2006,
-prior to the 1.5 release.
+Ah, didn't realise it had been merged.  I just applied the patch and ha=
+d
+a look for any missing changes.
 
-In retrospect, it would probably have been a good thing to make the move
-with the 1.0 release (which would likely have caused the bash and zsh
-completion scripts to pop into existence a lot earlier than 1.4.2), or
-in 1.5, when both reasons for keeping the commands in the path were simply
-not there anymore. 1.5 was also informally nicknamed "the UI release", so
-it would have sort of fitted in there, while 1.0 was the first "this is
-how git will work for the foreseeable future" release, so anything before
-1.0 could be considered beta software with a very flexible and fast-moving
-UI.
+> Was this the only one I'd missed?
+>=20
 
-Worth remembering for the future perhaps, although I know it's easy to
-overlook the fact that the inertia of the userbase grows exponentially
-with the headcount of the same.
+With `git grep -e 'git-' --and --not \( -e 'stgit-' -e '-git-' \)` the
+only things that seem to show up are special cases like file names,
+elisp functions, man page links, etc.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+--=20
+Daniel White
