@@ -1,75 +1,66 @@
-From: "Felipe Contreras" <felipe.contreras@gmail.com>
-Subject: Re: Planet Git
-Date: Thu, 28 Aug 2008 01:22:09 +0300
-Message-ID: <94a0d4530808271522m6aa36989leba92edc0a503b16@mail.gmail.com>
-References: <94a0d4530808271049y3ec34759pb2572180fb958dd0@mail.gmail.com>
-	 <87od3egx43.fsf@gmx.net>
+From: Adrian Bunk <bunk@kernel.org>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Thu, 28 Aug 2008 01:29:45 +0300
+Message-ID: <20080827222945.GT11734@cs181140183.pp.htv.fi>
+References: <20080826171012.GO10360@machine.or.cz> <20080826171255.GI26523@spearce.org> <20080826171623.GE5318@coredump.intra.peff.net> <20080826210631.GC3812@1wt.eu> <48B5B7F3.4080803@pobox.com> <20080827202707.GA25233@coredump.intra.peff.net> <48B5BB35.8090606@pobox.com> <20080827210555.GF18340@parisc-linux.org> <20080827211326.GI11734@cs181140183.pp.htv.fi> <20080827212217.GA3554@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailinglist" <git@vger.kernel.org>
-To: "David Soria Parra" <sn_@gmx.net>
-X-From: git-owner@vger.kernel.org Thu Aug 28 00:23:37 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Matthew Wilcox <matthew@wil.cx>, Jeff Garzik <jgarzik@pobox.com>,
+	Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	users@kernel.org, Andi Kleen <andi@firstfloor.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Willy Tarreau <w@1wt.eu>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Aug 28 00:32:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYTQ5-0004eT-Mr
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 00:23:18 +0200
+	id 1KYTYG-00080F-BK
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 00:31:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752495AbYH0WWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 18:22:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbYH0WWN
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 18:22:13 -0400
-Received: from rv-out-0506.google.com ([209.85.198.229]:25405 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752283AbYH0WWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 18:22:12 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so71969rvb.1
-        for <git@vger.kernel.org>; Wed, 27 Aug 2008 15:22:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=reoynz/OOrO3Lo2zkZOIpX+dTFZcA6jOMl69Z3pl18Q=;
-        b=RKnzH7tEBJ8TkHflDfqA/KuHLdGBISZC858q0/dx5DoOlJ9i40vvfIAFUBB7DrYHiR
-         FTWwWN33E8UADuRH/Hgh77v7h6zq2jiZtjiiXE3uYCvBlE85Xh7WSZFMOeHBGVHvajwp
-         kJnkrowaNXKHaSbr6hDnGqL40YLiHACB2zOng=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=H+bsgvb5nS3mZfUUrRVf/51TJpIN3t2fDD6DH2ttz/wgmVGXTnMvp4KcrifMe86UdX
-         eaJLy+CSw3oECYQI0oCdoS2d53eLRi+5LEfnpxfOoOW/sm2LUZ9fX7QdNZ6zeIaF+0Wr
-         zH4mJd/lcmI5/uboHIzVnlJoibsGgwa6UJaY4=
-Received: by 10.141.152.8 with SMTP id e8mr340958rvo.19.1219875729929;
-        Wed, 27 Aug 2008 15:22:09 -0700 (PDT)
-Received: by 10.140.166.19 with HTTP; Wed, 27 Aug 2008 15:22:09 -0700 (PDT)
-In-Reply-To: <87od3egx43.fsf@gmx.net>
+	id S1752546AbYH0Waj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 18:30:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752413AbYH0Waj
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 18:30:39 -0400
+Received: from smtp4.pp.htv.fi ([213.243.153.38]:52869 "EHLO smtp4.pp.htv.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751085AbYH0Waj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 18:30:39 -0400
+Received: from cs181140183.pp.htv.fi (cs181140183.pp.htv.fi [82.181.140.183])
+	by smtp4.pp.htv.fi (Postfix) with ESMTP id 37BB05BC026;
+	Thu, 28 Aug 2008 01:30:38 +0300 (EEST)
 Content-Disposition: inline
+In-Reply-To: <20080827212217.GA3554@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/93970>
 
-On Wed, Aug 27, 2008 at 8:56 PM, David Soria Parra <sn_@gmx.net> wrote:
-> "Felipe Contreras" <felipe.contreras@gmail.com> writes:
->
->> Hi there,
->>
->> What about a planet for git? Maybe an official blog too.
->>
->> I've been following delicious.com tags for git [1] and there's many
->> people blogging about git with very interesting posts. I think the
->> content should be git-specific, unlike other planets where people blog
->> about their lives and what not. But that's only my opinion.
->
-> sounds nice, just set up a box and annouce it.
+On Wed, Aug 27, 2008 at 05:22:17PM -0400, Jeff King wrote:
+> On Thu, Aug 28, 2008 at 12:13:26AM +0300, Adrian Bunk wrote:
+> 
+> > BTW: I'd love to get a --pretty=noline
+> 
+> How about --pretty=format: ?
 
-I don't have one. If I can get access to one I could do it.
+Thanks, that does the trick.  :-)
+
+> -Peff
+
+cu
+Adrian
 
 -- 
-Felipe Contreras
+
+       "Is there not promise of rain?" Ling Tan asked suddenly out
+        of the darkness. There had been need of rain for many days.
+       "Only a promise," Lao Er said.
+                                       Pearl S. Buck - Dragon Seed
