@@ -1,79 +1,104 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: [PATCH] Add a reference to gitk localbranc remote/branch in gittutorial
-Date: Thu, 28 Aug 2008 15:03:16 +0200
-Message-ID: <4d8e3fd30808280603vc42de57kcfa03bcf02dd450f@mail.gmail.com>
-References: <20080825215023.11822a20@paolo-desktop>
-	 <loom.20080825T200956-169@post.gmane.org>
-	 <7v63pog3rn.fsf@gitster.siamese.dyndns.org>
-	 <4d8e3fd30808251512x126502bj5f154b58d7ae51a2@mail.gmail.com>
-	 <7vy72kbov4.fsf@gitster.siamese.dyndns.org>
-	 <4d8e3fd30808260116o543f1a61sd05070fe02f69d2e@mail.gmail.com>
-	 <7viqtnabld.fsf@gitster.siamese.dyndns.org>
-	 <4d8e3fd30808270058g3379174bn9efe09f550aa0721@mail.gmail.com>
-	 <7v1w0aqqmj.fsf@gitster.siamese.dyndns.org>
+From: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] grep: fix worktree setup
+Date: Thu, 28 Aug 2008 20:04:30 +0700
+Message-ID: <1219928670-25219-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Eric Raible" <raible@gmail.com>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 15:04:28 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 28 15:06:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYhAp-0002hY-F0
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 15:04:27 +0200
+	id 1KYhCC-0002vE-9v
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 15:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753209AbYH1NDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 09:03:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753130AbYH1NDS
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 09:03:18 -0400
-Received: from wf-out-1314.google.com ([209.85.200.171]:56156 "EHLO
+	id S1752772AbYH1NEu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Aug 2008 09:04:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752755AbYH1NEu
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 09:04:50 -0400
+Received: from wf-out-1314.google.com ([209.85.200.173]:56670 "EHLO
 	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752917AbYH1NDR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 09:03:17 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so336587wfd.4
-        for <git@vger.kernel.org>; Thu, 28 Aug 2008 06:03:16 -0700 (PDT)
+	with ESMTP id S1752746AbYH1NEt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 09:04:49 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so337062wfd.4
+        for <git@vger.kernel.org>; Thu, 28 Aug 2008 06:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=TCg4dmm5Mg2x7Fur78lFCwa+SKQO08U0etOA7m4yCJY=;
-        b=xZYxKTMLHhRoDC3EO8VnGmOMZjNVSPCunkWBXcjdIRZkDBfDA2KgISBWntUOLXloHv
-         smGhS0mvfiD1x7zdH4mxhK3AHQ4/cCNXEEC8a75nPkI58ZXCfntDDl3d2gqZGMcU1U0+
-         0XJ8tl0JR6pKH25zwgZng3BWgpXeD1ru+hFpc=
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=uomiSYV5HzeTEqJLL66fqCnIQ3coXqYfJf8SkxQLxI0=;
+        b=QYabh6IL5riHDdjgOLNVat3KDA2KSyAvnh/Fh3D52c61cQRJdo3FWo+q5+xcH0ScwD
+         RBVwxyfC5N5E9G7VpEVd8P3ivS2jBDnIGVJs4jY1tKB07DNnipo4F97tmxk5hYOjyLKQ
+         Ja1xaITYZoKZGZp3p91dz+wZRfm5IJoUeyLSM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=U0Lc68XKkcvJr30627opT1H3BX5K0eYbxC/Phj5jgOsG98EkaHXp6QdXYGMAG5yjI9
-         kkfHMNZJ1DZZhZCQ51jKyTIrlgsXGe2hGjghWs/IRx9D5SfR+R74s50AZwNkUR9qNMn5
-         T5a8zEAUiSCX7Mwx1O5qiix3OHao6DK8yb5Nc=
-Received: by 10.142.188.4 with SMTP id l4mr457695wff.151.1219928596434;
-        Thu, 28 Aug 2008 06:03:16 -0700 (PDT)
-Received: by 10.142.177.15 with HTTP; Thu, 28 Aug 2008 06:03:16 -0700 (PDT)
-In-Reply-To: <7v1w0aqqmj.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=u+1eF9rt0y4Q8QntY0OZVssISxRvnMM0uMCKV7tgcrpUz4USaxNEERVsFEHavHDqJI
+         YtwC2iuY4PUxjXKimkKhNVkRIWfOrtCWLiVFa7MVEiO38W2PHpIoofER389A1QfYbjbV
+         1Haw5/s3Mu/i0t8Bo/DAqBcFbxFN+sXntyPaA=
+Received: by 10.142.143.4 with SMTP id q4mr458942wfd.162.1219928689088;
+        Thu, 28 Aug 2008 06:04:49 -0700 (PDT)
+Received: from pclouds@gmail.com ( [117.5.54.222])
+        by mx.google.com with ESMTPS id 30sm1708897wfg.9.2008.08.28.06.04.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 28 Aug 2008 06:04:48 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 28 Aug 2008 20:04:30 +0700
+X-Mailer: git-send-email 1.6.0.96.g2fad1.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94048>
 
-On Wed, Aug 27, 2008 at 8:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> diff --git a/gittutorial.txt.txt b/gittutorial.txt.txt
->> index 48d1454..384972c 100644
->> --- a/gittutorial.txt.txt
->> +++ b/gittutorial.txt.txt
->
-> I have to wonder why txt.txt, though.
+Unless used with --cached or grepping on a tree, "git grep" will
+search on working directory, so set up worktree properly
 
-Eheh, patch done on WinXP machine not
-properly set up...
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin-grep.c      |    5 ++++-
+ t/t1501-worktree.sh |    5 +++++
+ 2 files changed, 9 insertions(+), 1 deletions(-)
 
-Regards,
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 631129d..3ded1ba 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -783,8 +783,11 @@ int cmd_grep(int argc, const char **argv, const ch=
+ar *prefix)
+ 		paths[1] =3D NULL;
+ 	}
+=20
+-	if (!list.nr)
++	if (!list.nr) {
++		if (!cached)
++			setup_work_tree();
+ 		return !grep_cache(&opt, paths, cached);
++	}
+=20
+ 	if (cached)
+ 		die("both --cached and trees are given.");
+diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
+index e9e352c..e60116c 100755
+--- a/t/t1501-worktree.sh
++++ b/t/t1501-worktree.sh
+@@ -169,4 +169,9 @@ test_expect_success 'git diff' '
+ 	cmp diff-FILES.expected result
+ '
+=20
++test_expect_success 'git grep' '
++	(cd repo.git/work/sub &&
++	GIT_DIR=3D../.. GIT_WORK_TREE=3D.. git grep -l changed | grep -q dir/=
+tracked)
++'
++
+ test_done
+--=20
+1.6.0.96.g2fad1.dirty
