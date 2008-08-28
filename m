@@ -1,58 +1,93 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [StGit] Debian packaging update
-Date: Thu, 28 Aug 2008 22:52:55 +0200
-Message-ID: <20080828205255.GA28644@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20080818201036.7c2c00f8@whitehouse.id.au> <b0943d9e0808211535s7b829a13hbf28be8116e856a6@mail.gmail.com> <20080822235154.5e1f979c@whitehouse.id.au> <b0943d9e0808221457w42a84fbgdf62e3ddbb417389@mail.gmail.com> <20080828140929.GB3584@khazad-dum.debian.net> <20080828192450.GH4985@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Thu, 28 Aug 2008 07:43:52 +0200
+Organization: glandium.org
+Message-ID: <20080828054352.GB6791@glandium.org>
+References: <1f6632e50808260904t6bea0be5kc69342917e3db97@mail.gmail.com> <20080826162513.GR10544@machine.or.cz> <20080826164526.GM26610@one.firstfloor.org> <20080826171012.GO10360@machine.or.cz> <20080826171255.GI26523@spearce.org> <20080826171623.GE5318@coredump.intra.peff.net> <20080826210631.GC3812@1wt.eu> <48B5B7F3.4080803@pobox.com> <20080827202707.GA25233@coredump.intra.peff.net> <48B5BB35.8090606@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	Daniel White <daniel@whitehouse.id.au>, git@vger.kernel.org,
-	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	stgit@packages.debian.org
-To: Henrique de Moraes Holschuh <hmh@hmh.eng.br>
-X-From: git-owner@vger.kernel.org Thu Aug 28 22:54:29 2008
+Cc: Jeff King <peff@peff.net>, Willy Tarreau <w@1wt.eu>,
+	Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	users@kernel.org, Andi Kleen <andi@firstfloor.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff Garzik <jgarzik@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 07:47:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYoVW-0001Et-Mk
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 22:54:19 +0200
+	id 1KYaLV-0000Et-1e
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 07:47:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756075AbYH1Uwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 16:52:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754264AbYH1Uwx
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 16:52:53 -0400
-Received: from smtp5-g19.free.fr ([212.27.42.35]:49104 "EHLO smtp5-g19.free.fr"
+	id S1751295AbYH1Fp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 01:45:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbYH1Fp3
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 01:45:29 -0400
+Received: from vuizook.err.no ([194.24.252.247]:48513 "EHLO vuizook.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754162AbYH1Uww (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 16:52:52 -0400
-Received: from smtp5-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 6C99D3F617C;
-	Thu, 28 Aug 2008 22:52:51 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id E998D3F6198;
-	Thu, 28 Aug 2008 22:52:50 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id D1F291F0C2; Thu, 28 Aug 2008 22:52:55 +0200 (CEST)
+	id S1751127AbYH1Fp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 01:45:28 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1KYaIT-0004N8-Qf; Thu, 28 Aug 2008 07:44:00 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1KYaIS-00027Y-I9; Thu, 28 Aug 2008 07:43:52 +0200
 Content-Disposition: inline
-In-Reply-To: <20080828192450.GH4985@nan92-1-81-57-214-146.fbx.proxad.net>
+In-Reply-To: <48B5BB35.8090606@pobox.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
 User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94139>
 
-On Thu, Aug 28, 2008 at 09:24:50PM +0200, Yann Dirson wrote:
-> In except that lately I have not been very active on the stgit front
-> (and on the debian front as well BTW)
+On Wed, Aug 27, 2008 at 04:38:13PM -0400, Jeff Garzik wrote:
+> Jeff King wrote:
+>> On Wed, Aug 27, 2008 at 04:24:19PM -0400, Jeff Garzik wrote:
+>>
+>>> Indeed.
+>>>
+>>> Also, I type "git-diff-tree" quite a lot.
+>>>
+>>> My fingers find that
+>>>
+>>> 	git SPACE diff DASH tree
+>>>
+>>> is slower and less consistent than
+>>>
+>>> 	git DASH diff DASH tree
+>>>
+>>> The same with git-format-patch...  We are going from "all dashes" to 
+>>> "a  mix of space and dashes" which is increasing inconsistency.
+>>
+>> I have also found the SPACE-DASH slightly harder to type. However, I'm
+>> curious: what are you doing frequently from the commandline with
+>> git-diff-tree that is not just as easily done with git-diff?
+>
+> I use it to spit out a patch for a specific commit:
+>
+> 	git-diff-tree -p $COMMIT
+>
+> Though probably someone will now come along and tell me I'm am  
+> old-timer, and there is a shorter command that accomplishes the same  
+> thing :)
 
-Well, let's hope that will get me excused of writing bullshit :)
+Other than why you use git diff-tree so much, why don't you set 2
+letters aliases for your most commonly used commands ?
+[alias]
+        st = status
+        co = checkout
+        fp = format-patch
+        dt = diff-tree
+etc.
 
-No, as you noticed, the packaging in stgit.git is not in sync with the
-official package.  This ought to be fixed :).  I have started trying
-to address that.
-
-The official package ships a copy of documentation pages from the
-wiki, because they contain information not otherwise available.  Do we
-want to keep a copy of these files in the official repo ?
+Mike
