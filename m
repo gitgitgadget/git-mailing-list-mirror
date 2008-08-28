@@ -1,69 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] allow user aliases for the --author parameter
-Date: Thu, 28 Aug 2008 17:36:43 -0400
-Message-ID: <20080828213643.GC27867@coredump.intra.peff.net>
-References: <20080822165047.GA3339@sigill.intra.peff.net> <7vzln492pc.fsf@gitster.siamese.dyndns.org> <20080822211902.GA31884@coredump.intra.peff.net> <48B3B8B0.4020609@fastmail.fm> <7vsksr1hgt.fsf@gitster.siamese.dyndns.org> <20080827001944.GA7347@coredump.intra.peff.net> <7v7ia3rnnq.fsf@gitster.siamese.dyndns.org> <48B52037.7030405@fastmail.fm> <7vr68aqt3h.fsf@gitster.siamese.dyndns.org> <48B65922.4050005@fastmail.fm>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-X-From: git-owner@vger.kernel.org Thu Aug 28 23:37:58 2008
+From: Perry Wagle <wagle@cs.indiana.edu>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Thu, 28 Aug 2008 14:41:52 -0700
+Message-ID: <1C144B19-DA21-4CB4-B872-C1F154B031CF@cs.indiana.edu>
+References: <alpine.DEB.1.10.0808271717190.19923@gandalf.stny.rr.com> <7vd4jukphm.fsf@gitster.siamese.dyndns.org> <F86A1E37-8015-41B5-A462-F044B8D1C2B1@cs.indiana.edu> <BD6DEBB7-4D1C-43E9-B3D2-B46E42D9771D@cs.indiana.edu> <20080828090421.GQ10360@machine.or.cz> <18219E52-E56F-43D9-B28D-0CC74E225CC5@cs.indiana.edu> <alpine.LFD.1.10.0808280934160.3300@nehalem.linux-foundation.org> <7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu> <20080828195211.GA3545@mithlond.arda.local> <4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu> <20080828212346.GA27867@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v928.1)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Teemu Likonen <tlikonen@iki.fi>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
+	Andi Kleen <andi@firstfloor.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Aug 28 23:44:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYpBf-0006CA-Ev
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 23:37:51 +0200
+	id 1KYpI5-00080T-OK
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 23:44:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753986AbYH1Vgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 17:36:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753563AbYH1Vgq
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 17:36:46 -0400
-Received: from peff.net ([208.65.91.99]:3978 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752005AbYH1Vgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 17:36:45 -0400
-Received: (qmail 7954 invoked by uid 111); 28 Aug 2008 21:36:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 28 Aug 2008 17:36:44 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Aug 2008 17:36:43 -0400
-Content-Disposition: inline
-In-Reply-To: <48B65922.4050005@fastmail.fm>
+	id S1753924AbYH1VnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 17:43:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753911AbYH1VnZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 17:43:25 -0400
+Received: from newman.cs.indiana.edu ([129.79.247.4]:55986 "EHLO
+	newman.cs.indiana.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753825AbYH1VnY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 17:43:24 -0400
+Received: from smtp.cs.indiana.edu (smtp.cs.indiana.edu [129.79.247.7])
+	by newman.cs.indiana.edu (8.13.1/8.13.1/IUCS_2.87) with ESMTP id m7SLfxfB006967;
+	Thu, 28 Aug 2008 17:42:00 -0400
+Received: from dhcp-2.metabiology.com (pool-96-253-170-5.ptldor.fios.verizon.net [96.253.170.5])
+	(authenticated bits=0)
+	by rage.cs.indiana.edu (8.13.1/8.13.1/IUCS_SMTP_Alternate_Port_1.4) with ESMTP id m7SLfr7H009457
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 28 Aug 2008 17:41:57 -0400
+In-Reply-To: <20080828212346.GA27867@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.928.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94184>
 
-On Thu, Aug 28, 2008 at 09:52:02AM +0200, Michael J Gruber wrote:
 
-> Junio C Hamano venit, vidit, dixit 27.08.2008 19:13:
-> > Michael J Gruber <michaeljgruber+gmane@fastmail.fm> writes:
-> > 
-> >> People who don't use this feature don't have any entries and don't pay
-> >> anything.  People who use this feature and have a moderate number of
-> >> entries don't pay a recognizable price.  People who use this feature and
-> >> have a vast amount of entries should be told to implement an alias file
-> >> parser ;)
-> > 
-> > That attitude is Ok for an experimental piece of software.  Perhaps it was
-> > Ok for git 18 months ago as well, but not anymore.
-> 
-> I probably should have put the ;) in emphasis. This is not my attitude.
+On Aug 28, 2008, at 2:23 PM, Jeff King wrote:
 
-Hmm. It sounds like we your interest is moving towards Junio's approach,
-so maybe this doesn't matter. But I actually think your statement above
-made some sense. I think we will be providing multiple sources of alias
-information in the long run anyway, so this becomes just another source.
-As a source, it has some advantages (it is simple to setup in your
-existing git config, and does not require an extra file), and some
-disadvantages (it does not scale as well as some other solutions).
+> On Thu, Aug 28, 2008 at 01:23:50PM -0700, Perry Wagle wrote:
+>
+>> But, my problem is not git<DASH> vs git<SPACE>, but the slap-dash way
+>> upward compatibility was broken and the "water over the dam" slippery
+>> slope rationalizations that refuse to consider reverting.  "You"  
+>> will do
+>> it again in the future since you are declaring success here.  And  
+>> "you"
+>> have likely done it in the past 6 months.
+>
+> I don't think Junio is declaring success. In fact, I think he has sent
+> several messages saying (paraphrasing of course):
 
-> P.S.: This is "reply all" to a mail sent off-list probably meant for the
-> list, but I didn't want to cc: the list without your consent (since I'm
-> quoting you). I'm sorry for this confusion. I'm sure it's not your MUAs
-> and confident it's not mine, which leaves gmane..
+I did not name anyone, and put "you" in quotes to try to not even  
+imply I was pointing at one person.  Several people have declared  
+success, but Junio wasn't one of them.  I think (?) that he was just  
+the unwilling gunman.  8)
 
-I am putting it back on-list. :)
+> So please stop making specious claims that there are crazy
+> backwards-incompatibility bugs lurking throughout new versions of git.
+> If there are, then please find and name them. If not, then I think the
+> git community would welcome suggestions about how better to notify  
+> users
+> about the rare changes like this one.
 
--Peff
+I now have to TEST to find those crazy backwards-incompatibility bugs  
+before I can upgrade us to 1.6.0.  To test, I have to try to imagine  
+what I and others were assuming about git.  And this episode means  
+that I can't make any assumptions about the sanity of any changes  
+since March, which is the version I'm thinking of upgrading.
+
+But note that THIS upward compatibility bug has been declared to not  
+be a bug.  Will any others receive the same stamp?
+
+So please put on your engineer hat, and stop talking about "specious  
+claims" and hurting feelings.  Heck, I even got Linus himself to ask  
+if us people were on drugs, and I didn't take it personally.  At least  
+I'm saying something that can be disputed, and not ad hominem like  
+Linus.  8)
+
+How to better notify them is to do it on a major release, like Git  
+2.0.  THEN, they expect upward compatibility to break.
+
+-- Perry
