@@ -1,78 +1,84 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Splitting off old history to ancillary repo
-Date: Thu, 28 Aug 2008 14:40:23 +1200
-Message-ID: <46a038f90808271940w3aaf5c4ek6329e8066724c778@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT PATCH 1/3] Give NoRemoteRepositoryException better
+	message in BasePackConnection
+Date: Wed, 27 Aug 2008 19:44:37 -0700
+Message-ID: <20080828024437.GD8624@spearce.org>
+References: <1219887370-17265-1-git-send-email-marek.zawirski@gmail.com> <20080828023501.GC8624@spearce.org> <48B61016.7050401@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 28 04:41:46 2008
+Content-Type: text/plain; charset=utf-8
+Cc: robin.rosenberg@dewire.com, git@vger.kernel.org
+To: Marek Zawirski <marek.zawirski@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 04:45:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYXSA-0008WJ-29
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 04:41:42 +0200
+	id 1KYXW3-0000py-1a
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 04:45:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753533AbYH1CkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 22:40:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753503AbYH1CkZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 22:40:25 -0400
-Received: from wf-out-1314.google.com ([209.85.200.171]:22749 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752762AbYH1CkY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 22:40:24 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so147587wfd.4
-        for <git@vger.kernel.org>; Wed, 27 Aug 2008 19:40:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=pxPrwWbQLkx5C0j9qznxogONpRDT8xCaAO3qlbg3FAk=;
-        b=J0tTCyJza5tNP2UaL6ewW/yIIEyP9F5VYSHwjSIz9VBJw2xj4tP7PEpMFDnKAI46s1
-         EO2z0H8kL8ftGZjS6l3jXjDxTtKAnyH4+e0kFasvnJzgCTZNVC34HWl2wrg2J/UVVH2E
-         ns/A/y/o5W/0pcieOLDdhpdMGtXpclWcEvamo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=Z7nOIM78f8GfeNX5dYvQN+T+uINc8w/ySK4MvxISFx36Dr6gr/Xeb+DI6U+BIhChCn
-         up5knnnYTCzkT88U1em++JvwE/eV+Zpls/Gb22ZR51oFcux+mmPscOB1sjPLyW41sFvE
-         DRzFuwGzXBr1ouGAsKX4f3n+dMc5+apdGgNYA=
-Received: by 10.142.139.14 with SMTP id m14mr251670wfd.291.1219891223925;
-        Wed, 27 Aug 2008 19:40:23 -0700 (PDT)
-Received: by 10.142.43.6 with HTTP; Wed, 27 Aug 2008 19:40:23 -0700 (PDT)
+	id S1753615AbYH1Coi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 22:44:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753569AbYH1Coi
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 22:44:38 -0400
+Received: from george.spearce.org ([209.20.77.23]:58107 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753503AbYH1Coi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 22:44:38 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 85EF938375; Thu, 28 Aug 2008 02:44:37 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <48B61016.7050401@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94028>
 
-A project I've inherited has a codebase ~500KB in size. However, in
-early history some large binary blobs were committed to the repo.
-We've gotten rid of those, and they are not interesting to current
-development. But an initial checkout still has to retrieve 60MiB, when
-I'm sure the recent (and interesting) history fits in less than 1MB.
+Marek Zawirski <marek.zawirski@gmail.com> wrote:
+> Shawn O. Pearce wrote:
+> (...)
+>> +	@Override
+>> +	protected TransportException noRepository() {
+>> +		// Sadly we cannot tell the "invalid URI" case from "push not allowed".
+>> +		// Opening a fetch connection can help us tell the difference, as any
+>> +		// useful repository is going to support fetch if it also would allow
+>> +		// push. So if fetch throws NoRemoteRepositoryException we know the
+>> +		// URI is wrong. Otherwise we can correctly state push isn't allowed
+>> +		// as the fetch connection opened successfully.
+>> +		//
+>> +		try {
+>> +			transport.openFetch().close();
+>> +		} catch (NotSupportedException e) {
+>> +			// Fall through.
+>> +		} catch (NoRemoteRepositoryException e) {
+>> +			// Fetch concluded the repository doesn't exist.
+>> +			//
+>> +			return e;
+>> +		} catch (TransportException e) {
+>> +			// Fall through.
+>> +		}
+>> +		return new TransportException(uri, "push not permitted");
+>> +	}
+>> +
+>
+> Nice idea, even if it's crazy and time-consuming, it's probably better  
+> than my previous one.
 
-What is the state of grafts from a "keeping the repo mostly
-transparently usable for newcomers" POV? Is there a new mechanims I
-should look at?
+I'm not too worried about the extra time used here.
 
-Do we have a documented "here's how you split your repo with minimal
-downsides to end users"? If you give me enough hints I could write it
-:-)
+This happens only after we have already opened a connection and
+received no refs at all from the remote peer.  So the user has
+already had to wait to get this far.
 
-The repo in question is http://dev.laptop.org/git?p=projects/xs-config;a=summary
+By asking the same transport to open the fetch we can reuse an
+existing SSH tunnel for the new command if this is an SSH connection,
+so the setup costs are a lot lower then the original connection.
 
-cheers,
+We are already in a bad error condition; we cannot continue and
+the user is about to get an error.  I would rather give them the
+best error message we can determine than abort early and give them
+something misleading.
 
-
-m
 -- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+Shawn.
