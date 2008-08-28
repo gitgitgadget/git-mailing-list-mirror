@@ -1,84 +1,133 @@
 From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: [EGIT PATCH 1/3] Give NoRemoteRepositoryException better message in BasePackConnection
-Date: Thu, 28 Aug 2008 03:36:08 +0200
-Message-ID: <1219887370-17265-1-git-send-email-marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 3/3] Show ErrorDialog fot fatal connection errors in ConfirmationPage
+Date: Thu, 28 Aug 2008 03:36:10 +0200
+Message-ID: <1219887370-17265-3-git-send-email-marek.zawirski@gmail.com>
+References: <1219887370-17265-1-git-send-email-marek.zawirski@gmail.com>
+ <1219887370-17265-2-git-send-email-marek.zawirski@gmail.com>
 Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
 To: robin.rosenberg@dewire.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Thu Aug 28 03:37:24 2008
+X-From: git-owner@vger.kernel.org Thu Aug 28 03:37:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYWRu-0003Pc-3x
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 03:37:22 +0200
+	id 1KYWS4-0003SQ-9I
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 03:37:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752968AbYH1BgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 21:36:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752845AbYH1BgS
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 21:36:18 -0400
+	id S1753336AbYH1BgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 21:36:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753387AbYH1BgY
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 21:36:24 -0400
 Received: from nf-out-0910.google.com ([64.233.182.190]:20135 "EHLO
 	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752776AbYH1BgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 21:36:17 -0400
+	with ESMTP id S1753336AbYH1BgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 21:36:22 -0400
 Received: by nf-out-0910.google.com with SMTP id d3so35073nfc.21
-        for <git@vger.kernel.org>; Wed, 27 Aug 2008 18:36:16 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 27 Aug 2008 18:36:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=hv9mXi5IWO2Hi+1ovvjPCmTYE+O7yyoEnUf1u3C0ymw=;
-        b=WQp+CAlAcqPPRJBGXOTK2GUp8kmUTwMI52rRuoFArHopJ+mg55cPDS4y2PQoimp6F2
-         w6ObJvCgyaPgJX3+thYbhsMqv5FoIYiToRG5vktQhBwwGhdRk1kDzIHaO70veixglllf
-         o8T2TNYBohWIxbhDLEPQc2CulnU2hOS2wJ76k=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=3tZaZSDoKYrXPl3DsNe3+sh+BK8LbC2xeH5/d0pP3gg=;
+        b=oUXgwZ2jDPzduRTLU4rLIzgBoLt/X7YjmczOEkA1Vwp8oFbPrCwzwSCyqyXfEUAfEh
+         7iAtcyPQDBNTNLNWvoUhojosMtmPEPTyDXmOkivgj1mayeI8xCe3tCV1rzFG//pFgh5T
+         YhgYLMWYSBE5K5/0d+kaIiTdAtpSg3K1SuG80=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=L83t1ml2pZ0cbyr3skcZrR5xkyeutdLofD+BmwYnG2x3uYL2tQXcFWp3GavvfwRAQV
-         btDqvR6l56kSiXwU5eWwa/FoSsPr2TfbAfU0WzLHWTRD3UeLYO3JppzFm+/X0LDtF0wR
-         sI22+FMEdvPkDYZd5irbBTfIQxrCmNxiH43/s=
-Received: by 10.103.221.5 with SMTP id y5mr447439muq.34.1219887376121;
-        Wed, 27 Aug 2008 18:36:16 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=lGayRTCW6pO8cCONjADiKfXfunv2r8r9p897L8rk4aoINCWCLJoidjYUP746Mv+9UP
+         BPBtwXAnMevAME0YTcz/upPPPy6JVlPoXhFsNtfLi36Sl95c0Kf5zq4upjHnR00bGe6T
+         /dsWwYbmCtCY9F6b2PXeXtTRLXwRhPUL602fw=
+Received: by 10.103.173.5 with SMTP id a5mr416157mup.117.1219887382093;
+        Wed, 27 Aug 2008 18:36:22 -0700 (PDT)
 Received: from localhost ( [62.21.4.140])
-        by mx.google.com with ESMTPS id b9sm431133mug.13.2008.08.27.18.36.14
+        by mx.google.com with ESMTPS id y37sm432553mug.18.2008.08.27.18.36.20
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 27 Aug 2008 18:36:15 -0700 (PDT)
+        Wed, 27 Aug 2008 18:36:21 -0700 (PDT)
 X-Mailer: git-send-email 1.5.6.3
+In-Reply-To: <1219887370-17265-2-git-send-email-marek.zawirski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94011>
 
-Reported-by: Robert <robert_no.spam_m@yahoo.fr>
+We already do the same in analogous RefSpecPage and PushWizard etc., so
+let's do the same here.
+
 Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
 ---
+ .../src/org/spearce/egit/ui/UIText.java            |    3 +++
+ .../egit/ui/internal/push/ConfirmationPage.java    |   16 ++++++++++++++--
+ .../src/org/spearce/egit/ui/uitext.properties      |    1 +
+ 3 files changed, 18 insertions(+), 2 deletions(-)
 
-See http://code.google.com/p/egit/issues/detail?id=16
-
- .../spearce/jgit/transport/BasePackConnection.java |   11 +++++++++--
- 1 files changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
-index 14fffc3..de0c7b6 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
-@@ -129,8 +129,15 @@ private void readAdvertisedRefsImpl() throws IOException {
- 			try {
- 				line = pckIn.readString();
- 			} catch (EOFException eof) {
--				if (avail.isEmpty())
--					throw new NoRemoteRepositoryException(uri, "not found.");
-+				if (avail.isEmpty()) {
-+					String service = "unknown";
-+					if (this instanceof PushConnection)
-+						service = "push";
-+					else if (this instanceof FetchConnection)
-+						service = "fetch";
-+					throw new NoRemoteRepositoryException(uri, service
-+							+ " service not found.");
-+				}
- 				throw eof;
- 			}
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/UIText.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/UIText.java
+index b2cb340..b09cc10 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/UIText.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/UIText.java
+@@ -518,6 +518,9 @@
+ 	public static String PushWizard_windowTitleWithDestination;
  
+ 	/** */
++	public static String ConfirmationPage_cantConnectToAnyTitle;
++
++	/** */
+ 	public static String ConfirmationPage_cantConnectToAny;
+ 
+ 	/** */
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/ConfirmationPage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/ConfirmationPage.java
+index 08d21b3..6e925a7 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/ConfirmationPage.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/push/ConfirmationPage.java
+@@ -13,6 +13,9 @@
+ import java.util.Collection;
+ import java.util.List;
+ 
++import org.eclipse.core.runtime.IStatus;
++import org.eclipse.core.runtime.Status;
++import org.eclipse.jface.dialogs.ErrorDialog;
+ import org.eclipse.jface.wizard.WizardPage;
+ import org.eclipse.osgi.util.NLS;
+ import org.eclipse.swt.SWT;
+@@ -24,6 +27,7 @@
+ import org.spearce.egit.core.op.PushOperation;
+ import org.spearce.egit.core.op.PushOperationResult;
+ import org.spearce.egit.core.op.PushOperationSpecification;
++import org.spearce.egit.ui.Activator;
+ import org.spearce.egit.ui.UIText;
+ import org.spearce.egit.ui.internal.components.RefSpecPage;
+ import org.spearce.egit.ui.internal.components.RepositorySelection;
+@@ -204,8 +208,16 @@ setErrorMessage(NLS.bind(UIText.ConfirmationPage_errorUnexpected, e
+ 			setPageComplete(true);
+ 			confirmedResult = result;
+ 		} else {
+-			setErrorMessage(NLS.bind(UIText.ConfirmationPage_cantConnectToAny,
+-					result.getErrorStringForAllURis()));
++			final String message = NLS.bind(
++					UIText.ConfirmationPage_cantConnectToAny, result
++							.getErrorStringForAllURis());
++			setErrorMessage(message);
++			ErrorDialog
++					.openError(getShell(),
++							UIText.ConfirmationPage_cantConnectToAnyTitle,
++							null,
++							new Status(IStatus.ERROR, Activator.getPluginId(),
++									message));
+ 		}
+ 	}
+ }
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/uitext.properties b/org.spearce.egit.ui/src/org/spearce/egit/ui/uitext.properties
+index 0590e30..22e29c2 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/uitext.properties
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/uitext.properties
+@@ -199,6 +199,7 @@ PushWizard_unexpectedError=Unexpected error occurred.
+ PushWizard_windowTitleDefault=Push To Another Repositories
+ PushWizard_windowTitleWithDestination=Push To: {0}
+ 
++ConfirmationPage_cantConnectToAnyTitle=Can't Connect
+ ConfirmationPage_cantConnectToAny=Can't connect to any URI: {0}
+ ConfirmationPage_description=Confirm following expected push result.
+ ConfirmationPage_errorCantResolveSpecs=Can't resolve ref specifications locally or create tracking ref update: {0}
 -- 
 1.5.6.3
