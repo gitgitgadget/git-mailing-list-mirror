@@ -1,71 +1,78 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Wed, 27 Aug 2008 20:44:50 -0400
-Message-ID: <48B5F502.1090900@pobox.com>
-References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org> <1219664940.9583.42.camel@pmac.infradead.org> <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vy72kek6y.fsf@gitster.siamese.dyndns.org> <20080826145719.GB5046@coredump.intra.peff.net> <7vr68b8q9p.fsf@gitster.siamese.dyndns.org> <20080827001705.GG23698@parisc-linux.org> <7v63pmkozh.fsf@gitster.siamese.dyndns.org> <94a0d4530808271709s4e96c5a7ie6152b2937f2234b@mail.gmail.com>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: Are these bugs?
+Date: Thu, 28 Aug 2008 03:04:58 +0200
+Message-ID: <20080828010458.GE12354@leksak.fem-net>
+References: <76718490808271636i4de8f385pdaeb1672f06a00d7@mail.gmail.com> <7v1w0akolk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthew Wilcox <matthew@wil.cx>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	users@kernel.org, Jeff King <peff@peff.net>,
-	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 02:46:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 03:06:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYVeu-00010r-7E
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 02:46:44 +0200
+	id 1KYVxg-0005OP-Er
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 03:06:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757246AbYH1Api (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 20:45:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754847AbYH1Api
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 20:45:38 -0400
-Received: from srv5.dvmed.net ([207.36.208.214]:34112 "EHLO mail.dvmed.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754665AbYH1Aph (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 20:45:37 -0400
-Received: from cpe-069-134-153-115.nc.res.rr.com ([69.134.153.115] helo=core.yyz.us)
-	by mail.dvmed.net with esmtpsa (Exim 4.69 #1 (Red Hat Linux))
-	id 1KYVd4-0007jc-Tm; Thu, 28 Aug 2008 00:44:53 +0000
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <94a0d4530808271709s4e96c5a7ie6152b2937f2234b@mail.gmail.com>
-X-Spam-Score: -4.4 (----)
-X-Spam-Report: SpamAssassin version 3.2.5 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.4 points, 5.0 required)
+	id S1753782AbYH1BFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 21:05:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753874AbYH1BFB
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 21:05:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37521 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753037AbYH1BFA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 21:05:00 -0400
+Received: (qmail invoked by alias); 28 Aug 2008 01:04:59 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp058) with SMTP; 28 Aug 2008 03:04:59 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX19iQ0QTFg1iIwcyJtvoxhay8q0JkMv8iV6/p95IQr
+	ilDH2RgoX7LJpB
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KYVwY-0006WR-DO; Thu, 28 Aug 2008 03:04:58 +0200
+Content-Disposition: inline
+In-Reply-To: <7v1w0akolk.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94005>
 
-Felipe Contreras wrote:
-> Still, if this is the decision, all the documentation should be
-> updated, and people should be discouraged to mention the git-foo
-> commands ever again, otherwise new users would get confused.
+Hi,
+
+Junio C Hamano wrote:
+> "Jay Soffian" <jaysoffian@gmail.com> writes:
+> 
+> > I understand why "git reset" failed, but at best the error message is
+> > confusing to a new user.
+> 
+> This is in "patches welcome" category.
+
+<noise>
+I sometimes wondered if "git init" should create a dummy commit
+with empty tree, empty commit message or something like that and
+set refs/heads/master to that and HEAD to master.
+But I always said to myself that this is a stupid idea for several
+reasons, i.e. backwards compatibility, or: if the dummy commit is to
+be ignored (i.e. will not become parent of the first commit),
+then it does not really help at all in decreasing complexity.
+So I rejected this thought, but now it came back. ;-)
+
+A backwards-compatibily-breaking dummy commit would also help
+rebasing onto the dummy (replacing the first real commit).
+But I still think it's stupid.
+</noise>
 
 
-True.
+So, for a patch, is it sane to just remove/clear the index
+if get_sha1("HEAD", sha1) fails?
 
-I scanned my Kernel Hackers' Guide to Git and made sure to kill a few 
-straggling references to dash commands:
+Regards,
+  Stephan
 
-	http://linux.yyz.us/git-howto.html
-
-Even though my fingers still want to type git DASH foo, feedback from 
-gitsters caused me to purge most dash references from the guide a while 
-ago.  I'm surprised the git docs were not updated at the same time I was 
-being hectored <grin>
-
-Anyway, it's a fair point and lets definite get the straggling docs 
-converted and consistent.
-
-Comments on the above URL welcome, even if unrelated to the current 
-topic at hand.
-
-Thanks,
-
-	Jeff
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
