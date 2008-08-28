@@ -1,78 +1,84 @@
-From: Garry Dolley <gdolley@arpnetworks.com>
-Subject: Re: Planet Git
-Date: Wed, 27 Aug 2008 18:35:14 -0700
-Message-ID: <20080828013513.GA23508@garry-thinkpad.arpnetworks.com>
-References: <94a0d4530808271049y3ec34759pb2572180fb958dd0@mail.gmail.com> <87od3egx43.fsf@gmx.net> <94a0d4530808271522m6aa36989leba92edc0a503b16@mail.gmail.com> <94a0d4530808271623j3d508ddeuf8f68506308c80a6@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Soria Parra <sn_@gmx.net>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 03:36:24 2008
+From: Marek Zawirski <marek.zawirski@gmail.com>
+Subject: [EGIT PATCH 1/3] Give NoRemoteRepositoryException better message in BasePackConnection
+Date: Thu, 28 Aug 2008 03:36:08 +0200
+Message-ID: <1219887370-17265-1-git-send-email-marek.zawirski@gmail.com>
+Cc: git@vger.kernel.org, Marek Zawirski <marek.zawirski@gmail.com>
+To: robin.rosenberg@dewire.com, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Thu Aug 28 03:37:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYWQx-0003CT-4G
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 03:36:23 +0200
+	id 1KYWRu-0003Pc-3x
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 03:37:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752671AbYH1BfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 21:35:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752809AbYH1BfS
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 21:35:18 -0400
-Received: from mail.arpnetworks.com ([205.134.237.79]:55289 "HELO
-	penguin.filetron.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1752396AbYH1BfR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 21:35:17 -0400
-Received: (qmail 719 invoked from network); 28 Aug 2008 01:33:32 -0000
-Received: from unknown (HELO garry-thinkpad.arpnetworks.com) (gdolley@arpnetworks.com@205.134.237.48)
-  by mail.arpnetworks.com with SMTP; 28 Aug 2008 01:33:32 -0000
-Content-Disposition: inline
-In-Reply-To: <94a0d4530808271623j3d508ddeuf8f68506308c80a6@mail.gmail.com>
-X-PGP-Key: http://scie.nti.st/pubkey.asc
-X-PGP-Fingerprint: A4C2 A268 0A00 1C26 94BC  9690 4255 E69B F65A 9900
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752968AbYH1BgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 21:36:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752845AbYH1BgS
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 21:36:18 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:20135 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752776AbYH1BgR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 21:36:17 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so35073nfc.21
+        for <git@vger.kernel.org>; Wed, 27 Aug 2008 18:36:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=hv9mXi5IWO2Hi+1ovvjPCmTYE+O7yyoEnUf1u3C0ymw=;
+        b=WQp+CAlAcqPPRJBGXOTK2GUp8kmUTwMI52rRuoFArHopJ+mg55cPDS4y2PQoimp6F2
+         w6ObJvCgyaPgJX3+thYbhsMqv5FoIYiToRG5vktQhBwwGhdRk1kDzIHaO70veixglllf
+         o8T2TNYBohWIxbhDLEPQc2CulnU2hOS2wJ76k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=L83t1ml2pZ0cbyr3skcZrR5xkyeutdLofD+BmwYnG2x3uYL2tQXcFWp3GavvfwRAQV
+         btDqvR6l56kSiXwU5eWwa/FoSsPr2TfbAfU0WzLHWTRD3UeLYO3JppzFm+/X0LDtF0wR
+         sI22+FMEdvPkDYZd5irbBTfIQxrCmNxiH43/s=
+Received: by 10.103.221.5 with SMTP id y5mr447439muq.34.1219887376121;
+        Wed, 27 Aug 2008 18:36:16 -0700 (PDT)
+Received: from localhost ( [62.21.4.140])
+        by mx.google.com with ESMTPS id b9sm431133mug.13.2008.08.27.18.36.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 27 Aug 2008 18:36:15 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94010>
 
-On Thu, Aug 28, 2008 at 02:23:53AM +0300, Felipe Contreras wrote:
-> On Thu, Aug 28, 2008 at 1:22 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> > On Wed, Aug 27, 2008 at 8:56 PM, David Soria Parra <sn_@gmx.net> wrote:
-> >> "Felipe Contreras" <felipe.contreras@gmail.com> writes:
-> >>
-> >>> Hi there,
-> >>>
-> >>> What about a planet for git? Maybe an official blog too.
-> >>>
-> >>> I've been following delicious.com tags for git [1] and there's many
-> >>> people blogging about git with very interesting posts. I think the
-> >>> content should be git-specific, unlike other planets where people blog
-> >>> about their lives and what not. But that's only my opinion.
-> >>
-> >> sounds nice, just set up a box and annouce it.
-> >
-> > I don't have one. If I can get access to one I could do it.
-> 
-> Actually, since wordpress already provides hosting I tried creating a
-> blog there.
-> 
-> I tried git.wordpress.com but a minimum of 4 characters is required,
-> alphanum. So I got http://gitlog.wordpress.com/.
-> 
-> Is that ok? Or are there recommendations for something different?
+Reported-by: Robert <robert_no.spam_m@yahoo.fr>
+Signed-off-by: Marek Zawirski <marek.zawirski@gmail.com>
+---
 
-If you need some server space, I can donate a VM to this cause.
-Sounds like a cool idea.
+See http://code.google.com/p/egit/issues/detail?id=16
 
-Contact me off the list if you're interested.
+ .../spearce/jgit/transport/BasePackConnection.java |   11 +++++++++--
+ 1 files changed, 9 insertions(+), 2 deletions(-)
 
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
+index 14fffc3..de0c7b6 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
+@@ -129,8 +129,15 @@ private void readAdvertisedRefsImpl() throws IOException {
+ 			try {
+ 				line = pckIn.readString();
+ 			} catch (EOFException eof) {
+-				if (avail.isEmpty())
+-					throw new NoRemoteRepositoryException(uri, "not found.");
++				if (avail.isEmpty()) {
++					String service = "unknown";
++					if (this instanceof PushConnection)
++						service = "push";
++					else if (this instanceof FetchConnection)
++						service = "fetch";
++					throw new NoRemoteRepositoryException(uri, service
++							+ " service not found.");
++				}
+ 				throw eof;
+ 			}
+ 
 -- 
-Garry Dolley
-ARP Networks, Inc.
-http://scie.nti.st
-Los Angeles County REACT, Unit 336
-WQGK336
+1.5.6.3
