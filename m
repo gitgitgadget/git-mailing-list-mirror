@@ -1,115 +1,205 @@
-From: "Felipe Contreras" <felipe.contreras@gmail.com>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Thu, 28 Aug 2008 16:34:08 +0300
-Message-ID: <94a0d4530808280634k1c23fe10q8934875c83d4a2f5@mail.gmail.com>
-References: <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-	 <7vr68b8q9p.fsf@gitster.siamese.dyndns.org>
-	 <20080827001705.GG23698@parisc-linux.org>
-	 <7v63pmkozh.fsf@gitster.siamese.dyndns.org>
-	 <1219907659.7107.230.camel@pmac.infradead.org>
-	 <7vtzd5fta0.fsf@gitster.siamese.dyndns.org>
-	 <1219912327.7107.245.camel@pmac.infradead.org>
-	 <94a0d4530808280157p230d289dlf0c85cd517541801@mail.gmail.com>
-	 <20080828115408.GA30834@hera.kernel.org>
-	 <94a0d4530808280615i2befb89cm7d6153bfceb11b19@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "David Woodhouse" <dwmw2@infradead.org>,
-	"Matthew Wilcox" <matthew@wil.cx>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	users@kernel.org, "Jeff King" <peff@peff.net>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Al Viro" <viro@hera.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 28 15:38:37 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] builtin-merge: avoid run_command_v_opt() for recursive and subtree
+Date: Thu, 28 Aug 2008 15:43:00 +0200
+Message-ID: <1219930980-29114-1-git-send-email-vmiklos@frugalware.org>
+References: <7vtzdbuqb6.fsf@gitster.siamese.dyndns.org>
+Cc: Paolo Bonzini <bonzini@gnu.org>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 15:47:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYhfB-0004Ki-Ma
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 15:35:50 +0200
+	id 1KYhmk-0007BC-Bd
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 15:43:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752986AbYH1Nem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 09:34:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752933AbYH1Nel
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 09:34:41 -0400
-Received: from rv-out-0506.google.com ([209.85.198.238]:47765 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752636AbYH1Nel (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 09:34:41 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so401636rvb.1
-        for <git@vger.kernel.org>; Thu, 28 Aug 2008 06:34:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=XjjmdcHLcBYpk7eBvd/zXl9HAleJPYZq/WlJxBVhaJg=;
-        b=Lj4HOxQNyWZJzwHMxEnblNjEyuag8jAAY/a1tev8CramOMXkdp9NAqJnVUIo7DhS9j
-         AKXd7cfzsygg+zAH5AlSK53/qnwH0Ax65m8FDkR/ovyw+P/Xo4X6WM+C83au/CCntaFx
-         WCAjCd7e5aRBmIV5QEwP62dsCdAcOKeEl5fLg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=fWyay3J6mQvixIFjgpzblhgfa2hjlJb4lutBaCMqCmRReUydIKtQ0/NEAB6FCZR6hP
-         7O5rcv8qzM6wYXHVMkzQ79rUTI9hXhAV+afuZxPBQzgiXR9j6wJ++B7rCcDF1dlXSSN4
-         T0vUg2b/9dboS5IOmLrJ0H0h2d477HhCRcRNc=
-Received: by 10.141.53.4 with SMTP id f4mr733582rvk.82.1219930448230;
-        Thu, 28 Aug 2008 06:34:08 -0700 (PDT)
-Received: by 10.140.166.19 with HTTP; Thu, 28 Aug 2008 06:34:08 -0700 (PDT)
-In-Reply-To: <94a0d4530808280615i2befb89cm7d6153bfceb11b19@mail.gmail.com>
-Content-Disposition: inline
+	id S1753387AbYH1Nmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 09:42:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753352AbYH1Nmc
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 09:42:32 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:58807 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753149AbYH1Nmb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 09:42:31 -0400
+Received: from vmobile.example.net (dsl5401CCE0.pool.t-online.hu [84.1.204.224])
+	by yugo.frugalware.org (Postfix) with ESMTP id 74E1C1DDC5B;
+	Thu, 28 Aug 2008 15:42:28 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 6DD2184CA; Thu, 28 Aug 2008 15:43:01 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0
+In-Reply-To: <7vtzdbuqb6.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94053>
 
-On Thu, Aug 28, 2008 at 4:15 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Thu, Aug 28, 2008 at 2:54 PM, Al Viro <viro@hera.kernel.org> wrote:
->> On Thu, Aug 28, 2008 at 11:57:56AM +0300, Felipe Contreras wrote:
->>
->>> The masses should forget about the git-foo form. If you push people
->>> into using git-foo then you are not following git guidelines; you
->>> would be pushing your own agenda.
->>
->> Egads...  For sarcasm it's far too heavy-handed and if that's for real...
->> What's next, verbal diarrhea about Diluting the Message(tm)?
->
-> Sorry, I guess I should have made it clearer.
->
-> I haven't made my mind about git-foo vs "git foo", but a decision has
-> been made to deprecate git-foo, and allow it as an option for the
-> people that really want to use it, right?
->
-> So there must have been a reason to deprecate git-foo, if people keep
-> using git-foo, and distributions keep allowing it, what's the point of
-> deprecation? It's ok if they keep that usage to themselves, like
-> 'alias ll = ls -l', but it's not something to assume everybody uses.
->
-> So either we take back the decision and keep discussing if it's a good
-> idea to deprecate git-foo, or we go forward and discourage git-foo
-> completely.
->
-> Anything in the middle would just confuse people more, and wouldn't
-> achieve the purpose of deprecation.
->
-> If some script is relying on git-foo, and it has been deprecated, it
-> should be fixed.
+The try_merge_strategy() function always ran the strategy in a separate
+process, though this is not always necessary. The recursive and subtree
+strategy can be called without a fork(). This patch adds a check, and
+calls recursive in the same process without wasting resources.
 
-Actually, now I think I understand the point of David Woodhouse better.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-If the git-foo was supposed to be deprecated in 1.6.0, it should still
-work by default, but something to strongly discourage it like a
-warning should have been added.
+On Sat, Aug 23, 2008 at 06:58:37PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> By the way, in the medium term, if we are serious about making an
+> internal call to merge_recursive() from cmd_merge(), I think we may be
+> better off making it the responsibility for try_merge_strategy() to
+> leave an committable state in the in-core index (aka "the_index") when
+> they return with 0 (success) status.  After calling external ones via
+> the run_command interface, it should do a read_cache() (after calling
+> discard_cache() if needed); if it calls merge_recursive(), hopefully
+> you already have the committable state in the in-core index.
+>
+> That way, when automerge succeeds, write_tree_trivial() can write that
+> in-core index out and create the tree object to be committed. The
+> callchain to use merge_recursive() can avoid having to write to the
+> on-disk index, read it again and write out the tree from it.
 
-When it becomes truly obsolete, then people can rely on git exec-dir,
-which will be disabled by default.
+This is mostly the same patch I submitted earlier, but this is now on
+top of mv/merge-recursive, and now it does what you suggested above.
 
-So is it deprecated or obsolete?
+ builtin-merge.c |   92 +++++++++++++++++++++++++++++++++++++-----------------
+ 1 files changed, 63 insertions(+), 29 deletions(-)
 
+diff --git a/builtin-merge.c b/builtin-merge.c
+index 0bff26e..3a38089 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -22,6 +22,7 @@
+ #include "log-tree.h"
+ #include "color.h"
+ #include "rerere.h"
++#include "merge-recursive.h"
+ 
+ #define DEFAULT_TWOHEAD (1<<0)
+ #define DEFAULT_OCTOPUS (1<<1)
+@@ -511,28 +512,64 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 	struct commit_list *j;
+ 	struct strbuf buf;
+ 
+-	args = xmalloc((4 + commit_list_count(common) +
+-			commit_list_count(remoteheads)) * sizeof(char *));
+-	strbuf_init(&buf, 0);
+-	strbuf_addf(&buf, "merge-%s", strategy);
+-	args[i++] = buf.buf;
+-	for (j = common; j; j = j->next)
+-		args[i++] = xstrdup(sha1_to_hex(j->item->object.sha1));
+-	args[i++] = "--";
+-	args[i++] = head_arg;
+-	for (j = remoteheads; j; j = j->next)
+-		args[i++] = xstrdup(sha1_to_hex(j->item->object.sha1));
+-	args[i] = NULL;
+-	ret = run_command_v_opt(args, RUN_GIT_CMD);
+-	strbuf_release(&buf);
+-	i = 1;
+-	for (j = common; j; j = j->next)
+-		free((void *)args[i++]);
+-	i += 2;
+-	for (j = remoteheads; j; j = j->next)
+-		free((void *)args[i++]);
+-	free(args);
+-	return -ret;
++	if (!strcmp(strategy, "recursive") || !strcmp(strategy, "subtree")) {
++		int clean;
++		struct commit *result;
++		struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
++		int index_fd;
++		struct commit_list *reversed = NULL;
++		struct merge_options o;
++
++		if (remoteheads->next) {
++			error("Not handling anything other than two heads merge.");
++			return 2;
++		}
++
++		init_merge_options(&o);
++		if (!strcmp(strategy, "subtree"))
++			o.subtree_merge = 1;
++
++		o.branch1 = head_arg;
++		o.branch2 = remoteheads->item->util;
++
++		for (j = common; j; j = j->next)
++			commit_list_insert(j->item, &reversed);
++
++		index_fd = hold_locked_index(lock, 1);
++		clean = merge_recursive(&o, lookup_commit(head),
++				remoteheads->item, reversed, &result);
++		if (active_cache_changed &&
++				(write_cache(index_fd, active_cache, active_nr) ||
++				 commit_locked_index(lock)))
++			die ("unable to write %s", get_index_file());
++		return clean ? 0 : 1;
++	} else {
++		args = xmalloc((4 + commit_list_count(common) +
++					commit_list_count(remoteheads)) * sizeof(char *));
++		strbuf_init(&buf, 0);
++		strbuf_addf(&buf, "merge-%s", strategy);
++		args[i++] = buf.buf;
++		for (j = common; j; j = j->next)
++			args[i++] = xstrdup(sha1_to_hex(j->item->object.sha1));
++		args[i++] = "--";
++		args[i++] = head_arg;
++		for (j = remoteheads; j; j = j->next)
++			args[i++] = xstrdup(sha1_to_hex(j->item->object.sha1));
++		args[i] = NULL;
++		ret = run_command_v_opt(args, RUN_GIT_CMD);
++		strbuf_release(&buf);
++		i = 1;
++		for (j = common; j; j = j->next)
++			free((void *)args[i++]);
++		i += 2;
++		for (j = remoteheads; j; j = j->next)
++			free((void *)args[i++]);
++		free(args);
++		discard_cache();
++		if (read_cache() < 0)
++			die("failed to read the cache");
++		return -ret;
++	}
+ }
+ 
+ static void count_diff_files(struct diff_queue_struct *q,
+@@ -743,10 +780,6 @@ static int evaluate_result(void)
+ 	int cnt = 0;
+ 	struct rev_info rev;
+ 
+-	discard_cache();
+-	if (read_cache() < 0)
+-		die("failed to read the cache");
+-
+ 	/* Check how many files differ. */
+ 	init_revisions(&rev, "");
+ 	setup_revisions(0, NULL, &rev, NULL);
+@@ -880,12 +913,14 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 
+ 	for (i = 0; i < argc; i++) {
+ 		struct object *o;
++		struct commit *commit;
+ 
+ 		o = peel_to_type(argv[i], 0, NULL, OBJ_COMMIT);
+ 		if (!o)
+ 			die("%s - not something we can merge", argv[i]);
+-		remotes = &commit_list_insert(lookup_commit(o->sha1),
+-			remotes)->next;
++		commit = lookup_commit(o->sha1);
++		commit->util = (void *)argv[i];
++		remotes = &commit_list_insert(commit, remotes)->next;
+ 
+ 		strbuf_addf(&buf, "GITHEAD_%s", sha1_to_hex(o->sha1));
+ 		setenv(buf.buf, argv[i], 1);
+@@ -1079,7 +1114,6 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		}
+ 
+ 		/* Automerge succeeded. */
+-		discard_cache();
+ 		write_tree_trivial(result_tree);
+ 		automerge_was_ok = 1;
+ 		break;
 -- 
-Felipe Contreras
+1.6.0
