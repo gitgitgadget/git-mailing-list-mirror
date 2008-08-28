@@ -1,99 +1,92 @@
-From: "Imran M Yousuf" <imyousuf@gmail.com>
-Subject: Re: Git-aware HTTP transport
-Date: Thu, 28 Aug 2008 12:40:07 +0600
-Message-ID: <7bfdc29a0808272340kdc2f3b0x250eef32b25dcdcb@mail.gmail.com>
-References: <20080826012643.GD26523@spearce.org> <48B36BCA.8060103@zytor.com>
-	 <20080826145857.GF26523@spearce.org> <48B4303C.3080409@zytor.com>
-	 <20080826172648.GK26523@spearce.org> <48B485F8.5030109@zytor.com>
-	 <20080828035018.GA10010@spearce.org> <48B62B6F.7010103@zytor.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: ref markers link to named shortlogs
+Date: Thu, 28 Aug 2008 08:48:32 +0200
+Message-ID: <200808280848.34084.jnareb@gmail.com>
+References: <1219341860-4913-1-git-send-email-giuseppe.bilotta@gmail.com> <200808261349.28771.jnareb@gmail.com> <48B602B5.1070304@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 08:41:16 2008
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org,
+	Petr Baudis <pasky@ucw.cz>, Junio C Hamano <gitster@pobox.com>
+To: Lea Wiemann <lewiemann@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 08:49:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYbBz-0002eA-7C
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 08:41:15 +0200
+	id 1KYbKF-0004MX-Kf
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 08:49:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752037AbYH1GkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 02:40:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbYH1GkJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 02:40:09 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:36170 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751543AbYH1GkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 02:40:08 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so136242yxm.1
-        for <git@vger.kernel.org>; Wed, 27 Aug 2008 23:40:07 -0700 (PDT)
+	id S1752415AbYH1Gsm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 02:48:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752248AbYH1Gsm
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 02:48:42 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:17482 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752064AbYH1Gsl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 02:48:41 -0400
+Received: by ug-out-1314.google.com with SMTP id c2so1076926ugf.37
+        for <git@vger.kernel.org>; Wed, 27 Aug 2008 23:48:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=WARbXtzeiJ+FKBgB1VMA16J4S1PHE15JA55y6magngw=;
-        b=JoUckLs9qHWeLWlWoG+/5MSqxmjC8Aq3Tw/uGe3zoQZOPAtWd3hXWg/uxlKNpE7l7y
-         Uao888iZ4lD9xJYDNsEdY7InViCb3ENO1fAKpCDPKnPMUTRTK2P3ypH8Wc6QSN7v1v9s
-         k/ZH6SM67AbOownDcv8dmvRKAqur1jIZvsTQ4=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=y9De+KNTAqXeS9ixFNNhL2t2uHYTS59m5n+8NE3mwEs=;
+        b=hE2KOOrftZmrDHsCZtzvm2bFgcaazaCqGGqQQD3USyBhIE6I5DkFPhUJY6gnHrlLct
+         JvpaTsnSaDVbgAltdT3SKRoDUcdRi35iDrapoBWgQUJl7YJP4j0PJ6e3MOJpAgWK0dsX
+         i5Bj16GSbHWp2kA0z5+rJLbBqWEXYTEkri/Gs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=OLp6QYDiem9PXRviCTWB/oSToykeSZuVuBPVvpNE1Mu1/wEyPw3Sudcx1IQpxOx2o1
-         oJ/MBDVEDG0PcZIX6XT9tsSCqKtECRBNGKWbx6u+xpBpkeseJYTosa0Opfzm9LZBHKBW
-         7tDx6PYQqegYB6jsuE8K4ux9hK6QWIKWwhXJE=
-Received: by 10.150.148.1 with SMTP id v1mr1604456ybd.55.1219905607160;
-        Wed, 27 Aug 2008 23:40:07 -0700 (PDT)
-Received: by 10.150.225.1 with HTTP; Wed, 27 Aug 2008 23:40:07 -0700 (PDT)
-In-Reply-To: <48B62B6F.7010103@zytor.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=iEdWudo5NYS8QOvCxE+zI5djMxkhEP96p6XzUzVejLjSw4z2IMuSS01ddrNxNWwS9T
+         GVEBJ5DIaaWCHxjCYbASAVrhP3dBP5Cc9C23jA6zeMkGpTzbCSxxgbJvXOwMmHvqFI4+
+         s58PLC6H09ixVccRZCIYUR8pSLiHLv4sQAFLA=
+Received: by 10.66.245.2 with SMTP id s2mr2914309ugh.80.1219906119421;
+        Wed, 27 Aug 2008 23:48:39 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.214.109])
+        by mx.google.com with ESMTPS id 7sm731569eyb.1.2008.08.27.23.48.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 27 Aug 2008 23:48:38 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <48B602B5.1070304@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 28, 2008 at 10:37 AM, H. Peter Anvin <hpa@zytor.com> wrote:
-> Shawn O. Pearce wrote:
->>
->> So this is what may be the final draft of the HTTP protocol.
->> I've added stuff about capability selection between the peers for
->> future expansion support.  The upload-pack service has a better
->> use of it than receive-pack.  Otherwise it is what I think you are
->> agreeing to above.  ;-)
->>
->
-> It looks good to me.  I *really* like the option of combining a redirect
-> with a refs list in one reply; this will make things substantially easier do
-> deploy on kernel.org, and saves a round trip to boot.
+Lea Wiemann wrote:
+> Jakub Narebski wrote:
+> >
+> > By the way, this is argument *for* selecting action when generating
+> > link, if it is possible without incurring unnecessary (if you don't
+> > follow the link) performance penalty.
+> 
+> I agree that it's much cleaner to select the action when generating the
+> page, rather than having an 'objectview' action or so.
+> 
+> Worrying about performance seems like premature optimization though --
+> my guesstimate is that the performance penalty for looking up the object
+> type is not practically noticeable (read: relevant), and with my patch
+> applied (even without caching activated) it should move below the
+> measurable range.  So don't complicate the code to gain another 0.01%
+> performance. ;-)
 
-I agree, this is a very cool feature of the protocol...
+First, without your 'git cat-file --batch-check' reuse-connection trick
+it wouldn't be _one_ additional fork; it is one fork per ref marker,
+which might be quite a lot in tag-heavy, branch-heavy, and using for
+example StGIT (with its refs) environment.  Note that not all operating
+systems have lightweight fork, and that even with "caching" it is IO hit,
+and a bit of CPU hit.
 
-- Imran
-
->
-> Just an implementation detail for the server, however: for an *empty*
-> repository (one which has no refs at all), the server needs to *not*
-> transmit the redirect, or there will be a loop :)  It is unnecessary,
-> anyway, since there is inherently nothing to do.
->
->        -hpa
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-
-
+Second, it isn't much more code than git_get_type solution, it is bit
+larger change: leave ^{} alone, check if ^{} and strip it, as compared
+to git_get_type.
 
 -- 
-Imran M Yousuf
-Entrepreneur & Software Engineer
-Smart IT Engineering
-Dhaka, Bangladesh
-Email: imran@smartitengineering.com
-Blog: http://imyousuf-tech.blogs.smartitengineering.com/
-Mobile: +880-1711402557
+Jakub Narebski
+Poland
