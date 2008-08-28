@@ -1,86 +1,79 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [QGIT RFC] Unit tests for QGit
-Date: Thu, 28 Aug 2008 13:29:25 +0200
-Message-ID: <e5bfff550808280429h63496f9byfa4454af7adb0e86@mail.gmail.com>
-References: <20080808211318.GA4396@efreet.light.src>
-	 <e5bfff550808170846y522cc6a8w59b696be39df311b@mail.gmail.com>
-	 <20080817195839.GB4542@efreet.light.src>
-	 <e5bfff550808171330w28dda6a2m32b0e51b1ef73cdc@mail.gmail.com>
-	 <20080818180048.GA15520@efreet.light.src>
-	 <e5bfff550808190753t4f99ddb6q83886dbca27dbf03@mail.gmail.com>
-	 <20080827201819.GD15520@efreet.light.src>
+From: Jeff King <peff@peff.net>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Thu, 28 Aug 2008 17:23:47 -0400
+Message-ID: <20080828212346.GA27867@coredump.intra.peff.net>
+References: <alpine.DEB.1.10.0808271717190.19923@gandalf.stny.rr.com> <7vd4jukphm.fsf@gitster.siamese.dyndns.org> <F86A1E37-8015-41B5-A462-F044B8D1C2B1@cs.indiana.edu> <BD6DEBB7-4D1C-43E9-B3D2-B46E42D9771D@cs.indiana.edu> <20080828090421.GQ10360@machine.or.cz> <18219E52-E56F-43D9-B28D-0CC74E225CC5@cs.indiana.edu> <alpine.LFD.1.10.0808280934160.3300@nehalem.linux-foundation.org> <7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu> <20080828195211.GA3545@mithlond.arda.local> <4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jan Hudec" <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Thu Aug 28 13:30:35 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Teemu Likonen <tlikonen@iki.fi>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
+	Andi Kleen <andi@firstfloor.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Perry Wagle <wagle@cs.indiana.edu>
+X-From: git-owner@vger.kernel.org Thu Aug 28 23:25:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYfhy-0005gu-Sz
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 13:30:35 +0200
+	id 1KYoz9-0002Dn-Vf
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 23:24:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753681AbYH1L31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 07:29:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753468AbYH1L31
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 07:29:27 -0400
-Received: from rv-out-0506.google.com ([209.85.198.229]:33189 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753319AbYH1L30 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 07:29:26 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so355987rvb.1
-        for <git@vger.kernel.org>; Thu, 28 Aug 2008 04:29:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=kC0sr3UaQyijUIV+H3fWwKuxt0gIcwsv/vxC5JDx1U8=;
-        b=VI+w9vHvYnJ8lwXW3n1rAkqbbunPZcN2z8t1u9x3sHhy+HfTDIe/Ztb0iviBrxlgC0
-         z4moYr34L3Gy70V1/Fx8+dzfS553C1uKug6qYdpnCvwZByAhN3RTldHp0GTHEoDEyFPm
-         tuusi285SzK0Csymqv9ciTwpJ78NXg5scdPKc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=NtF7Swzw0Sn+/AbAc8s9NOtZqeSfsgtqQGwJDxJReoaTk8DVqhPFNr3h5mVDTrGs5N
-         +hUpwAcr6i3mHdLxCZaj2jtNg5CLFrfw+Bjr2UXUoYqkYwHjfw4bCk3KWkGxl2k6WkO/
-         lGZCt0YFQge21KHQZzc1S/IWNOZKkkKFM9zX0=
-Received: by 10.114.157.3 with SMTP id f3mr1160820wae.40.1219922965438;
-        Thu, 28 Aug 2008 04:29:25 -0700 (PDT)
-Received: by 10.114.174.5 with HTTP; Thu, 28 Aug 2008 04:29:25 -0700 (PDT)
-In-Reply-To: <20080827201819.GD15520@efreet.light.src>
+	id S1754013AbYH1VXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 17:23:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754547AbYH1VXv
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 17:23:51 -0400
+Received: from peff.net ([208.65.91.99]:1501 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753563AbYH1VXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 17:23:50 -0400
+Received: (qmail 7713 invoked by uid 111); 28 Aug 2008 21:23:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 28 Aug 2008 17:23:48 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Aug 2008 17:23:47 -0400
 Content-Disposition: inline
+In-Reply-To: <4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94178>
 
-On Wed, Aug 27, 2008 at 10:18 PM, Jan Hudec <bulb@ucw.cz> wrote:
->
-> Actually, I just wrote a first simple test for it. I didn't find this (now
-> the stg branch finds out properly), but I found another problem -- when
-> switching from non-stgit branch to a stgit one, Git::init will not notice,
-> because the path didn't change, so the check is not re-run. Applies to the
-> other direction too, of course.
->
+On Thu, Aug 28, 2008 at 01:23:50PM -0700, Perry Wagle wrote:
 
-I have never tested on repos where some branches are under stgit and
-others are not. Actually I even didn't know it was possible.
+> But, my problem is not git<DASH> vs git<SPACE>, but the slap-dash way  
+> upward compatibility was broken and the "water over the dam" slippery  
+> slope rationalizations that refuse to consider reverting.  "You" will do 
+> it again in the future since you are declaring success here.  And "you" 
+> have likely done it in the past 6 months.
 
-The command:
+I don't think Junio is declaring success. In fact, I think he has sent
+several messages saying (paraphrasing of course):
 
-isStGIT = run("stg branch", &stgCurBranch); // slow command
+  - this was obviously not done in the best manner possible, because of
+    the number of people complaining
 
-is used to check if a repo is under StGit control, i.e  'stg init' has
-been run in the repo working directory (it doesn't mean that there are
-StGit patches applied or unapplied, could be also without them).
+  - we will try to do better about notification next time such a change
+    is made. Please make suggestions about how to do so.
 
-So It's not very clear to me what does it mean "switching from
-non-stgit branch to a stgit one"
+  - since we have already released and already broken everybody, and
+    these people are now complaining on the list, there is not much
+    point in trying to notify people of _this_ change now
 
-Thanks
-Marco
+Junio (and others) have tried to be very careful about breaking
+backwards compatibility, especially for scripting interfaces. We thought
+sufficient steps were taken this time, but clearly some disagree.
+
+So please stop making specious claims that there are crazy
+backwards-incompatibility bugs lurking throughout new versions of git.
+If there are, then please find and name them. If not, then I think the
+git community would welcome suggestions about how better to notify users
+about the rare changes like this one.
+
+-Peff
