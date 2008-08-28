@@ -1,95 +1,78 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: Are these bugs?
-Date: Wed, 27 Aug 2008 21:26:27 -0400
-Message-ID: <76718490808271826y4ff8bc37ub046de3be5111eb5@mail.gmail.com>
-References: <76718490808271636i4de8f385pdaeb1672f06a00d7@mail.gmail.com>
-	 <7v1w0akolk.fsf@gitster.siamese.dyndns.org>
-	 <76718490808271825j68ac6abch406a8e12b5849b1a@mail.gmail.com>
+From: Garry Dolley <gdolley@arpnetworks.com>
+Subject: Re: Planet Git
+Date: Wed, 27 Aug 2008 18:35:14 -0700
+Message-ID: <20080828013513.GA23508@garry-thinkpad.arpnetworks.com>
+References: <94a0d4530808271049y3ec34759pb2572180fb958dd0@mail.gmail.com> <87od3egx43.fsf@gmx.net> <94a0d4530808271522m6aa36989leba92edc0a503b16@mail.gmail.com> <94a0d4530808271623j3d508ddeuf8f68506308c80a6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 28 03:27:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: David Soria Parra <sn_@gmx.net>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 03:36:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYWIj-0001Z7-73
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 03:27:53 +0200
+	id 1KYWQx-0003CT-4G
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 03:36:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753227AbYH1B0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 21:26:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753015AbYH1B0a
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 21:26:30 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:36363 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752806AbYH1B03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 21:26:29 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so85156yxm.1
-        for <git@vger.kernel.org>; Wed, 27 Aug 2008 18:26:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=/mvxEAG/zYI0QAlPzxv3CZFS3fIdGpNAOH2NPwKQH7g=;
-        b=TedXbVzEomPMfeTeMYUBaXiWodz6aS2DtT04wXvyVukk1UOKu2l65dd+YfzTWJeIRJ
-         AN6zdhSplFAVlEVmnJAYbDQ591kXsdHanmlWd0OrtinLemmq22jSiBRNB0xT8JZhEaKO
-         oDz1xrTTePFy8/d65mQ8jp9EfMteZzjDgNjD8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=U+2TmWvlbYVLe8oHbtOaHZslBFM01ld8Gv2RoTkR8P15xuGvBj/5GZ7pJc1NmFatSa
-         oweQaf4BC1s9VAyoBD5t3YVhrTFwmrV7t2wwmYprzfImYC7F6JtlVvYpHZPN+ukF5yAy
-         ZzO+IRn6rF590CofqnenqoWSl8dGZR+D5/YaM=
-Received: by 10.151.156.12 with SMTP id i12mr1146119ybo.194.1219886788036;
-        Wed, 27 Aug 2008 18:26:28 -0700 (PDT)
-Received: by 10.150.50.2 with HTTP; Wed, 27 Aug 2008 18:26:27 -0700 (PDT)
-In-Reply-To: <76718490808271825j68ac6abch406a8e12b5849b1a@mail.gmail.com>
+	id S1752671AbYH1BfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 21:35:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752809AbYH1BfS
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 21:35:18 -0400
+Received: from mail.arpnetworks.com ([205.134.237.79]:55289 "HELO
+	penguin.filetron.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1752396AbYH1BfR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 21:35:17 -0400
+Received: (qmail 719 invoked from network); 28 Aug 2008 01:33:32 -0000
+Received: from unknown (HELO garry-thinkpad.arpnetworks.com) (gdolley@arpnetworks.com@205.134.237.48)
+  by mail.arpnetworks.com with SMTP; 28 Aug 2008 01:33:32 -0000
 Content-Disposition: inline
+In-Reply-To: <94a0d4530808271623j3d508ddeuf8f68506308c80a6@mail.gmail.com>
+X-PGP-Key: http://scie.nti.st/pubkey.asc
+X-PGP-Fingerprint: A4C2 A268 0A00 1C26 94BC  9690 4255 E69B F65A 9900
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94009>
 
-Oops, should've gone to list.
+On Thu, Aug 28, 2008 at 02:23:53AM +0300, Felipe Contreras wrote:
+> On Thu, Aug 28, 2008 at 1:22 AM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+> > On Wed, Aug 27, 2008 at 8:56 PM, David Soria Parra <sn_@gmx.net> wrote:
+> >> "Felipe Contreras" <felipe.contreras@gmail.com> writes:
+> >>
+> >>> Hi there,
+> >>>
+> >>> What about a planet for git? Maybe an official blog too.
+> >>>
+> >>> I've been following delicious.com tags for git [1] and there's many
+> >>> people blogging about git with very interesting posts. I think the
+> >>> content should be git-specific, unlike other planets where people blog
+> >>> about their lives and what not. But that's only my opinion.
+> >>
+> >> sounds nice, just set up a box and annouce it.
+> >
+> > I don't have one. If I can get access to one I could do it.
+> 
+> Actually, since wordpress already provides hosting I tried creating a
+> blog there.
+> 
+> I tried git.wordpress.com but a minimum of 4 characters is required,
+> alphanum. So I got http://gitlog.wordpress.com/.
+> 
+> Is that ok? Or are there recommendations for something different?
 
+If you need some server space, I can donate a VM to this cause.
+Sounds like a cool idea.
 
----------- Forwarded message ----------
-From: Jay Soffian <jaysoffian@gmail.com>
-Date: Wed, Aug 27, 2008 at 9:25 PM
-Subject: Re: Are these bugs?
-To: Junio C Hamano <gitster@pobox.com>
+Contact me off the list if you're interested.
 
-
-On Wed, Aug 27, 2008 at 7:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Jay Soffian" <jaysoffian@gmail.com> writes:
->
->> I understand why "git reset" failed, but at best the error message is
->> confusing to a new user.
->
-> This is in "patches welcome" category.
-
-Okay, good to know. I'll add it to me "things to do in spare time" list.
-
->> 2. "git add --ignore-errors" doesn't work with ignored files:
->>
->> $ git add --ignore-errors foo bar
->
-> The option, IIRC, is more about filesystem errors (failure to read), not
-> about safety against user errors (specifying otherwise ignored paths).
->
-> If you are automating something that uses xargs to drive addition to the
-> index, and the feeder to xargs knows better than .gitignore files, then
-> probably your script should be using '-f' unconditionally.  So I do not
-> see why you would think #2 could be a bug.
-
-Well that's just it, my feeder to xargs did *not* know better than the
-.gitignore files so -f would have done the exact opposite of what I
-wanted. The git-add man page's description of --ignore-errors agrees
-with what you write above though, so I'll just move along on this one.
-
-j.
+-- 
+Garry Dolley
+ARP Networks, Inc.
+http://scie.nti.st
+Los Angeles County REACT, Unit 336
+WQGK336
