@@ -1,93 +1,81 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Thu, 28 Aug 2008 07:43:52 +0200
-Organization: glandium.org
-Message-ID: <20080828054352.GB6791@glandium.org>
-References: <1f6632e50808260904t6bea0be5kc69342917e3db97@mail.gmail.com> <20080826162513.GR10544@machine.or.cz> <20080826164526.GM26610@one.firstfloor.org> <20080826171012.GO10360@machine.or.cz> <20080826171255.GI26523@spearce.org> <20080826171623.GE5318@coredump.intra.peff.net> <20080826210631.GC3812@1wt.eu> <48B5B7F3.4080803@pobox.com> <20080827202707.GA25233@coredump.intra.peff.net> <48B5BB35.8090606@pobox.com>
+From: Anand Kumria <wildfire@progsoc.org>
+Subject: Re: [RFC] mtn to git conversion script
+Date: Thu, 28 Aug 2008 05:57:44 +0000 (UTC)
+Message-ID: <g95eoo$5ok$8@ger.gmane.org>
+References: <94a0d4530808240218j4bedbe3di99303da9addc93a4@mail.gmail.com>
+	<20080824131405.GJ23800@genesis.frugalware.org>
+	<94a0d4530808241133n5cc9f17arc79a1a5013187869@mail.gmail.com>
+	<20080824224658.GA16590@spearce.org>
+	<94a0d4530808241745r3f2bdb56q9cfa8bc61f79223e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Willy Tarreau <w@1wt.eu>,
-	Kristian H??gsberg <krh@redhat.com>,
-	Matthias Kestenholz <mk@spinlock.ch>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	users@kernel.org, Andi Kleen <andi@firstfloor.org>,
-	Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff Garzik <jgarzik@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 07:47:02 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: monotone-devel@nongnu.org
+X-From: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org Thu Aug 28 07:59:16 2008
+Return-path: <monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org>
+Envelope-to: gcvmd-monotone-devel@m.gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYaLV-0000Et-1e
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 07:47:01 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751295AbYH1Fp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 01:45:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbYH1Fp3
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 01:45:29 -0400
-Received: from vuizook.err.no ([194.24.252.247]:48513 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751127AbYH1Fp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 01:45:28 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1KYaIT-0004N8-Qf; Thu, 28 Aug 2008 07:44:00 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1KYaIS-00027Y-I9; Thu, 28 Aug 2008 07:43:52 +0200
-Content-Disposition: inline
-In-Reply-To: <48B5BB35.8090606@pobox.com>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
+	id 1KYaXK-0002gi-UA
+	for gcvmd-monotone-devel@m.gmane.org; Thu, 28 Aug 2008 07:59:15 +0200
+Received: from localhost ([127.0.0.1]:34556 helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1KYaWL-0007nP-10
+	for gcvmd-monotone-devel@m.gmane.org; Thu, 28 Aug 2008 01:58:13 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1KYaWF-0007li-LA
+	for monotone-devel@nongnu.org; Thu, 28 Aug 2008 01:58:07 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1KYaWC-0007iz-3t
+	for monotone-devel@nongnu.org; Thu, 28 Aug 2008 01:58:06 -0400
+Received: from [199.232.76.173] (port=54317 helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1KYaWB-0007in-WA
+	for monotone-devel@nongnu.org; Thu, 28 Aug 2008 01:58:04 -0400
+Received: from main.gmane.org ([80.91.229.2]:53722 helo=ciao.gmane.org)
+	by monty-python.gnu.org with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60) (envelope-from <gcvmd-monotone-devel@m.gmane.org>)
+	id 1KYaWB-0000jt-Q4
+	for monotone-devel@nongnu.org; Thu, 28 Aug 2008 01:58:03 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KYaW4-0000UB-Av
+	for monotone-devel@nongnu.org; Thu, 28 Aug 2008 05:57:56 +0000
+Received: from 62-31-42-82.cable.ubr03.dals.blueyonder.co.uk ([62.31.42.82])
+	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+	id 1AlnuQ-0007hv-00
+	for <monotone-devel@nongnu.org>; Thu, 28 Aug 2008 05:57:56 +0000
+Received: from wildfire by 62-31-42-82.cable.ubr03.dals.blueyonder.co.uk with
+	local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00
+	for <monotone-devel@nongnu.org>; Thu, 28 Aug 2008 05:57:56 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 62-31-42-82.cable.ubr03.dals.blueyonder.co.uk
+User-Agent: Pan/0.132 (Waxed in Black)
+X-detected-kernel: by monty-python.gnu.org: Linux 2.6, seldom 2.4 (older, 4)
+X-BeenThere: monotone-devel@nongnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: developer discussion for monotone <monotone-devel.nongnu.org>
+List-Unsubscribe: <http://lists.nongnu.org/mailman/listinfo/monotone-devel>,
+	<mailto:monotone-devel-request@nongnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/monotone-devel>
+List-Post: <mailto:monotone-devel@nongnu.org>
+List-Help: <mailto:monotone-devel-request@nongnu.org?subject=help>
+List-Subscribe: <http://lists.nongnu.org/mailman/listinfo/monotone-devel>,
+	<mailto:monotone-devel-request@nongnu.org?subject=subscribe>
+Sender: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org
+Errors-To: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org
 
-On Wed, Aug 27, 2008 at 04:38:13PM -0400, Jeff Garzik wrote:
-> Jeff King wrote:
->> On Wed, Aug 27, 2008 at 04:24:19PM -0400, Jeff Garzik wrote:
->>
->>> Indeed.
->>>
->>> Also, I type "git-diff-tree" quite a lot.
->>>
->>> My fingers find that
->>>
->>> 	git SPACE diff DASH tree
->>>
->>> is slower and less consistent than
->>>
->>> 	git DASH diff DASH tree
->>>
->>> The same with git-format-patch...  We are going from "all dashes" to 
->>> "a  mix of space and dashes" which is increasing inconsistency.
->>
->> I have also found the SPACE-DASH slightly harder to type. However, I'm
->> curious: what are you doing frequently from the commandline with
->> git-diff-tree that is not just as easily done with git-diff?
->
-> I use it to spit out a patch for a specific commit:
->
-> 	git-diff-tree -p $COMMIT
->
-> Though probably someone will now come along and tell me I'm am  
-> old-timer, and there is a shorter command that accomplishes the same  
-> thing :)
 
-Other than why you use git diff-tree so much, why don't you set 2
-letters aliases for your most commonly used commands ?
-[alias]
-        st = status
-        co = checkout
-        fp = format-patch
-        dt = diff-tree
-etc.
+Hi Felipe,
 
-Mike
+On Mon, 25 Aug 2008 03:45:11 +0300, Felipe Contreras wrote:
+
+> 
+> Anyway, very nice tool. It's going much faster (1h) compared to before
+> (1 day).
+
+Will you be submitting this as something for/to contrib?
+
+Thanks,
+Anand
