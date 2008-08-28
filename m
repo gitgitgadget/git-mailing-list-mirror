@@ -1,65 +1,69 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Thu, 28 Aug 2008 23:53:35 +0200
-Message-ID: <20080828215335.GA10360@machine.or.cz>
-References: <F86A1E37-8015-41B5-A462-F044B8D1C2B1@cs.indiana.edu> <BD6DEBB7-4D1C-43E9-B3D2-B46E42D9771D@cs.indiana.edu> <20080828090421.GQ10360@machine.or.cz> <18219E52-E56F-43D9-B28D-0CC74E225CC5@cs.indiana.edu> <alpine.LFD.1.10.0808280934160.3300@nehalem.linux-foundation.org> <7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu> <20080828195211.GA3545@mithlond.arda.local> <4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu> <20080828212346.GA27867@coredump.intra.peff.net> <1C144B19-DA21-4CB4-B872-C1F154B031CF@cs.indiana.edu>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [QGIT RFC] Unit tests for QGit
+Date: Fri, 29 Aug 2008 00:18:22 +0200
+Message-ID: <20080828221822.GA21850@diana.vm.bytemark.co.uk>
+References: <20080808211318.GA4396@efreet.light.src> <e5bfff550808170846y522cc6a8w59b696be39df311b@mail.gmail.com> <20080817195839.GB4542@efreet.light.src> <e5bfff550808171330w28dda6a2m32b0e51b1ef73cdc@mail.gmail.com> <20080818180048.GA15520@efreet.light.src> <e5bfff550808190753t4f99ddb6q83886dbca27dbf03@mail.gmail.com> <20080827201819.GD15520@efreet.light.src> <e5bfff550808280429h63496f9byfa4454af7adb0e86@mail.gmail.com> <20080828153118.GA13169@diana.vm.bytemark.co.uk> <e5bfff550808281154h67392297y3a08d4ed8aea408f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Teemu Likonen <tlikonen@iki.fi>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Kristian H??gsberg <krh@redhat.com>,
-	Matthias Kestenholz <mk@spinlock.ch>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
-	Andi Kleen <andi@firstfloor.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
-To: Perry Wagle <wagle@cs.indiana.edu>
-X-From: git-owner@vger.kernel.org Thu Aug 28 23:54:54 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 23:57:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYpS0-0002S3-Ps
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 23:54:45 +0200
+	id 1KYpUX-00039D-I9
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 23:57:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756054AbYH1Vxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 17:53:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755835AbYH1Vxi
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 17:53:38 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:52280 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756054AbYH1Vxh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 17:53:37 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 34EF43939B57; Thu, 28 Aug 2008 23:53:35 +0200 (CEST)
+	id S1753101AbYH1V4Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Aug 2008 17:56:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753652AbYH1V4Q
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 17:56:16 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3349 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752947AbYH1V4Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 17:56:16 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KYpos-0005j5-00; Thu, 28 Aug 2008 23:18:22 +0100
 Content-Disposition: inline
-In-Reply-To: <1C144B19-DA21-4CB4-B872-C1F154B031CF@cs.indiana.edu>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <e5bfff550808281154h67392297y3a08d4ed8aea408f@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94188>
 
-It's getting repetitive. :-(
+On 2008-08-28 20:54:44 +0200, Marco Costalba wrote:
 
-On Thu, Aug 28, 2008 at 02:41:52PM -0700, Perry Wagle wrote:
-> I now have to TEST to find those crazy backwards-incompatibility bugs 
-> before I can upgrade us to 1.6.0.  To test, I have to try to imagine what I 
-> and others were assuming about git.  And this episode means that I can't 
-> make any assumptions about the sanity of any changes since March, which is 
-> the version I'm thinking of upgrading.
+> On Thu, Aug 28, 2008 at 5:31 PM, Karl Hasselstr=F6m <kha@treskal.com>
+> wrote:
+>
+> > StGit has no per-repo data. It's all per-branch. "stg init"
+> > operates on the current branch, not the whole repo.
+>
+> Ok. Thanks. In this case the check qgit does is broken, and I think
+> not only that because I never had this point clear while developing
+> the interface.
+>
+> > Hmm. For me, "stg branch" succeeds even if "stg init" has not yet
+> > been run (which is arguably as it should be, since it doesn't
+> > require that stg init has been run in the current branch). "stg
+> > series" or something is probably better for this purpose.
+>
+> But if I run 'stg branch' in a git-only repo this gives an error.
+> This conditions, at least until now, has always been working for me.
 
-All changes of this kind, including this one, should be carefully
-described in the release notes. Since you say you are effectively a Git
-packager, you really should be one of the persons who do actually read
-them. :-)
+Ah. I guess it might have gotten fixed recently, then. [ ... makes
+some quick tests ... ] Yes, it gives an error in 0.13, but not in
+0.14.
 
-You can't ask us to stop making any incompatible changes - Git is still
-too young for that and it's UI got evolved, not designed. But we do
-document the changes we do, even though we might do a better job
-*spreading* the word.
+Not failing in this case is arguably correct for stg branch. But stg
+series can per definition not work before stg init, so I recommend you
+use that instead. Or don't use an stg command at all.
 
-				Petr "Pasky" Baudis
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
