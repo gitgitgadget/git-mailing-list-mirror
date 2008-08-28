@@ -1,223 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git-aware HTTP transport
-Date: Thu, 28 Aug 2008 07:57:06 -0700
-Message-ID: <20080828145706.GB21072@spearce.org>
-References: <20080826012643.GD26523@spearce.org> <48B36BCA.8060103@zytor.com> <20080826145857.GF26523@spearce.org> <48B4303C.3080409@zytor.com> <20080826172648.GK26523@spearce.org> <48B485F8.5030109@zytor.com> <20080828035018.GA10010@spearce.org> <7vhc95iwcs.fsf@gitster.siamese.dyndns.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [QGIT RFC] Unit tests for QGit
+Date: Thu, 28 Aug 2008 17:31:18 +0200
+Message-ID: <20080828153118.GA13169@diana.vm.bytemark.co.uk>
+References: <20080808211318.GA4396@efreet.light.src> <e5bfff550808170846y522cc6a8w59b696be39df311b@mail.gmail.com> <20080817195839.GB4542@efreet.light.src> <e5bfff550808171330w28dda6a2m32b0e51b1ef73cdc@mail.gmail.com> <20080818180048.GA15520@efreet.light.src> <e5bfff550808190753t4f99ddb6q83886dbca27dbf03@mail.gmail.com> <20080827201819.GD15520@efreet.light.src> <e5bfff550808280429h63496f9byfa4454af7adb0e86@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 16:58:19 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 17:10:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYiwz-0001hn-1t
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 16:58:17 +0200
+	id 1KYj8i-0005Q6-MI
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 17:10:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752770AbYH1O5K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 10:57:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752761AbYH1O5J
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 10:57:09 -0400
-Received: from george.spearce.org ([209.20.77.23]:39626 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752755AbYH1O5I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 10:57:08 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6C1BF38375; Thu, 28 Aug 2008 14:57:06 +0000 (UTC)
+	id S1751465AbYH1PJT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Aug 2008 11:09:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbYH1PJT
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 11:09:19 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1057 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751371AbYH1PJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 11:09:18 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KYjSx-0003ZY-00; Thu, 28 Aug 2008 16:31:19 +0100
 Content-Disposition: inline
-In-Reply-To: <7vhc95iwcs.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <e5bfff550808280429h63496f9byfa4454af7adb0e86@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94066>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > HTTP Redirects
-> > --------------
-> >
-> > If a POST request results in an HTTP 302 or 303 redirect response
-> > clients should retry the request by updating the URL and POSTing
-> > the same request to the new location.  Subsequent requests should
-> > still be sent to the original URL.
-> 
-> At the first reading I was confused because this seemed to contradict with
-> the server pinning that is done by the payload level redirect.
+On 2008-08-28 13:29:25 +0200, Marco Costalba wrote:
 
-This is meant to help load balancing initially target to a server.
-I think its also reasonable to honor a transport level redirect,
-much as we honor whatever route IP gives us (not that we have a
-lot of choice - or even want one at that level).
- 
-> > Service upload-pack
-> > -------------------
-> >  one compute step:
-> >  (c) Send an upload-pack request:
-> >
-> > 	C: 0011capabilities
-> > 	C: 0024thin-pack include-tag ofs-delta
-> > 	C: 0009want
-> > 	C: 0xxx<WANT list>
-> > 	C: 000bcommon
-> > 	C: 0xxx<COMMON list>
-> > 	C: 0009have
-> > 	C: 0xxx<HAVE list>
-> > 	C: 0000
-> >
-> >      The stream is organized into "sections", where each section is
-> >      composed of two git pkt-lines.  The first pkt-line provides the
-> >      name of the section ("capabilities", "want", "have", "common").
-> >      The second pkt-line has the binary SHA-1 ids which compose that
-> >      section.
-> 
-> It appears that you really meant "Binary", as opposed to "Hexadecimal"
-> that show-ref example illustrate, judging from the later 3,276 number.
-> I'd prefer hexadecimal here.
+> On Wed, Aug 27, 2008 at 10:18 PM, Jan Hudec <bulb@ucw.cz> wrote:
+>
+> > Actually, I just wrote a first simple test for it. I didn't find
+> > this (now the stg branch finds out properly), but I found another
+> > problem -- when switching from non-stgit branch to a stgit one,
+> > Git::init will not notice, because the path didn't change, so the
+> > check is not re-run. Applies to the other direction too, of
+> > course.
+>
+> I have never tested on repos where some branches are under stgit and
+> others are not. Actually I even didn't know it was possible.
 
-Yes, I really did mean for this part of the protocol to be in binary.
-We have to exchange a bunch of commits to figure out what is common.
-The binary form is 1/2 the size of the hexadecimal form, resulting
-in fewer TCP packets for the same request.
+StGit has no per-repo data. It's all per-branch. "stg init" operates
+on the current branch, not the whole repo.
 
-Reading/writing the SHA-1s in binary is usually faster than doing
-it in hex; you don't have to go through the formatting routines.
-So there's a few less CPU cycles on the server end.
+> The command:
+>
+> isStGIT =3D run("stg branch", &stgCurBranch); // slow command
+>
+> is used to check if a repo is under StGit control, i.e 'stg init'
+> has been run in the repo working directory (it doesn't mean that
+> there are StGit patches applied or unapplied, could be also without
+> them).
 
-But the rest of the protocol is in hex and ASCII, so I guess it
-does make sense to make this part be in hex too. I can change it
-in the next draft.
- 
-> As a protocol specification, you'd eventually need to describe the
-> pkt-line format, namely, (1) four hexadecimal digits that represents the
-> length of the line (including that four bytes), followed by that many
-> number of bytes as the line's payload, or (2) "0000" which is "flush".
-> Also typically the text based line payload is LF terminated (hence the
-> four-hexdigit length counts the terminating LF).
+Hmm. For me, "stg branch" succeeds even if "stg init" has not yet been
+run (which is arguably as it should be, since it doesn't require that
+stg init has been run in the current branch). "stg series" or
+something is probably better for this purpose.
 
-Yes.  I'll add that into the next draft.
+Though if you're concerned about speed (as the comment indicates), you
+should probably do something cheaper than running stg, such as
+checking if .git/patches/<branchname> exists.
 
-> Also "capabilities" need
-> to be defined.
+> So it's not very clear to me what does it mean "switching from
+> non-stgit branch to a stgit one"
 
-Well, currently its just room for expansion.  But I'll try to define
-it out better.  My initial thought is to do something like we have
-in the native protocol where there are capability names "hidden"
-on the end of the first pkt-line.  Only I'm making it explicit.
- 
-> >   (s) Parse the upload-pack request:
-> >
-> >       Verify all objects in WANT are reachable from refs.  As
-> >       this may require walking backwards through history to
-> >       the very beginning on invalid requests the server may
-> >       use a reasonable limit of commits (e.g. 1000) walked
-> >       beyond any ref tip before giving up.
-> 
-> I suspect moving as much work to the client side by erroring out and
-> having the client restart from show-ref might be a better tradeoff (also
-> this has been advertised as a security feature on the native protocol
-> side).
+Switching from a branch where "stg init" hasn't been run, to one where
+it has.
 
-I'm concerned about livelock.  If the client sees something in
-show-ref, starts upload-pack and gets 2 round-trips into the common
-exchange and then someone updates a ref the client wants, the client
-has to go back to the beginning and start all over.
-
-But if the object they want is still reachable (within a reasonable
-distance) from the current refs, what is the harm in letting the
-client see the stale view?  Especially since grabbing the most
-current refs would still make that object available to the client?
-
-Remember that is how the native protocol behaves.  You get a single
-upload-pack process which has grabbed a snapshot of the refs.
-If they change during the want-have-ack-nack exchange the client
-doesn't get kicked out and asked to start all over again.  Same idea.
- 
-> >       If any WANT object is not reachable, send an error:
-> >
-> > 	S: 001estatus error invalid want
-> >
-> >      Create an empty list, S_COMMON.
-> >
-> >      If 'common' was sent:
-> >
-> >      Load all objects into S_COMMON.
-> 
-> Security?  Error out if some of them do not exist on the server end, at
-> least.
-
-I think I can add something saying its a protocol error if that
-happens.  Its not a security risk, remember the S_COMMON set
-eventually turns into the
-
-  git rev-list --objects-edge $WANT --not $S_COMMON \
-  | git pack-objects --stdout
-
-Sending an S_COMMON the server doesn't have just causes it to fail.
-
-If the server silently prunes out ones it doesn't know its not a
-concern.  If the server has it, but it isn't advertised in a ref,
-its also not a security risk.  No data from those objects is sent
-back to the client.
- 
-> >   (s) Send the upload-pack response:
-> >
-> >      If the server has found a closed set of objects to pack, it
-> >      replies with the pack and the enabled capabilities.  The set
-> >      of enabled capabilities is limited to the intersection of
-> >      what the client requested and what the server supports.
-> 
-> Define "closed set".
-
-Yea, not only that I don't describe how the client can give up and
-just ask for everything that is left.  Like say on an initial clone.
- 
-> >      The stream formatting rules are the same as the request.
-> >
-> >      The section "common" details the contents of S_COMMON,
-> >      that is all objects from HAVE that the server also has.
-> 
-> An object in HAVE that exists on the server end can be a descendant of
-> many other HAVEs. Answering with that youngest one alone is enough,
-> without the other HAVEs the server end also has as its ancestors, as they
-> are redundant information.
-
-Yes, obviously.  I must not have made that clear here.  I'll try
-to improve the language.
- 
-> >   (c) Parse the upload-pack response:
-> >
-> >       If the status pkt-line is "status pack:"
-> >
-> >       Process the pack stream and update the local refs.
-> >
-> >       If the status pkt-line is "status continue":
-> >
-> >       Reset COMMON to the items in S_COMMON.  The new S_COMMON
-> >       should be a superset of the existing COMMON set.
-> 
-> Is there a way to detect bad clients that does not obey this rule without
-> server side states?
-
-No.  Is that really a concern though?
-
-The worst a bad client can do here is cause itself to receive
-more data than it wants by refusing to put things into COMMON.
-Eventually it gives up and just clones the entire repository.  How is
-that any different from a well behaved client doing an initial clone?
-
-A bad client could also stick random things into COMMON.  If the
-server doesn't have the object we error out (as you suggest above)
-during the next call.  So the client has only DOS'd the server.
-It can DOS the server easier other ways.
-
-A bad client could stick only part of what S_COMMON into COMMON.
-That may cause it to get a bigger pack file than it asked for as the
-rev-list call won't be as limited.  How is that any different from
-a well behaved client that is really behind and has a lot to fetch?
-
--- 
-Shawn.
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
