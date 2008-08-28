@@ -1,65 +1,87 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Git-aware HTTP transport
-Date: Thu, 28 Aug 2008 11:47:35 -0700
-Message-ID: <48B6F2C7.1010801@zytor.com>
-References: <48B36BCA.8060103@zytor.com> <20080826145857.GF26523@spearce.org> <48B4303C.3080409@zytor.com> <20080826172648.GK26523@spearce.org> <48B485F8.5030109@zytor.com> <20080828035018.GA10010@spearce.org> <7vhc95iwcs.fsf@gitster.siamese.dyndns.org> <48B6DABD.7090800@zytor.com> <20080828171052.GC21072@spearce.org> <48B6DE7A.1020207@zytor.com> <20080828172623.GD21072@spearce.org> <alpine.LFD.1.10.0808281432240.1624@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] dir.c: avoid c99 array initialization
+Date: Thu, 28 Aug 2008 11:50:32 -0700
+Message-ID: <7vhc95dldz.fsf@gitster.siamese.dyndns.org>
+References: <IH0MHSTEimhAN93AedvpRKq4qfzm1QA814ZYyhbSBtSdNbq8vuE6aw@cipher.nrlssc.navy.mil> <G-ipWASixyGW7nvO1KquifehvBB7FNKwjPtIB0ukyEJ1Si1CJWM34w@cipher.nrlssc.navy.mil> <871w09kvew.fsf@lysator.liu.se> <GwKOGVPR0AVw4_Phmw1TSNzzMDtafrawMMahm2DQwh44k6uTOHkjTQ@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Aug 28 20:52:41 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu Aug 28 20:54:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYmYr-0001Ml-VA
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 20:49:38 +0200
+	id 1KYmav-00027P-W0
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 20:51:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753546AbYH1Ssd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 14:48:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753314AbYH1Ssd
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 14:48:33 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:35439 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751768AbYH1Ssc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 14:48:32 -0400
-Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m7SIlhmv013567
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 28 Aug 2008 11:47:43 -0700
-Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
-	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m7SIlhAC026735;
-	Thu, 28 Aug 2008 11:47:43 -0700
-Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
-	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m7SIlZE9030518;
-	Thu, 28 Aug 2008 11:47:37 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <alpine.LFD.1.10.0808281432240.1624@xanadu.home>
-X-Virus-Scanned: ClamAV 0.93.3/8110/Thu Aug 28 10:43:02 2008 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1751776AbYH1Sul convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Aug 2008 14:50:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752675AbYH1Sul
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 14:50:41 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54513 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751725AbYH1Suk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Aug 2008 14:50:40 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A13A65500B;
+	Thu, 28 Aug 2008 14:50:39 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id E03D155008; Thu, 28 Aug 2008 14:50:35 -0400 (EDT)
+In-Reply-To: <GwKOGVPR0AVw4_Phmw1TSNzzMDtafrawMMahm2DQwh44k6uTOHkjTQ@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Thu, 28 Aug 2008 11:45:52 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3571CCB0-7532-11DD-97E4-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94113>
 
-Nicolas Pitre wrote:
->> Should I change the HTTP protocol then to use the same format,
->> so they have a better chance at sharing code between them?
-> 
-> Given that the ref exchange happens on multiple lines (one ref per line) 
-> in the native protocol, and that your proposal is using one line for 
-> multiple refs, I don't see this as a big factor wrt code reuse.  Since 
-> you'll have separate "output" code anyway, why not simply going with 
-> refs in straight binary for the HTTP protocol?  Even the debugability of 
-> refs exchange in plain text is dubious especially with all refs on the 
-> same line (that'll be a pain to split refs out of a long stream of hex 
-> by hand).
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-Well, I think the real question was to go to multiple lines, 
-native-protocol style, or go to binary.
+> David K=C3=A5gedal wrote:
+>> Brandon Casey <casey@nrlssc.navy.mil> writes:
+>>=20
+>>> The following syntax:
+>>>
+>>>         char foo[] =3D {
+>>>                 [0] =3D 1,
+>>>                 [7] =3D 2,
+>>>                 [15] =3D 3
+>>>         };
+>>>
+>>> is a c99 construct which some compilers do not support even though =
+they
+>>> support other c99 constructs. Use an alternative.
+>>=20
+>> But the alternative is much worse.
+>
+> _Much_ worse? In what way?
+>
+> From an execution standpoint, I don't think any more work is performe=
+d.
+> Probably exactly the same amount of work.
+>
+> From a readability standpoint, I think it is very nearly the same in
+> this case. The whole function is only 17 lines.
 
-	-hpa
+I do not think your patch deserves "much worse" comment.
+
+>> So how important is it to support non-C99 compilers?
+>
+> I think it is relative to the amount of effort it takes. If there is
+> a demonstrated need and a trivial work around, I think it is worth
+> it to support non-c99 compilers.
+
+I do not mind taking this patch.  While it would not hurt (because the
+code is readable with or without the change) to convert the trivial one=
+s
+like this patch addresses, it would not help portability if there are m=
+ore
+nontrivial dependance to c99 constructs in other places in the code.  A=
+re
+there known ones?
