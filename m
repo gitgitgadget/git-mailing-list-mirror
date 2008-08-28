@@ -1,88 +1,60 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: git-shortlog hangs on bare repo without --bare option
-Date: Thu, 28 Aug 2008 14:16:07 +0700
-Message-ID: <fcaeb9bf0808280016k7378cc0ev985f90b270f615e5@mail.gmail.com>
-References: <20080827195233.GA2477@garry-thinkpad.arpnetworks.com>
-	 <48B5C9E4.4030807@lsrfire.ath.cx>
-	 <7vvdxmm78o.fsf@gitster.siamese.dyndns.org>
-	 <7vod3em67d.fsf@gitster.siamese.dyndns.org>
-	 <7v8wuim4kv.fsf@gitster.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: What's cooking in git.git (Aug 2008, #08; Wed, 27)
+Date: Thu, 28 Aug 2008 09:17:08 +0200
+Message-ID: <48B650F4.3090404@viscovery.net>
+References: <7v3akpkfwf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>,
-	"=?UTF-8?Q?Ren=C3=A9_Scharfe?=" <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 09:17:26 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 09:18:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYbkq-0001x0-3e
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 09:17:16 +0200
+	id 1KYblp-0002Hj-5D
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 09:18:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752768AbYH1HQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 03:16:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752770AbYH1HQK
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 03:16:10 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:32308 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750874AbYH1HQJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 03:16:09 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so183147fgg.17
-        for <git@vger.kernel.org>; Thu, 28 Aug 2008 00:16:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=NI7llrJcNudMGOUvrSUBW1Yt1LTyzyFrmGls8tjOvpQ=;
-        b=oLr7TDiGgpIjWqwPjabE8COsLT/3D1vHPQVtb7xvA+9P9xoJwWEDf0S9lrRXcKiHSt
-         mNRXSqxyu6vsVmoz51wH5Lxe22XMM7sKkg0hOe4LmHckaYa0G1jbrfToDeLODc91EL1n
-         gyG/8pbFQlAM1chvz77XcvnHF8umh7wxWHdus=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=oKtKhv8yf4jAsu0r+HJKoJ75M3zXnv10NmRSEx+mnONqo5aO4VPJ9+UcbdOj0ZJQ1X
-         fA8t5VAtJ6qgv9sviebPjHrF0Rjd3hDnk4+jgxQfN8pULs8h8Eap/6eQ2K+4sD18uf5J
-         b4Gdmm8ewGAcrbsKBdq7gYgxR7f7JfhMOwLds=
-Received: by 10.86.57.9 with SMTP id f9mr768331fga.66.1219907767561;
-        Thu, 28 Aug 2008 00:16:07 -0700 (PDT)
-Received: by 10.86.30.20 with HTTP; Thu, 28 Aug 2008 00:16:07 -0700 (PDT)
-In-Reply-To: <7v8wuim4kv.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752769AbYH1HRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 03:17:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752737AbYH1HRN
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 03:17:13 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:30149 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752734AbYH1HRM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 03:17:12 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KYbki-0003KI-JO; Thu, 28 Aug 2008 09:17:08 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 2F7E669F; Thu, 28 Aug 2008 09:17:08 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7v3akpkfwf.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/28/08, Junio C Hamano <gitster@pobox.com> wrote:
->  This may be repeating what Jeff said earlier in another thread, but I
->  think we should rethink the start-up sequence carefully.  Ideally (I am
->  thinking aloud)...
->
->   * Have a single function "git_setup()" that notices --bare and --git-dir
->    from the command line and GIT_DIR environment, and does the discovery
->    of git_dir (if not told with the command line or environment
->    explicitly); if we do not find it, do *NOT* barf.  Just record the
->    facts it finds somewhere (e.g. the location of git_dir, absense of
->    git_dir, if the repository is explicitly bare, etc.).
->
->   * As the next step, still in this single function, if we have git_dir,
->    find out where the work_tree is, paying attention to --work-tree from
->    the command line and GIT_WORK_TREE environment if exists.  If we do not
->    have work tree, do *NOT* barf.  Again, just record the facts it finds.
->    If we do not have --work-tree from the command line and if we are not
->    told that it is --bare from the command line, then we may need to open
->    the config to see where core.worktree points at.
+Junio C Hamano schrieb:
+> * tr/filter-branch (Tue Aug 12 10:45:59 2008 +0200) 7 commits
+>  + filter-branch: use --simplify-merges
+>  + filter-branch: fix ref rewriting with --subdirectory-filter
+>  + filter-branch: Extend test to show rewriting bug
+> 
+> Fixes a longstanding filter branch bug.  Success stories?
+> Later parts depends on the earlier part of "--simplify-merges"
 
-Part of worktree issues comes from the fact that worktree setup is
-spread over many functions, starting at setup_git_dir*() and ending at
-setup_work_tree().
-So setting it up in a single function and turning setup_work_tree()
-into "check and die()" logic sounds great.
--- 
-Duy
+I have a repo to split that *requires* this. But I failed to complete the
+task because there's a problem with rev-list --parents --full-history
+--reverse that lists a commit without parent where there should be a
+parent (it lists it correctly if --reverse is dropped). A test repository
+is available in this messaged:
+
+http://thread.gmane.org/gmane.comp.version-control.git/93171
+
+-- Hannes
