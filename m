@@ -1,96 +1,77 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: [PATCH] dir.c: avoid c99 array initialization
-Date: Thu, 28 Aug 2008 17:32:07 +0200
-Message-ID: <871w09kvew.fsf@lysator.liu.se>
-References: <IH0MHSTEimhAN93AedvpRKq4qfzm1QA814ZYyhbSBtSdNbq8vuE6aw@cipher.nrlssc.navy.mil> <G-ipWASixyGW7nvO1KquifehvBB7FNKwjPtIB0ukyEJ1Si1CJWM34w@cipher.nrlssc.navy.mil>
+Date: Thu, 28 Aug 2008 17:41:09 +0200
+Message-ID: <48B6C715.9060603@op5.se>
+References: <IH0MHSTEimhAN93AedvpRKq4qfzm1QA814ZYyhbSBtSdNbq8vuE6aw@cipher.nrlssc.navy.mil> <G-ipWASixyGW7nvO1KquifehvBB7FNKwjPtIB0ukyEJ1Si1CJWM34w@cipher.nrlssc.navy.mil> <871w09kvew.fsf@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Brandon Casey <casey@nrlssc.navy.mil>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 28 17:33:26 2008
+Cc: git@vger.kernel.org, Brandon Casey <casey@nrlssc.navy.mil>
+To: =?ISO-8859-15?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Thu Aug 28 17:42:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYjUy-0004rF-Sp
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 17:33:25 +0200
+	id 1KYje8-0007cC-3n
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 17:42:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753467AbYH1PcR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Aug 2008 11:32:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753525AbYH1PcR
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 11:32:17 -0400
-Received: from main.gmane.org ([80.91.229.2]:38489 "EHLO ciao.gmane.org"
+	id S1755674AbYH1PlK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Aug 2008 11:41:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755152AbYH1PlK
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 11:41:10 -0400
+Received: from mail.op5.se ([193.201.96.20]:37158 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753319AbYH1PcQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 11:32:16 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KYjTq-0000J0-Gq
-	for git@vger.kernel.org; Thu, 28 Aug 2008 15:32:14 +0000
-Received: from dns.vtab.com ([62.20.90.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 28 Aug 2008 15:32:14 +0000
-Received: from davidk by dns.vtab.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 28 Aug 2008 15:32:14 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dns.vtab.com
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:59BIwRYwM465TfYbOQIbDpIq7/E=
+	id S1755572AbYH1PlJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 11:41:09 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id ED4061B80431;
+	Thu, 28 Aug 2008 17:45:59 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Pk0GyfRtLwkI; Thu, 28 Aug 2008 17:45:57 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.184])
+	by mail.op5.se (Postfix) with ESMTP id C8F091B80087;
+	Thu, 28 Aug 2008 17:45:56 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <871w09kvew.fsf@lysator.liu.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94078>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+David K=E5gedal wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> writes:
+>=20
+>> The following syntax:
+>>
+>>         char foo[] =3D {
+>>                 [0] =3D 1,
+>>                 [7] =3D 2,
+>>                 [15] =3D 3
+>>         };
+>>
+>> is a c99 construct which some compilers do not support even though t=
+hey
+>> support other c99 constructs. Use an alternative.
+>=20
+> But the alternative is much worse. So how important is it to support
+> non-C99 compilers?
+>=20
 
-> The following syntax:
->
->         char foo[] =3D {
->                 [0] =3D 1,
->                 [7] =3D 2,
->                 [15] =3D 3
->         };
->
-> is a c99 construct which some compilers do not support even though th=
-ey
-> support other c99 constructs. Use an alternative.
-
-But the alternative is much worse. So how important is it to support
-non-C99 compilers?
-
-> ---
->  dir.c |   11 ++++++-----
->  1 files changed, 6 insertions(+), 5 deletions(-)
->
-> diff --git a/dir.c b/dir.c
-> index 29d1d5b..14d2eea 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -680,13 +680,14 @@ static int cmp_name(const void *p1, const void =
-*p2)
->   */
->  static int simple_length(const char *match)
->  {
-> -	const char special[256] =3D {
-> -		[0] =3D 1, ['?'] =3D 1,
-> -		['\\'] =3D 1, ['*'] =3D 1,
-> -		['['] =3D 1
-> -	};
-> +	char special[256] =3D { 1, };
->  	int len =3D -1;
-> =20
-> +	special['?'] =3D 1;
-> +	special['\\'] =3D 1;
-> +	special['*'] =3D 1;
-> +	special['['] =3D 1;
-> +
->  	for (;;) {
->  		unsigned char c =3D *match++;
->  		len++;
+=46airly important. Lots of people have gone through lots of work to ma=
+ke
+sure git works with legacy compilers.
 
 --=20
-David K=C3=A5gedal
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
