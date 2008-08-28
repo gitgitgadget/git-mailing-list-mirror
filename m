@@ -1,104 +1,70 @@
-From: Paolo Ciarrocchi <paolo.ciarrocchi@vodafone.com>
-Subject: Subject: [PATCH] Update to the git tutorial
-Date: Thu, 28 Aug 2008 14:23:52 +0200
-Message-ID: <48B698D8.6080300@vodafone.com>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [PATCH] be paranoid about closed stdin/stdout/stderr
+Date: Thu, 28 Aug 2008 14:52:58 +0200
+Message-ID: <20080828125258.GA16940@cuci.nl>
+References: <E1KXawS-0001gg-Ty@fencepost.gnu.org> <48B2AFC2.20901@viscovery.net> <7vbpzgb94q.fsf@gitster.siamese.dyndns.org> <E1KXsL9-0004ef-Co@fencepost.gnu.org> <48B3A948.3080800@viscovery.net> <20080826074044.GA22694@cuci.nl> <32541b130808262201v4d7c1aa5r781720a80b79fcd0@mail.gmail.com> <20080827091800.GB484@cuci.nl> <32541b130808271122t45031cc7n497da8da6ca52bd3@mail.gmail.com> <20080828122142.GA6518@mail.local.tull.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 28 14:44:58 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Karl Chen <quarl@cs.berkeley.edu>,
+	Git mailing list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Nick Andrew <nick@nick-andrew.net>
+X-From: git-owner@vger.kernel.org Thu Aug 28 14:54:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYgrr-0004qM-UK
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 14:44:52 +0200
+	id 1KYh0q-0007sA-4x
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 14:54:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753238AbYH1Mnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 08:43:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753184AbYH1Mnm
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 08:43:42 -0400
-Received: from mailout-1.omnitel.it ([194.20.77.121]:35754 "EHLO
-	fmis437.omnitel.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752927AbYH1Mnl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 08:43:41 -0400
-X-Greylist: delayed 1171 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Aug 2008 08:43:41 EDT
-Received: from omini95.omnitel.it (omini95.omnitel.it [10.21.18.147])
-	by fmis437.omnitel.it (Switch-3.3.0/Switch-3.3.0) with ESMTP id m7SCO0ef013377
-	for <git@vger.kernel.org>; Thu, 28 Aug 2008 14:24:02 +0200 (MEST)
-Received: from OIVMEXO02.omnitel.it ([10.32.40.39]) by ominc75.omnitel.it 
-	with Microsoft SMTPSVC(5.0.2195.6713); Thu, 28 Aug 2008 14:23:59 +0200
-Received: from [10.34.3.159] ([10.34.3.159]) by OIVMEXO02.omnitel.it with 
-	Microsoft SMTPSVC(6.0.3790.1830); Thu, 28 Aug 2008 14:23:58 +0200
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-OriginalArrivalTime: 28 Aug 2008 12:23:58.0777 (UTC) 
-	FILETIME=[F2639290:01C90908]
-X-imss-version: 2.051
-X-imss-result: Passed
-X-imss-scanInfo: M:B L:N SM:3
-X-imss-tmaseResult: TT:1 TS:1.8771 TC:1F TRN:26 TV:5.5.1027(16122.003)
-X-imss-scores: Clean:19.95453 C:2 M:3 S:5 R:5
-X-imss-settings: Baseline:6 C:4 M:4 S:4 R:4 (2.0000 2.0000)
+	id S1752531AbYH1MxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 08:53:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752299AbYH1MxA
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 08:53:00 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:54867 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752170AbYH1Mw7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 08:52:59 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id DC0205465; Thu, 28 Aug 2008 14:52:58 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080828122142.GA6518@mail.local.tull.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94044>
 
-From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Nick Andrew wrote:
+>On Wed, Aug 27, 2008 at 02:22:39PM -0400, Avery Pennarun wrote:
+>> I'm just feeling protective of the future sanity of other developers
+>> here, hoping they don't have to go through what I did on a multi-week
 
-Update to gitutorial as discussedin the git mailing list:
+>You're not alone. I've been having trouble with a combination of
+>fetchmail, procmail and ssmtp, in which situation the ssmtp program
+>_somehow_ sometimes opens /dev/urandom as file descriptor 0 (while
 
-http://marc.info/?t=121969390900002&r=1&w=2
+>in controlled circumstances. It's possible that fetchmail or procmail
+>is doing something stupid - but a little more defensive programming
+>in ssmtp could avoid the total disaster area of sending an endless
+>binary stream to an SMTP server.
 
-Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
----
- Documentation/gittutorial.txt |   29 ++++++++++++++++++++++++++++-
- 1 files changed, 28 insertions(+), 1 deletions(-)
+Procmail I can vouch for, it basically assumes your OS is broken and
+fights it's way back to sanity (it can be setuid root, so it has to
+be rather careful).
+Nonetheless, I still maintain that hiding problems doesn't help, it
+only makes the bugs even rarer and more difficult to find.
 
-diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
-index 48d1454..384972c 100644
---- a/Documentation/gittutorial.txt
-+++ b/Documentation/gittutorial.txt
-@@ -321,10 +321,37 @@ pulling, like this:
- 
- ------------------------------------------------
- alice$ git fetch /home/bob/myrepo master
--alice$ git log -p ..FETCH_HEAD
-+alice$ git log -p HEAD..FETCH_HEAD
- ------------------------------------------------
- 
- This operation is safe even if Alice has uncommitted local changes.
-+The range notation HEAD..FETCH_HEAD" means "show everything that is reachable
-+from the FETCH_HEAD but exclude anything that is reachable from HEAD.
-+Alice already knows everything that leads to her current state (HEAD),
-+and reviewing what Bob has in his state (FETCH_HEAD) that she has not
-+seen with this command
-+
-+If Alice wants to visualize what Bob did since their histories forked
-+she can issue the following command:
-+
-+------------------------------------------------
-+$ gitk HEAD..FETCH_HEAD
-+------------------------------------------------
-+
-+This uses the same two-dot range notation we saw earlier with 'git log'.
-+
-+Alice may want to view what both of them did since they forked.
-+She can use three-dot form instead of the two-dot form:
-+
-+------------------------------------------------
-+$ gitk HEAD...FETCH_HEAD
-+------------------------------------------------
-+
-+This means "show everything that is reachable from either one, but
-+exclude anything that is reachable from both of them".
-+
-+Please note that these range notation can be used with both gitk
-+and "git log".
- 
- After inspecting what Bob did, if there is nothing urgent, Alice may
- decide to continue working without pulling from Bob.  If Bob's history
+The filedescriptor problem is a programmer-error, not a user-error,
+which is why not hiding it should be preferred.  If it were a
+user-error, thing would be different, assisting the user is a Good
+Thing.
 -- 
-1.5.6.1.1071.g76fb
+Sincerely,
+           Stephen R. van den Berg.
+
+"Listen carefully, I shall say this only wence."
