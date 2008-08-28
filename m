@@ -1,82 +1,104 @@
-From: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] read-tree: setup worktree if merge is required
-Date: Thu, 28 Aug 2008 20:03:22 +0700
-Message-ID: <1219928602-25155-1-git-send-email-pclouds@gmail.com>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Thu, 28 Aug 2008 16:15:08 +0300
+Message-ID: <94a0d4530808280615i2befb89cm7d6153bfceb11b19@mail.gmail.com>
+References: <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+	 <20080826145719.GB5046@coredump.intra.peff.net>
+	 <7vr68b8q9p.fsf@gitster.siamese.dyndns.org>
+	 <20080827001705.GG23698@parisc-linux.org>
+	 <7v63pmkozh.fsf@gitster.siamese.dyndns.org>
+	 <1219907659.7107.230.camel@pmac.infradead.org>
+	 <7vtzd5fta0.fsf@gitster.siamese.dyndns.org>
+	 <1219912327.7107.245.camel@pmac.infradead.org>
+	 <94a0d4530808280157p230d289dlf0c85cd517541801@mail.gmail.com>
+	 <20080828115408.GA30834@hera.kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 28 15:06:18 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "David Woodhouse" <dwmw2@infradead.org>,
+	"Matthew Wilcox" <matthew@wil.cx>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	users@kernel.org, "Jeff King" <peff@peff.net>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Al Viro" <viro@hera.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 28 15:16:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYhBk-0002vE-4P
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 15:05:50 +0200
+	id 1KYhMJ-0006bV-Rq
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 15:16:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752716AbYH1NDn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Aug 2008 09:03:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752500AbYH1NDm
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 09:03:42 -0400
-Received: from wf-out-1314.google.com ([209.85.200.171]:56156 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752411AbYH1NDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 09:03:41 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so336587wfd.4
-        for <git@vger.kernel.org>; Thu, 28 Aug 2008 06:03:41 -0700 (PDT)
+	id S1752558AbYH1NPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 09:15:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752411AbYH1NPL
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 09:15:11 -0400
+Received: from rv-out-0506.google.com ([209.85.198.228]:44016 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752112AbYH1NPJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 09:15:09 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so394913rvb.1
+        for <git@vger.kernel.org>; Thu, 28 Aug 2008 06:15:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=3El38stRO/NZaksrH1Vgp6bqUAXlrbKSTYb0ajBeISo=;
-        b=sPh2tHtSmZLQ8LtuyU/I+Nyq/Q07orohc+ITWh4jgwI85bttA7OF11cYnWH79/jStj
-         KuSrNXsc3BBpxdKw/+JvvLo/WLHTNjbu3WD6GdL3aBTfaM2pO+sF1CUtmDxmVqgfXtwt
-         0gaYsfXtONOt6UsiwzLn+tqag+U6/fAh/CpvU=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=vqOxy9B/lYzQG97uWbkclUpXcSa/kMvYhS9i97gBk9c=;
+        b=GbThKEae2oGpFKKeShYLBtADhZkXaL5gryGRxhFrBwI36MvWG8fNZqN1Sp0w0/2t5V
+         DUvM5JMWyKrGgETqQP6S1vSRzjQWHaocfyjPnKdJ99gjn6JybaIFEiw3S8K/SI8gBSfi
+         o/ftErouDWK0/dUwEdA0bV8IBMkZScXVdlNZM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=NArqLe9eAs+FLuAmXxpsfWgf4xBtBpT1ospLFxDk9LuE5uukOCAZToCGML1WmlYupg
-         HSX/NCQOxZ4eFvPRaT4uWUfPyNDRwypUfPMmaD3x3lYEW1V8H8hV0l18V3EYHYNVx/t5
-         RU876peVRUtQqWD0DhglbV63CQE6F3cDJCTS8=
-Received: by 10.142.125.9 with SMTP id x9mr463213wfc.89.1219928621756;
-        Thu, 28 Aug 2008 06:03:41 -0700 (PDT)
-Received: from pclouds@gmail.com ( [117.5.54.222])
-        by mx.google.com with ESMTPS id 28sm1703494wfd.4.2008.08.28.06.03.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 28 Aug 2008 06:03:40 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 28 Aug 2008 20:03:22 +0700
-X-Mailer: git-send-email 1.6.0.96.g2fad1.dirty
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Dui2ZbfLhTRHXONYzeuAy3D+tsrbwdLI8YIV3Rba8PfyiQ3Q2VSl7s8xbVK8sAgWcJ
+         1VTbvwu+KuEkuWgQpQ0H5u+hysSQZ7Jqbepuw+C8nHA1O2jUVS/hOSAyyJezZjLJt0Gy
+         NUhbR8RmniV0rzbGQms89Zh8KA5vRjcQ1HGFE=
+Received: by 10.141.27.16 with SMTP id e16mr712888rvj.136.1219929308843;
+        Thu, 28 Aug 2008 06:15:08 -0700 (PDT)
+Received: by 10.140.166.19 with HTTP; Thu, 28 Aug 2008 06:15:08 -0700 (PDT)
+In-Reply-To: <20080828115408.GA30834@hera.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94050>
 
+On Thu, Aug 28, 2008 at 2:54 PM, Al Viro <viro@hera.kernel.org> wrote:
+> On Thu, Aug 28, 2008 at 11:57:56AM +0300, Felipe Contreras wrote:
+>
+>> The masses should forget about the git-foo form. If you push people
+>> into using git-foo then you are not following git guidelines; you
+>> would be pushing your own agenda.
+>
+> Egads...  For sarcasm it's far too heavy-handed and if that's for real...
+> What's next, verbal diarrhea about Diluting the Message(tm)?
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin-read-tree.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Sorry, I guess I should have made it clearer.
 
-diff --git a/builtin-read-tree.c b/builtin-read-tree.c
-index 72a6de3..dddc304 100644
---- a/builtin-read-tree.c
-+++ b/builtin-read-tree.c
-@@ -194,6 +194,8 @@ int cmd_read_tree(int argc, const char **argv, cons=
-t char *unused_prefix)
- 		usage(read_tree_usage);
- 	if ((opts.dir && !opts.update))
- 		die("--exclude-per-directory is meaningless unless -u");
-+	if (opts.merge && !opts.index_only)
-+		setup_work_tree();
-=20
- 	if (opts.merge) {
- 		if (stage < 2)
---=20
-1.6.0.96.g2fad1.dirty
+I haven't made my mind about git-foo vs "git foo", but a decision has
+been made to deprecate git-foo, and allow it as an option for the
+people that really want to use it, right?
+
+So there must have been a reason to deprecate git-foo, if people keep
+using git-foo, and distributions keep allowing it, what's the point of
+deprecation? It's ok if they keep that usage to themselves, like
+'alias ll = ls -l', but it's not something to assume everybody uses.
+
+So either we take back the decision and keep discussing if it's a good
+idea to deprecate git-foo, or we go forward and discourage git-foo
+completely.
+
+Anything in the middle would just confuse people more, and wouldn't
+achieve the purpose of deprecation.
+
+If some script is relying on git-foo, and it has been deprecated, it
+should be fixed.
+
+Best regards.
+
+-- 
+Felipe Contreras
