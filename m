@@ -1,95 +1,81 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 0/6] 'git svn info' fixes
-Date: Thu, 28 Aug 2008 10:30:58 +0200
-Message-ID: <200808281031.04975.trast@student.ethz.ch>
-References: <1219779157-31602-1-git-send-email-trast@student.ethz.ch> <20080827095342.GB26475@untitled>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Thu, 28 Aug 2008 09:32:07 +0100
+Message-ID: <1219912327.7107.245.camel@pmac.infradead.org>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>
+	 <1219664940.9583.42.camel@pmac.infradead.org>
+	 <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+	 <7vy72kek6y.fsf@gitster.siamese.dyndns.org>
+	 <20080826145719.GB5046@coredump.intra.peff.net>
+	 <7vr68b8q9p.fsf@gitster.siamese.dyndns.org>
+	 <20080827001705.GG23698@parisc-linux.org>
+	 <7v63pmkozh.fsf@gitster.siamese.dyndns.org>
+	 <1219907659.7107.230.camel@pmac.infradead.org>
+	 <7vtzd5fta0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart8543558.W4A2qfG9rO";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Aug 28 10:32:09 2008
+Cc: Jeff King <peff@peff.net>, Matthew Wilcox <matthew@wil.cx>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	users@kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 10:37:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYcvI-0005Sp-LG
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 10:32:09 +0200
+	id 1KYd0H-0006nT-0R
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 10:37:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752606AbYH1IbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 04:31:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752585AbYH1IbE
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 04:31:04 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:28419 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752436AbYH1IbB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 04:31:01 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 28 Aug 2008 10:31:00 +0200
-Received: from [192.168.0.8] ([77.56.223.244]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 28 Aug 2008 10:31:00 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080827095342.GB26475@untitled>
-X-OriginalArrivalTime: 28 Aug 2008 08:31:00.0232 (UTC) FILETIME=[6686E080:01C908E8]
+	id S1751024AbYH1IgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 04:36:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbYH1IgM
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 04:36:12 -0400
+Received: from bombadil.infradead.org ([18.85.46.34]:34122 "EHLO
+	bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750780AbYH1IgL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 04:36:11 -0400
+Received: from pmac.infradead.org ([2001:8b0:10b:1:20d:93ff:fe7a:3f2c])
+	by bombadil.infradead.org with esmtpsa (Exim 4.68 #1 (Red Hat Linux))
+	id 1KYcyM-0007oS-Fs; Thu, 28 Aug 2008 08:35:18 +0000
+In-Reply-To: <7vtzd5fta0.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.22.3.1 (2.22.3.1-1.fc9) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by bombadil.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---nextPart8543558.W4A2qfG9rO
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Thu, 2008-08-28 at 01:17 -0700, Junio C Hamano wrote:
+> David Woodhouse <dwmw2@infradead.org> writes:
+> 
+> > Excellent. All we need to do is make sure the distributions all set
+> > $(gitexecdir) to /usr/bin when they upgrade to 1.6.0 -- and could you
+> > also fix it on master.kernel.org please?
+> 
+> Are you trying to irritate me even more?
 
-Eric Wong wrote:
-> Thomas Rast <trast@student.ethz.ch> wrote:
-> > However, the unknown files tests still fail, simply because 'svn info'
-> > itself fails on untracked files.  It would be great if someone who is
-> > still running SVN 1.4 could check whether that has been a bug in
-> > git-svn all along, or is actually a behaviour change on the part of
-> > SVN.
->=20
-> Oops, I upgraded to 1.5.x here already.  I should still have
-> another machine with 1.4 to check on tomorrow, though.
+Not at all; I'm sorry if that's the effect.
 
-I got a friend with 1.4 to test this, and it appears the error
+> Although I personally did not particularly like the "out of /usr/bin" move,
+> this was done by user request.  I now am hated for doing something I was
+> dragged into doing, not because I wanted the change, but only because many
+> others wanted it, and you are dreaming that another pointless change will
+> be made in the other direction?
 
-  $ touch new
-  $ svn info new
-  new:  (Keine versionierte Ressource)
+I'm not asking you to make another change in upstream git. You've told
+us the workaround (gitexecdir=/usr/bin), and that workaround is no
+longer going to be deprecated, which is great. It's just up to us to
+ensure that we use that workaround when we build git for ourselves, and
+to ensure that our distributions also build packages using that
+workaround.
 
-(literally "not a versioned resource") is already present in
+Since I believe you're building the git packages used on kernel.org, I
+was just asking you to apply the workaround when you build _those_
+packages, that's all.
 
-  $ svn --version
-  svn, Version 1.4.6 (r28521)
-
-(He also says the error is the same if the file does not exist at
-all.)
-
-So should we just change all "unknown foo" tests to verify that 'git
-svn info' errors out too?
-
-=2D Thomas
-
-=2D-=20
-Thomas Rast
-trast@student.ethz.ch
-
-
---nextPart8543558.W4A2qfG9rO
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAki2YkgACgkQqUud07tmzP1CJQCfargARljTYQo9S5Ympt7lWFTY
-XP0AnjBefPEX1RgJPaFUXa96dhP0Yea+
-=uDWZ
------END PGP SIGNATURE-----
-
---nextPart8543558.W4A2qfG9rO--
+-- 
+David Woodhouse                            Open Source Technology Centre
+David.Woodhouse@intel.com                              Intel Corporation
