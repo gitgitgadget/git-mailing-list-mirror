@@ -1,65 +1,78 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: What's cooking in git.git (Aug 2008, #08; Wed, 27)
-Date: Thu, 28 Aug 2008 13:07:49 +0200
-Message-ID: <48B68705.5050606@viscovery.net>
-References: <7v3akpkfwf.fsf@gitster.siamese.dyndns.org> <48B650F4.3090404@viscovery.net> <20080828105646.GA12494@cuci.nl>
+From: "Nathan Panike" <nathan.panike@gmail.com>
+Subject: [PATCH 1/2] Document %as and %cs as a pretty format flag
+Date: Thu, 28 Aug 2008 06:09:42 -0500
+Message-ID: <d77df1110808280409k35eb0f83ta7d95847dfcd0620@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Thu Aug 28 13:09:23 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 28 13:11:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYfNA-0007vF-4R
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 13:09:04 +0200
+	id 1KYfOx-00006A-9V
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 13:10:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752144AbYH1LHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 07:07:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752135AbYH1LHy
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 07:07:54 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:44374 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752118AbYH1LHx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 07:07:53 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KYfLy-0002Iq-3J; Thu, 28 Aug 2008 13:07:50 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id CE0AD69F; Thu, 28 Aug 2008 13:07:49 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20080828105646.GA12494@cuci.nl>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 3.0 (+++)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5, INFO_TLD=1.273
+	id S1752184AbYH1LJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 07:09:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752170AbYH1LJr
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 07:09:47 -0400
+Received: from ag-out-0708.google.com ([72.14.246.249]:63311 "EHLO
+	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751998AbYH1LJr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 07:09:47 -0400
+Received: by ag-out-0708.google.com with SMTP id 31so874303agc.10
+        for <git@vger.kernel.org>; Thu, 28 Aug 2008 04:09:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=i9ZU1HV/69EYTjMJtlaMoRu/Pimr0khbv28heAY3auM=;
+        b=NeCdSdQ6Cdv5bVFFoGXj8QHfsrNaJ4EvT47gN3OXYhthWXBGiUX7tWiSIO5w8w6urx
+         v7Deq5et22yPIOxr79leI/1oyFzKRcaqqZsPaJU+TXXQihaNH9oMGPKdyz5VjBCDQxes
+         Iy+o8RELoBlTZhwT3pUyC+FKtGyadDBVcyfHA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=Z+X0pGiNOTW99FIcy5GsAKYOdS0Co/Q9DnPyVYduDX9Mv0gtfCAxNKuSbJFpCI20ot
+         v6G2MY/iiNceWoIkMEKtdNwaWFb3w0fBYUs0w65eDVznm74ys+BdXDwsjCEh/C/Fnh8E
+         SX92ip6Srh5t+2uNvD3HvadDUo0tokxdqjikY=
+Received: by 10.67.116.8 with SMTP id t8mr3208778ugm.57.1219921782415;
+        Thu, 28 Aug 2008 04:09:42 -0700 (PDT)
+Received: by 10.66.234.6 with HTTP; Thu, 28 Aug 2008 04:09:42 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stephen R. van den Berg schrieb:
-> Johannes Sixt wrote:
->> I have a repo to split that *requires* this. But I failed to complete the
->> task because there's a problem with rev-list --parents --full-history
->> --reverse that lists a commit without parent where there should be a
->> parent (it lists it correctly if --reverse is dropped). A test repository
->> is available in this messaged:
-> 
->> http://thread.gmane.org/gmane.comp.version-control.git/93171
-> 
-> Not Found
-> 
-> The requested URL //gmane/comp/version-control/git/93171-001.bin was not
-> found on this server.
+Signed-off-by: Nathan W. Panike <nathan.panike@gmail.com>
+---
+ Documentation/pretty-formats.txt |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-Here is an alternate location:
-
- http://marc.info/?l=git&m=121933614321872
-
- Message-ID: <48AD9786.80707@viscovery.net>
-
--- Hannes
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index c11d495..2f98c5a 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -108,6 +108,7 @@ The placeholders are:
+ - '%ar': author date, relative
+ - '%at': author date, UNIX timestamp
+ - '%ai': author date, ISO 8601 format
++- '%as': author date, short format
+ - '%cn': committer name
+ - '%cN': committer name (respecting .mailmap)
+ - '%ce': committer email
+@@ -116,6 +117,7 @@ The placeholders are:
+ - '%cr': committer date, relative
+ - '%ct': committer date, UNIX timestamp
+ - '%ci': committer date, ISO 8601 format
++- '%cs': committer date, short format
+ - '%e': encoding
+ - '%s': subject
+ - '%b': body
+-- 
+1.6.0.1
