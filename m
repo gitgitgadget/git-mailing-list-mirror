@@ -1,101 +1,104 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [StGit] Debian packaging update
-Date: Thu, 28 Aug 2008 21:24:50 +0200
-Message-ID: <20080828192450.GH4985@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20080818201036.7c2c00f8@whitehouse.id.au> <b0943d9e0808211535s7b829a13hbf28be8116e856a6@mail.gmail.com> <20080822235154.5e1f979c@whitehouse.id.au> <b0943d9e0808221457w42a84fbgdf62e3ddbb417389@mail.gmail.com> <20080828140929.GB3584@khazad-dum.debian.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	Daniel White <daniel@whitehouse.id.au>, git@vger.kernel.org,
-	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	stgit@packages.debian.org
-To: Henrique de Moraes Holschuh <hmh@hmh.eng.br>
-X-From: git-owner@vger.kernel.org Thu Aug 28 21:25:58 2008
+From: Perry Wagle <wagle@cs.indiana.edu>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Thu, 28 Aug 2008 12:24:17 -0700
+Message-ID: <7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu>
+References: <20080826164526.GM26610@one.firstfloor.org> <48B5098E.748.A598B62@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de> <B83CC7EA-C77E-45CA-B9C5-FC81A8C0C9A5@cs.indiana.edu> <20080827195019.GA9962@sigill.intra.peff.net> <38B725C0-40C3-496C-AAD4-4EA65E3085F5@cs.indiana.edu> <48B5BC5F.4070209@kernel.org> <alpine.DEB.1.10.0808271717190.19923@gandalf.stny.rr.com> <7vd4jukphm.fsf@gitster.siamese.dyndns.org> <F86A1E37-8015-41B5-A462-F044B8D1C2B1@cs.indiana.edu> <BD6DEBB7-4D1C-43E9-B3D2-B46E42D9771D@cs.indiana.edu> <20080828090421.GQ10360@machine.or.cz> <18219E52-E56F-43D9-B28D-0CC74E225CC5@cs.indiana.edu> <alpine.LFD.1.10.0808280934160.3300@nehalem.linux-foundation.org>
+Mime-Version: 1.0 (Apple Message framework v928.1)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Jeff King <peff@peff.net>,
+	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
+	Andi Kleen <andi@firstfloor.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 28 21:27:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYn7z-0004kh-7h
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 21:25:55 +0200
+	id 1KYn9W-00059M-0y
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 21:27:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752742AbYH1TYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 15:24:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753314AbYH1TYv
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 15:24:51 -0400
-Received: from smtp7-g19.free.fr ([212.27.42.64]:51965 "EHLO smtp7-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752742AbYH1TYu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 15:24:50 -0400
-Received: from smtp7-g19.free.fr (localhost [127.0.0.1])
-	by smtp7-g19.free.fr (Postfix) with ESMTP id 5A231B019C;
-	Thu, 28 Aug 2008 21:24:47 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp7-g19.free.fr (Postfix) with ESMTP id DC48AB020E;
-	Thu, 28 Aug 2008 21:24:45 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id A2A3AA003; Thu, 28 Aug 2008 21:24:50 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080828140929.GB3584@khazad-dum.debian.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753767AbYH1T0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 15:26:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753314AbYH1T0S
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 15:26:18 -0400
+Received: from newman.cs.indiana.edu ([129.79.247.4]:48965 "EHLO
+	newman.cs.indiana.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752675AbYH1T0R (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 15:26:17 -0400
+Received: from smtp.cs.indiana.edu (smtp.cs.indiana.edu [129.79.247.7])
+	by newman.cs.indiana.edu (8.13.1/8.13.1/IUCS_2.87) with ESMTP id m7SJOQfE027772;
+	Thu, 28 Aug 2008 15:24:27 -0400
+Received: from dhcp-2.metabiology.com (pool-96-253-170-5.ptldor.fios.verizon.net [96.253.170.5])
+	(authenticated bits=0)
+	by rage.cs.indiana.edu (8.13.1/8.13.1/IUCS_SMTP_Alternate_Port_1.4) with ESMTP id m7SJOHWX007554
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 28 Aug 2008 15:24:22 -0400
+In-Reply-To: <alpine.LFD.1.10.0808280934160.3300@nehalem.linux-foundation.org>
+X-Mailer: Apple Mail (2.928.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94121>
 
-On Thu, Aug 28, 2008 at 11:09:29AM -0300, Henrique de Moraes Holschuh wrote:
-> (Debian maintainer(s) for stgit added to CC through the generic package
-> redirect address).
-> 
-> On Fri, 22 Aug 2008, Catalin Marinas wrote:
-> > 2008/8/22 Daniel White <daniel@whitehouse.id.au>:
-> > > Since it is now packaged by Debian is it still necessary to be
-> > > maintaining Debian packaging?
-> > 
-> > This is mainly to make it easier for Debian maintainers. Someone might
-> > also want to build a .deb package for a different version or flavour
-> > of Debian.
-> 
-> Well, I happen to be a heavy STGIT user, and also a senior Debian
-> developer (I have been a DD for over 10 years), so I am entitled to
-> reply to this thread I suppose :-)
-> 
-> Whatever people told you guys, the sad truth is that for the
-> overwhelming majority of packages, the mere presence of a debian/ dir
-> upstream is taken as a warning sign by any seasoned Debian developer
-> (i.e. it is so often a problem, we take it as a bad sign).  It almost
-> never helps.  I have no idea where stgit is in that regard, though.  And
-> I have NOT checked the "upstream version of the Debian packaging", so
-> please don't take this personally.
+On Aug 28, 2008, at 9:35 AM, Linus Torvalds wrote:
 
-In this case, they are mostly in sync, except that lately I have not
-been very active on the stgit front (and on the debian front as well
-BTW), so that I did not take the time to formalize a set of patches
-for integration of the latest changes into stgit.
+> On Thu, 28 Aug 2008, Perry Wagle wrote:
+>>
+>> The PATH thing fixes the problem of typing in git-commands at the
+>> command line, but not for scripts containing git<DASH> commands.   
+>> I've
+>> seen no-one rebut my rebuttal.
+>
+> What drugs are you people on?
 
-And most of the problem then boils down to the current package diffs
-not being handled as a series of patches, which is quite a shame for
-stgit :).  Indeed I had started trying to change that at the very
-beginning of my involvment in the package, but finally decided I had
-no time for that - and I'm also quite frustrated by the various ways I
-have tried to maintain debian packages as patch series, unfortunately
-(eg. see my experiment in debian/README.maint in the tau package).  I
-still have to come with a decent way of doing that.
+No drugs, just that I was expecting people to do more than demonstrate  
+to me the excellence of their knee reflex.  Especially you (Linus),  
+who supports thinking things out and not depending on debugging tools.
 
+I prefer to think things out and not "coding from the hip".  I can be  
+proven wrong, but you are going to have to engage your brain to do  
+so.  Threatening me or whacking me with the neural loop from your  
+spine to your knee isn't going to cut it.
 
-> Of course, this changes a lot when upstream is also a Debian developer
-> and spends a few hours per week keeping up-to-date with Debian policy
-> and toolset changes, etc.
+> Just put it in your .bash_profile or something. It will now work for  
+> all
+> your scripts.
 
-Hey, that's not far of what used to happen :)
+In terms of continuing to provide me git<DASH><TAB> if I so desire,  
+that's an excellent idea, and I've repeatedly said so.
 
-Another benefit to having uptodate packaging upstream would be to have
-deb snapshots regularly generated, alhough we don't take advantage of
-this for the moment.
+In terms of preserving scripts, thats a filthy hack that only fixes my  
+own execution of those scripts, not for other people.  And some people  
+don't run bash, so /etc/bashrc *on every system* or whatever doesn't  
+actually do it either.  Did you think that out?
 
+> And for us people who do _not_ want it, we fix the scripts, or we  
+> don't
+> run them.
 
-> I think you guys should CC the Debian developer on any threads about the
-> debian/ dir.
+This is one upward compatibility broken for goofy reasons, at least  
+those given in this thread, where there were numerous "ZOMG!  I get  
+143 completions!" accompanied by false claims that it was a 143  
+element *list* when in fact a *hash table* is used.
 
-I'm on the ml too, but CC'ing never hurts, especially since other
-people can subscribe to the address via the Package Tracking System.
+But the issue for me is what other upward compatibilities were  
+broken?  What am I testing for?  Is is really only that I
+
+     sed s/git-/git<SPACE>/g
+
+on the scripts?  I'm doubting it, given the quality of reasoning and  
+lack of respect for upward compatibility on this thread.
+
+Yes, I'm over-killing a molehill, but I see you all building a  
+mountain in the distance that I don't feel like climbing.  I haven't  
+been paid to do git stuff for months.
+
+-- Perry
