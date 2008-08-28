@@ -1,88 +1,63 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] git-commit: '--no-status' Allow suppression of status
-	summary in commit msg
-Date: Thu, 28 Aug 2008 21:34:23 +0200
-Message-ID: <20080828193423.GA6825@blimp.local>
-References: <1219949215-10189-1-git-send-email-marcus@griep.us> <7vd4jtdki8.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Thu, 28 Aug 2008 22:52:11 +0300
+Message-ID: <20080828195211.GA3545@mithlond.arda.local>
+References: <38B725C0-40C3-496C-AAD4-4EA65E3085F5@cs.indiana.edu> <48B5BC5F.4070209@kernel.org> <alpine.DEB.1.10.0808271717190.19923@gandalf.stny.rr.com> <7vd4jukphm.fsf@gitster.siamese.dyndns.org> <F86A1E37-8015-41B5-A462-F044B8D1C2B1@cs.indiana.edu> <BD6DEBB7-4D1C-43E9-B3D2-B46E42D9771D@cs.indiana.edu> <20080828090421.GQ10360@machine.or.cz> <18219E52-E56F-43D9-B28D-0CC74E225CC5@cs.indiana.edu> <alpine.LFD.1.10.0808280934160.3300@nehalem.linux-foundation.org> <7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marcus Griep <marcus@griep.us>,
-	Git Mailing List <git@vger.kernel.org>,
-	Marius Storm-Olsen <mstormo_git@storm-olsen.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 21:36:03 2008
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Jeff King <peff@peff.net>,
+	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
+	Andi Kleen <andi@firstfloor.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Perry Wagle <wagle@cs.indiana.edu>
+X-From: git-owner@vger.kernel.org Thu Aug 28 21:54:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYnHH-0007mm-Im
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 21:35:32 +0200
+	id 1KYnZm-0005vX-H0
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 21:54:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754048AbYH1Te1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 15:34:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753523AbYH1Te1
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 15:34:27 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.181]:21753 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752005AbYH1Te0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 15:34:26 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20hf4kO7
-Received: from tigra.home (Faa1f.f.strato-dslnet.de [195.4.170.31])
-	by post.webmailer.de (mrclete mo48) (RZmta 16.47)
-	with ESMTP id R03130k7SJ3Id4 ; Thu, 28 Aug 2008 21:34:24 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 09100277AE;
-	Thu, 28 Aug 2008 21:34:24 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id 020EB36D1D; Thu, 28 Aug 2008 21:34:24 +0200 (CEST)
+	id S1753967AbYH1TxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 15:53:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753482AbYH1TxI
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 15:53:08 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:41915 "EHLO jenni1.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753967AbYH1TxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 15:53:07 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni1.inet.fi (8.5.014)
+        id 488F1534015D52AE; Thu, 28 Aug 2008 22:52:16 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1KYnXP-0002cr-MR; Thu, 28 Aug 2008 22:52:11 +0300
 Content-Disposition: inline
-In-Reply-To: <7vd4jtdki8.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94125>
 
-Junio C Hamano, Thu, Aug 28, 2008 21:09:35 +0200:
-> Marcus Griep <marcus@griep.us> writes:
+Perry Wagle wrote (2008-08-28 12:24 -0700):
+
+> Is is really only that I
 > 
-> > Currently, using any editor to edit a commit message for 'git commit'
-> > kicks of a 'git status' which is then included as comments to give
-> > the commit author some context. However, in some situations, such as
-> > having a working tree of many hundred thousand files or on an inefficient
-> > filesystem,
+>     sed s/git-/git<SPACE>/g
 > 
-> I am not interested in this particular patch, especially the part that
-> hoards a short-and-nice -S flag that we could use for something more
-> useful.  Also calling the configuration variable "nostatus" is backwards;
-> I'd name it to "showstatus" that defaults to "true" if I were doing this.
+> on the scripts?  I'm doubting it, given the quality of reasoning and
+> lack of respect for upward compatibility on this thread.
 
-I like it (almost. I agree, it is not a very good idea to use up "-S"
-for such a thing). Not because of "inefficient filesystem" (I have
-proper systems at home), but because I more often need no file list in
-the commit message than I do need one. It is just annoyance.  OTOH,
-maybe I'm just too used to put things in the index and trust that. Or
-maybe it is again that stupid user-friendliness.
-
-> If that is not still enough for your particular use case, I think you can
-> have a custom wrapper that does:
-> 
-> 	#!/bin/sh
-> 	: >.log-message-file &&
->         vi .log-message-file &&
->         git commit -F .log-message-file "$@" &&
->         rm -f .log-message-file 
-> 
-> without touching git at all.
-
-That's not enough. Consider "-mMessage -e", "-t" or "-c" flags of git
-commit. The wrapper would have to catch them all! Not to mention the
-future flags in the same ballpark.
-
-ATM, I just use that "--cached" (from the patch I mentioned in the
-other mail) with "--cleanup=verbatim" to get the commit message just
-how I like them.
+I have come to understand that "git " has quite long time been more 
+robust and portable way of writing scripts. They work in both 
+configurations so I'd definitely suggest doing "s/git-/git /g" for every 
+script. Of course in an interactive shell everyone can use whatever they 
+prefer and works at the moment.
