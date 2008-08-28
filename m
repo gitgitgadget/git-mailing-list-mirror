@@ -1,66 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Thu, 28 Aug 2008 01:17:11 -0700
-Message-ID: <7vtzd5fta0.fsf@gitster.siamese.dyndns.org>
-References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org>
- <1219664940.9583.42.camel@pmac.infradead.org>
- <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
- <7vy72kek6y.fsf@gitster.siamese.dyndns.org>
- <20080826145719.GB5046@coredump.intra.peff.net>
- <7vr68b8q9p.fsf@gitster.siamese.dyndns.org>
- <20080827001705.GG23698@parisc-linux.org>
- <7v63pmkozh.fsf@gitster.siamese.dyndns.org>
- <1219907659.7107.230.camel@pmac.infradead.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 0/6] 'git svn info' fixes
+Date: Thu, 28 Aug 2008 10:30:58 +0200
+Message-ID: <200808281031.04975.trast@student.ethz.ch>
+References: <1219779157-31602-1-git-send-email-trast@student.ethz.ch> <20080827095342.GB26475@untitled>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, users@kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Matthew Wilcox <matthew@wil.cx>
-To: David Woodhouse <dwmw2@infradead.org>
-X-From: git-owner@vger.kernel.org Thu Aug 28 10:19:07 2008
+Content-Type: multipart/signed;
+  boundary="nextPart8543558.W4A2qfG9rO";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Aug 28 10:32:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYci6-00013h-OA
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 10:18:31 +0200
+	id 1KYcvI-0005Sp-LG
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 10:32:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752469AbYH1IRZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 04:17:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752319AbYH1IRY
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 04:17:24 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63637 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752296AbYH1IRX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 04:17:23 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 479816B55D;
-	Thu, 28 Aug 2008 04:17:22 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 87B566B55B; Thu, 28 Aug 2008 04:17:14 -0400 (EDT)
-In-Reply-To: <1219907659.7107.230.camel@pmac.infradead.org> (David
- Woodhouse's message of "Thu, 28 Aug 2008 08:14:19 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BD2CF156-74D9-11DD-ADCB-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752606AbYH1IbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 04:31:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752585AbYH1IbE
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 04:31:04 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:28419 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752436AbYH1IbB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 04:31:01 -0400
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 28 Aug 2008 10:31:00 +0200
+Received: from [192.168.0.8] ([77.56.223.244]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 28 Aug 2008 10:31:00 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080827095342.GB26475@untitled>
+X-OriginalArrivalTime: 28 Aug 2008 08:31:00.0232 (UTC) FILETIME=[6686E080:01C908E8]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Woodhouse <dwmw2@infradead.org> writes:
+--nextPart8543558.W4A2qfG9rO
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> Excellent. All we need to do is make sure the distributions all set
-> $(gitexecdir) to /usr/bin when they upgrade to 1.6.0 -- and could you
-> also fix it on master.kernel.org please?
+Eric Wong wrote:
+> Thomas Rast <trast@student.ethz.ch> wrote:
+> > However, the unknown files tests still fail, simply because 'svn info'
+> > itself fails on untracked files.  It would be great if someone who is
+> > still running SVN 1.4 could check whether that has been a bug in
+> > git-svn all along, or is actually a behaviour change on the part of
+> > SVN.
+>=20
+> Oops, I upgraded to 1.5.x here already.  I should still have
+> another machine with 1.4 to check on tomorrow, though.
 
-Are you trying to irritate me even more?
+I got a friend with 1.4 to test this, and it appears the error
 
-Although I personally did not particularly like the "out of /usr/bin" move,
-this was done by user request.  I now am hated for doing something I was
-dragged into doing, not because I wanted the change, but only because many
-others wanted it, and you are dreaming that another pointless change will
-be made in the other direction?
+  $ touch new
+  $ svn info new
+  new:  (Keine versionierte Ressource)
 
-Get a clue already.
+(literally "not a versioned resource") is already present in
+
+  $ svn --version
+  svn, Version 1.4.6 (r28521)
+
+(He also says the error is the same if the file does not exist at
+all.)
+
+So should we just change all "unknown foo" tests to verify that 'git
+svn info' errors out too?
+
+=2D Thomas
+
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
+
+
+--nextPart8543558.W4A2qfG9rO
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAki2YkgACgkQqUud07tmzP1CJQCfargARljTYQo9S5Ympt7lWFTY
+XP0AnjBefPEX1RgJPaFUXa96dhP0Yea+
+=uDWZ
+-----END PGP SIGNATURE-----
+
+--nextPart8543558.W4A2qfG9rO--
