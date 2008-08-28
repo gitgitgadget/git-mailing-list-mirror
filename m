@@ -1,105 +1,95 @@
-From: Steven Rostedt <rostedt@goodmis.org>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Wed, 27 Aug 2008 21:25:47 -0400 (EDT)
-Message-ID: <alpine.DEB.1.10.0808272117300.1782@gandalf.stny.rr.com>
-References: <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vy72kek6y.fsf@gitster.siamese.dyndns.org> <20080826145719.GB5046@coredump.intra.peff.net> <1219764860.4471.13.camel@gaara.bos.redhat.com> <1219766398.7107.87.camel@pmac.infradead.org>
- <alpine.LFD.1.10.0808260959000.3363@nehalem.linux-foundation.org> <20080826180926.GA25711@isilmar.linta.de> <alpine.LFD.1.10.0808261114070.3363@nehalem.linux-foundation.org> <23DFA9EC-9523-4179-BA3C-ACBDB82953DF@cs.indiana.edu>
- <alpine.DEB.1.10.0808271126190.10784@gandalf.stny.rr.com> <20080827230903.GB11005@flint.arm.linux.org.uk>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: Are these bugs?
+Date: Wed, 27 Aug 2008 21:26:27 -0400
+Message-ID: <76718490808271826y4ff8bc37ub046de3be5111eb5@mail.gmail.com>
+References: <76718490808271636i4de8f385pdaeb1672f06a00d7@mail.gmail.com>
+	 <7v1w0akolk.fsf@gitster.siamese.dyndns.org>
+	 <76718490808271825j68ac6abch406a8e12b5849b1a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Perry Wagle <wagle@cs.indiana.edu>,
-	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Russell King <rmk@arm.linux.org.uk>
-X-From: git-owner@vger.kernel.org Thu Aug 28 03:26:56 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 28 03:27:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYWHn-0001LR-De
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 03:26:55 +0200
+	id 1KYWIj-0001Z7-73
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 03:27:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752928AbYH1BZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 21:25:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752882AbYH1BZu
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 21:25:50 -0400
-Received: from hrndva-omtalb.mail.rr.com ([71.74.56.125]:47248 "EHLO
-	hrndva-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752845AbYH1BZu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 21:25:50 -0400
-Received: from gandalf ([74.74.65.243]) by hrndva-omta04.mail.rr.com
-          with ESMTP
-          id <20080828012548.CWOK20979.hrndva-omta04.mail.rr.com@gandalf>;
-          Thu, 28 Aug 2008 01:25:48 +0000
-X-X-Sender: rostedt@gandalf.stny.rr.com
-In-Reply-To: <20080827230903.GB11005@flint.arm.linux.org.uk>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1753227AbYH1B0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 21:26:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753015AbYH1B0a
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 21:26:30 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:36363 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752806AbYH1B03 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 21:26:29 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so85156yxm.1
+        for <git@vger.kernel.org>; Wed, 27 Aug 2008 18:26:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=/mvxEAG/zYI0QAlPzxv3CZFS3fIdGpNAOH2NPwKQH7g=;
+        b=TedXbVzEomPMfeTeMYUBaXiWodz6aS2DtT04wXvyVukk1UOKu2l65dd+YfzTWJeIRJ
+         AN6zdhSplFAVlEVmnJAYbDQ591kXsdHanmlWd0OrtinLemmq22jSiBRNB0xT8JZhEaKO
+         oDz1xrTTePFy8/d65mQ8jp9EfMteZzjDgNjD8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=U+2TmWvlbYVLe8oHbtOaHZslBFM01ld8Gv2RoTkR8P15xuGvBj/5GZ7pJc1NmFatSa
+         oweQaf4BC1s9VAyoBD5t3YVhrTFwmrV7t2wwmYprzfImYC7F6JtlVvYpHZPN+ukF5yAy
+         ZzO+IRn6rF590CofqnenqoWSl8dGZR+D5/YaM=
+Received: by 10.151.156.12 with SMTP id i12mr1146119ybo.194.1219886788036;
+        Wed, 27 Aug 2008 18:26:28 -0700 (PDT)
+Received: by 10.150.50.2 with HTTP; Wed, 27 Aug 2008 18:26:27 -0700 (PDT)
+In-Reply-To: <76718490808271825j68ac6abch406a8e12b5849b1a@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94008>
+
+Oops, should've gone to list.
 
 
-On Thu, 28 Aug 2008, Russell King wrote:
-
-> On Wed, Aug 27, 2008 at 11:27:04AM -0400, Steven Rostedt wrote:
-> > 
-> > On Tue, 26 Aug 2008, Perry Wagle wrote:
-> > > 
-> > > I'm trying to upgrade the git that our scripts use, and having the  
-> > > users modify their paths doesn't work.
-> > > 
-> > > Not that horrible to fix some other way, but still a rude thing to  
-> > > wake up to one day. (ie, today)
-> > > 
-> > 
-> > Did you see the yellow bulldozer coming at your house while brushing your 
-> > teeth?
-> 
-> That is not a valid point of view when you're a git user, and things
-> suddenly change from working one day, to not working the next _and_
-> you don't know why the commands you were using have suddenly vanished.
-> 
-> And there is no documentation seemingly available to tell you what to
-> use instead.
-
-I think you may have totally missed my reference to the beginning of
-"The Hitchhikers Guide to the Galaxy", where Aurther saw the Bulldozer 
-about to destroy his house. As he layed in front of the bulldozer, he was 
-told that he had plenty of time to complain. Aurther replied that the 
-posting was in some strange hidden location. Kind of like what release 
-notes are.
-
-But I digress, this thread is totally offtopic for users@kernel.org, can 
-we finally take it off (as I just did).
-
--- Steve
+---------- Forwarded message ----------
+From: Jay Soffian <jaysoffian@gmail.com>
+Date: Wed, Aug 27, 2008 at 9:25 PM
+Subject: Re: Are these bugs?
+To: Junio C Hamano <gitster@pobox.com>
 
 
-> 
-> And the available documentation tells you that the commands you were
-> using are still there.
-> 
-> And no warnings before hand that the commands you were using were
-> deprecated.
-> 
-> *That* is what is soo abhorrent about this whole business.
-> 
-> How would you feel if, tomorrow, 'ls', 'tar' etc all gave you "command
-> not found", 'man ls' still gave you a man page for ls(1) but the
-> command was now actually called 'listfiles' instead ?
-> 
-> Just put 'alias ls=listfiles' in your .bashrc !
-> 
-> -- 
-> Russell King
->  Linux kernel    2.6 ARM Linux   - http://www.arm.linux.org.uk/
->  maintainer of:
-> 
+On Wed, Aug 27, 2008 at 7:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Jay Soffian" <jaysoffian@gmail.com> writes:
+>
+>> I understand why "git reset" failed, but at best the error message is
+>> confusing to a new user.
+>
+> This is in "patches welcome" category.
+
+Okay, good to know. I'll add it to me "things to do in spare time" list.
+
+>> 2. "git add --ignore-errors" doesn't work with ignored files:
+>>
+>> $ git add --ignore-errors foo bar
+>
+> The option, IIRC, is more about filesystem errors (failure to read), not
+> about safety against user errors (specifying otherwise ignored paths).
+>
+> If you are automating something that uses xargs to drive addition to the
+> index, and the feeder to xargs knows better than .gitignore files, then
+> probably your script should be using '-f' unconditionally.  So I do not
+> see why you would think #2 could be a bug.
+
+Well that's just it, my feeder to xargs did *not* know better than the
+.gitignore files so -f would have done the exact opposite of what I
+wanted. The git-add man page's description of --ignore-errors agrees
+with what you write above though, so I'll just move along on this one.
+
+j.
