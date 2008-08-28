@@ -1,92 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: ref markers link to named shortlogs
-Date: Thu, 28 Aug 2008 08:48:32 +0200
-Message-ID: <200808280848.34084.jnareb@gmail.com>
-References: <1219341860-4913-1-git-send-email-giuseppe.bilotta@gmail.com> <200808261349.28771.jnareb@gmail.com> <48B602B5.1070304@gmail.com>
+From: Stefan Richter <stefanr@s5r6.in-berlin.de>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Thu, 28 Aug 2008 22:57:12 +0200
+Message-ID: <48B71128.8040400@s5r6.in-berlin.de>
+References: <20080826145719.GB5046@coredump.intra.peff.net> <1219764860.4471.13.camel@gaara.bos.redhat.com> <1219766398.7107.87.camel@pmac.infradead.org> <alpine.LFD.1.10.0808260959000.3363@nehalem.linux-foundation.org> <20080826180926.GA25711@isilmar.linta.de> <alpine.LFD.1.10.0808261114070.3363@nehalem.linux-foundation.org> <23DFA9EC-9523-4179-BA3C-ACBDB82953DF@cs.indiana.edu> <alpine.DEB.1.10.0808271126190.10784@gandalf.stny.rr.com> <20080827230903.GB11005@flint.arm.linux.org.uk> <48B5E90E.3000601@s5r6.in-berlin.de> <20080828191956.GA7906@flint.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org,
-	Petr Baudis <pasky@ucw.cz>, Junio C Hamano <gitster@pobox.com>
-To: Lea Wiemann <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 08:49:48 2008
+Cc: Steven Rostedt <rostedt@goodmis.org>,
+	=?ISO-8859-1?Q?Kristian_H=F8g?= =?ISO-8859-1?Q?sberg?= 
+	<krh@redhat.com>, Linus Torvalds <torvalds@linux-foundation.org>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Jeff King <peff@peff.net>, Perry Wagle <wagle@cs.indiana.edu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Russell King <rmk@arm.linux.org.uk>
+X-From: git-owner@vger.kernel.org Thu Aug 28 23:00:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYbKF-0004MX-Kf
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 08:49:48 +0200
+	id 1KYoba-0002yl-Hj
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 23:00:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752415AbYH1Gsm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 02:48:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752248AbYH1Gsm
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 02:48:42 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:17482 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752064AbYH1Gsl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 02:48:41 -0400
-Received: by ug-out-1314.google.com with SMTP id c2so1076926ugf.37
-        for <git@vger.kernel.org>; Wed, 27 Aug 2008 23:48:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=y9De+KNTAqXeS9ixFNNhL2t2uHYTS59m5n+8NE3mwEs=;
-        b=hE2KOOrftZmrDHsCZtzvm2bFgcaazaCqGGqQQD3USyBhIE6I5DkFPhUJY6gnHrlLct
-         JvpaTsnSaDVbgAltdT3SKRoDUcdRi35iDrapoBWgQUJl7YJP4j0PJ6e3MOJpAgWK0dsX
-         i5Bj16GSbHWp2kA0z5+rJLbBqWEXYTEkri/Gs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=iEdWudo5NYS8QOvCxE+zI5djMxkhEP96p6XzUzVejLjSw4z2IMuSS01ddrNxNWwS9T
-         GVEBJ5DIaaWCHxjCYbASAVrhP3dBP5Cc9C23jA6zeMkGpTzbCSxxgbJvXOwMmHvqFI4+
-         s58PLC6H09ixVccRZCIYUR8pSLiHLv4sQAFLA=
-Received: by 10.66.245.2 with SMTP id s2mr2914309ugh.80.1219906119421;
-        Wed, 27 Aug 2008 23:48:39 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.214.109])
-        by mx.google.com with ESMTPS id 7sm731569eyb.1.2008.08.27.23.48.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 27 Aug 2008 23:48:38 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <48B602B5.1070304@gmail.com>
-Content-Disposition: inline
+	id S1756374AbYH1U7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 16:59:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757051AbYH1U7Q
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 16:59:16 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:43101 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757433AbYH1U7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 16:59:14 -0400
+X-Envelope-From: stefanr@s5r6.in-berlin.de
+Received: from [192.168.0.42] ([83.221.231.7])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id m7SKvHca013487
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 28 Aug 2008 22:57:18 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080722 SeaMonkey/1.1.11
+In-Reply-To: <20080828191956.GA7906@flint.arm.linux.org.uk>
+X-Enigmail-Version: 0.95.6
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94146>
 
-Lea Wiemann wrote:
-> Jakub Narebski wrote:
-> >
-> > By the way, this is argument *for* selecting action when generating
-> > link, if it is possible without incurring unnecessary (if you don't
-> > follow the link) performance penalty.
+Russell King wrote:
+> On Thu, Aug 28, 2008 at 01:53:50AM +0200, Stefan Richter wrote:
+>> "-" -> " "?  Molehill.
 > 
-> I agree that it's much cleaner to select the action when generating the
-> page, rather than having an 'objectview' action or so.
-> 
-> Worrying about performance seems like premature optimization though --
-> my guesstimate is that the performance penalty for looking up the object
-> type is not practically noticeable (read: relevant), and with my patch
-> applied (even without caching activated) it should move below the
-> measurable range.  So don't complicate the code to gain another 0.01%
-> performance. ;-)
+> "ls" -> "listfiles" - how would you feel about that change happening
+> behind your back?
 
-First, without your 'git cat-file --batch-check' reuse-connection trick
-it wouldn't be _one_ additional fork; it is one fork per ref marker,
-which might be quite a lot in tag-heavy, branch-heavy, and using for
-example StGIT (with its refs) environment.  Note that not all operating
-systems have lightweight fork, and that even with "caching" it is IO hit,
-and a bit of CPU hit.
-
-Second, it isn't much more code than git_get_type solution, it is bit
-larger change: leave ^{} alone, check if ^{} and strip it, as compared
-to git_get_type.
-
+I would feel betrayed, then add another alias to .bashrc, then feel 
+deeply satisfied by my cunning betrayal of the betrayers, knowing that 
+only a true genius hacker could come up with a countermeasure like that.
 -- 
-Jakub Narebski
-Poland
+Stefan Richter
+-=====-==--- =--- ===--
+http://arcgraph.de/sr/
