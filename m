@@ -1,86 +1,99 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH] gitweb: ref markers link to named shortlogs
-Date: Thu, 28 Aug 2008 08:26:31 +0200
-Message-ID: <cb7bb73a0808272326s77391a10v607043f82f9b581f@mail.gmail.com>
-References: <1219341860-4913-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200808261015.37023.jnareb@gmail.com>
-	 <cb7bb73a0808260358o41a04a9ara701e6c726cf2298@mail.gmail.com>
-	 <200808261349.28771.jnareb@gmail.com> <48B602B5.1070304@gmail.com>
+From: "Imran M Yousuf" <imyousuf@gmail.com>
+Subject: Re: Git-aware HTTP transport
+Date: Thu, 28 Aug 2008 12:40:07 +0600
+Message-ID: <7bfdc29a0808272340kdc2f3b0x250eef32b25dcdcb@mail.gmail.com>
+References: <20080826012643.GD26523@spearce.org> <48B36BCA.8060103@zytor.com>
+	 <20080826145857.GF26523@spearce.org> <48B4303C.3080409@zytor.com>
+	 <20080826172648.GK26523@spearce.org> <48B485F8.5030109@zytor.com>
+	 <20080828035018.GA10010@spearce.org> <48B62B6F.7010103@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
-	"Petr Baudis" <pasky@ucw.cz>, "Junio C Hamano" <gitster@pobox.com>
-To: "Lea Wiemann" <lewiemann@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 08:28:43 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 08:41:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYazp-0000HL-RG
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 08:28:42 +0200
+	id 1KYbBz-0002eA-7C
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 08:41:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751898AbYH1G0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 02:26:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751523AbYH1G0d
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 02:26:33 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:30668 "EHLO
+	id S1752037AbYH1GkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 02:40:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbYH1GkJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 02:40:09 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:36170 "EHLO
 	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751884AbYH1G0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 02:26:32 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so134353yxm.1
-        for <git@vger.kernel.org>; Wed, 27 Aug 2008 23:26:31 -0700 (PDT)
+	with ESMTP id S1751543AbYH1GkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 02:40:08 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so136242yxm.1
+        for <git@vger.kernel.org>; Wed, 27 Aug 2008 23:40:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=/uZbc7HlTUtRkS67TwPVTEVJbHHCryfYq+CNfqHGyZs=;
-        b=D1DzXshNXx/GzPV0kzwQUwfgtV73JRTeBE0kvTV4pDnTJPWoZLauHNe9J9UoRDTutl
-         EBh7KO0kXsPjWvkgcPEmXkJqtVDJPVZA79fuvss7IwVCXLdZgAZNxINSxlw0NcAV14Na
-         YMACYvHWAVZX4JDLycjTFw3wCHMkkfAXg5XkU=
+        bh=WARbXtzeiJ+FKBgB1VMA16J4S1PHE15JA55y6magngw=;
+        b=JoUckLs9qHWeLWlWoG+/5MSqxmjC8Aq3Tw/uGe3zoQZOPAtWd3hXWg/uxlKNpE7l7y
+         Uao888iZ4lD9xJYDNsEdY7InViCb3ENO1fAKpCDPKnPMUTRTK2P3ypH8Wc6QSN7v1v9s
+         k/ZH6SM67AbOownDcv8dmvRKAqur1jIZvsTQ4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=Ei/HRwU44Pt0psI6+WtOXXT5PlTZ6cSUKOgiSJz3liU0P1VHakne2noyev1KwugbYs
-         ciKOhNCPDHeoQs2o0OGoJzsUujgrlC72fmfHFUo3qLI8zECdYAVwuKQBnPUX4jTFVN5T
-         6z9GZ6UrW8c88EyhX6F9l16Ms2vPKMqkUYqV8=
-Received: by 10.151.158.2 with SMTP id k2mr1559002ybo.125.1219904791346;
-        Wed, 27 Aug 2008 23:26:31 -0700 (PDT)
-Received: by 10.150.145.2 with HTTP; Wed, 27 Aug 2008 23:26:31 -0700 (PDT)
-In-Reply-To: <48B602B5.1070304@gmail.com>
+        b=OLp6QYDiem9PXRviCTWB/oSToykeSZuVuBPVvpNE1Mu1/wEyPw3Sudcx1IQpxOx2o1
+         oJ/MBDVEDG0PcZIX6XT9tsSCqKtECRBNGKWbx6u+xpBpkeseJYTosa0Opfzm9LZBHKBW
+         7tDx6PYQqegYB6jsuE8K4ux9hK6QWIKWwhXJE=
+Received: by 10.150.148.1 with SMTP id v1mr1604456ybd.55.1219905607160;
+        Wed, 27 Aug 2008 23:40:07 -0700 (PDT)
+Received: by 10.150.225.1 with HTTP; Wed, 27 Aug 2008 23:40:07 -0700 (PDT)
+In-Reply-To: <48B62B6F.7010103@zytor.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 28, 2008 at 3:43 AM, Lea Wiemann <lewiemann@gmail.com> wrote:
-> Jakub Narebski wrote:
->> By the way, this is argument *for* selecting action when generating
->> link, if it is possible without incurring unnecessary (if you don't
->> follow the link) performance penalty.
+On Thu, Aug 28, 2008 at 10:37 AM, H. Peter Anvin <hpa@zytor.com> wrote:
+> Shawn O. Pearce wrote:
+>>
+>> So this is what may be the final draft of the HTTP protocol.
+>> I've added stuff about capability selection between the peers for
+>> future expansion support.  The upload-pack service has a better
+>> use of it than receive-pack.  Otherwise it is what I think you are
+>> agreeing to above.  ;-)
+>>
 >
-> I agree that it's much cleaner to select the action when generating the
-> page, rather than having an 'objectview' action or so.
+> It looks good to me.  I *really* like the option of combining a redirect
+> with a refs list in one reply; this will make things substantially easier do
+> deploy on kernel.org, and saves a round trip to boot.
 
-In that case v7 of my patch is The Way (TM).
+I agree, this is a very cool feature of the protocol...
 
-> Worrying about performance seems like premature optimization though --
-> my guesstimate is that the performance penalty for looking up the object
-> type is not practically noticeable (read: relevant), and with my patch
-> applied (even without caching activated) it should move below the
-> measurable range.  So don't complicate the code to gain another 0.01%
-> performance. ;-)
+- Imran
 
-Well, considering that after Jakub's suggestion we just get the target
-type from the presence and absence of ^{} in the output of show-refs,
-we're not making the code overly complex :)
+>
+> Just an implementation detail for the server, however: for an *empty*
+> repository (one which has no refs at all), the server needs to *not*
+> transmit the redirect, or there will be a loop :)  It is unnecessary,
+> anyway, since there is inherently nothing to do.
+>
+>        -hpa
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-BTW, any ETA on your caching changes landing in git? I'm really
-curious to see how many of my changes are not compatible with it 8-D
+
 
 -- 
-Giuseppe "Oblomov" Bilotta
+Imran M Yousuf
+Entrepreneur & Software Engineer
+Smart IT Engineering
+Dhaka, Bangladesh
+Email: imran@smartitengineering.com
+Blog: http://imyousuf-tech.blogs.smartitengineering.com/
+Mobile: +880-1711402557
