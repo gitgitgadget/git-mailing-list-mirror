@@ -1,99 +1,75 @@
-From: goooguo <erwangg@fortemedia.com.cn>
-Subject: Re: question: how to ignore extral CR when diff dos format files
- with 'color=auto'
-Date: Wed, 27 Aug 2008 18:39:15 -0700 (PDT)
-Message-ID: <1219887555724-788498.post@n2.nabble.com>
-References: <1219728743111-783231.post@n2.nabble.com>
+From: Lea Wiemann <lewiemann@gmail.com>
+Subject: Re: [PATCH] gitweb: ref markers link to named shortlogs
+Date: Thu, 28 Aug 2008 03:43:17 +0200
+Message-ID: <48B602B5.1070304@gmail.com>
+References: <1219341860-4913-1-git-send-email-giuseppe.bilotta@gmail.com> <200808261015.37023.jnareb@gmail.com> <cb7bb73a0808260358o41a04a9ara701e6c726cf2298@mail.gmail.com> <200808261349.28771.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 28 03:40:21 2008
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org,
+	Petr Baudis <pasky@ucw.cz>, Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 03:44:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYWUm-0003qu-VT
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 03:40:21 +0200
+	id 1KYWYf-0004Sv-RX
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 03:44:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753511AbYH1BjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2008 21:39:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753458AbYH1BjR
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 21:39:17 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:51612 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753414AbYH1BjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2008 21:39:16 -0400
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1KYWTj-0003ru-Q9
-	for git@vger.kernel.org; Wed, 27 Aug 2008 18:39:15 -0700
-In-Reply-To: <1219728743111-783231.post@n2.nabble.com>
-X-Nabble-From: erwangg@fortemedia.com.cn
+	id S1753015AbYH1BnR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2008 21:43:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753020AbYH1BnR
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Aug 2008 21:43:17 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:56020 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752960AbYH1BnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2008 21:43:16 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so122072fgg.17
+        for <git@vger.kernel.org>; Wed, 27 Aug 2008 18:43:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:from;
+        bh=c+FNUuUbyDzFKZ9wKH0osVA+9eaOKtcDaUcqcZlaVzw=;
+        b=cIrgzqiUclydn5Pq/VjHEoTbqKbX1cDUagnsJAHYKCxF4sNypwTVl6l75gL4iEPZwF
+         mlTDgCA29zbekJPbl2H5QZw+hTiGVYhW8TU8PQkuVrbUpq6Ela9zn7+G2956FKcWGvX6
+         RAUSeiWovYAT4YhhTCISnx79A9QzBgf+rzc2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding:from;
+        b=BYCXa4qIQ5DmAfkyKz0Lupm42xVieGFCI8pwAqBLftz5hQGYMGQgk6RT730ilCIwBB
+         Y0AC/YzVjOfk0GuwFTfUVCKFi5aUfHO7xc0wP6zZ/0239Gkgz8QES0aFrQqG1LbuljPU
+         4dM8DueHlQcDoNqAiUmw8iHStxVqlmQ/0THlE=
+Received: by 10.86.80.17 with SMTP id d17mr585257fgb.47.1219887794916;
+        Wed, 27 Aug 2008 18:43:14 -0700 (PDT)
+Received: from ?172.16.30.128? ( [91.33.241.196])
+        by mx.google.com with ESMTPS id 4sm511744fgg.4.2008.08.27.18.43.12
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 27 Aug 2008 18:43:13 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080707 Thunderbird/2.0.0.16 Mnenhy/0.7.5.666
+In-Reply-To: <200808261349.28771.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94014>
 
+Jakub Narebski wrote:
+> By the way, this is argument *for* selecting action when generating
+> link, if it is possible without incurring unnecessary (if you don't
+> follow the link) performance penalty.
 
+I agree that it's much cleaner to select the action when generating the
+page, rather than having an 'objectview' action or so.
 
-git v1.6.0 still didn't work, neither v1.5.6.4. (however,v1.5.5 works on
-mingwin)
+Worrying about performance seems like premature optimization though --
+my guesstimate is that the performance penalty for looking up the object
+type is not practically noticeable (read: relevant), and with my patch
+applied (even without caching activated) it should move below the
+measurable range.  So don't complicate the code to gain another 0.01%
+performance. ;-)
 
-I checked the source code of v1.6.0, and I found emit_line didn't check
-whether there is a cr at eol.
-
-I have fixed it.
-
->From dae20e25960c73bd7ccc0939fe096bb68a009fb5 Mon Sep 17 00:00:00 2001
-From: erwangg <erwangg@fortemedia.com.cn>
-Date: Wed, 27 Aug 2008 12:22:43 +0800
-Subject: [PATCH] ingore cr at eol when diff with color=auto
-
----
- diff.c |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 18fa7a7..846a9af 100644
---- a/diff.c
-+++ b/diff.c
-@@ -517,9 +517,16 @@ static void emit_line(FILE *file, const char *set,
-const char *reset, const char
- 	if (has_trailing_newline)
- 		len--;
- 
-+	int has_trailing_return = (len > 0 && line[len-1] == '\r');
-+	if (has_trailing_return)
-+        len--;
-+
- 	fputs(set, file);
- 	fwrite(line, len, 1, file);
- 	fputs(reset, file);
-+
-+    if (has_trailing_return)
-+        fputc('\r', file);
- 	if (has_trailing_newline)
- 		fputc('\n', file);
- }
-@@ -535,7 +542,7 @@ static void emit_add_line(const char *reset, struct
-emit_callback *ecbdata, cons
- 		/* Emit just the prefix, then the rest. */
- 		emit_line(ecbdata->file, set, reset, line, ecbdata->nparents);
- 		ws_check_emit(line + ecbdata->nparents,
--			      len - ecbdata->nparents, ecbdata->ws_rule,
-+			      len - ecbdata->nparents, ecbdata->ws_rule|WS_CR_AT_EOL,
- 			      ecbdata->file, set, reset, ws);
- 	}
- }
--- 
-1.6.0.GIT
-
-
-
-
--- 
-View this message in context: http://n2.nabble.com/question%3A-how-to-ignore-extral-CR-when-diff-dos-format-files-with-%27color%3Dauto%27-tp783231p788498.html
-Sent from the git mailing list archive at Nabble.com.
+-- Lea
