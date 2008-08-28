@@ -1,69 +1,59 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Git-aware HTTP transport
-Date: Wed, 27 Aug 2008 21:58:05 -0700
-Message-ID: <48B6305D.1080004@zytor.com>
-References: <20080826012643.GD26523@spearce.org> <48B36BCA.8060103@zytor.com> <20080826145857.GF26523@spearce.org> <48B4303C.3080409@zytor.com> <20080826172648.GK26523@spearce.org> <48B485F8.5030109@zytor.com> <20080828035018.GA10010@spearce.org> <48B62B6F.7010103@zytor.com> <20080828044205.GB10238@spearce.org>
+From: Al Viro <viro@hera.kernel.org>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Thu, 28 Aug 2008 11:54:08 +0000
+Message-ID: <20080828115408.GA30834@hera.kernel.org>
+References: <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vy72kek6y.fsf@gitster.siamese.dyndns.org> <20080826145719.GB5046@coredump.intra.peff.net> <7vr68b8q9p.fsf@gitster.siamese.dyndns.org> <20080827001705.GG23698@parisc-linux.org> <7v63pmkozh.fsf@gitster.siamese.dyndns.org> <1219907659.7107.230.camel@pmac.infradead.org> <7vtzd5fta0.fsf@gitster.siamese.dyndns.org> <1219912327.7107.245.camel@pmac.infradead.org> <94a0d4530808280157p230d289dlf0c85cd517541801@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Aug 28 06:59:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: David Woodhouse <dwmw2@infradead.org>,
+	Matthew Wilcox <matthew@wil.cx>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	users@kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 13:57:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYZbM-00083o-QV
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 06:59:21 +0200
+	id 1KYg7X-0005Oo-Mz
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 13:57:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751327AbYH1E6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 00:58:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbYH1E6Q
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 00:58:16 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:36484 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751242AbYH1E6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 00:58:16 -0400
-Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m7S4wFxg032091
+	id S1752118AbYH1Lzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 07:55:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbYH1Lzz
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 07:55:55 -0400
+Received: from hera.kernel.org ([140.211.167.34]:34663 "EHLO hera.kernel.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751997AbYH1Lzy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 07:55:54 -0400
+Received: from hera.kernel.org (IDENT:U2FsdGVkX1/hmRO2OvXu9N+0kxEfH+qEBNcx9GFACOA@localhost [127.0.0.1])
+	by hera.kernel.org (8.14.2/8.14.2) with ESMTP id m7SBsTV8026342
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 Aug 2008 21:58:15 -0700
-Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
-	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m7S4wEbH021587;
-	Wed, 27 Aug 2008 21:58:14 -0700
-Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
-	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m7S4w5n4004328;
-	Wed, 27 Aug 2008 21:58:06 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <20080828044205.GB10238@spearce.org>
-X-Virus-Scanned: ClamAV 0.93.3/8104/Wed Aug 27 19:11:35 2008 on terminus.zytor.com
+	Thu, 28 Aug 2008 11:54:29 GMT
+Received: (from viro@localhost)
+	by hera.kernel.org (8.14.2/8.13.1/Submit) id m7SBs8GN026297;
+	Thu, 28 Aug 2008 11:54:08 GMT
+Content-Disposition: inline
+In-Reply-To: <94a0d4530808280157p230d289dlf0c85cd517541801@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.93.3/8104/Thu Aug 28 02:11:35 2008 on hera.kernel.org
 X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00,
+	UNPARSEABLE_RELAY autolearn=ham version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on hera.kernel.org
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0 (hera.kernel.org [127.0.0.1]); Thu, 28 Aug 2008 11:54:50 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94040>
 
-Shawn O. Pearce wrote:
-> 
->> Just an implementation detail for the server, however: for an *empty*  
->> repository (one which has no refs at all), the server needs to *not*  
->> transmit the redirect, or there will be a loop :)  It is unnecessary,  
->> anyway, since there is inherently nothing to do.
-> 
-> Actually that's not true.  A correct client won't loop.
-> 
-> An empty repository is required to send "refs" section header.
-> So the client will see the "refs" header and know that the complete
-> set of refs is following.  Only nothing follows, so it knows the
-> complete set is the empty set.
-> 
-> A redirect with no ref data won't have the "refs" section header.
-> So the client knows that it cannot conclude anything from that
-> exchange and must follow the redirect.
-> 
+On Thu, Aug 28, 2008 at 11:57:56AM +0300, Felipe Contreras wrote:
 
-Ah, good point.
+> The masses should forget about the git-foo form. If you push people
+> into using git-foo then you are not following git guidelines; you
+> would be pushing your own agenda.
 
-	-hpa
+Egads...  For sarcasm it's far too heavy-handed and if that's for real...
+What's next, verbal diarrhea about Diluting the Message(tm)?
