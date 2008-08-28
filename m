@@ -1,70 +1,61 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [PATCH] be paranoid about closed stdin/stdout/stderr
-Date: Thu, 28 Aug 2008 14:52:58 +0200
-Message-ID: <20080828125258.GA16940@cuci.nl>
-References: <E1KXawS-0001gg-Ty@fencepost.gnu.org> <48B2AFC2.20901@viscovery.net> <7vbpzgb94q.fsf@gitster.siamese.dyndns.org> <E1KXsL9-0004ef-Co@fencepost.gnu.org> <48B3A948.3080800@viscovery.net> <20080826074044.GA22694@cuci.nl> <32541b130808262201v4d7c1aa5r781720a80b79fcd0@mail.gmail.com> <20080827091800.GB484@cuci.nl> <32541b130808271122t45031cc7n497da8da6ca52bd3@mail.gmail.com> <20080828122142.GA6518@mail.local.tull.net>
+From: "srinivasan.malligarjunan" <formypersonnel@yahoo.co.in>
+Subject: Git clone error
+Date: Thu, 28 Aug 2008 05:57:10 -0700 (PDT)
+Message-ID: <19199973.post@talk.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Karl Chen <quarl@cs.berkeley.edu>,
-	Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Nick Andrew <nick@nick-andrew.net>
-X-From: git-owner@vger.kernel.org Thu Aug 28 14:54:11 2008
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 28 14:58:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYh0q-0007sA-4x
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 14:54:08 +0200
+	id 1KYh4s-0000lV-26
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 14:58:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752531AbYH1MxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 08:53:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752299AbYH1MxA
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 08:53:00 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:54867 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752170AbYH1Mw7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 08:52:59 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id DC0205465; Thu, 28 Aug 2008 14:52:58 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080828122142.GA6518@mail.local.tull.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752170AbYH1M5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 08:57:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752151AbYH1M5N
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 08:57:13 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:57853 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750746AbYH1M5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 08:57:13 -0400
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1KYh3m-0002if-R7
+	for git@vger.kernel.org; Thu, 28 Aug 2008 05:57:11 -0700
+X-Nabble-From: formypersonnel@yahoo.co.in
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94045>
 
-Nick Andrew wrote:
->On Wed, Aug 27, 2008 at 02:22:39PM -0400, Avery Pennarun wrote:
->> I'm just feeling protective of the future sanity of other developers
->> here, hoping they don't have to go through what I did on a multi-week
 
->You're not alone. I've been having trouble with a combination of
->fetchmail, procmail and ssmtp, in which situation the ssmtp program
->_somehow_ sometimes opens /dev/urandom as file descriptor 0 (while
+[root@aspire038 git-1.5.6]# git clone git@github.com:/ayyanar/adva_cms.git
+Initialize adva_cms/.git
+Initialized empty Git repository in /root/Desktop/git-1.5.6/adva_cms/.git/
+The authenticity of host 'github.com (65.74.177.129)' can't be established.
+RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'github.com,65.74.177.129' (RSA) to the list of
+known hosts.
+Permission denied (publickey).
+fatal: The remote end hung up unexpectedly
+[root@aspire038 git-1.5.6]# git clone
+git@github.com:/karthikeyan7585/adva_cms.git
+Initialize adva_cms/.git
+Initialized empty Git repository in /root/Desktop/git-1.5.6/adva_cms/.git/
+Permission denied (publickey).
+fatal: The remote end hung up unexpectedly
+[root@aspire038 git-1.5.6]# 
 
->in controlled circumstances. It's possible that fetchmail or procmail
->is doing something stupid - but a little more defensive programming
->in ssmtp could avoid the total disaster area of sending an endless
->binary stream to an SMTP server.
 
-Procmail I can vouch for, it basically assumes your OS is broken and
-fights it's way back to sanity (it can be setuid root, so it has to
-be rather careful).
-Nonetheless, I still maintain that hiding problems doesn't help, it
-only makes the bugs even rarer and more difficult to find.
 
-The filedescriptor problem is a programmer-error, not a user-error,
-which is why not hiding it should be preferred.  If it were a
-user-error, thing would be different, assisting the user is a Good
-Thing.
+The permission denied error is comming . Please help me.
 -- 
-Sincerely,
-           Stephen R. van den Berg.
-
-"Listen carefully, I shall say this only wence."
+View this message in context: http://www.nabble.com/Git-clone-error-tp19199973p19199973.html
+Sent from the git mailing list archive at Nabble.com.
