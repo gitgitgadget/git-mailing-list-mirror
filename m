@@ -1,77 +1,76 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Perry Wagle <wagle@cs.indiana.edu>
 Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Thu, 28 Aug 2008 22:44:18 +0200
-Message-ID: <20080828204418.GY10360@machine.or.cz>
-References: <alpine.DEB.1.10.0808271717190.19923@gandalf.stny.rr.com> <7vd4jukphm.fsf@gitster.siamese.dyndns.org> <F86A1E37-8015-41B5-A462-F044B8D1C2B1@cs.indiana.edu> <BD6DEBB7-4D1C-43E9-B3D2-B46E42D9771D@cs.indiana.edu> <20080828090421.GQ10360@machine.or.cz> <18219E52-E56F-43D9-B28D-0CC74E225CC5@cs.indiana.edu> <alpine.LFD.1.10.0808280934160.3300@nehalem.linux-foundation.org> <7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu> <20080828195211.GA3545@mithlond.arda.local> <4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Teemu Likonen <tlikonen@iki.fi>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Kristian H??gsberg <krh@redhat.com>,
-	Matthias Kestenholz <mk@spinlock.ch>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Jeff King <peff@peff.net>,
-	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
-	Andi Kleen <andi@firstfloor.org>,
+Date: Thu, 28 Aug 2008 13:42:22 -0700
+Message-ID: <B0BAA28F-C029-411B-BE86-3A63951CE213@cs.indiana.edu>
+References: <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vr68b8q9p.fsf@gitster.siamese.dyndns.org> <20080827001705.GG23698@parisc-linux.org> <7v63pmkozh.fsf@gitster.siamese.dyndns.org> <1219907659.7107.230.camel@pmac.infradead.org> <7vtzd5fta0.fsf@gitster.siamese.dyndns.org> <1219912327.7107.245.camel@pmac.infradead.org> <94a0d4530808280157p230d289dlf0c85cd517541801@mail.gmail.com> <20080828115408.GA30834@hera.kernel.org> <94a0d4530808280615i2befb89cm7d6153bfceb11b19@mail.gmail.com> <94a0d4530808280634k1c23fe10q8934875c83d4a2f5@mail.gmail.com> <alpine.LFD.1.10.0808280936300.3300@nehalem.linux-foundation.org>
+Mime-Version: 1.0 (Apple Message framework v928.1)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Al Viro <viro@hera.kernel.org>,
+	Matthew Wilcox <matthew@wil.cx>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	users@kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
-To: Perry Wagle <wagle@cs.indiana.edu>
-X-From: git-owner@vger.kernel.org Thu Aug 28 22:45:27 2008
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 28 22:47:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYoMw-0007GW-5I
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 22:45:26 +0200
+	id 1KYoP7-0007ru-AH
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 22:47:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753660AbYH1UoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 16:44:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752913AbYH1UoV
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 16:44:21 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:53037 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752437AbYH1UoV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 16:44:21 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id B9B983939B57; Thu, 28 Aug 2008 22:44:18 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1756110AbYH1UqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 16:46:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756032AbYH1UqV
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 16:46:21 -0400
+Received: from newman.cs.indiana.edu ([129.79.247.4]:53134 "EHLO
+	newman.cs.indiana.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755952AbYH1UqU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 16:46:20 -0400
+Received: from smtp.cs.indiana.edu (smtp.cs.indiana.edu [129.79.247.7])
+	by newman.cs.indiana.edu (8.13.1/8.13.1/IUCS_2.87) with ESMTP id m7SKgUBY002119;
+	Thu, 28 Aug 2008 16:42:30 -0400
+Received: from dhcp-2.metabiology.com (pool-96-253-170-5.ptldor.fios.verizon.net [96.253.170.5])
+	(authenticated bits=0)
+	by rage.cs.indiana.edu (8.13.1/8.13.1/IUCS_SMTP_Alternate_Port_1.4) with ESMTP id m7SKgNvo008661
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 28 Aug 2008 16:42:27 -0400
+In-Reply-To: <alpine.LFD.1.10.0808280936300.3300@nehalem.linux-foundation.org>
+X-Mailer: Apple Mail (2.928.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94138>
 
-On Thu, Aug 28, 2008 at 01:23:50PM -0700, Perry Wagle wrote:
+On Aug 28, 2008, at 9:37 AM, Linus Torvalds wrote:
+
+> On Thu, 28 Aug 2008, Felipe Contreras wrote:
+>>
+>> If the git-foo was supposed to be deprecated in 1.6.0
 >
-> On Aug 28, 2008, at 12:52 PM, Teemu Likonen wrote:
->
->> I have come to understand that "git " has quite long time been more
->> robust and portable way of writing scripts. They work in both
->> configurations so I'd definitely suggest doing "s/git-/git /g" for every
->> script. Of course in an interactive shell everyone can use whatever they
->> prefer and works at the moment.
->
-> Sure.  Its an extra fork in git command intensive scripts (and git is racey 
-> still maybe), but *shrug*.
+> Itw as deprecated over a _year_ ago.
 
-Do you have any details on the races in Git you know about?
+No, it wasn't.  As of March 2008, git<DASH> was still in the sample  
+hooks and in git-web.  That was the last time I did anything with git  
+scripting.  It was something between then and now that the <DASH>'s  
+were finally removed.
 
-This does not mean an extra fork, only extra exec. In case of builtin
-commands (which is actually a large majority by now), not even that.
+Oh wait:
 
-> Even as of March 2008 (our last sync with git before the git scripting was 
-> completed and we got on to other things), the sample scripts and gitweb 
-> still used the git<DASH> form.  If this has been brewing for two years, 
-> there shouldn't have been a git<DASH> form in the scripts in the standard 
-> source *anywhere* for those two years.
+     dhcp-2:git wagle$ grep -r --color git- . | wc -l
+         6580
+     dhcp-2:git wagle$
 
-I agree that this is a problem. Even now, the documentation is using
-git- at plenty of places. Patches are welcome, I'm sure.
+No, I'm not going to figure out which are okay, and which aren't.   
+I'll just assume that they are all okay, but leave you to wonder.
 
--- 
-				Petr "Pasky" Baudis
-The next generation of interesting software will be done
-on the Macintosh, not the IBM PC.  -- Bill Gates
+-- Perry
+
+PS.  Okay, fine!  Here's as far as I got before getting bored:
+
+     grep -r git- . | cat -v | sed "s/^.*\(git-[^ :\")\[($\']*\).*$/ 
+\1/" | sort | uniq
