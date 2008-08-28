@@ -1,76 +1,115 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH] be paranoid about closed stdin/stdout/stderr
-Date: Thu, 28 Aug 2008 15:17:46 +0200
-Message-ID: <48B6A57A.6050109@gnu.org>
-References: <quack.20080825T0128.lthr68djy70@roar.cs.berkeley.edu> <48B28CF8.2060306@viscovery.net> <48B29C52.8040901@gnu.org> <E1KXawS-0001gg-Ty@fencepost.gnu.org> <48B2AFC2.20901@viscovery.net> <7vbpzgb94q.fsf@gitster.siamese.dyndns.org> <E1KXsL9-0004ef-Co@fencepost.gnu.org> <48B3A948.3080800@viscovery.net> <20080826074044.GA22694@cuci.nl> <32541b130808262201v4d7c1aa5r781720a80b79fcd0@mail.gmail.com> <20080827091800.GB484@cuci.nl> <48B54A3D.3080708@gnu.org> <7vej4aqsge.fsf@gitster.siamese.dyndns.org>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Thu, 28 Aug 2008 16:34:08 +0300
+Message-ID: <94a0d4530808280634k1c23fe10q8934875c83d4a2f5@mail.gmail.com>
+References: <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+	 <7vr68b8q9p.fsf@gitster.siamese.dyndns.org>
+	 <20080827001705.GG23698@parisc-linux.org>
+	 <7v63pmkozh.fsf@gitster.siamese.dyndns.org>
+	 <1219907659.7107.230.camel@pmac.infradead.org>
+	 <7vtzd5fta0.fsf@gitster.siamese.dyndns.org>
+	 <1219912327.7107.245.camel@pmac.infradead.org>
+	 <94a0d4530808280157p230d289dlf0c85cd517541801@mail.gmail.com>
+	 <20080828115408.GA30834@hera.kernel.org>
+	 <94a0d4530808280615i2befb89cm7d6153bfceb11b19@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Stephen R. van den Berg" <srb@cuci.nl>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Karl Chen <quarl@cs.berkeley.edu>,
-	Git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 15:19:02 2008
+Cc: "David Woodhouse" <dwmw2@infradead.org>,
+	"Matthew Wilcox" <matthew@wil.cx>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	users@kernel.org, "Jeff King" <peff@peff.net>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Al Viro" <viro@hera.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 28 15:38:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYhOq-0007br-IR
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 15:18:57 +0200
+	id 1KYhfB-0004Ki-Ma
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 15:35:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752411AbYH1NRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 09:17:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752516AbYH1NRw
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 09:17:52 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:47746 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752304AbYH1NRv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 09:17:51 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so54521nfc.21
-        for <git@vger.kernel.org>; Thu, 28 Aug 2008 06:17:49 -0700 (PDT)
+	id S1752986AbYH1Nem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 09:34:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752933AbYH1Nel
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 09:34:41 -0400
+Received: from rv-out-0506.google.com ([209.85.198.238]:47765 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752636AbYH1Nel (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 09:34:41 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so401636rvb.1
+        for <git@vger.kernel.org>; Thu, 28 Aug 2008 06:34:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:newsgroups:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:sender;
-        bh=9U1/1EIraFgyOkzn/leZ3r8szxEJUUNQjIJDeQRInCo=;
-        b=MiEGm3H1lsjgE75MTyG1sc+S62yariGHbVT0ICeDACoxEVPwQ9GKxWjTQD2CxLx4Wn
-         RRIpuZ6j95x0sXp6CwYS83aHjoq7Fa7tFEBjcWDoYzxY1l/D5rYqSO7sBP0Mw/b6/R2e
-         qDP1NGYitBjO1GdgwJFUs8RAKQH+HpbwxR7SI=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=XjjmdcHLcBYpk7eBvd/zXl9HAleJPYZq/WlJxBVhaJg=;
+        b=Lj4HOxQNyWZJzwHMxEnblNjEyuag8jAAY/a1tev8CramOMXkdp9NAqJnVUIo7DhS9j
+         AKXd7cfzsygg+zAH5AlSK53/qnwH0Ax65m8FDkR/ovyw+P/Xo4X6WM+C83au/CCntaFx
+         WCAjCd7e5aRBmIV5QEwP62dsCdAcOKeEl5fLg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding:sender;
-        b=laNBzkJBs4JZhe0IMiDeWLjSkOwKdJfODPk0XdOdDuaiE/Ose/DeE6xyyFcb4S5mjB
-         antn+McSspNkl+3o49mq5bbl6kfbfEGnUqpt8P/0WMc5pKDOZQEwnSXNM5zunObUpcnH
-         arB9BpZEeNqh3FEP4G5i9QlQnSUm3/h10bizE=
-Received: by 10.103.242.7 with SMTP id u7mr854330mur.100.1219929469407;
-        Thu, 28 Aug 2008 06:17:49 -0700 (PDT)
-Received: from scientist-2.local ( [195.176.178.209])
-        by mx.google.com with ESMTPS id y6sm4643884mug.7.2008.08.28.06.17.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 28 Aug 2008 06:17:48 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <7vej4aqsge.fsf@gitster.siamese.dyndns.org>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=fWyay3J6mQvixIFjgpzblhgfa2hjlJb4lutBaCMqCmRReUydIKtQ0/NEAB6FCZR6hP
+         7O5rcv8qzM6wYXHVMkzQ79rUTI9hXhAV+afuZxPBQzgiXR9j6wJ++B7rCcDF1dlXSSN4
+         T0vUg2b/9dboS5IOmLrJ0H0h2d477HhCRcRNc=
+Received: by 10.141.53.4 with SMTP id f4mr733582rvk.82.1219930448230;
+        Thu, 28 Aug 2008 06:34:08 -0700 (PDT)
+Received: by 10.140.166.19 with HTTP; Thu, 28 Aug 2008 06:34:08 -0700 (PDT)
+In-Reply-To: <94a0d4530808280615i2befb89cm7d6153bfceb11b19@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94052>
 
+On Thu, Aug 28, 2008 at 4:15 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Thu, Aug 28, 2008 at 2:54 PM, Al Viro <viro@hera.kernel.org> wrote:
+>> On Thu, Aug 28, 2008 at 11:57:56AM +0300, Felipe Contreras wrote:
+>>
+>>> The masses should forget about the git-foo form. If you push people
+>>> into using git-foo then you are not following git guidelines; you
+>>> would be pushing your own agenda.
+>>
+>> Egads...  For sarcasm it's far too heavy-handed and if that's for real...
+>> What's next, verbal diarrhea about Diluting the Message(tm)?
+>
+> Sorry, I guess I should have made it clearer.
+>
+> I haven't made my mind about git-foo vs "git foo", but a decision has
+> been made to deprecate git-foo, and allow it as an option for the
+> people that really want to use it, right?
+>
+> So there must have been a reason to deprecate git-foo, if people keep
+> using git-foo, and distributions keep allowing it, what's the point of
+> deprecation? It's ok if they keep that usage to themselves, like
+> 'alias ll = ls -l', but it's not something to assume everybody uses.
+>
+> So either we take back the decision and keep discussing if it's a good
+> idea to deprecate git-foo, or we go forward and discourage git-foo
+> completely.
+>
+> Anything in the middle would just confuse people more, and wouldn't
+> achieve the purpose of deprecation.
+>
+> If some script is relying on git-foo, and it has been deprecated, it
+> should be fixed.
 
-> It is either run by ssh (via command="" option in authorized_keys file),
-> by init/login (if in /etc/passwd), or by gitosis (and its equivalent).
+Actually, now I think I understand the point of David Woodhouse better.
 
-It is possible to run it with file descriptors closed via ssh, using
-command="git-shell 0<&- 1<&- 2<&-" in the authorized_keys file.
+If the git-foo was supposed to be deprecated in 1.6.0, it should still
+work by default, but something to strongly discourage it like a
+warning should have been added.
 
-It's true that in this case the user is also shooting himself, but given
-that git-shell is used to restrict operation to "safe" commands, this
-special case might be worth being worked around.
+When it becomes truly obsolete, then people can rely on git exec-dir,
+which will be disabled by default.
 
-Paolo
+So is it deprecated or obsolete?
+
+-- 
+Felipe Contreras
