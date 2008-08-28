@@ -1,82 +1,76 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [QGIT RFC] Unit tests for QGit
-Date: Thu, 28 Aug 2008 17:31:18 +0200
-Message-ID: <20080828153118.GA13169@diana.vm.bytemark.co.uk>
-References: <20080808211318.GA4396@efreet.light.src> <e5bfff550808170846y522cc6a8w59b696be39df311b@mail.gmail.com> <20080817195839.GB4542@efreet.light.src> <e5bfff550808171330w28dda6a2m32b0e51b1ef73cdc@mail.gmail.com> <20080818180048.GA15520@efreet.light.src> <e5bfff550808190753t4f99ddb6q83886dbca27dbf03@mail.gmail.com> <20080827201819.GD15520@efreet.light.src> <e5bfff550808280429h63496f9byfa4454af7adb0e86@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Thu, 28 Aug 2008 17:21:29 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808281719130.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <7vprnzt7d5.fsf@gitster.siamese.dyndns.org> <1219664940.9583.42.camel@pmac.infradead.org> <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <7vy72kek6y.fsf@gitster.siamese.dyndns.org> <20080826145719.GB5046@coredump.intra.peff.net>
+ <1219764860.4471.13.camel@gaara.bos.redhat.com> <1219766398.7107.87.camel@pmac.infradead.org> <alpine.LFD.1.10.0808260959000.3363@nehalem.linux-foundation.org> <80myizelcw.fsf@tiny.isode.net> <20080826173512.GS10544@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 17:10:59 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Bruce Stephens <bruce.stephens@isode.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Kristian H?gsberg <krh@redhat.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	users@kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Aug 28 17:17:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYj8i-0005Q6-MI
-	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 17:10:25 +0200
+	id 1KYjFV-0007nH-NS
+	for gcvg-git-2@gmane.org; Thu, 28 Aug 2008 17:17:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751465AbYH1PJT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Aug 2008 11:09:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbYH1PJT
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 11:09:19 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1057 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751371AbYH1PJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 11:09:18 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KYjSx-0003ZY-00; Thu, 28 Aug 2008 16:31:19 +0100
-Content-Disposition: inline
-In-Reply-To: <e5bfff550808280429h63496f9byfa4454af7adb0e86@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753033AbYH1PQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 11:16:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752386AbYH1PQV
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 11:16:21 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60920 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751460AbYH1PQU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 11:16:20 -0400
+Received: (qmail invoked by alias); 28 Aug 2008 15:16:18 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp004) with SMTP; 28 Aug 2008 17:16:18 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19hX+t7iUNho5e2RIvQE3mwH6CS7EW1tOj8hQzGWY
+	s9dIpYDNbEodd1
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20080826173512.GS10544@machine.or.cz>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94067>
 
-On 2008-08-28 13:29:25 +0200, Marco Costalba wrote:
+Hi,
 
-> On Wed, Aug 27, 2008 at 10:18 PM, Jan Hudec <bulb@ucw.cz> wrote:
->
-> > Actually, I just wrote a first simple test for it. I didn't find
-> > this (now the stg branch finds out properly), but I found another
-> > problem -- when switching from non-stgit branch to a stgit one,
-> > Git::init will not notice, because the path didn't change, so the
-> > check is not re-run. Applies to the other direction too, of
-> > course.
->
-> I have never tested on repos where some branches are under stgit and
-> others are not. Actually I even didn't know it was possible.
+On Tue, 26 Aug 2008, Petr Baudis wrote:
 
-StGit has no per-repo data. It's all per-branch. "stg init" operates
-on the current branch, not the whole repo.
+> On Tue, Aug 26, 2008 at 06:29:03PM +0100, Bruce Stephens wrote:
+> >   - it means git on Windows has the same interface
+> > 
+> > (Arguably the latter point ought to be "forces Unix users to use the
+> > same interface as on Windows", but the git-foo forms have been
+> > deprecated on all platforms for a while.  Making Unix and Windows the
+> > same seems a worthwhile goal, though presumably it's irrelevant for
+> > linux kernel people.)
+> 
+> I actually checked, and my msysgit installation does hardlinking (or at
+> least pretends to do, and ls -l shows high linkcounts). And somewhat
+> amusingly, it doesn't appear that 1.6.0 will be released for Windows
+> anytime soon, though that's of course not relevant from long term
+> perspective.
 
-> The command:
->
-> isStGIT =3D run("stg branch", &stgCurBranch); // slow command
->
-> is used to check if a repo is under StGit control, i.e 'stg init'
-> has been run in the repo working directory (it doesn't mean that
-> there are StGit patches applied or unapplied, could be also without
-> them).
+That is correct.  Even more amusingly, it cannot be released ATM because 
+of a breakage _caused_ by the move into libexec: on Windows, we _want_ to 
+be as relocatable as possible, i.e. not having an _absolute_ exec path 
+compiled in.  So we use a relative one.  And that's the rub: from bin/ 
+(for "git") and from libexec/git/ (for almost all others), there is no 
+single relative path to etc/.
 
-Hmm. For me, "stg branch" succeeds even if "stg init" has not yet been
-run (which is arguably as it should be, since it doesn't require that
-stg init has been run in the current branch). "stg series" or
-something is probably better for this purpose.
-
-Though if you're concerned about speed (as the comment indicates), you
-should probably do something cheaper than running stg, such as
-checking if .git/patches/<branchname> exists.
-
-> So it's not very clear to me what does it mean "switching from
-> non-stgit branch to a stgit one"
-
-Switching from a branch where "stg init" hasn't been run, to one where
-it has.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Funny, eh?
+Dscho
