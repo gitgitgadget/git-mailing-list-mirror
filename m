@@ -1,107 +1,124 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Thu, 28 Aug 2008 16:03:08 -0700 (PDT)
-Message-ID: <m3prnsrbdp.fsf@localhost.localdomain>
-References: <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-	<7vr68b8q9p.fsf@gitster.siamese.dyndns.org>
-	<20080827001705.GG23698@parisc-linux.org>
-	<7v63pmkozh.fsf@gitster.siamese.dyndns.org>
-	<1219907659.7107.230.camel@pmac.infradead.org>
-	<7vtzd5fta0.fsf@gitster.siamese.dyndns.org>
-	<1219912327.7107.245.camel@pmac.infradead.org>
-	<94a0d4530808280157p230d289dlf0c85cd517541801@mail.gmail.com>
-	<20080828115408.GA30834@hera.kernel.org>
-	<94a0d4530808280615i2befb89cm7d6153bfceb11b19@mail.gmail.com>
-	<94a0d4530808280634k1c23fe10q8934875c83d4a2f5@mail.gmail.com>
-	<alpine.LFD.1.10.0808280936300.3300@nehalem.linux-foundation.org>
-	<B0BAA28F-C029-411B-BE86-3A63951CE213@cs.indiana.edu>
+Date: Thu, 28 Aug 2008 19:04:01 -0400
+Message-ID: <20080828230401.GC29609@coredump.intra.peff.net>
+References: <20080828090421.GQ10360@machine.or.cz> <18219E52-E56F-43D9-B28D-0CC74E225CC5@cs.indiana.edu> <alpine.LFD.1.10.0808280934160.3300@nehalem.linux-foundation.org> <7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu> <20080828195211.GA3545@mithlond.arda.local> <4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu> <20080828212346.GA27867@coredump.intra.peff.net> <1C144B19-DA21-4CB4-B872-C1F154B031CF@cs.indiana.edu> <20080828215907.GE27867@coredump.intra.peff.net> <3DE083DB-ADFF-45E7-B3EB-A76985941271@cs.indiana.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Al Viro <viro@hera.kernel.org>,
-	Matthew Wilcox <matthew@wil.cx>,
+Content-Type: text/plain; charset=utf-8
+Cc: Teemu Likonen <tlikonen@iki.fi>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
+	Andi Kleen <andi@firstfloor.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	users@kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
 To: Perry Wagle <wagle@cs.indiana.edu>
-X-From: git-owner@vger.kernel.org Fri Aug 29 01:04:18 2008
+X-From: git-owner@vger.kernel.org Fri Aug 29 01:06:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYqXJ-0004nQ-1s
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 01:04:17 +0200
+	id 1KYqYA-0004yT-VL
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 01:05:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754056AbYH1XDN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 19:03:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753920AbYH1XDN
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 19:03:13 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:62995 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753855AbYH1XDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 19:03:11 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so185118eyi.37
-        for <git@vger.kernel.org>; Thu, 28 Aug 2008 16:03:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=N8psNbNCR0bG52reIltpnmU4KUZQzR0zCoCQz36BBuM=;
-        b=jsZ6Bf4qwLZueJX1EVLUo/7hDTzLUhGjpq8WaSvjVt6zoGQc63tS9zwbpI6926E/h3
-         /JpEXkcUW9Hd+KK+n/Stv5/O8Xt+i0rDpKfUQCTlc08JpYDsepw9tyJTZTyuyQ+dKxCz
-         H4ypksiRLHhemufieMxQiQu7eixQrzHfB/HaQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=VlWili7MG+eSnppAMf/Hr2k8BSaFd0xw78ABmRHMujsWQzd130ignzZoWa4A03LKLg
-         3IJItYWNnPlVCMOVr+sgXq8subnkCkB1NH+pzbwiNfMco30OwpJj3k/Yc//9WDAqlmHh
-         5j0ZvcpBeeiofWSU/C3cFzX4M3/el0prlO+/k=
-Received: by 10.210.105.20 with SMTP id d20mr634448ebc.18.1219964589935;
-        Thu, 28 Aug 2008 16:03:09 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.255.225])
-        by mx.google.com with ESMTPS id f13sm5347465gvd.10.2008.08.28.16.03.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 28 Aug 2008 16:03:08 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m7SN36EQ023962;
-	Fri, 29 Aug 2008 01:03:06 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m7SN2xgm023959;
-	Fri, 29 Aug 2008 01:02:59 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <B0BAA28F-C029-411B-BE86-3A63951CE213@cs.indiana.edu>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754157AbYH1XEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 19:04:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753920AbYH1XEF
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 19:04:05 -0400
+Received: from peff.net ([208.65.91.99]:1823 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753375AbYH1XEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 19:04:04 -0400
+Received: (qmail 8750 invoked by uid 111); 28 Aug 2008 23:04:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 28 Aug 2008 19:04:02 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Aug 2008 19:04:01 -0400
+Content-Disposition: inline
+In-Reply-To: <3DE083DB-ADFF-45E7-B3EB-A76985941271@cs.indiana.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94199>
 
-Perry Wagle <wagle@cs.indiana.edu> writes:
+On Thu, Aug 28, 2008 at 03:33:26PM -0700, Perry Wagle wrote:
 
-> On Aug 28, 2008, at 9:37 AM, Linus Torvalds wrote: 
->> On Thu, 28 Aug 2008, Felipe Contreras wrote:
->>>
->>> If the git-foo was supposed to be deprecated in 1.6.0
->>
->> Itw as deprecated over a _year_ ago.
-> 
-> No, it wasn't.  As of March 2008, git<DASH> was still in the sample
-> hooks and in git-web. [...]
+> Ok.  My suggestion is that it shouldn't have been done in the first  
+> place, and we should now revert.  But others are saying over and over  
+> "its done!  live with it!".  I came in late.  What did I miss in the last 
+> 6 months.  Sounds like people have lots of practice with these  
+> water-over-the-dam's, surely this isn't the first time?
 
-If by "git-web" you mean "gitweb", the git web interface in Perl, this
-is simply not true.  From the commit 25691fb (gitweb: Use --git-dir
-parameter instead of setting $ENV{'GIT_DIR'}) _at least_ gitweb uses
-"git <comd>" and not "git-cmd" form.  And this commit was on 28 August
-2006, so in March 2008 gitweb didn't use git<DASH> form...
+No, it really is the first time.
 
-Check your facts, please...
+> In March 2008, the sample git-hooks and git-web used git<DASH> commands.  
+> That was the last I looked at git until Tuesday of this week.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Yes, and some of the test scripts still have git-* in them. I think in
+that respect, the git community has been very bad about eating our own
+dog food.
+
+>>    So yes, maybe there _are_ other bugs just like it lurking. But
+>>    wouldn't it stand to reason that those bugs have _also_ been
+>>    discussed and mentioned in the release notes, or that the developers
+>>    would know about them?
+>
+> This is declared to not be a bug, even though it breaks existing scripts, 
+> even those published in the main branch of git itself.
+
+I think the bug is not in the change, but in the deprecation process and
+communication. But I think the definition of "bug" is vague enough to
+simply be in the eye of the beholder.
+
+> I'm going by the reasoning shown in this thread.  Why not?  I'm looking 
+> for a way not to have to do exhaustive testing on those scripts, so would 
+> love to hear it.
+
+Ultimately you must be the judge of what and how much to test on your
+systems. But if you are asking if there are other similar compatibility
+bugs in 1.6.0, then my opinion, as somebody who follows the git list
+quite closely and contributes some code, is that no, there are not.
+
+>>  1. I find your claim that such bugs exist to have little evidence to
+>>     back it up.
+>
+> Induction.  If it happened once, it probably happened more than once.   
+> This wasn't a show stopper problem.  It wasn't broke, but it was "fixed" 
+> anyway.
+
+Induction in this manner is not a very rigorous argument (we're being
+engineers, right?). I gave several reasons already why the probability
+is low that another such bug exists, mostly related to the lack of
+indicators.
+
+> I don't know what I missed, and am not sure how to search for in in ten 
+> thousand messages or so since March.  My style is to anticipate problems.
+
+Sure, I wouldn't want to go back and read all of the messages either.
+But this was mentioned in the release notes, too. Why don't you start
+with them?
+
+> I think I hear you.  Since git is young, I should expect  
+> incompatibilities with minor version changes, and not demand that they be 
+> held off for major version changes.  That seems very plausible.
+
+That isn't quite what I meant. What I meant was that our idea of a major
+version number is the middle number. That is, the time to introduce a
+few minor incompatibilities is when that number jumps (but they should
+be documented for a significant time period ahead of time, which this
+was).  I don't expect to jump to "git 2.0" basically ever. Just as I
+don't really expect Linux 3.0 anytime soon. But I, of course, am not in
+charge of such things, so you may take that with a grain of salt.
+
+> But I think I'll still remain wary because 1.6 introduced a nearly  
+> complete renaming of the API for what, in this thread anyway, completely 
+> silly reasons.  If there are good reasons, I haven't seen them.
+
+I think the reasons have been mentioned a few times. Maybe you just
+didn't think they were good.
+
+-Peff
