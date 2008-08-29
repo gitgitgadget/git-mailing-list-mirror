@@ -1,220 +1,190 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 1/3] improve reliability of fixup_pack_header_footer()
-Date: Thu, 28 Aug 2008 22:07:02 -0400
-Message-ID: <1219975624-7653-1-git-send-email-nico@cam.org>
+Subject: [PATCH 3/3] index-pack: use fixup_pack_header_footer()'s validation
+ mode
+Date: Thu, 28 Aug 2008 22:07:04 -0400
+Message-ID: <1219975624-7653-3-git-send-email-nico@cam.org>
 References: <alpine.LFD.1.10.0808282142490.1624@xanadu.home>
+ <1219975624-7653-1-git-send-email-nico@cam.org>
+ <1219975624-7653-2-git-send-email-nico@cam.org>
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 29 04:08:34 2008
+X-From: git-owner@vger.kernel.org Fri Aug 29 04:08:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYtPW-0004BH-7b
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 04:08:26 +0200
+	id 1KYtPo-0004Ej-PV
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 04:08:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750912AbYH2CHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 22:07:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbYH2CHM
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 22:07:12 -0400
+	id S1751048AbYH2CH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 22:07:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbYH2CH1
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 22:07:27 -0400
 Received: from relais.videotron.ca ([24.201.245.36]:57167 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750908AbYH2CHL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 22:07:11 -0400
+	with ESMTP id S1750978AbYH2CHW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 22:07:22 -0400
 Received: from localhost.localdomain ([66.131.194.97])
  by VL-MO-MR005.ip.videotron.ca
  (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
  with ESMTP id <0K6C005YHB6YVB40@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 28 Aug 2008 22:06:35 -0400 (EDT)
+ git@vger.kernel.org; Thu, 28 Aug 2008 22:06:36 -0400 (EDT)
 X-Mailer: git-send-email 1.6.0.1.174.g97d7e.dirty
-In-reply-to: <alpine.LFD.1.10.0808282142490.1624@xanadu.home>
+In-reply-to: <1219975624-7653-2-git-send-email-nico@cam.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94244>
 
-Currently, this function has the potential to read corrupted pack data
-from disk and give it a valid SHA1 checksum.  Let's add the ability to
-validate SHA1 checksum of existing data along the way, including before
-and after any arbitrary point in the pack.
+When completing a thin pack, a new header has to be written to
+the pack and a new SHA1 computed.  Make sure that the SHA1 of what
+is being read back matches the SHA1 of what was written for both:
+the original pack and the appended objects.
+
+To do so, a couple write_or_die() calls were converted to sha1write()
+which has the advantage of doing some buffering as well as handling
+SHA1 and CRC32 checksum already.
 
 Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- builtin-pack-objects.c |    3 +-
- fast-import.c          |    3 +-
- index-pack.c           |    3 +-
- pack-write.c           |   78 ++++++++++++++++++++++++++++++++++++++++-------
- pack.h                 |    2 +-
- 5 files changed, 73 insertions(+), 16 deletions(-)
+ index-pack.c |   43 +++++++++++++++++++++++++------------------
+ 1 files changed, 25 insertions(+), 18 deletions(-)
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index ef3befe..ec80f14 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -498,7 +498,8 @@ static void write_pack_file(void)
- 			sha1close(f, sha1, CSUM_FSYNC);
- 		} else {
- 			int fd = sha1close(f, NULL, 0);
--			fixup_pack_header_footer(fd, sha1, pack_tmp_name, nr_written);
-+			fixup_pack_header_footer(fd, sha1, pack_tmp_name,
-+						 nr_written, NULL, 0);
- 			close(fd);
- 		}
- 
-diff --git a/fast-import.c b/fast-import.c
-index 7089e6f..d85b3a5 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -951,7 +951,8 @@ static void end_packfile(void)
- 
- 		close_pack_windows(pack_data);
- 		fixup_pack_header_footer(pack_data->pack_fd, pack_data->sha1,
--				    pack_data->pack_name, object_count);
-+				    pack_data->pack_name, object_count,
-+				    NULL, 0);
- 		close(pack_data->pack_fd);
- 		idx_name = keep_pack(create_index());
- 
 diff --git a/index-pack.c b/index-pack.c
-index 728af7d..411b80d 100644
+index 411b80d..a6e91fe 100644
 --- a/index-pack.c
 +++ b/index-pack.c
-@@ -982,7 +982,8 @@ int main(int argc, char **argv)
+@@ -654,7 +654,7 @@ static void parse_pack_objects(unsigned char *sha1)
+ 	}
+ }
+ 
+-static int write_compressed(int fd, void *in, unsigned int size, uint32_t *obj_crc)
++static int write_compressed(struct sha1file *f, void *in, unsigned int size)
+ {
+ 	z_stream stream;
+ 	unsigned long maxsize;
+@@ -674,13 +674,12 @@ static int write_compressed(int fd, void *in, unsigned int size, uint32_t *obj_c
+ 	deflateEnd(&stream);
+ 
+ 	size = stream.total_out;
+-	write_or_die(fd, out, size);
+-	*obj_crc = crc32(*obj_crc, out, size);
++	sha1write(f, out, size);
+ 	free(out);
+ 	return size;
+ }
+ 
+-static struct object_entry *append_obj_to_pack(
++static struct object_entry *append_obj_to_pack(struct sha1file *f,
+ 			       const unsigned char *sha1, void *buf,
+ 			       unsigned long size, enum object_type type)
+ {
+@@ -696,15 +695,15 @@ static struct object_entry *append_obj_to_pack(
+ 		s >>= 7;
+ 	}
+ 	header[n++] = c;
+-	write_or_die(output_fd, header, n);
+-	obj[0].idx.crc32 = crc32(0, Z_NULL, 0);
+-	obj[0].idx.crc32 = crc32(obj[0].idx.crc32, header, n);
++	crc32_begin(f);
++	sha1write(f, header, n);
+ 	obj[0].size = size;
+ 	obj[0].hdr_size = n;
+ 	obj[0].type = type;
+ 	obj[0].real_type = type;
+ 	obj[1].idx.offset = obj[0].idx.offset + n;
+-	obj[1].idx.offset += write_compressed(output_fd, buf, size, &obj[0].idx.crc32);
++	obj[1].idx.offset += write_compressed(f, buf, size);
++	obj[0].idx.crc32 = crc32_end(f);
+ 	hashcpy(obj->idx.sha1, sha1);
+ 	return obj;
+ }
+@@ -716,7 +715,7 @@ static int delta_pos_compare(const void *_a, const void *_b)
+ 	return a->obj_no - b->obj_no;
+ }
+ 
+-static void fix_unresolved_deltas(int nr_unresolved)
++static void fix_unresolved_deltas(struct sha1file *f, int nr_unresolved)
+ {
+ 	struct delta_entry **sorted_by_pos;
+ 	int i, n = 0;
+@@ -754,8 +753,8 @@ static void fix_unresolved_deltas(int nr_unresolved)
+ 		if (check_sha1_signature(d->base.sha1, base_obj.data,
+ 				base_obj.size, typename(type)))
+ 			die("local object %s is corrupt", sha1_to_hex(d->base.sha1));
+-		base_obj.obj = append_obj_to_pack(d->base.sha1, base_obj.data,
+-			base_obj.size, type);
++		base_obj.obj = append_obj_to_pack(f, d->base.sha1,
++					base_obj.data, base_obj.size, type);
+ 		link_base_data(NULL, &base_obj);
+ 
+ 		find_delta_children(&d->base, &first, &last);
+@@ -875,7 +874,7 @@ int main(int argc, char **argv)
+ 	const char *keep_name = NULL, *keep_msg = NULL;
+ 	char *index_name_buf = NULL, *keep_name_buf = NULL;
+ 	struct pack_idx_entry **idx_objects;
+-	unsigned char sha1[20];
++	unsigned char pack_sha1[20];
+ 	int nongit = 0;
+ 
+ 	setup_git_directory_gently(&nongit);
+@@ -962,13 +961,15 @@ int main(int argc, char **argv)
+ 	parse_pack_header();
+ 	objects = xmalloc((nr_objects + 1) * sizeof(struct object_entry));
+ 	deltas = xmalloc(nr_objects * sizeof(struct delta_entry));
+-	parse_pack_objects(sha1);
++	parse_pack_objects(pack_sha1);
+ 	if (nr_deltas == nr_resolved_deltas) {
+ 		stop_progress(&progress);
+ 		/* Flush remaining pack final 20-byte SHA1. */
+ 		flush();
+ 	} else {
+ 		if (fix_thin_pack) {
++			struct sha1file *f;
++			unsigned char read_sha1[20], tail_sha1[20];
+ 			char msg[48];
+ 			int nr_unresolved = nr_deltas - nr_resolved_deltas;
+ 			int nr_objects_initial = nr_objects;
+@@ -977,13 +978,19 @@ int main(int argc, char **argv)
+ 			objects = xrealloc(objects,
+ 					   (nr_objects + nr_unresolved + 1)
+ 					   * sizeof(*objects));
+-			fix_unresolved_deltas(nr_unresolved);
++			f = sha1fd(output_fd, curr_pack);
++			fix_unresolved_deltas(f, nr_unresolved);
+ 			sprintf(msg, "completed with %d local objects",
  				nr_objects - nr_objects_initial);
  			stop_progress_msg(&progress, msg);
- 			fixup_pack_header_footer(output_fd, sha1,
--						 curr_pack, nr_objects);
-+						 curr_pack, nr_objects,
-+						 NULL, 0);
+-			fixup_pack_header_footer(output_fd, sha1,
++			sha1close(f, tail_sha1, 0);
++			hashcpy(read_sha1, pack_sha1);
++			fixup_pack_header_footer(output_fd, pack_sha1,
+ 						 curr_pack, nr_objects,
+-						 NULL, 0);
++						 read_sha1, consumed_bytes-20);
++			if (hashcmp(read_sha1, tail_sha1) != 0)
++				die("Unexpected tail checksum for %s "
++				    "(disk corruption?)", curr_pack);
  		}
  		if (nr_deltas != nr_resolved_deltas)
  			die("pack has %d unresolved deltas",
-diff --git a/pack-write.c b/pack-write.c
-index ddcfd37..0c0abce 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -144,41 +144,95 @@ char *write_idx_file(char *index_name, struct pack_idx_entry **objects,
- 	return index_name;
- }
+@@ -996,13 +1003,13 @@ int main(int argc, char **argv)
+ 	idx_objects = xmalloc((nr_objects) * sizeof(struct pack_idx_entry *));
+ 	for (i = 0; i < nr_objects; i++)
+ 		idx_objects[i] = &objects[i].idx;
+-	curr_index = write_idx_file(index_name, idx_objects, nr_objects, sha1);
++	curr_index = write_idx_file(index_name, idx_objects, nr_objects, pack_sha1);
+ 	free(idx_objects);
  
-+/*
-+ * Update pack header with object_count and compute new SHA1 for pack data
-+ * associated to pack_fd, and write that SHA1 at the end.  That new SHA1
-+ * is also returned in new_pack_sha1.
-+ *
-+ * If partial_pack_sha1 is non null, then the SHA1 of the existing pack
-+ * (without the header update) is computed and validated against the one
-+ * provided in partial_pack_sha1.  The validation is performed at
-+ * partial_pack_offset bytes in the pack file, or at the end of the pack
-+ * file if partial_pack_offset is zero.  Also, when partial_pack_offset is
-+ * non zero, the SHA1 of the remaining data (i.e. from partial_pack_offset
-+ * to the end) is returned in partial_pack_sha1.
-+ *
-+ * Note that new_pack_sha1 is updated last, so both new_pack_sha1 and
-+ * partial_pack_sha1 can refer to the same buffer if the caller is not
-+ * interested in the resulting SHA1 of pack data above partial_pack_offset.
-+ */
- void fixup_pack_header_footer(int pack_fd,
--			 unsigned char *pack_file_sha1,
-+			 unsigned char *new_pack_sha1,
- 			 const char *pack_name,
--			 uint32_t object_count)
-+			 uint32_t object_count,
-+			 unsigned char *partial_pack_sha1,
-+			 off_t partial_pack_offset)
- {
- 	static const int buf_sz = 128 * 1024;
--	SHA_CTX c;
-+	SHA_CTX old_sha1_ctx, new_sha1_ctx;
- 	struct pack_header hdr;
- 	char *buf;
- 
-+	SHA1_Init(&old_sha1_ctx);
-+	SHA1_Init(&new_sha1_ctx);
-+
-+	if (partial_pack_sha1 && !partial_pack_offset) {
-+		partial_pack_offset = lseek(pack_fd, 0, SEEK_CUR);
-+		if (partial_pack_offset == (off_t)-1)
-+			die("Can't get size of %s: %s", pack_name, strerror(errno));
-+	}
-+
- 	if (lseek(pack_fd, 0, SEEK_SET) != 0)
--		die("Failed seeking to start: %s", strerror(errno));
-+		die("Failed seeking to start of %s: %s", pack_name, strerror(errno));
- 	if (read_in_full(pack_fd, &hdr, sizeof(hdr)) != sizeof(hdr))
- 		die("Unable to reread header of %s: %s", pack_name, strerror(errno));
- 	if (lseek(pack_fd, 0, SEEK_SET) != 0)
--		die("Failed seeking to start: %s", strerror(errno));
-+		die("Failed seeking to start of %s: %s", pack_name, strerror(errno));
-+	SHA1_Update(&old_sha1_ctx, &hdr, sizeof(hdr));
- 	hdr.hdr_entries = htonl(object_count);
-+	SHA1_Update(&new_sha1_ctx, &hdr, sizeof(hdr));
- 	write_or_die(pack_fd, &hdr, sizeof(hdr));
--
--	SHA1_Init(&c);
--	SHA1_Update(&c, &hdr, sizeof(hdr));
-+	partial_pack_offset -= sizeof(hdr);
- 
- 	buf = xmalloc(buf_sz);
- 	for (;;) {
--		ssize_t n = xread(pack_fd, buf, buf_sz);
-+		ssize_t m, n;
-+		m = (partial_pack_sha1 && partial_pack_offset < buf_sz) ?
-+			partial_pack_offset : buf_sz;
-+		n = xread(pack_fd, buf, m);
- 		if (!n)
- 			break;
- 		if (n < 0)
- 			die("Failed to checksum %s: %s", pack_name, strerror(errno));
--		SHA1_Update(&c, buf, n);
-+		SHA1_Update(&new_sha1_ctx, buf, n);
-+
-+		if (!partial_pack_sha1)
-+			continue;
-+
-+		SHA1_Update(&old_sha1_ctx, buf, n);
-+		partial_pack_offset -= n;
-+		if (partial_pack_offset == 0) {
-+			unsigned char sha1[20];
-+			SHA1_Final(sha1, &old_sha1_ctx);
-+			if (hashcmp(sha1, partial_pack_sha1) != 0)
-+				die("Unexpected checksum for %s "
-+				    "(disk corruption?)", pack_name);
-+			/*
-+			 * Now let's compute the SHA1 of the remainder of the
-+			 * pack, which also means making partial_pack_offset
-+			 * big enough not to matter anymore.
-+			 */
-+			SHA1_Init(&old_sha1_ctx);
-+			partial_pack_offset = ~partial_pack_offset;
-+			partial_pack_offset -= MSB(partial_pack_offset, 1);
-+		}
- 	}
- 	free(buf);
- 
--	SHA1_Final(pack_file_sha1, &c);
--	write_or_die(pack_fd, pack_file_sha1, 20);
-+	if (partial_pack_sha1)
-+		SHA1_Final(partial_pack_sha1, &old_sha1_ctx);
-+	SHA1_Final(new_pack_sha1, &new_sha1_ctx);
-+	write_or_die(pack_fd, new_pack_sha1, 20);
- 	fsync_or_die(pack_fd, pack_name);
- }
- 
-diff --git a/pack.h b/pack.h
-index 76e6aa2..a883334 100644
---- a/pack.h
-+++ b/pack.h
-@@ -58,7 +58,7 @@ struct pack_idx_entry {
- extern char *write_idx_file(char *index_name, struct pack_idx_entry **objects, int nr_objects, unsigned char *sha1);
- extern int check_pack_crc(struct packed_git *p, struct pack_window **w_curs, off_t offset, off_t len, unsigned int nr);
- extern int verify_pack(struct packed_git *);
--extern void fixup_pack_header_footer(int, unsigned char *, const char *, uint32_t);
-+extern void fixup_pack_header_footer(int, unsigned char *, const char *, uint32_t, unsigned char *, off_t);
- extern char *index_pack_lockfile(int fd);
- 
- #define PH_ERROR_EOF		(-1)
+ 	final(pack_name, curr_pack,
+ 		index_name, curr_index,
+ 		keep_name, keep_msg,
+-		sha1);
++		pack_sha1);
+ 	free(objects);
+ 	free(index_name_buf);
+ 	free(keep_name_buf);
 -- 
 1.6.0.1.174.g97d7e.dirty
