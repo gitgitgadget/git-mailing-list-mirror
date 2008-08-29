@@ -1,112 +1,93 @@
-From: "Mikael Magnusson" <mikachu@gmail.com>
-Subject: Re: [PATCH updated] git wrapper: DWIM mistyped commands
-Date: Fri, 29 Aug 2008 16:58:14 +0200
-Message-ID: <237967ef0808290758p2bd1de55idcb9ad9150389b2b@mail.gmail.com>
-References: <20080828171533.GA6024@blimp.local>
-	 <20080828212722.GF6439@steel.home>
+From: Romain Francoise <romain@orebokech.com>
+Subject: [PATCH] builtin-help: fallback to GIT_MAN_VIEWER before man
+Date: Fri, 29 Aug 2008 17:00:43 +0200
+Organization: orebokech dot com
+Message-ID: <877i9zsw6c.fsf@elegiac.orebokech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 29 16:59:34 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 29 17:01:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZ5RZ-0001Uy-Jt
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 16:59:21 +0200
+	id 1KZ5Ty-0002Ie-Mt
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 17:01:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751245AbYH2O6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 10:58:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750908AbYH2O6R
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 10:58:17 -0400
-Received: from ik-out-1112.google.com ([66.249.90.178]:2015 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750725AbYH2O6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 10:58:16 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so529680ika.5
-        for <git@vger.kernel.org>; Fri, 29 Aug 2008 07:58:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=X4KV+PC2ZRmwxMf+O5KLjCy9IvblWRuhY6jQRRs2K8Q=;
-        b=EXSrtVzPLbink/9gc002vhpKZ0TqSZ7XXBmG05NtVHlTEM4obAJvTQFWexApbd319v
-         t7dHL2HYVrsHEg14kSFVbVY7tL+4WVgEMalZarzikygegrwkVMVViXZbhPctF4Dkcyo1
-         TyvWjTloUPnbdJw2cSCFEVMhWLhEvdFMYzmZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Xs+KovHKuRYceELrLcK61ganCrPtHDT7OjNcpudS1kKtvLy9te+ZfMCZd9Qph96Y7u
-         DdBwSuu73RwbA8dNb2e3QgYEIAjBaO5eiwPEmPT80ZElUx2qp+FiWbn5qUkwE2pkhpCV
-         BU0HNZHcop/dPMBBZ1vZuSDnYh2yJhGTn8yR0=
-Received: by 10.210.127.13 with SMTP id z13mr1732983ebc.106.1220021894216;
-        Fri, 29 Aug 2008 07:58:14 -0700 (PDT)
-Received: by 10.210.73.14 with HTTP; Fri, 29 Aug 2008 07:58:14 -0700 (PDT)
-In-Reply-To: <20080828212722.GF6439@steel.home>
-Content-Disposition: inline
+	id S1751316AbYH2PAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 11:00:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750908AbYH2PAq
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 11:00:46 -0400
+Received: from smtp8-g19.free.fr ([212.27.42.65]:46027 "EHLO smtp8-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751376AbYH2PAp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 11:00:45 -0400
+Received: from smtp8-g19.free.fr (localhost [127.0.0.1])
+	by smtp8-g19.free.fr (Postfix) with ESMTP id C3CC632A7DE;
+	Fri, 29 Aug 2008 17:00:43 +0200 (CEST)
+Received: from elegiac.orebokech.com (home.orebokech.com [82.67.41.165])
+	by smtp8-g19.free.fr (Postfix) with ESMTP id AA29332A857;
+	Fri, 29 Aug 2008 17:00:43 +0200 (CEST)
+Received: by elegiac.orebokech.com (Postfix, from userid 1000)
+	id 215973B26A; Fri, 29 Aug 2008 17:00:43 +0200 (CEST)
+X-Face: }9mYu,e_@+e!`Z-P5kVXa3\_b:hdJ"B)ww[&=b<2=awG:GOIM</2q'*t@MNa)R`k0h1KbUu "Ek%gXCQA(?k=Uf9}qgF_x#7/+Ql\R!NJ9[Z[ky\CTYI<H(kc][?[m%*rsf!OG11|f&H[VgX;),"!N JG6IziY\~""3M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94303>
 
-2008/8/28 Alex Riesen <raa.lkml@gmail.com>:
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->
-> This patch introduces a modified Damerau-Levenshtein algorithm into
-> Git's code base, and uses it with the following penalties to show some
-> similar commands when an unknown command was encountered:
->
->        swap = 0, insertion = 1, substitution = 2, deletion = 4
->
-> A typical output would now look like this:
->
->        $ git sm
->        git: 'sm' is not a git-command. See 'git --help'.
->
->        Did you mean one of these?
->                am
->                rm
->
-> The cut-off is at similarity rating 6, which was empirically determined
-> to give sensible results.
+In some situations it is useful to be able to switch viewers via the
+environment, e.g. in Emacs shell buffers.  So check the GIT_MAN_VIEWER
+environment variable and try it before falling back to "man".
 
-I merged the branch in pu into next, which I think should work, but I get
-these segfaults for some commands... I tried running in gdb but even with
--g3 I only get nonsense backtraces, not sure why.
+Signed-off-by: Romain Francoise <romain@orebokech.com>
+---
 
-% git puhs
-WARNING: You called a Git program named 'puhs', which does not exist.
-Continuing under the assumption that you meant 'push'
-in 2.0 seconds automatically...
-zsh: segmentation fault  git puhs
+The motivation for this is that I want the viewer to be "woman" in
+Emacs shell buffers and "man" otherwise, and having an environment
+variable (like PAGER or EDITOR) is cleaner than using a
+man.viewer.cmd wrapper to do the redirection.
 
-% git ma
-WARNING: You called a Git program named 'ma', which does not exist.
-Continuing under the assumption that you meant 'am'
-in 2.0 seconds automatically...
-Nothing to do.
+ Documentation/git-help.txt |    4 +++-
+ builtin-help.c             |    3 +++
+ 2 files changed, 6 insertions(+), 1 deletions(-)
 
-At this point I thought builtins crashed and scripts were fine, but...
-% git ada
-WARNING: You called a Git program named 'ada', which does not exist.
-Continuing under the assumption that you meant 'add'
-in 2.0 seconds automatically...
-Nothing specified, nothing added.
-Maybe you wanted to say 'git add .'?
-
-However,
-% git ada git.c
-WARNING: You called a Git program named 'ada', which does not exist.
-Continuing under the assumption that you meant 'add'
-in 2.0 seconds automatically...
-zsh: segmentation fault  git ada git.c
-
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index f414583..d9b9c34 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -112,7 +112,9 @@ For example, this configuration:
+ will try to use konqueror first. But this may fail (for example if
+ DISPLAY is not set) and in that case emacs' woman mode will be tried.
+ 
+-If everything fails the 'man' program will be tried anyway.
++If everything fails, or if no viewer is configured, the viewer specified
++in the GIT_MAN_VIEWER environment variable will be tried.  If that
++fails too, the 'man' program will be tried anyway.
+ 
+ man.<tool>.path
+ ~~~~~~~~~~~~~~~
+diff --git a/builtin-help.c b/builtin-help.c
+index 721038e..64207cb 100644
+--- a/builtin-help.c
++++ b/builtin-help.c
+@@ -361,12 +361,15 @@ static void show_man_page(const char *git_cmd)
+ {
+ 	struct man_viewer_list *viewer;
+ 	const char *page = cmd_to_page(git_cmd);
++	const char *fallback = getenv("GIT_MAN_VIEWER");
+ 
+ 	setup_man_path();
+ 	for (viewer = man_viewer_list; viewer; viewer = viewer->next)
+ 	{
+ 		exec_viewer(viewer->name, page); /* will return when unable */
+ 	}
++	if (fallback)
++		exec_viewer(fallback, page);
+ 	exec_viewer("man", page);
+ 	die("no man viewer handled the request");
+ }
 -- 
-Mikael Magnusson
+1.6.0.1.141.g445ca.dirty
