@@ -1,78 +1,66 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 0/3] don't let disk corruptions escape pack SHA1
-	checksum
-Date: Thu, 28 Aug 2008 21:55:35 -0700
-Message-ID: <20080829045535.GB28492@spearce.org>
-References: <alpine.LFD.1.10.0808251435540.3363@nehalem.linux-foundation.org> <20080825221321.GL2213@fieldses.org> <alpine.LFD.1.10.0808251616240.3363@nehalem.linux-foundation.org> <48B46B04.70102@gmail.com> <48B46F46.9090302@gmail.com> <alpine.LFD.1.10.0808270937340.3363@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808271458320.1624@xanadu.home> <alpine.LFD.1.10.0808271222250.3363@nehalem.linux-foundation.org> <alpine.LFD.1.10.0808271627540.1624@xanadu.home> <alpine.LFD.1.10.0808282142490.1624@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Clarified how pattern works in documentation to
+ git-show-ref.
+Date: Thu, 28 Aug 2008 22:04:46 -0700
+Message-ID: <7vtzd48l8x.fsf@gitster.siamese.dyndns.org>
+References: <1219955836-10070-1-git-send-email-gdolley@arpnetworks.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Aug 29 06:56:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Garry Dolley <gdolley@ucla.edu>
+To: Garry Dolley <gdolley@arpnetworks.com>
+X-From: git-owner@vger.kernel.org Fri Aug 29 07:06:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYw2N-0000JC-8G
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 06:56:43 +0200
+	id 1KYwBL-0001gy-OP
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 07:06:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750786AbYH2Ezh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 00:55:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750799AbYH2Ezh
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 00:55:37 -0400
-Received: from george.spearce.org ([209.20.77.23]:48969 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750727AbYH2Ezg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 00:55:36 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id EAFCF38375; Fri, 29 Aug 2008 04:55:35 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0808282142490.1624@xanadu.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1750842AbYH2FEx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 01:04:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750839AbYH2FEx
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 01:04:53 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45252 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750805AbYH2FEx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 01:04:53 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 264D45522B;
+	Fri, 29 Aug 2008 01:04:52 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 68D7855229; Fri, 29 Aug 2008 01:04:48 -0400 (EDT)
+In-Reply-To: <1219955836-10070-1-git-send-email-gdolley@arpnetworks.com>
+ (Garry Dolley's message of "Thu, 28 Aug 2008 13:37:16 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 033EFB90-7588-11DD-87E3-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94251>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> 
-> So here is 3 patches for this in C git (Shawn already did it for jgit).
-> 
-> There are 3 spots where this needs to be plugged: in pack-objects, 
-> index-pack and fast-import.  I did the first two.
-> 
-> I don't think this is that pertinent in fast-import because:
-> 
->  - we want fast-import to be fast
-> 
->  - after fast-import is done, a full repack is typically done which 
->    would revalidate everything (maybe fast-import should use index v2 
->    with its per object CRC32 though)
-> 
-> But maybe I'm wrong about that. In any case, I am leaving the 
-> fast-import to someone more knowledgeable about its code than I do.
+Garry Dolley <gdolley@arpnetworks.com> writes:
 
-fast-import is the backend to a number of incremental import tools.
-They stream data in from foreign VCS systems (notably Perforce)
-and write into a live repository.  That repository may not get
-repacked for days/weeks.  We should treat it just like index-pack.
+> Several people in #git, including myself, thought that the following would
+> show all refs:
+>
+>   git show-ref '*'
+>
+> Since that is not how the pattern patching works, clarification was needed
+> in the documentation.
+>
+> Signed-off-by: Garry Dolley <gdolley@ucla.edu>
+> ---
+>
+> I think including a little more info in the docs regarding the pattern would
+> be helpful.  Comments?
 
-So I think we should plug it.  The cost to keep a running SHA-1
-for what we have written is pretty low.  I'd rather trade off a
-minute or so on an hour long import for data safety than have a
-chance for data corruption going unnoticed by the end user.
+Would be helpful.
 
-And now that index v2 is available, yea, fast-import should write
-its index in that format so that a later repack can safely delta
-reuse if it (by rare chance) decides the current packed form is the
-best representation.  This is especially true with "git gc --auto"
-triggering a repack every so often due to the incremental import
-packs I just metioned above.
+It may be worthwhile to know that that "pathspec" limiting done by
+revision traversal ("git log", "git rev-list") and diff is also without
+globbing, but it is a head-match, and match is forced at '/' boundary.
 
-I've just been too busy with other things to add index v2 support.
-
--- 
-Shawn.
+ls-files and grep know how to glob, on the other hand.
