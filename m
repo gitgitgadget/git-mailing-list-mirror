@@ -1,72 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
 Subject: Re: [PATCH] Allow 'git cmd -h' outside of repository
-Date: Fri, 29 Aug 2008 13:35:02 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808291333010.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+Date: Fri, 29 Aug 2008 18:44:55 +0700
+Message-ID: <fcaeb9bf0808290444n579590a3ob01f7b4178e7a210@mail.gmail.com>
 References: <1219958917-22780-1-git-send-email-szeder@ira.uka.de>
+	 <alpine.DEB.1.00.0808291333010.24820@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-255406520-1220009707=:24820"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Aug 29 13:31:02 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: "=?UTF-8?Q?SZEDER_G=C3=A1bor?=" <szeder@ira.uka.de>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 29 13:46:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZ2Bv-0002Eb-MK
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 13:31:00 +0200
+	id 1KZ2Qc-0005c8-1w
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 13:46:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753341AbYH2L3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 07:29:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbYH2L3x
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 07:29:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60746 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753262AbYH2L3w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 07:29:52 -0400
-Received: (qmail invoked by alias); 29 Aug 2008 11:29:51 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp052) with SMTP; 29 Aug 2008 13:29:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19DfuUCmmhD1vqYeVGmVm9KqhnrsvgZXNujLC2YPE
-	iNDpWtWtU/Rdl3
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <1219958917-22780-1-git-send-email-szeder@ira.uka.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68
+	id S1754095AbYH2Lo5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 07:44:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754040AbYH2Lo5
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 07:44:57 -0400
+Received: from rv-out-0506.google.com ([209.85.198.227]:35415 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754013AbYH2Lo4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 07:44:56 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so845644rvb.1
+        for <git@vger.kernel.org>; Fri, 29 Aug 2008 04:44:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=y2K9ojLc1p/0jBcH3btwKl9wIAM63BOHptmdg7Z0VCg=;
+        b=XFj0g+ElFHj17Xzngt7JEgSqoLvh4pUfTPZRDj1lpn3yi4/SoJq+Kn6gm09/Ikojsd
+         PKIjMcIhmYLTe7Y2JgBtbhx2p+VGAbQz3546QU0F01Z+ElAGEn+Eq1ErlhZepMfpY8ru
+         k98TWxYayLwJb4jfd0vxjKqXOeyGyK8LOUlXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=B0otqjgvffyLsU1oS+QPsj1gpQoRDt+uiRWQIFxWq72sJ6ozmST0GiRHHDQPVZsDIs
+         NKd/o5tlGcVqeLsDWCUq93ytfKQmUbADPMsFpMMPWxkdp+nK8NRrcKlRl3scovRcc1dA
+         nxSFHF8jokLE3XHjpSBlQ64C4vGGnd8EJbuk8=
+Received: by 10.141.171.1 with SMTP id y1mr1416673rvo.252.1220010295673;
+        Fri, 29 Aug 2008 04:44:55 -0700 (PDT)
+Received: by 10.141.98.6 with HTTP; Fri, 29 Aug 2008 04:44:55 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0808291333010.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-255406520-1220009707=:24820
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-
-Hi,
-
-On Thu, 28 Aug 2008, SZEDER Gábor wrote:
-
-> Printing usage strings of git commands should obviously not depend on 
-> the command being run inside a git repository.  However, in case of a 
-> command requiring a repository, the command line options are parsed only 
-> after it is ensured that the command was started inside a repository, 
-> resulting in a 'fatal: Not a git repository' if 'git cmd -h' wasn't 
-> executed inside a repository.
-> 
-> To get around this issue, we will check early for the presence of '-h'
-> option, and skip ensuring that the command is run inside a repository.
-
-You miss the fact that "git grep -h" does not mean "show usage".  Oh, and 
-"git ls-remote -h" neither.  Three times's a charm: "git show-ref -h" does 
-not show the help either.
-
-I am also not quite certain if we should not just tout "git help <cmd>" as 
-the official way to request help.
-
-Ciao,
-Dscho
---8323329-255406520-1220009707=:24820--
+T24gOC8yOS8wOCwgSm9oYW5uZXMgU2NoaW5kZWxpbiA8Sm9oYW5uZXMuU2NoaW5kZWxpbkBnbXgu
+ZGU+IHdyb3RlOgo+IEhpLAo+Cj4KPiAgT24gVGh1LCAyOCBBdWcgMjAwOCwgU1pFREVSIEfDoWJv
+ciB3cm90ZToKPgo+ICA+IFByaW50aW5nIHVzYWdlIHN0cmluZ3Mgb2YgZ2l0IGNvbW1hbmRzIHNo
+b3VsZCBvYnZpb3VzbHkgbm90IGRlcGVuZCBvbgo+ICA+IHRoZSBjb21tYW5kIGJlaW5nIHJ1biBp
+bnNpZGUgYSBnaXQgcmVwb3NpdG9yeS4gIEhvd2V2ZXIsIGluIGNhc2Ugb2YgYQo+ICA+IGNvbW1h
+bmQgcmVxdWlyaW5nIGEgcmVwb3NpdG9yeSwgdGhlIGNvbW1hbmQgbGluZSBvcHRpb25zIGFyZSBw
+YXJzZWQgb25seQo+ICA+IGFmdGVyIGl0IGlzIGVuc3VyZWQgdGhhdCB0aGUgY29tbWFuZCB3YXMg
+c3RhcnRlZCBpbnNpZGUgYSByZXBvc2l0b3J5LAo+ICA+IHJlc3VsdGluZyBpbiBhICdmYXRhbDog
+Tm90IGEgZ2l0IHJlcG9zaXRvcnknIGlmICdnaXQgY21kIC1oJyB3YXNuJ3QKPiAgPiBleGVjdXRl
+ZCBpbnNpZGUgYSByZXBvc2l0b3J5Lgo+ICA+Cj4gID4gVG8gZ2V0IGFyb3VuZCB0aGlzIGlzc3Vl
+LCB3ZSB3aWxsIGNoZWNrIGVhcmx5IGZvciB0aGUgcHJlc2VuY2Ugb2YgJy1oJwo+ICA+IG9wdGlv
+biwgYW5kIHNraXAgZW5zdXJpbmcgdGhhdCB0aGUgY29tbWFuZCBpcyBydW4gaW5zaWRlIGEgcmVw
+b3NpdG9yeS4KPgo+Cj4gWW91IG1pc3MgdGhlIGZhY3QgdGhhdCAiZ2l0IGdyZXAgLWgiIGRvZXMg
+bm90IG1lYW4gInNob3cgdXNhZ2UiLiAgT2gsIGFuZAo+ICAiZ2l0IGxzLXJlbW90ZSAtaCIgbmVp
+dGhlci4gIFRocmVlIHRpbWVzJ3MgYSBjaGFybTogImdpdCBzaG93LXJlZiAtaCIgZG9lcwo+ICBu
+b3Qgc2hvdyB0aGUgaGVscCBlaXRoZXIuCj4KPiAgSSBhbSBhbHNvIG5vdCBxdWl0ZSBjZXJ0YWlu
+IGlmIHdlIHNob3VsZCBub3QganVzdCB0b3V0ICJnaXQgaGVscCA8Y21kPiIgYXMKPiAgdGhlIG9m
+ZmljaWFsIHdheSB0byByZXF1ZXN0IGhlbHAuCgpObyB3ZSBzaG91bGQgbm90IChhdCBsZWFzdCB0
+byBtZSksIHVzYWdlIHN0cmluZ3MgYXJlIHNob3J0ZXIgYW5kIGRvbid0CnJlcXVpcmUgbWFuLiAg
+QXMgZm9yIGFsbG93aW5nICJnaXQgY21kIC1oIiBvdXRzaWRlIHJlcG9zaXRvcnksIEkgdGhpbmsK
+SmVmZidzIGlkZWEgb2YgcmVmYWN0b3Jpbmcgc2V0dXAgcHJvY2VkdXJlLCBzZXR0aW5nIHVwIGlm
+IHBvc3NpYmxlIGJ1dApub3QgYmFyZmluZywgd291bGQgc29sdmUgaXQuCi0tIApEdXkK
