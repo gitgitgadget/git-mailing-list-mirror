@@ -1,56 +1,122 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v3] Expand ~ and ~user in core.excludesfile, commit.template
-Date: Fri, 29 Aug 2008 09:00:45 +0200
-Message-ID: <48B79E9D.9000308@viscovery.net>
-References: <quack.20080821T2114.lthvdxtvg7b@roar.cs.berkeley.edu>	<7vsksw92nh.fsf@gitster.siamese.dyndns.org>	<quack.20080824T0140.lth3aku956e@roar.cs.berkeley.edu>	<7vprnyqo59.fsf@gitster.siamese.dyndns.org>	<20080824220854.GA27299@coredump.intra.peff.net>	<7vzln2j9y2.fsf@gitster.siamese.dyndns.org>	<20080824231343.GC27619@coredump.intra.peff.net>	<7vhc9aj82i.fsf@gitster.siamese.dyndns.org>	<quack.20080825T1207.lthk5e46hi4_-_@roar.cs.berkeley.edu>	<20080827002506.GB7347@coredump.intra.peff.net>	<quack.20080826T2012.lthvdxn2ls4@roar.cs.berkeley.edu>	<7vy72jrr00.fsf@gitster.siamese.dyndns.org> <quack.20080828T0209.lthmyixjyjx_-_@roar.cs.berkeley.edu>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [QGIT RFC] Unit tests for QGit
+Date: Fri, 29 Aug 2008 09:01:48 +0200
+Message-ID: <e5bfff550808290001r168c7edfre926f1bc735f3ad0@mail.gmail.com>
+References: <20080808211318.GA4396@efreet.light.src>
+	 <20080817195839.GB4542@efreet.light.src>
+	 <e5bfff550808171330w28dda6a2m32b0e51b1ef73cdc@mail.gmail.com>
+	 <20080818180048.GA15520@efreet.light.src>
+	 <e5bfff550808190753t4f99ddb6q83886dbca27dbf03@mail.gmail.com>
+	 <20080827201819.GD15520@efreet.light.src>
+	 <e5bfff550808280429h63496f9byfa4454af7adb0e86@mail.gmail.com>
+	 <20080828153118.GA13169@diana.vm.bytemark.co.uk>
+	 <e5bfff550808281154h67392297y3a08d4ed8aea408f@mail.gmail.com>
+	 <20080828220124.GF15520@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+Cc: "=?UTF-8?Q?Karl_Hasselstr=C3=B6m?=" <kha@treskal.com>,
 	git@vger.kernel.org
-To: Karl Chen <quarl@cs.berkeley.edu>
-X-From: git-owner@vger.kernel.org Fri Aug 29 09:02:55 2008
+To: "Jan Hudec" <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Fri Aug 29 09:03:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYxzW-000860-KZ
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 09:01:55 +0200
+	id 1KYy0V-0008Qc-8i
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 09:02:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750761AbYH2HAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 03:00:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750725AbYH2HAu
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 03:00:50 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:32084 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750722AbYH2HAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 03:00:49 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KYxyP-0005Wr-Qz; Fri, 29 Aug 2008 09:00:46 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 8AE1E6EF; Fri, 29 Aug 2008 09:00:45 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <quack.20080828T0209.lthmyixjyjx_-_@roar.cs.berkeley.edu>
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1751085AbYH2HBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 03:01:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751048AbYH2HBt
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 03:01:49 -0400
+Received: from rv-out-0506.google.com ([209.85.198.232]:6924 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750881AbYH2HBs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 03:01:48 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so749689rvb.1
+        for <git@vger.kernel.org>; Fri, 29 Aug 2008 00:01:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=WvVVfxqcp83Bok43ssIxIVAdR2LSPmTPdsoc6xJU5fg=;
+        b=sb4WgS+3RqiTlJz+Yh8WZp0SmHZzuvzaHtX9471ehtX7atJhycjuL5+mRUaW8S3qdU
+         hNiwz6iDhMSsN06eZ3K6s8E0J2jxfxu8hYGPnUPBQjKx1psSO9Nb+H8G8QZEsV0EIGzT
+         h+ZJVg6SLJpPdUkMlgyQO4S3VsXYkeYGfo7hQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=U6zNPywArnjnMC8cl8N4gpwgGMclNv0AvX5HVjoPR8mIVWHkIKAz5HOWcbSQfTqbsM
+         fjcVi7cIQ5ekeDU9uPhx0sIu3o9IahjEgbErvI6/rBDKdTxL35udQMlfN0boAHYQ700q
+         Gd0HDGSH7owkX9uRuuyDojI47wOdKz0NzZuuA=
+Received: by 10.114.184.7 with SMTP id h7mr2365135waf.9.1219993308277;
+        Fri, 29 Aug 2008 00:01:48 -0700 (PDT)
+Received: by 10.115.110.15 with HTTP; Fri, 29 Aug 2008 00:01:48 -0700 (PDT)
+In-Reply-To: <20080828220124.GF15520@efreet.light.src>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Karl Chen schrieb:
-> +		const char *after_username = strchr_or_end(path+1, '/');
+On Fri, Aug 29, 2008 at 12:01 AM, Jan Hudec <bulb@ucw.cz> wrote:
+>
+> So, now there is a test infrastructure plus test case to reproduce this
+> switching between stgit and non-stgit branch in
+> git://repo.or.cz/qgit4/bulb.git (http://repo.or.cz/r/qgit4/bulb.git) with
+> whoping 9 commits. Should I send out a patch series, or do you prefer just
+> pulling?
+>
 
-Use strchrnul() instead of a home-grown strchr_or_end().
+I prefer to pull.
 
-> +		struct passwd *pw = getpw_strspan(path+1, after_username);
-> +		if (!pw) return NULL;
-> +		return concatstr(buf, pw->pw_dir, after_username, sz);
+> Now in my opinion the code could use some refactoring rather than just fixing
+> the bugs (my long term intent is to add features like topgit support,
+> push/pull/merge and other things git-gui can do and such). I'd start with
+> the Git initialization sequence. I'll write tests for the new code, but as
+> I expect it to have significantly different interface from the old one, I'll
+> not try to write tests for the current one.
+>
 
-You really should use the strbuf API here. Look for strbuf_detach() in the
-existing code.
+We have following possibilities:
 
--- Hannes
+- Pull the code directly in qgit master as soon as there are some new
+commits in your branch
+
+- Pull the code in public qgit repo but under a different branch,
+let's call' it "next" ;-)
+
+- Waiting for your code has stabilized a bit (testing infrastructure
+is very young and for what I have seen from revision history code is
+still very 'fluid'), then pull the branch in qgit master directly.
+
+
+These are my two cents:
+
+Option one could be a little bit misleading for people pulling from
+qgit repo to get current qgit sources + just fixes.
+
+Option two is doable but is an additional step with an additional
+maintainer burden, probably the current number of contributors to qgit
+is not enough to justify such a complex development model.
+
+Perhaps option three it seems the more balanced, also looking at
+projects git related and with similar size of qgit, as example StGit
+itself. When let's say Karl has ready a block of patches he sends them
+all as a series and are applied to StGit master branch.
+
+The only modification I would suggest is that I can pull from you repo
+directly instead of asking you to send patches to the git list.
+
+I leave up to you when to ask for a pull request, I only ask you to
+consider that qgit public repo is pulled also by people not interested
+in the latest development, and they only want a stable qgit, so please
+ask for a pull when you think stuff is stable enough.
+
+Comments?
+
+Marco
