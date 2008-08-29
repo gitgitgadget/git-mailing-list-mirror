@@ -1,190 +1,181 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 3/3] index-pack: use fixup_pack_header_footer()'s validation
- mode
-Date: Thu, 28 Aug 2008 22:07:04 -0400
-Message-ID: <1219975624-7653-3-git-send-email-nico@cam.org>
-References: <alpine.LFD.1.10.0808282142490.1624@xanadu.home>
- <1219975624-7653-1-git-send-email-nico@cam.org>
- <1219975624-7653-2-git-send-email-nico@cam.org>
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 29 04:08:46 2008
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] Expand ~ and ~user in core.excludesfile,
+	commit.template
+Date: Thu, 28 Aug 2008 23:26:31 -0400
+Message-ID: <20080829032630.GA7024@coredump.intra.peff.net>
+References: <7vprnyqo59.fsf@gitster.siamese.dyndns.org> <20080824220854.GA27299@coredump.intra.peff.net> <7vzln2j9y2.fsf@gitster.siamese.dyndns.org> <20080824231343.GC27619@coredump.intra.peff.net> <7vhc9aj82i.fsf@gitster.siamese.dyndns.org> <quack.20080825T1207.lthk5e46hi4_-_@roar.cs.berkeley.edu> <20080827002506.GB7347@coredump.intra.peff.net> <quack.20080826T2012.lthvdxn2ls4@roar.cs.berkeley.edu> <7vy72jrr00.fsf@gitster.siamese.dyndns.org> <quack.20080828T0209.lthmyixjyjx_-_@roar.cs.berkeley.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Karl Chen <quarl@cs.berkeley.edu>
+X-From: git-owner@vger.kernel.org Fri Aug 29 05:29:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYtPo-0004Ej-PV
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 04:08:45 +0200
+	id 1KYufv-0000iu-CQ
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 05:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751048AbYH2CH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 22:07:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbYH2CH1
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 22:07:27 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:57167 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750978AbYH2CHW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 22:07:22 -0400
-Received: from localhost.localdomain ([66.131.194.97])
- by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K6C005YHB6YVB40@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 28 Aug 2008 22:06:36 -0400 (EDT)
-X-Mailer: git-send-email 1.6.0.1.174.g97d7e.dirty
-In-reply-to: <1219975624-7653-2-git-send-email-nico@cam.org>
+	id S1751270AbYH2D0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 23:26:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbYH2D0f
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 23:26:35 -0400
+Received: from peff.net ([208.65.91.99]:4866 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751180AbYH2D0d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 23:26:33 -0400
+Received: (qmail 10970 invoked by uid 111); 29 Aug 2008 03:26:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 28 Aug 2008 23:26:32 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Aug 2008 23:26:31 -0400
+Content-Disposition: inline
+In-Reply-To: <quack.20080828T0209.lthmyixjyjx_-_@roar.cs.berkeley.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94245>
 
-When completing a thin pack, a new header has to be written to
-the pack and a new SHA1 computed.  Make sure that the SHA1 of what
-is being read back matches the SHA1 of what was written for both:
-the original pack and the appended objects.
+On Thu, Aug 28, 2008 at 02:09:38AM -0700, Karl Chen wrote:
 
-To do so, a couple write_or_die() calls were converted to sha1write()
-which has the advantage of doing some buffering as well as handling
-SHA1 and CRC32 checksum already.
+>  builtin-commit.c |    2 +-
+>  cache.h          |    2 +
+>  config.c         |   13 +++++++-
+>  path.c           |   88 +++++++++++++++++++++++++++++++++--------------------
+>  4 files changed, 69 insertions(+), 36 deletions(-)
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
- index-pack.c |   43 +++++++++++++++++++++++++------------------
- 1 files changed, 25 insertions(+), 18 deletions(-)
+Documentation?
 
-diff --git a/index-pack.c b/index-pack.c
-index 411b80d..a6e91fe 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -654,7 +654,7 @@ static void parse_pack_objects(unsigned char *sha1)
- 	}
- }
- 
--static int write_compressed(int fd, void *in, unsigned int size, uint32_t *obj_crc)
-+static int write_compressed(struct sha1file *f, void *in, unsigned int size)
- {
- 	z_stream stream;
- 	unsigned long maxsize;
-@@ -674,13 +674,12 @@ static int write_compressed(int fd, void *in, unsigned int size, uint32_t *obj_c
- 	deflateEnd(&stream);
- 
- 	size = stream.total_out;
--	write_or_die(fd, out, size);
--	*obj_crc = crc32(*obj_crc, out, size);
-+	sha1write(f, out, size);
- 	free(out);
- 	return size;
- }
- 
--static struct object_entry *append_obj_to_pack(
-+static struct object_entry *append_obj_to_pack(struct sha1file *f,
- 			       const unsigned char *sha1, void *buf,
- 			       unsigned long size, enum object_type type)
- {
-@@ -696,15 +695,15 @@ static struct object_entry *append_obj_to_pack(
- 		s >>= 7;
- 	}
- 	header[n++] = c;
--	write_or_die(output_fd, header, n);
--	obj[0].idx.crc32 = crc32(0, Z_NULL, 0);
--	obj[0].idx.crc32 = crc32(obj[0].idx.crc32, header, n);
-+	crc32_begin(f);
-+	sha1write(f, header, n);
- 	obj[0].size = size;
- 	obj[0].hdr_size = n;
- 	obj[0].type = type;
- 	obj[0].real_type = type;
- 	obj[1].idx.offset = obj[0].idx.offset + n;
--	obj[1].idx.offset += write_compressed(output_fd, buf, size, &obj[0].idx.crc32);
-+	obj[1].idx.offset += write_compressed(f, buf, size);
-+	obj[0].idx.crc32 = crc32_end(f);
- 	hashcpy(obj->idx.sha1, sha1);
- 	return obj;
- }
-@@ -716,7 +715,7 @@ static int delta_pos_compare(const void *_a, const void *_b)
- 	return a->obj_no - b->obj_no;
- }
- 
--static void fix_unresolved_deltas(int nr_unresolved)
-+static void fix_unresolved_deltas(struct sha1file *f, int nr_unresolved)
- {
- 	struct delta_entry **sorted_by_pos;
- 	int i, n = 0;
-@@ -754,8 +753,8 @@ static void fix_unresolved_deltas(int nr_unresolved)
- 		if (check_sha1_signature(d->base.sha1, base_obj.data,
- 				base_obj.size, typename(type)))
- 			die("local object %s is corrupt", sha1_to_hex(d->base.sha1));
--		base_obj.obj = append_obj_to_pack(d->base.sha1, base_obj.data,
--			base_obj.size, type);
-+		base_obj.obj = append_obj_to_pack(f, d->base.sha1,
-+					base_obj.data, base_obj.size, type);
- 		link_base_data(NULL, &base_obj);
- 
- 		find_delta_children(&d->base, &first, &last);
-@@ -875,7 +874,7 @@ int main(int argc, char **argv)
- 	const char *keep_name = NULL, *keep_msg = NULL;
- 	char *index_name_buf = NULL, *keep_name_buf = NULL;
- 	struct pack_idx_entry **idx_objects;
--	unsigned char sha1[20];
-+	unsigned char pack_sha1[20];
- 	int nongit = 0;
- 
- 	setup_git_directory_gently(&nongit);
-@@ -962,13 +961,15 @@ int main(int argc, char **argv)
- 	parse_pack_header();
- 	objects = xmalloc((nr_objects + 1) * sizeof(struct object_entry));
- 	deltas = xmalloc(nr_objects * sizeof(struct delta_entry));
--	parse_pack_objects(sha1);
-+	parse_pack_objects(pack_sha1);
- 	if (nr_deltas == nr_resolved_deltas) {
- 		stop_progress(&progress);
- 		/* Flush remaining pack final 20-byte SHA1. */
- 		flush();
- 	} else {
- 		if (fix_thin_pack) {
-+			struct sha1file *f;
-+			unsigned char read_sha1[20], tail_sha1[20];
- 			char msg[48];
- 			int nr_unresolved = nr_deltas - nr_resolved_deltas;
- 			int nr_objects_initial = nr_objects;
-@@ -977,13 +978,19 @@ int main(int argc, char **argv)
- 			objects = xrealloc(objects,
- 					   (nr_objects + nr_unresolved + 1)
- 					   * sizeof(*objects));
--			fix_unresolved_deltas(nr_unresolved);
-+			f = sha1fd(output_fd, curr_pack);
-+			fix_unresolved_deltas(f, nr_unresolved);
- 			sprintf(msg, "completed with %d local objects",
- 				nr_objects - nr_objects_initial);
- 			stop_progress_msg(&progress, msg);
--			fixup_pack_header_footer(output_fd, sha1,
-+			sha1close(f, tail_sha1, 0);
-+			hashcpy(read_sha1, pack_sha1);
-+			fixup_pack_header_footer(output_fd, pack_sha1,
- 						 curr_pack, nr_objects,
--						 NULL, 0);
-+						 read_sha1, consumed_bytes-20);
-+			if (hashcmp(read_sha1, tail_sha1) != 0)
-+				die("Unexpected tail checksum for %s "
-+				    "(disk corruption?)", curr_pack);
- 		}
- 		if (nr_deltas != nr_resolved_deltas)
- 			die("pack has %d unresolved deltas",
-@@ -996,13 +1003,13 @@ int main(int argc, char **argv)
- 	idx_objects = xmalloc((nr_objects) * sizeof(struct pack_idx_entry *));
- 	for (i = 0; i < nr_objects; i++)
- 		idx_objects[i] = &objects[i].idx;
--	curr_index = write_idx_file(index_name, idx_objects, nr_objects, sha1);
-+	curr_index = write_idx_file(index_name, idx_objects, nr_objects, pack_sha1);
- 	free(idx_objects);
- 
- 	final(pack_name, curr_pack,
- 		index_name, curr_index,
- 		keep_name, keep_msg,
--		sha1);
-+		pack_sha1);
- 	free(objects);
- 	free(index_name_buf);
- 	free(keep_name_buf);
--- 
-1.6.0.1.174.g97d7e.dirty
+>  	if (!strcmp(k, "commit.template"))
+> -		return git_config_string(&template_file, k, v);
+> +		return git_config_userdir(&template_file, k, v);
+
+I like this.
+
+> +int git_config_userdir(const char **dest, const char *var, const char *value) {
+> +	if (!value)
+> +		return config_error_nonbool(var);
+> +	*dest = expand_user_path(NULL, value, 0);
+> +	if (!*dest || !**dest) die("Failed to expand user dir in: '%s'", value);
+> +	return 0;
+> +}
+
+I am not sure about !**dest here. This precludes somebody from using "".
+While it might not matter here, if there are other users of
+git_config_userdir(), they might want to allow a blank entry.
+
+Also, style: there should be a newline after conditional but before
+executed code. IOW, replace
+
+  if (cond) code;
+
+with
+
+  if (cond)
+          code;
+
+> +static inline struct passwd *getpw_strspan(const char *begin_username,
+> +										   const char *end_username) 
+
+1. There seem to be extra tabs in the second line, pushing the
+   end_username argument way too far to the right.
+
+2. I'm not sure "strspan" is a good name for this helper, since it calls
+   to mind the strspn C function, which is not really related to this at
+   all.
+
+3. Usually helper functions that take a non-terminated string like this
+   in git use the combination of (char *begin, int len) instead of two
+   pointers. While you are currently the only user of the helper, I
+   think it makes sense to follow that convention for future users.
+
+> +	if (begin_username == end_username) {
+> +		return getpwuid(getuid());
+> +	} else {
+
+Style: omit braces on one-liner conditionals:
+
+  if (begin_username == end_username)
+          return getwpuid(getuid());
+
+Also, you do a lot of early returns in your code. I think this is good,
+because it makes it more readable. But that means you don't have to
+worry about "else"ing the other half of the conditional, because you
+have already returned. Which makes it even easier to read.
+
+> +		size_t username_len = end_username - begin_username;
+
+See, here you end up converting back from two pointers to a pointer and
+a length. Which is why I think we tend to use the other representation.
+
+> +		char *username = alloca(username_len + 1);
+
+I don't think we use alloca() anywhere else. I don't know if there are
+portability issues.
+
+> +static inline char *concatstr(char *buf, const char *str1, const char *str2,
+> +							  size_t bufsz)
+> +{
+> +	size_t len1 = strlen(str1);
+> +	size_t len2 = strlen(str2);
+> +	size_t needbuflen = len1 + len2 + 1;
+> +	if (buf) {
+> +		if (needbuflen > bufsz) return NULL;
+> +	} else {
+> +		buf = xmalloc(needbuflen);
+
+Style: more braces which can be omitted.
+
+This function seems a little superfluous, since its semantics are so
+specific to this usage. I am all for splitting into little functions,
+but I think it would be quite confusing for somebody to try reusing
+this. Perhaps it at least needs a comment explaining the semantics of
+buf?
+
+> +static inline const char *strchr_or_end(const char *str, char c)
+> +{
+> +	while (*str && *str != c) ++str;
+> +	return str;
+> +}
+
+This really seems like premature optimization to me. The only advantage
+this has over
+
+  p = strchr(s);
+  if (!p)
+    p = s + strlen(s);
+
+is that we avoid traversing the string once. But balance that against an
+assembler-optimized strchr provided by your libc. And then wonder if it
+is even worth it, since this is not even remotely a critical path.
+
+> +{
+> +	if (path == NULL) {
+>  		return NULL;
+> [...]
+> +	} else if (path[0] != '~') {
+> +		if (buf == NULL) {
+> +			return xstrdup(path);
+> +		} else {
+> +			if (strlen(path)+1 > sz) return NULL;
+> +			return strcpy(buf, path);
+> +		}
+
+More early returns which can be removed from conditionals.
+
+Also, some of this code seems duplicated with concatstr. Wouldn't it
+just be simpler to let concatstr take a NULL for one of the arguments,
+and then just use it again here? IOW, something like:
+
+  if (!path)
+    return NULL;
+  if (path[0] != '~')
+    return concatstr(path, NULL);
+
+> -			if (!user_path(used_path, path, PATH_MAX))
+> +			if (!expand_user_path(used_path, path, PATH_MAX))
+
+But these functions don't have the same semantics, do they? user_path
+used to return NULL if the path didn't start with ~, right?
+
+-Peff
