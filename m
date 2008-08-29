@@ -1,66 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Clarified how pattern works in documentation to
- git-show-ref.
-Date: Thu, 28 Aug 2008 22:04:46 -0700
-Message-ID: <7vtzd48l8x.fsf@gitster.siamese.dyndns.org>
-References: <1219955836-10070-1-git-send-email-gdolley@arpnetworks.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Git-aware HTTP transport
+Date: Thu, 28 Aug 2008 22:11:25 -0700
+Message-ID: <48B784FD.3080005@zytor.com>
+References: <20080826012643.GD26523@spearce.org> <48B36BCA.8060103@zytor.com> <20080826145857.GF26523@spearce.org> <48B4303C.3080409@zytor.com> <20080826172648.GK26523@spearce.org> <48B485F8.5030109@zytor.com> <20080828035018.GA10010@spearce.org> <7vhc95iwcs.fsf@gitster.siamese.dyndns.org> <20080828145706.GB21072@spearce.org> <7vwsi0a2op.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Garry Dolley <gdolley@ucla.edu>
-To: Garry Dolley <gdolley@arpnetworks.com>
-X-From: git-owner@vger.kernel.org Fri Aug 29 07:06:36 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 29 07:13:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYwBL-0001gy-OP
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 07:06:00 +0200
+	id 1KYwIF-0002rQ-8N
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 07:13:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750842AbYH2FEx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 01:04:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750839AbYH2FEx
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 01:04:53 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45252 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750805AbYH2FEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 01:04:53 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 264D45522B;
-	Fri, 29 Aug 2008 01:04:52 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 68D7855229; Fri, 29 Aug 2008 01:04:48 -0400 (EDT)
-In-Reply-To: <1219955836-10070-1-git-send-email-gdolley@arpnetworks.com>
- (Garry Dolley's message of "Thu, 28 Aug 2008 13:37:16 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 033EFB90-7588-11DD-87E3-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1750868AbYH2FMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 01:12:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbYH2FMB
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 01:12:01 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:34514 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750856AbYH2FMA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 01:12:00 -0400
+Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m7T5BVA7029483
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 28 Aug 2008 22:11:32 -0700
+Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
+	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m7T5BVCs030139;
+	Thu, 28 Aug 2008 22:11:31 -0700
+Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
+	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m7T5BPfp008004;
+	Thu, 28 Aug 2008 22:11:26 -0700
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <7vwsi0a2op.fsf@gitster.siamese.dyndns.org>
+X-Virus-Scanned: ClamAV 0.93.3/8115/Thu Aug 28 18:49:47 2008 on terminus.zytor.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94251>
 
-Garry Dolley <gdolley@arpnetworks.com> writes:
+Junio C Hamano wrote:
+> 
+>>> Is there a way to detect bad clients that does not obey this rule without
+>>> server side states?
+>> No.  Is that really a concern though?
+> 
+> I was more concerned about a bad/broken client not giving up forever, and
+> not giving the server enough cue to give up, saying "I've conversed with
+> this guy long enough but haven't reached the conclusion yet --- there is
+> something wrong".  Even without server side states, if we were to trust
+> clients, we can add "this is Nth round" to the protocol to help the server
+> detect "long enough" part, but that somehow does not feel right.
+> 
 
-> Several people in #git, including myself, thought that the following would
-> show all refs:
->
->   git show-ref '*'
->
-> Since that is not how the pattern patching works, clarification was needed
-> in the documentation.
->
-> Signed-off-by: Garry Dolley <gdolley@ucla.edu>
-> ---
->
-> I think including a little more info in the docs regarding the pattern would
-> be helpful.  Comments?
+We should be able to detect either inconsistency, or lack of forward 
+progress, but as long as there is forward progress made there doesn't 
+seem to be a strong need to terminate.
 
-Would be helpful.
-
-It may be worthwhile to know that that "pathspec" limiting done by
-revision traversal ("git log", "git rev-list") and diff is also without
-globbing, but it is a head-match, and match is forced at '/' boundary.
-
-ls-files and grep know how to glob, on the other hand.
+	-hpa
