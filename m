@@ -1,71 +1,79 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 0/6] 'git svn info' fixes
-Date: Fri, 29 Aug 2008 01:16:54 -0700
-Message-ID: <20080829081654.GA6680@yp-box.dyndns.org>
-References: <1219779157-31602-1-git-send-email-trast@student.ethz.ch> <20080827095342.GB26475@untitled> <200808281031.04975.trast@student.ethz.ch>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Fri, 29 Aug 2008 10:23:43 +0200
+Message-ID: <48B7B20F.9030208@op5.se>
+References: <20080828090421.GQ10360@machine.or.cz>	<18219E52-E56F-43D9-B28D-0CC74E225CC5@cs.indiana.edu>	<alpine.LFD.1.10.0808280934160.3300@nehalem.linux-foundation.org>	<7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu>	<20080828195211.GA3545@mithlond.arda.local>	<4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu>	<20080828212346.GA27867@coredump.intra.peff.net>	<1C144B19-DA21-4CB4-B872-C1F154B031CF@cs.indiana.edu>	<20080828215907.GE27867@coredump.intra.peff.net>	<3DE083DB-ADFF-45E7-B3EB-A76985941271@cs.indiana.edu>	<20080828230401.GC29609@coredump.intra.peff.net>	<48B7AA67.4040400@op5.se> <vpqvdxk5jrl.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Aug 29 10:18:11 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Perry Wagle <wagle@cs.indiana.edu>,
+	Teemu Likonen <tlikonen@iki.fi>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
+	Andi Kleen <andi@firstfloor.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Aug 29 10:25:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYzBC-0002i2-Vv
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 10:18:03 +0200
+	id 1KYzI0-0004ZD-TE
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 10:25:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752423AbYH2IQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 04:16:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751628AbYH2IQ5
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 04:16:57 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:58830 "EHLO hand.yhbt.net"
+	id S1752833AbYH2IXn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 04:23:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752769AbYH2IXm
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 04:23:42 -0400
+Received: from mail.op5.se ([193.201.96.20]:49689 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751186AbYH2IQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 04:16:56 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id B50AA2DC01B;
-	Fri, 29 Aug 2008 01:16:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <200808281031.04975.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752631AbYH2IXk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 04:23:40 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id C8BA91B8036C;
+	Fri, 29 Aug 2008 10:28:35 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id g7z-4jdtIYsh; Fri, 29 Aug 2008 10:28:35 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.184])
+	by mail.op5.se (Postfix) with ESMTP id 7099B1B80090;
+	Fri, 29 Aug 2008 10:28:34 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <vpqvdxk5jrl.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Rast <trast@student.ethz.ch> wrote:
-> Eric Wong wrote:
-> > Thomas Rast <trast@student.ethz.ch> wrote:
-> > > However, the unknown files tests still fail, simply because 'svn info'
-> > > itself fails on untracked files.  It would be great if someone who is
-> > > still running SVN 1.4 could check whether that has been a bug in
-> > > git-svn all along, or is actually a behaviour change on the part of
-> > > SVN.
-> > 
-> > Oops, I upgraded to 1.5.x here already.  I should still have
-> > another machine with 1.4 to check on tomorrow, though.
+Matthieu Moy wrote:
+> Andreas Ericsson <ae@op5.se> writes:
 > 
-> I got a friend with 1.4 to test this, and it appears the error
+>> There's one, actually. The default pack-index version is increased now,
+>> so really, really old clients (pre-1.4.5) won't be able to understand
+>> the packs generated by default by a new server.
 > 
->   $ touch new
->   $ svn info new
->   new:  (Keine versionierte Ressource)
+> AAUI, the pack itself is sent over the network, but the index is
+> generated locally when receiving the pack, so this shouldn't be a
+> problem.
 > 
-> (literally "not a versioned resource") is already present in
-> 
->   $ svn --version
->   svn, Version 1.4.6 (r28521)
-> 
-> (He also says the error is the same if the file does not exist at
-> all.)
 
-Interesting.
-
-> So should we just change all "unknown foo" tests to verify that 'git
-> svn info' errors out too?
-
-Yes, I see no reason to differ from plain svn here.
+Which is why I later in the same message pointed out that this should
+only happen when using dumb protocols where the pack isn't reindexed
+after it has been fetched.
 
 -- 
-Eric Wong
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
