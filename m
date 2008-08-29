@@ -1,92 +1,74 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 5/5] fixup_pack_header_footer(): use nicely aligned buffer sizes
-Date: Fri, 29 Aug 2008 16:08:02 -0400
-Message-ID: <1220040482-10108-6-git-send-email-nico@cam.org>
-References: <20080829143023.GA7403@spearce.org>
- <1220040482-10108-1-git-send-email-nico@cam.org>
- <1220040482-10108-2-git-send-email-nico@cam.org>
- <1220040482-10108-3-git-send-email-nico@cam.org>
- <1220040482-10108-4-git-send-email-nico@cam.org>
- <1220040482-10108-5-git-send-email-nico@cam.org>
+Subject: Re: [PATCH 1/3] improve reliability of fixup_pack_header_footer()
+Date: Fri, 29 Aug 2008 16:14:14 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0808291609030.1624@xanadu.home>
+References: <alpine.LFD.1.10.0808282142490.1624@xanadu.home>
+ <1219975624-7653-1-git-send-email-nico@cam.org>
+ <20080829044459.GA28492@spearce.org>
+ <alpine.LFD.1.10.0808290844200.1624@xanadu.home>
+ <20080829143023.GA7403@spearce.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 29 22:09:48 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Aug 29 22:15:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZAHz-0006Wv-7f
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 22:09:47 +0200
+	id 1KZANQ-00085h-NB
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 22:15:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752409AbYH2UIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 16:08:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752216AbYH2UIe
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 16:08:34 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:15047 "EHLO
+	id S1752234AbYH2UOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 16:14:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752135AbYH2UOU
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 16:14:20 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:23473 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752317AbYH2UIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 16:08:32 -0400
-Received: from localhost.localdomain ([66.131.194.97])
- by VL-MO-MR005.ip.videotron.ca
+	with ESMTP id S1752093AbYH2UOU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 16:14:20 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
  (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K6D007OOP8J18A0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 29 Aug 2008 16:07:33 -0400 (EDT)
-X-Mailer: git-send-email 1.6.0.1.212.g35f9f
-In-reply-to: <1220040482-10108-5-git-send-email-nico@cam.org>
+ with ESMTP id <0K6D0049FPJQBMF1@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 29 Aug 2008 16:14:14 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20080829143023.GA7403@spearce.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94327>
 
-It should be more efficient to use nicely aligned buffer sizes, either
-for filesystem operations or SHA1 checksums.  Also, using a relatively
-small nominal size might allow for the data to remain in L1 cache
-between both SHA1_Update() calls.
+On Fri, 29 Aug 2008, Shawn O. Pearce wrote:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
- pack-write.c |   11 ++++++++---
- 1 files changed, 8 insertions(+), 3 deletions(-)
+> Oh, yea, that makes sense.  It still seems like playing with fire.
+> 
+> I'd rather the caller pass in the proper offset than rely on it
+> being the current position of the fd.  Especially if the caller
+> does actually have it available.
+> 
+> If you change anything, I'd like to see this lseek(SEEK_CUR) go away.
 
-diff --git a/pack-write.c b/pack-write.c
-index f9776c5..939ed56 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -167,7 +167,7 @@ void fixup_pack_header_footer(int pack_fd,
- 			 unsigned char *partial_pack_sha1,
- 			 off_t partial_pack_offset)
- {
--	static const int buf_sz = 128 * 1024;
-+	int aligned_sz, buf_sz = 8 * 1024;
- 	SHA_CTX old_sha1_ctx, new_sha1_ctx;
- 	struct pack_header hdr;
- 	char *buf;
-@@ -188,10 +188,11 @@ void fixup_pack_header_footer(int pack_fd,
- 	partial_pack_offset -= sizeof(hdr);
- 
- 	buf = xmalloc(buf_sz);
-+	aligned_sz = buf_sz - sizeof(hdr);
- 	for (;;) {
- 		ssize_t m, n;
--		m = (partial_pack_sha1 && partial_pack_offset < buf_sz) ?
--			partial_pack_offset : buf_sz;
-+		m = (partial_pack_sha1 && partial_pack_offset < aligned_sz) ?
-+			partial_pack_offset : aligned_sz;
- 		n = xread(pack_fd, buf, m);
- 		if (!n)
- 			break;
-@@ -199,6 +200,10 @@ void fixup_pack_header_footer(int pack_fd,
- 			die("Failed to checksum %s: %s", pack_name, strerror(errno));
- 		SHA1_Update(&new_sha1_ctx, buf, n);
- 
-+		aligned_sz -= n;
-+		if (!aligned_sz)
-+			aligned_sz = buf_sz;
-+
- 		if (!partial_pack_sha1)
- 			continue;
- 
--- 
-1.6.0.1.212.g35f9f
+Done.  I struggled a bit since it simply didn't work initially -- see 
+the first patch in the updated series.
+
+> > And another thing I had in store (but for which you _again_ beat me to :-) )
+> > is to realign data reads onto filesystem blocks.
+> 
+> That _really_ made the JGit code ugly.  But I think its worth it.
+
+See my version.  I think it is reasonably clear.
+
+> I also want to try and buffer the whole object appending we do
+> during fixThinPack(), as right now we write the object header in
+> one write and then compressed data bursts in the others.  Moving it
+> to at least write a full 4k at a time should remove about 2 write
+> calls per object.
+
+Yep.  In the C git case, moving to sha1write() added that buffering 
+for free.
+
+
+Nicolas
