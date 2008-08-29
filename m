@@ -1,60 +1,96 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: [PATCH] config.txt: Add missing colons after option name
-Date: Fri, 29 Aug 2008 10:29:42 +0300
-Message-ID: <20080829072942.GA4098@mithlond.arda.local>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Fri, 29 Aug 2008 09:51:03 +0200
+Message-ID: <48B7AA67.4040400@op5.se>
+References: <20080828090421.GQ10360@machine.or.cz> <18219E52-E56F-43D9-B28D-0CC74E225CC5@cs.indiana.edu> <alpine.LFD.1.10.0808280934160.3300@nehalem.linux-foundation.org> <7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu> <20080828195211.GA3545@mithlond.arda.local> <4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu> <20080828212346.GA27867@coredump.intra.peff.net> <1C144B19-DA21-4CB4-B872-C1F154B031CF@cs.indiana.edu> <20080828215907.GE27867@coredump.intra.peff.net> <3DE083DB-ADFF-45E7-B3EB-A76985941271@cs.indiana.edu> <20080828230401.GC29609@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mmogilvi_git@miniinfo.net
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Aug 29 09:31:20 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Perry Wagle <wagle@cs.indiana.edu>,
+	Teemu Likonen <tlikonen@iki.fi>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
+	Andi Kleen <andi@firstfloor.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 29 09:52:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYyRy-0007In-0K
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 09:31:18 +0200
+	id 1KYymE-0003jQ-Pb
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 09:52:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752028AbYH2HaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 03:30:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751869AbYH2HaL
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 03:30:11 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:52274 "EHLO kirsi2.inet.fi"
+	id S1752359AbYH2HvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 03:51:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752116AbYH2HvJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 03:51:09 -0400
+Received: from mail.op5.se ([193.201.96.20]:40494 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751782AbYH2HaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 03:30:10 -0400
-Received: from mithlond.arda.local (80.220.180.181) by kirsi2.inet.fi (8.5.014)
-        id 488DC54E016BC225; Fri, 29 Aug 2008 10:29:43 +0300
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1KYyQQ-0001nN-1W; Fri, 29 Aug 2008 10:29:42 +0300
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752093AbYH2HvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 03:51:08 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 894EC1B80090;
+	Fri, 29 Aug 2008 09:56:01 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id UL5IMk4nmaZH; Fri, 29 Aug 2008 09:55:56 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.184])
+	by mail.op5.se (Postfix) with ESMTP id 2D0921B80005;
+	Fri, 29 Aug 2008 09:55:54 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20080828230401.GC29609@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-    gitcvs.usecrlfattr --> gitcvs.usecrlfattr::
+Jeff King wrote:
+> On Thu, Aug 28, 2008 at 03:33:26PM -0700, Perry Wagle wrote:
+> 
+>> I'm going by the reasoning shown in this thread.  Why not?  I'm looking 
+>> for a way not to have to do exhaustive testing on those scripts, so would 
+>> love to hear it.
+> 
+> Ultimately you must be the judge of what and how much to test on your
+> systems. But if you are asking if there are other similar compatibility
+> bugs in 1.6.0, then my opinion, as somebody who follows the git list
+> quite closely and contributes some code, is that no, there are not.
+> 
 
-This fixes an asciidoc markup issue.
+There's one, actually. The default pack-index version is increased now,
+so really, really old clients (pre-1.4.5) won't be able to understand
+the packs generated by default by a new server. I haven't examined how
+and when this affect clients, although I believe only those using an
+ancient client that fetch pre-created packs over dumb transport (http
+or rsync) repo packed with pack.indexversion = 2, or with 1.6.0
+without a pack.indexversion setting at all, will suffer.
 
-Signed-off-by: Teemu Likonen <tlikonen@iki.fi>
----
- Documentation/config.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Encountering that particular scenario should be very rare indeed.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 866d0c3..2364b8d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -711,7 +711,7 @@ gitcvs.logfile::
- 	Path to a log file where the CVS server interface well... logs
- 	various stuff. See linkgit:git-cvsserver[1].
- 
--gitcvs.usecrlfattr
-+gitcvs.usecrlfattr::
- 	If true, the server will look up the `crlf` attribute for
- 	files to determine the '-k' modes to use. If `crlf` is set,
- 	the '-k' mode will be left blank, so cvs clients will
+Apart from that, I agree with Jeff about there not being any problems
+regarding compatibility, and I wholeheartedly agree with the hint to
+start reading the releasenotes.
+
+As for suggesting future improvements, perhaps relnotes entries with
+the slightest chance of breaking anything for anyone could be marked
+"COMPAT" or something, so Perry and the likes of him can find them
+easily. I also agree with the suggestion that git itself should be
+free of a deprecated way of doing things at the deprecation date.
+
 -- 
-1.6.0.1.129.g0a56
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
