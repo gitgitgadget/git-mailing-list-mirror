@@ -1,100 +1,63 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 1/3] improve reliability of fixup_pack_header_footer()
-Date: Fri, 29 Aug 2008 07:30:23 -0700
-Message-ID: <20080829143023.GA7403@spearce.org>
-References: <alpine.LFD.1.10.0808282142490.1624@xanadu.home> <1219975624-7653-1-git-send-email-nico@cam.org> <20080829044459.GA28492@spearce.org> <alpine.LFD.1.10.0808290844200.1624@xanadu.home>
+Subject: Re: [JGIT PATCH] Disambiguate "push not supported" from
+	"repository not found"
+Date: Fri, 29 Aug 2008 07:31:16 -0700
+Message-ID: <20080829143116.GB7403@spearce.org>
+References: <1219969118-31672-1-git-send-email-spearce@spearce.org> <200808291120.44413.robin.rosenberg@dewire.com> <48B7E927.2000205@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Aug 29 16:33:35 2008
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: Marek Zawirski <marek.zawirski@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 29 16:34:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZ51D-0000f4-RV
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 16:32:08 +0200
+	id 1KZ52i-0001LZ-7f
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 16:33:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757882AbYH2Oa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 10:30:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757892AbYH2Oa0
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 10:30:26 -0400
-Received: from george.spearce.org ([209.20.77.23]:56870 "EHLO
+	id S1758783AbYH2ObU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 10:31:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758778AbYH2ObT
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 10:31:19 -0400
+Received: from george.spearce.org ([209.20.77.23]:56874 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756613AbYH2Oa0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 10:30:26 -0400
+	with ESMTP id S1758765AbYH2ObS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 10:31:18 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id 509D038375; Fri, 29 Aug 2008 14:30:23 +0000 (UTC)
+	id D756C38376; Fri, 29 Aug 2008 14:31:16 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0808290844200.1624@xanadu.home>
+In-Reply-To: <48B7E927.2000205@gmail.com>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94289>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> On Thu, 28 Aug 2008, Shawn O. Pearce wrote:
-> > 
-> > I found your implementation in fixup_pack_header to be very
-> > contorted.  Did you read the JGit patch I posted?
-> 
-> Well, actually, I don't find the JGit implementation easier to follow at 
-> all.  Of course I wrote the C version while you wrote the Java version.  
-> Maybe without our respective bias then things are just fine in both 
-> cases.
+Marek Zawirski <marek.zawirski@gmail.com> wrote:
+> Robin Rosenberg wrote:
+>> fredagen den 29 augusti 2008 02.18.38 skrev Shawn O. Pearce:
+>>> +				if (avail.isEmpty())
+>>> +					throw noRepository();
+>>>  				throw eof;
+>>>  			}
+>>>  @@ -185,6 +182,10 @@ else if (this instanceof FetchConnection)
+>>>  		available(avail);
+>>>  	}
+>>>  +	protected TransportException noRepository() {
+>>> +		return new NoRemoteRepositoryException(uri, "not found.");
+>>> +	}
+>>> +
+>>
+>> Why an extra method for instantiating the exception?
+>
+> Isn't it overrode in subclass - BasePackPushConnection?
 
-I probably should have gone and edited my eariler comments after I
-reached the end of the patch and the light dawned about why you are
-summing the tail.  Most of what I found to be complex in your code
-was just to handle that boundary condition at partial_pack_offset
-and restart the checksum for the tail.  But I honestly cannot see
-an easier way to write that, so what you have is just fine.
- 
-> > >  void fixup_pack_header_footer(int pack_fd,
-> > ...
-> > > +	if (partial_pack_sha1 && !partial_pack_offset) {
-> > > +		partial_pack_offset = lseek(pack_fd, 0, SEEK_CUR);
-> > > +		if (partial_pack_offset == (off_t)-1)
-> > 
-> > Eh?
-> > 
-> > I find this to be nonsense.
-> 
-> This is not for thin packs but for split packs in repack-objects. And 
-> yeah, the caller has the offset information already in that case too, so 
-> this could be removed.  It just felt more generic that way originally.
-
-Oh, yea, that makes sense.  It still seems like playing with fire.
-
-I'd rather the caller pass in the proper offset than rely on it
-being the current position of the fd.  Especially if the caller
-does actually have it available.
-
-If you change anything, I'd like to see this lseek(SEEK_CUR) go away.
- 
-> And another thing I had in store (but for which you _again_ beat me to :-) )
-> is to realign data reads onto filesystem blocks.
-
-That _really_ made the JGit code ugly.  But I think its worth it.
-
-I also want to try and buffer the whole object appending we do
-during fixThinPack(), as right now we write the object header in
-one write and then compressed data bursts in the others.  Moving it
-to at least write a full 4k at a time should remove about 2 write
-calls per object.
- 
-> > That's freaking brilliant.  And something I missed in JGit.
-> > The way its implemented is downright difficult to follow though.
-> > I'll admit it took me a good 10 minutes to understand what you were
-> > doing here, and why.
-> 
-> Again maybe that's just because you're just too biased by your own 
-> implementation.  I don't consider this code particularly obscur.
-
-My own code in JGit got "obscure" when I added this check too.
-I take back the remark above.
+Correct.  I introduced the method so the subclass can inject its
+own implementation for the catch block.  But its required to give
+back a TransportException so the catch block can throw it, as we
+do not want the subclass to be able to continue at this point.
 
 -- 
 Shawn.
