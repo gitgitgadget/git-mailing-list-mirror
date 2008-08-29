@@ -1,94 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] Expand ~ and ~user in core.excludesfile,
- commit.template
-Date: Fri, 29 Aug 2008 12:28:54 -0700
-Message-ID: <7vk5dz4o3t.fsf@gitster.siamese.dyndns.org>
-References: <7vprnyqo59.fsf@gitster.siamese.dyndns.org>
- <20080824220854.GA27299@coredump.intra.peff.net>
- <7vzln2j9y2.fsf@gitster.siamese.dyndns.org>
- <20080824231343.GC27619@coredump.intra.peff.net>
- <7vhc9aj82i.fsf@gitster.siamese.dyndns.org>
- <quack.20080825T1207.lthk5e46hi4_-_@roar.cs.berkeley.edu>
- <20080827002506.GB7347@coredump.intra.peff.net>
- <quack.20080826T2012.lthvdxn2ls4@roar.cs.berkeley.edu>
- <7vy72jrr00.fsf@gitster.siamese.dyndns.org>
- <quack.20080828T0209.lthmyixjyjx_-_@roar.cs.berkeley.edu>
- <20080829032630.GA7024@coredump.intra.peff.net>
- <7vod3ca2ey.fsf@gitster.siamese.dyndns.org>
- <quack.20080829T0229.lthhc94rwyr_-_@roar.cs.berkeley.edu>
- <7vsksn4xdo.fsf@gitster.siamese.dyndns.org>
- <quack.20080829T1201.lthsksnir1u@roar.cs.berkeley.edu>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH] rev-list: fix --reverse interaction with --parents
+Date: Fri, 29 Aug 2008 21:53:59 +0200
+Message-ID: <200808292153.59376.johannes.sixt@telecom.at>
+References: <48AD9786.80707@viscovery.net> <1220037518-11219-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
-	git@vger.kernel.org
-To: Karl Chen <quarl@cs.berkeley.edu>
-X-From: git-owner@vger.kernel.org Fri Aug 29 21:30:10 2008
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Aug 29 21:55:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZ9fe-0003oi-Hr
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 21:30:10 +0200
+	id 1KZA4D-0002ir-4B
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 21:55:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751024AbYH2T3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 15:29:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750934AbYH2T3F
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 15:29:05 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45247 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750842AbYH2T3E (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 15:29:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 035C6577BE;
-	Fri, 29 Aug 2008 15:29:02 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0554A577BD; Fri, 29 Aug 2008 15:28:56 -0400 (EDT)
-In-Reply-To: <quack.20080829T1201.lthsksnir1u@roar.cs.berkeley.edu> (Karl
- Chen's message of "Fri, 29 Aug 2008 12:01:33 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BC2A1ED2-7600-11DD-BD2D-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1751786AbYH2TyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 15:54:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbYH2TyF
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 15:54:05 -0400
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:51736 "EHLO
+	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755189AbYH2TyE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 15:54:04 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id 4B9CC13A3A1;
+	Fri, 29 Aug 2008 21:54:00 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 78B4D1D215;
+	Fri, 29 Aug 2008 21:53:59 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <1220037518-11219-1-git-send-email-trast@student.ethz.ch>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94319>
 
-Karl Chen <quarl@cs.berkeley.edu> writes:
-
->>>>>> On 2008-08-29 09:08 PDT, Junio C Hamano writes:
+On Freitag, 29. August 2008, Thomas Rast wrote:
+> Johannes Sixt wrote:
+> > This command does not give the expected result: It reports *two* initial
+> > commits and one merge; in particular, commit X is reported as initial
+> > commit.
+> >
+> > $ git rev-list --parents --reverse --full-history master -- P2
 >
->     Junio> I do not see any strong reason why the single caller of
->     Junio> user_path() has to keep using the static allocation.
->     Junio> Would it help to reduce the complexity of your
->     Junio> expand_user_path() implementation, if we fixed the
->     Junio> caller along the lines of this patch (untested, but
->     Junio> just to illustrate the point)?
->
-> Yes, expand_user_path() would be much simpler, it would basically
-> be me original implementation except for returning NULL on error.
+> The good news is: the patch really does fix your issue.  It also fixes
+> the test case (which uses the history from the diagram above).  And it
+> passes the test suite.
 
-Yeah, modulo those styles issues your v3 and v4 addressed, and use of
-strbuf.
+Thanks for picking up the topic and helping out. It does indeed work with my 
+example.
 
-It might feel that we went full circles, wasting your time.  But it's not.
-We found out that the final series would look like this:
+I let others comment whether this patch is good. I've no clue how the revision 
+walker machinery works.
 
- [1/3] Introduce expand_user_path();
-
- [2/3] Using #1, introduce git_config_pathname() and use it to parse your
-       two variables;
-
- [3/3] Update the sole caller of user_path() to use expand_user_path().
-
-Patch #1 and #2 can be squashed into one if you want.  Also you do not
-have to do #3 yourself if you do not feel like it (but now we know how the
-code would look like, why not?).
-
-Thanks to these three initial rounds, we know whoever implements #1 knows
-what kind of interface the (to-be-rewritten) user of user_path() would
-want, so #3 will become much cleaner.  We made progress.
-
-Thanks.
+-- Hannes
