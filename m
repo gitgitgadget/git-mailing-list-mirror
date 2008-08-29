@@ -1,70 +1,150 @@
-From: Aidan Van Dyk <aidan@highrise.ca>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Fri, 29 Aug 2008 12:41:21 -0400
-Message-ID: <20080829164121.GC20629@yugib.highrise.ca>
-References: <4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu> <20080828212346.GA27867@coredump.intra.peff.net> <1C144B19-DA21-4CB4-B872-C1F154B031CF@cs.indiana.edu> <20080828215907.GE27867@coredump.intra.peff.net> <3DE083DB-ADFF-45E7-B3EB-A76985941271@cs.indiana.edu> <881C17DA-2FE2-49A7-A4A9-FACA7720599C@cs.indiana.edu> <20080829152451.GA20629@yugib.highrise.ca> <94a0d4530808290911j32bf5ee0q869dfe39483297f8@mail.gmail.com> <20080829162420.GB20629@yugib.highrise.ca> <94a0d4530808290928w3b1decd4o2e77349d793ffff0@mail.gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: [RFC/PATCH 1/2 v2] for-each-ref: add new format 'refbasename'
+Date: Fri, 29 Aug 2008 18:45:08 +0200
+Message-ID: <20080829164508.GF8000@neumann>
+References: <0329f1ab2642e1dab701b5fc6517bfb1b4ea2d46.1220004755.git.szeder@ira.uka.de>
+	<20080829143448.GC7403@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="oTHb8nViIGeoXxdp"
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 29 18:42:29 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Aug 29 18:46:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZ73L-0003Et-6F
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 18:42:27 +0200
+	id 1KZ772-0004NZ-Ox
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 18:46:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751435AbYH2QlW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 12:41:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbYH2QlW
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 12:41:22 -0400
-Received: from yugib.highrise.ca ([205.150.199.213]:38856 "EHLO
-	yugib.highrise.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751121AbYH2QlW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 12:41:22 -0400
-Received: from localhost (yugib.highrise.ca [205.150.199.213])
-	by yugib.highrise.ca (Postfix) with ESMTP id 6833E111E39;
-	Fri, 29 Aug 2008 12:41:21 -0400 (EDT)
+	id S1754062AbYH2QpL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Aug 2008 12:45:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751554AbYH2QpL
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 12:45:11 -0400
+Received: from francis.fzi.de ([141.21.7.5]:14076 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753105AbYH2QpJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 12:45:09 -0400
+Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 29 Aug 2008 18:45:07 +0200
 Content-Disposition: inline
-In-Reply-To: <94a0d4530808290928w3b1decd4o2e77349d793ffff0@mail.gmail.com>
-User-Agent: Mutt/1.5.12-2006-07-14
+In-Reply-To: <20080829143448.GC7403@spearce.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-OriginalArrivalTime: 29 Aug 2008 16:45:07.0297 (UTC) FILETIME=[97F7BD10:01C909F6]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94312>
+
+for-each-ref's refname format outputs each ref in its full format, e.g.
+'refs/heads/foo' and 'refs/tags/bar'.  However, there are tools that
+need only the last part of the refname, e.g. only 'foo' and 'bar'.  Suc=
+h
+a tool is git's bash completion script, which spends considerable amoun=
+t
+of time removing the unneeded parts from for-each-ref's output.
+
+Therefore, we introduce a new for-each-ref format called 'refbasename',
+which strips the leading parts of the refname:
+
+  * If the refname doesn't contain any '/', then it is printed as is.
+
+  * If the refname contains one '/', then the string following the '/'
+    is printed (e.g. 'refs/foo' becomes 'foo').
+
+  * If the refname contains two (or more) '/', then the string followin=
+g
+    the second '/' is printed (e.g. 'refs/heads/foo' becomes 'foo').
+   =20
+Signed-off-by: SZEDER G=E1bor <szeder@ira.uka.de>
+---
+
+On Fri, Aug 29, 2008 at 07:34:48AM -0700, Shawn O. Pearce wrote:
+> SZEDER GGGbor <szeder@ira.uka.de> wrote:
+> > +		} else if (!strcmp(name, "refbasename")) {
+> > +			char * p =3D strchr(ref->refname, '/');
+> > +			p =3D strchr(p+1, '/');
+> > +			v->s =3D p+1;
+>=20
+> Please be careful here and check for !p.  A refname may be missing
+> one or two '/' in which case you will cause the process to segfault.
+>=20
+> I don't think its a good idea to assume you'll always have to '/'
+> in the name.  "refs/foo" can be created by git-update-ref.  Or if
+> we ever started to report on HEAD this output tag would crash.
+Ah, I feared as much.
+
+This raises the question what should the refbasename format print in
+those cases.  The first case (no '/' at all) is trivial, but the other
+two are a bit problematic:
+
+  * The refname 'foo/bar' seems to be valid, or at least the command
+    sequence 'mkdir .git/foo; cp .git/refs/heads/master .git/foo/bar;
+    git checkout foo/bar' works as expected.  OTOH, 'git for-each-ref
+    --format=3D"%(refname)"' doesn't print anything.
+
+  * The refname 'refs/head/foo/bar' should become 'foo/bar':  it's in=20
+    sync with how 'git branch' lists it, and this behaviour is needed
+    by the bash completion changes.  However, unfortunately it
+    contradicts to the format's name, because basename removes all
+    directory components.  Maybe someone has a better idea on how to
+    name this format...
 
 
---oTHb8nViIGeoXxdp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+ builtin-for-each-ref.c  |   12 ++++++++++++
+ t/t6300-for-each-ref.sh |    2 ++
+ 2 files changed, 14 insertions(+), 0 deletions(-)
 
-* Felipe Contreras <felipe.contreras@gmail.com> [080829 12:28]:
- 
-> I meant 'X.0.0', if 1.X is major, what is X.0? Huge?
-
-Backwards compatible?
-
-;-)
-
--- 
-Aidan Van Dyk                                             Create like a god,
-aidan@highrise.ca                                       command like a king,
-http://www.highrise.ca/                                   work like a slave.
-
---oTHb8nViIGeoXxdp
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFIuCaxuVxNPsxNPScRAhLNAJ9Ov9YZ/eWp/2xsQVgLW9RoLih6YwCfToAV
-bdmu1Rtfc8OUZ4eiXtu0y8Y=
-=lHM0
------END PGP SIGNATURE-----
-
---oTHb8nViIGeoXxdp--
+diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+index 21e92bb..23d064b 100644
+--- a/builtin-for-each-ref.c
++++ b/builtin-for-each-ref.c
+@@ -66,6 +66,7 @@ static struct {
+ 	{ "subject" },
+ 	{ "body" },
+ 	{ "contents" },
++	{ "refbasename" },
+ };
+=20
+ /*
+@@ -577,6 +578,17 @@ static void populate_value(struct refinfo *ref)
+ 			char *s =3D xmalloc(len + 4);
+ 			sprintf(s, "%s^{}", ref->refname);
+ 			v->s =3D s;
++		} else if (!strcmp(name, "refbasename")) {
++			char * slash1 =3D strchr(ref->refname, '/');
++			if (!slash1)
++				v->s =3D ref->refname;
++			else {
++				char * slash2 =3D strchr(slash1 + 1, '/');
++				if (!slash2)
++					v->s =3D slash1 + 1;
++				else
++					v->s =3D slash2 + 1;
++			}
+ 		}
+ 	}
+=20
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 8ced593..b317a01 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -66,6 +66,7 @@ test_atom head subject 'Initial'
+ test_atom head body ''
+ test_atom head contents 'Initial
+ '
++test_atom head refbasename 'master'
+=20
+ test_atom tag refname refs/tags/testtag
+ test_atom tag objecttype tag
+@@ -95,6 +96,7 @@ test_atom tag subject 'Tagging at 1151939927'
+ test_atom tag body ''
+ test_atom tag contents 'Tagging at 1151939927
+ '
++test_atom tag refbasename 'testtag'
+=20
+ test_expect_success 'Check invalid atoms names are errors' '
+ 	test_must_fail git-for-each-ref --format=3D"%(INVALID)" refs/heads
+--=20
+1.6.0.1.149.g903b0
