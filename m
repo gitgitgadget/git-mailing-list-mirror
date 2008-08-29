@@ -1,122 +1,116 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [QGIT RFC] Unit tests for QGit
-Date: Fri, 29 Aug 2008 09:01:48 +0200
-Message-ID: <e5bfff550808290001r168c7edfre926f1bc735f3ad0@mail.gmail.com>
-References: <20080808211318.GA4396@efreet.light.src>
-	 <20080817195839.GB4542@efreet.light.src>
-	 <e5bfff550808171330w28dda6a2m32b0e51b1ef73cdc@mail.gmail.com>
-	 <20080818180048.GA15520@efreet.light.src>
-	 <e5bfff550808190753t4f99ddb6q83886dbca27dbf03@mail.gmail.com>
-	 <20080827201819.GD15520@efreet.light.src>
-	 <e5bfff550808280429h63496f9byfa4454af7adb0e86@mail.gmail.com>
-	 <20080828153118.GA13169@diana.vm.bytemark.co.uk>
-	 <e5bfff550808281154h67392297y3a08d4ed8aea408f@mail.gmail.com>
-	 <20080828220124.GF15520@efreet.light.src>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Fri, 29 Aug 2008 17:12:58 +0300
+Message-ID: <94a0d4530808290712s2044dd03pb93cb4a829dc56b0@mail.gmail.com>
+References: <alpine.DEB.1.00.0808252018490.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+	 <7v63pmkozh.fsf@gitster.siamese.dyndns.org>
+	 <1219907659.7107.230.camel@pmac.infradead.org>
+	 <7vtzd5fta0.fsf@gitster.siamese.dyndns.org>
+	 <1219912327.7107.245.camel@pmac.infradead.org>
+	 <94a0d4530808280157p230d289dlf0c85cd517541801@mail.gmail.com>
+	 <20080828115408.GA30834@hera.kernel.org>
+	 <94a0d4530808280615i2befb89cm7d6153bfceb11b19@mail.gmail.com>
+	 <94a0d4530808280634k1c23fe10q8934875c83d4a2f5@mail.gmail.com>
+	 <alpine.LFD.1.10.0808280936300.3300@nehalem.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "=?UTF-8?Q?Karl_Hasselstr=C3=B6m?=" <kha@treskal.com>,
-	git@vger.kernel.org
-To: "Jan Hudec" <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Fri Aug 29 09:03:25 2008
+Cc: "Al Viro" <viro@hera.kernel.org>,
+	"Matthew Wilcox" <matthew@wil.cx>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	users@kernel.org, "Jeff King" <peff@peff.net>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"David Woodhouse" <dwmw2@infradead.org>, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Aug 29 16:14:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYy0V-0008Qc-8i
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 09:02:55 +0200
+	id 1KZ4jk-0002rA-AD
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 16:14:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751085AbYH2HBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 03:01:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751048AbYH2HBt
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 03:01:49 -0400
-Received: from rv-out-0506.google.com ([209.85.198.232]:6924 "EHLO
+	id S1757662AbYH2OM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 10:12:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757650AbYH2OM7
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 10:12:59 -0400
+Received: from rv-out-0506.google.com ([209.85.198.236]:45735 "EHLO
 	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750881AbYH2HBs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 03:01:48 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so749689rvb.1
-        for <git@vger.kernel.org>; Fri, 29 Aug 2008 00:01:48 -0700 (PDT)
+	with ESMTP id S1755048AbYH2OM6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 10:12:58 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so898933rvb.1
+        for <git@vger.kernel.org>; Fri, 29 Aug 2008 07:12:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=WvVVfxqcp83Bok43ssIxIVAdR2LSPmTPdsoc6xJU5fg=;
-        b=sb4WgS+3RqiTlJz+Yh8WZp0SmHZzuvzaHtX9471ehtX7atJhycjuL5+mRUaW8S3qdU
-         hNiwz6iDhMSsN06eZ3K6s8E0J2jxfxu8hYGPnUPBQjKx1psSO9Nb+H8G8QZEsV0EIGzT
-         h+ZJVg6SLJpPdUkMlgyQO4S3VsXYkeYGfo7hQ=
+        bh=Mi+ELf2QzQlEtuBQoktWzoK7u5dm7WGW2qioqrVuLko=;
+        b=uSgytfQISD4GR6paEmGqQedAk9QpnL29pgekFhP/JWe9GbI1UVYk6fG7/x2XJQJwMJ
+         uLAthrkAzZ5uyw7Zbtt5gg2njoK9SJ6x9eiZq0RaQmb1kgxEesWkm8y8sfOcZj0zr2ZF
+         Z+Ehz1YQqo9by6vnS17UUbtGnhZbkbBfQMEd0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=U6zNPywArnjnMC8cl8N4gpwgGMclNv0AvX5HVjoPR8mIVWHkIKAz5HOWcbSQfTqbsM
-         fjcVi7cIQ5ekeDU9uPhx0sIu3o9IahjEgbErvI6/rBDKdTxL35udQMlfN0boAHYQ700q
-         Gd0HDGSH7owkX9uRuuyDojI47wOdKz0NzZuuA=
-Received: by 10.114.184.7 with SMTP id h7mr2365135waf.9.1219993308277;
-        Fri, 29 Aug 2008 00:01:48 -0700 (PDT)
-Received: by 10.115.110.15 with HTTP; Fri, 29 Aug 2008 00:01:48 -0700 (PDT)
-In-Reply-To: <20080828220124.GF15520@efreet.light.src>
+        b=ipsUZVkvJOjog+NM8EVHZH2I0p4ST7HGiCxpADYp1aPOF6OObTfRgPwfufNYYMHBl4
+         owaKN1CpBnOySr2ldUSB6S9AVOIHYVV34bgOeRYaV+a/k4ZS/Pe/vOp96MhiUK9j8ue4
+         1fKkl5sm/BiIQSznuvYgrvkSqhQ+UmYmcjq1I=
+Received: by 10.140.132.8 with SMTP id f8mr1508995rvd.206.1220019178207;
+        Fri, 29 Aug 2008 07:12:58 -0700 (PDT)
+Received: by 10.140.166.19 with HTTP; Fri, 29 Aug 2008 07:12:58 -0700 (PDT)
+In-Reply-To: <alpine.LFD.1.10.0808280936300.3300@nehalem.linux-foundation.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94262>
 
-On Fri, Aug 29, 2008 at 12:01 AM, Jan Hudec <bulb@ucw.cz> wrote:
+On Thu, Aug 28, 2008 at 7:37 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
-> So, now there is a test infrastructure plus test case to reproduce this
-> switching between stgit and non-stgit branch in
-> git://repo.or.cz/qgit4/bulb.git (http://repo.or.cz/r/qgit4/bulb.git) with
-> whoping 9 commits. Should I send out a patch series, or do you prefer just
-> pulling?
 >
-
-I prefer to pull.
-
-> Now in my opinion the code could use some refactoring rather than just fixing
-> the bugs (my long term intent is to add features like topgit support,
-> push/pull/merge and other things git-gui can do and such). I'd start with
-> the Git initialization sequence. I'll write tests for the new code, but as
-> I expect it to have significantly different interface from the old one, I'll
-> not try to write tests for the current one.
+> On Thu, 28 Aug 2008, Felipe Contreras wrote:
+>>
+>> If the git-foo was supposed to be deprecated in 1.6.0
 >
+> Itw as deprecated over a _year_ ago.
+>
+>> When it becomes truly obsolete, then people can rely on git exec-dir,
+>> which will be disabled by default.
+>
+> It _is_ obsolete, but there's a trivial compatibility thing.
+>
+> Are you happy now? How hard is it to really understand?
 
-We have following possibilities:
+It only takes one word; obsolete. I haven't heard that git-foo is
+obsolete until now, all I heard is that it was deprecated. Maybe I
+should have paid more attention but that's not the point.
 
-- Pull the code directly in qgit master as soon as there are some new
-commits in your branch
+What other projects do is make very visible when something is
+deprecated, like a big, annoying, unbearable warning. Next time you
+deprecated a command it might be a good idea to add the warning each
+time the command is used, and obsolete it later on.
 
-- Pull the code in public qgit repo but under a different branch,
-let's call' it "next" ;-)
+Also, if it's a big change like this git- stuff, then do a major version bump.
 
-- Waiting for your code has stabilized a bit (testing infrastructure
-is very young and for what I have seen from revision history code is
-still very 'fluid'), then pull the branch in qgit master directly.
+If you had marked 1.6 as 2.0, and added warnings when you deprecated
+the git-foo stuff then the users would have no excuse. It would have
+been obvious and this huge thread would have been avoided.
 
+Personally I'm subscribed to the mailing and I read the release notes
+of 1.6, but I didn't register that change. I install my git stuff to
+/opt/git, so when I was using git-foo I was using the old commands
+that come from Fedora. It wasn't until I read this thread that I
+noticed.
 
-These are my two cents:
+Don't expect users to be a aware of what's happening on the project,
+many wouldn't even notice that there was a minor version bump. Julio,
+I guess that recommendation goes for you.
 
-Option one could be a little bit misleading for people pulling from
-qgit repo to get current qgit sources + just fixes.
+Best regards.
 
-Option two is doable but is an additional step with an additional
-maintainer burden, probably the current number of contributors to qgit
-is not enough to justify such a complex development model.
-
-Perhaps option three it seems the more balanced, also looking at
-projects git related and with similar size of qgit, as example StGit
-itself. When let's say Karl has ready a block of patches he sends them
-all as a series and are applied to StGit master branch.
-
-The only modification I would suggest is that I can pull from you repo
-directly instead of asking you to send patches to the git list.
-
-I leave up to you when to ask for a pull request, I only ask you to
-consider that qgit public repo is pulled also by people not interested
-in the latest development, and they only want a stable qgit, so please
-ask for a pull when you think stuff is stable enough.
-
-Comments?
-
-Marco
+-- 
+Felipe Contreras
