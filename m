@@ -1,59 +1,69 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [EGIT PATCH] Change GitResourceDecorator to use isAccessible
-Date: Fri, 29 Aug 2008 11:01:06 +0200
-Message-ID: <200808291101.06253.robin.rosenberg.lists@dewire.com>
-References: <1219968506-30437-1-git-send-email-spearce@spearce.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Fri, 29 Aug 2008 11:02:58 +0200
+Message-ID: <vpqhc945h31.fsf@bauges.imag.fr>
+References: <20080828090421.GQ10360@machine.or.cz>
+	<20080828195211.GA3545@mithlond.arda.local>
+	<4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu>
+	<20080828212346.GA27867@coredump.intra.peff.net>
+	<1C144B19-DA21-4CB4-B872-C1F154B031CF@cs.indiana.edu>
+	<20080828215907.GE27867@coredump.intra.peff.net>
+	<3DE083DB-ADFF-45E7-B3EB-A76985941271@cs.indiana.edu>
+	<20080828230401.GC29609@coredump.intra.peff.net>
+	<48B7AA67.4040400@op5.se> <vpqvdxk5jrl.fsf@bauges.imag.fr>
+	<1f6632e50808290127x2ec1ee6am90639b35aba5b764@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Aug 29 11:04:21 2008
+To: "Matthias Kestenholz" <mk@spinlock.ch>
+X-From: git-owner@vger.kernel.org Fri Aug 29 11:05:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYzu0-0005ee-CY
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 11:04:20 +0200
+	id 1KYzvK-0005r3-BS
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 11:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752862AbYH2JDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 05:03:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753247AbYH2JDQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 05:03:16 -0400
-Received: from av9-2-sn2.hy.skanova.net ([81.228.8.180]:47996 "EHLO
-	av9-2-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751549AbYH2JDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 05:03:15 -0400
-Received: by av9-2-sn2.hy.skanova.net (Postfix, from userid 502)
-	id B03BE381D7; Fri, 29 Aug 2008 11:03:13 +0200 (CEST)
-Received: from smtp4-2-sn2.hy.skanova.net (smtp4-2-sn2.hy.skanova.net [81.228.8.93])
-	by av9-2-sn2.hy.skanova.net (Postfix) with ESMTP
-	id 910E637EC6; Fri, 29 Aug 2008 11:03:13 +0200 (CEST)
-Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
-	by smtp4-2-sn2.hy.skanova.net (Postfix) with ESMTP id 79DAA37E46;
-	Fri, 29 Aug 2008 11:03:13 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <1219968506-30437-1-git-send-email-spearce@spearce.org>
-Content-Disposition: inline
+	id S1752895AbYH2JEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 05:04:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752773AbYH2JEi
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 05:04:38 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:51800 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752737AbYH2JEh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 05:04:37 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m7T931P9005478;
+	Fri, 29 Aug 2008 11:03:01 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1KYzsg-0001e7-Hi; Fri, 29 Aug 2008 11:02:58 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1KYzsg-0000zr-FT; Fri, 29 Aug 2008 11:02:58 +0200
+In-Reply-To: <1f6632e50808290127x2ec1ee6am90639b35aba5b764@mail.gmail.com> (Matthias Kestenholz's message of "Fri\, 29 Aug 2008 10\:27\:08 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Fri, 29 Aug 2008 11:03:01 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-fredagen den 29 augusti 2008 02.08.26 skrev Shawn O. Pearce:
-> f3a6ac20 says it switched to use isAccessible() here but it
-> changed to exists().  We can only use setSessionProperty if
-> the resource is accessible so we must use the correct test
-> here in order to fix the issue reported by Robert.
-> 
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> ---
-> 
->  I just pushed this out to master since you clearly meant
->  for this to be the case.  :-|
+"Matthias Kestenholz" <mk@spinlock.ch> writes:
 
-Thanks. I had a fix, but noticed the attribution was wrong so I fixed
-the patch again and forgot the fix.
+>> AAUI, the pack itself is sent over the network, but the index is
+>> generated locally when receiving the pack, so this shouldn't be a
+>> problem.
+>
+> If you use the git or ssh protocol, then yes. If you use dumb protocols such as
+> HTTP or rsync, no.
 
--- robin
+Thanks for the clarification, and sorry for the noise then ;-).
+
+-- 
+Matthieu
