@@ -1,43 +1,43 @@
 From: Marius Storm-Olsen <marius@trolltech.com>
 Subject: Re: [PATCH] git-commit: '--no-status' Allow suppression of status
  summary in commit msg
-Date: Fri, 29 Aug 2008 07:39:14 +0200
-Message-ID: <48B78B82.5010908@trolltech.com>
-References: <1219949215-10189-1-git-send-email-marcus@griep.us> <20080828191302.GA2704@blimp.local> <48B6FB57.5030406@griep.us>
+Date: Fri, 29 Aug 2008 07:49:27 +0200
+Message-ID: <48B78DE7.3070700@trolltech.com>
+References: <1219949215-10189-1-git-send-email-marcus@griep.us> <20080828191302.GA2704@blimp.local> <48B6FB57.5030406@griep.us> <48B78B82.5010908@trolltech.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
  protocol="application/pgp-signature";
- boundary="------------enig64669C79D78BF45F982BAAB7"
+ boundary="------------enig32944FA7753C415424462008"
 Cc: Alex Riesen <raa.lkml@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: Marcus Griep <marcus@griep.us>
-X-From: git-owner@vger.kernel.org Fri Aug 29 07:41:22 2008
+X-From: git-owner@vger.kernel.org Fri Aug 29 07:51:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYwjS-0007LH-BZ
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 07:41:14 +0200
+	id 1KYwsc-0000kd-99
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 07:50:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750971AbYH2FjS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 01:39:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750984AbYH2FjS
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 01:39:18 -0400
-Received: from hoat.troll.no ([62.70.27.150]:39022 "EHLO hoat.troll.no"
+	id S1751184AbYH2Ft1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 01:49:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751185AbYH2Ft1
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 01:49:27 -0400
+Received: from hoat.troll.no ([62.70.27.150]:33530 "EHLO hoat.troll.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750879AbYH2FjR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 01:39:17 -0400
+	id S1751177AbYH2Ft0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 01:49:26 -0400
 Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 29255203FC;
-	Fri, 29 Aug 2008 07:39:12 +0200 (CEST)
+	by hoat.troll.no (Postfix) with SMTP id 970B52095F;
+	Fri, 29 Aug 2008 07:49:25 +0200 (CEST)
 Received: from [172.24.106.50] (unknown [172.24.106.50])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id E7C3B2058E;
-	Fri, 29 Aug 2008 07:39:11 +0200 (CEST)
+	by hoat.troll.no (Postfix) with ESMTP id 79D54205FB;
+	Fri, 29 Aug 2008 07:49:25 +0200 (CEST)
 User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.16) Gecko/20080708 Thunderbird/2.0.0.16 Mnenhy/0.7.5.666
-In-Reply-To: <48B6FB57.5030406@griep.us>
+In-Reply-To: <48B78B82.5010908@trolltech.com>
 X-Enigmail-Version: 0.95.7
 Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
  hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
@@ -57,32 +57,37 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig64669C79D78BF45F982BAAB7
+--------------enig32944FA7753C415424462008
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
 
-Marcus Griep said the following on 28.08.2008 21:24:
-> Using --untracked-files=3Dno cuts the time to display the editor from d=
-own to 12 seconds,
-> so that is perfectly fine.  The patch can be ignored.  However, would c=
-onfig option to
-> change the default --untracked-files value be entertained?  Allowing:
+Marius Storm-Olsen said the following on 29.08.2008 07:39:
+> Marcus Griep said the following on 28.08.2008 21:24:
+>> Using --untracked-files=3Dno cuts the time to display the editor from =
+down to 12 seconds,
+>> so that is perfectly fine.  The patch can be ignored.  However, would =
+config option to
+>> change the default --untracked-files value be entertained?  Allowing:
+>>
+>> [commit]
+>> 	untrackedfiles=3Dno
+>>
+>> which defaults (as stated in the documentation for --untracked-files) =
+to all?
 >=20
-> [commit]
-> 	untrackedfiles=3Dno
->=20
-> which defaults (as stated in the documentation for --untracked-files) t=
-o all?
+> That was already added in the commit d6293d. Just set
+>      status.showUntrackedFiles=3Dno
+With that, I of course mean:
 
-That was already added in the commit d6293d. Just set
-     status.showUntrackedFiles=3Dno
+[status]
+	showUntrackedFiles=3Dno
 
 --=20
 =2Emarius [@trolltech.com]
 'if you know what you're doing, it's not research'
 
 
---------------enig64669C79D78BF45F982BAAB7
+--------------enig32944FA7753C415424462008
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
@@ -90,9 +95,9 @@ Content-Disposition: attachment; filename="signature.asc"
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (MingW32)
 
-iD8DBQFIt4uCKzzXl/njVP8RAouoAJ4jy0/NOcXsZrZ7MKHi76e61OzRwgCguDvl
-5clwS+cbCzQZuTNf1oJscK0=
-=TQEE
+iD8DBQFIt43nKzzXl/njVP8RAlSJAJ0QMQ450CgQ7SLBU1vnXLlQb0P23wCgp4pC
+UpVdXulCa+doXvVowPjmGzY=
+=EXb7
 -----END PGP SIGNATURE-----
 
---------------enig64669C79D78BF45F982BAAB7--
+--------------enig32944FA7753C415424462008--
