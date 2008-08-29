@@ -1,81 +1,144 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Fri, 29 Aug 2008 10:05:02 +0200
-Message-ID: <vpqvdxk5jrl.fsf@bauges.imag.fr>
-References: <20080828090421.GQ10360@machine.or.cz>
-	<18219E52-E56F-43D9-B28D-0CC74E225CC5@cs.indiana.edu>
-	<alpine.LFD.1.10.0808280934160.3300@nehalem.linux-foundation.org>
-	<7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu>
-	<20080828195211.GA3545@mithlond.arda.local>
-	<4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu>
-	<20080828212346.GA27867@coredump.intra.peff.net>
-	<1C144B19-DA21-4CB4-B872-C1F154B031CF@cs.indiana.edu>
-	<20080828215907.GE27867@coredump.intra.peff.net>
-	<3DE083DB-ADFF-45E7-B3EB-A76985941271@cs.indiana.edu>
-	<20080828230401.GC29609@coredump.intra.peff.net>
-	<48B7AA67.4040400@op5.se>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/2] Use %as and %cs as pretty format flags
+Date: Fri, 29 Aug 2008 01:12:18 -0700 (PDT)
+Message-ID: <m3hc94qlyc.fsf@localhost.localdomain>
+References: <d77df1110808280409o9445f9fybcab2c8d1066a8d8@mail.gmail.com>
+	<20080828231547.GD29609@coredump.intra.peff.net>
+	<7viqtkd84s.fsf@gitster.siamese.dyndns.org>
+	<20080828235420.GB30195@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Perry Wagle <wagle@cs.indiana.edu>,
-	Teemu Likonen <tlikonen@iki.fi>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Petr Baudis <pasky@suse.cz>,
-	Kristian H??gsberg <krh@redhat.com>,
-	Matthias Kestenholz <mk@spinlock.ch>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
-	Andi Kleen <andi@firstfloor.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Aug 29 10:13:39 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nathan Panike <nathan.panike@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 29 10:13:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYz6n-0001gw-0v
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 10:13:29 +0200
+	id 1KYz6n-0001gw-ML
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 10:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752746AbYH2IMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 04:12:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752710AbYH2IMW
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 04:12:22 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:32834 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752506AbYH2IMV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 04:12:21 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m7T8544b021680;
-	Fri, 29 Aug 2008 10:05:04 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KYyyc-0000Sz-Pq; Fri, 29 Aug 2008 10:05:02 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KYyyc-0000sY-NV; Fri, 29 Aug 2008 10:05:02 +0200
-In-Reply-To: <48B7AA67.4040400@op5.se> (Andreas Ericsson's message of "Fri\, 29 Aug 2008 09\:51\:03 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Fri, 29 Aug 2008 10:05:05 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752768AbYH2IM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 04:12:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752710AbYH2IM0
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 04:12:26 -0400
+Received: from fk-out-0910.google.com ([209.85.128.188]:35200 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751960AbYH2IMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 04:12:22 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so500966fkq.5
+        for <git@vger.kernel.org>; Fri, 29 Aug 2008 01:12:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=YSdnE/K5c68IIIgJX3n0ETSg1CLhsMA36FwozASww54=;
+        b=fMhnUTNYNlvFUCYA1oQpQx8HVSGdMgp2mhf0FU68SjKE7pcIDhizsVd4IYb5+gAy8F
+         VaHPkrY4r5k7iK4aQs7IXSN2i+44DMNR7VIPO6t/kW3pulgag9+5xYR0pzTZCRq1O0IZ
+         8ZgbesjrJpCnp9hCkRp/hUXNmKFwj03zA1X1s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=n2xU0u6/f9txu/93imKLRb/kDickHDV3nmlh11SIHE0xNYQVHsu2rjcqzDCYtrsJVN
+         5BlagUTyQNhgCoNRPJHpNekJtFvrgfjhSYKXvEZRfUpaR+4aA/mUZ5JrP6mvqC7h5saK
+         f2mgHCi4p1V/76M+kBa3+o+qdTlC8qLqIWPrc=
+Received: by 10.180.254.18 with SMTP id b18mr3091955bki.43.1219997539229;
+        Fri, 29 Aug 2008 01:12:19 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.255.225])
+        by mx.google.com with ESMTPS id d13sm1749651fka.3.2008.08.29.01.12.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 29 Aug 2008 01:12:18 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m7T8CDet026706;
+	Fri, 29 Aug 2008 10:12:14 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m7T8CBWg026702;
+	Fri, 29 Aug 2008 10:12:11 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20080828235420.GB30195@coredump.intra.peff.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andreas Ericsson <ae@op5.se> writes:
+Jeff King <peff@peff.net> writes:
 
-> There's one, actually. The default pack-index version is increased now,
-> so really, really old clients (pre-1.4.5) won't be able to understand
-> the packs generated by default by a new server.
+> On Thu, Aug 28, 2008 at 04:36:51PM -0700, Junio C Hamano wrote:
+> 
+> > I was actually thinking about rejecting this, asking for something that
+> > allows to express all the other %[ai][dDri] format can express, and
+> > perhaps more.  So I think "%ad(short)" is a good direction to go, except
+> > that 'd' is already taken.  Perhaps %a(date), %a(shortdate,local),...?
+> 
+> I was thinking we could accept %ad _or_ %ad(short), but of course
+> introducing the latter can break existing "%ad(my other random text)"
+> which is a bad idea.
+> 
+> I really think some consideration should be given to introducing
+> arbitrary "arguments" to formatting specifiers, of which this is one
+> example. Another that has been mentioned is pulling an arbitrary element
+> from a list.
+> 
+> How do you feel about a brand new syntax (and supporting the old, of
+> course) that is syntactically a little easier to extend. Like:
+> 
+>   %(macro, key=val, key=val)
+> 
+> e.g.
+> 
+>   %(authordate, format=short, tz=local)
+> 
+> where the syntax can be easily parsed without understanding what
+> "authordate" means.  Jakub already suggested something akin to RPM's
+> macro expansion, though I haven't looked too closely at it.
 
-AAUI, the pack itself is sent over the network, but the index is
-generated locally when receiving the pack, so this shouldn't be a
-problem.
+I'd rather we do not introduce yet another pretty-printing /
+formatting syntax, and use the same syntax as git-for-each-ref uses
+for extra formatting, 
 
+  As a special case for the date-type fields, you may specify a format for
+  the date by adding one of `:default`, `:relative`, `:short`, `:local`,
+  `:iso8601` or `:rfc2822` to the end of the fieldname; e.g.
+  `%(taggerdate:relative)`.
+
+which incindentally (or not) is the same as rpm uses
+
+  Alternate output formats may be requested by following the tag with  :type-
+  tag.  Currently, the following types are supported:
+
+  :armor  Wrap a public key in ASCII armor.
+
+  :base64
+         Encode binary data using base64.
+
+  :date  Use strftime(3) "%c" format.
+
+  :day   Use strftime(3) "%a %b %d %Y" format.
+
+  :depflags
+         Format dependency flags.
+
+  :fflags
+         Format file flags.
+
+  :hex   Format in hexadecimal.
+
+  :octal Format in octal.
+
+  :perms Format file permissions.
+
+  :shescape
+         Escape single quotes for use in a script.
+
+  :triggertype
+         Display trigger suffix.
+
+P.S. I Agree with %ad and the like respecting --date=<type>
 -- 
-Matthieu
+Jakub Narebski
+Poland
+ShadeHawk on #git
