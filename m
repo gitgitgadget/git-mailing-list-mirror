@@ -1,92 +1,100 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] dir.c: avoid c99 array initialization
-Date: Fri, 29 Aug 2008 13:08:13 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808291306420.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <IH0MHSTEimhAN93AedvpRKq4qfzm1QA814ZYyhbSBtSdNbq8vuE6aw@cipher.nrlssc.navy.mil> <G-ipWASixyGW7nvO1KquifehvBB7FNKwjPtIB0ukyEJ1Si1CJWM34w@cipher.nrlssc.navy.mil> <81b0412b0808281301m29830c20l3e16432ea8aef45d@mail.gmail.com>
- <20080828201657.GH21072@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 1/3] improve reliability of fixup_pack_header_footer()
+Date: Fri, 29 Aug 2008 07:30:23 -0700
+Message-ID: <20080829143023.GA7403@spearce.org>
+References: <alpine.LFD.1.10.0808282142490.1624@xanadu.home> <1219975624-7653-1-git-send-email-nico@cam.org> <20080829044459.GA28492@spearce.org> <alpine.LFD.1.10.0808290844200.1624@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>, davidk@lysator.liu.se,
-	Andreas Ericsson <ae@op5.se>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Aug 29 13:08:06 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Aug 29 16:33:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZ1pk-0005rq-93
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 13:08:04 +0200
+	id 1KZ51D-0000f4-RV
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 16:32:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752902AbYH2LGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 07:06:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752881AbYH2LGx
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 07:06:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39331 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752751AbYH2LGw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 07:06:52 -0400
-Received: (qmail invoked by alias); 29 Aug 2008 11:03:03 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp033) with SMTP; 29 Aug 2008 13:03:03 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX196FCApshd6wKmIm0W/bcyvt3J8rHV1J1arIc+xwS
-	qbOv5QgXRxGS3L
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <20080828201657.GH21072@spearce.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1757882AbYH2Oa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 10:30:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757892AbYH2Oa0
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 10:30:26 -0400
+Received: from george.spearce.org ([209.20.77.23]:56870 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756613AbYH2Oa0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 10:30:26 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 509D038375; Fri, 29 Aug 2008 14:30:23 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0808290844200.1624@xanadu.home>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94288>
 
-Hi,
-
-On Thu, 28 Aug 2008, Shawn O. Pearce wrote:
-
-> Alex Riesen <raa.lkml@gmail.com> wrote:
+Nicolas Pitre <nico@cam.org> wrote:
+> On Thu, 28 Aug 2008, Shawn O. Pearce wrote:
 > > 
-> > For just these 5 values it is likely more effective to just use
-> > a conditional statement (less stack requested, less likely
-> > some stupid compiler tries to optimize it wrongly).
-> > And just as readable.
+> > I found your implementation in fixup_pack_header to be very
+> > contorted.  Did you read the JGit patch I posted?
+> 
+> Well, actually, I don't find the JGit implementation easier to follow at 
+> all.  Of course I wrote the C version while you wrote the Java version.  
+> Maybe without our respective bias then things are just fine in both 
+> cases.
+
+I probably should have gone and edited my eariler comments after I
+reached the end of the patch and the light dawned about why you are
+summing the tail.  Most of what I found to be complex in your code
+was just to handle that boundary condition at partial_pack_offset
+and restart the checksum for the tail.  But I honestly cannot see
+an easier way to write that, so what you have is just fine.
+ 
+> > >  void fixup_pack_header_footer(int pack_fd,
+> > ...
+> > > +	if (partial_pack_sha1 && !partial_pack_offset) {
+> > > +		partial_pack_offset = lseek(pack_fd, 0, SEEK_CUR);
+> > > +		if (partial_pack_offset == (off_t)-1)
 > > 
-> > diff --git a/dir.c b/dir.c
-> > index 92452eb..1cf5985 100644
-> > --- a/dir.c
-> > +++ b/dir.c
-> > @@ -680,17 +680,12 @@ static int cmp_name(const void *p1, const void *p2)
-> >   */
-> >  static int simple_length(const char *match)
-> >  {
-> > -	const char special[256] = {
-> > -		[0] = 1, ['?'] = 1,
-> > -		['\\'] = 1, ['*'] = 1,
-> > -		['['] = 1
-> > -	};
-> >  	int len = -1;
+> > Eh?
 > > 
-> >  	for (;;) {
-> >  		unsigned char c = *match++;
-> >  		len++;
-> > -		if (special[c])
-> > +		if (!c || '?' == c || '\\' == c || '*' == c || '[' == c)
+> > I find this to be nonsense.
 > 
-> I am reminded of a year old thread with my patch to this:
+> This is not for thin packs but for split packs in repack-objects. And 
+> yeah, the caller has the offset information already in that case too, so 
+> this could be removed.  It just felt more generic that way originally.
+
+Oh, yea, that makes sense.  It still seems like playing with fire.
+
+I'd rather the caller pass in the proper offset than rely on it
+being the current position of the fd.  Especially if the caller
+does actually have it available.
+
+If you change anything, I'd like to see this lseek(SEEK_CUR) go away.
+ 
+> And another thing I had in store (but for which you _again_ beat me to :-) )
+> is to realign data reads onto filesystem blocks.
+
+That _really_ made the JGit code ugly.  But I think its worth it.
+
+I also want to try and buffer the whole object appending we do
+during fixThinPack(), as right now we write the object header in
+one write and then compressed data bursts in the others.  Moving it
+to at least write a full 4k at a time should remove about 2 write
+calls per object.
+ 
+> > That's freaking brilliant.  And something I missed in JGit.
+> > The way its implemented is downright difficult to follow though.
+> > I'll admit it took me a good 10 minutes to understand what you were
+> > doing here, and why.
 > 
->   http://kerneltrap.org/mailarchive/git/2007/4/15/243541
-> 
-> The patch never applied.  I wonder why.  Was it just Dscho's comment?
+> Again maybe that's just because you're just too biased by your own 
+> implementation.  I don't consider this code particularly obscur.
 
-If it was, I am very sorry.
+My own code in JGit got "obscure" when I added this check too.
+I take back the remark above.
 
-But I still think that a lookup for something that is called potentially a 
-million times per second is better than a switch statement (except when 
-there are less than, say, 4 cases).
-
-Ciao,
-Dscho
+-- 
+Shawn.
