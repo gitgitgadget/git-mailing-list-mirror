@@ -1,80 +1,215 @@
-From: "Francis Moreau" <francis.moro@gmail.com>
-Subject: Re: How to create a branch without any links to the others branches
-Date: Fri, 29 Aug 2008 21:18:29 +0200
-Message-ID: <38b2ab8a0808291218t60be4d04u6c429f7b6c8e3f19@mail.gmail.com>
-References: <38b2ab8a0808290127o32621d09vac07e7811e6e8139@mail.gmail.com>
-	 <81b0412b0808290227g328b793cl58a606e718b4b3ff@mail.gmail.com>
-	 <38b2ab8a0808290237l703b0394rad8f42c091d7143f@mail.gmail.com>
-	 <81b0412b0808290246j299371b0k7895308368266a01@mail.gmail.com>
-	 <38b2ab8a0808290517l75296521rf99f724cb1594f69@mail.gmail.com>
-	 <7v4p536exq.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 29 21:20:24 2008
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] rev-list: fix --reverse interaction with --parents
+Date: Fri, 29 Aug 2008 21:18:38 +0200
+Message-ID: <1220037518-11219-1-git-send-email-trast@student.ethz.ch>
+References: <48AD9786.80707@viscovery.net>
+Cc: Johannes Sixt <johannes.sixt@telecom.at>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 29 21:20:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZ9VR-0008T8-U9
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 21:19:38 +0200
+	id 1KZ9Vg-00008g-Fd
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 21:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756112AbYH2TSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 15:18:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756044AbYH2TSb
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 15:18:31 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:29167 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755928AbYH2TSa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 15:18:30 -0400
-Received: by ug-out-1314.google.com with SMTP id c2so1384202ugf.37
-        for <git@vger.kernel.org>; Fri, 29 Aug 2008 12:18:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Y8Ppwjcu6tta2QO8TJnsSRfrVsYroXIazXRewVzjDAc=;
-        b=hXYns82XVOOEMmMIaJhHPC1ZP2GXLGqVzZjaqss+BSCTlftclWfxd4Q9c8KYxeXBhj
-         SgJMIaX2uOfmHBQDbCWsgCuepWZrXd8VwXVo5J1Qxiad58JPTGQ/Jc9rgoFln0yYES3h
-         +iBGX6jjURPP7CHM9Tz1pAIS3f5guApQISp0E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=ix1Wu4rwjkSul6bIG6XWF72kJifrTfPLYfO2MJXTkaLUxcv+OZUwBgf/NFokTv1Gos
-         1obZVHJvhHc1UfQtqm9CstvLdQIsKwQtCd+mwxo1sKDG8xxxUHyU33Rxvw4ZI0uT2o6d
-         TweYN5lsasIen4TGRBTQaHNz5hYSt6bfmG/8c=
-Received: by 10.67.29.4 with SMTP id g4mr4922538ugj.73.1220037509545;
-        Fri, 29 Aug 2008 12:18:29 -0700 (PDT)
-Received: by 10.67.22.17 with HTTP; Fri, 29 Aug 2008 12:18:29 -0700 (PDT)
-In-Reply-To: <7v4p536exq.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1756136AbYH2TSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 15:18:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756131AbYH2TSn
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 15:18:43 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:32643 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756044AbYH2TSm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 15:18:42 -0400
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 29 Aug 2008 21:18:37 +0200
+Received: from localhost.localdomain ([77.56.223.244]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 29 Aug 2008 21:18:37 +0200
+X-Mailer: git-send-email 1.6.0.1.227.g9d66
+In-Reply-To: <48AD9786.80707@viscovery.net>
+X-OriginalArrivalTime: 29 Aug 2008 19:18:37.0918 (UTC) FILETIME=[09ECF7E0:01C90A0C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94317>
 
-On Fri, Aug 29, 2008 at 5:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> If that is the objective...
->
-> There is no reason whatsoever for these unrelated branches to _ORIGINATE_
-> from the same source repository.
+--reverse did not interact well with --parents, as the included test
+case shows: in a history like
 
-Well I find sometimes convenient to embed some temporary working files
-and the project files at the same place.
+  A--B.
+   \   \
+    `C--M--D
 
->  The repositories you see at kernel.org
-> and repo.or.cz are merely public distribution points, and I push them into
-> a single repository at each of these places merely for downloaders
-> convenience, from separate repositories.
+the command
 
-OK.
+  git rev-list --reverse --parents --full-history HEAD
 
-thanks
+erroneously lists D as having no parents at all.  (Without --reverse,
+it correctly lists M.)
+
+This is caused by the machinery driving --reverse: it first grabs all
+commits through the normal routines, then runs them through the same
+routines again, effectively simplifying them twice.
+
+Fix this by moving the --reverse one level up, into get_revision().
+This way we can cleanly grab all commits via the normal calls, then
+just pop them off the list one by one without interfering with
+get_revision_internal().
+
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+
+Johannes Sixt wrote:
+> This command does not give the expected result: It reports *two* initial
+> commits and one merge; in particular, commit X is reported as initial commit.
+> 
+> $ git rev-list --parents --reverse --full-history master -- P2
+
+The good news is: the patch really does fix your issue.  It also fixes
+the test case (which uses the history from the diagram above).  And it
+passes the test suite.
+
+The bad news: I got as far as understanding that the repeated
+simplification must be at fault, but gave up on trying to see exactly
+_which step_ breaks the output.  Obviously parent rewriting is the
+prime suspect.
+
+And while I'm quite convinced that this is the "right" fix in the
+sense that the new implementation captures how --reverse would be
+described by someone not knowing the code, it does change behaviour in
+some cases.  For example, with --boundary we always output boundaries
+last, regardless of --reverse.  With this patch, --reverse is
+essentially just |tac, so they move to the top.
+
+- Thomas
+
+PS: Apologies for the subject braino earlier today.  As advised on
+IRC, I have labeled the resulting hole in my foot ***FIXME***.
+
+
+ revision.c                          |   38 ++++++++++++++-----------------
+ revision.h                          |    1 +
+ t/t6013-rev-list-reverse-parents.sh |   42 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 60 insertions(+), 21 deletions(-)
+ create mode 100755 t/t6013-rev-list-reverse-parents.sh
+
+diff --git a/revision.c b/revision.c
+index 36291b6..ae4062c 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1646,26 +1646,6 @@ static struct commit *get_revision_internal(struct rev_info *revs)
+ 		return c;
+ 	}
+ 
+-	if (revs->reverse) {
+-		int limit = -1;
+-
+-		if (0 <= revs->max_count) {
+-			limit = revs->max_count;
+-			if (0 < revs->skip_count)
+-				limit += revs->skip_count;
+-		}
+-		l = NULL;
+-		while ((c = get_revision_1(revs))) {
+-			commit_list_insert(c, &l);
+-			if ((0 < limit) && !--limit)
+-				break;
+-		}
+-		revs->commits = l;
+-		revs->reverse = 0;
+-		revs->max_count = -1;
+-		c = NULL;
+-	}
+-
+ 	/*
+ 	 * Now pick up what they want to give us
+ 	 */
+@@ -1738,7 +1718,23 @@ static struct commit *get_revision_internal(struct rev_info *revs)
+ 
+ struct commit *get_revision(struct rev_info *revs)
+ {
+-	struct commit *c = get_revision_internal(revs);
++	struct commit *c;
++	struct commit_list *reversed;
++
++	if (revs->reverse) {
++		reversed = NULL;
++		while ((c = get_revision_internal(revs))) {
++			commit_list_insert(c, &reversed);
++		}
++		revs->commits = reversed;
++		revs->reverse = 0;
++		revs->reverse_output_stage = 1;
++	}
++
++	if (revs->reverse_output_stage)
++		return pop_commit(&revs->commits);
++
++	c = get_revision_internal(revs);
+ 	if (c && revs->graph)
+ 		graph_update(revs->graph, c);
+ 	return c;
+diff --git a/revision.h b/revision.h
+index 91f1944..a636247 100644
+--- a/revision.h
++++ b/revision.h
+@@ -53,6 +53,7 @@ struct rev_info {
+ 			rewrite_parents:1,
+ 			print_parents:1,
+ 			reverse:1,
++			reverse_output_stage:1,
+ 			cherry_pick:1,
+ 			first_parent_only:1;
+ 
+diff --git a/t/t6013-rev-list-reverse-parents.sh b/t/t6013-rev-list-reverse-parents.sh
+new file mode 100755
+index 0000000..d294466
+--- /dev/null
++++ b/t/t6013-rev-list-reverse-parents.sh
+@@ -0,0 +1,42 @@
++#!/bin/sh
++
++test_description='--reverse combines with --parents'
++
++. ./test-lib.sh
++
++
++commit () {
++	test_tick &&
++	echo $1 > foo &&
++	git add foo &&
++	git commit -m "$1"
++}
++
++test_expect_success 'set up --reverse example' '
++	commit one &&
++	git tag root &&
++	commit two &&
++	git checkout -b side HEAD^ &&
++	commit three &&
++	git checkout master &&
++	git merge -s ours side &&
++	commit five
++	'
++
++test_expect_success '--reverse --parents --full-history combines correctly' '
++	git rev-list --parents --full-history master -- foo |
++		tac > expected &&
++	git rev-list --reverse --parents --full-history master -- foo \
++		> actual &&
++	test_cmp actual expected
++	'
++
++test_expect_success '--boundary does too' '
++	git rev-list --boundary --parents --full-history master ^root -- foo |
++		tac > expected &&
++	git rev-list --boundary --reverse --parents --full-history \
++		master ^root -- foo > actual &&
++	test_cmp actual expected
++	'
++
++test_done
 -- 
-Francis
+1.6.0.1.24.g4c7bd
