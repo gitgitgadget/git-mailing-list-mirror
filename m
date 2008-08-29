@@ -1,64 +1,79 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: Feature request: git-svn dcommit should send deltas upstream
-Date: Fri, 29 Aug 2008 12:17:02 +0200
-Message-ID: <87tzd4p1lt.fsf@mid.deneb.enyo.de>
-References: <87myj0f3mb.fsf@mid.deneb.enyo.de>
-	<20080829082311.GA7128@yp-box.dyndns.org>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: Subject: [PATCH] Update to the git tutorial
+Date: Fri, 29 Aug 2008 12:22:19 +0200
+Message-ID: <4d8e3fd30808290322o66764cb2tafaf91ff86ca7b4c@mail.gmail.com>
+References: <48B698D8.6080300@vodafone.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Aug 29 12:18:20 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Aug 29 12:23:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZ13U-0003zF-2C
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 12:18:12 +0200
+	id 1KZ18Y-0004xO-27
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 12:23:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751406AbYH2KRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 06:17:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751314AbYH2KRG
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 06:17:06 -0400
-Received: from mail.enyo.de ([212.9.189.167]:52291 "EHLO mail.enyo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750964AbYH2KRG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 06:17:06 -0400
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1KZ12M-0007Sx-Em; Fri, 29 Aug 2008 12:17:02 +0200
-Received: from fw by deneb.enyo.de with local (Exim 4.69)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1KZ12M-0003Xb-2d; Fri, 29 Aug 2008 12:17:02 +0200
-In-Reply-To: <20080829082311.GA7128@yp-box.dyndns.org> (Eric Wong's message of
-	"Fri, 29 Aug 2008 01:23:11 -0700")
+	id S1751828AbYH2KWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 06:22:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751733AbYH2KWU
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 06:22:20 -0400
+Received: from wf-out-1314.google.com ([209.85.200.175]:2818 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751472AbYH2KWU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 06:22:20 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so733394wfd.4
+        for <git@vger.kernel.org>; Fri, 29 Aug 2008 03:22:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=HdmQI9tmG6VjjDZJYIz/wPxkOO4RmVdQiZu7bvjS0s8=;
+        b=Q7+BtO5jOd0p26Y3dAff/eYxhMPVfHaCCgVSawQCgh/wD2yR7xEOR83AZD0D5QxWiD
+         +pmHTBfQW++jqy0eHtmRsrWvG7V0VKhJBHZsPWuJfR+E34xgHLfqFb7JIWYEwCfBZdp7
+         L2ukc0aFMNXZow0gKx31BvGZNKDUytmmEjr2c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=U8n/dUSZBRGqvGXGiyuQiqO408VZVY5cOdFEesBK3JV3N2FySVc+rlfQiGGba/xKI0
+         7CXLEXNGIjpMuDI09SG25mYfbGZM7BbtHPl+LEG+1/Np8zbnG1VgrXZAeQnDxCES2TT0
+         VHy0ImMIJBXK/qQaCNvQzvqae0G4SHtTyFlnQ=
+Received: by 10.142.47.13 with SMTP id u13mr911870wfu.38.1220005339047;
+        Fri, 29 Aug 2008 03:22:19 -0700 (PDT)
+Received: by 10.142.177.15 with HTTP; Fri, 29 Aug 2008 03:22:19 -0700 (PDT)
+In-Reply-To: <48B698D8.6080300@vodafone.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-* Eric Wong:
-
-> Florian Weimer <fw@deneb.enyo.de> wrote:
->> Looking at my network traffic and the Perl code, it seems to me that
->> git-svn fails to create a diff (delta) before sending data to the
->> server.  As a result, a few changes in a multi-megabyte file lead to a
->> large upload (similar to the situation with CVS).  git-svn should be
->> able to compute this diff in all cases because it has got an up-to-date
->> copy of the current revision in the Subversion repository.
->> 
->> As far as I can tell, this can't be fixed with a one-liner; some handles
->> need to be passed down to the code that actually handles the upload.
+On Thu, Aug 28, 2008 at 2:23 PM, Paolo Ciarrocchi
+<paolo.ciarrocchi@vodafone.com> wrote:
+> From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
 >
-> Odd.  Can you verify that svn(1) does not send full files in this case,
-> too?
+> Update to gitutorial as discussedin the git mailing list:
+>
+> http://marc.info/?t=121969390900002&r=1&w=2
+>
+> Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+> ---
+>  Documentation/gittutorial.txt |   29 ++++++++++++++++++++++++++++-
+>  1 files changed, 28 insertions(+), 1 deletions(-)
 
-These two are pcap files of single-line edits to the same file:
+Nice to see that you pick up the patch (with the right correction to
+my poor changelog :-/).
 
--rw-r--r-- 1 root root 1.3M 2008-08-29 11:54 /tmp/git
--rw-r--r-- 1 root root  40K 2008-08-29 11:53 /tmp/svn
+BTW, I made the patch with msysgit on win, MUA is Thunderbird and
+editor is Notepad++.
+It might be a good idea to adjust CodingGuidelines since there might
+be other win contributors.
 
-> It's been too long since I've looked at the SVN TxDelta API, but I
-> thought SVN::TxDelta::apply would take care of the delta computation for
-> us...
-
-SVN::Git::Editor::M does not seem to make use of the base text.
+ciao,
+-- 
+Paolo
+http://paolo.ciarrocchi.googlepages.com/
