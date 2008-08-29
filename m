@@ -1,135 +1,72 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 0/3] git-svn-externals PoC (in a sh script)
-Date: Fri, 29 Aug 2008 02:29:27 -0700
-Message-ID: <20080829092927.GA7500@yp-box.dyndns.org>
-References: <60381eeb0808281702q3dc7543enff2b35ebbcc80d08@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="7AUc2qLy4jB3hD7Z"
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Eddy =?utf-8?B?UGV0cmnImW9y?= <eddy.petrisor@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 29 11:30:48 2008
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Fri, 29 Aug 2008 11:33:58 +0200
+Message-ID: <06844986-44BF-4B82-A45F-0781B3513409@wincent.com>
+References: <alpine.DEB.1.10.0808271717190.19923@gandalf.stny.rr.com> <7vd4jukphm.fsf@gitster.siamese.dyndns.org> <F86A1E37-8015-41B5-A462-F044B8D1C2B1@cs.indiana.edu> <BD6DEBB7-4D1C-43E9-B3D2-B46E42D9771D@cs.indiana.edu> <20080828090421.GQ10360@machine.or.cz> <18219E52-E56F-43D9-B28D-0CC74E225CC5@cs.indiana.edu> <alpine.LFD.1.10.0808280934160.3300@nehalem.linux-foundation.org> <7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu> <20080828195211.GA3545@mithlond.arda.local> <4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu> <20080828212346.GA27867@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v924)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Perry Wagle <wagle@cs.indiana.edu>,
+	Teemu Likonen <tlikonen@iki.fi>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Kristian H??gsberg <krh@redhat.com>,
+	Matthias Kestenholz <mk@spinlock.ch>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
+	Andi Kleen <andi@firstfloor.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 29 11:37:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZ0JN-0002ND-SP
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 11:30:34 +0200
+	id 1KZ0QM-0003lC-Sy
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 11:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753310AbYH2J33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 05:29:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753364AbYH2J33
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 05:29:29 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:58950 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752956AbYH2J32 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 05:29:28 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id BB07E2DC01B;
-	Fri, 29 Aug 2008 02:29:27 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <60381eeb0808281702q3dc7543enff2b35ebbcc80d08@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752956AbYH2Jgl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Aug 2008 05:36:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752920AbYH2Jgk
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 05:36:40 -0400
+Received: from wincent1.inetu.net ([209.235.192.161]:53030 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752872AbYH2Jgk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Aug 2008 05:36:40 -0400
+Received: from cuzco.lan (98.pool85-53-1.dynamic.orange.es [85.53.1.98])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m7T9XxHr005283
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 29 Aug 2008 05:34:01 -0400
+In-Reply-To: <20080828212346.GA27867@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.924)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+El 28/8/2008, a las 23:23, Jeff King escribi=F3:
 
---7AUc2qLy4jB3hD7Z
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+> I don't think Junio is declaring success. In fact, I think he has sen=
+t
+> several messages saying (paraphrasing of course):
+>
+>  - this was obviously not done in the best manner possible, because o=
+f
+>    the number of people complaining
 
-Eddy Petrișor <eddy.petrisor@gmail.com> wrote:
-> Hello,
+One thing we mustn't lose sight of is that the number of people =20
+complaining is that it is utterly insignificant compared to the =20
+seething hordes that have complained about the number of git- commands =
+=20
+in /usr/bin over the years. We're talking about a dozen or so compared =
+=20
+to hundreds. And the change is likely to save us from hundreds more in =
+=20
+the future.
 
-Hi Eddy,
-
-> I have started a while back working on support for svn:externals
-> support for git-svn, but since I'm not that satisfied with the current
-> status of the patch, I haven't modified git-svn itself and just left
-> the sh script I made as a PoC as it was.
-> 
-> There's still work to be done to it, but I the current version is
-> functional enough to be probably found useful by more people than
-> myself.
-
-Cool.
-
-I definitely like the separate script approach.  Not sure if you read my
-posts, your PoC seems inline with my thoughts on handling externals be
-seen here:
-
-http://article.gmane.org/gmane.comp.version-control.git/91283
-http://article.gmane.org/gmane.comp.version-control.git/91293
-
-> Current status follows:
-> 
->     Current functionality:
->      - fetches all the externals of an already svn-fetched repo
->      - support for svn:externals refresh
->      - if the location of the external has changed, the current working
->        copy will be placed aside and a new directory will be created
->        instead
->      - if the remote URI is the same (maybe a verison bump, there will
->        be a 'git svn rebase'
->      - remove support (useful for testing purposes or clean restarts)
->      - avoid zombie externals at all costs - in some repos empty
->        svn:externals might exist; svn ignores such externals, so git should
->        do the same
-> 
->     TODO:
->      - take into account the revision of an external, if it exists
->      - do not do deep svn cloning, to avoid legthy operations, just pull HEAD
->        (this actually needs changes in git-svn itself)
-
-git svn clone -r<latest_revision_number> URL should work if you extract
-the revision number easily.  Specifying "-rHEAD" will only work if the
-branch of the external you're tracking was the last modified revision in
-the repository, so it's not very useful.  "svn log" seems to have the
-same semantics as git-svn as far as -rHEAD being useful or not...
-
->      - use/create shallow copies to git svn repos (one revision should be enough
->        for most externals)
->      - use submodules for externals
-
-I'm not sure if mapping submodules to externals is a good idea
-because externals don't require exact revisions and submodules do.
-There's also an issue I was just made aware of two days ago with
-submodules and git-svn that I haven't had time to work on.
-
-Another user also privately reported a bug to me about git-svn having
-trouble dcommitting when using submodules.  I've attached the test case
-here in case you have any thoughts on how to handle this (I think the
-easiest would be to ignore submodules on dcommit entirely).
-
-> Any comments are welcome.
-
-Also some small portability issues: "grep -q" is definitely unportable
-in my experience.  There are probably some more that I am missing my eye
-at this time of night...
-
--- 
-Eric Wong
-
---7AUc2qLy4jB3hD7Z
-Content-Type: application/x-sh
-Content-Disposition: attachment; filename="t9126-git-svn-submodule.sh"
-Content-Transfer-Encoding: quoted-printable
-
-#!/bin/sh=0A# Copyright (c) 2008 Eric Wong=0A=0Atest_description=3D'git-svn=
- submodule'=0A=0A. ./lib-git-svn.sh=0A=0Atest_expect_success 'setup repo' '=
-svn co "$svnrepo" svnfoo'=0A=0Atest_expect_success 'add files to svn repo' =
-'=0A	touch svnfoo/foo.txt=0A	(cd svnfoo && svn add * && svn commit -m "test=
- commit")=0A	'=0A=0Atest_expect_success 'git-svn clone the svn repo' '=0A	g=
-it-svn clone "$svnrepo" gitfoo=0A	'=0A=0Atest_expect_success 'create a git =
-repo to include as a submodule' '=0A	mkdir git_to_include=0A	(=0A		cd git_t=
-o_include &&=0A		git init && =0A		echo "This is another file" > another.txt=
- &&=0A		git add another.txt &&=0A		git commit -a -m "Adding file to submodu=
-le" &&=0A		git log=0A	)=0A	'=0A=0Atest_expect_success 'add the submodule' '=
-=0A	(=0A		cd gitfoo &&=0A		git submodule add "$remove_trash"/git_to_include=
- \=0A		  git_as_submodule &&=0A		git commit -a -m "Adding submodule"=0A	)=
-=0A	'=0A=0Atest_expect_success 'try to rebase and commit' '=0A	( cd gitfoo =
-&& git svn rebase && git svn dcommit )=0A	'=0A=0Atest_done=0A
---7AUc2qLy4jB3hD7Z--
+Cheers,
+Wincent
