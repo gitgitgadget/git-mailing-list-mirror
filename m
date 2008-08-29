@@ -1,103 +1,163 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: [PATCH] git-commit: '--no-status' Allow suppression of status
- summary in commit msg
-Date: Fri, 29 Aug 2008 07:49:27 +0200
-Message-ID: <48B78DE7.3070700@trolltech.com>
-References: <1219949215-10189-1-git-send-email-marcus@griep.us> <20080828191302.GA2704@blimp.local> <48B6FB57.5030406@griep.us> <48B78B82.5010908@trolltech.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig32944FA7753C415424462008"
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Marcus Griep <marcus@griep.us>
-X-From: git-owner@vger.kernel.org Fri Aug 29 07:51:01 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH] index-pack: Avoid disk corruption in objects appended to thin packs
+Date: Thu, 28 Aug 2008 22:54:10 -0700
+Message-ID: <1219989250-39943-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Aug 29 07:56:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYwsc-0000kd-99
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 07:50:42 +0200
+	id 1KYwx4-0002ZG-04
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 07:55:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751184AbYH2Ft1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 01:49:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751185AbYH2Ft1
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 01:49:27 -0400
-Received: from hoat.troll.no ([62.70.27.150]:33530 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751177AbYH2Ft0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 01:49:26 -0400
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 970B52095F;
-	Fri, 29 Aug 2008 07:49:25 +0200 (CEST)
-Received: from [172.24.106.50] (unknown [172.24.106.50])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id 79D54205FB;
-	Fri, 29 Aug 2008 07:49:25 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.16) Gecko/20080708 Thunderbird/2.0.0.16 Mnenhy/0.7.5.666
-In-Reply-To: <48B78B82.5010908@trolltech.com>
-X-Enigmail-Version: 0.95.7
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1751121AbYH2FyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 01:54:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751177AbYH2FyN
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 01:54:13 -0400
+Received: from george.spearce.org ([209.20.77.23]:39423 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751025AbYH2FyN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 01:54:13 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 600C738376; Fri, 29 Aug 2008 05:54:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 4B93E38360;
+	Fri, 29 Aug 2008 05:54:11 +0000 (UTC)
+X-Mailer: git-send-email 1.6.0.272.g9ab4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig32944FA7753C415424462008
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+When we are appending onto a thin pack we need to make sure the whole
+object we wrote into the pack is what is there when we re-read the
+pack to compute the final footer.
 
-Marius Storm-Olsen said the following on 29.08.2008 07:39:
-> Marcus Griep said the following on 28.08.2008 21:24:
->> Using --untracked-files=3Dno cuts the time to display the editor from =
-down to 12 seconds,
->> so that is perfectly fine.  The patch can be ignored.  However, would =
-config option to
->> change the default --untracked-files value be entertained?  Allowing:
->>
->> [commit]
->> 	untrackedfiles=3Dno
->>
->> which defaults (as stated in the documentation for --untracked-files) =
-to all?
->=20
-> That was already added in the commit d6293d. Just set
->      status.showUntrackedFiles=3Dno
-With that, I of course mean:
+Nicolas Pitre pointed out the need to perform this sort of compare
+in C Git.  We missed it in my first round of index-pack improvements.
 
-[status]
-	showUntrackedFiles=3Dno
+We also now take advantage of "roughly" block aligned reads during
+the fixup operation.  4k is a popular filesystem block size and by
+arranging the code a little differently we can always perform reads
+on 4k alignments within the file.  This should make it easier for
+the OS to move data to us.
 
---=20
-=2Emarius [@trolltech.com]
-'if you know what you're doing, it's not research'
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../src/org/spearce/jgit/transport/IndexPack.java  |   47 ++++++++++++++-----
+ 1 files changed, 34 insertions(+), 13 deletions(-)
 
-
---------------enig32944FA7753C415424462008
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
-
-iD8DBQFIt43nKzzXl/njVP8RAlSJAJ0QMQ450CgQ7SLBU1vnXLlQb0P23wCgp4pC
-UpVdXulCa+doXvVowPjmGzY=
-=EXb7
------END PGP SIGNATURE-----
-
---------------enig32944FA7753C415424462008--
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/IndexPack.java b/org.spearce.jgit/src/org/spearce/jgit/transport/IndexPack.java
+index 7b1f7ee..d8e6548 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/IndexPack.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/IndexPack.java
+@@ -76,7 +76,7 @@
+ 	/** Progress message when computing names of delta compressed objects. */
+ 	public static final String PROGRESS_RESOLVE_DELTA = "Resolving deltas";
+ 
+-	private static final int BUFFER_SIZE = 2048;
++	private static final int BUFFER_SIZE = 4096;
+ 
+ 	/**
+ 	 * Create an index pack instance to load a new pack into a repository.
+@@ -403,6 +403,7 @@ while (bi < b.size()) {
+ 	private void fixThinPack(final ProgressMonitor progress) throws IOException {
+ 		growEntries();
+ 
++		packDigest.reset();
+ 		originalEOF = packOut.length() - 20;
+ 		final Deflater def = new Deflater(Deflater.DEFAULT_COMPRESSION, false);
+ 		long end = originalEOF;
+@@ -432,7 +433,7 @@ if (!baseById.isEmpty()) {
+ 			throw new MissingObjectException(need, "delta base");
+ 		}
+ 
+-		fixHeaderFooter();
++		fixHeaderFooter(packcsum, packDigest.digest());
+ 	}
+ 
+ 	private void writeWhole(final Deflater def, final int typeCode,
+@@ -446,6 +447,7 @@ while (sz > 0) {
+ 			buf[hdrlen++] = (byte) (sz & 0x7f);
+ 			sz >>>= 7;
+ 		}
++		packDigest.update(buf, 0, hdrlen);
+ 		crc.update(buf, 0, hdrlen);
+ 		packOut.write(buf, 0, hdrlen);
+ 		def.reset();
+@@ -453,37 +455,56 @@ while (sz > 0) {
+ 		def.finish();
+ 		while (!def.finished()) {
+ 			final int datlen = def.deflate(buf);
++			packDigest.update(buf, 0, datlen);
+ 			crc.update(buf, 0, datlen);
+ 			packOut.write(buf, 0, datlen);
+ 		}
+ 	}
+ 
+-	private void fixHeaderFooter() throws IOException {
++	private void fixHeaderFooter(final byte[] origcsum, final byte[] tailcsum)
++			throws IOException {
+ 		final MessageDigest origDigest = Constants.newMessageDigest();
+-		long origRemaining = originalEOF - 12;
++		final MessageDigest tailDigest = Constants.newMessageDigest();
++		long origRemaining = originalEOF;
+ 
+ 		packOut.seek(0);
+-		if (packOut.read(buf, 0, 12) != 12)
+-			throw new IOException("Cannot re-read pack header to fix count");
+-		origDigest.update(buf, 0, 12);
++		bAvail = 0;
++		bOffset = 0;
++		fillFromFile(12);
++
++		{
++			final int origCnt = (int) Math.min(bAvail, origRemaining);
++			origDigest.update(buf, 0, origCnt);
++			origRemaining -= origCnt;
++			if (origRemaining == 0)
++				tailDigest.update(buf, origCnt, bAvail - origCnt);
++		}
++
+ 		NB.encodeInt32(buf, 8, entryCount);
+ 		packOut.seek(0);
+ 		packOut.write(buf, 0, 12);
++		packOut.seek(bAvail);
+ 
+ 		packDigest.reset();
+-		packDigest.update(buf, 0, 12);
++		packDigest.update(buf, 0, bAvail);
+ 		for (;;) {
+ 			final int n = packOut.read(buf);
+ 			if (n < 0)
+ 				break;
+-			if (origRemaining > 0) {
+-				origDigest.update(buf, 0, (int) Math.min(n, origRemaining));
+-				origRemaining -= n;
+-			}
++			if (origRemaining != 0) {
++				final int origCnt = (int) Math.min(n, origRemaining);
++				origDigest.update(buf, 0, origCnt);
++				origRemaining -= origCnt;
++				if (origRemaining == 0)
++					tailDigest.update(buf, origCnt, n - origCnt);
++			} else
++				tailDigest.update(buf, 0, n);
++
+ 			packDigest.update(buf, 0, n);
+ 		}
+ 
+-		if (!Arrays.equals(origDigest.digest(), packcsum))
++		if (!Arrays.equals(origDigest.digest(), origcsum)
++				|| !Arrays.equals(tailDigest.digest(), tailcsum))
+ 			throw new IOException("Pack corrupted while writing to filesystem");
+ 
+ 		packcsum = packDigest.digest();
+-- 
+1.6.0.272.g9ab4
