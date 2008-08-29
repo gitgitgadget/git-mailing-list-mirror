@@ -1,115 +1,143 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] diff: treat -crlf files as binary
-Date: Fri, 29 Aug 2008 14:28:20 -0700
-Message-ID: <7vfxon4ikr.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH 1/2] checkout: do not check out unmerged higher stages
+ randomly
+Date: Fri, 29 Aug 2008 14:39:54 -0700
+Message-ID: <7vbpzb4i1h.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 29 23:29:33 2008
+X-From: git-owner@vger.kernel.org Fri Aug 29 23:41:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZBXA-0003ba-Hv
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 23:29:32 +0200
+	id 1KZBiO-0006WT-5b
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 23:41:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757441AbYH2V20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 17:28:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756145AbYH2V20
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 17:28:26 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34200 "EHLO
+	id S1756123AbYH2VkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 17:40:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754486AbYH2VkA
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 17:40:00 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34801 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751376AbYH2V2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 17:28:25 -0400
+	with ESMTP id S1753186AbYH2Vj7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 17:39:59 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8D6596DEA9;
-	Fri, 29 Aug 2008 17:28:24 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4B5576DFA1;
+	Fri, 29 Aug 2008 17:39:58 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C8E276DEA8; Fri, 29 Aug 2008 17:28:22 -0400 (EDT)
+ ESMTPSA id 726806DFA0; Fri, 29 Aug 2008 17:39:56 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 69646BEC-7611-11DD-BC82-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 06E30E4A-7613-11DD-BC85-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94330>
 
-The manual advertises that setting "crlf" attribute to false marks the
-file as binary.  We should pay attention to this condition in addition
-to the "do not diff" attribute (i.e. setting "diff" to false) when
-deciding not to show the textual diff.
+During a conflicted merge when you have unmerged stages for a path F in
+the index, if you asked:
+
+    $ git checkout F
+
+we rewrote F as many times as we have stages for it, and the last one
+(typically "theirs") was left in the work tree, without resolving the
+conflict.
+
+This patch fixes it by noticing that a specified pathspec pattern matches
+an unmerged path, and by erroring out.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
+ builtin-checkout.c |   27 +++++++++++++++++++++++++++
+ t/t7201-co.sh      |   23 +++++++++++++++++++++++
+ 2 files changed, 50 insertions(+), 0 deletions(-)
 
- * Strictly speaking any change is backward incompatible, and this is
-   certainly one, but I do not think of a good use case to depend on the
-   previous behaviour, which was reported as a bug by my coworker.
-
- diff.c |   28 +++++++++++++++++++---------
- 1 files changed, 19 insertions(+), 9 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 18fa7a7..258b438 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1314,36 +1314,46 @@ static void emit_binary_diff(FILE *file, mmfile_t *one, mmfile_t *two)
- static void setup_diff_attr_check(struct git_attr_check *check)
- {
- 	static struct git_attr *attr_diff;
-+	static struct git_attr *attr_crlf;
- 
--	if (!attr_diff) {
-+	if (!attr_diff)
- 		attr_diff = git_attr("diff", 4);
--	}
-+	if (!attr_crlf)
-+		attr_crlf = git_attr("crlf", 4);
- 	check[0].attr = attr_diff;
-+	check[1].attr = attr_crlf;
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index b380ad6..9b33f3a 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -76,6 +76,15 @@ static int read_tree_some(struct tree *tree, const char **pathspec)
+ 	return 0;
  }
  
- static void diff_filespec_check_attr(struct diff_filespec *one)
++static int skip_same_name(struct cache_entry *ce, int pos)
++{
++	while (++pos < active_nr &&
++	       !strcmp(active_cache[pos]->name, ce->name))
++		; /* skip */
++	return pos;
++}
++
++
+ static int checkout_paths(struct tree *source_tree, const char **pathspec)
  {
--	struct git_attr_check attr_diff_check;
-+	struct git_attr_check attr_diff_check[2];
- 	int check_from_data = 0;
+ 	int pos;
+@@ -107,6 +116,20 @@ static int checkout_paths(struct tree *source_tree, const char **pathspec)
+ 	if (report_path_error(ps_matched, pathspec, 0))
+ 		return 1;
  
- 	if (one->checked_attr)
- 		return;
- 
--	setup_diff_attr_check(&attr_diff_check);
-+	setup_diff_attr_check(attr_diff_check);
- 	one->is_binary = 0;
- 	one->funcname_pattern_ident = NULL;
- 
--	if (!git_checkattr(one->path, 1, &attr_diff_check)) {
-+	if (!git_checkattr(one->path, 2, attr_diff_check)) {
- 		const char *value;
- 
--		/* binaryness */
--		value = attr_diff_check.value;
-+		/* binaryness; check both "diff" and "crlf" */
-+		value = attr_diff_check[0].value;
- 		if (ATTR_TRUE(value))
- 			;
- 		else if (ATTR_FALSE(value))
- 			one->is_binary = 1;
--		else
--			check_from_data = 1;
-+		else {
-+			const char *crlf = attr_diff_check[1].value;
-+			if (ATTR_TRUE(crlf))
-+				;
-+			else if (ATTR_FALSE(crlf))
-+				one->is_binary = 1;
-+			else
-+				check_from_data = 1;
++	/* Any unmerged paths? */
++	for (pos = 0; pos < active_nr; pos++) {
++		struct cache_entry *ce = active_cache[pos];
++		if (pathspec_match(pathspec, NULL, ce->name, 0) &&
++		    ce_stage(ce)) {
++			errs = 1;
++			error("path '%s' is unmerged", ce->name);
++			pos = skip_same_name(ce, pos) - 1;
++			continue;
 +		}
++	}
++	if (errs)
++		return 1;
++
+ 	/* Now we are committed to check them out */
+ 	memset(&state, 0, sizeof(state));
+ 	state.force = 1;
+@@ -114,6 +137,10 @@ static int checkout_paths(struct tree *source_tree, const char **pathspec)
+ 	for (pos = 0; pos < active_nr; pos++) {
+ 		struct cache_entry *ce = active_cache[pos];
+ 		if (pathspec_match(pathspec, NULL, ce->name, 0)) {
++			if (ce_stage(ce)) {
++				pos = skip_same_name(ce, pos) - 1;
++				continue;
++			}
+ 			errs |= checkout_entry(ce, &state, NULL);
+ 		}
+ 	}
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index 1dff84d..303cf62 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -369,4 +369,27 @@ test_expect_success \
+     'checkout with --track, but without -b, fails with too short tracked name' '
+     test_must_fail git checkout --track renamer'
  
- 		/* funcname pattern ident */
- 		if (ATTR_TRUE(value) || ATTR_FALSE(value) || ATTR_UNSET(value))
++test_expect_success 'checkout an unmerged path should fail' '
++	rm -f .git/index &&
++	O=$(echo original | git hash-object -w --stdin) &&
++	A=$(echo ourside | git hash-object -w --stdin) &&
++	B=$(echo theirside | git hash-object -w --stdin) &&
++	(
++		echo "100644 $A 0	fild" &&
++		echo "100644 $O 1	file" &&
++		echo "100644 $A 2	file" &&
++		echo "100644 $B 3	file" &&
++		echo "100644 $A 0	filf"
++	) | git update-index --index-info &&
++	echo "none of the above" >sample &&
++	cat sample >fild &&
++	cat sample >file &&
++	cat sample >filf &&
++	test_must_fail git checkout fild file filf &&
++	test_cmp sample fild &&
++	test_cmp sample filf &&
++	test_cmp sample file
++'
++
+ test_done
++
 -- 
 1.6.0.1.90.g27a6e
