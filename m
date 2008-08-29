@@ -1,72 +1,72 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Fri, 29 Aug 2008 11:33:58 +0200
-Message-ID: <06844986-44BF-4B82-A45F-0781B3513409@wincent.com>
-References: <alpine.DEB.1.10.0808271717190.19923@gandalf.stny.rr.com> <7vd4jukphm.fsf@gitster.siamese.dyndns.org> <F86A1E37-8015-41B5-A462-F044B8D1C2B1@cs.indiana.edu> <BD6DEBB7-4D1C-43E9-B3D2-B46E42D9771D@cs.indiana.edu> <20080828090421.GQ10360@machine.or.cz> <18219E52-E56F-43D9-B28D-0CC74E225CC5@cs.indiana.edu> <alpine.LFD.1.10.0808280934160.3300@nehalem.linux-foundation.org> <7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu> <20080828195211.GA3545@mithlond.arda.local> <4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu> <20080828212346.GA27867@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v924)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Perry Wagle <wagle@cs.indiana.edu>,
-	Teemu Likonen <tlikonen@iki.fi>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Petr Baudis <pasky@suse.cz>,
-	Kristian H??gsberg <krh@redhat.com>,
-	Matthias Kestenholz <mk@spinlock.ch>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ulrich Windl <ulrich.windl@rz.uni-regensburg.DE>,
-	Andi Kleen <andi@firstfloor.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 29 11:37:54 2008
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: How to create a branch without any links to the others branches
+Date: Fri, 29 Aug 2008 11:37:08 +0200
+Message-ID: <38b2ab8a0808290237l703b0394rad8f42c091d7143f@mail.gmail.com>
+References: <38b2ab8a0808290127o32621d09vac07e7811e6e8139@mail.gmail.com>
+	 <81b0412b0808290227g328b793cl58a606e718b4b3ff@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 29 11:38:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZ0QM-0003lC-Sy
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 11:37:47 +0200
+	id 1KZ0Qv-0003te-MT
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 11:38:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752956AbYH2Jgl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Aug 2008 05:36:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752920AbYH2Jgk
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 05:36:40 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:53030 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752872AbYH2Jgk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Aug 2008 05:36:40 -0400
-Received: from cuzco.lan (98.pool85-53-1.dynamic.orange.es [85.53.1.98])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m7T9XxHr005283
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 29 Aug 2008 05:34:01 -0400
-In-Reply-To: <20080828212346.GA27867@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.924)
+	id S1753563AbYH2JhN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 05:37:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753922AbYH2JhM
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 05:37:12 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:13387 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753774AbYH2JhK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 05:37:10 -0400
+Received: by ug-out-1314.google.com with SMTP id c2so1297481ugf.37
+        for <git@vger.kernel.org>; Fri, 29 Aug 2008 02:37:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=A7gV/9OlZmf7cVyB+OJWgBvZ8+p7ovJuFuhUtBB6J0s=;
+        b=oJnxCXd62TQsTuauxl4Ftw/xJzT6GZcHNIDQeS1EwqNVyuQemI5LbsUHWYnVZTtTKZ
+         e1jp91bh2h/q+oCwXKWVth9BgaU33P6kl5ldoVtnt9vmhPD8r2tKdIT0ip4brrjR6aVv
+         +T6F59W/FYJQA30V/JuGk42qRrj2Bqo/OQFRA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=VjfubNwr3d2dwBjGzvMkhnCSUAYt2InC8hqkgJaFts8ADuZ2D2kmsLPF6Uk7CfWft5
+         1QBxfTSXDr8YJ7c/9bYttdpsz4W27lI2sNkB7qFuCIiL5qy+6RSTCwK3dOfd/006a9RE
+         +jNWv0ETwoerQtVb82ksJ7Q3SP4P8Ji7EZaW4=
+Received: by 10.66.222.6 with SMTP id u6mr4402485ugg.21.1220002628725;
+        Fri, 29 Aug 2008 02:37:08 -0700 (PDT)
+Received: by 10.67.22.17 with HTTP; Fri, 29 Aug 2008 02:37:08 -0700 (PDT)
+In-Reply-To: <81b0412b0808290227g328b793cl58a606e718b4b3ff@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-El 28/8/2008, a las 23:23, Jeff King escribi=F3:
-
-> I don't think Junio is declaring success. In fact, I think he has sen=
-t
-> several messages saying (paraphrasing of course):
+On Fri, Aug 29, 2008 at 11:27 AM, Alex Riesen <raa.lkml@gmail.com> wrote:
 >
->  - this was obviously not done in the best manner possible, because o=
-f
->    the number of people complaining
+> $ rm .git/HEAD
+> $ echo ref: refs/heads/NEW-BRANCH-NAME > .git/HEAD
+> $ git commit
+>
 
-One thing we mustn't lose sight of is that the number of people =20
-complaining is that it is utterly insignificant compared to the =20
-seething hordes that have complained about the number of git- commands =
-=20
-in /usr/bin over the years. We're talking about a dozen or so compared =
-=20
-to hundreds. And the change is likely to save us from hundreds more in =
-=20
-the future.
+well, it looks pretty git internal hack thing to me.
 
-Cheers,
-Wincent
+Shouldn't we add a new option to git-branch to do that, like:
+
+    $ git branch --detach <new-branch>
+
+?
+-- 
+Francis
