@@ -1,143 +1,156 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] checkout: do not check out unmerged higher stages
- randomly
-Date: Fri, 29 Aug 2008 14:39:54 -0700
-Message-ID: <7vbpzb4i1h.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 29 23:41:17 2008
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [PATCH] for-each-ref: new 'refshort' format
+Date: Fri, 29 Aug 2008 23:41:56 +0200
+Message-ID: <1220046116-23703-1-git-send-email-bert.wesarg@googlemail.com>
+References: <36ca99e90808291121j7b202917r2308719970668be3@mail.gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Bert Wesarg <bert.wesarg@googlemail.com>
+To: szeder@ira.uka.de
+X-From: git-owner@vger.kernel.org Fri Aug 29 23:43:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZBiO-0006WT-5b
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 23:41:08 +0200
+	id 1KZBkM-0007AM-BR
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 23:43:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756123AbYH2VkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 17:40:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754486AbYH2VkA
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 17:40:00 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34801 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753186AbYH2Vj7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 17:39:59 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4B5576DFA1;
-	Fri, 29 Aug 2008 17:39:58 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 726806DFA0; Fri, 29 Aug 2008 17:39:56 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 06E30E4A-7613-11DD-BC85-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1754653AbYH2VmE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 17:42:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754513AbYH2VmD
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 17:42:03 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:5606 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754486AbYH2VmB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 17:42:01 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so646642fgg.17
+        for <git@vger.kernel.org>; Fri, 29 Aug 2008 14:41:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=4aXuWS6HicF9qfeyD1v9zNKBsL9CGOZj7mezL7SuHds=;
+        b=LnaZQko2vliRAzl5crPyFi2WaagJ6buMDSQUv3FaIhVZOaSf54QGPzzjrrnl5Dcf42
+         9uw9M/fotIsw5g7gIlUi0ZFLx0zi97/foETik20+oTocjw3o0KIEROhl//wqZw06SvDr
+         yBkdTH+ypKR/ScFww/4rW2dh4Rw1rXoQhRZMg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=bbUsi/6anYQ3Vpq71/+/tu/uVaGtzinq+sqUcxSTMhV+0y3YN1TITgnz97j5o1dx3b
+         ywBc7BZ/ORqpAvqK4XQoPqV/nnYTY4SMKiyqQXF/266UyDTIOUpdkv/tkU6VoMuWz8iJ
+         tcK3tliKx2B9g1mErVTo4Y/As8Hajmgejii1k=
+Received: by 10.86.66.11 with SMTP id o11mr2470098fga.25.1220046119310;
+        Fri, 29 Aug 2008 14:41:59 -0700 (PDT)
+Received: from localhost ( [91.15.92.135])
+        by mx.google.com with ESMTPS id d4sm3301081fga.5.2008.08.29.14.41.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 29 Aug 2008 14:41:58 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0
+In-Reply-To: <36ca99e90808291121j7b202917r2308719970668be3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94331>
 
-During a conflicted merge when you have unmerged stages for a path F in
-the index, if you asked:
+Here is a first sketch for this idea.
 
-    $ git checkout F
+This strips from the refname the common prefix with the matched pattern.
 
-we rewrote F as many times as we have stages for it, and the last one
-(typically "theirs") was left in the work tree, without resolving the
-conflict.
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
-This patch fixes it by noticing that a specified pathspec pattern matches
-an unmerged path, and by erroring out.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin-checkout.c |   27 +++++++++++++++++++++++++++
- t/t7201-co.sh      |   23 +++++++++++++++++++++++
- 2 files changed, 50 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index b380ad6..9b33f3a 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -76,6 +76,15 @@ static int read_tree_some(struct tree *tree, const char **pathspec)
- 	return 0;
+I think we should use a ':short' modifier to 'reflog' and '*reflog'.
+
+ builtin-for-each-ref.c |   39 +++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 37 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+index 21e92bb..b80d753 100644
+--- a/builtin-for-each-ref.c
++++ b/builtin-for-each-ref.c
+@@ -31,6 +31,7 @@ struct ref_sort {
+ 
+ struct refinfo {
+ 	char *refname;
++	const char *pattern; /* the pattern which matched this ref */
+ 	unsigned char objectname[20];
+ 	struct atom_value *value;
+ };
+@@ -66,6 +67,7 @@ static struct {
+ 	{ "subject" },
+ 	{ "body" },
+ 	{ "contents" },
++	{ "refshort" },
+ };
+ 
+ /*
+@@ -546,6 +548,36 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, v
  }
  
-+static int skip_same_name(struct cache_entry *ce, int pos)
+ /*
++ * Use the matched pattern from ref to shorten the refname
++ */
++static char *get_short_ref(struct refinfo *ref)
 +{
-+	while (++pos < active_nr &&
-+	       !strcmp(active_cache[pos]->name, ce->name))
-+		; /* skip */
-+	return pos;
++	int rlen, plen, len = 0;
++
++	if (!ref->pattern)
++		return ref->refname;
++
++	rlen = strlen(ref->refname);
++	plen = strlen(ref->pattern);
++
++	if ((plen <= rlen) &&
++	    !strncmp(ref->refname, ref->pattern, plen) &&
++	    (ref->refname[plen] == '\0' ||
++	     ref->refname[plen] == '/' ||
++	     ref->pattern[plen - 1] == '/')) {
++		len = plen + (ref->refname[plen] == '/');
++	} else {
++		len = strcspn(ref->pattern, "*?[");
++		while (len >= 0 && ref->pattern[len] != '/')
++			--len;
++		len++;
++	}
++
++	return ref->refname + len;
 +}
 +
 +
- static int checkout_paths(struct tree *source_tree, const char **pathspec)
- {
- 	int pos;
-@@ -107,6 +116,20 @@ static int checkout_paths(struct tree *source_tree, const char **pathspec)
- 	if (report_path_error(ps_matched, pathspec, 0))
- 		return 1;
- 
-+	/* Any unmerged paths? */
-+	for (pos = 0; pos < active_nr; pos++) {
-+		struct cache_entry *ce = active_cache[pos];
-+		if (pathspec_match(pathspec, NULL, ce->name, 0) &&
-+		    ce_stage(ce)) {
-+			errs = 1;
-+			error("path '%s' is unmerged", ce->name);
-+			pos = skip_same_name(ce, pos) - 1;
-+			continue;
-+		}
-+	}
-+	if (errs)
-+		return 1;
-+
- 	/* Now we are committed to check them out */
- 	memset(&state, 0, sizeof(state));
- 	state.force = 1;
-@@ -114,6 +137,10 @@ static int checkout_paths(struct tree *source_tree, const char **pathspec)
- 	for (pos = 0; pos < active_nr; pos++) {
- 		struct cache_entry *ce = active_cache[pos];
- 		if (pathspec_match(pathspec, NULL, ce->name, 0)) {
-+			if (ce_stage(ce)) {
-+				pos = skip_same_name(ce, pos) - 1;
-+				continue;
-+			}
- 			errs |= checkout_entry(ce, &state, NULL);
++/*
+  * Parse the object referred by ref, and grab needed value.
+  */
+ static void populate_value(struct refinfo *ref)
+@@ -577,6 +609,8 @@ static void populate_value(struct refinfo *ref)
+ 			char *s = xmalloc(len + 4);
+ 			sprintf(s, "%s^{}", ref->refname);
+ 			v->s = s;
++		} else if (!strcmp(name, "refshort")) {
++			v->s = get_short_ref(ref);
  		}
  	}
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 1dff84d..303cf62 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -369,4 +369,27 @@ test_expect_success \
-     'checkout with --track, but without -b, fails with too short tracked name' '
-     test_must_fail git checkout --track renamer'
  
-+test_expect_success 'checkout an unmerged path should fail' '
-+	rm -f .git/index &&
-+	O=$(echo original | git hash-object -w --stdin) &&
-+	A=$(echo ourside | git hash-object -w --stdin) &&
-+	B=$(echo theirside | git hash-object -w --stdin) &&
-+	(
-+		echo "100644 $A 0	fild" &&
-+		echo "100644 $O 1	file" &&
-+		echo "100644 $A 2	file" &&
-+		echo "100644 $B 3	file" &&
-+		echo "100644 $A 0	filf"
-+	) | git update-index --index-info &&
-+	echo "none of the above" >sample &&
-+	cat sample >fild &&
-+	cat sample >file &&
-+	cat sample >filf &&
-+	test_must_fail git checkout fild file filf &&
-+	test_cmp sample fild &&
-+	test_cmp sample filf &&
-+	test_cmp sample file
-+'
-+
- test_done
-+
+@@ -641,9 +675,9 @@ static int grab_single_ref(const char *refname, const unsigned char *sha1, int f
+ 	struct grab_ref_cbdata *cb = cb_data;
+ 	struct refinfo *ref;
+ 	int cnt;
++	const char **pattern = cb->grab_pattern;
+ 
+-	if (*cb->grab_pattern) {
+-		const char **pattern;
++	if (*pattern) {
+ 		int namelen = strlen(refname);
+ 		for (pattern = cb->grab_pattern; *pattern; pattern++) {
+ 			const char *p = *pattern;
+@@ -668,6 +702,7 @@ static int grab_single_ref(const char *refname, const unsigned char *sha1, int f
+ 	 */
+ 	ref = xcalloc(1, sizeof(*ref));
+ 	ref->refname = xstrdup(refname);
++	ref->pattern = *pattern;
+ 	hashcpy(ref->objectname, sha1);
+ 
+ 	cnt = cb->grab_cnt;
 -- 
-1.6.0.1.90.g27a6e
+1.6.0
