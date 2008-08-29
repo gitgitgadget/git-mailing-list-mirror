@@ -1,82 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Future suggestion's to assist with changes to git.
-Date: Thu, 28 Aug 2008 16:59:17 -0700
-Message-ID: <7vej48d73e.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.10.0808281646570.18129@suse104.zenez.com>
- <20080828233045.GE29609@coredump.intra.peff.net>
+From: "=?UTF-8?Q?Eddy_Petri=C8=99or?=" <eddy.petrisor@gmail.com>
+Subject: [PATCH 0/3] git-svn-externals PoC (in a sh script)
+Date: Fri, 29 Aug 2008 03:02:12 +0300
+Message-ID: <60381eeb0808281702q3dc7543enff2b35ebbcc80d08@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Boyd Lynn Gerber <gerberb@zenez.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 29 02:00:31 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 29 02:03:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYrPi-0002df-LR
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 02:00:31 +0200
+	id 1KYrSQ-0003OO-Rq
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 02:03:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753798AbYH1X70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 19:59:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753498AbYH1X70
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 19:59:26 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43299 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753418AbYH1X7Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 19:59:25 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 183D36C64D;
-	Thu, 28 Aug 2008 19:59:24 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A68416C648; Thu, 28 Aug 2008 19:59:19 -0400 (EDT)
-In-Reply-To: <20080828233045.GE29609@coredump.intra.peff.net> (Jeff King's
- message of "Thu, 28 Aug 2008 19:30:45 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 56DFD236-755D-11DD-B049-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753626AbYH2ACO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 20:02:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753482AbYH2ACO
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 20:02:14 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:41779 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753427AbYH2ACN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 20:02:13 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so348600yxm.1
+        for <git@vger.kernel.org>; Thu, 28 Aug 2008 17:02:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=elt6pRJFdajpaBxHZfJKDTO0qw64Edl+7YrfqzXfiWQ=;
+        b=N9k+9o87XpK6IzT3M34yEXyj4Ks772kkwdbzl0DyQezRaBKRdTNiQh9laRKGjp8Vu2
+         nFXBKTTKyoGlc6QJUQSaIe7eWRxpWwBQDxpOv1rXjjtnxWts8OH1zsXih8ribKGv34cn
+         GkBJkmpjYMJmyUZa1kALMzZP/QOaNoDX9FxEE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=kaDVCXfdvw2L2Oo39xM6O5ITxh9Sx0bCpGgCXlMowPmGI1mHu623SK6SjXBoXuID85
+         sGCVJsMoKg9bdTTPuMNoaNI8FifQcGUAj/36uzpSxzDCa+BHYUSMRxVmiRHfS9Bjzkay
+         BkEvJrOlNXl/r0hNPfggxCkVmAyOHSIHSxmv8=
+Received: by 10.150.156.9 with SMTP id d9mr1110579ybe.224.1219968132536;
+        Thu, 28 Aug 2008 17:02:12 -0700 (PDT)
+Received: by 10.151.26.18 with HTTP; Thu, 28 Aug 2008 17:02:12 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94221>
 
-Jeff King <peff@peff.net> writes:
+Hello,
 
-> On Thu, Aug 28, 2008 at 05:10:53PM -0600, Boyd Lynn Gerber wrote:
->
->> Maybe on item could be on the git web site news items could be created to  
->> announce backward compatibility changes.  I think most people do visit the 
->> main website to look for information.  Having these changes posted there  
->> or linked from the main page could be a positive method so something like  
->> this will not happen in the future.
->
-> Do they? I haven't been to the git web site in quite a long time. Nor
-> have I been to (for example) the vim web site. The two things I would
-> personally notice are:
->
->   - a note during upgrade of my system's packages. And this is going to
->     be dependent on the packaging system used. 1.6.0 hasn't hit many
->     distributions yet, so maybe there is still time for this. Gerrit,
->     do you mind putting something into NEWS.Debian about the drop of
->     "git-*" so that people with apt-listchanges will see it?
->
->     For people building from source, we have the Release Notes, but
->     beyond that, I don't know where to put it (and I don't meant the web
->     site is a bad place -- the more places the better, but there is no
->     catch-all place).
+I have started a while back working on support for svn:externals
+support for git-svn, but since I'm not that satisfied with the current
+status of the patch, I haven't modified git-svn itself and just left
+the sh script I made as a PoC as it was.
 
-That would help compared to doing nothing, but many people who complained
-in the first thread (this is the third one, by the way) was k.org users
-who used a machine somebody else installs the software for them.  Messages
-during installation would not help those people.
+There's still work to be done to it, but I the current version is
+functional enough to be probably found useful by more people than
+myself.
 
->   - the command complaining that my use of it is deprecated. In
->     retrospect, we probably should have done this.
 
-This is arguable.  People would have get annoying messages thrown into
-their mailbox from their cron jobs, even before the switchover happened,
-which effectively means that we move the whining period from now back to
-the beginning of the deprecation period -- it won't reduce the amount of
-actual whining.
+Current status follows:
+
+    Current functionality:
+     - fetches all the externals of an already svn-fetched repo
+     - support for svn:externals refresh
+     - if the location of the external has changed, the current working
+       copy will be placed aside and a new directory will be created
+       instead
+     - if the remote URI is the same (maybe a verison bump, there will
+       be a 'git svn rebase'
+     - remove support (useful for testing purposes or clean restarts)
+     - avoid zombie externals at all costs - in some repos empty
+       svn:externals might exist; svn ignores such externals, so git should
+       do the same
+
+    TODO:
+     - take into account the revision of an external, if it exists
+     - do not do deep svn cloning, to avoid legthy operations, just pull HEAD
+       (this actually needs changes in git-svn itself)
+     - use/create shallow copies to git svn repos (one revision should be enough
+       for most externals)
+     - use submodules for externals
+
+
+
+
+Any comments are welcome.
+
+
+-- 
+Regards,
+EddyP
+=============================================
+"Imagination is more important than knowledge" A.Einstein
