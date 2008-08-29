@@ -1,87 +1,454 @@
-From: "=?UTF-8?Q?Eddy_Petri=C8=99or?=" <eddy.petrisor@gmail.com>
-Subject: Re: [PATCH 0/3] git-svn-externals PoC (in a sh script)
-Date: Fri, 29 Aug 2008 03:16:00 +0300
-Message-ID: <60381eeb0808281716l512a4ac5kc7ba41c0d00e6baa@mail.gmail.com>
-References: <60381eeb0808281702q3dc7543enff2b35ebbcc80d08@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 2/2 - RFH/WIP] xdiff-merge: optionally show conflicts in
+ "diff3 -m" style
+Date: Thu, 28 Aug 2008 17:18:18 -0700
+Message-ID: <7vsksobrn9.fsf@gitster.siamese.dyndns.org>
+References: <7vzlmwbs1u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 29 02:17:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 29 02:19:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYrfq-0006xP-At
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 02:17:10 +0200
+	id 1KYriV-0007fV-O7
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 02:19:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754426AbYH2AQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2008 20:16:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753683AbYH2AQD
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 20:16:03 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:44319 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753406AbYH2AQB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2008 20:16:01 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so350689yxm.1
-        for <git@vger.kernel.org>; Thu, 28 Aug 2008 17:16:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=bs+xGsbEXcNhnl1Q0qE64l5w4x98cx0lAZb5TfbxSkI=;
-        b=kLPFG0Rc09B2niLcmibC7Uv3qx6UwL1zJbh6sfH6Qt75ySQnmtWWe66xPgF+f8rcv3
-         XeWAqcpH9Sahg3qsV9u003fYbZ52sTSweOUOeBLjt6VSYmG64KwvmW/xSTucEW86ztkh
-         +qgwj1M/wmcdDN/j9EZhvgE3/5ky7WX3S4TS4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=h6/BRzQA0+bOQ8YCAcMVdvqM9ON5QnsjqSEKEwKpwYH/edz1rcZJXddL04nBLONsCn
-         PPOCqb6Ff253T/Dx3hLHxBW9DIfknpryc+2weMIwysg3qzPIbVnh+9pSFmIeWN5+671R
-         hEUHxBnxgv7vSUP/n0sl8n85qAd68f9CcDNYo=
-Received: by 10.150.11.6 with SMTP id 6mr3165765ybk.9.1219968960576;
-        Thu, 28 Aug 2008 17:16:00 -0700 (PDT)
-Received: by 10.151.26.18 with HTTP; Thu, 28 Aug 2008 17:16:00 -0700 (PDT)
-In-Reply-To: <60381eeb0808281702q3dc7543enff2b35ebbcc80d08@mail.gmail.com>
-Content-Disposition: inline
+	id S1755143AbYH2AS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2008 20:18:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754187AbYH2AS1
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Aug 2008 20:18:27 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38243 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756779AbYH2ASZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2008 20:18:25 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EDAB2555CD;
+	Thu, 28 Aug 2008 20:18:24 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 508B7555C9; Thu, 28 Aug 2008 20:18:21 -0400 (EDT)
+In-Reply-To: <7vzlmwbs1u.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 28 Aug 2008 17:09:33 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FEE30708-755F-11DD-85AD-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94233>
 
-UGxlYXNlIENDIG1lLCBJIGFtIG5vdCBsaXN0ZWQuCgoyMDA4LzgvMjkgRWRkeSBQZXRyaciZb3Ig
-PGVkZHkucGV0cmlzb3JAZ21haWwuY29tPjoKPiBIZWxsbywKPgo+IEkgaGF2ZSBzdGFydGVkIGEg
-d2hpbGUgYmFjayB3b3JraW5nIG9uIHN1cHBvcnQgZm9yIHN2bjpleHRlcm5hbHMKPiBzdXBwb3J0
-IGZvciBnaXQtc3ZuLCBidXQgc2luY2UgSSdtIG5vdCB0aGF0IHNhdGlzZmllZCB3aXRoIHRoZSBj
-dXJyZW50Cj4gc3RhdHVzIG9mIHRoZSBwYXRjaCwgSSBoYXZlbid0IG1vZGlmaWVkIGdpdC1zdm4g
-aXRzZWxmIGFuZCBqdXN0IGxlZnQKPiB0aGUgc2ggc2NyaXB0IEkgbWFkZSBhcyBhIFBvQyBhcyBp
-dCB3YXMuCj4KPiBUaGVyZSdzIHN0aWxsIHdvcmsgdG8gYmUgZG9uZSB0byBpdCwgYnV0IEkgdGhl
-IGN1cnJlbnQgdmVyc2lvbiBpcwo+IGZ1bmN0aW9uYWwgZW5vdWdoIHRvIGJlIHByb2JhYmx5IGZv
-dW5kIHVzZWZ1bCBieSBtb3JlIHBlb3BsZSB0aGFuCj4gbXlzZWxmLgo+Cj4KPiBDdXJyZW50IHN0
-YXR1cyBmb2xsb3dzOgo+Cj4gICAgQ3VycmVudCBmdW5jdGlvbmFsaXR5Ogo+ICAgICAtIGZldGNo
-ZXMgYWxsIHRoZSBleHRlcm5hbHMgb2YgYW4gYWxyZWFkeSBzdm4tZmV0Y2hlZCByZXBvCj4gICAg
-IC0gc3VwcG9ydCBmb3Igc3ZuOmV4dGVybmFscyByZWZyZXNoCj4gICAgIC0gaWYgdGhlIGxvY2F0
-aW9uIG9mIHRoZSBleHRlcm5hbCBoYXMgY2hhbmdlZCwgdGhlIGN1cnJlbnQgd29ya2luZwo+ICAg
-ICAgIGNvcHkgd2lsbCBiZSBwbGFjZWQgYXNpZGUgYW5kIGEgbmV3IGRpcmVjdG9yeSB3aWxsIGJl
-IGNyZWF0ZWQKPiAgICAgICBpbnN0ZWFkCj4gICAgIC0gaWYgdGhlIHJlbW90ZSBVUkkgaXMgdGhl
-IHNhbWUgKG1heWJlIGEgdmVyaXNvbiBidW1wLCB0aGVyZSB3aWxsCj4gICAgICAgYmUgYSAnZ2l0
-IHN2biByZWJhc2UnCj4gICAgIC0gcmVtb3ZlIHN1cHBvcnQgKHVzZWZ1bCBmb3IgdGVzdGluZyBw
-dXJwb3NlcyBvciBjbGVhbiByZXN0YXJ0cykKPiAgICAgLSBhdm9pZCB6b21iaWUgZXh0ZXJuYWxz
-IGF0IGFsbCBjb3N0cyAtIGluIHNvbWUgcmVwb3MgZW1wdHkKPiAgICAgICBzdm46ZXh0ZXJuYWxz
-IG1pZ2h0IGV4aXN0OyBzdm4gaWdub3JlcyBzdWNoIGV4dGVybmFscywgc28gZ2l0IHNob3VsZAo+
-ICAgICAgIGRvIHRoZSBzYW1lCj4KPiAgICBUT0RPOgo+ICAgICAtIHRha2UgaW50byBhY2NvdW50
-IHRoZSByZXZpc2lvbiBvZiBhbiBleHRlcm5hbCwgaWYgaXQgZXhpc3RzCj4gICAgIC0gZG8gbm90
-IGRvIGRlZXAgc3ZuIGNsb25pbmcsIHRvIGF2b2lkIGxlZ3RoeSBvcGVyYXRpb25zLCBqdXN0IHB1
-bGwgSEVBRAo+ICAgICAgICh0aGlzIGFjdHVhbGx5IG5lZWRzIGNoYW5nZXMgaW4gZ2l0LXN2biBp
-dHNlbGYpCj4gICAgIC0gdXNlL2NyZWF0ZSBzaGFsbG93IGNvcGllcyB0byBnaXQgc3ZuIHJlcG9z
-IChvbmUgcmV2aXNpb24gc2hvdWxkIGJlIGVub3VnaAo+ICAgICAgIGZvciBtb3N0IGV4dGVybmFs
-cykKPiAgICAgLSB1c2Ugc3VibW9kdWxlcyBmb3IgZXh0ZXJuYWxzCj4KPgo+Cj4KPiBBbnkgY29t
-bWVudHMgYXJlIHdlbGNvbWUuCj4KPgo+IC0tCj4gUmVnYXJkcywKPiBFZGR5UAo+ID09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQo+ICJJbWFnaW5hdGlvbiBpcyBt
-b3JlIGltcG9ydGFudCB0aGFuIGtub3dsZWRnZSIgQS5FaW5zdGVpbgo+CgoKCi0tIApSZWdhcmRz
-LApFZGR5UAo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KIklt
-YWdpbmF0aW9uIGlzIG1vcmUgaW1wb3J0YW50IHRoYW4ga25vd2xlZGdlIiBBLkVpbnN0ZWluCg==
+When showing conflicting merges, we traditionally followed RCS's merge
+output format.  The output shows:
+
+ <<<<<<<
+ postimage from one side;
+ =======
+ postimage of the other side; and
+ >>>>>>>
+
+Some poeple find it easier to be able to understand what is going on when
+they can view the common ancestor's version, which is used by "diff3 -m",
+which shows:
+
+ <<<<<<<
+ postimage from one side;
+ |||||||
+ shared preimage;
+ =======
+ postimage of the other side; and
+ >>>>>>>
+
+This is an initial step to bring that as an optional feature to git.
+Only "git merge-file" has been converted, with "--diff3" option.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * This is RFH/WIP partly because I tested it only on simplest cases, but
+   more importantly I suspect this should be orthogonal to the refinement
+   level parameter.
+
+   The idea is to keep (just like <i1,chg1>, <i2,chg2> you use to point at
+   the postimage of both sides) <i0,chg0> in xdmerge_t that point at the
+   corresponding part of the shared preimage.  I think I got the initial
+   computation of <i0,chg0>, coalescing done in xdl_append_merge(), and
+   use of that in xdl_fill_merge_buffer() right, but I couldn't figure out
+   how to adjust them inside the merge refinement logic.
+
+   Of course the eventual goal is to add this to merge-file.c, give a new
+   configuration variable to allow people to use this, while teaching
+   rerere to ignore the new '|||||||' + shared preimage section, so that
+   existing rerere information can be reused for new conflicts in
+   diff3 style output.
+
+ builtin-merge-file.c |    6 ++-
+ xdiff/xdiff.h        |    5 +-
+ xdiff/xmerge.c       |  145 ++++++++++++++++++++++++++++++++++++++------------
+ 3 files changed, 119 insertions(+), 37 deletions(-)
+
+diff --git a/builtin-merge-file.c b/builtin-merge-file.c
+index 3605960..2f69aa1 100644
+--- a/builtin-merge-file.c
++++ b/builtin-merge-file.c
+@@ -13,6 +13,7 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ 	mmbuffer_t result = {NULL, 0};
+ 	xpparam_t xpp = {XDF_NEED_MINIMAL};
+ 	int ret = 0, i = 0, to_stdout = 0;
++	int level = XDL_MERGE_ZEALOUS_ALNUM;
+ 
+ 	while (argc > 4) {
+ 		if (!strcmp(argv[1], "-L") && i < 3) {
+@@ -25,6 +26,9 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ 		else if (!strcmp(argv[1], "-q") ||
+ 				!strcmp(argv[1], "--quiet"))
+ 			freopen("/dev/null", "w", stderr);
++		else if (!strcmp(argv[1], "-3") ||
++			 !strcmp(argv[1], "--diff3"))
++			level = XDL_MERGE_DIFF3;
+ 		else
+ 			usage(merge_file_usage);
+ 		argc--;
+@@ -46,7 +50,7 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	ret = xdl_merge(mmfs + 1, mmfs + 0, names[0], mmfs + 2, names[2],
+-			&xpp, XDL_MERGE_ZEALOUS_ALNUM, &result);
++			&xpp, level, &result);
+ 
+ 	for (i = 0; i < 3; i++)
+ 		free(mmfs[i].ptr);
+diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+index 413082e..a7b6e08 100644
+--- a/xdiff/xdiff.h
++++ b/xdiff/xdiff.h
+@@ -52,8 +52,9 @@ extern "C" {
+ 
+ #define XDL_MERGE_MINIMAL 0
+ #define XDL_MERGE_EAGER 1
+-#define XDL_MERGE_ZEALOUS 2
+-#define XDL_MERGE_ZEALOUS_ALNUM 3
++#define XDL_MERGE_DIFF3 2
++#define XDL_MERGE_ZEALOUS 10
++#define XDL_MERGE_ZEALOUS_ALNUM 11
+ 
+ typedef struct s_mmfile {
+ 	char *ptr;
+diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
+index 6ffaa4f..ac6cc40 100644
+--- a/xdiff/xmerge.c
++++ b/xdiff/xmerge.c
+@@ -30,17 +30,32 @@ typedef struct s_xdmerge {
+ 	 * 2 = no conflict, take second.
+ 	 */
+ 	int mode;
++	/*
++	 * These point at the respective postimages.  E.g. <i1,chg1> is
++	 * how side #1 wants to change the common ancestor; if there is no
++	 * overlap, lines before i1 in the postimage of side #1 appear
++	 * in the merge result as a region touched by neither side.
++	 */
+ 	long i1, i2;
+ 	long chg1, chg2;
++	/*
++	 * These point at the preimage; of course there is just one
++	 * preimage, that is from the shared common ancestor.
++	 */
++	long i0;
++	long chg0;
+ } xdmerge_t;
+ 
+ static int xdl_append_merge(xdmerge_t **merge, int mode,
+-		long i1, long chg1, long i2, long chg2)
++			    long i0, long chg0,
++			    long i1, long chg1,
++			    long i2, long chg2)
+ {
+ 	xdmerge_t *m = *merge;
+ 	if (m && (i1 <= m->i1 + m->chg1 || i2 <= m->i2 + m->chg2)) {
+ 		if (mode != m->mode)
+ 			m->mode = 0;
++		m->chg0 = i0 + chg0 - m->i0;
+ 		m->chg1 = i1 + chg1 - m->i1;
+ 		m->chg2 = i2 + chg2 - m->i2;
+ 	} else {
+@@ -49,6 +64,8 @@ static int xdl_append_merge(xdmerge_t **merge, int mode,
+ 			return -1;
+ 		m->next = NULL;
+ 		m->mode = mode;
++		m->i0 = i0;
++		m->chg0 = chg0;
+ 		m->i1 = i1;
+ 		m->chg1 = chg1;
+ 		m->i2 = i2;
+@@ -91,11 +108,13 @@ static int xdl_merge_cmp_lines(xdfenv_t *xe1, int i1, xdfenv_t *xe2, int i2,
+ 	return 0;
+ }
+ 
+-static int xdl_recs_copy(xdfenv_t *xe, int i, int count, int add_nl, char *dest)
++static int xdl_recs_copy_0(int use_orig, xdfenv_t *xe, int i, int count, int add_nl, char *dest)
+ {
+-	xrecord_t **recs = xe->xdf2.recs + i;
++	xrecord_t **recs;
+ 	int size = 0;
+ 
++	recs = (use_orig ? xe->xdf1.recs : xe->xdf2.recs) + i;
++
+ 	if (count < 1)
+ 		return 0;
+ 
+@@ -113,9 +132,19 @@ static int xdl_recs_copy(xdfenv_t *xe, int i, int count, int add_nl, char *dest)
+ 	return size;
+ }
+ 
++static int xdl_recs_copy(xdfenv_t *xe, int i, int count, int add_nl, char *dest)
++{
++	return xdl_recs_copy_0(0, xe, i, count, add_nl, dest);
++}
++
++static int xdl_orig_copy(xdfenv_t *xe, int i, int count, int add_nl, char *dest)
++{
++	return xdl_recs_copy_0(1, xe, i, count, add_nl, dest);
++}
++
+ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 			      xdfenv_t *xe2, const char *name2,
+-			      int size, int i,
++			      int size, int i, int level,
+ 			      xdmerge_t *m, char *dest)
+ {
+ 	const int marker_size = 7;
+@@ -143,6 +172,20 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 	/* Postimage from side #1 */
+ 	size += xdl_recs_copy(xe1, m->i1, m->chg1, 1,
+ 			      dest ? dest + size : NULL);
++
++	if (level == XDL_MERGE_DIFF3) {
++		/* Shared preimage */
++		if (!dest) {
++			size += marker_size + 1;
++		} else {
++			for (j = 0; j < marker_size; j++)
++				dest[size++] = '|';
++			dest[size++] = '\n';
++		}
++		size += xdl_orig_copy(xe1, m->i0, m->chg0, 1,
++				      dest ? dest + size : NULL);
++	}
++
+ 	if (!dest) {
+ 		size += marker_size + 1;
+ 	} else {
+@@ -170,14 +213,15 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ }
+ 
+ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
+-		xdfenv_t *xe2, const char *name2, xdmerge_t *m, char *dest)
++				 xdfenv_t *xe2, const char *name2,
++				 xdmerge_t *m, char *dest, int level)
+ {
+ 	int size, i;
+ 
+ 	for (size = i = 0; m; m = m->next) {
+ 		if (m->mode == 0)
+ 			size = fill_conflict_hunk(xe1, name1, xe2, name2,
+-						  size, i, m, dest);
++						  size, i, level, m, dest);
+ 		else if (m->mode == 1)
+ 			size += xdl_recs_copy(xe1, i, m->i1 + m->chg1 - i, 0,
+ 					      dest ? dest + size : NULL);
+@@ -332,19 +376,31 @@ static int xdl_simplify_non_conflicts(xdfenv_t *xe1, xdmerge_t *m,
+ }
+ 
+ /*
+- * level == 0: mark all overlapping changes as conflict
+- * level == 1: mark overlapping changes as conflict only if not identical
+- * level == 2: analyze non-identical changes for minimal conflict set
+- * level == 3: analyze non-identical changes for minimal conflict set, but
+- *             treat hunks not containing any letter or number as conflicting
++ * "Level" parameter can be:
++ *
++ * (MINIMAL):
++ * Mark all overlapping changes as conflict
++ *
++ * (EAGER):
++ * Mark overlapping changes as conflict only if not identical
++ *
++ * (DIFF3):
++ * Same as EAGER but show the shared preimage in the output as well
++ *
++ * (ZEALOUS):
++ * Analyze non-identical changes for minimal conflict set
++ *
++ * (ZEALOUS_ALNUM):
++ * Analyze non-identical changes for minimal conflict set, but
++ * treat hunks not containing any letter or number as conflicting
+  *
+  * returns < 0 on error, == 0 for no conflicts, else number of conflicts
+  */
+ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1, const char *name1,
+-		xdfenv_t *xe2, xdchange_t *xscr2, const char *name2,
+-		int level, xpparam_t const *xpp, mmbuffer_t *result) {
++			xdfenv_t *xe2, xdchange_t *xscr2, const char *name2,
++			int level, xpparam_t const *xpp, mmbuffer_t *result) {
+ 	xdmerge_t *changes, *c;
+-	int i1, i2, chg1, chg2;
++	int i0, i1, i2, chg0, chg1, chg2;
+ 
+ 	c = changes = NULL;
+ 
+@@ -352,11 +408,14 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1, const char *name1,
+ 		if (!changes)
+ 			changes = c;
+ 		if (xscr1->i1 + xscr1->chg1 < xscr2->i1) {
++			i0 = xscr1->i1;
+ 			i1 = xscr1->i2;
+ 			i2 = xscr2->i2 - xscr2->i1 + xscr1->i1;
++			chg0 = xscr1->chg1;
+ 			chg1 = xscr1->chg2;
+ 			chg2 = xscr1->chg1;
+-			if (xdl_append_merge(&c, 1, i1, chg1, i2, chg2)) {
++			if (xdl_append_merge(&c, 1,
++					     i0, chg0, i1, chg1, i2, chg2)) {
+ 				xdl_cleanup_merge(changes);
+ 				return -1;
+ 			}
+@@ -364,40 +423,50 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1, const char *name1,
+ 			continue;
+ 		}
+ 		if (xscr2->i1 + xscr2->chg1 < xscr1->i1) {
++			i0 = xscr2->i1;
+ 			i1 = xscr1->i2 - xscr1->i1 + xscr2->i1;
+ 			i2 = xscr2->i2;
++			chg0 = xscr2->chg1;
+ 			chg1 = xscr2->chg1;
+ 			chg2 = xscr2->chg2;
+-			if (xdl_append_merge(&c, 2, i1, chg1, i2, chg2)) {
++			if (xdl_append_merge(&c, 2,
++					     i0, chg0, i1, chg1, i2, chg2)) {
+ 				xdl_cleanup_merge(changes);
+ 				return -1;
+ 			}
+ 			xscr2 = xscr2->next;
+ 			continue;
+ 		}
+-		if (level < 1 || xscr1->i1 != xscr2->i1 ||
+-				xscr1->chg1 != xscr2->chg1 ||
+-				xscr1->chg2 != xscr2->chg2 ||
+-				xdl_merge_cmp_lines(xe1, xscr1->i2,
++		if (level == XDL_MERGE_MINIMAL ||
++		    (xscr1->i1 != xscr2->i1 ||
++		     xscr1->chg1 != xscr2->chg1 ||
++		     xscr1->chg2 != xscr2->chg2) ||
++		    xdl_merge_cmp_lines(xe1, xscr1->i2,
+ 					xe2, xscr2->i2,
+ 					xscr1->chg2, xpp->flags)) {
+ 			/* conflict */
+ 			int off = xscr1->i1 - xscr2->i1;
+ 			int ffo = off + xscr1->chg1 - xscr2->chg1;
+ 
++			i0 = xscr1->i1;
+ 			i1 = xscr1->i2;
+ 			i2 = xscr2->i2;
+-			if (off > 0)
++			if (off > 0) {
++				i0 -= off;
+ 				i1 -= off;
++			}
+ 			else
+ 				i2 += off;
++			chg0 = xscr1->i1 + xscr1->chg1 - i0;
+ 			chg1 = xscr1->i2 + xscr1->chg2 - i1;
+ 			chg2 = xscr2->i2 + xscr2->chg2 - i2;
+-			if (ffo > 0)
+-				chg2 += ffo;
+-			else
++			if (ffo < 0) {
++				chg0 -= ffo;
+ 				chg1 -= ffo;
+-			if (xdl_append_merge(&c, 0, i1, chg1, i2, chg2)) {
++			} else
++				chg2 += ffo;
++			if (xdl_append_merge(&c, 0,
++					     i0, chg0, i1, chg1, i2, chg2)) {
+ 				xdl_cleanup_merge(changes);
+ 				return -1;
+ 			}
+@@ -414,11 +483,14 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1, const char *name1,
+ 	while (xscr1) {
+ 		if (!changes)
+ 			changes = c;
++		i0 = xscr1->i1;
+ 		i1 = xscr1->i2;
+ 		i2 = xscr1->i1 + xe2->xdf2.nrec - xe2->xdf1.nrec;
++		chg0 = xscr1->chg1;
+ 		chg1 = xscr1->chg2;
+ 		chg2 = xscr1->chg1;
+-		if (xdl_append_merge(&c, 1, i1, chg1, i2, chg2)) {
++		if (xdl_append_merge(&c, 1,
++				     i0, chg0, i1, chg1, i2, chg2)) {
+ 			xdl_cleanup_merge(changes);
+ 			return -1;
+ 		}
+@@ -427,11 +499,14 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1, const char *name1,
+ 	while (xscr2) {
+ 		if (!changes)
+ 			changes = c;
++		i0 = xscr2->i1;
+ 		i1 = xscr2->i1 + xe1->xdf2.nrec - xe1->xdf1.nrec;
+ 		i2 = xscr2->i2;
++		chg0 = xscr2->chg1;
+ 		chg1 = xscr2->chg1;
+ 		chg2 = xscr2->chg2;
+-		if (xdl_append_merge(&c, 2, i1, chg1, i2, chg2)) {
++		if (xdl_append_merge(&c, 2,
++				     i0, chg0, i1, chg1, i2, chg2)) {
+ 			xdl_cleanup_merge(changes);
+ 			return -1;
+ 		}
+@@ -440,16 +515,17 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1, const char *name1,
+ 	if (!changes)
+ 		changes = c;
+ 	/* refine conflicts */
+-	if (level > 1 &&
++	if (XDL_MERGE_ZEALOUS <= level &&
+ 	    (xdl_refine_conflicts(xe1, xe2, changes, xpp) < 0 ||
+-	     xdl_simplify_non_conflicts(xe1, changes, level > 2) < 0)) {
++	     xdl_simplify_non_conflicts(xe1, changes,
++					level > XDL_MERGE_ZEALOUS) < 0)) {
+ 		xdl_cleanup_merge(changes);
+ 		return -1;
+ 	}
+ 	/* output */
+ 	if (result) {
+ 		int size = xdl_fill_merge_buffer(xe1, name1, xe2, name2,
+-			changes, NULL);
++						 changes, NULL, level);
+ 		result->ptr = xdl_malloc(size);
+ 		if (!result->ptr) {
+ 			xdl_cleanup_merge(changes);
+@@ -457,14 +533,15 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1, const char *name1,
+ 		}
+ 		result->size = size;
+ 		xdl_fill_merge_buffer(xe1, name1, xe2, name2, changes,
+-				result->ptr);
++				      result->ptr, level);
+ 	}
+ 	return xdl_cleanup_merge(changes);
+ }
+ 
+-int xdl_merge(mmfile_t *orig, mmfile_t *mf1, const char *name1,
+-		mmfile_t *mf2, const char *name2,
+-		xpparam_t const *xpp, int level, mmbuffer_t *result) {
++int xdl_merge(mmfile_t *orig,
++	      mmfile_t *mf1, const char *name1,
++	      mmfile_t *mf2, const char *name2,
++	      xpparam_t const *xpp, int level, mmbuffer_t *result) {
+ 	xdchange_t *xscr1, *xscr2;
+ 	xdfenv_t xe1, xe2;
+ 	int status;
+-- 
+1.6.0.1.200.ge682f
