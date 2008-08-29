@@ -1,69 +1,68 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Fri, 29 Aug 2008 11:02:58 +0200
-Message-ID: <vpqhc945h31.fsf@bauges.imag.fr>
-References: <20080828090421.GQ10360@machine.or.cz>
-	<20080828195211.GA3545@mithlond.arda.local>
-	<4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu>
-	<20080828212346.GA27867@coredump.intra.peff.net>
-	<1C144B19-DA21-4CB4-B872-C1F154B031CF@cs.indiana.edu>
-	<20080828215907.GE27867@coredump.intra.peff.net>
-	<3DE083DB-ADFF-45E7-B3EB-A76985941271@cs.indiana.edu>
-	<20080828230401.GC29609@coredump.intra.peff.net>
-	<48B7AA67.4040400@op5.se> <vpqvdxk5jrl.fsf@bauges.imag.fr>
-	<1f6632e50808290127x2ec1ee6am90639b35aba5b764@mail.gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: How to create a branch without any links to the others branches
+Date: Fri, 29 Aug 2008 11:27:02 +0200
+Message-ID: <81b0412b0808290227g328b793cl58a606e718b4b3ff@mail.gmail.com>
+References: <38b2ab8a0808290127o32621d09vac07e7811e6e8139@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Matthias Kestenholz" <mk@spinlock.ch>
-X-From: git-owner@vger.kernel.org Fri Aug 29 11:05:53 2008
+To: "Francis Moreau" <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 29 11:28:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KYzvK-0005r3-BS
-	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 11:05:47 +0200
+	id 1KZ0H6-0001vL-AQ
+	for gcvg-git-2@gmane.org; Fri, 29 Aug 2008 11:28:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752895AbYH2JEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 05:04:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752773AbYH2JEi
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 05:04:38 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:51800 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752737AbYH2JEh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 05:04:37 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m7T931P9005478;
-	Fri, 29 Aug 2008 11:03:01 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KYzsg-0001e7-Hi; Fri, 29 Aug 2008 11:02:58 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KYzsg-0000zr-FT; Fri, 29 Aug 2008 11:02:58 +0200
-In-Reply-To: <1f6632e50808290127x2ec1ee6am90639b35aba5b764@mail.gmail.com> (Matthias Kestenholz's message of "Fri\, 29 Aug 2008 10\:27\:08 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Fri, 29 Aug 2008 11:03:01 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753307AbYH2J1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 05:27:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753327AbYH2J1G
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 05:27:06 -0400
+Received: from wa-out-1112.google.com ([209.85.146.179]:20273 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753307AbYH2J1D (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 05:27:03 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so419113waf.23
+        for <git@vger.kernel.org>; Fri, 29 Aug 2008 02:27:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=W4t6+fN9JFNrEitb2V/VzC4DfUk/hcQV/ijtIRmhI10=;
+        b=TNe/1juW8ZUOn7bsIYIT0qcMm5U9usaTSvJ4Hzff8nT6V1tlqa6ruX0fTQe6Ae4eSO
+         Zgf0EW7MA3mRjcyD6TRwDKNhxRcLcmHkze5Ciujy6utkBlZFkQM1QBr/2mGgRptsDEK0
+         zU1iR0u8yaNqgjSbKDDyU4HGQrMmJ78k3XLmI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=uNxwb5eu8S2c6KlGIf73OAhOX3ggBUidFsoVw7kUdt3yCGa81nMBjiUTT1oqBIf4Y+
+         zSPc1LKEV7JsZsPwejlcm0w5BptxV9AbX7s6uHOB/3QEwjWf5X2eEZ4p+3/q3saQYocM
+         e9S80dy3KOdaJd9dp4u5o4BzbeIYQDx1e2YMU=
+Received: by 10.114.209.1 with SMTP id h1mr2436376wag.36.1220002022804;
+        Fri, 29 Aug 2008 02:27:02 -0700 (PDT)
+Received: by 10.114.157.9 with HTTP; Fri, 29 Aug 2008 02:27:02 -0700 (PDT)
+In-Reply-To: <38b2ab8a0808290127o32621d09vac07e7811e6e8139@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Matthias Kestenholz" <mk@spinlock.ch> writes:
-
->> AAUI, the pack itself is sent over the network, but the index is
->> generated locally when receiving the pack, so this shouldn't be a
->> problem.
+2008/8/29 Francis Moreau <francis.moro@gmail.com>:
 >
-> If you use the git or ssh protocol, then yes. If you use dumb protocols such as
-> HTTP or rsync, no.
+> The only solution I'm seeing is to create a new repository with these
+> 'unrelated' branches and pull them from the other repository.
+>
+> Is this correct ?
+>
 
-Thanks for the clarification, and sorry for the noise then ;-).
+Almost:
 
--- 
-Matthieu
+$ rm .git/HEAD
+$ echo ref: refs/heads/NEW-BRANCH-NAME > .git/HEAD
+$ git commit
