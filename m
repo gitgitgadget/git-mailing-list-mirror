@@ -1,67 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
-Date: Sat, 30 Aug 2008 14:00:22 -0400
-Message-ID: <20080830180022.GA14552@coredump.intra.peff.net>
-References: <20080830173947.GF7185@schiele.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] checkout: do not check out unmerged higher stages
+ randomly
+Date: Sat, 30 Aug 2008 11:02:48 -0700
+Message-ID: <7v1w06ido7.fsf@gitster.siamese.dyndns.org>
+References: <7vbpzb4i1h.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Robert Schiele <rschiele@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 20:01:34 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 30 20:04:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZUlO-0007x7-0t
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 20:01:30 +0200
+	id 1KZUnn-0000BS-QJ
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 20:04:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753312AbYH3SAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 14:00:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753305AbYH3SAZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 14:00:25 -0400
-Received: from peff.net ([208.65.91.99]:1706 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753266AbYH3SAY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 14:00:24 -0400
-Received: (qmail 24493 invoked by uid 111); 30 Aug 2008 18:00:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 30 Aug 2008 14:00:24 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 30 Aug 2008 14:00:22 -0400
-Content-Disposition: inline
-In-Reply-To: <20080830173947.GF7185@schiele.dyndns.org>
+	id S1753392AbYH3SCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 14:02:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753305AbYH3SCy
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 14:02:54 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61676 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753107AbYH3SCy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 14:02:54 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B7555AEE0;
+	Sat, 30 Aug 2008 14:02:52 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 66AE75AEDF; Sat, 30 Aug 2008 14:02:50 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DD145D2A-76BD-11DD-B64F-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94398>
 
-On Sat, Aug 30, 2008 at 07:39:47PM +0200, Robert Schiele wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> git-add--interactive has one Perl command that was not yet present in
-> Perl 5.6.  Changing this single command makes it compatible again.
+> During a conflicted merge when you have unmerged stages for a path F in
+> the index, if you asked:
+>
+>     $ git checkout F
+>
+> we rewrote F as many times as we have stages for it, and the last one
+> (typically "theirs") was left in the work tree, without resolving the
+> conflict.
+>
+> This patch fixes it by noticing that a specified pathspec pattern matches
+> an unmerged path, and by erroring out.
 
-Having read your other message, I know what it is about this command
-that does not work with Perl 5.6. But probably it would be good to
-mention "list form of three argument open with pipe".
+The patch claims that it is a bugfix, but I have a slight worry that
+somebody might be depending on this broken behaviour in their workflow.
 
->  git-add--interactive.perl |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
+    $ git pull
+    Conflicts in foo.c (modify/modify)
+    .. Eeek, conflicts.  My changes are always crap, and I trust my
+    .. upstream more than I trust myself, so I'll take advantage of
+    .. the bug to check out "their" version.
+    $ git checkout foo.c
 
-What about the similar uses in cvsimport, cvsserver, and gitweb? How
-about the scripts in contrib (a quick grep reveals some fast-import
-scripts, blameview, cidaemon, continuous, and hooks/update-paranoid.
+In modify/modify case, because we will have stage #3 (state after their
+change), that will be the version you will get as the final result of this
+broken behaviour of "checkout".
 
-Most of those things are not as "core" as add--interactive, so I am not
-opposed to changing just this one spot and documenting "core can use
-5.6, but these other things need 5.8".
+This patch alone will make the above to check out "theirs" an error.  In a
+later one in the series, you can still say:
 
-> -		open($fh, '-|', @_) or die;
-> +		open($fh, '-|', join(' ', @_)) or die;
+    $ git checkout --theirs foo.c ;# or "git checkout -3 foo.c"
 
-Won't this execute the command using the shell, which means that
-metacharacters need to be escaped? I didn't try, but I'm pretty sure
-this would break
+to get the feature back, at the same time you will now be able to say
 
-  git add -i "file with space"
+    $ git checkout --ours foo.c ;# or "git checkout -2 foo.c"
 
--Peff
+for symmetry (admittably, it is the same thing as "git checkout HEAD
+foo.c").
+
+So we _could_ choose to stay backward compatible by leaving this "bug"
+unattended without loss of ability to checkout either theirs or ours, even
+though without fixing this, you cannot sanely add "git checkout -m foo.c"
+feature that comes later in the updated series, which allows you to go
+back to the original conflicted state after you (or rerere) messed up the
+working tree state.
+
+Thoughts?
