@@ -1,143 +1,107 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] git apply: do not match beginning in special unidiff-zero
-	case
-Date: Sat, 30 Aug 2008 21:03:02 +0200
-Message-ID: <20080830190302.GA29851@localhost>
-References: <20080830164527.GA25370@localhost> <20080830165600.GB25370@localhost> <7vhc92ie44.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] git-apply: Loosen "match_beginning" logic
+Date: Sat, 30 Aug 2008 12:40:32 -0700
+Message-ID: <7vk5dygukv.fsf_-_@gitster.siamese.dyndns.org>
+References: <20080830164527.GA25370@localhost>
+ <20080830165600.GB25370@localhost>
+ <7vhc92ie44.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 21:04:04 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Clemens Buchacher <drizzd@aon.at>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 30 21:41:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZVjo-0001x1-PI
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 21:03:57 +0200
+	id 1KZWKV-0004uZ-Bu
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 21:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754116AbYH3TCu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 15:02:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753691AbYH3TCt
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 15:02:49 -0400
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:29894 "EHLO
-	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753795AbYH3TCt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 15:02:49 -0400
-Received: from darc.dyndns.org ([84.154.72.105]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 30 Aug 2008 21:02:46 +0200
-Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1KZViw-0003Hb-CK; Sat, 30 Aug 2008 21:03:02 +0200
-Content-Disposition: inline
-In-Reply-To: <7vhc92ie44.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 30 Aug 2008 19:02:47.0115 (UTC) FILETIME=[FD9DB1B0:01C90AD2]
+	id S1754541AbYH3Tkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 15:40:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754467AbYH3Tkm
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 15:40:42 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49008 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754222AbYH3Tkl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 15:40:41 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B5BB6D377;
+	Sat, 30 Aug 2008 15:40:40 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 32B186D376; Sat, 30 Aug 2008 15:40:33 -0400 (EDT)
+In-Reply-To: <7vhc92ie44.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat, 30 Aug 2008 10:53:15 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 86AB1FEC-76CB-11DD-8B8C-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94409>
 
-If a unidiff patch without any context modifies the second line, it does
-not match the beginning, even though oldpos == 1.
+Even after a handfle attempts, match_beginning logic still has corner
+cases:
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+    1bf1a85 (apply: treat EOF as proper context., 2006-05-23)
+    65aadb9 (apply: force matching at the beginning., 2006-05-24)
+    4be6096 (apply --unidiff-zero: loosen sanity checks ..., 2006-09-17)
+    ee5a317 (Fix "git apply" to correctly enforce "match ..., 2008-04-06)
+
+This is a tricky piece of code.
+
+We still incorrectly enforce "match_beginning" for -U0 matches.
+I noticed this while trying out an example sequence from Clemens Buchacher:
+
+    $ echo a >victim
+    $ git add victim
+    $ echo b >>victim
+    $ git diff -U0 >patch
+    $ cat patch
+    diff --git i/victim w/victim
+    index 7898192..422c2b7 100644
+    --- i/victim
+    +++ w/victim
+    @@ -1,0 +2 @@ a
+    +b
+    $ git apply --cached --unidiff-zero <patch
+    $ git show :victim
+    b
+    a
+
+The change inserts a new line before the second line, but we insist it to
+be applied at the beginning.  As the result, the code refuses to apply it
+at the original offset, and we end up adding the line at the beginning.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
+ builtin-apply.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-On Sat, Aug 30, 2008 at 10:53:15AM -0700, Junio C Hamano wrote:
-> Clemens Buchacher <drizzd@aon.at> writes:
-> 
-> > echo a > victim
-> > git add victim
-> > echo b >> victim
-> > git diff -U0 | git apply --cached --unidiff-zero
-> > git diff
-> 
-> I think "diff -U0" there would say "@@ -1,0 +2 @@", iow "add this one line
-> after the first line", and "apply" has an off-by-one in this case.
-
-Indeed. This appears to fix problems with staging hunks in git gui, even
-with zero context lines. Staging individual lines still doesn't work,
-though.
-
-Clemens
-
- builtin-apply.c           |    9 ++++-----
- t/t4104-apply-boundary.sh |   15 ++++++++++++---
- 2 files changed, 16 insertions(+), 8 deletions(-)
-
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 2216a0b..8402f9d 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -1994,16 +1994,15 @@ static int apply_one_fragment(struct image *img, struct fragment *frag,
- 	trailing = frag->trailing;
- 
+diff --git c/builtin-apply.c w/builtin-apply.c
+index 2216a0b..47261e1 100644
+--- c/builtin-apply.c
++++ w/builtin-apply.c
+@@ -1996,6 +1996,8 @@ static int apply_one_fragment(struct image *img, struct fragment *frag,
  	/*
--	 * A hunk to change lines at the beginning would begin with
-+	 * Unless the patch was generated with unidiff without any context, a
-+	 * hunk to change lines at the beginning would begin with
+ 	 * A hunk to change lines at the beginning would begin with
  	 * @@ -1,L +N,M @@
++	 * but we need to be careful.  -U0 that inserts before the second
++	 * line also has this pattern.
  	 *
  	 * And a hunk to add to an empty file would begin with
  	 * @@ -0,0 +N,M @@
--	 *
--	 * In other words, a hunk that is (frag->oldpos <= 1) with or
--	 * without leading context must match at the beginning.
+@@ -2003,7 +2005,8 @@ static int apply_one_fragment(struct image *img, struct fragment *frag,
+ 	 * In other words, a hunk that is (frag->oldpos <= 1) with or
+ 	 * without leading context must match at the beginning.
  	 */
 -	match_beginning = frag->oldpos <= 1;
-+	match_beginning = frag->oldpos == 0 ||
-+		(!unidiff_zero && frag->oldpos == 1);
++	match_beginning = (!frag->oldpos ||
++			   (frag->oldpos == 1 && !unidiff_zero));
  
  	/*
  	 * A hunk without trailing lines must match at the end.
-diff --git a/t/t4104-apply-boundary.sh b/t/t4104-apply-boundary.sh
-index e7e2913..0e3ce36 100755
---- a/t/t4104-apply-boundary.sh
-+++ b/t/t4104-apply-boundary.sh
-@@ -27,6 +27,15 @@ test_expect_success setup '
- 	git diff victim >add-a-patch.with &&
- 	git diff --unified=0 >add-a-patch.without &&
- 
-+	: insert at line two
-+	for i in b a '"$L"' y
-+	do
-+		echo $i
-+	done >victim &&
-+	cat victim >insert-a-expect &&
-+	git diff victim >insert-a-patch.with &&
-+	git diff --unified=0 >insert-a-patch.without &&
-+
- 	: modify at the head
- 	for i in a '"$L"' y
- 	do
-@@ -55,7 +64,7 @@ test_expect_success setup '
- 	git diff --unified=0 >add-z-patch.without &&
- 
- 	: modify at the tail
--	for i in a '"$L"' y
-+	for i in b '"$L"' z
- 	do
- 		echo $i
- 	done >victim &&
-@@ -81,7 +90,7 @@ do
- 	with) u= ;;
- 	without) u='--unidiff-zero ' ;;
- 	esac
--	for kind in add-a add-z mod-a mod-z del-a del-z
-+	for kind in add-a add-z insert-a mod-a mod-z del-a del-z
- 	do
- 		test_expect_success "apply $kind-patch $with context" '
- 			cat original >victim &&
-@@ -95,7 +104,7 @@ do
- 	done
- done
- 
--for kind in add-a add-z mod-a mod-z del-a del-z
-+for kind in add-a add-z insert-a mod-a mod-z del-a del-z
- do
- 	rm -f $kind-ng.without
- 	sed	-e "s/^diff --git /diff /" \
--- 
-1.6.0
