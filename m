@@ -1,67 +1,95 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH/resend] Fix use of hardlinks in "make install"
-Date: Sat, 30 Aug 2008 17:48:50 +0200
-Message-ID: <81b0412b0808300848o7510bbc4u178f32f8d23723d@mail.gmail.com>
-References: <81b0412b0808280704h585b6cb4nf03e509de0159a91@mail.gmail.com>
-	 <81b0412b0808280717u78c5ccf8ne1413c701ed8edd9@mail.gmail.com>
-	 <20080830002032.GA14522@steel.home>
-	 <66B007DD-F970-43E5-BA38-6138E553C93A@googlemail.com>
-	 <81b0412b0808300308m2d03b94ft8601f02b2fea494e@mail.gmail.com>
-	 <60597530-B8AC-421E-84DF-BF241CB799C5@googlemail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: About git pretty
+Date: Sat, 30 Aug 2008 09:30:15 -0700
+Message-ID: <7vfxom1n54.fsf@gitster.siamese.dyndns.org>
+References: <94a0d4530808221624m26034923pbc1f97cb4c4203d8@mail.gmail.com>
+ <20080823000336.GB14684@leksak.fem-net>
+ <94a0d4530808231157y3d36fc23q4617787214a02ea1@mail.gmail.com>
+ <alpine.DEB.1.00.0808241948390.24820@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "=?UTF-8?Q?Andreas_F=C3=A4rber?=" <planche2k@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 17:50:06 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Aug 30 18:31:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZSiC-0003IC-OY
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 17:50:05 +0200
+	id 1KZTMG-0007AI-Ti
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 18:31:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751960AbYH3Psw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 11:48:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752505AbYH3Psw
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 11:48:52 -0400
-Received: from rv-out-0506.google.com ([209.85.198.238]:34831 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751610AbYH3Psv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 11:48:51 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1273423rvb.1
-        for <git@vger.kernel.org>; Sat, 30 Aug 2008 08:48:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=L55Jd8YW7RQrV6CHKEhDsDLPBfAKvfMr8BJU2Mi1JMQ=;
-        b=AS/l2BgkDfgSq4Qh63rkklfcwMqHDIRmNO3fejJLTXNDg6rVZgJAPE4bhA3JEUVznv
-         LhbZnLkT+pIampuXDASby+DKZTnE6ER64erU7eg/8egdwCIEUsOA4OHcqFWjfMnNZEiS
-         L0WNWziyyS4rCtP9KCGT112jMLz6pX68ro9KY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=D/ZcNhhimsGA34zFtTwGLv7reZbCGsGS6rSrcB4kC67BJlvPewZPi9WXiyOq8OTzEu
-         EsylzUua/td8bhKMoRuoSs33HAW2VtKYRTXqEi7R6zf2dBXeJhDNPuKKQUc5zDdL07kJ
-         5zbJFRFe4xT+Mf+OgoUw417pwEEEWFmK3vV0g=
-Received: by 10.115.18.1 with SMTP id v1mr3809571wai.15.1220111330894;
-        Sat, 30 Aug 2008 08:48:50 -0700 (PDT)
-Received: by 10.114.157.9 with HTTP; Sat, 30 Aug 2008 08:48:50 -0700 (PDT)
-In-Reply-To: <60597530-B8AC-421E-84DF-BF241CB799C5@googlemail.com>
-Content-Disposition: inline
+	id S1752326AbYH3QaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 12:30:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752632AbYH3QaX
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 12:30:23 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38563 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752441AbYH3QaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 12:30:22 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9F1B35A80B;
+	Sat, 30 Aug 2008 12:30:21 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id E584D5A7FF; Sat, 30 Aug 2008 12:30:16 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0808241948390.24820@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
+ Schindelin's message of "Sun, 24 Aug 2008 19:49:58 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F0BF8226-76B0-11DD-8218-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94384>
 
-MjAwOC84LzMwIEFuZHJlYXMgRsOkcmJlciA8cGxhbmNoZTJrQGdvb2dsZW1haWwuY29tPjoKPgo+
-IFNpbmNlIG5vIG9uZSBhcHBlYXJlZCB0byBoYXZlIHJlcGxpZWQgeWV0LCBJIGNvbmZpcm1lZCB0
-aGF0IHlvdXIgV2luZG93cwo+IHBhdGNoIGRvZXMgbm90IGJyZWFrIHRoaW5ncyBoZXJlIGFuZCBs
-b29rcyByZWFzb25hYmxlIHRvIG1lIGFzIGNvLWF1dGhvciBvZgo+IHRoZSBvZmZlbmRpbmcgY29t
-bWl0LgoKT2sK
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+>> On Sat, Aug 23, 2008 at 3:03 AM, Stephan Beyer <s-beyer@gmx.net> wrote:
+>>
+>> > Felipe Contreras wrote:
+>> >> Hi,
+>> >>
+>> >> Please read aloud the following commands:
+>> >> git log --pretty=short
+>> >> git log --pretty=full
+>> >> git log --pretty=format:%s
+>> >>
+>> >> It is just me or 'pretty full' doesn't exactly convey the meaning of 
+>> >> the action to execute?
+>> >
+>> > But "pretty short" and "pretty format" is. :)
+>> >
+>> >> How about:
+>> >> git log --format=short
+>> >> git log --format=full
+>> >> git log --format=custom:%s
+>> >>
+>> >> If you like the idea I can work on a patch.
+>> >
+>> > Because --pretty=<format> is an option taken by many git commands 
+>> > including git plumbing (e.g. rev-list), many scripts will rely on 
+>> > "--pretty" and they all would have to be changed. And --pretty exists 
+>> > since Jan 2005 (see 9d97aa64).
+>> 
+>> Well, it might be difficult, but that doesn't mean it should not be 
+>> done. Just like the 'git-*' removal, there could be a period for 
+>> transition.
+>
+> Of course it could be done.  But I do not deem it necessary.  In the 
+> balance gain/pain it comes out as not worth the hassle on this guy's 
+> calculator.
+
+On the other hand, as an undocumented synonym without deprecating nor
+conflicting with existing set of options in any way, I do not think it is
+wrong per-se to support something like:
+
+	git log --format=short
+        git log --format=':%h %s'
+
+in addition to existing --pretty.  It should be fairly obvious and trivial
+to make handle_revision_opt() pretend as if the user said --pretty, and
+for the latter one silently prefix "tformat" while doing so.
+
+I won't be doing such a patch myself, though.
