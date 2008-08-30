@@ -1,119 +1,117 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 05/12] rerere.c: use symbolic constants to keep track of
- parsing states
-Date: Fri, 29 Aug 2008 17:42:36 -0700
-Message-ID: <1220056963-2352-6-git-send-email-gitster@pobox.com>
+Subject: [PATCH 08/12] git-merge-recursive: learn to honor merge.conflictstyle
+Date: Fri, 29 Aug 2008 17:42:39 -0700
+Message-ID: <1220056963-2352-9-git-send-email-gitster@pobox.com>
 References: <1220056963-2352-1-git-send-email-gitster@pobox.com>
  <1220056963-2352-2-git-send-email-gitster@pobox.com>
  <1220056963-2352-3-git-send-email-gitster@pobox.com>
  <1220056963-2352-4-git-send-email-gitster@pobox.com>
  <1220056963-2352-5-git-send-email-gitster@pobox.com>
+ <1220056963-2352-6-git-send-email-gitster@pobox.com>
+ <1220056963-2352-7-git-send-email-gitster@pobox.com>
+ <1220056963-2352-8-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sat Aug 30 02:44:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZEZt-00076v-5k
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 02:44:33 +0200
+	id 1KZEZu-00076v-Pl
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 02:44:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752746AbYH3AnD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 20:43:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbYH3AnB
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 20:43:01 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41142 "EHLO
+	id S1752832AbYH3AnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 20:43:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbYH3AnM
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 20:43:12 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42388 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752498AbYH3AnA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 20:43:00 -0400
+	with ESMTP id S1752765AbYH3AnH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 20:43:07 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A5B0F57A07
-	for <git@vger.kernel.org>; Fri, 29 Aug 2008 20:42:59 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 468AC6DC0F
+	for <git@vger.kernel.org>; Fri, 29 Aug 2008 20:43:07 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id EDAA357A06 for <git@vger.kernel.org>; Fri, 29 Aug 2008 20:42:58
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 8C1056DC0D for <git@vger.kernel.org>; Fri, 29 Aug 2008 20:43:06
  -0400 (EDT)
 X-Mailer: git-send-email 1.6.0.1.149.ga4c44
-In-Reply-To: <1220056963-2352-5-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 984AF00A-762C-11DD-B316-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+In-Reply-To: <1220056963-2352-8-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 9CCF496E-762C-11DD-BED4-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94347>
 
-These hardcoded integers make the code harder to follow than necessary;
-replace them with enums to make it easier to read, before adding support
-for optionally parsing "diff3 -m" style conflict markers.
+This teaches the low-level ll_xdl_merge() routine to honor
+merge.conflictstyle configuration variable, so that merge-recursive
+strategy can show the conflicts in the style of user's choice.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- rerere.c |   23 +++++++++++++----------
- 1 files changed, 13 insertions(+), 10 deletions(-)
+ builtin-merge-recursive.c |    2 +-
+ ll-merge.c                |   16 ++++++++++++----
+ 2 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/rerere.c b/rerere.c
-index 323e493..bf74b26 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -75,7 +75,10 @@ static int handle_file(const char *path,
+diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
+index dfb363e..f3b6ede 100644
+--- a/builtin-merge-recursive.c
++++ b/builtin-merge-recursive.c
+@@ -1348,7 +1348,7 @@ static int merge_config(const char *var, const char *value, void *cb)
+ 		merge_rename_limit = git_config_int(var, value);
+ 		return 0;
+ 	}
+-	return git_default_config(var, value, cb);
++	return git_xmerge_config(var, value, cb);
+ }
+ 
+ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+diff --git a/ll-merge.c b/ll-merge.c
+index 9837c84..4a71614 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -63,6 +63,7 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 			int virtual_ancestor)
  {
- 	SHA_CTX ctx;
- 	char buf[1024];
--	int hunk = 0, hunk_no = 0;
-+	int hunk_no = 0;
-+	enum {
-+		RR_CONTEXT = 0, RR_SIDE_1, RR_SIDE_2,
-+	} hunk = RR_CONTEXT;
- 	struct strbuf one, two;
- 	FILE *f = fopen(path, "r");
- 	FILE *out = NULL;
-@@ -98,20 +101,20 @@ static int handle_file(const char *path,
- 	strbuf_init(&two,  0);
- 	while (fgets(buf, sizeof(buf), f)) {
- 		if (!prefixcmp(buf, "<<<<<<< ")) {
--			if (hunk)
-+			if (hunk != RR_CONTEXT)
- 				goto bad;
--			hunk = 1;
-+			hunk = RR_SIDE_1;
- 		} else if (!prefixcmp(buf, "=======") && isspace(buf[7])) {
--			if (hunk != 1)
-+			if (hunk != RR_SIDE_1)
- 				goto bad;
--			hunk = 2;
-+			hunk = RR_SIDE_2;
- 		} else if (!prefixcmp(buf, ">>>>>>> ")) {
--			if (hunk != 2)
-+			if (hunk != RR_SIDE_2)
- 				goto bad;
- 			if (strbuf_cmp(&one, &two) > 0)
- 				strbuf_swap(&one, &two);
- 			hunk_no++;
--			hunk = 0;
-+			hunk = RR_CONTEXT;
- 			if (out) {
- 				fputs("<<<<<<<\n", out);
- 				fwrite(one.buf, one.len, 1, out);
-@@ -127,9 +130,9 @@ static int handle_file(const char *path,
- 			}
- 			strbuf_reset(&one);
- 			strbuf_reset(&two);
--		} else if (hunk == 1)
-+		} else if (hunk == RR_SIDE_1)
- 			strbuf_addstr(&one, buf);
--		else if (hunk == 2)
-+		else if (hunk == RR_SIDE_2)
- 			strbuf_addstr(&two, buf);
- 		else if (out)
- 			fputs(buf, out);
-@@ -146,7 +149,7 @@ static int handle_file(const char *path,
- 		fclose(out);
- 	if (sha1)
- 		SHA1_Final(sha1, &ctx);
--	if (hunk) {
-+	if (hunk != RR_CONTEXT) {
- 		if (output)
- 			unlink(output);
- 		return error("Could not parse conflict hunks in %s", path);
+ 	xpparam_t xpp;
++	int style = 0;
+ 
+ 	if (buffer_is_binary(orig->ptr, orig->size) ||
+ 	    buffer_is_binary(src1->ptr, src1->size) ||
+@@ -77,10 +78,12 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 	}
+ 
+ 	memset(&xpp, 0, sizeof(xpp));
++	if (git_xmerge_style >= 0)
++		style = git_xmerge_style;
+ 	return xdl_merge(orig,
+ 			 src1, name1,
+ 			 src2, name2,
+-			 &xpp, XDL_MERGE_ZEALOUS,
++			 &xpp, XDL_MERGE_ZEALOUS | style,
+ 			 result);
+ }
+ 
+@@ -95,10 +98,15 @@ static int ll_union_merge(const struct ll_merge_driver *drv_unused,
+ 	char *src, *dst;
+ 	long size;
+ 	const int marker_size = 7;
+-
+-	int status = ll_xdl_merge(drv_unused, result, path_unused,
+-				  orig, src1, NULL, src2, NULL,
+-				  virtual_ancestor);
++	int status, saved_style;
++
++	/* We have to force the RCS "merge" style */
++	saved_style = git_xmerge_style;
++	git_xmerge_style = 0;
++	status = ll_xdl_merge(drv_unused, result, path_unused,
++			      orig, src1, NULL, src2, NULL,
++			      virtual_ancestor);
++	git_xmerge_style = saved_style;
+ 	if (status <= 0)
+ 		return status;
+ 	size = result->size;
 -- 
 1.6.0.1.149.ga4c44
