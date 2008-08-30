@@ -1,94 +1,108 @@
 From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] git gui: show diffs with a minimum of 1 context line
-Date: Sat, 30 Aug 2008 18:45:27 +0200
-Message-ID: <20080830164527.GA25370@localhost>
+Subject: [PATCH] git gui: use apply --unidiff-zero when staging hunks
+	without context
+Date: Sat, 30 Aug 2008 18:56:00 +0200
+Message-ID: <20080830165600.GB25370@localhost>
+References: <20080830164527.GA25370@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Aug 30 18:46:25 2008
+X-From: git-owner@vger.kernel.org Sat Aug 30 19:00:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZTah-0002Tr-3x
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 18:46:23 +0200
+	id 1KZTo8-0006FU-2q
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 19:00:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752833AbYH3QpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 12:45:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752710AbYH3QpR
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 12:45:17 -0400
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:20360 "EHLO
+	id S1752441AbYH3Qzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 12:55:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752604AbYH3Qzt
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 12:55:49 -0400
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:21140 "EHLO
 	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752613AbYH3QpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 12:45:16 -0400
+	with ESMTP id S1752238AbYH3Qzs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 12:55:48 -0400
 Received: from darc.dyndns.org ([84.154.72.105]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 30 Aug 2008 18:45:12 +0200
+	 Sat, 30 Aug 2008 18:55:46 +0200
 Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
 	(envelope-from <drizzd@aon.at>)
-	id 1KZTZn-0007O6-AR; Sat, 30 Aug 2008 18:45:27 +0200
+	id 1KZTk0-0007QO-Nl; Sat, 30 Aug 2008 18:56:00 +0200
 Content-Disposition: inline
+In-Reply-To: <20080830164527.GA25370@localhost>
 User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 30 Aug 2008 16:45:13.0275 (UTC) FILETIME=[C5F1A8B0:01C90ABF]
+X-OriginalArrivalTime: 30 Aug 2008 16:55:46.0752 (UTC) FILETIME=[3F869400:01C90AC1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94388>
 
-git apply does not handle diffs without context correctly. Configuring git
-gui to show zero context lines therefore breaks staging.
-
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+git apply does not work correctly with zero-context patches. It does a
+little better with --unidiff-zero.
 ---
 
-In reply to this patch I will send a first attempt at fixing this problem
-instead of avoiding it. There does not seem to be a straightforward
-solution, however, so this should hide the bug for now.
+This appears to fix staging hunks with zero context lines in the majority of
+cases. Staging individual lines still is a problem frequently.
 
- git-gui/git-gui.sh     |    2 +-
- git-gui/lib/diff.tcl   |    2 +-
- git-gui/lib/option.tcl |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+In any case, it's easy enough to break zero-context diff & patch like this:
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index ad65aaa..86402d4 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -1932,7 +1932,7 @@ proc show_more_context {} {
- 
- proc show_less_context {} {
- 	global repo_config
--	if {$repo_config(gui.diffcontext) >= 1} {
-+	if {$repo_config(gui.diffcontext) > 1} {
- 		incr repo_config(gui.diffcontext) -1
- 		reshow_diff
- 	}
+echo a > victim
+git add victim
+echo b >> victim
+git diff -U0 | git apply --cached --unidiff-zero
+git diff
+
+So before delving into this problem to deeply, I'd like to find out who
+needs fixing exactly. Is there documentation defining how zero-context git
+diff output should look like? Or is git apply the culprit in the bug above?
+
+Or do we even want to support applying zero-context patches? If not, we
+should detect and fail such attempts.
+
+Clemens
+
+ git-gui/lib/diff.tcl |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
+
 diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index 52b79e4..4a7138b 100644
+index 52b79e4..78c1b56 100644
 --- a/git-gui/lib/diff.tcl
 +++ b/git-gui/lib/diff.tcl
-@@ -175,7 +175,7 @@ proc show_diff {path w {lno {}} {scroll_pos {}}} {
+@@ -302,12 +302,15 @@ proc read_diff {fd scroll_pos} {
  
- 	lappend cmd -p
- 	lappend cmd --no-color
--	if {$repo_config(gui.diffcontext) >= 0} {
-+	if {$repo_config(gui.diffcontext) >= 1} {
- 		lappend cmd "-U$repo_config(gui.diffcontext)"
- 	}
- 	if {$w eq $ui_index} {
-diff --git a/git-gui/lib/option.tcl b/git-gui/lib/option.tcl
-index ffb3f00..5e1346e 100644
---- a/git-gui/lib/option.tcl
-+++ b/git-gui/lib/option.tcl
-@@ -125,7 +125,7 @@ proc do_options {} {
- 		{b gui.matchtrackingbranch {mc "Match Tracking Branches"}}
- 		{b gui.fastcopyblame {mc "Blame Copy Only On Changed Files"}}
- 		{i-20..200 gui.copyblamethreshold {mc "Minimum Letters To Blame Copy On"}}
--		{i-0..99 gui.diffcontext {mc "Number of Diff Context Lines"}}
-+		{i-1..99 gui.diffcontext {mc "Number of Diff Context Lines"}}
- 		{i-0..99 gui.commitmsgwidth {mc "Commit Message Text Width"}}
- 		{t gui.newbranchtemplate {mc "New Branch Name Template"}}
- 		} {
+ proc apply_hunk {x y} {
+ 	global current_diff_path current_diff_header current_diff_side
+-	global ui_diff ui_index file_states
++	global ui_diff ui_index file_states repo_config
+ 
+ 	if {$current_diff_path eq {} || $current_diff_header eq {}} return
+ 	if {![lock_index apply_hunk]} return
+ 
+ 	set apply_cmd {apply --cached --whitespace=nowarn}
++	if {$repo_config(gui.diffcontext) eq 0} {
++		lappend apply_cmd --unidiff-zero
++	}
+ 	set mi [lindex $file_states($current_diff_path) 0]
+ 	if {$current_diff_side eq $ui_index} {
+ 		set failed_msg [mc "Failed to unstage selected hunk."]
+@@ -375,12 +378,15 @@ proc apply_hunk {x y} {
+ 
+ proc apply_line {x y} {
+ 	global current_diff_path current_diff_header current_diff_side
+-	global ui_diff ui_index file_states
++	global ui_diff ui_index file_states repo_config
+ 
+ 	if {$current_diff_path eq {} || $current_diff_header eq {}} return
+ 	if {![lock_index apply_hunk]} return
+ 
+ 	set apply_cmd {apply --cached --whitespace=nowarn}
++	if {$repo_config(gui.diffcontext) eq 0} {
++		lappend apply_cmd --unidiff-zero
++	}
+ 	set mi [lindex $file_states($current_diff_path) 0]
+ 	if {$current_diff_side eq $ui_index} {
+ 		set failed_msg [mc "Failed to unstage selected line."]
 -- 
 1.6.0
