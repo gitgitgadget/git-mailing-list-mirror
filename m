@@ -1,109 +1,85 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Reuse cmdname->len to store pre-calculated similarity
-	indexes
-Date: Sat, 30 Aug 2008 19:13:31 +0200
-Message-ID: <20080830171331.GA26932@steel.home>
-References: <20080828171533.GA6024@blimp.local> <20080828212722.GF6439@steel.home> <7vsksm1pmd.fsf@gitster.siamese.dyndns.org> <81b0412b0808300944p29199600ie95c65404b6cb380@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git gui: show diffs with a minimum of 1 context line
+Date: Sat, 30 Aug 2008 10:19:14 -0700
+Message-ID: <7vtzd2ifot.fsf@gitster.siamese.dyndns.org>
+References: <20080830164527.GA25370@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 19:15:00 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sat Aug 30 19:20:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZU2F-0002Uj-R3
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 19:14:52 +0200
+	id 1KZU7f-0004Qe-Uz
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 19:20:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754479AbYH3RNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 13:13:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754498AbYH3RNe
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 13:13:34 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.181]:33438 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754479AbYH3RNd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 13:13:33 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20tf4EK7
-Received: from tigra.home (Fad0a.f.strato-dslnet.de [195.4.173.10])
-	by post.webmailer.de (klopstock mo28) (RZmta 16.47)
-	with ESMTP id 300086k7UE6G5i ; Sat, 30 Aug 2008 19:13:31 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 68D29277AE;
-	Sat, 30 Aug 2008 19:13:31 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 36EBF56D2A; Sat, 30 Aug 2008 19:13:31 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <81b0412b0808300944p29199600ie95c65404b6cb380@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752832AbYH3RTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 13:19:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752887AbYH3RTW
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 13:19:22 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44190 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752344AbYH3RTV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 13:19:21 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C82DF67967;
+	Sat, 30 Aug 2008 13:19:20 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id C088367965; Sat, 30 Aug 2008 13:19:16 -0400 (EDT)
+In-Reply-To: <20080830164527.GA25370@localhost> (Clemens Buchacher's message
+ of "Sat, 30 Aug 2008 18:45:27 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C8A1764E-76B7-11DD-B4C8-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94391>
 
-To avoid doing that while sorting
+Clemens Buchacher <drizzd@aon.at> writes:
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+> git apply does not handle diffs without context correctly.
 
-Alex Riesen, Sat, Aug 30, 2008 18:44:15 +0200:
-> 2008/8/30 Junio C Hamano <gitster@pobox.com>:
-> > I wonder if it makes sense to give an otherwise unused "score" member to
-> 
-> Hmm, it is a _non-existing_ member of cmdname, isn't it?
-> 
-> > the "struct cmdname", compute the distance only once per each command, and
-> > use that as the sort key (alternatively you can have a separate int[N]
-> > array to store similarity values for each item in the cmdnames list, only
-> > used inside this codepath).
-> 
-> I think I'll take the struct cmdname->len over.
+NAK on this part of the proposed commit log message.
 
- help.c |   12 +++++++-----
- 1 files changed, 7 insertions(+), 5 deletions(-)
+"git-apply" is more anal than other "patch" implementations in that it
+tries to make sure that a hunk that touches the trailing end actually
+applies to the trailing end of the file.  If a patch is generated with
+non-zero context, we can detect by presense of trailing context lines that
+a patch is _not_ about modifying the trailing end, but with a -U0 patch,
+every hunk will come without trailing context, so you need to disable that
+safety by asking for --unidiff-zero option.
 
-diff --git a/help.c b/help.c
-index 7bfbbcd..70d57a3 100644
---- a/help.c
-+++ b/help.c
-@@ -287,8 +287,8 @@ static int levenshtein_compare(const void *p1, const void *p2)
- {
- 	const struct cmdname *const *c1 = p1, *const *c2 = p2;
- 	const char *s1 = (*c1)->name, *s2 = (*c2)->name;
--	int l1 = similarity(s1);
--	int l2 = similarity(s2);
-+	int l1 = (*c1)->len;
-+	int l2 = (*c2)->len;
- 	return l1 != l2 ? l1 - l2 : strcmp(s1, s2);
- }
- 
-@@ -312,6 +312,9 @@ const char *help_unknown_cmd(const char *cmd)
- 	memcpy(main_cmds.names + main_cmds.cnt, other_cmds.names,
- 		other_cmds.cnt * sizeof(other_cmds.names[0]));
- 	main_cmds.cnt += other_cmds.cnt;
-+	/* This reuses cmdname->len for similarity index */
-+	for (i = 0; i < main_cmds.cnt; ++i)
-+		main_cmds.names[i]->len = similarity(main_cmds.names[i]->name);
- 
- 	levenshtein_cmd = cmd;
- 	qsort(main_cmds.names, main_cmds.cnt,
-@@ -319,10 +322,9 @@ const char *help_unknown_cmd(const char *cmd)
- 
- 	if (!main_cmds.cnt)
- 		die ("Uh oh.  Your system reports no Git commands at all.");
--	best_similarity = similarity(main_cmds.names[0]->name);
-+	best_similarity = main_cmds.names[0]->len;
- 	n = 1;
--	while (n < main_cmds.cnt &&
--		best_similarity == similarity(main_cmds.names[n]->name))
-+	while (n < main_cmds.cnt && best_similarity == main_cmds.names[n]->len)
- 		++n;
- 	if (autocorrect && n == 1) {
- 		const char *assumed;
--- 
-1.6.0.1.149.g9ecb0
+> ... Configuring git
+> gui to show zero context lines therefore breaks staging.
+
+So another option might be to pass --unidiff-zero iff/when it is feeding
+such a patch to fix this particular "user error" of "git-apply" program.
+
+Having said that,
+
+> In reply to this patch I will send a first attempt at fixing this problem
+> instead of avoiding it.
+
+I suspect there are some things "git-apply" should be able to _figure out_
+that the user is giving it a -U0 patch and automatically flip unidiff_zero
+option on.  For example, if the _first_ hunk of a patch does not begin
+with "@@ -0,0 +N,M @@" nor with "@@ -1,L +N,M @@" (i.e. the hunk claims to
+apply not at the beginning) and the hunk does not have leading context
+lines, _and_ if that first hunk does not have trailing context lines, then
+it is clearly a -U0 patch (or it could be a corrupt patch, but let's
+discount that possibility for now).
+
+Even if the hunk does claim to apply at the beginning, in which case we
+cannot determine if it is a -U0 patch by looking at the lack of leading
+context, if it has any context lines, we can tell it is _not_ a -U0 patch.
+When the first hunk that applies to the beginning lacks any context, we
+cannot really tell if it is -U0 or not (the other possibility is a total
+rewrite of the file from the beginning to the end).  Even in that case,
+you could look at the next hunk --- if you have a hunk that applies to
+the same path after looking at such a "first" hunk without context, then
+it clearly is a -U0 patch.
