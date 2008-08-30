@@ -1,84 +1,111 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [RFC PATCH 0/9] Narrow/Sparse checkout round 3: "easy mode"
-Date: Sat, 30 Aug 2008 16:21:50 +0700
-Message-ID: <fcaeb9bf0808300221q12d1d984mdf78c81363a909d1@mail.gmail.com>
-References: <20080815142439.GA10609@laptop>
-	 <loom.20080819T210550-149@post.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 02/12] xdiff-merge: optionally show conflicts in "diff3
+ -m" style
+Date: Sat, 30 Aug 2008 11:29:00 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0808301115530.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <1220056963-2352-1-git-send-email-gitster@pobox.com> <1220056963-2352-2-git-send-email-gitster@pobox.com> <1220056963-2352-3-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: "James Pickens" <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 11:22:59 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 30 11:24:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZMfa-0004Dn-Da
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 11:22:58 +0200
+	id 1KZMhU-0004Zy-2q
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 11:24:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546AbYH3JVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 05:21:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752409AbYH3JVx
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 05:21:53 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:42837 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750777AbYH3JVw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 05:21:52 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so749253fgg.17
-        for <git@vger.kernel.org>; Sat, 30 Aug 2008 02:21:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=fuPFPBT5eupdk3keohAsfMZ5EuUu8ie7Ykxs5CI3OLE=;
-        b=ZR6CHBGgfIWfg1jT+gpZJxDaa/86QoDa2cF5vSNDiEDf5ZMwR5+ZQJSutaUraHBxsW
-         eMb631a3MyZp9xi0I6kowVU9UvlOukuVY1zdUfnkxcSDlz2yuxyFnlrb67rk2CHmRpaE
-         t6uJNKzxe1skxL6afg4qZ+FT/LlWVlb4ygTfc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=GuXz3heQLYkA0wCXOGBwaXbFkBicLAV1239nUzLYHVA4EJMmWt9i3KeZJ9l7FWGM6E
-         MsZlGS6hL4xspBhU4QyFn2JO6iyE8VVQ1oq7tCKqvbnftRAvhWfMzgf8eidOqOf3g/uy
-         gRidFNXVtxctgyFFCyaXUXcK4GUTE8f1lmoiA=
-Received: by 10.86.93.19 with SMTP id q19mr2804394fgb.76.1220088110753;
-        Sat, 30 Aug 2008 02:21:50 -0700 (PDT)
-Received: by 10.86.30.20 with HTTP; Sat, 30 Aug 2008 02:21:50 -0700 (PDT)
-In-Reply-To: <loom.20080819T210550-149@post.gmane.org>
-Content-Disposition: inline
+	id S1751071AbYH3JXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 05:23:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751206AbYH3JXv
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 05:23:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50594 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750878AbYH3JXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 05:23:50 -0400
+Received: (qmail invoked by alias); 30 Aug 2008 09:23:48 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp039) with SMTP; 30 Aug 2008 11:23:48 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/mo0gw0xDmlzqx40Vrsj+CcmihINKqBEZAdz8+s+
+	uzNpjaPJI5X1yV
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <1220056963-2352-3-git-send-email-gitster@pobox.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.43
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94365>
 
-T24gOC8yMC8wOCwgSmFtZXMgUGlja2VucyA8amVwaWNrZW5AZ21haWwuY29tPiB3cm90ZToKPiBO
-Z3V54buFbiBUaMOhaSBOZ+G7jWMgRHV5IDxwY2xvdWRzIDxhdD4gZ21haWwuY29tPiB3cml0ZXM6
-Cj4KPiAgPiBGcm9tIHVzZXIgUE9WLCB3ZSBjYW4gbm93IGNoZWNrb3V0IGEgc2luZ2xlIGZpbGUg
-b3IgYQo+ICA+IHN1YmRpcmVjdG9yeSAoY2hlY2tpbmcgb3V0IHN1YmRpcmVjdG9yeSBub24tcmVj
-dXJzaXZlbHkgaXMKPiAgPiBwb3NzaWJsZSB0b28pLiBZb3UgbWF5IHN0YXJ0IHdpdGggYSBuYXJy
-b3cgY2xvbmUgbGlrZToKPgo+Cj4gSXMgdGhlcmUgYW55IHJlYXNvbiBmb3IgdGhlIGNoYW5nZSBp
-biB0ZXJtaW5vbG9neSBmcm9tICJzcGFyc2UiCj4gIHRvICJuYXJyb3ciPyAgSSB1bmRlcnN0YW5k
-IHRoZSBkaWZmZXJlbmNlIGJldHdlZW4gInBhcnRpYWwiCj4gIGFuZCAic3BhcnNlIiwgYnV0IEkg
-Y2FuJ3QgdGVsbCBpZiB0aGVyZSdzIGFueSBkaWZmZXJlbmNlCj4gIGJldHdlZW4gIm5hcnJvdyIg
-YW5kICJzcGFyc2UiLiAgSWYgdGhleSBhcmUgdGhlIHNhbWUgdGhpbmcsIHRoZW4KPiAgSSB0aGlu
-ayAic3BhcnNlIiBpcyB0aGUgYmV0dGVyIHRlcm0uCgpJIGhhdmUgbm8gcGFydGljdWxhciBwcmVm
-ZXJlbmNlLiBJdCdzIHVwIHRvIHRoZSBjb21tdW5pdHkgdG8gY2hvb3NlIHRoZSBuYW1lLgoKPiAg
-PiBMYXN0IGJpdC4gIk5hcnJvdyBydWxlcyIgZm9yIC0tcGF0aHwtLWFkZC1wYXRofC0tcmVtb3Zl
-LXBhdGggaXMKPiAgPiBjdXJyZW50bHkgd2lsZGNhcmRzIHNlcGFyYXRlZCBieSBjb2xvbnMuIFdo
-aWxlIGl0IGRvZXMgdGhlIGpvYiwKPiAgPiBpdCBkb2VzIG5vdCBhbGxvdyB0byBjaGVja291dCBl
-YXNpbHkgYSBzdWJkaXJlY3RvcnkKPiAgPiBub24tcmVjdXNpdmVseS4gSSB3YXMgdGhpbmtpbmcg
-YWJvdXQgJyonIGFzICJtYXRjaCBldmVyeXRoaW5nCj4gID4gZXhjZXB0IHNsYXNoZXMiIGFuZCAn
-KionIGFzICJtYXRjaCBldmVyeXRoaW5nIGV2ZW4gc2xhc2hlcyIuCj4KPgo+IEkgbGlrZSB0aGlz
-IGlkZWEgLSBpdCB3b3VsZCBtYWtlIHRoaXMgbXVjaCBtb3JlIGludHVpdGl2ZSB0byB1c2UsCj4g
-IHNpbmNlICcqJyBhbmQgJyoqJyB3b3VsZCB3b3JrIHRoZSBzYW1lIGFzIHRoZXkgZG8gaW4gdGhl
-Cj4gIHNoZWxsIChmb3Igc2hlbGxzIHRoYXQgc3VwcG9ydCAnKionIGF0IGxlYXN0KS4gIEkgdHJp
-ZWQgdGhlIHBhdGNoCj4gIGluIGl0J3MgY3VycmVudCBmb3JtLCBhbmQgaXQgdG9vayBtZSBhIHdo
-aWxlIHRvIGZpZ3VyZSBvdXQgdGhhdAo+ICBwYXRocyB3ZXJlIG5vbi1yZWN1cnNpdmUgYW5kICcq
-JyB3YXMgbWF0Y2hpbmcgZXZlcnl0aGluZywKPiAgaW5jbHVkaW5nIHNsYXNoZXMuCgpUcmllZCB0
-aGUgbGFzdCBmZXcgZGF5cyBidXQgaXQgd2FzIG5vdCBlYXN5LCBuZWVkZWQgdG8gZHVwbGljYXRl
-CmZubWF0Y2ggY29kZS4gSSBtYXkgY29tZSB1cCB3aXRoIGEgbGVzcyBwb3dlcmZ1bCBzeW50YXgg
-Zm9yCnJlY3VzaXZlL25vbi1yZWN1cnNpdmUgJyonLgotLSAKRHV5Cg==
+Hi,
+
+On Fri, 29 Aug 2008, Junio C Hamano wrote:
+
+> diff --git a/builtin-merge-file.c b/builtin-merge-file.c
+> index 3605960..5b4f020 100644
+> --- a/builtin-merge-file.c
+> +++ b/builtin-merge-file.c
+> @@ -25,6 +27,10 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+>  		else if (!strcmp(argv[1], "-q") ||
+>  				!strcmp(argv[1], "--quiet"))
+>  			freopen("/dev/null", "w", stderr);
+> +		else if (!strcmp(argv[1], "--diff3")) {
+> +			merge_style = XDL_MERGE_DIFF3;
+> +			merge_level = XDL_MERGE_EAGER;
+> +		}
+
+FWIW I do not follow your reasoning why --diff3 does not make sense for 
+anything more eager than MERGE_EAGER.  All that ZEALOUS and ZEALOUS_ALNUM 
+(the latter of which is useless at the moment, since it is not enabled for 
+git-merge) do is change the way the conflicting regions are displayed, but 
+they do not leave out conflicting regions.
+
+So I actually suspect that ZEALOUS_ALNUM will be _especially_ useful with 
+--diff3, since it is designed to skip the single curly brackets that would 
+disrupt the reading pleasure otherwise.
+
+> diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+> index 413082e..deebe02 100644
+> --- a/xdiff/xdiff.h
+> +++ b/xdiff/xdiff.h
+> @@ -50,10 +50,16 @@ extern "C" {
+>  #define XDL_BDOP_CPY 2
+>  #define XDL_BDOP_INSB 3
+>  
+> +/* merge simplification levels */
+>  #define XDL_MERGE_MINIMAL 0
+>  #define XDL_MERGE_EAGER 1
+>  #define XDL_MERGE_ZEALOUS 2
+>  #define XDL_MERGE_ZEALOUS_ALNUM 3
+> +#define XDL_MERGE_LEVEL_MASK 0x0f
+> +
+> +/* merge output styles */
+> +#define XDL_MERGE_DIFF3 0x8000
+> +#define XDL_MERGE_STYLE_MASK 0x8000
+
+Hmm.  This is not the Linux kernel, I think we could safely pass around 
+two integers instead of one.
+
+> @@ -91,11 +108,13 @@ static int xdl_merge_cmp_lines(xdfenv_t *xe1, int i1, xdfenv_t *xe2, int i2,
+>  	return 0;
+>  }
+>  
+> -static int xdl_recs_copy(xdfenv_t *xe, int i, int count, int add_nl, char *dest)
+> +static int xdl_recs_copy_0(int use_orig, xdfenv_t *xe, int i, int count, int add_nl, char *dest)
+
+You rewrapped many function headers already; I wonder why this one was 
+left out.
+
+The rest looks pretty much obviously correct to me; I was too lazy/ran out 
+of time to apply the patch and look through the resulting code, though, 
+but I guess that you searched for "i1" and "chg1" and added the code for 
+i0 and chg0 where necessary.
+
+So: ACK.
+
+Ciao,
+Dscho
