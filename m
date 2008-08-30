@@ -1,67 +1,56 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
-Date: Sat, 30 Aug 2008 14:39:50 -0400
-Message-ID: <20080830183949.GA16415@coredump.intra.peff.net>
-References: <20080830173947.GF7185@schiele.dyndns.org> <20080830180022.GA14552@coredump.intra.peff.net> <7vwshygyy9.fsf@gitster.siamese.dyndns.org> <20080830183413.GG7185@schiele.dyndns.org>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH] Teach git.el to mark/unmark files by regexp
+Date: Sat, 30 Aug 2008 20:41:35 +0200
+Message-ID: <87myiuwdk0.fsf@wine.dyndns.org>
+References: <1219807480-57122-1-git-send-email-david@endpoint.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Lea Wiemann <lewiemann@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Robert Schiele <rschiele@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 20:41:03 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Christensen <david@endpoint.com>
+X-From: git-owner@vger.kernel.org Sat Aug 30 20:42:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZVNZ-0003Bo-Dz
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 20:40:57 +0200
+	id 1KZVPO-0003dC-7T
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 20:42:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753573AbYH3Sjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 14:39:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753612AbYH3Sjw
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 14:39:52 -0400
-Received: from peff.net ([208.65.91.99]:1851 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753569AbYH3Sjw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 14:39:52 -0400
-Received: (qmail 24738 invoked by uid 111); 30 Aug 2008 18:39:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 30 Aug 2008 14:39:51 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 30 Aug 2008 14:39:50 -0400
-Content-Disposition: inline
-In-Reply-To: <20080830183413.GG7185@schiele.dyndns.org>
+	id S1753769AbYH3Slp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 14:41:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753743AbYH3Slp
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 14:41:45 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:40260 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753691AbYH3Slo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 14:41:44 -0400
+Received: from adsl-89-217-62-226.adslplus.ch ([89.217.62.226] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1KZVOD-0003Yu-Nf; Sat, 30 Aug 2008 13:41:43 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 5E3411E716B; Sat, 30 Aug 2008 20:41:35 +0200 (CEST)
+In-Reply-To: <1219807480-57122-1-git-send-email-david@endpoint.com> (David
+	Christensen's message of "Tue, 26 Aug 2008 22:24:40 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+X-Spam-Score: -3.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94404>
 
-On Sat, Aug 30, 2008 at 08:34:13PM +0200, Robert Schiele wrote:
+David Christensen <david@endpoint.com> writes:
 
-> If there are problems with that change I recommend just using my
-> initial patch changing the documentation to require Perl 5.8 since my
-> interest in Perl 5.6 support is not big enough to mess around with
-> quoting all that stuff.  If someone really needs this he or she can
-> still do it --- it should be not too difficult.
+> Adds the functions git-mark-regexp and git-unmark-regexp to git.el.
+> Creates a mark-map keymap to support dired-like behavior for
+> marking/unmarking via regexp.  Also adds these functions to the
+> menubar.
 
-I think it is as simple as:
+I think that emulating dired behavior is a good idea, but you should go
+all the way and make it fully compatible, unmark is supposed to be "* %"
+with a prefix arg, and "* DEL" should be git-unmark-file-up.
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index da768ee..4ee6f89 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -61,7 +61,7 @@ sub run_cmd_pipe {
- 		return qx{@args};
- 	} else {
- 		my $fh = undef;
--		open($fh, '-|', @_) or die;
-+		open($fh, '-|', join(' ', map { quotemeta($_) } @_)) or die;
- 		return <$fh>;
- 	}
- }
-
-But I didn't do any testing beyond checking that "git add -i 'file with
-spaces'" which was broken by your patch now works at all.
-
--Peff
+-- 
+Alexandre Julliard
+julliard@winehq.org
