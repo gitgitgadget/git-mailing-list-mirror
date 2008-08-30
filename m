@@ -1,65 +1,85 @@
-From: Karl Chen <quarl@cs.berkeley.edu>
-Subject: Re: [PATCH v4] Expand ~ and ~user in core.excludesfile, commit.template
-Date: Fri, 29 Aug 2008 15:34:41 -0700
-Message-ID: <quack.20080829T1534.lthd4jr30xq@roar.cs.berkeley.edu>
-References: <7vprnyqo59.fsf@gitster.siamese.dyndns.org>
-	<20080824220854.GA27299@coredump.intra.peff.net>
-	<7vzln2j9y2.fsf@gitster.siamese.dyndns.org>
-	<20080824231343.GC27619@coredump.intra.peff.net>
-	<7vhc9aj82i.fsf@gitster.siamese.dyndns.org>
-	<quack.20080825T1207.lthk5e46hi4_-_@roar.cs.berkeley.edu>
-	<20080827002506.GB7347@coredump.intra.peff.net>
-	<quack.20080826T2012.lthvdxn2ls4@roar.cs.berkeley.edu>
-	<7vy72jrr00.fsf@gitster.siamese.dyndns.org>
-	<quack.20080828T0209.lthmyixjyjx_-_@roar.cs.berkeley.edu>
-	<20080829032630.GA7024@coredump.intra.peff.net>
-	<7vod3ca2ey.fsf@gitster.siamese.dyndns.org>
-	<quack.20080829T0229.lthhc94rwyr_-_@roar.cs.berkeley.edu>
-	<7vsksn4xdo.fsf@gitster.siamese.dyndns.org>
-	<quack.20080829T1201.lthsksnir1u@roar.cs.berkeley.edu>
-	<7vk5dz4o3t.fsf@gitster.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH/resend] Fix use of hardlinks in "make install"
+Date: Sat, 30 Aug 2008 02:20:32 +0200
+Message-ID: <20080830002032.GA14522@steel.home>
+References: <81b0412b0808280704h585b6cb4nf03e509de0159a91@mail.gmail.com> <81b0412b0808280717u78c5ccf8ne1413c701ed8edd9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 00:36:00 2008
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 30 02:21:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZCZU-0002Mn-2R
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 00:36:00 +0200
+	id 1KZEDt-0003gc-Mh
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 02:21:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756823AbYH2Wem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2008 18:34:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756847AbYH2Wem
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 18:34:42 -0400
-Received: from roar.CS.Berkeley.EDU ([128.32.36.242]:52524 "EHLO
-	roar.quarl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756636AbYH2Wel (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2008 18:34:41 -0400
-Received: by roar.quarl.org (Postfix, from userid 18378)
-	id 0E3983458E; Fri, 29 Aug 2008 15:34:41 -0700 (PDT)
-X-Quack-Archive: 1
-In-Reply-To: <7vk5dz4o3t.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 29 Aug 2008 12\:28\:54 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751494AbYH3AUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2008 20:20:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751615AbYH3AUk
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Aug 2008 20:20:40 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.180]:57088 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751494AbYH3AUj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2008 20:20:39 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20tf4EK7
+Received: from tigra.home (Fad0a.f.strato-dslnet.de [195.4.173.10])
+	by post.webmailer.de (fruni mo9) (RZmta 16.47)
+	with ESMTP id m01781k7TMLVAn ; Sat, 30 Aug 2008 02:20:34 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 2185B277AE;
+	Sat, 30 Aug 2008 02:20:33 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id B874056D2A; Sat, 30 Aug 2008 02:20:32 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <81b0412b0808280717u78c5ccf8ne1413c701ed8edd9@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94337>
 
->>>>> On 2008-08-29 12:28 PDT, Junio C Hamano writes:
+The code failed to filter-out git-add properly on platforms were $X is
+not empty (ATM there is only one such a platform).
 
-    Junio>  [3/3] Update the sole caller of user_path() to use
-    Junio>  expand_user_path().
+Than it tried to create a hardlink to the file ($execdir/git-add) it just
+removed (because git-add is first in the BUILT_INS), so ln failed (but
+because stderr was redirected into /dev/null the error was never seen), and
+the whole install ended up using "ln -s" instead.
 
-Actually I just looked closer at enter_repo() and it's not quite
-as simple as your proposed patch, because enter_repo() wants to
-concatenate suffixes like ".git".  So either the malloced string
-would have to be copied to the static buffer again, or return a
-strbuf, or take an argument for allocating extra chars.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+2008/8/28 Alex Riesen <raa.lkml@gmail.com>:
+> 2008/8/28 Alex Riesen <raa.lkml@gmail.com>:
+>>
+>> It created endless symlink loops on cygwin, but obviously nowhere else.
+>>
+>
+> Sh@#! Scrap that, there is something else going on in that cygwindows thing...
+>
 
-Wow, I'd forgotten how much work it is to do string manipulation
-in C.
+Well, as usual, simple fix for a trivial typo caused by existence of an
+idiotic platform.
+
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index bf400e6..20f028f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1379,7 +1379,7 @@ endif
+ 	{ $(RM) "$$execdir/git-add$X" && \
+ 		ln git-add$X "$$execdir/git-add$X" 2>/dev/null || \
+ 		cp git-add$X "$$execdir/git-add$X"; } && \
+-	{ $(foreach p,$(filter-out git-add,$(BUILT_INS)), $(RM) "$$execdir/$p" && \
++	{ $(foreach p,$(filter-out git-add$X,$(BUILT_INS)), $(RM) "$$execdir/$p" && \
+ 		ln "$$execdir/git-add$X" "$$execdir/$p" 2>/dev/null || \
+ 		ln -s "git-add$X" "$$execdir/$p" 2>/dev/null || \
+ 		cp "$$execdir/git-add$X" "$$execdir/$p" || exit;) } && \
+-- 
+1.6.0.1.152.g6969c
