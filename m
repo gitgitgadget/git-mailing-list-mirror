@@ -1,125 +1,67 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Replace "git-" with "git " in *.[ch] comments and notifications
-Date: Sat, 30 Aug 2008 12:08:03 +0200
-Message-ID: <48B91C03.3000702@op5.se>
-References: <20080829234751.GA2396@zakalwe.fi> <7vvdxj2ucl.fsf@gitster.siamese.dyndns.org> <20080830011509.GA16289@zakalwe.fi> <7vr6872qv1.fsf@gitster.siamese.dyndns.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH/resend] Fix use of hardlinks in "make install"
+Date: Sat, 30 Aug 2008 12:08:44 +0200
+Message-ID: <81b0412b0808300308m2d03b94ft8601f02b2fea494e@mail.gmail.com>
+References: <81b0412b0808280704h585b6cb4nf03e509de0159a91@mail.gmail.com>
+	 <81b0412b0808280717u78c5ccf8ne1413c701ed8edd9@mail.gmail.com>
+	 <20080830002032.GA14522@steel.home>
+	 <66B007DD-F970-43E5-BA38-6138E553C93A@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Heikki Orsila <shdl@zakalwe.fi>,
-	Heikki Orsila <heikki.orsila@iki.fi>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 12:09:22 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "=?UTF-8?Q?Andreas_F=C3=A4rber?=" <planche2k@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 30 12:09:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZNOI-0004Qu-Ev
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 12:09:10 +0200
+	id 1KZNOx-0004bA-3a
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 12:09:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075AbYH3KIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 06:08:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750878AbYH3KIF
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 06:08:05 -0400
-Received: from mail.op5.se ([193.201.96.20]:53406 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750847AbYH3KID (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 06:08:03 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id D2BAD1B800AF;
-	Sat, 30 Aug 2008 12:13:04 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id i2PYf0Qa6N+l; Sat, 30 Aug 2008 12:13:02 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [172.27.78.6])
-	by mail.op5.se (Postfix) with ESMTP id 8CCF61B8008F;
-	Sat, 30 Aug 2008 12:13:01 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <7vr6872qv1.fsf@gitster.siamese.dyndns.org>
+	id S1751180AbYH3KIq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 06:08:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751206AbYH3KIq
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 06:08:46 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:53562 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751025AbYH3KIp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 06:08:45 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so711917waf.23
+        for <git@vger.kernel.org>; Sat, 30 Aug 2008 03:08:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=LeUrQQpz+WcWySIOcM7P+pxmnqUzWObkCCh0Zbg61ik=;
+        b=o6xWaHZ+fvG88e8KUzY5/TGpsilgqKXN/39FXf731NvRQVqSyRhxo077q0yWNo2sUz
+         o3Lq6xEamwj83Ttw8aQfRXx+A6VY2Id61YomPKF30aO+mSRdoMScHZrGe9Z75LuHcJyx
+         jwmQ9XKHMmpJfnEvvjp1Y35JvlHEbxA4dRKB0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Qccr/8alZb2fiKSQdqnyoz1MMrgWURmCaLuc4RTD2Pj933W5i1MK8/F01J3jMDPFJ2
+         SCDPXlO8r7j8rw0VJO719v8K0PW9nqx4dLEGYbBvwHeriMIxPPbXwVjYjqiB4e3FpoxO
+         vn5b33E2+24LkoDfAtaC86Dkhar4gpZeQS/W4=
+Received: by 10.114.201.1 with SMTP id y1mr3494849waf.216.1220090924820;
+        Sat, 30 Aug 2008 03:08:44 -0700 (PDT)
+Received: by 10.114.157.9 with HTTP; Sat, 30 Aug 2008 03:08:44 -0700 (PDT)
+In-Reply-To: <66B007DD-F970-43E5-BA38-6138E553C93A@googlemail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94371>
 
-Junio C Hamano wrote:
-> Heikki Orsila <shdl@zakalwe.fi> writes:
-> 
->> On Fri, Aug 29, 2008 at 05:56:58PM -0700, Junio C Hamano wrote:
->> ...
->>> I do not think a single patch with the above hunk (which I think is a
->>> mistake) and other bits that are obviously good (e.g. the first hunk to
->>> builtin-apply.c we see below) is reviewable, but I cannot think of a
->>> better alterantive.  Sigh...
->> ...
->>> I did not look at the rest.
->> Is the concept OK for this change? I can submit another patch.
-> 
-> By "concept" if you mean the goal to stop implying to the end users as if
-> it is a good practice to type (either from the command line or in their
-> scripts) "git-foo" dashed form, the goal is obviously good.
-> 
-> I however am not sure if posting a single patch that is 1300 lines long
-> would be the most effective way to achieve that goal.  Splitting them into
-> a handful batches, spread over a few weeks to give reviewers some
-> breathing room, might make it more reviewable.  I dunno.
-> 
-> Let's see hands; how many of you on git mailing list are willing to review
-> a re-rolled series, when Heikki posts one?  How can we make it easier to
-> apply "many eyeballs" to make the issue shallower?
-> 
-
-I've started doing the exact same thing, so I'll happily review some.
-
-I'm currently fiddling with the linkgit asciidoc macro. Since I know
-nothing of asciidoc macro syntax, it's very slow going and immensely
-fun :)
-
-> One thing you might be able to do would be to separate user visible
-> strings and in-comment strings.  Frankly, when a comment talks about a git
-> subprogram, blindly replacing s/-/ / makes it _far worse_ and the
-> resulting text is harder to read for git hackers (who are primary
-> audiences of comments).  E.g. taking one random example from your patch:
-> 
-> diff --git a/builtin-init-db.c b/builtin-init-db.c
-> index baf0d09..81aa822 100644
-> --- a/builtin-init-db.c
-> +++ b/builtin-init-db.c
-> @@ -37,7 +37,7 @@ static void copy_templates_1(char *path, int baselen,
->  
->  	/* Note: if ".git/hooks" file exists in the repository being
->  	 * re-initialized, /etc/core-git/templates/hooks/update would
-> -	 * cause git-init to fail here.  I think this is sane but
-> +	 * cause git init to fail here.  I think this is sane but
->  	 * it means that the set of templates we ship by default, along
->  	 * with the way the namespace under .git/ is organized, should
->  	 * be really carefully chosen.
-> 
-> I do not think this is an improvement.  We are talking about a single
-> subprogram, not what the user types from the command line.  Either of
-> these two would be easier to read:
-> 
-> 	... would cause git-init to fail here...
->         ... would cause "init" to fail here...
-> 
-> than:
-> 
->         ... would cause git init to fail here...
-> 
-> Among these three, I think the second one is the most readable.  Perhaps
-> dropping "git-" prefix when we are talking about a git subprogram, and
-> quoting the word to make it stand out, could be a good approach , than
-> replacing it with "git " prefix.
-
-I concur.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+MjAwOC84LzMwIEFuZHJlYXMgRsOkcmJlciA8cGxhbmNoZTJrQGdvb2dsZW1haWwuY29tPjoKPiBB
+bSAzMC4wOC4yMDA4IHVtIDAyOjIwIHNjaHJpZWIgQWxleCBSaWVzZW46Cj4KPj4gV2VsbCwgYXMg
+dXN1YWwsIHNpbXBsZSBmaXggZm9yIGEgdHJpdmlhbCB0eXBvIGNhdXNlZCBieSBleGlzdGVuY2Ug
+b2YgYW4KPj4gaWRpb3RpYyBwbGF0Zm9ybS4KPj4KPiBZb3VyIHBhdGNoIHNlZW1zIHRvIHdvcmsg
+b24gSGFpa3UsIGRvbid0IGhhdmUgYSBNaW5HVyBzZXR1cCB0byB0ZXN0LiBTb3JyeQo+IGZvciB0
+aGUgYnJlYWthZ2UuCgpXaGF0PyEgSGFpa3UgdXNlcyBzdHVwaWQgZmlsZSBleHRlbnNpb25zIHRv
+IG1hcmsgZXhlY3V0YWJsZXM/Cg==
