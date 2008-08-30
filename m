@@ -1,85 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git gui: show diffs with a minimum of 1 context line
-Date: Sat, 30 Aug 2008 10:19:14 -0700
-Message-ID: <7vtzd2ifot.fsf@gitster.siamese.dyndns.org>
-References: <20080830164527.GA25370@localhost>
+Subject: Re: [PATCH] Reuse cmdname->len to store pre-calculated similarity
+ indexes
+Date: Sat, 30 Aug 2008 10:26:17 -0700
+Message-ID: <7vprnqifd2.fsf@gitster.siamese.dyndns.org>
+References: <20080828171533.GA6024@blimp.local>
+ <20080828212722.GF6439@steel.home>
+ <7vsksm1pmd.fsf@gitster.siamese.dyndns.org>
+ <81b0412b0808300944p29199600ie95c65404b6cb380@mail.gmail.com>
+ <20080830171331.GA26932@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sat Aug 30 19:20:29 2008
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 30 19:27:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZU7f-0004Qe-Uz
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 19:20:28 +0200
+	id 1KZUEY-0007Lm-6Z
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 19:27:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752832AbYH3RTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 13:19:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752887AbYH3RTW
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 13:19:22 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44190 "EHLO
+	id S1753152AbYH3R01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 13:26:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753141AbYH3R01
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 13:26:27 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52016 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752344AbYH3RTV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 13:19:21 -0400
+	with ESMTP id S1752344AbYH3R00 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 13:26:26 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C82DF67967;
-	Sat, 30 Aug 2008 13:19:20 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AC8D65AC19;
+	Sat, 30 Aug 2008 13:26:22 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C088367965; Sat, 30 Aug 2008 13:19:16 -0400 (EDT)
-In-Reply-To: <20080830164527.GA25370@localhost> (Clemens Buchacher's message
- of "Sat, 30 Aug 2008 18:45:27 +0200")
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 06CA05AC17; Sat, 30 Aug 2008 13:26:18 -0400 (EDT)
+In-Reply-To: <20080830171331.GA26932@steel.home> (Alex Riesen's message of
+ "Sat, 30 Aug 2008 19:13:31 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C8A1764E-76B7-11DD-B4C8-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C417F0FC-76B8-11DD-9737-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94392>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-> git apply does not handle diffs without context correctly.
+> To avoid doing that while sorting
+>
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
+>
+> Alex Riesen, Sat, Aug 30, 2008 18:44:15 +0200:
+>> 2008/8/30 Junio C Hamano <gitster@pobox.com>:
+>> > I wonder if it makes sense to give an otherwise unused "score" member to
+>> 
+>> Hmm, it is a _non-existing_ member of cmdname, isn't it?
+>> 
+>> > the "struct cmdname", compute the distance only once per each command, and
+>> > use that as the sort key (alternatively you can have a separate int[N]
+>> > array to store similarity values for each item in the cmdnames list, only
+>> > used inside this codepath).
+>> 
+>> I think I'll take the struct cmdname->len over.
 
-NAK on this part of the proposed commit log message.
+I think you do not need the file-scope static levenshtein_cmd anymore with
+this change, if you make similarity() take two command names.  No?
 
-"git-apply" is more anal than other "patch" implementations in that it
-tries to make sure that a hunk that touches the trailing end actually
-applies to the trailing end of the file.  If a patch is generated with
-non-zero context, we can detect by presense of trailing context lines that
-a patch is _not_ about modifying the trailing end, but with a -U0 patch,
-every hunk will come without trailing context, so you need to disable that
-safety by asking for --unidiff-zero option.
+Please reroll the whole f66dd34 (git wrapper: DWIM mistyped commands,
+2008-08-28), as it is not part of any solid integration branch yet.
 
-> ... Configuring git
-> gui to show zero context lines therefore breaks staging.
-
-So another option might be to pass --unidiff-zero iff/when it is feeding
-such a patch to fix this particular "user error" of "git-apply" program.
-
-Having said that,
-
-> In reply to this patch I will send a first attempt at fixing this problem
-> instead of avoiding it.
-
-I suspect there are some things "git-apply" should be able to _figure out_
-that the user is giving it a -U0 patch and automatically flip unidiff_zero
-option on.  For example, if the _first_ hunk of a patch does not begin
-with "@@ -0,0 +N,M @@" nor with "@@ -1,L +N,M @@" (i.e. the hunk claims to
-apply not at the beginning) and the hunk does not have leading context
-lines, _and_ if that first hunk does not have trailing context lines, then
-it is clearly a -U0 patch (or it could be a corrupt patch, but let's
-discount that possibility for now).
-
-Even if the hunk does claim to apply at the beginning, in which case we
-cannot determine if it is a -U0 patch by looking at the lack of leading
-context, if it has any context lines, we can tell it is _not_ a -U0 patch.
-When the first hunk that applies to the beginning lacks any context, we
-cannot really tell if it is -U0 or not (the other possibility is a total
-rewrite of the file from the beginning to the end).  Even in that case,
-you could look at the next hunk --- if you have a hunk that applies to
-the same path after looking at such a "first" hunk without context, then
-it clearly is a -U0 patch.
+You might also want to update the commit log message to talk about the
+"len" reuse hack, but you already have in-code comment which might be
+sufficient.
