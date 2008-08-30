@@ -1,82 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4] Expand ~ and ~user in core.excludesfile,
-	commit.template
-Date: Sat, 30 Aug 2008 02:02:00 -0400
-Message-ID: <20080830060159.GA6826@coredump.intra.peff.net>
-References: <20080824231343.GC27619@coredump.intra.peff.net> <7vhc9aj82i.fsf@gitster.siamese.dyndns.org> <quack.20080825T1207.lthk5e46hi4_-_@roar.cs.berkeley.edu> <20080827002506.GB7347@coredump.intra.peff.net> <quack.20080826T2012.lthvdxn2ls4@roar.cs.berkeley.edu> <7vy72jrr00.fsf@gitster.siamese.dyndns.org> <quack.20080828T0209.lthmyixjyjx_-_@roar.cs.berkeley.edu> <20080829032630.GA7024@coredump.intra.peff.net> <7vod3ca2ey.fsf@gitster.siamese.dyndns.org> <quack.20080829T0229.lthhc94rwyr_-_@roar.cs.berkeley.edu>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
+Date: Sat, 30 Aug 2008 10:13:46 +0200
+Message-ID: <48B9013A.70201@op5.se>
+References: <7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu>	 <4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu>	 <20080828212346.GA27867@coredump.intra.peff.net>	 <1C144B19-DA21-4CB4-B872-C1F154B031CF@cs.indiana.edu>	 <20080828215907.GE27867@coredump.intra.peff.net>	 <3DE083DB-ADFF-45E7-B3EB-A76985941271@cs.indiana.edu>	 <881C17DA-2FE2-49A7-A4A9-FACA7720599C@cs.indiana.edu>	 <20080829152451.GA20629@yugib.highrise.ca>	 <94a0d4530808290911j32bf5ee0q869dfe39483297f8@mail.gmail.com>	 <20080829162420.GB20629@yugib.highrise.ca> <94a0d4530808290928w3b1decd4o2e77349d793ffff0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Karl Chen <quarl@cs.berkeley.edu>
-X-From: git-owner@vger.kernel.org Sat Aug 30 08:03:39 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Aidan Van Dyk <aidan@highrise.ca>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 30 10:14:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZJYe-0003lh-Vu
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 08:03:37 +0200
+	id 1KZLbi-0008Rn-2U
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 10:14:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751189AbYH3GCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 02:02:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbYH3GCE
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 02:02:04 -0400
-Received: from peff.net ([208.65.91.99]:2116 "EHLO peff.net"
+	id S1751940AbYH3INt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 04:13:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751933AbYH3INs
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 04:13:48 -0400
+Received: from mail.op5.se ([193.201.96.20]:53700 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751071AbYH3GCD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 02:02:03 -0400
-Received: (qmail 19500 invoked by uid 111); 30 Aug 2008 06:02:01 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 30 Aug 2008 02:02:01 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 30 Aug 2008 02:02:00 -0400
-Content-Disposition: inline
-In-Reply-To: <quack.20080829T0229.lthhc94rwyr_-_@roar.cs.berkeley.edu>
+	id S1751507AbYH3INr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 04:13:47 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id C76A11B8008F;
+	Sat, 30 Aug 2008 10:18:47 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id AtdRNDg1+MfI; Sat, 30 Aug 2008 10:18:46 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.6])
+	by mail.op5.se (Postfix) with ESMTP id 607BE1B80369;
+	Sat, 30 Aug 2008 10:18:44 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <94a0d4530808290928w3b1decd4o2e77349d793ffff0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94359>
 
-On Fri, Aug 29, 2008 at 02:29:00AM -0700, Karl Chen wrote:
+Felipe Contreras wrote:
+> On Fri, Aug 29, 2008 at 7:24 PM, Aidan Van Dyk <aidan@highrise.ca> wrote:
+>> * Felipe Contreras <felipe.contreras@gmail.com> [080829 12:11]:
+>>> On Fri, Aug 29, 2008 at 6:24 PM, Aidan Van Dyk <aidan@highrise.ca> wrote:
+>>>> * Perry Wagle <wagle@cs.indiana.edu> [080801 00:00]:
+>>>>> Jeff King has convinced me that it's perfectly legitimate to introduce
+>>>>> non-upward compatibilities in minor version releases of "young"
+>>>>> software.
+>>>> This is the gist of the problem.  You keep hammering about a
+>>>> "non-upwards compatibilities in minor version releases", yet you have
+>>>> *not* pointed out one such in-compatibility in a minor version release..
+>>>>
+>>>> Remember, in git, 1.6 is a "major version" release, with release notes, etc.
+>>>> 1.5.X is a "minor version" release.
+>>>> 1.5.X.Y is a "patch" release.
+>>> What is X (2.0)?
+>> X would be a digit, like 0, 1, 2, 3, 4, 5, 6, 7, 8, or 9, as in the git
+>> 1.5 releases:
+>>        1.5.0
+>>        1.5.1
+>>        1.5.2
+>>        1.5.3
+>>        1.5.4
+>>        1.5.4
+>>        1.5.6
+>>
+>> And now also:
+>>        1.6.0, being the first of the 1.6 releases...
+> 
+> I meant 'X.0.0', if 1.X is major, what is X.0? Huge?
+> 
 
->  core.excludesfile::
->  	In addition to '.gitignore' (per-directory) and
->  	'.git/info/exclude', git looks into this file for patterns
-> -	of files which are not meant to be tracked.  See
-> +	of files which are not meant to be tracked.  "~" and "~user"
-> +	are expanded to the user's home directory.  See
->  	linkgit:gitignore[5].
+X.0 is "technically backwards incompatible".
 
-How about:
+If, for example, SHA1 turns out to be horribly broken, git might have
+to be updated to use something else instead. Such a switch would
+require a version bump from 1.x to 2.x.
 
-  A leading "~" or "~user" is expanded to the home directory of the
-  current user or "user", as in the shell.
+That might come some day anyway, assuming we decide to make a flag-day
+and just remove older-version compatibility code from git or some
+such.
 
-Specifically:
-
-  1. We obviously handle only leading cases, so /path/to/~file~with~tildes
-     is ok.
-
-  2. It was a little unclear to me whether both "~" and "~user" expande
-     to the same thing. I.e., can one use this for arbitrary "user" (and
-     the answer of course is yes).
-
-> +char *expand_user_path(char *buf, const char *path, int bufsz)
-> +{
-> +	if (path == NULL)
-> +		return NULL;
-> +
-> +	if (path[0] != '~')
-> +		return concatstr(buf, path, NULL, bufsz);
-> +
-> +	const char *username = path + 1;
-> +	size_t username_len = strchrnul(username, '/') - username;
-> +	struct passwd *pw = getpw_str(username, username_len);
-
-Declaration after statement (we try to remain portable to non-C99
-systems).
-
-Other than that, I think the patch is fine (though I am not opposed to
-the improvements Junio has mentioned).
-
--Peff
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
