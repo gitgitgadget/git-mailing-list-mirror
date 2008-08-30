@@ -1,110 +1,111 @@
-From: Robert Schiele <rschiele@gmail.com>
-Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
-Date: Sat, 30 Aug 2008 23:21:17 +0200
-Message-ID: <20080830212117.GH7185@schiele.dyndns.org>
-References: <20080830173947.GF7185@schiele.dyndns.org> <20080830183413.GG7185@schiele.dyndns.org> <20080830183949.GA16415@coredump.intra.peff.net> <200808302237.17017.jnareb@gmail.com>
-Reply-To: Robert Schiele <rschiele@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: treat -crlf files as binary
+Date: Sat, 30 Aug 2008 14:34:55 -0700
+Message-ID: <7vljyefaps.fsf@gitster.siamese.dyndns.org>
+References: <7vfxon4ikr.fsf@gitster.siamese.dyndns.org>
+ <32541b130808291456k3de953a2yd1e93bc27ad14293@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="E7i4zwmWs5DOuDSH"
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Lea Wiemann <lewiemann@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 23:22:34 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, arman@twinsun.com
+To: "Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 30 23:36:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZXts-00016s-8A
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 23:22:28 +0200
+	id 1KZY7S-0003pJ-31
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 23:36:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754798AbYH3VVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 17:21:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754603AbYH3VVX
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 17:21:23 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:1134 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754519AbYH3VVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 17:21:22 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so863763fgg.17
-        for <git@vger.kernel.org>; Sat, 30 Aug 2008 14:21:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent:from:reply-to;
-        bh=bqUQ2PnyxTrryj4fTxBZJnyH11W65rKiC+z8dPlszM8=;
-        b=d/xgfo0rfKTAjRH1jLvR9hTCZKd08qPlEo2TOT9GJG8R56XNEmcWCotM3GlNhl/jsJ
-         KI81EQjKh/3pL8ac13ipQFWugXbMZ76IM3N/Zyn9R4nKKpzcsDAeTSFjsXPHLy7PXzL0
-         /kPFic7EY2Kxzx9/SgW2K3M9cZb3io4cACIRU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:to:cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent:from:reply-to;
-        b=QV332bfITv+1hRA4ZNImhHD9J7MoGyU8oOHDAF6YCqK65BZhv+2CwpUSSnNBCiV4Kn
-         +FteO+wBYqbgXY1EPaiJ8oG1vieYaQq+u0ViwY6TrmA8A6YXY6Qhz+Va3c46tZ8V9xlm
-         IFChul7Qw3GgcVshZ/1kUFiMkiGNST8gtz8mU=
-Received: by 10.86.77.5 with SMTP id z5mr3271538fga.10.1220131280559;
-        Sat, 30 Aug 2008 14:21:20 -0700 (PDT)
-Received: from sigkill.schiele.dyndns.org ( [91.18.78.90])
-        by mx.google.com with ESMTPS id d6sm3861117fga.2.2008.08.30.14.21.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 30 Aug 2008 14:21:19 -0700 (PDT)
-Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
-	id 0818116081; Sat, 30 Aug 2008 23:21:17 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200808302237.17017.jnareb@gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1759795AbYH3VfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 17:35:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755533AbYH3VfG
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 17:35:06 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53378 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759057AbYH3VfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 17:35:04 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 66AE16DC21;
+	Sat, 30 Aug 2008 17:35:01 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 281A86DC1F; Sat, 30 Aug 2008 17:34:56 -0400 (EDT)
+In-Reply-To: <32541b130808291456k3de953a2yd1e93bc27ad14293@mail.gmail.com>
+ (Avery Pennarun's message of "Fri, 29 Aug 2008 17:56:38 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 80575A38-76DB-11DD-8750-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94436>
 
+"Avery Pennarun" <apenwarr@gmail.com> writes:
 
---E7i4zwmWs5DOuDSH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I think the bug is that "crlf=false" should not be considered the same
+> as "binary=true", which seems to be a bug in the documentation, not
+> the program.
 
-On Sat, Aug 30, 2008 at 10:37:15PM +0200, Jakub Narebski wrote:
->  # quote the given arguments for passing them to the shell
->  # quote_command("command", "arg 1", "arg with ' and ! characters")
->  # =3D> "'command' 'arg 1' 'arg with '\'' and '\!' characters'"
->  # Try to avoid using this function wherever possible.
->  sub quote_command {
->  	return join(' ',
->  		    map( { my $a =3D $_; $a =3D~ s/(['!])/'\\$1'/g; "'$a'" } @_ ));
->  }
+Yeah, that's right.  How about doing something like this?
 
-Well, I guess you know why I did not consider it worth from my side to go i=
-nto
-that business.  ;-)
+ Documentation/gitattributes.txt |   39 ++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 36 insertions(+), 3 deletions(-)
 
-If someone has a concrete implementation and a list of (concrete) tests I
-should do I can do so.
-
-Otherwise I just consider Perl 5.6 as unsupported since our main development
-systems have Perl 5.8 or later anyway.
-
-Robert
-
---=20
-Robert Schiele
-Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
-
-"Quidquid latine dictum sit, altum sonatur."
-
---E7i4zwmWs5DOuDSH
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.4-svn0 (GNU/Linux)
-
-iD8DBQFIubnNxcDFxyGNGNcRAqdGAJsFghdYtTgsWlzlqLArt2+kEnXKgQCgp/Tq
-PskmF/yRhjLMqxMAtUtLXwQ=
-=cis5
------END PGP SIGNATURE-----
-
---E7i4zwmWs5DOuDSH--
+diff --git i/Documentation/gitattributes.txt w/Documentation/gitattributes.txt
+index db16b0c..ec8a860 100644
+--- i/Documentation/gitattributes.txt
++++ w/Documentation/gitattributes.txt
+@@ -105,9 +105,8 @@ Set::
+ 
+ Unset::
+ 
+-	Unsetting the `crlf` attribute on a path is meant to
+-	mark the path as a "binary" file.  The path never goes
+-	through line endings conversion upon checkin/checkout.
++	Unsetting the `crlf` attribute on a path is tells git
++	not to attempt any end-of-line conversion  upon checkin/checkout.
+ 
+ Unspecified::
+ 
+@@ -482,6 +481,40 @@ in the file.  E.g. the string `$Format:%H$` will be replaced by the
+ commit hash.
+ 
+ 
++USING ATTRIBUTE MACROS
++----------------------
++
++You do not want any end-of-line conversions applied to, nor textual diffs
++produced for any binary file you track.  You would need to specify e.g.
++
++------------
++*.jpg -crlf -diff
++------------
++
++but that is cumbersome.  Using attribute macros, you can specify groups of
++attributes set or unset at the same time.  The system knows a built-in
++attribute macro, `binary`:
++
++------------
++*.jpg binary
++------------
++
++which is equivalent to the above.  Note that the attribute macros can only
++be "Set" (see the above example).
++
++
++DEFINING ATTRIBUTE MACROS
++-------------------------
++
++Custom attribute macros can be defined only in the `.gitattributes` file
++at the toplevel (i.e. not in any subdirectory).  The built-in attribute
++macro "binary" is equivalent to:
++
++------------
++[attr]binary -diff -crlf
++------------
++
++
+ EXAMPLE
+ -------
+ 
