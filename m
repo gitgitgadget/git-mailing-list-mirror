@@ -1,62 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
-Date: Sat, 30 Aug 2008 13:20:13 -0700
-Message-ID: <7v3akmgsqq.fsf@gitster.siamese.dyndns.org>
-References: <20080830173947.GF7185@schiele.dyndns.org>
- <20080830180022.GA14552@coredump.intra.peff.net>
- <7vwshygyy9.fsf@gitster.siamese.dyndns.org>
- <20080830183413.GG7185@schiele.dyndns.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] git gui: use apply --unidiff-zero when staging hunks
+	without context
+Date: Sat, 30 Aug 2008 22:27:06 +0200
+Message-ID: <20080830202706.GA13573@localhost>
+References: <20080830164527.GA25370@localhost> <20080830165600.GB25370@localhost> <48B9A2D7.8090801@telecom.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Lea Wiemann <lewiemann@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Robert Schiele <rschiele@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 22:21:34 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sat Aug 30 22:28:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZWwr-0004SM-JQ
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 22:21:30 +0200
+	id 1KZX39-0006CE-5j
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 22:27:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753107AbYH3UUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 16:20:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752904AbYH3UUX
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 16:20:23 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50499 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752831AbYH3UUW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 16:20:22 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8749D6D667;
-	Sat, 30 Aug 2008 16:20:21 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 58DBC6D665; Sat, 30 Aug 2008 16:20:15 -0400 (EDT)
-In-Reply-To: <20080830183413.GG7185@schiele.dyndns.org> (Robert Schiele's
- message of "Sat, 30 Aug 2008 20:34:13 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 12220AA4-76D1-11DD-B262-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1754104AbYH3U0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 16:26:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754003AbYH3U0y
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 16:26:54 -0400
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:34491 "EHLO
+	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753827AbYH3U0x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 16:26:53 -0400
+Received: from darc.dyndns.org ([84.154.72.105]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 30 Aug 2008 22:26:51 +0200
+Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1KZX2I-0003av-Uy; Sat, 30 Aug 2008 22:27:06 +0200
+Content-Disposition: inline
+In-Reply-To: <48B9A2D7.8090801@telecom.at>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-OriginalArrivalTime: 30 Aug 2008 20:26:51.0902 (UTC) FILETIME=[BC8B19E0:01C90ADE]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94417>
 
-Robert Schiele <rschiele@gmail.com> writes:
-
-> On Sat, Aug 30, 2008 at 11:06:06AM -0700, Junio C Hamano wrote:
->> I didn't try either but I think you are right.  And I agree we should say
->> we rely on 5.6 or newer.
+On Sat, Aug 30, 2008 at 09:43:19PM +0200, Johannes Sixt wrote:
+> Clemens Buchacher schrieb:
+>> git apply does not work correctly with zero-context patches. It does a
+>> little better with --unidiff-zero.
 >
-> If we don't change it we need to rely on 5.8 or newer as my initial patch
-> suggested.
+> No, NO, NOOOOO! This kills your data!
 
-I think it should be as simple as Jeff's patch, and I think it is
-moderately preferable to make sure the core part runs with earlier version
-than punting.
+Okay. Since we have 'Stage Line for Commit', supporting this would be almost
+pointless anyways. So let's forget about trying to fix this and simply
+disable zero-context diff in git-gui, as per my original patch
 
-I however do not have 5.6 (or 5.6.1) installation handy, so I cannot test
-to make sure that Jeff's patch is the only necessary fix to the "add -i".
+[PATCH] git gui: show diffs with a minimum of 1 context line
+
+Clemens
