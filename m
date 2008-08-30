@@ -1,113 +1,168 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
-Date: Sat, 30 Aug 2008 22:37:15 +0200
-Message-ID: <200808302237.17017.jnareb@gmail.com>
-References: <20080830173947.GF7185@schiele.dyndns.org> <20080830183413.GG7185@schiele.dyndns.org> <20080830183949.GA16415@coredump.intra.peff.net>
+From: David Soria Parra <dsoria@gmx.net>
+Subject: Re: [PATCH 1/2] Improvate portability: Display pid_t's always as
+ long
+Date: Sat, 30 Aug 2008 22:40:31 +0200
+Message-ID: <48B9B03F.1080304@gmx.net>
+References: <1219858743-4476-1-git-send-email-sn_@gmx.net> <1219858743-4476-2-git-send-email-sn_@gmx.net> <7vsksqp9f1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Robert Schiele <rschiele@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Lea Wiemann <lewiemann@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 30 22:38:40 2008
+Cc: git@vger.kernel.org, David Soria Parra <dsp@php.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 30 22:41:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZXDM-0008NB-Gf
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 22:38:33 +0200
+	id 1KZXGM-0000bB-Lh
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 22:41:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754748AbYH3Uh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 16:37:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754652AbYH3Uh0
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 16:37:26 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:54686 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754445AbYH3UhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 16:37:25 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so856901fgg.17
-        for <git@vger.kernel.org>; Sat, 30 Aug 2008 13:37:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=a+j0zdYI/xu6CK8y+BsQESTVrEqwsLwDoIwUz8w6sl8=;
-        b=kAXGEbqeGKu6ejzzPAKOmqyKQNTAlAhv4j0e1Zyu49iaMm6Q0IgWTBQhux3NDMu5Xq
-         XZdpBxs5PLsLDrLIDLkbJEn6sHQnmIEMf2QNwWJVgQPUgUbMOVE/0Pb2fxlfalc+nrbT
-         R/Lo1CSc8n/9k/wN2ZKbHPqX1HL1VKoJ1j4ZQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=NeoKS4dIbukIFrbckC2MWwIG1MqElnUr0AcYYp8TSFA5pA1n3hMNstlpuDhrZHXszn
-         OGGeniny2bXcNeoKik1Ik475RMvAmPjw0K55nSg7lQL6MGn5HnUsUVDdMRRxDOluK67h
-         Kr3KP8Cz5p3SBBCOv4Ihtp88YV1RSjh7lVCfo=
-Received: by 10.86.80.17 with SMTP id d17mr3225145fgb.47.1220128643424;
-        Sat, 30 Aug 2008 13:37:23 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.200.211])
-        by mx.google.com with ESMTPS id e20sm3842343fga.1.2008.08.30.13.37.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 30 Aug 2008 13:37:22 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080830183949.GA16415@coredump.intra.peff.net>
-Content-Disposition: inline
+	id S1754498AbYH3Ukd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 16:40:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754413AbYH3Ukd
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 16:40:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49515 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754003AbYH3Ukc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 16:40:32 -0400
+Received: (qmail invoked by alias); 30 Aug 2008 20:40:30 -0000
+Received: from p57AEE144.dip.t-dialin.net (EHLO [192.168.1.116]) [87.174.225.68]
+  by mail.gmx.net (mp061) with SMTP; 30 Aug 2008 22:40:30 +0200
+X-Authenticated: #235172
+X-Provags-ID: V01U2FsdGVkX18BGn0LtUsBflQH6Y2cMzlhYr9H1XnR8MZtYD/osy
+	qooGxH7gLGg2tG
+User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <7vsksqp9f1.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.6
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94419>
-
-On Sat, 30 August 2008, Jeff King wrote:
-> On Sat, Aug 30, 2008 at 08:34:13PM +0200, Robert Schiele wrote:
-> 
-> > If there are problems with that change I recommend just using my
-> > initial patch changing the documentation to require Perl 5.8 since my
-> > interest in Perl 5.6 support is not big enough to mess around with
-> > quoting all that stuff.  If someone really needs this he or she can
-> > still do it --- it should be not too difficult.
-
-First, IIRC gitweb requires Perl 5.8 _anyway_ because of unicode stuff.
-
-> I think it is as simple as:
-> 
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index da768ee..4ee6f89 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -61,7 +61,7 @@ sub run_cmd_pipe {
->  		return qx{@args};
->  	} else {
->  		my $fh = undef;
-> -		open($fh, '-|', @_) or die;
-> +		open($fh, '-|', join(' ', map { quotemeta($_) } @_)) or die;
->  		return <$fh>;
->  	}
->  }
-> 
-> But I didn't do any testing beyond checking that "git add -i 'file with
-> spaces'" which was broken by your patch now works at all.
-
-No, you would need something like this code from gitweb.perl (used in
-very rare cases where list form of open cannot be used, which means
-when we need pipeline like for compressed snapshot, or redirecting
-stdout and/or stderr to /dev/null like when getting type of possibly
-not existing object in git_object)
-
- # quote the given arguments for passing them to the shell
- # quote_command("command", "arg 1", "arg with ' and ! characters")
- # => "'command' 'arg 1' 'arg with '\'' and '\!' characters'"
- # Try to avoid using this function wherever possible.
- sub quote_command {
- 	return join(' ',
- 		    map( { my $a = $_; $a =~ s/(['!])/'\\$1'/g; "'$a'" } @_ ));
- }
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94420>
 
 
-Or you can use "open $fd, '-|'" to fork, an "manually" exec/system.
+ > On the other hand, if you are shooting for maximum compatibility perhaps
+ > you may want to cast it to "intmax_t" and format as such.
+Yes, good point, casting to long isn't enough. I think it's a good approach to cast the pids to intmax_t as pids
+are also used in git_path() and therefore might result in equal paths for separate processes if
+the pid is higher than int.
+
+so here is an updated patch:
+
+ From da5519b3ae5ce84c703aeaab2bc4ea363897c334 Mon Sep 17 00:00:00 2001
+From: David Soria Parra <dsp at>
+Date: Fri, 29 Aug 2008 01:19:43 +0200
+Subject: [PATCH] Improvate portability: Cast pid_t's to intmax_t
+
+Some systems (like e.g. OpenSolaris) define pid_t as long,
+therefore all our sprintf that use %i cause a compiler warning
+beacuse if the implicit long->int cast. So to make sure that
+we fit the limits we display pids as intmax_t and cast them explicitly.
+
+Signed-off-by: David Soria Parra <dsp@php.net>
+---
+  builtin-commit.c     |    2 +-
+  builtin-fetch-pack.c |    2 +-
+  daemon.c             |    6 +++---
+  fast-import.c        |    6 +++---
+  receive-pack.c       |    2 +-
+  5 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/builtin-commit.c b/builtin-commit.c
+index c870037..90ef3d5 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -320,7 +320,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
+  		die("unable to write new_index file");
+
+  	fd = hold_lock_file_for_update(&false_lock,
+-				       git_path("next-index-%d", getpid()), 1);
++				       git_path("next-index-%jd", (intmax_t) getpid()), 1);
+
+  	create_base_index();
+  	add_remove_files(&partial);
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index 273239a..91616e7 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -540,7 +540,7 @@ static int get_pack(int xd[2], char **pack_lockfile)
+  			*av++ = "--fix-thin";
+  		if (args.lock_pack || unpack_limit) {
+  			int s = sprintf(keep_arg,
+-					"--keep=fetch-pack %d on ", getpid());
++					"--keep=fetch-pack %jd on ", (intmax_t) getpid());
+  			if (gethostname(keep_arg + s, sizeof(keep_arg) - s))
+  				strcpy(keep_arg + s, "localhost");
+  			*av++ = keep_arg;
+diff --git a/daemon.c b/daemon.c
+index 23278e2..6081986 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -86,7 +86,7 @@ static void logreport(int priority, const char *err, va_list params)
+  		 * Since stderr is set to linebuffered mode, the
+  		 * logging of different processes will not overlap
+  		 */
+-		fprintf(stderr, "[%d] ", (int)getpid());
++		fprintf(stderr, "[%jd] ", (intmax_t)getpid());
+  		vfprintf(stderr, err, params);
+  		fputc('\n', stderr);
+  	}
+@@ -658,7 +658,7 @@ static void check_dead_children(void)
+  		remove_child(pid);
+  		if (!WIFEXITED(status) || (WEXITSTATUS(status) > 0))
+  			dead = " (with error)";
+-		loginfo("[%d] Disconnected%s", (int)pid, dead);
++		loginfo("[%jd] Disconnected%s", (intmax_t)pid, dead);
+  	}
+  }
+
+@@ -923,7 +923,7 @@ static void store_pid(const char *path)
+  	FILE *f = fopen(path, "w");
+  	if (!f)
+  		die("cannot open pid file %s: %s", path, strerror(errno));
+-	if (fprintf(f, "%d\n", getpid()) < 0 || fclose(f) != 0)
++	if (fprintf(f, "%jd\n", (intmax_t) getpid()) < 0 || fclose(f) != 0)
+  		die("failed to write pid file %s: %s", path, strerror(errno));
+  }
+
+diff --git a/fast-import.c b/fast-import.c
+index 7089e6f..e3a6510 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -376,7 +376,7 @@ static void dump_marks_helper(FILE *, uintmax_t, struct mark_set *);
+
+  static void write_crash_report(const char *err)
+  {
+-	char *loc = git_path("fast_import_crash_%d", getpid());
++	char *loc = git_path("fast_import_crash_%jd", (intmax_t) getpid());
+  	FILE *rpt = fopen(loc, "w");
+  	struct branch *b;
+  	unsigned long lu;
+@@ -390,8 +390,8 @@ static void write_crash_report(const char *err)
+  	fprintf(stderr, "fast-import: dumping crash report to %s\n", loc);
+
+  	fprintf(rpt, "fast-import crash report:\n");
+-	fprintf(rpt, "    fast-import process: %d\n", getpid());
+-	fprintf(rpt, "    parent process     : %d\n", getppid());
++	fprintf(rpt, "    fast-import process: %jd\n", (intmax_t) getpid());
++	fprintf(rpt, "    parent process     : %jd\n", (intmax_t) getppid());
+  	fprintf(rpt, "    at %s\n", show_date(time(NULL), 0, DATE_LOCAL));
+  	fputc('\n', rpt);
+
+diff --git a/receive-pack.c b/receive-pack.c
+index d44c19e..ec770d0 100644
+--- a/receive-pack.c
++++ b/receive-pack.c
+@@ -407,7 +407,7 @@ static const char *unpack(void)
+  		char keep_arg[256];
+  		struct child_process ip;
+
+-		s = sprintf(keep_arg, "--keep=receive-pack %i on ", getpid());
++		s = sprintf(keep_arg, "--keep=receive-pack %ji on ", (intmax_t) getpid());
+  		if (gethostname(keep_arg + s, sizeof(keep_arg) - s))
+  			strcpy(keep_arg + s, "localhost");
+
 -- 
-Jakub Narebski
-Poland
+1.6.0.174.gd789c
