@@ -1,67 +1,62 @@
-From: "Felipe Carvalho Oliveira" <felipekde@gmail.com>
-Subject: Re: [PATCH updated] git wrapper: DWIM mistyped commands
-Date: Sat, 30 Aug 2008 19:17:11 -0300
-Message-ID: <a2075f4c0808301517m1df72e85j5a0de23c04c7f6ae@mail.gmail.com>
-References: <20080828171533.GA6024@blimp.local>
-	 <20080828212722.GF6439@steel.home>
-	 <a2075f4c0808301510g1af01b14kd58da12dc2e80f93@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Relative submodule URLs vs. clone URL DWIMming
+Date: Sat, 30 Aug 2008 15:27:01 -0700
+Message-ID: <7vhc92f8ay.fsf@gitster.siamese.dyndns.org>
+References: <200808271400.54302.johan@herland.net>
+ <48B6BB49.3000703@gmail.com> <200808290101.20048.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Aug 31 00:18:20 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sun Aug 31 00:28:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZYlu-00058O-B8
-	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 00:18:18 +0200
+	id 1KZYvX-0006dV-U8
+	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 00:28:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755172AbYH3WRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 18:17:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755235AbYH3WRN
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 18:17:13 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:49938 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755100AbYH3WRM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 18:17:12 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so562472eyi.37
-        for <git@vger.kernel.org>; Sat, 30 Aug 2008 15:17:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=POSBPdYkdIdtx7WVGuimu0d55vHkjMey+jCGEWlPZCU=;
-        b=ieFwK3juc0qNhzE0wzctfR+o8257hF88HFCV26ECehRIUHQV0hnoaoxqVfXaoOPWpi
-         XB48VsJ1R7BHnEzn19+kdgDMKrt7A30C3IH55hWCiNJQqES8j7sh1jEn8eFKhPBAPesM
-         zSpMY4l+bQo0a+G+fvKwcY4EP2TDxWxhpdBH4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=FJ4rjscDIGO4UWCsIkNTCcdU30UxCRhV0lRPGG4PdUATDA+6kT3+8kdTfeE5r0Sp2W
-         gTYvUpbeeVtP9uVV8RvyGlnyLdzyU/nvtT0FG6nwlYldY7hj9vrzcDqSkExRqHOqE5Ie
-         UTE1tn7qzjohGQjTyJXQKQOIRaQiULqNuBM48=
-Received: by 10.210.105.20 with SMTP id d20mr3904981ebc.18.1220134631052;
-        Sat, 30 Aug 2008 15:17:11 -0700 (PDT)
-Received: by 10.210.46.3 with HTTP; Sat, 30 Aug 2008 15:17:11 -0700 (PDT)
-In-Reply-To: <a2075f4c0808301510g1af01b14kd58da12dc2e80f93@mail.gmail.com>
-Content-Disposition: inline
+	id S1755710AbYH3W1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 18:27:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755080AbYH3W1J
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 18:27:09 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43921 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752887AbYH3W1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 18:27:08 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4A63759176;
+	Sat, 30 Aug 2008 18:27:07 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 8864759173; Sat, 30 Aug 2008 18:27:03 -0400 (EDT)
+In-Reply-To: <200808290101.20048.johan@herland.net> (Johan Herland's message
+ of "Fri, 29 Aug 2008 01:01:19 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C7829E66-76E2-11DD-8548-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94441>
 
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->
-> This patch introduces a modified Damerau-Levenshtein algorithm into
-> Git's code base, and uses it with the following penalties to show some
-> similar commands when an unknown command was encountered:
+Johan Herland <johan@herland.net> writes:
 
- Thanks so much by implement this. Few weeks ago I had thought about this.
+> ... But AFAICS, there's no way to get this information from the
+> transport layer. I assume that the actual repo location is resolved on the
+> remote side, and simply not communicated back to the local side.
 
-  Felipe(from Brazil)
+Correct.
+
+> If we simply resolve submodule URLs against the _repo_ (i.e. the real origin
+> URL) and not the work tree (if any), we get results that are coupled to
+> whether we use bare or non-bare repos: Take, for example, your use
+> of "../<path>" to make submodules live outside the (bare) superproject. If I
+> now create a non-bare clone of this, I must move the submodule repos _into_
+> my work tree, so that the submodule repos are available, if someone tries to
+> clone from me.
+
+I personally feel that cases that involve cloning from non-bare
+repositories (and in addition, DWIMmed repositories), with or without
+nested submodules, are not worth supporting.
