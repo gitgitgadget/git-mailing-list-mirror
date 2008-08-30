@@ -1,105 +1,79 @@
-From: Robert Schiele <rschiele@gmail.com>
-Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
-Date: Sat, 30 Aug 2008 20:34:13 +0200
-Message-ID: <20080830183413.GG7185@schiele.dyndns.org>
-References: <20080830173947.GF7185@schiele.dyndns.org> <20080830180022.GA14552@coredump.intra.peff.net> <7vwshygyy9.fsf@gitster.siamese.dyndns.org>
-Reply-To: Robert Schiele <rschiele@gmail.com>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH] git.el: Diff only file at point by default
+Date: Sat, 30 Aug 2008 20:29:00 +0200
+Message-ID: <87r686we4z.fsf@wine.dyndns.org>
+References: <87vdxtpjkd.fsf@lysator.liu.se>
+	<7v3akvw7gz.fsf@gitster.siamese.dyndns.org>
+	<87bpzh8msk.fsf@wine.dyndns.org> <873aktnsbf.fsf@lysator.liu.se>
+	<871w0bmn6w.fsf@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="gDGSpKKIBgtShtf+"
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Lea Wiemann <lewiemann@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 20:35:26 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Sat Aug 30 20:39:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZVIC-0001aJ-KC
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 20:35:25 +0200
+	id 1KZVMN-0002mZ-U4
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 20:39:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753317AbYH3SeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 14:34:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753180AbYH3SeS
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 14:34:18 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:16040 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752769AbYH3SeR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 14:34:17 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so837733fgg.17
-        for <git@vger.kernel.org>; Sat, 30 Aug 2008 11:34:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent:from:reply-to;
-        bh=c4lu54+YI7IrSXVVFC+M5vaxZ/gGxo7TJ29Wb+7gHwc=;
-        b=T6o2RI3pnXXoE2DEjro8acnURYyIyki7Z+8IXkP5HWDIOfaL+6oHHkXhGedTa5VV9R
-         GgZ6Xwm7vL6UxwR+hGGTg1dNeLzAb+x32zt3ayGihu04oA5d+v1ny/jqrCbrOQbHHV5C
-         LHn9T8fkNjh8mNqwvADB+PLE2vhU8Fqo6Hu/4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:to:cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent:from:reply-to;
-        b=yCFCB7USTvDjtdlA7tfbGBRkV12WhAQcrSXCz51z6dig2EgWZZCF7PvnyKJIbzGmW/
-         3Mby2/evPvcyQbXXhfyVWBrwiuepE+DGr8VB+ZCHy17kMnvUxErVM8zXxM+GVVLjsYCz
-         IIKTcqfamZxV4miMPmv1uErmBG40+4iiz53R4=
-Received: by 10.86.97.7 with SMTP id u7mr3166818fgb.29.1220121256074;
-        Sat, 30 Aug 2008 11:34:16 -0700 (PDT)
-Received: from sigkill.schiele.dyndns.org ( [91.18.78.90])
-        by mx.google.com with ESMTPS id 4sm4357160fge.8.2008.08.30.11.34.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 30 Aug 2008 11:34:15 -0700 (PDT)
-Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
-	id 5347C18F2B; Sat, 30 Aug 2008 20:34:13 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vwshygyy9.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753527AbYH3Sij convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Aug 2008 14:38:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753420AbYH3Sii
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 14:38:38 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:34840 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753518AbYH3Sii convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Aug 2008 14:38:38 -0400
+Received: from adsl-89-217-62-226.adslplus.ch ([89.217.62.226] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1KZVKY-0003T3-Sd; Sat, 30 Aug 2008 13:38:36 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id B771A1E716B; Sat, 30 Aug 2008 20:29:00 +0200 (CEST)
+In-Reply-To: <871w0bmn6w.fsf@lysator.liu.se> ("David =?utf-8?Q?K=C3=A5geda?=
+ =?utf-8?Q?l=22's?= message of
+	"Wed, 27 Aug 2008 00:22:15 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+X-Spam-Score: -3.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94402>
 
+David K=C3=A5gedal <davidk@lysator.liu.se> writes:
 
---gDGSpKKIBgtShtf+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Use prefix (C-u) to diff all marked files.
+>
+> Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
+> ---
+>  contrib/emacs/git.el |   62 +++++++++++++++++++++++++++++-----------=
+----------
+>  1 files changed, 36 insertions(+), 26 deletions(-)
+>
+> Here is an updated patch that udpate the stage diff commands as
+> well. It doesn't touch git-diff-file-merge-head since that already
+> uses prefix arguments. Don't know if there is a solution to that.
 
-On Sat, Aug 30, 2008 at 11:06:06AM -0700, Junio C Hamano wrote:
-> I didn't try either but I think you are right.  And I agree we should say
-> we rely on 5.6 or newer.
+I'd suggest to change git-diff-file-merge-head to act on the current
+file too. This means that the behavior is consistent across all diff
+functions, even if we lose the ability to do git-diff-file-merge-head o=
+n
+all marked files. Later on we may want to use a different mechanism tha=
+n
+the prefix arg to toggle the marked file behavior for all diff function=
+s
+(something like the pcl-cvs toggle-marks function).
 
-If we don't change it we need to rely on 5.8 or newer as my initial patch
-suggested.
-
-If there are problems with that change I recommend just using my initial pa=
-tch
-changing the documentation to require Perl 5.8 since my interest in Perl 5.6
-support is not big enough to mess around with quoting all that stuff.  If
-someone really needs this he or she can still do it --- it should be not too
-difficult.
-
-Robert
+Also make sure to check the callers of the diff functions you are
+changing; at least git-log-edit-diff got broken by your change, there
+may be others.
 
 --=20
-Robert Schiele
-Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
-
-"Quidquid latine dictum sit, altum sonatur."
-
---gDGSpKKIBgtShtf+
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.4-svn0 (GNU/Linux)
-
-iD8DBQFIuZKlxcDFxyGNGNcRAn3RAJ4w3AmlfyjHseT1cg/JPlSr0ZKTfACg7AGM
-PZhxClT20dKzOM+4qePkVVM=
-=JflV
------END PGP SIGNATURE-----
-
---gDGSpKKIBgtShtf+--
+Alexandre Julliard
+julliard@winehq.org
