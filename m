@@ -1,60 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge-recursive: fix subtree merge
-Date: Sat, 30 Aug 2008 09:39:37 -0700
-Message-ID: <7vbpza1mpi.fsf@gitster.siamese.dyndns.org>
-References: <1220110929-6803-1-git-send-email-vmiklos@frugalware.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH updated] git wrapper: DWIM mistyped commands
+Date: Sat, 30 Aug 2008 18:44:15 +0200
+Message-ID: <81b0412b0808300944p29199600ie95c65404b6cb380@mail.gmail.com>
+References: <20080828171533.GA6024@blimp.local>
+	 <20080828212722.GF6439@steel.home>
+	 <7vsksm1pmd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat Aug 30 18:40:51 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 30 18:45:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZTVK-0000yN-FC
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 18:40:50 +0200
+	id 1KZTZi-00029c-14
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 18:45:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752550AbYH3Qjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 12:39:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752710AbYH3Qjo
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 12:39:44 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40567 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752238AbYH3Qjo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 12:39:44 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 45BF25A8C0;
-	Sat, 30 Aug 2008 12:39:43 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 80D045A8B8; Sat, 30 Aug 2008 12:39:39 -0400 (EDT)
-In-Reply-To: <1220110929-6803-1-git-send-email-vmiklos@frugalware.org>
- (Miklos Vajna's message of "Sat, 30 Aug 2008 17:42:09 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3F822EA8-76B2-11DD-B965-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1752792AbYH3QoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 12:44:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752604AbYH3QoR
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 12:44:17 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:37268 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752716AbYH3QoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 12:44:16 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1285752rvb.1
+        for <git@vger.kernel.org>; Sat, 30 Aug 2008 09:44:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ROmG3gZc2jCNiceyJYW6TPe9p/2fUlpddn8km1062lo=;
+        b=wbNPywDCvY0EruqSRny+2ys6dpZPriZ+nfYWL9/UvrVfEvtsNHUqm3OVU3KrukolIp
+         nUW33B62L47vDeo3Bv7jsE1nkxr/LryB3GNf2f8XUX5RG7Su5fMgo7eNZfkky/AcQ1Yb
+         jVEe/l18ZN22FVkoUP2HLTdLFsPEM28BGMUfQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=h6mG+nVEKBtfiL5rK7WnAWNXyIB/ADyaRGPEmFs5Mm0gpCXsrZ6rLTvcVkVY8gQRq0
+         YRhsWZJI9WhP7sbP/UhU87lCx6eU31wrB0ggIUP1iZAC0fijvcLZ/PbZJjsRpDHahiaE
+         S1Zyp07IGrP1JGPhccqSCJNKvoBcQUs0iB7fY=
+Received: by 10.114.184.7 with SMTP id h7mr3844796waf.9.1220114655529;
+        Sat, 30 Aug 2008 09:44:15 -0700 (PDT)
+Received: by 10.114.157.9 with HTTP; Sat, 30 Aug 2008 09:44:15 -0700 (PDT)
+In-Reply-To: <7vsksm1pmd.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94386>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
-
-> On Mon, Aug 25, 2008 at 04:25:57PM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
->> It also takes care of subtree merge, output buffering, verbosity, and
->> rename limits - these were global variables till now in
->> merge-recursive.c.
+2008/8/30 Junio C Hamano <gitster@pobox.com>:
+>> +static int levenshtein_compare(const void *p1, const void *p2)
+>>  {
+>> +     const struct cmdname *const *c1 = p1, *const *c2 = p2;
+>> +     const char *s1 = (*c1)->name, *s2 = (*c2)->name;
+>> +     int l1 = similarity(s1);
+>> +     int l2 = similarity(s2);
+>> +     return l1 != l2 ? l1 - l2 : strcmp(s1, s2);
+>> +}
+>> ...
+>> +     levenshtein_cmd = cmd;
+>> +     qsort(main_cmds.names, main_cmds.cnt,
+>> +           sizeof(*main_cmds.names), levenshtein_compare);
 >
-> Actually subtree_merge was not used from the struct merge_options, here
-> is the fix.
+> Isn't this awfully inefficient?
+>
+> You have one mistyped command name to compute distance against, and want
+> to sort the available 100+ command names by that distance.  In qsort(),
+> levenshtein_compare() will be called O(N log N) times (depending on your
+> qsort implementation)?
 
-As bd1e8fe (merge-recursive: introduce merge_options, 2008-08-25) is not
-part of any solid integration branch yet, I'll squash this into it.
+not only similarity, but strcmp as well.
 
-In the longer term, I suspect that other file scope static variables in
-merge-recursive.c, such as call_depth, may want to move to merge_options,
-not as "option" but as "current state".  But that is quite minor, as it
-only affects reentrancy, and I do not see a reason for merge_recursive()
-to be reentrant (yet).
+> I wonder if it makes sense to give an otherwise unused "score" member to
+
+Hmm, it is a _non-existing_ member of cmdname, isn't it?
+
+> the "struct cmdname", compute the distance only once per each command, and
+> use that as the sort key (alternatively you can have a separate int[N]
+> array to store similarity values for each item in the cmdnames list, only
+> used inside this codepath).
+
+I think I'll take the struct cmdname->len over.
