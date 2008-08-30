@@ -1,95 +1,105 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [kernel.org users] [RFD] On deprecating "git-foo" for builtins
-Date: Sat, 30 Aug 2008 10:13:46 +0200
-Message-ID: <48B9013A.70201@op5.se>
-References: <7BC51BEC-E230-48C5-BD3E-2CECE3C7FC98@cs.indiana.edu>	 <4B9831F7-3CB8-49CB-A1DB-111481A271FE@cs.indiana.edu>	 <20080828212346.GA27867@coredump.intra.peff.net>	 <1C144B19-DA21-4CB4-B872-C1F154B031CF@cs.indiana.edu>	 <20080828215907.GE27867@coredump.intra.peff.net>	 <3DE083DB-ADFF-45E7-B3EB-A76985941271@cs.indiana.edu>	 <881C17DA-2FE2-49A7-A4A9-FACA7720599C@cs.indiana.edu>	 <20080829152451.GA20629@yugib.highrise.ca>	 <94a0d4530808290911j32bf5ee0q869dfe39483297f8@mail.gmail.com>	 <20080829162420.GB20629@yugib.highrise.ca> <94a0d4530808290928w3b1decd4o2e77349d793ffff0@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+From: =?ISO-8859-1?Q?Andreas_F=E4rber?= <planche2k@googlemail.com>
+Subject: Re: [PATCH/resend] Fix use of hardlinks in "make install"
+Date: Sat, 30 Aug 2008 10:59:36 +0200
+Message-ID: <66B007DD-F970-43E5-BA38-6138E553C93A@googlemail.com>
+References: <81b0412b0808280704h585b6cb4nf03e509de0159a91@mail.gmail.com> <81b0412b0808280717u78c5ccf8ne1413c701ed8edd9@mail.gmail.com> <20080830002032.GA14522@steel.home>
+Mime-Version: 1.0 (Apple Message framework v926)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Aidan Van Dyk <aidan@highrise.ca>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 10:14:58 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 30 11:01:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZLbi-0008Rn-2U
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 10:14:54 +0200
+	id 1KZMKa-0007Ph-GJ
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 11:01:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751940AbYH3INt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 04:13:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751933AbYH3INs
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 04:13:48 -0400
-Received: from mail.op5.se ([193.201.96.20]:53700 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751507AbYH3INr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 04:13:47 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id C76A11B8008F;
-	Sat, 30 Aug 2008 10:18:47 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id AtdRNDg1+MfI; Sat, 30 Aug 2008 10:18:46 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [172.27.78.6])
-	by mail.op5.se (Postfix) with ESMTP id 607BE1B80369;
-	Sat, 30 Aug 2008 10:18:44 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <94a0d4530808290928w3b1decd4o2e77349d793ffff0@mail.gmail.com>
+	id S1751615AbYH3JAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 05:00:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbYH3JAF
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 05:00:05 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:30290 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751413AbYH3JAB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 05:00:01 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so746000fgg.17
+        for <git@vger.kernel.org>; Sat, 30 Aug 2008 02:00:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=WrwoMkdbiWhi8/b86myoaqsMp/tXkoUFB3Z6DlgraJw=;
+        b=Evxv7x+5Lbr3U5gQYT7JnhD9yeViw6x2V9OELRxQygg7Yi8SCFn93/ZQDGkwOHR17G
+         GcvSTaZTu8ZBVBcCPW678+VhjMLxlzZpBlvQnDNyRy2iMOUDpxN6ToW31AVLjpuoNhGv
+         x0Z/RWxvHDaliE/SbtEEqplZIaPd39UMESM6g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=wUFpzD1CZOtq23pT9hJbQWgWFKSV0+1qXC5XiLKgrzGSMZ0o9BDGcq5KgZAlmcepPl
+         mLbJr5P276Vt6lWgC15xFrefVIk5pJdh19kko/BdFoPZi4+MlW8LADobcTuvVt1QEaVa
+         1WEreYyDdY8N9oUzlMHwRgO8r+xMBKfZJ5Pv4=
+Received: by 10.86.98.14 with SMTP id v14mr2791430fgb.74.1220086800573;
+        Sat, 30 Aug 2008 02:00:00 -0700 (PDT)
+Received: from ?10.0.1.1? ( [91.18.70.30])
+        by mx.google.com with ESMTPS id e20sm3244897fga.1.2008.08.30.01.59.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 30 Aug 2008 01:59:59 -0700 (PDT)
+In-Reply-To: <20080830002032.GA14522@steel.home>
+X-Mailer: Apple Mail (2.926)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94360>
 
-Felipe Contreras wrote:
-> On Fri, Aug 29, 2008 at 7:24 PM, Aidan Van Dyk <aidan@highrise.ca> wrote:
->> * Felipe Contreras <felipe.contreras@gmail.com> [080829 12:11]:
->>> On Fri, Aug 29, 2008 at 6:24 PM, Aidan Van Dyk <aidan@highrise.ca> wrote:
->>>> * Perry Wagle <wagle@cs.indiana.edu> [080801 00:00]:
->>>>> Jeff King has convinced me that it's perfectly legitimate to introduce
->>>>> non-upward compatibilities in minor version releases of "young"
->>>>> software.
->>>> This is the gist of the problem.  You keep hammering about a
->>>> "non-upwards compatibilities in minor version releases", yet you have
->>>> *not* pointed out one such in-compatibility in a minor version release..
->>>>
->>>> Remember, in git, 1.6 is a "major version" release, with release notes, etc.
->>>> 1.5.X is a "minor version" release.
->>>> 1.5.X.Y is a "patch" release.
->>> What is X (2.0)?
->> X would be a digit, like 0, 1, 2, 3, 4, 5, 6, 7, 8, or 9, as in the git
->> 1.5 releases:
->>        1.5.0
->>        1.5.1
->>        1.5.2
->>        1.5.3
->>        1.5.4
->>        1.5.4
->>        1.5.6
->>
->> And now also:
->>        1.6.0, being the first of the 1.6 releases...
-> 
-> I meant 'X.0.0', if 1.X is major, what is X.0? Huge?
-> 
 
-X.0 is "technically backwards incompatible".
+Am 30.08.2008 um 02:20 schrieb Alex Riesen:
 
-If, for example, SHA1 turns out to be horribly broken, git might have
-to be updated to use something else instead. Such a switch would
-require a version bump from 1.x to 2.x.
+> The code failed to filter-out git-add properly on platforms were $X is
+> not empty (ATM there is only one such a platform).
+>
+> Than it tried to create a hardlink to the file ($execdir/git-add) it  
+> just
+> removed (because git-add is first in the BUILT_INS), so ln failed (but
+> because stderr was redirected into /dev/null the error was never  
+> seen), and
+> the whole install ended up using "ln -s" instead.
+>
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
 
-That might come some day anyway, assuming we decide to make a flag-day
-and just remove older-version compatibility code from git or some
-such.
+> Well, as usual, simple fix for a trivial typo caused by existence of  
+> an
+> idiotic platform.
+>
+> Makefile |    2 +-
+> 1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index bf400e6..20f028f 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1379,7 +1379,7 @@ endif
+> 	{ $(RM) "$$execdir/git-add$X" && \
+> 		ln git-add$X "$$execdir/git-add$X" 2>/dev/null || \
+> 		cp git-add$X "$$execdir/git-add$X"; } && \
+> -	{ $(foreach p,$(filter-out git-add,$(BUILT_INS)), $(RM) "$$execdir/ 
+> $p" && \
+> +	{ $(foreach p,$(filter-out git-add$X,$(BUILT_INS)), $(RM) "$ 
+> $execdir/$p" && \
+> 		ln "$$execdir/git-add$X" "$$execdir/$p" 2>/dev/null || \
+> 		ln -s "git-add$X" "$$execdir/$p" 2>/dev/null || \
+> 		cp "$$execdir/git-add$X" "$$execdir/$p" || exit;) } && \
+> -- 
+> 1.6.0.1.152.g6969c
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Your patch seems to work on Haiku, don't have a MinGW setup to test.  
+Sorry for the breakage.
+
+Andreas
