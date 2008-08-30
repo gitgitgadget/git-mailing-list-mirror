@@ -1,87 +1,109 @@
-From: Robert Schiele <rschiele@gmail.com>
-Subject: [PATCH] mention required Perl version in INSTALL
-Date: Sat, 30 Aug 2008 19:13:12 +0200
-Message-ID: <20080830171312.GE7185@schiele.dyndns.org>
-Reply-To: Robert Schiele <rschiele@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Reuse cmdname->len to store pre-calculated similarity
+	indexes
+Date: Sat, 30 Aug 2008 19:13:31 +0200
+Message-ID: <20080830171331.GA26932@steel.home>
+References: <20080828171533.GA6024@blimp.local> <20080828212722.GF6439@steel.home> <7vsksm1pmd.fsf@gitster.siamese.dyndns.org> <81b0412b0808300944p29199600ie95c65404b6cb380@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 30 19:14:44 2008
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 30 19:15:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZU1o-0002Jr-VK
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 19:14:25 +0200
+	id 1KZU2F-0002Uj-R3
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 19:14:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752768AbYH3RNT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 13:13:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752710AbYH3RNS
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 13:13:18 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:54655 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751646AbYH3RNR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 13:13:17 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so824024fgg.17
-        for <git@vger.kernel.org>; Sat, 30 Aug 2008 10:13:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent
-         :from:reply-to;
-        bh=h/khIGSwHd7QVx81GI1mfSKyNOaP+I7GQoAQKJW0GXM=;
-        b=RKJifhlslhCGzQLD4n3xUnkLzqpaheOcAY2IVJEaPRjYFSS6oUUIcGfDcr66WMAX1/
-         KiX/EZfGgU5uQOgi04owXzTzf3U9VYt0C3IKRNUJsEhMXAgcrY3Sx68bZ+iqi0SKboQH
-         1LbY9OEOppOqr1qle5bvkmYguFU0my9fZCQtI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent:from:reply-to;
-        b=t6k27fLVeETQ6421bpXKERaUsOHSFMEjrDzbVpNC3YJA4tHxwpJ+F6CwQnh2H+Q/oB
-         1hE4vomPYbqY4KA/lvY4jV4vRdgZ/0TM0TicwRcWMViBCzfehauCLPIFZah6Lsd6CG5+
-         UpToCpMqg2Zku0g/+JtCN68YD+zwcXRsmHTGg=
-Received: by 10.86.77.5 with SMTP id z5mr3123279fga.10.1220116395780;
-        Sat, 30 Aug 2008 10:13:15 -0700 (PDT)
-Received: from sigkill.schiele.dyndns.org ( [91.18.78.90])
-        by mx.google.com with ESMTPS id 4sm4289938fge.8.2008.08.30.10.13.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 30 Aug 2008 10:13:14 -0700 (PDT)
-Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
-	id A82F817BD2; Sat, 30 Aug 2008 19:13:12 +0200 (CEST)
+	id S1754479AbYH3RNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 13:13:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754498AbYH3RNe
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 13:13:34 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.181]:33438 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754479AbYH3RNd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 13:13:33 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20tf4EK7
+Received: from tigra.home (Fad0a.f.strato-dslnet.de [195.4.173.10])
+	by post.webmailer.de (klopstock mo28) (RZmta 16.47)
+	with ESMTP id 300086k7UE6G5i ; Sat, 30 Aug 2008 19:13:31 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 68D29277AE;
+	Sat, 30 Aug 2008 19:13:31 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 36EBF56D2A; Sat, 30 Aug 2008 19:13:31 +0200 (CEST)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <81b0412b0808300944p29199600ie95c65404b6cb380@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94390>
 
-We use syntax in some places that is only supported on Perl 5.8 or
-later.  One example for this is the list form of the open command in
-combination with pipes in git-add--interactive.perl:
+To avoid doing that while sorting
 
-    open($fh, '-|', @_) or die;
-
-Signed-off-by: Robert Schiele <rschiele@gmail.com>
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
- INSTALL |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/INSTALL b/INSTALL
-index 2bae53f..0495fe5 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -72,8 +72,8 @@ Issues of note:
+Alex Riesen, Sat, Aug 30, 2008 18:44:15 +0200:
+> 2008/8/30 Junio C Hamano <gitster@pobox.com>:
+> > I wonder if it makes sense to give an otherwise unused "score" member to
+> 
+> Hmm, it is a _non-existing_ member of cmdname, isn't it?
+> 
+> > the "struct cmdname", compute the distance only once per each command, and
+> > use that as the sort key (alternatively you can have a separate int[N]
+> > array to store similarity values for each item in the cmdnames list, only
+> > used inside this codepath).
+> 
+> I think I'll take the struct cmdname->len over.
+
+ help.c |   12 +++++++-----
+ 1 files changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/help.c b/help.c
+index 7bfbbcd..70d57a3 100644
+--- a/help.c
++++ b/help.c
+@@ -287,8 +287,8 @@ static int levenshtein_compare(const void *p1, const void *p2)
+ {
+ 	const struct cmdname *const *c1 = p1, *const *c2 = p2;
+ 	const char *s1 = (*c1)->name, *s2 = (*c2)->name;
+-	int l1 = similarity(s1);
+-	int l2 = similarity(s2);
++	int l1 = (*c1)->len;
++	int l2 = (*c2)->len;
+ 	return l1 != l2 ? l1 - l2 : strcmp(s1, s2);
+ }
  
- 	- "ssh" is used to push and pull over the net
+@@ -312,6 +312,9 @@ const char *help_unknown_cmd(const char *cmd)
+ 	memcpy(main_cmds.names + main_cmds.cnt, other_cmds.names,
+ 		other_cmds.cnt * sizeof(other_cmds.names[0]));
+ 	main_cmds.cnt += other_cmds.cnt;
++	/* This reuses cmdname->len for similarity index */
++	for (i = 0; i < main_cmds.cnt; ++i)
++		main_cmds.names[i]->len = similarity(main_cmds.names[i]->name);
  
--	- "perl" and POSIX-compliant shells are needed to use most of
--	  the bare-bones Porcelainish scripts.
-+	- "perl" 5.8 or later and POSIX-compliant shells are needed to use
-+          most of the bare-bones Porcelainish scripts.
+ 	levenshtein_cmd = cmd;
+ 	qsort(main_cmds.names, main_cmds.cnt,
+@@ -319,10 +322,9 @@ const char *help_unknown_cmd(const char *cmd)
  
-  - Some platform specific issues are dealt with Makefile rules,
-    but depending on your specific installation, you may not
+ 	if (!main_cmds.cnt)
+ 		die ("Uh oh.  Your system reports no Git commands at all.");
+-	best_similarity = similarity(main_cmds.names[0]->name);
++	best_similarity = main_cmds.names[0]->len;
+ 	n = 1;
+-	while (n < main_cmds.cnt &&
+-		best_similarity == similarity(main_cmds.names[n]->name))
++	while (n < main_cmds.cnt && best_similarity == main_cmds.names[n]->len)
+ 		++n;
+ 	if (autocorrect && n == 1) {
+ 		const char *assumed;
 -- 
-1.5.4.5
+1.6.0.1.149.g9ecb0
