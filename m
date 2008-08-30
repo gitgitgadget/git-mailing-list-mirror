@@ -1,111 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff: treat -crlf files as binary
-Date: Sat, 30 Aug 2008 14:34:55 -0700
-Message-ID: <7vljyefaps.fsf@gitster.siamese.dyndns.org>
-References: <7vfxon4ikr.fsf@gitster.siamese.dyndns.org>
- <32541b130808291456k3de953a2yd1e93bc27ad14293@mail.gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH] Don't use the dashed for of git commands
+Date: Sat, 30 Aug 2008 22:56:35 +0100
+Message-ID: <b0943d9e0808301456t603834d4lb98c38fef83de9e5@mail.gmail.com>
+References: <20080827002827.14720.45394.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, arman@twinsun.com
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 23:36:33 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Sat Aug 30 23:57:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZY7S-0003pJ-31
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 23:36:30 +0200
+	id 1KZYRz-0001JY-Df
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 23:57:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759795AbYH3VfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 17:35:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755533AbYH3VfG
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 17:35:06 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53378 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759057AbYH3VfE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 17:35:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 66AE16DC21;
-	Sat, 30 Aug 2008 17:35:01 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 281A86DC1F; Sat, 30 Aug 2008 17:34:56 -0400 (EDT)
-In-Reply-To: <32541b130808291456k3de953a2yd1e93bc27ad14293@mail.gmail.com>
- (Avery Pennarun's message of "Fri, 29 Aug 2008 17:56:38 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 80575A38-76DB-11DD-8750-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1755013AbYH3V4h convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Aug 2008 17:56:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754926AbYH3V4h
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 17:56:37 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:2651 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754670AbYH3V4g convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Aug 2008 17:56:36 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so853087waf.23
+        for <git@vger.kernel.org>; Sat, 30 Aug 2008 14:56:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=8x2sH445h5OiOjKfdGxgFI03xus5aEJC9H4cJm35O7s=;
+        b=sPEqVWvp6xPiEX5DzhUa+0pCeDeIBy24ttB+lVs0AqCknjfuFyz2N78ENauonKU0D9
+         yAvVSTrA/UKrWsN2+wEJkXvJR56panG/rXX5mY3lUs/NkSNsQ7lfizMd5LGl+8s7Rn5B
+         3mKdk6o8I85F/TlfGeDmYJomnIzzFlCoDhPd0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=JRJ75tYMUQ7vZTODd9AokbakhvM04MDgKpkQTEuJSjFh+or3dIRYHOmdXtq/U9YdU1
+         Zdy9ReqO5APP9E/NVxcRFV37RRErFnwYzVibUjSw3/biPimZCUWq97sCzDz5mM71jfJN
+         nbp/2ouUu/XYrL3Wzxy38jceOomNPvYVz6iFs=
+Received: by 10.114.197.10 with SMTP id u10mr4012219waf.66.1220133395652;
+        Sat, 30 Aug 2008 14:56:35 -0700 (PDT)
+Received: by 10.114.193.12 with HTTP; Sat, 30 Aug 2008 14:56:35 -0700 (PDT)
+In-Reply-To: <20080827002827.14720.45394.stgit@yoghurt>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94437>
 
-"Avery Pennarun" <apenwarr@gmail.com> writes:
+2008/8/27 Karl Hasselstr=F6m <kha@treskal.com>:
+> With the release of git 1.6.0, the dashed forms of the git commands
+> are no longer installed in $PATH by default, so trying to use them is
+> likely to fail. This patch replaces all remaining dashed git calls by
+> their dashless equivalents -- even in comments and docs, for
+> consistency and to aid grepping.
 
-> I think the bug is that "crlf=false" should not be considered the same
-> as "binary=true", which seems to be a bug in the documentation, not
-> the program.
+Great, thanks.
 
-Yeah, that's right.  How about doing something like this?
-
- Documentation/gitattributes.txt |   39 ++++++++++++++++++++++++++++++++++++---
- 1 files changed, 36 insertions(+), 3 deletions(-)
-
-diff --git i/Documentation/gitattributes.txt w/Documentation/gitattributes.txt
-index db16b0c..ec8a860 100644
---- i/Documentation/gitattributes.txt
-+++ w/Documentation/gitattributes.txt
-@@ -105,9 +105,8 @@ Set::
- 
- Unset::
- 
--	Unsetting the `crlf` attribute on a path is meant to
--	mark the path as a "binary" file.  The path never goes
--	through line endings conversion upon checkin/checkout.
-+	Unsetting the `crlf` attribute on a path is tells git
-+	not to attempt any end-of-line conversion  upon checkin/checkout.
- 
- Unspecified::
- 
-@@ -482,6 +481,40 @@ in the file.  E.g. the string `$Format:%H$` will be replaced by the
- commit hash.
- 
- 
-+USING ATTRIBUTE MACROS
-+----------------------
-+
-+You do not want any end-of-line conversions applied to, nor textual diffs
-+produced for any binary file you track.  You would need to specify e.g.
-+
-+------------
-+*.jpg -crlf -diff
-+------------
-+
-+but that is cumbersome.  Using attribute macros, you can specify groups of
-+attributes set or unset at the same time.  The system knows a built-in
-+attribute macro, `binary`:
-+
-+------------
-+*.jpg binary
-+------------
-+
-+which is equivalent to the above.  Note that the attribute macros can only
-+be "Set" (see the above example).
-+
-+
-+DEFINING ATTRIBUTE MACROS
-+-------------------------
-+
-+Custom attribute macros can be defined only in the `.gitattributes` file
-+at the toplevel (i.e. not in any subdirectory).  The built-in attribute
-+macro "binary" is equivalent to:
-+
-+------------
-+[attr]binary -diff -crlf
-+------------
-+
-+
- EXAMPLE
- -------
- 
+--=20
+Catalin
