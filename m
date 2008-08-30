@@ -1,70 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 07/12] merge.conflictstyle: choose between "merge" and
- "diff3 -m" styles
-Date: Sat, 30 Aug 2008 11:42:14 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0808301141160.24820@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <1220056963-2352-1-git-send-email-gitster@pobox.com> <1220056963-2352-2-git-send-email-gitster@pobox.com> <1220056963-2352-3-git-send-email-gitster@pobox.com> <1220056963-2352-4-git-send-email-gitster@pobox.com> <1220056963-2352-5-git-send-email-gitster@pobox.com>
- <1220056963-2352-6-git-send-email-gitster@pobox.com> <1220056963-2352-7-git-send-email-gitster@pobox.com> <1220056963-2352-8-git-send-email-gitster@pobox.com>
+From: Heikki Orsila <shd@modeemi.fi>
+Subject: Re: [PATCH] Replace "git-" with "git " in *.[ch] comments and notifications
+Date: Sat, 30 Aug 2008 12:54:11 +0300
+Message-ID: <20080830095411.GA28666@jolt.modeemi.cs.tut.fi>
+References: <20080829234751.GA2396@zakalwe.fi> <7vvdxj2ucl.fsf@gitster.siamese.dyndns.org> <20080830011509.GA16289@zakalwe.fi> <7vr6872qv1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=iso-8859-1
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 11:38:14 2008
+X-From: git-owner@vger.kernel.org Sat Aug 30 12:03:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZMuI-0006xO-Mt
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 11:38:11 +0200
+	id 1KZNIp-0002hC-G3
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 12:03:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753400AbYH3JhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 05:37:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751206AbYH3JhF
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 05:37:05 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35768 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753400AbYH3JhE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 05:37:04 -0400
-Received: (qmail invoked by alias); 30 Aug 2008 09:37:01 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp056) with SMTP; 30 Aug 2008 11:37:01 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19jZd8kgJ1jnbj5rfItha4/207Z0TYkI6EjIyzR3a
-	l9odm5IdcO9kRP
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <1220056963-2352-8-git-send-email-gitster@pobox.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1751197AbYH3KCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 06:02:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750931AbYH3KCZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 06:02:25 -0400
+Received: from mail.cs.tut.fi ([130.230.4.42]:59390 "EHLO mail.cs.tut.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750847AbYH3KCY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 06:02:24 -0400
+X-Greylist: delayed 456 seconds by postgrey-1.27 at vger.kernel.org; Sat, 30 Aug 2008 06:02:24 EDT
+Received: from amavis2.cs.tut.fi (amavis2.cs.tut.fi [130.230.4.70])
+	by mail.cs.tut.fi (Postfix) with ESMTP id C9A7E5C06;
+	Sat, 30 Aug 2008 12:54:45 +0300 (EEST)
+Received: from mail.cs.tut.fi ([130.230.4.42])
+ by amavis2.cs.tut.fi (amavis2.cs.tut.fi [130.230.4.70]) (amavisd-maia, port 10024)
+ with ESMTP id 04644-09-2; Sat, 30 Aug 2008 12:54:44 +0300 (EEST)
+Received: from modeemi.modeemi.cs.tut.fi (modeemi.modeemi.cs.tut.fi [130.230.72.134])
+	by mail.cs.tut.fi (Postfix) with ESMTP id 679E75C02;
+	Sat, 30 Aug 2008 12:54:43 +0300 (EEST)
+Received: from jolt.modeemi.cs.tut.fi (jolt.modeemi.cs.tut.fi [130.230.72.144])
+	by modeemi.modeemi.cs.tut.fi (Postfix) with ESMTP id 2A0B522200;
+	Sat, 30 Aug 2008 12:54:13 +0300 (EEST)
+Received: by jolt.modeemi.cs.tut.fi (Postfix, from userid 16311)
+	id 8B95BA313D; Sat, 30 Aug 2008 12:54:11 +0300 (EEST)
+Content-Disposition: inline
+In-Reply-To: <7vr6872qv1.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-Virus-Scanned: Maia Mailguard 1.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94369>
 
-Hi,
+On Fri, Aug 29, 2008 at 07:12:18PM -0700, Junio C Hamano wrote:
+> I however am not sure if posting a single patch that is 1300 lines long
+> would be the most effective way to achieve that goal.  Splitting them into
+> a handful batches, spread over a few weeks to give reviewers some
+> breathing room, might make it more reviewable.  I dunno.
+> 
+> [CUT]
+> 
+> One thing you might be able to do would be to separate user visible
+> strings and in-comment strings.
+> 
+> [CUT]
+> 	... would cause git-init to fail here...
+>         ... would cause "init" to fail here...
+> 
+> than:
+> 
+>         ... would cause git init to fail here...
+> 
+> Among these three, I think the second one is the most readable. 
 
-On Fri, 29 Aug 2008, Junio C Hamano wrote:
+Okay, will split patches into smaller ones, distribute them over time, 
+and use the second form for _in-comment_ strings. User visible strings 
+will say "git init".
 
-> diff --git a/builtin-merge-file.c b/builtin-merge-file.c
-> index 1e92510..f009e73 100644
-> --- a/builtin-merge-file.c
-> +++ b/builtin-merge-file.c
-> @@ -15,6 +15,15 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
->  	int ret = 0, i = 0, to_stdout = 0;
->  	int merge_level = XDL_MERGE_ZEALOUS_ALNUM;
->  	int merge_style = 0;
-> +	int nongit;
-> +
-> +	prefix = setup_git_directory_gently(&nongit);
-> +	if (!nongit) {
-> +		/* Read the configuration file */
-> +		git_config(git_xmerge_config, NULL);
-> +		if (git_xmerge_style > 0)
-> +			merge_style = git_xmerge_style;
-
-Did you not mean ">="?  In the future, the default merge style could very 
-well change...
-
-Ciao,
-Dscho
+-- 
+Heikki Orsila
+heikki.orsila@iki.fi
+http://www.iki.fi/shd
