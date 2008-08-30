@@ -1,77 +1,58 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Reuse cmdname->len to store pre-calculated similarity
- indexes
-Date: Sat, 30 Aug 2008 10:26:17 -0700
-Message-ID: <7vprnqifd2.fsf@gitster.siamese.dyndns.org>
-References: <20080828171533.GA6024@blimp.local>
- <20080828212722.GF6439@steel.home>
- <7vsksm1pmd.fsf@gitster.siamese.dyndns.org>
- <81b0412b0808300944p29199600ie95c65404b6cb380@mail.gmail.com>
- <20080830171331.GA26932@steel.home>
+Subject: Re: [PATCH] git gui: show diffs with a minimum of 1 context line
+Date: Sat, 30 Aug 2008 10:30:51 -0700
+Message-ID: <7vljyeif5g.fsf@gitster.siamese.dyndns.org>
+References: <20080830164527.GA25370@localhost>
+ <7vtzd2ifot.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 19:27:38 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sat Aug 30 19:32:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZUEY-0007Lm-6Z
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 19:27:34 +0200
+	id 1KZUJ1-0000Fh-7e
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 19:32:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753152AbYH3R01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 13:26:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753141AbYH3R01
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 13:26:27 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52016 "EHLO
+	id S1753311AbYH3RbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 13:31:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753266AbYH3RbD
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 13:31:03 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44619 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752344AbYH3R00 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 13:26:26 -0400
+	with ESMTP id S1753105AbYH3RbB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 13:31:01 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AC8D65AC19;
-	Sat, 30 Aug 2008 13:26:22 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E1D9F67A3C;
+	Sat, 30 Aug 2008 13:30:58 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 06CA05AC17; Sat, 30 Aug 2008 13:26:18 -0400 (EDT)
-In-Reply-To: <20080830171331.GA26932@steel.home> (Alex Riesen's message of
- "Sat, 30 Aug 2008 19:13:31 +0200")
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 9F02967A37; Sat, 30 Aug 2008 13:30:53 -0400 (EDT)
+In-Reply-To: <7vtzd2ifot.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat, 30 Aug 2008 10:19:14 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C417F0FC-76B8-11DD-9737-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 68BBE8B6-76B9-11DD-8EE7-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94393>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> To avoid doing that while sorting
->
-> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> ---
->
-> Alex Riesen, Sat, Aug 30, 2008 18:44:15 +0200:
->> 2008/8/30 Junio C Hamano <gitster@pobox.com>:
->> > I wonder if it makes sense to give an otherwise unused "score" member to
->> 
->> Hmm, it is a _non-existing_ member of cmdname, isn't it?
->> 
->> > the "struct cmdname", compute the distance only once per each command, and
->> > use that as the sort key (alternatively you can have a separate int[N]
->> > array to store similarity values for each item in the cmdnames list, only
->> > used inside this codepath).
->> 
->> I think I'll take the struct cmdname->len over.
+> I suspect there are some things "git-apply" should be able to _figure out_
 
-I think you do not need the file-scope static levenshtein_cmd anymore with
-this change, if you make similarity() take two command names.  No?
+s/able to/& do to/;
 
-Please reroll the whole f66dd34 (git wrapper: DWIM mistyped commands,
-2008-08-28), as it is not part of any solid integration branch yet.
+> that the user is giving it a -U0 patch and automatically flip unidiff_zero
+> option on.  For example, if the _first_ hunk of a patch does not begin
+> with "@@ -0,0 +N,M @@" nor with "@@ -1,L +N,M @@" (i.e. the hunk claims to
+> apply not at the beginning) and the hunk does not have leading context
+> lines, _and_ if that first hunk does not have trailing context lines, then
 
-You might also want to update the commit log message to talk about the
-"len" reuse hack, but you already have in-code comment which might be
-sufficient.
+Eh, what was I smoking.  In short, if the first hunk does not have _any_
+context lines and still says it is intended to apply to somewhere not at
+the beginning, then that is a -U0 patch.
