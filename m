@@ -1,79 +1,85 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit] Debian packaging update
-Date: Sat, 30 Aug 2008 23:36:57 +0100
-Message-ID: <b0943d9e0808301536m6422e6cfv96c14afd0a62966a@mail.gmail.com>
-References: <20080818201036.7c2c00f8@whitehouse.id.au>
-	 <b0943d9e0808211535s7b829a13hbf28be8116e856a6@mail.gmail.com>
-	 <20080822235154.5e1f979c@whitehouse.id.au>
-	 <b0943d9e0808221457w42a84fbgdf62e3ddbb417389@mail.gmail.com>
-	 <20080828140929.GB3584@khazad-dum.debian.net>
-	 <20080828192450.GH4985@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Relative submodule URLs vs. clone URL DWIMming
+Date: Sun, 31 Aug 2008 01:23:47 +0200
+Message-ID: <200808310123.48018.johan@herland.net>
+References: <200808271400.54302.johan@herland.net>
+ <200808290101.20048.johan@herland.net>
+ <7vhc92f8ay.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Henrique de Moraes Holschuh" <hmh@hmh.eng.br>,
-	"Daniel White" <daniel@whitehouse.id.au>, git@vger.kernel.org,
-	"=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	stgit@packages.debian.org
-To: "Yann Dirson" <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Sun Aug 31 00:38:13 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Mark Levedahl <mlevedahl@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 31 01:30:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZZ53-0000MD-EE
-	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 00:38:05 +0200
+	id 1KZZtQ-0002e1-ME
+	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 01:30:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756141AbYH3Wg7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 18:36:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755535AbYH3Wg7
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 18:36:59 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:5655 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756141AbYH3Wg6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 18:36:58 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so861010waf.23
-        for <git@vger.kernel.org>; Sat, 30 Aug 2008 15:36:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=uPqUrAhY1+RCGzMmdi75tx4gsrkKiyMz2O/8h6RVg/I=;
-        b=C5obsDgDXmnSzqkFUz23YQ629doJ7YrfHlWUBQeCTDLOfJJaEzu32HUXOQ/wxO9KUu
-         CH+WiQ8EOxQh259qRdegJZ3Yc/hF+JVk+J4UGKbkjaw3F7LIUcmS+AQcuB4lvsG+oEc2
-         KkLNPOIPerUGBgd+FhxgA0Jf5IF2YHwHB6neI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=TJRIoRyBoxtoplxMr/c5Kw4n9jP/M/KZrxa48v4F46Bt84PJ+TveKFzVLtO/vu8iU4
-         kfRcdpovIUAI8Yu3WVjDczmVVCiF0qBCtbfbuo9pax2aDQxWzD8X3lcFgsqq/OwKZD8j
-         mByI9ZZJSIa2NJPAnWezW1h27wWzGCwkuEFx8=
-Received: by 10.114.210.2 with SMTP id i2mr4061408wag.18.1220135818019;
-        Sat, 30 Aug 2008 15:36:58 -0700 (PDT)
-Received: by 10.114.193.12 with HTTP; Sat, 30 Aug 2008 15:36:57 -0700 (PDT)
-In-Reply-To: <20080828192450.GH4985@nan92-1-81-57-214-146.fbx.proxad.net>
-Content-Disposition: inline
+	id S1754632AbYH3XYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 19:24:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754624AbYH3XYI
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 19:24:08 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:53076 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754555AbYH3XYH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 19:24:07 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0K6F0080BT04VN00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 31 Aug 2008 01:24:04 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K6F00J4ESZOAB90@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 31 Aug 2008 01:23:48 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K6F00699SZORC40@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Sun, 31 Aug 2008 01:23:48 +0200 (CEST)
+In-reply-to: <7vhc92f8ay.fsf@gitster.siamese.dyndns.org>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94444>
 
-2008/8/28 Yann Dirson <ydirson@altern.org>:
-> Another benefit to having uptodate packaging upstream would be to have
-> deb snapshots regularly generated, alhough we don't take advantage of
-> this for the moment.
+On Sunday 31 August 2008, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> I personally feel that cases that involve cloning from non-bare
+> repositories (and in addition, DWIMmed repositories), with or without
+> nested submodules, are not worth supporting.
 
-As a side-note, in the Python world it seems that more people started
-using the Python Package Index (http://pypi.python.org/pypi) and
-install a package easily using "easy_install". This doesn't have the
-.deb features but it is more universal across various Linux
-distributions (the bad thing, it doesn't seem to allow uninstalling).
-At some point I might create a pypi entry (shouldn't take long but
-I've been too busy with other things).
+Ok. I guess that's fair. Such a decision should definitely be documented 
+appropriately in the submodule documentation, though.
+
+I guess this also means you don't plan to do anything about the difference 
+in origin URLs produced by "git clone" for the following two cases:
+
+$ git clone /repo/foo bar
+$ grep -B1 url bar/.git/config
+[remote "origin"]
+        url = /repo/foo/.git
+
+vs.
+
+$ git clone file:///repo/foo bar
+$ grep -B1 url bar/.git/config
+[remote "origin"]
+        file:///home/johan/git/foo
+
+
+Hmm?
+
+...Johan
 
 -- 
-Catalin
+Johan Herland, <johan@herland.net>
+www.herland.net
