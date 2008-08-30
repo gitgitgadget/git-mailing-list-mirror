@@ -1,55 +1,81 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] git gui: use apply --unidiff-zero when staging hunks
-	without context
-Date: Sat, 30 Aug 2008 22:27:06 +0200
-Message-ID: <20080830202706.GA13573@localhost>
-References: <20080830164527.GA25370@localhost> <20080830165600.GB25370@localhost> <48B9A2D7.8090801@telecom.at>
+From: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
+Subject: [StGit PATCH revised] Remove add/applied/unapplied bash completion
+ entries
+Date: Sun, 31 Aug 2008 05:30:57 +0900
+Message-ID: <48B9AE01.1010804@ruby.dti.ne.jp>
+References: <48B9A37B.4060001@ruby.dti.ne.jp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sat Aug 30 22:28:06 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: catalin.marinas@gmail.com
+X-From: git-owner@vger.kernel.org Sat Aug 30 22:32:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZX39-0006CE-5j
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 22:27:59 +0200
+	id 1KZX7E-00071q-ST
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 22:32:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754104AbYH3U0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 16:26:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754003AbYH3U0y
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 16:26:54 -0400
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:34491 "EHLO
-	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753827AbYH3U0x (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 16:26:53 -0400
-Received: from darc.dyndns.org ([84.154.72.105]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 30 Aug 2008 22:26:51 +0200
-Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1KZX2I-0003av-Uy; Sat, 30 Aug 2008 22:27:06 +0200
-Content-Disposition: inline
-In-Reply-To: <48B9A2D7.8090801@telecom.at>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 30 Aug 2008 20:26:51.0902 (UTC) FILETIME=[BC8B19E0:01C90ADE]
+	id S1753847AbYH3UbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 16:31:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753827AbYH3UbG
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 16:31:06 -0400
+Received: from smtp14.dti.ne.jp ([202.216.231.189]:45919 "EHLO
+	smtp14.dti.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752463AbYH3UbF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 16:31:05 -0400
+Received: from [192.168.1.3] (PPPa881.tokyo-ip.dti.ne.jp [210.159.215.131]) by smtp14.dti.ne.jp (3.11s) with ESMTP AUTH id m7UKUwZf025604;Sun, 31 Aug 2008 05:31:01 +0900 (JST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <48B9A37B.4060001@ruby.dti.ne.jp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94418>
 
-On Sat, Aug 30, 2008 at 09:43:19PM +0200, Johannes Sixt wrote:
-> Clemens Buchacher schrieb:
->> git apply does not work correctly with zero-context patches. It does a
->> little better with --unidiff-zero.
->
-> No, NO, NOOOOO! This kills your data!
+These commands are not available any more.
 
-Okay. Since we have 'Stage Line for Commit', supporting this would be almost
-pointless anyways. So let's forget about trying to fix this and simply
-disable zero-context diff in git-gui, as per my original patch
+Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
+---
+Shinya Kuribayashi wrote:
+> "stg add" was dropped several months ago.
 
-[PATCH] git gui: show diffs with a minimum of 1 context line
+Hm, I should have removed applied/unapplied entries also.
 
-Clemens
+thanks,
+
+  Shinya
+
+ contrib/stgit-completion.bash |    4 ----
+ 1 files changed, 0 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/stgit-completion.bash b/contrib/stgit-completion.bash
+index 1867e6b..ac868e7 100644
+--- a/contrib/stgit-completion.bash
++++ b/contrib/stgit-completion.bash
+@@ -11,8 +11,6 @@
+ #         . ~/.stgit-completion.bash
+ 
+ _stg_commands="
+-    add
+-    applied
+     branch
+     delete
+     diff
+@@ -51,7 +49,6 @@ _stg_commands="
+     status
+     sync
+     top
+-    unapplied
+     uncommit
+     unhide
+ "
+@@ -264,7 +261,6 @@ _stg ()
+         # working-copy commands
+         diff)   _stg_patches_options $command _applied_patches "-r --range" ;;
+ 	resolved) _complete_files $command "$(_conflicting_files)" ;;
+-	add)	_complete_files $command "$(_unknown_files)" ;;
+ #	rm)	_complete_files $command "$(_known_files)" ;;
+ 	# commands that usually raher accept branches
+ 	branch) _complete_branch $command _all_branches ;;
