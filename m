@@ -1,171 +1,110 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [PATCH (GIT-GUI) 7/8] git-gui: Make F5 reselect a diff, if an untracked file is selected.
-Date: Sun, 31 Aug 2008 01:04:10 +0400
-Organization: TEPKOM
-Message-ID: <200808310104.11048.angavrilov@gmail.com>
-References: <200808310052.21595.angavrilov@gmail.com> <200808310100.49998.angavrilov@gmail.com> <200808310102.56795.angavrilov@gmail.com>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
+Date: Sat, 30 Aug 2008 23:21:17 +0200
+Message-ID: <20080830212117.GH7185@schiele.dyndns.org>
+References: <20080830173947.GF7185@schiele.dyndns.org> <20080830183413.GG7185@schiele.dyndns.org> <20080830183949.GA16415@coredump.intra.peff.net> <200808302237.17017.jnareb@gmail.com>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 30 23:16:46 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="E7i4zwmWs5DOuDSH"
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Lea Wiemann <lewiemann@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 30 23:22:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZXo9-00089f-No
-	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 23:16:34 +0200
+	id 1KZXts-00016s-8A
+	for gcvg-git-2@gmane.org; Sat, 30 Aug 2008 23:22:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755508AbYH3VOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2008 17:14:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755031AbYH3VOq
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 17:14:46 -0400
-Received: from fk-out-0910.google.com ([209.85.128.189]:59109 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754863AbYH3VOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2008 17:14:32 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so883449fkq.5
-        for <git@vger.kernel.org>; Sat, 30 Aug 2008 14:14:31 -0700 (PDT)
+	id S1754798AbYH3VVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 17:21:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754603AbYH3VVX
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 17:21:23 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:1134 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754519AbYH3VVW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 17:21:22 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so863763fgg.17
+        for <git@vger.kernel.org>; Sat, 30 Aug 2008 14:21:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=pm+foTaMmucQXI1e6OoCHcvN+86EmbJZnsnHe9Q/xuQ=;
-        b=VvP7ifJpkDI/QE5dUfyYgdy6ghVIDMm9IxoOX1jDki4nDC7tW898NJK29HegFuvfg7
-         PRcSmwNJTzFu0OKZoYUfdKM/g1K5uwsYleWbKEyJxxayOSm/elA9wdEwZbpLTc68UM+j
-         6AipENXxAlW16lIVoknN7jHk6HogEoqNrGJhk=
+        h=domainkey-signature:received:received:received:date:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent:from:reply-to;
+        bh=bqUQ2PnyxTrryj4fTxBZJnyH11W65rKiC+z8dPlszM8=;
+        b=d/xgfo0rfKTAjRH1jLvR9hTCZKd08qPlEo2TOT9GJG8R56XNEmcWCotM3GlNhl/jsJ
+         KI81EQjKh/3pL8ac13ipQFWugXbMZ76IM3N/Zyn9R4nKKpzcsDAeTSFjsXPHLy7PXzL0
+         /kPFic7EY2Kxzx9/SgW2K3M9cZb3io4cACIRU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=TfDeIGE2uy8E/47zR/Laj7NCG/ShzRvgfBPD5NqSJExuPU6HbvNK/0zdcHQRcn2mWO
-         sfGULQdPdU0kDB+Iip7O7A/UpDaYsT/m/YGsLNFMy+nWHs+5xfRk2/uSeNmENXPZv2S8
-         PuKlSAAFQ/ERU4CG9uD+UWYEhutMsOvukDrKo=
-Received: by 10.180.247.17 with SMTP id u17mr4097244bkh.66.1220130871233;
-        Sat, 30 Aug 2008 14:14:31 -0700 (PDT)
-Received: from desktop2 ( [92.255.85.78])
-        by mx.google.com with ESMTPS id d13sm4092560fka.3.2008.08.30.14.14.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 30 Aug 2008 14:14:30 -0700 (PDT)
-User-Agent: KMail/1.9.9
-In-Reply-To: <200808310102.56795.angavrilov@gmail.com>
+        h=date:to:cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=QV332bfITv+1hRA4ZNImhHD9J7MoGyU8oOHDAF6YCqK65BZhv+2CwpUSSnNBCiV4Kn
+         +FteO+wBYqbgXY1EPaiJ8oG1vieYaQq+u0ViwY6TrmA8A6YXY6Qhz+Va3c46tZ8V9xlm
+         IFChul7Qw3GgcVshZ/1kUFiMkiGNST8gtz8mU=
+Received: by 10.86.77.5 with SMTP id z5mr3271538fga.10.1220131280559;
+        Sat, 30 Aug 2008 14:21:20 -0700 (PDT)
+Received: from sigkill.schiele.dyndns.org ( [91.18.78.90])
+        by mx.google.com with ESMTPS id d6sm3861117fga.2.2008.08.30.14.21.19
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 30 Aug 2008 14:21:19 -0700 (PDT)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 0818116081; Sat, 30 Aug 2008 23:21:17 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <200808302237.17017.jnareb@gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94435>
 
-If an untracked file is selected, F5 and other manual rescan synonyms
-would try to select a tracked file instead. Also, clicking on an icon
-in the unstaged changes list skips over untracked files, unless the
-file clicked is untracked itself.
 
-The objective is to make it easier to ignore untracked files showing
-up in the Unstaged Changes list, and ensure that no modifications
-to tracked objects are left unstaged.
+--E7i4zwmWs5DOuDSH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
----
- git-gui.sh |   44 +++++++++++++++++++++++++++++++++++---------
- 1 files changed, 35 insertions(+), 9 deletions(-)
+On Sat, Aug 30, 2008 at 10:37:15PM +0200, Jakub Narebski wrote:
+>  # quote the given arguments for passing them to the shell
+>  # quote_command("command", "arg 1", "arg with ' and ! characters")
+>  # =3D> "'command' 'arg 1' 'arg with '\'' and '\!' characters'"
+>  # Try to avoid using this function wherever possible.
+>  sub quote_command {
+>  	return join(' ',
+>  		    map( { my $a =3D $_; $a =3D~ s/(['!])/'\\$1'/g; "'$a'" } @_ ));
+>  }
 
-diff --git a/git-gui.sh b/git-gui.sh
-index f84f436..fde44a6 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1817,6 +1817,10 @@ proc do_rescan {} {
- 	rescan ui_ready
- }
- 
-+proc ui_do_rescan {} {
-+	rescan {force_first_diff; ui_ready}
-+}
-+
- proc do_commit {} {
- 	commit_tree
- }
-@@ -1917,6 +1921,18 @@ proc select_first_diff {} {
- 	}
- }
- 
-+proc force_first_diff {} {
-+	global current_diff_path
-+
-+	if {[info exists file_states($current_diff_path)]} {
-+		set state [lindex $file_states($current_diff_path) 0]
-+
-+		if {[string index $state 1] ne {O}} return
-+	}
-+
-+	select_first_diff
-+}
-+
- proc toggle_or_diff {w x y} {
- 	global file_states file_lists current_diff_path ui_index ui_workdir
- 	global last_clicked selected_paths
-@@ -1938,13 +1954,23 @@ proc toggle_or_diff {w x y} {
- 	# Do not stage files with conflicts
- 	if {[info exists file_states($path)]} {
- 		set state [lindex $file_states($path) 0]
--		if {[string first {U} $state] >= 0} {
--			set col 1
--		}
-+	} else {
-+		set state {__}
-+	}
-+
-+	if {[string first {U} $state] >= 0} {
-+		set col 1
- 	}
- 
-+	# Restage the file, or simply show the diff
- 	if {$col == 0 && $y > 1} {
--		set after [next_diff_after_action $w $path $lno]
-+		if {[string index $state 1] eq {O}} {
-+			set mmask {}
-+		} else {
-+			set mmask {[^O]}
-+		}
-+
-+		set after [next_diff_after_action $w $path $lno $mmask]
- 
- 		if {$w eq $ui_index} {
- 			update_indexinfo \
-@@ -2208,7 +2234,7 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
- 	.mbar.commit add separator
- 
- 	.mbar.commit add command -label [mc Rescan] \
--		-command do_rescan \
-+		-command ui_do_rescan \
- 		-accelerator F5
- 	lappend disable_on_lock \
- 		[list .mbar.commit entryconf [.mbar.commit index last] -state]
-@@ -2564,7 +2590,7 @@ pack .vpane.lower.commarea.buttons.l -side top -fill x
- pack .vpane.lower.commarea.buttons -side left -fill y
- 
- button .vpane.lower.commarea.buttons.rescan -text [mc Rescan] \
--	-command do_rescan
-+	-command ui_do_rescan
- pack .vpane.lower.commarea.buttons.rescan -side top -fill x
- lappend disable_on_lock \
- 	{.vpane.lower.commarea.buttons.rescan conf -state}
-@@ -2985,9 +3011,9 @@ if {[is_enabled transport]} {
- 	bind . <$M1B-Key-P> do_push_anywhere
- }
- 
--bind .   <Key-F5>     do_rescan
--bind .   <$M1B-Key-r> do_rescan
--bind .   <$M1B-Key-R> do_rescan
-+bind .   <Key-F5>     ui_do_rescan
-+bind .   <$M1B-Key-r> ui_do_rescan
-+bind .   <$M1B-Key-R> ui_do_rescan
- bind .   <$M1B-Key-s> do_signoff
- bind .   <$M1B-Key-S> do_signoff
- bind .   <$M1B-Key-t> do_add_selection
--- 
-1.6.0.20.g6148bc
+Well, I guess you know why I did not consider it worth from my side to go i=
+nto
+that business.  ;-)
+
+If someone has a concrete implementation and a list of (concrete) tests I
+should do I can do so.
+
+Otherwise I just consider Perl 5.6 as unsupported since our main development
+systems have Perl 5.8 or later anyway.
+
+Robert
+
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
+
+"Quidquid latine dictum sit, altum sonatur."
+
+--E7i4zwmWs5DOuDSH
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.4-svn0 (GNU/Linux)
+
+iD8DBQFIubnNxcDFxyGNGNcRAqdGAJsFghdYtTgsWlzlqLArt2+kEnXKgQCgp/Tq
+PskmF/yRhjLMqxMAtUtLXwQ=
+=cis5
+-----END PGP SIGNATURE-----
+
+--E7i4zwmWs5DOuDSH--
