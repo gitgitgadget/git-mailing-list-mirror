@@ -1,91 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Improvate portability: Display pid_t's always as
- long
-Date: Sun, 31 Aug 2008 00:15:10 -0700
-Message-ID: <7vtzd1bqpt.fsf@gitster.siamese.dyndns.org>
-References: <1219858743-4476-1-git-send-email-sn_@gmx.net>
- <1219858743-4476-2-git-send-email-sn_@gmx.net>
- <7vsksqp9f1.fsf@gitster.siamese.dyndns.org> <48B9B03F.1080304@gmx.net>
+From: "Weyert de Boer" <weyert@gmail.com>
+Subject: Problems with using git svn dcommit
+Date: Sun, 31 Aug 2008 09:29:22 +0200
+Message-ID: <c7d83d0d0808310029s15c1413m49cad5c68a568271@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Soria Parra <dsp@php.net>
-To: David Soria Parra <dsoria@gmx.net>
-X-From: git-owner@vger.kernel.org Sun Aug 31 09:16:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 31 09:39:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZhAg-00038n-Dp
-	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 09:16:26 +0200
+	id 1KZhX1-0006Qg-6s
+	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 09:39:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752766AbYHaHPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2008 03:15:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752717AbYHaHPV
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 03:15:21 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38429 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752729AbYHaHPU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2008 03:15:20 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AF92958833;
-	Sun, 31 Aug 2008 03:15:16 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id E995058831; Sun, 31 Aug 2008 03:15:12 -0400 (EDT)
-In-Reply-To: <48B9B03F.1080304@gmx.net> (David Soria Parra's message of "Sat,
- 30 Aug 2008 22:40:31 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8FDFFC98-772C-11DD-B268-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1751728AbYHaH3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2008 03:29:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751785AbYHaH3Z
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 03:29:25 -0400
+Received: from rv-out-0506.google.com ([209.85.198.235]:25922 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751027AbYHaH3Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 03:29:24 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1421874rvb.1
+        for <git@vger.kernel.org>; Sun, 31 Aug 2008 00:29:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=0sW4p7v8pvDR6l0n5fgeo+JcM96XntSAkRYtdqyGxRQ=;
+        b=Rs1qO2cTTAY24+SzRoPg9ejy8CDqTcn2CGHJ6YUgi0lcQE63j2zjMR2/ey3UbzqKXu
+         mwn2z0fwvRRm4FolzW5v3hQqZETTIQiEYhdIhXkiS5ipdMmhdx3WuYhu5gB4kYKy3ULy
+         Ep9zW6Nmn73sIR0pN38wTaG0t9KRy5vHmvzuA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=r1IYVsYGzJW20m8eiQw8QT9gGDc+iHmrgcfofl/Fbnk5yRVD3TYQr+hMzFzetbebrZ
+         V960AdoJZt7BJ0m+PnhYngZs6gp7yirVoaRuFzXUwYDoJdA5vfNKx6EtecaC3fQt7t1/
+         Vi3X8c8FOEwjfgr8Ti0redVmXFYchNzfenJOI=
+Received: by 10.140.144.6 with SMTP id r6mr2573305rvd.293.1220167763013;
+        Sun, 31 Aug 2008 00:29:23 -0700 (PDT)
+Received: by 10.140.203.3 with HTTP; Sun, 31 Aug 2008 00:29:22 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94462>
 
-David Soria Parra <dsoria@gmx.net> writes:
+I have initialized a GIT repository for using a subversion repository
+hosted at beanstalk.com. Only I have problems with it. Each time I try
+to trigger GIT SVN DCOMMIT. I am getting the following error message:
 
->> On the other hand, if you are shooting for maximum compatibility perhaps
->> you may want to cast it to "intmax_t" and format as such.
-> Yes, good point, casting to long isn't enough. I think it's a good approach to cast the pids to intmax_t as pids
-> are also used in git_path() and therefore might result in equal paths for separate processes if
-> the pid is higher than int.
->
-> so here is an updated patch:
+Can't call method "full_url" on an undefined value at
+/opt/local/libexec/git-core/git-svn line 425.
 
-Please wrap lines to reasonable length (e.g. 70-76 cols).
+Really strange on other repos it's working fine. Anyone might know
+what could cause this?
 
-Please move commentary like this that clarifies context of the patch
-submission to after three-dashes (emulate patches from people with good
-manners).
+Here you can find some output:
+http://www.dustyfrog.nl/dropbox/git-svn-1.txt
+http://www.dustyfrog.nl/dropbox/git-svn-2.txt
 
-> From da5519b3ae5ce84c703aeaab2bc4ea363897c334 Mon Sep 17 00:00:00 2001
-
-Especially, don't paste this line.
-
-> From: David Soria Parra <dsp at>
-> Date: Fri, 29 Aug 2008 01:19:43 +0200
-> Subject: [PATCH] Improvate portability: Cast pid_t's to intmax_t
-
-"Improvate"?
-
-Including these in your message is not very useful.  These in-body headers
-are used to override what can be read from the real headers of the e-mail
-message, but you do not have a valid e-mail address here!
-
-> Some systems (like e.g. OpenSolaris) define pid_t as long,
-> ...
-> diff --git a/builtin-commit.c b/builtin-commit.c
-> index c870037..90ef3d5 100644
-> --- a/builtin-commit.c
-> +++ b/builtin-commit.c
-> @@ -320,7 +320,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
->  		die("unable to write new_index file");
->
->  	fd = hold_lock_file_for_update(&false_lock,
-> -				       git_path("next-index-%d", getpid()), 1);
-> +				       git_path("next-index-%jd", (intmax_t) getpid()), 1);
-
-Some systems we support do not have %j width specifier.  I'd suggest
-casting up to uintmax_t and format with PRIuMAX, which we do define
-a substitute for portability.
+I am currently using GIT 1.6.0.1 on MacOSX 10.5.4 installed via MacPorts
