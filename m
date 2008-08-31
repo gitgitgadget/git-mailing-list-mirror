@@ -1,86 +1,61 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] t6013: replace use of 'tac' with equivalent Perl
-Date: Mon,  1 Sep 2008 00:31:37 +0200
-Message-ID: <1220221897-6081-1-git-send-email-trast@student.ethz.ch>
-References: <1220212998-90810-1-git-send-email-benji@silverinsanity.com>
-Cc: Brian Gernhardt <benji@silverinsanity.com>,
-	Junio C Hamano <gitster@pobox.com>
+From: Heikki Orsila <heikki.orsila@iki.fi>
+Subject: [PATCH] Correct documentation wording for diff options -S and --pickaxe-all
+Date: Mon, 1 Sep 2008 02:03:04 +0300
+Message-ID: <20080831230304.GA30480@zakalwe.fi>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 01 00:39:19 2008
+X-From: git-owner@vger.kernel.org Mon Sep 01 01:04:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZvZg-0003GV-2h
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 00:39:12 +0200
+	id 1KZvxv-0007vV-8o
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 01:04:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752845AbYHaWby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2008 18:31:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752601AbYHaWby
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 18:31:54 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:14677 "EHLO xsmtp1.ethz.ch"
+	id S1755986AbYHaXDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2008 19:03:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755529AbYHaXDI
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 19:03:08 -0400
+Received: from zakalwe.fi ([80.83.5.154]:53803 "EHLO zakalwe.fi"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752437AbYHaWbx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2008 18:31:53 -0400
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 1 Sep 2008 00:31:52 +0200
-Received: from localhost.localdomain ([84.75.158.234]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 1 Sep 2008 00:31:51 +0200
-X-Mailer: git-send-email 1.6.0.1.282.g3cc57
-In-Reply-To: <1220212998-90810-1-git-send-email-benji@silverinsanity.com>
-X-OriginalArrivalTime: 31 Aug 2008 22:31:51.0699 (UTC) FILETIME=[5D2F0E30:01C90BB9]
+	id S1753521AbYHaXDH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 19:03:07 -0400
+Received: by zakalwe.fi (Postfix, from userid 1023)
+	id 92EEA2BC68; Mon,  1 Sep 2008 02:03:04 +0300 (EEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94513>
 
-'tac' is not available everywhere, so substitute the equivalent Perl
-code 'print reverse <>'.  Noticed by Brian Gernhardt.
-
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+Signed-off-by: Heikki Orsila <heikki.orsila@iki.fi>
 ---
+ Documentation/diff-options.txt |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-Thanks for pointing this out.  However, I tried to avoid hardcoding
-those results by recommendation of t/README (last paragraph):
-
-  ... If all the test scripts hardcoded the object IDs like
-  t0000-basic.sh does, that defeats the purpose of t0000-basic.sh,
-  which is to isolate that level of validation in one place.  Your
-  test also ends up needing updating when such a change to the
-  internal happens, so do _not_ do it and leave the low level of
-  validation to t0000-basic.sh.
-
-So I would favour this fix.  I think this should be ok because we
-depend on Perl anyway.
-
-- Thomas
-
-
- t/t6013-rev-list-reverse-parents.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t6013-rev-list-reverse-parents.sh b/t/t6013-rev-list-reverse-parents.sh
-index d294466..59fc2f0 100755
---- a/t/t6013-rev-list-reverse-parents.sh
-+++ b/t/t6013-rev-list-reverse-parents.sh
-@@ -25,7 +25,7 @@ test_expect_success 'set up --reverse example' '
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 1759386..062a8ae 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -160,12 +160,12 @@ endif::git-format-patch[]
+ 	number.
  
- test_expect_success '--reverse --parents --full-history combines correctly' '
- 	git rev-list --parents --full-history master -- foo |
--		tac > expected &&
-+		perl -e "print reverse <>" > expected &&
- 	git rev-list --reverse --parents --full-history master -- foo \
- 		> actual &&
- 	test_cmp actual expected
-@@ -33,7 +33,7 @@ test_expect_success '--reverse --parents --full-history combines correctly' '
+ -S<string>::
+-	Look for differences that contain the change in <string>.
++	Look for differences that contain <string> in the change.
  
- test_expect_success '--boundary does too' '
- 	git rev-list --boundary --parents --full-history master ^root -- foo |
--		tac > expected &&
-+		perl -e "print reverse <>" > expected &&
- 	git rev-list --boundary --reverse --parents --full-history \
- 		master ^root -- foo > actual &&
- 	test_cmp actual expected
+ --pickaxe-all::
+ 	When -S finds a change, show all the changes in that
+-	changeset, not just the files that contain the change
+-	in <string>.
++	changeset, not just the files that contain <string>
++	in the change.
+ 
+ --pickaxe-regex::
+ 	Make the <string> not a plain string but an extended POSIX
 -- 
-1.6.0.1.282.g3cc57
+1.6.0.1
