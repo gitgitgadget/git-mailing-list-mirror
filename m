@@ -1,135 +1,107 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 2/2 - RFH/WIP] xdiff-merge: optionally show conflicts in
- "diff3 -m" style
-Date: Sun, 31 Aug 2008 10:38:18 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0808311021120.12958@nehalem.linux-foundation.org>
-References: <7vzlmwbs1u.fsf@gitster.siamese.dyndns.org> <7vsksobrn9.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.10.0808281727490.3300@nehalem.linux-foundation.org> <7vmyiwbpe2.fsf@gitster.siamese.dyndns.org> <7v1w05d5hm.fsf@gitster.siamese.dyndns.org>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
+Date: Sun, 31 Aug 2008 14:29:28 -0400
+Message-ID: <32541b130808311129u79f4179enfabab8f5845ed522@mail.gmail.com>
+References: <20080830173947.GF7185@schiele.dyndns.org>
+	 <20080830183413.GG7185@schiele.dyndns.org>
+	 <20080830183949.GA16415@coredump.intra.peff.net>
+	 <200808302237.17017.jnareb@gmail.com>
+	 <32541b130808302235g6a23efcfs78efe2ef557cd9c7@mail.gmail.com>
+	 <8663phnw3z.fsf@blue.stonehenge.com>
+	 <7v63ph40at.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 31 19:39:46 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	"Jakub Narebski" <jnareb@gmail.com>, "Jeff King" <peff@peff.net>,
+	"Robert Schiele" <rschiele@gmail.com>, git@vger.kernel.org,
+	"Lea Wiemann" <lewiemann@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 31 20:31:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZqtu-0008S6-28
-	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 19:39:46 +0200
+	id 1KZrhc-0000zL-E0
+	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 20:31:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754692AbYHaRil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2008 13:38:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754559AbYHaRik
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 13:38:40 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:60549 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754501AbYHaRik (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Aug 2008 13:38:40 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7VHcJvo022550
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 31 Aug 2008 10:38:20 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m7VHcIR9031692;
-	Sun, 31 Aug 2008 10:38:18 -0700
-In-Reply-To: <7v1w05d5hm.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.932 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1755338AbYHaSaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2008 14:30:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755196AbYHaSaA
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 14:30:00 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:11670 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754493AbYHaSaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 14:30:00 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so972310yxm.1
+        for <git@vger.kernel.org>; Sun, 31 Aug 2008 11:29:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=G77WVhQspPEMo/DyMbB9aBa7/cmoXmqm/8CDoC0F4fQ=;
+        b=IUvKX/QUIdGzDs6eDF3gQgCr36WyC8WhR+lJiljW0tzeg34woNL0YRrXivx7zEUsdj
+         ES4bpwnuh2kGQftSP8ezB6JHUiDFv8ydxPfCFFLnv2m6V4o2RuikybxZ8gUteQvkY8vD
+         qX4wPR7dqwldHSeILz6bwAtb/Sf806hx4R5oI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=EQhoeAf5bjpRwFizfYOfOOijvaC1gJbC6eZCjfSc/JyC6vtQV6cUQAm896Kln9hKDd
+         HNNcf9l7wk6sloppfOWmYrR396byFcVFfUI6NcPSE35RWqb33c4MShDnL7/Vr0QCXRej
+         JgAPtXtCdpqdTEk+tVCd9PJqAK0DdJbUWXbrY=
+Received: by 10.151.45.6 with SMTP id x6mr1799534ybj.110.1220207398973;
+        Sun, 31 Aug 2008 11:29:58 -0700 (PDT)
+Received: by 10.150.96.5 with HTTP; Sun, 31 Aug 2008 11:29:28 -0700 (PDT)
+In-Reply-To: <7v63ph40at.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94498>
 
+On Sun, Aug 31, 2008 at 12:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> merlyn@stonehenge.com (Randal L. Schwartz) writes:
+>
+>>>>>>> "Avery" == Avery Pennarun <apenwarr@gmail.com> writes:
+>>
+>> Avery> Shell quoting is a disaster (including security holes, where relevant)
+>> Avery> waiting to happen.  The above is the only sane way to do it, and it
+>> Avery> isn't very hard to implement.  (Instead of system() in the subprocess,
+>> Avery> you can use exec().)
+>>
+>> quotemeta() is about regex quoting.  This is not precisely the same as shell
+>> quoting, and is both misleading, and potentially broken.
+>
+> Agreed to, and grateful for, both of your comments.
+>
+> Do you like the one Jakub quoted from how gitweb does it?  It looks like
+> this:
+>
+>    # quote the given arguments for passing them to the shell
+>    # quote_command("command", "arg 1", "arg with ' and ! characters")
+>    # => "'command' 'arg 1' 'arg with '\'' and '\!' characters'"
+>    # Try to avoid using this function wherever possible.
+>    sub quote_command {
+>           return join(' ',
+>                       map( { my $a = $_; $a =~ s/(['!])/'\\$1'/g; "'$a'" } @_ ));
+>    }
 
+No, that's just another feeble attempt at quoting, which may or may
+not be correct.  I'm not smart enough to tell.
 
-On Sun, 31 Aug 2008, Junio C Hamano wrote:
-> 
-> On average, I am finding that "diff3 -m" format more irritating than
-> useful.  However, on occasions like this, I am finding it quite useful.
+I have a proper implementation in the 'runlock' script in gitbuilder:
 
-I have to say that the best feature of the standard merge is the zealous 
-version, which apparently doesn't work well with the "diff3 -m" format.
+    http://github.com/apenwarr/gitbuilder/tree/master/runlock
 
-I do agree that what is often really nasty with the normal merge conflict 
-info is when you actually need the original thing to understand why some 
-hunk was left, and yes, a common case of that is that one side simply 
-removed a function, and the other side had modified it. At that point the 
-resulting conflict is often hard to understand without seeing the 
-original, exactly because you don't see any actual "conflict", you only 
-see one side (the other side being empty).
+In that particular case, I wanted to handle signals carefully, so I
+needed the manual fork thing even in perl 5.8.  You can safely remove
+the signal handling stuff (and of course the lockfile stuff) if you
+just want a minimal safe fork-exec-wait implementation in perl.
 
-But what really saves that situation is the combination of
+Have fun,
 
- - 'gitk --merge <file>'
- - 'git diff' showing the multi-way merge
-
-and I find myself really _hating_ doing rebases because the merge helpers 
-are so totally useless (ie "gitk --merge" at least didn't use to work 
-across a rebase conflict because MERGE_HEAD isn't set)
-
-But the biggest problem, and the reason I _really_ detest the diff3 
-format, is that small merges are fairly often pretty easy to see anyway. 
-If the conflict markers all fit in one screenful, it's generally fairly 
-easy to see why something conflicted, because you can visually compare 
-things.
-
-But the complicated cases are when there are bigger changes, and the 
-conflict is over many many lines of code, and it's really hard to visually 
-see what changed. And the diff3 format makes this worse - it not only 
-makes the conflict 50% bigger to begin with, it moves the two conflicting 
-versions away from each other, making that visual comparison much harder.
-
-Now, there are tools to help with that. I think various of the graphical 
-merge tools understand the diff3 format, and then ti can really help. But 
-I think it hurts for a lot of the _common_ cases.
-
-> My observation so far suggests that it would be best for me to leave the
-> configuration "merge.conflictstyle" to the default "merge", and instead
-> give an option to allow me to tell "git checkout -m -- $path" (which is
-> also a new feature; it overwrites the $path by the result of a fresh merge
-> to reproduce the conflicted state in the working tree, using the three
-> stages recorded in the index) to use "diff3 -m" style, when I want to.
-
-Now *this* I think is a great idea! 
-
-The reason I think it's a great idea is that it solves so many _different_ 
-issues (which is the mark of a really good solution):
-
- - it fixes my problem with diff3 output: the fact that it's more annoying 
-   by _default_ than it is occasionally useful.
-
-   If the default isn't to do it - since by default it often hurts - but 
-   you have the option to do it when there is something confusing going on 
-   (like the "one side disappeared, why did it conflict?" case), then you 
-   have the best of both worlds - a good default with a way to dig deeper 
-   when you need to.
-
- - it fixes another totally unrelated problem: incorrect merge 
-   resolutions.
-
-   Again, I find this to be fairly rare, but what git is good at is to 
-   make incremental resolutions for merge problems - you can resolve the 
-   merge in the work tree, then compile and test the result before 
-   actually committing it, and "git diff" always gives relevant and 
-   interesting output for the merge.
-
-   And _occasionally_ the resolve looks obvious, but then when you compile 
-   things you notice that it doesn't work because (for example) you 
-   resolved it by removing one side (exactly because the other side was a 
-   removal), and it turned out that the conflict was adding a function 
-   that you hadn't realized was new, and was needed.
-
-   And while "git diff" is fine, and you can cut-and-paste things and try 
-   to re-resolve it that way, I have occasionally decided to just do a 
-   "git reset" and re-do the whole merge.
-
-   But your idea allows us to just re-do the merge for a single file.
-
-So I think we do quite well already, but your solution really does sound 
-like a good and useful addition to the toolbox.
-
-		Linus
+Avery
