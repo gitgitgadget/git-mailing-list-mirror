@@ -1,61 +1,93 @@
-From: =?utf-8?q?Ask=20Bj=C3=B8rn=20Hansen?= <ask@develooper.com>
-Subject: [PATCH] Document sendemail.envelopesender configuration
-Date: Sun, 31 Aug 2008 13:32:43 -0700
-Message-ID: <1220214763-25790-1-git-send-email-ask@develooper.com>
-References: <1A4402DD-03B5-4951-B8CA-DB8A8E93D8C4@develooper.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
+Date: Sun, 31 Aug 2008 22:55:15 +0200
+Message-ID: <200808312255.16943.jnareb@gmail.com>
+References: <20080830173947.GF7185@schiele.dyndns.org> <32541b130808311129u79f4179enfabab8f5845ed522@mail.gmail.com> <200808312223.38222.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Ask=20Bj=C3=B8rn=20Hansen?= <ask@develooper.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 31 22:43:12 2008
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	"Jeff King" <peff@peff.net>, "Robert Schiele" <rschiele@gmail.com>,
+	git@vger.kernel.org, "Lea Wiemann" <lewiemann@gmail.com>,
+	"H. Peter Anvin" <hpa@zytor.com>, Petr Baudis <pasky@suse.cz>
+To: "Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 31 22:56:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZtlO-0001rU-Ue
-	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 22:43:11 +0200
+	id 1KZtyF-0005vf-1c
+	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 22:56:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757141AbYHaUmE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Aug 2008 16:42:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752203AbYHaUmD
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 16:42:03 -0400
-Received: from gw.develooper.com ([64.81.84.140]:61384 "EHLO
-	freja.develooper.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752120AbYHaUmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2008 16:42:03 -0400
-X-Greylist: delayed 557 seconds by postgrey-1.27 at vger.kernel.org; Sun, 31 Aug 2008 16:42:02 EDT
-Received: by freja.develooper.com (Postfix, from userid 500)
-	id A9D7E17D025; Sun, 31 Aug 2008 13:32:43 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.1.158.ga28da.dirty
-In-Reply-To: <1A4402DD-03B5-4951-B8CA-DB8A8E93D8C4@develooper.com>
+	id S1757746AbYHaUzU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Aug 2008 16:55:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757743AbYHaUzU
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 16:55:20 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:53906 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757732AbYHaUzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 16:55:19 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1109660fgg.17
+        for <git@vger.kernel.org>; Sun, 31 Aug 2008 13:55:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=8YUDN2E6eLwtGdtIEzY4bo/pScaroPTEhGEsC2pxtfE=;
+        b=Da00EEB3eI6TE0WWF1DzXdcBhIjSJUNbcYvZxBdF8jQPCKpYhZzgWpAxkMHNxFrN+V
+         GE+u9UjsrMHru2mGO7VycYOpEkMBMlR7urIVL2SQhN+gDPrIqSkfBLNMqg5tbhkucZeu
+         QxHmMEh/C4+Zt4sX8PKbACbcqs2giGKCcNs3A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=SqShI1jzELmu15lLUTJx3sS/cA8+5N4wvsqxq47ME+B7V8OnagYo5nD1fhmIeAUppZ
+         ZpH3K1z/2/KHcf8C2Mc8Q7iRWwFDahVW0Ccb/7wDDnZl+fWzX1a20ke8FJUQ5oftNoZU
+         aoCZ+RoP51evbfdDSIwTqRsxXQyFg1w/Quwdg=
+Received: by 10.86.82.6 with SMTP id f6mr3987940fgb.38.1220216117794;
+        Sun, 31 Aug 2008 13:55:17 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.214.20])
+        by mx.google.com with ESMTPS id l12sm5697732fgb.6.2008.08.31.13.55.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 31 Aug 2008 13:55:16 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200808312223.38222.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94509>
 
+Jakub Narebski wrote:
 
-Signed-off-by: Ask Bj=C3=B8rn Hansen <ask@develooper.com>
----
- Documentation/git-send-email.txt |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+> We have to go to quote.c to get to know why "!" is a special case too=
+,
+> in addition to "'". =A0The commit message for 77d604c3 (by H. Peter A=
+nvin,
+> which is CC-ed) states:
+>=20
+> =A0 =A0 Create function to sq_quote into a buffer
+> =A0 =A0 Handle !'s for csh-based shells
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-=
-email.txt
-index e2437f3..e3f82da 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -179,6 +179,9 @@ user is prompted for a password while the input is =
-masked for privacy.
- 	This is useful if your default address is not the address that is
- 	subscribed to a list. If you use the sendmail binary, you must have
- 	suitable privileges for the -f parameter.
-+	Default is the value of the 'sendemail.envelopesender' configuration
-+ 	value; if that is unspecified, choosing the envelope sender is left
-+	to your MTA.
-=20
- --to::
- 	Specify the primary recipient of the emails generated.
+Although according to POSIX=20
+
+  Enclosing characters in single-quotes ( '' ) shall preserve the liter=
+al
+  value of each character within the single-quotes. A single-quote cann=
+ot
+  occur within single-quotes.
+
+so "!" should be not treated as special character in POSIX shell,
+csh unfortunately does not follow this.  Try
+
+  $ echo '!!'
+
+in csh, tcsh (now that's funny) and bash (or dash).
+
 --=20
-1.6.0.1.158.ga28da.dirty
+Jakub Narebski
+Poland
