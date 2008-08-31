@@ -1,150 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Start conforming code to "git subcmd" style
-Date: Sun, 31 Aug 2008 02:32:05 -0700 (PDT)
-Message-ID: <m38wudr0mq.fsf@localhost.localdomain>
-References: <20080830111253.GA9148@zakalwe.fi>
-	<7vwshyfctu.fsf@gitster.siamese.dyndns.org>
+From: "David Aguilar" <davvid@gmail.com>
+Subject: Re: 'git format-patch' --interactive?
+Date: Sun, 31 Aug 2008 02:32:29 -0700
+Message-ID: <402731c90808310232r56f399y55216f7f7748ed42@mail.gmail.com>
+References: <48BA1D9D.1070003@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Heikki Orsila <heikki.orsila@iki.fi>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 31 11:33:20 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Ittay Dror" <ittay.dror@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 31 11:33:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZjJ6-0004fc-2O
-	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 11:33:16 +0200
+	id 1KZjJR-0004kN-1l
+	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 11:33:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756033AbYHaJcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2008 05:32:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755414AbYHaJcJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 05:32:09 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:34837 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754863AbYHaJcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2008 05:32:08 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so937408fgg.17
-        for <git@vger.kernel.org>; Sun, 31 Aug 2008 02:32:06 -0700 (PDT)
+	id S1756218AbYHaJcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2008 05:32:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756180AbYHaJcc
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 05:32:32 -0400
+Received: from wf-out-1314.google.com ([209.85.200.172]:15981 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755526AbYHaJcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 05:32:31 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so1424167wfd.4
+        for <git@vger.kernel.org>; Sun, 31 Aug 2008 02:32:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=xNDthy+gGF9QbKQdgPFYw6qBVK9E1haZpaZTMbCfAxU=;
-        b=JcnNlGBTL9V/7cRcme/H3PvJjgOHUAY30erktmOUy3SVbbCbdUeKE/Ltci0usarJOe
-         PmcvJSTWMzs9C7FGxkwHzcl3rt3dtHYUlVwwUH5t+3ns5H9Azv4wTImUA9ojw0DLn//b
-         DxCrmJ5ziw+m0QRd95iMK3J8OVsnNIV4zHFWU=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=qnU76xy5K+dYQZ8k86KgP4yLRbY0aiV6pXycbet2Yk0=;
+        b=lRjpZ0hYsJuXsvcfTWTq1lcmG+cy09wpLlQ2wYQFW7rFgE+KABs3927hkoWWwb6oee
+         oWXQTvPahc81DoOtgFOcdyyKgh/blmqLC6KMbaceZToOI+SYBjxnwBiKT01HphKh7vhQ
+         jOiS+K8RT2OyyXr0VddJVM6P300eM0wDmP0ps=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=OsBekIFPktxoVU9L+mSHJtC5BNDJRcim9dipC51umND04GYACTEc6PWweQ7ChSBWpq
-         LH7Dk6tPW+vVajKKpEVWD8Pt0bs61NW2ttpNI7QHJfOla7xl4THbEnm1zvZ5EaWYNNg3
-         7CkLEr7QJ/3IXk2+/OZ3HZRe6Zob8I2iGXRzI=
-Received: by 10.86.82.6 with SMTP id f6mr3593366fgb.38.1220175126312;
-        Sun, 31 Aug 2008 02:32:06 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.200.211])
-        by mx.google.com with ESMTPS id 3sm4311117fge.3.2008.08.31.02.32.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 31 Aug 2008 02:32:05 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m7V9VxPF011283;
-	Sun, 31 Aug 2008 11:31:59 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m7V9Vvru011280;
-	Sun, 31 Aug 2008 11:31:57 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vwshyfctu.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Nt6n3MiRahNJE/qPvNzEAKdVb84qkVHSJvUepw/FZChayw1bKMHNiaoNluCT0ib1AZ
+         /MzUXnSwPfjQSPlSBzdRJcn9PvptfaFkchA6YIVOMqp0sXOgTnU5CZZ9I+KCfdRSlSb2
+         W1nZVJApoFyYO/r8fwtZf3j5NcoS6/JqCEQKs=
+Received: by 10.142.222.21 with SMTP id u21mr1664157wfg.244.1220175149646;
+        Sun, 31 Aug 2008 02:32:29 -0700 (PDT)
+Received: by 10.142.174.2 with HTTP; Sun, 31 Aug 2008 02:32:29 -0700 (PDT)
+In-Reply-To: <48BA1D9D.1070003@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94468>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sat, Aug 30, 2008 at 9:27 PM, Ittay Dror <ittay.dror@gmail.com> wrote:
+> Hi,
+>
+> Is there a way (tool) to allow me to interactively format a patch so that I
+> can remove formatting noise or insignificant changes?
+>
+> Thank you,
+> Ittay
+>
+> --
+> --
+> Ittay Dror <ittay.dror@gmail.com>
+>
 
-> Heikki Orsila <heikki.orsila@iki.fi> writes:
-> 
-> > User notifications are presented as 'git cmd', and code comments
-> > are presented as '"cmd"' or 'git's cmd', rather than 'git-cmd'.
-...
-> > diff --git a/builtin-apply.c b/builtin-apply.c
-> > ...
-> > @@ -506,17 +506,17 @@ static char *gitdiff_verify_name(const char *li
-> > ...
-> > -			die("git-apply: bad git-diff - expected /dev/nu...
-> > +			die("git apply: bad git-diff - expected /dev/nu...
-> > ...
-> > -			die("git-apply: bad git-diff - inconsistent %s ...
-> > +			die("git apply: bad git-diff - inconsistent %s ...
-> > ...
-> > -			die("git-apply: bad git-diff - expected /dev/nu...
-> > +			die("git apply: bad git-diff - expected /dev/nu...
-> > ...
-> 
-> I'd vote for doing "s/git-diff/patch/" here.  After looking at
-> builtin-apply.c, there is no other error/die messages that would become
-> ambiguous, so such a rewording won't make it harder to help people who saw
-> any of these error messages (or other error messages from the "git-apply"
-> program).
+Yes -- get changes into your worktree (through e.g. "git apply") and
+then use "git cola" to edit the index and/or worktree into a
+commitable state
+.
+http://cola.tuxfamily.org/
 
-I agree.  git-apply in general is presented a patch output, not
-necessary git-diff output (it could be output generated by GNU diff,
-or by 'scm diff' from some SCM...).
+You can undo or ignore specific changes to a file, which is what it
+sounds like you're trying to do.
 
-> > diff --git a/builtin-blame.c b/builtin-blame.c
-> > ...
-> > @@ -2299,12 +2299,12 @@ int cmd_blame(int argc, const char **argv, co...
-> > ...
-> > -		OPT_BIT(..."Use the ... as git-annotate (Default: off)"...
-> > +		OPT_BIT(..."Use the ... as git annotate (Default: off)"...
-> > ...
-> > -		OPT_STRING(..."Use ...instead of calling git-rev-list"),
-> > +		OPT_STRING(..."Use ...instead of calling git rev-list"),
-> > ...
-> 
-> A two-word command name in a prose is hard to read; "rev-list" is not a
-> word and that makes the problem less serious, but it would be easier to
-> read if these two word command names are quoted or grouped together in
-> some way to make it clear they form a single noun and the sentence is
-> talking about a single "thing".
-> 
-> The old "git-foo" spelling was good for that purpose, but it will invite
-> user confusion so we cannot use it anymore.  Perhaps we can say "instead
-> of calling 'git rev-list'"?
-
-Either "git-rev-list" or "'git rev-list'" is fine; "git rev-list"
-is not, as it requires careful reading to notice which part is
-proposed git command, and which the rest of message.
-
-> The command name at the beginning of die message does not have this issue.
-> E.g. the colon in:
-> 
-> 	die("git foo: I hate you");
-> 
-> is sufficient to make it clear that these two words form a single noun;
-> i.e. "I'm 'git foo' program, and I am telling you that I hate you".
-> 
-> But it might be just me, so before asking you to reroll another round, I'd
-> like to hear opinions from the list.
-> 
->  (1) No, JC is worrying too much about readability; Heikki's patch is good;
-> 
->  (2) JC's right -- "instead of calling 'git rev-list'" is much better;
-> 
->  (3) Something else?
-
-I think that "git foo: message" is unambiguous, and I guess _that_
-could be even in one single large patch.  Other cases I guess need
-careful review and thinking about in a case by case basis,
-unfortunately.
-
-Better to be careful about that change than to make change and then
-notice that it is not good...
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+ David
