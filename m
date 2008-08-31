@@ -1,103 +1,98 @@
-From: Sheng Yang <yasker@gmail.com>
-Subject: Ambiguous -from of git-send-email
-Date: Sun, 31 Aug 2008 13:57:10 +0800
-Message-ID: <20080831055710.GA644@yukikaze>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-am: Pass the --directory option through to git-apply
+Date: Sat, 30 Aug 2008 23:30:30 -0700
+Message-ID: <7vfxold7cp.fsf@gitster.siamese.dyndns.org>
+References: <1220048870-97641-1-git-send-email-kevin@sb.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 31 08:00:40 2008
+Cc: git@vger.kernel.org, "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Sun Aug 31 08:42:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZfzJ-000111-72
-	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 08:00:37 +0200
+	id 1KZgdq-00063V-IT
+	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 08:42:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751738AbYHaF5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2008 01:57:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751588AbYHaF5N
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 01:57:13 -0400
-Received: from ti-out-0910.google.com ([209.85.142.186]:64248 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751726AbYHaF5M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2008 01:57:12 -0400
-Received: by ti-out-0910.google.com with SMTP id b6so794441tic.23
-        for <git@vger.kernel.org>; Sat, 30 Aug 2008 22:57:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:to:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent
-         :from;
-        bh=h3DHNYE8PHiomTwEEU9oBRXle2gtwvBeXLg6AxBz45c=;
-        b=tcdOuTsacTD0FVcEgVDE7we1YGJPWa6UowIEGlTLHt8zOmSZE4ZwoVg/BxhwhIMUKe
-         /H55McFCTJLwLW6wp3wXttxT41mp55Nhejsxsc73HOlWlbYOP0KHwsDDXOSLiRAL9X6E
-         ObTuoS7yL1+ssJUDjHqwsHgPyeeNJO49UHAZ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent:from;
-        b=Bpt4Ip8VZSMKVqYcAn9IZBxEOOAMWRHZCAXWYyeY3Hiyu8FwwV5XUQ0pvIh8JJEdqE
-         O04SRutryI4jxrRZzIU7XdySeuNbDvDABNi0mZM52z5WpGWE7x9nPOiSX4STEuhUZ8pl
-         unCtkHzU/lG+IhQs9I3iPumFPBQQ05bp5dqL0=
-Received: by 10.110.14.12 with SMTP id 12mr5676639tin.19.1220162229305;
-        Sat, 30 Aug 2008 22:57:09 -0700 (PDT)
-Received: from localhost.localdomain ( [58.38.142.61])
-        by mx.google.com with ESMTPS id d4sm11026934tib.13.2008.08.30.22.57.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 30 Aug 2008 22:57:08 -0700 (PDT)
-Received: from yasker by localhost.localdomain with local (Exim 4.69)
-	(envelope-from <yasker@yukikaze>)
-	id 1KZfvy-0005Of-Ma
-	for git@vger.kernel.org; Sun, 31 Aug 2008 13:57:10 +0800
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751104AbYHaGai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2008 02:30:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751449AbYHaGai
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 02:30:38 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63911 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751027AbYHaGah (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 02:30:37 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4DD0E5859A;
+	Sun, 31 Aug 2008 02:30:36 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6FB0E58598; Sun, 31 Aug 2008 02:30:32 -0400 (EDT)
+In-Reply-To: <1220048870-97641-1-git-send-email-kevin@sb.org> (Kevin
+ Ballard's message of "Fri, 29 Aug 2008 15:27:50 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 523B2AD0-7726-11DD-8A74-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94456>
 
-Hi, all
+Kevin Ballard <kevin@sb.org> writes:
 
-A trivial problem here, but I think it can be handled more clearly.
+> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+> index b9c6fac..64c8178 100644
+> --- a/Documentation/git-am.txt
+> +++ b/Documentation/git-am.txt
+> @@ -66,6 +66,7 @@ default.   You could use `--no-utf8` to override this.
+>  
+>  -C<n>::
+>  -p<n>::
+> +--directory=<root>::
+>  	These flags are passed to the 'git-apply' (see linkgit:git-apply[1])
+>  	program that applies
+>  	the patch.
+> diff --git a/git-am.sh b/git-am.sh
+> index aa60261..7e7a86f 100755
+> --- a/git-am.sh
+> +++ b/git-am.sh
+> @@ -18,6 +18,7 @@ k,keep          pass -k flag to git-mailinfo
+>  whitespace=     pass it through git-apply
+>  C=              pass it through git-apply
+>  p=              pass it through git-apply
+> +directory=      pass it through git-apply
+>  resolvemsg=     override error message when patch failure occurs
+>  r,resolved      to be used after a patch failure
+>  skip            skip the current patch
+> @@ -155,7 +156,7 @@ do
+>  		;;
+>  	--resolvemsg)
+>  		shift; resolvemsg=$1 ;;
+> -	--whitespace)
+> +	--whitespace|--directory)
+>  		git_apply_opt="$git_apply_opt $1=$2"; shift ;;
+>  	-C|-p)
+>  		git_apply_opt="$git_apply_opt $1$2"; shift ;;
 
-Recently when I begin to use git-send-email with my private email
-account, I found it didn't work as I expected. The problem is "From" of
-the patch. I have to specify my company email in the "From" which meant
-the author, but when I go with default value of git-send-email, I found
-it omit the additional "From" of patch in the mailbody.
+Thanks, will queue.
 
-For example, I specified "my@company.com" in patch's "From: " when used
-git-format-patch to generate it. And I use "my@home.com" to send the
-mail.  But if I go with default setting of git-send-email, it said the
-mail would be sent as "from my@company.com"(of course it can't). At
-last, the sent mail only got "From my@home.com" in mail header, and
-"From my@company.com" was omitted.
+This inherits an ancient breakage that was introduced to the --whitespace
+option by 67dad68 (add -C[NUM] to git-am, 2007-02-08), in that you need to
+give the next "git am" session the same option when you get a conflict and
+need to restart.  We should fix this ancient breakage by recording the
+miscellaneous options that we append to $git_apply_opt variable (we should
+remove the use of "$dotest/whitespace" that is now a no-op but 67dad68 did
+not remove).  That is a separate topic anyway, but the end result should:
 
-I've checked the git-send-email code, and found what's the real meaning
-of "-from" specify in git-send-email is the email account(sender) rather
-than the author. And if the sender is the same as the author, the first
-line of patch "From: xxx" was omitted. But at least on my machine, the
-from specified in the mail would be overwritten by MTA/ISP(well, I am
-not sure which of them did this), so what's the content of "-from" is
-not important, but if "-from" is the same as "From" in the patch, the
-"From" line in the patch is omitted, otherwise the line is kept.
+ * Save the options in effect in $dotest/, just like "sign", "utf8" and
+   "keep" are kept;
 
-Yeah, it's reasonable. But I think it's not that clear. "-from" of
-git-send-email indicated the sender and "From" indicated the author is
-very ambiguous.  Maybe use "-sender" here in parameter is more
-reasonable? And do we need some notes in manual?
+ * Upon command startup, read the saved options, and then let the command
+   line options override them (which is not what the current code does, by
+   the way);
 
-And can we add a something like "sendemail.sender" to specify the
-sender? I think it's not that unusual to make author's email address is
-different from sender, at least I think it's more common than
-"sendmail.bcc".
-
-If you agree, I'd like to offer a patch for "sendemail.sender"(maybe
-also give some note in manual for "-from").
-
-Thanks!
-
---
-regards
-Yang, Sheng
+so that you can give necessary --directory, --whitespace, -C etc. options
+when you feed your series to "git-am", and after fixing up a rejected
+patch, you can continue without typing the same set of options again.
