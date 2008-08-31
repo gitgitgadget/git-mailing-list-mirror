@@ -1,68 +1,71 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Start conforming code to "git subcmd" style
-Date: Sun, 31 Aug 2008 03:53:47 +0200
-Message-ID: <200808310353.47699.chriscool@tuxfamily.org>
-References: <20080830111253.GA9148@zakalwe.fi> <7vwshyfctu.fsf@gitster.siamese.dyndns.org>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: [PATCH] diff: treat -crlf files as binary
+Date: Sat, 30 Aug 2008 22:34:01 -0400
+Message-ID: <32541b130808301934t6034d52bva0f8c3608a88e585@mail.gmail.com>
+References: <7vfxon4ikr.fsf@gitster.siamese.dyndns.org>
+	 <32541b130808291456k3de953a2yd1e93bc27ad14293@mail.gmail.com>
+	 <7vljyefaps.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Heikki Orsila <heikki.orsila@iki.fi>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 31 03:51:27 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, arman@twinsun.com
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 31 04:35:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZc68-0003YL-Rv
-	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 03:51:25 +0200
+	id 1KZcmz-0001mg-3J
+	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 04:35:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755017AbYHaBuH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Aug 2008 21:50:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754966AbYHaBuH
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 21:50:07 -0400
-Received: from smtp4-g19.free.fr ([212.27.42.30]:37353 "EHLO smtp4-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754829AbYHaBuG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Aug 2008 21:50:06 -0400
-Received: from smtp4-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp4-g19.free.fr (Postfix) with ESMTP id 60BF53EA0C5;
-	Sun, 31 Aug 2008 03:50:04 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp4-g19.free.fr (Postfix) with ESMTP id 351D13EA0B5;
-	Sun, 31 Aug 2008 03:50:04 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vwshyfctu.fsf@gitster.siamese.dyndns.org>
+	id S1754953AbYHaCeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2008 22:34:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754863AbYHaCeF
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Aug 2008 22:34:05 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:33553 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754829AbYHaCeD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2008 22:34:03 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so803196yxm.1
+        for <git@vger.kernel.org>; Sat, 30 Aug 2008 19:34:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=t2LTUgAiz/TsXdbV5eeSPsdXNP8RwkzzcYKLrQ1xxhM=;
+        b=Pine+qygnIK32SiEeYnf+OiZPflsL16DBy7XA6zoFyFUk4v6gdhpcnJBhCUdE+SvAG
+         yUYjALrUaMfDpVGfXNcTVuu2fJaMiUrueDgJOTDP6aDqv2FHSHQyxzz19Q+Ht+5Aaey9
+         UWbDPHMKaUnwZpn6XQQPkkgZbJdhIYwl+QFZ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=fqu6b4XygrIccPRRCaDwquHuMptKVNOSNEWycmhI1M88ice6jiuwbtV29b4owdrn5r
+         yYnJS2aIVLA1kgQpilmpvy7fFdDZNG76tCMUjJ1K1VRH8AGqZXaI5Uv7TwvK4zigYen9
+         vOgmtsPpLhuGd6C2mLTqQ1tOw9xudr0KgQjU4=
+Received: by 10.151.46.17 with SMTP id y17mr6611590ybj.120.1220150041750;
+        Sat, 30 Aug 2008 19:34:01 -0700 (PDT)
+Received: by 10.150.96.5 with HTTP; Sat, 30 Aug 2008 19:34:01 -0700 (PDT)
+In-Reply-To: <7vljyefaps.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94448>
 
-Le samedi 30 ao=FBt 2008, Junio C Hamano a =E9crit :
+On Sat, Aug 30, 2008 at 5:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>  Unset::
 >
-> The command name at the beginning of die message does not have this
-> issue. E.g. the colon in:
->
-> 	die("git foo: I hate you");
->
-> is sufficient to make it clear that these two words form a single nou=
-n;
-> i.e. "I'm 'git foo' program, and I am telling you that I hate you".
->
-> But it might be just me, so before asking you to reroll another round=
-,
-> I'd like to hear opinions from the list.
->
->  (1) No, JC is worrying too much about readability; Heikki's patch is
-> good;
->
->  (2) JC's right -- "instead of calling 'git rev-list'" is much better=
-;
+> -       Unsetting the `crlf` attribute on a path is meant to
+> -       mark the path as a "binary" file.  The path never goes
+> -       through line endings conversion upon checkin/checkout.
+> +       Unsetting the `crlf` attribute on a path is tells git
+> +       not to attempt any end-of-line conversion  upon checkin/checkout.
+[...]
 
-I agree with (2).
+Well, _I_ understand it :)
 
-Regards,
-Christian.
-
->  (3) Something else?
+Avery
