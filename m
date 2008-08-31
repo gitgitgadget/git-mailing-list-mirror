@@ -1,73 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff: treat -crlf files as binary
-Date: Sun, 31 Aug 2008 09:25:17 -0700
-Message-ID: <7vej45b18y.fsf@gitster.siamese.dyndns.org>
-References: <7vfxon4ikr.fsf@gitster.siamese.dyndns.org>
- <32541b130808291456k3de953a2yd1e93bc27ad14293@mail.gmail.com>
- <7vljyefaps.fsf@gitster.siamese.dyndns.org>
- <81b0412b0808310216h6c349e1en740a1f4c7fef75e6@mail.gmail.com>
+Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
+Date: Sun, 31 Aug 2008 09:27:38 -0700
+Message-ID: <7v63ph40at.fsf@gitster.siamese.dyndns.org>
+References: <20080830173947.GF7185@schiele.dyndns.org>
+ <20080830183413.GG7185@schiele.dyndns.org>
+ <20080830183949.GA16415@coredump.intra.peff.net>
+ <200808302237.17017.jnareb@gmail.com>
+ <32541b130808302235g6a23efcfs78efe2ef557cd9c7@mail.gmail.com>
+ <8663phnw3z.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Avery Pennarun" <apenwarr@gmail.com>, git@vger.kernel.org,
-	arman@twinsun.com
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 31 18:28:12 2008
+Cc: "Avery Pennarun" <apenwarr@gmail.com>,
+	"Jakub Narebski" <jnareb@gmail.com>, "Jeff King" <peff@peff.net>,
+	"Robert Schiele" <rschiele@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Lea Wiemann" <lewiemann@gmail.com>
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+X-From: git-owner@vger.kernel.org Sun Aug 31 18:31:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZpmb-00037W-Sj
-	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 18:28:10 +0200
+	id 1KZppO-0003dq-5X
+	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 18:31:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752835AbYHaQZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2008 12:25:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752846AbYHaQZ3
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 12:25:29 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53505 "EHLO
+	id S1752989AbYHaQ1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2008 12:27:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752894AbYHaQ1w
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 12:27:52 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53842 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752835AbYHaQZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2008 12:25:28 -0400
+	with ESMTP id S1752873AbYHaQ1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 12:27:51 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 098AB547E8;
-	Sun, 31 Aug 2008 12:25:27 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5E1CA54803;
+	Sun, 31 Aug 2008 12:27:50 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B813D547E5; Sun, 31 Aug 2008 12:25:20 -0400 (EDT)
-In-Reply-To: <81b0412b0808310216h6c349e1en740a1f4c7fef75e6@mail.gmail.com>
- (Alex Riesen's message of "Sun, 31 Aug 2008 11:16:29 +0200")
+ ESMTPSA id 8DB6854802; Sun, 31 Aug 2008 12:27:41 -0400 (EDT)
+In-Reply-To: <8663phnw3z.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+ message of "Sun, 31 Aug 2008 06:37:52 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6B8EFE6E-7779-11DD-B8A2-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: C1000CD0-7779-11DD-8C44-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94491>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-> 2008/8/30 Junio C Hamano <gitster@pobox.com>:
->> diff --git i/Documentation/gitattributes.txt w/Documentation/gitattributes.txt
->> ...
->> -       through line endings conversion upon checkin/checkout.
->> +       Unsetting the `crlf` attribute on a path is tells git
->> ...
+>>>>>> "Avery" == Avery Pennarun <apenwarr@gmail.com> writes:
 >
-> "+       Unsetting the `crlf` attribute on a path tells git"
+> Avery> Shell quoting is a disaster (including security holes, where relevant)
+> Avery> waiting to happen.  The above is the only sane way to do it, and it
+> Avery> isn't very hard to implement.  (Instead of system() in the subprocess,
+> Avery> you can use exec().)
 >
-> (remove "is" before "tells")
+> quotemeta() is about regex quoting.  This is not precisely the same as shell
+> quoting, and is both misleading, and potentially broken.
 
-Yeah, thanks.  I reworded the sentence number of times and somehow crufts
-were left behind.  Fixed, together with the double space before "upon",
-before committing.
+Agreed to, and grateful for, both of your comments.
 
-I am actually more surprised by the lack of any surprised comment about
-the unadvertised presense of "binary" (pseudo)attribute, though.  The
-support has been there since f48fd68 (attribute macro support,
-2007-04-14), two days after introduction of gitattributes mechanism.
+Do you like the one Jakub quoted from how gitweb does it?  It looks like
+this:
 
-Maybe somebody should re-read the log message of that commit, and refine
-the attribute macros sections the patch under discussion has added.
-
-Somebody who can write and spell English better than me, that is ;-)
+    # quote the given arguments for passing them to the shell
+    # quote_command("command", "arg 1", "arg with ' and ! characters")
+    # => "'command' 'arg 1' 'arg with '\'' and '\!' characters'"
+    # Try to avoid using this function wherever possible.
+    sub quote_command {
+           return join(' ',
+                       map( { my $a = $_; $a =~ s/(['!])/'\\$1'/g; "'$a'" } @_ ));
+    }
