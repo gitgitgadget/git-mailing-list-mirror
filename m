@@ -1,63 +1,65 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Document clarification: gitmodules, gitattributes
-Date: Sun, 31 Aug 2008 09:38:40 -0700
-Message-ID: <7vwshx2l7z.fsf@gitster.siamese.dyndns.org>
-References: <1220198427-13017-1-git-send-email-hendeby@isy.liu.se>
+Subject: Re: Feature request: git-svn dcommit should send deltas upstream
+Date: Sun, 31 Aug 2008 10:03:53 -0700
+Message-ID: <7vsksl2k1y.fsf@gitster.siamese.dyndns.org>
+References: <87myj0f3mb.fsf@mid.deneb.enyo.de>
+ <20080829082311.GA7128@yp-box.dyndns.org> <87tzd4p1lt.fsf@mid.deneb.enyo.de>
+ <87y72dkvq4.fsf@mid.deneb.enyo.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Gustaf Hendeby <hendeby@isy.liu.se>
-X-From: git-owner@vger.kernel.org Sun Aug 31 18:39:59 2008
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Florian Weimer <fw@deneb.enyo.de>
+X-From: git-owner@vger.kernel.org Sun Aug 31 19:06:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZpy1-0005Ek-GA
-	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 18:39:57 +0200
+	id 1KZqMN-0001dP-PS
+	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 19:05:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753261AbYHaQiq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2008 12:38:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753044AbYHaQiq
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 12:38:46 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55975 "EHLO
+	id S1753044AbYHaREB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2008 13:04:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753055AbYHaREB
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 13:04:01 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56894 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752067AbYHaQiq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2008 12:38:46 -0400
+	with ESMTP id S1752909AbYHaREA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 13:04:00 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 91E3F6EF1A;
-	Sun, 31 Aug 2008 12:38:45 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7CA416F0EA;
+	Sun, 31 Aug 2008 13:03:59 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id BB6736EF19; Sun, 31 Aug 2008 12:38:42 -0400 (EDT)
-In-Reply-To: <1220198427-13017-1-git-send-email-hendeby@isy.liu.se> (Gustaf
- Hendeby's message of "Sun, 31 Aug 2008 18:00:27 +0200")
+ ESMTPSA id 70E8F6F0E8; Sun, 31 Aug 2008 13:03:55 -0400 (EDT)
+In-Reply-To: <87y72dkvq4.fsf@mid.deneb.enyo.de> (Florian Weimer's message of
+ "Sun, 31 Aug 2008 18:14:27 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4787ED76-777B-11DD-8EFD-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CDE685A0-777E-11DD-83F0-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94495>
 
-Gustaf Hendeby <hendeby@isy.liu.se> writes:
+Florian Weimer <fw@deneb.enyo.de> writes:
 
-> The SYNOPSIS section of gitattibutes and gitmodule fail to clearly
-> specify the name of the in tree files used.  This patch brings in the
-> initial `.' and the fact that the `.gitmodules' file should reside at
-> the top-level of the working tree.
+> * Florian Weimer:
 >
-> Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
-> ---
+>>> It's been too long since I've looked at the SVN TxDelta API, but I
+>>> thought SVN::TxDelta::apply would take care of the delta computation for
+>>> us...
+>>
+>> SVN::Git::Editor::M does not seem to make use of the base text.
 >
-> If this patch isn't accepted, the reverse changes should be made to
-> the gitignore documentation.
+> Here's an attempt at delta generation.  I don't know if it is entirely
+> correct, but it does work in the sense that it passes "make test" and
+> the test cases I reported eariler.
+>
+> Sorry for the format.  Has anybody got some Emacs code to submit diffs
+> using Gnus?
 
-The sole reason they lacked the initial "." was because AsciiDOC
-mishandled ".gitmodules" that began the line; we used to have the dot but
-removed it as a workaround because we couldn't find a good solution by
-tweaking the mark-up.
-
-By prefixing "$GIT_FOOBAR/" in front of them, your patch makes the issue
-go away while conveying the fact that it has to be at the toplevel of the
-work tree, not anywhere in the tree.  Very nice.
+What's wrong with using "C-x C-i" in the message mode to read format-patch
+output in (alternatively "C-u M-! git format-patch --stdout -1 $commit"
+in the message mode), move "Subject: " up and remove the remainder of the
+fake headers?
