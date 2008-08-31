@@ -1,108 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Start conforming code to "git subcmd" style
-Date: Sun, 31 Aug 2008 09:14:43 -0700
-Message-ID: <7vk5dxb1qk.fsf@gitster.siamese.dyndns.org>
-References: <20080830111253.GA9148@zakalwe.fi>
- <7vwshyfctu.fsf@gitster.siamese.dyndns.org>
- <m38wudr0mq.fsf@localhost.localdomain>
+Subject: Re: [PATCH] diff: treat -crlf files as binary
+Date: Sun, 31 Aug 2008 09:25:17 -0700
+Message-ID: <7vej45b18y.fsf@gitster.siamese.dyndns.org>
+References: <7vfxon4ikr.fsf@gitster.siamese.dyndns.org>
+ <32541b130808291456k3de953a2yd1e93bc27ad14293@mail.gmail.com>
+ <7vljyefaps.fsf@gitster.siamese.dyndns.org>
+ <81b0412b0808310216h6c349e1en740a1f4c7fef75e6@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Heikki Orsila <heikki.orsila@iki.fi>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 31 18:16:06 2008
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Avery Pennarun" <apenwarr@gmail.com>, git@vger.kernel.org,
+	arman@twinsun.com
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 31 18:28:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZpau-0000TQ-UL
-	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 18:16:05 +0200
+	id 1KZpmb-00037W-Sj
+	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 18:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753226AbYHaQOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2008 12:14:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753004AbYHaQOw
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 12:14:52 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54609 "EHLO
+	id S1752835AbYHaQZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2008 12:25:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752846AbYHaQZ3
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 12:25:29 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53505 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752846AbYHaQOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2008 12:14:51 -0400
+	with ESMTP id S1752835AbYHaQZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 12:25:28 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DAEB46EC29;
-	Sun, 31 Aug 2008 12:14:49 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 098AB547E8;
+	Sun, 31 Aug 2008 12:25:27 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D55646EC26; Sun, 31 Aug 2008 12:14:45 -0400 (EDT)
-In-Reply-To: <m38wudr0mq.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Sun, 31 Aug 2008 02:32:05 -0700 (PDT)")
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id B813D547E5; Sun, 31 Aug 2008 12:25:20 -0400 (EDT)
+In-Reply-To: <81b0412b0808310216h6c349e1en740a1f4c7fef75e6@mail.gmail.com>
+ (Alex Riesen's message of "Sun, 31 Aug 2008 11:16:29 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EFCB1EBC-7777-11DD-90CB-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6B8EFE6E-7779-11DD-B8A2-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94490>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+"Alex Riesen" <raa.lkml@gmail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> 2008/8/30 Junio C Hamano <gitster@pobox.com>:
+>> diff --git i/Documentation/gitattributes.txt w/Documentation/gitattributes.txt
+>> ...
+>> -       through line endings conversion upon checkin/checkout.
+>> +       Unsetting the `crlf` attribute on a path is tells git
+>> ...
 >
->> Heikki Orsila <heikki.orsila@iki.fi> writes:
->> 
->> > User notifications are presented as 'git cmd', and code comments
->> > are presented as '"cmd"' or 'git's cmd', rather than 'git-cmd'.
-> ...
->> > diff --git a/builtin-apply.c b/builtin-apply.c
->> > ...
->> > @@ -506,17 +506,17 @@ static char *gitdiff_verify_name(const char *li
->> > ...
->> > -			die("git-apply: bad git-diff - expected /dev/nu...
->> > +			die("git apply: bad git-diff - expected /dev/nu...
->> > ...
->> 
->> I'd vote for doing "s/git-diff/patch/" here.  After looking at
->> builtin-apply.c, there is no other error/die messages that would become
->> ambiguous, so such a rewording won't make it harder to help people who saw
->> any of these error messages (or other error messages from the "git-apply"
->> program).
+> "+       Unsetting the `crlf` attribute on a path tells git"
 >
-> I agree.  git-apply in general is presented a patch output, not
-> necessary git-diff output (it could be output generated by GNU diff,
-> or by 'scm diff' from some SCM...).
+> (remove "is" before "tells")
 
-This codepath only is reached after we determine "diff --git" header, so
-we are specifically expecting a patch intput with git flavor here.  The
-original wording of the message helps somebody who diagnoses at what point
-in git-apply program the input is considered corrupt.  My point was that
-that line of thinking caters to a git programmer/debugger but changing it
-to end user language (I suggested "patch", but I think "bad input" might
-be even better) would not harm the debuggability this message is giving
-us, because there is no similar message from the command from any other
-codepath.
+Yeah, thanks.  I reworded the sentence number of times and somehow crufts
+were left behind.  Fixed, together with the double space before "upon",
+before committing.
 
-> I think that "git foo: message" is unambiguous, and I guess _that_
-> could be even in one single large patch.  Other cases I guess need
-> careful review and thinking about in a case by case basis,
-> unfortunately.
+I am actually more surprised by the lack of any surprised comment about
+the unadvertised presense of "binary" (pseudo)attribute, though.  The
+support has been there since f48fd68 (attribute macro support,
+2007-04-14), two days after introduction of gitattributes mechanism.
 
-Yes, I think that is a very good suggestion.  Thanks.
+Maybe somebody should re-read the log message of that commit, and refine
+the attribute macros sections the patch under discussion has added.
 
-    $ git grep -c -e '\(die\|error\|warning\)("git-[^ ]*:' 34baebc -- '*.c'
-    ho/dashless:builtin-apply.c:3
-    ho/dashless:builtin-checkout-index.c:3
-    ho/dashless:builtin-commit-tree.c:1
-    ho/dashless:builtin-fetch-pack.c:1
-    ho/dashless:builtin-grep.c:1
-    ho/dashless:builtin-ls-files.c:3
-    ho/dashless:builtin-rm.c:2
-    ho/dashless:builtin-show-ref.c:3
-    ho/dashless:builtin-tar-tree.c:2
-    ho/dashless:builtin-update-index.c:8
-    ho/dashless:connect.c:2
-    ho/dashless:entry.c:10
-    ho/dashless:merge-index.c:3
-    ho/dashless:tree-diff.c:1
-    ho/dashless:upload-pack.c:9
-
-I've looked at the hits from the above command (without -c) and they all
-looked good candidate, so I'll do that myself to reduce the amount of
-patches that do need thinking and inspection.
+Somebody who can write and spell English better than me, that is ;-)
