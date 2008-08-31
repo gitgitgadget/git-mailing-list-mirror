@@ -1,71 +1,87 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Add help.autocorrect to enable/disable autocorrecting
-Date: Sun, 31 Aug 2008 16:49:01 +0200
-Message-ID: <vpqk5dxqlya.fsf@bauges.imag.fr>
-References: <20080828171533.GA6024@blimp.local>
-	<20080828212722.GF6439@steel.home>
-	<7vsksm1pmd.fsf@gitster.siamese.dyndns.org>
-	<81b0412b0808300944p29199600ie95c65404b6cb380@mail.gmail.com>
-	<20080830171331.GA26932@steel.home>
-	<7vprnqifd2.fsf@gitster.siamese.dyndns.org>
-	<20080831135023.GA6616@blimp.local>
-	<20080831135458.GB6616@blimp.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 31 16:52:33 2008
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: [PATCH] Document clarification: gitmodules, gitattributes
+Date: Sun, 31 Aug 2008 18:00:27 +0200
+Message-ID: <1220198427-13017-1-git-send-email-hendeby@isy.liu.se>
+Cc: git@vger.kernel.org, Gustaf Hendeby <hendeby@isy.liu.se>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Aug 31 18:06:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZoI4-00042t-2V
-	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 16:52:32 +0200
+	id 1KZpRU-0005kD-Qh
+	for gcvg-git-2@gmane.org; Sun, 31 Aug 2008 18:06:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751402AbYHaOvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2008 10:51:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751342AbYHaOvY
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 10:51:24 -0400
-Received: from imag.imag.fr ([129.88.30.1]:55096 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751274AbYHaOvX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2008 10:51:23 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m7VEnFQo014631
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 31 Aug 2008 16:49:16 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KZoEf-0004oY-7I; Sun, 31 Aug 2008 16:49:01 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KZoEf-0005xu-4j; Sun, 31 Aug 2008 16:49:01 +0200
-In-Reply-To: <20080831135458.GB6616@blimp.local> (Alex Riesen's message of "Sun\, 31 Aug 2008 15\:54\:58 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 31 Aug 2008 16:49:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752533AbYHaQAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2008 12:00:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752374AbYHaQAa
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 12:00:30 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:50529 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752079AbYHaQA3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 12:00:29 -0400
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id D25E025AB1;
+	Sun, 31 Aug 2008 18:00:27 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 11210-04; Fri,  4 Jul 2008 02:08:56 +0200 (MEST)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 2817925AA4;
+	Sun, 31 Aug 2008 18:00:27 +0200 (MEST)
+Received: by pluring.isy.liu.se (Postfix, from userid 2087)
+	id 1E0762ED78; Sun, 31 Aug 2008 18:00:27 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.1.258.g6c63a
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94487>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+The SYNOPSIS section of gitattibutes and gitmodule fail to clearly
+specify the name of the in tree files used.  This patch brings in the
+initial `.' and the fact that the `.gitmodules' file should reside at
+the top-level of the working tree.
 
-> It is off(0) by default, to avoid scaring people unless they asked to.
-> If set to a non-0 value, wait for that amount of deciseconds before
-> running the corrected command.
+Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
+---
 
-Perhaps off should be -1 (or, say, anything negative), so that the
-value 0 can be used to mean "execute the corrected command without
-waiting".
+If this patch isn't accepted, the reverse changes should be made to
+the gitignore documentation.
 
-(not that I really care personnally, I'd probably keep it off anyway).
+/Gustaf
 
+ Documentation/gitattributes.txt |    2 +-
+ Documentation/gitmodules.txt    |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 1f23d27..5fb5007 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -7,7 +7,7 @@ gitattributes - defining attributes per path
+ 
+ SYNOPSIS
+ --------
+-$GIT_DIR/info/attributes, gitattributes
++$GIT_DIR/info/attributes, .gitattributes
+ 
+ 
+ DESCRIPTION
+diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+index f8d122a..d1a17e2 100644
+--- a/Documentation/gitmodules.txt
++++ b/Documentation/gitmodules.txt
+@@ -7,7 +7,7 @@ gitmodules - defining submodule properties
+ 
+ SYNOPSIS
+ --------
+-gitmodules
++$GIT_WORK_DIR/.gitmodules
+ 
+ 
+ DESCRIPTION
 -- 
-Matthieu
+1.6.0.1.258.g6c63a
