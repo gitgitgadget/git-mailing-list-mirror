@@ -1,56 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] t6013: replace use of 'tac' with equivalent Perl
-Date: Mon, 1 Sep 2008 18:32:16 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0809011831200.13830@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <1220212998-90810-1-git-send-email-benji@silverinsanity.com> <1220221897-6081-1-git-send-email-trast@student.ethz.ch> <48BBE682.2070000@op5.se> <41757CC9-DB9B-41C9-A698-E2948F79DC2C@silverinsanity.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/12] Towards a better merge resolution support
+Date: Mon, 01 Sep 2008 10:26:24 -0700
+Message-ID: <7v8wubwzen.fsf@gitster.siamese.dyndns.org>
+References: <1220056963-2352-1-git-send-email-gitster@pobox.com>
+ <20080901094412.GB3993@blimp.local>
+ <7vod38w3q6.fsf@gitster.siamese.dyndns.org>
+ <20080901113416.GA8610@blimp.localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, Thomas Rast <trast@student.ethz.ch>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Mon Sep 01 18:28:14 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 01 19:27:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaCGB-0003yY-9a
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 18:28:11 +0200
+	id 1KaDBk-0002SR-I1
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 19:27:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752238AbYIAQ1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 12:27:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751882AbYIAQ1E
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 12:27:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51741 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751360AbYIAQ1D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 12:27:03 -0400
-Received: (qmail invoked by alias); 01 Sep 2008 16:27:00 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp060) with SMTP; 01 Sep 2008 18:27:00 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18E/A0Vw7AE2PtFvnOU6PpSPYFPKImeK2dgUEzeSW
-	YFVuGmvuW8GX6I
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <41757CC9-DB9B-41C9-A698-E2948F79DC2C@silverinsanity.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.72
+	id S1750989AbYIAR0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 13:26:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751061AbYIAR0b
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 13:26:31 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47944 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750912AbYIAR0b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 13:26:31 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 93BEB6D214;
+	Mon,  1 Sep 2008 13:26:29 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 917016D213; Mon,  1 Sep 2008 13:26:26 -0400 (EDT)
+In-Reply-To: <20080901113416.GA8610@blimp.localhost> (Alex Riesen's message
+ of "Mon, 1 Sep 2008 13:34:16 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1D08705E-784B-11DD-8F65-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94596>
 
-Hi,
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-On Mon, 1 Sep 2008, Brian Gernhardt wrote:
+> Junio C Hamano, Mon, Sep 01, 2008 12:38:25 +0200:
+>> Alex Riesen <raa.lkml@gmail.com> writes:
+>> 
+>> > ... IOW, copy the commit
+>> > resolution from some other merge commit. Maybe can be a way to use
+>> > rerere mechanism with that?
+>> 
+>> If you know which merge I did you want to steal from, you can prime your
+>> rerere database by pretending to be me, doing the merge.  Something like:
+>> 
+>> 	$ git checkout $merge^1 ;# detach to the parent of merge
+>>         $ git merge $merge^2 ;# pretend you were me to redo it
+>>         $ git diff -R $merge | git apply --index ;# and get what I did
+>
+> I ended up using
 
-> I am reminded of the last time I tried to remove a use of tac from git 
-> (rebase -i, to be specific).  I was yelled at for trying to use perl, 
-> and "sed -ne '1!G;$p;h'" turned out to be not portable enough.
-
-Please note that using Perl in test scripts is considered less bad than 
-using Perl in a shell script which is part of Git's core.
-
-Ciao,
-Dscho
+I think the last step should be "git read-tree --reset -u $merge" if we
+really want the minimum  sequence.
