@@ -1,90 +1,80 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [cgit PATCH] use Host: header to generate cgit_hosturl
-Date: Sun, 31 Aug 2008 23:30:33 -0700
-Message-ID: <20080901063033.GA21848@untitled>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Subject: Re: [ANNOUNCE] Git User's Survey 2008
+Date: Mon, 1 Sep 2008 10:10:08 +0300
+Message-ID: <94a0d4530809010010yd46f2fevedac2682a330b8e2@mail.gmail.com>
+References: <200808312329.17312.jnareb@gmail.com>
+	 <d411cc4a0808312213k5414b0e2s82d122cf37fea778@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 01 08:31:47 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+To: "Scott Chacon" <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 01 09:11:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ka2wu-0007gm-U7
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 08:31:41 +0200
+	id 1Ka3ZI-00075x-97
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 09:11:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751517AbYIAGaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 02:30:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbYIAGaf
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 02:30:35 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:35180 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751306AbYIAGae (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 02:30:34 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id D597F2DC01B;
-	Sun, 31 Aug 2008 23:30:33 -0700 (PDT)
+	id S1750914AbYIAHKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 03:10:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751052AbYIAHKK
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 03:10:10 -0400
+Received: from rv-out-0506.google.com ([209.85.198.228]:55063 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750843AbYIAHKI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 03:10:08 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1673868rvb.1
+        for <git@vger.kernel.org>; Mon, 01 Sep 2008 00:10:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=PIgdBraPmDKM5zWP7d5u0vdzRZ05A/cx2F6Zs0wUWwY=;
+        b=ck80R/IsQznUo1KVX2R0turtgL7VCmEQpSqoWI9Mf3WpG2NjWugSHe49cJGhORLvFE
+         aX00kRkIW1f6gSd8/xp0HmE1IGGdaKUQsg2iLGswUr2CARycTUEOswG9AXDhGSNHL92K
+         79BYXtUvPkplIgcdPCzWS3fiJOOztgbjP0EbI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=QYzVmo5wUOgSf7Ccw7On/NJKUXMh9Kcj/6oE2wPPYufBbY9hXyPigWcFfaSatJQSyo
+         JFKEYhQTTTfwUwJX/8RRoRcihRTRu133s7Aks4HOnIcc+hNXhHSkSeSXFh3bULT6RIgd
+         qw5eateJcY+MKEThfV8/4q8neZTKQ2XwomC44=
+Received: by 10.140.201.8 with SMTP id y8mr3253935rvf.28.1220253008065;
+        Mon, 01 Sep 2008 00:10:08 -0700 (PDT)
+Received: by 10.140.166.19 with HTTP; Mon, 1 Sep 2008 00:10:08 -0700 (PDT)
+In-Reply-To: <d411cc4a0808312213k5414b0e2s82d122cf37fea778@mail.gmail.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94536>
 
-I run an instance of lighttpd for cgit behind nginx (nginx
-doesn't execute CGI).  So the port (SERVER_PORT=33333) that
-lighttpd runs on sends to cgit is different from the standard
-port 80 that public clients connect to (via nginx).
+On Mon, Sep 1, 2008 at 8:13 AM, Scott Chacon <schacon@gmail.com> wrote:
+> This got on Hacker News and got a few comments on the length of the
+> survey.  It did take me a pretty good amount of time to do.
+>
+> http://news.ycombinator.com/item?id=291560
+>
+> I'm afraid the length and time required to fill it out will skew the
+> answers away from beginning type users, even though a lot of the
+> questions are aimed at them.
+>
+> It may be a good idea next year to do an adaptive survey, where there
+> are a few of the basic questions that could be answered in a few
+> minutes and if the user is a beginner it stops there, if they are more
+> advanced, it asks more advanced questions. I would be happy to help
+> set this up if there is interest, whoever is in charge of this.
 
-This was causing the Atom feed URL to show the private port
-number that lighttpd was running on.
+Well, the changes are saved even if you don't finish it, right?
 
-Since the HTTP/1.1 "Host" header includes the port number if
-running on a non-standard port, it allows non-client-facing HTTP
-servers to transparently generate public URLs that clients can
-see.
+So you can fill it in different sessions.
 
-So use the "Host" header if it is available and fall back to
-SERVER_NAME/SERVER_PORT for some clients that don't set
-HTTP_HOST.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- ui-shared.c |   19 ++++++++++++-------
- 1 files changed, 12 insertions(+), 7 deletions(-)
-
-diff --git a/ui-shared.c b/ui-shared.c
-index 37c60b2..5a848c1 100644
---- a/ui-shared.c
-+++ b/ui-shared.c
-@@ -38,14 +38,19 @@ char *cgit_hosturl()
- {
- 	char *host, *port;
- 
--	host = getenv("SERVER_NAME");
--	if (!host)
--		return NULL;
--	port = getenv("SERVER_PORT");
--	if (port && atoi(port) != 80)
--		host = xstrdup(fmt("%s:%d", host, atoi(port)));
--	else
-+	host = getenv("HTTP_HOST");
-+	if (host) {
- 		host = xstrdup(host);
-+	} else {
-+		host = getenv("SERVER_NAME");
-+		if (!host)
-+			return NULL;
-+		port = getenv("SERVER_PORT");
-+		if (port && atoi(port) != 80)
-+			host = xstrdup(fmt("%s:%d", host, atoi(port)));
-+		else
-+			host = xstrdup(host);
-+	}
- 	return host;
- }
- 
 -- 
-Eric Wong
+Felipe Contreras
