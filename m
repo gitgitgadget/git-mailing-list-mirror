@@ -1,68 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] checkout --conflict=<style>: recreate merge in a
- non-default style
-Date: Mon, 01 Sep 2008 03:39:07 -0700
-Message-ID: <7vhc90w3p0.fsf@gitster.siamese.dyndns.org>
-References: <7v4p501j2y.fsf@gitster.siamese.dyndns.org>
- <48BB9F45.4070509@viscovery.net>
+From: Abhijit Menon-Sen <ams@toroid.org>
+Subject: [PATCH] Git.pm: Use File::Temp->tempfile instead of ->new
+Date: Mon, 1 Sep 2008 16:12:22 +0530
+Message-ID: <20080901104222.GA10026@toroid.org>
+References: <48BBB59F.9080204@statsbiblioteket.dk> <vpqvdxggpw6.fsf@bauges.imag.fr> <20080901100435.GC6555@toroid.org> <48BBC20E.20808@statsbiblioteket.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Sep 01 12:40:34 2008
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Petr Baudis <pasky@suse.cz>
+To: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
+X-From: git-owner@vger.kernel.org Mon Sep 01 12:43:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ka6ph-0008M7-NF
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 12:40:30 +0200
+	id 1Ka6sl-0000sL-92
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 12:43:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753046AbYIAKjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 06:39:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752649AbYIAKjO
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 06:39:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43499 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752148AbYIAKjO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 06:39:14 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6737C5BF77;
-	Mon,  1 Sep 2008 06:39:13 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id BB8C15BF5E; Mon,  1 Sep 2008 06:39:09 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 37EE753C-7812-11DD-BF34-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1752055AbYIAKme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 06:42:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752529AbYIAKmd
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 06:42:33 -0400
+Received: from fugue.toroid.org ([85.10.196.113]:52125 "EHLO fugue.toroid.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751528AbYIAKmd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 06:42:33 -0400
+Received: from penne.toroid.org (penne-vpn [10.8.0.6])
+	by fugue.toroid.org (Postfix) with ESMTP id 058F25580FE;
+	Mon,  1 Sep 2008 12:42:31 +0200 (CEST)
+Received: by penne.toroid.org (Postfix, from userid 1000)
+	id 1E8F2ADC36D; Mon,  1 Sep 2008 16:12:23 +0530 (IST)
+Content-Disposition: inline
+In-Reply-To: <48BBC20E.20808@statsbiblioteket.dk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94570>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Perl 5.8.0 ships with File::Temp 0.13, which does not have the new()
+interface introduced in 0.14, as pointed out by Tom G. Christensen.
 
-> If --conflict is basically the same as --merge, couldn't we then pass
-> style argument to --merge or omit it to get the default style?
+Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
+---
 
-I originally was thinking about doing it that way, but the option parsing
-would become somewhat hairly.
+At 2008-09-01 12:21:02 +0200, tgc@statsbiblioteket.dk wrote:
+>
+> Wouldn't it be possible to accomplish the same as File::Temp->New with
+> the old File::Temp?
 
-    $ git checkout --merge=diff3 foo
-    $ git checkout --merge diff3 foo
-    $ git checkout --merge diff3
+OK, does this one work for you?
 
-The first one is clearly "switch to branch 'foo'; simple 2-way read-tree
-may find the changes in my working tree conflicting and refuse, so use
-3-way merge to resolve such conflicts and express the conflicts in diff3
-style".
+-- ams
 
-The third one is "switch to branch 'diff3'; don't barf on conflicting
-working tree changes; 3-way merge them".
+ perl/Git.pm |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
 
-What about the second one?  Is it "switch to 'foo', express conflicts in
-diff3 style", or "checkout path foo from tree-ish diff3"?
-
-It is the former, but that is only because the latter is an error (-m is
-defined only for checking things out of the index).  That is not something
-parse-options can easily/cleanly do.
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 102e6a4..f383ff8 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -1021,10 +1021,13 @@ sub _temp_cache {
+ 			carp "Temp file '", $name,
+ 				"' was closed. Opening replacement.";
+ 		}
+-		$$temp_fd = File::Temp->new(
+-			TEMPLATE => 'Git_XXXXXX',
+-			DIR => File::Spec->tmpdir
+-			) or throw Error::Simple("couldn't open new temp file");
++		eval {
++			($$temp_fd) = File::Temp->tempfile(
++				'Git_XXXXXX',
++				DIR => File::Spec->tmpdir
++			);
++		};
++		throw Error::Simple("couldn't open new temp file") if $@;
+ 		$$temp_fd->autoflush;
+ 		binmode $$temp_fd;
+ 	}
+-- 
+1.6.0.1.161.g7f314
