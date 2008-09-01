@@ -1,82 +1,83 @@
-From: Abhijit Menon-Sen <ams@toroid.org>
-Subject: [PATCH] Git.pm: Require File::Temp 0.14 for new()
-Date: Mon, 1 Sep 2008 15:34:35 +0530
-Message-ID: <20080901100435.GC6555@toroid.org>
-References: <48BBB59F.9080204@statsbiblioteket.dk> <vpqvdxggpw6.fsf@bauges.imag.fr>
+From: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
+Subject: Re: [TopGit PATCH] tg redepend: New command.
+Date: Mon, 01 Sep 2008 12:11:45 +0200
+Organization: lilypond-design.org
+Message-ID: <1220263905.6278.13.camel@heerbeest>
+References: <1218808427.25300.2.camel@heerbeest>
+	 <36ca99e90809010231o439ab4acsaa3027366c551ff6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	"Tom G. Christensen" <tgc@statsbiblioteket.dk>,
-	Petr Baudis <pasky@suse.cz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 01 12:05:59 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>, Jan Holesovsky <kendy@suse.cz>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 01 12:13:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ka6IA-0006hC-BH
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 12:05:50 +0200
+	id 1Ka6PA-00012Z-IJ
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 12:13:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752762AbYIAKEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 06:04:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752412AbYIAKEo
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 06:04:44 -0400
-Received: from fugue.toroid.org ([85.10.196.113]:58219 "EHLO fugue.toroid.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752055AbYIAKEo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 06:04:44 -0400
-Received: from penne.toroid.org (penne-vpn [10.8.0.6])
-	by fugue.toroid.org (Postfix) with ESMTP id B5F105583E5;
-	Mon,  1 Sep 2008 12:04:42 +0200 (CEST)
-Received: by penne.toroid.org (Postfix, from userid 1000)
-	id B6C6CADC36D; Mon,  1 Sep 2008 15:34:35 +0530 (IST)
-Content-Disposition: inline
-In-Reply-To: <vpqvdxggpw6.fsf@bauges.imag.fr>
+	id S1752055AbYIAKLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 06:11:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751843AbYIAKLt
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 06:11:49 -0400
+Received: from edu-smtp-01.edutel.nl ([88.159.1.221]:55477 "EHLO
+	edu-smtp-01.edutel.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751951AbYIAKLs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 06:11:48 -0400
+Received: from heerbeest (unknown [88.159.206.46])
+	by edu-smtp-01.edutel.nl (Postfix) with ESMTP id BCEB4677A1;
+	Mon,  1 Sep 2008 12:11:46 +0200 (CEST)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by heerbeest (Postfix) with ESMTP id 239EDDC07A;
+	Mon,  1 Sep 2008 12:11:46 +0200 (CEST)
+In-Reply-To: <36ca99e90809010231o439ab4acsaa3027366c551ff6@mail.gmail.com>
+X-Mailer: Evolution 2.23.90 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94557>
 
-File::Temp->new() was introduced in File::Temp 0.14, but 5.8.0 shipped
-with File::Temp 0.13, as pointed out by Tom G. Christensen. Since the
-dependency is optional anyway, we can require 0.14.
+On ma, 2008-09-01 at 11:31 +0200, Bert Wesarg wrote:
 
-Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
----
+Hi Bert,
 
-At 2008-09-01 11:46:17 +0200, Matthieu.Moy@imag.fr wrote:
->
-> > The problem is that Git.pm depends on the "new" method of File::Temp
-> > introduced in 0.14. [...]
 > 
-> Isn't that fixed by c14c8ceb13b299892f286757e22e6af4f6cffab5 ?
-> (Git.pm: Make File::Spec and File::Temp requirement lazy, a few
-> commits before 1.6.0)
+> On Fri, Aug 15, 2008 at 15:53, Jan Nieuwenhuizen <janneke-list@xs4all.nl> wrote:
+> > As discussed previously
+> >
+> >    http://kerneltrap.org/mailarchive/git/2008/8/13/2925144
+> >
+> > Change a topgit branch's dependencies by doing a rebase-by-merge.
+> >
+> >
+> is this script in use by you, or is it abandoned in favor of another idea?
 
-No, because _verify_require only checks that File::Temp exists, not that
-File::Temp 0.14 exists. This patch fixes that.
+I haven't had the time to digest the several new takes on this, esp.
+http://kerneltrap.org/mailarchive/git/2008/8/15/2954214 and combining
+my previous attempt's use of git revert and git cherry-pick with git
+read-tree to make for a much faster adding or removal of
+dependencies.
 
--- ams
+> Anyway, I have tried it today but it looks like the top-bases wasn't
+> updated to the new deps.
 
- perl/Git.pm |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+How odd.  It also looks like "redeps" contains the new set of
+dependencies, which is written to .topdeps.  I guess that most of
+this script will be abandoned anyway, but a nice bug report ie: how to
+reproduce this error never hurts ;-)
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 102e6a4..4e901b6 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -1032,7 +1032,10 @@ sub _temp_cache {
- }
- 
- sub _verify_require {
--	eval { require File::Temp; require File::Spec; };
-+	eval {
-+            require File::Spec;
-+            require File::Temp; File::Temp->VERSION(0.14);
-+        };
- 	$@ and throw Error::Simple($@);
- }
- 
+> IMHO all these "| tr '\n' ' '" aren't needed. bash do the right thing
+> here.
+
+Thanks, I'll have a look.  You did try --add, --remove and "new dep
+list" right? 
+
+Greetings,
+Jan.
+
 -- 
-1.6.0.49.gea35
+Jan Nieuwenhuizen <janneke@gnu.org> | GNU LilyPond - The music typesetter
+http://www.xs4all.nl/~jantien       | http://www.lilypond.org
