@@ -1,57 +1,53 @@
-From: Karl Chen <quarl@cs.berkeley.edu>
-Subject: Re: [PATCH] Support diff.autorefreshindex=true in `git-diff --quiet'
-Date: Mon, 01 Sep 2008 03:50:29 -0700
-Message-ID: <quack.20080901T0350.lthzlmsgmx6@roar.cs.berkeley.edu>
-References: <quack.20080901T0129.lth8wuci80o@roar.cs.berkeley.edu>
-	<7vskskw41j.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix example in git-name-rev documentation
+Date: Mon, 1 Sep 2008 13:07:12 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0809011306550.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <48B9A2C7.3080001@dgreaves.com> <7v7i9ygt4x.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git mailing list <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Greaves <david@dgreaves.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 01 12:55:24 2008
+X-From: git-owner@vger.kernel.org Mon Sep 01 13:03:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ka747-0004lQ-Gv
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 12:55:24 +0200
+	id 1Ka7Bn-0006x5-7c
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 13:03:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751052AbYIAKua (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 06:50:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750933AbYIAKua
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 06:50:30 -0400
-Received: from roar.CS.Berkeley.EDU ([128.32.36.242]:33437 "EHLO
-	roar.quarl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750836AbYIAKu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 06:50:29 -0400
-Received: by roar.quarl.org (Postfix, from userid 18378)
-	id 4AAFB34443; Mon,  1 Sep 2008 03:50:29 -0700 (PDT)
-X-Quack-Archive: 1
-In-Reply-To: <7vskskw41j.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 01 Sep 2008 03\:31\:36 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753125AbYIALBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 07:01:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752882AbYIALBx
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 07:01:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33469 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752742AbYIALBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 07:01:52 -0400
+Received: (qmail invoked by alias); 01 Sep 2008 11:01:50 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp015) with SMTP; 01 Sep 2008 13:01:50 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX195bU0jlSZ5abGOOkkXvosVNWeBXhakMotq7/esRz
+	0Ks4EdXFjAhBAn
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <7v7i9ygt4x.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94573>
 
->>>>> On 2008-09-01 03:31 PDT, Junio C Hamano writes:
+Hi,
 
-    Junio> Karl Chen <quarl@cs.berkeley.edu> writes:
-    >> When diff.autorefreshindex is true, if a file has merely
-    >> been 'touched' (mtime changed, but contents unchanged),
-    >> then `git-diff --quiet' will now return 0 (indicating no
-    >> change) instead of 1, and also silently refresh the index.
+On Sat, 30 Aug 2008, Junio C Hamano wrote:
 
-    Junio> My knee-jerk reaction is that I do not particularly
-    Junio> like this, but I haven't thought things through.  What
-    Junio> does --exit-code do with or without the configuration
-    Junio> variable?
+> Since 59d3f54 (name-rev: avoid "^0" when unneeded, 2007-02-20), name-rev
+> stopped showing an unnecessary "^0" to dereference a tag down to a commit.
+> The patch should have made a matching update to the documentation, but we
+> forgot.
 
-git diff --exit-code silently refreshes the index and returns 0,
-as documented and as I expect.  So I further expect "git diff
---exit-code --quiet" to be have the same semantics as "git diff
---exit-code >/dev/null".
-
-What don't you like about this?  Isn't this the point of
-diff.autorefreshindex ?
+ACK & sorry,
+Dscho
