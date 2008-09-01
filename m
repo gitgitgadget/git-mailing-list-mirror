@@ -1,91 +1,56 @@
-From: Magnus Hjorth <magnus.hjorth@home.se>
-Subject: Re: Committing with past date?
-Date: Mon, 01 Sep 2008 18:25:21 +0200
-Message-ID: <1220286321.5474.6.camel@magnus-desktop>
-References: <1220179469.5518.5.camel@magnus-desktop>
-	 <m34p51qvzv.fsf@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t6013: replace use of 'tac' with equivalent Perl
+Date: Mon, 1 Sep 2008 18:32:16 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0809011831200.13830@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <1220212998-90810-1-git-send-email-benji@silverinsanity.com> <1220221897-6081-1-git-send-email-trast@student.ethz.ch> <48BBE682.2070000@op5.se> <41757CC9-DB9B-41C9-A698-E2948F79DC2C@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 01 18:26:41 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andreas Ericsson <ae@op5.se>, Thomas Rast <trast@student.ethz.ch>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Mon Sep 01 18:28:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaCEc-0003XU-S7
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 18:26:35 +0200
+	id 1KaCGB-0003yY-9a
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 18:28:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751615AbYIAQZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 12:25:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752318AbYIAQZ2
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 12:25:28 -0400
-Received: from ch-smtp01.sth.basefarm.net ([80.76.149.212]:58531 "EHLO
-	ch-smtp01.sth.basefarm.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751627AbYIAQZ1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Sep 2008 12:25:27 -0400
-Received: from c83-254-118-193.bredband.comhem.se ([83.254.118.193]:51376)
-	by ch-smtp01.sth.basefarm.net with esmtp (Exim 4.68)
-	(envelope-from <magnus.hjorth@home.se>)
-	id 1KaCDU-0004dr-4l; Mon, 01 Sep 2008 18:25:27 +0200
-In-Reply-To: <m34p51qvzv.fsf@localhost.localdomain>
-X-Mailer: Evolution 2.22.3.1 
-X-Originating-IP: 83.254.118.193
-X-Scan-Result: No virus found in message 1KaCDU-0004dr-4l.
-X-Scan-Signature: ch-smtp01.sth.basefarm.net 1KaCDU-0004dr-4l d4d4a6a8d8d86efed5a1df66ad60f493
+	id S1752238AbYIAQ1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 12:27:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751882AbYIAQ1E
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 12:27:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51741 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751360AbYIAQ1D (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 12:27:03 -0400
+Received: (qmail invoked by alias); 01 Sep 2008 16:27:00 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp060) with SMTP; 01 Sep 2008 18:27:00 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18E/A0Vw7AE2PtFvnOU6PpSPYFPKImeK2dgUEzeSW
+	YFVuGmvuW8GX6I
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <41757CC9-DB9B-41C9-A698-E2948F79DC2C@silverinsanity.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94595>
 
-Thank you Jakub! 
+Hi,
 
-Forgot to look in the main git manpage, and that variable wasn't
-mentioned in the git-commit manpage or in any FAQ.. 
+On Mon, 1 Sep 2008, Brian Gernhardt wrote:
 
-Now I have a more tricky question.
+> I am reminded of the last time I tried to remove a use of tac from git 
+> (rebase -i, to be specific).  I was yelled at for trying to use perl, 
+> and "sed -ne '1!G;$p;h'" turned out to be not portable enough.
 
-The first part of my application history (the stone age) was maintained
-manually using tarballs, but the second part was maintained using CVS
-(the dark ages).
+Please note that using Perl in test scripts is considered less bad than 
+using Perl in a shell script which is part of Git's core.
 
-I have successfully imported the CVS history using git-cvsimport, but
-now I want to add these older revisions that were made with tarballs to
-the same tree, before the CVS revisions. The last tarball and the first
-CVS revision have identical content, and I would like to somehow "glue"
-the histories together.
-
-Can this be done? 
-
-Best regards,
-Magnus
-
-
-
-On Sun, 2008-08-31 at 04:12 -0700, Jakub Narebski wrote:
-> Magnus Hjorth <magnus.hjorth@home.se> writes:
-> 
-> > Can someone tell me how to make a git commit with a date other than the
-> > current. I hope there is some easier way than changing the system
-> > clock.. :)
-> 
-> See git(1), section "Environment Variables":
->    git Commits
->        GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, GIT_AUTHOR_DATE,
->        GIT_COMMITTER_NAME, GIT_COMMITTER_EMAIL, GIT_COMMITTER_DATE,
->        EMAIL
->               see git-commit-tree(1)
-> 
-> or you can use GIT_COMMITTER_IDENT, GIT_AUTHOR_IDENT.  See output
-> of "git var -l" to get form of it.
->  
-> > I'm trying to port over old version history that I maintained manually
-> > (tarballs and changelogs) into a git repository. 
-> 
-> For that, I think it would be best to take a look at example
-> fast-import script: contrib/fast-import/import-tars.perl;
-> there is equivalent contrib/fast-import/import-zips.py if you
-> perfer either Pyhon over Perl, and/or zips over tarballs.
-> 
+Ciao,
+Dscho
