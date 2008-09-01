@@ -1,55 +1,51 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fast-import: add ignore non-existent files option.
-Date: Mon, 01 Sep 2008 16:04:19 -0700
-Message-ID: <7v63pftqmk.fsf@gitster.siamese.dyndns.org>
-References: <94a0d4530809011501n651c42c8xebb5cc39a93aac4c@mail.gmail.com>
- <1220308173-20392-1-git-send-email-felipe.contreras@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [cgit PATCH] use Host: header to generate cgit_hosturl
+Date: Mon, 1 Sep 2008 23:07:42 +0000
+Message-ID: <20080901230741.GA19984@hand.yhbt.net>
+References: <20080901063033.GA21848@untitled> <8c5c35580809011336v58b139acu5078cafd3440c786@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 02 01:05:51 2008
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 02 01:08:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaISj-0007ht-82
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 01:05:48 +0200
+	id 1KaIVs-0008VA-9c
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 01:08:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751305AbYIAXE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 19:04:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750821AbYIAXE0
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 19:04:26 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34572 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750722AbYIAXEZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 19:04:25 -0400
+	id S1751245AbYIAXHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 19:07:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbYIAXHn
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 19:07:43 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:35983 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750984AbYIAXHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 19:07:43 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7A8D56F776;
-	Mon,  1 Sep 2008 19:04:24 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id ACA036F775; Mon,  1 Sep 2008 19:04:21 -0400 (EDT)
-In-Reply-To: <1220308173-20392-1-git-send-email-felipe.contreras@gmail.com>
- (Felipe Contreras's message of "Tue, 2 Sep 2008 01:30:08 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 51D00494-787A-11DD-B5A4-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	by hand.yhbt.net (Postfix) with ESMTP id 710A62DC01B;
+	Mon,  1 Sep 2008 16:07:42 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <8c5c35580809011336v58b139acu5078cafd3440c786@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94625>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Lars Hjemli <hjemli@gmail.com> wrote:
+> On Mon, Sep 1, 2008 at 8:30 AM, Eric Wong <normalperson@yhbt.net> wrote:
+> > So use the "Host" header if it is available and fall back to
+> > SERVER_NAME/SERVER_PORT for some clients that don't set
+> > HTTP_HOST.
+> 
+> Maybe it would be better to use a new cgitrc parameter as fallback if
+> the client doesn't provide the "Host" header?
 
-> This is useful for SCMs that don't have proper changesets in each
-> revision (monotone).
+That sounds a bit hackish to me since HTTP_HOST, SERVER_NAME and
+SERVER_PORT are all standardized.  Anyhow, it's your call :)
 
-I am still not convinced this is a proper workaround for the issue.  Why
-shouldn't the feeder of fast-import be able to do this?
-
-> @@ -1993,8 +1994,15 @@ static void file_change_cr(struct branch *b, int rename)
-> ...
-
-Also what happened to the missing warning() for 'D'elete codepath?
+-- 
+Eric Wong
