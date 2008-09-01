@@ -1,76 +1,160 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] fast-import: show a warning for non-existent files.
-Date: Mon, 01 Sep 2008 12:04:30 -0700
-Message-ID: <7vwshvvgap.fsf@gitster.siamese.dyndns.org>
-References: <1220275214-6178-1-git-send-email-felipe.contreras@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH] Bring local clone's origin URL in line with that of a remote
+ clone
+Date: Mon, 01 Sep 2008 21:07:33 +0200
+Message-ID: <200809012107.34020.johan@herland.net>
+References: <200808271400.54302.johan@herland.net>
+ <200808310123.48018.johan@herland.net>
+ <7vabeuf4oj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 01 21:06:09 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Mark Levedahl <mlevedahl@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 01 21:09:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaEid-0001N0-Pa
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 21:05:48 +0200
+	id 1KaEmD-0002Tj-Hl
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 21:09:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751528AbYIATEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 15:04:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751530AbYIATEh
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 15:04:37 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48443 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751526AbYIATEh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 15:04:37 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C3A165D945;
-	Mon,  1 Sep 2008 15:04:35 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D918F5D943; Mon,  1 Sep 2008 15:04:32 -0400 (EDT)
-In-Reply-To: <1220275214-6178-1-git-send-email-felipe.contreras@gmail.com>
- (Felipe Contreras's message of "Mon, 1 Sep 2008 16:20:14 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D17A455A-7858-11DD-8684-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1751524AbYIATIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 15:08:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbYIATIU
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 15:08:20 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:36128 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751406AbYIATIT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 15:08:19 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0K6J0022H6HF2S00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 01 Sep 2008 21:08:03 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K6J00DGH6GMJ930@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 01 Sep 2008 21:07:34 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K6J00EZ96GMQT40@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Mon, 01 Sep 2008 21:07:34 +0200 (CEST)
+In-reply-to: <7vabeuf4oj.fsf@gitster.siamese.dyndns.org>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94600>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On a local clone, "git clone" would use the fully DWIMmed path as the origin
+URL in the resulting repo. This was slightly inconsistent with the case of a
+remote clone where the _given_ URL was used as the origin URL (because the
+DWIMming was done remotely, and was therefore not available to "git clone").
 
-> This is useful in certain SCMs like monotone, where each 'merge revision' has
-> the changes of all the micro-branches merged. So it appears as duplicated commands.
+This behaviour caused problems when cloning a local non-bare repo with
+relative submodule URLs, because these submodule URLs would then be resolved
+against the DWIMmed URL (e.g. "/repo/.git") instead of the given URL (e.g.
+"/repo").
 
-The patch appears to add warning to when you try to 'D'elete something
-that should not exist in the revision, whose moral equivalents are
-implemented in the codepath to deal with 'R'enaming and 'C'opying an
-non-existent path.
+This patch teaches "git clone" to use the _given_ URL - instead of the
+DWIMmed path - as the origin URL. This causes relative submodule URLs to be
+resolved correctly, as long the _given_ URL indicates the correct directory
+against which the submodule URLs should be resolved.
 
-But instead of making it die(), it merely warns, and even worse, you are
-demoting an existing die() in Rename/Copy codepath to mere warning
-unconditionally.  Why?
+The patch also updates a testcase that contained the old-style origin URLs.
 
-"This" that begins your proposed commit log message needs to be clarified,
-but I am guessing that you are defending your change to demote existing
-error check to die on inconsistent input to a mere warning.  I do not find
-it a particularly good defending argument.  It sounds more like you are
-papering over bugs in _one_ broken converter that produces and feeds an
-incorrect input to fast-import, breaking a safety valve for everybody else.
+Signed-off-by: Johan Herland <johan@herland.net>
+---
 
-> The delete command was ignoring the issue completely. The rename/copy commands
-> where throwing a fatal exception.
+On Sunday 31 August 2008, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > $ git clone /repo/foo bar
+> > $ grep -B1 url bar/.git/config
+> > [remote "origin"]
+> >         url = /repo/foo/.git
+> >
+> > vs.
+> >
+> > $ git clone file:///repo/foo bar
+> > $ grep -B1 url bar/.git/config
+> > [remote "origin"]
+> >         file:///home/johan/git/foo
+> >
+> > Hmm?
+>
+> If you mean "the latter lacks 'url =' and is broken", and if that is what
+> happens, then it needs to be fixed.  But otherwise, I do not personally
+> find these differences interesting.
 
-Yes.  I think this has to be two patch series, that:
+Sorry, my fault (cut-n-paste error)
 
- (1) Adds the equivalent "you cannot delete what you do not have" die() in
-     the delete codepath; and
+> But that does not mean I'd veto if somebody else cares deeply enough and
+> comes up with a clean solution.
 
- (2) Adds an option that demotes *all* the "don't touch (rename, modify,
-     copy or delete) what you do not have" die()s to warning().
+Is this clean enough? It passes selftests on my box, and although it
+doesn't resolve all the issues I raised in this thread, it _does_ resolve
+the one issue that I first bumped into, and that triggered this thread in
+the first place. I expect this one issue is also the first that most other
+people would bump into when working locally with relative submodule URLs.
 
-provided if we can give a good rationale to the latter.  Otherwise we
-should just do (1) and forget about (2).
+
+Have fun! :)
+
+...Johan
+
+
+ builtin-clone.c   |    2 +-
+ t/t5505-remote.sh |    6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-clone.c b/builtin-clone.c
+index c0e3086..f44ecea 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -387,7 +387,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 
+ 	path = get_repo_path(repo_name, &is_bundle);
+ 	if (path)
+-		repo = path;
++		repo = xstrdup(make_nonrelative_path(repo_name));
+ 	else if (!strchr(repo_name, ':'))
+ 		repo = xstrdup(make_absolute_path(repo_name));
+ 	else
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index be9ee93..c449663 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -109,7 +109,7 @@ test_expect_success 'remove remote' '
+ 
+ cat > test/expect << EOF
+ * remote origin
+-  URL: $(pwd)/one/.git
++  URL: $(pwd)/one
+   Remote branch merged with 'git pull' while on branch master
+     master
+   New remote branch (next fetch will store in remotes/origin)
+@@ -140,7 +140,7 @@ test_expect_success 'show' '
+ 
+ cat > test/expect << EOF
+ * remote origin
+-  URL: $(pwd)/one/.git
++  URL: $(pwd)/one
+   Remote branch merged with 'git pull' while on branch master
+     master
+   Tracked remote branches
+@@ -169,7 +169,7 @@ test_expect_success 'prune' '
+ 
+ cat > test/expect << EOF
+ Pruning origin
+-URL: $(pwd)/one/.git
++URL: $(pwd)/one
+  * [would prune] origin/side2
+ EOF
+ 
+-- 
+1.6.0.96.g2fad1
