@@ -1,66 +1,113 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 00/12] Towards a better merge resolution support
-Date: Mon, 1 Sep 2008 11:44:12 +0200
-Message-ID: <20080901094412.GB3993@blimp.local>
-References: <1220056963-2352-1-git-send-email-gitster@pobox.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 0/2] 'git svn info' fixes
+Date: Mon, 1 Sep 2008 11:46:42 +0200
+Message-ID: <200809011146.44909.trast@student.ethz.ch>
+References: <20080829081654.GA6680@yp-box.dyndns.org> <1220017369-32637-1-git-send-email-trast@student.ethz.ch> <20080830010319.GA2940@untitled>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 01 11:45:25 2008
+Content-Type: multipart/signed;
+  boundary="nextPart2199554.QmBFqD5oMk";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Sep 01 11:47:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ka5yN-0000Q9-Fa
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 11:45:23 +0200
+	id 1Ka60k-0001Aa-Uf
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 11:47:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754021AbYIAJoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 05:44:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754575AbYIAJoP
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 05:44:15 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.180]:62772 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754021AbYIAJoP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 05:44:15 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20lf4ka7
-Received: from tigra.home (Fab22.f.strato-dslnet.de [195.4.171.34])
-	by post.webmailer.de (fruni mo55) (RZmta 16.47)
-	with ESMTP id y00f9dk819NWb1 ; Mon, 1 Sep 2008 11:44:13 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 0DFA9277AE;
-	Mon,  1 Sep 2008 11:44:13 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id F3CF736D1D; Mon,  1 Sep 2008 11:44:12 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1220056963-2352-1-git-send-email-gitster@pobox.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751912AbYIAJqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 05:46:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751657AbYIAJqp
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 05:46:45 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:58663 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750977AbYIAJqp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 05:46:45 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 1 Sep 2008 11:46:44 +0200
+Received: from cx-public-docking-1-043.ethz.ch ([129.132.149.43]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 1 Sep 2008 11:46:43 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080830010319.GA2940@untitled>
+X-OriginalArrivalTime: 01 Sep 2008 09:46:43.0641 (UTC) FILETIME=[A4431290:01C90C17]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94553>
 
-Junio C Hamano, Sat, Aug 30, 2008 02:42:31 +0200:
-> This consists of two loosely related topics on improving conflicted merge
-> resolution support.
-> 
-> The early part of the series is what you already saw.  In addition to
-> recording a conflicted merge in the RCS merge style we have traditionally
-> used, this allows you to optionally use "diff3 -m" style.  The difference
-> is that the latter format shows the part from the common ancestor that
-> corresponds to the parts both sides modified to cause the conflict, in
-> addition to the changes done on each side.  This can be chosen by setting
-> a configuration variable.  Rerere mechanism is updated to understand this
-> new format as well, and conflicts from either formats interoperate well,
-> because rerere mechanism only records and uses the changes made on each
-> side, not what was in the common ancestor.
+--nextPart2199554.QmBFqD5oMk
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-This reminds me: when resolving a conflict in a git repo (when trying
-something from next or pu), I often notice that I'd like to resolve it
-the same way it was done on next or pu. IOW, copy the commit
-resolution from some other merge commit. Maybe can be a way to use
-rerere mechanism with that?
+Eric Wong wrote:
+> Yes.  Please maintain compatibility with svn 1.5.  The current version
+> of git-svn should strive to maintain compatibility with the current
+> version of svn whenever possible.
+
+Ok, that certainly clarifies the goal.
+
+> > Unfortunately this does raise the question whether the URL-encoding
+> > issue treated in the other series is in fact a similar incompatibility
+> > between 1.4 and 1.5, not a (minor but long-standing) bug in git-svn.
+>=20
+> It should match svn 1.5 for "git svn info".
+[...]
+> 	svn log -v `git svn info --url`
+> [should] just work.
+>=20
+> I seem to recall the rules being slightly different for http(s):// and
+> (file://|svn://) URLs with the command-line client; but my memory may
+> just be fuzzy...
+
+I've finally found a system with SVN 1.4 that I have access to, and
+ran a few tests.  I don't have svn:// servers with weird directory
+names at hand, but I could verify that even SVN 1.4 quotes output and
+requires the input to be properly quoted:
+
+  $ svn info
+  Path: .
+  URL: file:///home/thomas/test%20directory%3F
+  Repository Root: file:///home/thomas/test%20directory%3F
+  [...]
+
+  $ svn info file:///home/thomas/test%20directory%3F
+  Path: test directory?
+  URL: file:///home/thomas/test%20directory%3F
+  Repository Root: file:///home/thomas/test%20directory%3F
+  [...]
+
+  $ svn info file:///home/thomas/'test directory?'
+  svn: URL 'file:///home/thomas/test directory?' is not properly URI-encoded
+
+Variations with https:// and SVN 1.5 give the same results.  So unless
+I'm missing something, the two patch series are needed to get the
+correct output.
+
+=2D Thomas
+
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
+
+
+
+--nextPart2199554.QmBFqD5oMk
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAki7ugQACgkQqUud07tmzP2howCeMGJjcc95ERgBR1ZlGzq4cwcN
+VkAAn2d8dZ16T9FpNXDrDkbRW6YLXtXp
+=5/gw
+-----END PGP SIGNATURE-----
+
+--nextPart2199554.QmBFqD5oMk--
