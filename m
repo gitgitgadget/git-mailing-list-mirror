@@ -1,95 +1,92 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 1/1] fast-import: show a warning for non-existent files.
-Date: Mon,  1 Sep 2008 16:20:14 +0300
-Message-ID: <1220275214-6178-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 01 15:22:01 2008
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] for-each-ref: `:short` format for `refname`
+Date: Mon, 1 Sep 2008 16:13:15 +0200
+Message-ID: <36ca99e90809010713h7c673d10j6addd1624a655371@mail.gmail.com>
+References: <7vprnpbqmo.fsf@gitster.siamese.dyndns.org>
+	 <1220186467-24623-1-git-send-email-bert.wesarg@googlemail.com>
+	 <20080901131523.GA6739@neumann>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "=?UTF-8?Q?SZEDER_G=C3=A1bor?=" <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Sep 01 16:17:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ka9Lw-0003vL-9H
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 15:21:56 +0200
+	id 1KaAAi-00045G-1J
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 16:14:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751333AbYIANUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 09:20:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750956AbYIANUt
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 09:20:49 -0400
-Received: from smtp.nokia.com ([192.100.122.233]:48630 "EHLO
-	mgw-mx06.nokia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750737AbYIANUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 09:20:48 -0400
-Received: from vaebh105.NOE.Nokia.com (vaebh105.europe.nokia.com [10.160.244.31])
-	by mgw-mx06.nokia.com (Switch-3.2.6/Switch-3.2.6) with ESMTP id m81DKUHW001869;
-	Mon, 1 Sep 2008 16:20:44 +0300
-Received: from vaebh102.NOE.Nokia.com ([10.160.244.23]) by vaebh105.NOE.Nokia.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 1 Sep 2008 16:20:31 +0300
-Received: from vaebh104.NOE.Nokia.com ([10.160.244.30]) by vaebh102.NOE.Nokia.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 1 Sep 2008 16:20:26 +0300
-Received: from mgw-int02.ntc.nokia.com ([172.21.143.97]) by vaebh104.NOE.Nokia.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 1 Sep 2008 16:20:16 +0300
-Received: from annwn.felipec.org (esdhcp04373.research.nokia.com [172.21.43.73])
-	by mgw-int02.ntc.nokia.com (Switch-3.2.5/Switch-3.2.5) with ESMTP id m81DKET9012901;
-	Mon, 1 Sep 2008 16:20:14 +0300
-Received: by annwn.felipec.org (Postfix, from userid 500)
-	id 48CF84C027; Mon,  1 Sep 2008 16:20:14 +0300 (EEST)
-X-Mailer: git-send-email 1.6.0.1
-X-OriginalArrivalTime: 01 Sep 2008 13:20:16.0330 (UTC) FILETIME=[793842A0:01C90C35]
-X-Nokia-AV: Clean
+	id S1751295AbYIAONS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 10:13:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751316AbYIAONR
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 10:13:17 -0400
+Received: from an-out-0708.google.com ([209.85.132.243]:43882 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750933AbYIAONR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 10:13:17 -0400
+Received: by an-out-0708.google.com with SMTP id d40so307958and.103
+        for <git@vger.kernel.org>; Mon, 01 Sep 2008 07:13:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=VEdT3tLpa2JIweKrooZ0d03CFE9kbg1uD0UFRfRD80Y=;
+        b=bmYq2upAA3PQkGuNPcAZQDp70Dc2/1mWXHNTcd6XG61mHUJiZT4W/Ydr8me4VIVJWa
+         5eVIeHBc4Qn4d+NSj0l8TdXvI6Lr+V72WSwUa52zSR11G032SHdrofmZHfg7B4n9Vuxd
+         aE1Zo/stuhd0ELWZybixena7KeN7XGZkyvM3w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=kAl/J2M3JS1CxU3VBlDnWKRmPYUNzbm5oZWmxT5G66CGfGWF/1eaG3yz+0uqzO/YWT
+         nTSScKJ5Lcan10H8qIpHarXKCtheJ9gwPvpBMTjrhAqXjYMeJ+j6CPNeFqxVKI2r7LCl
+         gM+PrmLOL+6yFQGqxMf0fSGVjPhccSbD59Y6E=
+Received: by 10.100.112.9 with SMTP id k9mr5957325anc.72.1220278395603;
+        Mon, 01 Sep 2008 07:13:15 -0700 (PDT)
+Received: by 10.70.49.12 with HTTP; Mon, 1 Sep 2008 07:13:15 -0700 (PDT)
+In-Reply-To: <20080901131523.GA6739@neumann>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94586>
 
-This is useful in certain SCMs like monotone, where each 'merge revision' has
-the changes of all the micro-branches merged. So it appears as duplicated commands.
-
-The delete command was ignoring the issue completely. The rename/copy commands
-where throwing a fatal exception.
----
- fast-import.c |   14 ++++++++++++--
- 1 files changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/fast-import.c b/fast-import.c
-index 7089e6f..3dd2ab6 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1945,6 +1945,7 @@ static void file_change_d(struct branch *b)
- 	const char *p = command_buf.buf + 2;
- 	static struct strbuf uq = STRBUF_INIT;
- 	const char *endp;
-+	struct tree_entry leaf;
- 
- 	strbuf_reset(&uq);
- 	if (!unquote_c_style(&uq, p, &endp)) {
-@@ -1952,7 +1953,13 @@ static void file_change_d(struct branch *b)
- 			die("Garbage after path in: %s", command_buf.buf);
- 		p = uq.buf;
- 	}
--	tree_content_remove(&b->branch_tree, p, NULL);
-+	memset(&leaf, 0, sizeof(leaf));
-+	tree_content_remove(&b->branch_tree, p, &leaf);
-+	if (!leaf.versions[1].mode)
-+	{
-+		warning("Path %s not in branch", p);
-+		return;
-+	}
- }
- 
- static void file_change_cr(struct branch *b, int rename)
-@@ -1994,7 +2001,10 @@ static void file_change_cr(struct branch *b, int rename)
- 	else
- 		tree_content_get(&b->branch_tree, s, &leaf);
- 	if (!leaf.versions[1].mode)
--		die("Path %s not in branch", s);
-+	{
-+		warning("Path %s not in branch", s);
-+		return;
-+	}
- 	tree_content_set(&b->branch_tree, d,
- 		leaf.versions[1].sha1,
- 		leaf.versions[1].mode,
--- 
-1.6.0.1
+T24gTW9uLCBTZXAgMSwgMjAwOCBhdCAxNToxNSwgU1pFREVSIEfDoWJvciA8c3plZGVyQGlyYS51
+a2EuZGU+IHdyb3RlOgo+IEhpLAo+Cj4gT24gU3VuLCBBdWcgMzEsIDIwMDggYXQgMDI6NDE6MDdQ
+TSArMDIwMCwgQmVydCBXZXNhcmcgd3JvdGU6Cj4+IFRoaXMgc3RyaXBzIGZyb20gdGhlIHJlZm5h
+bWUgdGhlIGNvbW1vbiBkaXJlY3RvcnkgcHJlZml4IHdpdGggdGhlCj4+IG1hdGNoZWQgcGF0dGVy
+bi4KPj4KPj4gVGhpcyBpcyBwYXJ0aWN1bGFyIHVzZWZ1bGwgZm9yIGJhc2ggY29tcGxldGlvbiwg
+dG8gZ2V0IHJlZnMgd2l0aG91dAo+PiBgcmVmcy9oZWFkc2Agb3IgYHJlZnMvdGFnc2AuCj4KPj4g
+IHJlZm5hbWU6Ogo+PiAgICAgICBUaGUgbmFtZSBvZiB0aGUgcmVmICh0aGUgcGFydCBhZnRlciAk
+R0lUX0RJUi8pLgo+PiArICAgICBGb3IgYSBzaG9ydCBuYW1lIG9mIHRoZSByZWYgYXBwZW5kIGA6
+c2hvcnRgLiBUaGlzIHdpbGwgc3RyaXAKPj4gKyAgICAgdGhlIGNvbW1vbiBkaXJlY3RvcnkgcHJl
+Zml4IHdpdGggdGhlIHBhdHRlcm4gd2hpY2ggbWF0Y2hlcyB0aGlzIHJlZi4KPj4gKyAgICAgSS5l
+LiBmb3IgYSB0aGUgcGF0dGVybiBgcmVmcy9oZWFkc2AgeW91IGdldCBgbWFzdGVyYCwgb3IgZm9y
+Cj4+ICsgICAgIGByZWZzL3RhZ3MvdjEuNS5bMDFdLipgIHlvdSBnZXQgYHYxLjUuWzAxXS4qYC4K
+Pj4gKyAgICAgVGhpcyBpcyBwYXJ0aWN1bGFyIHVzZWZ1bGwgZm9yIGJhc2ggY29tcGxldGlvbi4K
+PiBTaG91bGQgdGhpcyBsYXN0IHNlbnRlbmNlIHJlYWxseSBiZWxvbmcgdG8gdGhlIGRvY3VtZW50
+YXRpb24/CkF0IGxlYXN0IGl0IGlzIG5vdCB0aGUgb25seSBleGFtcGxlIGluIHRoZSBkb2N1bWVu
+dGF0aW9uLgoKPgo+IEZ1cnRoZXJtb3JlLCBJIHRoaW5rICc6c3RyaXAnIGJldHRlciBkZXNjcmli
+ZXMgd2hhdCB0aGlzIGZvcm1hdAo+IGFjdHVhbGx5IGRvZXMuICBFdmVuIHlvdSBoYXZlIHVzZWQg
+dGhlIHdvcmQgJ3N0cmlwJyBpbiB0aGUgY29tbWl0Cj4gbWVzc2FnZSBhbmQgaW4gdGhlIGRvY3Vt
+ZW50YXRpb24gYXMgd2VsbC4KVHJ1ZSwgSSdtIG9rIHdpdGggdGhpcyBwcm9wb3NhbC4KCj4KPgo+
+IEFzIGZhciBhcyBiYXNoIGNvbXBsZXRpb24gaXMgY29uY2VybmVkLCBJJ20gZm9yIGl0LCBhcyBp
+dCBkb2VzIGV4YWN0bHkKPiB3aGF0IHRoZSBjb21wbGV0aW9uIHNjcmlwdCBuZWVkcyB0byBwZXJm
+b3JtIGJldHRlciwgaXQgZG9lc24ndCBoYXZlCj4gdGhvc2UgY29uY2VwdHVhbCBpc3N1ZXMgJ3Jl
+ZmJhc2VuYW1lJyBoYXMsIGFuZCBpdCdzIG9ubHkgYSB0YWQgc2xvd2VyCj4gdGhhbiAncmVmYmFz
+ZW5hbWUnLgo+Cj4gSG93ZXZlciwgaWYgd2UgY29uc2lkZXIgcG9zc2libGUgdXNlIGNhc2VzIG90
+aGVyIHRoYW4gYmFzaCBjb21wbGV0aW9uLAo+IEkgZG9uJ3Qga25vdyB3aGljaCBvbmUgaXMgbW9y
+ZSB1c2VmdWwuICBGb3IgZXhhbXBsZSwgaWYgeW91IGhhdmUgdHdvCj4gYnJhbmNoZXMgJ2Zvby9i
+YXInIGFuZCAnZm9vL2JheicsIHRoZW4gJ2dpdCBtZXJnZSAkKGdpdCBmb3ItZWFjaC1yZWYKPiAt
+LWZvcm1hdD0lKHJlZmJhc2VuYW1lKSByZWZzL2hlYWRzL2ZvbyknIHdpbGwgd29yayBhcyBleHBl
+Y3RlZCwgYnV0Cj4gJ3JlZm5hbWU6c2hvcnQnIG5vdCwgYXMgaXQgd2lsbCBvdXRwdXQgb25seSAn
+YmFyJyBhbmQgJ2Jheicgd2hpY2ggJ2dpdAo+IG1lcmdlJyBjYW4gbm90IGZpbmQuClllYWgsIHRo
+YXRzIGFuIGRpc2FkdmFudGFnZSBhbmQgSSB0aG91Z2h0IGFib3V0IHRoaXMsIHRvby4gQnV0IEkg
+aGF2ZQpubyBwYXJ0aWN1bGFyIG9waW5pb24gYWJvdXQgaXQuCgpSZWdhcmRzLApCZXJ0Cgo+IEJl
+c3QsCj4gR8OhYm9yCg==
