@@ -1,83 +1,87 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] t6013: replace use of 'tac' with equivalent Perl
-Date: Mon, 01 Sep 2008 14:56:34 +0200
-Message-ID: <48BBE682.2070000@op5.se>
-References: <1220212998-90810-1-git-send-email-benji@silverinsanity.com> <1220221897-6081-1-git-send-email-trast@student.ethz.ch>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Extend index to save more flags
+Date: Mon, 01 Sep 2008 15:05:05 +0200
+Message-ID: <48BBE881.1050206@viscovery.net>
+References: <1220268758-29550-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Brian Gernhardt <benji@silverinsanity.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Sep 01 14:57:47 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 01 15:06:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ka8yT-0005HS-Gp
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 14:57:42 +0200
+	id 1Ka96m-0007nv-RA
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 15:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750842AbYIAM4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 08:56:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750762AbYIAM4f
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 08:56:35 -0400
-Received: from mail.op5.se ([193.201.96.20]:47602 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750737AbYIAM4f (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 08:56:35 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 34F8F24B0B24;
-	Mon,  1 Sep 2008 15:01:51 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YBnVQobqiFsx; Mon,  1 Sep 2008 15:01:47 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [192.168.1.184])
-	by mail.op5.se (Postfix) with ESMTP id 411E51B800B0;
-	Mon,  1 Sep 2008 15:01:46 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <1220221897-6081-1-git-send-email-trast@student.ethz.ch>
+	id S1751099AbYIANFK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Sep 2008 09:05:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750871AbYIANFK
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 09:05:10 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:2238 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750748AbYIANFJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Sep 2008 09:05:09 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Ka95e-0002F4-3V; Mon, 01 Sep 2008 15:05:06 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id D3D0654D; Mon,  1 Sep 2008 15:05:05 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <1220268758-29550-1-git-send-email-pclouds@gmail.com>
+X-Spam-Score: 1.2 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94581>
 
-Thomas Rast wrote:
-> 'tac' is not available everywhere, so substitute the equivalent Perl
-> code 'print reverse <>'.  Noticed by Brian Gernhardt.
-> 
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
-> 
-> Thanks for pointing this out.  However, I tried to avoid hardcoding
-> those results by recommendation of t/README (last paragraph):
-> 
->   ... If all the test scripts hardcoded the object IDs like
->   t0000-basic.sh does, that defeats the purpose of t0000-basic.sh,
->   which is to isolate that level of validation in one place.  Your
->   test also ends up needing updating when such a change to the
->   internal happens, so do _not_ do it and leave the low level of
->   validation to t0000-basic.sh.
-> 
-> So I would favour this fix.  I think this should be ok because we
-> depend on Perl anyway.
-> 
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy schrieb:
+> +/* Extended flags in ondisk_cache_entry_extended */
+> +#define CE_EXTENDED2 (0x80000000)
+> +#define CE_EXTENDED_MASK (CE_EXTENDED2)
 
-If it isn't, you could always do
-	sed '1!G;h;$!d'
-or
-	sed -n '1!G;h;$p'
-instead.
+Wouldn't it be better, from a maintainance point of view, to have
 
-Both of them are very portable indeed.
+#define CE_EXTENDED_MASK 0xffff0000
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+right from the beginning?
+
+> @@ -1143,19 +1144,29 @@ static void convert_from_disk(struct ondisk_c=
+ache_entry *ondisk, struct cache_en
+>  	/* On-disk flags are just 16 bits */
+>  	ce->ce_flags =3D ntohs(ondisk->flags);
+> =20
+> -	/* For future extension: we do not understand this entry yet */
+> -	if (ce->ce_flags & CE_EXTENDED)
+> -		die("Unknown index entry format");
+>  	hashcpy(ce->sha1, ondisk->sha1);
+> =20
+>  	len =3D ce->ce_flags & CE_NAMEMASK;
+> +
+> +	if (ce->ce_flags & CE_EXTENDED) {
+> +		struct ondisk_cache_entry_extended *ondisk2;
+> +		ondisk2 =3D (struct ondisk_cache_entry_extended *)ondisk;
+> +		ce->ce_flags |=3D (ntohs(ondisk2->flags2) << 16) & CE_EXTENDED_MAS=
+K;
+> +		/* For future extension: we do not understand the last bit yet */
+> +		if (ce->ce_flags & CE_EXTENDED2)
+> +			die("Unknown index entry format");
+
+At this point, we do not understand the CE_EXTENDED2 flag; but we do no=
+t
+understand any of the other 15 extended flags, either. So, you should
+error out if *any* of them is non-zero.
+
+> +		name =3D ondisk2->name;
+> +	}
+> +	else
+> +		name =3D ondisk->name;
+
+-- Hannes
