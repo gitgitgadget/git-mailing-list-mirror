@@ -1,84 +1,117 @@
-From: "Bert Wesarg" <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] for-each-ref: `:short` format for `refname`
-Date: Mon, 1 Sep 2008 23:44:09 +0200
-Message-ID: <36ca99e90809011444v3fca09c4o4d9dcf1a7249a00a@mail.gmail.com>
-References: <7vprnpbqmo.fsf@gitster.siamese.dyndns.org>
-	 <1220186467-24623-1-git-send-email-bert.wesarg@googlemail.com>
-	 <20080901131523.GA6739@neumann>
-	 <36ca99e90809010713h7c673d10j6addd1624a655371@mail.gmail.com>
-	 <36ca99e90809011052s568fa6e4y89e56769f63806c1@mail.gmail.com>
-	 <20080901191051.GD7482@spearce.org>
-	 <36ca99e90809011410w646cc6eajb3063ea3501f173c@mail.gmail.com>
-	 <7v7i9vv9n2.fsf@gitster.siamese.dyndns.org>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH] Bust the ghost of long-defunct diffcore-pathspec.
+Date: Mon, 01 Sep 2008 23:53:54 +0200
+Message-ID: <20080901215353.30399.33432.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"=?UTF-8?Q?SZEDER_G=C3=A1bor?=" <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 01 23:45:17 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 01 23:54:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaHD3-0004xM-8c
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 23:45:17 +0200
+	id 1KaHMB-000749-O4
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 23:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751664AbYIAVoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 17:44:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751305AbYIAVoL
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 17:44:11 -0400
-Received: from wr-out-0506.google.com ([64.233.184.224]:50181 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751207AbYIAVoK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 17:44:10 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so1684007wri.5
-        for <git@vger.kernel.org>; Mon, 01 Sep 2008 14:44:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=LLjyxai0NxuFzS/6VxmBLdrU8XlbsaRNrKfizzytgUc=;
-        b=RpWa8y2BXxhSRq/CeIaE6mX0k1D4E4etDCYoaJrJrOwW2CokYWjlfROQymHi7lNnkV
-         n0A7eT2VT8Qw+7al0blRCtovK1FzX28kt4Uq1Y155e/dmKCtg2nGbci7OuHlu1WfA5ND
-         DLCozciI6A+5Zgyh3AtllCiH1t/RFpY59ip3w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=OUusrZ7JMxv17ex2EZsvr+DjZdVk94tjx2CgawhYmtqQawVJppwCUfX4ydAcU5G9D9
-         9e/37vMKDZ2+RaXlmIQPGHkS8WKChzc2BqGtdnWq29O4+56reKP9eNTUK3wAkxP5iOoD
-         JIcmtLCHTz6W3JgccOEE7U6NA66Khv6yj4kow=
-Received: by 10.90.70.6 with SMTP id s6mr8454538aga.17.1220305449418;
-        Mon, 01 Sep 2008 14:44:09 -0700 (PDT)
-Received: by 10.70.49.12 with HTTP; Mon, 1 Sep 2008 14:44:09 -0700 (PDT)
-In-Reply-To: <7v7i9vv9n2.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751362AbYIAVxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 17:53:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751389AbYIAVxh
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 17:53:37 -0400
+Received: from smtp8-g19.free.fr ([212.27.42.65]:53438 "EHLO smtp8-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751056AbYIAVxh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 17:53:37 -0400
+Received: from smtp8-g19.free.fr (localhost [127.0.0.1])
+	by smtp8-g19.free.fr (Postfix) with ESMTP id C9A4332A7B9
+	for <git@vger.kernel.org>; Mon,  1 Sep 2008 23:53:35 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp8-g19.free.fr (Postfix) with ESMTP id 9D29D32A777
+	for <git@vger.kernel.org>; Mon,  1 Sep 2008 23:53:35 +0200 (CEST)
+Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 6B26F1F0C0
+	for <git@vger.kernel.org>; Mon,  1 Sep 2008 23:53:54 +0200 (CEST)
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94615>
 
-On Mon, Sep 1, 2008 at 23:28, Junio C Hamano <gitster@pobox.com> wrote:
-> "Bert Wesarg" <bert.wesarg@googlemail.com> writes:
->
->> On Mon, Sep 1, 2008 at 21:10, Shawn O. Pearce <spearce@spearce.org> wrote:
->> ...
->>> You can still get ambiguous names.  Avoiding them requires going
->>> through all refs and building their short forms, then using the
->>> full ref name for any ref which had more than one name shorten to
->>> the same string.  Ugly, but implementable, and probably something
->>> that should be considered.
->>
->> What about: try the list backwards until the first match, than try the
->> matched part (this what %.*s matched) with the forward list, if both
->> give the same pattern, its not disambiguous. If not try the next
->> pattern backwards.
->
-> How does it catch the case where you have both 'xyzzy' branch and 'xyzzy'
-> tag, which is the point of disambiguation issue Shawn raised?
-Right.
+This concept was retired by 77882f60d9df2fd410ba7d732b01738315643c05,
+more than 2 years ago.
+---
+
+ Documentation/gitdiffcore.txt |   23 +++++++++--------------
+ diffcore.h                    |    1 -
+ 2 files changed, 9 insertions(+), 15 deletions(-)
+
+diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
+index 2bdbc3d..fc54bfb 100644
+--- a/Documentation/gitdiffcore.txt
++++ b/Documentation/gitdiffcore.txt
+@@ -52,9 +52,8 @@ unmerged       :000000 000000 0000000... 0000000... U file6
+ The diffcore mechanism is fed a list of such comparison results
+ (each of which is called "filepair", although at this point each
+ of them talks about a single file), and transforms such a list
+-into another list.  There are currently 6 such transformations:
++into another list.  There are currently 5 such transformations:
+ 
+-- diffcore-pathspec
+ - diffcore-break
+ - diffcore-rename
+ - diffcore-merge-broken
+@@ -62,21 +61,22 @@ into another list.  There are currently 6 such transformations:
+ - diffcore-order
+ 
+ These are applied in sequence.  The set of filepairs 'git-diff-{asterisk}'
+-commands find are used as the input to diffcore-pathspec, and
+-the output from diffcore-pathspec is used as the input to the
++commands find are used as the input to diffcore-break, and
++the output from diffcore-break is used as the input to the
+ next transformation.  The final result is then passed to the
+ output routine and generates either diff-raw format (see Output
+ format sections of the manual for 'git-diff-{asterisk}' commands) or
+ diff-patch format.
+ 
+ 
+-diffcore-pathspec: For Ignoring Files Outside Our Consideration
+----------------------------------------------------------------
++Pathspec filtering: For Ignoring Files Outside Our Consideration
++----------------------------------------------------------------
+ 
+-The first transformation in the chain is diffcore-pathspec, and
++The first transformation in the chain is pathspec filtering, which
++occurs before calling diffcore, and
+ is controlled by giving the pathname parameters to the
+-'git-diff-{asterisk}' commands on the command line.  The pathspec is used
+-to limit the world diff operates in.  It removes the filepairs
++'git-diff-{asterisk}' commands on the command line.  The pathspec is
++used to limit the world diff operates in.  It removes the filepairs
+ outside the specified set of pathnames.  E.g. If the input set
+ of filepairs included:
+ 
+@@ -88,11 +88,6 @@ but the command invocation was `git diff-files myfile`, then the
+ junkfile entry would be removed from the list because only "myfile"
+ is under consideration.
+ 
+-Implementation note.  For performance reasons, 'git-diff-tree'
+-uses the pathname parameters on the command line to cull set of
+-filepairs it feeds the diffcore mechanism itself, and does not
+-use diffcore-pathspec, but the end result is the same.
+-
+ 
+ diffcore-break: For Splitting Up "Complete Rewrites"
+ ----------------------------------------------------
+diff --git a/diffcore.h b/diffcore.h
+index cc96c20..8ae3578 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -92,7 +92,6 @@ extern struct diff_filepair *diff_queue(struct diff_queue_struct *,
+ 					struct diff_filespec *);
+ extern void diff_q(struct diff_queue_struct *, struct diff_filepair *);
+ 
+-extern void diffcore_pathspec(const char **pathspec);
+ extern void diffcore_break(int);
+ extern void diffcore_rename(struct diff_options *);
+ extern void diffcore_merge_broken(void);
