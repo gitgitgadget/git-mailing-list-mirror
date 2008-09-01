@@ -1,117 +1,117 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Bust the ghost of long-defunct diffcore-pathspec.
-Date: Mon, 01 Sep 2008 23:53:54 +0200
-Message-ID: <20080901215353.30399.33432.stgit@gandelf.nowhere.earth>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/1] fast-import: show a warning for non-existent files.
+Date: Tue, 2 Sep 2008 00:58:59 +0300
+Message-ID: <94a0d4530809011458r25f73f49web2c3ae601a5544d@mail.gmail.com>
+References: <1220275214-6178-1-git-send-email-felipe.contreras@gmail.com>
+	 <7vwshvvgap.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 01 23:54:54 2008
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 02 00:00:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaHMB-000749-O4
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 23:54:44 +0200
+	id 1KaHRO-0008Rv-FN
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 00:00:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751362AbYIAVxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 17:53:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751389AbYIAVxh
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 17:53:37 -0400
-Received: from smtp8-g19.free.fr ([212.27.42.65]:53438 "EHLO smtp8-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751056AbYIAVxh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 17:53:37 -0400
-Received: from smtp8-g19.free.fr (localhost [127.0.0.1])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id C9A4332A7B9
-	for <git@vger.kernel.org>; Mon,  1 Sep 2008 23:53:35 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id 9D29D32A777
-	for <git@vger.kernel.org>; Mon,  1 Sep 2008 23:53:35 +0200 (CEST)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 6B26F1F0C0
-	for <git@vger.kernel.org>; Mon,  1 Sep 2008 23:53:54 +0200 (CEST)
-User-Agent: StGIT/0.14.3
+	id S1751389AbYIAV7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 17:59:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751466AbYIAV7A
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 17:59:00 -0400
+Received: from rv-out-0506.google.com ([209.85.198.230]:62188 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751056AbYIAV7A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 17:59:00 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1975192rvb.1
+        for <git@vger.kernel.org>; Mon, 01 Sep 2008 14:58:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=YvHB/DeDkNdOkvop5h6rz5qG3YsfcagdednwgI1Hg08=;
+        b=nZ01d908Xd5vcLo4esGXdPfrNkE/nGleZMuYnWru8csAh/vJdsZkRoVv96zPGne/8G
+         9q7VAIL8M+BiRua1qwallYon8wPn5GYru1fXzXj8qc2/UUm/Shzz/pxx1PZgwZWC7WVP
+         3joSbqhISJ6uP9JeEqsNcm5Go2euc7/oAQau4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=CJavWQPkI4cj1i0nncKFGp633ROVnv98p5YixDl3cGbD6X18aq7aOArq2sEqegUHDG
+         CCUI0VpcldT0DMcb8JljNZqsF2trPLxIdwd7uEeB/KrXUgubuEv0EYcRxYclChH7IgHi
+         NS5pU2g9EL0PCnt2LhWPuHFTuohIBg7/h1fpA=
+Received: by 10.141.132.8 with SMTP id j8mr3693907rvn.297.1220306339272;
+        Mon, 01 Sep 2008 14:58:59 -0700 (PDT)
+Received: by 10.140.166.19 with HTTP; Mon, 1 Sep 2008 14:58:59 -0700 (PDT)
+In-Reply-To: <7vwshvvgap.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94616>
 
-This concept was retired by 77882f60d9df2fd410ba7d732b01738315643c05,
-more than 2 years ago.
----
+On Mon, Sep 1, 2008 at 10:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> This is useful in certain SCMs like monotone, where each 'merge revision' has
+>> the changes of all the micro-branches merged. So it appears as duplicated commands.
+>
+> The patch appears to add warning to when you try to 'D'elete something
+> that should not exist in the revision, whose moral equivalents are
+> implemented in the codepath to deal with 'R'enaming and 'C'opying an
+> non-existent path.
+>
+> But instead of making it die(), it merely warns, and even worse, you are
+> demoting an existing die() in Rename/Copy codepath to mere warning
+> unconditionally.  Why?
 
- Documentation/gitdiffcore.txt |   23 +++++++++--------------
- diffcore.h                    |    1 -
- 2 files changed, 9 insertions(+), 15 deletions(-)
+Right, I tried to do two things at once. I thought adding the code in
+'D'elete in a separate branch was too much separation for such a
+trivial thing.
 
-diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
-index 2bdbc3d..fc54bfb 100644
---- a/Documentation/gitdiffcore.txt
-+++ b/Documentation/gitdiffcore.txt
-@@ -52,9 +52,8 @@ unmerged       :000000 000000 0000000... 0000000... U file6
- The diffcore mechanism is fed a list of such comparison results
- (each of which is called "filepair", although at this point each
- of them talks about a single file), and transforms such a list
--into another list.  There are currently 6 such transformations:
-+into another list.  There are currently 5 such transformations:
- 
--- diffcore-pathspec
- - diffcore-break
- - diffcore-rename
- - diffcore-merge-broken
-@@ -62,21 +61,22 @@ into another list.  There are currently 6 such transformations:
- - diffcore-order
- 
- These are applied in sequence.  The set of filepairs 'git-diff-{asterisk}'
--commands find are used as the input to diffcore-pathspec, and
--the output from diffcore-pathspec is used as the input to the
-+commands find are used as the input to diffcore-break, and
-+the output from diffcore-break is used as the input to the
- next transformation.  The final result is then passed to the
- output routine and generates either diff-raw format (see Output
- format sections of the manual for 'git-diff-{asterisk}' commands) or
- diff-patch format.
- 
- 
--diffcore-pathspec: For Ignoring Files Outside Our Consideration
-----------------------------------------------------------------
-+Pathspec filtering: For Ignoring Files Outside Our Consideration
-+----------------------------------------------------------------
- 
--The first transformation in the chain is diffcore-pathspec, and
-+The first transformation in the chain is pathspec filtering, which
-+occurs before calling diffcore, and
- is controlled by giving the pathname parameters to the
--'git-diff-{asterisk}' commands on the command line.  The pathspec is used
--to limit the world diff operates in.  It removes the filepairs
-+'git-diff-{asterisk}' commands on the command line.  The pathspec is
-+used to limit the world diff operates in.  It removes the filepairs
- outside the specified set of pathnames.  E.g. If the input set
- of filepairs included:
- 
-@@ -88,11 +88,6 @@ but the command invocation was `git diff-files myfile`, then the
- junkfile entry would be removed from the list because only "myfile"
- is under consideration.
- 
--Implementation note.  For performance reasons, 'git-diff-tree'
--uses the pathname parameters on the command line to cull set of
--filepairs it feeds the diffcore mechanism itself, and does not
--use diffcore-pathspec, but the end result is the same.
--
- 
- diffcore-break: For Splitting Up "Complete Rewrites"
- ----------------------------------------------------
-diff --git a/diffcore.h b/diffcore.h
-index cc96c20..8ae3578 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -92,7 +92,6 @@ extern struct diff_filepair *diff_queue(struct diff_queue_struct *,
- 					struct diff_filespec *);
- extern void diff_q(struct diff_queue_struct *, struct diff_filepair *);
- 
--extern void diffcore_pathspec(const char **pathspec);
- extern void diffcore_break(int);
- extern void diffcore_rename(struct diff_options *);
- extern void diffcore_merge_broken(void);
+> "This" that begins your proposed commit log message needs to be clarified,
+> but I am guessing that you are defending your change to demote existing
+> error check to die on inconsistent input to a mere warning.  I do not find
+> it a particularly good defending argument.  It sounds more like you are
+> papering over bugs in _one_ broken converter that produces and feeds an
+> incorrect input to fast-import, breaking a safety valve for everybody else.
+
+In monotone you can have something like:
+
+ A
+/ \
+B D
+| |
+C E
+\ /
+ F
+
+If you do a 'delete foo' in B, and a 'delete bar' in F, you will get
+this stored in the merge revision (F):
+
+old_revision [C]
+delete "foo"
+delete "bar"
+
+old_revision [E]
+delete "bar"
+
+All the changes of the merged branches are stored again in the merge revision.
+
+I guess ideally my converter should check which changes appear on both
+branches, and only apply those. Of course, only on revisions that are
+merges.
+That complicates the code quite a lot. I tried it and it didn't work
+quite well (I did something wrong).
+
+So I tried to workaround this in fast-import, and it's simple, and it works.
+
+<snip/>
+
+-- 
+Felipe Contreras
