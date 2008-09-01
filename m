@@ -1,96 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Jay Soffian" <jaysoffian@gmail.com>
 Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
-Date: Sun, 31 Aug 2008 18:48:10 -0700
-Message-ID: <7vhc901vs5.fsf@gitster.siamese.dyndns.org>
+Date: Sun, 31 Aug 2008 21:52:20 -0400
+Message-ID: <76718490808311852n6d6d138ch7bbf5605c6cf7c18@mail.gmail.com>
 References: <20080830173947.GF7185@schiele.dyndns.org>
- <53906E21-DE02-4C85-8CC0-4E4AC53AE130@develooper.com>
- <7vljyc1wzg.fsf@gitster.siamese.dyndns.org>
+	 <20080830183413.GG7185@schiele.dyndns.org>
+	 <20080830183949.GA16415@coredump.intra.peff.net>
+	 <200808302237.17017.jnareb@gmail.com>
+	 <32541b130808302235g6a23efcfs78efe2ef557cd9c7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Robert Schiele <rschiele@gmail.com>,
-	Ask =?utf-8?Q?Bj=C3=B8rn?= Hansen <ask@develooper.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 01 03:49:28 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Jakub Narebski" <jnareb@gmail.com>, "Jeff King" <peff@peff.net>,
+	"Robert Schiele" <rschiele@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Lea Wiemann" <lewiemann@gmail.com>
+To: "Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 01 03:53:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZyXn-0002xh-8T
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 03:49:27 +0200
+	id 1KZybe-0003hi-SL
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 03:53:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752856AbYIABsW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Aug 2008 21:48:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbYIABsW
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 21:48:22 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41880 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752649AbYIABsV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Aug 2008 21:48:21 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8C27D6F2C6;
-	Sun, 31 Aug 2008 21:48:20 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 507DD6F2BE; Sun, 31 Aug 2008 21:48:13 -0400 (EDT)
-In-Reply-To: <7vljyc1wzg.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 31 Aug 2008 18:22:11 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0E23F8D4-77C8-11DD-8C5C-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753035AbYIABwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2008 21:52:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752994AbYIABwW
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 21:52:22 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:59898 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751911AbYIABwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 21:52:21 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so1034475yxm.1
+        for <git@vger.kernel.org>; Sun, 31 Aug 2008 18:52:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=0F5uw8b2gj8zR/45ESxKHYM9chdchYZHa5MDidyzR7Y=;
+        b=kHdVEynalUOK1CYSUn8A/s48w4ozJj7AqCZLzzpM+b7Zw/TncNsL6kVDBzIgkko0xv
+         lREey/oYbODpHmm80WQInvQpRsToxUakY2QK/KyvhCLOGYaDFJxQkqzhTun6DI06yMyd
+         pP8c0tRFre+qg1NBDVNJ7xchuPZQA88gXFVgg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=M26+w+g+PCT866DnegH2qU2yMfB0V+2t+J0LOAAhsrlI5gbm2QuVmkhMCpGVHwiYWk
+         kiTPxmqIoNYSdeq3yTuNML8L3FJAHiqhYOOrZfikSCHvbG1F7aV7IMBMN8xniIaqSkqn
+         saUII+St12+6ufp1ymUqbh4c9R4C8AYcDdK9U=
+Received: by 10.150.124.2 with SMTP id w2mr7801541ybc.170.1220233940315;
+        Sun, 31 Aug 2008 18:52:20 -0700 (PDT)
+Received: by 10.150.50.2 with HTTP; Sun, 31 Aug 2008 18:52:20 -0700 (PDT)
+In-Reply-To: <32541b130808302235g6a23efcfs78efe2ef557cd9c7@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94524>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Ask Bj=C3=B8rn Hansen <ask@develooper.com> writes:
-> ...
->>> This is an alternative to my previous patch that just declared Perl
->>> 5.8 to
->>> be the required version.
->>
->> +1 to that one.
+On Sun, Aug 31, 2008 at 1:35 AM, Avery Pennarun <apenwarr@gmail.com> wrote:
+> On Sat, Aug 30, 2008 at 4:37 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+>> Or you can use "open $fd, '-|'" to fork, an "manually" exec/system.
 >
-> Now, would somebody volunteer to go everywhere our user base (who no
-> longer read Release Notes) hang around, post a message saying that so=
-me
-> people on git development list are proposing to drop Perl 5.6 support=
-, and
-> if the proposal goes ahead, it is possible that the next release may =
-force
-> upgrading Perl for them, to make sure they won't complain saying they=
-'ve
-> never heard about the "incompatible change" beforehand?
+> Shell quoting is a disaster (including security holes, where relevant)
+> waiting to happen.  The above is the only sane way to do it, and it
+> isn't very hard to implement.  (Instead of system() in the subprocess,
+> you can use exec().)
 
-Just in case before anybody overreacts without reading the mailing list
-backlog; the above is meant to be a moderately bitter joke ;-)
+The perlipc man page has example routines. Search for "safe backtick"
+and/or "safe pipe".
 
-I tend to think that everybody who needs to run git in their developmen=
-t
-environment (the deployment site could be running with ancient Perl for
-all we care --- after all, git or any SCM is primarily to be run in the
-development environment, and even if people use git to transfer the end
-result from the development side, all they need is the really core part=
- of
-history tranfer tools like fetch, push and checkout on the deployed sit=
-e;
-these tools do not depend on Perl) would be running 5.8 by now.  Grante=
-d,
-some development machine need to have the exact same version of everyth=
-ing
-as the intended deployment environment for testing purposes, and some
-people may be developing a piece of software that is meant to run on Pe=
-rl
-that is no more recent than 5.6, but with virtual machines and all, I
-think it would be rare to have such a setup --- it is a lot easier to
-develop on a platform with more reasonably recent Perl that your
-development tools (not limited to git itself) may depend on, and test o=
-n a
-virtual bochs with an ancient software configuration as the intended
-deployment site.
-
-So I personally think it is probably Ok to declare that we do depend on
-5.8.
+j.
