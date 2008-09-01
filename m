@@ -1,58 +1,84 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
-Date: Mon, 1 Sep 2008 23:42:54 +0200
-Message-ID: <20080901214254.GA8058@blimp.localhost>
-References: <20080830173947.GF7185@schiele.dyndns.org> <20080830183413.GG7185@schiele.dyndns.org> <20080830183949.GA16415@coredump.intra.peff.net> <200808302237.17017.jnareb@gmail.com> <32541b130808302235g6a23efcfs78efe2ef557cd9c7@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] for-each-ref: `:short` format for `refname`
+Date: Mon, 1 Sep 2008 23:44:09 +0200
+Message-ID: <36ca99e90809011444v3fca09c4o4d9dcf1a7249a00a@mail.gmail.com>
+References: <7vprnpbqmo.fsf@gitster.siamese.dyndns.org>
+	 <1220186467-24623-1-git-send-email-bert.wesarg@googlemail.com>
+	 <20080901131523.GA6739@neumann>
+	 <36ca99e90809010713h7c673d10j6addd1624a655371@mail.gmail.com>
+	 <36ca99e90809011052s568fa6e4y89e56769f63806c1@mail.gmail.com>
+	 <20080901191051.GD7482@spearce.org>
+	 <36ca99e90809011410w646cc6eajb3063ea3501f173c@mail.gmail.com>
+	 <7v7i9vv9n2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
-	Robert Schiele <rschiele@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Lea Wiemann <lewiemann@gmail.com>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 01 23:44:04 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"=?UTF-8?Q?SZEDER_G=C3=A1bor?=" <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 01 23:45:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaHBr-0004l6-6a
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 23:44:03 +0200
+	id 1KaHD3-0004xM-8c
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 23:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751093AbYIAVm5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 17:42:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbYIAVm5
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 17:42:57 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.180]:20263 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750961AbYIAVm5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 17:42:57 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20tf40HVSQ==
-Received: from tigra.home (Fade9.f.strato-dslnet.de [195.4.173.233])
-	by post.webmailer.de (fruni mo10) (RZmta 16.47)
-	with ESMTP id 90673ek81HnFJE ; Mon, 1 Sep 2008 23:42:54 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 19D97277AE;
-	Mon,  1 Sep 2008 23:42:54 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id 1148236D1D; Mon,  1 Sep 2008 23:42:54 +0200 (CEST)
+	id S1751664AbYIAVoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 17:44:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751305AbYIAVoL
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 17:44:11 -0400
+Received: from wr-out-0506.google.com ([64.233.184.224]:50181 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751207AbYIAVoK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 17:44:10 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so1684007wri.5
+        for <git@vger.kernel.org>; Mon, 01 Sep 2008 14:44:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=LLjyxai0NxuFzS/6VxmBLdrU8XlbsaRNrKfizzytgUc=;
+        b=RpWa8y2BXxhSRq/CeIaE6mX0k1D4E4etDCYoaJrJrOwW2CokYWjlfROQymHi7lNnkV
+         n0A7eT2VT8Qw+7al0blRCtovK1FzX28kt4Uq1Y155e/dmKCtg2nGbci7OuHlu1WfA5ND
+         DLCozciI6A+5Zgyh3AtllCiH1t/RFpY59ip3w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=OUusrZ7JMxv17ex2EZsvr+DjZdVk94tjx2CgawhYmtqQawVJppwCUfX4ydAcU5G9D9
+         9e/37vMKDZ2+RaXlmIQPGHkS8WKChzc2BqGtdnWq29O4+56reKP9eNTUK3wAkxP5iOoD
+         JIcmtLCHTz6W3JgccOEE7U6NA66Khv6yj4kow=
+Received: by 10.90.70.6 with SMTP id s6mr8454538aga.17.1220305449418;
+        Mon, 01 Sep 2008 14:44:09 -0700 (PDT)
+Received: by 10.70.49.12 with HTTP; Mon, 1 Sep 2008 14:44:09 -0700 (PDT)
+In-Reply-To: <7v7i9vv9n2.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <32541b130808302235g6a23efcfs78efe2ef557cd9c7@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94614>
 
-Avery Pennarun, Sun, Aug 31, 2008 07:35:31 +0200:
-> On Sat, Aug 30, 2008 at 4:37 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> > Or you can use "open $fd, '-|'" to fork, an "manually" exec/system.
-> 
-> Shell quoting is a disaster (including security holes, where relevant)
-> waiting to happen.  The above is the only sane way to do it, and it
-> isn't very hard to implement. ...
-
-except on Windows, where it is impossible to implement.
+On Mon, Sep 1, 2008 at 23:28, Junio C Hamano <gitster@pobox.com> wrote:
+> "Bert Wesarg" <bert.wesarg@googlemail.com> writes:
+>
+>> On Mon, Sep 1, 2008 at 21:10, Shawn O. Pearce <spearce@spearce.org> wrote:
+>> ...
+>>> You can still get ambiguous names.  Avoiding them requires going
+>>> through all refs and building their short forms, then using the
+>>> full ref name for any ref which had more than one name shorten to
+>>> the same string.  Ugly, but implementable, and probably something
+>>> that should be considered.
+>>
+>> What about: try the list backwards until the first match, than try the
+>> matched part (this what %.*s matched) with the forward list, if both
+>> give the same pattern, its not disambiguous. If not try the next
+>> pattern backwards.
+>
+> How does it catch the case where you have both 'xyzzy' branch and 'xyzzy'
+> tag, which is the point of disambiguation issue Shawn raised?
+Right.
