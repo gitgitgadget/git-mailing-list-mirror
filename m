@@ -1,63 +1,80 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 00/12] Towards a better merge resolution support
-Date: Mon, 1 Sep 2008 11:39:24 +0200
-Message-ID: <20080901093924.GA3993@blimp.local>
-References: <1220056963-2352-1-git-send-email-gitster@pobox.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Improve documentation for --dirstat diff option
+Date: Mon, 01 Sep 2008 11:42:54 +0200
+Organization: At home
+Message-ID: <g9gdev$2un$1@ger.gmane.org>
+References: <20080901005028.GA31502@zakalwe.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 01 11:40:43 2008
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 01 11:44:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ka5tl-0007Ov-JN
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 11:40:38 +0200
+	id 1Ka5xJ-00007w-Jn
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 11:44:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753122AbYIAJj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 05:39:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753197AbYIAJj2
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 05:39:28 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.180]:43756 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753076AbYIAJj1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 05:39:27 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :YSxENQjhO8RswxTRIGdg20lf4ka7
-Received: from tigra.home (Fab22.f.strato-dslnet.de [195.4.171.34])
-	by post.webmailer.de (klopstock mo7) (RZmta 16.47)
-	with ESMTP id 6016d6k818AG9V ; Mon, 1 Sep 2008 11:39:24 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 69DD2277AE;
-	Mon,  1 Sep 2008 11:39:24 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id 44DE536D1D; Mon,  1 Sep 2008 11:39:24 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1220056963-2352-1-git-send-email-gitster@pobox.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753547AbYIAJnL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Sep 2008 05:43:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753281AbYIAJnK
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 05:43:10 -0400
+Received: from main.gmane.org ([80.91.229.2]:43298 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752457AbYIAJnJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 05:43:09 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Ka5w6-0005cZ-Hc
+	for git@vger.kernel.org; Mon, 01 Sep 2008 09:43:02 +0000
+Received: from abvq20.neoplus.adsl.tpnet.pl ([83.8.214.20])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 01 Sep 2008 09:43:02 +0000
+Received: from jnareb by abvq20.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 01 Sep 2008 09:43:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvq20.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94551>
 
-Junio C Hamano, Sat, Aug 30, 2008 02:42:31 +0200:
-> The early part of the series is what you already saw.  In addition to
-> recording a conflicted merge in the RCS merge style we have traditionally
-> used, this allows you to optionally use "diff3 -m" style.  The difference
-> is that the latter format shows the part from the common ancestor that
-> corresponds to the parts both sides modified to cause the conflict, in
-> addition to the changes done on each side.  This can be chosen by setting
-> a configuration variable.  Rerere mechanism is updated to understand this
-> new format as well, and conflicts from either formats interoperate well,
-> because rerere mechanism only records and uses the changes made on each
-> side, not what was in the common ancestor.
-> 
-> The last four patches are to "git checkout" that checks things out of the
-> index.  ...
+Heikki Orsila wrote:
 
-I like that and started using the patches. Do you have any specific
-area I should pay a special attention to?
+> =A0--dirstat[=3Dlimit]::
+> -=A0=A0=A0=A0=A0=A0=A0Output only the sub-directories that are impact=
+ed by a diff,
+> -=A0=A0=A0=A0=A0=A0=A0and to what degree they are impacted. =A0You ca=
+n override the
+> -=A0=A0=A0=A0=A0=A0=A0default cut-off in percent (3) by "--dirstat=3D=
+limit". =A0If you
+> -=A0=A0=A0=A0=A0=A0=A0want to enable "cumulative" directory statistic=
+s, you can use
+> -=A0=A0=A0=A0=A0=A0=A0the "--cumulative" flag, which adds up percenta=
+ges recursively
+> -=A0=A0=A0=A0=A0=A0=A0even when they have been already reported for a=
+ sub-directory.
+> +=A0=A0=A0=A0=A0=A0=A0Output the distribution of relative damage (num=
+ber of lines added or
+> +=A0=A0=A0=A0=A0=A0=A0removed) for each sub-directory. Directories wi=
+th damage below
+> +=A0=A0=A0=A0=A0=A0=A0a cut-off percent (3% by default) are not shown=
+=2E The cut-off percent
+> +=A0=A0=A0=A0=A0=A0=A0can be set with "--dirstat=3Dlimit". Damage for=
+ a child directory is not
+> +=A0=A0=A0=A0=A0=A0=A0counted for the parent directory, unless "--cum=
+ulative" is used.
+
+I rather prefer "impact" to "damage". And it should probably be=20
+"child directory _shown_".
+
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
