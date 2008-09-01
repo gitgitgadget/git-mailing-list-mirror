@@ -1,77 +1,57 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: What's cooking in git.git (Aug 2008, #05; Tue, 19)
-Date: Mon, 1 Sep 2008 03:06:12 +0200
-Message-ID: <20080901010612.GC16514@genesis.frugalware.org>
-References: <7vpro5cr2x.fsf@gitster.siamese.dyndns.org> <20080819125429.GD17582@genesis.frugalware.org> <7vabf83j9u.fsf@gitster.siamese.dyndns.org> <20080819205917.GJ23800@genesis.frugalware.org> <7v3al0zmv8.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ahZICQ7iXVM/oLYH"
+Subject: [PATCH] builtin-revert: use merge_recursive_generic()
+Date: Mon,  1 Sep 2008 03:09:01 +0200
+Message-ID: <1220231341-1748-1-git-send-email-vmiklos@frugalware.org>
+References: <20080901010612.GC16514@genesis.frugalware.org>
 Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 01 03:07:21 2008
+X-From: git-owner@vger.kernel.org Mon Sep 01 03:09:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZxt2-0005Sk-IB
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 03:07:21 +0200
+	id 1KZxvC-0005kL-M5
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 03:09:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753342AbYIABGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2008 21:06:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbYIABGP
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 21:06:15 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:45382 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752828AbYIABGO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2008 21:06:14 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id EC7271B251A;
-	Mon,  1 Sep 2008 03:06:12 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 8E5E34465E;
-	Mon,  1 Sep 2008 03:06:12 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 6E012119003C; Mon,  1 Sep 2008 03:06:12 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7v3al0zmv8.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1753372AbYIABI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2008 21:08:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbYIABI3
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 21:08:29 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:60715 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752796AbYIABI3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 21:08:29 -0400
+Received: from vmobile.example.net (catv-80-98-230-81.catv.broadband.hu [80.98.230.81])
+	by yugo.frugalware.org (Postfix) with ESMTP id E05961DDC5B;
+	Mon,  1 Sep 2008 03:08:26 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id F221A84CA; Mon,  1 Sep 2008 03:09:01 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0
+In-Reply-To: <20080901010612.GC16514@genesis.frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94519>
 
+We had a separate function to run merge-recursive in a separate process,
+but this is not really necessary, since we have
+merge_recursive_generic() to do the same, without wasting resources.
 
---ahZICQ7iXVM/oLYH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-On Tue, Aug 19, 2008 at 03:00:27PM -0700, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> and the call chain would become:
-> (...)
->     cmd_revert(), cmd_am(), cmd_checkout(), cmd_stash(), ...
->     -> merge_trees()
+On Mon, Sep 01, 2008 at 03:06:12AM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> I'm sending both patches: the one that works properly using
+> merge_recursive_generic() - and which one passes the testsuite here
 
-I tried to let cmd_revert() use merge_trees() only and not
-merge_recursive_generic(), but something is fishy with it.
+Here it is.
 
-t3501-revert-cherry-pick passes fine, but t3404-rebase-interactive fail,
-becase once we have a conflict, git diff --name-status says 'M' for the
-given file and not 'U', which is obviously wrong.
-
-I'm sending both patches: the one that works properly using
-merge_recursive_generic() - and which one passes the testsuite here, and
-the one that is elegant as it uses merge_trees(), but actually not
-complete, at least regarding not adding the unmerged entries to the
-index.
-
-So, first here is my failed attempt to use merge_trees() inside
-builtin-revert:
+ builtin-revert.c |   55 ++++++++++++++++++-----------------------------------
+ 1 files changed, 19 insertions(+), 36 deletions(-)
 
 diff --git a/builtin-revert.c b/builtin-revert.c
-index 3667705..3071518 100644
+index 3667705..8d4ebcf 100644
 --- a/builtin-revert.c
 +++ b/builtin-revert.c
 @@ -12,6 +12,7 @@
@@ -79,20 +59,20 @@ index 3667705..3071518 100644
  #include "revision.h"
  #include "rerere.h"
 +#include "merge-recursive.h"
-=20
+ 
  /*
   * This implements the builtins revert and cherry-pick.
 @@ -201,36 +202,6 @@ static void set_author_ident_env(const char *message)
  			sha1_to_hex(commit->object.sha1));
  }
-=20
+ 
 -static int merge_recursive(const char *base_sha1,
 -		const char *head_sha1, const char *head_name,
 -		const char *next_sha1, const char *next_name)
 -{
 -	char buffer[256];
 -	const char *argv[6];
--	int i =3D 0;
+-	int i = 0;
 -
 -	sprintf(buffer, "GITHEAD_%s", head_sha1);
 -	setenv(buffer, head_name, 1);
@@ -105,13 +85,13 @@ index 3667705..3071518 100644
 -	 * and $prev on top of us (when reverting), or the change between
 -	 * $prev and $commit on top of us (when cherry-picking or replaying).
 -	 */
--	argv[i++] =3D "merge-recursive";
+-	argv[i++] = "merge-recursive";
 -	if (base_sha1)
--		argv[i++] =3D base_sha1;
--	argv[i++] =3D "--";
--	argv[i++] =3D head_sha1;
--	argv[i++] =3D next_sha1;
--	argv[i++] =3D NULL;
+-		argv[i++] = base_sha1;
+-	argv[i++] = "--";
+-	argv[i++] = head_sha1;
+-	argv[i++] = next_sha1;
+-	argv[i++] = NULL;
 -
 -	return run_command_v_opt(argv, RUN_COMMAND_NO_STDIN | RUN_GIT_CMD);
 -}
@@ -119,51 +99,48 @@ index 3667705..3071518 100644
  static char *help_msg(const unsigned char *sha1)
  {
  	static char helpbuf[1024];
-@@ -271,6 +242,8 @@ static int revert_or_cherry_pick(int argc, const char *=
-*argv)
- 	char *oneline, *reencoded_message =3D NULL;
+@@ -266,12 +237,16 @@ static int index_is_dirty(void)
+ static int revert_or_cherry_pick(int argc, const char **argv)
+ {
+ 	unsigned char head[20];
++	unsigned const char *ca = NULL;
+ 	struct commit *base, *next, *parent;
+-	int i;
++	int i, fail;
+ 	char *oneline, *reencoded_message = NULL;
  	const char *message, *encoding;
- 	const char *defmsg =3D xstrdup(git_path("MERGE_MSG"));
+ 	const char *defmsg = xstrdup(git_path("MERGE_MSG"));
 +	struct merge_options o;
-+	struct tree *result;
-=20
++	struct commit *result;
+ 
++	init_merge_options(&o);
  	git_config(git_default_config, NULL);
- 	me =3D action =3D=3D REVERT ? "revert" : "cherry-pick";
-@@ -374,13 +347,16 @@ static int revert_or_cherry_pick(int argc, const char=
- **argv)
+ 	me = action == REVERT ? "revert" : "cherry-pick";
+ 	setenv(GIT_REFLOG_ACTION, me, 0);
+@@ -374,11 +349,19 @@ static int revert_or_cherry_pick(int argc, const char **argv)
  		}
  	}
-=20
--	if (merge_recursive(base =3D=3D NULL ?
+ 
+-	if (merge_recursive(base == NULL ?
 -				NULL : sha1_to_hex(base->object.sha1),
 -				sha1_to_hex(head), "HEAD",
 -				sha1_to_hex(next->object.sha1), oneline) ||
 -			write_cache_as_tree(head, 0, NULL)) {
-+	read_cache();
-+	init_merge_options(&o);
-+	o.branch1 =3D "HEAD";
-+	o.branch2 =3D oneline;
-+	parse_commit(next);
-+	parse_commit(base);
-+	if (!merge_trees(&o, lookup_commit_reference_gently(head, 0)->tree,
-+				next->tree, base->tree, &result) ||
-+		write_cache_as_tree(head, 0, NULL)) {
++	if (base)
++		ca = base->object.sha1;
++	o.branch1 = "HEAD";
++	o.branch2 = oneline;
++	fail = merge_recursive_generic(&o,
++				head,
++				next->object.sha1,
++				ca ? 1 : 0,
++				&ca,
++				&result);
++	if (fail < 0)
++		exit(1);
++	if (fail || write_cache_as_tree(head, 0, NULL)) {
  		add_to_msg("\nConflicts:\n\n");
--		read_cache();
- 		for (i =3D 0; i < active_nr;) {
- 			struct cache_entry *ce =3D active_cache[i++];
- 			if (ce_stage(ce)) {
-
---ahZICQ7iXVM/oLYH
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAki7QAQACgkQe81tAgORUJbMcwCeIGEu0YK9a73WN6JURE7x7xZL
-eZoAn1+28sq0mEKIWS6vGYm5vH+KAQzY
-=alwW
------END PGP SIGNATURE-----
-
---ahZICQ7iXVM/oLYH--
+ 		read_cache();
+ 		for (i = 0; i < active_nr;) {
+-- 
+1.6.0
