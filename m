@@ -1,76 +1,87 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
-Date: Sun, 31 Aug 2008 21:52:20 -0400
-Message-ID: <76718490808311852n6d6d138ch7bbf5605c6cf7c18@mail.gmail.com>
-References: <20080830173947.GF7185@schiele.dyndns.org>
-	 <20080830183413.GG7185@schiele.dyndns.org>
-	 <20080830183949.GA16415@coredump.intra.peff.net>
-	 <200808302237.17017.jnareb@gmail.com>
-	 <32541b130808302235g6a23efcfs78efe2ef557cd9c7@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git svn: catch lack of upstream info for dcommit earlier
+Date: Sun, 31 Aug 2008 20:26:57 -0700
+Message-ID: <20080901032657.GC25876@hand.yhbt.net>
+References: <c7d83d0d0808310029s15c1413m49cad5c68a568271@mail.gmail.com> <1220190659-5955-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, "Jeff King" <peff@peff.net>,
-	"Robert Schiele" <rschiele@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	"Lea Wiemann" <lewiemann@gmail.com>
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 01 03:53:27 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Sep 01 05:28:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KZybe-0003hi-SL
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 03:53:27 +0200
+	id 1Ka05M-0002GN-Pg
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 05:28:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753035AbYIABwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2008 21:52:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752994AbYIABwW
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 21:52:22 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:59898 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751911AbYIABwV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2008 21:52:21 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so1034475yxm.1
-        for <git@vger.kernel.org>; Sun, 31 Aug 2008 18:52:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=0F5uw8b2gj8zR/45ESxKHYM9chdchYZHa5MDidyzR7Y=;
-        b=kHdVEynalUOK1CYSUn8A/s48w4ozJj7AqCZLzzpM+b7Zw/TncNsL6kVDBzIgkko0xv
-         lREey/oYbODpHmm80WQInvQpRsToxUakY2QK/KyvhCLOGYaDFJxQkqzhTun6DI06yMyd
-         pP8c0tRFre+qg1NBDVNJ7xchuPZQA88gXFVgg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=M26+w+g+PCT866DnegH2qU2yMfB0V+2t+J0LOAAhsrlI5gbm2QuVmkhMCpGVHwiYWk
-         kiTPxmqIoNYSdeq3yTuNML8L3FJAHiqhYOOrZfikSCHvbG1F7aV7IMBMN8xniIaqSkqn
-         saUII+St12+6ufp1ymUqbh4c9R4C8AYcDdK9U=
-Received: by 10.150.124.2 with SMTP id w2mr7801541ybc.170.1220233940315;
-        Sun, 31 Aug 2008 18:52:20 -0700 (PDT)
-Received: by 10.150.50.2 with HTTP; Sun, 31 Aug 2008 18:52:20 -0700 (PDT)
-In-Reply-To: <32541b130808302235g6a23efcfs78efe2ef557cd9c7@mail.gmail.com>
+	id S1750988AbYIAD07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2008 23:26:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbYIAD07
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 23:26:59 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:35022 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750927AbYIAD06 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 23:26:58 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id C4C092DC01B;
+	Sun, 31 Aug 2008 20:26:57 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <1220190659-5955-1-git-send-email-trast@student.ethz.ch>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94525>
 
-On Sun, Aug 31, 2008 at 1:35 AM, Avery Pennarun <apenwarr@gmail.com> wrote:
-> On Sat, Aug 30, 2008 at 4:37 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->> Or you can use "open $fd, '-|'" to fork, an "manually" exec/system.
->
-> Shell quoting is a disaster (including security holes, where relevant)
-> waiting to happen.  The above is the only sane way to do it, and it
-> isn't very hard to implement.  (Instead of system() in the subprocess,
-> you can use exec().)
+Thomas Rast <trast@student.ethz.ch> wrote:
+> Since 711521e 'git svn dcommit' attempts to use the upstream
+> information to determine the SVN URL, before it verifies that it even
+> found an upstream.  Move up the corresponding check.
+> 
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
-The perlipc man page has example routines. Search for "safe backtick"
-and/or "safe pipe".
+Thanks,
 
-j.
+Acked-by: Eric Wong <normalperson@yhbt.net>
+
+> ---
+> 
+> Weyert de Boer wrote:
+> > Can't call method "full_url" on an undefined value at
+> > /opt/local/libexec/git-core/git-svn line 425.
+> 
+> After resolving the problem on IRC, here's the fix to avoid the
+> unhelpful message.
+> 
+> 
+>  git-svn.perl |    8 ++++----
+>  1 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 7a1d26d..43bf201 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -421,15 +421,15 @@ sub cmd_dcommit {
+>  	$head ||= 'HEAD';
+>  	my @refs;
+>  	my ($url, $rev, $uuid, $gs) = working_head_info($head, \@refs);
+> +	unless ($gs) {
+> +		die "Unable to determine upstream SVN information from ",
+> +		    "$head history.\nPerhaps the repository is empty.";
+> +	}
+>  	$url = defined $_commit_url ? $_commit_url : $gs->full_url;
+>  	my $last_rev = $_revision if defined $_revision;
+>  	if ($url) {
+>  		print "Committing to $url ...\n";
+>  	}
+> -	unless ($gs) {
+> -		die "Unable to determine upstream SVN information from ",
+> -		    "$head history.\nPerhaps the repository is empty.";
+> -	}
+>  	my ($linear_refs, $parents) = linearize_history($gs, \@refs);
+>  	if ($_no_rebase && scalar(@$linear_refs) > 1) {
+>  		warn "Attempting to commit more than one change while ",
+> -- 
+> 1.6.0.1.278.g5a622
