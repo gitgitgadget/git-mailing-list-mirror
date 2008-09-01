@@ -1,119 +1,92 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 00/12] Towards a better merge resolution support
-Date: Mon, 1 Sep 2008 14:20:58 +0200
-Message-ID: <200809011421.20175.trast@student.ethz.ch>
-References: <1220056963-2352-1-git-send-email-gitster@pobox.com> <20080901094412.GB3993@blimp.local> <20080901095008.GB6555@toroid.org>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: [RFD] How to better document the "two and three dots" format
+Date: Mon, 1 Sep 2008 14:43:51 +0200
+Message-ID: <4d8e3fd30809010543o1e1562c1s4466e191e782ddcc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1801958.fYsbYbeGy7";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Abhijit Menon-Sen" <ams@toroid.org>
-X-From: git-owner@vger.kernel.org Mon Sep 01 14:22:32 2008
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 01 14:45:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ka8QM-0002qK-7e
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 14:22:26 +0200
+	id 1Ka8mK-0000bK-O7
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 14:45:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754363AbYIAMVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2008 08:21:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754262AbYIAMVU
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 08:21:20 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:31894 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754162AbYIAMVT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 08:21:19 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 1 Sep 2008 14:21:19 +0200
-Received: from cx-public-docking-1-043.ethz.ch ([129.132.149.43]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 1 Sep 2008 14:21:17 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080901095008.GB6555@toroid.org>
-X-OriginalArrivalTime: 01 Sep 2008 12:21:18.0014 (UTC) FILETIME=[3C3815E0:01C90C2D]
+	id S1754640AbYIAMnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 08:43:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754629AbYIAMnw
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 08:43:52 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:2674 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754623AbYIAMnv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 08:43:51 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so1859621wfd.4
+        for <git@vger.kernel.org>; Mon, 01 Sep 2008 05:43:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=MIOBz7QqZa2i2nw1KVuNJugsIVbcVcyr65dEEAvQlag=;
+        b=M+KNxJhCdnE/Ns8LDAAyqhAuRJk4jB7lwOEdIZrIiZPi55d8FXN9kzsrH/SNLHrQBA
+         Zxdcbx5gbgcO+kgySK2aCt54zTYFqBFIX3uH/c8gv1V9qVcotr043Zx5C8obKzhfWCyJ
+         JrmXuv5zkOS4ik78OA9cEF5XTzXvEW8uibTFw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=hAoScK5dbHcCDZK6CR9AmJQMBbgb4bbwF0j6CMX8f0aBf4IzTbB5fNRWjirexZtVfV
+         Gj5HhFyHmOB+osHyuPdndQuTeE1qx7Fz6dN9VVHVgL6514DZ+PCUdFFNcOB7FqU7Piyl
+         f6J1sYln1mjHCRy1azLj1mykyaU+lczyTWZuc=
+Received: by 10.142.188.4 with SMTP id l4mr2097691wff.92.1220273031160;
+        Mon, 01 Sep 2008 05:43:51 -0700 (PDT)
+Received: by 10.142.177.15 with HTTP; Mon, 1 Sep 2008 05:43:51 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94578>
 
---nextPart1801958.fYsbYbeGy7
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi all,
+I'm looking in the existing documentation about some example and
+clarification about
+the two and three dots formats applied to git diff.
 
-Abhijit Menon-Sen wrote:
-> At 2008-09-01 11:44:12 +0200, raa.lkml@gmail.com wrote:
-> >
-> > IOW, copy the commit resolution from some other merge commit. Maybe
-> > can be a way to use rerere mechanism with that?
->=20
-> That's what I'm trying to implement on Dscho's suggestion. I'm still
-> just trying to understand the code, so any suggestions about how to
-> do this are very welcome.
+The git-diff.txt file includes the following:
 
-Random idea: you could use a script that just replays the merges
-present in history and lets rerere record them.  Like so:
+---8<---
+Comparing branches::
++
+------------
+$ git diff topic master    <1>
+$ git diff topic..master   <2>
+$ git diff topic...master  <3>
+------------
++
+<1> Changes between the tips of the topic and the master branches.
+<2> Same as above.
+<3> Changes that occurred on the master branch since when the topic
+branch was started off it.
+---8<---
 
-=2D- 8< --
-#!/bin/sh
+I think <3> should be changed in something like:
+<3> Changes between the tips of the topic and the master branch that
+occurred since when the topic
+branch was started off it.
 
-=2E "$(git --exec-path)/git-sh-setup"
+What do you think?
 
-require_work_tree
-git update-index --refresh || die "can't run with dirty index"
+I would like to add some graphical representation of <2> and <3> but
+I'm a bit loss
+with <3> (and I guess lot of newbies are not really understanding that point).
+Can anybody come up with some ASCII art?
 
-git rev-list --parents "$@" |
-grep '.* .* .*' |
-while read merge firstparent otherparents
-do
-	git checkout $firstparent >/dev/null 2>/dev/null
-	git merge $otherparents >/dev/null
-	if test -z "$(git ls-files -u)"; then
-		echo -n 'no conflicts: '
-		git --no-pager log -1 --pretty=3Doneline --abbrev-commit $merge
-		continue
-	fi
-	git rerere
-	git ls-files -t | grep ^M | cut -c 3- | xargs git checkout $merge --
-	git rerere
-	git reset --hard >/dev/null 2>/dev/null
-	echo -n 'recorded:     '
-	git --no-pager log -1 --pretty=3Doneline --abbrev-commit $merge
-done
-=2D- >8 --
+Thanks.
 
-The intended usage is like
-
-  ./rerereimport.sh v1.6.0..origin/next
-
-to import all resolutions in the specified range.  Granted, it's
-probably not as good and definitely not as fast as an automatic
-feature integrated with the merge machinery.
-
-=2D Thomas
-
-=2D-=20
-Thomas Rast
-trast@student.ethz.ch
-
-
-
---nextPart1801958.fYsbYbeGy7
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAki73kAACgkQqUud07tmzP1K4QCgkVIH0d5IYm2cgJ2ZNpdQynYr
-If8AnAxbByA1tD+UQmhw2HvDu7XPci5d
-=CFhS
------END PGP SIGNATURE-----
-
---nextPart1801958.fYsbYbeGy7--
+Ciao,
+-- 
+Paolo
+http://paolo.ciarrocchi.googlepages.com/
