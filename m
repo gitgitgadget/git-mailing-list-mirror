@@ -1,98 +1,57 @@
-From: Jing Xue <jingxue@digizenstudio.com>
-Subject: file deletion in index lost after checkout -b
-Date: Sun, 31 Aug 2008 23:44:14 -0400
-Message-ID: <20080901034414.GR6619@jabba.hq.digizenstudio.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] change Perl syntax to support Perl 5.6
+Date: Sun, 31 Aug 2008 20:57:51 -0700
+Message-ID: <48BB683F.6020308@zytor.com>
+References: <20080830173947.GF7185@schiele.dyndns.org> <7v63ph40at.fsf@gitster.siamese.dyndns.org> <32541b130808311129u79f4179enfabab8f5845ed522@mail.gmail.com> <200808312223.38222.jnareb@gmail.com> <20080831203427.GF10360@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 01 05:52:19 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Jeff King <peff@peff.net>, Robert Schiele <rschiele@gmail.com>,
+	git@vger.kernel.org, Lea Wiemann <lewiemann@gmail.com>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Sep 01 05:59:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ka0SY-0005m8-Rl
-	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 05:52:11 +0200
+	id 1Ka0a2-0006kg-6z
+	for gcvg-git-2@gmane.org; Mon, 01 Sep 2008 05:59:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751364AbYIADvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2008 23:51:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751053AbYIADvD
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 23:51:03 -0400
-Received: from k2smtpout01-01.prod.mesa1.secureserver.net ([64.202.189.88]:40211
-	"HELO k2smtpout01-01.prod.mesa1.secureserver.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750927AbYIADvA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2008 23:51:00 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Sun, 31 Aug 2008 23:51:00 EDT
-Received: (qmail 3317 invoked from network); 1 Sep 2008 03:44:20 -0000
-Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
-  by k2smtpout01-01.prod.mesa1.secureserver.net (64.202.189.88) with ESMTP; 01 Sep 2008 03:44:20 -0000
-Received: from localhost (unknown [127.0.0.1])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 06D5D100A22
-	for <git@vger.kernel.org>; Mon,  1 Sep 2008 03:44:20 +0000 (UTC)
-Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
-	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id z0lQ0ghmfGuj for <git@vger.kernel.org>;
-	Sun, 31 Aug 2008 23:44:15 -0400 (EDT)
-Received: from jabba.hq.digizenstudio.com (ip70-174-133-176.dc.dc.cox.net [70.174.133.176])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 3763810007A
-	for <git@vger.kernel.org>; Sun, 31 Aug 2008 23:44:15 -0400 (EDT)
-Received: by jabba.hq.digizenstudio.com (Postfix, from userid 1000)
-	id 5748548E9A; Sun, 31 Aug 2008 23:44:14 -0400 (EDT)
-Mail-Followup-To: git <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751305AbYIAD6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2008 23:58:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751053AbYIAD6r
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Aug 2008 23:58:47 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:33708 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750927AbYIAD6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2008 23:58:46 -0400
+Received: from [172.27.2.85] (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m813voAE031404
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 31 Aug 2008 20:57:52 -0700
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20080831203427.GF10360@machine.or.cz>
+X-Virus-Scanned: ClamAV 0.93.3/8122/Sat Aug 30 18:04:56 2008 on terminus.zytor.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94528>
 
-In Git 1.6.0 the following sequence:
+Petr Baudis wrote:
+> 
+> Can anyone give a concrete justification for Perl 5.6 support? Who is
+> needing it and why do they have to use Perl 5.6? Does it offset the time
+> spent discussing and reviewing this and the maintenance burden of extra
+> complicated code?
+> 
 
-$ git init
-$ echo 'abcdefgh' >1.txt
-$ echo '12345678' >2.txt
-$ git add 1.txt 2.txt
-$ git commit -m 'init'
-$ git rm 2.txt
-$ echo 'qwertyuiop' >>1.txt
-$ git add 1.txt
-$ echo 'asdfghjkl;' >3.txt
-$ git add 3.txt
-$ git status
-$ git checkout -b foo
-$ git status
+I believe RHEL4 is Perl 5.6.1, but I could be wrong.
 
-produces this output:
-
-Initialized empty Git repository in /home/jingxue/workspace/sandboxes/test.git/.git/
-Created initial commit 918f3c6: init
- 2 files changed, 2 insertions(+), 0 deletions(-)
- create mode 100644 1.txt
- create mode 100644 2.txt
-rm '2.txt'
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       modified:   1.txt
-#       deleted:    2.txt
-#       new file:   3.txt
-#
-M       1.txt
-A       3.txt
-Switched to a new branch "foo"
-# On branch foo
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       modified:   1.txt
-#       new file:   3.txt
-#
-
-The deletion of 2.txt appears lost during 'checkout -b foo', while the
-modification and addition were both brought over. Is it a bug?
-
-Cheers.
--- 
-Jing Xue
+	-hpa
