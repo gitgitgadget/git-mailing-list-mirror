@@ -1,92 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Extend index to save more flags
-Date: Tue, 02 Sep 2008 00:25:57 -0700
-Message-ID: <7vhc8zm2ka.fsf@gitster.siamese.dyndns.org>
-References: <48BBE881.1050206@viscovery.net>
- <1220278585-26969-1-git-send-email-pclouds@gmail.com>
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] for-each-ref: `:short` format for `refname`
+Date: Tue, 2 Sep 2008 09:26:27 +0200
+Message-ID: <36ca99e90809020026j37c41a8fu99b45abbd02eb372@mail.gmail.com>
+References: <7vprnpbqmo.fsf@gitster.siamese.dyndns.org>
+	 <1220186467-24623-1-git-send-email-bert.wesarg@googlemail.com>
+	 <20080901131523.GA6739@neumann>
+	 <36ca99e90809010713h7c673d10j6addd1624a655371@mail.gmail.com>
+	 <36ca99e90809011052s568fa6e4y89e56769f63806c1@mail.gmail.com>
+	 <20080901191051.GD7482@spearce.org>
+	 <36ca99e90809011410w646cc6eajb3063ea3501f173c@mail.gmail.com>
+	 <7v7i9vv9n2.fsf@gitster.siamese.dyndns.org>
+	 <36ca99e90809011444v3fca09c4o4d9dcf1a7249a00a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 02 09:27:29 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"=?UTF-8?Q?SZEDER_G=C3=A1bor?=" <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 02 09:27:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaQIF-0006vW-8c
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 09:27:15 +0200
+	id 1KaQIZ-000722-6C
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 09:27:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752373AbYIBH0K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Sep 2008 03:26:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752010AbYIBH0J
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 03:26:09 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50135 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751325AbYIBH0H convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Sep 2008 03:26:07 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F2DFB5993D;
-	Tue,  2 Sep 2008 03:26:06 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 453A55993C; Tue,  2 Sep 2008 03:26:02 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 684B98A0-78C0-11DD-830F-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1752493AbYIBH03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 03:26:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752471AbYIBH03
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 03:26:29 -0400
+Received: from wx-out-0506.google.com ([66.249.82.238]:59619 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752092AbYIBH02 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 03:26:28 -0400
+Received: by wx-out-0506.google.com with SMTP id h29so643382wxd.4
+        for <git@vger.kernel.org>; Tue, 02 Sep 2008 00:26:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=JimUENyUSd6cP/QKclQvyFEvDLjtEz89HGN/GPbakg0=;
+        b=KfcqeF6QO3g+A3He6REC7XCTbq1NzacWWbOYGcLUKeapPhVeoKUqX9FsKTy7c+k2eG
+         fZErjf6wdtAcC9+oxnjgY6faYjt4fPs3K5rSD+2aYQFtWbeOdsmzKVbxisE3ljnL7W4y
+         ztB14Zr6l2iAxdQxfLH5LaVUGGEvVegWOSEIk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=vUkUU7nxh9Vcu+LFO1AeomDY2GcUcc0KqFnz8uDTo0yR9ETv8ktt+SbK3Hn3W/B+Yw
+         j968L1XR7pXKPLEx6SCx2IeZ66Pa49TE3teW+P0PHizDRVZ4X3lrG6bmCrfcpjXgo/Nj
+         5vMFYMUN/LteSawbsaIKUaPdzWohJtJzOBZFQ=
+Received: by 10.70.48.13 with SMTP id v13mr9149177wxv.28.1220340387250;
+        Tue, 02 Sep 2008 00:26:27 -0700 (PDT)
+Received: by 10.70.49.12 with HTTP; Tue, 2 Sep 2008 00:26:27 -0700 (PDT)
+In-Reply-To: <36ca99e90809011444v3fca09c4o4d9dcf1a7249a00a@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94659>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Mon, Sep 1, 2008 at 23:44, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+> On Mon, Sep 1, 2008 at 23:28, Junio C Hamano <gitster@pobox.com> wrote:
+>> "Bert Wesarg" <bert.wesarg@googlemail.com> writes:
+>>
+>>> On Mon, Sep 1, 2008 at 21:10, Shawn O. Pearce <spearce@spearce.org> wrote:
+>>> ...
+>>>> You can still get ambiguous names.  Avoiding them requires going
+>>>> through all refs and building their short forms, then using the
+>>>> full ref name for any ref which had more than one name shorten to
+>>>> the same string.  Ugly, but implementable, and probably something
+>>>> that should be considered.
+>>>
+>>> What about: try the list backwards until the first match, than try the
+>>> matched part (this what %.*s matched) with the forward list, if both
+>>> give the same pattern, its not disambiguous. If not try the next
+>>> pattern backwards.
+>>
+>> How does it catch the case where you have both 'xyzzy' branch and 'xyzzy'
+>> tag, which is the point of disambiguation issue Shawn raised?
+> Right.
+I was wrong:
 
-> The on-disk format of index only saves 16 bit flags, nearly all have
-> been used. The last bit (CE_EXTENDED) is used to for future extension=
-=2E
->
-> This patch extends index entry format to save more flags in future.
-> The new entry format will be used when CE_EXTENDED bit is 1.
->
-> Because older implementation may not understand CE_EXTENDED bit and
-> misread the new format, if there is any extended entry in index, inde=
-x
-> header version will turn 3, which makes it incompatible for older git=
-=2E
-> If there is none, header version will return to 2 again.
+given these two refs:
 
-I think this is a good change.
+  refs/heads/xyzzy
+  refs/tags/xyzzy
 
-> diff --git a/cache.h b/cache.h
-> index f725783..f8578d1 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -109,6 +109,26 @@ struct ondisk_cache_entry {
->  	char name[FLEX_ARRAY]; /* more */
->  };
-> =20
-> +/*
-> + * This struct is used when CE_EXTENDED bit is 1
-> + * The struct must match ondisk_cache_entry exactly from
-> + * ctime till flags
-> + */
-> +struct ondisk_cache_entry_extended {
-> +	struct cache_time ctime;
-> +	struct cache_time mtime;
-> +	unsigned int dev;
-> +	unsigned int ino;
-> +	unsigned int mode;
-> +	unsigned int uid;
-> +	unsigned int gid;
-> +	unsigned int size;
-> +	unsigned char sha1[20];
-> +	unsigned short flags;
-> +	unsigned short flags2;
-> +	char name[FLEX_ARRAY]; /* more */
-> +};
-> +
+first try to shorten "refs/heads/xyzzy":
 
-We should change these to more explicitly sized uint32_t both in the
-original and this extended structure, but after this patch (or later
-variant of it) lands in the tree.
+  first (from the end) matched pattern is "refs/heads/%.*s" with
+"xyzzy" as result
+
+  but resolved ref for "xyzzy" is "refs/tags/xyzzy" => continue
+
+  next matched pattern is "%.*s" with "refs/heads/xyzzy" as result
+
+  end result is therefore: "refs/heads/xyzzy"
+
+second try to shorten "refs/tags/xyzzy":
+
+  first (from the end) matched pattern is "refs/tags/%.*s" with
+"xyzzy" as result
+
+  resolved ref for "xyzzy" is "refs/tags/xyzzy" => end
+
+  end result is therefore: "xyzzy"
+
+the output would be:
+
+  refs/heads/xyzzy
+  xyzzy
+
+The question is now, if this is usable for bash completion? Current
+bash completion would handle this case wrong, because you get two
+xyzzy.
+
+Bert
