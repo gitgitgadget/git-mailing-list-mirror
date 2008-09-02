@@ -1,69 +1,63 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [RFC] Detached-HEAD reminder on commit?
-Date: Tue, 02 Sep 2008 22:26:29 +0200
-Message-ID: <vpq3aki1eh6.fsf@bauges.imag.fr>
-References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: non-monotonic index error
+Date: Tue, 02 Sep 2008 16:28:59 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0809021625230.23787@xanadu.home>
+References: <9e4733910809021257v3012ec89l64b2bb412ac1ebbd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailinglist <git@vger.kernel.org>
-To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Tue Sep 02 22:29:43 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 02 22:30:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KacVK-0004bz-Lo
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 22:29:35 +0200
+	id 1KacWB-0004pM-SB
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 22:30:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751825AbYIBU23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 16:28:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751721AbYIBU23
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 16:28:29 -0400
-Received: from imag.imag.fr ([129.88.30.1]:40045 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751646AbYIBU22 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 16:28:28 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m82KQhTU019448
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 2 Sep 2008 22:26:44 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KacSL-0001db-LC; Tue, 02 Sep 2008 22:26:29 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KacSL-0003J8-Il; Tue, 02 Sep 2008 22:26:29 +0200
-In-Reply-To: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl> (Pieter de Bie's message of "Tue\,  2 Sep 2008 21\:31\:45 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 02 Sep 2008 22:26:44 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752150AbYIBU3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 16:29:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751721AbYIBU3V
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 16:29:21 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:56963 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751469AbYIBU3V (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 16:29:21 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K6L00I3M4WBG99B@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 02 Sep 2008 16:29:00 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <9e4733910809021257v3012ec89l64b2bb412ac1ebbd@mail.gmail.com>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94706>
 
-Pieter de Bie <pdebie@ai.rug.nl> writes:
+On Tue, 2 Sep 2008, Jon Smirl wrote:
 
-> +       if (!strcmp("HEAD", head))
-> +               printf("You are on a detached head, so this commit "
-> +                       "has not been recorded in a branch.\n"
-> +                       "If you don't want to lose this commit, checkout a "
-> +                       "branch and then run:\n"
-> +                       "       git merge %s\n", sha1_to_hex(sha1));
+> I pulled from linus, did stg rebase linus/master, git push digispeaker
+> and got these errors.
+> 
+> Where's the problem, at my local machine or the digispeaker one? How
+> do I fix this?
+> 
+> jonsmirl@terra:~/fs$ stg --version
+> Stacked GIT 0.14.3.195.g36a0
+> git version 1.5.6.GIT
+> Python version 2.5.2 (r252:60911, Jul 31 2008, 17:31:22)
+> [GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)]
+> jonsmirl@terra:~/fs$
+> 
+> [digispeaker]$ git --version
+> git version 1.4.4.4
 
-I'd say
+This should be upgraded to at least version 1.4.4.5.  If this is a 
+Debian distro and they didn't provide an updated package for git then 
+please fill a bug with Debian.
 
-+                       "If you don't want to lose this commit, run "
-+                       "git branch <some-name>\n"
-+			"to create a named branch for the commit you just made");
 
-(or whatever better wording you find, but I think suggesting to name
-the branch makes more sense that merging it)
-
--- 
-Matthieu
+Nicolas
