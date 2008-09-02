@@ -1,99 +1,90 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: non-monotonic index error
-Date: Tue, 2 Sep 2008 17:37:21 -0400
-Message-ID: <9e4733910809021437w40eb1e2cv6379e5d199e234a5@mail.gmail.com>
-References: <9e4733910809021257v3012ec89l64b2bb412ac1ebbd@mail.gmail.com>
-	 <alpine.LFD.1.10.0809021625230.23787@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] Documentation: new upstream rebase recovery section
+ in git-rebase
+Date: Tue, 02 Sep 2008 14:39:28 -0700
+Message-ID: <7vvdxei5wv.fsf@gitster.siamese.dyndns.org>
+References: <1220386721-10215-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Sep 02 23:38:34 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Sep 02 23:40:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kada2-0003tZ-MO
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 23:38:31 +0200
+	id 1Kadc9-0004QX-Jt
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 23:40:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751926AbYIBVhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 17:37:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751664AbYIBVhX
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 17:37:23 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:62362 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751607AbYIBVhX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 17:37:23 -0400
-Received: by py-out-1112.google.com with SMTP id p76so1350936pyb.10
-        for <git@vger.kernel.org>; Tue, 02 Sep 2008 14:37:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=B7rALX9kv9ZK5gmN+E7qKa5Ef1MRkhiPuh91/K3oPNg=;
-        b=tgoNYBwpQ7nfpoLRj5CKEgZ914i+2D16k2kfmBktDjw2HqEQzW1Apw8lPBcqrnv7zb
-         ASIbdz4E1JsF7U2ZfcAyZtxWe6R4DsAwry6nl9ypdX4vkBU+9MXz1hXNXCGBDaVO4fuq
-         9CTQZ7hhgZmLCm2nKdJotw2TSK+wwugbXVl1A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=aLKlJHCyQJgjwFgdKisC3huitryJKGC0HONaarBylSG+BTFG2b+yLId+BYS20yjJgW
-         HCmQF9v5W0nASgowo8AQijBpUMVwexQyPanKdfkQ4cYViccoLpfSRm9PmKur8bxIu+D5
-         iZ118I8vY9DOuV3EAIcjrOz9ZHJv9qcypVIC0=
-Received: by 10.65.112.18 with SMTP id p18mr16449894qbm.38.1220391441780;
-        Tue, 02 Sep 2008 14:37:21 -0700 (PDT)
-Received: by 10.64.178.13 with HTTP; Tue, 2 Sep 2008 14:37:21 -0700 (PDT)
-In-Reply-To: <alpine.LFD.1.10.0809021625230.23787@xanadu.home>
-Content-Disposition: inline
+	id S1751695AbYIBVjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 17:39:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752241AbYIBVje
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 17:39:34 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42058 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751677AbYIBVje (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 17:39:34 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7195F5AC05;
+	Tue,  2 Sep 2008 17:39:33 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 1E7475AC04; Tue,  2 Sep 2008 17:39:29 -0400 (EDT)
+In-Reply-To: <1220386721-10215-1-git-send-email-trast@student.ethz.ch>
+ (Thomas Rast's message of "Tue, 2 Sep 2008 22:18:41 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A1BAD8B8-7937-11DD-992D-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94718>
 
-On 9/2/08, Nicolas Pitre <nico@cam.org> wrote:
-> On Tue, 2 Sep 2008, Jon Smirl wrote:
+Thomas Rast <trast@student.ethz.ch> writes:
+
+> I flagged it as RFC because I'd appreciate some feedback:
 >
->  > I pulled from linus, did stg rebase linus/master, git push digispeaker
->  > and got these errors.
->  >
->  > Where's the problem, at my local machine or the digispeaker one? How
->  > do I fix this?
->  >
->  > jonsmirl@terra:~/fs$ stg --version
->  > Stacked GIT 0.14.3.195.g36a0
->  > git version 1.5.6.GIT
->  > Python version 2.5.2 (r252:60911, Jul 31 2008, 17:31:22)
->  > [GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)]
->  > jonsmirl@terra:~/fs$
->  >
->  > [digispeaker]$ git --version
->  > git version 1.4.4.4
+> - Are the warnings too repetitive?  I fear that if we sound too
+>   protective, users won't listen.
 >
->
-> This should be upgraded to at least version 1.4.4.5.  If this is a
->  Debian distro and they didn't provide an updated package for git then
->  please fill a bug with Debian.
->
+> - Is it perhaps too verbose, or in the wrong place?  I did not want to
+>   detract from the feature descriptions that the manpage should first
+>   and foremost contain.  Chances that a user will "accidentally" read
+>   the section at this position and length seem fairly low however.
 
-I just built the current version in my local directory, I'm still
-getting the monotonic error on push. Do I need to repack or something?
+It feels on a bit too repetitive side, but I think this is going in the
+right direction.  How about dropping the earlier part of the change to
+Notes section (but keep "See also" which is a good guide for understanding
+the said "implications")?
 
-[digispeaker]$ git --version
-git version 1.6.0.1.g7f314.dirty
+> +HELP, MY UPSTREAM HAS REBASED!
+> +------------------------------
 
+I read this section only once, but it looked reasonable as a recovery
+procedure to me.
 
+The additions you made are all about why rebasing public history is bad
+from mechanisms (overlapping changes made by old upstream history and new
+upstream history, unless they are identical, will cause merge conflicts
+between themselves that downstream will have hard time resolving) POV.
+While that description is all good, I think there should also be a
+discussion from the patchflow/workflow angle.
 
->
->
->  Nicolas
->
+"Upstream has rebased" almost implies that it has its own upstream
+(i.e. "My upstream" is not the toplevel upstream, but is a subsystem tree
+or something).
 
+Rebasing upstream is bad, but an upstream that backmerges from its own
+upstream too often is equally bad, and the reason of the badness, viewed
+from the workflow angle, shares exactly the same component.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+It means that the mid-level upstream in question is not focused enough.
+
+Cf.
+
+    http://article.gmane.org/gmane.linux.kernel/681763
+    http://article.gmane.org/gmane.linux.kernel/684030
+    http://article.gmane.org/gmane.linux.kernel/684073
+    http://article.gmane.org/gmane.linux.kernel/684091
+    http://article.gmane.org/gmane.linux.kernel/638511
