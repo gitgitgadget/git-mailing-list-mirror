@@ -1,80 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Detached-HEAD reminder on commit?
-Date: Wed, 03 Sep 2008 00:11:52 +0200
-Organization: At home
-Message-ID: <g9kdn4$rgs$1@ger.gmane.org>
-References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl> <7vk5dujn9h.fsf@gitster.siamese.dyndns.org> <20080902210524.GB7757@leksak.fem-net> <0578A0F2-F90A-4555-9B34-726F26A1CDBB@ai.rug.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 03 00:13:20 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Makefile: add merge_recursive.h to LIB_H
+Date: Wed,  3 Sep 2008 00:13:59 +0200
+Message-ID: <1220393639-20433-1-git-send-email-vmiklos@frugalware.org>
+References: <b96b1e10babd379daea483e72d99d8e520e34506.1220392547.git.vmiklos@frugalware.org>
+Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 03 00:15:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kae7e-0004Xy-ET
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 00:13:14 +0200
+	id 1Kae9Y-00050j-Ti
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 00:15:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753064AbYIBWMI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Sep 2008 18:12:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753084AbYIBWMI
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 18:12:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:32887 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752986AbYIBWMG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 18:12:06 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Kae6T-0008D0-7T
-	for git@vger.kernel.org; Tue, 02 Sep 2008 22:12:01 +0000
-Received: from abvy100.neoplus.adsl.tpnet.pl ([83.8.222.100])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Sep 2008 22:12:01 +0000
-Received: from jnareb by abvy100.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Sep 2008 22:12:01 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvy100.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1753388AbYIBWOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 18:14:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753251AbYIBWOE
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 18:14:04 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:48786 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753224AbYIBWOC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 18:14:02 -0400
+Received: from vmobile.example.net (dsl5401C449.pool.t-online.hu [84.1.196.73])
+	by yugo.frugalware.org (Postfix) with ESMTP id 8367F1DDC5B;
+	Wed,  3 Sep 2008 00:14:00 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 26F9C84CA; Wed,  3 Sep 2008 00:13:59 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.1
+In-Reply-To: <b96b1e10babd379daea483e72d99d8e520e34506.1220392547.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94729>
 
-Pieter de Bie wrote:
+When modifying merge-recursive.h, for example builtin-merge-recursive.c
+have to be recompiled which was not true till now, causing various
+runtime errors using an incremental build.
 
-> =A0=A0=A0=A0=A0=A0=A0=A0# Please enter the commit message for your ch=
-anges. Lines starting
-> =A0=A0=A0=A0=A0=A0=A0=A0# with '#' will be ignored, and an empty mess=
-age aborts the commit.
-> =A0=A0=A0=A0=A0=A0=A0=A0# Not currently on any branch.
-> =A0=A0=A0=A0=A0=A0=A0=A0# Untracked files:
-> =A0=A0=A0=A0=A0=A0=A0=A0# =A0 (use "git add <file>..." to include in =
-what will be committed)
->=20
-> It's the third line, surrounded by other lines and at the bottom of =A0
-> the window.
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-Perhaps instead of poposed patch we should simply put empty lines
-to emphasize that we are on no branch:
+On Wed, Sep 03, 2008 at 12:05:32AM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> Subject: Re: [PATCH 1/2] merge-recursive: move call_depth to struct
+>       merge_options
 
-        # Please enter the commit message for your changes. Lines start=
-ing
-        # with '#' will be ignored, and an empty message aborts the com=
-mit.
-        #
-        # Not currently on any branch.
-        #
-        # Untracked files:
-        #   (use "git add <file>..." to include in what will be committ=
-ed)
+While testing this one, I got some weird errors, finally they gone after
+a 'touch builtin-merge-recursive.c', I guess this is the right fix.
 
+ Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+diff --git a/Makefile b/Makefile
+index f697618..bec6a84 100644
+--- a/Makefile
++++ b/Makefile
+@@ -362,6 +362,7 @@ LIB_H += list-objects.h
+ LIB_H += ll-merge.h
+ LIB_H += log-tree.h
+ LIB_H += mailmap.h
++LIB_H += merge_recursive.h
+ LIB_H += object.h
+ LIB_H += pack.h
+ LIB_H += pack-refs.h
+-- 
+1.6.0.1
