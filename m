@@ -1,78 +1,109 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH v7, resend] gitweb: ref markers link to named shortlogs
-Date: Wed, 3 Sep 2008 01:55:25 +0200
-Message-ID: <cb7bb73a0809021655t1c9c2863ub7e2771bf2ca3a83@mail.gmail.com>
-References: <1220384825-19824-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200809030116.13676.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add --filedirstat diff option
+Date: Tue, 02 Sep 2008 16:55:39 -0700
+Message-ID: <7v3akigl1g.fsf@gitster.siamese.dyndns.org>
+References: <20080901011259.GA31696@zakalwe.fi>
+ <7vd4jnnifp.fsf@gitster.siamese.dyndns.org>
+ <20080902115848.GA1252@jolt.modeemi.cs.tut.fi>
+ <7vwshuglq1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@ucw.cz>,
-	"Lea Wiemann" <lewiemann@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 03 01:56:34 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Heikki Orsila <shd@modeemi.fi>
+X-From: git-owner@vger.kernel.org Wed Sep 03 01:56:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kafjd-0004oj-93
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 01:56:33 +0200
+	id 1Kafjw-0004s2-Ai
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 01:56:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752026AbYIBXz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 19:55:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815AbYIBXz1
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 19:55:27 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:57178 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751199AbYIBXz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 19:55:26 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so1491062yxm.1
-        for <git@vger.kernel.org>; Tue, 02 Sep 2008 16:55:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=wcO2NzOK0IbV0QCUwgZhub3edzfxcddB/s7muNhV2+s=;
-        b=dS+14tmx0epJkWO9anKerHUEBpY91/B+nYTnzP8/WH7FH0SLV5IVqOvQO6uWwo4UnA
-         orfUbe13FzCYj48WR29RWvxnNUn6ocLhc0pV0Kw8E+KoGrn3WAjdv4xuIzNlyX6uHJb2
-         ElQ+ZOTMiiakDyx63H98LQVa/VipDhm0y+KIo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=xnPEcYQ9K3r9p7jmSTrEogBS1SV6uVt/v9RtEAtmfRMw1Sdr8ZSz9z0xXwXyMmhp1b
-         lnI0UTTrR6QTWpwjC02G9S13k8NWpSBtDyX6Tz+tsg2x9FwO6zvWqpOMbUDrpcGS6MJO
-         LXTIG9ISASVMPeM30vnY1H15pkV18kxwZWcSc=
-Received: by 10.150.121.3 with SMTP id t3mr11375966ybc.179.1220399725555;
-        Tue, 02 Sep 2008 16:55:25 -0700 (PDT)
-Received: by 10.150.145.2 with HTTP; Tue, 2 Sep 2008 16:55:25 -0700 (PDT)
-In-Reply-To: <200809030116.13676.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1753569AbYIBXzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 19:55:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753629AbYIBXzp
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 19:55:45 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35673 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753090AbYIBXzp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 19:55:45 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2E2A65BF02;
+	Tue,  2 Sep 2008 19:55:44 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 63B835BF00; Tue,  2 Sep 2008 19:55:41 -0400 (EDT)
+In-Reply-To: <7vwshuglq1.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 02 Sep 2008 16:40:54 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A7DC79D2-794A-11DD-A039-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94744>
 
-On Wed, Sep 3, 2008 at 1:16 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Heikki Orsila <shd@modeemi.fi> writes:
 >
-> for what it is worth...
->> ---
+>> On Mon, Sep 01, 2008 at 11:57:46PM -0700, Junio C Hamano wrote:
+>>> Heikki Orsila <heikki.orsila@iki.fi> writes:
+>>> 
+>>> > @@ -2474,7 +2478,10 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+>>> >  		options->output_format |= DIFF_FORMAT_DIRSTAT;
+>>> >  	else if (!strcmp(arg, "--cumulative"))
+>>> >  		options->output_format |= DIFF_FORMAT_CUMULATIVE;
+>>> > -	else if (!strcmp(arg, "--check"))
+>>> > +	else if (opt_arg(arg, 'X', "filedirstat", &options->dirstat_percent)) {
+>>> > +		options->output_format |= DIFF_FORMAT_DIRSTAT;
+>>> > +		options->filedirstat = 1;
+>>> 
+>>> Why 'X'?  It would never match, confusing to the reader, and risks a
+>>> sudden change in behaviour when these statements are reordered or somebody
+>>> mechanically attempts to convert this to parse_options().
 >>
->> This is a resend of v7 of the refmark patch, since it seems to
->> have falled again below the gitweb maintainers' radar, despite
->> their interest in it ;)
+>> This is embarrassing.. I just copied the previous "dirstat" line.. 
+>> *grin*
+>>
+>> Anyway, what about the concept of filedirstat? Is it agreeable?
 >
-> Unfortunately there is not gitweb maintainer; nobody picked up
-> the mantle (although there are a few of unofficial gitweb "gurus").
+> I am neutral.
+>
+> I do not think the additional code hurts anybody, so I wouldn't say I do
+> not want to have the patch anywhere near my tree, but on the other hand,
+> personally I do not find the feature as interesting or useful as dirstat.
+>
+> Maybe there are many others who do find this option useful.  I dunno.
 
-Oh, that's ok, as long as I know I can bug you and Petr I'm happy ;)
-Just let me know if I become a little too insistent 8-D
+While I was thinking about potential issues before queuing this, I
+realized that I forgot to mention one thing.
 
+The name.
 
+"filedirstat" is simply too long to type, and it has a certain "Huh?"
+factor --- is it about file, or is it about directory?
 
--- 
-Giuseppe "Oblomov" Bilotta
+This option essentially is just the dirstat but with different logic to
+compute how big the damage is.  Conceptually, the original one gives one
+"damage point" to each added or deleted line.
+
+        $ git show --dirstat=<one-point-per-line>
+
+and yours awards one point to each file, whatever the size of the damage
+is.
+
+        $ git show --dirstat=<one-point-per-file>
+
+I cannot come up with a short-and-sweet name for one-point-per-X offhand,
+but expressing this variant as an option to --dirstat will leave the door
+open for other people to come up with different system to award damage
+points.  Perhaps
+
+	$ git show --dirstat=exclude-typofixes
+
+might even be not just interesting but useful ;-)
+
+Again, I mention this not because I want to reject the patch, but because
+I hope other people with better UI taste may come up with an alternative
+before I finish handling other patches.
