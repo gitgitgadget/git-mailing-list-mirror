@@ -1,105 +1,78 @@
-From: Heikki Orsila <heikki.orsila@iki.fi>
-Subject: [PATCH] Add --filedirstat diff option
-Date: Wed, 3 Sep 2008 02:51:48 +0300
-Message-ID: <20080902235148.GA25312@zakalwe.fi>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH v7, resend] gitweb: ref markers link to named shortlogs
+Date: Wed, 3 Sep 2008 01:55:25 +0200
+Message-ID: <cb7bb73a0809021655t1c9c2863ub7e2771bf2ca3a83@mail.gmail.com>
+References: <1220384825-19824-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200809030116.13676.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 03 01:52:57 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@ucw.cz>,
+	"Lea Wiemann" <lewiemann@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 03 01:56:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kafg8-0004CM-P9
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 01:52:57 +0200
+	id 1Kafjd-0004oj-93
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 01:56:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753933AbYIBXvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 19:51:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753090AbYIBXvu
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 19:51:50 -0400
-Received: from zakalwe.fi ([80.83.5.154]:43695 "EHLO zakalwe.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751199AbYIBXvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 19:51:50 -0400
-Received: by zakalwe.fi (Postfix, from userid 1023)
-	id 87F832BC68; Wed,  3 Sep 2008 02:51:48 +0300 (EEST)
+	id S1752026AbYIBXz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 19:55:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815AbYIBXz1
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 19:55:27 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:57178 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751199AbYIBXz0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 19:55:26 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so1491062yxm.1
+        for <git@vger.kernel.org>; Tue, 02 Sep 2008 16:55:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=wcO2NzOK0IbV0QCUwgZhub3edzfxcddB/s7muNhV2+s=;
+        b=dS+14tmx0epJkWO9anKerHUEBpY91/B+nYTnzP8/WH7FH0SLV5IVqOvQO6uWwo4UnA
+         orfUbe13FzCYj48WR29RWvxnNUn6ocLhc0pV0Kw8E+KoGrn3WAjdv4xuIzNlyX6uHJb2
+         ElQ+ZOTMiiakDyx63H98LQVa/VipDhm0y+KIo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=xnPEcYQ9K3r9p7jmSTrEogBS1SV6uVt/v9RtEAtmfRMw1Sdr8ZSz9z0xXwXyMmhp1b
+         lnI0UTTrR6QTWpwjC02G9S13k8NWpSBtDyX6Tz+tsg2x9FwO6zvWqpOMbUDrpcGS6MJO
+         LXTIG9ISASVMPeM30vnY1H15pkV18kxwZWcSc=
+Received: by 10.150.121.3 with SMTP id t3mr11375966ybc.179.1220399725555;
+        Tue, 02 Sep 2008 16:55:25 -0700 (PDT)
+Received: by 10.150.145.2 with HTTP; Tue, 2 Sep 2008 16:55:25 -0700 (PDT)
+In-Reply-To: <200809030116.13676.jnareb@gmail.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94743>
 
---filedirstat is the same as --dirstat, but it counts "damaged files"
-instead of "damaged lines" (lines that are added or removed).
+On Wed, Sep 3, 2008 at 1:16 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+>
+> for what it is worth...
+>> ---
+>>
+>> This is a resend of v7 of the refmark patch, since it seems to
+>> have falled again below the gitweb maintainers' radar, despite
+>> their interest in it ;)
+>
+> Unfortunately there is not gitweb maintainer; nobody picked up
+> the mantle (although there are a few of unofficial gitweb "gurus").
 
-Signed-off-by: Heikki Orsila <heikki.orsila@iki.fi>
----
-This is version 2 of the patch. It fixes --filedirstat option handling.
+Oh, that's ok, as long as I know I can bug you and Petr I'm happy ;)
+Just let me know if I become a little too insistent 8-D
 
- Documentation/diff-options.txt |    3 +++
- diff.c                         |   11 +++++++++--
- diff.h                         |    1 +
- 3 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 1759386..6e84f40 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -66,6 +66,9 @@ endif::git-format-patch[]
- 	the "--cumulative" flag, which adds up percentages recursively
- 	even when they have been already reported for a sub-directory.
- 
-+--filedirstat[=limit]::
-+	Same as --dirstat, but count changed files instead of lines.
-+
- --summary::
- 	Output a condensed summary of extended header information
- 	such as creations, renames and mode changes.
-diff --git a/diff.c b/diff.c
-index 135dec4..393dea7 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1110,9 +1110,13 @@ static void show_dirstat(struct diff_options *options)
- 		/*
- 		 * Original minus copied is the removed material,
- 		 * added is the new material.  They are both damages
--		 * made to the preimage.
-+		 * made to the preimage. In --filedirstat mode, count
-+		 * damaged files, not damaged lines. This is done by
-+		 * counting only a single damaged line per file.
- 		 */
- 		damage = (p->one->size - copied) + added;
-+		if (options->filedirstat && damage > 0)
-+			damage = 1;
- 
- 		ALLOC_GROW(dir.files, dir.nr + 1, dir.alloc);
- 		dir.files[dir.nr].name = name;
-@@ -2474,7 +2478,10 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		options->output_format |= DIFF_FORMAT_DIRSTAT;
- 	else if (!strcmp(arg, "--cumulative"))
- 		options->output_format |= DIFF_FORMAT_CUMULATIVE;
--	else if (!strcmp(arg, "--check"))
-+	else if (opt_arg(arg, 0, "filedirstat", &options->dirstat_percent)) {
-+		options->output_format |= DIFF_FORMAT_DIRSTAT;
-+		options->filedirstat = 1;
-+	} else if (!strcmp(arg, "--check"))
- 		options->output_format |= DIFF_FORMAT_CHECKDIFF;
- 	else if (!strcmp(arg, "--summary"))
- 		options->output_format |= DIFF_FORMAT_SUMMARY;
-diff --git a/diff.h b/diff.h
-index 50fb5dd..2832bb8 100644
---- a/diff.h
-+++ b/diff.h
-@@ -86,6 +86,7 @@ struct diff_options {
- 	int rename_limit;
- 	int warn_on_too_large_rename;
- 	int dirstat_percent;
-+	int filedirstat;
- 	int setup;
- 	int abbrev;
- 	const char *prefix;
+
 -- 
-1.6.0.1
+Giuseppe "Oblomov" Bilotta
