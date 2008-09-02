@@ -1,74 +1,80 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC] Detached-HEAD reminder on commit?
-Date: Tue, 02 Sep 2008 18:58:53 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0809021856310.23787@xanadu.home>
-References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl>
- <7vk5dujn9h.fsf@gitster.siamese.dyndns.org>
- <20080902210524.GB7757@leksak.fem-net>
- <0578A0F2-F90A-4555-9B34-726F26A1CDBB@ai.rug.nl> <g9kdn4$rgs$1@ger.gmane.org>
- <7vabeqi2n3.fsf@gitster.siamese.dyndns.org>
+Subject: Re: non-monotonic index error
+Date: Tue, 02 Sep 2008 19:04:27 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0809021859030.23787@xanadu.home>
+References: <9e4733910809021257v3012ec89l64b2bb412ac1ebbd@mail.gmail.com>
+ <alpine.LFD.1.10.0809021625230.23787@xanadu.home>
+ <9e4733910809021437w40eb1e2cv6379e5d199e234a5@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 03 01:00:09 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 03 01:05:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kaeqz-0007QG-GH
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 01:00:05 +0200
+	id 1Kaewb-0008VV-7G
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 01:05:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752535AbYIBW67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 18:58:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753157AbYIBW67
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 18:58:59 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:61256 "EHLO
+	id S1753383AbYIBXEe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 19:04:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753364AbYIBXEd
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 19:04:33 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:9850 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752220AbYIBW67 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 18:58:59 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+	with ESMTP id S1753339AbYIBXEd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 19:04:33 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
  (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K6L001OKBU5F5WA@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 02 Sep 2008 18:58:53 -0400 (EDT)
+ with ESMTP id <0K6L00EEBC3FOJN1@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 02 Sep 2008 19:04:27 -0400 (EDT)
 X-X-Sender: nico@xanadu.home
-In-reply-to: <7vabeqi2n3.fsf@gitster.siamese.dyndns.org>
+In-reply-to: <9e4733910809021437w40eb1e2cv6379e5d199e234a5@mail.gmail.com>
 User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94735>
 
-On Tue, 2 Sep 2008, Junio C Hamano wrote:
+On Tue, 2 Sep 2008, Jon Smirl wrote:
 
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > Perhaps instead of poposed patch we should simply put empty lines
-> > to emphasize that we are on no branch:
+> On 9/2/08, Nicolas Pitre <nico@cam.org> wrote:
+> > On Tue, 2 Sep 2008, Jon Smirl wrote:
 > >
-> >         # Please enter the commit message for your changes. Lines starting
-> >         # with '#' will be ignored, and an empty message aborts the commit.
-> >         #
-> >         # Not currently on any branch.
-> >         #
-> >         # Untracked files:
-> >         #   (use "git add <file>..." to include in what will be committed)
+> >  > I pulled from linus, did stg rebase linus/master, git push digispeaker
+> >  > and got these errors.
+> >  >
+> >  > Where's the problem, at my local machine or the digispeaker one? How
+> >  > do I fix this?
+> >  >
+> >  > jonsmirl@terra:~/fs$ stg --version
+> >  > Stacked GIT 0.14.3.195.g36a0
+> >  > git version 1.5.6.GIT
+> >  > Python version 2.5.2 (r252:60911, Jul 31 2008, 17:31:22)
+> >  > [GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)]
+> >  > jonsmirl@terra:~/fs$
+> >  >
+> >  > [digispeaker]$ git --version
+> >  > git version 1.4.4.4
+> >
+> >
+> > This should be upgraded to at least version 1.4.4.5.  If this is a
+> >  Debian distro and they didn't provide an updated package for git then
+> >  please fill a bug with Debian.
+> >
 > 
-> That sounds sensible, easy and safe enough.
+> I just built the current version in my local directory, I'm still
+> getting the monotonic error on push. Do I need to repack or something?
 
-Yep.  And I would go as far as suggesting that the branch information be 
-the first line of the lot:
+Probably because the version in your local directory is not the one used 
+when the push is performed.  Still, on pushes it is the native git 
+protocol which is used and in that case there should not be any index 
+version issues.
 
-# Not currently on any branch.
-#
-# Please enter the commit message for your changes. Lines starting
-# with '#' will be ignored, and an empty message aborts the commit.
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-# [...]
+Puzzled.
 
 
 Nicolas
