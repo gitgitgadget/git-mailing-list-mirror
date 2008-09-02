@@ -1,93 +1,63 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: diffcore and directory renames
-Date: Tue, 2 Sep 2008 22:48:02 +0200
-Message-ID: <20080902204802.GS4985@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20080901213904.GP4985@nan92-1-81-57-214-146.fbx.proxad.net> <7vfxojtr9t.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: non-monotonic index error
+Date: Tue, 02 Sep 2008 13:53:12 -0700
+Message-ID: <7vbpz6jmmf.fsf@gitster.siamese.dyndns.org>
+References: <9e4733910809021257v3012ec89l64b2bb412ac1ebbd@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 02 22:48:56 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	Catalin Marinas <catalin.marinas@gmail.com>
+To: "Jon Smirl" <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 02 22:54:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kaco3-00026Q-DV
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 22:48:55 +0200
+	id 1KactO-0003ir-Ag
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 22:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751364AbYIBUru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 16:47:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751386AbYIBUru
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 16:47:50 -0400
-Received: from smtp5-g19.free.fr ([212.27.42.35]:51382 "EHLO smtp5-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751000AbYIBUrt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 16:47:49 -0400
-Received: from smtp5-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 87CC81C7333;
-	Tue,  2 Sep 2008 22:47:47 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id E98A41C72FA;
-	Tue,  2 Sep 2008 22:47:44 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id DF7811F0C1; Tue,  2 Sep 2008 22:48:02 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vfxojtr9t.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752093AbYIBUxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 16:53:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752131AbYIBUxT
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 16:53:19 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62007 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751675AbYIBUxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 16:53:19 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2EF425ABEE;
+	Tue,  2 Sep 2008 16:53:18 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 946E15ABED; Tue,  2 Sep 2008 16:53:14 -0400 (EDT)
+In-Reply-To: <9e4733910809021257v3012ec89l64b2bb412ac1ebbd@mail.gmail.com>
+ (Jon Smirl's message of "Tue, 2 Sep 2008 15:57:54 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 2B89D348-7931-11DD-A5E3-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94712>
 
-On Mon, Sep 01, 2008 at 03:50:22PM -0700, Junio C Hamano wrote:
-> Yes, I've hinted here number of times that rename detection could notice
-> the fact that neighbouring paths are migrating to the same directory and
-> boost similarity scores of leftover paths that did not otherwise made the
-> threshold in such a situation.
+"Jon Smirl" <jonsmirl@gmail.com> writes:
 
-Wow, that's a great idea I did not think about :)
+> I pulled from linus, did stg rebase linus/master, git push digispeaker
+> and got these errors.
+>
+> Where's the problem, at my local machine or the digispeaker one? How
+> do I fix this?
+>
+> jonsmirl@terra:~/fs$ stg --version
+> Stacked GIT 0.14.3.195.g36a0
+> git version 1.5.6.GIT
+> Python version 2.5.2 (r252:60911, Jul 31 2008, 17:31:22)
+> [GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)]
+> jonsmirl@terra:~/fs$
+>
+> [digispeaker]$ git --version
+> git version 1.4.4.4
 
-> I am glad to see finally somebody got interested ;-)
-
-I am glad we're on the same side :)
-
-> > $ ./git-diff-tree 0f1027 -M
-> > 0f1027e1aceb4bc5fa682776ab9f72935e2cd1b3
-> > :040000 040000 6f6159f0245784352414ff38ffb68bae80f30bd6 6f6159f0245784352414ff38ffb68bae80f30bd6 R100   ppc     moved
-> 
-> Yes, diff-tree can show this, and you should be able to teach diff-index
-> with a clean cache-tree to do similar, but this only applies to the
-> non-recursive 100% rename at the toplevel, which is too narrow a special
-> case to be interesting at all.  We perhaps further could run the
-> similarity comparison on the raw tree objects if we wanted to so that you
-> can find inexact matches, but I think it is going in the wrong direction.
-
-Agreed.
-
-> The thing is, diffcore is designed to be a general mechanism to unify
-> comparisons on two arbitrary sets of files, be they from tree-vs-tree,
-> tree-vs-index, tree-vs-worktree, or index-vs-worktree.  The machinery
-> should be able to operate on any two sets of files in the same way and
-> produce more-or-less the same results.  It is Ok for callers to give extra
-> hints, when available, to speed up the computation, but the core of the
-> algorithm should not depend on the presense of such hints to deduce the
-> renames.
-
-My idea was rather to just see tree/index/worktree as just 3
-specialized forms of a single "abstract tree" of some sort,
-effectively unifying things.
-
-But anyway afterwards I thought that there may be something for me to
-learn in how --find-copies-harder gets its information for
-non-modified sources of copies -- I'll have a look at that.
-
-
-> So please aim to make the hint-less case, "diff-files --no-index", produce
-> a sensible result.  That should be the first step.
-
-OK.
-
-Best regards,
--- 
-Yann
+It is a bit fishy that stg reports 1.5.6.GIT; does it come with its own
+copy of git which is newer than what you have?
