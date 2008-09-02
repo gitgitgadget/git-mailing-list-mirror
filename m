@@ -1,87 +1,76 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] for-each-ref: `:short` format for `refname`
-Date: Tue, 2 Sep 2008 07:39:12 -0700
-Message-ID: <20080902143912.GB28704@spearce.org>
-References: <7vprnpbqmo.fsf@gitster.siamese.dyndns.org> <1220186467-24623-1-git-send-email-bert.wesarg@googlemail.com> <20080901131523.GA6739@neumann> <36ca99e90809010713h7c673d10j6addd1624a655371@mail.gmail.com> <36ca99e90809011052s568fa6e4y89e56769f63806c1@mail.gmail.com> <20080901191051.GD7482@spearce.org> <36ca99e90809011410w646cc6eajb3063ea3501f173c@mail.gmail.com> <7v7i9vv9n2.fsf@gitster.siamese.dyndns.org> <36ca99e90809011444v3fca09c4o4d9dcf1a7249a00a@mail.gmail.com> <36ca99e90809020026j37c41a8fu99b45abbd02eb372@mail.gmail.com>
+From: m.skoric@web.de
+Subject: Unable to clone svn repository
+Date: Tue, 02 Sep 2008 16:58:15 +0200
+Organization: http://freemail.web.de/
+Message-ID: <1293837402@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	SZEDER GGGbor <szeder@ira.uka.de>, git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 02 16:41:43 2008
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 02 16:59:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaX3M-000329-N2
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 16:40:21 +0200
+	id 1KaXM7-0001sf-A3
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 16:59:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751466AbYIBOjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 10:39:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751439AbYIBOjN
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 10:39:13 -0400
-Received: from george.spearce.org ([209.20.77.23]:42102 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751413AbYIBOjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 10:39:13 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 8831338375; Tue,  2 Sep 2008 14:39:12 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <36ca99e90809020026j37c41a8fu99b45abbd02eb372@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751688AbYIBO6U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Sep 2008 10:58:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751667AbYIBO6T
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 10:58:19 -0400
+Received: from fmmailgate05.web.de ([217.72.192.243]:60960 "EHLO
+	fmmailgate05.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751329AbYIBO6T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Sep 2008 10:58:19 -0400
+Received: from web.de 
+	by fmmailgate05.web.de (Postfix) with SMTP id 6CF3A5910E9C
+	for <git@vger.kernel.org>; Tue,  2 Sep 2008 16:58:17 +0200 (CEST)
+Received: from [62.206.44.30] by freemailng2303.web.de with HTTP;
+ Tue, 02 Sep 2008 16:58:15 +0200
+X-Provags-Id: V01U2FsdGVkX1/dCmvEAfE0+ZCySE5Lq2DppL4iWS9fp8PFqnoiZnxhKCI3S
+ AlzJjM12kvMh2IyAyB8/2eXRdp/I1pAXXBwGZN8v8EkjHFCcN0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94677>
 
-Bert Wesarg <bert.wesarg@googlemail.com> wrote:
-> 
-> given these two refs:
-> 
->   refs/heads/xyzzy
->   refs/tags/xyzzy
-> 
-> first try to shorten "refs/heads/xyzzy":
-> 
->   first (from the end) matched pattern is "refs/heads/%.*s" with
-> "xyzzy" as result
-> 
->   but resolved ref for "xyzzy" is "refs/tags/xyzzy" => continue
-> 
->   next matched pattern is "%.*s" with "refs/heads/xyzzy" as result
-> 
->   end result is therefore: "refs/heads/xyzzy"
-> 
-> second try to shorten "refs/tags/xyzzy":
-> 
->   first (from the end) matched pattern is "refs/tags/%.*s" with
-> "xyzzy" as result
-> 
->   resolved ref for "xyzzy" is "refs/tags/xyzzy" => end
-> 
->   end result is therefore: "xyzzy"
-> 
-> the output would be:
-> 
->   refs/heads/xyzzy
->   xyzzy
-> 
-> The question is now, if this is usable for bash completion? Current
-> bash completion would handle this case wrong, because you get two
-> xyzzy.
+Hi guys,
 
-I think this is reasonable.  Its better than what we have today,
-which is ambiguous completion.  So this looks reasoanble to me.
-Usually people don't have ambiguous names, but it happens.  I've
-been known to do something stupid like this:
+im getting an error when im trying to clone a big svn repository. trunk=
+ and a couple of branches worked before
+git crashed.
 
-  git checkout -b v1.0 v1.0
-  git reset --hard v1.2
-  git log v1.0
-  # wtf?!?!!?!
+git Version 1.6.0.1
 
-;-)
+command: git-svn clone https://SECRETURL --trunk=3Dtrunk --branches=3Db=
+ranches --tags=3Dtags
+error:
 
--- 
-Shawn.
+=46ound possible branch point: https://SECRETURL/branches/dirk/Abo-Uebe=
+rnahme (Bug #994) =3D> https://SECRETURL/branches/Abo-Uebernahme (Bug #=
+994), 341
+Initializing parent: Abo-Uebernahme (Bug #994)@341
+W: Ignoring error from SVN, path probably does not exist: (175002): RA =
+layer request failed: REPORT request failed on '/svn/tixx1/!svn/bc/101'=
+: REPORT of '/svn/tixx1/!svn/bc/101': Could not read chunk size: Secure=
+ connection truncated (https://SECRETURL)
+W: Do not be alarmed at the above message git-svn is just searching agg=
+ressively for old history.
+This may take a while on large repositories
+=46ound possible branch point: https://SECRETURL/trunk =3D> https://SEC=
+RETURL/branches/dirk/Abo-Uebernahme (Bug #994), 203
+=46ound branch parent: (Abo-Uebernahme (Bug #994)@341) bb831869748c98bf=
+97d105c5894ae65331c95c08
+Bad URL passed to RA layer: Malformed URL for repository at /usr/bin/gi=
+t-svn line 3792
+
+Maybe a https problem -> "Secure connection truncated (https://SECRETUR=
+L)" ?
+Anyone has an idea and can help me?
+
+Greetz ms
+____________________________________________________________________
+Psssst! Schon vom neuen WEB.DE MultiMessenger geh=F6rt?=20
+Der kann`s mit allen: http://www.produkte.web.de/messenger/?did=3D3123
