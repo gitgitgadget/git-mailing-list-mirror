@@ -1,123 +1,139 @@
-From: "Bert Wesarg" <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] for-each-ref: `:short` format for `refname`
-Date: Tue, 2 Sep 2008 09:26:27 +0200
-Message-ID: <36ca99e90809020026j37c41a8fu99b45abbd02eb372@mail.gmail.com>
-References: <7vprnpbqmo.fsf@gitster.siamese.dyndns.org>
-	 <1220186467-24623-1-git-send-email-bert.wesarg@googlemail.com>
-	 <20080901131523.GA6739@neumann>
-	 <36ca99e90809010713h7c673d10j6addd1624a655371@mail.gmail.com>
-	 <36ca99e90809011052s568fa6e4y89e56769f63806c1@mail.gmail.com>
-	 <20080901191051.GD7482@spearce.org>
-	 <36ca99e90809011410w646cc6eajb3063ea3501f173c@mail.gmail.com>
-	 <7v7i9vv9n2.fsf@gitster.siamese.dyndns.org>
-	 <36ca99e90809011444v3fca09c4o4d9dcf1a7249a00a@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"=?UTF-8?Q?SZEDER_G=C3=A1bor?=" <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 02 09:27:44 2008
+From: David Aguilar <davvid@gmail.com>
+Subject: [RFC/PATCH] git-mergetool: allow using merge tools for staging changes
+Date: Tue,  2 Sep 2008 00:25:49 -0700
+Message-ID: <ca72cec5020d847ac7d1577c586772ae22810bef.1220339887.git.davvid@gmail.com>
+Cc: git@vger.kernel.org, tytso@mit.edu,
+	David Aguilar <davvid@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Sep 02 09:34:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaQIZ-000722-6C
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 09:27:35 +0200
+	id 1KaQP9-0000bd-Vs
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 09:34:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752493AbYIBH03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 03:26:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752471AbYIBH03
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 03:26:29 -0400
-Received: from wx-out-0506.google.com ([66.249.82.238]:59619 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752092AbYIBH02 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 03:26:28 -0400
-Received: by wx-out-0506.google.com with SMTP id h29so643382wxd.4
-        for <git@vger.kernel.org>; Tue, 02 Sep 2008 00:26:27 -0700 (PDT)
+	id S1752499AbYIBHdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 03:33:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752359AbYIBHdR
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 03:33:17 -0400
+Received: from rv-out-0506.google.com ([209.85.198.233]:40257 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752092AbYIBHdQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 03:33:16 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so2135161rvb.1
+        for <git@vger.kernel.org>; Tue, 02 Sep 2008 00:33:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=JimUENyUSd6cP/QKclQvyFEvDLjtEz89HGN/GPbakg0=;
-        b=KfcqeF6QO3g+A3He6REC7XCTbq1NzacWWbOYGcLUKeapPhVeoKUqX9FsKTy7c+k2eG
-         fZErjf6wdtAcC9+oxnjgY6faYjt4fPs3K5rSD+2aYQFtWbeOdsmzKVbxisE3ljnL7W4y
-         ztB14Zr6l2iAxdQxfLH5LaVUGGEvVegWOSEIk=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=aDwc0WveG2NSpce3Z/i7Q4p0r440DKMhqluptTRXkCg=;
+        b=O8dnZWLtZYruvD1X3S6s1W3xdlNq/+op+l/mliFw93TKQnyF0f0HZg03K+uBIDEcqd
+         qGZwdeeDVVPNiYwU4TJ6crPo2LdfRPweCL32nJxzMF0y+r0b9tiVis+ldOXSWb5Hx252
+         DTG0d2Fo/MalPVTrdgKLIWexHlrJf4EwObflc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=vUkUU7nxh9Vcu+LFO1AeomDY2GcUcc0KqFnz8uDTo0yR9ETv8ktt+SbK3Hn3W/B+Yw
-         j968L1XR7pXKPLEx6SCx2IeZ66Pa49TE3teW+P0PHizDRVZ4X3lrG6bmCrfcpjXgo/Nj
-         5vMFYMUN/LteSawbsaIKUaPdzWohJtJzOBZFQ=
-Received: by 10.70.48.13 with SMTP id v13mr9149177wxv.28.1220340387250;
-        Tue, 02 Sep 2008 00:26:27 -0700 (PDT)
-Received: by 10.70.49.12 with HTTP; Tue, 2 Sep 2008 00:26:27 -0700 (PDT)
-In-Reply-To: <36ca99e90809011444v3fca09c4o4d9dcf1a7249a00a@mail.gmail.com>
-Content-Disposition: inline
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Zd8DiXwfpQUjwTt71NK+MMGZgLv01Z0Cx4Eo8IaPGyygyla64qT7qUbx9Xyy6iYZqB
+         sobx8wkny7A2BS27BCebvc4xLOPHgcnV7Mg7PZWpCHIAtGLEcWKX0EBa3JcNC0pMYAOw
+         EX67BRE8qPjX+11N9e1nSlk3QHyYXVFxPoSlM=
+Received: by 10.141.78.14 with SMTP id f14mr3974386rvl.76.1220340795625;
+        Tue, 02 Sep 2008 00:33:15 -0700 (PDT)
+Received: from localhost ( [208.106.56.2])
+        by mx.google.com with ESMTPS id b8sm12167495rvf.4.2008.09.02.00.33.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 02 Sep 2008 00:33:14 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.1.161.g7f314
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94660>
 
-On Mon, Sep 1, 2008 at 23:44, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
-> On Mon, Sep 1, 2008 at 23:28, Junio C Hamano <gitster@pobox.com> wrote:
->> "Bert Wesarg" <bert.wesarg@googlemail.com> writes:
->>
->>> On Mon, Sep 1, 2008 at 21:10, Shawn O. Pearce <spearce@spearce.org> wrote:
->>> ...
->>>> You can still get ambiguous names.  Avoiding them requires going
->>>> through all refs and building their short forms, then using the
->>>> full ref name for any ref which had more than one name shorten to
->>>> the same string.  Ugly, but implementable, and probably something
->>>> that should be considered.
->>>
->>> What about: try the list backwards until the first match, than try the
->>> matched part (this what %.*s matched) with the forward list, if both
->>> give the same pattern, its not disambiguous. If not try the next
->>> pattern backwards.
->>
->> How does it catch the case where you have both 'xyzzy' branch and 'xyzzy'
->> tag, which is the point of disambiguation issue Shawn raised?
-> Right.
-I was wrong:
+git-mergetool contains a lot of useful code for interfacing
+with arbitrary diff/merge tools.  This code is only ever used
+when merge conflicts occur, though.
 
-given these two refs:
+This change allows git-mergetool to be used for the common
+task of comparing unstaged changes against the latest commit.
+Being able to see side-by-side diffs in your favorite $mergetool
+is the benefit of these changes.
 
-  refs/heads/xyzzy
-  refs/tags/xyzzy
+When additional changes are staged in the index, those changes
+are provided as the $BASE merge file.
 
-first try to shorten "refs/heads/xyzzy":
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
 
-  first (from the end) matched pattern is "refs/heads/%.*s" with
-"xyzzy" as result
+Notes:
 
-  but resolved ref for "xyzzy" is "refs/tags/xyzzy" => continue
+I am aware that git-citool is a viable alternative in such a
+scenario, but being able to see a side-by-side diff is one of
+the first things that CVS-using co-workers asked me about
+when using git.
 
-  next matched pattern is "%.*s" with "refs/heads/xyzzy" as result
+This only affects the "git mergetool -t <tool> <file(s)>"
+scenario.  The behavior of the no-argument "git mergetool"
+invocation is unchanged.
 
-  end result is therefore: "refs/heads/xyzzy"
+Style note:
 
-second try to shorten "refs/tags/xyzzy":
+This patch mixes tabs and spaces (indent: 4) to be consistent
+with the rest of git-mergetool.sh.
 
-  first (from the end) matched pattern is "refs/tags/%.*s" with
-"xyzzy" as result
+ git-mergetool.sh |   32 ++++++++++++++++++++++++++------
+ 1 files changed, 26 insertions(+), 6 deletions(-)
 
-  resolved ref for "xyzzy" is "refs/tags/xyzzy" => end
-
-  end result is therefore: "xyzzy"
-
-the output would be:
-
-  refs/heads/xyzzy
-  xyzzy
-
-The question is now, if this is usable for bash completion? Current
-bash completion would handle this case wrong, because you get two
-xyzzy.
-
-Bert
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 94187c3..9e5cc68 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -131,6 +131,13 @@ merge_file () {
+     MERGED="$1"
+ 
+     f=`git ls-files -u -- "$MERGED"`
++
++    if test -z "$f" ; then
++	f=$(git ls-files --modified -- "$MERGED")
++	test -z "$f" && f=$(git diff --name-only --cached -- "$MERGED")
++	test -f "$f" && worktree_mode=1
++    fi
++
+     if test -z "$f" ; then
+ 	if test ! -f "$MERGED" ; then
+ 	    echo "$MERGED: file not found"
+@@ -149,13 +156,26 @@ merge_file () {
+     mv -- "$MERGED" "$BACKUP"
+     cp -- "$BACKUP" "$MERGED"
+ 
+-    base_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}'`
+-    local_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}'`
+-    remote_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $1;}'`
++    if test -n "$worktree_mode" ; then
++	base_mode=$(git diff --name-only --cached -- "$MERGED")
++	local_mode=1
++	remote_mode=1
++	cp "$MERGED" "$LOCAL"
++	git show HEAD:"$MERGED" > "$REMOTE"
++	if base_present ; then
++	    # If changes are present in the index use them as $BASE
++	    git checkout-index --prefix=.remote- "$MERGED"
++	    mv .remote-"$MERGED" "$BASE"
++	fi
++    else
++	base_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}'`
++	local_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}'`
++	remote_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $1;}'`
+ 
+-    base_present   && git cat-file blob ":1:$prefix$MERGED" >"$BASE" 2>/dev/null
+-    local_present  && git cat-file blob ":2:$prefix$MERGED" >"$LOCAL" 2>/dev/null
+-    remote_present && git cat-file blob ":3:$prefix$MERGED" >"$REMOTE" 2>/dev/null
++	base_present   && git cat-file blob ":1:$prefix$MERGED" >"$BASE" 2>/dev/null
++	local_present  && git cat-file blob ":2:$prefix$MERGED" >"$LOCAL" 2>/dev/null
++	remote_present && git cat-file blob ":3:$prefix$MERGED" >"$REMOTE" 2>/dev/null
++    fi
+ 
+     if test -z "$local_mode" -o -z "$remote_mode"; then
+ 	echo "Deleted merge conflict for '$MERGED':"
+-- 
+1.6.0.1.161.g7f314
