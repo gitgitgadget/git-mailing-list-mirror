@@ -1,169 +1,62 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFC PATCH] Documentation: new upstream rebase recovery section in git-rebase
-Date: Tue,  2 Sep 2008 22:18:41 +0200
-Message-ID: <1220386721-10215-1-git-send-email-trast@student.ethz.ch>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 02 22:20:10 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Support diff.autorefreshindex=true in `git-diff --quiet'
+Date: Tue, 02 Sep 2008 13:19:27 -0700
+Message-ID: <7vwshujo6o.fsf@gitster.siamese.dyndns.org>
+References: <quack.20080901T0129.lth8wuci80o@roar.cs.berkeley.edu>
+ <7vskskw41j.fsf@gitster.siamese.dyndns.org>
+ <quack.20080901T0350.lthzlmsgmx6@roar.cs.berkeley.edu>
+ <7vy72bnk5x.fsf_-_@gitster.siamese.dyndns.org>
+ <quack.20080902T1039.lthabeqmopo_-_@roar.cs.berkeley.edu>
+ <7v4p4ymocc.fsf@gitster.siamese.dyndns.org>
+ <quack.20080902T1059.lthsksil97w@roar.cs.berkeley.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git mailing list <git@vger.kernel.org>
+To: Karl Chen <quarl@cs.berkeley.edu>
+X-From: git-owner@vger.kernel.org Tue Sep 02 22:21:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KacM5-0001wy-LB
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 22:20:02 +0200
+	id 1KacMz-0002Gv-3e
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 22:20:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752091AbYIBUSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 16:18:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752150AbYIBUSw
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 16:18:52 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:54801 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751711AbYIBUSv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 16:18:51 -0400
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 2 Sep 2008 22:18:49 +0200
-Received: from localhost.localdomain ([84.75.158.234]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 2 Sep 2008 22:18:48 +0200
-X-Mailer: git-send-email 1.6.0.1.302.g47141
-X-OriginalArrivalTime: 02 Sep 2008 20:18:48.0584 (UTC) FILETIME=[1BB3E080:01C90D39]
+	id S1752093AbYIBUTl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 16:19:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751646AbYIBUTl
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 16:19:41 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59155 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751364AbYIBUTk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 16:19:40 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CE82D7112F;
+	Tue,  2 Sep 2008 16:19:39 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id CE6B97112D; Tue,  2 Sep 2008 16:19:28 -0400 (EDT)
+In-Reply-To: <quack.20080902T1059.lthsksil97w@roar.cs.berkeley.edu> (Karl
+ Chen's message of "Tue, 02 Sep 2008 10:59:47 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 787BA73A-792C-11DD-BC18-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94702>
 
-Documents how to recover if the upstream that you pull from has
-rebased the branches you depend your work on.  Hopefully this can also
-serve as a warning to potential rebasers.
+Karl Chen <quarl@cs.berkeley.edu> writes:
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+>>>>>> On 2008-09-02 10:47 PDT, Junio C Hamano writes:
+>
+>     Junio> If somebody's depending on the behaviour, it is this
+>     Junio> new behaviour of doing everything asked without
+>     Junio> shortcut that needs to become a new option.
+>
+> Do you agree that the old behavior is at odds with the
+> documentation and expectations of new users like me, and
+> inconsistent?
 
-I've always found the "warning" on the git-rebase manpage (it's not
-even marked as a warning!) a bit weak.
-
-So this is an attempt to solve two problems in one go.  It should be
-precise enough to help users understand and recover, but scary enough
-to prevent them from doing such rebases in the first place.
-
-I flagged it as RFC because I'd appreciate some feedback:
-
-- Are the warnings too repetitive?  I fear that if we sound too
-  protective, users won't listen.
-
-- Is it perhaps too verbose, or in the wrong place?  I did not want to
-  detract from the feature descriptions that the manpage should first
-  and foremost contain.  Chances that a user will "accidentally" read
-  the section at this position and length seem fairly low however.
-
-I've also edited it a fair bit, so chances are that mistakes have
-snuck in.
-
-If you like the general direction of this, I'll also make a patch that
-points at this section from other rewriting manpages.
-
-- Thomas
-
-
- Documentation/git-rebase.txt |   79 +++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 75 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 59c1b02..5e1dc30 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -257,11 +257,12 @@ include::merge-strategies.txt[]
- 
- NOTES
- -----
--When you rebase a branch, you are changing its history in a way that
--will cause problems for anyone who already has a copy of the branch
--in their repository and tries to pull updates from you.  You should
-+
-+As a rule of thumb, rebasing anything that you have published already
-+is a bad idea.  It causes problems for people who already have a copy
-+of your branch, and are trying to pull updates from you.  You should
- understand the implications of using 'git-rebase' on a repository that
--you share.
-+you share.  See also HELP, MY UPSTREAM HAS REBASED! below.
- 
- When the git-rebase command is run, it will first execute a "pre-rebase"
- hook if one exists.  You can use this hook to do sanity checks and
-@@ -396,6 +397,76 @@ consistent (they compile, pass the testsuite, etc.) you should use
- after each commit, test, and amend the commit if fixes are necessary.
- 
- 
-+HELP, MY UPSTREAM HAS REBASED!
-+------------------------------
-+
-+This section briefly explains the problems that arise from rebasing
-+published branches, and shows how to recover.  The process is rather
-+tedious, so we emphasize again: 'Avoid rebasing published branches.'
-+(The same warning goes for other history rewriting too, for example,
-+`git commit --amend` and 'git-filter-branch'.)
-+
-+To illustrate, suppose you are in a situation where someone develops a
-+'subsystem' branch, and you are working on a 'topic' that is dependent
-+on this 'subsystem'.  You might end up with a history like the
-+following:
-+
-+------------
-+    o---o---o---o---o  master
-+	 \
-+	  o---o---o---o---o  subsystem
-+			   \
-+			    *---*---*  topic
-+------------
-+
-+In a push/pull workflow, the maintainer of 'subsystem' would use `git
-+merge master` to grab updates from upstream, and you can use the
-+analogous `git merge subsystem`.
-+
-+If 'subsystem' is instead **rebased** against master, the following
-+happens:
-+
-+------------
-+    o---o---o---o---o  master
-+	|	     \
-+	|	      o'--o'--o'--o'--o'  subsystem
-+	\
-+	 o---o---o---o---o---*---*---*	topic
-+------------
-+
-+Note that while we have marked your own commits with a '*', there is
-+nothing that distinguishes them from the commits that previously were
-+on 'subsystem'.  You can easily verify this with, for example, `git
-+log subsystem..topic` -- which returned only your own commits in the
-+scenario of the first graph above, but now has all the commits of the
-+old 'subsystem' too!  Furthermore, a potential merge of 'topic' into
-+'subsystem' is liable to cause unnecessary conflicts due to the
-+duplicated changes.
-+
-+To recover from this, you need to find the original branch point
-+manually, and rebase your topic against the new 'subsystem'.  Since in
-+the graph, there are 3 commits that were your own, you can do
-+------------
-+    git rebase --onto subsystem HEAD~3 topic
-+------------
-+and end up with the fixed history
-+------------
-+    o---o---o---o---o  master
-+		     \
-+		      o'--o'--o'--o'--o'  subsystem
-+					\
-+					 *'--*'--*'  topic
-+------------
-+
-+`git pull --rebase` (see linkgit:git-pull[1]) can be used to automate
-+this process, but only if you use it instead of fetching, so that it
-+can use the old upstream head to determine the previous branch point.
-+
-+The rewriting becomes a ripple effect to developers downstream from
-+you (if any): since you now have rebased 'topic', they will have to
-+manually rebase their own work to reflect this!
-+
-+
- Authors
- ------
- Written by Junio C Hamano <gitster@pobox.com> and
--- 
-1.6.0.1.302.g47141
+Yes, I was just trying to make you realize that it _could_ be the
+documentation that needs fixing.
