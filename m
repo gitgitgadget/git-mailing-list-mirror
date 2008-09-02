@@ -1,65 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-update-index -q
-Date: Tue, 02 Sep 2008 13:23:27 -0700
-Message-ID: <7vsksijo00.fsf@gitster.siamese.dyndns.org>
-References: <quack.20080902T1051.lth1w02mo5l@roar.cs.berkeley.edu>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC] Detached-HEAD reminder on commit?
+Date: Tue, 02 Sep 2008 16:24:20 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0809021620290.23787@xanadu.home>
+References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git mailing list <git@vger.kernel.org>
-To: Karl Chen <quarl@cs.berkeley.edu>
-X-From: git-owner@vger.kernel.org Tue Sep 02 22:24:41 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailinglist <git@vger.kernel.org>
+To: Pieter de Bie <pdebie@ai.rug.nl>
+X-From: git-owner@vger.kernel.org Tue Sep 02 22:25:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KacQZ-0003Mp-D7
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 22:24:39 +0200
+	id 1KacRf-0003fM-EG
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 22:25:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751575AbYIBUXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 16:23:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbYIBUXe
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 16:23:34 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59286 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751364AbYIBUXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 16:23:33 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B7EA87116E;
-	Tue,  2 Sep 2008 16:23:32 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B04877116D; Tue,  2 Sep 2008 16:23:29 -0400 (EDT)
-In-Reply-To: <quack.20080902T1051.lth1w02mo5l@roar.cs.berkeley.edu> (Karl
- Chen's message of "Tue, 02 Sep 2008 10:51:50 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 03544A10-792D-11DD-AAA0-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751687AbYIBUYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 16:24:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751530AbYIBUYl
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 16:24:41 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:48923 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751511AbYIBUYl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 16:24:41 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K6L00KHM4NP84G1@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 02 Sep 2008 16:23:49 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94704>
 
-Karl Chen <quarl@cs.berkeley.edu> writes:
+On Tue, 2 Sep 2008, Pieter de Bie wrote:
 
-> The git-update-index man page entry for -q says:
->
->        -q
->            Quiet. If --refresh finds that the index needs an
->            update, the default behavior is to error out. This
->            option makes git-update-index continue anyway.
->
-> Can someone explain this to me?  As far as I can tell,
-> git-update-index without -q does not error out after the first
-> update.
+> Sometimes I work on a detached HEAD and then forget about it. If I then create
+> some commits and checkout another branch, I have to dig through my reflog to
+> find the older commits. I know that "git commit" adds has a "Not currently on
+> any branch", but it's not very noticeable and also doesn't work when you
+> specify a commit message on the command line.
+> 
+> I suggest to add some extra output to the STDOUT after a commit if we're on a
+> detached HEAD. The quick patch below adds output like:
+> 
+> Vienna:git pieter$ ./git commit --allow-empty -m"test"
+> Created commit 6ce62c8b: test
+> You are on a detached head, so this commit has not been recorded in a branch.
+> If you don't want to lose this commit, checkout a branch and then run:
+> 	git merge 6ce62c8bfcfb341106f3587d1c141c3955c2544c
 
-: gitster j; git init
-Initialized empty Git repository in /var/tmp/j/.git/
-: gitster j/master; >afile; git update-index --add afile
-: gitster j/master; echo a >afile
-: gitster j/master; git update-index --refresh; echo $?
-afile: needs update
-1
-: gitster j/master; git update-index -q --refresh; echo $?
-0
-: gitster j/master; exit
+Nah.
+
+I have nothing against the idea of an extra message, but there are other 
+ways to preserve commits made on top of a detached head.  So I'd keep 
+only the first line.
+
+
+Nicolas
