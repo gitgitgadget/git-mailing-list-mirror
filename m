@@ -1,89 +1,87 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: non-monotonic index error
-Date: Tue, 2 Sep 2008 17:01:38 -0400
-Message-ID: <9e4733910809021401s217706d0h7a313bbd66670ad9@mail.gmail.com>
-References: <9e4733910809021257v3012ec89l64b2bb412ac1ebbd@mail.gmail.com>
-	 <7vbpz6jmmf.fsf@gitster.siamese.dyndns.org>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [RFC] Detached-HEAD reminder on commit?
+Date: Tue, 2 Sep 2008 23:05:24 +0200
+Message-ID: <20080902210524.GB7757@leksak.fem-net>
+References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl> <7vk5dujn9h.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Catalin Marinas" <catalin.marinas@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 02 23:02:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Pieter de Bie <pdebie@ai.rug.nl>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 02 23:07:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kad1S-0005un-JT
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 23:02:47 +0200
+	id 1Kad59-0006zx-PF
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 23:06:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511AbYIBVBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 17:01:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751489AbYIBVBk
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 17:01:40 -0400
-Received: from py-out-1112.google.com ([64.233.166.177]:53691 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751469AbYIBVBj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 17:01:39 -0400
-Received: by py-out-1112.google.com with SMTP id p76so1339876pyb.10
-        for <git@vger.kernel.org>; Tue, 02 Sep 2008 14:01:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=jW9qbbWgKBbRoJXMeOjfZg9dYHVAgIQN7IwyGE+huJk=;
-        b=D9GChKc+FTaVtYJxupKIzI04jgpDQpVV2gMj2RSPhLVpdosGsGv0x3KTSAvlrOepXW
-         Q+VCcRCQTY7UgeObS5ZTJ0/IKJB095qVwwoFdagJkMtXXK1JanUT04K0QVk+GFBFB7E0
-         0GVajyVbQDamwzogMgl4YsGfksbiUti/W2coU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=qejus5ybx/PJiAA87BZppJvvB87yf3brwtXrNePLL+bqIXNfvgVp1b1NVWGCDiNUwp
-         JBRYwJL3jbX7bgpRIb02KoPAASkrymFl7vhoWtGgW2A6iuORrfteCOZx5Qwh3JDlqxoC
-         gWEsvsf5kynknQJv2ypjgbCdSCqXpW5gEgnEs=
-Received: by 10.65.215.14 with SMTP id s14mr16422214qbq.18.1220389298212;
-        Tue, 02 Sep 2008 14:01:38 -0700 (PDT)
-Received: by 10.64.178.13 with HTTP; Tue, 2 Sep 2008 14:01:38 -0700 (PDT)
-In-Reply-To: <7vbpz6jmmf.fsf@gitster.siamese.dyndns.org>
+	id S1751664AbYIBVF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 17:05:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbYIBVF3
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 17:05:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45430 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751651AbYIBVF2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 17:05:28 -0400
+Received: (qmail invoked by alias); 02 Sep 2008 21:05:26 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp028) with SMTP; 02 Sep 2008 23:05:26 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+hxfQL7euhqTTGECDP0wDdDs7nImC1ybrfm7oXxe
+	zVqgBNmYbxxnHC
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1Kad40-0002fA-9V; Tue, 02 Sep 2008 23:05:24 +0200
 Content-Disposition: inline
+In-Reply-To: <7vk5dujn9h.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94714>
 
-On 9/2/08, Junio C Hamano <gitster@pobox.com> wrote:
-> "Jon Smirl" <jonsmirl@gmail.com> writes:
->
->  > I pulled from linus, did stg rebase linus/master, git push digispeaker
->  > and got these errors.
->  >
->  > Where's the problem, at my local machine or the digispeaker one? How
->  > do I fix this?
->  >
->  > jonsmirl@terra:~/fs$ stg --version
->  > Stacked GIT 0.14.3.195.g36a0
->  > git version 1.5.6.GIT
->  > Python version 2.5.2 (r252:60911, Jul 31 2008, 17:31:22)
->  > [GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)]
->  > jonsmirl@terra:~/fs$
->  >
->  > [digispeaker]$ git --version
->  > git version 1.4.4.4
->
->
-> It is a bit fishy that stg reports 1.5.6.GIT; does it come with its own
->  copy of git which is newer than what you have?
->
+Hi,
 
-Two different machines - terra and digispeaker
+Junio C Hamano wrote:
+> Pieter de Bie <pdebie@ai.rug.nl> writes:
+> 
+[..]
+> > Vienna:git pieter$ ./git commit --allow-empty -m"test"
+> > Created commit 6ce62c8b: test
+> > You are on a detached head, so this commit has not been recorded in a branch.
+> > If you don't want to lose this commit, checkout a branch and then run:
+> > 	git merge 6ce62c8bfcfb341106f3587d1c141c3955c2544c
+> >
+> > Are there any comments to this / strong opinions against such a change?
+> 
+> Unconditionally doing this is too loud for my taste.  You probably can do
+> this in your post-commit hook.
 
+Well, Pieter probably can do this in his post-commit hook. But I think
+this is useful for usability... especially for beginners who might not
+even know what a hook is. ;)
 
+For me this felt too loud, too, especially since "git status" and
+"git commit" (without message option) already tells the user that
+she is on a detached HEAD. And "git commit -a" is usually done after
+a "git status", too, isn't it? (I do not use "git commit -a", I *use*
+the index.)
+
+But nonetheless... Some days ago I accidentally detached my head (hihi)
+and at the end of the day, after switching and rebasing branches, I noticed
+that some commits in my branch were "lost"... Such a patch may have helped.
+(Yes, "git fsck --lost-found" and "git cherry-pick ..." helped.)
+
+So I'm somewhere in between. I think this patch can be useful to
+minimize some annoyance for git users, but on the other hand the
+loud output can annoy people if they, for example, use git-commit in
+scripts (like git-rebase and git-rebase--interactive does).
+
+Regards,
+  Stephan
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
