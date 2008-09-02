@@ -1,79 +1,63 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] ignore trailing slash when creating leading directories
-Date: Tue, 02 Sep 2008 13:36:38 -0700
-Message-ID: <7vod36jne1.fsf@gitster.siamese.dyndns.org>
-References: <20080902081909.GA2059@localhost>
- <7vk5dul7f5.fsf@gitster.siamese.dyndns.org>
- <20080902191322.GA11172@localhost>
+Subject: Re: [RFC] Detached-HEAD reminder on commit?
+Date: Tue, 02 Sep 2008 13:39:22 -0700
+Message-ID: <7vk5dujn9h.fsf@gitster.siamese.dyndns.org>
+References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Sep 02 22:38:08 2008
+Cc: Git Mailinglist <git@vger.kernel.org>
+To: Pieter de Bie <pdebie@ai.rug.nl>
+X-From: git-owner@vger.kernel.org Tue Sep 02 22:40:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KacdM-00072w-Ky
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 22:37:53 +0200
+	id 1Kacfx-0007kU-QT
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 22:40:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751677AbYIBUgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 16:36:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751490AbYIBUgq
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 16:36:46 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60451 "EHLO
+	id S1752181AbYIBUj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 16:39:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752144AbYIBUj1
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 16:39:27 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60640 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751435AbYIBUgq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 16:36:46 -0400
+	with ESMTP id S1752131AbYIBUj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 16:39:27 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E2C0571326;
-	Tue,  2 Sep 2008 16:36:43 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C9C1E71390;
+	Tue,  2 Sep 2008 16:39:26 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id F3CD671325; Tue,  2 Sep 2008 16:36:40 -0400 (EDT)
-In-Reply-To: <20080902191322.GA11172@localhost> (Clemens Buchacher's message
- of "Tue, 2 Sep 2008 21:13:22 +0200")
+ ESMTPSA id 091FC7138D; Tue,  2 Sep 2008 16:39:23 -0400 (EDT)
+In-Reply-To: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl> (Pieter de
+ Bie's message of "Tue, 2 Sep 2008 21:31:45 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DAE9C90E-792E-11DD-9F87-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3C01F8C4-792F-11DD-B227-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94709>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Pieter de Bie <pdebie@ai.rug.nl> writes:
 
-> Unfortunately, if we simply add strerror to the error message, in place of
+> Sometimes I work on a detached HEAD and then forget about it. If I then create
+> some commits and checkout another branch, I have to dig through my reflog to
+> find the older commits. I know that "git commit" adds has a "Not currently on
+> any branch", but it's not very noticeable and also doesn't work when you
+> specify a commit message on the command line.
 >
-> fatal: could not create work tree dir 'path/'.
+> I suggest to add some extra output to the STDOUT after a commit if we're on a
+> detached HEAD. The quick patch below adds output like:
 >
-> the new version would print
+> Vienna:git pieter$ ./git commit --allow-empty -m"test"
+> Created commit 6ce62c8b: test
+> You are on a detached head, so this commit has not been recorded in a branch.
+> If you don't want to lose this commit, checkout a branch and then run:
+> 	git merge 6ce62c8bfcfb341106f3587d1c141c3955c2544c
 >
-> fatal: could not create work tree dir 'path/': File exists.
->
-> which makes things worse IMO. We could of course strip trailing slashes in
-> builtin-clone.c for now and revert that as soon as the cleanup patch is in,
+> Are there any comments to this / strong opinions against such a change?
 
-I think the above statement is a wrong way to think about it.
-
-This particular caller (and nobody else), even when it does not want the
-"create all directories" behaviour, is giving such an instruction to the
-existing function, without validating the user input.  That is a bug that
-needs to be fixed, regardless of what the final semantics of c-l-d should
-be, isn't it?
-
-> but I think it's not worth the trouble.
-
-What I think is not worth the trouble is, after fixing this caller, to
-revert that fix, when/if we decide that c-l-d should strip trailing
-slashes for all callers.
-
-I am not saying the current semantics of c-l-d is optimal.  I am just
-worried about breaking people's private patches that may depend on the
-current behaviour.  It would be nice if we can clean it up without
-breaking people, and after doing so, if somebody really want to have
-"create all directories, the last one is also a directory", they can
-invent a cleaner function that takes that insn as a separate paremeter,
-not as an obscure "trailing slash means create all", which may be cute but
-not clean nor clear at all, which is what c-l-d does.
+Unconditionally doing this is too loud for my taste.  You probably can do
+this in your post-commit hook.
