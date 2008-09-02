@@ -1,62 +1,87 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] t5300: improve SHA1 collision test
-Date: Tue, 02 Sep 2008 10:22:22 -0400
-Message-ID: <1220365342-21308-3-git-send-email-nico@cam.org>
-References: <1220365342-21308-1-git-send-email-nico@cam.org>
- <1220365342-21308-2-git-send-email-nico@cam.org>
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 02 16:24:33 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] for-each-ref: `:short` format for `refname`
+Date: Tue, 2 Sep 2008 07:39:12 -0700
+Message-ID: <20080902143912.GB28704@spearce.org>
+References: <7vprnpbqmo.fsf@gitster.siamese.dyndns.org> <1220186467-24623-1-git-send-email-bert.wesarg@googlemail.com> <20080901131523.GA6739@neumann> <36ca99e90809010713h7c673d10j6addd1624a655371@mail.gmail.com> <36ca99e90809011052s568fa6e4y89e56769f63806c1@mail.gmail.com> <20080901191051.GD7482@spearce.org> <36ca99e90809011410w646cc6eajb3063ea3501f173c@mail.gmail.com> <7v7i9vv9n2.fsf@gitster.siamese.dyndns.org> <36ca99e90809011444v3fca09c4o4d9dcf1a7249a00a@mail.gmail.com> <36ca99e90809020026j37c41a8fu99b45abbd02eb372@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	SZEDER GGGbor <szeder@ira.uka.de>, git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 02 16:41:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaWo2-0006md-7B
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 16:24:30 +0200
+	id 1KaX3M-000329-N2
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 16:40:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752733AbYIBOWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 10:22:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751866AbYIBOWl
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 10:22:41 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:46761 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751677AbYIBOWk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 10:22:40 -0400
-Received: from localhost.localdomain ([66.131.194.97])
- by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K6K00ILVNXAG9W9@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 02 Sep 2008 10:22:23 -0400 (EDT)
-X-Mailer: git-send-email 1.6.0.1.276.g59b81
-In-reply-to: <1220365342-21308-2-git-send-email-nico@cam.org>
+	id S1751466AbYIBOjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 10:39:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751439AbYIBOjN
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 10:39:13 -0400
+Received: from george.spearce.org ([209.20.77.23]:42102 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751413AbYIBOjN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 10:39:13 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 8831338375; Tue,  2 Sep 2008 14:39:12 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <36ca99e90809020026j37c41a8fu99b45abbd02eb372@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94676>
 
-Make sure the reason for the command failure is actually due to
-the detection of SHA1 collision.
+Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+> 
+> given these two refs:
+> 
+>   refs/heads/xyzzy
+>   refs/tags/xyzzy
+> 
+> first try to shorten "refs/heads/xyzzy":
+> 
+>   first (from the end) matched pattern is "refs/heads/%.*s" with
+> "xyzzy" as result
+> 
+>   but resolved ref for "xyzzy" is "refs/tags/xyzzy" => continue
+> 
+>   next matched pattern is "%.*s" with "refs/heads/xyzzy" as result
+> 
+>   end result is therefore: "refs/heads/xyzzy"
+> 
+> second try to shorten "refs/tags/xyzzy":
+> 
+>   first (from the end) matched pattern is "refs/tags/%.*s" with
+> "xyzzy" as result
+> 
+>   resolved ref for "xyzzy" is "refs/tags/xyzzy" => end
+> 
+>   end result is therefore: "xyzzy"
+> 
+> the output would be:
+> 
+>   refs/heads/xyzzy
+>   xyzzy
+> 
+> The question is now, if this is usable for bash completion? Current
+> bash completion would handle this case wrong, because you get two
+> xyzzy.
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
- t/t5300-pack-object.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+I think this is reasonable.  Its better than what we have today,
+which is ambiguous completion.  So this looks reasoanble to me.
+Usually people don't have ambiguous names, but it happens.  I've
+been known to do something stupid like this:
 
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 83abe5f..8a8b0f1 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -272,7 +272,8 @@ test_expect_success \
- 
- test_expect_success \
-     'make sure index-pack detects the SHA1 collision' \
--    'test_must_fail git-index-pack -o bad.idx test-3.pack'
-+    'test_must_fail git-index-pack -o bad.idx test-3.pack 2>msg &&
-+     grep "SHA1 COLLISION FOUND" msg'
- 
- test_expect_success \
-     'honor pack.packSizeLimit' \
+  git checkout -b v1.0 v1.0
+  git reset --hard v1.2
+  git log v1.0
+  # wtf?!?!!?!
+
+;-)
+
 -- 
-1.6.0.1.276.g59b81
+Shawn.
