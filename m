@@ -1,62 +1,80 @@
-From: T Worman <lists@thetimmy.com>
-Subject: problem with eGit/jGit install in Eclipse 3.4
-Date: Tue, 2 Sep 2008 00:00:14 -0700
-Message-ID: <D1AFAEA7-79A6-4CB8-B1D5-07DB1900B116@thetimmy.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 02 09:14:04 2008
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: Unexpected behaviour with git stash save --keep-index?
+Date: Tue, 2 Sep 2008 09:45:16 +0200
+Message-ID: <20080902074516.GA5402@diana.vm.bytemark.co.uk>
+References: <B1185033-36D7-4504-92A3-6F75B6CE90DF@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonas =?iso-8859-1?Q?Flod=E9n?= <jonas.floden@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 02 09:24:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaQ5S-0003XB-RL
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 09:14:03 +0200
+	id 1KaQFP-00061e-CJ
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 09:24:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751021AbYIBHM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 03:12:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750957AbYIBHM5
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 03:12:57 -0400
-Received: from smtpgw.gseis.ucla.edu ([149.142.5.109]:51473 "EHLO
-	smtpgw.gseis.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750891AbYIBHM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 03:12:56 -0400
-X-Greylist: delayed 761 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Sep 2008 03:12:56 EDT
-Received: from gseis.ucla.edu (mail.gseis.ucla.edu [149.142.5.69])
-	by smtpgw.gseis.ucla.edu (8.14.2/8.14.2) with ESMTP id m8270EfD014380
-	for <git@vger.kernel.org>; Tue, 2 Sep 2008 00:00:14 -0700
-X-Scanned-By: MIMEDefang 2.64 on 149.142.5.109
-X-Scanned-By: MPP/Sophos http://www.messagepartners.com
-X-Scanned-By: This message was scanned by MPP v.3 (www.messagepartners.com)
-Received: from [69.232.45.226] (account worman HELO [192.168.0.2])
-  by gseis.ucla.edu (CommuniGate Pro SMTP 4.3.7)
-  with ESMTPSA id 25210145 for git@vger.kernel.org; Tue, 02 Sep 2008 00:01:48 -0700
-X-Mailer: Apple Mail (2.929.2)
-X-Virus-Scanned: ClamAV 0.92.1/8137/Mon Sep  1 19:07:16 2008 on smtpgw.gseis.ucla.edu
-X-Virus-Status: Clean
-X-Probable-Spam: no
-X-Spam-Score: -4.399 ()
+	id S1751675AbYIBHXM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Sep 2008 03:23:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751670AbYIBHXM
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 03:23:12 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4760 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751517AbYIBHXM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 03:23:12 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KaQZg-0001Wd-00; Tue, 02 Sep 2008 08:45:16 +0100
+Content-Disposition: inline
+In-Reply-To: <B1185033-36D7-4504-92A3-6F75B6CE90DF@gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94655>
 
-All:
+On 2008-09-02 01:14:10 +0200, Jonas Flod=E9n wrote:
 
-Newbie to this list. I've been using eGit in Eclipse for a while now  
-and I've been updating it manually. Most recently I've installed a new  
-version of Eclipse (3.4 Ganymede) and I've imported the org.spearce.*  
-projects into the new version and exported the projects to the Eclipse  
-plugins directory. All looks normal to here and the products are where  
-they should be. I quit and restart Eclipse.
+> while I was using StGit for the first time
+[...]
+> Also maybe someone could someone recommend a way to split an unclean
+> working dir into several patches/commits?
 
-When I access Team > Share Project on any of my projects the only  
-option available is CVS. For some reason Git does not show up as an  
-option. Since I have never had any problems installing egit before I  
-have tried everything I know of to troubleshoot. Does anyone here have  
-any ideas why Git is not showing up as an option for sharing in  
-Ganymede?
+This is what I usually do:
 
-Tim
+  1. Create a new StGit patch with all the changes.
+
+  2. Pop that patch.
+
+  3. View the patch in an emacs diff-mode buffer, and repeatedly
+
+       a. apply one or more hunks, and
+
+       b. create a new patch with just those changes
+
+     until no more changes remain.
+
+Another way to do it would be to
+
+  1. Use e.g. git-gui to stage the changes you want in your first
+     patch.
+
+  2. Make an StGit patch out of just that (with e.g. stg new and stg
+     refresh --index).
+
+  3. If the worktree is still dirty, go to step 1.
+
+A third method I usually make use of is to commit very often while
+developing, and periodically clump these microcommits together into
+larger commits. This sidesteps the whole problem of splitting up a
+commit into pieces, which can be quite a chore if splitting on hunk
+boundaries isn't enough. (stg coalesce will turn two or more smaller
+patches into one large patch for you. And I'm pretty sure git-rebase
+--interactive has some equivalent functions.)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
