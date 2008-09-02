@@ -1,65 +1,83 @@
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: Error on new installation
-Date: Tue, 2 Sep 2008 20:25:16 +0100
-Message-ID: <200809022025.16793.alan@chandlerfamily.org.uk>
-References: <200808310047.50560.alan@chandlerfamily.org.uk> <a2075f4c0809020719u40850e8bk240db2ee1499ee0@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 02 21:26:32 2008
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: [RFC] Detached-HEAD reminder on commit?
+Date: Tue,  2 Sep 2008 21:31:45 +0200
+Message-ID: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl>
+To: Git Mailinglist <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 02 21:32:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KabVz-0007eB-8o
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 21:26:11 +0200
+	id 1KabcW-0001Hq-O9
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 21:32:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751554AbYIBTZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 15:25:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751386AbYIBTZF
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 15:25:05 -0400
-Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:58090 "EHLO
-	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751390AbYIBTZE (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Sep 2008 15:25:04 -0400
-Received: from [172.23.170.139] (helo=anti-virus01-10)
-	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1KabUr-0001yz-JT
-	for git@vger.kernel.org; Tue, 02 Sep 2008 20:25:01 +0100
-Received: from [77.101.57.129] (helo=home.chandlerfamily.org.uk)
-	by asmtp-out4.blueyonder.co.uk with esmtp (Exim 4.52)
-	id 1KabUm-0005JG-2X
-	for git@vger.kernel.org; Tue, 02 Sep 2008 20:24:56 +0100
-Received: from kanger.home ([192.168.0.21])
-	by home.chandlerfamily.org.uk with esmtp (Exim 4.63)
-	(envelope-from <alan@chandlerfamily.org.uk>)
-	id 1KabUl-0006aa-R6
-	for git@vger.kernel.org; Tue, 02 Sep 2008 20:24:55 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <a2075f4c0809020719u40850e8bk240db2ee1499ee0@mail.gmail.com>
-Content-Disposition: inline
-X-SA-Exim-Connect-IP: 192.168.0.21
-X-SA-Exim-Mail-From: alan@chandlerfamily.org.uk
-X-SA-Exim-Scanned: No (on home.chandlerfamily.org.uk); SAEximRunCond expanded to false
+	id S1751825AbYIBTbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 15:31:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbYIBTbt
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 15:31:49 -0400
+Received: from smtp-4.orange.nl ([193.252.22.249]:11786 "EHLO smtp-4.orange.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751518AbYIBTbs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 15:31:48 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6306.online.nl (SMTP Server) with ESMTP id 71F2C7000089
+	for <git@vger.kernel.org>; Tue,  2 Sep 2008 21:31:46 +0200 (CEST)
+Received: from localhost.localdomain (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6306.online.nl (SMTP Server) with ESMTP id 24A957000086
+	for <git@vger.kernel.org>; Tue,  2 Sep 2008 21:31:45 +0200 (CEST)
+X-ME-UUID: 20080902193146150.24A957000086@mwinf6306.online.nl
+X-Mailer: git-send-email 1.6.0.rc1.288.g5b89f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94695>
 
-On Tuesday 02 Sep 2008, Felipe Carvalho Oliveira wrote:
-> I use sshfs (my hosting don't permits Shell Acess) to mount my "sftp"
-> server on my filesystem and it works welll (a litle bit slow, but
-> works).
+Sometimes I work on a detached HEAD and then forget about it. If I then create
+some commits and checkout another branch, I have to dig through my reflog to
+find the older commits. I know that "git commit" adds has a "Not currently on
+any branch", but it's not very noticeable and also doesn't work when you
+specify a commit message on the command line.
 
-Interesting - but I changed my mind in the end and use a 
-post-commit/post-merge hook to see if I am now on my "site" branch on 
-my home change and then rsync the working tree over to the server.  It 
-means I don't need the whole repository on the server, and I also can 
-use git-describe --tags to give me a version no reference file
+I suggest to add some extra output to the STDOUT after a commit if we're on a
+detached HEAD. The quick patch below adds output like:
 
--- 
-Alan Chandler
-http://www.chandlerfamily.org.uk
+Vienna:git pieter$ ./git commit --allow-empty -m"test"
+Created commit 6ce62c8b: test
+You are on a detached head, so this commit has not been recorded in a branch.
+If you don't want to lose this commit, checkout a branch and then run:
+	git merge 6ce62c8bfcfb341106f3587d1c141c3955c2544c
+
+Are there any comments to this / strong opinions against such a change?
+
+- Pieter
+
+diff --git a/builtin-commit.c b/builtin-commit.c
+index ec65ac5..bfe25f9 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -845,6 +845,8 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+ {
+        struct rev_info rev;
+        struct commit *commit;
++       unsigned char sha[20];
++       const char* head = resolve_ref("HEAD", sha, 0, NULL);
+ 
+        commit = lookup_commit(sha1);
+        if (!commit)
+@@ -877,6 +879,15 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+                printf("%s\n", buf.buf);
+                strbuf_release(&buf);
+        }
++
++       /* Are we on a detached HEAD? */
++       if (!strcmp("HEAD", head))
++               printf("You are on a detached head, so this commit "
++                       "has not been recorded in a branch.\n"
++                       "If you don't want to lose this commit, checkout a "
++                       "branch and then run:\n"
++                       "       git merge %s\n", sha1_to_hex(sha1));
++
+ }
+ 
+ static int git_commit_config(const char *k, const char *v, void *cb)
