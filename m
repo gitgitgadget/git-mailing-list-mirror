@@ -1,84 +1,76 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] ignore trailing slash when creating leading directories
-Date: Tue, 2 Sep 2008 10:19:09 +0200
-Message-ID: <20080902081909.GA2059@localhost>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: pack count on repo.or.cz [was "Medium term dreams"]
+Date: Tue, 2 Sep 2008 13:15:31 +0200
+Message-ID: <20080902111531.GL10360@machine.or.cz>
+References: <7vsksjsbcc.fsf@gitster.siamese.dyndns.org> <20080902000037.GA11869@coredump.intra.peff.net> <20080902010410.GI10360@machine.or.cz> <20080902011433.GA12682@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 02 10:20:08 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 02 13:16:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaR7O-0003UD-TZ
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 10:20:07 +0200
+	id 1KaTsO-0000pR-Q6
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 13:16:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751915AbYIBIS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 04:18:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751643AbYIBIS7
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 04:18:59 -0400
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:44658 "EHLO
-	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751510AbYIBIS6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 04:18:58 -0400
-Received: from darc.dyndns.org ([84.154.124.185]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 2 Sep 2008 10:18:54 +0200
-Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1KaR6T-0005Vp-5J
-	for git@vger.kernel.org; Tue, 02 Sep 2008 10:19:09 +0200
+	id S1751915AbYIBLPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 07:15:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751866AbYIBLPh
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 07:15:37 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:54033 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751781AbYIBLPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 07:15:36 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 028863939B44; Tue,  2 Sep 2008 13:15:32 +0200 (CEST)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 02 Sep 2008 08:18:56.0463 (UTC) FILETIME=[8B313DF0:01C90CD4]
+In-Reply-To: <20080902011433.GA12682@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94666>
 
-'git clone <repo> path/' (note the trailing slash) fails, because the
-entire path is interpreted as leading directories. So when mkdir tries to
-create the actual path, it already exists.
+On Mon, Sep 01, 2008 at 09:14:33PM -0400, Jeff King wrote:
+> On Tue, Sep 02, 2008 at 03:04:10AM +0200, Petr Baudis wrote:
+> 
+> > Unfortunately, I'm not aware how to decreate the packs count with
+> > current Git without losing _any_ objects. So yes, you could say that
+> > this is an artifact of the forking infrastructure - we just can't afford
+> > to lose objects.
+> 
+> Hmm, I thought that was the point of adding the "-A" flag to git-repack.
 
-This makes sure a trailing slash is ignored.
+Ok, I did
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
- builtin-clone.c |    7 ++++---
- sha1_file.c     |    2 +-
- 2 files changed, 5 insertions(+), 4 deletions(-)
+	git repack -A -d
 
-diff --git a/builtin-clone.c b/builtin-clone.c
-index c0e3086..4f945ad 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -422,10 +422,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	if (!option_bare) {
- 		junk_work_tree = work_tree;
- 		if (safe_create_leading_directories_const(work_tree) < 0)
--			die("could not create leading directories of '%s'",
--					work_tree);
-+			die("could not create leading directories of '%s': %s",
-+					work_tree, strerror(errno));
- 		if (mkdir(work_tree, 0755))
--			die("could not create work tree dir '%s'.", work_tree);
-+			die("could not create work tree dir '%s': %s.",
-+					work_tree, strerror(errno));
- 		set_git_work_tree(work_tree);
- 	}
- 	junk_git_dir = git_dir;
-diff --git a/sha1_file.c b/sha1_file.c
-index 9ee1ed1..3cb9414 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -97,7 +97,7 @@ int safe_create_leading_directories(char *path)
- 
- 	while (pos) {
- 		pos = strchr(pos, '/');
--		if (!pos)
-+		if (!pos || !*(pos + 1))
- 			break;
- 		*pos = 0;
- 		if (!stat(path, &st)) {
+in repo.or.cz's git.git. What next? I have brand-new
+
+	-rw-rw-r-- 1 root root  1314056 2008-09-02 13:07 pack-d19ca8b0cfd0e3357c475a3e96ce55b9f7195667.idx
+	-rw-rw-r-- 1 root root 17344999 2008-09-02 13:07 pack-d19ca8b0cfd0e3357c475a3e96ce55b9f7195667.pack
+
+but all the old packs too; git repack didn't delete anything,
+git prune-packed seems to have no effect either.
+
+> Though an even simpler solution, since you control all of the repos, is
+> to just temporarily add references from the "parent" of the fork to
+> every ref of every forked child. Then do the repack in the parent, which
+> should then contain all of the objects for all of the children, delete
+> the temporary references, and prune in the children (who should see most
+> of their objects now in the parent).
+
+So not just refs but also alternates? What if someone accesses the
+reposiory at that moment? I would also need to make the symlinks quite
+densely to avoid refs/forkee/-induced loops.
+
+I might as well just use a common repository for all the forks then. But
+this does not scale at all for dumb transports, does it?
+
 -- 
-1.6.0
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
