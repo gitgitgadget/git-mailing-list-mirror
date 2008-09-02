@@ -1,59 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: add merge_recursive.h to LIB_H
-Date: Tue, 02 Sep 2008 15:39:57 -0700
-Message-ID: <7vfxoii342.fsf@gitster.siamese.dyndns.org>
-References: <b96b1e10babd379daea483e72d99d8e520e34506.1220392547.git.vmiklos@frugalware.org> <1220393639-20433-1-git-send-email-vmiklos@frugalware.org>
+Subject: Re: [RFC] Detached-HEAD reminder on commit?
+Date: Tue, 02 Sep 2008 15:50:08 -0700
+Message-ID: <7vabeqi2n3.fsf@gitster.siamese.dyndns.org>
+References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl>
+ <7vk5dujn9h.fsf@gitster.siamese.dyndns.org>
+ <20080902210524.GB7757@leksak.fem-net>
+ <0578A0F2-F90A-4555-9B34-726F26A1CDBB@ai.rug.nl> <g9kdn4$rgs$1@ger.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Wed Sep 03 00:41:17 2008
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 03 00:51:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaeYj-0003gi-9g
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 00:41:13 +0200
+	id 1KaeiZ-0005qR-H9
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 00:51:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753332AbYIBWkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 18:40:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753315AbYIBWkH
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 18:40:07 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35885 "EHLO
+	id S1751554AbYIBWuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 18:50:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751457AbYIBWuR
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 18:50:17 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49510 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753254AbYIBWkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 18:40:06 -0400
+	with ESMTP id S1751439AbYIBWuQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 18:50:16 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EC0E5701B9;
-	Tue,  2 Sep 2008 18:40:03 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 668A65B74B;
+	Tue,  2 Sep 2008 18:50:13 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C4A86701B7; Tue,  2 Sep 2008 18:39:59 -0400 (EDT)
-In-Reply-To: <1220393639-20433-1-git-send-email-vmiklos@frugalware.org>
- (Miklos Vajna's message of "Wed, 3 Sep 2008 00:13:59 +0200")
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 976555B747; Tue,  2 Sep 2008 18:50:10 -0400 (EDT)
+In-Reply-To: <g9kdn4$rgs$1@ger.gmane.org> (Jakub Narebski's message of "Wed,
+ 03 Sep 2008 00:11:52 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 15AD9564-7940-11DD-B493-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 80F041FE-7941-11DD-B2DB-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94732>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> When modifying merge-recursive.h, for example builtin-merge-recursive.c
-> have to be recompiled which was not true till now, causing various
-> runtime errors using an incremental build.
+> Perhaps instead of poposed patch we should simply put empty lines
+> to emphasize that we are on no branch:
 >
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> ---
->
-> On Wed, Sep 03, 2008 at 12:05:32AM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
->> Subject: Re: [PATCH 1/2] merge-recursive: move call_depth to struct
->>       merge_options
->
-> While testing this one, I got some weird errors, finally they gone after
-> a 'touch builtin-merge-recursive.c', I guess this is the right fix.
+>         # Please enter the commit message for your changes. Lines starting
+>         # with '#' will be ignored, and an empty message aborts the commit.
+>         #
+>         # Not currently on any branch.
+>         #
+>         # Untracked files:
+>         #   (use "git add <file>..." to include in what will be committed)
 
-Thanks.
+That sounds sensible, easy and safe enough.
+
+
+ wt-status.c |   20 ++++++++++----------
+ 1 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git i/wt-status.c w/wt-status.c
+index 889e50f..97076e8 100644
+--- i/wt-status.c
++++ w/wt-status.c
+@@ -342,17 +342,17 @@ void wt_status_print(struct wt_status *s)
+ 
+ 	s->is_initial = get_sha1(s->reference, sha1) ? 1 : 0;
+ 	if (s->branch) {
+-		const char *on_what = "On branch ";
+-		const char *branch_name = s->branch;
+-		if (!prefixcmp(branch_name, "refs/heads/"))
+-			branch_name += 11;
+-		else if (!strcmp(branch_name, "HEAD")) {
+-			branch_name = "";
+-			branch_color = color(WT_STATUS_NOBRANCH);
+-			on_what = "Not currently on any branch.";
++		if (!prefixcmp(s->branch, "refs/heads/")) {
++			color_fprintf(s->fp, color(WT_STATUS_HEADER), "# ");
++			color_fprintf_ln(s->fp, branch_color,
++					 "On branch %s", s->branch + 11);
++		} else if (!strcmp(s->branch, "HEAD")) {
++			color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "#");
++			color_fprintf(s->fp, color(WT_STATUS_HEADER), "# ");
++			color_fprintf_ln(s->fp, color(WT_STATUS_NOBRANCH),
++					 "Not currently on any branch.");
++			color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "#");
+ 		}
+-		color_fprintf(s->fp, color(WT_STATUS_HEADER), "# ");
+-		color_fprintf_ln(s->fp, branch_color, "%s%s", on_what, branch_name);
+ 		if (!s->is_initial)
+ 			wt_status_print_tracking(s);
+ 	}
