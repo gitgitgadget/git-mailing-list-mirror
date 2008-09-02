@@ -1,173 +1,144 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH v7, resend] gitweb: ref markers link to named shortlogs
-Date: Tue,  2 Sep 2008 21:47:05 +0200
-Message-ID: <1220384825-19824-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@ucw.cz>,
-	Lea Wiemann <lewiemann@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 02 21:48:29 2008
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: non-monotonic index error
+Date: Tue, 2 Sep 2008 15:57:54 -0400
+Message-ID: <9e4733910809021257v3012ec89l64b2bb412ac1ebbd@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 02 21:59:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KabrO-0006jX-CX
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 21:48:18 +0200
+	id 1Kac1n-0002bc-W8
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 21:59:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752093AbYIBTrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 15:47:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752091AbYIBTrM
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 15:47:12 -0400
-Received: from ik-out-1112.google.com ([66.249.90.181]:18371 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752064AbYIBTrL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 15:47:11 -0400
-Received: by ik-out-1112.google.com with SMTP id c28so1150705ika.5
-        for <git@vger.kernel.org>; Tue, 02 Sep 2008 12:47:09 -0700 (PDT)
+	id S1751646AbYIBT55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 15:57:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751533AbYIBT55
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 15:57:57 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:22185 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751471AbYIBT54 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 15:57:56 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so1435271yxm.1
+        for <git@vger.kernel.org>; Tue, 02 Sep 2008 12:57:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=DTSurVudRXxtsFWDLLnI+GbT/evS6NTV1x3/wVdJVkk=;
-        b=uh+/67iAcAF0lhl7/U2IaJL+47gnUAPHSflg6aTUf89Md/G9X0ndmHf00KQkzeBTja
-         /GaiUt6WeN9ZkyX6TE9goQ98PY+Bg++5TVizjF0Fcxoiw1Ntqn6luANO0dpSRD9uROcZ
-         hXpGjGLr5Cyy3pz9och8zWBsqhVVqk5+jRo0c=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=xUSLaQ6bfu3SaE6+4N2QOUwyy7IsFNbqhEzblp32csI=;
+        b=HOeCvm/gVf5oEd0CQkX9rJu8ifbtQSQGOFWNgoNHFUsjfb+BOmReP1sK+6lehtQeFZ
+         5updueIxAbUdzl2za9e+iTxu3E87I4mygRFsuEn3D8PnU/dEfLqiRCHcRmvttvpMnXsf
+         hb9eo2pfduUsrLFuUq10W1XO2snV0NxkDhBOs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=U0c0wMkNh/mwAsyHVIvN1DCYxfILjZc7tTvZ2vgMw/8+QorDh4SSZM20PXyNNkGQaK
-         zgaKAFNso1OhtpP2yILDuVahTLNKiUM8JKq/BjPxAeonV1mytT3p7X/H7W4lNykggz9T
-         e9G12mtaaU2TBWJKkjCEm5ByldV0k2SE8NLvA=
-Received: by 10.210.46.14 with SMTP id t14mr8820881ebt.0.1220384829695;
-        Tue, 02 Sep 2008 12:47:09 -0700 (PDT)
-Received: from localhost ( [78.15.13.249])
-        by mx.google.com with ESMTPS id 34sm43355735nfu.24.2008.09.02.12.47.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 02 Sep 2008 12:47:08 -0700 (PDT)
-X-Mailer: git-send-email 1.5.6.5
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=qARA/BZGMJrypAkfYca6alzpiCHWSznS+6pG3lOnUA8s9BqcvEJwyRtZIUknApF9iZ
+         mf5jkYf4mGhnkx8pjCVKACm5xdSzl2DzZEfGhI2WOizIdtbr52FY3JlzLJt40rdVucxy
+         8IlRiDpNDl62jNRUcOvv2gTgg+zG/W0MGgqqc=
+Received: by 10.151.49.8 with SMTP id b8mr11036197ybk.180.1220385475006;
+        Tue, 02 Sep 2008 12:57:55 -0700 (PDT)
+Received: by 10.64.178.13 with HTTP; Tue, 2 Sep 2008 12:57:54 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94698>
 
-This patch turns ref markers for tags and heads into links to
-appropriate views for the ref name, depending on current context.
+I pulled from linus, did stg rebase linus/master, git push digispeaker
+and got these errors.
 
-For annotated tags, we link to the tag view, unless that's the current
-view, in which case we switch to shortlog. For other refs, we prefer the
-current view if it's history or (short)log, and default to shortlog
-otherwise.
+Where's the problem, at my local machine or the digispeaker one? How
+do I fix this?
 
-Appropriate changes are made in the CSS to prevent ref markers from
-being annoyingly blue and underlined, unless hovered. A visual
-indication of the target view difference is also implemented by making
-annotated tags show up in italic.
+jonsmirl@terra:~/fs$ stg --version
+Stacked GIT 0.14.3.195.g36a0
+git version 1.5.6.GIT
+Python version 2.5.2 (r252:60911, Jul 31 2008, 17:31:22)
+[GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)]
+jonsmirl@terra:~/fs$
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
+[digispeaker]$ git --version
+git version 1.4.4.4
 
-This is a resend of v7 of the refmark patch, since it seems to
-have falled again below the gitweb maintainers' radar, despite
-their interest in it ;)
 
- gitweb/gitweb.css  |   13 +++++++++++++
- gitweb/gitweb.perl |   37 ++++++++++++++++++++++++++++++++++---
- 2 files changed, 47 insertions(+), 3 deletions(-)
+jonsmirl@terra:~/fs$ git push digispeaker
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: refs/heads/asoc-v2 does not point to a valid object!
+error: refs/heads/i2c does not point to a valid object!
+error: refs/heads/jean does not point to a valid object!
+error: refs/heads/master-old does not point to a valid object!
+error: refs/remotes/origin/HEAD does not point to a valid object!
+error: refs/remotes/origin/master does not point to a valid object!
+error: refs/tags/v2.6.26-rc7 does not point to a valid object!
+error: refs/tags/v2.6.26-rc8 does not point to a valid object!
+error: refs/tags/v2.6.27-rc2 does not point to a valid object!
+error: refs/tags/v2.6.27-rc3 does not point to a valid object!
+Counting objects: 714, done.
+Compressing objects: 100% (235/235), done.
+Writing objects: 100% (451/451), 106.87 KiB, done.
+Total 451 (delta 351), reused 277 (delta 214)
+Unpacking 451 objects
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+fatal: unresolved deltas left after unpacking
+error: unpack failed: unpacker exited with error code
+To ssh://jonsmirl1@git.digispeaker.com/~/projects/digispeaker-kernel.git
+ ! [remote rejected] master -> master (n/a (unpacker error))
+error: failed to push some refs to
+'ssh://jonsmirl1@git.digispeaker.com/~/projects/digispeaker-kernel.git'
+jonsmirl@terra:~/fs$
 
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 5f4a4b8..3e50060 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -491,6 +491,19 @@ span.refs span {
- 	border-color: #ffccff #ff00ee #ff00ee #ffccff;
- }
- 
-+span.refs span a {
-+	text-decoration: none;
-+	color: inherit;
-+}
-+
-+span.refs span a:hover {
-+	text-decoration: underline;
-+}
-+
-+span.refs span.indirect {
-+	font-style: italic;
-+}
-+
- span.refs span.ref {
- 	background-color: #aaaaff;
- 	border-color: #ccccff #0033cc #0033cc #ccccff;
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a0d9272..7536fc8 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1196,13 +1196,23 @@ sub format_log_line_html {
- }
- 
- # format marker of refs pointing to given object
-+
-+# the destination action is chosen based on object type and current context:
-+# - for annotated tags, we choose the tag view unless it's the current view
-+#   already, in which case we go to shortlog view
-+# - for other refs, we keep the current view if we're in history, shortlog or
-+#   log view, and select shortlog otherwise
- sub format_ref_marker {
- 	my ($refs, $id) = @_;
- 	my $markers = '';
- 
- 	if (defined $refs->{$id}) {
- 		foreach my $ref (@{$refs->{$id}}) {
-+			# this code exploits the fact that non-lightweight tags are the
-+			# only indirect objects, and that they are the only objects for which
-+			# we want to use tag instead of shortlog as action
- 			my ($type, $name) = qw();
-+			my $indirect = ($ref =~ s/\^\{\}$//);
- 			# e.g. tags/v2.6.11 or heads/next
- 			if ($ref =~ m!^(.*?)s?/(.*)$!) {
- 				$type = $1;
-@@ -1212,8 +1222,29 @@ sub format_ref_marker {
- 				$name = $ref;
- 			}
- 
--			$markers .= " <span class=\"$type\" title=\"$ref\">" .
--			            esc_html($name) . "</span>";
-+			my $class = $type;
-+			$class .= " indirect" if $indirect;
-+
-+			my $dest_action = "shortlog";
-+
-+			if ($indirect) {
-+				$dest_action = "tag" unless $action eq "tag";
-+			} elsif ($action =~ /^(history|(short)?log)$/) {
-+				$dest_action = $action;
-+			}
-+
-+			my $dest = "";
-+			$dest .= "refs/" unless $ref =~ m!^refs/!;
-+			$dest .= $ref;
-+
-+			my $link = $cgi->a({
-+				-href => href(
-+					action=>$dest_action,
-+					hash=>$dest
-+				)}, $name);
-+
-+			$markers .= " <span class=\"$class\" title=\"$ref\">" .
-+				$link . "</span>";
- 		}
- 	}
- 
-@@ -2035,7 +2066,7 @@ sub git_get_references {
- 
- 	while (my $line = <$fd>) {
- 		chomp $line;
--		if ($line =~ m!^([0-9a-fA-F]{40})\srefs/($type/?[^^]+)!) {
-+		if ($line =~ m!^([0-9a-fA-F]{40})\srefs/($type.*)$!) {
- 			if (defined $refs{$1}) {
- 				push @{$refs{$1}}, $2;
- 			} else {
+
+
 -- 
-1.5.6.5
+Jon Smirl
+jonsmirl@gmail.com
