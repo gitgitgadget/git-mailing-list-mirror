@@ -1,96 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: [RFC] Detached-HEAD reminder on commit?
-Date: Tue, 02 Sep 2008 15:50:08 -0700
-Message-ID: <7vabeqi2n3.fsf@gitster.siamese.dyndns.org>
+Date: Tue, 02 Sep 2008 18:53:00 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0809021849390.23787@xanadu.home>
 References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl>
  <7vk5dujn9h.fsf@gitster.siamese.dyndns.org>
- <20080902210524.GB7757@leksak.fem-net>
- <0578A0F2-F90A-4555-9B34-726F26A1CDBB@ai.rug.nl> <g9kdn4$rgs$1@ger.gmane.org>
+ <20080902210524.GB7757@leksak.fem-net> <200809022339.20123.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 03 00:51:24 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Pieter de Bie <pdebie@ai.rug.nl>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Sep 03 00:54:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaeiZ-0005qR-H9
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 00:51:24 +0200
+	id 1KaelK-0006PS-WB
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 00:54:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751554AbYIBWuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 18:50:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751457AbYIBWuR
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 18:50:17 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49510 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751439AbYIBWuQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 18:50:16 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 668A65B74B;
-	Tue,  2 Sep 2008 18:50:13 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 976555B747; Tue,  2 Sep 2008 18:50:10 -0400 (EDT)
-In-Reply-To: <g9kdn4$rgs$1@ger.gmane.org> (Jakub Narebski's message of "Wed,
- 03 Sep 2008 00:11:52 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 80F041FE-7941-11DD-B2DB-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1753189AbYIBWxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2008 18:53:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753158AbYIBWxI
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 18:53:08 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:55722 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753157AbYIBWxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 18:53:07 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K6L007UZBKCL6E6@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 02 Sep 2008 18:53:00 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <200809022339.20123.johan@herland.net>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94733>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Tue, 2 Sep 2008, Johan Herland wrote:
 
-> Perhaps instead of poposed patch we should simply put empty lines
-> to emphasize that we are on no branch:
->
->         # Please enter the commit message for your changes. Lines starting
->         # with '#' will be ignored, and an empty message aborts the commit.
->         #
->         # Not currently on any branch.
->         #
->         # Untracked files:
->         #   (use "git add <file>..." to include in what will be committed)
+> On Tuesday 02 September 2008, Stephan Beyer wrote:
+> > Junio C Hamano wrote:
+> > > Pieter de Bie <pdebie@ai.rug.nl> writes:
+> > > > Vienna:git pieter$ ./git commit --allow-empty -m"test"
+> > > > Created commit 6ce62c8b: test
+> > > > You are on a detached head, so this commit has not been recorded in a
+> > > > branch. If you don't want to lose this commit, checkout a branch and
+> > > > then run: git merge 6ce62c8bfcfb341106f3587d1c141c3955c2544c
+> > > >
+> > > > Are there any comments to this / strong opinions against such a
+> > > > change?
+> > >
+> > > Unconditionally doing this is too loud for my taste.  You probably can
+> > > do this in your post-commit hook.
+> >
+> > Well, Pieter probably can do this in his post-commit hook. But I think
+> > this is useful for usability... especially for beginners who might not
+> > even know what a hook is. ;)
+> 
+> I'm not sure I like this personally, but if we _really_ don't want newbies 
+> to shoot themselves in the foot, we could make "git commit" fail on a 
+> detached HEAD unless the user has indicated that s/he knows what's going 
+> on; i.e. something like this:
+> 
+> Vienna:git pieter$ ./git commit --allow-empty -m"test"
+> You are on a detached head, so this commit would not be recorded in a
+> branch. If you don't want to lose this commit, please switch to a (new) 
+> branch before committing. If you know what you're doing, and want to
+> proceed on a detached HEAD, please enable commit.detached in your 
+> configuration (git config --global commit.detached true)
+> 
+> ...but I sympathize with those that think this is overkill.
 
-That sounds sensible, easy and safe enough.
+This is going over board indeed.
+
+Adding commits to a detached head is _cool_, and it is also _useful_ in 
+many occasions.  Let's not obfuscate that capability.
+
+Adding an extra line of warning when the commit is done is fine, but 
+more than that is too much IMHO.
 
 
- wt-status.c |   20 ++++++++++----------
- 1 files changed, 10 insertions(+), 10 deletions(-)
-
-diff --git i/wt-status.c w/wt-status.c
-index 889e50f..97076e8 100644
---- i/wt-status.c
-+++ w/wt-status.c
-@@ -342,17 +342,17 @@ void wt_status_print(struct wt_status *s)
- 
- 	s->is_initial = get_sha1(s->reference, sha1) ? 1 : 0;
- 	if (s->branch) {
--		const char *on_what = "On branch ";
--		const char *branch_name = s->branch;
--		if (!prefixcmp(branch_name, "refs/heads/"))
--			branch_name += 11;
--		else if (!strcmp(branch_name, "HEAD")) {
--			branch_name = "";
--			branch_color = color(WT_STATUS_NOBRANCH);
--			on_what = "Not currently on any branch.";
-+		if (!prefixcmp(s->branch, "refs/heads/")) {
-+			color_fprintf(s->fp, color(WT_STATUS_HEADER), "# ");
-+			color_fprintf_ln(s->fp, branch_color,
-+					 "On branch %s", s->branch + 11);
-+		} else if (!strcmp(s->branch, "HEAD")) {
-+			color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "#");
-+			color_fprintf(s->fp, color(WT_STATUS_HEADER), "# ");
-+			color_fprintf_ln(s->fp, color(WT_STATUS_NOBRANCH),
-+					 "Not currently on any branch.");
-+			color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "#");
- 		}
--		color_fprintf(s->fp, color(WT_STATUS_HEADER), "# ");
--		color_fprintf_ln(s->fp, branch_color, "%s%s", on_what, branch_name);
- 		if (!s->is_initial)
- 			wt_status_print_tracking(s);
- 	}
+Nicolas
