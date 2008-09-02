@@ -1,93 +1,92 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [cgit PATCH] use Host: header to generate cgit_hosturl
-Date: Tue, 2 Sep 2008 09:24:26 +0200
-Message-ID: <8c5c35580809020024x564e8bc3o410cea6d4cd905@mail.gmail.com>
-References: <20080901063033.GA21848@untitled>
-	 <8c5c35580809011336v58b139acu5078cafd3440c786@mail.gmail.com>
-	 <20080901230741.GA19984@hand.yhbt.net>
-	 <8c5c35580809011614k6ec5a0e9tdfd5d3031c58b84@mail.gmail.com>
-	 <20080901233033.GB19984@hand.yhbt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Extend index to save more flags
+Date: Tue, 02 Sep 2008 00:25:57 -0700
+Message-ID: <7vhc8zm2ka.fsf@gitster.siamese.dyndns.org>
+References: <48BBE881.1050206@viscovery.net>
+ <1220278585-26969-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Eric Wong" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Sep 02 09:25:34 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 02 09:27:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaQGb-0006J5-FB
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 09:25:33 +0200
+	id 1KaQIF-0006vW-8c
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 09:27:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752316AbYIBHY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 03:24:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752210AbYIBHY2
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 03:24:28 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:37190 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751851AbYIBHY1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 03:24:27 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so1580246waf.23
-        for <git@vger.kernel.org>; Tue, 02 Sep 2008 00:24:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=qrK6pN8G8uBvvCRBzb+EyVoqGWdPoFyg3O3ERgzHRNo=;
-        b=cMyrrcobw5F8pwBrwL6cIw+fbSt5s2KCo9xIQDv01EJodR6+t68e6QQdsz2xjitgfL
-         ru9XKpGsOvqKK+lySVOClxsXrUAxJ0oBUwtlKEqGt99D7X1vrlG+500rSUuBotcLdLxQ
-         yYBDKeP3HDcGnSeXtE8D+Fq5Msx42PBZ1fupA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=H/oj6aKo6/ZlPtCD14raDlci0av0BswX+4bfOFuxHbki7qB+cHjlvlwD1KWOJgVfnJ
-         jjPjHQxMTZDlhHVk/0zNWVEkJ3mQtypmsnnOzsZkTkdaSwnkcYl7Yg1gegsdzFhFK3VN
-         Kq92WLkiB8NXEBe9bmWoG1Ju7kY02OgfZfyE8=
-Received: by 10.114.235.8 with SMTP id i8mr5928245wah.194.1220340266899;
-        Tue, 02 Sep 2008 00:24:26 -0700 (PDT)
-Received: by 10.114.166.20 with HTTP; Tue, 2 Sep 2008 00:24:26 -0700 (PDT)
-In-Reply-To: <20080901233033.GB19984@hand.yhbt.net>
-Content-Disposition: inline
+	id S1752373AbYIBH0K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Sep 2008 03:26:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752010AbYIBH0J
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 03:26:09 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50135 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751325AbYIBH0H convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Sep 2008 03:26:07 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F2DFB5993D;
+	Tue,  2 Sep 2008 03:26:06 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 453A55993C; Tue,  2 Sep 2008 03:26:02 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 684B98A0-78C0-11DD-830F-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94658>
 
-On Tue, Sep 2, 2008 at 1:30 AM, Eric Wong <normalperson@yhbt.net> wrote:
-> Lars Hjemli <hjemli@gmail.com> wrote:
->> On Tue, Sep 2, 2008 at 1:07 AM, Eric Wong <normalperson@yhbt.net> wrote:
->> > Lars Hjemli <hjemli@gmail.com> wrote:
->> >> On Mon, Sep 1, 2008 at 8:30 AM, Eric Wong <normalperson@yhbt.net> wrote:
->> >> > So use the "Host" header if it is available and fall back to
->> >> > SERVER_NAME/SERVER_PORT for some clients that don't set
->> >> > HTTP_HOST.
->> >>
->> >> Maybe it would be better to use a new cgitrc parameter as fallback if
->> >> the client doesn't provide the "Host" header?
->> >
->> > That sounds a bit hackish to me since HTTP_HOST, SERVER_NAME and
->> > SERVER_PORT are all standardized.  Anyhow, it's your call :)
->>
->> I just figured that since SERVER_NAME/SERVER_PORT doesn't work in a
->> setup like the one you described, clients which doesn't provide the
->> "Host" header would never get a correct url. A default value for the
->> "Host" header in cgitrc would work around this issue.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+
+> The on-disk format of index only saves 16 bit flags, nearly all have
+> been used. The last bit (CE_EXTENDED) is used to for future extension=
+=2E
 >
-> Actually, in my situation, the proxy server will unconditionally set a
-> Host: header before sending the request to the lighttpd backend.  Header
-> rewriting/injection is a common feature in HTTP aware proxies.
+> This patch extends index entry format to save more flags in future.
+> The new entry format will be used when CE_EXTENDED bit is 1.
+>
+> Because older implementation may not understand CE_EXTENDED bit and
+> misread the new format, if there is any extended entry in index, inde=
+x
+> header version will turn 3, which makes it incompatible for older git=
+=2E
+> If there is none, header version will return to 2 again.
 
+I think this is a good change.
 
-Ok, so if we assume that the "Host" header is only missing if the
-client didn't specify it and there's no proxy involved, using
-SERVER_NAME/SERVER_PORT as a fallback should be ok.
+> diff --git a/cache.h b/cache.h
+> index f725783..f8578d1 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -109,6 +109,26 @@ struct ondisk_cache_entry {
+>  	char name[FLEX_ARRAY]; /* more */
+>  };
+> =20
+> +/*
+> + * This struct is used when CE_EXTENDED bit is 1
+> + * The struct must match ondisk_cache_entry exactly from
+> + * ctime till flags
+> + */
+> +struct ondisk_cache_entry_extended {
+> +	struct cache_time ctime;
+> +	struct cache_time mtime;
+> +	unsigned int dev;
+> +	unsigned int ino;
+> +	unsigned int mode;
+> +	unsigned int uid;
+> +	unsigned int gid;
+> +	unsigned int size;
+> +	unsigned char sha1[20];
+> +	unsigned short flags;
+> +	unsigned short flags2;
+> +	char name[FLEX_ARRAY]; /* more */
+> +};
+> +
 
-Thanks for the patch and explanation.
-
---
-lh
+We should change these to more explicitly sized uint32_t both in the
+original and this extended structure, but after this patch (or later
+variant of it) lands in the tree.
