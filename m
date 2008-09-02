@@ -1,479 +1,80 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 2/2] merge-recursive: move index_only to struct merge_options
-Date: Wed,  3 Sep 2008 00:05:33 +0200
-Message-ID: <07ec53323899e255b858751fbbaa3b29bb4108c3.1220392547.git.vmiklos@frugalware.org>
-References: <cover.1220392547.git.vmiklos@frugalware.org>
- <b96b1e10babd379daea483e72d99d8e520e34506.1220392547.git.vmiklos@frugalware.org>
-Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 03 00:06:56 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Detached-HEAD reminder on commit?
+Date: Wed, 03 Sep 2008 00:11:52 +0200
+Organization: At home
+Message-ID: <g9kdn4$rgs$1@ger.gmane.org>
+References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl> <7vk5dujn9h.fsf@gitster.siamese.dyndns.org> <20080902210524.GB7757@leksak.fem-net> <0578A0F2-F90A-4555-9B34-726F26A1CDBB@ai.rug.nl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 03 00:13:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kae1P-00039s-HK
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 00:06:48 +0200
+	id 1Kae7e-0004Xy-ET
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 00:13:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753093AbYIBWFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2008 18:05:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752328AbYIBWFm
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 18:05:42 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:47077 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752179AbYIBWFj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2008 18:05:39 -0400
-Received: from vmobile.example.net (dsl5401C449.pool.t-online.hu [84.1.196.73])
-	by yugo.frugalware.org (Postfix) with ESMTP id EE3E41DDC5D;
-	Wed,  3 Sep 2008 00:05:35 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 36AF984CA; Wed,  3 Sep 2008 00:05:34 +0200 (CEST)
-X-Mailer: git-send-email 1.6.0.1
-In-Reply-To: <b96b1e10babd379daea483e72d99d8e520e34506.1220392547.git.vmiklos@frugalware.org>
-In-Reply-To: <cover.1220392547.git.vmiklos@frugalware.org>
-References: <cover.1220392547.git.vmiklos@frugalware.org>
+	id S1753064AbYIBWMI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Sep 2008 18:12:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753084AbYIBWMI
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Sep 2008 18:12:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:32887 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752986AbYIBWMG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2008 18:12:06 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Kae6T-0008D0-7T
+	for git@vger.kernel.org; Tue, 02 Sep 2008 22:12:01 +0000
+Received: from abvy100.neoplus.adsl.tpnet.pl ([83.8.222.100])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Sep 2008 22:12:01 +0000
+Received: from jnareb by abvy100.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Sep 2008 22:12:01 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvy100.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94728>
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
- merge-recursive.c |  139 ++++++++++++++++++++++++++---------------------------
- merge-recursive.h |   12 +++++
- 2 files changed, 80 insertions(+), 71 deletions(-)
+Pieter de Bie wrote:
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 5bb20aa..4af657c 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -165,17 +165,6 @@ static int add_cacheinfo(unsigned int mode, const unsigned char *sha1,
- 	return add_cache_entry(ce, options);
- }
- 
--/*
-- * This is a global variable which is used in a number of places but
-- * only written to in the 'merge' function.
-- *
-- * index_only == 1    => Don't leave any non-stage 0 entries in the cache and
-- *                       don't update the working directory.
-- *               0    => Leave unmerged entries in the cache and update
-- *                       the working directory.
-- */
--static int index_only = 0;
--
- static void init_tree_desc_from_tree(struct tree_desc *desc, struct tree *tree)
- {
- 	parse_tree(tree);
-@@ -428,10 +417,11 @@ static int remove_path(const char *name)
- 	return ret;
- }
- 
--static int remove_file(int clean, const char *path, int no_wd)
-+static int remove_file(struct merge_options *o, int clean,
-+		       const char *path, int no_wd)
- {
--	int update_cache = index_only || clean;
--	int update_working_directory = !index_only && !no_wd;
-+	int update_cache = o->index_only || clean;
-+	int update_working_directory = !o->index_only && !no_wd;
- 
- 	if (update_cache) {
- 		if (remove_file_from_cache(path))
-@@ -509,13 +499,14 @@ static int make_room_for_path(const char *path)
- 	return error(msg, path, ": perhaps a D/F conflict?");
- }
- 
--static void update_file_flags(const unsigned char *sha,
-+static void update_file_flags(struct merge_options *o,
-+			      const unsigned char *sha,
- 			      unsigned mode,
- 			      const char *path,
- 			      int update_cache,
- 			      int update_wd)
- {
--	if (index_only)
-+	if (o->index_only)
- 		update_wd = 0;
- 
- 	if (update_wd) {
-@@ -574,12 +565,13 @@ static void update_file_flags(const unsigned char *sha,
- 		add_cacheinfo(mode, sha, path, 0, update_wd, ADD_CACHE_OK_TO_ADD);
- }
- 
--static void update_file(int clean,
-+static void update_file(struct merge_options *o,
-+			int clean,
- 			const unsigned char *sha,
- 			unsigned mode,
- 			const char *path)
- {
--	update_file_flags(sha, mode, path, index_only || clean, !index_only);
-+	update_file_flags(o, sha, mode, path, o->index_only || clean, !o->index_only);
- }
- 
- /* Low level file merging, update and removal */
-@@ -609,8 +601,9 @@ static void fill_mm(const unsigned char *sha1, mmfile_t *mm)
- 	mm->size = size;
- }
- 
--static int merge_3way(mmbuffer_t *result_buf,
--		      struct diff_filespec *o,
-+static int merge_3way(struct merge_options *o,
-+		      mmbuffer_t *result_buf,
-+		      struct diff_filespec *one,
- 		      struct diff_filespec *a,
- 		      struct diff_filespec *b,
- 		      const char *branch1,
-@@ -623,13 +616,13 @@ static int merge_3way(mmbuffer_t *result_buf,
- 	name1 = xstrdup(mkpath("%s:%s", branch1, a->path));
- 	name2 = xstrdup(mkpath("%s:%s", branch2, b->path));
- 
--	fill_mm(o->sha1, &orig);
-+	fill_mm(one->sha1, &orig);
- 	fill_mm(a->sha1, &src1);
- 	fill_mm(b->sha1, &src2);
- 
- 	merge_status = ll_merge(result_buf, a->path, &orig,
- 				&src1, name1, &src2, name2,
--				index_only);
-+				o->index_only);
- 
- 	free(name1);
- 	free(name2);
-@@ -639,9 +632,12 @@ static int merge_3way(mmbuffer_t *result_buf,
- 	return merge_status;
- }
- 
--static struct merge_file_info merge_file(struct diff_filespec *o,
--		struct diff_filespec *a, struct diff_filespec *b,
--		const char *branch1, const char *branch2)
-+static struct merge_file_info merge_file(struct merge_options *o,
-+				         struct diff_filespec *one,
-+					 struct diff_filespec *a,
-+					 struct diff_filespec *b,
-+					 const char *branch1,
-+					 const char *branch2)
- {
- 	struct merge_file_info result;
- 	result.merge = 0;
-@@ -657,31 +653,31 @@ static struct merge_file_info merge_file(struct diff_filespec *o,
- 			hashcpy(result.sha, b->sha1);
- 		}
- 	} else {
--		if (!sha_eq(a->sha1, o->sha1) && !sha_eq(b->sha1, o->sha1))
-+		if (!sha_eq(a->sha1, one->sha1) && !sha_eq(b->sha1, one->sha1))
- 			result.merge = 1;
- 
- 		/*
- 		 * Merge modes
- 		 */
--		if (a->mode == b->mode || a->mode == o->mode)
-+		if (a->mode == b->mode || a->mode == one->mode)
- 			result.mode = b->mode;
- 		else {
- 			result.mode = a->mode;
--			if (b->mode != o->mode) {
-+			if (b->mode != one->mode) {
- 				result.clean = 0;
- 				result.merge = 1;
- 			}
- 		}
- 
--		if (sha_eq(a->sha1, b->sha1) || sha_eq(a->sha1, o->sha1))
-+		if (sha_eq(a->sha1, b->sha1) || sha_eq(a->sha1, one->sha1))
- 			hashcpy(result.sha, b->sha1);
--		else if (sha_eq(b->sha1, o->sha1))
-+		else if (sha_eq(b->sha1, one->sha1))
- 			hashcpy(result.sha, a->sha1);
- 		else if (S_ISREG(a->mode)) {
- 			mmbuffer_t result_buf;
- 			int merge_status;
- 
--			merge_status = merge_3way(&result_buf, o, a, b,
-+			merge_status = merge_3way(o, &result_buf, one, a, b,
- 						  branch1, branch2);
- 
- 			if ((merge_status < 0) || !result_buf.ptr)
-@@ -726,22 +722,22 @@ static void conflict_rename_rename(struct merge_options *o,
- 		dst_name1 = del[delp++] = unique_path(ren1_dst, branch1);
- 		output(o, 1, "%s is a directory in %s adding as %s instead",
- 		       ren1_dst, branch2, dst_name1);
--		remove_file(0, ren1_dst, 0);
-+		remove_file(o, 0, ren1_dst, 0);
- 	}
- 	if (string_list_has_string(&current_directory_set, ren2_dst)) {
- 		dst_name2 = del[delp++] = unique_path(ren2_dst, branch2);
- 		output(o, 1, "%s is a directory in %s adding as %s instead",
- 		       ren2_dst, branch1, dst_name2);
--		remove_file(0, ren2_dst, 0);
-+		remove_file(o, 0, ren2_dst, 0);
- 	}
--	if (index_only) {
-+	if (o->index_only) {
- 		remove_file_from_cache(dst_name1);
- 		remove_file_from_cache(dst_name2);
- 		/*
- 		 * Uncomment to leave the conflicting names in the resulting tree
- 		 *
--		 * update_file(0, ren1->pair->two->sha1, ren1->pair->two->mode, dst_name1);
--		 * update_file(0, ren2->pair->two->sha1, ren2->pair->two->mode, dst_name2);
-+		 * update_file(o, 0, ren1->pair->two->sha1, ren1->pair->two->mode, dst_name1);
-+		 * update_file(o, 0, ren2->pair->two->sha1, ren2->pair->two->mode, dst_name2);
- 		 */
- 	} else {
- 		update_stages(dst_name1, NULL, ren1->pair->two, NULL, 1);
-@@ -757,8 +753,8 @@ static void conflict_rename_dir(struct merge_options *o,
- {
- 	char *new_path = unique_path(ren1->pair->two->path, branch1);
- 	output(o, 1, "Renaming %s to %s instead", ren1->pair->one->path, new_path);
--	remove_file(0, ren1->pair->two->path, 0);
--	update_file(0, ren1->pair->two->sha1, ren1->pair->two->mode, new_path);
-+	remove_file(o, 0, ren1->pair->two->path, 0);
-+	update_file(o, 0, ren1->pair->two->sha1, ren1->pair->two->mode, new_path);
- 	free(new_path);
- }
- 
-@@ -773,9 +769,9 @@ static void conflict_rename_rename_2(struct merge_options *o,
- 	output(o, 1, "Renaming %s to %s and %s to %s instead",
- 	       ren1->pair->one->path, new_path1,
- 	       ren2->pair->one->path, new_path2);
--	remove_file(0, ren1->pair->two->path, 0);
--	update_file(0, ren1->pair->two->sha1, ren1->pair->two->mode, new_path1);
--	update_file(0, ren2->pair->two->sha1, ren2->pair->two->mode, new_path2);
-+	remove_file(o, 0, ren1->pair->two->path, 0);
-+	update_file(o, 0, ren1->pair->two->sha1, ren1->pair->two->mode, new_path1);
-+	update_file(o, 0, ren2->pair->two->sha1, ren2->pair->two->mode, new_path2);
- 	free(new_path2);
- 	free(new_path1);
- }
-@@ -867,17 +863,18 @@ static int process_renames(struct merge_options *o,
- 				       "rename \"%s\"->\"%s\" in \"%s\"%s",
- 				       src, ren1_dst, branch1,
- 				       src, ren2_dst, branch2,
--				       index_only ? " (left unresolved)": "");
--				if (index_only) {
-+				       o->index_only ? " (left unresolved)": "");
-+				if (o->index_only) {
- 					remove_file_from_cache(src);
--					update_file(0, ren1->pair->one->sha1,
-+					update_file(o, 0, ren1->pair->one->sha1,
- 						    ren1->pair->one->mode, src);
- 				}
- 				conflict_rename_rename(o, ren1, branch1, ren2, branch2);
- 			} else {
- 				struct merge_file_info mfi;
--				remove_file(1, ren1_src, 1);
--				mfi = merge_file(ren1->pair->one,
-+				remove_file(o, 1, ren1_src, 1);
-+				mfi = merge_file(o,
-+						 ren1->pair->one,
- 						 ren1->pair->two,
- 						 ren2->pair->two,
- 						 branch1,
-@@ -893,14 +890,14 @@ static int process_renames(struct merge_options *o,
- 					       ren1_dst);
- 					clean_merge = 0;
- 
--					if (!index_only)
-+					if (!o->index_only)
- 						update_stages(ren1_dst,
- 							      ren1->pair->one,
- 							      ren1->pair->two,
- 							      ren2->pair->two,
- 							      1 /* clear */);
- 				}
--				update_file(mfi.clean, mfi.sha, mfi.mode, ren1_dst);
-+				update_file(o, mfi.clean, mfi.sha, mfi.mode, ren1_dst);
- 			}
- 		} else {
- 			/* Renamed in 1, maybe changed in 2 */
-@@ -909,7 +906,7 @@ static int process_renames(struct merge_options *o,
- 			struct diff_filespec src_other, dst_other;
- 			int try_merge, stage = a_renames == renames1 ? 3: 2;
- 
--			remove_file(1, ren1_src, index_only || stage == 3);
-+			remove_file(o, 1, ren1_src, o->index_only || stage == 3);
- 
- 			hashcpy(src_other.sha1, ren1->src_entry->stages[stage].sha);
- 			src_other.mode = ren1->src_entry->stages[stage].mode;
-@@ -931,7 +928,7 @@ static int process_renames(struct merge_options *o,
- 				       "and deleted in %s",
- 				       ren1_src, ren1_dst, branch1,
- 				       branch2);
--				update_file(0, ren1->pair->two->sha1, ren1->pair->two->mode, ren1_dst);
-+				update_file(o, 0, ren1->pair->two->sha1, ren1->pair->two->mode, ren1_dst);
- 			} else if (!sha_eq(dst_other.sha1, null_sha1)) {
- 				const char *new_path;
- 				clean_merge = 0;
-@@ -942,7 +939,7 @@ static int process_renames(struct merge_options *o,
- 				       ren1_dst, branch2);
- 				new_path = unique_path(ren1_dst, branch2);
- 				output(o, 1, "Adding as %s instead", new_path);
--				update_file(0, dst_other.sha1, dst_other.mode, new_path);
-+				update_file(o, 0, dst_other.sha1, dst_other.mode, new_path);
- 			} else if ((item = string_list_lookup(ren1_dst, renames2Dst))) {
- 				ren2 = item->util;
- 				clean_merge = 0;
-@@ -969,7 +966,7 @@ static int process_renames(struct merge_options *o,
- 					b = ren1->pair->two;
- 					a = &src_other;
- 				}
--				mfi = merge_file(one, a, b,
-+				mfi = merge_file(o, one, a, b,
- 						o->branch1, o->branch2);
- 
- 				if (mfi.clean &&
-@@ -991,11 +988,11 @@ static int process_renames(struct merge_options *o,
- 						       ren1_dst);
- 						clean_merge = 0;
- 
--						if (!index_only)
-+						if (!o->index_only)
- 							update_stages(ren1_dst,
- 								      one, a, b, 1);
- 					}
--					update_file(mfi.clean, mfi.sha, mfi.mode, ren1_dst);
-+					update_file(o, mfi.clean, mfi.sha, mfi.mode, ren1_dst);
- 				}
- 			}
- 		}
-@@ -1037,7 +1034,7 @@ static int process_entry(struct merge_options *o,
- 			if (a_sha)
- 				output(o, 2, "Removing %s", path);
- 			/* do not touch working file if it did not exist */
--			remove_file(1, path, !a_sha);
-+			remove_file(o, 1, path, !a_sha);
- 		} else {
- 			/* Deleted in one and changed in the other */
- 			clean_merge = 0;
-@@ -1046,13 +1043,13 @@ static int process_entry(struct merge_options *o,
- 				       "and modified in %s. Version %s of %s left in tree.",
- 				       path, o->branch1,
- 				       o->branch2, o->branch2, path);
--				update_file(0, b_sha, b_mode, path);
-+				update_file(o, 0, b_sha, b_mode, path);
- 			} else {
- 				output(o, 1, "CONFLICT (delete/modify): %s deleted in %s "
- 				       "and modified in %s. Version %s of %s left in tree.",
- 				       path, o->branch2,
- 				       o->branch1, o->branch1, path);
--				update_file(0, a_sha, a_mode, path);
-+				update_file(o, 0, a_sha, a_mode, path);
- 			}
- 		}
- 
-@@ -1084,11 +1081,11 @@ static int process_entry(struct merge_options *o,
- 			output(o, 1, "CONFLICT (%s): There is a directory with name %s in %s. "
- 			       "Adding %s as %s",
- 			       conf, path, other_branch, path, new_path);
--			remove_file(0, path, 0);
--			update_file(0, sha, mode, new_path);
-+			remove_file(o, 0, path, 0);
-+			update_file(o, 0, sha, mode, new_path);
- 		} else {
- 			output(o, 2, "Adding %s", path);
--			update_file(1, sha, mode, path);
-+			update_file(o, 1, sha, mode, path);
- 		}
- 	} else if (a_sha && b_sha) {
- 		/* Case C: Added in both (check for same permissions) and */
-@@ -1110,12 +1107,12 @@ static int process_entry(struct merge_options *o,
- 		hashcpy(b.sha1, b_sha);
- 		b.mode = b_mode;
- 
--		mfi = merge_file(&one, &a, &b,
-+		mfi = merge_file(o, &one, &a, &b,
- 				 o->branch1, o->branch2);
- 
- 		clean_merge = mfi.clean;
- 		if (mfi.clean)
--			update_file(1, mfi.sha, mfi.mode, path);
-+			update_file(o, 1, mfi.sha, mfi.mode, path);
- 		else if (S_ISGITLINK(mfi.mode))
- 			output(o, 1, "CONFLICT (submodule): Merge conflict in %s "
- 			       "- needs %s", path, sha1_to_hex(b.sha1));
-@@ -1123,10 +1120,10 @@ static int process_entry(struct merge_options *o,
- 			output(o, 1, "CONFLICT (%s): Merge conflict in %s",
- 					reason, path);
- 
--			if (index_only)
--				update_file(0, mfi.sha, mfi.mode, path);
-+			if (o->index_only)
-+				update_file(o, 0, mfi.sha, mfi.mode, path);
- 			else
--				update_file_flags(mfi.sha, mfi.mode, path,
-+				update_file_flags(o, mfi.sha, mfi.mode, path,
- 					      0 /* update_cache */, 1 /* update_working_directory */);
- 		}
- 	} else if (!o_sha && !a_sha && !b_sha) {
-@@ -1134,7 +1131,7 @@ static int process_entry(struct merge_options *o,
- 		 * this entry was deleted altogether. a_mode == 0 means
- 		 * we had that path and want to actively remove it.
- 		 */
--		remove_file(1, path, !a_mode);
-+		remove_file(o, 1, path, !a_mode);
- 	} else
- 		die("Fatal merge failure, shouldn't happen.");
- 
-@@ -1160,7 +1157,7 @@ int merge_trees(struct merge_options *o,
- 		return 1;
- 	}
- 
--	code = git_merge_trees(index_only, common, head, merge);
-+	code = git_merge_trees(o->index_only, common, head, merge);
- 
- 	if (code != 0)
- 		die("merging of trees %s and %s failed",
-@@ -1195,7 +1192,7 @@ int merge_trees(struct merge_options *o,
- 	else
- 		clean = 1;
- 
--	if (index_only)
-+	if (o->index_only)
- 		*result = write_tree_from_memory(o);
- 
- 	return clean;
-@@ -1283,14 +1280,14 @@ int merge_recursive(struct merge_options *o,
- 	discard_cache();
- 	if (!o->call_depth) {
- 		read_cache();
--		index_only = 0;
-+		o->index_only = 0;
- 	} else
--		index_only = 1;
-+		o->index_only = 1;
- 
- 	clean = merge_trees(o, h1->tree, h2->tree, merged_common_ancestors->tree,
- 			    &mrtree);
- 
--	if (index_only) {
-+	if (o->index_only) {
- 		*result = make_virtual_commit(mrtree, "merged tree");
- 		commit_list_insert(h1, &(*result)->parents);
- 		commit_list_insert(h2, &(*result)->parents->next);
-diff --git a/merge-recursive.h b/merge-recursive.h
-index 4f55374..6622c3e 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -10,6 +10,18 @@ struct merge_options {
- 	int diff_rename_limit;
- 	int merge_rename_limit;
- 	int call_depth;
-+	/*
-+	 * This variable is used in a number of places but only written
-+	 * to in the 'merge_recursive' function.
-+	 *
-+	 * index_only == 1    => Don't leave any non-stage 0 entries in
-+	 *                       the cache and don't update the working
-+	 *                       directory.
-+	 *               0    => Leave unmerged entries in the cache and
-+	 *                       update the working directory.
-+	 */
-+	int index_only;
-+
- };
- 
- /* merge_trees() but with recursive ancestor consolidation */
--- 
-1.6.0.1
+> =A0=A0=A0=A0=A0=A0=A0=A0# Please enter the commit message for your ch=
+anges. Lines starting
+> =A0=A0=A0=A0=A0=A0=A0=A0# with '#' will be ignored, and an empty mess=
+age aborts the commit.
+> =A0=A0=A0=A0=A0=A0=A0=A0# Not currently on any branch.
+> =A0=A0=A0=A0=A0=A0=A0=A0# Untracked files:
+> =A0=A0=A0=A0=A0=A0=A0=A0# =A0 (use "git add <file>..." to include in =
+what will be committed)
+>=20
+> It's the third line, surrounded by other lines and at the bottom of =A0
+> the window.
+
+Perhaps instead of poposed patch we should simply put empty lines
+to emphasize that we are on no branch:
+
+        # Please enter the commit message for your changes. Lines start=
+ing
+        # with '#' will be ignored, and an empty message aborts the com=
+mit.
+        #
+        # Not currently on any branch.
+        #
+        # Untracked files:
+        #   (use "git add <file>..." to include in what will be committ=
+ed)
+
+
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
